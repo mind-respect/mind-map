@@ -1,0 +1,313 @@
+.ui-loader {
+    display: none;
+}
+body{
+    /*overflow:hidden;*/
+}
+#mind_map {
+    font-family:arial;
+}
+
+#mind_map label{
+    font-size:12px;
+}
+
+#mind_map .main-panel{
+    z-index:12;
+    background-color: white;
+    opacity: 0.91;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
+
+#mind_map input[type=button]{
+    color: #1919AC
+}
+
+#mind_map input[type=button]:hover{
+    color:#47A3FF;
+}
+
+#right-panel {
+    margin-right: 5px;
+    position:fixed;
+    right:0.1em;
+    top:0.5em;
+}
+
+#redraw-graph-btn{
+    border : 1px solid black;
+    font-size:12px;
+    font-family:arial;
+    padding: 3px;
+    background-color:white;
+    font-weight:normal;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+
+}
+#redraw-graph-btn:hover{
+    color:white !important;
+    background: #6B6B6B;
+    background: -webkit-gradient(linear, left top, left bottom, from(#D1D1D1), to(#6B6B6B));
+    background: -webkit-linear-gradient(top, #D1D1D1, #6B6B6B);
+    background: -moz-linear-gradient(top, #D1D1D1, #6B6B6B);
+    background: -ms-linear-gradient(top, #D1D1D1, #6B6B6B);
+    background: -o-linear-gradient(top, #D1D1D1, #6B6B6B);
+}
+
+.redraw-button-panel{
+    text-align:right;
+    margin-bottom:5px;
+}
+
+#left-panel {
+    margin-left: 5px;
+    position:fixed;
+    left:0.1em;
+    top:0.5em;
+    width:175px;
+}
+
+#left-panel h2{
+    font-size:12px;
+    font-family:arial;
+    text-decoration:underline
+}
+
+#sub-vertices-depth-slider{
+    z-index: 3;
+    width:120px;
+}
+
+#sub-vertices-depth-index{
+    border: 0;
+}
+
+.graph {
+    background-color: white;
+}
+
+.when-default-graph-element-text{
+    font-style:italic;
+}
+
+.vertex {
+    position: absolute;
+    z-index: 3;
+}
+
+.highlighted-vertex{
+    border: 1px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    border-color: green;
+    border-style: solid;
+    background-color: white;
+    opacity: 0.96;
+    z-index: 10;
+}
+
+.vertex .textfield-container {
+    display: inline;
+}
+
+.vertex input[type="text"] {
+    border: 0px;
+    padding: 0px;
+    spacing: 0px;
+    outline: none;
+    font-family: courier new, monospace;
+    text-align: left;
+    font-size: 14px;
+    vertical-align: middle;
+    background-color: transparent;
+    margin-top: 15px;
+}
+
+.vertex input[type="button"] {
+    border-size: 0px;
+    border-style: none;
+    font: inherit;
+    padding: 0 0 0 0;
+    font-weight: bold;
+    font-size:15px;
+}
+
+.vertex .center {
+    background: url('images/icons/vertex/target.png') no-repeat top;
+    min-width:16px;
+    min-height:14px;
+    margin-top:5px;
+}
+
+.vertex .move {
+    background: url('images/icons/vertex/move.png') no-repeat top;
+    min-width:16px;
+    min-height:15px;
+    margin-top:5px;
+}
+
+.vertex .remove input[type=button]{
+    color: red !important;
+    text-align: center;
+    background: none;
+}
+
+.vertex .what-is-this{
+    color: black !important;
+    text-align: center;
+    background: none;
+}
+
+.vertex .suggestion input[type="button"]{
+    color: green !important;
+    text-align: center;
+    background: none;
+}
+
+.vertex .menu {
+    display:inline;
+    float:right;
+}
+
+.vertex .menu ul {
+    list-style: none;
+    font-family: courier new, monospace;
+    font-size: 18px;
+    padding: 0;
+    margin: 0 0 0 5px;
+    display: inline;
+    float:left;
+    min-width:12px;
+}
+
+.vertex ul:first-of-type {
+    margin-left:0px;
+}
+
+.center-vertex {
+    -moz-border-radius: 15px;
+  border-radius: 15px;
+  -webkit-box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.1);
+  -moz-box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.1);
+  box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.5);
+
+}
+
+.edge {
+    position: absolute;
+    z-index: 2;
+}
+
+.edge .remove {
+    background-color:transparent;
+    border-size: 0px;
+    border-style: none;
+    padding: 0px;
+    font-weight: bold;
+    color: red !important;
+    text-align: center;
+}
+
+.highlighted-edge{
+    border: 1px;
+    border-color: green;
+    border-style: solid;
+    background-color: white;
+    opacity: 0.96;
+    background-color:rgba(255,255,255,1);
+    z-index: 10;
+}
+
+.edge input[type="text"] {
+    border: 0px;
+    padding: 0px;
+    spacing: 0px;
+    margin: 0px 0px 0px;
+    outline: none;
+    width: auto;
+    text-align: left;
+    background-color: transparent;
+    font-size: 14px;
+    font-family: courier new, monospace;
+}
+
+
+#graphCanvas {
+    position: absolute;
+    left:0;
+    top:0;
+}
+
+#canvasForRelation {
+    position: absolute;
+    left:0;
+    top:0;
+    z-index: 2;
+}
+#canvasToMoveVertex {
+    position: absolute;
+    left:0;
+    top:0;
+    z-index: 2;
+}
+
+.peripheral-menu{
+    position:absolute;
+    z-index: 3;
+    background: -moz-linear-gradient(100% 100% 90deg, #ffffff, #eeeeee);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), to(#eeeeee));
+    opacity: 0.96;
+    margin-right:auto;
+    border:1px solid black;
+    padding:5px;
+}
+
+.peripheral-menu h2{
+    font-size: 12px;
+    text-align: center;
+}
+
+.peripheral-menu h3{
+    font-size: 10px;
+    text-align: center;
+    font-weight:normal;
+}
+
+.peripheral-menu ul{
+    margin-left: 0px;
+    padding:0;
+    list-style-type: bullet;
+}
+
+.peripheral-menu li{
+    margin-left: 0px;
+    padding:0;
+    font-size:12px;
+    text-align:center;
+}
+
+.suggestion ul{
+    list-style-type: none;
+}
+
+.suggestion li{
+    font-size: 12px;
+    font-weight:normal;
+    margin-left: 0;
+    padding:0;
+    background: -moz-linear-gradient(left, #CDFFCD,  #ffffff);
+    background: -webkit-gradient(linear, left right, left right, from(#CDFFCD), to(#ffffff));
+    width:100%;
+    text-align:center;
+    font-family: comic Sans MS;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    border : 1px solid green;
+}
+
+.hidden-properties-container{
+    position: absolute;
+}
+

@@ -1,0 +1,2 @@
+org.triple_brain.mind_map.service.RestModule
+org.triple_brain.mind_map.web.WebModule

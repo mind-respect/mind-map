@@ -1,0 +1,55 @@
+.vertices-list-panel{
+
+}
+
+#vertices-list{
+    font-size:12px;
+    font-family:arial;
+    margin-top:5px;
+    list-style:none;
+}
+
+#vertices-list li{
+    margin-left:-36px;
+    background-color: white;
+    opacity: 0.91;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    width:175px;
+}
+#vertices-list-sort-options{
+    margin-left: 0;
+    padding-left:30px;
+    padding-top:0px;
+    margin-top:3px;
+    margin-bottom:0px;
+}
+
+#vertices-list-sort-options li {
+    margin-left: 0;
+    text-indent: -0.5em;
+    margin-bottom:2px;
+    text-color:blue;
+}
+
+#vertices-list-sort-options li:last-child {
+    margin-bottom:0px;
+}
+
+
+#vertices-list-sort-options li:marker { padding-right: 0px; }
+
+#vertices-list .min-number-of-edges-from-center-vertex{
+    margin-right:5px;
+}
+
+.sort-vertices-btn{
+    border-size: 0px;
+    border-style: none;
+    font-size:12px;
+    font-family:arial;
+    padding: 0 0 0 0;
+    background-color:white;
+    z-index: 3;
+    font-weight:normal;
+}

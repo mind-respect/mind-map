@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+
+
+    <appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+        <param name="target" value="System.out"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="conversionPattern" value="%d %p [%t] [%c{3}] %x - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="levelMin" value="TRACE"/>
+            <param name="levelMax" value="INFO"/>
+        </filter>
+    </appender>
+
+    <appender name="STDERR" class="org.apache.log4j.ConsoleAppender">
+        <param name="target" value="System.err"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="conversionPattern" value="%d %p [%t] [%c{3}] %x - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="levelMin" value="WARN"/>
+            <param name="levelMax" value="FATAL"/>
+        </filter>
+    </appender>
+
+    <!-- ========== -->
+    <!-- CATEGORIES -->
+    <!-- ========== -->
+
+    <category name="com.sun.jersey.server.impl.ejb.EJBComponentProviderFactoryInitilizer">
+        <priority value="WARN"/>
+    </category>
+
+    <category name="com.sun.jersey.server.impl.cdi.CDIComponentProviderFactoryInitializer">
+        <priority value="WARN"/>
+    </category>
+
+    <category name="com.sun.jersey.server.impl.managedbeans.ManagedBeanComponentProviderFactoryInitilizer">
+        <priority value="WARN"/>
+    </category>
+
+    <category name="com.ovea.resource.web">
+        <priority value="WARN"/>
+    </category>
+
+    <category name="com.ovea.tadjin.module.plugin">
+        <priority value="INFO"/>
+    </category>
+
+    <category name="org.triple_brain.graph.service.RestModule">
+        <priority value="INFO"/>
+    </category>
+
+    <!-- ======================= -->
+    <!-- Setup the Root category -->
+    <!-- ======================= -->
+
+    <root>
+        <priority value="WARN"/>
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="STDERR"/>
+    </root>
+
+</log4j:configuration>

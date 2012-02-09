@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=320, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+    <script type="text/javascript" src="@{props.getString('ws.resource')}/js/platform-detection.js?v=@{props.getString('ws.resource.version')}"></script>
+
+    <script type="text/javascript">
+        if (window.platform.isMobile) {
+            window.location = "@{props.getString('ws.app')}/mobile/security/login.html";
+        }
+        else {
+            window.location = "@{props.getString('ws.app')}/desktop/security/login.html";
+        }
+    </script>
+
+</head>
+<body>
+</body>
+</html>
+
+
