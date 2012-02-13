@@ -9,8 +9,13 @@ import org.junit.runner.RunWith;
 import org.testatoo.config.annotation.TestatooModules;
 import org.testatoo.config.junit.TestatooJunitRunner;
 import org.triple_brain.mind_map.service.conf.ContainerModule;
+import org.triple_brain.model.User;
 
 import javax.inject.Inject;
+import javax.ws.rs.core.NewCookie;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 /**
  * @author Vincent Blouin
@@ -23,7 +28,7 @@ public abstract class RestTest {
 
     protected WebResource resource;
     protected ClientResponse response;
-
+    protected NewCookie loggedCookie;
 
     @Before
     public void init() throws Exception {
@@ -45,5 +50,11 @@ public abstract class RestTest {
 
     protected Client createClient() {
         return Client.create();
+    }
+
+    protected void log(User user) {
+        response = resource.path("users").path("authenticate").queryParam("email", user.email()).queryParam("password", "password").cookie(loggedCookie).get(ClientResponse.class);
+        assertThat(response.getStatus(), is(200));
+        loggedCookie = response.getCookies().get(0);
     }
 }
