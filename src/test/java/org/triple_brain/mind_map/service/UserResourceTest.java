@@ -40,7 +40,7 @@ public class UserResourceTest extends RestTest {
         response = resource.path("users").path("me").cookie(loggedCookie).get(ClientResponse.class);
         assertThat(response.getStatus(), is(200));
         JSONObject jsonUser = response.getEntity(JSONObject.class);
-        assertThat(jsonUser.getString(EMAIL), is("user@actimenu.ca"));
+        assertThat(jsonUser.getString(EMAIL), is("user@triple_brain.ca"));
     }
 
 }
