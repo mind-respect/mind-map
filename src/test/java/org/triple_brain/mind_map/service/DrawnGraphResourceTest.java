@@ -6,7 +6,6 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
 
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 import static junit.framework.Assert.assertFalse;

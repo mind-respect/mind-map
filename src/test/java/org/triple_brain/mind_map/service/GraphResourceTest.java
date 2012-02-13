@@ -1,19 +1,10 @@
 package org.triple_brain.mind_map.service;
 
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.SimpleSelector;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.sun.jersey.api.client.ClientResponse;
-import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONObject;
-import org.json.XML;
 import org.junit.Before;
 import org.junit.Test;
-import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
-import org.triple_brain.model.json.graph.VertexJSONFields;
-
-import java.util.List;
 
 import static com.hp.hpl.jena.vocabulary.RDFS.label;
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
@@ -25,10 +16,6 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.triple_brain.mind_map.service.SingleUserTempClass.jenaEdgeManipulator;
 import static org.triple_brain.mind_map.service.SingleUserTempClass.jenaGraphManipulator;
 import static org.triple_brain.mind_map.service.SingleUserTempClass.jenaVertexManipulator;
-import static org.triple_brain.model.json.graph.GraphJSONFields.EDGES;
-import static org.triple_brain.model.json.graph.GraphJSONFields.VERTICES;
-import static org.triple_brain.module.graphviz_visualisation.JenaGraphToDrawnGraphConverter.graphVizDrawing;
-import static org.triple_brain.model.json.StatementJSONFields.*;
 
 import static org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator.*;
 import static org.triple_brain.graphmanipulator.jena.graph.JenaVertexManipulator.*;

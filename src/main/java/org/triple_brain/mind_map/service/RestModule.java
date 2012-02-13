@@ -16,6 +16,7 @@ public class RestModule extends AbstractModule {
         bind(GraphResource.class);
         bind(VertexResource.class);
         bind(EdgeResource.class);
+        bind(UserResource.class);
         requireBinding(PropertySettings.class);
     }
 }

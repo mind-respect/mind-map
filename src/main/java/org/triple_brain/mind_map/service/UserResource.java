@@ -14,4 +14,5 @@ public class UserResource {
 
     @Inject
     UserRepository userRepository;
+
 }

@@ -4,14 +4,12 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.sun.jersey.api.client.ClientResponse;
-import com.thoughtworks.selenium.SeleneseTestBase;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.triple_brain.model.json.graph.VertexJSONFields;
 
-import static com.hp.hpl.jena.vocabulary.RDFS.Resource;
 import static com.hp.hpl.jena.vocabulary.RDFS.label;
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 import static junit.framework.Assert.assertFalse;

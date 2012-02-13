@@ -11,7 +11,6 @@ import org.testatoo.config.junit.TestatooJunitRunner;
 import org.triple_brain.mind_map.service.conf.ContainerModule;
 import org.triple_brain.model.User;
 
-import javax.inject.Inject;
 import javax.ws.rs.core.NewCookie;
 
 import static org.hamcrest.MatcherAssert.assertThat;
