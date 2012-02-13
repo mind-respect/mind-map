@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 import org.testatoo.config.annotation.TestatooModules;
 import org.testatoo.config.junit.TestatooJunitRunner;
 import org.triple_brain.mind_map.service.conf.ContainerModule;
-import org.triple_brain.model.User;
+import org.triple_brain.module.model.User;
 
 import javax.ws.rs.core.NewCookie;
 

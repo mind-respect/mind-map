@@ -13,9 +13,9 @@ import javax.ws.rs.core.Response;
 import java.net.URISyntaxException;
 
 import static org.triple_brain.mind_map.service.SingleUserTempClass.jenaVertexManipulator;
-import static org.triple_brain.model.json.StatementJSONFields.OBJECT_ID;
-import static org.triple_brain.model.json.StatementJSONFields.PREDICATE_ID;
-import static org.triple_brain.model.json.StatementJSONFields.SUBJECT_ID;
+import static org.triple_brain.module.model.json.StatementJSONFields.OBJECT_ID;
+import static org.triple_brain.module.model.json.StatementJSONFields.PREDICATE_ID;
+import static org.triple_brain.module.model.json.StatementJSONFields.SUBJECT_ID;
 
 /**
  * @author Vincent Blouin

@@ -3,7 +3,7 @@ package org.triple_brain.mind_map.service;
 import com.sun.jersey.api.client.ClientResponse;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.*;
-import org.triple_brain.model.User;
+import org.triple_brain.module.model.User;
 import org.triple_brain.module.repository.user.user.UserRepository;
 
 import javax.inject.Inject;
@@ -11,7 +11,7 @@ import javax.ws.rs.core.Cookie;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.triple_brain.model.json.UserJSONFields.*;
+import static org.triple_brain.module.model.json.UserJSONFields.*;
 
 /**
  * @author Vincent Blouin

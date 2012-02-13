@@ -15,7 +15,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.triple_brain.mind_map.service.SingleUserTempClass.jenaGraphManipulator;
 import static org.triple_brain.mind_map.service.SingleUserTempClass.jenaVertexManipulator;
-import static org.triple_brain.model.json.graph.GraphJSONFields.EDGES;
+import static org.triple_brain.module.model.json.graph.GraphJSONFields.EDGES;
 import static org.triple_brain.module.graphviz_visualisation.JenaGraphToDrawnGraphConverter.graphVizDrawing;
 
 /**

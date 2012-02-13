@@ -11,8 +11,8 @@ import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 import static junit.framework.Assert.assertFalse;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.is;
-import static org.triple_brain.model.json.drawn_graph.DrawnGraphJSONFields.*;
-import static org.triple_brain.model.json.drawn_graph.DrawnVertexJSONFields.*;
+import static org.triple_brain.module.model.json.drawn_graph.DrawnGraphJSONFields.*;
+import static org.triple_brain.module.model.json.drawn_graph.DrawnVertexJSONFields.*;
 import static org.triple_brain.mind_map.service.SingleUserTempClass.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;

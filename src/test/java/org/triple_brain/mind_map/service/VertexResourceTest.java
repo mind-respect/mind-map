@@ -8,7 +8,7 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-import org.triple_brain.model.json.graph.VertexJSONFields;
+import org.triple_brain.module.model.json.graph.VertexJSONFields;
 
 import static com.hp.hpl.jena.vocabulary.RDFS.label;
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
@@ -21,11 +21,11 @@ import static org.triple_brain.graphmanipulator.jena.graph.JenaVertexManipulator
 import static org.triple_brain.mind_map.service.SingleUserTempClass.jenaEdgeManipulator;
 import static org.triple_brain.mind_map.service.SingleUserTempClass.jenaGraphManipulator;
 import static org.triple_brain.mind_map.service.SingleUserTempClass.jenaVertexManipulator;
-import static org.triple_brain.model.json.StatementJSONFields.OBJECT_ID;
-import static org.triple_brain.model.json.StatementJSONFields.PREDICATE_ID;
-import static org.triple_brain.model.json.StatementJSONFields.SUBJECT_ID;
-import static org.triple_brain.model.json.graph.GraphJSONFields.EDGES;
-import static org.triple_brain.model.json.graph.GraphJSONFields.VERTICES;
+import static org.triple_brain.module.model.json.StatementJSONFields.OBJECT_ID;
+import static org.triple_brain.module.model.json.StatementJSONFields.PREDICATE_ID;
+import static org.triple_brain.module.model.json.StatementJSONFields.SUBJECT_ID;
+import static org.triple_brain.module.model.json.graph.GraphJSONFields.EDGES;
+import static org.triple_brain.module.model.json.graph.GraphJSONFields.VERTICES;
 import static org.triple_brain.module.graphviz_visualisation.JenaGraphToDrawnGraphConverter.graphVizDrawing;
 import static com.hp.hpl.jena.vocabulary.RDF.*;
 
