@@ -17,9 +17,6 @@
 
     <name>triple_brain :: Webapp :: Mind Map</name>
     <description>${project.artifactId}</description>
-    <properties>
-            <jersey.test.containerFactory>com.sun.jersey.test.framework.spi.container.grizzly.GrizzlyTestContainerFactory</jersey.test.containerFactory>
-    </properties>
     <build>
         <plugins>
             <plugin>
@@ -72,11 +69,6 @@
 
         <!-- Ovea -->
         <dependency>
-            <groupId>com.ovea</groupId>
-            <artifactId>ovea-dynamic-markup</artifactId>
-            <version>1.8.ga</version>
-        </dependency>
-        <dependency>
             <groupId>com.ovea.tadjin.module</groupId>
             <artifactId>tadjin-security-client</artifactId>
             <version>1.7.ga</version>
@@ -91,17 +83,13 @@
             <artifactId>tadjin-util</artifactId>
             <version>1.12.ga</version>
         </dependency>
+
+
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.7.3</version>
         </dependency>
-        <dependency>
-            <groupId>com.ovea</groupId>
-            <artifactId>ovea-i18n</artifactId>
-            <version>1.8.ga</version>
-        </dependency>
-
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -216,7 +204,6 @@
         </dependency>
 
         <!-- Testing -->
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit-dep</artifactId>
@@ -313,18 +300,6 @@
             </exclusions>
             <scope>test</scope>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>com.sun.grizzly</groupId>-->
-            <!--<artifactId>grizzly-servlet-webserver</artifactId>-->
-            <!--<version>1.9.18-i</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>com.sun.jersey.jersey-test-framework</groupId>-->
-            <!--<artifactId>jersey-test-framework-grizzly</artifactId>-->
-            <!--<version>1.8</version>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
-
     </dependencies>
 </project>
 
