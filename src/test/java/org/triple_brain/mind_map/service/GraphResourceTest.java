@@ -4,6 +4,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.sun.jersey.api.client.ClientResponse;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static com.hp.hpl.jena.vocabulary.RDFS.label;
@@ -23,6 +24,7 @@ import static org.triple_brain.graphmanipulator.jena.graph.JenaEdgeManipulator.*
 /**
  * @author Vincent Blouin
  */
+
 public class GraphResourceTest extends RestTest {
 
     private final Integer DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES = 10;

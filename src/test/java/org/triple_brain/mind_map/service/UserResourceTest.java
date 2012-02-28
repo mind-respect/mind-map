@@ -16,6 +16,7 @@ import static org.triple_brain.module.model.json.UserJSONFields.*;
 /**
  * @author Vincent Blouin
  */
+
 public class UserResourceTest extends RestTest {
 
     @Inject
@@ -27,7 +28,7 @@ public class UserResourceTest extends RestTest {
     public void setUp() {
         user = User.withEmail("user@triplebrain.org").password("password");
         userRepository.save(user);
-        log(user);
+        //log(user);
     }
 
     @Test
@@ -40,7 +41,7 @@ public class UserResourceTest extends RestTest {
         response = resource.path("users").path("me").cookie(loggedCookie).get(ClientResponse.class);
         assertThat(response.getStatus(), is(200));
         JSONObject jsonUser = response.getEntity(JSONObject.class);
-        assertThat(jsonUser.getString(EMAIL), is("user@triple_brain.ca"));
+        assertThat(jsonUser.getString(EMAIL), is("user@triplebrain.org"));
     }
 
 }

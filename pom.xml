@@ -17,7 +17,9 @@
 
     <name>triple_brain :: Webapp :: Mind Map</name>
     <description>${project.artifactId}</description>
-
+    <properties>
+            <jersey.test.containerFactory>com.sun.jersey.test.framework.spi.container.grizzly.GrizzlyTestContainerFactory</jersey.test.containerFactory>
+    </properties>
     <build>
         <plugins>
             <plugin>
@@ -35,7 +37,13 @@
         </plugins>
     </build>
 
+
     <dependencies>
+        <dependency>
+            <groupId>org.triple_brain.module</groupId>
+            <artifactId>triple_brain-repository-sql</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
 
          <dependency>
             <groupId>org.triple_brain.module</groupId>
@@ -56,12 +64,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.triple_brain.module</groupId>
-            <artifactId>triple_brain-repository</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
@@ -76,13 +78,18 @@
         </dependency>
         <dependency>
             <groupId>com.ovea.tadjin.module</groupId>
+            <artifactId>tadjin-security-client</artifactId>
+            <version>1.7.ga</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ovea.tadjin.module</groupId>
             <artifactId>tadjin-plugin</artifactId>
             <version>1.12.ga</version>
         </dependency>
         <dependency>
             <groupId>com.ovea.tadjin.module</groupId>
-            <artifactId>tadjin-security-client</artifactId>
-            <version>1.7.ga</version>
+            <artifactId>tadjin-util</artifactId>
+            <version>1.12.ga</version>
         </dependency>
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
@@ -93,11 +100,6 @@
             <groupId>com.ovea</groupId>
             <artifactId>ovea-i18n</artifactId>
             <version>1.8.ga</version>
-        </dependency>
-        <dependency>
-            <groupId>com.ovea.tadjin.module</groupId>
-            <artifactId>tadjin-util</artifactId>
-            <version>1.12.ga</version>
         </dependency>
 
         <dependency>
@@ -161,6 +163,25 @@
             <version>1.1.1</version>
         </dependency>
 
+        <!-- JMS -->
+        <dependency>
+            <groupId>com.mycila</groupId>
+            <artifactId>mycila-jms</artifactId>
+            <version>1.0.ga</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.geronimo.specs</groupId>
+                    <artifactId>geronimo-jms_1.1_spec</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-jms_1.1_spec</artifactId>
+            <version>1.1.1</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Logging -->
         <dependency>
             <groupId>log4j</groupId>
@@ -217,19 +238,19 @@
         <dependency>
             <groupId>org.testatoo</groupId>
             <artifactId>testatoo-config</artifactId>
-            <version>1.0-rc2-SNAPSHOT</version>
+            <version>1.0-rc2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testatoo</groupId>
             <artifactId>testatoo-selenium</artifactId>
-            <version>1.0-rc2-SNAPSHOT</version>
+            <version>1.0-rc4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testatoo.cartridge</groupId>
             <artifactId>testatoo-html4</artifactId>
-            <version>1.0-rc2-SNAPSHOT</version>
+            <version>1.0-rc3</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -238,6 +259,72 @@
             <version>1.8</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.sun.jersey.contribs</groupId>
+            <artifactId>jersey-apache-client</artifactId>
+            <version>1.9.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-core</artifactId>
+            <version>5.5.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.activemq</groupId>
+                    <artifactId>kahadb</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.activemq.protobuf</groupId>
+                    <artifactId>activemq-protobuf</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.osgi</groupId>
+                    <artifactId>spring-osgi-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-net</groupId>
+                    <artifactId>commons-net</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.osgi</groupId>
+                    <artifactId>org.osgi.core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.activemq</groupId>
+                    <artifactId>activeio-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.geronimo.specs</groupId>
+                    <artifactId>geronimo-j2ee-management_1.0_spec</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.geronimo.specs</groupId>
+                    <artifactId>geronimo-jms_1.1_spec</artifactId>
+                </exclusion>
+            </exclusions>
+            <scope>test</scope>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.sun.grizzly</groupId>-->
+            <!--<artifactId>grizzly-servlet-webserver</artifactId>-->
+            <!--<version>1.9.18-i</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.sun.jersey.jersey-test-framework</groupId>-->
+            <!--<artifactId>jersey-test-framework-grizzly</artifactId>-->
+            <!--<version>1.8</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+
     </dependencies>
 </project>
 

@@ -20,6 +20,7 @@
                 <Put name="application.name">TripleBrainMindMapWebapp</Put>
                 <Put name="ws.app">http://localhost:8080</Put>
                 <Put name="ws.resource">http://localhost:8080/static</Put>
+                <Put name="security.key">user_key</Put>
             </New>
         </Arg>
     </New>

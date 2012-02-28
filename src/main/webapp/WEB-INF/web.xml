@@ -5,6 +5,24 @@
 
     <display-name>triple_brain Mind Map Web Application</display-name>
 
+
+    <servlet>
+        <servlet-name>Jersey REST Service</servlet-name>
+        <servlet-class>
+            com.sun.jersey.spi.container.servlet.ServletContainer
+        </servlet-class>
+        <init-param>
+            <param-name>com.sun.jersey.config.property.packages</param-name>
+            <param-value>org.triple_brain.mind_map.service.resources</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Jersey REST Service</servlet-name>
+        <url-pattern>/service/*</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>mind-map.html</welcome-file>
     </welcome-file-list>
@@ -21,6 +39,10 @@
         <listener-class>com.ovea.tadjin.util.guice.CommonGuiceConfig</listener-class>
     </listener>
 
+    <listener>
+        <listener-class>org.triple_brain.mind_map.service.conf.MyGuiceConfig</listener-class>
+    </listener>
+
     <filter>
         <filter-name>Guice Filter</filter-name>
         <filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
@@ -29,6 +51,15 @@
         <filter-name>Guice Filter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <!--<filter>-->
+        <!--<filter-name>Guice Filter</filter-name>-->
+        <!--<filter-class>com.google.inject.servlet.GuiceFilter</filter-class>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>Guice Filter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
 
     <resource-env-ref>
         <resource-env-ref-name>settings/application</resource-env-ref-name>
@@ -39,4 +70,17 @@
         <resource-env-ref-name>settings/global</resource-env-ref-name>
         <resource-env-ref-type>java.util.Properties</resource-env-ref-type>
     </resource-env-ref>
+
+    <resource-ref>
+        <res-ref-name>jdbc/triple_brainDB</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
+
+    <resource-ref>
+        <res-ref-name>jms/triple_brain</res-ref-name>
+        <res-type>javax.jms.ConnectionFactory</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
+
 </web-app>

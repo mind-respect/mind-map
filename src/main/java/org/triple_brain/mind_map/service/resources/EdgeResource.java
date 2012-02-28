@@ -1,9 +1,8 @@
-package org.triple_brain.mind_map.service;
+package org.triple_brain.mind_map.service.resources;
 
 import com.hp.hpl.jena.rdf.model.Statement;
 import org.codehaus.jettison.json.JSONException;
 
-import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -19,7 +18,6 @@ import static org.triple_brain.mind_map.service.SingleUserTempClass.jenaEdgeMani
  */
 @Path("/edge")
 @Produces(MediaType.APPLICATION_JSON)
-@Singleton
 public class EdgeResource {
 
     @POST

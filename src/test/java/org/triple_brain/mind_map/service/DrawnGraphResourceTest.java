@@ -5,6 +5,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
@@ -24,6 +25,7 @@ import static org.triple_brain.graphmanipulator.jena.graph.JenaEdgeManipulator.*
 /**
  * @author Vincent Blouin
  */
+
 public class DrawnGraphResourceTest extends RestTest {
 
     @Before

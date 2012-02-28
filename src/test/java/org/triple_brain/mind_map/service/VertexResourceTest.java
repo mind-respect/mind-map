@@ -7,6 +7,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.triple_brain.module.model.json.graph.VertexJSONFields;
 
@@ -32,6 +33,7 @@ import static com.hp.hpl.jena.vocabulary.RDF.*;
 /**
  * @author Vincent Blouin
  */
+
 public class VertexResourceTest extends RestTest{
 
     private final Integer DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES = 10;

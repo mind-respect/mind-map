@@ -2,6 +2,7 @@ package org.triple_brain.mind_map.service;
 
 import com.google.inject.AbstractModule;
 import com.ovea.tadjin.util.properties.PropertySettings;
+import org.triple_brain.mind_map.service.resources.*;
 
 import java.util.logging.Logger;
 

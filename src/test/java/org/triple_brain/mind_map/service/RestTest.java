@@ -1,59 +1,96 @@
 package org.triple_brain.mind_map.service;
-
+import com.google.inject.Binder;
+import com.google.inject.Module;
+import com.google.inject.Stage;
+import com.google.inject.util.Modules;
+import com.mycila.inject.jsr250.Jsr250;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.runner.RunWith;
-import org.testatoo.config.annotation.TestatooModules;
-import org.testatoo.config.junit.TestatooJunitRunner;
-import org.triple_brain.mind_map.service.conf.ContainerModule;
-import org.triple_brain.module.model.User;
+import org.junit.BeforeClass;
+import org.triple_brain.mind_map.Launcher;
+import org.triple_brain.module.repository.user.user.UserRepository;
+import org.triple_brain.module.repository_sql.SQLModule;
+import org.triple_brain.module.repository_sql.SQLUserRepository;
 
-import javax.ws.rs.core.NewCookie;
+import java.net.URI;
+import java.sql.SQLException;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.triple_brain.module.repository_sql.SQLConnection.closeConnection;
+import static org.triple_brain.module.repository_sql.SQLConnection.preparedStatement;
+
 
 /**
  * @author Vincent Blouin
  */
-@RunWith(TestatooJunitRunner.class)
-@TestatooModules(ContainerModule.class)
-public abstract class RestTest {
+public abstract class RestTest implements Module {
 
-    protected static String BASE_URL = "http://localhost:" +  System.getProperty("port") + "/service";
+   protected static URI BASE_URI;
+   protected WebResource resource;
+   protected ClientResponse response;
+   static private Launcher launcher;
+   static private Client client;
 
-    protected WebResource resource;
-    protected ClientResponse response;
-    protected NewCookie loggedCookie;
+    @BeforeClass
+    static public void startServer() throws Exception {
+        BASE_URI = new URI("http://localhost:8080/service");
+        
+        launcher = new Launcher();
+        launcher.launch();
+
+        DefaultApacheHttpClientConfig clientConfig = new DefaultApacheHttpClientConfig();
+        clientConfig.getProperties().put("com.sun.jersey.impl.client.httpclient.handleCookies", true);
+        client = Client.create(clientConfig);
+        cleanTables();
+    }
+
+    @AfterClass
+    static public void stopServer() throws Exception {
+        launcher.stop();
+    }
 
     @Before
-    public void init() throws Exception {
-        resource = createClient().resource(BASE_URL);
+    public void before_rest_test()throws SQLException{
+        Jsr250.createInjector(Stage.PRODUCTION, Modules.override(new SQLModule()).with(this)).injectMembers(this);
+        resource = client.resource(BASE_URI);
     }
 
     @After
-    public void showServerError() {
-        if (response != null) {
-            try {
-                if (response.getStatus() != 200)
-                    System.err.println(response.getEntity(String.class));
-            } catch (Exception ignored) {
-                // simply ignore exceptions here - no output
-            }
-            response.close();
-        }
+    public void after_rest_test()throws SQLException{
+        closeConnection();
     }
 
-    protected Client createClient() {
-        return Client.create();
+    static protected void cleanTables()throws SQLException {
+        String query = "DROP TABLE IF EXISTS por_user;";
+        preparedStatement(query).executeUpdate();
+        createTables();
     }
 
-    protected void log(User user) {
-        response = resource.path("users").path("authenticate").queryParam("email", user.email()).queryParam("password", "password").cookie(loggedCookie).get(ClientResponse.class);
-        assertThat(response.getStatus(), is(200));
-        loggedCookie = response.getCookies().get(0);
+    static protected void createTables() throws SQLException{
+        String query = "CREATE TABLE por_user (\n" +
+                "    id           BIGINT    PRIMARY KEY AUTO_INCREMENT,\n" +
+                "    creationTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,\n" +
+                "    updateTime   TIMESTAMP NOT NULL,\n" +
+                "\n" +
+                "    uuid   VARCHAR(36)   UNIQUE NOT NULL,\n" +
+                "    email  VARCHAR(50)   UNIQUE NOT NULL,\n" +
+                "    locale VARCHAR(10)   NOT NULL DEFAULT 'en_US',\n" +
+                "\n" +
+                "    salt                 VARCHAR(36),\n" +
+                "    passwordHash         VARCHAR(100),\n" +
+                "    firstname            VARCHAR(50),\n" +
+                "    lastname             VARCHAR(50)\n" +
+                ");";
+        preparedStatement(query).executeUpdate();
     }
+
+    @Override
+    public final void configure(Binder binder) {
+        binder.bind(UserRepository.class).to(SQLUserRepository.class);
+    }
+
 }

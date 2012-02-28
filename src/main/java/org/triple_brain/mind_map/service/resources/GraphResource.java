@@ -1,4 +1,4 @@
-package org.triple_brain.mind_map.service;
+package org.triple_brain.mind_map.service.resources;
 
 import javax.inject.Singleton;
 import javax.ws.rs.*;

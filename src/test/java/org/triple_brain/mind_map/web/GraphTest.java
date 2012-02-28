@@ -35,6 +35,7 @@ import static org.triple_brain.mind_map.web.component.edge.Edges.*;
 /**
  * @author Vincent Blouin
  */
+@Ignore
 public class GraphTest extends WebTest{
 
 

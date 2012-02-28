@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
+
+<Configure id="webappContext" class="org.eclipse.jetty.webapp.WebAppContext">
+
+    <Set name="contextPath">/services</Set>
+
+    <Set name="securityHandler">
+        <New class="org.eclipse.jetty.security.ConstraintSecurityHandler">
+            <Set name="loginService">
+                <New class="org.eclipse.jetty.plus.jaas.JAASLoginService">
+                    <Set name="name">Hello</Set>
+                    <Set name="loginModuleName">props</Set>
+                </New>
+            </Set>
+            <!--         <Set name="authenticatorFactory">
+
+                <New class="org.triple_brain.services.auth.SessionAuthenticatorFactory" />
+
+            </Set>-->
+        </New>
+    </Set>
+</Configure>

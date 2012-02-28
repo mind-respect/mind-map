@@ -1,4 +1,4 @@
-package org.triple_brain.mind_map.service;
+package org.triple_brain.mind_map.service.resources;
 
 import com.hp.hpl.jena.rdf.model.Statement;
 import org.codehaus.jettison.json.JSONException;
