@@ -1,6 +1,5 @@
 package org.triple_brain.mind_map.service.resources;
 
-import com.ovea.tadjin.module.security.client.AuthManager;
 import com.ovea.tadjin.util.rest.JSONMessages;
 import org.codehaus.jettison.json.JSONObject;
 import org.triple_brain.module.model.User;
@@ -16,7 +15,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
-import java.util.Locale;
 import java.util.Map;
 
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
@@ -31,21 +29,9 @@ import static org.triple_brain.module.model.validator.UserValidator.validate;
 @Produces(MediaType.APPLICATION_JSON)
 @Singleton
 public class UserResource {
-    @Inject
-    AuthManager authManager;
 
     @Inject
     UserRepository userRepository;
-
-    @GET
-    @Path("/me")
-    public Response me() throws Exception {
-        try {
-            return Response.ok(findById(authManager.getCurrentUserId())).build();
-        } catch (Exception e) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }
-    }
 
     @GET
     @Path("/{id}")
@@ -59,7 +45,6 @@ public class UserResource {
         try {
             User user = userRepository.findByEmail(email);
             if (user.hasPassword(password)) {
-                authManager.login(user.id());
                 return Response.ok().build();
             }
         } catch (NonExistingUserException e) {

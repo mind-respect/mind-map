@@ -20,13 +20,10 @@
         <Arg>settings/global</Arg>
         <Arg>
             <New class="java.util.Properties">
-                <Put name="client.security.redirect">http://<SystemProperty name="host" default="localhost"/>:<SystemProperty name="port" default="8080"/>/login.html</Put>
-                <Put name="client.security.excludes">/,/login\.html.*,/css/.*,/js/.*,/desktop/security/login\.html.*,/mobile/security/login\.html.*,/service/users/authenticate.*,/.*</Put>
                 <Put name="ws.resource">http://<SystemProperty name="host" default="localhost"/>:<SystemProperty name="port" default="8080"/>/res</Put>
                 <Put name="ws.app">http://<SystemProperty name="host" default="localhost"/>:<SystemProperty name="port" default="8080"/></Put>
                 <Put name="ws.resource.version">1</Put>
                 <Put name="cookie.domain"><SystemProperty name="host" default="localhost"/></Put>
-                <Put name="security.key">user_key</Put>
                 <Put name="caching.system">memory</Put>
             </New>
         </Arg>

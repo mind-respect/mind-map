@@ -6,23 +6,6 @@
     <display-name>triple_brain Mind Map Web Application</display-name>
 
 
-    <servlet>
-        <servlet-name>Jersey REST Service</servlet-name>
-        <servlet-class>
-            com.sun.jersey.spi.container.servlet.ServletContainer
-        </servlet-class>
-        <init-param>
-            <param-name>com.sun.jersey.config.property.packages</param-name>
-            <param-value>org.triple_brain.mind_map.service.resources</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>Jersey REST Service</servlet-name>
-        <url-pattern>/service/*</url-pattern>
-    </servlet-mapping>
-
     <welcome-file-list>
         <welcome-file>mind-map.html</welcome-file>
     </welcome-file-list>
@@ -32,21 +15,14 @@
     </session-config>
 
     <listener>
-        <listener-class>com.mycila.jdk.logging.ContextualLogManagerWebappListener</listener-class>
-    </listener>
-
-    <listener>
-        <listener-class>com.ovea.tadjin.util.guice.CommonGuiceConfig</listener-class>
-    </listener>
-
-    <listener>
-        <listener-class>org.triple_brain.mind_map.service.conf.MyGuiceConfig</listener-class>
+        <listener-class>org.triple_brain.mind_map.service.conf.GuiceConfig</listener-class>
     </listener>
 
     <filter>
         <filter-name>Guice Filter</filter-name>
         <filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
     </filter>
+
     <filter-mapping>
         <filter-name>Guice Filter</filter-name>
         <url-pattern>/*</url-pattern>
