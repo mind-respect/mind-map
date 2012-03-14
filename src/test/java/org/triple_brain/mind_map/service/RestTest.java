@@ -1,4 +1,5 @@
-package org.triple_brain.mind_map.service;
+    package org.triple_brain.mind_map.service;
+
 import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.google.inject.Stage;
@@ -13,13 +14,18 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.triple_brain.mind_map.Launcher;
+import org.triple_brain.module.model.User;
 import org.triple_brain.module.repository.user.user.UserRepository;
 import org.triple_brain.module.repository_sql.SQLModule;
 import org.triple_brain.module.repository_sql.SQLUserRepository;
 
+import javax.inject.Inject;
+import javax.ws.rs.core.NewCookie;
 import java.net.URI;
 import java.sql.SQLException;
 
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 import static org.triple_brain.module.repository_sql.SQLConnection.closeConnection;
 import static org.triple_brain.module.repository_sql.SQLConnection.preparedStatement;
 
@@ -34,6 +40,11 @@ public abstract class RestTest implements Module {
    protected ClientResponse response;
    static private Launcher launcher;
    static private Client client;
+   protected NewCookie authCookie;
+
+    @Inject
+    UserRepository userRepository;
+
 
     @BeforeClass
     static public void startServer() throws Exception {
@@ -56,6 +67,7 @@ public abstract class RestTest implements Module {
     @Before
     public void before_rest_test()throws SQLException{
         Jsr250.createInjector(Stage.PRODUCTION, Modules.override(new SQLModule()).with(this)).injectMembers(this);
+        cleanTables();
         resource = client.resource(BASE_URI);
     }
 
@@ -91,6 +103,24 @@ public abstract class RestTest implements Module {
     @Override
     public final void configure(Binder binder) {
         binder.bind(UserRepository.class).to(SQLUserRepository.class);
+    }
+
+    protected void authenticate(){
+        authenticate(
+                createAUser()
+        );
+    }
+
+    protected User createAUser(){
+        User user = User.withEmail("user@triplebrain.org").password("password");
+        userRepository.save(user);
+        return user;
+    }
+
+    protected void authenticate(User user) {
+        response = resource.path("users").path("authenticate").queryParam("email", user.email()).queryParam("password", "password").cookie(authCookie).get(ClientResponse.class);
+        assertThat(response.getStatus(), is(200));
+        authCookie = response.getCookies().get(0);
     }
 
 }

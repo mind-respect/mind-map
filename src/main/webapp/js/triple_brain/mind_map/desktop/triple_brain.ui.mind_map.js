@@ -35,6 +35,7 @@ if (triple_brain.ui.mind_map == undefined) {
         });
 
         triple_brain.bus.local.topic('/event/ui/view/beforeshow/mind_map').subscribe(function (page) {
+            handleIfNotAuthentifiedRedirectToAuthPage();
             var sliderDefaultValue = 1;
             $("#sub-vertices-depth-index").val(sliderDefaultValue);
             $("#sub-vertices-depth-slider").slider({
@@ -89,6 +90,12 @@ if (triple_brain.ui.mind_map == undefined) {
 
             triple_brain.bus.local.topic('/event/ui/graph/drawn').publish();
         });
-
+        function handleIfNotAuthentifiedRedirectToAuthPage(){
+            $("html").ajaxError(function (e, jqxhr, settings, exception){
+                if(jqxhr.status == 403){
+                    window.location = "login.html";
+                }
+            });
+        }
     })(jQuery);
 }

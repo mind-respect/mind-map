@@ -1,4 +1,4 @@
-require("Logger", "triple_brain.ui", "options.ws.app");
+require("Logger", "triple_brain.ui");
 
 if (triple_brain.ui.login == undefined) {
     (function($) {

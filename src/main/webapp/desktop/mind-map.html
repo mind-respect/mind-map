@@ -1,14 +1,6 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="text/javascript">
-        options = {
-        ws: {
-            app: 'http://localhost:8080',
-        },
-        bundleName: 'graph-webapp'
-        };
-    </script>
 
     <link rel="stylesheet" href="../../css/ui-lightness/jquery-ui-1.8.16.custom.css"/>
     <link rel="stylesheet" href="../../css/freebase/suggest.min.css"/>
@@ -20,12 +12,9 @@
     <!--Date picker module-->
     <link rel="stylesheet" href="../../module/mind_map/date_picker/desktop/jsdatepick-calendar/jsDatePick_rtl.css"/>
 
-    <!--<script src="@{props.getString('ws.resource')}/js/lib.js?v=@{props.getString('ws.resource.version')}"></script>-->
-
     <!-- Libs -->
-
+    <script src="../../js/triple_brain/triple_brain.config.js"></script>
     <script src="../../js/jquery/jquery-1.7.min.js"></script>
-    <!--<code>window.SESSION_COOKIE_NAME = 'ID';</code>-->
     <script src="../../js/jquery/plugins/jquery.xdomain.js"></script>
     <script src="../../js/jquery/jquery.json-2.2.min.js"></script>
     <script src="../../js/jquery/jquery.nano.js"></script>
@@ -42,7 +31,6 @@
     <script src="../../js/jquery/jquery.mobile-1.0b2.js"></script>
     <script src="../../js/ovea/jqm/contrib/jqm-contribs-1.0.js"></script>
 
-    <!--<script src="@{props.getString('ws.resource')}/js/graph-webapp.js?v=@{props.getString('ws.resource.version')}"></script>-->
 
     <script src="../../js/jquery/jquery-ui-1.8.16.custom.min.js"></script>
     <script src="../../js/jquery/jquery.overscroll.js"></script>
@@ -102,12 +90,6 @@
     <script src="../../module/mind_map/date_picker/desktop/jsdatepick-calendar/jsDatePick.full.1.3.js"></script>
     <script src="../../module/mind_map/date_picker/desktop/triple_brain.module.date_picker.js"></script>
 
-
-    <script>
-        @if{com.ovea.tadjin.util.Application.DEBUG}
-        Log.level = Log.DEBUG;
-        @end{}
-    </script>
 </head>
 <body>
 

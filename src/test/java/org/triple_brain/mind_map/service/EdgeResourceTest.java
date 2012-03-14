@@ -3,12 +3,14 @@ package org.triple_brain.mind_map.service;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.SimpleSelector;
 import com.hp.hpl.jena.rdf.model.Statement;
-import static com.hp.hpl.jena.vocabulary.RDFS.label;
 import com.sun.jersey.api.client.ClientResponse;
 import org.codehaus.jettison.json.JSONObject;
+import org.junit.Before;
 import org.junit.Test;
+
 import java.util.List;
 
+import static com.hp.hpl.jena.vocabulary.RDFS.label;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertFalse;
@@ -24,6 +26,11 @@ public class EdgeResourceTest extends RestTest {
 
     private final Integer DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES = 10;
 
+    @Before
+    public void before(){
+        authenticate();
+    }
+
     @Test
     public void can_add_a_relation() throws Exception {
         Statement statement = jenaVertexManipulator.addVertexAndRelation(jenaGraphManipulator.defaultUser().absoluteCentralVertex().getLocalName());
@@ -38,7 +45,7 @@ public class EdgeResourceTest extends RestTest {
         com.hp.hpl.jena.rdf.model.Resource rogerLamotheAsResource = jenaGraph.getResource(jenaGraphManipulator.defaultUser().absoluteCentralVertex().getURI());
         List<Statement> statementsWithThirdVertexAsSubjectAndRogerLamotheAsObject = jenaGraph.listStatements(new SimpleSelector(statement.getObject().asResource(), null, rogerLamotheAsResource)).toList();
         assertThat(statementsWithThirdVertexAsSubjectAndRogerLamotheAsObject.size(), is(0));
-        response = resource.path("edge").path(thirdVertexId).path(rogerLamotheAsResource.getLocalName()).post(ClientResponse.class);
+        response = resource.path("edge").path(thirdVertexId).path(rogerLamotheAsResource.getLocalName()).cookie(authCookie).post(ClientResponse.class);
         assertThat(response.getStatus(), is(201));
         jenaGraph = jenaGraphManipulator.graphWithDefaultVertexAndDepth(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES);
         rogerLamotheAsResource = jenaGraph.getResource(jenaGraphManipulator.defaultUser().absoluteCentralVertex().getURI());
@@ -60,7 +67,7 @@ public class EdgeResourceTest extends RestTest {
 
         JSONObject drawnGraph = graphVizDrawing(jenaGraphManipulator.graphWithDefaultVertexAndDepth(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES));
         Integer numberOfEdges = drawnGraph.getJSONArray(EDGES).length();
-        response = resource.path("edge").path(edge.getLocalName()).delete(ClientResponse.class);
+        response = resource.path("edge").path(edge.getLocalName()).cookie(authCookie).delete(ClientResponse.class);
         assertThat(response.getStatus(), is(200));
 
         JSONObject updatedDrawnGraph = graphVizDrawing(jenaGraphManipulator.graphWithDefaultVertexAndDepth(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES));
@@ -78,7 +85,7 @@ public class EdgeResourceTest extends RestTest {
         String addedEdgeLabel = statement.getPredicate().asResource().getProperty(label).getString();
         assertThat(addedEdgeLabel, is(""));
 
-        response = resource.path("edge/label/").path(addedEdgeID).queryParam("label", "likes").post(ClientResponse.class);
+        response = resource.path("edge/label/").path(addedEdgeID).queryParam("label", "likes").cookie(authCookie).post(ClientResponse.class);
         Model jenaGraph = jenaGraphManipulator.graphWithDefaultVertexAndDepth(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES);
         com.hp.hpl.jena.rdf.model.Resource edgeAsResource = jenaGraph.getResource(statement.getPredicate().getURI());
         String updatedEdgeLabel = edgeAsResource.getProperty(label).getString();

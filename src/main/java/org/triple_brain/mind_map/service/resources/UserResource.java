@@ -7,6 +7,7 @@ import org.triple_brain.module.model.validator.Validators;
 import org.triple_brain.module.repository.user.user.NonExistingUserException;
 import org.triple_brain.module.repository.user.user.UserRepository;
 
+import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
@@ -20,12 +21,13 @@ import java.util.Map;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static org.triple_brain.module.model.json.UserJSONFields.*;
 import static org.triple_brain.module.model.validator.UserValidator.validate;
-
+import static org.triple_brain.mind_map.service.SecurityInterceptor.*;
 /**
  * @author Vincent Blouin
  */
 
 @Path("/users")
+@PermitAll
 @Produces(MediaType.APPLICATION_JSON)
 @Singleton
 public class UserResource {
@@ -34,17 +36,12 @@ public class UserResource {
     UserRepository userRepository;
 
     @GET
-    @Path("/{id}")
-    public JSONObject findById(@PathParam("id") String id) throws Exception {
-        return userRepository.findByIdAsJson(id);
-    }
-
-    @GET
     @Path("/authenticate")
-    public Response authenticate(@QueryParam("email") String email, @QueryParam("password") String password) {
+    public Response authenticate(@QueryParam("email") String email, @QueryParam("password") String password, @Context HttpServletRequest request) {
         try {
             User user = userRepository.findByEmail(email);
             if (user.hasPassword(password)) {
+                request.getSession().setAttribute(AUTHENTICATION_ATTRIBUTE_KEY, true);
                 return Response.ok().build();
             }
         } catch (NonExistingUserException e) {

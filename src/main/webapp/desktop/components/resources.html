@@ -4,15 +4,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript">
     options = {
-        ws: {app: '@{props.getString("ws.app")}',
+        ws: {
+            app: '@{props.getString("ws.app")}',
             resource: '@{props.getString("ws.resource")}'
         },
         locale: '@{request.locale}',
         bundleName: 'graph-webapp'
     };
-    @if{com.ovea.tadjin.util.Application.DEBUG}
-    options.debug = true;
-    @end{}
 </script>
 
 <link rel="stylesheet" href="../../css/ui-lightness/jquery-ui-1.8.16.custom.css"/>

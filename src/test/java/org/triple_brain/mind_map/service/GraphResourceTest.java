@@ -4,23 +4,15 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.sun.jersey.api.client.ClientResponse;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static com.hp.hpl.jena.vocabulary.RDFS.label;
-import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
-import static junit.framework.Assert.assertFalse;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
-import static org.triple_brain.mind_map.service.SingleUserTempClass.jenaEdgeManipulator;
-import static org.triple_brain.mind_map.service.SingleUserTempClass.jenaGraphManipulator;
-import static org.triple_brain.mind_map.service.SingleUserTempClass.jenaVertexManipulator;
-
-import static org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator.*;
-import static org.triple_brain.graphmanipulator.jena.graph.JenaVertexManipulator.*;
-import static org.triple_brain.graphmanipulator.jena.graph.JenaEdgeManipulator.*;
+import static org.hamcrest.Matchers.*;
+import static org.triple_brain.graphmanipulator.jena.graph.JenaEdgeManipulator.jenaEdgeManipulatorWithJenaGraphManipulator;
+import static org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator.jenaGraphManipulatorWithDefaultUser;
+import static org.triple_brain.graphmanipulator.jena.graph.JenaVertexManipulator.jenaVertexManipulatorWithJenaGraphManipulator;
+import static org.triple_brain.mind_map.service.SingleUserTempClass.*;
 /**
  * @author Vincent Blouin
  */
@@ -31,6 +23,7 @@ public class GraphResourceTest extends RestTest {
 
     @Before
     public void before() {
+        authenticate();
         jenaGraphManipulator = jenaGraphManipulatorWithDefaultUser();
         jenaVertexManipulator = jenaVertexManipulatorWithJenaGraphManipulator(jenaGraphManipulator);
         jenaEdgeManipulator = jenaEdgeManipulatorWithJenaGraphManipulator(jenaGraphManipulator);
@@ -38,7 +31,7 @@ public class GraphResourceTest extends RestTest {
 
     @Test
     public void can_get_graph_as_xml_rdf(){
-        response = resource.path("graph").get(ClientResponse.class);
+        response = resource.path("graph").cookie(authCookie).get(ClientResponse.class);
         assertThat(response.getStatus(), is(200));
         String rdfXMLGraph = response.getEntity(String.class);
         assertThat(rdfXMLGraph, is(not(nullValue())));
@@ -52,7 +45,7 @@ public class GraphResourceTest extends RestTest {
         String addedEdgeLabel = statement.getPredicate().asResource().getProperty(label).getString();
         assertThat(addedEdgeLabel, is(""));
 
-        response = resource.path("graph/edge/label/").path(addedEdgeID).queryParam("label", "likes").get(ClientResponse.class);
+        response = resource.path("graph/edge/label/").path(addedEdgeID).queryParam("label", "likes").cookie(authCookie).get(ClientResponse.class);
         Model jenaGraph = jenaGraphManipulator.graphWithDefaultVertexAndDepth(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES);
         com.hp.hpl.jena.rdf.model.Resource edgeAsResource = jenaGraph.getResource(statement.getPredicate().getURI());
         String updatedEdgeLabel = edgeAsResource.getProperty(label).getString();
@@ -62,7 +55,7 @@ public class GraphResourceTest extends RestTest {
         String addedVertexLabel = statement.getObject().asResource().getProperty(label).getString();
         assertThat(addedVertexLabel, is(""));
 
-        response = resource.path("graph/vertex/label/").path(addedVertexID).queryParam("label", "Ju-Ji-Tsu").get(ClientResponse.class);
+        response = resource.path("graph/vertex/label/").path(addedVertexID).queryParam("label", "Ju-Ji-Tsu").cookie(authCookie).get(ClientResponse.class);
         jenaGraph = jenaGraphManipulator.graphWithDefaultVertexAndDepth(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES);
         com.hp.hpl.jena.rdf.model.Resource vertexAsResource = jenaGraph.getResource(statement.getObject().asResource().getURI());
         String updatedVertexLabel = vertexAsResource.getProperty(label).getString();
