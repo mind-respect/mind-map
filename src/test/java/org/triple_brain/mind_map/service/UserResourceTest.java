@@ -5,10 +5,10 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Test;
 import org.triple_brain.module.model.User;
-import org.triple_brain.module.model.validator.Validators;
 import org.triple_brain.module.repository.user.user.UserRepository;
 
 import javax.inject.Inject;
+import java.util.UUID;
 
 import static com.ovea.tadjin.util.rest.JSONMessages.FIELD;
 import static com.ovea.tadjin.util.rest.JSONMessages.REASON;
@@ -30,9 +30,7 @@ public class UserResourceTest extends RestTest {
 
     @Test
     public void can_authenticate_user() throws Exception {
-        User rogerLamothe = User.withEmail("roger.lamothe@example.org")
-                .firstName("Roger")
-                .lastName("Lamothe")
+        User rogerLamothe = User.withUsernameAndEmail("roger_lamothe", "roger.lamothe@example.org")
                 .password("password");
         userRepository.save(rogerLamothe);
         response = resource.path("users").path("authenticate").queryParam("email", "roger.lamothe@example.org").queryParam("password", "password").get(ClientResponse.class);
@@ -49,8 +47,7 @@ public class UserResourceTest extends RestTest {
 
         JSONObject jsonUser = new JSONObject();
         jsonUser.put(EMAIL, "roger.lamothe@example.org");
-        jsonUser.put(FIRST_NAME, "Roger");
-        jsonUser.put(LAST_NAME, "Lamothe");
+        jsonUser.put(USER_NAME, "roger_lamothe");
         jsonUser.put(PASSWORD, "password");
         jsonUser.put(PASSWORD_VERIFICATION, "password");
         response = resource.path("users").type("application/json").post(ClientResponse.class, jsonUser);
@@ -60,190 +57,71 @@ public class UserResourceTest extends RestTest {
     }
 
     @Test
-    public void when_user_creation_fail_a_json_error_message_is_returned() throws Exception {
-        JSONArray errors;
-        JSONObject jsonUser;
-        // Errors on email
-
-        // Already registered email
+    public void cant_register_same_email_twice() throws Exception {
         createUserWithEmail("roger.lamothe@example.org");
-        jsonUser = new JSONObject();
-        jsonUser.put(EMAIL, "roger.lamothe@example.org");
-        jsonUser.put(FIRST_NAME, "Roger");
-        jsonUser.put(LAST_NAME, "Lamothe");
-        jsonUser.put(PASSWORD, "asdfasdfjjjasd");
-        jsonUser.put(PASSWORD_VERIFICATION, "asdfasdfjjjasd");
+        JSONObject jsonUser = validUser().put(EMAIL, "roger.lamothe@example.org");
         response = resource.path("users").type("application/json").post(ClientResponse.class, jsonUser);
         assertThat(response.getStatus(), is(400));
-        errors = response.getEntity(JSONArray.class);
+        JSONArray errors = response.getEntity(JSONArray.class);
         assertThat(errors.length(), greaterThan(0));
         assertThat(errors.getJSONObject(0).get(FIELD).toString(), is(EMAIL));
-        assertThat(errors.getJSONObject(0).get(REASON).toString(), is(Validators.ALREADY_REGISTERED_EMAIL));
+        assertThat(errors.getJSONObject(0).get(REASON).toString(), is(ALREADY_REGISTERED_EMAIL));
+    }
 
-        // Email mandatory
-        jsonUser = new JSONObject();
-        jsonUser.put(EMAIL, "");
-        jsonUser.put(FIRST_NAME, "Roger");
-        jsonUser.put(LAST_NAME, "Lamothe");
-        jsonUser.put(PASSWORD, "asdfasdfasd");
-        jsonUser.put(PASSWORD_VERIFICATION, "asdfasdfasd");
+    @Test
+    public void cant_register_same_user_name_twice() throws Exception {
+        createUserWithUsername("roger_lamothe");
+        JSONObject jsonUser = validUser().put(USER_NAME, "roger_lamothe");
         response = resource.path("users").type("application/json").post(ClientResponse.class, jsonUser);
         assertThat(response.getStatus(), is(400));
-        errors = response.getEntity(JSONArray.class);
+        JSONArray errors = response.getEntity(JSONArray.class);
         assertThat(errors.length(), greaterThan(0));
-        assertThat(errors.getJSONObject(0).get(FIELD).toString(), is(EMAIL));
-        assertThat(errors.getJSONObject(0).get(REASON).toString(), is(Validators.MANDATORY_EMAIL));
-
-        // Email invalid (not well formed)
-        jsonUser = new JSONObject();
-        jsonUser.put(EMAIL, "roger.lamothe$example.org");
-        jsonUser.put(FIRST_NAME, "Roger");
-        jsonUser.put(LAST_NAME, "Lamothe");
-        jsonUser.put(PASSWORD, "asdfasdfasd");
-        jsonUser.put(PASSWORD_VERIFICATION, "asdfasdfasd");
-        response = resource.path("users").type("application/json").post(ClientResponse.class, jsonUser);
-        assertThat(response.getStatus(), is(400));
-        errors = response.getEntity(JSONArray.class);
-        assertThat(errors.length(), greaterThan(0));
-        assertThat(errors.getJSONObject(0).get(FIELD).toString(), is(EMAIL));
-        assertThat(errors.getJSONObject(0).get(REASON).toString(), is(Validators.INVALID_EMAIL));
-
-        // Email too long
-        jsonUser = new JSONObject();
-        jsonUser.put(EMAIL, "roger.lamotheeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee@example.org");
-        jsonUser.put(FIRST_NAME, "Roger");
-        jsonUser.put(LAST_NAME, "Lamothe");
-        jsonUser.put(PASSWORD, "asdfasdfasd");
-        jsonUser.put(PASSWORD_VERIFICATION, "asdfasdfasd");
-        response = resource.path("users").type("application/json").post(ClientResponse.class, jsonUser);
-        assertThat(response.getStatus(), is(400));
-        errors = response.getEntity(JSONArray.class);
-        assertThat(errors.length(), greaterThan(0));
-        assertThat(errors.getJSONObject(0).get(FIELD).toString(), is(EMAIL));
-        assertThat(errors.getJSONObject(0).get(REASON).toString(), is(Validators.EMAIL_TOO_LONG));
-
-        // Errors on password
-
-        // password mandatory
-        jsonUser = new JSONObject();
-        jsonUser.put(EMAIL, "roger.lamothe@example.org");
-        jsonUser.put(FIRST_NAME, "Roger");
-        jsonUser.put(LAST_NAME, "Lamothe");
-        jsonUser.put(PASSWORD, "");
-        response = resource.path("users").type("application/json").post(ClientResponse.class, jsonUser);
-        assertThat(response.getStatus(), is(400));
-        errors = response.getEntity(JSONArray.class);
-        assertThat(errors.length(), greaterThan(0));
-        assertThat(errors.getJSONObject(0).get(FIELD).toString(), is(PASSWORD));
-        assertThat(errors.getJSONObject(0).get(REASON).toString(), is(Validators.MANDATORY_PASSWORD));
-
-        // password too short
-        jsonUser = new JSONObject();
-        jsonUser.put(EMAIL, "roger.lamothe@example.org");
-        jsonUser.put(FIRST_NAME, "Roger");
-        jsonUser.put(LAST_NAME, "Lamothe");
-        jsonUser.put(PASSWORD, "pass");
-        jsonUser.put(PASSWORD_VERIFICATION, "pass");
-        response = resource.path("users").type("application/json").post(ClientResponse.class, jsonUser);
-        assertThat(response.getStatus(), is(400));
-        errors = response.getEntity(JSONArray.class);
-        assertThat(errors.length(), greaterThan(0));
-        assertThat(errors.getJSONObject(0).get(FIELD).toString(), is(PASSWORD));
-        assertThat(errors.getJSONObject(0).get(REASON).toString(), is(Validators.PASSWORD_TOO_SHORT));
-
-        // passwords passed twice need to be the same
-        jsonUser = new JSONObject();
-        jsonUser.put(EMAIL, "roger.lamothe@example.org");
-        jsonUser.put(FIRST_NAME, "Roger");
-        jsonUser.put(LAST_NAME, "Lamothe");
-        jsonUser.put(PASSWORD, "password");
-        jsonUser.put(PASSWORD_VERIFICATION, "different_password");
-        response = resource.path("users").type("application/json").post(ClientResponse.class, jsonUser);
-        assertThat(response.getStatus(), is(400));
-        errors = response.getEntity(JSONArray.class);
-        assertThat(errors.length(), greaterThan(0));
-        assertThat(errors.getJSONObject(0).get(FIELD).toString(), is(PASSWORD));
-        assertThat(errors.getJSONObject(0).get(REASON).toString(), is(Validators.PASSWORD_VERIFICATION_ERROR));
-
-        // Errors on firstname lastname
-
-        // firstname mandatory
-        jsonUser = new JSONObject();
-        jsonUser.put(EMAIL, "roger.lamothe@example.org");
-        jsonUser.put(LAST_NAME, "Lamothe");
-        jsonUser.put(PASSWORD, "password");
-        jsonUser.put(PASSWORD_VERIFICATION, "password");
-        response = resource.path("users").type("application/json").post(ClientResponse.class, jsonUser);
-        assertThat(response.getStatus(), is(400));
-        errors = response.getEntity(JSONArray.class);
-        assertThat(errors.length(), greaterThan(0));
-        assertThat(errors.getJSONObject(0).get(FIELD).toString(), is(FIRST_NAME));
-        assertThat(errors.getJSONObject(0).get(REASON).toString(), is(MANDATORY_FIRST_NAME));
-
-        // lastname mandatory
-        jsonUser = new JSONObject();
-        jsonUser.put(EMAIL, "roger.lamothe@example.rog");
-        jsonUser.put(FIRST_NAME, "Roger");
-        jsonUser.put(PASSWORD, "password");
-        jsonUser.put(PASSWORD_VERIFICATION, "password");
-        response = resource.path("users").type("application/json").post(ClientResponse.class, jsonUser);
-        assertThat(response.getStatus(), is(400));
-        errors = response.getEntity(JSONArray.class);
-        assertThat(errors.length(), greaterThan(0));
-        assertThat(errors.getJSONObject(0).get(FIELD).toString(), is(LAST_NAME));
-        assertThat(errors.getJSONObject(0).get(REASON).toString(), is(MANDATORY_LAST_NAME));
-
-        // firstname too long
-        jsonUser = new JSONObject();
-        jsonUser.put(EMAIL, "roger.lamothe@example.org");
-        jsonUser.put(FIRST_NAME, "Rogerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-        jsonUser.put(LAST_NAME, "Lamothe");
-        jsonUser.put(PASSWORD, "password");
-        jsonUser.put(PASSWORD_VERIFICATION, "password");
-        response = resource.path("users").type("application/json").post(ClientResponse.class, jsonUser);
-        assertThat(response.getStatus(), is(400));
-        errors = response.getEntity(JSONArray.class);
-        assertThat(errors.length(), greaterThan(0));
-        assertThat(errors.getJSONObject(0).get(FIELD).toString(), is(FIRST_NAME));
-        assertThat(errors.getJSONObject(0).get(REASON).toString(), is(FIRST_NAME_TOO_LONG));
-
-        // lastname too long
-        jsonUser = new JSONObject();
-        jsonUser.put(EMAIL, "roger.lamothe@example.org");
-        jsonUser.put(FIRST_NAME, "Roger");
-        jsonUser.put(LAST_NAME, "Lamotheeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-        jsonUser.put(PASSWORD, "password");
-        jsonUser.put(PASSWORD_VERIFICATION, "password");
-        response = resource.path("users").type("application/json").post(ClientResponse.class, jsonUser);
-        assertThat(response.getStatus(), is(400));
-        errors = response.getEntity(JSONArray.class);
-        assertThat(errors.length(), greaterThan(0));
-        assertThat(errors.getJSONObject(0).get(FIELD).toString(), is(LAST_NAME));
-        assertThat(errors.getJSONObject(0).get(REASON).toString(), is(LAST_NAME_TOO_LONG));
+        assertThat(errors.getJSONObject(0).get(FIELD).toString(), is(USER_NAME));
+        assertThat(errors.getJSONObject(0).get(REASON).toString(), is(USER_NAME_ALREADY_REGISTERED));
     }
 
     @Test
     public void returned_user_creation_error_messages_are_in_the_right_order() throws Exception {
         JSONObject jsonUser = new JSONObject();
         jsonUser.put(EMAIL, "");
-        jsonUser.put(FIRST_NAME, "");
-        jsonUser.put(LAST_NAME, "");
+        jsonUser.put(USER_NAME, "");
         jsonUser.put(PASSWORD, "pass");
         jsonUser.put(PASSWORD_VERIFICATION, "");
         response = resource.path("users").type("application/json").cookie(authCookie).post(ClientResponse.class, jsonUser);
         JSONArray errors = response.getEntity(JSONArray.class);
         assertThat(errors.getJSONObject(0).get(FIELD).toString(), is(EMAIL));
-        assertThat(errors.getJSONObject(1).get(FIELD).toString(), is(FIRST_NAME));
-        assertThat(errors.getJSONObject(2).get(FIELD).toString(), is(LAST_NAME));
-        assertThat(errors.getJSONObject(3).get(FIELD).toString(), is(PASSWORD));
+        assertThat(errors.getJSONObject(1).get(FIELD).toString(), is(USER_NAME));
+        assertThat(errors.getJSONObject(2).get(FIELD).toString(), is(PASSWORD));
+    }
+
+    private JSONObject validUser() throws Exception{
+        JSONObject user = new JSONObject();
+        user.put(USER_NAME, randomUsername());
+        user.put(EMAIL, randomEmail());
+        user.put(PASSWORD, "generated password");
+        user.put(PASSWORD_VERIFICATION, "generated password");
+        return user;
     }
 
     private User createUserWithEmail(String email){
-        User user = User.withEmail(email)
-                .firstName("generated first name")
-                .lastName("generated last name")
+        User user = User.withUsernameAndEmail(randomUsername(), email)
                 .password("password");
         userRepository.save(user);
         return user;
+    }
+
+    private User createUserWithUsername(String username){
+        User user = User.withUsernameAndEmail(username, randomEmail())
+                .password("password");
+        userRepository.save(user);
+        return user;
+    }
+    
+    private String randomEmail(){
+        return UUID.randomUUID().toString() + "@example.org";
+    }
+
+    private String randomUsername(){
+        return UUID.randomUUID().toString().substring(0, 15);
     }
 }

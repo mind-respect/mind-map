@@ -89,13 +89,11 @@ public abstract class RestTest implements Module {
                 "    updateTime   TIMESTAMP NOT NULL,\n" +
                 "\n" +
                 "    uuid   VARCHAR(36)   UNIQUE NOT NULL,\n" +
+                "    username  VARCHAR(50)   UNIQUE NOT NULL,\n" +
                 "    email  VARCHAR(50)   UNIQUE NOT NULL,\n" +
-                "    locale VARCHAR(10)   NOT NULL DEFAULT 'en_US',\n" +
                 "\n" +
                 "    salt                 VARCHAR(36),\n" +
-                "    passwordHash         VARCHAR(100),\n" +
-                "    firstname            VARCHAR(50),\n" +
-                "    lastname             VARCHAR(50)\n" +
+                "    passwordHash         VARCHAR(100)\n" +
                 ");";
         preparedStatement(query).executeUpdate();
     }
@@ -112,7 +110,7 @@ public abstract class RestTest implements Module {
     }
 
     protected User createAUser(){
-        User user = User.withEmail("user@triplebrain.org").password("password");
+        User user = User.withUsernameAndEmail("a_user_name", "user@triplebrain.org").password("password");
         userRepository.save(user);
         return user;
     }

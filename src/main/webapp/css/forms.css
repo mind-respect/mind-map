@@ -12,7 +12,10 @@
 }
 
 
-.notification p { margin: 5px 0; }
+.notification p {
+    margin: 5px 0;
+    color: #666666;
+}
 
 .notification h4, .content-box .section .notification h4 {
     margin:      3px 0 5px;
@@ -22,6 +25,8 @@
 
 .notification.error {
     background-image: url('images/icons/notifications/icon_notification_error.png');
+    border-color: #AE432E;
+    background-color: #FDDFDE;
 }
 
 .notification.success {
@@ -57,6 +62,26 @@ ul li.red {
     margin: 0 auto 5px;
     position: relative;
     display: table;
+}
+
+input[type=button]{
+    background: -moz-linear-gradient(center top , #D95338 0%, #AE432E 100%) repeat scroll 0 0 transparent;
+    border-radius: 5px 5px 5px 5px;
+    color: #F2DEDA;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #A6402B #993B28 #803121;
+    box-shadow: 0 1px 2px #A6A6A6;
+    text-shadow: 0 1px 1px #4D4D4D;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: bold;
+    overflow: visible;
+    padding: 7px 10px;
+    text-decoration: none;
+    vertical-align: baseline;
+    white-space: nowrap;
+    width: auto;
 }
 
 /* login panel

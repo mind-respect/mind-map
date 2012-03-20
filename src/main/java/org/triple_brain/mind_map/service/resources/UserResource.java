@@ -3,7 +3,6 @@ package org.triple_brain.mind_map.service.resources;
 import com.ovea.tadjin.util.rest.JSONMessages;
 import org.codehaus.jettison.json.JSONObject;
 import org.triple_brain.module.model.User;
-import org.triple_brain.module.model.validator.Validators;
 import org.triple_brain.module.repository.user.user.NonExistingUserException;
 import org.triple_brain.module.repository.user.user.UserRepository;
 
@@ -20,7 +19,7 @@ import java.util.Map;
 
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static org.triple_brain.module.model.json.UserJSONFields.*;
-import static org.triple_brain.module.model.validator.UserValidator.validate;
+import static org.triple_brain.module.model.validator.UserValidator.*;
 import static org.triple_brain.mind_map.service.SecurityInterceptor.*;
 /**
  * @author Vincent Blouin
@@ -54,16 +53,17 @@ public class UserResource {
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(JSONObject jsonUser, @Context HttpServletRequest request) throws Exception {
-        User user = User.withEmail(jsonUser.optString(EMAIL, "")).firstName(jsonUser.optString(FIRST_NAME, "")).lastName(jsonUser.optString(LAST_NAME, ""))
+        User user = User.withUsernameAndEmail(jsonUser.optString(USER_NAME, ""), jsonUser.optString(EMAIL, ""))
                 .password(jsonUser.optString(PASSWORD, ""));
 
         JSONMessages jsonMessages = new JSONMessages();
-        Map<String, String> errors = Validators.validateEmail(EMAIL, user.email());
-        errors.putAll(validate(user));
-        errors.putAll(Validators.validatePassword(PASSWORD, jsonUser.optString(PASSWORD, ""), jsonUser.optString(PASSWORD_VERIFICATION, "")));
+        Map<String, String> errors = validate(jsonUser);
 
         if (userRepository.emailExists(jsonUser.optString(EMAIL, "")))
-            errors.put(EMAIL, Validators.ALREADY_REGISTERED_EMAIL);
+            errors.put(EMAIL, ALREADY_REGISTERED_EMAIL);
+
+        if (userRepository.usernameExists(jsonUser.optString(USER_NAME, "")))
+            errors.put(USER_NAME, USER_NAME_ALREADY_REGISTERED);
 
         if (!errors.isEmpty()) {
             for (Map.Entry<String, String> entry : errors.entrySet()) {
