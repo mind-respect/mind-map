@@ -5,22 +5,18 @@ import com.sun.jersey.api.client.ClientResponse;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 import static junit.framework.Assert.assertFalse;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.Matchers.is;
-import static org.triple_brain.module.model.json.drawn_graph.DrawnGraphJSONFields.*;
-import static org.triple_brain.module.model.json.drawn_graph.DrawnVertexJSONFields.*;
-import static org.triple_brain.mind_map.service.SingleUserTempClass.*;
-
 import static org.hamcrest.MatcherAssert.assertThat;
-
-import static org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator.*;
-import static org.triple_brain.graphmanipulator.jena.graph.JenaVertexManipulator.*;
-import static org.triple_brain.graphmanipulator.jena.graph.JenaEdgeManipulator.*;
+import static org.hamcrest.Matchers.*;
+import static org.triple_brain.graphmanipulator.jena.graph.JenaEdgeManipulator.jenaEdgeManipulatorWithJenaGraphManipulator;
+import static org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator.jenaGraphManipulatorWithDefaultUser;
+import static org.triple_brain.graphmanipulator.jena.graph.JenaVertexManipulator.jenaVertexManipulatorWithJenaGraphManipulator;
+import static org.triple_brain.mind_map.service.SingleUserTempClass.*;
+import static org.triple_brain.module.model.json.drawn_graph.DrawnGraphJSONFields.VERTICES;
+import static org.triple_brain.module.model.json.drawn_graph.DrawnVertexJSONFields.ID;
 
 /**
  * @author Vincent Blouin
@@ -33,12 +29,13 @@ public class DrawnGraphResourceTest extends RestTest {
         jenaGraphManipulator = jenaGraphManipulatorWithDefaultUser();
         jenaVertexManipulator = jenaVertexManipulatorWithJenaGraphManipulator(jenaGraphManipulator);
         jenaEdgeManipulator = jenaEdgeManipulatorWithJenaGraphManipulator(jenaGraphManipulator);
+        authenticate();
     }
 
     @Test
     public void can_get_drawn_graph_with_default_central_vertex() throws Exception {
         Integer depthOfSubVertices = 2;
-        response = resource.path("drawn_graph").path(depthOfSubVertices.toString()).get(ClientResponse.class);
+        response = resource.path("drawn_graph").path(depthOfSubVertices.toString()).cookie(authCookie).get(ClientResponse.class);
         assertThat(response.getStatus(), is(200));
         JSONObject drawnGraph = response.getEntity(JSONObject.class);
         assertThat(drawnGraph, is(not(nullValue())));
@@ -52,7 +49,7 @@ public class DrawnGraphResourceTest extends RestTest {
         Integer depthOfSubVertices = 2;
         Statement statement = jenaVertexManipulator.addVertexAndRelation(jenaGraphManipulator.defaultUser().absoluteCentralVertex().getLocalName());
         String secondVertexId = statement.getObject().asResource().getLocalName();
-        response = resource.path("drawn_graph").path(depthOfSubVertices.toString()).path(secondVertexId).get(ClientResponse.class);
+        response = resource.path("drawn_graph").path(depthOfSubVertices.toString()).path(secondVertexId).cookie(authCookie).get(ClientResponse.class);
         assertThat(response.getStatus(), is(200));
         JSONObject drawnGraph = response.getEntity(JSONObject.class);
         assertThat(drawnGraph, is(not(nullValue())));
@@ -70,16 +67,16 @@ public class DrawnGraphResourceTest extends RestTest {
         statement = jenaVertexManipulator.addVertexAndRelation(secondVertexId);
         String thirdVertexId = statement.getObject().asResource().getLocalName();
 
-        response = resource.path("drawn_graph").path(depthOfSubVertices.toString()).get(ClientResponse.class);
+        response = resource.path("drawn_graph").path(depthOfSubVertices.toString()).cookie(authCookie).get(ClientResponse.class);
         JSONObject drawnGraph = response.getEntity(JSONObject.class);
         assertThat(drawnGraph.getJSONArray(VERTICES).length(), is(3));
         assertFalse(verticesContainID(drawnGraph.getJSONArray(VERTICES), thirdVertexId));
 
-        response = resource.path("drawn_graph").path(depthOfSubVertices.toString()).path(secondVertexId).get(ClientResponse.class);
+        response = resource.path("drawn_graph").path(depthOfSubVertices.toString()).path(secondVertexId).cookie(authCookie).get(ClientResponse.class);
         drawnGraph = response.getEntity(JSONObject.class);
         assertThat(drawnGraph.getJSONArray(VERTICES).length(), is(3));
 
-        response = resource.path("drawn_graph").path(depthOfSubVertices.toString()).path(thirdVertexId).get(ClientResponse.class);
+        response = resource.path("drawn_graph").path(depthOfSubVertices.toString()).path(thirdVertexId).cookie(authCookie).get(ClientResponse.class);
         drawnGraph = response.getEntity(JSONObject.class);
         assertThat(drawnGraph.getJSONArray(VERTICES).length(), is(2));
         assertFalse(verticesContainID(drawnGraph.getJSONArray(VERTICES), jenaGraphManipulator.defaultUser().absoluteCentralVertex().getLocalName()));
