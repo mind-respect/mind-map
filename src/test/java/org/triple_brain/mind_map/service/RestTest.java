@@ -26,11 +26,10 @@ import java.sql.SQLException;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.triple_brain.module.repository_sql.SQLConnection.closeConnection;
-import static org.triple_brain.module.repository_sql.SQLConnection.preparedStatement;
+import static org.triple_brain.module.repository_sql.SQLConnection.*;
 
 
-/**
+    /**
  * @author Vincent Blouin
  */
 public abstract class RestTest implements Module {
@@ -77,26 +76,11 @@ public abstract class RestTest implements Module {
     }
 
     static protected void cleanTables()throws SQLException {
-        String query = "DROP TABLE IF EXISTS por_user;";
-        preparedStatement(query).executeUpdate();
+        clearDatabases();
         createTables();
     }
 
-    static protected void createTables() throws SQLException{
-        String query = "CREATE TABLE por_user (\n" +
-                "    id           BIGINT    PRIMARY KEY AUTO_INCREMENT,\n" +
-                "    creationTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,\n" +
-                "    updateTime   TIMESTAMP NOT NULL,\n" +
-                "\n" +
-                "    uuid   VARCHAR(36)   UNIQUE NOT NULL,\n" +
-                "    username  VARCHAR(50)   UNIQUE NOT NULL,\n" +
-                "    email  VARCHAR(50)   UNIQUE NOT NULL,\n" +
-                "\n" +
-                "    salt                 VARCHAR(36),\n" +
-                "    passwordHash         VARCHAR(100)\n" +
-                ");";
-        preparedStatement(query).executeUpdate();
-    }
+
 
     @Override
     public final void configure(Binder binder) {

@@ -1,5 +1,8 @@
 import org.testatoo.container.ContainerRunner;
 
+import static org.triple_brain.module.repository_sql.SQLConnection.clearDatabases;
+import static org.triple_brain.module.repository_sql.SQLConnection.createTables;
+
 /**
  * This launcher starts the webapp in test mode. To launch the webapp in real runtime mode, create a launcher
  * in your IDE with :
@@ -9,6 +12,8 @@ import org.testatoo.container.ContainerRunner;
 public class LaunchWebapp {
 
     public static void main(String[] args) throws Exception {
+        clearDatabases();
+        createTables();
         ContainerRunner.main("-container", "jetty");
     }
 }
