@@ -12,7 +12,7 @@ import java.util.List;
 import static org.testatoo.core.ComponentFactory.components;
 
 /**
- * @author Vincent Blouin
+ * Copyright Mozilla Public License 1.1
  */
 public class Vertices implements SizeSupport{
 

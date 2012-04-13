@@ -33,7 +33,7 @@ import static org.testatoo.core.matcher.Value.value;
 import static org.triple_brain.mind_map.web.component.vertex.Vertices.*;
 import static org.triple_brain.mind_map.web.component.edge.Edges.*;
 /**
- * @author Vincent Blouin
+ * Copyright Mozilla Public License 1.1
  */
 @Ignore
 public class GraphTest extends WebTest{

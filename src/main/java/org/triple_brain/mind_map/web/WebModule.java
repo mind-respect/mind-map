@@ -3,7 +3,7 @@ package org.triple_brain.mind_map.web;
 import com.sun.jersey.guice.JerseyServletModule;
 
 /**
- * @author Vincent Blouin
+ * Copyright Mozilla Public License 1.1
  */
 public class WebModule extends JerseyServletModule {
 

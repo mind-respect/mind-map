@@ -30,7 +30,7 @@ import static org.triple_brain.module.repository_sql.SQLConnection.*;
 
 
     /**
- * @author Vincent Blouin
+ * Copyright Mozilla Public License 1.1
  */
 public abstract class RestTest implements Module {
 

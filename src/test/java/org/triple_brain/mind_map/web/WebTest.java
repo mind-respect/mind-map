@@ -13,7 +13,7 @@ import org.triple_brain.mind_map.web.conf.Module;
 import javax.inject.Inject;
 
 /**
- * @author Vincent Blouin
+ * Copyright Mozilla Public License 1.1
  */
 
 @RunWith(TestatooJunitRunner.class)

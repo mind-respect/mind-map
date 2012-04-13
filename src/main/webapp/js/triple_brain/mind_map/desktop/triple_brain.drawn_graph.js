@@ -7,7 +7,7 @@ if (triple_brain.drawn_graph == undefined) {
     (function($) {
         triple_brain.drawn_graph = {
             getWithDefaultCentralVertex: function() {
-                var centralVertexId = 'element_1'
+                var centralVertexId = triple_brain.id_uri.idFromUri('http://www.triple_brain.org/roger_lamothe/element_1');
                 var depthOfSubVertices = $("#sub-vertices-depth-slider").slider('value');
                 $.ajax({
                     type: 'GET',
@@ -21,7 +21,7 @@ if (triple_brain.drawn_graph == undefined) {
                 var depthOfSubVertices = $("#sub-vertices-depth-slider").slider('value');
                 $.ajax({
                     type: 'GET',
-                    url: options.ws.app + '/service/drawn_graph/' + depthOfSubVertices + '/' + newCentralVertex.id(),
+                    url: options.ws.app + '/service/drawn_graph/' + depthOfSubVertices + '/' + triple_brain.id_uri.encodedUriFromId(newCentralVertex.id()),
                     dataType: 'json'
                 }).success(function(drawnGraph) {
                     triple_brain.bus.local.topic('/event/ui/graph/drawing_info/updated/').publish(drawnGraph, newCentralVertex.id());

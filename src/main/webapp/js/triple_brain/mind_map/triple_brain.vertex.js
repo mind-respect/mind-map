@@ -6,7 +6,7 @@ if (triple_brain.vertex == undefined) {
              addRelationAndVertexAtPositionToVertex: function(vertex, newVertexPosition, callback) {
                 var response = $.ajax({
                     type: 'POST',
-                    url: options.ws.app + '/service/vertex/' + vertex.id(),
+                    url: options.ws.app + '/service/vertex/' + triple_brain.id_uri.encodedUriFromId(vertex.id()),
                     dataType: 'json'
                 }).success(function(statementNewRelation) {
                     if(callback != undefined){
@@ -18,7 +18,7 @@ if (triple_brain.vertex == undefined) {
              remove: function(vertex) {
                 $.ajax({
                     type: 'DELETE',
-                    url: options.ws.app + '/service/vertex/' + vertex.id()
+                    url: options.ws.app + '/service/vertex/' + triple_brain.id_uri.encodedUriFromId(vertex.id())
                 }).success(function() {
                     triple_brain.bus.local.topic('/event/ui/graph/vertex/deleted/').publish(vertex);
                 })
@@ -26,7 +26,7 @@ if (triple_brain.vertex == undefined) {
              updateLabel: function(vertex, label) {
                 $.ajax({
                     type: 'POST',
-                    url: options.ws.app + '/service/vertex/label/' + vertex.id() + '?label=' + label,
+                    url: options.ws.app + '/service/vertex/label/' + triple_brain.id_uri.encodedUriFromId(vertex.id()) + '?label=' + label,
                     dataType: 'json'
                 }).success(function() {
                     triple_brain.bus.local.topic('/event/ui/graph/vertex/label/updated').publish(vertex);
@@ -35,7 +35,7 @@ if (triple_brain.vertex == undefined) {
              updateType: function(vertex, typeUri) {
                 $.ajax({
                     type: 'POST',
-                    url: options.ws.app + '/service/vertex/type/' + vertex.id() + '?type_uri=' + typeUri,
+                    url: options.ws.app + '/service/vertex/type/' + triple_brain.id_uri.encodedUriFromId(vertex.id()) + '?type_uri=' + typeUri,
                     dataType: 'json'
                 }).success(function() {
                     triple_brain.bus.local.topic('/event/ui/graph/vertex/type/updated').publish(vertex, typeUri);
@@ -44,7 +44,7 @@ if (triple_brain.vertex == undefined) {
              updateSameAs: function(vertex, sameAsUri) {
                 $.ajax({
                     type: 'POST',
-                    url: options.ws.app + '/service/vertex/same_as/' + vertex.id() + '?same_as_uri=' + sameAsUri,
+                    url: options.ws.app + '/service/vertex/same_as/' + triple_brain.id_uri.encodedUriFromId(vertex.id()) + '?same_as_uri=' + sameAsUri,
                     dataType: 'json'
                 }).success(function() {
                     triple_brain.bus.local.topic('/event/ui/graph/vertex/same_as/updated').publish(vertex, sameAsUri);

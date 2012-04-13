@@ -13,7 +13,7 @@ import static org.testatoo.core.ComponentFactory.components;
 import static org.triple_brain.mind_map.web.component.edge.Edge.*;
 
 /**
- * @author Vincent Blouin
+ * Copyright Mozilla Public License 1.1
  */
 public class Edges implements SizeSupport {
 

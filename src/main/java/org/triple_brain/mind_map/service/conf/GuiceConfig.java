@@ -16,7 +16,7 @@ import org.triple_brain.module.repository_sql.SQLUserRepository;
 import javax.ws.rs.Path;
 
 /**
- * @author Vincent Blouin
+ * Copyright Mozilla Public License 1.1
  */
 public class GuiceConfig extends GuiceServletContextListener {
 

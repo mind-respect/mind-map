@@ -1,26 +1,27 @@
 package org.triple_brain.mind_map.service;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.SimpleSelector;
-import com.hp.hpl.jena.rdf.model.Statement;
 import com.sun.jersey.api.client.ClientResponse;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
+import org.triple_brain.graphmanipulator.jena.graph.JenaVertex;
+import org.triple_brain.module.graphviz_visualisation.GraphToDrawnGraphConverter;
+import org.triple_brain.module.model.graph.Edge;
+import org.triple_brain.module.model.graph.Graph;
+import org.triple_brain.module.model.graph.Vertex;
 
-import java.util.List;
+import java.util.Set;
 
-import static com.hp.hpl.jena.vocabulary.RDFS.label;
+import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.triple_brain.mind_map.service.SingleUserTempClass.jenaGraphManipulator;
 import static org.triple_brain.mind_map.service.SingleUserTempClass.jenaVertexManipulator;
-import static org.triple_brain.module.graphviz_visualisation.JenaGraphToDrawnGraphConverter.graphVizDrawing;
 import static org.triple_brain.module.model.json.graph.GraphJSONFields.EDGES;
 
 /**
- * @author Vincent Blouin
+ * Copyright Mozilla Public License 1.1
  */
 public class EdgeResourceTest extends RestTest {
 
@@ -33,62 +34,83 @@ public class EdgeResourceTest extends RestTest {
 
     @Test
     public void can_add_a_relation() throws Exception {
-        Statement statement = jenaVertexManipulator.addVertexAndRelation(jenaGraphManipulator.defaultUser().absoluteCentralVertex().getLocalName());
-        String secondVertexId = statement.getObject().asResource().getLocalName();
-        statement = jenaVertexManipulator.addVertexAndRelation(secondVertexId);
-        String thirdVertexId = statement.getObject().asResource().getLocalName();
+        Vertex centralVertex = JenaVertex.withResource(
+                jenaGraphManipulator.defaultUser().absoluteCentralVertex());
+        Edge newEdge = jenaVertexManipulator.addVertexAndRelation(
+                centralVertex.id());
 
-        JSONObject drawnGraph = graphVizDrawing(jenaGraphManipulator.graphWithDefaultVertexAndDepth(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES));
+        Vertex newVertex = newEdge.destinationVertex();
+        String secondVertexId = newVertex.id();
+        newEdge = jenaVertexManipulator.addVertexAndRelation(secondVertexId);
+
+        JSONObject drawnGraph = GraphToDrawnGraphConverter.withGraph(wholeGraph()).convert();
         Integer numberOfEdges = drawnGraph.getJSONArray(EDGES).length();
 
-        Model jenaGraph = jenaGraphManipulator.graphWithDefaultVertexAndDepth(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES);
-        com.hp.hpl.jena.rdf.model.Resource rogerLamotheAsResource = jenaGraph.getResource(jenaGraphManipulator.defaultUser().absoluteCentralVertex().getURI());
-        List<Statement> statementsWithThirdVertexAsSubjectAndRogerLamotheAsObject = jenaGraph.listStatements(new SimpleSelector(statement.getObject().asResource(), null, rogerLamotheAsResource)).toList();
-        assertThat(statementsWithThirdVertexAsSubjectAndRogerLamotheAsObject.size(), is(0));
-        response = resource.path("edge").path(thirdVertexId).path(rogerLamotheAsResource.getLocalName()).cookie(authCookie).post(ClientResponse.class);
+        Graph graph = wholeGraph();
+        centralVertex = graph.vertexWithIdentifier(centralVertex.id());
+        newEdge = graph.edgeWithIdentifier(newEdge.id());
+        Vertex thirdVertex = newEdge.destinationVertex();
+        assertFalse(neighborsOfVertex(thirdVertex).contains(centralVertex));
+        response = resource.path("edge").path(ServiceUtils.encodeURL(thirdVertex.id())).path(ServiceUtils.encodeURL(centralVertex.id())).cookie(authCookie).post(ClientResponse.class);
         assertThat(response.getStatus(), is(201));
-        jenaGraph = jenaGraphManipulator.graphWithDefaultVertexAndDepth(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES);
-        rogerLamotheAsResource = jenaGraph.getResource(jenaGraphManipulator.defaultUser().absoluteCentralVertex().getURI());
-        statementsWithThirdVertexAsSubjectAndRogerLamotheAsObject = jenaGraph.listStatements(new SimpleSelector(statement.getObject().asResource(), null, rogerLamotheAsResource)).toList();
-        assertThat(statementsWithThirdVertexAsSubjectAndRogerLamotheAsObject.size(), is(1));
+        graph = wholeGraph();
+        thirdVertex = graph.vertexWithIdentifier(thirdVertex.id());
+        centralVertex = graph.vertexWithIdentifier(centralVertex.id());
+        assertTrue(neighborsOfVertex(thirdVertex).contains(centralVertex));
+        Edge edgeBetweenThirdVertexAndCentralVertex = thirdVertex.edgeThatLinksToDestinationVertex(centralVertex);
+        assertThat(response.getHeaders().get("Location").get(0),
+                is(BASE_URI + "/edge/" + ServiceUtils.encodeURL(thirdVertex.id()) + "/" + ServiceUtils.encodeURL(centralVertex.id()) + "/" + ServiceUtils.encodeURL(edgeBetweenThirdVertexAndCentralVertex.id())));
 
-        String lastAddedEdgeId = statementsWithThirdVertexAsSubjectAndRogerLamotheAsObject.get(0).getPredicate().getLocalName();
-        assertThat(response.getHeaders().get("Location").get(0), is(BASE_URI + "/edge/" + thirdVertexId + "/" + rogerLamotheAsResource.getLocalName() + "/" + lastAddedEdgeId));
-
-        JSONObject updatedDrawnGraph = graphVizDrawing(jenaGraphManipulator.graphWithDefaultVertexAndDepth(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES));
+        JSONObject updatedDrawnGraph = GraphToDrawnGraphConverter.withGraph(wholeGraph()).convert();
         Integer updatedNumberOfEdges = updatedDrawnGraph.getJSONArray(EDGES).length();
         assertThat(updatedNumberOfEdges, is(numberOfEdges + 1));
     }
 
     @Test
     public void can_remove_a_relation() throws Exception {
-        Statement statement = jenaVertexManipulator.addVertexAndRelation(jenaGraphManipulator.defaultUser().absoluteCentralVertex().getLocalName());
-        com.hp.hpl.jena.rdf.model.Resource edge = statement.getPredicate();
+        Vertex centralVertex = JenaVertex.withResource(
+                jenaGraphManipulator.defaultUser().absoluteCentralVertex());
+        Edge newEdge = jenaVertexManipulator.addVertexAndRelation(
+                centralVertex.id()
+        );
 
-        JSONObject drawnGraph = graphVizDrawing(jenaGraphManipulator.graphWithDefaultVertexAndDepth(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES));
+        JSONObject drawnGraph = GraphToDrawnGraphConverter.withGraph(
+                wholeGraph()).convert();
         Integer numberOfEdges = drawnGraph.getJSONArray(EDGES).length();
-        response = resource.path("edge").path(edge.getLocalName()).cookie(authCookie).delete(ClientResponse.class);
+        response = resource.path("edge").path(ServiceUtils.encodeURL(newEdge.id())).cookie(authCookie).delete(ClientResponse.class);
         assertThat(response.getStatus(), is(200));
 
-        JSONObject updatedDrawnGraph = graphVizDrawing(jenaGraphManipulator.graphWithDefaultVertexAndDepth(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES));
+        JSONObject updatedDrawnGraph = GraphToDrawnGraphConverter.withGraph(
+                wholeGraph()).convert();
         Integer updatedNumberOfEdges = updatedDrawnGraph.getJSONArray(EDGES).length();
         assertThat(updatedNumberOfEdges, is(numberOfEdges - 1));
-        assertFalse(jenaGraphManipulator.graphWithDefaultVertexAndDepth(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES).containsResource(edge));
+        assertFalse(wholeGraph().edges().contains(newEdge));
 
     }
 
     @Test
     public void can_update_label() throws Exception {
-        Statement statement = jenaVertexManipulator.addVertexAndRelation(jenaGraphManipulator.defaultUser().absoluteCentralVertex().getLocalName());
+        Vertex centralVertex = JenaVertex.withResource(
+                jenaGraphManipulator.defaultUser().absoluteCentralVertex());
 
-        String addedEdgeID = statement.getPredicate().getLocalName();
-        String addedEdgeLabel = statement.getPredicate().asResource().getProperty(label).getString();
-        assertThat(addedEdgeLabel, is(""));
+        Edge newEdge = jenaVertexManipulator.addVertexAndRelation(
+                centralVertex.id());
 
-        response = resource.path("edge/label/").path(addedEdgeID).queryParam("label", "likes").cookie(authCookie).post(ClientResponse.class);
-        Model jenaGraph = jenaGraphManipulator.graphWithDefaultVertexAndDepth(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES);
-        com.hp.hpl.jena.rdf.model.Resource edgeAsResource = jenaGraph.getResource(statement.getPredicate().getURI());
-        String updatedEdgeLabel = edgeAsResource.getProperty(label).getString();
-        assertThat(updatedEdgeLabel, is("likes"));
+        assertThat(newEdge.label(), is(""));
+
+        response = resource.path("edge/label/").path(ServiceUtils.encodeURL(newEdge.id())).queryParam("label", "likes").cookie(authCookie).post(ClientResponse.class);
+        Graph graph = wholeGraph();
+        newEdge = graph.edgeWithIdentifier(newEdge.id());
+        assertThat(newEdge.label(), is("likes"));
     }
+
+    private Graph wholeGraph(){
+        return jenaGraphManipulator.graphWithDefaultVertexAndDepth(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES);
+    }
+
+    private Set<Vertex> neighborsOfVertex(Vertex vertex){
+        return jenaGraphManipulator.graphWithDepthAndCenterVertexId(
+                1, vertex.id()).vertices();
+    }
+
 }

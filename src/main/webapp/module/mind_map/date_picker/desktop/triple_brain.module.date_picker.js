@@ -1,5 +1,5 @@
 /**
- * @author Vincent Blouin
+ * Copyright Mozilla Public License 1.1
  */
 if (triple_brain.module.date_picker == undefined) {
     (function($) {

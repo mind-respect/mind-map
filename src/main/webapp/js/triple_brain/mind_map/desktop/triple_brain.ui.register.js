@@ -1,5 +1,5 @@
 /**
- * @author Vincent Blouin
+ * Copyright Mozilla Public License 1.1
  */
 
 require("Logger", "triple_brain.ui");

@@ -22,7 +22,7 @@ import static org.triple_brain.module.model.json.UserJSONFields.*;
 import static org.triple_brain.module.model.validator.UserValidator.*;
 import static org.triple_brain.mind_map.service.SecurityInterceptor.*;
 /**
- * @author Vincent Blouin
+ * Copyright Mozilla Public License 1.1
  */
 
 @Path("/users")

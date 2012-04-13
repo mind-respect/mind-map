@@ -20,7 +20,7 @@ import static org.triple_brain.module.model.json.UserJSONFields.*;
 import static org.triple_brain.module.model.validator.UserValidator.*;
 
 /**
- * @author Vincent Blouin
+ * Copyright Mozilla Public License 1.1
  */
 
 public class UserResourceTest extends RestTest {

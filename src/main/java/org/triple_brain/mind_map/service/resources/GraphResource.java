@@ -8,7 +8,7 @@ import javax.ws.rs.core.Response;
 import static org.triple_brain.mind_map.service.SingleUserTempClass.*;
 
 /**
- * @author Vincent Blouin
+ * Copyright Mozilla Public License 1.1
  */
 @Path("/graph")
 @Produces(MediaType.APPLICATION_JSON)

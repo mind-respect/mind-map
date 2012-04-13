@@ -5,14 +5,12 @@ import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
 import org.triple_brain.graphmanipulator.jena.graph.JenaVertexManipulator;
 
 import static org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator.*;
-import static org.triple_brain.graphmanipulator.jena.graph.JenaVertexManipulator.*;
-import static org.triple_brain.graphmanipulator.jena.graph.JenaEdgeManipulator.*;
 
 /**
- * @author Vincent Blouin
+ * Copyright Mozilla Public License 1.1
  */
 public class SingleUserTempClass {
-    public static JenaGraphManipulator jenaGraphManipulator = jenaGraphManipulatorWithDefaultUser();
-    public static JenaVertexManipulator jenaVertexManipulator = jenaVertexManipulatorWithJenaGraphManipulator(jenaGraphManipulator);
-    public static JenaEdgeManipulator jenaEdgeManipulator = jenaEdgeManipulatorWithJenaGraphManipulator(jenaGraphManipulator);
+    public static JenaGraphManipulator jenaGraphManipulator = withDefaultUser();
+    public static JenaVertexManipulator jenaVertexManipulator = JenaVertexManipulator.withJenaGraphManipulator(jenaGraphManipulator);
+    public static JenaEdgeManipulator jenaEdgeManipulator = JenaEdgeManipulator.withJenaGraphManipulator(jenaGraphManipulator);
 }

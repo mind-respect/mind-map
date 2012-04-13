@@ -10,7 +10,7 @@ import org.testatoo.core.component.TextField;
 import static org.testatoo.core.ComponentFactory.component;
 
 /**
- * @author Vincent Blouin
+ * Copyright Mozilla Public License 1.1
  */
 public class Edge extends Panel {
 

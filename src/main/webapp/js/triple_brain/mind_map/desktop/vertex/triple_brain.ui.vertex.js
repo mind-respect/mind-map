@@ -1,5 +1,5 @@
 /**
- * @author Vincent Blouin
+ * Copyright Mozilla Public License 1.1
  */
 
 if (triple_brain.ui.vertex == undefined) {
@@ -212,7 +212,11 @@ if (triple_brain.ui.vertex == undefined) {
     });
 
     triple_brain.bus.local.topic('/event/ui/graph/vertex_and_relation/added/').subscribe(function(statementNewRelation, newVertexPosition) {
-        var sourceVertex = triple_brain.ui.vertex.withId(statementNewRelation.subject_id);
+        var sourceVertex = triple_brain.ui.vertex.withId(
+            triple_brain.id_uri.idFromUri(
+                statementNewRelation.subject_id
+            )
+        );
         var destinationVertexId = statementNewRelation.object_id;
         var edgeId = statementNewRelation.predicate_id;
 
@@ -240,8 +244,8 @@ if (triple_brain.ui.vertex == undefined) {
         );
         edgeJSON.arrowLineStartPoint = arrowLine.segment().startPoint;
         edgeJSON.arrowLineEndPoint = arrowLine.segment().endPoint;
-        edgeJSON.source_vertex_id = sourceVertex.id();
-        edgeJSON.destination_vertex_id = destinationVertex.id();
+        edgeJSON.source_vertex_id = statementNewRelation.subject_id;
+        edgeJSON.destination_vertex_id = statementNewRelation.object_id;
         edgeJSON.label = triple_brain.ui.edge.EMPTY_LABEL;
         var edge = triple_brain.ui.edge_creator.withArrayOfJsonHavingAbsolutePosition(edgeJSON).create();
         if(statementNewRelation.predicate_label != undefined){

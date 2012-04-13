@@ -1,5 +1,5 @@
 /**
- * @author Vincent Blouin
+ * Copyright Mozilla Public License 1.1
  */
 
 if (triple_brain.ui.vertex_creator == undefined) {
@@ -29,6 +29,7 @@ if (triple_brain.ui.vertex_creator == undefined) {
     }
 
     function VertexCreator(json){
+        json.id = triple_brain.id_uri.idFromUri(json.id);
         var html = triple_brain.template['vertex'].merge(json);
         this.create = function(){
             triple_brain.ui.graph.addHTML(
