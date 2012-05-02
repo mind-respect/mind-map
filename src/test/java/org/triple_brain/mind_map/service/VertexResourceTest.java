@@ -3,11 +3,7 @@ package org.triple_brain.mind_map.service;
 import com.sun.jersey.api.client.ClientResponse;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
-import org.junit.Before;
 import org.junit.Test;
-import org.triple_brain.graphmanipulator.jena.graph.JenaEdgeManipulator;
-import org.triple_brain.graphmanipulator.jena.graph.JenaVertex;
-import org.triple_brain.graphmanipulator.jena.graph.JenaVertexManipulator;
 import org.triple_brain.module.graphviz_visualisation.GraphToDrawnGraphConverter;
 import org.triple_brain.module.model.graph.Edge;
 import org.triple_brain.module.model.graph.Graph;
@@ -18,8 +14,6 @@ import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 import static junit.framework.Assert.assertFalse;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator.withDefaultUser;
-import static org.triple_brain.mind_map.service.SingleUserTempClass.*;
 import static org.triple_brain.module.model.json.StatementJSONFields.*;
 import static org.triple_brain.module.model.json.graph.GraphJSONFields.EDGES;
 import static org.triple_brain.module.model.json.graph.GraphJSONFields.VERTICES;
@@ -28,17 +22,7 @@ import static org.triple_brain.module.model.json.graph.GraphJSONFields.VERTICES;
  * Copyright Mozilla Public License 1.1
  */
 
-public class VertexResourceTest extends RestTest{
-
-    private final Integer DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES = 10;
-
-    @Before
-    public void before() {
-        authenticate();
-        jenaGraphManipulator = withDefaultUser();
-        jenaVertexManipulator = JenaVertexManipulator.withJenaGraphManipulator(jenaGraphManipulator);
-        jenaEdgeManipulator = JenaEdgeManipulator.withJenaGraphManipulator(jenaGraphManipulator);
-    }
+public class VertexResourceTest extends GraphManipulationRestTest{
 
     @Test
     public void can_add_a_vertex() throws Exception {
@@ -49,9 +33,7 @@ public class VertexResourceTest extends RestTest{
         assertFalse(containsVertexWithLabel(drawnGraph.getJSONArray(VERTICES), ""));
         assertFalse(containsEdgeWithLabel(drawnGraph.getJSONArray(EDGES), ""));
 
-        Vertex sourceVertex = JenaVertex.withResource(
-                jenaGraphManipulator.defaultUser().absoluteCentralVertex()
-        );
+        Vertex sourceVertex = vertexManipulator.defaultVertex();
         response = resource.path("vertex").path(ServiceUtils.encodeURL(sourceVertex.id())).cookie(authCookie).post(ClientResponse.class);
         assertThat(response.getStatus(), is(200));
         JSONObject createdStatement = response.getEntity(JSONObject.class);
@@ -68,10 +50,9 @@ public class VertexResourceTest extends RestTest{
 
     @Test
     public void can_remove_a_vertex() throws Exception {
-        Edge newEdge = jenaVertexManipulator.addVertexAndRelation(
-                JenaVertex.withResource(
-                    jenaGraphManipulator.defaultUser().absoluteCentralVertex()
-        ).id());
+        Edge newEdge = vertexManipulator.addVertexAndRelation(
+                vertexManipulator.defaultVertex().id()
+        );
         Vertex vertex = newEdge.destinationVertex();
 
         JSONObject drawnGraph = GraphToDrawnGraphConverter.withGraph(
@@ -91,9 +72,9 @@ public class VertexResourceTest extends RestTest{
 
     @Test
     public void can_modify_label() throws Exception {
-        Edge edge = jenaVertexManipulator.addVertexAndRelation(JenaVertex.withResource(
-            jenaGraphManipulator.defaultUser().absoluteCentralVertex()
-        ).id());
+        Edge edge = vertexManipulator.addVertexAndRelation(
+                vertexManipulator.defaultVertex().id()
+        );
 
         Vertex newVertex = edge.destinationVertex();
         String addedVertexID = newVertex.id();
@@ -107,9 +88,7 @@ public class VertexResourceTest extends RestTest{
 
     @Test
     public void can_set_type_of_vertex() throws Exception {
-        Vertex centerVertex = JenaVertex.withResource(
-                jenaVertexManipulator.defaultUser().absoluteCentralVertex()
-        );
+        Vertex centerVertex = vertexManipulator.defaultVertex();
         String personClassURI = "http://xmlns.com/foaf/0.1/Person";
         assertFalse(centerVertex.types().contains(personClassURI));
         response = resource.path("vertex/type/").path(ServiceUtils.encodeURL(centerVertex.id())).queryParam("type_uri", personClassURI).cookie(authCookie).post(ClientResponse.class);
@@ -155,6 +134,6 @@ public class VertexResourceTest extends RestTest{
     }
 
     private Graph wholeGraph(){
-        return jenaGraphManipulator.graphWithDefaultVertexAndDepth(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES);
+        return graphManipulator.graphWithDefaultVertexAndDepth(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES);
     }
 }

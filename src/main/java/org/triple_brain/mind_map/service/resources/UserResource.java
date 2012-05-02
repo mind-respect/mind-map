@@ -1,7 +1,9 @@
 package org.triple_brain.mind_map.service.resources;
 
 import com.ovea.tadjin.util.rest.JSONMessages;
+import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.repository.user.user.NonExistingUserException;
 import org.triple_brain.module.repository.user.user.UserRepository;
@@ -18,9 +20,12 @@ import java.net.URI;
 import java.util.Map;
 
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
+import static org.triple_brain.mind_map.service.SecurityInterceptor.AUTHENTICATED_USER_KEY;
+import static org.triple_brain.mind_map.service.SecurityInterceptor.AUTHENTICATION_ATTRIBUTE_KEY;
+import static org.triple_brain.mind_map.service.resources.GraphManipulatorResourceUtils.isUserInSession;
+import static org.triple_brain.mind_map.service.resources.GraphManipulatorResourceUtils.userFromSession;
 import static org.triple_brain.module.model.json.UserJSONFields.*;
 import static org.triple_brain.module.model.validator.UserValidator.*;
-import static org.triple_brain.mind_map.service.SecurityInterceptor.*;
 /**
  * Copyright Mozilla Public License 1.1
  */
@@ -36,17 +41,30 @@ public class UserResource {
 
     @GET
     @Path("/authenticate")
-    public Response authenticate(@QueryParam("email") String email, @QueryParam("password") String password, @Context HttpServletRequest request) {
+    public Response authenticate(@QueryParam("email") String email, @QueryParam("password") String password, @Context HttpServletRequest request) throws JSONException{
         try {
             User user = userRepository.findByEmail(email);
             if (user.hasPassword(password)) {
                 request.getSession().setAttribute(AUTHENTICATION_ATTRIBUTE_KEY, true);
-                return Response.ok().build();
+                request.getSession().setAttribute(AUTHENTICATED_USER_KEY, user);
+                return Response.ok(user.toJSON()).build();
             }
         } catch (NonExistingUserException e) {
             return Response.status(401).build();
         }
         return Response.status(401).build();
+    }
+
+    @GET
+    @Path("/")
+    public Response sessionUser(@Context HttpServletRequest request) throws JSONException{
+        if(isUserInSession(request.getSession())){
+            User authenticatedUser = userFromSession(request.getSession());
+            return Response.ok(authenticatedUser.toJSON()).build();
+        }else{
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+
     }
 
     @POST
@@ -77,6 +95,7 @@ public class UserResource {
         }
 
         userRepository.save(user);
+        JenaGraphManipulator.createUserGraph(user);
         return Response.created(new URI(request.getRequestURL() + "/" + user.id())).build();
     }
 

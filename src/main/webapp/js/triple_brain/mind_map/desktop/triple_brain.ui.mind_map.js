@@ -41,7 +41,7 @@ if (triple_brain.ui.mind_map == undefined) {
             $("#sub-vertices-depth-slider").slider({
                 value:sliderDefaultValue,
                 min:0,
-                max:20,
+                max:10,
                 step:1,
                 orientation:"horizontal",
                 slide:function (event, ui) {
@@ -56,7 +56,10 @@ if (triple_brain.ui.mind_map == undefined) {
                     }
                 }
             });
-            triple_brain.drawn_graph.getWithDefaultCentralVertex();
+            triple_brain.user.authenticatedUser(function(authenticatedUser){
+                triple_brain.authenticatedUser = authenticatedUser;
+                triple_brain.drawn_graph.getWithDefaultCentralVertex();
+            });
 
             $("#redraw-graph-btn").click(function (e) {
                 triple_brain.drawn_graph.getWithNewCentralVertex(

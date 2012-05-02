@@ -7,7 +7,8 @@ if (triple_brain.drawn_graph == undefined) {
     (function($) {
         triple_brain.drawn_graph = {
             getWithDefaultCentralVertex: function() {
-                var centralVertexId = triple_brain.id_uri.idFromUri('http://www.triple_brain.org/roger_lamothe/element_1');
+                var authenticatedUsername = triple_brain.authenticatedUser.user_name;
+                var centralVertexId = triple_brain.id_uri.idFromUri('http://www.triple_brain.org/' + authenticatedUsername + '/default');
                 var depthOfSubVertices = $("#sub-vertices-depth-slider").slider('value');
                 $.ajax({
                     type: 'GET',

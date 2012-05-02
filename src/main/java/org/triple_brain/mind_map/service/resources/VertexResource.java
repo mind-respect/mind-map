@@ -2,6 +2,7 @@ package org.triple_brain.mind_map.service.resources;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+import org.triple_brain.graphmanipulator.jena.graph.JenaVertexManipulator;
 import org.triple_brain.mind_map.service.ServiceUtils;
 import org.triple_brain.module.model.graph.Edge;
 
@@ -14,7 +15,7 @@ import javax.ws.rs.core.Response;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 
-import static org.triple_brain.mind_map.service.SingleUserTempClass.jenaVertexManipulator;
+import static org.triple_brain.mind_map.service.resources.GraphManipulatorResourceUtils.userFromSession;
 import static org.triple_brain.module.model.json.StatementJSONFields.*;
 
 /**
@@ -33,7 +34,10 @@ public class VertexResource {
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        Edge createdEdge = jenaVertexManipulator.addVertexAndRelation(
+        JenaVertexManipulator vertexManipulator = JenaVertexManipulator.withUser(
+                userFromSession(request.getSession())
+        );
+        Edge createdEdge = vertexManipulator.addVertexAndRelation(
                 sourceVertexId
         );
 
@@ -53,7 +57,10 @@ public class VertexResource {
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        jenaVertexManipulator.removeVertex(vertexId);
+        JenaVertexManipulator vertexManipulator = JenaVertexManipulator.withUser(
+                userFromSession(request.getSession())
+        );
+        vertexManipulator.removeVertex(vertexId);
         return Response.ok().build();
     }
 
@@ -65,31 +72,40 @@ public class VertexResource {
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        jenaVertexManipulator.updateLabel(vertexId, label);
+        JenaVertexManipulator vertexManipulator = JenaVertexManipulator.withUser(
+                userFromSession(request.getSession())
+        );
+        vertexManipulator.updateLabel(vertexId, label);
         return Response.ok().build();
     }
 
     @POST
     @Path("type/{vertexId}")
-    public Response setType(@PathParam("vertexId") String vertexId, @QueryParam("type_uri") String typeUri) throws JSONException, URISyntaxException{
+    public Response setType(@PathParam("vertexId") String vertexId, @QueryParam("type_uri") String typeUri, @Context HttpServletRequest request) throws JSONException, URISyntaxException{
         try{
             vertexId = ServiceUtils.decodeURL(vertexId);
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        jenaVertexManipulator.semanticType(vertexId, typeUri);
+        JenaVertexManipulator vertexManipulator = JenaVertexManipulator.withUser(
+                userFromSession(request.getSession())
+        );
+        vertexManipulator.semanticType(vertexId, typeUri);
         return Response.ok().build();
     }
 
     @POST
     @Path("same_as/{vertexId}")
-    public Response setSameAs(@PathParam("vertexId") String vertexId, @QueryParam("same_as_uri") String sameAsUri) throws JSONException, URISyntaxException{
+    public Response setSameAs(@PathParam("vertexId") String vertexId, @QueryParam("same_as_uri") String sameAsUri, @Context HttpServletRequest request) throws JSONException, URISyntaxException{
         try{
             vertexId = ServiceUtils.decodeURL(vertexId);
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        jenaVertexManipulator.sameAsResourceWithUri(vertexId, sameAsUri);
+        JenaVertexManipulator vertexManipulator = JenaVertexManipulator.withUser(
+                userFromSession(request.getSession())
+        );
+        vertexManipulator.sameAsResourceWithUri(vertexId, sameAsUri);
         return Response.ok().build();
     }
 }

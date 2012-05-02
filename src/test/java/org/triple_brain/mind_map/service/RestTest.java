@@ -87,8 +87,8 @@ public abstract class RestTest implements Module {
         binder.bind(UserRepository.class).to(SQLUserRepository.class);
     }
 
-    protected void authenticate(){
-        authenticate(
+    protected User authenticate(){
+        return authenticate(
                 createAUser()
         );
     }
@@ -99,10 +99,11 @@ public abstract class RestTest implements Module {
         return user;
     }
 
-    protected void authenticate(User user) {
+    protected User authenticate(User user) {
         response = resource.path("users").path("authenticate").queryParam("email", user.email()).queryParam("password", "password").cookie(authCookie).get(ClientResponse.class);
         assertThat(response.getStatus(), is(200));
         authCookie = response.getCookies().get(0);
+        return user;
     }
 
 }

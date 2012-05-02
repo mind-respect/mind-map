@@ -1,6 +1,7 @@
 package org.triple_brain.mind_map.service.resources;
 
 import org.codehaus.jettison.json.JSONException;
+import org.triple_brain.graphmanipulator.jena.graph.JenaEdgeManipulator;
 import org.triple_brain.mind_map.service.ServiceUtils;
 import org.triple_brain.module.model.graph.Edge;
 
@@ -13,7 +14,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import static org.triple_brain.mind_map.service.SingleUserTempClass.jenaEdgeManipulator;
+import static org.triple_brain.mind_map.service.resources.GraphManipulatorResourceUtils.userFromSession;
+
 
 /**
  * Copyright Mozilla Public License 1.1
@@ -31,7 +33,10 @@ public class EdgeResource {
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        Edge createdEdge = jenaEdgeManipulator.addRelationBetweenVertices(sourceVertexId, destinationVertexId);
+        JenaEdgeManipulator edgeManipulator = JenaEdgeManipulator.withUser(
+                userFromSession(request.getSession())
+        );
+        Edge createdEdge = edgeManipulator.addRelationBetweenVertices(sourceVertexId, destinationVertexId);
         return Response.created(new URI(request.getRequestURL() + "/" + ServiceUtils.encodeURL(createdEdge.id()))).build();
     }
 
@@ -43,7 +48,10 @@ public class EdgeResource {
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        jenaEdgeManipulator.removeEdge(edgeId);
+        JenaEdgeManipulator edgeManipulator = JenaEdgeManipulator.withUser(
+                userFromSession(request.getSession())
+        );
+        edgeManipulator.removeEdge(edgeId);
         return Response.ok().build();
     }
 
@@ -55,7 +63,10 @@ public class EdgeResource {
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        jenaEdgeManipulator.updateLabel(edgeId, label);
+        JenaEdgeManipulator edgeManipulator = JenaEdgeManipulator.withUser(
+                userFromSession(request.getSession())
+        );
+        edgeManipulator.updateLabel(edgeId, label);
         return Response.ok().build();
     }
 }

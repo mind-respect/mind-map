@@ -2,9 +2,7 @@ package org.triple_brain.mind_map.service;
 
 import com.sun.jersey.api.client.ClientResponse;
 import org.codehaus.jettison.json.JSONObject;
-import org.junit.Before;
 import org.junit.Test;
-import org.triple_brain.graphmanipulator.jena.graph.JenaVertex;
 import org.triple_brain.module.graphviz_visualisation.GraphToDrawnGraphConverter;
 import org.triple_brain.module.model.graph.Edge;
 import org.triple_brain.module.model.graph.Graph;
@@ -16,32 +14,22 @@ import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertFalse;
-import static org.triple_brain.mind_map.service.SingleUserTempClass.jenaGraphManipulator;
-import static org.triple_brain.mind_map.service.SingleUserTempClass.jenaVertexManipulator;
 import static org.triple_brain.module.model.json.graph.GraphJSONFields.EDGES;
 
 /**
  * Copyright Mozilla Public License 1.1
  */
-public class EdgeResourceTest extends RestTest {
-
-    private final Integer DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES = 10;
-
-    @Before
-    public void before(){
-        authenticate();
-    }
+public class EdgeResourceTest extends GraphManipulationRestTest{
 
     @Test
     public void can_add_a_relation() throws Exception {
-        Vertex centralVertex = JenaVertex.withResource(
-                jenaGraphManipulator.defaultUser().absoluteCentralVertex());
-        Edge newEdge = jenaVertexManipulator.addVertexAndRelation(
+        Vertex centralVertex = vertexManipulator.defaultVertex();
+        Edge newEdge = vertexManipulator.addVertexAndRelation(
                 centralVertex.id());
 
         Vertex newVertex = newEdge.destinationVertex();
         String secondVertexId = newVertex.id();
-        newEdge = jenaVertexManipulator.addVertexAndRelation(secondVertexId);
+        newEdge = vertexManipulator.addVertexAndRelation(secondVertexId);
 
         JSONObject drawnGraph = GraphToDrawnGraphConverter.withGraph(wholeGraph()).convert();
         Integer numberOfEdges = drawnGraph.getJSONArray(EDGES).length();
@@ -68,9 +56,8 @@ public class EdgeResourceTest extends RestTest {
 
     @Test
     public void can_remove_a_relation() throws Exception {
-        Vertex centralVertex = JenaVertex.withResource(
-                jenaGraphManipulator.defaultUser().absoluteCentralVertex());
-        Edge newEdge = jenaVertexManipulator.addVertexAndRelation(
+        Vertex centralVertex = vertexManipulator.defaultVertex();
+        Edge newEdge = vertexManipulator.addVertexAndRelation(
                 centralVertex.id()
         );
 
@@ -90,10 +77,9 @@ public class EdgeResourceTest extends RestTest {
 
     @Test
     public void can_update_label() throws Exception {
-        Vertex centralVertex = JenaVertex.withResource(
-                jenaGraphManipulator.defaultUser().absoluteCentralVertex());
+        Vertex centralVertex = vertexManipulator.defaultVertex();
 
-        Edge newEdge = jenaVertexManipulator.addVertexAndRelation(
+        Edge newEdge = vertexManipulator.addVertexAndRelation(
                 centralVertex.id());
 
         assertThat(newEdge.label(), is(""));
@@ -105,11 +91,11 @@ public class EdgeResourceTest extends RestTest {
     }
 
     private Graph wholeGraph(){
-        return jenaGraphManipulator.graphWithDefaultVertexAndDepth(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES);
+        return graphManipulator.graphWithDefaultVertexAndDepth(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES);
     }
 
     private Set<Vertex> neighborsOfVertex(Vertex vertex){
-        return jenaGraphManipulator.graphWithDepthAndCenterVertexId(
+        return graphManipulator.graphWithDepthAndCenterVertexId(
                 1, vertex.id()).vertices();
     }
 

@@ -15,15 +15,18 @@ import javax.ws.rs.core.Response;
 public class SecurityInterceptor implements MethodInterceptor {
 
     public static final String AUTHENTICATION_ATTRIBUTE_KEY = "authentified";
+    public static final String AUTHENTICATED_USER_KEY = "authenticated_user";
     
     @Inject
     private Provider<HttpServletRequest> requestProvider;
 
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
-        return isAllowedToInvokeMethod(invocation) ?
-            invocation.proceed():
-            Response.status(403).build();
+        if(isAllowedToInvokeMethod(invocation)){
+            return invocation.proceed();
+        }else{
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
     }
 
     private boolean isAllowedToInvokeMethod(MethodInvocation methodInvocation){

@@ -136,7 +136,7 @@ if (triple_brain.ui.vertex_creator == undefined) {
             removeBtn.click(function(event) {
                 event.stopPropagation();
                 var vertex = vertexOfSubHtmlComponent(this);
-                if(!vertex.isCenterVertex() && vertex.id() != "element_1"){
+                if(!vertex.isCenterVertex() && vertex.id() != "default"){
                     triple_brain.vertex.remove(vertex);
                 }
             });
