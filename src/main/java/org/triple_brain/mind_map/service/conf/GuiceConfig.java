@@ -3,17 +3,25 @@ package org.triple_brain.mind_map.service.conf;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.matcher.Matchers;
+import com.google.inject.name.Names;
 import com.google.inject.servlet.GuiceServletContextListener;
-import com.ovea.tadjin.util.properties.JndiPropertySettingsProvider;
-import com.ovea.tadjin.util.properties.PropertySettings;
 import com.sun.jersey.guice.JerseyServletModule;
 import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
+import org.triple_brain.graphmanipulator.jena.JenaConnection;
 import org.triple_brain.mind_map.service.SecurityInterceptor;
 import org.triple_brain.mind_map.service.resources.*;
-import org.triple_brain.module.repository.user.user.UserRepository;
+import org.triple_brain.module.repository.user.UserRepository;
+import org.triple_brain.module.repository_sql.JenaFriendlyDataSource;
+import org.triple_brain.module.repository_sql.SQLModule;
 import org.triple_brain.module.repository_sql.SQLUserRepository;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import javax.ws.rs.Path;
+
+import static com.google.inject.jndi.JndiIntegration.fromJndi;
 
 /**
  * Copyright Mozilla Public License 1.1
@@ -22,16 +30,16 @@ public class GuiceConfig extends GuiceServletContextListener {
 
     @Override
     protected Injector getInjector() {
-        return Guice.createInjector(new JerseyServletModule(){
+        return Guice.createInjector(new JerseyServletModule() {
             @Override
             protected void configureServlets() {
+                bind(Context.class).to(InitialContext.class);
                 SecurityInterceptor securityInterceptor = new SecurityInterceptor();
                 requestInjection(securityInterceptor);
 
                 bindInterceptor(Matchers.any(), Matchers.annotatedWith(Path.class),
                         securityInterceptor);
-                PropertySettings settings = new JndiPropertySettingsProvider("settings/global", "settings/application").get();
-                bind(PropertySettings.class).toInstance(settings);
+                install(new SQLModule());
                 bind(UserRepository.class).to(SQLUserRepository.class);
                 bind(DrawnGraphResource.class);
                 bind(GraphResource.class);
@@ -39,7 +47,25 @@ public class GuiceConfig extends GuiceServletContextListener {
                 bind(EdgeResource.class);
                 bind(UserResource.class);
                 serve("/service/*").with(GuiceContainer.class);
-                requireBinding(PropertySettings.class);
+
+                bind(DataSource.class)
+                        .annotatedWith(Names.named("nonRdfDb"))
+                        .toProvider(fromJndi(DataSource.class, "jdbc/nonRdfTripleBrainDB"));
+
+                requestStaticInjection(JenaConnection.class);
+                try {
+                    Context context = new InitialContext();
+                    JenaFriendlyDataSource jenaFriendlyDataSource = (JenaFriendlyDataSource) context.lookup("jdbc/jenaTripleBrainDB");
+                    bind(DataSource.class)
+                            .annotatedWith(Names.named("jenaDB"))
+                            .toInstance(jenaFriendlyDataSource);
+
+                    bind(String.class)
+                            .annotatedWith(Names.named("jenaDatabaseTypeName"))
+                            .toInstance(jenaFriendlyDataSource.getDatabaseTypeName());
+                } catch (NamingException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

@@ -5,23 +5,20 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Test;
 import org.triple_brain.module.model.User;
-import org.triple_brain.module.repository.user.user.UserRepository;
+import org.triple_brain.module.repository.user.UserRepository;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 import java.util.UUID;
 
-import static com.ovea.tadjin.util.rest.JSONMessages.FIELD;
-import static com.ovea.tadjin.util.rest.JSONMessages.REASON;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.triple_brain.graphmanipulator.jena.JenaConnection.modelMaker;
 import static org.triple_brain.module.model.json.UserJSONFields.*;
 import static org.triple_brain.module.model.validator.UserValidator.ALREADY_REGISTERED_EMAIL;
 import static org.triple_brain.module.model.validator.UserValidator.USER_NAME_ALREADY_REGISTERED;
-
+import static org.hamcrest.Matchers.*;
 /**
  * Copyright Mozilla Public License 1.1
  */
@@ -105,8 +102,8 @@ public class UserResourceTest extends RestTest {
         assertThat(response.getStatus(), is(400));
         JSONArray errors = response.getEntity(JSONArray.class);
         assertThat(errors.length(), greaterThan(0));
-        assertThat(errors.getJSONObject(0).get(FIELD).toString(), is(EMAIL));
-        assertThat(errors.getJSONObject(0).get(REASON).toString(), is(ALREADY_REGISTERED_EMAIL));
+        assertThat(errors.getJSONObject(0).get("FIELD").toString(), is(EMAIL));
+        assertThat(errors.getJSONObject(0).get("REASON").toString(), is(ALREADY_REGISTERED_EMAIL));
     }
 
     @Test
@@ -117,8 +114,8 @@ public class UserResourceTest extends RestTest {
         assertThat(response.getStatus(), is(400));
         JSONArray errors = response.getEntity(JSONArray.class);
         assertThat(errors.length(), greaterThan(0));
-        assertThat(errors.getJSONObject(0).get(FIELD).toString(), is(USER_NAME));
-        assertThat(errors.getJSONObject(0).get(REASON).toString(), is(USER_NAME_ALREADY_REGISTERED));
+        assertThat(errors.getJSONObject(0).get("FIELD").toString(), is(USER_NAME));
+        assertThat(errors.getJSONObject(0).get("REASON").toString(), is(USER_NAME_ALREADY_REGISTERED));
     }
 
     @Test
@@ -130,9 +127,9 @@ public class UserResourceTest extends RestTest {
         jsonUser.put(PASSWORD_VERIFICATION, "");
         response = resource.path("users").type("application/json").cookie(authCookie).post(ClientResponse.class, jsonUser);
         JSONArray errors = response.getEntity(JSONArray.class);
-        assertThat(errors.getJSONObject(0).get(FIELD).toString(), is(EMAIL));
-        assertThat(errors.getJSONObject(1).get(FIELD).toString(), is(USER_NAME));
-        assertThat(errors.getJSONObject(2).get(FIELD).toString(), is(PASSWORD));
+        assertThat(errors.getJSONObject(0).get("FIELD").toString(), is(EMAIL));
+        assertThat(errors.getJSONObject(1).get("FIELD").toString(), is(USER_NAME));
+        assertThat(errors.getJSONObject(2).get("FIELD").toString(), is(PASSWORD));
     }
 
     private NewCookie authenticateUser(User user){

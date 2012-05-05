@@ -1,12 +1,12 @@
 package org.triple_brain.mind_map.service.resources;
 
-import com.ovea.tadjin.util.rest.JSONMessages;
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
 import org.triple_brain.module.model.User;
-import org.triple_brain.module.repository.user.user.NonExistingUserException;
-import org.triple_brain.module.repository.user.user.UserRepository;
+import org.triple_brain.module.repository.user.NonExistingUserException;
+import org.triple_brain.module.repository.user.UserRepository;
 
 import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
@@ -74,7 +74,7 @@ public class UserResource {
         User user = User.withUsernameAndEmail(jsonUser.optString(USER_NAME, ""), jsonUser.optString(EMAIL, ""))
                 .password(jsonUser.optString(PASSWORD, ""));
 
-        JSONMessages jsonMessages = new JSONMessages();
+        JSONArray jsonMessages = new JSONArray();
         Map<String, String> errors = validate(jsonUser);
 
         if (userRepository.emailExists(jsonUser.optString(EMAIL, "")))
@@ -85,7 +85,11 @@ public class UserResource {
 
         if (!errors.isEmpty()) {
             for (Map.Entry<String, String> entry : errors.entrySet()) {
-                jsonMessages.addFieldError(entry.getKey(), entry.getValue());
+                jsonMessages.put(new JSONObject().put(
+                        "FIELD", entry.getKey()
+                ).put(
+                        "REASON", entry.getValue()
+                ));
             }
 
             throw new WebApplicationException(Response

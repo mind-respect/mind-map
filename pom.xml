@@ -90,12 +90,6 @@
             <version>r07</version>
         </dependency>
 
-        <!-- DI -->
-        <dependency>
-            <groupId>com.mycila</groupId>
-            <artifactId>mycila-guice</artifactId>
-            <version>2.2.ga</version>
-        </dependency>
         <dependency>
             <groupId>com.google.inject.extensions</groupId>
             <artifactId>guice-servlet</artifactId>
@@ -108,6 +102,11 @@
         </dependency>
 
         <!-- Jersey -->
+        <dependency>
+            <groupId>com.sun.jersey.contribs</groupId>
+            <artifactId>jersey-apache-client</artifactId>
+            <version>1.9.1</version>
+        </dependency>
         <dependency>
             <groupId>com.sun.jersey.contribs</groupId>
             <artifactId>jersey-guice</artifactId>
@@ -145,18 +144,6 @@
             <version>1.1.1</version>
         </dependency>
 
-        <!--Sping security-->
-        <dependency>
-            <groupId>springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>1.2.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
-            <version>2.0.4</version>
-        </dependency>
-
         <!-- Logging -->
         <dependency>
             <groupId>log4j</groupId>
@@ -183,8 +170,28 @@
             <artifactId>mail</artifactId>
             <version>1.4.3</version>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-plus</artifactId>
+            <version>8.0.0.M3</version>
+        </dependency>
 
-        <!-- Testing -->
+
+        <!-- Tests -->
+        <dependency>
+            <groupId>org.triple_brain.module</groupId>
+            <artifactId>triple_brain-repository-sql</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <classifier>tests</classifier>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.triple_brain.module</groupId>
+            <artifactId>triple_brain-jena-graph-manipulator</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <classifier>tests</classifier>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit-dep</artifactId>
@@ -198,27 +205,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.testatoo.container</groupId>
-            <artifactId>testatoo-container-jetty</artifactId>
-            <version>1.0-rc5</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testatoo</groupId>
-            <artifactId>testatoo-config</artifactId>
-            <version>1.0-rc2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testatoo</groupId>
-            <artifactId>testatoo-selenium</artifactId>
-            <version>1.0-rc4</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testatoo.cartridge</groupId>
-            <artifactId>testatoo-html4</artifactId>
-            <version>1.0-rc3</version>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>1.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -228,9 +217,16 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.sun.jersey.contribs</groupId>
-            <artifactId>jersey-apache-client</artifactId>
-            <version>1.9.1</version>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-security</artifactId>
+            <version>8.0.0.M3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-webapp</artifactId>
+            <version>8.0.0.M3</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

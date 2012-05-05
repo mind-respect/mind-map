@@ -4,21 +4,30 @@
 
 <Configure id="webappContext" class="org.eclipse.jetty.webapp.WebAppContext">
 
-    <Set name="contextPath">/services</Set>
+    <Set name="contextPath">/</Set>
 
-    <Set name="securityHandler">
-        <New class="org.eclipse.jetty.security.ConstraintSecurityHandler">
-            <Set name="loginService">
-                <New class="org.eclipse.jetty.plus.jaas.JAASLoginService">
-                    <Set name="name">Hello</Set>
-                    <Set name="loginModuleName">props</Set>
-                </New>
-            </Set>
-            <!--         <Set name="authenticatorFactory">
+    <New class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg>jdbc/nonRdfTripleBrainDB</Arg>
+        <Arg>
+            <New class="org.apache.commons.dbcp.BasicDataSource">
+                <Set name="driverClassName">org.h2.Driver</Set>
+                <Set name="url">jdbc:h2:mem:test;</Set>
+                <Set name="username">sa</Set>
+                <Set name="password"></Set>
+            </New>
+        </Arg>
+    </New>
 
-                <New class="org.triple_brain.services.auth.SessionAuthenticatorFactory" />
-
-            </Set>-->
-        </New>
-    </Set>
+    <New class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg>jdbc/jenaTripleBrainDB</Arg>
+        <Arg>
+            <New class="org.triple_brain.module.repository_sql.JenaFriendlyDataSource">
+                <Set name="driverClassName">org.h2.Driver</Set>
+                <Set name="url">jdbc:h2:mem:test;</Set>
+                <Set name="username">sa</Set>
+                <Set name="password"></Set>
+                <Set name="databaseTypeName">HSQLDB</Set>
+            </New>
+        </Arg>
+    </New>
 </Configure>

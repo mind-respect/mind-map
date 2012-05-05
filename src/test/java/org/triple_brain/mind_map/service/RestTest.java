@@ -1,30 +1,27 @@
-    package org.triple_brain.mind_map.service;
+package org.triple_brain.mind_map.service;
 
-import com.google.inject.Binder;
-import com.google.inject.Module;
-import com.google.inject.Stage;
-import com.google.inject.util.Modules;
-import com.mycila.inject.jsr250.Jsr250;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
+import graph.JenaSQLTestModule;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.triple_brain.mind_map.Launcher;
 import org.triple_brain.module.model.User;
-import org.triple_brain.module.repository.user.user.UserRepository;
-import org.triple_brain.module.repository_sql.SQLModule;
-import org.triple_brain.module.repository_sql.SQLUserRepository;
+import org.triple_brain.module.repository.user.UserRepository;
+import org.triple_brain.module.repository_sql.SQLTestModule;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.NewCookie;
 import java.net.URI;
 import java.sql.SQLException;
 
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.triple_brain.module.repository_sql.SQLConnection.*;
 
@@ -32,7 +29,7 @@ import static org.triple_brain.module.repository_sql.SQLConnection.*;
     /**
  * Copyright Mozilla Public License 1.1
  */
-public abstract class RestTest implements Module {
+public abstract class RestTest{
 
    protected static URI BASE_URI;
    protected WebResource resource;
@@ -47,6 +44,7 @@ public abstract class RestTest implements Module {
 
     @BeforeClass
     static public void startServer() throws Exception {
+        Guice.createInjector(new SQLTestModule(), new JenaSQLTestModule());
         BASE_URI = new URI("http://localhost:8080/service");
         
         launcher = new Launcher();
@@ -65,7 +63,11 @@ public abstract class RestTest implements Module {
 
     @Before
     public void before_rest_test()throws SQLException{
-        Jsr250.createInjector(Stage.PRODUCTION, Modules.override(new SQLModule()).with(this)).injectMembers(this);
+        Injector injector = Guice.createInjector(
+                new SQLTestModule(),
+                new JenaSQLTestModule()
+        );
+        injector.injectMembers(this);
         cleanTables();
         resource = client.resource(BASE_URI);
     }
@@ -80,12 +82,6 @@ public abstract class RestTest implements Module {
         createTables();
     }
 
-
-
-    @Override
-    public final void configure(Binder binder) {
-        binder.bind(UserRepository.class).to(SQLUserRepository.class);
-    }
 
     protected User authenticate(){
         return authenticate(

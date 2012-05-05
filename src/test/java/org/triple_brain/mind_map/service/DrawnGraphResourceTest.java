@@ -7,10 +7,10 @@ import org.junit.Test;
 import org.triple_brain.module.model.graph.Edge;
 import org.triple_brain.module.model.graph.Vertex;
 
-import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 import static junit.framework.Assert.assertFalse;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertTrue;
 import static org.triple_brain.module.model.json.drawn_graph.DrawnGraphJSONFields.VERTICES;
 import static org.triple_brain.module.model.json.drawn_graph.DrawnVertexJSONFields.ID;
 

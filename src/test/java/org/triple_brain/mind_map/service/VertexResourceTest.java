@@ -10,10 +10,10 @@ import org.triple_brain.module.model.graph.Graph;
 import org.triple_brain.module.model.graph.Vertex;
 import org.triple_brain.module.model.json.graph.VertexJSONFields;
 
-import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 import static junit.framework.Assert.assertFalse;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertTrue;
 import static org.triple_brain.module.model.json.StatementJSONFields.*;
 import static org.triple_brain.module.model.json.graph.GraphJSONFields.EDGES;
 import static org.triple_brain.module.model.json.graph.GraphJSONFields.VERTICES;
