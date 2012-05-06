@@ -21,13 +21,18 @@
     <New class="org.eclipse.jetty.plus.jndi.Resource">
         <Arg>jdbc/jenaTripleBrainDB</Arg>
         <Arg>
-            <New class="org.triple_brain.module.repository_sql.JenaFriendlyDataSource">
+            <New class="org.apache.commons.dbcp.BasicDataSource">
                 <Set name="driverClassName">org.h2.Driver</Set>
-                <Set name="url">jdbc:h2:mem:test;</Set>
+                <Set name="url">jdbc:h2:mem:jena_triple_brain;</Set>
                 <Set name="username">sa</Set>
                 <Set name="password"></Set>
-                <Set name="databaseTypeName">HSQLDB</Set>
             </New>
+        </Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg>jdbc/jenaTripleBrainDBTypeName</Arg>
+        <Arg>
+            HSQLDB
         </Arg>
     </New>
 </Configure>

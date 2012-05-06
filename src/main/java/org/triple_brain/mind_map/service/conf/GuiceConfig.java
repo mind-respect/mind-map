@@ -11,13 +11,11 @@ import org.triple_brain.graphmanipulator.jena.JenaConnection;
 import org.triple_brain.mind_map.service.SecurityInterceptor;
 import org.triple_brain.mind_map.service.resources.*;
 import org.triple_brain.module.repository.user.UserRepository;
-import org.triple_brain.module.repository_sql.JenaFriendlyDataSource;
 import org.triple_brain.module.repository_sql.SQLModule;
 import org.triple_brain.module.repository_sql.SQLUserRepository;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 import javax.ws.rs.Path;
 
@@ -53,19 +51,14 @@ public class GuiceConfig extends GuiceServletContextListener {
                         .toProvider(fromJndi(DataSource.class, "jdbc/nonRdfTripleBrainDB"));
 
                 requestStaticInjection(JenaConnection.class);
-                try {
-                    Context context = new InitialContext();
-                    JenaFriendlyDataSource jenaFriendlyDataSource = (JenaFriendlyDataSource) context.lookup("jdbc/jenaTripleBrainDB");
-                    bind(DataSource.class)
-                            .annotatedWith(Names.named("jenaDB"))
-                            .toInstance(jenaFriendlyDataSource);
 
-                    bind(String.class)
-                            .annotatedWith(Names.named("jenaDatabaseTypeName"))
-                            .toInstance(jenaFriendlyDataSource.getDatabaseTypeName());
-                } catch (NamingException e) {
-                    e.printStackTrace();
-                }
+                bind(DataSource.class)
+                        .annotatedWith(Names.named("jenaDB"))
+                        .toProvider(fromJndi(DataSource.class, "jdbc/jenaTripleBrainDB"));
+
+                bind(String.class)
+                        .annotatedWith(Names.named("jenaDatabaseTypeName"))
+                        .toProvider(fromJndi(String.class, "jdbc/jenaTripleBrainDBTypeName"));
             }
         });
     }
