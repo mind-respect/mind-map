@@ -11,7 +11,7 @@
         <Arg>
             <New class="org.apache.commons.dbcp.BasicDataSource">
                 <Set name="driverClassName">org.h2.Driver</Set>
-                <Set name="url">jdbc:h2:mem:test;</Set>
+                <Set name="url">jdbc:h2:mem:triple_brain;</Set>
                 <Set name="username">sa</Set>
                 <Set name="password"></Set>
             </New>
