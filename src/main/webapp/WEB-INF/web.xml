@@ -28,15 +28,4 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-
-    <resource-env-ref>
-        <resource-env-ref-name>settings/application</resource-env-ref-name>
-        <resource-env-ref-type>java.util.Properties</resource-env-ref-type>
-    </resource-env-ref>
-
-    <resource-env-ref>
-        <resource-env-ref-name>settings/global</resource-env-ref-name>
-        <resource-env-ref-type>java.util.Properties</resource-env-ref-type>
-    </resource-env-ref>
-
 </web-app>
