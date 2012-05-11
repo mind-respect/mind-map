@@ -4,6 +4,7 @@ import org.codehaus.jettison.json.JSONException;
 import org.triple_brain.graphmanipulator.jena.graph.JenaEdgeManipulator;
 import org.triple_brain.mind_map.service.ServiceUtils;
 import org.triple_brain.module.model.graph.Edge;
+import org.triple_brain.module.model.graph.GraphElementIdentifier;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -26,7 +27,7 @@ public class EdgeResource {
 
     @POST
     @Path("/{sourceVertexId}/{destinationVertexId}")
-    public Response addRelation(@PathParam("sourceVertexId") String sourceVertexId, @PathParam("destinationVertexId") String destinationVertexId, @Context HttpServletRequest request) throws JSONException, URISyntaxException, UnsupportedEncodingException {
+    public Response addRelation(@GraphElementIdentifier @PathParam("sourceVertexId") String sourceVertexId, @GraphElementIdentifier @PathParam("destinationVertexId") String destinationVertexId, @Context HttpServletRequest request) throws JSONException, URISyntaxException, UnsupportedEncodingException {
         try{
             sourceVertexId = ServiceUtils.decodeURL(sourceVertexId);
             destinationVertexId = ServiceUtils.decodeURL(destinationVertexId);
@@ -42,7 +43,7 @@ public class EdgeResource {
 
     @DELETE
     @Path("/{edgeId}")
-    public Response removeRelation(@PathParam("edgeId") String edgeId, @Context HttpServletRequest request) throws JSONException, URISyntaxException{
+    public Response removeRelation(@GraphElementIdentifier @PathParam("edgeId") String edgeId, @Context HttpServletRequest request) throws JSONException, URISyntaxException{
         try{
             edgeId = ServiceUtils.decodeURL(edgeId);
         }catch (UnsupportedEncodingException e){
@@ -57,7 +58,7 @@ public class EdgeResource {
 
     @POST
     @Path("/label/{edgeId}")
-    public Response modifyEdgeLabel(@PathParam("edgeId") String edgeId, @QueryParam("label") String label, @Context HttpServletRequest request) throws JSONException, URISyntaxException{
+    public Response modifyEdgeLabel(@GraphElementIdentifier @PathParam("edgeId") String edgeId, @QueryParam("label") String label, @Context HttpServletRequest request) throws JSONException, URISyntaxException{
         try{
             edgeId = ServiceUtils.decodeURL(edgeId);
         }catch (UnsupportedEncodingException e){

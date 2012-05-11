@@ -6,6 +6,7 @@ import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
 import org.triple_brain.mind_map.service.ServiceUtils;
 import org.triple_brain.module.graphviz_visualisation.GraphToDrawnGraphConverter;
 import org.triple_brain.module.model.graph.Graph;
+import org.triple_brain.module.model.graph.GraphElementIdentifier;
 
 import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +43,7 @@ public class DrawnGraphResource {
 
     @GET
     @Path("/{depthOfSubVertices}/{centralVertexId}")
-    public Response drawnGraph(@PathParam("depthOfSubVertices") Integer depthOfSubVertices, @PathParam("centralVertexId") String centralVertexId, @Context HttpServletRequest request) throws JSONException{
+    public Response drawnGraph(@PathParam("depthOfSubVertices") Integer depthOfSubVertices, @GraphElementIdentifier @PathParam("centralVertexId") String centralVertexId, @Context HttpServletRequest request) throws JSONException{
         try{
             centralVertexId = ServiceUtils.decodeURL(centralVertexId);
         }catch(UnsupportedEncodingException e){

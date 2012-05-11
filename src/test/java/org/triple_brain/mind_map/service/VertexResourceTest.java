@@ -4,7 +4,10 @@ import com.sun.jersey.api.client.ClientResponse;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Test;
+import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
+import org.triple_brain.graphmanipulator.jena.graph.JenaVertexManipulator;
 import org.triple_brain.module.graphviz_visualisation.GraphToDrawnGraphConverter;
+import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.Edge;
 import org.triple_brain.module.model.graph.Graph;
 import org.triple_brain.module.model.graph.Vertex;
@@ -47,6 +50,19 @@ public class VertexResourceTest extends GraphManipulationRestTest{
         assertTrue(containsVertexWithId(updatedDrawnGraph.getJSONArray(VERTICES), createdVertexId));
         assertTrue(containsEdgeWithId(updatedDrawnGraph.getJSONArray(EDGES), createdEdgeId));
     }
+
+    @Test
+    public void cannot_add_a_vertex_that_user_doesnt_own()throws Exception{
+        User anotherUser = createAUser();
+        JenaGraphManipulator.createUserGraph(anotherUser);
+        vertexManipulator = JenaVertexManipulator.withUser(anotherUser);
+        Vertex anotherUserDefaultVertex = vertexManipulator.defaultVertex();
+        response = resource.path("vertex").path(ServiceUtils.encodeURL(anotherUserDefaultVertex.id())).cookie(authCookie).post(ClientResponse.class);
+        assertThat(response.getStatus(), is(403));
+    }
+
+
+
 
     @Test
     public void can_remove_a_vertex() throws Exception {

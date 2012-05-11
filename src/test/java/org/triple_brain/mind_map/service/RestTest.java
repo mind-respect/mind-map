@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import javax.ws.rs.core.NewCookie;
 import java.net.URI;
 import java.sql.SQLException;
+import java.util.UUID;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -90,7 +91,10 @@ public abstract class RestTest{
     }
 
     protected User createAUser(){
-        User user = User.withUsernameAndEmail("a_user_name", "user@triplebrain.org").password("password");
+        User user = User.withUsernameAndEmail(
+                UUID.randomUUID().toString(),
+                UUID.randomUUID().toString() + "@triplebrain.org")
+                .password("password");
         userRepository.save(user);
         return user;
     }
