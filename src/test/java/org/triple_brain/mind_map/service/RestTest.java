@@ -98,6 +98,7 @@ public abstract class RestTest{
         userRepository.save(user);
         return user;
     }
+        /**/
 
     protected User authenticate(User user) {
         response = resource.path("users").path("authenticate").queryParam("email", user.email()).queryParam("password", "password").cookie(authCookie).get(ClientResponse.class);
