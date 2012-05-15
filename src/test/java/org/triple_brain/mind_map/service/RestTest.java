@@ -46,9 +46,9 @@ public abstract class RestTest{
     @BeforeClass
     static public void startServer() throws Exception {
         Guice.createInjector(new SQLTestModule(), new JenaSQLTestModule());
-        BASE_URI = new URI("http://localhost:8080/service");
-        
-        launcher = new Launcher();
+        BASE_URI = new URI("http://localhost:8786/service");
+
+        launcher = new Launcher(BASE_URI.getPort());
         launcher.launch();
 
         DefaultApacheHttpClientConfig clientConfig = new DefaultApacheHttpClientConfig();

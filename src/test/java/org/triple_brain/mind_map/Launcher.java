@@ -15,9 +15,15 @@ import java.io.File;
 public class Launcher {
     private Server server;
 
-    public Launcher() throws Exception {
+    private int port = 0;
 
-        server = new Server(8080);
+    public Launcher() throws Exception{
+        this(8080);
+    }
+
+    public Launcher(int port) throws Exception {
+        this.port = port;
+        server = new Server(port);
         HandlerCollection handlers = new HandlerCollection();
 
         WebAppContext wac = new WebAppContext("src/main/webapp", "/");
@@ -33,7 +39,7 @@ public class Launcher {
     }
 
     int getPort() {
-        return 8080;
+        return port;
     }
 
     public void launch() throws Exception {
