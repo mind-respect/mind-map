@@ -4,6 +4,9 @@ if (triple_brain.id_uri == undefined) {
     var idSeparator = "_id_separator_";
 
     triple_brain.id_uri = {
+
+        baseURI : "http://www.triple_brain.org/",
+
         idFromUri: function(uri){
             var segments = $.url(uri).segment();
             return segments[0] + idSeparator + segments[1];

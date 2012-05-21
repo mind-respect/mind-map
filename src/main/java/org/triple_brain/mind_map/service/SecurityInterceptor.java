@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 import java.lang.annotation.Annotation;
 import java.net.URI;
 
+import static org.triple_brain.mind_map.service.ServiceUtils.usernameInURI;
 import static org.triple_brain.mind_map.service.resources.GraphManipulatorResourceUtils.userFromSession;
 
 /**
@@ -78,11 +79,7 @@ public class SecurityInterceptor implements MethodInterceptor {
 
     private boolean doesCurrentUserHaveAccessToURI(URI uri){
         User currentUser = userFromSession(requestProvider.get().getSession());
-        return userNameInUri(uri).equals(currentUser.username());
-    }
-
-    private String userNameInUri(URI uri){
-        return uri.getPath().split("\\/")[1];
+        return usernameInURI(uri).equals(currentUser.username());
     }
 
     private boolean annotationsHaveGraphElementIdentifierAnnotation(Annotation[] annotations){

@@ -5,14 +5,15 @@ if (triple_brain.drawn_graph == undefined) {
     var logger = new Logger('triple_brain.drawn_graph');
 
     (function($) {
+        var idURIUtils = triple_brain.id_uri;
         triple_brain.drawn_graph = {
             getWithDefaultCentralVertex: function() {
                 var authenticatedUsername = triple_brain.authenticatedUser.user_name;
-                var centralVertexId = triple_brain.id_uri.idFromUri('http://www.triple_brain.org/' + authenticatedUsername + '/default');
+                var centralVertexId = idURIUtils.idFromUri(idURIUtils.baseURI + authenticatedUsername + '/default');
                 var depthOfSubVertices = $("#sub-vertices-depth-slider").slider('value');
                 $.ajax({
                     type: 'GET',
-                    url: options.ws.app + '/service/drawn_graph/' + depthOfSubVertices,
+                    url: options.ws.app + '/service/drawn_graph/' + mindMapURI() + "/" + depthOfSubVertices,
                     dataType: 'json'
                 }).success(function(drawnGraph) {
                     triple_brain.bus.local.topic('/event/ui/graph/drawing_info/updated/').publish(drawnGraph, centralVertexId);
@@ -22,12 +23,20 @@ if (triple_brain.drawn_graph == undefined) {
                 var depthOfSubVertices = $("#sub-vertices-depth-slider").slider('value');
                 $.ajax({
                     type: 'GET',
-                    url: options.ws.app + '/service/drawn_graph/' + depthOfSubVertices + '/' + triple_brain.id_uri.encodedUriFromId(newCentralVertex.id()),
+                    url: options.ws.app + '/service/drawn_graph/' + mindMapURI() + "/" + depthOfSubVertices + '/' + triple_brain.id_uri.encodedUriFromId(newCentralVertex.id()),
                     dataType: 'json'
                 }).success(function(drawnGraph) {
                     triple_brain.bus.local.topic('/event/ui/graph/drawing_info/updated/').publish(drawnGraph, newCentralVertex.id());
                 })
              }
+        }
+
+        function mindMapURI(){
+            return encodeURIComponent(
+                idURIUtils.baseURI +
+                    triple_brain.authenticatedUser.user_name +
+                    "/mind_map"
+            )
         }
 
     })(jQuery);

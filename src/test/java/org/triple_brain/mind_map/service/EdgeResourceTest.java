@@ -1,20 +1,14 @@
 package org.triple_brain.mind_map.service;
 
 import com.sun.jersey.api.client.ClientResponse;
-import org.codehaus.jettison.json.JSONObject;
 import org.junit.Test;
-import org.triple_brain.module.graphviz_visualisation.GraphToDrawnGraphConverter;
 import org.triple_brain.module.model.graph.Edge;
-import org.triple_brain.module.model.graph.Graph;
-import org.triple_brain.module.model.graph.Vertex;
-
-import java.util.Set;
 
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertFalse;
-import static org.triple_brain.module.model.json.graph.GraphJSONFields.EDGES;
 
 /**
  * Copyright Mozilla Public License 1.1
@@ -23,80 +17,91 @@ public class EdgeResourceTest extends GraphManipulationRestTest{
 
     @Test
     public void can_add_a_relation() throws Exception {
-        Vertex centralVertex = vertexManipulator.defaultVertex();
-        Edge newEdge = vertexManipulator.addVertexAndRelation(
-                centralVertex.id());
+        assertFalse(vertexA.hasDestinationVertex(vertexC));
+        addRelationBetweenVertexAAndCUsingRest();
+        assertTrue(vertexA.hasDestinationVertex(vertexC));
+    }
 
-        Vertex newVertex = newEdge.destinationVertex();
-        String secondVertexId = newVertex.id();
-        newEdge = vertexManipulator.addVertexAndRelation(secondVertexId);
-
-        JSONObject drawnGraph = GraphToDrawnGraphConverter.withGraph(wholeGraph()).convert();
-        Integer numberOfEdges = drawnGraph.getJSONArray(EDGES).length();
-
-        Graph graph = wholeGraph();
-        centralVertex = graph.vertexWithIdentifier(centralVertex.id());
-        newEdge = graph.edgeWithIdentifier(newEdge.id());
-        Vertex thirdVertex = newEdge.destinationVertex();
-        assertFalse(neighborsOfVertex(thirdVertex).contains(centralVertex));
-        response = resource.path("edge").path(ServiceUtils.encodeURL(thirdVertex.id())).path(ServiceUtils.encodeURL(centralVertex.id())).cookie(authCookie).post(ClientResponse.class);
+    @Test
+    public void adding_a_relation_returns_correct_response_status() throws Exception{
+        ClientResponse response = addRelationBetweenVertexAAndCUsingRest();
         assertThat(response.getStatus(), is(201));
-        graph = wholeGraph();
-        thirdVertex = graph.vertexWithIdentifier(thirdVertex.id());
-        centralVertex = graph.vertexWithIdentifier(centralVertex.id());
-        assertTrue(neighborsOfVertex(thirdVertex).contains(centralVertex));
-        Edge edgeBetweenThirdVertexAndCentralVertex = thirdVertex.edgeThatLinksToDestinationVertex(centralVertex);
-        assertThat(response.getHeaders().get("Location").get(0),
-                is(BASE_URI + "/edge/" + ServiceUtils.encodeURL(thirdVertex.id()) + "/" + ServiceUtils.encodeURL(centralVertex.id()) + "/" + ServiceUtils.encodeURL(edgeBetweenThirdVertexAndCentralVertex.id())));
+    }
 
-        JSONObject updatedDrawnGraph = GraphToDrawnGraphConverter.withGraph(wholeGraph()).convert();
-        Integer updatedNumberOfEdges = updatedDrawnGraph.getJSONArray(EDGES).length();
-        assertThat(updatedNumberOfEdges, is(numberOfEdges + 1));
+    @Test
+    public void adding_a_relation_returns_correct_headers() throws Exception{
+        ClientResponse response = addRelationBetweenVertexAAndCUsingRest();
+        Edge edgeBetweenAAndC = vertexA.edgeThatLinksToDestinationVertex(vertexC);
+        assertThat(
+                response.getHeaders().get("Location").get(0),
+                is(
+                        BASE_URI + "/edge/" +
+                                ServiceUtils.encodeURL(vertexA.id())
+                                + "/" +
+                                ServiceUtils.encodeURL(vertexC.id())
+                                + "/" +
+                                ServiceUtils.encodeURL(edgeBetweenAAndC.id())
+                ));
+    }
+
+    private ClientResponse addRelationBetweenVertexAAndCUsingRest() throws Exception{
+        ClientResponse response = resource
+                .path("edge")
+                .path(ServiceUtils.encodeURL(vertexA.id()))
+                .path(ServiceUtils.encodeURL(vertexC.id()))
+                .cookie(authCookie)
+                .post(ClientResponse.class);
+        actualizeVertexABAndC();
+        return response;
     }
 
     @Test
     public void can_remove_a_relation() throws Exception {
-        Vertex centralVertex = vertexManipulator.defaultVertex();
-        Edge newEdge = vertexManipulator.addVertexAndRelation(
-                centralVertex.id()
-        );
+        Edge edgeBetweenAAndB = vertexA.edgeThatLinksToDestinationVertex(vertexB);
+        removeEdgeBetweenVertexAAndBUsingRest();
+        assertFalse(wholeGraph().edges().contains(edgeBetweenAAndB));
+    }
 
-        JSONObject drawnGraph = GraphToDrawnGraphConverter.withGraph(
-                wholeGraph()).convert();
-        Integer numberOfEdges = drawnGraph.getJSONArray(EDGES).length();
-        response = resource.path("edge").path(ServiceUtils.encodeURL(newEdge.id())).cookie(authCookie).delete(ClientResponse.class);
+    @Test
+    public void removing_a_relation_returns_correct_status() throws Exception{
+        ClientResponse response = removeEdgeBetweenVertexAAndBUsingRest();
         assertThat(response.getStatus(), is(200));
+    }
 
-        JSONObject updatedDrawnGraph = GraphToDrawnGraphConverter.withGraph(
-                wholeGraph()).convert();
-        Integer updatedNumberOfEdges = updatedDrawnGraph.getJSONArray(EDGES).length();
-        assertThat(updatedNumberOfEdges, is(numberOfEdges - 1));
-        assertFalse(wholeGraph().edges().contains(newEdge));
-
+    private ClientResponse removeEdgeBetweenVertexAAndBUsingRest() throws Exception{
+        Edge edgeBetweenAAndB = vertexA.edgeThatLinksToDestinationVertex(vertexB);
+        ClientResponse response = resource.path("edge")
+                .path(ServiceUtils.encodeURL(edgeBetweenAAndB.id()))
+                .cookie(authCookie)
+                .delete(ClientResponse.class);
+        actualizeVertexABAndC();
+        return response;
     }
 
     @Test
     public void can_update_label() throws Exception {
-        Vertex centralVertex = vertexManipulator.defaultVertex();
-
-        Edge newEdge = vertexManipulator.addVertexAndRelation(
-                centralVertex.id());
-
-        assertThat(newEdge.label(), is(""));
-
-        response = resource.path("edge/label/").path(ServiceUtils.encodeURL(newEdge.id())).queryParam("label", "likes").cookie(authCookie).post(ClientResponse.class);
-        Graph graph = wholeGraph();
-        newEdge = graph.edgeWithIdentifier(newEdge.id());
-        assertThat(newEdge.label(), is("likes"));
+        Edge edgeBetweenAAndB = vertexA.edgeThatLinksToDestinationVertex(vertexB);
+        assertThat(edgeBetweenAAndB.label(), is(not("new edge label")));
+        updateEdgeLabelBetweenAAndBUsingRest("new edge label");
+        edgeBetweenAAndB = vertexA.edgeThatLinksToDestinationVertex(vertexB);
+        assertThat(edgeBetweenAAndB.label(), is("new edge label"));
     }
 
-    private Graph wholeGraph(){
-        return graphManipulator.graphWithDefaultVertexAndDepth(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES);
+    @Test
+    public void updating_label_returns_correct_status() throws Exception {
+        ClientResponse response = updateEdgeLabelBetweenAAndBUsingRest("new edge label");
+        assertThat(response.getStatus(), is(200));
     }
 
-    private Set<Vertex> neighborsOfVertex(Vertex vertex){
-        return graphManipulator.graphWithDepthAndCenterVertexId(
-                1, vertex.id()).vertices();
+    private ClientResponse updateEdgeLabelBetweenAAndBUsingRest(String label)throws Exception{
+        Edge edgeBetweenAAndB = vertexA.edgeThatLinksToDestinationVertex(vertexB);
+        ClientResponse response = resource
+                .path("edge/label/")
+                .path(ServiceUtils.encodeURL(edgeBetweenAAndB.id()))
+                .queryParam("label", label)
+                .cookie(authCookie)
+                .post(ClientResponse.class);
+        actualizeVertexABAndC();
+        return response;
     }
-
 }

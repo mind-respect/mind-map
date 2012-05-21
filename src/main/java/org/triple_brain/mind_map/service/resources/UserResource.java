@@ -86,9 +86,9 @@ public class UserResource {
         if (!errors.isEmpty()) {
             for (Map.Entry<String, String> entry : errors.entrySet()) {
                 jsonMessages.put(new JSONObject().put(
-                        "FIELD", entry.getKey()
+                        "field", entry.getKey()
                 ).put(
-                        "REASON", entry.getValue()
+                        "reason", entry.getValue()
                 ));
             }
 

@@ -5,9 +5,12 @@ import org.codehaus.jettison.json.JSONObject;
 import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
 import org.triple_brain.mind_map.service.ServiceUtils;
 import org.triple_brain.module.graphviz_visualisation.GraphToDrawnGraphConverter;
+import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.Graph;
 import org.triple_brain.module.model.graph.GraphElementIdentifier;
+import org.triple_brain.module.repository.user.UserRepository;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -18,8 +21,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 
-import static org.triple_brain.mind_map.service.resources.GraphManipulatorResourceUtils.userFromSession;
+import static org.triple_brain.mind_map.service.ServiceUtils.usernameInURI;
 
 /**
  * Copyright Mozilla Public License 1.1
@@ -30,11 +34,14 @@ import static org.triple_brain.mind_map.service.resources.GraphManipulatorResour
 @Singleton
 public class DrawnGraphResource {
 
+    @Inject
+    UserRepository userRepository;
+
     @GET
-    @Path("/{depthOfSubVertices}")
-    public Response drawnGraph(@PathParam("depthOfSubVertices") Integer depthOfSubVertices, @Context HttpServletRequest request) throws JSONException{
+    @Path("/{graph_uri}/{depthOfSubVertices}")
+    public Response drawnGraph(@GraphElementIdentifier @PathParam("graph_uri") String graphUri, @PathParam("depthOfSubVertices") Integer depthOfSubVertices, @Context HttpServletRequest request) throws JSONException{
         JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
-                userFromSession(request.getSession())
+                userFromGraphURI(URI.create(graphUri))
         );
         Graph graph = graphManipulator.graphWithDefaultVertexAndDepth(depthOfSubVertices);
         JSONObject drawnGraph = GraphToDrawnGraphConverter.withGraph(graph).convert();
@@ -42,18 +49,22 @@ public class DrawnGraphResource {
     }
 
     @GET
-    @Path("/{depthOfSubVertices}/{centralVertexId}")
-    public Response drawnGraph(@PathParam("depthOfSubVertices") Integer depthOfSubVertices, @GraphElementIdentifier @PathParam("centralVertexId") String centralVertexId, @Context HttpServletRequest request) throws JSONException{
+    @Path("/{graph_uri}/{depthOfSubVertices}/{centralVertexId}")
+    public Response drawnGraph(@GraphElementIdentifier @PathParam("graph_uri") String graphUri, @PathParam("depthOfSubVertices") Integer depthOfSubVertices, @GraphElementIdentifier @PathParam("centralVertexId") String centralVertexId, @Context HttpServletRequest request) throws JSONException{
         try{
             centralVertexId = ServiceUtils.decodeURL(centralVertexId);
         }catch(UnsupportedEncodingException e){
             Response.status(Response.Status.BAD_REQUEST).build();
         }
         JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
-                userFromSession(request.getSession())
+                userFromGraphURI(URI.create(graphUri))
         );
         Graph graph = graphManipulator.graphWithDepthAndCenterVertexId(depthOfSubVertices, centralVertexId);
         JSONObject drawnGraph = GraphToDrawnGraphConverter.withGraph(graph).convert();
         return Response.ok(drawnGraph, MediaType.APPLICATION_JSON).build();
+    }
+
+    private User userFromGraphURI(URI graphURI){
+        return userRepository.findByUsername(usernameInURI(URI.create(graphURI.toString())));
     }
 }
