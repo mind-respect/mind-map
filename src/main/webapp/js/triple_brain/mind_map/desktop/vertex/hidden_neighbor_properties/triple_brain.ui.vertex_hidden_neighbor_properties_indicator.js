@@ -12,14 +12,14 @@ if (triple_brain.ui.vertex_hidden_neighbor_properties_indicator == undefined) {
            var numberOfHiddenConnectedVertices = vertex.numberOfHiddenConnectedVertices();
            var lengthInPixels = numberOfHiddenConnectedVertices == 1 ? 1 : 40;
            var startPoint = triple_brain.point.fromCoordinates(
-                vertex.position().left + vertex.width(),
-                vertex.position().top + (vertex.height() / 2)
+                vertex.position().x + vertex.width(),
+                vertex.position().y + (vertex.height() / 2)
            );
            var distanceBetweenEachDashedSegment = numberOfHiddenConnectedVertices == 1 ? 0: lengthInPixels / (vertex.numberOfHiddenConnectedVertices() - 1);
            var plainSegment = triple_brain.segment.withStartAndEndPointAtOrigin();
            plainSegment.startPoint = startPoint;
            var horizontalDistanceOfDashedSegment = 20;
-           plainSegment.endPoint.x = vertex.position().left + vertex.width() + horizontalDistanceOfDashedSegment;
+           plainSegment.endPoint.x = vertex.position().x + vertex.width() + horizontalDistanceOfDashedSegment;
            for(i = 0; i < numberOfHiddenConnectedVertices; i++){
                 plainSegment.endPoint.y = startPoint.y - (lengthInPixels / 2) + (i * distanceBetweenEachDashedSegment);
                 var dashedSegment = triple_brain.ui.vertex.hidden_neighbor_properties_indicator_dashed_segment.withSegment(plainSegment.clone());
