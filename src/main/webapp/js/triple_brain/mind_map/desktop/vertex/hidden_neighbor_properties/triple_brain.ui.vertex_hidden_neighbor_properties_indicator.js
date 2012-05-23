@@ -9,8 +9,9 @@ if (triple_brain.ui.vertex_hidden_neighbor_properties_indicator == undefined) {
 
     function HiddenNeighborPropertiesIndicator(vertex){
        this.build = function(){
+           var defaultLengthOfHiddenPropertiesContainer = 40;
            var numberOfHiddenConnectedVertices = vertex.numberOfHiddenConnectedVertices();
-           var lengthInPixels = numberOfHiddenConnectedVertices == 1 ? 1 : 40;
+           var lengthInPixels = numberOfHiddenConnectedVertices == 1 ? 1 : defaultLengthOfHiddenPropertiesContainer;
            var startPoint = triple_brain.point.fromCoordinates(
                 vertex.position().x + vertex.width(),
                 vertex.position().y + (vertex.height() / 2)
@@ -29,10 +30,10 @@ if (triple_brain.ui.vertex_hidden_neighbor_properties_indicator == undefined) {
            var hiddenNeighborPropertiesContainer = triple_brain.template['hidden_property_container'].merge();
            $("#drawn_graph").append(hiddenNeighborPropertiesContainer);
 
-           $(hiddenNeighborPropertiesContainer).css('min-width', lengthInPixels);
-           $(hiddenNeighborPropertiesContainer).css('min-height', lengthInPixels);
+           $(hiddenNeighborPropertiesContainer).css('min-width', defaultLengthOfHiddenPropertiesContainer);
+           $(hiddenNeighborPropertiesContainer).css('min-height', defaultLengthOfHiddenPropertiesContainer);
            $(hiddenNeighborPropertiesContainer).css('left', startPoint.x);
-           $(hiddenNeighborPropertiesContainer).css('top', startPoint.y - (lengthInPixels / 2));
+           $(hiddenNeighborPropertiesContainer).css('top', startPoint.y - (defaultLengthOfHiddenPropertiesContainer / 2));
            var timer;
            $(hiddenNeighborPropertiesContainer).mouseenter(function(e){
                if(timer) {
