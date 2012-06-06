@@ -23,28 +23,24 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <classpathDependencyExcludes>
-                        <!-- exclude code absent api -->
-                        <!--<classpathDependencyExclude>javax:javaee-api</classpathDependencyExclude>-->
-                        <classpathDependencyExclude>javax:javaee-web-api</classpathDependencyExclude>
-                    </classpathDependencyExcludes>
                     <excludes>
-                        <exclude>**/*Test.java</exclude>
-                        <exclude>javax:javaee-web-api</exclude>
+                        <exclude>**/service/**</exclude>
                     </excludes>
-                    <includes>
-                        <include>**/DesktopTestSuite.java</include>
-                    </includes>
                 </configuration>
             </plugin>
         </plugins>
     </build>
 
-
     <dependencies>
         <dependency>
             <groupId>org.triple_brain.module</groupId>
             <artifactId>triple_brain-repository-sql</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.triple_brain.module</groupId>
+            <artifactId>triple_brain-common-utils</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 

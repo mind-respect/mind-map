@@ -14,6 +14,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertTrue;
+import static org.triple_brain.module.common_utils.CommonUtils.encodeURL;
 import static org.triple_brain.module.model.json.StatementJSONFields.*;
 
 /**
@@ -53,7 +54,7 @@ public class VertexResourceTest extends GraphManipulationRestTest{
 
     private ClientResponse addAVertexToVertexAUsingRest()throws Exception{
         ClientResponse response = resource.path("vertex")
-                .path(ServiceUtils.encodeURL(vertexA.id()))
+                .path(encodeURL(vertexA.id()))
                 .cookie(authCookie)
                 .post(ClientResponse.class);
         actualizeVertexABAndC();
@@ -66,7 +67,7 @@ public class VertexResourceTest extends GraphManipulationRestTest{
         JenaGraphManipulator.createUserGraph(anotherUser);
         vertexManipulator = JenaVertexManipulator.withUser(anotherUser);
         Vertex anotherUserDefaultVertex = vertexManipulator.defaultVertex();
-        response = resource.path("vertex").path(ServiceUtils.encodeURL(anotherUserDefaultVertex.id())).cookie(authCookie).post(ClientResponse.class);
+        response = resource.path("vertex").path(encodeURL(anotherUserDefaultVertex.id())).cookie(authCookie).post(ClientResponse.class);
         assertThat(response.getStatus(), is(403));
     }
 
@@ -85,7 +86,7 @@ public class VertexResourceTest extends GraphManipulationRestTest{
 
     private ClientResponse removeVertexBUsingRest()throws Exception{
         ClientResponse response = resource.path("vertex")
-                .path(ServiceUtils.encodeURL(vertexB.id()))
+                .path(encodeURL(vertexB.id()))
                 .cookie(authCookie)
                 .delete(ClientResponse.class);
         actualizeVertexABAndC();
@@ -108,7 +109,7 @@ public class VertexResourceTest extends GraphManipulationRestTest{
     private ClientResponse updateVertexALabelUsingRest(String label)throws Exception{
         ClientResponse response = resource
                 .path("vertex/label/")
-                .path(ServiceUtils.encodeURL(vertexA.id()))
+                .path(encodeURL(vertexA.id()))
                 .queryParam("label", label)
                 .cookie(authCookie)
                 .post(ClientResponse.class);
@@ -134,7 +135,7 @@ public class VertexResourceTest extends GraphManipulationRestTest{
     private ClientResponse setTypeOfVerteAToFoafPerson()throws Exception{
         ClientResponse response = resource
                 .path("vertex/type/")
-                .path(ServiceUtils.encodeURL(vertexA.id()))
+                .path(encodeURL(vertexA.id()))
                 .queryParam("type_uri", personClassURI)
                 .cookie(authCookie)
                 .post(ClientResponse.class);

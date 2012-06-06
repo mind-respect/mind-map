@@ -9,6 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertFalse;
+import static org.triple_brain.module.common_utils.CommonUtils.encodeURL;
 
 /**
  * Copyright Mozilla Public License 1.1
@@ -36,19 +37,19 @@ public class EdgeResourceTest extends GraphManipulationRestTest{
                 response.getHeaders().get("Location").get(0),
                 is(
                         BASE_URI + "/edge/" +
-                                ServiceUtils.encodeURL(vertexA.id())
+                                encodeURL(vertexA.id())
                                 + "/" +
-                                ServiceUtils.encodeURL(vertexC.id())
+                                encodeURL(vertexC.id())
                                 + "/" +
-                                ServiceUtils.encodeURL(edgeBetweenAAndC.id())
+                                encodeURL(edgeBetweenAAndC.id())
                 ));
     }
 
     private ClientResponse addRelationBetweenVertexAAndCUsingRest() throws Exception{
         ClientResponse response = resource
                 .path("edge")
-                .path(ServiceUtils.encodeURL(vertexA.id()))
-                .path(ServiceUtils.encodeURL(vertexC.id()))
+                .path(encodeURL(vertexA.id()))
+                .path(encodeURL(vertexC.id()))
                 .cookie(authCookie)
                 .post(ClientResponse.class);
         actualizeVertexABAndC();
@@ -71,7 +72,7 @@ public class EdgeResourceTest extends GraphManipulationRestTest{
     private ClientResponse removeEdgeBetweenVertexAAndBUsingRest() throws Exception{
         Edge edgeBetweenAAndB = vertexA.edgeThatLinksToDestinationVertex(vertexB);
         ClientResponse response = resource.path("edge")
-                .path(ServiceUtils.encodeURL(edgeBetweenAAndB.id()))
+                .path(encodeURL(edgeBetweenAAndB.id()))
                 .cookie(authCookie)
                 .delete(ClientResponse.class);
         actualizeVertexABAndC();
@@ -97,7 +98,7 @@ public class EdgeResourceTest extends GraphManipulationRestTest{
         Edge edgeBetweenAAndB = vertexA.edgeThatLinksToDestinationVertex(vertexB);
         ClientResponse response = resource
                 .path("edge/label/")
-                .path(ServiceUtils.encodeURL(edgeBetweenAAndB.id()))
+                .path(encodeURL(edgeBetweenAAndB.id()))
                 .queryParam("label", label)
                 .cookie(authCookie)
                 .post(ClientResponse.class);

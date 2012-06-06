@@ -19,7 +19,7 @@
     </New>
 
     <New class="org.eclipse.jetty.plus.jndi.Resource">
-        <Arg>jdbc/jenaTripleBrainDB</Arg>
+        <Arg>jdbc/  jenaTripleBrainDB</Arg>
         <Arg>
             <New class="org.apache.commons.dbcp.BasicDataSource">
                 <Set name="driverClassName">org.h2.Driver</Set>

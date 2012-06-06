@@ -3,7 +3,6 @@ package org.triple_brain.mind_map.service.resources;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.triple_brain.graphmanipulator.jena.graph.JenaVertexManipulator;
-import org.triple_brain.mind_map.service.ServiceUtils;
 import org.triple_brain.module.model.graph.Edge;
 import org.triple_brain.module.model.graph.GraphElementIdentifier;
 
@@ -17,6 +16,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 
 import static org.triple_brain.mind_map.service.resources.GraphManipulatorResourceUtils.userFromSession;
+import static org.triple_brain.module.common_utils.CommonUtils.decodeURL;
 import static org.triple_brain.module.model.json.StatementJSONFields.*;
 
 /**
@@ -31,7 +31,7 @@ public class VertexResource {
     @Path("/{sourceVertexId}")
     public Response addVertexAndEdgeToSourceVertex(@GraphElementIdentifier @PathParam("sourceVertexId") String sourceVertexId, @Context HttpServletRequest request) throws JSONException, URISyntaxException {
         try{
-            sourceVertexId = ServiceUtils.decodeURL(sourceVertexId);
+            sourceVertexId = decodeURL(sourceVertexId);
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
@@ -54,7 +54,7 @@ public class VertexResource {
     @Path("/{vertexId}")
     public Response removeVertex(@GraphElementIdentifier @PathParam("vertexId") String vertexId, @Context HttpServletRequest request) throws JSONException, URISyntaxException{
         try{
-            vertexId = ServiceUtils.decodeURL(vertexId);
+            vertexId = decodeURL(vertexId);
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
@@ -69,7 +69,7 @@ public class VertexResource {
     @Path("label/{vertexId}")
     public Response updateVertexLabel(@GraphElementIdentifier @PathParam("vertexId") String vertexId, @QueryParam("label") String label, @Context HttpServletRequest request) throws JSONException, URISyntaxException{
         try{
-            vertexId = ServiceUtils.decodeURL(vertexId);
+            vertexId = decodeURL(vertexId);
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
@@ -84,7 +84,7 @@ public class VertexResource {
     @Path("type/{vertexId}")
     public Response setType(@GraphElementIdentifier @PathParam("vertexId") String vertexId, @QueryParam("type_uri") String typeUri, @Context HttpServletRequest request) throws JSONException, URISyntaxException{
         try{
-            vertexId = ServiceUtils.decodeURL(vertexId);
+            vertexId = decodeURL(vertexId);
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
@@ -99,7 +99,7 @@ public class VertexResource {
     @Path("same_as/{vertexId}")
     public Response setSameAs(@GraphElementIdentifier @PathParam("vertexId") String vertexId, @QueryParam("same_as_uri") String sameAsUri, @Context HttpServletRequest request) throws JSONException, URISyntaxException{
         try{
-            vertexId = ServiceUtils.decodeURL(vertexId);
+            vertexId = decodeURL(vertexId);
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }

@@ -6,6 +6,7 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.triple_brain.graphmanipulator.jena.TripleBrainModel.*;
+import static org.triple_brain.module.common_utils.CommonUtils.encodeURL;
 
 /**
  * Copyright Mozilla Public License 1.1
@@ -29,7 +30,7 @@ public class GraphResourceTest extends GraphManipulationRestTest {
     private ClientResponse getGraphAsXMLRDFUsingRest()throws Exception{
         return  resource
                 .path("graph")
-                .path(ServiceUtils.encodeURL(authenticatedUser.mindMapURIFromSiteURI(SITE_URI)))
+                .path(encodeURL(authenticatedUser.mindMapURIFromSiteURI(SITE_URI)))
                 .cookie(authCookie)
                 .get(ClientResponse.class);
     }

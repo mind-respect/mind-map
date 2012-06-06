@@ -3,7 +3,6 @@ package org.triple_brain.mind_map.service.resources;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
-import org.triple_brain.mind_map.service.ServiceUtils;
 import org.triple_brain.module.graphviz_visualisation.GraphToDrawnGraphConverter;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.Graph;
@@ -24,6 +23,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 
 import static org.triple_brain.mind_map.service.ServiceUtils.usernameInURI;
+import static org.triple_brain.module.common_utils.CommonUtils.decodeURL;
 
 /**
  * Copyright Mozilla Public License 1.1
@@ -52,7 +52,7 @@ public class DrawnGraphResource {
     @Path("/{graph_uri}/{depthOfSubVertices}/{centralVertexId}")
     public Response drawnGraph(@GraphElementIdentifier @PathParam("graph_uri") String graphUri, @PathParam("depthOfSubVertices") Integer depthOfSubVertices, @GraphElementIdentifier @PathParam("centralVertexId") String centralVertexId, @Context HttpServletRequest request) throws JSONException{
         try{
-            centralVertexId = ServiceUtils.decodeURL(centralVertexId);
+            centralVertexId = decodeURL(centralVertexId);
         }catch(UnsupportedEncodingException e){
             Response.status(Response.Status.BAD_REQUEST).build();
         }
