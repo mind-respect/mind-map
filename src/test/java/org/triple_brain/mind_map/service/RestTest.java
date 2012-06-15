@@ -12,6 +12,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.triple_brain.mind_map.Launcher;
+import org.triple_brain.mind_map.SearchTestModule;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.repository.user.UserRepository;
 import org.triple_brain.module.repository_sql.SQLTestModule;
@@ -42,10 +43,13 @@ public abstract class RestTest{
     @Inject
     UserRepository userRepository;
 
-
     @BeforeClass
     static public void startServer() throws Exception {
-        Guice.createInjector(new SQLTestModule(), new JenaSQLTestModule());
+        Guice.createInjector(
+                new SQLTestModule(),
+                new JenaSQLTestModule(),
+                new SearchTestModule()
+        );
         BASE_URI = new URI("http://localhost:8786/service");
 
         launcher = new Launcher(BASE_URI.getPort());
@@ -66,7 +70,8 @@ public abstract class RestTest{
     public void before_rest_test()throws SQLException{
         Injector injector = Guice.createInjector(
                 new SQLTestModule(),
-                new JenaSQLTestModule()
+                new JenaSQLTestModule(),
+                new SearchTestModule()
         );
         injector.injectMembers(this);
         cleanTables();
@@ -105,5 +110,4 @@ public abstract class RestTest{
         authCookie = response.getCookies().get(0);
         return user;
     }
-
 }

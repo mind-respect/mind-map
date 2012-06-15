@@ -5,7 +5,10 @@ import org.codehaus.jettison.json.JSONObject;
 import org.triple_brain.graphmanipulator.jena.graph.JenaVertexManipulator;
 import org.triple_brain.module.model.graph.Edge;
 import org.triple_brain.module.model.graph.GraphElementIdentifier;
+import org.triple_brain.module.model.graph.Vertex;
+import org.triple_brain.module.search.GraphIndexer;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -27,6 +30,9 @@ import static org.triple_brain.module.model.json.StatementJSONFields.*;
 @Singleton
 public class VertexResource {
 
+    @Inject
+    GraphIndexer graphIndexer;
+
     @POST
     @Path("/{sourceVertexId}")
     public Response addVertexAndEdgeToSourceVertex(@GraphElementIdentifier @PathParam("sourceVertexId") String sourceVertexId, @Context HttpServletRequest request) throws JSONException, URISyntaxException {
@@ -41,11 +47,15 @@ public class VertexResource {
         Edge createdEdge = vertexManipulator.addVertexAndRelation(
                 sourceVertexId
         );
-
+        Vertex createdVertex = createdEdge.destinationVertex();
+        graphIndexer.indexVertexOfUser(
+                createdVertex,
+                userFromSession(request.getSession())
+        );
         JSONObject jsonCreatedStatement = new JSONObject();
         jsonCreatedStatement.put(SUBJECT_ID, createdEdge.sourceVertex().id());
         jsonCreatedStatement.put(PREDICATE_ID, createdEdge.id());
-        jsonCreatedStatement.put(OBJECT_ID, createdEdge.destinationVertex().id());
+        jsonCreatedStatement.put(OBJECT_ID, createdVertex.id());
         //TODO response should be of created type
         return Response.ok(jsonCreatedStatement).build();
     }

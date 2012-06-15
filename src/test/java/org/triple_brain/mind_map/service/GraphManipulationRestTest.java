@@ -1,8 +1,10 @@
 package org.triple_brain.mind_map.service;
 
+import com.sun.jersey.api.client.ClientResponse;
 import graph.mock.JenaGraphManipulatorMock;
 import graph.scenarios.GraphScenariosGenerator;
-import graph.scenarios.VertexABAndC;
+import graph.scenarios.VerticesCalledABAndC;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.triple_brain.graphmanipulator.jena.graph.JenaEdgeManipulator;
@@ -10,7 +12,12 @@ import org.triple_brain.graphmanipulator.jena.graph.JenaVertexManipulator;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.Graph;
 import org.triple_brain.module.model.graph.Vertex;
+import org.triple_brain.module.search.GraphIndexer;
 
+import javax.inject.Inject;
+
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 import static org.triple_brain.graphmanipulator.jena.JenaConnection.closeConnection;
 
 /*
@@ -30,31 +37,41 @@ public class GraphManipulationRestTest extends RestTest {
 
     protected User authenticatedUser;
 
+    @Inject
+    GraphIndexer graphIndexer;
+
     @Before
     public void before() throws Exception{
         authenticatedUser = authenticate();
+        createUserCore();
+        deleteAllUserVerticesFromSearch();
         graphManipulator = JenaGraphManipulatorMock.mockWithUser(authenticatedUser);
         vertexManipulator = JenaVertexManipulator.withUser(authenticatedUser);
         edgeManipulator = JenaEdgeManipulator.withUser(authenticatedUser);
-        makeGraphHave3VerticesABCWhereAIsDefaultCenterVertexAndAPointsToBAndBPointsToC(authenticatedUser);
+        VerticesCalledABAndC vertexABAndC = makeGraphHave3SerialVerticesWithLongLabels(authenticatedUser);
+
+        vertexA = vertexABAndC.vertexA();
+        vertexB = vertexABAndC.vertexB();
+        vertexC = vertexABAndC.vertexC();
     }
 
     @AfterClass
-    public static void after()throws Exception{
+    public static void afterClass()throws Exception{
         closeConnection();
     }
 
-    protected void makeGraphHave3VerticesABCWhereAIsDefaultCenterVertexAndAPointsToBAndBPointsToC(User user) throws Exception {
+    @After
+    public void after(){
+    }
+
+    protected VerticesCalledABAndC makeGraphHave3SerialVerticesWithLongLabels(User user) throws Exception {
         GraphScenariosGenerator graphScenariosGenerator = GraphScenariosGenerator.withUserManipulators(
                 user,
                 graphManipulator,
                 vertexManipulator,
                 edgeManipulator
         );
-        VertexABAndC vertexABAndC = graphScenariosGenerator.makeGraphHave3VerticesABCWhereAIsDefaultCenterVertexAndAPointsToBAndBPointsToC();
-        vertexA = vertexABAndC.vertexA();
-        vertexB = vertexABAndC.vertexB();
-        vertexC = vertexABAndC.vertexC();
+        return graphScenariosGenerator.makeGraphHave3SerialVerticesWithLongLabels();
     }
 
     protected void actualizeVertexABAndC(){
@@ -66,5 +83,35 @@ public class GraphManipulationRestTest extends RestTest {
 
     protected Graph wholeGraph(){
         return graphManipulator.graphWithDefaultVertexAndDepth(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES);
+    }
+
+    private void createUserCore(){
+        ClientResponse response = resource
+                .path("test")
+                .path("search")
+                .path("create_core")
+                .cookie(authCookie)
+                .get(ClientResponse.class);
+        assertThat(response.getStatus(), is(200));
+    }
+
+    private void deleteAllUserVerticesFromSearch(){
+        ClientResponse response = resource
+                .path("test")
+                .path("search")
+                .path("delete_all_documents")
+                .cookie(authCookie)
+                .get(ClientResponse.class);
+        assertThat(response.getStatus(), is(200));
+    }
+
+    protected void indexAllVertices(){
+        ClientResponse response = resource
+                .path("test")
+                .path("search")
+                .path("index_all_vertices")
+                .cookie(authCookie)
+                .get(ClientResponse.class);
+        assertThat(response.getStatus(), is(200));
     }
 }
