@@ -1,12 +1,10 @@
+require("Logger")
 /**
  * Copyright Mozilla Public License 1.1
  */
-require("Logger")
 
 if (triple_brain.error == undefined) {
     (function($) {
-        var logger = new Logger('triple_brain.i18n');
-
         triple_brain.error = {
             withName : function(name){
                 new Error(name, "");
