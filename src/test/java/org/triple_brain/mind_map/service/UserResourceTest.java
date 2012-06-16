@@ -53,31 +53,59 @@ public class UserResourceTest extends RestTest {
 
     @Test
     public void can_create_user() throws Exception {
-        try {
-            userRepository.findByEmail("roger.lamothe@example.org");
-            fail();
-        } catch (Exception e) {
-        }
+        JSONObject user = validForCreation();
+        assertFalse(userRepository.emailExists(
+                user.getString(EMAIL)
+        ));
+        createUserUsingRest(
+                user
+        );
+        assertTrue(
+                userRepository.emailExists(
+                        user.getString(EMAIL)
+                )
+        );
+    }
 
-        JSONObject jsonUser = new JSONObject();
-        jsonUser.put(EMAIL, "roger.lamothe@example.org");
-        jsonUser.put(USER_NAME, "roger_lamothe");
-        jsonUser.put(PASSWORD, "password");
-        jsonUser.put(PASSWORD_VERIFICATION, "password");
-        response = resource.path("users").type("application/json").post(ClientResponse.class, jsonUser);
+    @Test
+    public void creating_a_user_returns_corrects_response()throws Exception{
+        JSONObject jsonUser = validForCreation();
+        ClientResponse response = createUserUsingRest(
+                jsonUser
+        );
         assertThat(response.getStatus(), is(201));
-        User user = userRepository.findByEmail("roger.lamothe@example.org");
-        assertThat(response.getHeaders().get("Location").get(0), is(BASE_URI + "/users/" + user.id()));
+        User user = userRepository.findByEmail(
+                jsonUser.getString(EMAIL)
+        );
+        assertThat(
+                response.getHeaders().get("Location").get(0),
+                is(BASE_URI + "/users/" + user.id())
+        );
     }
 
     @Test
     public void when_creating_a_user_a_mind_map_is_created_for_him() throws Exception {
         JSONObject validUser = validForCreation();
         String username = validUser.getString(USER_NAME);
-        assertFalse(modelMaker().hasModel(username));
-        response = resource.path("users").type("application/json").post(ClientResponse.class, validUser);
-        User user = User.withUsernameAndEmail(username, validUser.getString(EMAIL));
-        assertTrue(modelMaker().hasModel(user.mindMapURIFromSiteURI(SITE_URI)));
+        assertFalse(
+                modelMaker().hasModel(username)
+        );
+        createUserUsingRest(validUser);
+        User user = User.withUsernameAndEmail(
+                username, validUser.getString(EMAIL)
+        );
+        assertTrue(
+                modelMaker().hasModel(
+                        user.mindMapURIFromSiteURI(SITE_URI)
+                )
+        );
+    }
+
+    private ClientResponse createUserUsingRest(JSONObject user){
+        return resource
+                .path("users")
+                .type("application/json")
+                .post(ClientResponse.class, user);
     }
 
     @Test

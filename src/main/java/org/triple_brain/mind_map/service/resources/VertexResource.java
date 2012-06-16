@@ -2,7 +2,9 @@ package org.triple_brain.mind_map.service.resources;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
 import org.triple_brain.graphmanipulator.jena.graph.JenaVertexManipulator;
+import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.Edge;
 import org.triple_brain.module.model.graph.GraphElementIdentifier;
 import org.triple_brain.module.model.graph.Vertex;
@@ -68,8 +70,17 @@ public class VertexResource {
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
+        User authenticatedUser = userFromSession(request.getSession());
+
+        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
+                authenticatedUser
+        );
+        graphIndexer.deleteVertexOfUser(
+                graphManipulator.vertexWithURI(vertexId),
+                authenticatedUser
+        );
         JenaVertexManipulator vertexManipulator = JenaVertexManipulator.withUser(
-                userFromSession(request.getSession())
+                authenticatedUser
         );
         vertexManipulator.removeVertex(vertexId);
         return Response.ok().build();
@@ -83,10 +94,18 @@ public class VertexResource {
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
+        User authenticatedUser = userFromSession(request.getSession());
         JenaVertexManipulator vertexManipulator = JenaVertexManipulator.withUser(
-                userFromSession(request.getSession())
+                authenticatedUser
         );
         vertexManipulator.updateLabel(vertexId, label);
+        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
+                authenticatedUser
+        );
+        graphIndexer.indexVertexOfUser(
+                graphManipulator.vertexWithURI(vertexId),
+                authenticatedUser
+        );
         return Response.ok().build();
     }
 

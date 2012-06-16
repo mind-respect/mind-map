@@ -4,9 +4,11 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
+import org.triple_brain.graphmanipulator.jena.graph.JenaVertexManipulator;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.repository.user.NonExistingUserException;
 import org.triple_brain.module.repository.user.UserRepository;
+import org.triple_brain.module.search.GraphIndexer;
 
 import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
@@ -38,6 +40,9 @@ public class UserResource {
 
     @Inject
     UserRepository userRepository;
+
+    @Inject
+    GraphIndexer graphIndexer;
 
     @GET
     @Path("/authenticate")
@@ -100,6 +105,14 @@ public class UserResource {
 
         userRepository.save(user);
         JenaGraphManipulator.createUserGraph(user);
+        graphIndexer.createUserCore(user);
+        JenaVertexManipulator vertexManipulator = JenaVertexManipulator.withUser(
+                user
+        );
+        graphIndexer.indexVertexOfUser(
+                vertexManipulator.defaultVertex(),
+                user
+        );
         return Response.created(new URI(request.getRequestURL() + "/" + user.id())).build();
     }
 
