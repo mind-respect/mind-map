@@ -1,6 +1,4 @@
-// LIBRARIES INITIALIZATION
 
-// for jquery
 $.ajaxSetup({
     cache: false,
     xhrFields: {
