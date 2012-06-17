@@ -51,6 +51,7 @@ public class ResourceForTests {
         );
         JenaGraphManipulator.createUserGraph(user);
         graphIndexer.createUserCore(user);
+        deleteAllUserDocumentsForSearch(user);
         JenaVertexManipulator vertexManipulator = JenaVertexManipulator.withUser(
                 user
         );
@@ -83,8 +84,15 @@ public class ResourceForTests {
     @Path("search/delete_all_documents")
     @GET
     public Response deleteAllUserDocuments(@Context HttpServletRequest request) {
-        SolrServer solrServer = searchUtils.solrServerFromUser(
+        deleteAllUserDocumentsForSearch(
                 userFromSession(request.getSession())
+        );
+        return Response.ok().build();
+    }
+
+    private void deleteAllUserDocumentsForSearch(User user){
+        SolrServer solrServer = searchUtils.solrServerFromUser(
+                user
         );
         try {
             solrServer.deleteByQuery("*:*");
@@ -92,7 +100,6 @@ public class ResourceForTests {
         } catch (SolrServerException | IOException e) {
             throw new RuntimeException(e);
         }
-        return Response.ok().build();
     }
 
     @Path("search/index_all_vertices")

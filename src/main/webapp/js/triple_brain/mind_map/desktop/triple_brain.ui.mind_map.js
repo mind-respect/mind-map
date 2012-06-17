@@ -67,6 +67,24 @@ if (triple_brain.ui.mind_map == undefined) {
                 );
             });
             triple_brain.ui.mind_map.applyOverScroll();
+            prepareSearchFeature();
+            function prepareSearchFeature(){
+                $("#vertex-search-input").autocomplete({
+                    source : function(request, response){
+                        triple_brain.search.search_for_auto_complete(
+                            request.term,
+                            function(searchResults){
+                                response($.map(searchResults, function(searchResult){
+                                    return {
+                                        label : searchResult.label,
+                                        value : searchResult.label
+                                    }
+                                }));
+                            }
+                        );
+                    }
+                })
+            }
         });
 
         triple_brain.bus.local.topics('/event/ui/graph/drawing_info/updated/').subscribe(function (drawnGraph, centralVertexId) {

@@ -47,6 +47,7 @@
     <script src="js/triple_brain/mind_map/triple_brain.freebase.js"></script>
 
     <script src="js/triple_brain/mind_map/triple_brain.transform_matrix_2d.js"></script>
+    <script src="js/triple_brain/mind_map/triple_brain.search.js"></script>
     <script src="js/triple_brain/mind_map/triple_brain.point.js"></script>
     <script src="js/triple_brain/mind_map/triple_brain.segment.js"></script>
 
@@ -96,10 +97,12 @@
 
     <div id="mind_map" data-role="page" data-url="mind-map.html">
         <div data-role="content">
-            <div>
-
-            </div>
             <div id="left-panel" class="main-panel">
+                <h2>Search concepts</h2>
+                <div class="ui-widget">
+                    <label for="vertex-search-input"></label>
+                    <input id="vertex-search-input"/>
+                </div>
                 <h2>Distance from center concept</h2>
                 <div id="sub-vertices-depth-slider" ></div>
                 <input type="text" id="sub-vertices-depth-index"/>

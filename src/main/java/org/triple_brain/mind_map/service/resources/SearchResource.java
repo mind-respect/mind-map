@@ -28,10 +28,10 @@ public class SearchResource {
     GraphSearch graphSearch;
 
     @GET
-    @Path("vertices/auto_complete/{search_input}")
-    public JSONArray searchVerticesForAutoComplete(@PathParam("search_input") String searchInput, @Context HttpServletRequest request) throws JSONException, UnsupportedEncodingException {
+    @Path("vertices/auto_complete/{search_text}")
+    public JSONArray searchVerticesForAutoComplete(@PathParam("search_text") String searchText, @Context HttpServletRequest request) throws JSONException, UnsupportedEncodingException {
         return graphSearch.searchVerticesForAutoCompletionByLabelAndUser(
-                CommonUtils.decodeURL(searchInput),
+                CommonUtils.decodeURL(searchText),
                 userFromSession(request.getSession())
 
         );
