@@ -12,6 +12,11 @@ if (triple_brain.ui.vertex == undefined) {
         withId : function(id) {
             return triple_brain.ui.vertex.withHtml($("#" + id));
         },
+        withUri : function(uri){
+            return triple_brain.ui.vertex.withId(
+                triple_brain.id_uri.idFromUri(uri)
+            );
+        },
         centralVertex : function(){
             return triple_brain.ui.vertex.withHtml(
                 $('.center-vertex')

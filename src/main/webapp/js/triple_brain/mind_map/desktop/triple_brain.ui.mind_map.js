@@ -77,10 +77,17 @@ if (triple_brain.ui.mind_map == undefined) {
                                 response($.map(searchResults, function(searchResult){
                                     return {
                                         label : searchResult.label,
-                                        value : searchResult.label
+                                        value : searchResult.label,
+                                        id : searchResult.id
                                     }
                                 }));
                             }
+                        );
+                    },
+                    select : function(event, ui){
+                        var vertexUri = ui.item.id;
+                        triple_brain.drawn_graph.getFromNewCentralVertexUri(
+                            vertexUri
                         );
                     }
                 })

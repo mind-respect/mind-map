@@ -6,7 +6,11 @@ if (triple_brain.id_uri == undefined) {
     triple_brain.id_uri = {
 
         baseURI : "http://www.triple_brain.org/",
-
+        encodeUri : function(uri){
+            return encodeURIComponent(
+                uri
+            );
+        },
         idFromUri: function(uri){
             var segments = $.url(uri).segment();
             return segments[0] + idSeparator + segments[1];

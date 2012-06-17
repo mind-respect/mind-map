@@ -28,7 +28,17 @@ if (triple_brain.drawn_graph == undefined) {
                 }).success(function(drawnGraph) {
                     triple_brain.bus.local.topic('/event/ui/graph/drawing_info/updated/').publish(drawnGraph, newCentralVertex.id());
                 })
-             }
+            },
+            getFromNewCentralVertexUri: function(newCentralVertexUri) {
+                var depthOfSubVertices = $("#sub-vertices-depth-slider").slider('value');
+                $.ajax({
+                    type: 'GET',
+                    url: options.ws.app + '/service/drawn_graph/' + mindMapURI() + "/" + depthOfSubVertices + '/' + triple_brain.id_uri.encodeUri(newCentralVertexUri),
+                    dataType: 'json'
+                }).success(function(drawnGraph) {
+                        triple_brain.bus.local.topic('/event/ui/graph/drawing_info/updated/').publish(drawnGraph, triple_brain.id_uri.idFromUri(newCentralVertexUri));
+                    })
+            }
         }
 
         function mindMapURI(){
