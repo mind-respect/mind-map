@@ -88,42 +88,57 @@ if (triple_brain.module.vertices_list == undefined) {
             }
         }
 
-        triple_brain.bus.local.topics('/event/ui/graph/drawing_info/updated/').subscribe(function () {
-            var verticesList = triple_brain.module.vertices_list.exists() ?
-                triple_brain.module.vertices_list.get() :
-                triple_brain.module.vertices_list_creator.create();
-            verticesList.rebuild();
-        });
+        var eventBus = triple_brain.event_bus;
 
-        triple_brain.bus.local.topic('/event/ui/graph/drawn/').subscribe(function() {
-            var verticesList = triple_brain.module.vertices_list.get();
-            verticesList.sort();
-        });
+        eventBus.subscribe(
+            '/event/ui/graph/drawing_info/updated/',
+            function () {
+                var verticesList = triple_brain.module.vertices_list.exists() ?
+                    triple_brain.module.vertices_list.get() :
+                    triple_brain.module.vertices_list_creator.create();
+                verticesList.rebuild();
+            }
+        );
 
-        triple_brain.bus.local.topic('/event/ui/html/vertex/created/').subscribe(function(vertex) {
-            var verticesListElementCreator = triple_brain.module.vertices_list_element_creator.withVertex(vertex);
-            verticesListElementCreator.create();
-            var verticesList = triple_brain.module.vertices_list.get();
-            verticesList.sort();
-            $(vertex.label()).on("keyup blur focus", function(){
-                var vertex = triple_brain.ui.vertex.withHtml(
-                    $(this).closest(".vertex")
-                );
+        eventBus.subscribe(
+            '/event/ui/graph/drawn/',
+            function() {
+                var verticesList = triple_brain.module.vertices_list.get();
+                verticesList.sort();
+            }
+        );
+
+        eventBus.subscribe(
+            '/event/ui/html/vertex/created/',
+            function(event, vertex) {
+                var verticesListElementCreator = triple_brain.module.vertices_list_element_creator.withVertex(vertex);
+                verticesListElementCreator.create();
+                var verticesList = triple_brain.module.vertices_list.get();
+                verticesList.sort();
+                $(vertex.label()).on("keyup blur focus", function(){
+                    var vertex = triple_brain.ui.vertex.withHtml(
+                        $(this).closest(".vertex")
+                    );
+                    var verticesListElement = triple_brain.module.vertices_list_element.withVertex(vertex);
+                    verticesListElement.setLabel(vertex.text());
+                    if($(this).val() == "" || vertex.hasDefaultText()){
+                        verticesListElement.applyStyleOfDefaultText();
+                    }else{
+                        verticesListElement.removeStyleOfDefaultText();
+                    }
+                });
+            }
+        );
+
+        eventBus.subscribe(
+            '/event/ui/graph/vertex/deleted/',
+            function(event, vertex) {
                 var verticesListElement = triple_brain.module.vertices_list_element.withVertex(vertex);
-                verticesListElement.setLabel(vertex.text());
-                if($(this).val() == "" || vertex.hasDefaultText()){
-                    verticesListElement.applyStyleOfDefaultText();
-                }else{
-                    verticesListElement.removeStyleOfDefaultText();
-                }
-            });
-        });
-        triple_brain.bus.local.topic('/event/ui/graph/vertex/deleted/').subscribe(function(vertex) {
-            var verticesListElement = triple_brain.module.vertices_list_element.withVertex(vertex);
-            verticesListElement.remove();
-            var verticesList = triple_brain.module.vertices_list.get();
-            verticesList.sort();
-        });
+                verticesListElement.remove();
+                var verticesList = triple_brain.module.vertices_list.get();
+                verticesList.sort();
+            }
+        );
 
     })(jQuery);
 }

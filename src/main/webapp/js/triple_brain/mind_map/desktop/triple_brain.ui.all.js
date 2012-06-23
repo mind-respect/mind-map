@@ -1,5 +1,3 @@
-require("triple_brain.ui", "triple_brain.bus.local");
-
 if (triple_brain.ui.all == undefined) {
     (function($) {
         triple_brain.ui.all = {
@@ -8,10 +6,5 @@ if (triple_brain.ui.all == undefined) {
                 canvasContext.clearRect(0, 0, $(canvas).width(), $(canvas).height());
             }
         };
-
-        triple_brain.bus.local.topic('/event/ui/action/logout').subscribe(function() {
-            //$.mobile.changePage("login.html");
-        });
-
     })(jQuery);
 }

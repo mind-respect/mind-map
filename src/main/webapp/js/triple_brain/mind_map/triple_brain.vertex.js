@@ -1,10 +1,9 @@
-
 if (triple_brain.vertex == undefined) {
-
     (function($) {
+        var eventBus = triple_brain.event_bus;
         triple_brain.vertex = {
              addRelationAndVertexAtPositionToVertex: function(vertex, newVertexPosition, callback) {
-                var response = $.ajax({
+                $.ajax({
                     type: 'POST',
                     url: options.ws.app + '/service/vertex/' + triple_brain.id_uri.encodedUriFromId(vertex.id()),
                     dataType: 'json'
@@ -12,7 +11,10 @@ if (triple_brain.vertex == undefined) {
                     if(callback != undefined){
                         callback.call(this, statementNewRelation);
                     }
-                    triple_brain.bus.local.topic('/event/ui/graph/vertex_and_relation/added/').publish(statementNewRelation, newVertexPosition);
+                        eventBus.publish(
+                            '/event/ui/graph/vertex_and_relation/added/',
+                            [statementNewRelation, newVertexPosition]
+                        );
                 })
              },
              remove: function(vertex) {
@@ -20,7 +22,10 @@ if (triple_brain.vertex == undefined) {
                     type: 'DELETE',
                     url: options.ws.app + '/service/vertex/' + triple_brain.id_uri.encodedUriFromId(vertex.id())
                 }).success(function() {
-                    triple_brain.bus.local.topic('/event/ui/graph/vertex/deleted/').publish(vertex);
+                        eventBus.publish(
+                        '/event/ui/graph/vertex/deleted/',
+                        vertex
+                    )
                 })
              },
              updateLabel: function(vertex, label) {
@@ -29,7 +34,10 @@ if (triple_brain.vertex == undefined) {
                     url: options.ws.app + '/service/vertex/label/' + triple_brain.id_uri.encodedUriFromId(vertex.id()) + '?label=' + label,
                     dataType: 'json'
                 }).success(function() {
-                    triple_brain.bus.local.topic('/event/ui/graph/vertex/label/updated').publish(vertex);
+                        eventBus.publish(
+                        '/event/ui/graph/vertex/label/updated',
+                        vertex
+                    )
                 })
              },
              updateType: function(vertex, typeUri) {
@@ -38,7 +46,10 @@ if (triple_brain.vertex == undefined) {
                     url: options.ws.app + '/service/vertex/type/' + triple_brain.id_uri.encodedUriFromId(vertex.id()) + '?type_uri=' + typeUri,
                     dataType: 'json'
                 }).success(function() {
-                    triple_brain.bus.local.topic('/event/ui/graph/vertex/type/updated').publish(vertex, typeUri);
+                    eventBus.publish(
+                        '/event/ui/graph/vertex/type/updated',
+                        [vertex, typeUri]
+                    );
                 })
              },
              updateSameAs: function(vertex, sameAsUri) {
@@ -47,7 +58,10 @@ if (triple_brain.vertex == undefined) {
                     url: options.ws.app + '/service/vertex/same_as/' + triple_brain.id_uri.encodedUriFromId(vertex.id()) + '?same_as_uri=' + sameAsUri,
                     dataType: 'json'
                 }).success(function() {
-                    triple_brain.bus.local.topic('/event/ui/graph/vertex/same_as/updated').publish(vertex, sameAsUri);
+                    eventBus.publish(
+                        '/event/ui/graph/vertex/same_as/updated',
+                        [vertex, sameAsUri]
+                    );
                 })
              }
         }

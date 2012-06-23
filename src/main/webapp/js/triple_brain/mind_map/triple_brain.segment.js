@@ -1,8 +1,4 @@
-require("Logger");
-
 if (triple_brain.segment == undefined) {
-
-    var logger = new Logger('triple_brain.segment');
 
     triple_brain.segment = {
         withStartAndEndPoint : function(startPoint, endPoint){
@@ -10,8 +6,9 @@ if (triple_brain.segment == undefined) {
         },
         withStartAndEndPointAtOrigin : function(){
             return new Segment(
-                triple_brain.point.centeredAtOrigin()
-              , triple_brain.point.centeredAtOrigin());
+               triple_brain.point.centeredAtOrigin(),
+               triple_brain.point.centeredAtOrigin()
+            );
         }
     }
 

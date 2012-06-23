@@ -7,7 +7,6 @@ if (triple_brain.template.vertices_list == undefined) {
             add: function(name, html) {
                 triple_brain.template.vertices_list[name] = {
                     merge: function(obj) {
-                        logger.debug('Merging template: ' + name);
                         return $($.nano(html, obj || null));
                     }
                 }

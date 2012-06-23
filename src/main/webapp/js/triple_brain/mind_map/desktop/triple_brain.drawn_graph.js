@@ -1,11 +1,8 @@
-require("Logger");
-
 if (triple_brain.drawn_graph == undefined) {
-
-    var logger = new Logger('triple_brain.drawn_graph');
 
     (function($) {
         var idURIUtils = triple_brain.id_uri;
+        var eventBus = triple_brain.event_bus;
         triple_brain.drawn_graph = {
             getWithDefaultCentralVertex: function() {
                 var authenticatedUsername = triple_brain.authenticatedUser.user_name;
@@ -16,7 +13,10 @@ if (triple_brain.drawn_graph == undefined) {
                     url: options.ws.app + '/service/drawn_graph/' + mindMapURI() + "/" + depthOfSubVertices,
                     dataType: 'json'
                 }).success(function(drawnGraph) {
-                    triple_brain.bus.local.topic('/event/ui/graph/drawing_info/updated/').publish(drawnGraph, centralVertexId);
+                    eventBus.publish(
+                        '/event/ui/graph/drawing_info/updated/',
+                        [drawnGraph, centralVertexId]
+                    );
                 })
              },
             getWithNewCentralVertex: function(newCentralVertex) {
@@ -26,7 +26,10 @@ if (triple_brain.drawn_graph == undefined) {
                     url: options.ws.app + '/service/drawn_graph/' + mindMapURI() + "/" + depthOfSubVertices + '/' + triple_brain.id_uri.encodedUriFromId(newCentralVertex.id()),
                     dataType: 'json'
                 }).success(function(drawnGraph) {
-                    triple_brain.bus.local.topic('/event/ui/graph/drawing_info/updated/').publish(drawnGraph, newCentralVertex.id());
+                    eventBus.publish(
+                        '/event/ui/graph/drawing_info/updated/',
+                        [drawnGraph, newCentralVertex.id()]
+                    );
                 })
             },
             getFromNewCentralVertexUri: function(newCentralVertexUri) {
@@ -36,8 +39,14 @@ if (triple_brain.drawn_graph == undefined) {
                     url: options.ws.app + '/service/drawn_graph/' + mindMapURI() + "/" + depthOfSubVertices + '/' + triple_brain.id_uri.encodeUri(newCentralVertexUri),
                     dataType: 'json'
                 }).success(function(drawnGraph) {
-                        triple_brain.bus.local.topic('/event/ui/graph/drawing_info/updated/').publish(drawnGraph, triple_brain.id_uri.idFromUri(newCentralVertexUri));
-                    })
+                    eventBus.publish(
+                        '/event/ui/graph/drawing_info/updated/',
+                        [
+                            drawnGraph,
+                            triple_brain.id_uri.idFromUri(newCentralVertexUri)
+                        ]
+                    )
+                })
             }
         }
 

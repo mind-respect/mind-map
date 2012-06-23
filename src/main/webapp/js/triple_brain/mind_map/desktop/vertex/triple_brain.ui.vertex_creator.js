@@ -3,7 +3,7 @@
  */
 
 if (triple_brain.ui.vertex_creator == undefined) {
-
+    var eventBus = triple_brain.event_bus;
     triple_brain.ui.vertex_creator = {
 
         createWithArrayOfJsonHavingRelativePosition : function(jsonArray){
@@ -67,7 +67,10 @@ if (triple_brain.ui.vertex_creator == undefined) {
             }
             var vertex = vertexFacade();
             vertex.setNumberOfEdgesFromCentralVertex(json.min_number_of_edges_from_center_vertex);
-            triple_brain.bus.local.topic('/event/ui/html/vertex/created/').publish(vertex);
+            eventBus.publish(
+                '/event/ui/html/vertex/created/',
+                vertex
+            );
             return vertex;
         }
         function createLabel(){

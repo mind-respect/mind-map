@@ -1,5 +1,3 @@
-require("triple_brain", "Logger", "EventBus");
-
 if (triple_brain.bus == undefined) {
     (function($) {
 

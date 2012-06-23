@@ -5,6 +5,7 @@
 if (triple_brain.user == undefined) {
 
     (function($) {
+        var eventBus = triple_brain.event_bus;
         triple_brain.user = {
             register : function(userObject){
                 $.ajax({
@@ -14,9 +15,15 @@ if (triple_brain.user == undefined) {
                     dataType: 'json',
                     contentType: 'application/json;charset=utf-8'
                 }).success(function(user) {
-                        triple_brain.bus.local.topic('/event/ui/user/registration/success').publish(userObject);
+                        eventBus.publish(
+                            '/event/ui/user/registration/success',
+                            userObject
+                        );
                     }).error(function(xhr) {
-                        triple_brain.bus.local.topic('/event/ui/users/registration/errors').publish($.parseJSON(xhr.responseText));
+                        eventBus.publish(
+                            '/event/ui/users/registration/errors',
+                            [$.parseJSON(xhr.responseText)]
+                        );
                     })
             },
             authenticatedUser : function(callback){
@@ -27,13 +34,16 @@ if (triple_brain.user == undefined) {
                         if(callback != undefined){
                             callback.call(this, authenticatedUser);
                         }
-                        triple_brain.bus.local.topic('/event/ui/user/get_authenticated/success').publish(authenticatedUser);
+                        eventBus.publish(
+                            '/event/ui/user/get_authenticated/success',
+                            authenticatedUser
+                        );
                     }).error(function() {
-                        triple_brain.bus.local.topic('/event/ui/users/get_authenticated/errors').publish();
+                        eventBus.publish(
+                            '/event/ui/users/get_authenticated/errors'
+                        );
                     })
             }
         }
-
     })(jQuery);
-
 }

@@ -205,58 +205,69 @@ if (triple_brain.ui.vertex == undefined) {
         }
     }
 
-    triple_brain.bus.local.topic('/event/ui/graph/vertex/label/updated').subscribe(function(vertex) {
-        triple_brain.ui.vertex_and_edge_common.highlightLabel(
-            vertex.id()
-        );
-    });
+    var eventBus = triple_brain.event_bus;
 
-    triple_brain.bus.local.topic('/event/ui/graph/vertex/deleted/').subscribe(function(vertex) {
-        vertex.removeConnectedEdges();
-        vertex.remove();
-    });
-
-    triple_brain.bus.local.topic('/event/ui/graph/vertex_and_relation/added/').subscribe(function(statementNewRelation, newVertexPosition) {
-        var sourceVertex = triple_brain.ui.vertex.withId(
-            triple_brain.id_uri.idFromUri(
-                statementNewRelation.subject_id
-            )
-        );
-        var destinationVertexId = statementNewRelation.object_id;
-        var edgeId = statementNewRelation.predicate_id;
-
-        var vertexJSON = {};
-        vertexJSON.id = destinationVertexId;
-        vertexJSON.label = triple_brain.ui.vertex.EMPTY_LABEL;
-        vertexJSON.position= {};
-        vertexJSON.position.x = newVertexPosition.x;
-        vertexJSON.position.y = newVertexPosition.y;
-
-        vertexJSON.min_number_of_edges_from_center_vertex = sourceVertex.numberOfEdgesFromCentralVertex() + 1;
-
-        var destinationVertex = triple_brain.ui.vertex_creator.withArrayOfJsonHavingAbsolutePosition(vertexJSON).create();
-
-        var typeUri = statementNewRelation.object_type_uri;
-        if(typeUri != undefined){
-            triple_brain.vertex.updateType(destinationVertex, typeUri);
+    eventBus.subscribe(
+        '/event/ui/graph/vertex/label/updated',
+        function(event, vertex) {
+            triple_brain.ui.vertex_and_edge_common.highlightLabel(
+                vertex.id()
+            );
         }
+    );
 
-        var edgeJSON = {};
-        edgeJSON.id = edgeId;
-        var arrowLine = triple_brain.ui.arrow_line.ofSourceAndDestinationVertex(
-            sourceVertex,
-            destinationVertex
-        );
-        edgeJSON.arrowLineStartPoint = arrowLine.segment().startPoint;
-        edgeJSON.arrowLineEndPoint = arrowLine.segment().endPoint;
-        edgeJSON.source_vertex_id = statementNewRelation.subject_id;
-        edgeJSON.destination_vertex_id = statementNewRelation.object_id;
-        edgeJSON.label = triple_brain.ui.edge.EMPTY_LABEL;
-        var edge = triple_brain.ui.edge_creator.withArrayOfJsonHavingAbsolutePosition(edgeJSON).create();
-        if(statementNewRelation.predicate_label != undefined){
-            edge.setText(statementNewRelation.predicate_label);
-            triple_brain.edge.updateLabel(edge, edge.text());
+    eventBus.subscribe(
+        '/event/ui/graph/vertex/deleted/',
+        function(event, vertex) {
+            vertex.removeConnectedEdges();
+            vertex.remove();
         }
-        destinationVertex.focus();
-    });
+    );
+
+    eventBus.subscribe(
+        '/event/ui/graph/vertex_and_relation/added/',
+        function(event, statementNewRelation, newVertexPosition) {
+            var sourceVertex = triple_brain.ui.vertex.withId(
+                triple_brain.id_uri.idFromUri(
+                    statementNewRelation.subject_id
+                )
+            );
+            var destinationVertexId = statementNewRelation.object_id;
+            var edgeId = statementNewRelation.predicate_id;
+
+            var vertexJSON = {};
+            vertexJSON.id = destinationVertexId;
+            vertexJSON.label = triple_brain.ui.vertex.EMPTY_LABEL;
+            vertexJSON.position= {};
+            vertexJSON.position.x = newVertexPosition.x;
+            vertexJSON.position.y = newVertexPosition.y;
+
+            vertexJSON.min_number_of_edges_from_center_vertex = sourceVertex.numberOfEdgesFromCentralVertex() + 1;
+
+            var destinationVertex = triple_brain.ui.vertex_creator.withArrayOfJsonHavingAbsolutePosition(vertexJSON).create();
+
+            var typeUri = statementNewRelation.object_type_uri;
+            if(typeUri != undefined){
+                triple_brain.vertex.updateType(destinationVertex, typeUri);
+            }
+
+            var edgeJSON = {};
+            edgeJSON.id = edgeId;
+            var arrowLine = triple_brain.ui.arrow_line.ofSourceAndDestinationVertex(
+                sourceVertex,
+                destinationVertex
+            );
+            edgeJSON.arrowLineStartPoint = arrowLine.segment().startPoint;
+            edgeJSON.arrowLineEndPoint = arrowLine.segment().endPoint;
+            edgeJSON.source_vertex_id = statementNewRelation.subject_id;
+            edgeJSON.destination_vertex_id = statementNewRelation.object_id;
+            edgeJSON.label = triple_brain.ui.edge.EMPTY_LABEL;
+            var edge = triple_brain.ui.edge_creator.withArrayOfJsonHavingAbsolutePosition(edgeJSON).create();
+            if(statementNewRelation.predicate_label != undefined){
+                edge.setText(statementNewRelation.predicate_label);
+                triple_brain.edge.updateLabel(edge, edge.text());
+            }
+            destinationVertex.focus();
+        }
+    );
 }

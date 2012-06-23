@@ -1,4 +1,4 @@
-require("Logger")
+
 /**
  * Copyright Mozilla Public License 1.1
  */
@@ -23,7 +23,7 @@ if (triple_brain.error == undefined) {
                 return message;
             }
             function log(){
-                logger.debug('error name : ' + name + " message : " + message);
+                console.log('error name : ' + name + " message : " + message);
             }
         }
 

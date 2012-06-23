@@ -1,12 +1,7 @@
-require("Logger", "triple_brain.ui");
-
 if (triple_brain.ui.login == undefined) {
     (function($) {
-
         triple_brain.ui.login = {};
-
-        triple_brain.bus.local.topic('/event/ui/view/create/login').subscribe(function() {
-
+        $(document).ready(function(){
             $('#login-button').click(function(e) {
                 e.preventDefault();
                 $.ajax({
@@ -20,11 +15,8 @@ if (triple_brain.ui.login == undefined) {
                         $('#error-panel').show();
                     });
             });
-        });
-
-        triple_brain.bus.local.topic('/event/ui/view/beforeshow/login').subscribe(function(page) {
-            $('#error-panel', page).hide();
-            $('#login-form', page)[0].reset();
+            $('#error-panel').hide();
+            $('#login-form')[0].reset();
         });
 
     })(jQuery);

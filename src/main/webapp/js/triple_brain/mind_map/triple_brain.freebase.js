@@ -1,6 +1,5 @@
-require("triple_brain")
 if (triple_brain.freebase == undefined) {
-
+    var eventBus = triple_brain.event_bus;
     (function($) {
         triple_brain.freebase = {
              freebaseIdToURI: function(freebaseId) {
@@ -32,7 +31,10 @@ if (triple_brain.freebase == undefined) {
                     if(result.result){
                         properties = result.result.properties;
                     }
-                    triple_brain.bus.local.topic('/event/ui/graph/vertex/type/properties/updated').publish(vertex, properties);
+                    eventBus.publish(
+                        '/event/ui/graph/vertex/type/properties/updated',
+                        event, vertex, properties
+                    );
                 })
              }
         }

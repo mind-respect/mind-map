@@ -1,7 +1,7 @@
-
 if (triple_brain.edge == undefined) {
 
     (function($) {
+        var eventBus = triple_brain.event_bus;
         triple_brain.edge = {
             add: function(sourceVertex, destinationVertex) {
                 var sourceVertexURI = triple_brain.id_uri.encodedUriFromId(sourceVertex.id());
@@ -28,7 +28,10 @@ if (triple_brain.edge == undefined) {
                                             destinationVertex.id());
 
                     edgeJSON.label = triple_brain.ui.edge.EMPTY_LABEL;
-                    triple_brain.bus.local.topic('/event/ui/graph/relation/added/').publish(edgeJSON);
+                    eventBus.publish(
+                        '/event/ui/graph/relation/added/',
+                        edgeJSON
+                    );
                 })
              },
             remove: function(edge) {
@@ -36,7 +39,10 @@ if (triple_brain.edge == undefined) {
                     type: 'DELETE',
                     url: options.ws.app + '/service/edge/' + triple_brain.id_uri.encodedUriFromId(edge.id())
                 }).success(function() {
-                    triple_brain.bus.local.topic('/event/ui/graph/relation/deleted').publish(edge);
+                    eventBus.publish(
+                        '/event/ui/graph/relation/deleted',
+                        edge
+                    )
                 })
              },
              updateLabel: function(edge, label) {
@@ -45,11 +51,12 @@ if (triple_brain.edge == undefined) {
                     url: options.ws.app + '/service/edge/label/' + triple_brain.id_uri.encodedUriFromId(edge.id()) + '?label=' + label,
                     dataType: 'json'
                 }).success(function() {
-                    triple_brain.bus.local.topic('/event/ui/graph/edge/label/updated').publish(edge);
+                    eventBus.publish(
+                        '/event/ui/graph/edge/label/updated',
+                        edge
+                    );
                 })
              }
         }
-
     })(jQuery);
-
 }

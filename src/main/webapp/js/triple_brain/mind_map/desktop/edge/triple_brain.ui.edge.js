@@ -129,18 +129,29 @@ if (triple_brain.ui.edge == undefined) {
         }
     }
 
-    triple_brain.bus.local.topics('/event/ui/graph/relation/deleted').subscribe(function(edge) {
-        edge.remove();
-        triple_brain.ui.edge.redrawAllEdges();
-    });
+    var eventBus = triple_brain.event_bus;
 
-    triple_brain.bus.local.topic('/event/ui/graph/relation/added/').subscribe(function(newEdgeJSON) {
-        var edgeCreator = triple_brain.ui.edge_creator.withArrayOfJsonHavingAbsolutePosition(newEdgeJSON)
-        var edge = edgeCreator.create();
-        edge.focus();
-    });
+    eventBus.subscribe(
+        '/event/ui/graph/relation/deleted',
+        function(event, edge) {
+            edge.remove();
+            triple_brain.ui.edge.redrawAllEdges();
+        }
+    );
 
-    triple_brain.bus.local.topic('/event/ui/graph/edge/label/updated').subscribe(function(edge) {
-        triple_brain.ui.vertex_and_edge_common.highlightLabel(edge.id());
-    });
+    eventBus.subscribe(
+        '/event/ui/graph/relation/added/',
+        function(event, newEdgeJSON) {
+            var edgeCreator = triple_brain.ui.edge_creator.withArrayOfJsonHavingAbsolutePosition(newEdgeJSON)
+            var edge = edgeCreator.create();
+            edge.focus();
+        }
+    );
+
+    eventBus.subscribe(
+        '/event/ui/graph/edge/label/updated',
+        function(event, edge) {
+            triple_brain.ui.vertex_and_edge_common.highlightLabel(edge.id());
+        }
+    );
 }

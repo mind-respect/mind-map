@@ -84,28 +84,34 @@ if (triple_brain.ui.identification_menu == undefined) {
             return identificationTextField;
         }
     }
+    var eventBus = triple_brain.event_bus;
 
-    triple_brain.bus.local.topic('/event/ui/graph/vertex/type/updated').subscribe(function(vertex, typeUri) {
-        var typeId = triple_brain.freebase.idInFreebaseURI(typeUri);
-        triple_brain.freebase.listPropertiesOfFreebaseTypeId(vertex, typeId);
-        $(vertex.label()).suggest({
-            "zIndex": 20,
-            "type": typeId
-        })
-        .bind("fb-select", function(e, data)
-        {
-            vertex.readjustLabelWidth();
-            triple_brain.vertex.updateLabel(vertex, vertex.text());
-            resourceUri = triple_brain.freebase.freebaseIdToURI(data.id);
-            triple_brain.vertex.updateSameAs(vertex, resourceUri);
-        });
-    });
-
-    triple_brain.bus.local.topic('/event/ui/graph/vertex/type/properties/updated').subscribe(function(vertex, properties) {
-        if(properties.length > 0){
-            vertex.setSuggestions(properties);
-            vertex.showSuggestionButton();
+    eventBus.subscribe(
+        '/event/ui/graph/vertex/type/updated',
+        function(event, vertex, typeUri) {
+            var typeId = triple_brain.freebase.idInFreebaseURI(typeUri);
+            triple_brain.freebase.listPropertiesOfFreebaseTypeId(vertex, typeId);
+            $(vertex.label()).suggest({
+                "zIndex": 20,
+                "type": typeId
+            })
+            .bind("fb-select", function(e, data)
+            {
+                vertex.readjustLabelWidth();
+                triple_brain.vertex.updateLabel(vertex, vertex.text());
+                resourceUri = triple_brain.freebase.freebaseIdToURI(data.id);
+                triple_brain.vertex.updateSameAs(vertex, resourceUri);
+            });
         }
-    });
+    );
 
+    eventBus.subscribe(
+        '/event/ui/graph/vertex/type/properties/updated',
+        function(event, vertex, properties) {
+            if(properties.length > 0){
+                vertex.setSuggestions(properties);
+                vertex.showSuggestionButton();
+            }
+        }
+    );
 }

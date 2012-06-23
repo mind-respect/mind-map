@@ -1,10 +1,7 @@
-require("Logger");
 
 if (triple_brain.suggestion == undefined) {
-
-    var logger = new Logger('triple_brain.suggestion');
-
     (function($) {
+            var eventBus = triple_brain.event_bus;
             triple_brain.suggestion = {
             autoComplete: function(textField) {
                 var textFieldValBeforeCall = $(textField).val();
@@ -15,7 +12,10 @@ if (triple_brain.suggestion == undefined) {
                 }).success(function(response) {
                     var areAutoCompleteSuggestionsStillRelevant = $(textField).val() == textFieldValBeforeCall;
                     if(areAutoCompleteSuggestionsStillRelevant){
-                        triple_brain.bus.local.topic('/event/ui/graph/auto_complete/updated/').publish(textField, response.result);
+                        eventBus.publish(
+                            '/event/ui/graph/auto_complete/updated/',
+                            [textField, response.result]
+                        );
                     }
                 })
              }

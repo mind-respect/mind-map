@@ -1,8 +1,4 @@
-require("Logger");
-
 if (triple_brain.ui.vertex_and_edge_common == undefined) {
-
-    var logger = new Logger('triple_brain.ui.vertex_and_edge_common');
 
     (function($) {
         triple_brain.ui.vertex_and_edge_common = {

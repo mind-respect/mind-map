@@ -1,14 +1,9 @@
-require("triple_brain", "jQuery.nano");
-
 if (triple_brain.template == undefined) {
     (function($) {
-
-        var logger = new Logger('triple_brain.template');
         triple_brain.template = {
             add: function(name, html) {
                 triple_brain.template[name] = {
                     merge: function(obj) {
-                        logger.debug('Merging template: ' + name);
                         return $($.nano(html, obj || null));
                     }
                 }
