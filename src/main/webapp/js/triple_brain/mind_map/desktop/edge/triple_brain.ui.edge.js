@@ -33,12 +33,14 @@ if (triple_brain.ui.edge == undefined) {
         onMouseOver : function(){
             var edge = triple_brain.ui.edge.withHtml(this);
             edge.highlight();
+            edge.showMenu();
         },
         onMouseOut: function(){
             var edge = triple_brain.ui.edge.withHtml(this);
             if(!edge.isTextFieldInFocus()){
                 edge.unhighlight();
             }
+            edge.hideMenu();
         }
     }
 
@@ -117,6 +119,15 @@ if (triple_brain.ui.edge == undefined) {
         }
         this.remove = function(){
             $(html).remove();
+        }
+        this.showMenu = function(){
+            $(menu()).show();
+        }
+        this.hideMenu = function(){
+            $(menu()).hide();
+        }
+        function menu(){
+            return $(html).find('.remove');
         }
         function label(){
             return $(html).find("input[type='text']");

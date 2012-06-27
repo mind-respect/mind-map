@@ -46,8 +46,10 @@ if (triple_brain.ui.edge_creator == undefined) {
             createLabel();
             createMenu();
             drawArrowLine();
-            edgeFacade().centerOnArrowLine();
-            return edgeFacade();
+            var edge = edgeFacade();
+            edge.centerOnArrowLine();
+            edge.hideMenu();
+            return edge;
         }
         function createLabel(){
             var label = triple_brain.template['edge_label'].merge(json);
