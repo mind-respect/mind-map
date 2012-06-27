@@ -35,9 +35,10 @@ if (triple_brain.ui.vertex_creator == undefined) {
             triple_brain.ui.graph.addHTML(
                 html
             );
-            createLabel();
             createMenu();
+            createLabel();
             var vertex = vertexFacade();
+            vertex.hideMenu();
             $(html).hover(
                 onMouseOver,
                 onMouseOut
@@ -65,7 +66,6 @@ if (triple_brain.ui.vertex_creator == undefined) {
                 vertex.setNameOfHiddenProperties(json.name_of_hidden_properties);
                 vertex.buildHiddenNeighborPropertiesIndicator();
             }
-            var vertex = vertexFacade();
             vertex.setNumberOfEdgesFromCentralVertex(json.min_number_of_edges_from_center_vertex);
             eventBus.publish(
                 '/event/ui/html/vertex/created/',
@@ -265,6 +265,7 @@ if (triple_brain.ui.vertex_creator == undefined) {
         function onMouseOver(){
             var vertex = vertexOfSubHtmlComponent(this);
             vertex.highlight();
+            vertex.showMenu();
         }
 
         function onMouseOut(){
@@ -272,6 +273,7 @@ if (triple_brain.ui.vertex_creator == undefined) {
             if(!vertex.isLabelInFocus()){
                 vertex.unhighlight();
             }
+            vertex.hideMenu();
         }
 
         function mouseDownToCreateRelationOrAddVertex(mouseDownEvent){

@@ -97,10 +97,10 @@ if (triple_brain.ui.vertex == undefined) {
             return $("#"+this.id()+":hover").size() > 0;
         }
         this.hideMenu = function(){
-            $(menu()).hide();
+            $(menu()).css("visibility", "hidden");
         }
         this.showMenu = function(){
-            $(menu()).show();
+            $(menu()).css("visibility", "visible");
         }
         this.showCenterButton = function(){
             $(centerButton()).hide();

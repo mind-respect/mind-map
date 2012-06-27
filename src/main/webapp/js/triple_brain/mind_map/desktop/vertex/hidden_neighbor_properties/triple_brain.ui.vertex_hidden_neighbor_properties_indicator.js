@@ -1,6 +1,6 @@
 
 if (triple_brain.ui.vertex_hidden_neighbor_properties_indicator == undefined) {
-
+    var edgeUi = triple_brain.ui.edge;
     triple_brain.ui.vertex_hidden_neighbor_properties_indicator = {
         withVertex : function(vertex){
             return new HiddenNeighborPropertiesIndicator(vertex);
@@ -49,7 +49,7 @@ if (triple_brain.ui.vertex_hidden_neighbor_properties_indicator == undefined) {
                    var nameOfHiddenProperties = vertex.nameOfHiddenProperties();
                    for(var i in nameOfHiddenProperties){
                        var hiddenProperty = {};
-                       hiddenProperty.name = nameOfHiddenProperties[i];
+                       hiddenProperty.name = nameOfHiddenProperties[i] == "" ? edgeUi.EMPTY_LABEL : nameOfHiddenProperties[i];
                        var property = triple_brain.template['hidden_property'].merge(hiddenProperty);
                        $(propertyList).append(property);
                    }
