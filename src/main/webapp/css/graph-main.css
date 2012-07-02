@@ -2,7 +2,9 @@
     display: none;
 }
 body{
-    /*overflow:hidden;*/
+    overflow:hidden;
+    /*min-width:20000px;*/
+    /*min-height:20000px;*/
 }
 #mind_map {
     font-family:arial;
@@ -237,6 +239,7 @@ body{
     position: absolute;
     left:0;
     top:0;
+    cursor:pointer;
 }
 
 #canvasForRelation {

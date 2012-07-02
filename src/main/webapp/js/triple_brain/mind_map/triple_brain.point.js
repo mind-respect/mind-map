@@ -11,12 +11,13 @@ if (triple_brain.point == undefined) {
         sumOfPoints : function(pointA, pointB){
             return addTwoPoints(pointA, pointB);
         },
-        differenceOfPoints: function(pointA, pointB){
-            return subtractTwoPoints(this, pointToSubtract);
+        fromPoint : function(point){
+            return new Point(point.x, point.y);
         }
     }
 
     function Point(x, y){
+        var point = this;
         this.x = x;
         this.y = y;
         this.distanceWithPoint = function(pointToCompare){
@@ -32,6 +33,14 @@ if (triple_brain.point == undefined) {
 
         this.clone = function(){
             return triple_brain.point.fromCoordinates(this.x, this.y);
+        }
+        this.multiply = function(factor){
+            this.x *= factor;
+            this.y *= factor;
+            return point;
+        }
+        this.invert = function(){
+            return point.multiply(-1);
         }
     }
 
@@ -49,7 +58,9 @@ if (triple_brain.point == undefined) {
         return subtractedPoint;
     }
 
-
-
+    Point.prototype.toString = function()
+    {
+        return "(" + this.x + "," + this.y + ")";
+    }
 
 }

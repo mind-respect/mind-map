@@ -1,4 +1,6 @@
 if (triple_brain.ui.mind_map == undefined) {
+    var point = triple_brain.point;
+    var segment = triple_brain.segment;
     (function ($) {
         var eventBus = triple_brain.event_bus;
         triple_brain.ui.mind_map = {
@@ -11,27 +13,92 @@ if (triple_brain.ui.mind_map == undefined) {
                 return offset;
             },
             applyOverScroll:function () {
-//                $("[data-role='page']").overscroll({
-//                    zIndex : 1,
-//                    wheelDelta : 20,
-//                    scrollDelta : 4,
-//                    hoverThumbs : true,
-//                    showThumbs : false,
-//                    cancelOn : ""
-//                })
-//                $("[data-role='page']").on('click', function(){
-//                    var outOfVertexMenus = $('.peripheral-menu');
-//                    $(outOfVertexMenus).remove();
-//                    $("input[type=text]:focus").blur();
-//                });
+                $("#graphCanvas").mousedown(function(){
+                    var mousePosition;
+                    var graphCanvas = this;
+                    $(graphCanvas).data("mousedown", true);
+                    var numberOfMouseMove = 0;
+                    $(graphCanvas).mousemove(moveHandler);
+                    function moveHandler(moveEvent){
+//                        console.log("moveEvent.which " + moveEvent.which);
+                        numberOfMouseMove ++;
+                        mousePosition = point.fromCoordinates(
+                            moveEvent.pageX,
+                            moveEvent.pageY
+                        );
+                        if(0== 0){
+                            console.log("mouse position " +  mousePosition);
+                            if($("#graphCanvas").data("mousedown")){
+                                scroll();
+                            }else{
+                                $("#graphCanvas").unbind("mousemove");
+                                //    clearInterval(scrollLoop);
+                            }
+                        }
+                    }
+                    //var scrollLoop = setInterval(scroll, 10);
+                    $("body").mouseup(function(){
+                      //  clearInterval(scrollLoop);
+                        $("#graphCanvas").unbind("mousemove");
+                        $("#graphCanvas").data("mousedown", false);
+                    });
+                    var lastPosition;
+                    function scroll(){
+                        $(graphCanvas).unbind("mousemove");
+//                        console.log(new Date() + " is mouse down in scroll " + $("#graphCanvas").data("mousedown"));
+                        if(!$("#graphCanvas").data("mousedown")){
+                            $("#graphCanvas").unbind("mousemove");
+                            //    clearInterval(scrollLoop);
+                            return;
+                        }
+                        lastPosition = lastPosition === undefined ?
+                            point.fromPoint(mousePosition) :
+                            lastPosition;
+                        var movementSegment = segment.withStartAndEndPoint(
+                            lastPosition,
+                            mousePosition
+                        );
+                        var distanceToScroll = distanceToScroll();
+                        console.log("distance to scroll " +  distanceToScroll);
+//                        if((Math.abs(distanceToScroll.x) + Math.abs(distanceToScroll.y)) < 2){
+//                            $(graphCanvas).bind("mousemove", moveHandler);
+//                            return;
+//                        }
+                        function distanceToScroll(){
+                            var distanceToScroll = movementSegment.length();
+                            distanceToScroll = distanceToScroll.invert();
+                            distanceToScroll = distanceToScroll.multiply(1);
+                            return distanceToScroll;
+                        }
+                        var scrollPosition = point.fromCoordinates(
+                            $("body").scrollLeft(),
+                            $("body").scrollTop()
+                        )
+                        var newScrollPosition = point.sumOfPoints(
+                            distanceToScroll,
+                            scrollPosition
+                        );
+//                        console.log("new scroll Position" +  newScrollPosition)
+                        window.scrollTo(
+                            newScrollPosition.x,
+                            newScrollPosition.y
+                        );
+                        lastPosition = point.sumOfPoints(
+                            distanceToScroll,
+                            mousePosition
+                        );
+                        $(graphCanvas).bind("mousemove", moveHandler);
+                    }
+                });
+
             },
             disableOverScroll:function () {
-//                $("[data-role='page']").removeOverscroll();
+//                $("body").removeOverscroll();
             }
         };
         $(document).ready(function(){
             handleIfNotAuthentifiedRedirectToAuthPage();
-            var sliderDefaultValue = 1;
+            var sliderDefaultValue = 5;
             $("#sub-vertices-depth-index").val(sliderDefaultValue);
             $("#sub-vertices-depth-slider").slider({
                 value:sliderDefaultValue,
@@ -61,7 +128,6 @@ if (triple_brain.ui.mind_map == undefined) {
                     triple_brain.ui.vertex.centralVertex()
                 );
             });
-            triple_brain.ui.mind_map.applyOverScroll();
             prepareSearchFeature();
             function prepareSearchFeature(){
                 $("#vertex-search-input").autocomplete({
@@ -112,6 +178,7 @@ if (triple_brain.ui.mind_map == undefined) {
                     var outOfVertexMenus = $('.peripheral-menu');
                     $(outOfVertexMenus).remove();
                 });
+                triple_brain.ui.mind_map.applyOverScroll();
                 eventBus.publish('/event/ui/graph/drawn');
             }
         );
