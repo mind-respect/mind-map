@@ -3,6 +3,7 @@ if (triple_brain.ui.mind_map == undefined) {
     var segment = triple_brain.segment;
     (function ($) {
         var eventBus = triple_brain.event_bus;
+        var dragScroll = triple_brain.drag_scroll;
         triple_brain.ui.mind_map = {
             offset:function () {
                 var offset = {};
@@ -11,89 +12,6 @@ if (triple_brain.ui.mind_map == undefined) {
                 offset.left = $("#left-panel").width() + leftMargin;
                 offset.top = topMargin;
                 return offset;
-            },
-            applyOverScroll:function () {
-                $("#graphCanvas").mousedown(function(){
-                    var mousePosition;
-                    var graphCanvas = this;
-                    $(graphCanvas).data("mousedown", true);
-                    var numberOfMouseMove = 0;
-                    $(graphCanvas).mousemove(moveHandler);
-                    function moveHandler(moveEvent){
-//                        console.log("moveEvent.which " + moveEvent.which);
-                        numberOfMouseMove ++;
-                        mousePosition = point.fromCoordinates(
-                            moveEvent.pageX,
-                            moveEvent.pageY
-                        );
-                        if(0== 0){
-                            console.log("mouse position " +  mousePosition);
-                            if($("#graphCanvas").data("mousedown")){
-                                scroll();
-                            }else{
-                                $("#graphCanvas").unbind("mousemove");
-                                //    clearInterval(scrollLoop);
-                            }
-                        }
-                    }
-                    //var scrollLoop = setInterval(scroll, 10);
-                    $("body").mouseup(function(){
-                      //  clearInterval(scrollLoop);
-                        $("#graphCanvas").unbind("mousemove");
-                        $("#graphCanvas").data("mousedown", false);
-                    });
-                    var lastPosition;
-                    function scroll(){
-                        $(graphCanvas).unbind("mousemove");
-//                        console.log(new Date() + " is mouse down in scroll " + $("#graphCanvas").data("mousedown"));
-                        if(!$("#graphCanvas").data("mousedown")){
-                            $("#graphCanvas").unbind("mousemove");
-                            //    clearInterval(scrollLoop);
-                            return;
-                        }
-                        lastPosition = lastPosition === undefined ?
-                            point.fromPoint(mousePosition) :
-                            lastPosition;
-                        var movementSegment = segment.withStartAndEndPoint(
-                            lastPosition,
-                            mousePosition
-                        );
-                        var distanceToScroll = distanceToScroll();
-                        console.log("distance to scroll " +  distanceToScroll);
-//                        if((Math.abs(distanceToScroll.x) + Math.abs(distanceToScroll.y)) < 2){
-//                            $(graphCanvas).bind("mousemove", moveHandler);
-//                            return;
-//                        }
-                        function distanceToScroll(){
-                            var distanceToScroll = movementSegment.length();
-                            distanceToScroll = distanceToScroll.invert();
-                            distanceToScroll = distanceToScroll.multiply(1);
-                            return distanceToScroll;
-                        }
-                        var scrollPosition = point.fromCoordinates(
-                            $("body").scrollLeft(),
-                            $("body").scrollTop()
-                        )
-                        var newScrollPosition = point.sumOfPoints(
-                            distanceToScroll,
-                            scrollPosition
-                        );
-//                        console.log("new scroll Position" +  newScrollPosition)
-                        window.scrollTo(
-                            newScrollPosition.x,
-                            newScrollPosition.y
-                        );
-                        lastPosition = point.sumOfPoints(
-                            distanceToScroll,
-                            mousePosition
-                        );
-                        $(graphCanvas).bind("mousemove", moveHandler);
-                    }
-                });
-
-            },
-            disableOverScroll:function () {
-//                $("body").removeOverscroll();
             }
         };
         $(document).ready(function(){
@@ -178,7 +96,7 @@ if (triple_brain.ui.mind_map == undefined) {
                     var outOfVertexMenus = $('.peripheral-menu');
                     $(outOfVertexMenus).remove();
                 });
-                triple_brain.ui.mind_map.applyOverScroll();
+                dragScroll.start();
                 eventBus.publish('/event/ui/graph/drawn');
             }
         );
