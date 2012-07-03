@@ -187,7 +187,6 @@ if (triple_brain.ui.vertex_creator == undefined) {
         }
 
         function onDragStart(mouseDownEvent, ui){
-            triple_brain.ui.mind_map.disableOverScroll();
             var canvasToMoveVertex = triple_brain.template['canvas_to_move_vertex'].merge();
             triple_brain.ui.graph.addHTML(
                 canvasToMoveVertex
@@ -214,7 +213,6 @@ if (triple_brain.ui.vertex_creator == undefined) {
         }
 
         function onDragStop(dragStopEvent, ui){
-            triple_brain.ui.mind_map.applyDragScroll();
             var canvasToMoveVertex = $("#canvasToMoveVertex");
             $(canvasToMoveVertex).remove();
             triple_brain.ui.edge.redrawAllEdges();
@@ -277,7 +275,6 @@ if (triple_brain.ui.vertex_creator == undefined) {
         }
 
         function mouseDownToCreateRelationOrAddVertex(mouseDownEvent){
-            triple_brain.ui.mind_map.disableOverScroll();
             var sourceVertex = vertexFacade();
             if(sourceVertex.isMouseOverLabel() || sourceVertex.isMouseOverMoveButton()){
                 return;
@@ -315,7 +312,7 @@ if (triple_brain.ui.vertex_creator == undefined) {
             });
 
             $('[data-role=page]').mouseup(function(mouseUpEvent) {
-                triple_brain.ui.mind_map.applyDragScroll();
+
                 $('.edge').hover(triple_brain.ui.edge.onMouseOver, triple_brain.ui.edge.onMouseOut);
                 $('.edge').css('z-index', normalStateEdgesZIndex);
                 $(canvasForRelation).remove();

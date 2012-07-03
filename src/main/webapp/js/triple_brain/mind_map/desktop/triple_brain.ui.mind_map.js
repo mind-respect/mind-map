@@ -77,10 +77,8 @@ if (triple_brain.ui.mind_map == undefined) {
             '/event/ui/graph/drawing_info/updated/',
             function (event, drawnGraph, centralVertexId) {
                 $("#drawn_graph").empty();
-                var graphCanvasSizeCoefficient = 3;
-                var graphCanvasSizeConstant = 400;
-                drawnGraph.bounding_box_width = drawnGraph.bounding_box_width * graphCanvasSizeCoefficient + graphCanvasSizeConstant;
-                drawnGraph.bounding_box_height = drawnGraph.bounding_box_height * graphCanvasSizeCoefficient + graphCanvasSizeConstant;
+                drawnGraph.bounding_box_width = 0.75 * $("body").width();
+                drawnGraph.bounding_box_height = 0.75 * $("body").height();
                 var graphCanvas = triple_brain.template['graph_canvas'].merge(drawnGraph);
                 $("#drawn_graph").append(graphCanvas);
                 triple_brain.ui.edge_creator.createWithArrayOfJsonHavingRelativePosition(
@@ -92,7 +90,7 @@ if (triple_brain.ui.mind_map == undefined) {
                 var centralVertex = triple_brain.ui.vertex.withId(centralVertexId);
                 centralVertex.setAsCentral();
 
-                $("[data-role='page']").on('click', "#drawn_graph", function () {
+                $("body").on('click', "#drawn_graph", function () {
                     var outOfVertexMenus = $('.peripheral-menu');
                     $(outOfVertexMenus).remove();
                 });

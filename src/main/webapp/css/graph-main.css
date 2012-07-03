@@ -3,8 +3,8 @@
 }
 body{
     overflow:hidden;
-    /*min-width:20000px;*/
-    /*min-height:20000px;*/
+    min-width:5000px;
+    min-height:5000px;
 }
 #mind_map {
     font-family:arial;
