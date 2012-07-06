@@ -4,8 +4,8 @@
 
 if (triple_brain.ui.vertex_creator == undefined) {
     var eventBus = triple_brain.event_bus;
+    var graph = triple_brain.ui.graph;
     triple_brain.ui.vertex_creator = {
-
         createWithArrayOfJsonHavingRelativePosition : function(jsonArray){
             for (var i in jsonArray) {
                 var json = jsonArray[i];
@@ -23,8 +23,9 @@ if (triple_brain.ui.vertex_creator == undefined) {
             return new VertexCreator(json);
         },
         addGraphOffsetToJsonPosition : function(json){
-            json.position.x += triple_brain.ui.mind_map.offset().left;
-            json.position.y += triple_brain.ui.mind_map.offset().top;
+            var graphOffset = graph.offset();
+            json.position.x += graphOffset.x;
+            json.position.y += graphOffset.y;
         }
     }
 
@@ -38,6 +39,7 @@ if (triple_brain.ui.vertex_creator == undefined) {
             createMenu();
             createLabel();
             var vertex = vertexFacade();
+            vertex.adjustWidth();
             vertex.hideMenu();
             $(html).hover(
                 onMouseOver,
@@ -118,6 +120,7 @@ if (triple_brain.ui.vertex_creator == undefined) {
                 var vertex = vertexOfSubHtmlComponent(this);
                 vertex.readjustLabelWidth();
             });
+            return labelContainer;
         }
 
         function createMenu(){
@@ -173,6 +176,7 @@ if (triple_brain.ui.vertex_creator == undefined) {
                     vertexOfSubHtmlComponent(this)
                 );
             });
+            return vertexMenu;
         }
 
         function vertexOfSubHtmlComponent(htmlOfSubComponent){

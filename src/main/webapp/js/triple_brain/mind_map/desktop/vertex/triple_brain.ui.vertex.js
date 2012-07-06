@@ -98,9 +98,11 @@ if (triple_brain.ui.vertex == undefined) {
         }
         this.hideMenu = function(){
             $(menu()).css("visibility", "hidden");
+//            $(menu()).hide();
         }
         this.showMenu = function(){
             $(menu()).css("visibility", "visible");
+//            $(menu()).show();
         }
         this.showCenterButton = function(){
             $(centerButton()).hide();
@@ -132,6 +134,7 @@ if (triple_brain.ui.vertex == undefined) {
             triple_brain.ui.vertex_and_edge_common.adjustTextFieldWidthToNumberOfChars(
                 this.label()
             );
+            thisVertex.adjustWidth();
         }
         this.text = function(){
             return $(this.label()).val();
@@ -190,6 +193,23 @@ if (triple_brain.ui.vertex == undefined) {
         }
         this.setNumberOfEdgesFromCentralVertex = function(numberOfEdgesFromCentralVertex){
             $(html).data('numberOfEdgesFromCentralVertex', numberOfEdgesFromCentralVertex);
+        }
+        this.scrollTo = function(){
+            var position = thisVertex.position();
+            window.scroll(
+                position.x - screen.width / 2,
+                position.y - screen.height / 4
+            );
+        }
+        this.adjustWidth = function(){
+            var intuitiveWeightBuffer = 5;
+            $(html).css(
+                "width",
+                $(menu()).width()
+                    + $(this.label()).width()
+                    + intuitiveWeightBuffer+
+                    "px"
+            );
         }
         function suggestionButton(){
             return $(html).find('.suggestion');
