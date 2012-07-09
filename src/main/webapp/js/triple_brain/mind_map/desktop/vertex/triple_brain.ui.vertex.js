@@ -202,7 +202,7 @@ if (triple_brain.ui.vertex == undefined) {
             );
         }
         this.adjustWidth = function(){
-            var intuitiveWeightBuffer = 5;
+            var intuitiveWeightBuffer = 7;
             $(html).css(
                 "width",
                 $(menu()).width()

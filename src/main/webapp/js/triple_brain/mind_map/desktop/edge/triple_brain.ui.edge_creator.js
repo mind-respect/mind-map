@@ -3,7 +3,7 @@
  */
 
 if (triple_brain.ui.edge_creator == undefined) {
-
+    var graph = triple_brain.ui.graph;
     triple_brain.ui.edge_creator = {
         createWithArrayOfJsonHavingRelativePosition : function(jsonArray){
             for (var i in jsonArray) {
@@ -23,10 +23,11 @@ if (triple_brain.ui.edge_creator == undefined) {
             return new EdgeCreator(json);
         },
         addGraphOffsetToJsonPosition : function(json){
-            json.arrowLineStartPoint.x += triple_brain.ui.mind_map.offset().left;
-            json.arrowLineStartPoint.y += triple_brain.ui.mind_map.offset().top ;
-            json.arrowLineEndPoint.x += triple_brain.ui.mind_map.offset().left;
-            json.arrowLineEndPoint.y += triple_brain.ui.mind_map.offset().top;
+            var graphOffset = graph.offset();
+            json.arrowLineStartPoint.x += graphOffset.x;
+            json.arrowLineStartPoint.y += graphOffset.y ;
+            json.arrowLineEndPoint.x += graphOffset.x;
+            json.arrowLineEndPoint.y += graphOffset.y;
         }
     }
 
