@@ -3,8 +3,8 @@
  */
 
 if (triple_brain.ui.graph == undefined) {
-
     (function($) {
+        var point = triple_brain.point;
         triple_brain.ui.graph = {
             addHTML : function(html){
                 $("#drawn_graph").append(html);
@@ -25,6 +25,12 @@ if (triple_brain.ui.graph == undefined) {
             },
             canvasContextToMoveAVertex: function(){
                 return triple_brain.ui.graph.canvasToMoveAVertex()[0].getContext("2d");
+            },
+            offset : function(){
+                return point.fromCoordinates(
+                    $("body").width() / 2,
+                    $("body").height() / 2
+                )
             }
         }
 

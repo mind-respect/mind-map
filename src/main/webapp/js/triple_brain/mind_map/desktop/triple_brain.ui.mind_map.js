@@ -77,8 +77,8 @@ if (triple_brain.ui.mind_map == undefined) {
             '/event/ui/graph/drawing_info/updated/',
             function (event, drawnGraph, centralVertexId) {
                 $("#drawn_graph").empty();
-                drawnGraph.bounding_box_width = 0.75 * $("body").width();
-                drawnGraph.bounding_box_height = 0.75 * $("body").height();
+                drawnGraph.bounding_box_width = $("body").width();
+                drawnGraph.bounding_box_height = $("body").height();
                 var graphCanvas = triple_brain.template['graph_canvas'].merge(drawnGraph);
                 $("#drawn_graph").append(graphCanvas);
                 triple_brain.ui.edge_creator.createWithArrayOfJsonHavingRelativePosition(
@@ -89,6 +89,7 @@ if (triple_brain.ui.mind_map == undefined) {
                 );
                 var centralVertex = triple_brain.ui.vertex.withId(centralVertexId);
                 centralVertex.setAsCentral();
+                centralVertex.scrollTo();
 
                 $("body").on('click', "#drawn_graph", function () {
                     var outOfVertexMenus = $('.peripheral-menu');
@@ -98,6 +99,7 @@ if (triple_brain.ui.mind_map == undefined) {
                 eventBus.publish('/event/ui/graph/drawn');
             }
         );
+
         function handleIfNotAuthentifiedRedirectToAuthPage(){
             $("html").ajaxError(function (e, jqxhr, settings, exception){
                 if(jqxhr.status == 403){

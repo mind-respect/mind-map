@@ -33,7 +33,7 @@ if (triple_brain.freebase == undefined) {
                     }
                     eventBus.publish(
                         '/event/ui/graph/vertex/type/properties/updated',
-                        event, vertex, properties
+                        [vertex, properties]
                     );
                 })
              }
