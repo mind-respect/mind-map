@@ -23,6 +23,7 @@
     padding-top:0px;
     margin-top:3px;
     margin-bottom:0px;
+    white-space: nowrap;
 }
 
 #vertices-list-sort-options li {
