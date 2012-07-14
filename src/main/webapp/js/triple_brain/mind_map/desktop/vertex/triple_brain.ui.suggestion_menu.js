@@ -12,10 +12,10 @@ if (triple_brain.ui.suggestion_menu == undefined) {
     }
 
     function SuggestionMenu(vertex){
-
-        var html = triple_brain.template['suggestions_menu'].merge();
-
+        var suggestionMenu = this;
+        var html;
         this.create = function(){
+            html = triple_brain.template['suggestions_menu'].merge();
             triple_brain.ui.graph.addHTML(
                 html
             );
@@ -26,6 +26,11 @@ if (triple_brain.ui.suggestion_menu == undefined) {
             html.click(function(menuClickEvent){
                 menuClickEvent.stopPropagation();
             });
+            return suggestionMenu;
+        }
+
+        this.reEvaluatePosition = function(){
+            position();
         }
 
         function addTitle(){

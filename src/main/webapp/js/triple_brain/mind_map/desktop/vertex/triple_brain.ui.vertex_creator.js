@@ -58,7 +58,6 @@ if (triple_brain.ui.vertex_creator == undefined) {
                 drag : onDrag,
                 stop : onDragStop
             });
-
             $(html).mousedown(mouseDownToCreateRelationOrAddVertex);
             json.position.x -= $(html).width() / 2;
             json.position.y -= $(html).height() / 2;
@@ -152,8 +151,10 @@ if (triple_brain.ui.vertex_creator == undefined) {
             whatIsThisBtn.click(function(event){
                 event.stopPropagation();
                 var vertex = vertexOfSubHtmlComponent(this);
-                triple_brain.ui.identification_menu.ofVertex(vertex)
-                    .create();
+                vertex.setIdentificationMenu(
+                    triple_brain.ui.identification_menu.ofVertex(vertex)
+                    .create()
+                );
             });
 
             var suggestionsBtn = triple_brain.template['vertex_suggestion_button'].merge();
@@ -163,9 +164,10 @@ if (triple_brain.ui.vertex_creator == undefined) {
                 var outOfVertexMenus = $('.peripheral-menu');
                 $(outOfVertexMenus).remove();
                 var vertex = vertexOfSubHtmlComponent(this);
-                triple_brain.ui.suggestion_menu.ofVertex(vertex)
-                    .create();
-
+                vertex.setSuggestionMenu(
+                    triple_brain.ui.suggestion_menu.ofVertex(vertex)
+                    .create()
+                )
             });
             $(suggestionsBtn).hide();
 
@@ -214,6 +216,15 @@ if (triple_brain.ui.vertex_creator == undefined) {
 
         function onDrag(dragEvent, ui){
             redrawConnectedEdgesArrowLine();
+            var vertex = triple_brain.ui.vertex.withHtml(
+                ui.helper
+            );
+            if(vertex.hasIdentificationMenu()){
+                vertex.getIdentificationMenu().reEvaluatePosition();
+            }
+            if(vertex.hasSuggestionMenu()){
+                vertex.getSuggestionMenu().reEvaluatePosition();
+            }
         }
 
         function onDragStop(dragStopEvent, ui){

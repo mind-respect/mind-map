@@ -211,6 +211,24 @@ if (triple_brain.ui.vertex == undefined) {
                     "px"
             );
         }
+        this.hasIdentificationMenu = function(){
+            return thisVertex.getIdentificationMenu() != undefined;
+        }
+        this.hasSuggestionMenu = function(){
+            return thisVertex.getSuggestionMenu() != undefined;
+        }
+        this.setIdentificationMenu = function(identificationMenu){
+            $(html).data("identification_menu", identificationMenu);
+        }
+        this.getIdentificationMenu = function(){
+            return $(html).data("identification_menu");
+        }
+        this.setSuggestionMenu = function(suggestionMenu){
+            $(html).data("suggestion_menu", suggestionMenu);
+        }
+        this.getSuggestionMenu = function(){
+            return $(html).data("suggestion_menu");
+        }
         function suggestionButton(){
             return $(html).find('.suggestion');
         }

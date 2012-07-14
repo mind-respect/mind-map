@@ -12,11 +12,13 @@ if (triple_brain.ui.identification_menu == undefined) {
     }
 
     function IdentificationMenu(vertex){
+        var identificationMenu = this;
         var menuHTMLVariables = {
             vertex_id : vertex.id()
         };
-        var html = triple_brain.template['identification_menu'].merge(menuHTMLVariables);
+        var html;
         this.create = function(){
+            html = triple_brain.template['identification_menu'].merge(menuHTMLVariables);
             triple_brain.ui.graph.addHTML(html);
             addTitle();
             addSubTitle();
@@ -26,7 +28,11 @@ if (triple_brain.ui.identification_menu == undefined) {
             $(html).click(function(e){
                 e.stopPropagation();
             });
-            return html;
+            return identificationMenu;
+        }
+
+        this.reEvaluatePosition = function(){
+            position();
         }
 
         function addTitle(){
