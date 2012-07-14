@@ -43,6 +43,22 @@ if (triple_brain.user == undefined) {
                             '/event/ui/users/get_authenticated/errors'
                         );
                     })
+            },
+            isAuthenticated : function(isAuthenticatedCallBack, isNotAuthenticatedCallBack){
+                $.ajax({
+                    type: 'GET',
+                    url: options.ws.app + '/service/users/is_authenticated'
+                }).success(function(isAuthenticated) {
+                        isAuthenticated.is_authenticated ?
+                        isAuthenticatedCallBack.call() :
+                        isNotAuthenticatedCallBack.call()
+                }).error(isNotAuthenticatedCallBack)
+            },
+            logout : function(successCallBack){
+                $.ajax({
+                    type: 'GET',
+                    url: options.ws.app + '/service/users/logout'
+                }).success(successCallBack)
             }
         }
     })(jQuery);

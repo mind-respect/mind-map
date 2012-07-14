@@ -1,6 +1,7 @@
 if (triple_brain.ui.mind_map == undefined) {
     var point = triple_brain.point;
     var segment = triple_brain.segment;
+    var users = triple_brain.user;
     (function ($) {
         var eventBus = triple_brain.event_bus;
         var dragScroll = triple_brain.drag_scroll;
@@ -15,62 +16,74 @@ if (triple_brain.ui.mind_map == undefined) {
             }
         };
         $(document).ready(function(){
-            handleIfNotAuthentifiedRedirectToAuthPage();
-            var sliderDefaultValue = 5;
-            $("#sub-vertices-depth-index").val(sliderDefaultValue);
-            $("#sub-vertices-depth-slider").slider({
-                value:sliderDefaultValue,
-                min:0,
-                max:10,
-                step:1,
-                orientation:"horizontal",
-                slide:function (event, ui) {
-                    $("#sub-vertices-depth-index").val(ui.value);
-                },
-                change:function (event, ui) {
-                    $("#sub-vertices-depth-index").val(ui.value);
-                    if (event.originalEvent) {
-                        triple_brain.drawn_graph.getWithNewCentralVertex(
-                            triple_brain.ui.vertex.centralVertex()
-                        );
-                    }
+            $("body").hide();
+            users.isAuthenticated(
+                callBackWhenIsAuthenticated,
+                function(){
+                    window.location = "login.html";
                 }
-            });
-            triple_brain.user.authenticatedUser(function(authenticatedUser){
-                triple_brain.authenticatedUser = authenticatedUser;
-                triple_brain.drawn_graph.getWithDefaultCentralVertex();
-            });
-
-            $("#redraw-graph-btn").click(function (e) {
-                triple_brain.drawn_graph.getWithNewCentralVertex(
-                    triple_brain.ui.vertex.centralVertex()
-                );
-            });
-            prepareSearchFeature();
-            function prepareSearchFeature(){
-                $("#vertex-search-input").autocomplete({
-                    source : function(request, response){
-                        triple_brain.search.search_for_auto_complete(
-                            request.term,
-                            function(searchResults){
-                                response($.map(searchResults, function(searchResult){
-                                    return {
-                                        label : searchResult.label,
-                                        value : searchResult.label,
-                                        id : searchResult.id
-                                    }
-                                }));
-                            }
-                        );
+            )
+            function callBackWhenIsAuthenticated(){
+                $("body").show();
+                handleIfNotAuthentifiedRedirectToAuthPage();
+                handleDisconnectButton();
+                var sliderDefaultValue = 5;
+                $("#sub-vertices-depth-index").val(sliderDefaultValue);
+                $("#sub-vertices-depth-slider").slider({
+                    value:sliderDefaultValue,
+                    min:0,
+                    max:10,
+                    step:1,
+                    orientation:"horizontal",
+                    slide:function (event, ui) {
+                        $("#sub-vertices-depth-index").val(ui.value);
                     },
-                    select : function(event, ui){
-                        var vertexUri = ui.item.id;
-                        triple_brain.drawn_graph.getFromNewCentralVertexUri(
-                            vertexUri
-                        );
+                    change:function (event, ui) {
+                        $("#sub-vertices-depth-index").val(ui.value);
+                        if (event.originalEvent) {
+                            triple_brain.drawn_graph.getWithNewCentralVertex(
+                                triple_brain.ui.vertex.centralVertex()
+                            );
+                        }
                     }
-                })
+                });
+                triple_brain.user.authenticatedUser(function(authenticatedUser){
+                    triple_brain.authenticatedUser = authenticatedUser;
+                    triple_brain.drawn_graph.getWithDefaultCentralVertex();
+                });
+
+                $("#redraw-graph-btn").click(function (e) {
+                    triple_brain.drawn_graph.getWithNewCentralVertex(
+                        triple_brain.ui.vertex.centralVertex()
+                    );
+                });
+                prepareSearchFeature();
+                function prepareSearchFeature(){
+                    $("#vertex-search-input").autocomplete({
+                        source : function(request, response){
+                            triple_brain.search.search_for_auto_complete(
+                                request.term,
+                                function(searchResults){
+                                    response($.map(searchResults, function(searchResult){
+                                        return {
+                                            label : searchResult.label,
+                                            value : searchResult.label,
+                                            id : searchResult.id
+                                        }
+                                    }));
+                                }
+                            );
+                        },
+                        select : function(event, ui){
+                            var vertexUri = ui.item.id;
+                            triple_brain.drawn_graph.getFromNewCentralVertexUri(
+                                vertexUri
+                            );
+                        }
+                    })
+                }
             }
+
         });
 
         eventBus.subscribe(
@@ -106,6 +119,13 @@ if (triple_brain.ui.mind_map == undefined) {
                     window.location = "login.html";
                 }
             });
+        }
+        function handleDisconnectButton(){
+            $("#disconnect-btn").click(function(){
+                users.logout(function(){
+                    window.location = "login.html";
+                })
+            })
         }
     })(jQuery);
 }

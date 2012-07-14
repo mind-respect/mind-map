@@ -30,13 +30,16 @@ body{
     color:#47A3FF;
 }
 
-#right-panel {
+#top-panel {
     margin-right: 5px;
     position:fixed;
     right:0.1em;
     top:0.5em;
 }
-
+#top-panel div.menu-item {
+    float:left;
+    margin-left:15px;
+}
 #redraw-graph-btn{
     border : 1px solid black;
     font-size:12px;
@@ -315,3 +318,16 @@ body{
     position: absolute;
 }
 
+.link-like-button{
+    border-size: 0px;
+    border-style: none;
+    font-size:12px;
+    font-family:arial;
+    padding: 0 0 0 0;
+    background-color:white;
+    font-weight:normal;
+}
+
+.top-menu-link-like-button{
+    margin-top:4px;
+}

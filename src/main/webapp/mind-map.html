@@ -81,8 +81,7 @@
     <script src="module/mind_map/date_picker/desktop/triple_brain.module.date_picker.js"></script>
 
 </head>
-<body>
-
+<body style="display:none">
     <div id="mind_map" data-role="page" data-url="mind-map.html">
         <div data-role="content">
             <div id="left-panel" class="main-panel">
@@ -97,12 +96,14 @@
             </div>
             <div id="drawn_graph">
             </div>
-            <div id="right-panel" class="main-panel">
-                <div class="redraw-button-panel">
+            <div id="top-panel" class="main-panel">
+                <div class="redraw-button-panel menu-item">
                     <input type="button" id="redraw-graph-btn" value="redraw" data-role="none"/>
                 </div>
+                <div class="menu-item">
+                    <input type="button" id="disconnect-btn" value="disconnect" class="link-like-button top-menu-link-like-button">
+                </div>
             </div>
-
         </div>
     </div>
 </body>

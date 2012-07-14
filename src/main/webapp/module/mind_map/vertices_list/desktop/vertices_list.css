@@ -45,12 +45,5 @@
 }
 
 .sort-vertices-btn{
-    border-size: 0px;
-    border-style: none;
-    font-size:12px;
-    font-family:arial;
-    padding: 0 0 0 0;
-    background-color:white;
     z-index: 3;
-    font-weight:normal;
 }
