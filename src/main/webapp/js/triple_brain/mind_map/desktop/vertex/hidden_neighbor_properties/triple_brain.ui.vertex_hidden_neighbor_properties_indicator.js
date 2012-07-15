@@ -1,6 +1,7 @@
 
 if (triple_brain.ui.vertex_hidden_neighbor_properties_indicator == undefined) {
     var edgeUi = triple_brain.ui.edge;
+    var dashedSegmentStatic = triple_brain.ui.vertex_hidden_neighbor_properties_indicator_dashed_segment;
     triple_brain.ui.vertex_hidden_neighbor_properties_indicator = {
         withVertex : function(vertex){
             return new HiddenNeighborPropertiesIndicator(vertex);
@@ -23,7 +24,7 @@ if (triple_brain.ui.vertex_hidden_neighbor_properties_indicator == undefined) {
            plainSegment.endPoint.x = vertex.position().x + vertex.width() + horizontalDistanceOfDashedSegment;
            for(i = 0; i < numberOfHiddenConnectedVertices; i++){
                 plainSegment.endPoint.y = startPoint.y - (lengthInPixels / 2) + (i * distanceBetweenEachDashedSegment);
-                var dashedSegment = triple_brain.ui.vertex.hidden_neighbor_properties_indicator_dashed_segment.withSegment(plainSegment.clone());
+                var dashedSegment = dashedSegmentStatic.withSegment(plainSegment.clone());
                 dashedSegment.draw();
            }
 

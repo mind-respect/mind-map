@@ -1,17 +1,18 @@
-if (triple_brain.ui.vertex.hidden_neighbor_properties_indicator_dashed_segment == undefined) {
+if (triple_brain.ui.vertex_hidden_neighbor_properties_indicator_dashed_segment == undefined) {
 
-    triple_brain.ui.vertex.hidden_neighbor_properties_indicator_dashed_segment = {
+    triple_brain.ui.vertex_hidden_neighbor_properties_indicator_dashed_segment = {
         withSegment : function(segment){
             return new DashedSegment(segment);
         }
     }
 
     function DashedSegment(segment){
+        var graph = triple_brain.ui.graph;
         var numberOfDashes = 3;
         var distanceBetweenEachDash = 5;
         var radianDirection = segment.radianDirection();
         var dash = segment;
-        var graphCanvasContext = $("#graphCanvas")[0].getContext("2d");
+        var graphCanvasContext = graph.canvasContext();
         this.draw = function(){
             for(j = 1 ; j <= numberOfDashes; j++){
                 updateDashEndPoint();

@@ -23,6 +23,7 @@ if (triple_brain.module.vertices_list_element_creator == undefined) {
                     var verticesListElement = triple_brain.module.vertices_list_element.withHtml(this);
                     var vertex = verticesListElement.associatedVertex();
                     vertex.focus();
+                    vertex.scrollTo();
                 });
                 return verticesListElement;
             }

@@ -9,10 +9,11 @@ if (triple_brain.ui.graph == undefined) {
             addHTML : function(html){
                 $("#drawn_graph").append(html);
             },
-            clear: function() {
+            removeAllArrowLines: function() {
                 triple_brain.ui.all.clearCanvas(
                     triple_brain.ui.graph.canvas()
                 );
+                triple_brain.ui.vertex.redrawAllPropertiesIndicator();
             },
             canvas : function(){
                     return $("#graphCanvas");

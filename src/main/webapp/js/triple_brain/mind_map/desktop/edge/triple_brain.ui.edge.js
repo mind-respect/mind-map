@@ -19,7 +19,7 @@ if (triple_brain.ui.edge == undefined) {
             return edges;
         },
         redrawAllEdges : function(){
-            triple_brain.ui.graph.clear();
+            triple_brain.ui.graph.removeAllArrowLines();
             var edges = triple_brain.ui.edge.allEdges();
             for(var i = 0 ; i < edges.length; i++){
                 var edge = edges[i];

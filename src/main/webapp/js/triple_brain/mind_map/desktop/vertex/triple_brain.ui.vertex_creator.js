@@ -5,6 +5,7 @@
 if (triple_brain.ui.vertex_creator == undefined) {
     var eventBus = triple_brain.event_bus;
     var graph = triple_brain.ui.graph;
+    var vertexStatic = triple_brain.ui.vertex;
     triple_brain.ui.vertex_creator = {
         createWithArrayOfJsonHavingRelativePosition : function(jsonArray){
             for (var i in jsonArray) {
@@ -194,11 +195,12 @@ if (triple_brain.ui.vertex_creator == undefined) {
 
         function onDragStart(mouseDownEvent, ui){
             var canvasToMoveVertex = triple_brain.template['canvas_to_move_vertex'].merge();
-            triple_brain.ui.graph.addHTML(
+            graph.addHTML(
                 canvasToMoveVertex
             );
-            $(canvasToMoveVertex).attr('width', $("#graphCanvas").width());
-            $(canvasToMoveVertex).attr('height', $("#graphCanvas").height());
+            var graphCanvas = graph.canvas();
+            $(canvasToMoveVertex).attr('width', $(graphCanvas).width());
+            $(canvasToMoveVertex).attr('height', $(graphCanvas).height());
 
             $('.edge').unbind('mouseenter mouseleave');
             $("#drawn_graph").data("edgesNormalStateZIndex", $('.edge').css('z-index'));
@@ -216,7 +218,7 @@ if (triple_brain.ui.vertex_creator == undefined) {
 
         function onDrag(dragEvent, ui){
             redrawConnectedEdgesArrowLine();
-            var vertex = triple_brain.ui.vertex.withHtml(
+            var vertex = vertexStatic.withHtml(
                 ui.helper
             );
             if(vertex.hasIdentificationMenu()){
@@ -244,7 +246,7 @@ if (triple_brain.ui.vertex_creator == undefined) {
         }
 
         function removeConnectedEdgesArrowLine(){
-            triple_brain.ui.graph.clear();
+            graph.removeAllArrowLines();
             var allEdges = triple_brain.ui.edge.allEdges();
             for(var i = 0; i < allEdges.length; i++){
                 var edge = allEdges[i];
@@ -315,8 +317,7 @@ if (triple_brain.ui.vertex_creator == undefined) {
                 relationEndPoint = triple_brain.point.fromCoordinates(
                     mouseMoveEvent.pageX,
                     mouseMoveEvent.pageY
-                )
-
+                );
                 var arrowLine = triple_brain.ui.arrow_line.withSegment(
                     triple_brain.segment.withStartAndEndPoint(
                         sourceVertex.centerPoint(),
@@ -326,7 +327,7 @@ if (triple_brain.ui.vertex_creator == undefined) {
                 arrowLine.drawInContextWithDefaultStyle(canvasContextForRelation);
             });
 
-            $('[data-role=page]').mouseup(function(mouseUpEvent) {
+            $("body").mouseup(function(mouseUpEvent) {
 
                 $('.edge').hover(triple_brain.ui.edge.onMouseOver, triple_brain.ui.edge.onMouseOut);
                 $('.edge').css('z-index', normalStateEdgesZIndex);

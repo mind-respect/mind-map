@@ -3,242 +3,252 @@
  */
 
 if (triple_brain.ui.vertex == undefined) {
-    triple_brain.ui.vertex = {
-        EMPTY_LABEL: "a concept",
+    var propertiesIndicatorStatic = triple_brain.ui.vertex_hidden_neighbor_properties_indicator;
+    var vertexStatic = triple_brain.ui.vertex = {};
+    vertexStatic.EMPTY_LABEL = "a concept";
 
-        withHtml : function(html){
-            return new Vertex(html);
-        },
-        withId : function(id) {
-            return triple_brain.ui.vertex.withHtml($("#" + id));
-        },
-        withUri : function(uri){
-            return triple_brain.ui.vertex.withId(
-                triple_brain.id_uri.idFromUri(uri)
-            );
-        },
-        centralVertex : function(){
-            return triple_brain.ui.vertex.withHtml(
-                $('.center-vertex')
-            );
-        },
-        allVertices : function(){
-            var vertices = new Array();
-            $(".vertex").each(function() {
-                vertices.push(triple_brain.ui.vertex.withHtml(this));
-            });
-            return vertices;
-        }
+    vertexStatic.withHtml = function (html) {
+        return new Vertex(html);
+    };
+    vertexStatic.withId = function (id) {
+        return vertexStatic.withHtml($("#" + id));
+    };
+    vertexStatic.withUri = function (uri) {
+        return vertexStatic.withId(
+            triple_brain.id_uri.idFromUri(uri)
+        );
+    };
+    vertexStatic.centralVertex = function () {
+        return vertexStatic.withHtml(
+            $('.center-vertex')
+        );
+    };
+    vertexStatic.allVertices = function () {
+        var vertices = new Array();
+        $(".vertex").each(function () {
+            vertices.push(vertexStatic.withHtml(this));
+        });
+        return vertices;
+    };
+    vertexStatic.redrawAllPropertiesIndicator = function () {
+        $.each(vertexStatic.allVertices(), function () {
+            var vertex = this;
+            vertex.buildHiddenNeighborPropertiesIndicator();
+        })
     }
 
-    function Vertex(html){
+    function Vertex(html) {
 
         var thisVertex = this;
 
         var segments = triple_brain.ui.vertex_segments.withHTMLVertex(html);
-        this.position = function(){
+        this.position = function () {
             return triple_brain.point.fromCoordinates(
                 $(html).offset().left,
                 $(html).offset().top
             );
         };
-        this.intersectsWithSegment = function(segment){
+        this.intersectsWithSegment = function (segment) {
             return segments.intersectsWithSegment(segment);
         }
-        this.intersectionPointWithSegment = function(segmentToCompare){
-            if(!this.intersectsWithSegment(segmentToCompare)){
+        this.intersectionPointWithSegment = function (segmentToCompare) {
+            if (!this.intersectsWithSegment(segmentToCompare)) {
                 throw(
                     triple_brain.error.withName(
                         "no_intersection"
                     )
-                );
+                    );
             }
             return segments.intersectionPointWithSegment(segmentToCompare);
         };
-        this.sideClosestToEdge = function(){
+        this.sideClosestToEdge = function () {
             return segments.sideThatIntersectsWithAnotherSegmentUsingMarginOfError(10);
         }
-        this.setAsNonCentral = function(){
+        this.setAsNonCentral = function () {
             $(html).removeClass('center-vertex');
             this.showCenterButton();
         }
-        this.setAsCentral = function(){
+        this.setAsCentral = function () {
             var centralVertex = triple_brain.ui.vertex.centralVertex();
             centralVertex.setAsNonCentral()
             $(html).addClass('center-vertex');
             this.hideCenterButton();
         }
-        this.buildHiddenNeighborPropertiesIndicator = function(){
-          propertiesIndicator = triple_brain.ui.vertex_hidden_neighbor_properties_indicator.withVertex(this);
-          propertiesIndicator.build();
+        this.setNumberOfHiddenConnectedVertices = function (numberOfHiddenConnectedVertices) {
+            $(html).data('numberOfHiddenConnectedVertices', numberOfHiddenConnectedVertices);
         }
-        this.width = function(){
+        this.setNameOfHiddenProperties = function (nameOfHiddenProperties) {
+            $(html).data('nameOfHiddenProperties', nameOfHiddenProperties);
+        }
+        this.buildHiddenNeighborPropertiesIndicator = function () {
+            var propertiesIndicator = propertiesIndicatorStatic.withVertex(this);
+            propertiesIndicator.build();
+        }
+        this.numberOfHiddenConnectedVertices = function () {
+            return $(html).data('numberOfHiddenConnectedVertices');
+        }
+        this.nameOfHiddenProperties = function () {
+            return $(html).data('nameOfHiddenProperties');
+        }
+        this.width = function () {
             return $(html).width();
         }
-        this.height = function(){
+        this.height = function () {
             return $(html).height();
         }
-        this.centerPoint = function(){
+        this.centerPoint = function () {
             return triple_brain.point.fromCoordinates(
                 $(html).offset().left + $(html).width() / 2,
                 $(html).offset().top + $(html).height() / 2
             )
         }
-        this.numberOfHiddenConnectedVertices = function(){
-            return $(html).data('numberOfHiddenConnectedVertices');
-        }
-        this.nameOfHiddenProperties = function(){
-            return $(html).data('nameOfHiddenProperties');
-        }
-        this.id = function(){
+
+        this.id = function () {
             return $(html).attr('id');
         }
-        this.isMouseOver = function(){
-            return $("#"+this.id()+":hover").size() > 0;
+        this.isMouseOver = function () {
+            return $("#" + this.id() + ":hover").size() > 0;
         }
-        this.hideMenu = function(){
+        this.hideMenu = function () {
             $(menu()).css("visibility", "hidden");
 //            $(menu()).hide();
         }
-        this.showMenu = function(){
+        this.showMenu = function () {
             $(menu()).css("visibility", "visible");
 //            $(menu()).show();
         }
-        this.showCenterButton = function(){
+        this.showCenterButton = function () {
             $(centerButton()).hide();
         }
-        this.hideCenterButton = function(){
+        this.hideCenterButton = function () {
             $(centerButton()).hide();
         }
-        this.highlight = function(){
+        this.highlight = function () {
             $(html).addClass('highlighted-vertex');
         }
-        this.unhighlight = function(){
+        this.unhighlight = function () {
             $(html).removeClass('highlighted-vertex');
         }
-        this.connectedEdges = function(){
-            var connectedHTMLEdges = $(".edge[source-vertex-id="+ thisVertex.id() +"],[destination-vertex-id="+ thisVertex.id() +"]");
+        this.connectedEdges = function () {
+            var connectedHTMLEdges = $(".edge[source-vertex-id=" + thisVertex.id() + "],[destination-vertex-id=" + thisVertex.id() + "]");
             var connectedEdges = new Array();
-            for(var i = 0; i < connectedHTMLEdges.length; i++){
+            for (var i = 0; i < connectedHTMLEdges.length; i++) {
                 connectedEdges.push(triple_brain.ui.edge.withHtml(connectedHTMLEdges[i]));
             }
             return connectedEdges;
         }
-        this.isLabelInFocus = function(){
+        this.isLabelInFocus = function () {
             return $(this.label()).is(":focus");
         }
-        this.focus = function(){
+        this.focus = function () {
             $(this.label()).focus();
         }
-        this.readjustLabelWidth = function(){
+        this.readjustLabelWidth = function () {
             triple_brain.ui.vertex_and_edge_common.adjustTextFieldWidthToNumberOfChars(
                 this.label()
             );
             thisVertex.adjustWidth();
         }
-        this.text = function(){
+        this.text = function () {
             return $(this.label()).val();
         }
-        this.hasDefaultText = function(){
+        this.hasDefaultText = function () {
             return $(this.label()).val() == triple_brain.ui.vertex.EMPTY_LABEL;
         }
-        this.applyStyleOfDefaultText = function(){
+        this.applyStyleOfDefaultText = function () {
             $(this.label()).addClass('when-default-graph-element-text');
         }
-        this.removeStyleOfDefaultText = function(){
+        this.removeStyleOfDefaultText = function () {
             $(this.label()).removeClass('when-default-graph-element-text');
         }
-        this.isMouseOverLabel = function(){
+        this.isMouseOverLabel = function () {
             return $(html).find("input[type='text']:hover").size() > 0;
         }
-        this.isMouseOverMoveButton= function(){
+        this.isMouseOverMoveButton = function () {
             return $(html).find(".move:hover").size() > 0;
         }
-        this.isCenterVertex = function(){
+        this.isCenterVertex = function () {
             return $(html).hasClass("center-vertex");
         }
-        this.removeConnectedEdges = function(){
+        this.removeConnectedEdges = function () {
             var connectedEdges = this.connectedEdges();
-            for(var i = 0 ; i < connectedEdges.length; i++){
+            for (var i = 0; i < connectedEdges.length; i++) {
                 connectedEdges[i].remove();
             }
             triple_brain.ui.edge.redrawAllEdges();
         },
-        this.remove = function(){
-            $(html).remove();
-        }
-        this.suggestions = function(){
+            this.remove = function () {
+                $(html).remove();
+            }
+        this.suggestions = function () {
             return $(html).data('suggestions');
         }
-        this.setSuggestions = function(suggestions){
+        this.setSuggestions = function (suggestions) {
             $(html).data('suggestions', suggestions);
         }
-        this.showSuggestionButton = function(){
+        this.showSuggestionButton = function () {
             $(suggestionButton()).show();
         }
-        this.label = function(){
+        this.label = function () {
             return $(html).find(".label");
         }
-        this.equalsVertex = function(otherVertex){
+        this.equalsVertex = function (otherVertex) {
             return thisVertex.id() == otherVertex.id();
         }
-        this.setNumberOfHiddenConnectedVertices = function(numberOfHiddenConnectedVertices){
-            $(html).data('numberOfHiddenConnectedVertices', numberOfHiddenConnectedVertices);
-        }
-        this.setNameOfHiddenProperties = function(nameOfHiddenProperties){
-            $(html).data('nameOfHiddenProperties', nameOfHiddenProperties);
-        }
-        this.numberOfEdgesFromCentralVertex = function(){
+        this.numberOfEdgesFromCentralVertex = function () {
             return $(html).data('numberOfEdgesFromCentralVertex');
         }
-        this.setNumberOfEdgesFromCentralVertex = function(numberOfEdgesFromCentralVertex){
+        this.setNumberOfEdgesFromCentralVertex = function (numberOfEdgesFromCentralVertex) {
             $(html).data('numberOfEdgesFromCentralVertex', numberOfEdgesFromCentralVertex);
         }
-        this.scrollTo = function(){
+        this.scrollTo = function () {
             var position = thisVertex.position();
             window.scroll(
                 position.x - screen.width / 2,
                 position.y - screen.height / 4
             );
         }
-        this.adjustWidth = function(){
+        this.adjustWidth = function () {
             var intuitiveWeightBuffer = 7;
             $(html).css(
                 "width",
                 $(menu()).width()
                     + $(this.label()).width()
-                    + intuitiveWeightBuffer+
+                    + intuitiveWeightBuffer +
                     "px"
             );
         }
-        this.hasIdentificationMenu = function(){
+        this.hasIdentificationMenu = function () {
             return thisVertex.getIdentificationMenu() != undefined;
         }
-        this.hasSuggestionMenu = function(){
+        this.hasSuggestionMenu = function () {
             return thisVertex.getSuggestionMenu() != undefined;
         }
-        this.setIdentificationMenu = function(identificationMenu){
+        this.setIdentificationMenu = function (identificationMenu) {
             $(html).data("identification_menu", identificationMenu);
         }
-        this.getIdentificationMenu = function(){
+        this.getIdentificationMenu = function () {
             return $(html).data("identification_menu");
         }
-        this.setSuggestionMenu = function(suggestionMenu){
+        this.setSuggestionMenu = function (suggestionMenu) {
             $(html).data("suggestion_menu", suggestionMenu);
         }
-        this.getSuggestionMenu = function(){
+        this.getSuggestionMenu = function () {
             return $(html).data("suggestion_menu");
         }
-        function suggestionButton(){
+        function suggestionButton() {
             return $(html).find('.suggestion');
         }
-        function moveButton(){
+
+        function moveButton() {
             return $(html).find('.move');
         }
-        function menu(){
+
+        function menu() {
             return $(html).find('.menu');
         }
-        function centerButton(){
+
+        function centerButton() {
             return $(html).find('.center');
         }
     }
@@ -247,7 +257,7 @@ if (triple_brain.ui.vertex == undefined) {
 
     eventBus.subscribe(
         '/event/ui/graph/vertex/label/updated',
-        function(event, vertex) {
+        function (event, vertex) {
             triple_brain.ui.vertex_and_edge_common.highlightLabel(
                 vertex.id()
             );
@@ -256,7 +266,7 @@ if (triple_brain.ui.vertex == undefined) {
 
     eventBus.subscribe(
         '/event/ui/graph/vertex/deleted/',
-        function(event, vertex) {
+        function (event, vertex) {
             vertex.removeConnectedEdges();
             vertex.remove();
         }
@@ -264,7 +274,7 @@ if (triple_brain.ui.vertex == undefined) {
 
     eventBus.subscribe(
         '/event/ui/graph/vertex_and_relation/added/',
-        function(event, statementNewRelation, newVertexPosition) {
+        function (event, statementNewRelation, newVertexPosition) {
             var sourceVertex = triple_brain.ui.vertex.withId(
                 triple_brain.id_uri.idFromUri(
                     statementNewRelation.subject_id
@@ -276,7 +286,7 @@ if (triple_brain.ui.vertex == undefined) {
             var vertexJSON = {};
             vertexJSON.id = destinationVertexId;
             vertexJSON.label = triple_brain.ui.vertex.EMPTY_LABEL;
-            vertexJSON.position= {};
+            vertexJSON.position = {};
             vertexJSON.position.x = newVertexPosition.x;
             vertexJSON.position.y = newVertexPosition.y;
 
@@ -285,7 +295,7 @@ if (triple_brain.ui.vertex == undefined) {
             var destinationVertex = triple_brain.ui.vertex_creator.withArrayOfJsonHavingAbsolutePosition(vertexJSON).create();
 
             var typeUri = statementNewRelation.object_type_uri;
-            if(typeUri != undefined){
+            if (typeUri != undefined) {
                 triple_brain.vertex.updateType(destinationVertex, typeUri);
             }
 
@@ -301,7 +311,7 @@ if (triple_brain.ui.vertex == undefined) {
             edgeJSON.destination_vertex_id = statementNewRelation.object_id;
             edgeJSON.label = triple_brain.ui.edge.EMPTY_LABEL;
             var edge = triple_brain.ui.edge_creator.withArrayOfJsonHavingAbsolutePosition(edgeJSON).create();
-            if(statementNewRelation.predicate_label != undefined){
+            if (statementNewRelation.predicate_label != undefined) {
                 edge.setText(statementNewRelation.predicate_label);
                 triple_brain.edge.updateLabel(edge, edge.text());
             }
