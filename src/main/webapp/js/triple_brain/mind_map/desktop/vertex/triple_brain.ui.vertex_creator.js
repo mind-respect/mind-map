@@ -6,8 +6,9 @@ if (triple_brain.ui.vertex_creator == undefined) {
     var eventBus = triple_brain.event_bus;
     var graph = triple_brain.ui.graph;
     var vertexStatic = triple_brain.ui.vertex;
+    var suggestionStatic = triple_brain.suggestion;
     triple_brain.ui.vertex_creator = {
-        createWithArrayOfJsonHavingRelativePosition : function(jsonArray){
+        createWithArrayOfJsonHavingRelativePosition:function (jsonArray) {
             for (var i in jsonArray) {
                 var json = jsonArray[i];
                 triple_brain.ui.vertex_creator.withArrayOfJsonHavingRelativePosition(
@@ -16,30 +17,38 @@ if (triple_brain.ui.vertex_creator == undefined) {
             }
         },
 
-        withArrayOfJsonHavingAbsolutePosition : function(json){
+        withArrayOfJsonHavingAbsolutePosition:function (json) {
             return new VertexCreator(json);
         },
-        withArrayOfJsonHavingRelativePosition : function(json){
+        withArrayOfJsonHavingRelativePosition:function (json) {
             triple_brain.ui.vertex_creator.addGraphOffsetToJsonPosition(json);
             return new VertexCreator(json);
         },
-        addGraphOffsetToJsonPosition : function(json){
+        addGraphOffsetToJsonPosition:function (json) {
             var graphOffset = graph.offset();
             json.position.x += graphOffset.x;
             json.position.y += graphOffset.y;
         }
     }
 
-    function VertexCreator(json){
+    function VertexCreator(json) {
         json.id = triple_brain.id_uri.idFromUri(json.id);
         var html = triple_brain.template['vertex'].merge(json);
-        this.create = function(){
+        this.create = function () {
             triple_brain.ui.graph.addHTML(
                 html
             );
             createMenu();
             createLabel();
             var vertex = vertexFacade();
+            vertex.setSuggestions(
+                suggestionStatic.fromJsonArrayOfServer(
+                    json.suggestions
+                )
+            );
+            if(json.suggestions.length > 0){
+                vertex.showSuggestionButton();
+            }
             vertex.adjustWidth();
             vertex.hideMenu();
             $(html).hover(
@@ -48,22 +57,22 @@ if (triple_brain.ui.vertex_creator == undefined) {
             );
             var graphCanvas = triple_brain.ui.graph.canvas();
             $(html).draggable({
-                handle: ".move",
-                containment: [
+                handle:".move",
+                containment:[
                     $(graphCanvas).position().left,
                     $(graphCanvas).position().top,
                     $(graphCanvas).width(),
                     $(graphCanvas).height()
                 ],
-                start : onDragStart,
-                drag : onDrag,
-                stop : onDragStop
+                start:onDragStart,
+                drag:onDrag,
+                stop:onDragStop
             });
             $(html).mousedown(mouseDownToCreateRelationOrAddVertex);
             json.position.x -= $(html).width() / 2;
             json.position.y -= $(html).height() / 2;
             position();
-            if(json.is_frontier_vertex_with_hidden_vertices){
+            if (json.is_frontier_vertex_with_hidden_vertices) {
                 vertex.setNumberOfHiddenConnectedVertices(json.number_of_hidden_connected_vertices);
                 vertex.setNameOfHiddenProperties(json.name_of_hidden_properties);
                 vertex.buildHiddenNeighborPropertiesIndicator();
@@ -75,55 +84,55 @@ if (triple_brain.ui.vertex_creator == undefined) {
             );
             return vertex;
         }
-        function createLabel(){
+        function createLabel() {
             var labelContainer = triple_brain.template['vertex_label_container'].merge(json);
             $(html).append(labelContainer);
             var label = $(labelContainer).find("input[type='text']:first");
-            var vertex =  vertexFacade();
+            var vertex = vertexFacade();
             vertex.readjustLabelWidth();
             $(label).draggable('disabled');
 
-            if(vertex.hasDefaultText()){
+            if (vertex.hasDefaultText()) {
                 vertex.applyStyleOfDefaultText();
             }
-            label.focus(function(e) {
+            label.focus(function (e) {
                 var vertex = vertexOfSubHtmlComponent(this);
                 vertex.highlight();
                 vertex.removeStyleOfDefaultText();
-                if(vertex.hasDefaultText()){
+                if (vertex.hasDefaultText()) {
                     $(this).val("");
                     vertex.readjustLabelWidth();
                 }
             });
-            label.blur(function(e) {
+            label.blur(function (e) {
                 var vertex = vertexOfSubHtmlComponent(this);
-                if(!vertex.isMouseOver()){
+                if (!vertex.isMouseOver()) {
                     vertex.unhighlight();
                 }
-                if($(this).val() == ""){
+                if ($(this).val() == "") {
                     $(this).val(triple_brain.ui.vertex.EMPTY_LABEL);
                     vertex.applyStyleOfDefaultText();
                     vertex.readjustLabelWidth()
-                }else{
+                } else {
                     vertex.removeStyleOfDefaultText();
                 }
             });
 
-            label.change(function(e) {
+            label.change(function (e) {
                 triple_brain.vertex.updateLabel(vertexOfSubHtmlComponent(this), $(this).val());
             });
 
-            label.keydown(function(e) {
+            label.keydown(function (e) {
                 vertexOfSubHtmlComponent(this).readjustLabelWidth();
             });
-            label.keyup(function(e) {
+            label.keyup(function (e) {
                 var vertex = vertexOfSubHtmlComponent(this);
                 vertex.readjustLabelWidth();
             });
             return labelContainer;
         }
 
-        function createMenu(){
+        function createMenu() {
             var vertexMenu = triple_brain.template['vertex_menu'].merge();
             $(html).append(vertexMenu);
             var menuListFirstCol = triple_brain.template['vertex_menu_list_first_col'].merge();
@@ -139,42 +148,42 @@ if (triple_brain.ui.vertex_creator == undefined) {
             var removeBtn = triple_brain.template['vertex_remove_button'].merge();
             $(menuListFirstCol).append(removeBtn);
 
-            removeBtn.click(function(event) {
+            removeBtn.click(function (event) {
                 event.stopPropagation();
                 var vertex = vertexOfSubHtmlComponent(this);
-                if(!vertex.isCenterVertex() && vertex.id() != "default"){
+                if (!vertex.isCenterVertex() && vertex.id() != "default") {
                     triple_brain.vertex.remove(vertex);
                 }
             });
 
             var whatIsThisBtn = triple_brain.template['vertex_what_is_this_button'].merge();
             $(menuListSecondCol).append(whatIsThisBtn);
-            whatIsThisBtn.click(function(event){
+            whatIsThisBtn.click(function (event) {
                 event.stopPropagation();
                 var vertex = vertexOfSubHtmlComponent(this);
                 vertex.setIdentificationMenu(
                     triple_brain.ui.identification_menu.ofVertex(vertex)
-                    .create()
+                        .create()
                 );
             });
 
             var suggestionsBtn = triple_brain.template['vertex_suggestion_button'].merge();
             $(menuListThirdCol).append(suggestionsBtn);
-            suggestionsBtn.click(function(event){
+            suggestionsBtn.click(function (event) {
                 event.stopPropagation();
                 var outOfVertexMenus = $('.peripheral-menu');
                 $(outOfVertexMenus).remove();
                 var vertex = vertexOfSubHtmlComponent(this);
                 vertex.setSuggestionMenu(
                     triple_brain.ui.suggestion_menu.ofVertex(vertex)
-                    .create()
+                        .create()
                 )
             });
             $(suggestionsBtn).hide();
 
             var centerBtn = triple_brain.template['vertex_center_button'].merge();
             $(menuListSecondCol).append(centerBtn);
-            centerBtn.click(function() {
+            centerBtn.click(function () {
                 triple_brain.drawn_graph.getWithNewCentralVertex(
                     vertexOfSubHtmlComponent(this)
                 );
@@ -182,18 +191,18 @@ if (triple_brain.ui.vertex_creator == undefined) {
             return vertexMenu;
         }
 
-        function vertexOfSubHtmlComponent(htmlOfSubComponent){
+        function vertexOfSubHtmlComponent(htmlOfSubComponent) {
             return triple_brain.ui.vertex.withHtml(
                 $(htmlOfSubComponent).closest('.vertex')
             );
         }
 
-        function position(){
+        function position() {
             $(html).css('left', json.position.x);
             $(html).css('top', json.position.y);
         }
 
-        function onDragStart(mouseDownEvent, ui){
+        function onDragStart(mouseDownEvent, ui) {
             var canvasToMoveVertex = triple_brain.template['canvas_to_move_vertex'].merge();
             graph.addHTML(
                 canvasToMoveVertex
@@ -216,20 +225,20 @@ if (triple_brain.ui.vertex_creator == undefined) {
             removeConnectedEdgesArrowLine();
         }
 
-        function onDrag(dragEvent, ui){
+        function onDrag(dragEvent, ui) {
             redrawConnectedEdgesArrowLine();
             var vertex = vertexStatic.withHtml(
                 ui.helper
             );
-            if(vertex.hasIdentificationMenu()){
+            if (vertex.hasIdentificationMenu()) {
                 vertex.getIdentificationMenu().reEvaluatePosition();
             }
-            if(vertex.hasSuggestionMenu()){
+            if (vertex.hasSuggestionMenu()) {
                 vertex.getSuggestionMenu().reEvaluatePosition();
             }
         }
 
-        function onDragStop(dragStopEvent, ui){
+        function onDragStop(dragStopEvent, ui) {
             var canvasToMoveVertex = $("#canvasToMoveVertex");
             $(canvasToMoveVertex).remove();
             triple_brain.ui.edge.redrawAllEdges();
@@ -245,24 +254,25 @@ if (triple_brain.ui.vertex_creator == undefined) {
             $('.vertex').css('z-index', verticesNormalStateZIndex);
         }
 
-        function removeConnectedEdgesArrowLine(){
+        function removeConnectedEdgesArrowLine() {
             graph.removeAllArrowLines();
             var allEdges = triple_brain.ui.edge.allEdges();
-            for(var i = 0; i < allEdges.length; i++){
+            for (var i = 0; i < allEdges.length; i++) {
                 var edge = allEdges[i];
-                if(!edge.isConnectedWithVertex(vertexFacade())){
+                if (!edge.isConnectedWithVertex(vertexFacade())) {
                     edge.arrowLine().drawInContextWithDefaultStyle(
                         triple_brain.ui.graph.canvasContext()
                     );
                 }
             }
         }
-        function redrawConnectedEdgesArrowLine(){
+
+        function redrawConnectedEdgesArrowLine() {
             triple_brain.ui.all.clearCanvas(
                 triple_brain.ui.graph.canvasToMoveAVertex()
             );
             var connectedEdges = vertexFacade().connectedEdges();
-            for(var i = 0; i < connectedEdges.length; i++){
+            for (var i = 0; i < connectedEdges.length; i++) {
                 var edge = connectedEdges[i];
                 edge.setArrowLine(
                     triple_brain.ui.arrow_line.ofSourceAndDestinationVertex(
@@ -277,23 +287,23 @@ if (triple_brain.ui.vertex_creator == undefined) {
             }
         }
 
-        function onMouseOver(){
+        function onMouseOver() {
             var vertex = vertexOfSubHtmlComponent(this);
             vertex.highlight();
             vertex.showMenu();
         }
 
-        function onMouseOut(){
+        function onMouseOut() {
             var vertex = vertexOfSubHtmlComponent(this)
-            if(!vertex.isLabelInFocus()){
+            if (!vertex.isLabelInFocus()) {
                 vertex.unhighlight();
             }
             vertex.hideMenu();
         }
 
-        function mouseDownToCreateRelationOrAddVertex(mouseDownEvent){
+        function mouseDownToCreateRelationOrAddVertex(mouseDownEvent) {
             var sourceVertex = vertexFacade();
-            if(sourceVertex.isMouseOverLabel() || sourceVertex.isMouseOverMoveButton()){
+            if (sourceVertex.isMouseOverLabel() || sourceVertex.isMouseOverMoveButton()) {
                 return;
             }
             var canvasForRelation = triple_brain.template['canvas_for_relation'].merge();
@@ -309,7 +319,8 @@ if (triple_brain.ui.vertex_creator == undefined) {
             $('.edge').css('z-index', '1');
             var relationMouseMoveEvent;
             var relationEndPoint = triple_brain.point.centeredAtOrigin();
-            $(canvasForRelation).mousemove(function(mouseMoveEvent) {
+
+            $(canvasForRelation).mousemove(function (mouseMoveEvent) {
                 sourceVertex.highlight();
                 relationMouseMoveEvent = mouseMoveEvent;
                 triple_brain.ui.all.clearCanvas(canvasForRelation);
@@ -327,7 +338,7 @@ if (triple_brain.ui.vertex_creator == undefined) {
                 arrowLine.drawInContextWithDefaultStyle(canvasContextForRelation);
             });
 
-            $("body").mouseup(function(mouseUpEvent) {
+            $("body").mouseup(function (mouseUpEvent) {
 
                 $('.edge').hover(triple_brain.ui.edge.onMouseOver, triple_brain.ui.edge.onMouseOut);
                 $('.edge').css('z-index', normalStateEdgesZIndex);
@@ -340,14 +351,14 @@ if (triple_brain.ui.vertex_creator == undefined) {
                         sourceVertex.unhighlight();
                         triple_brain.edge.add(sourceVertex, destinationVertex);
                     }
-                }else{
+                } else {
                     sourceVertex.unhighlight();
                     triple_brain.vertex.addRelationAndVertexAtPositionToVertex(sourceVertex, relationEndPoint);
                 }
             });
         }
 
-        function vertexFacade(){
+        function vertexFacade() {
             return triple_brain.ui.vertex.withHtml(html);
         }
 

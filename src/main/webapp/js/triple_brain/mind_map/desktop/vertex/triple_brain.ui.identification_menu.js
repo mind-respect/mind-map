@@ -3,7 +3,7 @@
  */
 
 if (triple_brain.ui.identification_menu == undefined) {
-
+    var vertexService = triple_brain.vertex;
     triple_brain.ui.identification_menu = {
 
         ofVertex : function(vertex){
@@ -81,10 +81,10 @@ if (triple_brain.ui.identification_menu == undefined) {
                 var typeId = data['n:type'].id;
                 if(triple_brain.freebase.isOfTypeTypeFromTypeId(typeId)){
                     typeUri = triple_brain.freebase.freebaseIdToURI(data.id);
-                    triple_brain.vertex.updateType(vertex, typeUri);
+                    vertexService.updateType(vertex, typeUri);
                 }else{
                     resourceUri = triple_brain.freebase.freebaseIdToURI(data.id);
-                    triple_brain.vertex.updateSameAs(vertex, resourceUri);
+                    vertexService.updateSameAs(vertex, resourceUri);
                 }
             });
             return identificationTextField;
@@ -113,10 +113,10 @@ if (triple_brain.ui.identification_menu == undefined) {
 
     eventBus.subscribe(
         '/event/ui/graph/vertex/type/properties/updated',
-        function(event, vertex, properties) {
-            if(properties.length > 0){
-                vertex.setSuggestions(properties);
-                vertex.showSuggestionButton();
+        function(event, vertexUi, suggestions) {
+            if(suggestions.length > 0){
+                vertexUi.setSuggestions(suggestions);
+                vertexUi.showSuggestionButton();
             }
         }
     );
