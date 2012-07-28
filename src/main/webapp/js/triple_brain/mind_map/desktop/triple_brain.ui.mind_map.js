@@ -83,12 +83,12 @@ if (triple_brain.ui.mind_map == undefined) {
                     })
                 }
             }
-
         });
 
         eventBus.subscribe(
             '/event/ui/graph/drawing_info/updated/',
             function (event, drawnGraph, centralVertexId) {
+                triple_brain.ui.graph.reset();
                 $("#drawn_graph").empty();
                 drawnGraph.bounding_box_width = $("body").width();
                 drawnGraph.bounding_box_height = $("body").height();

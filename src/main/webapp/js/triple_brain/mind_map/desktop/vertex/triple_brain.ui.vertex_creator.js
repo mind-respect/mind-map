@@ -77,7 +77,6 @@ if (triple_brain.ui.vertex_creator == undefined) {
                 vertex.setNameOfHiddenProperties(json.name_of_hidden_properties);
                 vertex.buildHiddenNeighborPropertiesIndicator();
             }
-            vertex.setNumberOfEdgesFromCentralVertex(json.min_number_of_edges_from_center_vertex);
             eventBus.publish(
                 '/event/ui/html/vertex/created/',
                 vertex

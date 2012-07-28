@@ -5,6 +5,7 @@ if (triple_brain.drawn_graph == undefined) {
         var eventBus = triple_brain.event_bus;
         triple_brain.drawn_graph = {
             getWithDefaultCentralVertex: function() {
+                eventBus.publish('/event/ui/graph/drawing_info/about_to/update', []);
                 var authenticatedUsername = triple_brain.authenticatedUser.user_name;
                 var centralVertexId = idURIUtils.idFromUri(idURIUtils.baseURI + authenticatedUsername + '/default');
                 var depthOfSubVertices = $("#sub-vertices-depth-slider").slider('value');
@@ -20,6 +21,7 @@ if (triple_brain.drawn_graph == undefined) {
                 })
              },
             getWithNewCentralVertex: function(newCentralVertex) {
+                eventBus.publish('/event/ui/graph/drawing_info/about_to/update', []);
                 var depthOfSubVertices = $("#sub-vertices-depth-slider").slider('value');
                 $.ajax({
                     type: 'GET',
@@ -33,6 +35,7 @@ if (triple_brain.drawn_graph == undefined) {
                 })
             },
             getFromNewCentralVertexUri: function(newCentralVertexUri) {
+                eventBus.publish('/event/ui/graph/drawing_info/about_to/update', []);
                 var depthOfSubVertices = $("#sub-vertices-depth-slider").slider('value');
                 $.ajax({
                     type: 'GET',

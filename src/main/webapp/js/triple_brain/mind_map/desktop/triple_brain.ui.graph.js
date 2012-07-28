@@ -6,7 +6,8 @@ if (triple_brain.ui.graph == undefined) {
     (function ($) {
         var point = triple_brain.point;
         var graphStatic = triple_brain.ui.graph = {};
-        var graphForTraversal = new crow.Graph();
+        var graphForTraversal;
+
         graphStatic.addHTML = function (html) {
             $("#drawn_graph").append(html);
         };
@@ -35,13 +36,21 @@ if (triple_brain.ui.graph == undefined) {
             )
         };
 
+        graphStatic.reset = function(){
+            if(graphForTraversal != undefined){
+                graphForTraversal.invalidate();
+            }
+            graphForTraversal = new crow.Graph();
+        }
+
         graphStatic.numberOfEdgesBetween = function(vertexA, vertexB){
             return graphForTraversal.findGoal({
-                start: vertexInGraphForTraversal(vertexA),
-                goal: vertexInGraphForTraversal(vertexB),
+                start: graphForTraversal.getNode(vertexA.getId()),
+                goal: graphForTraversal.getNode(vertexB.getId()),
                 algorithm: "dijkstra"
-            }).length();
+            }).length;
         };
+
         eventBus.subscribe(
             '/event/ui/html/vertex/created/',
             function(event, vertex){
@@ -54,21 +63,54 @@ if (triple_brain.ui.graph == undefined) {
             function(event, triple){
                 addVertexToGraphTraversal(triple.destinationVertex());
                 connectVerticesOfEdgeForTraversal(triple.edge());
-            }
-        );
-        eventBus.subscribe(
-            '/event/ui/graph/vertex/deleted/',
-            function(event, vertex){
-                graphForTraversal.removeNode(
-                    vertexInGraphForTraversal(vertex)
+                eventBus.publish(
+                    "/event/graph_traversal/triple_added",
+                    triple
                 );
             }
         );
 
         eventBus.subscribe(
+            '/event/ui/graph/vertex/deleted/',
+            function(event, vertex){
+                removeVertexInGraphForTraversal(vertex);
+            }
+        );
+
+        function removeVertexInGraphForTraversal(vertex){
+            graphForTraversal.removeNode(
+                graphForTraversal.getNode(vertex.getId())
+            );
+            for(var i in graphForTraversal.nodes){
+                var node = graphForTraversal.nodes[i];
+                if(node.id == vertex.getId()){
+                    $.each(node.connections, function(){
+                        var connection = this;
+                        var connectedNodeInMap = graphForTraversal.map[
+                            connection.id
+                            ];
+                        for(var j in connectedNodeInMap.connections){
+                            var connection = connectedNodeInMap.connections[j];
+                            if(connection.id == vertex.getId()){
+                                connectedNodeInMap.connections.splice(j,1);
+                            }
+                        }
+                    });
+                    graphForTraversal.nodes.splice(
+                        i,1
+                    );
+                }
+            }
+        }
+
+        eventBus.subscribe(
             '/event/ui/html/edge/created/',
             function(event, edge){
                 connectVerticesOfEdgeForTraversal(edge);
+                eventBus.publish(
+                    "/event/graph_traversal/edge_added",
+                    edge
+                );
             }
         );
 
@@ -77,21 +119,16 @@ if (triple_brain.ui.graph == undefined) {
         }
 
         function connectVerticesOfEdgeForTraversal(edge){
-            var sourceVertex = vertexInGraphForTraversal(
-                edge.sourceVertex()
+            var sourceVertex = graphForTraversal.getNode(
+                edge.sourceVertex().getId()
             );
-            var destinationVertex = vertexInGraphForTraversal(
-                edge.destinationVertex()
+            var destinationVertex = graphForTraversal.getNode(
+                edge.destinationVertex().getId()
             );
             sourceVertex.connectTo(
                 destinationVertex
             );
         }
-
-        function vertexInGraphForTraversal(vertex){
-            return graphForTraversal.map[vertex.getId()];
-        }
-
     })(jQuery);
 
 }

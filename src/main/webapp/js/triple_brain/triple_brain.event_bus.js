@@ -8,6 +8,9 @@ if (triple_brain.event_bus == undefined) {
             subscribe: function(event, fn) {
                 $(this).bind(event, fn);
             },
+            unsubscribe: function(event, fn){
+                $(this).unbind(event, fn);
+            },
             publish: function(event, args) {
                 $(this).trigger(event, args);
             }

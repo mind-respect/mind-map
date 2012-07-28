@@ -17,7 +17,7 @@ if (triple_brain.module.vertices_list_element == undefined) {
 
         function VerticesListElement(html){
 
-            this.associatedVertex = function(vertex){
+            this.associatedVertex = function(){
                 return triple_brain.ui.vertex.withId(
                     $(html).data('vertexId')
                 );

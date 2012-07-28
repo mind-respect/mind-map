@@ -144,10 +144,10 @@ if (triple_brain.ui.edge == undefined) {
             return $(html).find("input[type='text']");
         }
         function isSourceVertex(vertex){
-            return thisEdge.sourceVertex().id() == vertex.getId()
+            return thisEdge.sourceVertex().getId() == vertex.getId()
         }
         function isDestinationVertex(vertex){
-            return thisEdge.destinationVertex().id() == vertex.getId()
+            return thisEdge.destinationVertex().getId() == vertex.getId()
         }
     }
 

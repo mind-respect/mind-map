@@ -22,8 +22,6 @@ if (triple_brain.ui.triple == undefined) {
             vertexJSON.position.x = newVertexPosition.x;
             vertexJSON.position.y = newVertexPosition.y;
 
-            vertexJSON.min_number_of_edges_from_center_vertex = sourceVertex.numberOfEdgesFromCentralVertex() + 1;
-
             var destinationVertex = vertexCreatorStatic.withArrayOfJsonHavingAbsolutePosition(
                 vertexJSON
             ).create();
