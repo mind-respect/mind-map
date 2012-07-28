@@ -1,9 +1,10 @@
 package org.triple_brain.mind_map.service.resources;
 
 import org.codehaus.jettison.json.JSONException;
-import org.triple_brain.graphmanipulator.jena.graph.JenaEdgeManipulator;
+import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
 import org.triple_brain.module.model.graph.Edge;
 import org.triple_brain.module.model.graph.GraphElementIdentifier;
+import org.triple_brain.module.model.graph.Vertex;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -35,10 +36,12 @@ public class EdgeResource {
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        JenaEdgeManipulator edgeManipulator = JenaEdgeManipulator.withUser(
+        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
                 userFromSession(request.getSession())
         );
-        Edge createdEdge = edgeManipulator.addRelationBetweenVertices(sourceVertexId, destinationVertexId);
+        Vertex sourceVertex = graphManipulator.vertexWithURI(sourceVertexId);
+        Vertex destinationVertex = graphManipulator.vertexWithURI(destinationVertexId);
+        Edge createdEdge = sourceVertex.addRelationToVertex(destinationVertex);
         return Response.created(new URI(request.getRequestURL() + "/" + encodeURL(createdEdge.id()))).build();
     }
 
@@ -50,10 +53,11 @@ public class EdgeResource {
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        JenaEdgeManipulator edgeManipulator = JenaEdgeManipulator.withUser(
+        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
                 userFromSession(request.getSession())
         );
-        edgeManipulator.removeEdge(edgeId);
+        Edge edge = graphManipulator.edgeWithUri(edgeId);
+        edge.remove();
         return Response.ok().build();
     }
 
@@ -65,10 +69,11 @@ public class EdgeResource {
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        JenaEdgeManipulator edgeManipulator = JenaEdgeManipulator.withUser(
+        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
                 userFromSession(request.getSession())
         );
-        edgeManipulator.updateLabel(edgeId, label);
+        Edge edge = graphManipulator.edgeWithUri(edgeId);
+        edge.label(label);
         return Response.ok().build();
     }
 }

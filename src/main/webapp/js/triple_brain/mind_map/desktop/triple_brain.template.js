@@ -38,7 +38,7 @@ if (triple_brain.template == undefined) {
 
         add('suggestions_menu', '<div class="peripheral-menu suggestion"></div>');
         add('suggestions_list', '<ul></ul>');
-        add('suggestion', '<li type-id="{expected_type}">{name}</li>');
+        add('suggestion', '<li type-id="{domain_id}">{label}</li>');
         add('suggestions_menu_title', '<h2>Suggestions of properties</h2>');
         add('suggestions_menu_sub_title', '<h3>( Drag a property outside the box<br/> to add it to your mind map )</h3>');
 

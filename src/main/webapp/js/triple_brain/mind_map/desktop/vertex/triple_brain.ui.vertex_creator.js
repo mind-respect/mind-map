@@ -9,12 +9,12 @@ if (triple_brain.ui.vertex_creator == undefined) {
     var suggestionStatic = triple_brain.suggestion;
     triple_brain.ui.vertex_creator = {
         createWithArrayOfJsonHavingRelativePosition:function (jsonArray) {
-            for (var i in jsonArray) {
-                var json = jsonArray[i];
+            $.each(jsonArray, function(){
+                var json = this;
                 triple_brain.ui.vertex_creator.withArrayOfJsonHavingRelativePosition(
                     json
                 ).create();
-            }
+            });
         },
 
         withArrayOfJsonHavingAbsolutePosition:function (json) {
@@ -151,7 +151,7 @@ if (triple_brain.ui.vertex_creator == undefined) {
             removeBtn.click(function (event) {
                 event.stopPropagation();
                 var vertex = vertexOfSubHtmlComponent(this);
-                if (!vertex.isCenterVertex() && vertex.id() != "default") {
+                if (!vertex.isCenterVertex() && vertex.getId() != "default") {
                     triple_brain.vertex.remove(vertex);
                 }
             });
@@ -361,7 +361,5 @@ if (triple_brain.ui.vertex_creator == undefined) {
         function vertexFacade() {
             return triple_brain.ui.vertex.withHtml(html);
         }
-
-
     }
 }

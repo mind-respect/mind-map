@@ -13,7 +13,8 @@ if (triple_brain.id_uri == undefined) {
         },
         idFromUri: function(uri){
             var segments = $.url(uri).segment();
-            return segments[0] + idSeparator + segments[1];
+            var graphElementId = segments[1];
+            return graphElementId;
         },
         encodedUriFromId : function(id){
             return encodeURIComponent(
@@ -21,10 +22,8 @@ if (triple_brain.id_uri == undefined) {
             );
         },
         uriFromId: function(id){
-            var idSegments = id.split(idSeparator);
-            var username = idSegments[0];
-            var graphElementId = idSegments[1];
-            return baseUrl + username + "/" + graphElementId;
+            var username = triple_brain.authenticatedUser.user_name;
+            return baseUrl + username + "/" + id;
         }
     }
 }

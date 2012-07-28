@@ -4,8 +4,8 @@ if (triple_brain.edge == undefined) {
         var eventBus = triple_brain.event_bus;
         triple_brain.edge = {
             add: function(sourceVertex, destinationVertex) {
-                var sourceVertexURI = triple_brain.id_uri.encodedUriFromId(sourceVertex.id());
-                var destinationVertexURI = triple_brain.id_uri.encodedUriFromId(destinationVertex.id());
+                var sourceVertexURI = triple_brain.id_uri.encodedUriFromId(sourceVertex.getId());
+                var destinationVertexURI = triple_brain.id_uri.encodedUriFromId(destinationVertex.getId());
                 var response = $.ajax({
                     type: 'POST',
                     url: options.ws.app + '/service/edge/' + sourceVertexURI  + '/' + destinationVertexURI
@@ -23,9 +23,9 @@ if (triple_brain.edge == undefined) {
                     edgeJSON.arrowLineEndPoint = arrowLine.segment().endPoint;
 
                     edgeJSON.source_vertex_id = triple_brain.id_uri.uriFromId(
-                                        sourceVertex.id());
+                                        sourceVertex.getId());
                     edgeJSON.destination_vertex_id = triple_brain.id_uri.uriFromId(
-                                            destinationVertex.id());
+                                            destinationVertex.getId());
 
                     edgeJSON.label = triple_brain.ui.edge.EMPTY_LABEL;
                     eventBus.publish(

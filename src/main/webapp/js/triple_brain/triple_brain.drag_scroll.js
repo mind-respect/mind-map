@@ -4,6 +4,7 @@
 
 if (triple_brain.drag_scroll== undefined) {
     (function($) {
+        var point = triple_brain.point;
         triple_brain.drag_scroll = {
             start: function() {
                 $("#graphCanvas").mousedown(function(){

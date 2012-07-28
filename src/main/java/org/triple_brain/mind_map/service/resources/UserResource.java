@@ -4,7 +4,6 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
-import org.triple_brain.graphmanipulator.jena.graph.JenaVertexManipulator;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.repository.user.NonExistingUserException;
 import org.triple_brain.module.repository.user.UserRepository;
@@ -28,6 +27,7 @@ import static org.triple_brain.mind_map.service.resources.GraphManipulatorResour
 import static org.triple_brain.mind_map.service.resources.GraphManipulatorResourceUtils.userFromSession;
 import static org.triple_brain.module.model.json.UserJSONFields.*;
 import static org.triple_brain.module.model.validator.UserValidator.*;
+
 /**
  * Copyright Mozilla Public License 1.1
  */
@@ -46,7 +46,7 @@ public class UserResource {
 
     @GET
     @Path("/authenticate")
-    public Response authenticate(@QueryParam("email") String email, @QueryParam("password") String password, @Context HttpServletRequest request) throws JSONException{
+    public Response authenticate(@QueryParam("email") String email, @QueryParam("password") String password, @Context HttpServletRequest request) throws JSONException {
         try {
             User user = userRepository.findByEmail(email);
             if (user.hasPassword(password)) {
@@ -61,12 +61,28 @@ public class UserResource {
     }
 
     @GET
+    @Path("/logout")
+    public Response logout(@Context HttpServletRequest request) throws JSONException {
+        request.getSession().setAttribute(AUTHENTICATION_ATTRIBUTE_KEY, false);
+        request.getSession().setAttribute(AUTHENTICATED_USER_KEY, null);
+        return Response.ok().build();
+    }
+
+    @GET
+    @Path("/is_authenticated")
+    public Response isAuthenticated(@Context HttpServletRequest request) throws JSONException {
+        return Response.ok(new JSONObject()
+                .put("is_authenticated",isUserInSession(request.getSession()))
+        ).build();
+    }
+
+    @GET
     @Path("/")
-    public Response sessionUser(@Context HttpServletRequest request) throws JSONException{
-        if(isUserInSession(request.getSession())){
+    public Response sessionUser(@Context HttpServletRequest request) throws JSONException {
+        if (isUserInSession(request.getSession())) {
             User authenticatedUser = userFromSession(request.getSession());
             return Response.ok(authenticatedUser.toJSON()).build();
-        }else{
+        } else {
             return Response.status(Response.Status.FORBIDDEN).build();
         }
 
@@ -106,11 +122,11 @@ public class UserResource {
         userRepository.save(user);
         JenaGraphManipulator.createUserGraph(user);
         graphIndexer.createUserCore(user);
-        JenaVertexManipulator vertexManipulator = JenaVertexManipulator.withUser(
+        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
                 user
         );
         graphIndexer.indexVertexOfUser(
-                vertexManipulator.defaultVertex(),
+                graphManipulator.defaultVertex(),
                 user
         );
         return Response.created(new URI(request.getRequestURL() + "/" + user.id())).build();

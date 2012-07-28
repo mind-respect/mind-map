@@ -94,12 +94,15 @@ if (triple_brain.ui.mind_map == undefined) {
                 drawnGraph.bounding_box_height = $("body").height();
                 var graphCanvas = triple_brain.template['graph_canvas'].merge(drawnGraph);
                 $("#drawn_graph").append(graphCanvas);
-                triple_brain.ui.edge_creator.createWithArrayOfJsonHavingRelativePosition(
-                    drawnGraph.edges
-                );
+
                 triple_brain.ui.vertex_creator.createWithArrayOfJsonHavingRelativePosition(
                     drawnGraph.vertices
                 );
+
+                triple_brain.ui.edge_creator.createWithArrayOfJsonHavingRelativePosition(
+                    drawnGraph.edges
+                );
+
                 var centralVertex = triple_brain.ui.vertex.withId(centralVertexId);
                 centralVertex.setAsCentral();
                 centralVertex.scrollTo();

@@ -14,7 +14,7 @@ if (triple_brain.module.vertices_list_element_creator == undefined) {
             var verticesListElement = triple_brain.module.vertices_list_element.withHtml(html);
             this.create = function(){
                 triple_brain.module.vertices_list.get().addHtml(html);
-                $(html).data('vertexId', vertex.id());
+                $(html).data('vertexId', vertex.getId());
                 verticesListElement.setDistanceFromCentralVertex(
                     vertex.numberOfEdgesFromCentralVertex()
                 );

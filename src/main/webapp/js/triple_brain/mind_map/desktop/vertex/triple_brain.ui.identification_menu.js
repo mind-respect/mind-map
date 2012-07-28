@@ -14,7 +14,7 @@ if (triple_brain.ui.identification_menu == undefined) {
     function IdentificationMenu(vertex){
         var identificationMenu = this;
         var menuHTMLVariables = {
-            vertex_id : vertex.id()
+            vertex_id : vertex.getId()
         };
         var html;
         this.create = function(){

@@ -113,6 +113,17 @@ if (triple_brain.ui.edge == undefined) {
             triple_brain.ui.vertex_and_edge_common.adjustTextFieldWidthToNumberOfChars(
                 label()
             );
+            this.adjustWidth();
+        }
+        this.adjustWidth = function(){
+            var intuitiveWidthBuffer = 14;
+            $(html).css(
+                "width",
+                $(menu()).width()
+                    + $(label()).width()
+                    + intuitiveWidthBuffer +
+                    "px"
+            );
         }
         this.isMouseOver = function(){
             return $("#" + thisEdge.id() + ":hover").size() > 0;
@@ -133,10 +144,10 @@ if (triple_brain.ui.edge == undefined) {
             return $(html).find("input[type='text']");
         }
         function isSourceVertex(vertex){
-            return thisEdge.sourceVertex().id() == vertex.id()
+            return thisEdge.sourceVertex().id() == vertex.getId()
         }
         function isDestinationVertex(vertex){
-            return thisEdge.destinationVertex().id() == vertex.id()
+            return thisEdge.destinationVertex().id() == vertex.getId()
         }
     }
 

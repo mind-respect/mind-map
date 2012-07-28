@@ -2,13 +2,11 @@ package org.triple_brain.mind_map.service;
 
 import com.sun.jersey.api.client.ClientResponse;
 import graph.mock.JenaGraphManipulatorMock;
-import graph.scenarios.GraphScenariosGenerator;
+import graph.scenarios.TestScenarios;
 import graph.scenarios.VerticesCalledABAndC;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.triple_brain.graphmanipulator.jena.graph.JenaEdgeManipulator;
-import org.triple_brain.graphmanipulator.jena.graph.JenaVertexManipulator;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.Graph;
 import org.triple_brain.module.model.graph.Vertex;
@@ -28,8 +26,6 @@ public class GraphManipulationRestTest extends RestTest {
     protected final Integer DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES = 10;
 
     protected JenaGraphManipulatorMock graphManipulator;
-    protected JenaVertexManipulator vertexManipulator;
-    protected JenaEdgeManipulator edgeManipulator;
 
     protected Vertex vertexA;
     protected Vertex vertexB;
@@ -46,8 +42,6 @@ public class GraphManipulationRestTest extends RestTest {
         createUserCore();
         deleteAllUserVerticesFromSearch();
         graphManipulator = JenaGraphManipulatorMock.mockWithUser(authenticatedUser);
-        vertexManipulator = JenaVertexManipulator.withUser(authenticatedUser);
-        edgeManipulator = JenaEdgeManipulator.withUser(authenticatedUser);
         VerticesCalledABAndC vertexABAndC = makeGraphHave3SerialVerticesWithLongLabels(authenticatedUser);
 
         vertexA = vertexABAndC.vertexA();
@@ -65,11 +59,9 @@ public class GraphManipulationRestTest extends RestTest {
     }
 
     protected VerticesCalledABAndC makeGraphHave3SerialVerticesWithLongLabels(User user) throws Exception {
-        GraphScenariosGenerator graphScenariosGenerator = GraphScenariosGenerator.withUserManipulators(
+        TestScenarios graphScenariosGenerator = TestScenarios.withUserManipulators(
                 user,
-                graphManipulator,
-                vertexManipulator,
-                edgeManipulator
+                graphManipulator
         );
         return graphScenariosGenerator.makeGraphHave3SerialVerticesWithLongLabels();
     }

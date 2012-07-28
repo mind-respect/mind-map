@@ -3,7 +3,6 @@ package org.triple_brain.mind_map.service.resources;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
-import org.triple_brain.graphmanipulator.jena.graph.JenaVertexManipulator;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.Graph;
 import org.triple_brain.module.model.graph.Vertex;
@@ -52,11 +51,11 @@ public class ResourceForTests {
         JenaGraphManipulator.createUserGraph(user);
         graphIndexer.createUserCore(user);
         deleteAllUserDocumentsForSearch(user);
-        JenaVertexManipulator vertexManipulator = JenaVertexManipulator.withUser(
+        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
                 user
         );
         graphIndexer.indexVertexOfUser(
-                vertexManipulator.defaultVertex(),
+                graphManipulator.defaultVertex(),
                 user
         );
         request.getSession().setAttribute(AUTHENTICATION_ATTRIBUTE_KEY, true);

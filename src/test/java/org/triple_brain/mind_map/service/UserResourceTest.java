@@ -2,6 +2,7 @@ package org.triple_brain.mind_map.service;
 
 import com.sun.jersey.api.client.ClientResponse;
 import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Test;
 import org.triple_brain.module.model.User;
@@ -12,6 +13,7 @@ import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 import java.util.UUID;
 
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.triple_brain.graphmanipulator.jena.JenaConnection.modelMaker;
@@ -19,7 +21,6 @@ import static org.triple_brain.graphmanipulator.jena.TripleBrainModel.SITE_URI;
 import static org.triple_brain.module.model.json.UserJSONFields.*;
 import static org.triple_brain.module.model.validator.UserValidator.ALREADY_REGISTERED_EMAIL;
 import static org.triple_brain.module.model.validator.UserValidator.USER_NAME_ALREADY_REGISTERED;
-import static org.hamcrest.Matchers.*;
 /**
  * Copyright Mozilla Public License 1.1
  */
@@ -39,6 +40,47 @@ public class UserResourceTest extends RestTest {
         userRepository.save(rogerLamothe);
         response = resource.path("users").path("authenticate").queryParam("email", "roger.lamothe@example.org").queryParam("password", "password").get(ClientResponse.class);
         assertThat(response.getStatus(), is(200));
+    }
+
+    @Test
+    public void can_logout() throws Exception {
+        NewCookie cookie = loginUsingRest().getCookies().get(0);
+        assertTrue(usingRestAndCookieIsThereAUserInSession(cookie));
+        logoutUsingRestAndCookie(cookie);
+        assertFalse(usingRestAndCookieIsThereAUserInSession(cookie));
+    }
+
+    private ClientResponse loginUsingRest(){
+        User rogerLamothe = User.withUsernameAndEmail("roger_lamothe", "roger.lamothe@example.org")
+                .password("password");
+        userRepository.save(rogerLamothe);
+        ClientResponse response = resource
+                .path("users")
+                .path("authenticate")
+                .queryParam("email", "roger.lamothe@example.org")
+                .queryParam("password", "password")
+                .get(ClientResponse.class);
+        return response;
+    }
+
+    private ClientResponse logoutUsingRestAndCookie(NewCookie cookie){
+        ClientResponse response = resource
+                .path("users")
+                .path("logout")
+                .cookie(cookie)
+                .get(ClientResponse.class);
+        return response;
+    }
+
+    private boolean usingRestAndCookieIsThereAUserInSession(NewCookie cookie)throws JSONException{
+        response = resource
+                .path("users")
+                .path("is_authenticated")
+                .cookie(cookie)
+                .get(ClientResponse.class);
+        return response.getEntity(JSONObject.class)
+                .getBoolean("is_authenticated");
+
     }
 
     @Test

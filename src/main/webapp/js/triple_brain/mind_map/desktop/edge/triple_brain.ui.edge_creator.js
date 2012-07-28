@@ -6,14 +6,14 @@ if (triple_brain.ui.edge_creator == undefined) {
     var graph = triple_brain.ui.graph;
     triple_brain.ui.edge_creator = {
         createWithArrayOfJsonHavingRelativePosition : function(jsonArray){
-            for (var i in jsonArray) {
-                var json = jsonArray[i];
+            $.each(jsonArray, function(){
+                var json = this;
                 json.arrowLineStartPoint = json.arrow_line_bezier_points[0];
                 json.arrowLineEndPoint = json.arrow_line_bezier_points[3];
                 triple_brain.ui.edge_creator.withArrayOfJsonHavingRelativePosition(
                     json
                 ).create();
-            }
+            });
         },
         withArrayOfJsonHavingAbsolutePosition : function(json){
             return new EdgeCreator(json);
@@ -50,6 +50,11 @@ if (triple_brain.ui.edge_creator == undefined) {
             var edge = edgeFacade();
             edge.centerOnArrowLine();
             edge.hideMenu();
+            edge.adjustWidth();
+            eventBus.publish(
+                '/event/ui/html/edge/created/',
+                edge
+            );
             return edge;
         }
         function createLabel(){

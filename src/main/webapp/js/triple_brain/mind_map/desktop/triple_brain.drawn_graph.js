@@ -23,12 +23,12 @@ if (triple_brain.drawn_graph == undefined) {
                 var depthOfSubVertices = $("#sub-vertices-depth-slider").slider('value');
                 $.ajax({
                     type: 'GET',
-                    url: options.ws.app + '/service/drawn_graph/' + mindMapURI() + "/" + depthOfSubVertices + '/' + triple_brain.id_uri.encodedUriFromId(newCentralVertex.id()),
+                    url: options.ws.app + '/service/drawn_graph/' + mindMapURI() + "/" + depthOfSubVertices + '/' + triple_brain.id_uri.encodedUriFromId(newCentralVertex.getId()),
                     dataType: 'json'
                 }).success(function(drawnGraph) {
                     eventBus.publish(
                         '/event/ui/graph/drawing_info/updated/',
-                        [drawnGraph, newCentralVertex.id()]
+                        [drawnGraph, newCentralVertex.getId()]
                     );
                 })
             },

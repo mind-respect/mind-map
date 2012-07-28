@@ -9,7 +9,7 @@ if (triple_brain.module.vertices_list_element == undefined) {
             },
             withVertex : function(vertex){
                 var htmlOfVertexListElement = $('.vertices-list-element').filter(function() {
-                    return $(this).data("vertexId") == vertex.id();
+                    return $(this).data("vertexId") == vertex.getId();
                 });
                 return new VerticesListElement(htmlOfVertexListElement);
             }
