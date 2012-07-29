@@ -28,7 +28,9 @@ if (triple_brain.ui.vertex_hidden_neighbor_properties_indicator == undefined) {
                 dashedSegment.draw();
            }
 
-           var hiddenNeighborPropertiesContainer = triple_brain.template['hidden_property_container'].merge();
+           var hiddenNeighborPropertiesContainer = triple_brain.template[
+               'hidden_property_container'
+               ].merge();
            $("#drawn_graph").append(hiddenNeighborPropertiesContainer);
 
            $(hiddenNeighborPropertiesContainer).css('min-width', defaultLengthOfHiddenPropertiesContainer);
@@ -45,15 +47,18 @@ if (triple_brain.ui.vertex_hidden_neighbor_properties_indicator == undefined) {
                    var hiddenPropertyMenu = triple_brain.template['hidden_property_menu'].merge();
                    $("#drawn_graph").append(hiddenPropertyMenu);
                    $(hiddenPropertyMenu).append(triple_brain.template['hidden_properties_title'].merge());
-                   propertyList = triple_brain.template['hidden_property_list'].merge();
+                   var propertyList = triple_brain.template['hidden_property_list'].merge();
                    $(hiddenPropertyMenu).append(propertyList);
                    var nameOfHiddenProperties = vertex.nameOfHiddenProperties();
-                   for(var i in nameOfHiddenProperties){
-                       var hiddenProperty = {};
-                       hiddenProperty.name = nameOfHiddenProperties[i] == "" ? edgeUi.EMPTY_LABEL : nameOfHiddenProperties[i];
-                       var property = triple_brain.template['hidden_property'].merge(hiddenProperty);
+                   $.each(nameOfHiddenProperties, function(){
+                       var nameOfHiddenProperty = this;
+                       var property = triple_brain.template[
+                           'hidden_property'
+                           ].merge({
+                               name : nameOfHiddenProperty == "" ? edgeUi.EMPTY_LABEL : nameOfHiddenProperty
+                           });
                        $(propertyList).append(property);
-                   }
+                   });
 
                    $(hiddenNeighborPropertiesContainer).css('top', startPoint.y - (lengthInPixels / 2));
 
