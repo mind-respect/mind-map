@@ -71,6 +71,28 @@ if (triple_brain.ui.graph == undefined) {
         );
 
         eventBus.subscribe(
+            '/event/ui/graph/relation/deleted',
+            function(event, edge){
+                removeEdgeInGraphForTraversal(edge);
+            }
+        );
+
+        function removeEdgeInGraphForTraversal(edge){
+            var sourceVertex = graphForTraversal.getNode(
+                edge.sourceVertex().getId()
+            );
+            var destinationVertex = graphForTraversal.getNode(
+                edge.destinationVertex().getId()
+            );
+            removeVertexInConnections(destinationVertex, sourceVertex.connections);
+            removeVertexInConnections(sourceVertex, destinationVertex.connections);
+            eventBus.publish(
+                "/event/graph_traversal/edge/removed",
+                [edge]
+            );
+        }
+
+        eventBus.subscribe(
             '/event/ui/graph/vertex/deleted/',
             function(event, vertex){
                 removeVertexInGraphForTraversal(vertex);
@@ -81,27 +103,36 @@ if (triple_brain.ui.graph == undefined) {
             graphForTraversal.removeNode(
                 graphForTraversal.getNode(vertex.getId())
             );
-            for(var i in graphForTraversal.nodes){
-                var node = graphForTraversal.nodes[i];
-                if(node.id == vertex.getId()){
-                    $.each(node.connections, function(){
-                        var connection = this;
-                        var connectedNodeInMap = graphForTraversal.map[
-                            connection.id
-                            ];
-                        for(var j in connectedNodeInMap.connections){
-                            var connection = connectedNodeInMap.connections[j];
-                            if(connection.id == vertex.getId()){
-                                connectedNodeInMap.connections.splice(j,1);
-                            }
-                        }
-                    });
-                    graphForTraversal.nodes.splice(
-                        i,1
-                    );
+            var node = findVertexInGraphForTraversalNodesAfterItWasDeleted(
+                vertex
+            );
+            $.each(node.connections, function(){
+                var connection = this;
+                var connectedNode = graphForTraversal.getNode(connection.id);
+                removeVertexInConnections(vertex, connectedNode.connections);
+            });
+            graphForTraversal.nodes.splice(
+                i,1
+            );
+        }
+        function removeVertexInConnections(vertex, connections){
+            for(var j in connections){
+                var connection = connections[j];
+                if(connection.id == vertex.getId()){
+                    connections.splice(j,1);
                 }
             }
         }
+
+        function findVertexInGraphForTraversalNodesAfterItWasDeleted(vertex){
+            for(var i in graphForTraversal.nodes){
+                var node = graphForTraversal.nodes[i];
+                if(node.id == vertex.getId()){
+                    return node;
+                }
+            }
+        }
+
 
         eventBus.subscribe(
             '/event/ui/html/edge/created/',

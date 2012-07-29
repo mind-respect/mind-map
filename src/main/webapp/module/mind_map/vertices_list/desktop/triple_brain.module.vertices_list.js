@@ -180,6 +180,11 @@ if (triple_brain.module.vertices_list == undefined) {
                 verticesList.rebuild();
             }
         );
-
+        eventBus.subscribe(
+            "/event/graph_traversal/edge/removed",
+            function(){
+                verticesListStatic.get().rebuild();
+            }
+        );
     })(jQuery);
 }
