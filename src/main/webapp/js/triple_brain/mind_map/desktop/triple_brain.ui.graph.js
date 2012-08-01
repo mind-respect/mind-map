@@ -4,6 +4,7 @@
 
 if (triple_brain.ui.graph == undefined) {
     (function ($) {
+        var eventBus = triple_brain.event_bus;
         var point = triple_brain.point;
         var graphStatic = triple_brain.ui.graph = {};
         var graphForTraversal;

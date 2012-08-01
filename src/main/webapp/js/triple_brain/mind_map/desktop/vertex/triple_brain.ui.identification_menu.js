@@ -69,7 +69,9 @@ if (triple_brain.ui.identification_menu == undefined) {
         }
 
         function addIdentificationTextField(){
-            var identificationTextField = triple_brain.template['identification_textfield'].merge();
+            var identificationTextField = triple_brain.template[
+                'identification_textfield'
+                ].merge();
             $(html).append(identificationTextField);
             $(identificationTextField).suggest({
                 "zIndex": 20
@@ -80,10 +82,10 @@ if (triple_brain.ui.identification_menu == undefined) {
                 var vertex = triple_brain.ui.vertex.withId($(semanticMenu).attr('vertex-id'));
                 var typeId = data['n:type'].id;
                 if(triple_brain.freebase.isOfTypeTypeFromTypeId(typeId)){
-                    typeUri = triple_brain.freebase.freebaseIdToURI(data.id);
+                    var typeUri = triple_brain.freebase.freebaseIdToURI(data.id);
                     vertexService.updateType(vertex, typeUri);
                 }else{
-                    resourceUri = triple_brain.freebase.freebaseIdToURI(data.id);
+                    var resourceUri = triple_brain.freebase.freebaseIdToURI(data.id);
                     vertexService.updateSameAs(vertex, resourceUri);
                 }
             });
@@ -91,25 +93,6 @@ if (triple_brain.ui.identification_menu == undefined) {
         }
     }
     var eventBus = triple_brain.event_bus;
-
-    eventBus.subscribe(
-        '/event/ui/graph/vertex/type/updated',
-        function(event, vertex, typeUri) {
-            var typeId = triple_brain.freebase.idInFreebaseURI(typeUri);
-            triple_brain.freebase.listPropertiesOfFreebaseTypeId(vertex, typeId);
-            $(vertex.label()).suggest({
-                "zIndex": 20,
-                "type": typeId
-            })
-            .bind("fb-select", function(e, data)
-            {
-                vertex.readjustLabelWidth();
-                triple_brain.vertex.updateLabel(vertex, vertex.text());
-                resourceUri = triple_brain.freebase.freebaseIdToURI(data.id);
-                triple_brain.vertex.updateSameAs(vertex, resourceUri);
-            });
-        }
-    );
 
     eventBus.subscribe(
         '/event/ui/graph/vertex/type/properties/updated',

@@ -45,16 +45,13 @@ if (triple_brain.vertex == undefined) {
                         )
                     })
             },
-            updateType:function (vertex, typeUri) {
+            updateType:function (vertex, type) {
                 $.ajax({
                     type:'POST',
                     url:options.ws.app + '/service/vertex/' + idUriStatic.encodedUriFromId(vertex.getId()) + '/type?type_uri=' + typeUri,
                     dataType:'json'
                 }).success(function () {
-                        eventBus.publish(
-                            '/event/ui/graph/vertex/type/updated',
-                            [vertex, typeUri]
-                        );
+                        vertex.setType(type);
                     })
             },
             updateSameAs:function (vertex, sameAsUri) {

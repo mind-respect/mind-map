@@ -2,6 +2,7 @@ package org.triple_brain.mind_map.service;
 
 import com.sun.jersey.api.client.ClientResponse;
 import graph.mock.JenaGraphManipulatorMock;
+import graph.scenarios.TestScenarios;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Test;
@@ -10,7 +11,8 @@ import org.triple_brain.module.model.Suggestion;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.Edge;
 import org.triple_brain.module.model.graph.Vertex;
-import org.triple_brain.module.model.json.SuggestionJSONFields;
+import org.triple_brain.module.model.json.ExternalResourceJsonFields;
+import org.triple_brain.module.model.json.SuggestionJsonFields;
 
 import java.net.URI;
 
@@ -20,7 +22,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertTrue;
 import static org.triple_brain.module.common_utils.CommonUtils.encodeURL;
-import static org.triple_brain.module.model.json.StatementJSONFields.*;
+import static org.triple_brain.module.model.json.StatementJsonFields.*;
 
 /**
  * Copyright Mozilla Public License 1.1
@@ -128,26 +130,29 @@ public class VertexResourceTest extends GraphManipulationRestTest {
     private String personClassURI = "http://xmlns.com/foaf/0.1/Person";
 
     @Test
-    public void can_set_type_of_vertex() throws Exception {
-        assertFalse(vertexA.types().contains(personClassURI));
-        setTypeOfVerteAToFoafPerson();
-        assertTrue(vertexA.types().contains(personClassURI));
+    public void can_set_the_additional_type_of_vertex() throws Exception {
+        assertFalse(vertexA.hasTheAdditionalType());
+        setTheAdditionalTypeOfVertexAToFoafPerson();
+        assertTrue(vertexA.hasTheAdditionalType());
     }
 
     @Test
     public void setting_type_of_a_vertex_returns_correct_response_status() throws Exception {
-        setTypeOfVerteAToFoafPerson();
+        setTheAdditionalTypeOfVertexAToFoafPerson();
         assertThat(response.getStatus(), is(200));
     }
 
-    private ClientResponse setTypeOfVerteAToFoafPerson() throws Exception {
+    private ClientResponse setTheAdditionalTypeOfVertexAToFoafPerson() throws Exception {
+        JSONObject personType = ExternalResourceJsonFields.toJson(
+                TestScenarios.personType()
+        );
         ClientResponse response = resource
                 .path("vertex")
                 .path(encodeURL(vertexA.id()))
                 .path("type")
-                .queryParam("type_uri", personClassURI)
                 .cookie(authCookie)
-                .post(ClientResponse.class);
+                .type("application/json")
+                .post(ClientResponse.class, personType);
         actualizeVertexABAndC();
         return response;
     }
@@ -162,7 +167,7 @@ public class VertexResourceTest extends GraphManipulationRestTest {
         );
         setSuggestionsOfVertex(
                 new JSONArray().put(
-                        SuggestionJSONFields.suggestionToJson(suggestion)
+                        SuggestionJsonFields.toJson(suggestion)
                 )
         );
         assertFalse(vertexA.suggestions().isEmpty());

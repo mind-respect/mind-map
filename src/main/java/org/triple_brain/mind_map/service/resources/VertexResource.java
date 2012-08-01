@@ -4,11 +4,13 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
+import org.triple_brain.module.model.ExternalResource;
 import org.triple_brain.module.model.Suggestion;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.Edge;
 import org.triple_brain.module.model.graph.GraphElementIdentifier;
 import org.triple_brain.module.model.graph.Vertex;
+import org.triple_brain.module.model.json.ExternalResourceJsonFields;
 import org.triple_brain.module.search.GraphIndexer;
 
 import javax.inject.Inject;
@@ -26,8 +28,8 @@ import java.util.Set;
 
 import static org.triple_brain.mind_map.service.resources.GraphManipulatorResourceUtils.userFromSession;
 import static org.triple_brain.module.common_utils.CommonUtils.decodeURL;
-import static org.triple_brain.module.model.json.StatementJSONFields.*;
-import static org.triple_brain.module.model.json.SuggestionJSONFields.*;
+import static org.triple_brain.module.model.json.StatementJsonFields.*;
+import static org.triple_brain.module.model.json.SuggestionJsonFields.*;
 /**
  * Copyright Mozilla Public License 1.1
  */
@@ -112,7 +114,7 @@ public class VertexResource {
 
     @POST
     @Path("{vertexId}/type")
-    public Response addType(@GraphElementIdentifier @PathParam("vertexId") String vertexId, @QueryParam("type_uri") String typeUri, @Context HttpServletRequest request) throws JSONException, URISyntaxException{
+    public Response setType(@GraphElementIdentifier @PathParam("vertexId") String vertexId, JSONObject type, @Context HttpServletRequest request) throws JSONException, URISyntaxException{
         try{
             vertexId = decodeURL(vertexId);
         }catch (UnsupportedEncodingException e){
@@ -122,8 +124,23 @@ public class VertexResource {
                 userFromSession(request.getSession())
         );
         Vertex vertex = graphManipulator.vertexWithURI(vertexId);
-        vertex.addSemanticType(typeUri);
+        vertex.setTheAdditionalType(
+                externalResourceFromJson(type)
+        );
         return Response.ok().build();
+    }
+
+    private ExternalResource externalResourceFromJson(JSONObject externalResource)throws JSONException, URISyntaxException{
+        return ExternalResource.withUriAndLabel(
+                new URI(
+                        externalResource.getString(
+                            ExternalResourceJsonFields.URI
+                        )
+                ),
+                externalResource.getString(
+                        ExternalResourceJsonFields.LABEL
+                )
+        );
     }
 
     @POST

@@ -7,8 +7,8 @@ if (triple_brain.module.date_picker == undefined) {
 
         triple_brain.event_bus.subscribe(
             '/event/ui/graph/vertex/type/updated',
-            function(event, vertex, typeUri){
-                if(typeUri == "http://rdf.freebase.com/rdf/type/datetime"){
+            function(event, vertex){
+                if(vertex.type().uri() == "http://rdf.freebase.com/rdf/type/datetime"){
     //                vertex.label().attr('id',  vertex.getId() + '_label');
     //                new JsDatePick({
     //                    useMode:2,

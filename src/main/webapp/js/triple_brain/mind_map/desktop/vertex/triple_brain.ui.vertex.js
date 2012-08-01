@@ -1,7 +1,6 @@
 /**
  * Copyright Mozilla Public License 1.1
  */
-
 if (triple_brain.ui.vertex == undefined) {
     var propertiesIndicatorStatic = triple_brain.ui.vertex_hidden_neighbor_properties_indicator;
     var vertexStatic = triple_brain.ui.vertex = {};
@@ -40,7 +39,8 @@ if (triple_brain.ui.vertex == undefined) {
     function Vertex(html) {
         var thisVertex = this;
         var segments = triple_brain.ui.vertex_segments.withHTMLVertex(html);
-        this._initialize = function(){};
+        this._initialize = function () {
+        };
         this.position = function () {
             return triple_brain.point.fromCoordinates(
                 $(html).offset().left,
@@ -110,11 +110,9 @@ if (triple_brain.ui.vertex == undefined) {
         }
         this.hideMenu = function () {
             $(menu()).css("visibility", "hidden");
-//            $(menu()).hide();
         }
         this.showMenu = function () {
             $(menu()).css("visibility", "visible");
-//            $(menu()).show();
         }
         this.showCenterButton = function () {
             $(centerButton()).hide();
@@ -185,6 +183,16 @@ if (triple_brain.ui.vertex == undefined) {
         this.setSuggestions = function (suggestions) {
             $(html).data('suggestions', suggestions);
         }
+        this.type = function () {
+            return $(html).data('type');
+        }
+        this.setType = function (type) {
+            $(html).data('type', type);
+            eventBus.publish(
+                '/event/ui/graph/vertex/type/updated',
+                [thisVertex]
+            );
+        }
         this.showSuggestionButton = function () {
             $(suggestionButton()).show();
         }
@@ -250,8 +258,10 @@ if (triple_brain.ui.vertex == undefined) {
         function centerButton() {
             return $(html).find('.center');
         }
-        crow.ConnectedNode.apply(this,[thisVertex.getId()]);
+
+        crow.ConnectedNode.apply(this, [thisVertex.getId()]);
     }
+
     Vertex.prototype = new crow.ConnectedNode();
 
     var eventBus = triple_brain.event_bus;

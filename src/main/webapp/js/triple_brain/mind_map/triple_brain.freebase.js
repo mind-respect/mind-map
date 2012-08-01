@@ -1,5 +1,4 @@
 if (triple_brain.freebase == undefined) {
-    var eventBus = triple_brain.event_bus;
     (function ($) {
         var freebaseStatic = triple_brain.freebase = {};
         freebaseStatic.freebaseIdToURI = function (freebaseId) {
@@ -11,6 +10,12 @@ if (triple_brain.freebase == undefined) {
         freebaseStatic.isOfTypeTypeFromTypeId = function (typeId) {
             return typeId == "/type/type";
         };
+        freebaseStatic.isFreebaseUri = function (uri) {
+            return $.url(uri).attr()
+                .host
+                .toLowerCase()
+                .indexOf("freebase.com") != -1;
+        }
         freebaseStatic.listPropertiesOfFreebaseTypeId = function (vertex, freebaseId) {
             propertiesOfTypeQuery = {
                 query:{
@@ -42,11 +47,36 @@ if (triple_brain.freebase == undefined) {
                             )
                         )
                     })
-                    triple_brain.vertex.setSuggestions(vertex, suggestions);
+                    triple_brain.vertex.setSuggestions(
+                        vertex,
+                        suggestions
+                    );
                 })
         }
-
-
+        eventBus.subscribe(
+            '/event/ui/graph/vertex/type/updated',
+            function (event, vertex) {
+                var typeUri = vertex.type().uri();
+                if (!freebaseStatic.isFreebaseUri(typeUri)) {
+                    return;
+                }
+                var typeId = freebaseStatic.idInFreebaseURI(typeUri);
+                freebaseStatic.listPropertiesOfFreebaseTypeId(
+                    vertex,
+                    typeId
+                );
+                $(vertex.label()).suggest({
+                    "zIndex":20,
+                    "type":typeId
+                })
+                    .bind("fb-select", function (e, data) {
+                        vertex.readjustLabelWidth();
+                        triple_brain.vertex.updateLabel(vertex, vertex.text());
+                        var resourceUri = freebaseStatic.freebaseIdToURI(data.id);
+                        triple_brain.vertex.updateSameAs(vertex, resourceUri);
+                    });
+            }
+        );
     })(jQuery);
 
 }

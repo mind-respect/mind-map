@@ -1,16 +1,16 @@
 if (triple_brain.suggestion == undefined) {
     (function ($) {
-        var freebaseStatic = triple_brain.freebase;
+       var freebaseStatic = triple_brain.freebase;
+        var externalResourceStatic = triple_brain.external_resource;
         var suggestionStatic = triple_brain.suggestion = {};
         suggestionStatic.fromFreebaseSuggestion = function (freebaseSuggestion) {
             return new Suggestion(
-                freebaseStatic.freebaseIdToURI(
-                    freebaseSuggestion.id
+                externalResourceStatic.fromFreebaseSuggestion(
+                    freebaseSuggestion
                 ),
                 freebaseStatic.freebaseIdToURI(
                     freebaseSuggestion.expected_type
-                ),
-                freebaseSuggestion.name
+                )
             );
         }
         suggestionStatic.formatAllForServer = function (suggestions) {
@@ -24,9 +24,11 @@ if (triple_brain.suggestion == undefined) {
 
         suggestionStatic.fromJsonOfServer = function (suggestion) {
             return new Suggestion(
-                suggestion.typeUri,
-                suggestion.domain_uri,
-                suggestion.label
+                externalResourceStatic.withUriAndLabel(
+                    suggestion.typeUri,
+                    suggestion.label
+                ),
+                suggestion.domain_uri
             );
         }
         suggestionStatic.fromJsonArrayOfServer = function (jsonSuggestions) {
@@ -42,16 +44,16 @@ if (triple_brain.suggestion == undefined) {
             return suggestions;
         }
 
-        function Suggestion(typeUri, domainUri, label) {
+        function Suggestion(externalResource, domainUri) {
             var thisSuggestion = this;
             this.typeUri = function () {
-                return typeUri;
+                return externalResource.uri();
             }
             this.domainUri = function () {
                 return domainUri;
             }
             this.label = function () {
-                return label;
+                return externalResource.label();
             }
             this.serverFormat = function(){
                 return {
@@ -63,5 +65,4 @@ if (triple_brain.suggestion == undefined) {
         }
 
     })(jQuery);
-
 }
