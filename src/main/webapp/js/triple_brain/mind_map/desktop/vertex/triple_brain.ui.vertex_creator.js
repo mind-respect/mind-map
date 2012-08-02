@@ -77,6 +77,13 @@ if (triple_brain.ui.vertex_creator == undefined) {
                 vertex.setNameOfHiddenProperties(json.name_of_hidden_properties);
                 vertex.buildHiddenNeighborPropertiesIndicator();
             }
+            if(json.type){
+                vertex.setType(
+                    triple_brain.external_resource.fromServerJson(
+                        json.type
+                    )
+                );
+            }
             eventBus.publish(
                 '/event/ui/html/vertex/created/',
                 vertex

@@ -20,6 +20,12 @@ if (triple_brain.external_resource == undefined) {
                 freebaseSuggestion.name
             )
         }
+        externalResourceStatic.fromServerJson = function(serverJson){
+            return new ExternalResource(
+                serverJson.uri,
+                serverJson.label
+            )
+        }
         function ExternalResource(uri, label) {
             var thisExternalResource = this;
             this.uri = function () {
@@ -29,10 +35,10 @@ if (triple_brain.external_resource == undefined) {
                 return label;
             }
             this.serverFormat = function(){
-                return {
+                return $.toJSON({
                     uri : thisExternalResource.uri(),
                     label : thisExternalResource.label()
-                }
+                });
             }
         }
     })(jQuery);

@@ -1,5 +1,6 @@
 if (triple_brain.freebase == undefined) {
     (function ($) {
+        var eventBus = triple_brain.event_bus;
         var freebaseStatic = triple_brain.freebase = {};
         freebaseStatic.freebaseIdToURI = function (freebaseId) {
             return "http://rdf.freebase.com/rdf" + freebaseId;

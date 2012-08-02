@@ -48,8 +48,10 @@ if (triple_brain.vertex == undefined) {
             updateType:function (vertex, type) {
                 $.ajax({
                     type:'POST',
-                    url:options.ws.app + '/service/vertex/' + idUriStatic.encodedUriFromId(vertex.getId()) + '/type?type_uri=' + typeUri,
-                    dataType:'json'
+                    url:options.ws.app + '/service/vertex/' + idUriStatic.encodedUriFromId(vertex.getId()) + '/type',
+                    dataType:'json',
+                    data:type.serverFormat(),
+                    contentType:'application/json;charset=utf-8'
                 }).success(function () {
                         vertex.setType(type);
                     })

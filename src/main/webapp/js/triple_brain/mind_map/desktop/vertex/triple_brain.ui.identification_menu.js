@@ -3,9 +3,9 @@
  */
 
 if (triple_brain.ui.identification_menu == undefined) {
+    var externalResourceStatic = triple_brain.external_resource;
     var vertexService = triple_brain.vertex;
     triple_brain.ui.identification_menu = {
-
         ofVertex : function(vertex){
             return new IdentificationMenu(vertex);
         }
@@ -82,8 +82,12 @@ if (triple_brain.ui.identification_menu == undefined) {
                 var vertex = triple_brain.ui.vertex.withId($(semanticMenu).attr('vertex-id'));
                 var typeId = data['n:type'].id;
                 if(triple_brain.freebase.isOfTypeTypeFromTypeId(typeId)){
-                    var typeUri = triple_brain.freebase.freebaseIdToURI(data.id);
-                    vertexService.updateType(vertex, typeUri);
+                    vertexService.updateType(
+                        vertex,
+                        externalResourceStatic.fromFreebaseSuggestion(
+                            data
+                        )
+                    );
                 }else{
                     var resourceUri = triple_brain.freebase.freebaseIdToURI(data.id);
                     vertexService.updateSameAs(vertex, resourceUri);
