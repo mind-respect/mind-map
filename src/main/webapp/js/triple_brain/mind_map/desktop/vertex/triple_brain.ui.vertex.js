@@ -183,6 +183,11 @@ if (triple_brain.ui.vertex == undefined) {
         this.setSuggestions = function (suggestions) {
             $(html).data('suggestions', suggestions);
         }
+
+        this.hasTheAdditionalType = function(){
+            return thisVertex.type() != undefined;
+        }
+
         this.type = function () {
             return $(html).data('type');
         }

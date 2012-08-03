@@ -20,11 +20,17 @@ if (triple_brain.ui.identification_menu == undefined) {
         this.create = function(){
             html = triple_brain.template['identification_menu'].merge(menuHTMLVariables);
             triple_brain.ui.graph.addHTML(html);
-            addTitle();
-            addSubTitle();
+            if(vertex.hasTheAdditionalType()){
+                addTitle();
+                addTheAdditionalTypeMenu();
+            }else{
+                addExplanationTitle();
+                addSubTitle();
+            }
             position();
             var identificationTextField = addIdentificationTextField();
             $(identificationTextField).focus();
+
             $(html).click(function(e){
                 e.stopPropagation();
             });
@@ -41,11 +47,26 @@ if (triple_brain.ui.identification_menu == undefined) {
             );
         }
 
+        function addExplanationTitle(){
+            $(html).append(
+                triple_brain.template['identification_menu_explanation_title'].merge()
+            );
+        }
+
         function addSubTitle(){
             $(html).append(
                 triple_brain.template['identification_menu_sub_title'].merge()
             );
         }
+
+        function addTheAdditionalTypeMenu(){
+            $(html).append(
+                triple_brain.template['identification_additional_type_menu'].merge({
+                    type_label : vertex.type().label()
+                })
+            );
+        }
+
         function position(){
             var menuOffset = triple_brain.point.fromCoordinates(
                 vertex.width(),

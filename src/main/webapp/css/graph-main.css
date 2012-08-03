@@ -284,7 +284,7 @@ body{
 .peripheral-menu ul{
     margin-left: 0px;
     padding:0;
-    list-style-type: bullet;
+    list-style-type: none;
 }
 
 .peripheral-menu li{
@@ -324,7 +324,7 @@ body{
     font-size:12px;
     font-family:arial;
     padding: 0 0 0 0;
-    background-color:white;
+    background-color:transparent;
     font-weight:normal;
 }
 
