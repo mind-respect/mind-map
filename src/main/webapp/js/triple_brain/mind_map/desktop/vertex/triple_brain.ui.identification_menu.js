@@ -21,15 +21,16 @@ if (triple_brain.ui.identification_menu == undefined) {
             html = triple_brain.template['identification_menu'].merge(menuHTMLVariables);
             triple_brain.ui.graph.addHTML(html);
             if(vertex.hasTheAdditionalType()){
-                addTitle();
                 addTheAdditionalTypeMenu();
+                addIdentificationTextField();
+                position();
             }else{
                 addExplanationTitle();
                 addSubTitle();
+                position();
+                var identificationTextField = addIdentificationTextField();
+                $(identificationTextField).focus();
             }
-            position();
-            var identificationTextField = addIdentificationTextField();
-            $(identificationTextField).focus();
 
             $(html).click(function(e){
                 e.stopPropagation();
@@ -39,12 +40,6 @@ if (triple_brain.ui.identification_menu == undefined) {
 
         this.reEvaluatePosition = function(){
             position();
-        }
-
-        function addTitle(){
-            $(html).append(
-                triple_brain.template['identification_menu_title'].merge()
-            );
         }
 
         function addExplanationTitle(){
