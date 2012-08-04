@@ -54,6 +54,12 @@ if (triple_brain.freebase == undefined) {
                     );
                 })
         }
+        freebaseStatic.removeSuggestFeatureOnVertex = function(vertex){
+            $(vertex.label())
+                .unbind(".suggest")
+                .unbind("fb-select")
+                .removeData("suggest");
+        }
         eventBus.subscribe(
             '/event/ui/graph/vertex/type/updated',
             function (event, vertex) {
@@ -78,6 +84,18 @@ if (triple_brain.freebase == undefined) {
                     });
             }
         );
+
+        eventBus.subscribe(
+            '/event/ui/graph/vertex/type/removed',
+            function(event, vertex, removedType){
+                if (freebaseStatic.isFreebaseUri(removedType.uri())) {
+                    freebaseStatic.removeSuggestFeatureOnVertex(
+                        vertex
+                    );
+                }
+            }
+        );
+
     })(jQuery);
 
 }

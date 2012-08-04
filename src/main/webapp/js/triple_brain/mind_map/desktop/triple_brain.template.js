@@ -31,7 +31,7 @@ if (triple_brain.template == undefined) {
         add('vertex_what_is_this_button', '<li><input type="button" class="what-is-this" data-role="none" value="?"></li>');
         add('vertex_suggestion_button', '<li class="suggestion"><input type="button" data-role="none" value="S"></li>');
 
-        add('identification_menu', '<div class="peripheral-menu identification" vertex-id="{vertex_id}"></div>');
+        add('identification_menu', '<div class="peripheral-menu identification"></div>');
         add('identification_menu_explanation_title', '<h2>What is the type of this concept?</h2>');
         add('identification_menu_sub_title', '<h3>i.e "my best friend fido" would be of type "Dog"<br/> or "Friend" or "Pet" etc</h3>');
         add('identification_additional_type_menu', '<label class="type-label">The type is <strong>{type_label}</strong></label>' +

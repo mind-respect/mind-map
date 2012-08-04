@@ -45,7 +45,7 @@ if (triple_brain.vertex == undefined) {
                         )
                     })
             },
-            updateType:function (vertex, type) {
+            updateType:function (vertex, type, successCallback) {
                 $.ajax({
                     type:'POST',
                     url:options.ws.app + '/service/vertex/' + idUriStatic.encodedUriFromId(vertex.getId()) + '/type',
@@ -54,6 +54,17 @@ if (triple_brain.vertex == undefined) {
                     contentType:'application/json;charset=utf-8'
                 }).success(function () {
                         vertex.setType(type);
+                        successCallback.call();
+                    })
+            },
+            removeType:function (vertex, successCallback) {
+                $.ajax({
+                    type:'DELETE',
+                    url:options.ws.app + '/service/vertex/' + idUriStatic.encodedUriFromId(vertex.getId()) + '/type',
+                    dataType:'json'
+                }).success(function () {
+                        vertex.removeType();
+                        successCallback.call();
                     })
             },
             updateSameAs:function (vertex, sameAsUri) {

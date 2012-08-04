@@ -137,6 +137,14 @@ public class VertexResourceTest extends GraphManipulationRestTest {
     }
 
     @Test
+    public void can_remove_the_additional_type_of_vertex() throws Exception {
+        setTheAdditionalTypeOfVertexAToFoafPerson();
+        assertTrue(vertexA.hasTheAdditionalType());
+        removeTheAdditionalTypeOfVertexUsingRest();
+        assertFalse(vertexA.hasTheAdditionalType());
+    }
+
+    @Test
     public void setting_type_of_a_vertex_returns_correct_response_status() throws Exception {
         setTheAdditionalTypeOfVertexAToFoafPerson();
         assertThat(response.getStatus(), is(200));
@@ -153,6 +161,18 @@ public class VertexResourceTest extends GraphManipulationRestTest {
                 .cookie(authCookie)
                 .type("application/json")
                 .post(ClientResponse.class, personType);
+        actualizeVertexABAndC();
+        return response;
+    }
+
+    private ClientResponse removeTheAdditionalTypeOfVertexUsingRest() throws Exception {
+        ClientResponse response = resource
+                .path("vertex")
+                .path(encodeURL(vertexA.id()))
+                .path("type")
+                .cookie(authCookie)
+                .type("application/json")
+                .delete(ClientResponse.class);
         actualizeVertexABAndC();
         return response;
     }

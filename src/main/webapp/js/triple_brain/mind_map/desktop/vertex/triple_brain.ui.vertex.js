@@ -188,6 +188,15 @@ if (triple_brain.ui.vertex == undefined) {
             return thisVertex.type() != undefined;
         }
 
+        this.removeType = function(){
+            var removedType = thisVertex.type();
+            $(html).removeData('type');
+            eventBus.publish(
+                '/event/ui/graph/vertex/type/removed',
+                [thisVertex, removedType]
+            );
+        }
+
         this.type = function () {
             return $(html).data('type');
         }

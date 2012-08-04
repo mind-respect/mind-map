@@ -130,6 +130,22 @@ public class VertexResource {
         return Response.ok().build();
     }
 
+    @DELETE
+    @Path("{vertexId}/type")
+    public Response removeTheAdditionalType(@GraphElementIdentifier @PathParam("vertexId") String vertexId, @Context HttpServletRequest request){
+        try{
+            vertexId = decodeURL(vertexId);
+        }catch (UnsupportedEncodingException e){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
+                userFromSession(request.getSession())
+        );
+        Vertex vertex = graphManipulator.vertexWithURI(vertexId);
+        vertex.removeTheAdditionalType();
+        return Response.ok().build();
+    }
+
     private ExternalResource externalResourceFromJson(JSONObject externalResource)throws JSONException, URISyntaxException{
         return ExternalResource.withUriAndLabel(
                 new URI(
