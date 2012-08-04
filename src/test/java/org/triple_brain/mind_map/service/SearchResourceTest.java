@@ -9,7 +9,7 @@ import org.triple_brain.module.common_utils.CommonUtils;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.triple_brain.module.model.json.graph.VertexJSONFields.LABEL;
+import static org.triple_brain.module.model.json.graph.VertexJsonFields.LABEL;
 /*
 * Copyright Mozilla Public License 1.1
 */

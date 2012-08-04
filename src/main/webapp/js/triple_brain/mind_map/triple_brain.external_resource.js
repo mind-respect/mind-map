@@ -26,6 +26,7 @@ if (triple_brain.external_resource == undefined) {
                 serverJson.label
             )
         }
+
         function ExternalResource(uri, label) {
             var thisExternalResource = this;
             this.uri = function () {

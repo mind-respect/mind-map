@@ -13,6 +13,8 @@ import org.triple_brain.module.model.graph.Edge;
 import org.triple_brain.module.model.graph.Vertex;
 import org.triple_brain.module.model.json.ExternalResourceJsonFields;
 import org.triple_brain.module.model.json.SuggestionJsonFields;
+import org.triple_brain.module.model.json.graph.EdgeJsonFields;
+import org.triple_brain.module.model.json.graph.VertexJsonFields;
 
 import java.net.URI;
 
@@ -48,12 +50,13 @@ public class VertexResourceTest extends GraphManipulationRestTest {
     public void adding_a_vertex_returns_the_new_edge_and_vertex_id() throws Exception {
         ClientResponse response = addAVertexToVertexAUsingRest();
         JSONObject createdStatement = response.getEntity(JSONObject.class);
-        assertThat(createdStatement.getString(SUBJECT_ID), is(vertexA.id()));
+        JSONObject subject = createdStatement.getJSONObject(SOURCE_VERTEX);
+        assertThat(subject.getString(VertexJsonFields.ID), is(vertexA.id()));
         Edge newEdge = wholeGraph().edgeWithIdentifier(
-                createdStatement.getString(PREDICATE_ID)
+                createdStatement.getJSONObject(EDGE).getString(EdgeJsonFields.ID)
         );
         Vertex newVertex = wholeGraph().vertexWithIdentifier(
-                createdStatement.getString(OBJECT_ID)
+                createdStatement.getJSONObject(END_VERTEX).getString(VertexJsonFields.ID)
         );
         assertTrue(vertexA.hasEdge(newEdge));
         assertTrue(vertexA.hasDestinationVertex(newVertex));

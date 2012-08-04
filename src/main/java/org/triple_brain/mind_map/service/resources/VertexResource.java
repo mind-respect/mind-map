@@ -11,6 +11,8 @@ import org.triple_brain.module.model.graph.Edge;
 import org.triple_brain.module.model.graph.GraphElementIdentifier;
 import org.triple_brain.module.model.graph.Vertex;
 import org.triple_brain.module.model.json.ExternalResourceJsonFields;
+import org.triple_brain.module.model.json.graph.EdgeJsonFields;
+import org.triple_brain.module.model.json.graph.VertexJsonFields;
 import org.triple_brain.module.search.GraphIndexer;
 
 import javax.inject.Inject;
@@ -61,9 +63,15 @@ public class VertexResource {
                 userFromSession(request.getSession())
         );
         JSONObject jsonCreatedStatement = new JSONObject();
-        jsonCreatedStatement.put(SUBJECT_ID, createdEdge.sourceVertex().id());
-        jsonCreatedStatement.put(PREDICATE_ID, createdEdge.id());
-        jsonCreatedStatement.put(OBJECT_ID, createdVertex.id());
+        jsonCreatedStatement.put(
+                SOURCE_VERTEX, VertexJsonFields.toJson(sourceVertex)
+        );
+        jsonCreatedStatement.put(
+                EDGE, EdgeJsonFields.toJson(createdEdge)
+        );
+        jsonCreatedStatement.put(
+                END_VERTEX, VertexJsonFields.toJson(createdVertex)
+        );
         //TODO response should be of created type
         return Response.ok(jsonCreatedStatement).build();
     }

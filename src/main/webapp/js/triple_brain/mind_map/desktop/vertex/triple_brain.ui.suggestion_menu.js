@@ -64,12 +64,19 @@ if (triple_brain.ui.suggestion_menu == undefined) {
                         $(this).offset().left + $(this).width() / 2,
                         $(this).offset().top
                     );
-                    triple_brain.vertex.addRelationAndVertexAtPositionToVertex(vertex, newVertexPosition, function (statementNewRelation) {
-                        statementNewRelation.predicate_label = $(currentSuggestion).html();
-                        var typeId = $(currentSuggestion).attr('type-id');
-                        var typeUri = freebaseStatic.freebaseIdToURI(typeId);
-                        statementNewRelation.object_type_uri = typeUri;
-                    });
+                    triple_brain.vertex.addRelationAndVertexAtPositionToVertex(
+                        vertex,
+                        newVertexPosition,
+                        function (tripleJson) {
+                            tripleJson.edge.label = $(currentSuggestion).html();
+                            var typeId = $(currentSuggestion).attr('type-id');
+                            var typeUri = freebaseStatic.freebaseIdToURI(typeId);
+                            tripleJson.end_vertex.type = triple_brain.external_resource.withUriAndLabel(
+                                typeUri,
+                                $(currentSuggestion).text()
+                            );
+                        }
+                    );
                     $(this).remove();
                 });
             });

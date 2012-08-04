@@ -4,15 +4,15 @@
 if (triple_brain.ui.triple == undefined) {
     (function ($) {
         var tripleStatic = triple_brain.ui.triple= {};
-        tripleStatic.fromServerStatementAndNewVertexPosition = function (statement, newVertexPosition) {
+        tripleStatic.fromServerStatementAndNewVertexPosition = function (tripleJson, newVertexPosition) {
             var sourceVertex = triple_brain.ui.vertex.withId(
                 triple_brain.id_uri.idFromUri(
-                    statement.subject_id
+                    tripleJson.source_vertex.id
                 )
             );
             var vertexCreatorStatic = triple_brain.ui.vertex_creator;
-            var destinationVertexId = statement.object_id;
-            var edgeId = statement.predicate_id;
+            var destinationVertexId = tripleJson.end_vertex.id;
+            var edgeId = tripleJson.edge.id;
 
             var vertexJSON = {};
             vertexJSON.id = destinationVertexId;
@@ -26,9 +26,9 @@ if (triple_brain.ui.triple == undefined) {
                 vertexJSON
             ).create();
 
-            var typeUri = statement.object_type_uri;
-            if (typeUri != undefined) {
-                triple_brain.vertex.updateType(destinationVertex, typeUri);
+            var type = tripleJson.end_vertex.type;
+            if (type != undefined) {
+                triple_brain.vertex.updateType(destinationVertex, type);
             }
 
             var edgeJSON = {};
@@ -39,12 +39,12 @@ if (triple_brain.ui.triple == undefined) {
             );
             edgeJSON.arrowLineStartPoint = arrowLine.segment().startPoint;
             edgeJSON.arrowLineEndPoint = arrowLine.segment().endPoint;
-            edgeJSON.source_vertex_id = statement.subject_id;
-            edgeJSON.destination_vertex_id = statement.object_id;
+            edgeJSON.source_vertex_id = tripleJson.source_vertex.id;
+            edgeJSON.destination_vertex_id = tripleJson.end_vertex.id;
             edgeJSON.label = triple_brain.ui.edge.EMPTY_LABEL;
             var edge = triple_brain.ui.edge_creator.withArrayOfJsonHavingAbsolutePosition(edgeJSON).create();
-            if (statement.predicate_label != undefined) {
-                edge.setText(statement.predicate_label);
+            if (tripleJson.edge.label != undefined) {
+                edge.setText(tripleJson.edge.label);
                 triple_brain.edge.updateLabel(edge, edge.text());
             }
             return new Triple(

@@ -3,17 +3,17 @@ if (triple_brain.vertex == undefined) {
         var eventBus = triple_brain.event_bus;
         var idUriStatic = triple_brain.id_uri;
         triple_brain.vertex = {
-            addRelationAndVertexAtPositionToVertex:function (vertex, newVertexPosition, callback) {
+            addRelationAndVertexAtPositionToVertex:function (vertex, newVertexPosition, successCallback) {
                 $.ajax({
                     type:'POST',
                     url:options.ws.app + '/service/vertex/' + idUriStatic.encodedUriFromId(vertex.getId()),
                     dataType:'json'
-                }).success(function (statementNewRelation) {
-                        if (callback != undefined) {
-                            callback.call(this, statementNewRelation);
+                }).success(function (tripleJson) {
+                        if (successCallback != undefined) {
+                            successCallback.call(this, tripleJson);
                         }
                         var triple = triple_brain.ui.triple.fromServerStatementAndNewVertexPosition(
-                            statementNewRelation,
+                            tripleJson,
                             newVertexPosition
                         )
                         eventBus.publish(
@@ -54,7 +54,9 @@ if (triple_brain.vertex == undefined) {
                     contentType:'application/json;charset=utf-8'
                 }).success(function () {
                         vertex.setType(type);
-                        successCallback.call();
+                        if(successCallback != undefined){
+                            successCallback.call();
+                        }
                     })
             },
             removeType:function (vertex, successCallback) {
@@ -64,7 +66,9 @@ if (triple_brain.vertex == undefined) {
                     dataType:'json'
                 }).success(function () {
                         vertex.removeType();
-                        successCallback.call();
+                        if(successCallback != undefined){
+                            successCallback.call();
+                        }
                     })
             },
             updateSameAs:function (vertex, sameAsUri) {
