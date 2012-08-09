@@ -104,5 +104,4 @@ if (triple_brain.ui.suggestion_menu == undefined) {
             return menuPosition.y < 10;
         }
     }
-
 }

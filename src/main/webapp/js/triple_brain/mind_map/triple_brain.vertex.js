@@ -91,10 +91,7 @@ if (triple_brain.vertex == undefined) {
                     data:triple_brain.suggestion.formatAllForServer(suggestions),
                     contentType:'application/json;charset=utf-8'
                 }).success(function () {
-                        eventBus.publish(
-                            '/event/ui/graph/vertex/type/properties/updated',
-                            [vertex, suggestions]
-                        );
+                        vertex.setSuggestions(suggestions);
                     })
             }
         }
