@@ -17,8 +17,29 @@ if (triple_brain.freebase == undefined) {
                 .toLowerCase()
                 .indexOf("freebase.com") != -1;
         }
+        freebaseStatic.handleIdentificationToServer = function(vertex, freebaseSuggestion, successCallBack){
+            var vertexService = triple_brain.vertex;
+            var externalResourceStatic = triple_brain.external_resource;
+            var typeId = freebaseSuggestion['n:type'].id;
+            var externalResource = externalResourceStatic.fromFreebaseSuggestion(
+                freebaseSuggestion
+            );
+            if (triple_brain.freebase.isOfTypeTypeFromTypeId(typeId)) {
+                vertexService.addType(
+                    vertex,
+                    externalResource,
+                    successCallBack
+                );
+            } else {
+                vertexService.addSameAs(
+                    vertex,
+                    externalResource,
+                    successCallBack
+                );
+            }
+        }
         freebaseStatic.listPropertiesOfFreebaseTypeId = function (vertex, freebaseId) {
-            propertiesOfTypeQuery = {
+            var propertiesOfTypeQuery = {
                 query:{
                     id:freebaseId,
                     type:"/type/type",
@@ -61,9 +82,9 @@ if (triple_brain.freebase == undefined) {
                 .removeData("suggest");
         }
         eventBus.subscribe(
-            '/event/ui/graph/vertex/type/updated',
-            function (event, vertex) {
-                var typeUri = vertex.type().uri();
+            '/event/ui/graph/vertex/type/added',
+            function (event, vertex, type) {
+                var typeUri = type.uri();
                 if (!freebaseStatic.isFreebaseUri(typeUri)) {
                     return;
                 }
@@ -76,11 +97,13 @@ if (triple_brain.freebase == undefined) {
                     "zIndex":20,
                     "type":typeId
                 })
-                    .bind("fb-select", function (e, data) {
+                    .bind("fb-select", function (e, freebaseSuggestion) {
+                        var vertex = triple_brain.ui.vertex.withId(
+                            $(this).closest(".vertex").attr("id")
+                        );
                         vertex.readjustLabelWidth();
                         triple_brain.vertex.updateLabel(vertex, vertex.text());
-                        var resourceUri = freebaseStatic.freebaseIdToURI(data.id);
-                        triple_brain.vertex.updateSameAs(vertex, resourceUri);
+                        freebaseStatic.handleIdentificationToServer(vertex, freebaseSuggestion);
                     });
             }
         );

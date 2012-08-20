@@ -5,48 +5,30 @@ if (triple_brain.ui.triple == undefined) {
     (function ($) {
         var tripleStatic = triple_brain.ui.triple= {};
         tripleStatic.fromServerStatementAndNewVertexPosition = function (tripleJson, newVertexPosition) {
+            var vertexCreatorStatic = triple_brain.ui.vertex_creator;
+            tripleJson.end_vertex.position = {
+                x : newVertexPosition.x,
+                y : newVertexPosition.y
+            };
+            var destinationVertex = vertexCreatorStatic.withArrayOfJsonHavingAbsolutePosition(
+                tripleJson.end_vertex
+            ).create();
+
             var sourceVertex = triple_brain.ui.vertex.withId(
-                triple_brain.id_uri.idFromUri(
+                triple_brain.id_uri.graphElementIdFromUri(
                     tripleJson.source_vertex.id
                 )
             );
-            var vertexCreatorStatic = triple_brain.ui.vertex_creator;
-            var destinationVertexId = tripleJson.end_vertex.id;
-            var edgeId = tripleJson.edge.id;
-
-            var vertexJSON = {};
-            vertexJSON.id = destinationVertexId;
-            vertexJSON.label = vertexStatic.EMPTY_LABEL;
-            vertexJSON.suggestions = [];
-            vertexJSON.position = {};
-            vertexJSON.position.x = newVertexPosition.x;
-            vertexJSON.position.y = newVertexPosition.y;
-
-            var destinationVertex = vertexCreatorStatic.withArrayOfJsonHavingAbsolutePosition(
-                vertexJSON
-            ).create();
-
-            var type = tripleJson.end_vertex.type;
-            if (type != undefined) {
-                triple_brain.vertex.updateType(destinationVertex, type);
-            }
-
-            var edgeJSON = {};
-            edgeJSON.id = edgeId;
             var arrowLine = triple_brain.ui.arrow_line.ofSourceAndDestinationVertex(
                 sourceVertex,
                 destinationVertex
             );
-            edgeJSON.arrowLineStartPoint = arrowLine.segment().startPoint;
-            edgeJSON.arrowLineEndPoint = arrowLine.segment().endPoint;
-            edgeJSON.source_vertex_id = tripleJson.source_vertex.id;
-            edgeJSON.destination_vertex_id = tripleJson.end_vertex.id;
-            edgeJSON.label = triple_brain.ui.edge.EMPTY_LABEL;
-            var edge = triple_brain.ui.edge_creator.withArrayOfJsonHavingAbsolutePosition(edgeJSON).create();
-            if (tripleJson.edge.label != undefined) {
-                edge.setText(tripleJson.edge.label);
-                triple_brain.edge.updateLabel(edge, edge.text());
-            }
+            var arrowLineSegment = arrowLine.segment();
+            tripleJson.edge.arrowLineStartPoint = arrowLineSegment.startPoint;
+            tripleJson.edge.arrowLineEndPoint = arrowLineSegment.endPoint;
+            var edge = triple_brain.ui.edge_creator.withArrayOfJsonHavingAbsolutePosition(
+                tripleJson.edge
+            ).create();
             return new Triple(
                 sourceVertex,
                 edge,

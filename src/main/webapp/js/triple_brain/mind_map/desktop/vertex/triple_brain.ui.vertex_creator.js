@@ -32,7 +32,7 @@ if (triple_brain.ui.vertex_creator == undefined) {
     }
 
     function VertexCreator(json) {
-        json.id = triple_brain.id_uri.idFromUri(json.id);
+        json.id = triple_brain.id_uri.graphElementIdFromUri(json.id);
         var html = triple_brain.template['vertex'].merge(json);
         this.create = function () {
             triple_brain.ui.graph.addHTML(
@@ -77,13 +77,25 @@ if (triple_brain.ui.vertex_creator == undefined) {
                 vertex.setNameOfHiddenProperties(json.name_of_hidden_properties);
                 vertex.buildHiddenNeighborPropertiesIndicator();
             }
-            if(json.type){
-                vertex.setType(
+            vertex.setTypes([]);
+            vertex.setSameAs([]);
+            $.each(json.types, function(){
+                var typeFromServer = this;
+                vertex.addType(
                     triple_brain.external_resource.fromServerJson(
-                        json.type
+                        typeFromServer
                     )
                 );
-            }
+            });
+
+            $.each(json.same_as, function(){
+                var sameAsFromServer = this;
+                vertex.addSameAs(
+                    triple_brain.external_resource.fromServerJson(
+                        sameAsFromServer
+                    )
+                );
+            });
             eventBus.publish(
                 '/event/ui/html/vertex/created/',
                 vertex

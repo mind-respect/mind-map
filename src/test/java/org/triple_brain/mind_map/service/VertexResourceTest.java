@@ -7,6 +7,7 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Test;
 import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
+import org.triple_brain.module.model.FriendlyResource;
 import org.triple_brain.module.model.Suggestion;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.Edge;
@@ -130,30 +131,36 @@ public class VertexResourceTest extends GraphManipulationRestTest {
         return response;
     }
 
-    private String personClassURI = "http://xmlns.com/foaf/0.1/Person";
-
     @Test
-    public void can_set_the_additional_type_of_vertex() throws Exception {
-        assertFalse(vertexA.hasTheAdditionalType());
-        setTheAdditionalTypeOfVertexAToFoafPerson();
-        assertTrue(vertexA.hasTheAdditionalType());
+    public void can_add_an_additional_type_to_vertex() throws Exception {
+        assertTrue(
+                vertexA.getAdditionalTypes().isEmpty()
+        );
+        addFoafPersonTypeToVertexA();
+        assertFalse(
+                vertexA.getAdditionalTypes().isEmpty()
+        );
     }
 
     @Test
     public void can_remove_the_additional_type_of_vertex() throws Exception {
-        setTheAdditionalTypeOfVertexAToFoafPerson();
-        assertTrue(vertexA.hasTheAdditionalType());
-        removeTheAdditionalTypeOfVertexUsingRest();
-        assertFalse(vertexA.hasTheAdditionalType());
+        addFoafPersonTypeToVertexA();
+        assertFalse(
+                vertexA.getAdditionalTypes().isEmpty()
+        );
+        removeFoafPersonIdentificationToVertexA();
+        assertTrue(
+                vertexA.getAdditionalTypes().isEmpty()
+        );
     }
 
     @Test
     public void setting_type_of_a_vertex_returns_correct_response_status() throws Exception {
-        setTheAdditionalTypeOfVertexAToFoafPerson();
+        addFoafPersonTypeToVertexA();
         assertThat(response.getStatus(), is(200));
     }
 
-    private ClientResponse setTheAdditionalTypeOfVertexAToFoafPerson() throws Exception {
+    private ClientResponse addFoafPersonTypeToVertexA() throws Exception {
         JSONObject personType = ExternalResourceJsonFields.toJson(
                 TestScenarios.personType()
         );
@@ -168,11 +175,13 @@ public class VertexResourceTest extends GraphManipulationRestTest {
         return response;
     }
 
-    private ClientResponse removeTheAdditionalTypeOfVertexUsingRest() throws Exception {
+    private ClientResponse removeFoafPersonIdentificationToVertexA() throws Exception {
+        FriendlyResource personType = TestScenarios.personType();
         ClientResponse response = resource
                 .path("vertex")
                 .path(encodeURL(vertexA.id()))
-                .path("type")
+                .path("identification")
+                .path(encodeURL(personType.uri().toString()))
                 .cookie(authCookie)
                 .type("application/json")
                 .delete(ClientResponse.class);

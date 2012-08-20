@@ -11,17 +11,17 @@ if (triple_brain.id_uri == undefined) {
                 uri
             );
         },
-        idFromUri: function(uri){
+        graphElementIdFromUri: function(uri){
             var segments = $.url(uri).segment();
             var graphElementId = segments[1];
             return graphElementId;
         },
-        encodedUriFromId : function(id){
+        encodedUriFromGraphElementId : function(id){
             return encodeURIComponent(
-                triple_brain.id_uri.uriFromId(id)
+                triple_brain.id_uri.uriFromGraphElementId(id)
             );
         },
-        uriFromId: function(id){
+        uriFromGraphElementId: function(id){
             var username = triple_brain.authenticatedUser.user_name;
             return baseUrl + username + "/" + id;
         }

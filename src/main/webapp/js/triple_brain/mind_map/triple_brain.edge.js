@@ -4,8 +4,8 @@ if (triple_brain.edge == undefined) {
         var eventBus = triple_brain.event_bus;
         triple_brain.edge = {
             add: function(sourceVertex, destinationVertex) {
-                var sourceVertexURI = triple_brain.id_uri.encodedUriFromId(sourceVertex.getId());
-                var destinationVertexURI = triple_brain.id_uri.encodedUriFromId(destinationVertex.getId());
+                var sourceVertexURI = triple_brain.id_uri.encodedUriFromGraphElementId(sourceVertex.getId());
+                var destinationVertexURI = triple_brain.id_uri.encodedUriFromGraphElementId(destinationVertex.getId());
                 var response = $.ajax({
                     type: 'POST',
                     url: options.ws.app + '/service/edge/' + sourceVertexURI  + '/' + destinationVertexURI
@@ -22,9 +22,9 @@ if (triple_brain.edge == undefined) {
                     edgeJSON.arrowLineStartPoint = arrowLine.segment().startPoint;
                     edgeJSON.arrowLineEndPoint = arrowLine.segment().endPoint;
 
-                    edgeJSON.source_vertex_id = triple_brain.id_uri.uriFromId(
+                    edgeJSON.source_vertex_id = triple_brain.id_uri.uriFromGraphElementId(
                                         sourceVertex.getId());
-                    edgeJSON.destination_vertex_id = triple_brain.id_uri.uriFromId(
+                    edgeJSON.destination_vertex_id = triple_brain.id_uri.uriFromGraphElementId(
                                             destinationVertex.getId());
 
                     edgeJSON.label = triple_brain.ui.edge.EMPTY_LABEL;
@@ -37,7 +37,7 @@ if (triple_brain.edge == undefined) {
             remove: function(edge) {
                 $.ajax({
                     type: 'DELETE',
-                    url: options.ws.app + '/service/edge/' + triple_brain.id_uri.encodedUriFromId(edge.id())
+                    url: options.ws.app + '/service/edge/' + triple_brain.id_uri.encodedUriFromGraphElementId(edge.id())
                 }).success(function() {
                     eventBus.publish(
                         '/event/ui/graph/relation/deleted',
@@ -48,7 +48,7 @@ if (triple_brain.edge == undefined) {
              updateLabel: function(edge, label) {
                 $.ajax({
                     type: 'POST',
-                    url: options.ws.app + '/service/edge/label/' + triple_brain.id_uri.encodedUriFromId(edge.id()) + '?label=' + label,
+                    url: options.ws.app + '/service/edge/label/' + triple_brain.id_uri.encodedUriFromGraphElementId(edge.id()) + '?label=' + label,
                     dataType: 'json'
                 }).success(function() {
                     eventBus.publish(

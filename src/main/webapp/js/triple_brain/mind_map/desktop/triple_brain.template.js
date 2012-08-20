@@ -32,11 +32,12 @@ if (triple_brain.template == undefined) {
         add('vertex_suggestion_button', '<li class="suggestion"><input type="button" data-role="none" value="S"></li>');
 
         add('identification_menu', '<div class="peripheral-menu identification"></div>');
-        add('identification_menu_explanation_title', '<h2>What is the type of this concept?</h2>');
-        add('identification_menu_sub_title', '<h3>i.e "my best friend fido" would be of type "Dog"<br/> or "Friend" or "Pet" etc</h3>');
-        add('identification_additional_type_menu', '<label class="type-label">The type is <strong>{type_label}</strong></label>' +
-            '<input type="button" class="link-like-button remove-type" value="remove the type">');
-        add('identification_textfield', '<input type="text" placeholder="Set a new type" class="semantic-textfield">');
+        add('identification_menu_explanation_title', '<h2>Identifications</h2>');
+        add('identification_menu_indications', '<h3>Find as many concepts that identify or are a generalization of this one.</h3>');
+        add('identification_existing_identities', '<ul class="identification-list"></ul>');
+        add('identification_existing_identity', '<li class="identification" identification-uri="{identification_uri}"><label class="type-label"><strong>{type_label}</strong></label> ' +
+            '<input type="button" class="link-like-button remove-identification" value="remove"></li>');
+        add('identification_textfield', '<input type="text" placeholder="Identify" class="semantic-textfield">');
 
         add('suggestions_menu', '<div class="peripheral-menu suggestion"></div>');
         add('suggestions_list', '<ul></ul>');

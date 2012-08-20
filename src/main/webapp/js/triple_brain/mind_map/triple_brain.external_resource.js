@@ -41,6 +41,12 @@ if (triple_brain.external_resource == undefined) {
                     label : thisExternalResource.label()
                 });
             }
+            this.setType = function(type){
+                thisExternalResource.type = type;
+            }
+            this.getType = function(){
+                return thisExternalResource.type;
+            }
         }
     })(jQuery);
 }

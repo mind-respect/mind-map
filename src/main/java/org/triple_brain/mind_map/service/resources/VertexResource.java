@@ -4,7 +4,7 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
-import org.triple_brain.module.model.ExternalResource;
+import org.triple_brain.module.model.FriendlyResource;
 import org.triple_brain.module.model.Suggestion;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.Edge;
@@ -72,7 +72,7 @@ public class VertexResource {
         jsonCreatedStatement.put(
                 END_VERTEX, VertexJsonFields.toJson(createdVertex)
         );
-        //TODO response should be of created type
+        //TODO response should be of type created
         return Response.ok(jsonCreatedStatement).build();
     }
 
@@ -122,7 +122,7 @@ public class VertexResource {
 
     @POST
     @Path("{vertexId}/type")
-    public Response setType(@GraphElementIdentifier @PathParam("vertexId") String vertexId, JSONObject type, @Context HttpServletRequest request) throws JSONException, URISyntaxException{
+    public Response addType(@GraphElementIdentifier @PathParam("vertexId") String vertexId, JSONObject type, @Context HttpServletRequest request) throws JSONException, URISyntaxException{
         try{
             vertexId = decodeURL(vertexId);
         }catch (UnsupportedEncodingException e){
@@ -132,33 +132,17 @@ public class VertexResource {
                 userFromSession(request.getSession())
         );
         Vertex vertex = graphManipulator.vertexWithURI(vertexId);
-        vertex.setTheAdditionalType(
-                externalResourceFromJson(type)
+        vertex.addType(
+                friendlyResourceFromJson(type)
         );
         return Response.ok().build();
     }
 
-    @DELETE
-    @Path("{vertexId}/type")
-    public Response removeTheAdditionalType(@GraphElementIdentifier @PathParam("vertexId") String vertexId, @Context HttpServletRequest request){
-        try{
-            vertexId = decodeURL(vertexId);
-        }catch (UnsupportedEncodingException e){
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
-                userFromSession(request.getSession())
-        );
-        Vertex vertex = graphManipulator.vertexWithURI(vertexId);
-        vertex.removeTheAdditionalType();
-        return Response.ok().build();
-    }
-
-    private ExternalResource externalResourceFromJson(JSONObject externalResource)throws JSONException, URISyntaxException{
-        return ExternalResource.withUriAndLabel(
+    private FriendlyResource friendlyResourceFromJson(JSONObject externalResource)throws JSONException, URISyntaxException{
+        return FriendlyResource.withUriAndLabel(
                 new URI(
                         externalResource.getString(
-                            ExternalResourceJsonFields.URI
+                                ExternalResourceJsonFields.URI
                         )
                 ),
                 externalResource.getString(
@@ -169,7 +153,7 @@ public class VertexResource {
 
     @POST
     @Path("{vertexId}/same_as")
-    public Response setSameAs(@GraphElementIdentifier @PathParam("vertexId") String vertexId, @QueryParam("same_as_uri") String sameAsUri, @Context HttpServletRequest request) throws JSONException, URISyntaxException{
+    public Response setSameAs(@GraphElementIdentifier @PathParam("vertexId") String vertexId, JSONObject sameAs, @Context HttpServletRequest request) throws JSONException, URISyntaxException{
         try{
             vertexId = decodeURL(vertexId);
         }catch (UnsupportedEncodingException e){
@@ -179,7 +163,29 @@ public class VertexResource {
                 userFromSession(request.getSession())
         );
         Vertex vertex = graphManipulator.vertexWithURI(vertexId);
-        vertex.setSameAsUsingUri(sameAsUri);
+        vertex.addSameAs(
+               friendlyResourceFromJson(sameAs)
+        );
+        return Response.ok().build();
+    }
+
+    @DELETE
+    @Path("{vertexId}/identification/{friendly_resource_uri}")
+    public Response removeFriendlyResource(@GraphElementIdentifier @PathParam("vertexId") String vertexId, @PathParam("friendly_resource_uri") String friendlyResourceUri, @Context HttpServletRequest request)throws URISyntaxException, JSONException{
+        try{
+            vertexId = decodeURL(vertexId);
+            friendlyResourceUri = decodeURL(friendlyResourceUri);
+        }catch (UnsupportedEncodingException e){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
+                userFromSession(request.getSession())
+        );
+        Vertex vertex = graphManipulator.vertexWithURI(vertexId);
+        FriendlyResource type = vertex.friendlyResourceWithUri(
+                new URI(friendlyResourceUri)
+        );
+        vertex.removeFriendlyResource(type);
         return Response.ok().build();
     }
 

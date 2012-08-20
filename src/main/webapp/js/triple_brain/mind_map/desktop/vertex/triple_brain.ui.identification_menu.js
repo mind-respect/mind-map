@@ -15,16 +15,14 @@ if (triple_brain.ui.identification_menu == undefined) {
         function IdentificationMenu(vertex) {
             var identificationMenu = this;
             var html;
-            this.redraw = function () {
-                $(html).remove();
-                identificationMenu.create();
+            this.rebuildList = function () {
+                $(listHtml()).remove();
+                addExistingIdentifications();
             }
             this.create = function () {
                 html = triple_brain.template['identification_menu'].merge();
                 triple_brain.ui.graph.addHTML(html);
-                vertex.hasTheAdditionalType() ?
-                    displayAdditionalTypeScenario() :
-                    displayNoAdditionalTypeScenario();
+                buildMenu();
                 $(html).click(function (e) {
                     e.stopPropagation();
                 });
@@ -32,49 +30,90 @@ if (triple_brain.ui.identification_menu == undefined) {
                 return identificationMenu;
             }
 
-            function displayAdditionalTypeScenario() {
-                addTheAdditionalTypeMenu();
-                addIdentificationTextField();
-                position();
+            function listHtml() {
+                return $(html).find(".identification-list")
             }
 
-            function displayNoAdditionalTypeScenario() {
-                addExplanationTitle();
-                addSubTitle();
+            function listElements() {
+                return $(html).find(".identification-list").find("li");
+            }
+
+            function buildMenu() {
+                addTitle();
+                addExistingIdentifications();
+                addIndications();
                 position();
                 var identificationTextField = addIdentificationTextField();
                 $(identificationTextField).focus();
+                position();
             }
 
             this.reEvaluatePosition = function () {
                 position();
             }
 
-            function addExplanationTitle() {
+            function addTitle() {
                 $(html).append(
                     triple_brain.template['identification_menu_explanation_title'].merge()
                 );
             }
 
-            function addSubTitle() {
+            function addIndications() {
                 $(html).append(
-                    triple_brain.template['identification_menu_sub_title'].merge()
+                    triple_brain.template['identification_menu_indications'].merge()
                 );
             }
 
-            function addTheAdditionalTypeMenu() {
-                var typeMenu = triple_brain.template['identification_additional_type_menu'].merge({
-                    type_label:vertex.type().label()
-                });
+            function addExistingIdentifications() {
+                var identitiesList = triple_brain.template['identification_existing_identities'].merge();
                 $(html).append(
-                    typeMenu
+                    identitiesList
                 );
-                $(html).find(".remove-type").click(function () {
-                    var vertex = $(this).closest('.peripheral-menu').data("vertex");
-                    vertexService.removeType(vertex, function () {
-                        identificationMenu.redraw();
-                    });
-                })
+                $.each(vertex.getTypes().concat(vertex.getSameAs()), function () {
+                    addIdentificationAsListElement(
+                        this
+                    );
+                });
+            }
+
+            function addIdentificationAsListElement(identification) {
+                var identificationListElement = triple_brain.template['identification_existing_identity'].merge({
+                    identification_uri:triple_brain.id_uri.encodeUri(identification.uri()),
+                    type_label:identification.label()
+                });
+                $(identificationListElement).data("identification", identification);
+                $(listHtml()).append(
+                    identificationListElement
+                );
+                $(identificationListElement).find(".remove-identification").click(function () {
+                    var identificationListElement = this;
+                    var identification = $(identificationListElement).closest(
+                        'li.identification'
+                    ).data("identification");
+                    var semanticMenu = $(identificationListElement).closest(
+                        '.peripheral-menu'
+                    );
+                    var vertex = $(semanticMenu).data("vertex");
+                    var removeIdentification = identification.getType() == "type" ?
+                        vertexService.removeType :
+                        vertexService.removeSameAs;
+                    removeIdentification.call(
+                        this,
+                        vertex,
+                        identification,
+                        function (vertex, identification) {
+                            $.each(listElements(), function(){
+                                var listElement = this;
+                                var listElementIdentification = $(listElement).data("identification");
+                                if(identification.uri() == listElementIdentification.uri()){
+                                    $(listElement).remove();
+                                    return false;
+                                }
+                            });
+                        }
+                    )
+                });
+                return identificationListElement;
             }
 
             function position() {
@@ -107,24 +146,16 @@ if (triple_brain.ui.identification_menu == undefined) {
                 $(identificationTextField).suggest({
                     "zIndex":20
                 })
-                    .bind("fb-select", function (e, data) {
+                    .bind("fb-select", function (e, freebaseSuggestion) {
                         var semanticMenu = $(this).closest('.peripheral-menu');
                         var vertex = $(semanticMenu).data("vertex");
-                        var typeId = data['n:type'].id;
-                        if (triple_brain.freebase.isOfTypeTypeFromTypeId(typeId)) {
-                            vertexService.updateType(
-                                vertex,
-                                externalResourceStatic.fromFreebaseSuggestion(
-                                    data
-                                ),
-                                function () {
-                                    identificationMenu.redraw();
-                                }
-                            );
-                        } else {
-                            var resourceUri = triple_brain.freebase.freebaseIdToURI(data.id);
-                            vertexService.updateSameAs(vertex, resourceUri);
-                        }
+                        triple_brain.freebase.handleIdentificationToServer(
+                            vertex,
+                            freebaseSuggestion,
+                            function (vertex, identification) {
+                                addIdentificationAsListElement(identification);
+                            }
+                        );
                     });
                 return identificationTextField;
             }

@@ -32,9 +32,9 @@ if (triple_brain.ui.edge_creator == undefined) {
     }
 
     function EdgeCreator(json){
-        json.id = triple_brain.id_uri.idFromUri(json.id);
-        json.source_vertex_id = triple_brain.id_uri.idFromUri(json.source_vertex_id);
-        json.destination_vertex_id = triple_brain.id_uri.idFromUri(json.destination_vertex_id);
+        json.id = triple_brain.id_uri.graphElementIdFromUri(json.id);
+        json.source_vertex_id = triple_brain.id_uri.graphElementIdFromUri(json.source_vertex_id);
+        json.destination_vertex_id = triple_brain.id_uri.graphElementIdFromUri(json.destination_vertex_id);
         var html = triple_brain.template['edge'].merge(json);
         this.create = function(){
             triple_brain.ui.graph.addHTML(

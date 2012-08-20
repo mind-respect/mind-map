@@ -17,7 +17,7 @@ if (triple_brain.ui.vertex == undefined) {
         };
         vertexStatic.withUri = function (uri) {
             return vertexStatic.withId(
-                triple_brain.id_uri.idFromUri(uri)
+                triple_brain.id_uri.graphElementIdFromUri(uri)
             );
         };
         vertexStatic.centralVertex = function () {
@@ -193,33 +193,81 @@ if (triple_brain.ui.vertex == undefined) {
                     [thisVertex, suggestions]
                 );
             }
-
-            this.hasTheAdditionalType = function(){
-                return thisVertex.type() != undefined;
-            }
-
-            this.removeType = function(){
-                var removedType = thisVertex.type();
-                $(html).removeData('type');
+            this.removeType = function (type) {
+                var types = thisVertex.removeIdenficationInArray(
+                    type,
+                    thisVertex.getTypes()
+                );
+                $(thisVertex).data("types", types);
                 vertexService.setSuggestions(
                     thisVertex,
                     []
                 );
                 eventBus.publish(
                     '/event/ui/graph/vertex/type/removed',
-                    [thisVertex, removedType]
+                    [thisVertex, type]
                 );
             }
 
-            this.type = function () {
-                return $(html).data('type');
+            this.removeIdenficationInArray = function (identificationToRemove, array) {
+                var i = 0;
+                $.each(array, function(){
+                    var identification = this;
+                    if (identification.uri() == identificationToRemove.uri()) {
+                        array.splice(i, 1);
+                        return false;
+                    }
+                    i++;
+                });
+                return array;
             }
-            this.setType = function (type) {
-                $(html).data('type', type);
+
+            this.getTypes = function () {
+                return $(html).data('types');
+            }
+            this.setTypes = function (types) {
+                return $(html).data('types', types);
+            }
+            this.addType = function (type) {
+                type.setType("type");
+                var types = thisVertex.getTypes();
+                types.push(type);
+                thisVertex.setTypes(types);
                 eventBus.publish(
-                    '/event/ui/graph/vertex/type/updated',
-                    [thisVertex]
+                    '/event/ui/graph/vertex/type/added',
+                    [thisVertex, type]
                 );
+            }
+            this.addSameAs = function (sameAs) {
+                sameAs.setType("same_as");
+                var sameAsCollection = thisVertex.getSameAs()
+                sameAsCollection.push(sameAs);
+                thisVertex.setSameAs(sameAsCollection);
+                eventBus.publish(
+                    '/event/ui/graph/vertex/same_as/added',
+                    [thisVertex, sameAs]
+                );
+            }
+            this.setSameAs = function(sameAsCollection){
+                $(html).data('sameAs', sameAsCollection);
+            }
+            this.removeSameAs = function (sameAsToRemove) {
+                var sameAs = thisVertex.removeIdenficationInArray(
+                    sameAsToRemove,
+                    thisVertex.getTypes()
+                );
+                $(thisVertex).data("sameAs", sameAs);
+                vertexService.setSuggestions(
+                    thisVertex,
+                    []
+                );
+                eventBus.publish(
+                    '/event/ui/graph/vertex/same_as/removed',
+                    [thisVertex, sameAsToRemove]
+                );
+            }
+            this.getSameAs = function () {
+                return $(html).data('sameAs');
             }
             this.showSuggestionButton = function () {
                 $(suggestionButton()).show();
@@ -289,7 +337,6 @@ if (triple_brain.ui.vertex == undefined) {
             function centerButton() {
                 return $(html).find('.center');
             }
-
             crow.ConnectedNode.apply(this, [thisVertex.getId()]);
         }
 

@@ -7,7 +7,7 @@ if (triple_brain.drawn_graph == undefined) {
             getWithDefaultCentralVertex: function() {
                 eventBus.publish('/event/ui/graph/drawing_info/about_to/update', []);
                 var authenticatedUsername = triple_brain.authenticatedUser.user_name;
-                var centralVertexId = idURIUtils.idFromUri(idURIUtils.baseURI + authenticatedUsername + '/default');
+                var centralVertexId = idURIUtils.graphElementIdFromUri(idURIUtils.baseURI + authenticatedUsername + '/default');
                 var depthOfSubVertices = $("#sub-vertices-depth-slider").slider('value');
                 $.ajax({
                     type: 'GET',
@@ -25,7 +25,7 @@ if (triple_brain.drawn_graph == undefined) {
                 var depthOfSubVertices = $("#sub-vertices-depth-slider").slider('value');
                 $.ajax({
                     type: 'GET',
-                    url: options.ws.app + '/service/drawn_graph/' + mindMapURI() + "/" + depthOfSubVertices + '/' + triple_brain.id_uri.encodedUriFromId(newCentralVertex.getId()),
+                    url: options.ws.app + '/service/drawn_graph/' + mindMapURI() + "/" + depthOfSubVertices + '/' + triple_brain.id_uri.encodedUriFromGraphElementId(newCentralVertex.getId()),
                     dataType: 'json'
                 }).success(function(drawnGraph) {
                     eventBus.publish(
@@ -46,7 +46,7 @@ if (triple_brain.drawn_graph == undefined) {
                         '/event/ui/graph/drawing_info/updated/',
                         [
                             drawnGraph,
-                            triple_brain.id_uri.idFromUri(newCentralVertexUri)
+                            triple_brain.id_uri.graphElementIdFromUri(newCentralVertexUri)
                         ]
                     )
                 })
