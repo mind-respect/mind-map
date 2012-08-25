@@ -1,44 +1,51 @@
-if (triple_brain.freebase == undefined) {
-    (function ($) {
-        var eventBus = triple_brain.event_bus;
-        var freebaseStatic = triple_brain.freebase = {};
-        freebaseStatic.freebaseIdToURI = function (freebaseId) {
+define([
+    "jquery",
+    "triple_brain/triple_brain.event_bus",
+    "triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex",
+    "triple_brain/mind_map/triple_brain.vertex",
+    "triple_brain/mind_map/triple_brain.suggestion",
+    "triple_brain/mind_map/triple_brain.external_resource",
+    "jquery/freebase_suggest.min",
+    "jquery/jquery.url"
+],
+    function ($, EventBus, Vertex, VertexService, Suggestion, ExternalResource) {
+        var api = {};
+        api.freebaseIdToURI = function (freebaseId) {
             return "http://rdf.freebase.com/rdf" + freebaseId;
         };
-        freebaseStatic.idInFreebaseURI = function (freebaseURI) {
+        api.idInFreebaseURI = function (freebaseURI) {
             return freebaseURI.replace("http://rdf.freebase.com/rdf", "");
         };
-        freebaseStatic.isOfTypeTypeFromTypeId = function (typeId) {
+        api.isOfTypeTypeFromTypeId = function (typeId) {
             return typeId == "/type/type";
         };
-        freebaseStatic.isFreebaseUri = function (uri) {
+        api.isFreebaseUri = function (uri) {
             return $.url(uri).attr()
                 .host
                 .toLowerCase()
                 .indexOf("freebase.com") != -1;
         }
-        freebaseStatic.handleIdentificationToServer = function(vertex, freebaseSuggestion, successCallBack){
-            var vertexService = triple_brain.vertex;
-            var externalResourceStatic = triple_brain.external_resource;
+        api.handleIdentificationToServer = function(vertex, freebaseSuggestion, successCallBack){
             var typeId = freebaseSuggestion['n:type'].id;
-            var externalResource = externalResourceStatic.fromFreebaseSuggestion(
+            var externalResource = ExternalResource.fromFreebaseSuggestion(
                 freebaseSuggestion
             );
-            if (triple_brain.freebase.isOfTypeTypeFromTypeId(typeId)) {
-                vertexService.addType(
+            if (api.isOfTypeTypeFromTypeId(typeId)) {
+                vertexService().addType(
                     vertex,
                     externalResource,
                     successCallBack
                 );
             } else {
-                vertexService.addSameAs(
+                vertexService().addSameAs(
                     vertex,
                     externalResource,
                     successCallBack
                 );
             }
         }
-        freebaseStatic.listPropertiesOfFreebaseTypeId = function (vertex, freebaseId) {
+        api.listPropertiesOfFreebaseTypeId = function (vertex, freebaseId) {
+            Suggestion = require("triple_brain/mind_map/triple_brain.suggestion")
             var propertiesOfTypeQuery = {
                 query:{
                     id:freebaseId,
@@ -64,32 +71,33 @@ if (triple_brain.freebase == undefined) {
                     $.each(freebaseProperties, function () {
                         var freebaseProperty = this;
                         suggestions.push(
-                            triple_brain.suggestion.fromFreebaseSuggestion(
+                            Suggestion.fromFreebaseSuggestion(
                                 freebaseProperty
                             )
                         )
                     })
-                    triple_brain.vertex.setSuggestions(
+                    vertexService().setSuggestions(
                         vertex,
                         suggestions
                     );
                 })
         }
-        freebaseStatic.removeSuggestFeatureOnVertex = function(vertex){
+        api.removeSuggestFeatureOnVertex = function(vertex){
+
             $(vertex.label())
                 .unbind(".suggest")
                 .unbind("fb-select")
                 .removeData("suggest");
         }
-        eventBus.subscribe(
+        EventBus.subscribe(
             '/event/ui/graph/vertex/type/added',
             function (event, vertex, type) {
                 var typeUri = type.uri();
-                if (!freebaseStatic.isFreebaseUri(typeUri)) {
+                if (!api.isFreebaseUri(typeUri)) {
                     return;
                 }
-                var typeId = freebaseStatic.idInFreebaseURI(typeUri);
-                freebaseStatic.listPropertiesOfFreebaseTypeId(
+                var typeId = api.idInFreebaseURI(typeUri);
+                api.listPropertiesOfFreebaseTypeId(
                     vertex,
                     typeId
                 );
@@ -98,27 +106,31 @@ if (triple_brain.freebase == undefined) {
                     "type":typeId
                 })
                     .bind("fb-select", function (e, freebaseSuggestion) {
-                        var vertex = triple_brain.ui.vertex.withId(
+                        var vertex = Vertex.withId(
                             $(this).closest(".vertex").attr("id")
                         );
                         vertex.readjustLabelWidth();
-                        triple_brain.vertex.updateLabel(vertex, vertex.text());
-                        freebaseStatic.handleIdentificationToServer(vertex, freebaseSuggestion);
+                        vertexService().updateLabel(vertex, vertex.text());
+                        api.handleIdentificationToServer(vertex, freebaseSuggestion);
                     });
             }
         );
 
-        eventBus.subscribe(
+        EventBus.subscribe(
             '/event/ui/graph/vertex/type/removed',
             function(event, vertex, removedType){
-                if (freebaseStatic.isFreebaseUri(removedType.uri())) {
-                    freebaseStatic.removeSuggestFeatureOnVertex(
+                if (api.isFreebaseUri(removedType.uri())) {
+                    api.removeSuggestFeatureOnVertex(
                         vertex
                     );
                 }
             }
         );
-
-    })(jQuery);
-
-}
+        function vertexService(){
+            return VertexService === undefined ?
+                require("triple_brain/mind_map/triple_brain.vertex") :
+                VertexService;
+        }
+        return api;
+    }
+);

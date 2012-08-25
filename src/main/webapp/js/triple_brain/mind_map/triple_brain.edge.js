@@ -1,62 +1,69 @@
-if (triple_brain.edge == undefined) {
-
-    (function($) {
-        var eventBus = triple_brain.event_bus;
-        triple_brain.edge = {
+define([
+    "require",
+    "jquery",
+    "triple_brain/triple_brain.config",
+    "triple_brain/triple_brain.event_bus",
+    "triple_brain/triple_brain.id_uri",
+    "triple_brain/mind_map/desktop/edge/triple_brain.ui.arrow_line"
+],
+    function(require, $, Config, EventBus, IdUriUtils, ArrowLine) {
+        var api = {
             add: function(sourceVertex, destinationVertex) {
-                var sourceVertexURI = triple_brain.id_uri.encodedUriFromGraphElementId(sourceVertex.getId());
-                var destinationVertexURI = triple_brain.id_uri.encodedUriFromGraphElementId(destinationVertex.getId());
+                var Edge = require("triple_brain/mind_map/desktop/edge/triple_brain.ui.edge");
+                var sourceVertexURI = IdUriUtils.encodedUriFromGraphElementId(sourceVertex.getId());
+                var destinationVertexURI = IdUriUtils.encodedUriFromGraphElementId(destinationVertex.getId());
                 var response = $.ajax({
                     type: 'POST',
-                    url: options.ws.app + '/service/edge/' + sourceVertexURI  + '/' + destinationVertexURI
+                    url: Config.links.app + '/service/edge/' + sourceVertexURI  + '/' + destinationVertexURI
                 }).success(function() {
-                    var responseURI = response.getResponseHeader("Location");
-                    var edgeJSON = {};
-                    edgeJSON.id = decodeURIComponent(
-                                    responseURI.substring(responseURI.lastIndexOf("/") + 1)
-                                   );
-                    var arrowLine = triple_brain.ui.arrow_line.ofSourceAndDestinationVertex(
-                        sourceVertex,
-                        destinationVertex
-                    );
-                    edgeJSON.arrowLineStartPoint = arrowLine.segment().startPoint;
-                    edgeJSON.arrowLineEndPoint = arrowLine.segment().endPoint;
+                        var responseURI = response.getResponseHeader("Location");
+                        var edgeJSON = {};
+                        edgeJSON.id = decodeURIComponent(
+                            responseURI.substring(responseURI.lastIndexOf("/") + 1)
+                        );
+                        var arrowLine = ArrowLine.ofSourceAndDestinationVertex(
+                            sourceVertex,
+                            destinationVertex
+                        );
+                        edgeJSON.arrowLineStartPoint = arrowLine.segment().startPoint;
+                        edgeJSON.arrowLineEndPoint = arrowLine.segment().endPoint;
 
-                    edgeJSON.source_vertex_id = triple_brain.id_uri.uriFromGraphElementId(
-                                        sourceVertex.getId());
-                    edgeJSON.destination_vertex_id = triple_brain.id_uri.uriFromGraphElementId(
-                                            destinationVertex.getId());
+                        edgeJSON.source_vertex_id = IdUriUtils.uriFromGraphElementId(
+                            sourceVertex.getId());
+                        edgeJSON.destination_vertex_id = IdUriUtils.uriFromGraphElementId(
+                            destinationVertex.getId());
 
-                    edgeJSON.label = triple_brain.ui.edge.EMPTY_LABEL;
-                    eventBus.publish(
-                        '/event/ui/graph/relation/added/',
-                        edgeJSON
-                    );
-                })
-             },
+                        edgeJSON.label = Edge.EMPTY_LABEL;
+                        EventBus.publish(
+                            '/event/ui/graph/relation/added/',
+                            edgeJSON
+                        );
+                    })
+            },
             remove: function(edge) {
                 $.ajax({
                     type: 'DELETE',
-                    url: options.ws.app + '/service/edge/' + triple_brain.id_uri.encodedUriFromGraphElementId(edge.id())
+                    url: Config.links.app + '/service/edge/' + IdUriUtils.encodedUriFromGraphElementId(edge.id())
                 }).success(function() {
-                    eventBus.publish(
-                        '/event/ui/graph/relation/deleted',
-                        edge
-                    )
-                })
-             },
-             updateLabel: function(edge, label) {
+                        EventBus.publish(
+                            '/event/ui/graph/relation/deleted',
+                            edge
+                        )
+                    })
+            },
+            updateLabel: function(edge, label) {
                 $.ajax({
                     type: 'POST',
-                    url: options.ws.app + '/service/edge/label/' + triple_brain.id_uri.encodedUriFromGraphElementId(edge.id()) + '?label=' + label,
+                    url: Config.links.app + '/service/edge/label/' + IdUriUtils.encodedUriFromGraphElementId(edge.id()) + '?label=' + label,
                     dataType: 'json'
                 }).success(function() {
-                    eventBus.publish(
-                        '/event/ui/graph/edge/label/updated',
-                        edge
-                    );
-                })
-             }
+                        EventBus.publish(
+                            '/event/ui/graph/edge/label/updated',
+                            edge
+                        );
+                    })
+            }
         }
-    })(jQuery);
-}
+        return api;
+    }
+);

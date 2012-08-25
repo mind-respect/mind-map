@@ -1,50 +1,53 @@
 /**
  * Copyright Mozilla Public License 1.1
  */
-
-if (triple_brain.ui.graph == undefined) {
-    (function ($) {
-        var eventBus = triple_brain.event_bus;
-        var point = triple_brain.point;
-        var graphStatic = triple_brain.ui.graph = {};
+define([
+    "require",
+    "jquery",
+    "triple_brain/mind_map/triple_brain.point",
+    "triple_brain/triple_brain.event_bus",
+    "triple_brain/mind_map/desktop/triple_brain.ui.all"
+],
+    function (require, $, Point, EventBus, UiUtils ) {
+        var api = {};
         var graphForTraversal;
-
-        graphStatic.addHTML = function (html) {
+        api.addHTML = function (html) {
             $("#drawn_graph").append(html);
         };
-        graphStatic.removeAllArrowLines = function () {
-            triple_brain.ui.all.clearCanvas(
-                triple_brain.ui.graph.canvas()
+        api.removeAllArrowLines = function () {
+            UiUtils.clearCanvas(
+                api.canvas()
             );
-            triple_brain.ui.vertex.redrawAllPropertiesIndicator();
+            var Vertex = require("triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex");
+            Vertex.redrawAllPropertiesIndicator();
         };
-        graphStatic.canvas = function () {
+        api.canvas = function () {
             return $("#graphCanvas");
         };
-        graphStatic.canvasContext = function () {
-            return triple_brain.ui.graph.canvas()[0].getContext("2d");
+        api.canvasContext = function () {
+            return api.canvas()[0].getContext("2d");
         };
-        graphStatic.canvasToMoveAVertex = function () {
+        api.canvasToMoveAVertex = function () {
             return $("#canvasToMoveVertex");
         };
-        graphStatic.canvasContextToMoveAVertex = function () {
-            return triple_brain.ui.graph.canvasToMoveAVertex()[0].getContext("2d");
+        api.canvasContextToMoveAVertex = function () {
+            return api.canvasToMoveAVertex()[0].getContext("2d");
         };
-        graphStatic.offset = function () {
-            return point.fromCoordinates(
+        api.offset = function () {
+            return Point.fromCoordinates(
                 $("body").width() / 2,
                 $("body").height() / 2
             )
         };
 
-        graphStatic.reset = function(){
+        api.reset = function(){
             if(graphForTraversal != undefined){
                 graphForTraversal.invalidate();
             }
             graphForTraversal = new crow.Graph();
         }
 
-        graphStatic.numberOfEdgesBetween = function(vertexA, vertexB){
+        api.numberOfEdgesBetween = function(vertexA, vertexB){
             return graphForTraversal.findGoal({
                 start: graphForTraversal.getNode(vertexA.getId()),
                 goal: graphForTraversal.getNode(vertexB.getId()),
@@ -52,26 +55,26 @@ if (triple_brain.ui.graph == undefined) {
             }).length;
         };
 
-        eventBus.subscribe(
+        EventBus.subscribe(
             '/event/ui/html/vertex/created/',
             function(event, vertex){
                 addVertexToGraphTraversal(vertex);
             }
         );
 
-        eventBus.subscribe(
+        EventBus.subscribe(
             '/event/ui/graph/vertex_and_relation/added/',
             function(event, triple){
                 addVertexToGraphTraversal(triple.destinationVertex());
                 connectVerticesOfEdgeForTraversal(triple.edge());
-                eventBus.publish(
+                EventBus.publish(
                     "/event/graph_traversal/triple_added",
                     triple
                 );
             }
         );
 
-        eventBus.subscribe(
+        EventBus.subscribe(
             '/event/ui/graph/relation/deleted',
             function(event, edge){
                 removeEdgeInGraphForTraversal(edge);
@@ -87,13 +90,13 @@ if (triple_brain.ui.graph == undefined) {
             );
             removeVertexInConnections(destinationVertex, sourceVertex.connections);
             removeVertexInConnections(sourceVertex, destinationVertex.connections);
-            eventBus.publish(
+            EventBus.publish(
                 "/event/graph_traversal/edge/removed",
                 [edge]
             );
         }
 
-        eventBus.subscribe(
+        EventBus.subscribe(
             '/event/ui/graph/vertex/deleted/',
             function(event, vertex){
                 removeVertexInGraphForTraversal(vertex);
@@ -135,11 +138,11 @@ if (triple_brain.ui.graph == undefined) {
         }
 
 
-        eventBus.subscribe(
+        EventBus.subscribe(
             '/event/ui/html/edge/created/',
             function(event, edge){
                 connectVerticesOfEdgeForTraversal(edge);
-                eventBus.publish(
+                EventBus.publish(
                     "/event/graph_traversal/edge_added",
                     edge
                 );
@@ -161,6 +164,6 @@ if (triple_brain.ui.graph == undefined) {
                 destinationVertex
             );
         }
-    })(jQuery);
-
-}
+        return api;
+    }
+)

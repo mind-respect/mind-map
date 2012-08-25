@@ -1,32 +1,38 @@
 /*
  * Copyright Mozilla Public License 1.1
  */
-if (triple_brain.ui.triple == undefined) {
-    (function ($) {
-        var tripleStatic = triple_brain.ui.triple= {};
-        tripleStatic.fromServerStatementAndNewVertexPosition = function (tripleJson, newVertexPosition) {
-            var vertexCreatorStatic = triple_brain.ui.vertex_creator;
+define([
+    "require",
+    "triple_brain/mind_map/desktop/edge/triple_brain.ui.edge_creator",
+    "triple_brain/triple_brain.id_uri",
+    "triple_brain/mind_map/desktop/edge/triple_brain.ui.arrow_line"
+],
+    function (require, EdgeCreator, IdUriUtils, ArrowLine) {
+        var api = {};
+        api.fromServerStatementAndNewVertexPosition = function (tripleJson, newVertexPosition) {
+            var VertexCreator = require("triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex_creator");
+            var Vertex = require("triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex");
             tripleJson.end_vertex.position = {
                 x : newVertexPosition.x,
                 y : newVertexPosition.y
             };
-            var destinationVertex = vertexCreatorStatic.withArrayOfJsonHavingAbsolutePosition(
+            var destinationVertex = VertexCreator.withArrayOfJsonHavingAbsolutePosition(
                 tripleJson.end_vertex
             ).create();
 
-            var sourceVertex = triple_brain.ui.vertex.withId(
-                triple_brain.id_uri.graphElementIdFromUri(
+            var sourceVertex = Vertex.withId(
+                IdUriUtils.graphElementIdFromUri(
                     tripleJson.source_vertex.id
                 )
             );
-            var arrowLine = triple_brain.ui.arrow_line.ofSourceAndDestinationVertex(
+            var arrowLine = ArrowLine.ofSourceAndDestinationVertex(
                 sourceVertex,
                 destinationVertex
             );
             var arrowLineSegment = arrowLine.segment();
             tripleJson.edge.arrowLineStartPoint = arrowLineSegment.startPoint;
             tripleJson.edge.arrowLineEndPoint = arrowLineSegment.endPoint;
-            var edge = triple_brain.ui.edge_creator.withArrayOfJsonHavingAbsolutePosition(
+            var edge = EdgeCreator.withArrayOfJsonHavingAbsolutePosition(
                 tripleJson.edge
             ).create();
             return new Triple(
@@ -47,5 +53,6 @@ if (triple_brain.ui.triple == undefined) {
                 return destinationVertex;
             }
         }
-    })(jQuery);
-}
+        return api;
+    }
+);

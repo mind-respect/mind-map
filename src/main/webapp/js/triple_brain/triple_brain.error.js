@@ -2,10 +2,10 @@
 /**
  * Copyright Mozilla Public License 1.1
  */
-
-if (triple_brain.error == undefined) {
-    (function($) {
-        triple_brain.error = {
+define(
+    [],
+    function() {
+        return {
             withName : function(name){
                 new Error(name, "");
             },
@@ -27,5 +27,4 @@ if (triple_brain.error == undefined) {
             }
         }
 
-    })(jQuery);
-}
+    })

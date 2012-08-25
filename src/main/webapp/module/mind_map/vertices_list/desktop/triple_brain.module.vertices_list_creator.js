@@ -1,57 +1,62 @@
 /**
  * Copyright Mozilla Public License 1.1
  */
-if (triple_brain.module.vertices_list_creator == undefined) {
-    (function($) {
-        triple_brain.module.vertices_list_creator = {
+define([
+    "require",
+    "jquery",
+    "module/mind_map/vertices_list/desktop/triple_brain.template.vertices_list",
+    "triple_brain/mind_map/desktop/triple_brain.ui.left_panel",
+    "module/mind_map/vertices_list/desktop/triple_brain.template.vertices_list"
+],
+    function(require, $, Template, LeftPanel, VerticesList) {
+        var api = {
             create : function(){
                 return new VerticesListCreator().create()
             }
         };
-
         function VerticesListCreator(){
-            var html = triple_brain.template.vertices_list['panel'].merge();
+            var html = Template['panel'].merge();
             this.create = function(){
-                triple_brain.ui.left_panel.addHTML(html);
+                VerticesList = require("module/mind_map/vertices_list/desktop/triple_brain.module.vertices_list");
+                LeftPanel.addHTML(html);
                 addTitle();
                 addSortMenu();
                 addVerticesList();
                 $('.sort-vertices-btn').css('padding', '0px');
                 $('#sort-by-label').click(function (e) {
-                    var verticesList = triple_brain.module.vertices_list.get();
+                    var verticesList = VerticesList.get();
                     verticesList.sortByLabel();
                 });
                 $('#sort-by-min-number-of-edges-from-center-vertex').click(function (e) {
-                    var verticesList = triple_brain.module.vertices_list.get();
+                    var verticesList = VerticesList.get();
                     verticesList.sortByDistanceFromCentralVertex();
                 });
-                return triple_brain.module.vertices_list.get();
+                return VerticesList.get();
             }
 
             function addTitle(){
                 $(html).append(
-                    triple_brain.template.vertices_list['title'].merge()
+                    Template['title'].merge()
                 )
             }
             function addSortMenu(){
-                var sortMenu = triple_brain.template.vertices_list['sort_menu'].merge();
+                var sortMenu = Template['sort_menu'].merge();
                 $(html).append(sortMenu);
-                var title = triple_brain.template.vertices_list['sort_menu_title'].merge();
+                var title = Template['sort_menu_title'].merge();
                 $(sortMenu).append(title);
-                var optionsList = triple_brain.template.vertices_list['options_list'].merge();
+                var optionsList = Template['options_list'].merge();
                 $(sortMenu).append(optionsList);
-                var sortByLabelOption = triple_brain.template.vertices_list['sort_by_label_option'].merge();
+                var sortByLabelOption = Template['sort_by_label_option'].merge();
                 $(optionsList).append(sortByLabelOption);
-                var sortByDistanceFromCentralVertex = triple_brain.template.vertices_list['sort_by_distance_from_central_vertex'].merge();
+                var sortByDistanceFromCentralVertex = Template['sort_by_distance_from_central_vertex'].merge();
                 $(optionsList).append(sortByDistanceFromCentralVertex);
             }
             function addVerticesList(){
                 $(html).append(
-                    triple_brain.template.vertices_list['vertices_list'].merge()
+                    Template['vertices_list'].merge()
                 );
             }
-
         }
-
-    })(jQuery);
-}
+        return api;
+    }
+);

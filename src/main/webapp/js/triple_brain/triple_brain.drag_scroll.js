@@ -2,10 +2,14 @@
  * Copyright Mozilla Public License 1.1
  */
 
-if (triple_brain.drag_scroll== undefined) {
-    (function($) {
-        var point = triple_brain.point;
-        triple_brain.drag_scroll = {
+define([
+    "require",
+    "jquery",
+    "triple_brain/mind_map/triple_brain.point",
+    "triple_brain/mind_map/triple_brain.segment"
+],
+    function(require, $, Point, Segment) {
+        return {
             start: function() {
                 $("#graphCanvas").mousedown(function(){
                     var graphCanvas = this;
@@ -13,7 +17,7 @@ if (triple_brain.drag_scroll== undefined) {
                     var mousePosition;
                     $(graphCanvas).mousemove(moveHandler);
                     function moveHandler(moveEvent){
-                        mousePosition = point.fromCoordinates(
+                        mousePosition = Point.fromCoordinates(
                             moveEvent.pageX,
                             moveEvent.pageY
                         );
@@ -30,9 +34,9 @@ if (triple_brain.drag_scroll== undefined) {
                     var lastPosition;
                     function scroll(){
                         lastPosition = lastPosition === undefined ?
-                            point.fromPoint(mousePosition) :
+                            Point.fromPoint(mousePosition) :
                             lastPosition;
-                        var movementSegment = segment.withStartAndEndPoint(
+                        var movementSegment = Segment.withStartAndEndPoint(
                             lastPosition,
                             mousePosition
                         );
@@ -43,11 +47,11 @@ if (triple_brain.drag_scroll== undefined) {
                             distanceToScroll = distanceToScroll.multiply(1);
                             return distanceToScroll;
                         }
-                        var scrollPosition = point.fromCoordinates(
+                        var scrollPosition = Point.fromCoordinates(
                             $("body").scrollLeft(),
                             $("body").scrollTop()
                         )
-                        var newScrollPosition = point.sumOfPoints(
+                        var newScrollPosition = Point.sumOfPoints(
                             distanceToScroll,
                             scrollPosition
                         );
@@ -55,7 +59,7 @@ if (triple_brain.drag_scroll== undefined) {
                             newScrollPosition.x,
                             newScrollPosition.y
                         );
-                        lastPosition = point.sumOfPoints(
+                        lastPosition = Point.sumOfPoints(
                             distanceToScroll,
                             mousePosition
                         );
@@ -63,5 +67,6 @@ if (triple_brain.drag_scroll== undefined) {
                 });
             }
         };
-    })(jQuery);
-}
+    }
+);
+

@@ -1,29 +1,30 @@
-if (triple_brain.id_uri == undefined) {
-
-    var baseUrl= "http://www.triple_brain.org/"
-    var idSeparator = "_id_separator_";
-
-    triple_brain.id_uri = {
-
-        baseURI : "http://www.triple_brain.org/",
-        encodeUri : function(uri){
+define([
+    "jquery",
+    "triple_brain/mind_map/triple_brain.user",
+    "jquery/jquery.url"
+],
+    function ($, userService) {
+        var api = {};
+        api.baseUri = "http://www.triple_brain.org/";
+        api.encodeUri = function (uri) {
             return encodeURIComponent(
                 uri
             );
-        },
-        graphElementIdFromUri: function(uri){
+        };
+        api.graphElementIdFromUri = function (uri) {
             var segments = $.url(uri).segment();
             var graphElementId = segments[1];
             return graphElementId;
-        },
-        encodedUriFromGraphElementId : function(id){
+        };
+        api.encodedUriFromGraphElementId = function (id) {
             return encodeURIComponent(
-                triple_brain.id_uri.uriFromGraphElementId(id)
+                api.uriFromGraphElementId(id)
             );
-        },
-        uriFromGraphElementId: function(id){
-            var username = triple_brain.authenticatedUser.user_name;
-            return baseUrl + username + "/" + id;
-        }
+        };
+        api.uriFromGraphElementId = function (id) {
+            var username = userService.authenticatedUserInCache().user_name;
+            return api.baseUri + username + "/" + id
+        };
+        return api;
     }
-}
+);

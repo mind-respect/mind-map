@@ -1,19 +1,21 @@
-if (triple_brain.suggestion == undefined) {
-    (function ($) {
-       var freebaseStatic = triple_brain.freebase;
-        var externalResourceStatic = triple_brain.external_resource;
-        var suggestionStatic = triple_brain.suggestion = {};
-        suggestionStatic.fromFreebaseSuggestion = function (freebaseSuggestion) {
+define([
+    "jquery",
+    "triple_brain/mind_map/triple_brain.freebase",
+    "triple_brain/mind_map/triple_brain.external_resource"
+],
+    function ($, Freebase, ExternalResource) {
+        var api = {};
+        api.fromFreebaseSuggestion = function (freebaseSuggestion) {
             return new Suggestion(
-                externalResourceStatic.fromFreebaseSuggestion(
+                ExternalResource.fromFreebaseSuggestion(
                     freebaseSuggestion
                 ),
-                freebaseStatic.freebaseIdToURI(
+                Freebase.freebaseIdToURI(
                     freebaseSuggestion.expected_type
                 )
             );
         }
-        suggestionStatic.formatAllForServer = function (suggestions) {
+        api.formatAllForServer = function (suggestions) {
             var suggestionsFormatedForServer = [];
             $.each(suggestions, function(){
                 var suggestion = this;
@@ -22,21 +24,21 @@ if (triple_brain.suggestion == undefined) {
             return $.toJSON(suggestionsFormatedForServer);
         }
 
-        suggestionStatic.fromJsonOfServer = function (suggestion) {
+        api.fromJsonOfServer = function (suggestion) {
             return new Suggestion(
-                externalResourceStatic.withUriAndLabel(
+                ExternalResource.withUriAndLabel(
                     suggestion.typeUri,
                     suggestion.label
                 ),
                 suggestion.domain_uri
             );
         }
-        suggestionStatic.fromJsonArrayOfServer = function (jsonSuggestions) {
+        api.fromJsonArrayOfServer = function (jsonSuggestions) {
             var suggestions = [];
             $.each(jsonSuggestions, function(){
                 var jsonSuggestion = this;
                 suggestions.push(
-                    suggestionStatic.fromJsonOfServer(
+                    api.fromJsonOfServer(
                         jsonSuggestion
                     )
                 )
@@ -63,6 +65,6 @@ if (triple_brain.suggestion == undefined) {
                 }
             }
         }
-
-    })(jQuery);
-}
+        return api;
+    }
+);

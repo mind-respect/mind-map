@@ -1,39 +1,48 @@
 /**
  * Copyright Mozilla Public License 1.1
  */
-if (triple_brain.ui.vertex == undefined) {
-    (function ($) {
-        var propertiesIndicatorStatic = triple_brain.ui.vertex_hidden_neighbor_properties_indicator;
-        var vertexStatic = triple_brain.ui.vertex = {};
-        var vertexService = triple_brain.vertex;
+define([
+    "jquery",
+    "triple_brain/mind_map/desktop/vertex/hidden_neighbor_properties/triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
+    "triple_brain/mind_map/triple_brain.vertex",
+    "triple_brain/triple_brain.id_uri",
+    "triple_brain/mind_map/triple_brain.point",
+    "triple_brain/triple_brain.error",
+    "triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex_segments",
+    "triple_brain/mind_map/desktop/edge/triple_brain.ui.edge",
+    "triple_brain/mind_map/desktop/triple_brain.ui.vertex_and_edge_common",
+    "triple_brain/triple_brain.event_bus"
+],
+    function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, Edge, VertexAndEdgeCommon, EventBus) {
+        var api = {};
 
-        vertexStatic.EMPTY_LABEL = "a concept";
+        api.EMPTY_LABEL = "a concept";
 
-        vertexStatic.withHtml = function (html) {
+        api.withHtml = function (html) {
             return new Vertex(html);
         };
-        vertexStatic.withId = function (id) {
-            return vertexStatic.withHtml($("#" + id));
+        api.withId = function (id) {
+            return api.withHtml($("#" + id));
         };
-        vertexStatic.withUri = function (uri) {
-            return vertexStatic.withId(
-                triple_brain.id_uri.graphElementIdFromUri(uri)
+        api.withUri = function (uri) {
+            return api.withId(
+                IdUriUtils.graphElementIdFromUri(uri)
             );
         };
-        vertexStatic.centralVertex = function () {
-            return vertexStatic.withHtml(
+        api.centralVertex = function () {
+            return api.withHtml(
                 $('.center-vertex')
             );
         };
-        vertexStatic.allVertices = function () {
+        api.allVertices = function () {
             var vertices = new Array();
             $(".vertex").each(function () {
-                vertices.push(vertexStatic.withHtml(this));
+                vertices.push(api.withHtml(this));
             });
             return vertices;
         };
-        vertexStatic.redrawAllPropertiesIndicator = function () {
-            $.each(vertexStatic.allVertices(), function () {
+        api.redrawAllPropertiesIndicator = function () {
+            $.each(api.allVertices(), function () {
                 var vertex = this;
                 vertex.buildHiddenNeighborPropertiesIndicator();
             })
@@ -41,11 +50,11 @@ if (triple_brain.ui.vertex == undefined) {
 
         function Vertex(html) {
             var thisVertex = this;
-            var segments = triple_brain.ui.vertex_segments.withHTMLVertex(html);
+            var segments = VertexSegments.withHTMLVertex(html);
             this._initialize = function () {
             };
             this.position = function () {
-                return triple_brain.point.fromCoordinates(
+                return Point.fromCoordinates(
                     $(html).offset().left,
                     $(html).offset().top
                 );
@@ -56,7 +65,7 @@ if (triple_brain.ui.vertex == undefined) {
             this.intersectionPointWithSegment = function (segmentToCompare) {
                 if (!this.intersectsWithSegment(segmentToCompare)) {
                     throw(
-                        triple_brain.error.withName(
+                        Error.withName(
                             "no_intersection"
                         )
                         );
@@ -71,7 +80,7 @@ if (triple_brain.ui.vertex == undefined) {
                 this.showCenterButton();
             }
             this.setAsCentral = function () {
-                var centralVertex = triple_brain.ui.vertex.centralVertex();
+                var centralVertex = api.centralVertex();
                 centralVertex.setAsNonCentral()
                 $(html).addClass('center-vertex');
                 this.hideCenterButton();
@@ -83,7 +92,7 @@ if (triple_brain.ui.vertex == undefined) {
                 $(html).data('nameOfHiddenProperties', nameOfHiddenProperties);
             }
             this.buildHiddenNeighborPropertiesIndicator = function () {
-                var propertiesIndicator = propertiesIndicatorStatic.withVertex(this);
+                var propertiesIndicator = PropertiesIndicator.withVertex(this);
                 propertiesIndicator.build();
             }
             this.numberOfHiddenConnectedVertices = function () {
@@ -99,7 +108,7 @@ if (triple_brain.ui.vertex == undefined) {
                 return $(html).height();
             }
             this.centerPoint = function () {
-                return triple_brain.point.fromCoordinates(
+                return Point.fromCoordinates(
                     $(html).offset().left + $(html).width() / 2,
                     $(html).offset().top + $(html).height() / 2
                 )
@@ -133,7 +142,7 @@ if (triple_brain.ui.vertex == undefined) {
                 var connectedHTMLEdges = $(".edge[source-vertex-id=" + thisVertex.getId() + "],[destination-vertex-id=" + thisVertex.getId() + "]");
                 var connectedEdges = new Array();
                 for (var i = 0; i < connectedHTMLEdges.length; i++) {
-                    connectedEdges.push(triple_brain.ui.edge.withHtml(connectedHTMLEdges[i]));
+                    connectedEdges.push(Edge.withHtml(connectedHTMLEdges[i]));
                 }
                 return connectedEdges;
             }
@@ -144,7 +153,7 @@ if (triple_brain.ui.vertex == undefined) {
                 $(this.label()).focus();
             }
             this.readjustLabelWidth = function () {
-                triple_brain.ui.vertex_and_edge_common.adjustTextFieldWidthToNumberOfChars(
+                VertexAndEdgeCommon.adjustTextFieldWidthToNumberOfChars(
                     this.label()
                 );
                 thisVertex.adjustWidth();
@@ -153,7 +162,7 @@ if (triple_brain.ui.vertex == undefined) {
                 return $(this.label()).val();
             }
             this.hasDefaultText = function () {
-                return $(this.label()).val() == triple_brain.ui.vertex.EMPTY_LABEL;
+                return $(this.label()).val() == api.EMPTY_LABEL;
             }
             this.applyStyleOfDefaultText = function () {
                 $(this.label()).addClass('when-default-graph-element-text');
@@ -175,7 +184,7 @@ if (triple_brain.ui.vertex == undefined) {
                 for (var i = 0; i < connectedEdges.length; i++) {
                     connectedEdges[i].remove();
                 }
-                triple_brain.ui.edge.redrawAllEdges();
+                Edge.redrawAllEdges();
             },
                 this.remove = function () {
                     $(html).remove();
@@ -188,7 +197,7 @@ if (triple_brain.ui.vertex == undefined) {
                 suggestions.length > 0 ?
                     thisVertex.showSuggestionButton() :
                     thisVertex.hideSuggestionButton();
-                eventBus.publish(
+                EventBus.publish(
                     '/event/ui/graph/vertex/suggestions/updated',
                     [thisVertex, suggestions]
                 );
@@ -199,11 +208,11 @@ if (triple_brain.ui.vertex == undefined) {
                     thisVertex.getTypes()
                 );
                 $(thisVertex).data("types", types);
-                vertexService.setSuggestions(
+                Vertex.setSuggestions(
                     thisVertex,
                     []
                 );
-                eventBus.publish(
+                EventBus.publish(
                     '/event/ui/graph/vertex/type/removed',
                     [thisVertex, type]
                 );
@@ -211,7 +220,7 @@ if (triple_brain.ui.vertex == undefined) {
 
             this.removeIdenficationInArray = function (identificationToRemove, array) {
                 var i = 0;
-                $.each(array, function(){
+                $.each(array, function () {
                     var identification = this;
                     if (identification.uri() == identificationToRemove.uri()) {
                         array.splice(i, 1);
@@ -233,7 +242,7 @@ if (triple_brain.ui.vertex == undefined) {
                 var types = thisVertex.getTypes();
                 types.push(type);
                 thisVertex.setTypes(types);
-                eventBus.publish(
+                EventBus.publish(
                     '/event/ui/graph/vertex/type/added',
                     [thisVertex, type]
                 );
@@ -243,12 +252,12 @@ if (triple_brain.ui.vertex == undefined) {
                 var sameAsCollection = thisVertex.getSameAs()
                 sameAsCollection.push(sameAs);
                 thisVertex.setSameAs(sameAsCollection);
-                eventBus.publish(
+                EventBus.publish(
                     '/event/ui/graph/vertex/same_as/added',
                     [thisVertex, sameAs]
                 );
             }
-            this.setSameAs = function(sameAsCollection){
+            this.setSameAs = function (sameAsCollection) {
                 $(html).data('sameAs', sameAsCollection);
             }
             this.removeSameAs = function (sameAsToRemove) {
@@ -257,11 +266,11 @@ if (triple_brain.ui.vertex == undefined) {
                     thisVertex.getTypes()
                 );
                 $(thisVertex).data("sameAs", sameAs);
-                vertexService.setSuggestions(
+                Vertex.setSuggestions(
                     thisVertex,
                     []
                 );
-                eventBus.publish(
+                EventBus.publish(
                     '/event/ui/graph/vertex/same_as/removed',
                     [thisVertex, sameAsToRemove]
                 );
@@ -298,7 +307,7 @@ if (triple_brain.ui.vertex == undefined) {
                 var intuitiveWidthBuffer = 7;
                 $(html).css(
                     "width",
-                    $(menu()).width()
+                    menuWidth()
                         + $(this.label()).width()
                         + intuitiveWidthBuffer +
                         "px"
@@ -334,26 +343,29 @@ if (triple_brain.ui.vertex == undefined) {
                 return $(html).find('.menu');
             }
 
+            function menuWidth() {
+                return $(menu()).find("ul").width() * 4;
+            }
+
             function centerButton() {
                 return $(html).find('.center');
             }
+
             crow.ConnectedNode.apply(this, [thisVertex.getId()]);
         }
 
         Vertex.prototype = new crow.ConnectedNode();
 
-        var eventBus = triple_brain.event_bus;
-
-        eventBus.subscribe(
+        EventBus.subscribe(
             '/event/ui/graph/vertex/label/updated',
             function (event, vertex) {
-                triple_brain.ui.vertex_and_edge_common.highlightLabel(
+                VertexAndEdgeCommon.highlightLabel(
                     vertex.getId()
                 );
             }
         );
 
-        eventBus.subscribe(
+        EventBus.subscribe(
             '/event/ui/graph/vertex/deleted/',
             function (event, vertex) {
                 vertex.removeConnectedEdges();
@@ -361,11 +373,12 @@ if (triple_brain.ui.vertex == undefined) {
             }
         );
 
-        eventBus.subscribe(
+        EventBus.subscribe(
             '/event/ui/graph/vertex_and_relation/added/',
             function (event, triple) {
                 triple.destinationVertex().focus();
             }
         );
-    })(jQuery);
-}
+        return api;
+    }
+);

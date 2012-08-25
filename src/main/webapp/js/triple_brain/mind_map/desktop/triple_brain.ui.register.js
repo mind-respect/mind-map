@@ -1,21 +1,23 @@
 /**
  * Copyright Mozilla Public License 1.1
  */
-if (triple_brain.ui.register == undefined) {
-    (function($) {
-        var eventBus = triple_brain.event_bus;
-        triple_brain.ui.register = {};
-        $(document).ready(function(){
+define([
+    "jquery",
+    "triple_brain/triple_brain.event_bus",
+    "triple_brain/mind_map/triple_brain.user"
+],
+    function ($, eventBus, userService) {
+        $(document).ready(function () {
             $('#error-panel').hide();
             $('#register-form')[0].reset();
-            $('#register-button').click(function() {
-                triple_brain.user.register(
+            $('#register-button').click(function () {
+                userService.register(
                     formAsJSon()
                 );
             });
         });
 
-        function formAsJSon(){
+        function formAsJSon() {
             var formAsJson = {};
             formAsJson.user_name = $("#register-user_name").val();
             formAsJson.email = $("#register-email").val();
@@ -26,14 +28,14 @@ if (triple_brain.ui.register == undefined) {
 
         eventBus.subscribe(
             '/event/ui/user/registration/success',
-            function() {
+            function () {
                 $('#register-form, #error-panel').hide();
             }
         );
 
         eventBus.subscribe(
             '/event/ui/users/registration/errors',
-            function(event, errors) {
+            function (event, errors) {
                 $('.notification.error').hide();
                 for (var i in errors) {
                     $('#' + errors[i].reason).show();
@@ -41,5 +43,7 @@ if (triple_brain.ui.register == undefined) {
                 $('#error-panel').show();
             }
         );
-    })(jQuery);
-}
+        return {};
+    }
+)
+

@@ -2,11 +2,20 @@
  * Copyright Mozilla Public License 1.1
  */
 
-if (triple_brain.ui.identification_menu == undefined) {
-    (function ($) {
-        var externalResourceStatic = triple_brain.external_resource;
-        var vertexService = triple_brain.vertex;
-        triple_brain.ui.identification_menu = {
+define([
+    "jquery",
+    "triple_brain/mind_map/triple_brain.external_resource",
+    "triple_brain/mind_map/triple_brain.vertex",
+    "triple_brain/mind_map/desktop/triple_brain.template",
+    "triple_brain/mind_map/desktop/triple_brain.ui.graph",
+    "triple_brain/triple_brain.id_uri",
+    "triple_brain/mind_map/triple_brain.point",
+    "triple_brain/mind_map/triple_brain.freebase",
+    "jquery/freebase_suggest.min"
+],
+    function ($, ExternalResource, VertexService, Template, Graph, IdUriUtils, Point, Freebase) {
+
+        var api = {
             ofVertex:function (vertex) {
                 return new IdentificationMenu(vertex);
             }
@@ -20,8 +29,8 @@ if (triple_brain.ui.identification_menu == undefined) {
                 addExistingIdentifications();
             }
             this.create = function () {
-                html = triple_brain.template['identification_menu'].merge();
-                triple_brain.ui.graph.addHTML(html);
+                html = Template['identification_menu'].merge();
+                Graph.addHTML(html);
                 buildMenu();
                 $(html).click(function (e) {
                     e.stopPropagation();
@@ -54,18 +63,18 @@ if (triple_brain.ui.identification_menu == undefined) {
 
             function addTitle() {
                 $(html).append(
-                    triple_brain.template['identification_menu_explanation_title'].merge()
+                    Template['identification_menu_explanation_title'].merge()
                 );
             }
 
             function addIndications() {
                 $(html).append(
-                    triple_brain.template['identification_menu_indications'].merge()
+                    Template['identification_menu_indications'].merge()
                 );
             }
 
             function addExistingIdentifications() {
-                var identitiesList = triple_brain.template['identification_existing_identities'].merge();
+                var identitiesList = Template['identification_existing_identities'].merge();
                 $(html).append(
                     identitiesList
                 );
@@ -77,8 +86,8 @@ if (triple_brain.ui.identification_menu == undefined) {
             }
 
             function addIdentificationAsListElement(identification) {
-                var identificationListElement = triple_brain.template['identification_existing_identity'].merge({
-                    identification_uri:triple_brain.id_uri.encodeUri(identification.uri()),
+                var identificationListElement = Template['identification_existing_identity'].merge({
+                    identification_uri:IdUriUtils.encodeUri(identification.uri()),
                     type_label:identification.label()
                 });
                 $(identificationListElement).data("identification", identification);
@@ -95,8 +104,8 @@ if (triple_brain.ui.identification_menu == undefined) {
                     );
                     var vertex = $(semanticMenu).data("vertex");
                     var removeIdentification = identification.getType() == "type" ?
-                        vertexService.removeType :
-                        vertexService.removeSameAs;
+                        VertexService.removeType :
+                        VertexService.removeSameAs;
                     removeIdentification.call(
                         this,
                         vertex,
@@ -117,12 +126,12 @@ if (triple_brain.ui.identification_menu == undefined) {
             }
 
             function position() {
-                var menuOffset = triple_brain.point.fromCoordinates(
+                var menuOffset = Point.fromCoordinates(
                     vertex.width(),
                     vertex.height() / 2 - $(html).height() / 2
                 )
 
-                var menuPosition = triple_brain.point.sumOfPoints(
+                var menuPosition = Point.sumOfPoints(
                     vertex.position(),
                     menuOffset
                 );
@@ -139,7 +148,7 @@ if (triple_brain.ui.identification_menu == undefined) {
             }
 
             function addIdentificationTextField() {
-                var identificationTextField = triple_brain.template[
+                var identificationTextField = Template[
                     'identification_textfield'
                     ].merge();
                 $(html).append(identificationTextField);
@@ -149,7 +158,7 @@ if (triple_brain.ui.identification_menu == undefined) {
                     .bind("fb-select", function (e, freebaseSuggestion) {
                         var semanticMenu = $(this).closest('.peripheral-menu');
                         var vertex = $(semanticMenu).data("vertex");
-                        triple_brain.freebase.handleIdentificationToServer(
+                        Freebase.handleIdentificationToServer(
                             vertex,
                             freebaseSuggestion,
                             function (vertex, identification) {
@@ -160,5 +169,6 @@ if (triple_brain.ui.identification_menu == undefined) {
                 return identificationTextField;
             }
         }
-    })(jQuery);
-}
+        return api;
+    }
+);

@@ -1,54 +1,59 @@
-if (triple_brain.vertex == undefined) {
-    (function ($) {
-        var eventBus = triple_brain.event_bus;
-        var idUriStatic = triple_brain.id_uri;
-        var vertexService = triple_brain.vertex = {};
-        vertexService.addRelationAndVertexAtPositionToVertex = function (vertex, newVertexPosition, successCallback) {
+define([
+    "jquery",
+    "triple_brain/triple_brain.config",
+    "triple_brain/triple_brain.event_bus",
+    "triple_brain/triple_brain.id_uri",
+    "triple_brain/mind_map/triple_brain.ui.triple",
+    "triple_brain/mind_map/triple_brain.suggestion"
+],
+    function ($, Config, EventBus, IdUriUtils, Triple, Suggestion) {
+        var api = {};
+        api.addRelationAndVertexAtPositionToVertex = function (vertex, newVertexPosition, successCallback) {
             $.ajax({
                 type:'POST',
-                url:options.ws.app + '/service/vertex/' + idUriStatic.encodedUriFromGraphElementId(vertex.getId()),
+                url:Config.links.app+ '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()),
                 dataType:'json'
             }).success(function (tripleJson) {
                     if (successCallback != undefined) {
                         successCallback.call(this, tripleJson);
                     }
-                    var triple = triple_brain.ui.triple.fromServerStatementAndNewVertexPosition(
+                    var triple = Triple.fromServerStatementAndNewVertexPosition(
                         tripleJson,
                         newVertexPosition
                     )
-                    eventBus.publish(
+                    EventBus.publish(
                         '/event/ui/graph/vertex_and_relation/added/',
                         [triple]
                     );
                 })
         };
-        vertexService.remove = function (vertex) {
+        api.remove = function (vertex) {
             $.ajax({
                 type:'DELETE',
-                url:options.ws.app + '/service/vertex/' + idUriStatic.encodedUriFromGraphElementId(vertex.getId())
+                url:Config.links.app+ '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId())
             }).success(function () {
-                    eventBus.publish(
+                    EventBus.publish(
                         '/event/ui/graph/vertex/deleted/',
                         vertex
                     )
                 })
         };
-        vertexService.updateLabel = function (vertex, label) {
+        api.updateLabel = function (vertex, label) {
             $.ajax({
                 type:'POST',
-                url:options.ws.app + '/service/vertex/' + idUriStatic.encodedUriFromGraphElementId(vertex.getId()) + '/label?label=' + label,
+                url:Config.links.app+ '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()) + '/label?label=' + label,
                 dataType:'json'
             }).success(function () {
-                    eventBus.publish(
+                    EventBus.publish(
                         '/event/ui/graph/vertex/label/updated',
                         vertex
                     )
                 })
         };
-        vertexService.addType = function (vertex, type, successCallback) {
+        api.addType = function (vertex, type, successCallback) {
             $.ajax({
                 type:'POST',
-                url:options.ws.app + '/service/vertex/' + idUriStatic.encodedUriFromGraphElementId(vertex.getId()) + '/type',
+                url:Config.links.app+ '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()) + '/type',
                 dataType:'json',
                 data:type.serverFormat(),
                 contentType:'application/json;charset=utf-8'
@@ -63,19 +68,19 @@ if (triple_brain.vertex == undefined) {
                     }
                 })
         };
-        vertexService.removeIdentification = function(vertex, identification, successCallback){
+        api.removeIdentification = function(vertex, identification, successCallback){
             $.ajax({
                 type:'DELETE',
-                url:options.ws.app +
+                url:Config.links.app+
                     '/service/vertex/' +
-                    idUriStatic.encodedUriFromGraphElementId(vertex.getId())
+                    IdUriUtils.encodedUriFromGraphElementId(vertex.getId())
                     + '/identification/'
-                    + idUriStatic.encodeUri(identification.uri()),
+                    + IdUriUtils.encodeUri(identification.uri()),
                 dataType:'json'
             }).success(successCallback);
         };
-        vertexService.removeType = function (vertex, typeToRemove, successCallback) {
-            vertexService.removeIdentification(
+        api.removeType = function (vertex, typeToRemove, successCallback) {
+            api.removeIdentification(
                 vertex,
                 typeToRemove,
                 function(){
@@ -90,10 +95,10 @@ if (triple_brain.vertex == undefined) {
                 }
             );
         };
-        vertexService.addSameAs = function (vertex, sameAs, successCallback) {
+        api.addSameAs = function (vertex, sameAs, successCallback) {
             $.ajax({
                 type:'POST',
-                url:options.ws.app + '/service/vertex/' + idUriStatic.encodedUriFromGraphElementId(vertex.getId()) + '/same_as',
+                url:Config.links.app+ '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()) + '/same_as',
                 dataType:'json',
                 data:sameAs.serverFormat(),
                 contentType:'application/json;charset=utf-8'
@@ -108,8 +113,8 @@ if (triple_brain.vertex == undefined) {
                     }
                 })
         };
-        vertexService.removeSameAs = function (vertex, sameAs, successCallback) {
-            vertexService.removeIdentification(
+        api.removeSameAs = function (vertex, sameAs, successCallback) {
+            api.removeIdentification(
                 vertex,
                 sameAs,
                 function(){
@@ -124,18 +129,17 @@ if (triple_brain.vertex == undefined) {
                 }
             );
         };
-        vertexService.setSuggestions = function (vertex, suggestions) {
+        api.setSuggestions = function (vertex, suggestions) {
             $.ajax({
                 type:'POST',
-                url:options.ws.app + '/service/vertex/' + idUriStatic.encodedUriFromGraphElementId(vertex.getId()) + '/suggestions',
+                url:Config.links.app+ '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()) + '/suggestions',
                 dataType:'json',
-                data:triple_brain.suggestion.formatAllForServer(suggestions),
+                data:Suggestion.formatAllForServer(suggestions),
                 contentType:'application/json;charset=utf-8'
             }).success(function () {
                     vertex.setSuggestions(suggestions);
                 })
         };
-
-    })(jQuery);
-
-}
+        return api;
+    }
+);

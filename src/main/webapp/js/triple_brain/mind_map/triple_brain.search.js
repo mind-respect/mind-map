@@ -2,15 +2,18 @@
  * Copyright Mozilla Public License 1.1
  */
 
-if (triple_brain.search == undefined) {
-    (function($) {
-        triple_brain.search = {
-            search_for_auto_complete: function(searchText, successCallback) {
+define([
+    "jquery",
+    "triple_brain/triple_brain.config"
+],
+    function ($, config) {
+        return {
+            search_for_auto_complete:function (searchText, successCallback) {
                 $.ajax({
-                    type: 'GET',
-                    url: options.ws.app + '/service/search/vertices/auto_complete/' + searchText
+                    type:'GET',
+                    url:config.links.app + '/service/search/vertices/auto_complete/' + searchText
                 }).success(successCallback)
             }
-        }
-    })(jQuery);
-}
+        };
+    }
+);

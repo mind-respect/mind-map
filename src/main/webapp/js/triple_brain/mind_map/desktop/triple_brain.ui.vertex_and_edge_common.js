@@ -1,7 +1,8 @@
-if (triple_brain.ui.vertex_and_edge_common == undefined) {
-
-    (function($) {
-        triple_brain.ui.vertex_and_edge_common = {
+define([
+    "jquery"
+],
+    function($){
+        return {
             adjustTextFieldWidthToNumberOfChars: function(textField) {
                 var nbCharacter = $(textField).val().length;
                 var charWidth = $(textField).css('font-size').substring(0, 2);
@@ -16,7 +17,5 @@ if (triple_brain.ui.vertex_and_edge_common == undefined) {
                 $("#" + id + " input[type=text]:first").animate({color:'black'}, 2000);
             }
         }
-
-    })(jQuery);
-
-}
+    }
+);

@@ -1,23 +1,24 @@
-if (triple_brain.ui.login == undefined) {
-    (function($) {
-        triple_brain.ui.login = {};
+define([
+    "jquery",
+    "triple_brain/triple_brain.config"
+],
+    function($, config) {
         $(document).ready(function(){
             $('#login-button').click(function(e) {
                 e.preventDefault();
                 $.ajax({
                     type: 'GET',
                     data: $('#login-form').serialize(),
-                    url: options.ws.app + '/service/users/authenticate'
+                    url: config.links.app + '/service/users/authenticate'
                 }).success(
-                    function(result) {
+                    function() {
                         window.location = "/";
-                    }).error(function(xhr) {
+                    }).error(function() {
                         $('#error-panel').show();
                     });
             });
             $('#error-panel').hide();
             $('#login-form')[0].reset();
         });
-
-    })(jQuery);
-}
+        return {};
+    });

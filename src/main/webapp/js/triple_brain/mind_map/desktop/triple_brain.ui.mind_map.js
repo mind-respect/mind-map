@@ -1,11 +1,20 @@
-if (triple_brain.ui.mind_map == undefined) {
-    var point = triple_brain.point;
-    var segment = triple_brain.segment;
-    var users = triple_brain.user;
-    (function ($) {
-        var eventBus = triple_brain.event_bus;
-        var dragScroll = triple_brain.drag_scroll;
-        triple_brain.ui.mind_map = {
+define(
+    [
+        "jquery",
+        "triple_brain/mind_map/triple_brain.user",
+        "triple_brain/triple_brain.event_bus",
+        "triple_brain/triple_brain.drag_scroll",
+        "triple_brain/mind_map/desktop/triple_brain.drawn_graph",
+        "triple_brain/mind_map/desktop/triple_brain.ui.graph",
+        "triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex",
+        "triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex_creator",
+        "triple_brain/mind_map/desktop/edge/triple_brain.ui.edge_creator",
+        "triple_brain/mind_map/triple_brain.search",
+        "triple_brain/mind_map/desktop/triple_brain.template",
+        "jquery/jquery-ui.min"
+    ],
+    function($, UserService, EventBus, DragScroll, DrawnGraph, Graph, Vertex, VertexCreator, EdgeCreator, SearchService, Template){
+        var api = {
             offset:function () {
                 var offset = {};
                 var leftMargin = 150;
@@ -13,97 +22,97 @@ if (triple_brain.ui.mind_map == undefined) {
                 offset.left = $("#left-panel").width() + leftMargin;
                 offset.top = topMargin;
                 return offset;
-            }
-        };
-        $(document).ready(function(){
-            $("body").hide();
-            users.isAuthenticated(
-                callBackWhenIsAuthenticated,
-                function(){
-                    window.location = "login.html";
-                }
-            )
-            function callBackWhenIsAuthenticated(){
-                $("body").show();
-                handleIfNotAuthentifiedRedirectToAuthPage();
-                handleDisconnectButton();
-                var sliderDefaultValue = 5;
-                $("#sub-vertices-depth-index").val(sliderDefaultValue);
-                $("#sub-vertices-depth-slider").slider({
-                    value:sliderDefaultValue,
-                    min:0,
-                    max:10,
-                    step:1,
-                    orientation:"horizontal",
-                    slide:function (event, ui) {
-                        $("#sub-vertices-depth-index").val(ui.value);
-                    },
-                    change:function (event, ui) {
-                        $("#sub-vertices-depth-index").val(ui.value);
-                        if (event.originalEvent) {
-                            triple_brain.drawn_graph.getWithNewCentralVertex(
-                                triple_brain.ui.vertex.centralVertex()
+            },
+            start : function(){
+                $(document).ready(function(){
+                    $("body").hide();
+                    UserService.isAuthenticated(
+                        callBackWhenIsAuthenticated,
+                        function(){
+                            window.location = "login.html";
+                        }
+                    )
+                    function callBackWhenIsAuthenticated(){
+                        $("body").show();
+                        handleIfNotAuthentifiedRedirectToAuthPage();
+                        handleDisconnectButton();
+                        var sliderDefaultValue = 5;
+                        $("#sub-vertices-depth-index").val(sliderDefaultValue);
+                        $("#sub-vertices-depth-slider").slider({
+                            value:sliderDefaultValue,
+                            min:0,
+                            max:10,
+                            step:1,
+                            orientation:"horizontal",
+                            slide:function (event, ui) {
+                                $("#sub-vertices-depth-index").val(ui.value);
+                            },
+                            change:function (event, ui) {
+                                $("#sub-vertices-depth-index").val(ui.value);
+                                if (event.originalEvent) {
+                                    DrawnGraph.getWithNewCentralVertex(
+                                        Vertex.centralVertex()
+                                    );
+                                }
+                            }
+                        });
+                        UserService.authenticatedUser(function(){
+                            DrawnGraph.getWithDefaultCentralVertex();
+                        });
+
+                        $("#redraw-graph-btn").click(function (e) {
+                            DrawnGraph.getWithNewCentralVertex(
+                                Vertex.centralVertex()
                             );
+                        });
+                        prepareSearchFeature();
+                        function prepareSearchFeature(){
+                            $("#vertex-search-input").autocomplete({
+                                source : function(request, response){
+                                    SearchService.search_for_auto_complete(
+                                        request.term,
+                                        function(searchResults){
+                                            response($.map(searchResults, function(searchResult){
+                                                return {
+                                                    label : searchResult.label,
+                                                    value : searchResult.label,
+                                                    id : searchResult.id
+                                                }
+                                            }));
+                                        }
+                                    );
+                                },
+                                select : function(event, ui){
+                                    var vertexUri = ui.item.id;
+                                    DrawnGraph.getFromNewCentralVertexUri(
+                                        vertexUri
+                                    );
+                                }
+                            })
                         }
                     }
                 });
-                triple_brain.user.authenticatedUser(function(authenticatedUser){
-                    triple_brain.authenticatedUser = authenticatedUser;
-                    triple_brain.drawn_graph.getWithDefaultCentralVertex();
-                });
-
-                $("#redraw-graph-btn").click(function (e) {
-                    triple_brain.drawn_graph.getWithNewCentralVertex(
-                        triple_brain.ui.vertex.centralVertex()
-                    );
-                });
-                prepareSearchFeature();
-                function prepareSearchFeature(){
-                    $("#vertex-search-input").autocomplete({
-                        source : function(request, response){
-                            triple_brain.search.search_for_auto_complete(
-                                request.term,
-                                function(searchResults){
-                                    response($.map(searchResults, function(searchResult){
-                                        return {
-                                            label : searchResult.label,
-                                            value : searchResult.label,
-                                            id : searchResult.id
-                                        }
-                                    }));
-                                }
-                            );
-                        },
-                        select : function(event, ui){
-                            var vertexUri = ui.item.id;
-                            triple_brain.drawn_graph.getFromNewCentralVertexUri(
-                                vertexUri
-                            );
-                        }
-                    })
-                }
             }
-        });
+        };
 
-        eventBus.subscribe(
+        EventBus.subscribe(
             '/event/ui/graph/drawing_info/updated/',
             function (event, drawnGraph, centralVertexId) {
-                triple_brain.ui.graph.reset();
+                Graph.reset();
                 $("#drawn_graph").empty();
                 drawnGraph.bounding_box_width = $("body").width();
                 drawnGraph.bounding_box_height = $("body").height();
-                var graphCanvas = triple_brain.template['graph_canvas'].merge(drawnGraph);
+                var graphCanvas = Template['graph_canvas'].merge(drawnGraph);
                 $("#drawn_graph").append(graphCanvas);
-
-                triple_brain.ui.vertex_creator.createWithArrayOfJsonHavingRelativePosition(
+                VertexCreator.createWithArrayOfJsonHavingRelativePosition(
                     drawnGraph.vertices
                 );
 
-                triple_brain.ui.edge_creator.createWithArrayOfJsonHavingRelativePosition(
+                EdgeCreator.createWithArrayOfJsonHavingRelativePosition(
                     drawnGraph.edges
                 );
 
-                var centralVertex = triple_brain.ui.vertex.withId(centralVertexId);
+                var centralVertex = Vertex.withId(centralVertexId);
                 centralVertex.setAsCentral();
                 centralVertex.scrollTo();
 
@@ -111,8 +120,8 @@ if (triple_brain.ui.mind_map == undefined) {
                     var outOfVertexMenus = $('.peripheral-menu');
                     $(outOfVertexMenus).remove();
                 });
-                dragScroll.start();
-                eventBus.publish('/event/ui/graph/drawn');
+                DragScroll.start();
+                EventBus.publish('/event/ui/graph/drawn');
             }
         );
 
@@ -125,10 +134,13 @@ if (triple_brain.ui.mind_map == undefined) {
         }
         function handleDisconnectButton(){
             $("#disconnect-btn").click(function(){
-                users.logout(function(){
+                UserService.logout(function(){
                     window.location = "login.html";
                 })
             })
         }
-    })(jQuery);
-}
+        return api;
+    }
+);
+
+

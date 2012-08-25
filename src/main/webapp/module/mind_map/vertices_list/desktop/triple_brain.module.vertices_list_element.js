@@ -1,9 +1,12 @@
 /**
  * Copyright Mozilla Public License 1.1
  */
-if (triple_brain.module.vertices_list_element == undefined) {
-    (function($) {
-        triple_brain.module.vertices_list_element = {
+define([
+    "jquery",
+    "triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex"
+],
+    function($, Vertex) {
+        var api = {
             withHtml : function(html){
                 return new VerticesListElement(html);
             },
@@ -14,11 +17,10 @@ if (triple_brain.module.vertices_list_element == undefined) {
                 return new VerticesListElement(htmlOfVertexListElement);
             }
         };
-
         function VerticesListElement(html){
 
             this.associatedVertex = function(){
-                return triple_brain.ui.vertex.withId(
+                return Vertex.withId(
                     $(html).data('vertexId')
                 );
             }
@@ -53,6 +55,6 @@ if (triple_brain.module.vertices_list_element == undefined) {
                 $(containerWithLabel()).removeClass('when-default-graph-element-text');
             }
         }
-
-    })(jQuery);
-}
+        return api;
+    }
+);

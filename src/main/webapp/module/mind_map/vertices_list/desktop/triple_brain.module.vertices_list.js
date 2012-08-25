@@ -1,23 +1,30 @@
 /**
  * Copyright Mozilla Public License 1.1
  */
-if (triple_brain.module.vertices_list == undefined) {
-    (function ($) {
-        var vertexStatic = triple_brain.ui.vertex;
-        var verticesListStatic = triple_brain.module.vertices_list = {};
+define([
+    "jquery",
+    "triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex",
+    "module/mind_map/vertices_list/desktop/triple_brain.module.vertices_list_creator",
+    "module/mind_map/vertices_list/desktop/triple_brain.module.vertices_list_element_creator",
+    "module/mind_map/vertices_list/desktop/triple_brain.module.vertices_list_element",
+    "triple_brain/triple_brain.event_bus",
+    "jquery/jquery.tinysort.min"
+],
+    function ($, Vertex, VerticesListCreator, VerticesListElementCreator, VerticesListElement, EventBus) {
+        var api = {};
         var SORT_TYPE_LABEL = 1;
         var SORT_TYPE_DISTANCE_FROM_CENTRAL_VERTEX = 2;
-        verticesListStatic.get = function () {
+        api.get = function () {
             return new VerticesList(
                 $("#vertices-list")
             );
         };
-        verticesListStatic.ifExistsRebuild = function(){
-            if(verticesListStatic.exists()){
-                verticesListStatic.get().rebuild();
+        api.ifExistsRebuild = function(){
+            if(api.exists()){
+                api.get().rebuild();
             }
         }
-        verticesListStatic.exists = function () {
+        api.exists = function () {
             return $("#vertices-list-panel").length > 0;
         };
         function VerticesList(html) {
@@ -50,19 +57,19 @@ if (triple_brain.module.vertices_list == undefined) {
 
             this.rebuild = function () {
                 this.empty();
-                $.each(vertexStatic.allVertices(), function () {
+                $.each(Vertex.allVertices(), function () {
                     thisVerticesList.buildForAVertex(
                         this
                     );
                 });
-                var verticesList = verticesListStatic.get();
+                var verticesList = api.get();
                 verticesList.sort();
             }
 
             this.buildForAVertex = function (vertex) {
-                triple_brain.module.vertices_list_element_creator.withVertexAndCentralVertex(
+                VerticesListElementCreator.withVertexAndCentralVertex(
                     vertex,
-                    vertexStatic.centralVertex()
+                    Vertex.centralVertex()
                 ).create();
             }
 
@@ -82,7 +89,7 @@ if (triple_brain.module.vertices_list == undefined) {
                 var verticesListElement = [];
                 $.each($(html).find(".vertices-list-element"),function(){
                     verticesListElement.push(
-                        triple_brain.module.vertices_list_element.withHtml(
+                        VerticesListElement.withHtml(
                             this
                         )
                     );
@@ -123,28 +130,27 @@ if (triple_brain.module.vertices_list == undefined) {
             }
         }
 
-        var eventBus = triple_brain.event_bus;
-        eventBus.subscribe(
+        EventBus.subscribe(
             '/event/ui/graph/drawing_info/about_to/update',
             function(){
-                if(triple_brain.module.vertices_list.exists()){
-                    triple_brain.module.vertices_list.get().empty();
+                if(api.exists()){
+                    api.get().empty();
                 }
-                eventBus.unsubscribe(
+                EventBus.unsubscribe(
                     "/event/graph_traversal/edge_added",
-                    verticesListStatic.ifExistsRebuild
+                    api.ifExistsRebuild
                 );
             }
         )
 
-        eventBus.subscribe(
+        EventBus.subscribe(
             '/event/ui/html/vertex/created/',
             function (event, vertex) {
                 $(vertex.label()).on("keyup blur focus", function () {
-                    var vertex = vertexStatic.withHtml(
+                    var vertex = Vertex.withHtml(
                         $(this).closest(".vertex")
                     );
-                    var verticesListElement = triple_brain.module.vertices_list_element.withVertex(
+                    var verticesListElement = VerticesListElement.withVertex(
                         vertex
                     );
                     verticesListElement.setLabel(vertex.text());
@@ -157,34 +163,35 @@ if (triple_brain.module.vertices_list == undefined) {
             }
         );
 
-        eventBus.subscribe(
-            '/event/ui/graph/drawing_info/updated/',
+        EventBus.subscribe(
+            '/event/ui/graph/drawn',
             function () {
-                var verticesList = triple_brain.module.vertices_list.exists() ?
-                    triple_brain.module.vertices_list.get() :
-                    triple_brain.module.vertices_list_creator.create();
+                var verticesList = api.exists() ?
+                    api.get() :
+                    VerticesListCreator.create();
                 verticesList.rebuild();
-                eventBus.subscribe(
+                EventBus.subscribe(
                     "/event/graph_traversal/edge_added",
-                    verticesListStatic.ifExistsRebuild
+                    api.ifExistsRebuild
                 );
             }
         );
 
-        eventBus.subscribe(
+        EventBus.subscribe(
             '/event/ui/graph/vertex/deleted/',
             function (event, vertex) {
-                var verticesListElement = triple_brain.module.vertices_list_element.withVertex(vertex);
+                var verticesListElement = VerticesListElement.withVertex(vertex);
                 verticesListElement.remove();
-                var verticesList = triple_brain.module.vertices_list.get();
+                var verticesList = api.get();
                 verticesList.rebuild();
             }
         );
-        eventBus.subscribe(
+        EventBus.subscribe(
             "/event/graph_traversal/edge/removed",
             function(){
-                verticesListStatic.get().rebuild();
+                api.get().rebuild();
             }
         );
-    })(jQuery);
-}
+        return api;
+    }
+);

@@ -2,25 +2,28 @@
  * Copyright Mozilla Public License 1.1
  */
 
-if (triple_brain.external_resource == undefined) {
-    (function ($) {
-        var freebaseStatic = triple_brain.freebase;
-        var externalResourceStatic = triple_brain.external_resource = {};
-        externalResourceStatic.withUriAndLabel = function(uri, label){
+define([
+    "require",
+    "jquery"
+],
+    function (require, $) {
+        var api = {};
+        api.withUriAndLabel = function(uri, label){
             return new ExternalResource(
                 uri,
                 label
             );
         }
-        externalResourceStatic.fromFreebaseSuggestion = function(freebaseSuggestion){
+        api.fromFreebaseSuggestion = function(freebaseSuggestion){
+            var Freebase = require("triple_brain/mind_map/triple_brain.freebase");
             return new ExternalResource(
-                freebaseStatic.freebaseIdToURI(
+                Freebase.freebaseIdToURI(
                     freebaseSuggestion.id
                 ),
                 freebaseSuggestion.name
             )
         }
-        externalResourceStatic.fromServerJson = function(serverJson){
+        api.fromServerJson = function(serverJson){
             return new ExternalResource(
                 serverJson.uri,
                 serverJson.label
@@ -48,5 +51,6 @@ if (triple_brain.external_resource == undefined) {
                 return thisExternalResource.type;
             }
         }
-    })(jQuery);
-}
+        return api;
+    }
+);

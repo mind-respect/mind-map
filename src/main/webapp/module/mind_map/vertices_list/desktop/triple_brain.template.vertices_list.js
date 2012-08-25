@@ -1,11 +1,14 @@
 /**
  * Copyright Mozilla Public License 1.1
  */
-if (triple_brain.template.vertices_list == undefined) {
-    (function($) {
-        triple_brain.template.vertices_list = {
+define([
+    "jquery",
+    "jquery/jquery.nano"
+],
+    function($) {
+        var api = {
             add: function(name, html) {
-                triple_brain.template.vertices_list[name] = {
+                api[name] = {
                     merge: function(obj) {
                         return $($.nano(html, obj || null));
                     }
@@ -13,7 +16,7 @@ if (triple_brain.template.vertices_list == undefined) {
             }
         };
         function add(name, html){
-            triple_brain.template.vertices_list.add(name, html);
+            api.add(name, html);
         }
         add('panel', "<div id='vertices-list-panel'></div>");
         add('title', "<h2>Concepts on page</h2>");
@@ -27,8 +30,9 @@ if (triple_brain.template.vertices_list == undefined) {
         add('vertices_list', "<ul id='vertices-list'></ul>");
 
         add('list_element', '<li class="vertices-list-element"><span class="min-number-of-edges-from-center-vertex"></span><span class="label"></span></li>');
-    })(jQuery);
-}
+        return api;
+    }
+);
 
 
 

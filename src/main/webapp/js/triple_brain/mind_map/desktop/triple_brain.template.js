@@ -1,17 +1,20 @@
-if (triple_brain.template == undefined) {
-    (function($) {
-        triple_brain.template = {
-            add: function(name, html) {
-                triple_brain.template[name] = {
-                    merge: function(obj) {
+define([
+    "jquery",
+    "jquery/jquery.nano"
+],
+    function ($) {
+        var api = {
+            add:function (name, html) {
+                api[name] = {
+                    merge:function (obj) {
                         return $($.nano(html, obj || null));
                     }
                 }
             }
         };
 
-        function add(name, html){
-            triple_brain.template.add(name, html);
+        function add(name, html) {
+            api.add(name, html);
         }
 
         add('graph_canvas', '<canvas id="graphCanvas" width="{bounding_box_width}" height="{bounding_box_height}"></canvas>');
@@ -58,6 +61,6 @@ if (triple_brain.template == undefined) {
 
         add('auto_complete_suggestion_list', '<ul class="auto-complete-suggestion"></ul>');
         add('auto_complete_suggestion_list_element', '<li>{name}</li>');
-
-    })(jQuery);
-}
+        return api;
+    }
+);
