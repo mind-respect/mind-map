@@ -14,17 +14,13 @@ define([
                 url:Config.links.app+ '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()),
                 dataType:'json'
             }).success(function (tripleJson) {
-                    if (successCallback != undefined) {
-                        successCallback.call(this, tripleJson);
-                    }
                     var triple = Triple.fromServerStatementAndNewVertexPosition(
                         tripleJson,
                         newVertexPosition
                     )
-                    EventBus.publish(
-                        '/event/ui/graph/vertex_and_relation/added/',
-                        [triple]
-                    );
+                    if (successCallback != undefined) {
+                        successCallback.call(this, triple);
+                    }
                 })
         };
         api.remove = function (vertex) {

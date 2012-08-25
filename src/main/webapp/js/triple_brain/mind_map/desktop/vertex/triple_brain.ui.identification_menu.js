@@ -26,7 +26,7 @@ define([
             var html;
             this.rebuildList = function () {
                 $(listHtml()).remove();
-                addExistingIdentifications();
+                addIdentifications();
             }
             this.create = function () {
                 html = Template['identification_menu'].merge();
@@ -49,7 +49,7 @@ define([
 
             function buildMenu() {
                 addTitle();
-                addExistingIdentifications();
+                addIdentifications();
                 addIndications();
                 position();
                 var identificationTextField = addIdentificationTextField();
@@ -73,7 +73,7 @@ define([
                 );
             }
 
-            function addExistingIdentifications() {
+            function addIdentifications() {
                 var identitiesList = Template['identification_existing_identities'].merge();
                 $(html).append(
                     identitiesList

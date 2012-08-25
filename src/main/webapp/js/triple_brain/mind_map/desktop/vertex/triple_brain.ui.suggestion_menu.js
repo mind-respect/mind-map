@@ -9,9 +9,10 @@ define([
     "triple_brain/mind_map/desktop/triple_brain.ui.graph",
     "triple_brain/mind_map/triple_brain.point",
     "triple_brain/mind_map/triple_brain.external_resource",
-    "triple_brain/mind_map/triple_brain.vertex"
+    "triple_brain/mind_map/triple_brain.vertex",
+    "triple_brain/mind_map/triple_brain.edge"
 ],
-    function($, Freebase, Template, Graph, Point, ExternalResource, VertexService){
+    function ($, Freebase, Template, Graph, Point, ExternalResource, VertexService, EdgeService) {
         var api = {
             ofVertex:function (vertex) {
                 return new SuggestionMenu(vertex);
@@ -60,8 +61,8 @@ define([
                 $.each(vertex.suggestions(), function () {
                     var suggestion = this;
                     var htmlSuggestion = Template['suggestion'].merge({
-                        domain_id : Freebase.idInFreebaseURI(suggestion.domainUri()),
-                        label : suggestion.label()
+                        domain_id:Freebase.idInFreebaseURI(suggestion.domainUri()),
+                        label:suggestion.label()
                     });
                     $(htmlSuggestion).draggable();
                     $(suggestionsList).append(htmlSuggestion);
@@ -74,13 +75,22 @@ define([
                         VertexService.addRelationAndVertexAtPositionToVertex(
                             vertex,
                             newVertexPosition,
-                            function (tripleJson) {
-                                tripleJson.edge.label = $(currentSuggestion).html();
+                            function (triple) {
+                                var edgeLabel = $(currentSuggestion).html();
+                                EdgeService.updateLabel(
+                                    triple.edge(),
+                                    edgeLabel
+                                );
+                                triple.edge().setText(edgeLabel);
                                 var typeId = $(currentSuggestion).attr('type-id');
                                 var typeUri = Freebase.freebaseIdToURI(typeId);
-                                tripleJson.end_vertex.type = ExternalResource.withUriAndLabel(
+                                var type = ExternalResource.withUriAndLabel(
                                     typeUri,
                                     $(currentSuggestion).text()
+                                );
+                                VertexService.addType(
+                                    triple.destinationVertex(),
+                                    type
                                 );
                             }
                         );
@@ -111,6 +121,7 @@ define([
                 return menuPosition.y < 10;
             }
         }
+
         return api;
     }
 );

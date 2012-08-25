@@ -115,9 +115,6 @@ define([
                 var connectedNode = graphForTraversal.getNode(connection.id);
                 removeVertexInConnections(vertex, connectedNode.connections);
             });
-            graphForTraversal.nodes.splice(
-                i,1
-            );
         }
         function removeVertexInConnections(vertex, connections){
             for(var j in connections){

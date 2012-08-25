@@ -106,6 +106,7 @@ define([
                     "type":typeId
                 })
                     .bind("fb-select", function (e, freebaseSuggestion) {
+                        Vertex = require("triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex");
                         var vertex = Vertex.withId(
                             $(this).closest(".vertex").attr("id")
                         );

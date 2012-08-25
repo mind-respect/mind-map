@@ -39,10 +39,15 @@ define([
                 return label;
             }
             this.serverFormat = function(){
-                return $.toJSON({
+                return $.toJSON(
+                    thisExternalResource.jsonFormat()
+                );
+            }
+            this.jsonFormat = function(){
+                return {
                     uri : thisExternalResource.uri(),
                     label : thisExternalResource.label()
-                });
+                }
             }
             this.setType = function(type){
                 thisExternalResource.type = type;
