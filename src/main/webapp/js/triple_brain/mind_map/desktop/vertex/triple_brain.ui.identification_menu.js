@@ -6,14 +6,14 @@ define([
     "jquery",
     "triple_brain/mind_map/triple_brain.external_resource",
     "triple_brain/mind_map/triple_brain.vertex",
-    "triple_brain/mind_map/desktop/triple_brain.template",
+    "triple_brain/mind_map/desktop/triple_brain.mind-map_template",
     "triple_brain/mind_map/desktop/triple_brain.ui.graph",
     "triple_brain/triple_brain.id_uri",
     "triple_brain/mind_map/triple_brain.point",
     "triple_brain/mind_map/triple_brain.freebase",
     "jquery/freebase_suggest.min"
 ],
-    function ($, ExternalResource, VertexService, Template, Graph, IdUriUtils, Point, Freebase) {
+    function ($, ExternalResource, VertexService, MindMapTemplate, Graph, IdUriUtils, Point, Freebase) {
 
         var api = {
             ofVertex:function (vertex) {
@@ -29,7 +29,7 @@ define([
                 addIdentifications();
             }
             this.create = function () {
-                html = Template['identification_menu'].merge();
+                html = MindMapTemplate['identification_menu'].merge();
                 Graph.addHTML(html);
                 buildMenu();
                 $(html).click(function (e) {
@@ -63,18 +63,18 @@ define([
 
             function addTitle() {
                 $(html).append(
-                    Template['identification_menu_explanation_title'].merge()
+                    MindMapTemplate['identification_menu_explanation_title'].merge()
                 );
             }
 
             function addIndications() {
                 $(html).append(
-                    Template['identification_menu_indications'].merge()
+                    MindMapTemplate['identification_menu_indications'].merge()
                 );
             }
 
             function addIdentifications() {
-                var identitiesList = Template['identification_existing_identities'].merge();
+                var identitiesList = MindMapTemplate['identification_existing_identities'].merge();
                 $(html).append(
                     identitiesList
                 );
@@ -86,7 +86,7 @@ define([
             }
 
             function addIdentificationAsListElement(identification) {
-                var identificationListElement = Template['identification_existing_identity'].merge({
+                var identificationListElement = MindMapTemplate['identification_existing_identity'].merge({
                     identification_uri:IdUriUtils.encodeUri(identification.uri()),
                     type_label:identification.label()
                 });
@@ -148,7 +148,7 @@ define([
             }
 
             function addIdentificationTextField() {
-                var identificationTextField = Template[
+                var identificationTextField = MindMapTemplate[
                     'identification_textfield'
                     ].merge();
                 $(html).append(identificationTextField);

@@ -6,7 +6,7 @@ define([
     "require",
     "jquery",
     "triple_brain/mind_map/desktop/triple_brain.ui.graph",
-    "triple_brain/mind_map/desktop/triple_brain.template",
+    "triple_brain/mind_map/desktop/triple_brain.mind-map_template",
     "triple_brain/triple_brain.id_uri",
     "triple_brain/mind_map/desktop/triple_brain.ui.vertex_and_edge_common",
     "triple_brain/mind_map/triple_brain.edge",
@@ -14,7 +14,7 @@ define([
     "triple_brain/triple_brain.event_bus",
     "triple_brain/mind_map/triple_brain.segment"
 ],
-    function(require, $, Graph, Template, IdUriUtils, VertexAndEdgeCommon, EdgeService, ArrowLine, EventBus, Segment){
+    function(require, $, Graph, MindMapTemplate, IdUriUtils, VertexAndEdgeCommon, EdgeService, ArrowLine, EventBus, Segment){
         var api = {};
         api.createWithArrayOfJsonHavingRelativePosition = function(jsonArray){
             $.each(jsonArray, function(){
@@ -46,7 +46,7 @@ define([
             json.id = IdUriUtils.graphElementIdFromUri(json.id);
             json.source_vertex_id = IdUriUtils.graphElementIdFromUri(json.source_vertex_id);
             json.destination_vertex_id = IdUriUtils.graphElementIdFromUri(json.destination_vertex_id);
-            var html = Template['edge'].merge(json);
+            var html = MindMapTemplate['edge'].merge(json);
             this.create = function(){
                 Graph.addHTML(
                     html
@@ -69,7 +69,7 @@ define([
                 return edge;
             }
             function createLabel(){
-                var label = Template['edge_label'].merge(json);
+                var label = MindMapTemplate['edge_label'].merge(json);
                 $(html).append(label);
                 VertexAndEdgeCommon.adjustTextFieldWidthToNumberOfChars(
                     label
@@ -113,7 +113,7 @@ define([
             }
 
             function createMenu(){
-                var removeButton = Template['edge_remove_button'].merge();
+                var removeButton = MindMapTemplate['edge_remove_button'].merge();
                 $(html).append(removeButton);
 
                 removeButton.click(function() {

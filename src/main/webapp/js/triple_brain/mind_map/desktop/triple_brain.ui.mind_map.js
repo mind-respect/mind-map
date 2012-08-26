@@ -10,10 +10,10 @@ define(
         "triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex_creator",
         "triple_brain/mind_map/desktop/edge/triple_brain.ui.edge_creator",
         "triple_brain/mind_map/triple_brain.search",
-        "triple_brain/mind_map/desktop/triple_brain.template",
+        "triple_brain/mind_map/desktop/triple_brain.mind-map_template",
         "jquery/jquery-ui.min"
     ],
-    function($, UserService, EventBus, DragScroll, DrawnGraph, Graph, Vertex, VertexCreator, EdgeCreator, SearchService, Template){
+    function($, UserService, EventBus, DragScroll, DrawnGraph, Graph, Vertex, VertexCreator, EdgeCreator, SearchService, MindMapTemplate){
         var api = {
             offset:function () {
                 var offset = {};
@@ -102,7 +102,7 @@ define(
                 $("#drawn_graph").empty();
                 drawnGraph.bounding_box_width = $("body").width();
                 drawnGraph.bounding_box_height = $("body").height();
-                var graphCanvas = Template['graph_canvas'].merge(drawnGraph);
+                var graphCanvas = MindMapTemplate['graph_canvas'].merge(drawnGraph);
                 $("#drawn_graph").append(graphCanvas);
                 VertexCreator.createWithArrayOfJsonHavingRelativePosition(
                     drawnGraph.vertices

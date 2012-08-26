@@ -5,9 +5,9 @@ define([
     "triple_brain/mind_map/desktop/vertex/hidden_neighbor_properties/triple_brain.ui.vertex_hidden_neighbor_properties_indicator_dashed_segment",
     "triple_brain/mind_map/triple_brain.point",
     "triple_brain/mind_map/triple_brain.segment",
-    "triple_brain/mind_map/desktop/triple_brain.template"
+    "triple_brain/mind_map/desktop/triple_brain.mind-map_template"
 ],
-    function($, Edge, DashedSegment, Point, Segment, Template){
+    function($, Edge, DashedSegment, Point, Segment, MindMapTemplate){
         var api = {
             withVertex : function(vertex){
                 return new HiddenNeighborPropertiesIndicator(vertex);
@@ -34,7 +34,7 @@ define([
                     dashedSegment.draw();
                 }
 
-                var hiddenNeighborPropertiesContainer = Template[
+                var hiddenNeighborPropertiesContainer = MindMapTemplate[
                     'hidden_property_container'
                     ].merge();
                 $("#drawn_graph").append(hiddenNeighborPropertiesContainer);
@@ -50,15 +50,15 @@ define([
                         timer = null
                     }
                     timer = setTimeout(function() {
-                        var hiddenPropertyMenu = Template['hidden_property_menu'].merge();
+                        var hiddenPropertyMenu = MindMapTemplate['hidden_property_menu'].merge();
                         $("#drawn_graph").append(hiddenPropertyMenu);
-                        $(hiddenPropertyMenu).append(Template['hidden_properties_title'].merge());
-                        var propertyList = Template['hidden_property_list'].merge();
+                        $(hiddenPropertyMenu).append(MindMapTemplate['hidden_properties_title'].merge());
+                        var propertyList = MindMapTemplate['hidden_property_list'].merge();
                         $(hiddenPropertyMenu).append(propertyList);
                         var nameOfHiddenProperties = vertex.nameOfHiddenProperties();
                         $.each(nameOfHiddenProperties, function(){
                             var nameOfHiddenProperty = this;
-                            var property = Template[
+                            var property = MindMapTemplate[
                                 'hidden_property'
                                 ].merge({
                                     name : nameOfHiddenProperty == "" ? Edge.EMPTY_LABEL : nameOfHiddenProperty

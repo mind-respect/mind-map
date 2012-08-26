@@ -13,7 +13,7 @@ define([
     "triple_brain/mind_map/triple_brain.edge",
     "triple_brain/mind_map/triple_brain.suggestion",
     "triple_brain/triple_brain.id_uri",
-    "triple_brain/mind_map/desktop/triple_brain.template",
+    "triple_brain/mind_map/desktop/triple_brain.mind-map_template",
     "triple_brain/mind_map/triple_brain.external_resource",
     "triple_brain/mind_map/desktop/vertex/triple_brain.ui.identification_menu",
     "triple_brain/mind_map/desktop/vertex/triple_brain.ui.suggestion_menu",
@@ -23,7 +23,7 @@ define([
     "triple_brain/mind_map/triple_brain.point",
     "triple_brain/mind_map/triple_brain.segment",
     "jquery/jquery-ui.min"
-], function (require, $, EventBus, Graph, Vertex, VertexService, Edge, EdgeService, Suggestion, IdUriUtils, Template, ExternalResource, IdentificationMenu, SuggestionMenu, DrawnGraph, UiUtils, ArrowLine, Point, Segment) {
+], function (require, $, EventBus, Graph, Vertex, VertexService, Edge, EdgeService, Suggestion, IdUriUtils, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, DrawnGraph, UiUtils, ArrowLine, Point, Segment) {
         var api = {};
         api.createWithArrayOfJsonHavingRelativePosition = function (jsonArray) {
             $.each(jsonArray, function () {
@@ -50,18 +50,19 @@ define([
         function VertexCreator(json) {
             var Graph = require("triple_brain/mind_map/desktop/triple_brain.ui.graph");
             var IdUriUtils = require("triple_brain/triple_brain.id_uri");
-            var Template = require("triple_brain/mind_map/desktop/triple_brain.template");
+            var MindMapTemplate = require("triple_brain/mind_map/desktop/triple_brain.mind-map_template");
             var Vertex = require("triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex");
             var VertexService = require("triple_brain/mind_map/triple_brain.vertex");
             var Suggestion = require("triple_brain/mind_map/triple_brain.suggestion");
             var IdentificationMenu = require("triple_brain/mind_map/desktop/vertex/triple_brain.ui.identification_menu");
             var SuggestionMenu = require("triple_brain/mind_map/desktop/vertex/triple_brain.ui.suggestion_menu");
             json.id = IdUriUtils.graphElementIdFromUri(json.id);
-            var html = Template['vertex'].merge(json);
+            var html = MindMapTemplate['vertex'].merge(json);
             this.create = function () {
                 Graph.addHTML(
                     html
                 );
+                addMoveButton();
                 createMenu();
                 createLabel();
                 var vertex = vertexFacade();
@@ -127,7 +128,7 @@ define([
                 return vertex;
             }
             function createLabel() {
-                var labelContainer = Template['vertex_label_container'].merge(json);
+                var labelContainer = MindMapTemplate['vertex_label_container'].merge(json);
                 $(html).append(labelContainer);
                 var label = $(labelContainer).find("input[type='text']:first");
                 var vertex = vertexFacade();
@@ -174,20 +175,23 @@ define([
                 return labelContainer;
             }
 
+            function addMoveButton() {
+
+            }
             function createMenu() {
-                var vertexMenu = Template['vertex_menu'].merge();
+                var vertexMenu = MindMapTemplate['vertex_menu'].merge();
                 $(html).append(vertexMenu);
-                var menuListFirstCol = Template['vertex_menu_list_first_col'].merge();
-                var menuListSecondCol = Template['vertex_menu_list_second_col'].merge();
-                var menuListThirdCol = Template['vertex_menu_list_third_col'].merge();
+                var menuListFirstCol = MindMapTemplate['vertex_menu_list_first_col'].merge();
+                var menuListSecondCol = MindMapTemplate['vertex_menu_list_second_col'].merge();
+                var menuListThirdCol = MindMapTemplate['vertex_menu_list_third_col'].merge();
                 $(vertexMenu).append(menuListFirstCol);
                 $(vertexMenu).append(menuListSecondCol);
                 $(vertexMenu).append(menuListThirdCol);
 
-                var moveBtn = Template['vertex_move_button'].merge();
+                var moveBtn = MindMapTemplate['vertex_move_button'].merge();
                 $(menuListFirstCol).append(moveBtn);
 
-                var removeBtn = Template['vertex_remove_button'].merge();
+                var removeBtn = MindMapTemplate['vertex_remove_button'].merge();
                 $(menuListFirstCol).append(removeBtn);
 
                 removeBtn.click(function (event) {
@@ -198,7 +202,7 @@ define([
                     }
                 });
 
-                var whatIsThisBtn = Template['vertex_what_is_this_button'].merge();
+                var whatIsThisBtn = MindMapTemplate['vertex_what_is_this_button'].merge();
                 $(menuListSecondCol).append(whatIsThisBtn);
                 whatIsThisBtn.click(function (event) {
                     event.stopPropagation();
@@ -209,7 +213,7 @@ define([
                     );
                 });
 
-                var suggestionsBtn = Template['vertex_suggestion_button'].merge();
+                var suggestionsBtn = MindMapTemplate['vertex_suggestion_button'].merge();
                 $(menuListThirdCol).append(suggestionsBtn);
                 suggestionsBtn.click(function (event) {
                     event.stopPropagation();
@@ -223,7 +227,7 @@ define([
                 });
                 $(suggestionsBtn).hide();
 
-                var centerBtn = Template['vertex_center_button'].merge();
+                var centerBtn = MindMapTemplate['vertex_center_button'].merge();
                 $(menuListSecondCol).append(centerBtn);
                 centerBtn.click(function () {
                     DrawnGraph.getWithNewCentralVertex(
@@ -245,7 +249,7 @@ define([
             }
 
             function onDragStart(mouseDownEvent, ui) {
-                var canvasToMoveVertex = Template['canvas_to_move_vertex'].merge();
+                var canvasToMoveVertex = MindMapTemplate['canvas_to_move_vertex'].merge();
                 Graph.addHTML(
                     canvasToMoveVertex
                 );
@@ -348,7 +352,7 @@ define([
                 if (sourceVertex.isMouseOverLabel() || sourceVertex.isMouseOverMoveButton()) {
                     return;
                 }
-                var canvasForRelation = Template['canvas_for_relation'].merge();
+                var canvasForRelation = MindMapTemplate['canvas_for_relation'].merge();
                 var graphCanvas = Graph.canvas();
                 $(canvasForRelation).attr('width', $(graphCanvas).width());
                 $(canvasForRelation).attr('height', $(graphCanvas).height());

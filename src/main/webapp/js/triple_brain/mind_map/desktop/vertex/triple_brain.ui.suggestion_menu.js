@@ -5,14 +5,14 @@
 define([
     "jquery",
     "triple_brain/mind_map/triple_brain.freebase",
-    "triple_brain/mind_map/desktop/triple_brain.template",
+    "triple_brain/mind_map/desktop/triple_brain.mind-map_template",
     "triple_brain/mind_map/desktop/triple_brain.ui.graph",
     "triple_brain/mind_map/triple_brain.point",
     "triple_brain/mind_map/triple_brain.external_resource",
     "triple_brain/mind_map/triple_brain.vertex",
     "triple_brain/mind_map/triple_brain.edge"
 ],
-    function ($, Freebase, Template, Graph, Point, ExternalResource, VertexService, EdgeService) {
+    function ($, Freebase, MindMapTemplate, Graph, Point, ExternalResource, VertexService, EdgeService) {
         var api = {
             ofVertex:function (vertex) {
                 return new SuggestionMenu(vertex);
@@ -23,7 +23,7 @@ define([
             var suggestionMenu = this;
             var html;
             this.create = function () {
-                html = Template['suggestions_menu'].merge();
+                html = MindMapTemplate['suggestions_menu'].merge();
                 Graph.addHTML(
                     html
                 );
@@ -43,24 +43,24 @@ define([
 
             function addTitle() {
                 $(html).append(
-                    Template['suggestions_menu_title'].merge()
+                    MindMapTemplate['suggestions_menu_title'].merge()
                 );
             }
 
             function addSubTitle() {
                 $(html).append(
-                    Template['suggestions_menu_sub_title'].merge()
+                    MindMapTemplate['suggestions_menu_sub_title'].merge()
                 );
             }
 
             function addSuggestionList() {
-                var suggestionsList = Template['suggestions_list'].merge();
+                var suggestionsList = MindMapTemplate['suggestions_list'].merge();
                 $(html).append(
                     suggestionsList
                 );
                 $.each(vertex.suggestions(), function () {
                     var suggestion = this;
-                    var htmlSuggestion = Template['suggestion'].merge({
+                    var htmlSuggestion = MindMapTemplate['suggestion'].merge({
                         domain_id:Freebase.idInFreebaseURI(suggestion.domainUri()),
                         label:suggestion.label()
                     });
