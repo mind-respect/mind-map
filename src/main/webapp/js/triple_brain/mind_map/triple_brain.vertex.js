@@ -1,10 +1,10 @@
 define([
     "jquery",
-    "triple_brain/triple_brain.config",
-    "triple_brain/triple_brain.event_bus",
-    "triple_brain/triple_brain.id_uri",
-    "triple_brain/mind_map/triple_brain.ui.triple",
-    "triple_brain/mind_map/triple_brain.suggestion"
+    "triple_brain.config",
+    "triple_brain.event_bus",
+    "triple_brain.id_uri",
+    "triple_brain.ui.triple",
+    "triple_brain.suggestion"
 ],
     function ($, Config, EventBus, IdUriUtils, Triple, Suggestion) {
         var api = {};

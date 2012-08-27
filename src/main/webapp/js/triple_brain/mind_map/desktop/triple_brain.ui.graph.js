@@ -4,9 +4,9 @@
 define([
     "require",
     "jquery",
-    "triple_brain/mind_map/triple_brain.point",
-    "triple_brain/triple_brain.event_bus",
-    "triple_brain/mind_map/desktop/triple_brain.ui.all"
+    "triple_brain.point",
+    "triple_brain.event_bus",
+    "triple_brain.ui.all"
 ],
     function (require, $, Point, EventBus, UiUtils ) {
         var api = {};
@@ -18,7 +18,7 @@ define([
             UiUtils.clearCanvas(
                 api.canvas()
             );
-            var Vertex = require("triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex");
+            var Vertex = require("triple_brain.ui.vertex");
             Vertex.redrawAllPropertiesIndicator();
         };
         api.canvas = function () {

@@ -5,8 +5,8 @@
 define([
     "require",
     "jquery",
-    "triple_brain/mind_map/triple_brain.point",
-    "triple_brain/mind_map/triple_brain.segment"
+    "triple_brain.point",
+    "triple_brain.segment"
 ],
     function(require, $, Point, Segment) {
         return {

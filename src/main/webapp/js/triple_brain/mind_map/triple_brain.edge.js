@@ -1,15 +1,15 @@
 define([
     "require",
     "jquery",
-    "triple_brain/triple_brain.config",
-    "triple_brain/triple_brain.event_bus",
-    "triple_brain/triple_brain.id_uri",
-    "triple_brain/mind_map/desktop/edge/triple_brain.ui.arrow_line"
+    "triple_brain.config",
+    "triple_brain.event_bus",
+    "triple_brain.id_uri",
+    "triple_brain.ui.arrow_line"
 ],
     function(require, $, Config, EventBus, IdUriUtils, ArrowLine) {
         var api = {
             add: function(sourceVertex, destinationVertex) {
-                var Edge = require("triple_brain/mind_map/desktop/edge/triple_brain.ui.edge");
+                var Edge = require("triple_brain.ui.edge");
                 var sourceVertexURI = IdUriUtils.encodedUriFromGraphElementId(sourceVertex.getId());
                 var destinationVertexURI = IdUriUtils.encodedUriFromGraphElementId(destinationVertex.getId());
                 var response = $.ajax({

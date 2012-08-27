@@ -3,7 +3,7 @@
  */
 define([
     "jquery",
-    "triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex"
+    "triple_brain.ui.vertex"
 ],
     function($, Vertex) {
         var api = {

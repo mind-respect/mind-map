@@ -2,7 +2,7 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "triple_brain/triple_brain.template"
+    "triple_brain.template"
 ],
     function(Template) {
         var api = {};

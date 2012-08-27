@@ -5,24 +5,24 @@
 define([
     "require",
     "jquery",
-    "triple_brain/triple_brain.event_bus",
-    "triple_brain/mind_map/desktop/triple_brain.ui.graph",
-    "triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex",
-    "triple_brain/mind_map/triple_brain.vertex",
-    "triple_brain/mind_map/desktop/edge/triple_brain.ui.edge",
-    "triple_brain/mind_map/triple_brain.edge",
-    "triple_brain/mind_map/triple_brain.suggestion",
-    "triple_brain/triple_brain.id_uri",
-    "triple_brain/mind_map/desktop/triple_brain.mind-map_template",
-    "triple_brain/mind_map/triple_brain.external_resource",
-    "triple_brain/mind_map/desktop/vertex/triple_brain.ui.identification_menu",
-    "triple_brain/mind_map/desktop/vertex/triple_brain.ui.suggestion_menu",
-    "triple_brain/mind_map/desktop/triple_brain.drawn_graph",
-    "triple_brain/mind_map/desktop/triple_brain.ui.all",
-    "triple_brain/mind_map/desktop/edge/triple_brain.ui.arrow_line",
-    "triple_brain/mind_map/triple_brain.point",
-    "triple_brain/mind_map/triple_brain.segment",
-    "jquery/jquery-ui.min"
+    "triple_brain.event_bus",
+    "triple_brain.ui.graph",
+    "triple_brain.ui.vertex",
+    "triple_brain.vertex",
+    "triple_brain.ui.edge",
+    "triple_brain.edge",
+    "triple_brain.suggestion",
+    "triple_brain.id_uri",
+    "triple_brain.mind-map_template",
+    "triple_brain.external_resource",
+    "triple_brain.ui.identification_menu",
+    "triple_brain.ui.suggestion_menu",
+    "triple_brain.drawn_graph",
+    "triple_brain.ui.all",
+    "triple_brain.ui.arrow_line",
+    "triple_brain.point",
+    "triple_brain.segment",
+    "jquery-ui.min"
 ], function (require, $, EventBus, Graph, Vertex, VertexService, Edge, EdgeService, Suggestion, IdUriUtils, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, DrawnGraph, UiUtils, ArrowLine, Point, Segment) {
         var api = {};
         api.createWithArrayOfJsonHavingRelativePosition = function (jsonArray) {
@@ -48,14 +48,14 @@ define([
         }
 
         function VertexCreator(json) {
-            var Graph = require("triple_brain/mind_map/desktop/triple_brain.ui.graph");
-            var IdUriUtils = require("triple_brain/triple_brain.id_uri");
-            var MindMapTemplate = require("triple_brain/mind_map/desktop/triple_brain.mind-map_template");
-            var Vertex = require("triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex");
-            var VertexService = require("triple_brain/mind_map/triple_brain.vertex");
-            var Suggestion = require("triple_brain/mind_map/triple_brain.suggestion");
-            var IdentificationMenu = require("triple_brain/mind_map/desktop/vertex/triple_brain.ui.identification_menu");
-            var SuggestionMenu = require("triple_brain/mind_map/desktop/vertex/triple_brain.ui.suggestion_menu");
+            var Graph = require("triple_brain.ui.graph");
+            var IdUriUtils = require("triple_brain.id_uri");
+            var MindMapTemplate = require("triple_brain.mind-map_template");
+            var Vertex = require("triple_brain.ui.vertex");
+            var VertexService = require("triple_brain.vertex");
+            var Suggestion = require("triple_brain.suggestion");
+            var IdentificationMenu = require("triple_brain.ui.identification_menu");
+            var SuggestionMenu = require("triple_brain.ui.suggestion_menu");
             json.id = IdUriUtils.graphElementIdFromUri(json.id);
             var html = MindMapTemplate['vertex'].merge(json);
             this.create = function () {
@@ -178,6 +178,7 @@ define([
             function addMoveButton() {
 
             }
+
             function createMenu() {
                 var vertexMenu = MindMapTemplate['vertex_menu'].merge();
                 $(html).append(vertexMenu);

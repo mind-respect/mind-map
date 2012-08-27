@@ -1,5 +1,5 @@
 define([
-    "triple_brain/mind_map/desktop/triple_brain.ui.graph"
+    "triple_brain.ui.graph"
 ],
     function(Graph){
         var api = {

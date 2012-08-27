@@ -3,12 +3,12 @@
  */
 define([
     "jquery",
-    "triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex",
-    "module/mind_map/vertices_list/desktop/triple_brain.module.vertices_list_creator",
-    "module/mind_map/vertices_list/desktop/triple_brain.module.vertices_list_element_creator",
-    "module/mind_map/vertices_list/desktop/triple_brain.module.vertices_list_element",
-    "triple_brain/triple_brain.event_bus",
-    "jquery/jquery.tinysort.min"
+    "triple_brain.ui.vertex",
+    "./triple_brain.module.vertices_list_creator",
+    "./triple_brain.module.vertices_list_element_creator",
+    "./triple_brain.module.vertices_list_element",
+    "triple_brain.event_bus",
+    "jquery.tinysort.min"
 ],
     function ($, Vertex, VerticesListCreator, VerticesListElementCreator, VerticesListElement, EventBus) {
         var api = {};

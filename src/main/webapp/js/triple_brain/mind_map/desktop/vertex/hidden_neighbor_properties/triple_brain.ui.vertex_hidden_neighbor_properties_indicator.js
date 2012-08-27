@@ -1,11 +1,11 @@
 
 define([
     "jquery",
-    "triple_brain/mind_map/desktop/edge/triple_brain.ui.edge",
-    "triple_brain/mind_map/desktop/vertex/hidden_neighbor_properties/triple_brain.ui.vertex_hidden_neighbor_properties_indicator_dashed_segment",
-    "triple_brain/mind_map/triple_brain.point",
-    "triple_brain/mind_map/triple_brain.segment",
-    "triple_brain/mind_map/desktop/triple_brain.mind-map_template"
+    "triple_brain.ui.edge",
+    "triple_brain.ui.vertex_hidden_neighbor_properties_indicator_dashed_segment",
+    "triple_brain.point",
+    "triple_brain.segment",
+    "triple_brain.mind-map_template"
 ],
     function($, Edge, DashedSegment, Point, Segment, MindMapTemplate){
         var api = {

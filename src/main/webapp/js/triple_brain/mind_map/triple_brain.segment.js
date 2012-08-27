@@ -1,7 +1,7 @@
 define([
-    "triple_brain/mind_map/triple_brain.point",
-    "triple_brain/mind_map/triple_brain.transform_matrix_2d",
-    "triple_brain/triple_brain.error"
+    "triple_brain.point",
+    "triple_brain.transform_matrix_2d",
+    "triple_brain.error"
 ],
     function(Point, TransformMatrix2d, Error) {
         var api = {

@@ -4,7 +4,7 @@
  */
 
 define([
-    "triple_brain/mind_map/triple_brain.segment"
+    "triple_brain.segment"
 ],
     function(Segment){
         var api = {

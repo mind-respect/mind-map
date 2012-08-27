@@ -1,6 +1,6 @@
 define([
     "jquery",
-    "jquery/jquery.nano"
+    "jquery.nano"
 ],
     function ($) {
         var api = {};

@@ -2,9 +2,9 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "triple_brain/triple_brain.error",
-    "triple_brain/mind_map/triple_brain.point",
-    "triple_brain/mind_map/triple_brain.segment"
+    "triple_brain.error",
+    "triple_brain.point",
+    "triple_brain.segment"
 ],
     function(Error, Point, Segment){
         var api = {

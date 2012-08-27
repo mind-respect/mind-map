@@ -1,6 +1,6 @@
 define([
     "jquery",
-    "triple_brain/triple_brain.config"
+    "triple_brain.config"
 ],
     function($, config) {
         $(document).ready(function(){

@@ -4,14 +4,14 @@
 
 define([
     "jquery",
-    "triple_brain/mind_map/triple_brain.external_resource",
-    "triple_brain/mind_map/triple_brain.vertex",
-    "triple_brain/mind_map/desktop/triple_brain.mind-map_template",
-    "triple_brain/mind_map/desktop/triple_brain.ui.graph",
-    "triple_brain/triple_brain.id_uri",
-    "triple_brain/mind_map/triple_brain.point",
-    "triple_brain/mind_map/triple_brain.freebase",
-    "jquery/freebase_suggest.min"
+    "triple_brain.external_resource",
+    "triple_brain.vertex",
+    "triple_brain.mind-map_template",
+    "triple_brain.ui.graph",
+    "triple_brain.id_uri",
+    "triple_brain.point",
+    "triple_brain.freebase",
+    "jquery.freebase_suggest.min"
 ],
     function ($, ExternalResource, VertexService, MindMapTemplate, Graph, IdUriUtils, Point, Freebase) {
 

@@ -1,9 +1,9 @@
 define([
     "jquery",
-    "triple_brain/triple_brain.id_uri",
-    "triple_brain/triple_brain.event_bus",
-    "triple_brain/mind_map/triple_brain.user",
-    "triple_brain/triple_brain.config"
+    "triple_brain.id_uri",
+    "triple_brain.event_bus",
+    "triple_brain.user",
+    "triple_brain.config"
 ],
     function ($, IdUriUtils, EventBus, UserService, Config) {
         return {

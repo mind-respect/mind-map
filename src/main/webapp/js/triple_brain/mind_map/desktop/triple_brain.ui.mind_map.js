@@ -1,17 +1,17 @@
 define(
     [
         "jquery",
-        "triple_brain/mind_map/triple_brain.user",
-        "triple_brain/triple_brain.event_bus",
-        "triple_brain/triple_brain.drag_scroll",
-        "triple_brain/mind_map/desktop/triple_brain.drawn_graph",
-        "triple_brain/mind_map/desktop/triple_brain.ui.graph",
-        "triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex",
-        "triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex_creator",
-        "triple_brain/mind_map/desktop/edge/triple_brain.ui.edge_creator",
-        "triple_brain/mind_map/triple_brain.search",
-        "triple_brain/mind_map/desktop/triple_brain.mind-map_template",
-        "jquery/jquery-ui.min"
+        "triple_brain.user",
+        "triple_brain.event_bus",
+        "triple_brain.drag_scroll",
+        "triple_brain.drawn_graph",
+        "triple_brain.ui.graph",
+        "triple_brain.ui.vertex",
+        "triple_brain.ui.vertex_creator",
+        "triple_brain.ui.edge_creator",
+        "triple_brain.search",
+        "triple_brain.mind-map_template",
+        "jquery-ui.min"
     ],
     function($, UserService, EventBus, DragScroll, DrawnGraph, Graph, Vertex, VertexCreator, EdgeCreator, SearchService, MindMapTemplate){
         var api = {

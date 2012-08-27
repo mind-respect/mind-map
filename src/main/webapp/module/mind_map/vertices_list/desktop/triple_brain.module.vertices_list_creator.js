@@ -4,9 +4,9 @@
 define([
     "require",
     "jquery",
-    "module/mind_map/vertices_list/desktop/triple_brain.template.vertices_list",
-    "triple_brain/mind_map/desktop/triple_brain.ui.left_panel",
-    "module/mind_map/vertices_list/desktop/triple_brain.template.vertices_list"
+    "./triple_brain.template.vertices_list",
+    "triple_brain.ui.left_panel",
+    "./triple_brain.template.vertices_list"
 ],
     function(require, $, Template, LeftPanel, VerticesList) {
         var api = {
@@ -17,7 +17,7 @@ define([
         function VerticesListCreator(){
             var html = Template['panel'].merge();
             this.create = function(){
-                VerticesList = require("module/mind_map/vertices_list/desktop/triple_brain.module.vertices_list");
+                VerticesList = require("./triple_brain.module.vertices_list");
                 LeftPanel.addHTML(html);
                 addTitle();
                 addSortMenu();

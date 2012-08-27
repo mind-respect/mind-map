@@ -4,8 +4,8 @@
 define([
     "require",
     "jquery",
-    "module/mind_map/vertices_list/desktop/triple_brain.template.vertices_list",
-    "module/mind_map/vertices_list/desktop/triple_brain.module.vertices_list_element"
+    "./triple_brain.template.vertices_list",
+    "./triple_brain.module.vertices_list_element"
 ],
     function(require, $, Template, VerticesListElement) {
         var api = {
@@ -15,8 +15,8 @@ define([
         };
 
         function VerticesListElementCreator(vertex, centralVertex){
-            var Graph = require("triple_brain/mind_map/desktop/triple_brain.ui.graph");
-            var VerticesList = require("module/mind_map/vertices_list/desktop/triple_brain.module.vertices_list");
+            var Graph = require("triple_brain.ui.graph");
+            var VerticesList = require("./triple_brain.module.vertices_list");
             var html = Template['list_element'].merge();
             var verticesListElement = VerticesListElement.withHtml(html);
             this.create = function(){

@@ -1,7 +1,7 @@
 define([
     "jquery",
-    "triple_brain/mind_map/triple_brain.freebase",
-    "triple_brain/mind_map/triple_brain.external_resource"
+    "triple_brain.freebase",
+    "triple_brain.external_resource"
 ],
     function ($, Freebase, ExternalResource) {
         var api = {};

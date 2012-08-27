@@ -3,15 +3,15 @@
  */
 define([
     "jquery",
-    "triple_brain/mind_map/desktop/vertex/hidden_neighbor_properties/triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
-    "triple_brain/mind_map/triple_brain.vertex",
-    "triple_brain/triple_brain.id_uri",
-    "triple_brain/mind_map/triple_brain.point",
-    "triple_brain/triple_brain.error",
-    "triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex_segments",
-    "triple_brain/mind_map/desktop/edge/triple_brain.ui.edge",
-    "triple_brain/mind_map/desktop/triple_brain.ui.vertex_and_edge_common",
-    "triple_brain/triple_brain.event_bus"
+    "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
+    "triple_brain.vertex",
+    "triple_brain.id_uri",
+    "triple_brain.point",
+    "triple_brain.error",
+    "triple_brain.ui.vertex_segments",
+    "triple_brain.ui.edge",
+    "triple_brain.ui.vertex_and_edge_common",
+    "triple_brain.event_bus"
 ],
     function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, Edge, VertexAndEdgeCommon, EventBus) {
         var api = {};

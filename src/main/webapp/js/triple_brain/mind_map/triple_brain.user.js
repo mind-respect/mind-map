@@ -3,9 +3,9 @@
  */
 define([
     "jquery",
-    "triple_brain/triple_brain.event_bus",
-    "triple_brain/triple_brain.config",
-    "jquery/jquery.json.min"
+    "triple_brain.event_bus",
+    "triple_brain.config",
+    "jquery.json.min"
 ],
     function ($, eventBus, config) {
         var api = {};

@@ -1,12 +1,12 @@
 define([
     "jquery",
-    "triple_brain/triple_brain.event_bus",
-    "triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex",
-    "triple_brain/mind_map/triple_brain.vertex",
-    "triple_brain/mind_map/triple_brain.suggestion",
-    "triple_brain/mind_map/triple_brain.external_resource",
-    "jquery/freebase_suggest.min",
-    "jquery/jquery.url"
+    "triple_brain.event_bus",
+    "triple_brain.ui.vertex",
+    "triple_brain.vertex",
+    "triple_brain.suggestion",
+    "triple_brain.external_resource",
+    "jquery.freebase_suggest.min",
+    "jquery.url"
 ],
     function ($, EventBus, Vertex, VertexService, Suggestion, ExternalResource) {
         var api = {};
@@ -45,7 +45,7 @@ define([
             }
         }
         api.listPropertiesOfFreebaseTypeId = function (vertex, freebaseId) {
-            Suggestion = require("triple_brain/mind_map/triple_brain.suggestion")
+            Suggestion = require("triple_brain.suggestion")
             var propertiesOfTypeQuery = {
                 query:{
                     id:freebaseId,
@@ -106,7 +106,7 @@ define([
                     "type":typeId
                 })
                     .bind("fb-select", function (e, freebaseSuggestion) {
-                        Vertex = require("triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex");
+                        Vertex = require("triple_brain.ui.vertex");
                         var vertex = Vertex.withId(
                             $(this).closest(".vertex").attr("id")
                         );
@@ -129,7 +129,7 @@ define([
         );
         function vertexService(){
             return VertexService === undefined ?
-                require("triple_brain/mind_map/triple_brain.vertex") :
+                require("triple_brain.vertex") :
                 VertexService;
         }
         return api;

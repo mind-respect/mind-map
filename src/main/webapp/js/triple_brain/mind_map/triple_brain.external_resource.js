@@ -15,7 +15,7 @@ define([
             );
         }
         api.fromFreebaseSuggestion = function(freebaseSuggestion){
-            var Freebase = require("triple_brain/mind_map/triple_brain.freebase");
+            var Freebase = require("triple_brain.freebase");
             return new ExternalResource(
                 Freebase.freebaseIdToURI(
                     freebaseSuggestion.id

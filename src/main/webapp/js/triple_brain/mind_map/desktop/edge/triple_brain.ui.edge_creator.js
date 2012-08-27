@@ -5,14 +5,14 @@
 define([
     "require",
     "jquery",
-    "triple_brain/mind_map/desktop/triple_brain.ui.graph",
-    "triple_brain/mind_map/desktop/triple_brain.mind-map_template",
-    "triple_brain/triple_brain.id_uri",
-    "triple_brain/mind_map/desktop/triple_brain.ui.vertex_and_edge_common",
-    "triple_brain/mind_map/triple_brain.edge",
-    "triple_brain/mind_map/desktop/edge/triple_brain.ui.arrow_line",
-    "triple_brain/triple_brain.event_bus",
-    "triple_brain/mind_map/triple_brain.segment"
+    "triple_brain.ui.graph",
+    "triple_brain.mind-map_template",
+    "triple_brain.id_uri",
+    "triple_brain.ui.vertex_and_edge_common",
+    "triple_brain.edge",
+    "triple_brain.ui.arrow_line",
+    "triple_brain.event_bus",
+    "triple_brain.segment"
 ],
     function(require, $, Graph, MindMapTemplate, IdUriUtils, VertexAndEdgeCommon, EdgeService, ArrowLine, EventBus, Segment){
         var api = {};
@@ -42,7 +42,7 @@ define([
         };
 
         function EdgeCreator(json){
-            var Edge = require("triple_brain/mind_map/desktop/edge/triple_brain.ui.edge");
+            var Edge = require("triple_brain.ui.edge");
             json.id = IdUriUtils.graphElementIdFromUri(json.id);
             json.source_vertex_id = IdUriUtils.graphElementIdFromUri(json.source_vertex_id);
             json.destination_vertex_id = IdUriUtils.graphElementIdFromUri(json.destination_vertex_id);

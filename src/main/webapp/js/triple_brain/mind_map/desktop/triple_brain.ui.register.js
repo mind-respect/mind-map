@@ -3,8 +3,8 @@
  */
 define([
     "jquery",
-    "triple_brain/triple_brain.event_bus",
-    "triple_brain/mind_map/triple_brain.user"
+    "triple_brain.event_bus",
+    "triple_brain.user"
 ],
     function ($, eventBus, userService) {
         $(document).ready(function () {

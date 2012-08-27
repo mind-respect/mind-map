@@ -1,9 +1,9 @@
 define([
     "jquery",
-    "triple_brain/mind_map/triple_brain.user",
-    "jquery/jquery.url"
+    "triple_brain.user",
+    "jquery.url"
 ],
-    function ($, userService) {
+    function ($, UserService) {
         var api = {};
         api.baseUri = "http://www.triple_brain.org/";
         api.encodeUri = function (uri) {
@@ -22,7 +22,7 @@ define([
             );
         };
         api.uriFromGraphElementId = function (id) {
-            var username = userService.authenticatedUserInCache().user_name;
+            var username = UserService.authenticatedUserInCache().user_name;
             return api.baseUri + username + "/" + id
         };
         return api;

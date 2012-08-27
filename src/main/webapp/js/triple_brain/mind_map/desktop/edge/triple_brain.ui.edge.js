@@ -5,10 +5,10 @@
 define([
     "require",
     "jquery",
-    "triple_brain/mind_map/desktop/triple_brain.ui.graph",
-    "triple_brain/mind_map/desktop/triple_brain.ui.vertex_and_edge_common",
-    "triple_brain/triple_brain.event_bus",
-    "triple_brain/mind_map/desktop/edge/triple_brain.ui.edge_creator"
+    "triple_brain.ui.graph",
+    "triple_brain.ui.vertex_and_edge_common",
+    "triple_brain.event_bus",
+    "triple_brain.ui.edge_creator"
 ],
     function (require, $, Graph, VertexAndEdgeCommon, EventBus, EdgeCreator) {
         var api = {};
@@ -51,7 +51,7 @@ define([
         };
 
         function Edge(html) {
-            var Vertex = require("triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex");
+            var Vertex = require("triple_brain.ui.vertex");
             var thisEdge = this;
 
             this.id = function () {
