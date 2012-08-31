@@ -120,11 +120,25 @@ define([
             this.isMouseOver = function () {
                 return $("#" + this.getId() + ":hover").size() > 0;
             }
+            this.hideButtons = function () {
+                thisVertex.hideMenu();
+                thisVertex.hideMoveButton();
+            }
+            this.showButtons = function () {
+                thisVertex.showMenu();
+                thisVertex.showMoveButton();
+            }
             this.hideMenu = function () {
                 $(menu()).css("visibility", "hidden");
             }
             this.showMenu = function () {
                 $(menu()).css("visibility", "visible");
+            }
+            this.hideMoveButton = function () {
+                $(moveButton()).css("visibility", "hidden");
+            }
+            this.showMoveButton = function () {
+                $(moveButton()).css("visibility", "visible");
             }
             this.showCenterButton = function () {
                 $(centerButton()).hide();

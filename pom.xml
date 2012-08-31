@@ -32,6 +32,7 @@
     </build>
 
     <dependencies>
+
         <dependency>
             <groupId>org.triple_brain.module</groupId>
             <artifactId>triple_brain-repository-sql</artifactId>

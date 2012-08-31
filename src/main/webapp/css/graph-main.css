@@ -97,7 +97,9 @@ body{
     font-style:italic;
 }
 
-.vertex {
+.vertex{
+    white-space: nowrap;
+    min-width:100px;
     position: absolute;
     z-index: 3;
 }
@@ -149,11 +151,14 @@ body{
 .vertex .move {
     background: url('images/icons/vertex/move.png') no-repeat top;
     min-width:16px;
-    min-height:15px;
-    margin-top:5px;
+    min-height:30px;
+    margin-top:15px;
+    margin-right:10px;
+    margin-left:10px;
+    float:left;
 }
 
-.vertex .remove input[type=button]{
+.vertex .remove {
     color: red !important;
     text-align: center;
     background: none;
@@ -172,7 +177,7 @@ body{
 }
 
 .vertex .menu {
-    display:inline;
+
 }
 
 .vertex .menu ul:first-of-type {
@@ -188,6 +193,11 @@ body{
     display: inline;
     float:left;
     min-width:12px;
+}
+
+.vertex .menu input{
+    display:block;
+    float:left;
 }
 
 .center-vertex {

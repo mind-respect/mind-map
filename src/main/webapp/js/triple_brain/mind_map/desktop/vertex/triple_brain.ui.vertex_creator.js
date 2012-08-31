@@ -63,8 +63,8 @@ define([
                     html
                 );
                 addMoveButton();
-                createMenu();
                 createLabel();
+                createMenu();
                 var vertex = vertexFacade();
                 vertex.setSuggestions(
                     Suggestion.fromJsonArrayOfServer(
@@ -75,7 +75,7 @@ define([
                     vertex.showSuggestionButton();
                 }
                 vertex.adjustWidth();
-                vertex.hideMenu();
+                vertex.hideButtons();
                 $(html).hover(
                     onMouseOver,
                     onMouseOut
@@ -176,24 +176,17 @@ define([
             }
 
             function addMoveButton() {
-
+                $(html).append(
+                    MindMapTemplate['vertex_move_button'].merge()
+                );
             }
 
             function createMenu() {
                 var vertexMenu = MindMapTemplate['vertex_menu'].merge();
                 $(html).append(vertexMenu);
-                var menuListFirstCol = MindMapTemplate['vertex_menu_list_first_col'].merge();
-                var menuListSecondCol = MindMapTemplate['vertex_menu_list_second_col'].merge();
-                var menuListThirdCol = MindMapTemplate['vertex_menu_list_third_col'].merge();
-                $(vertexMenu).append(menuListFirstCol);
-                $(vertexMenu).append(menuListSecondCol);
-                $(vertexMenu).append(menuListThirdCol);
-
-                var moveBtn = MindMapTemplate['vertex_move_button'].merge();
-                $(menuListFirstCol).append(moveBtn);
 
                 var removeBtn = MindMapTemplate['vertex_remove_button'].merge();
-                $(menuListFirstCol).append(removeBtn);
+                $(vertexMenu).append(removeBtn);
 
                 removeBtn.click(function (event) {
                     event.stopPropagation();
@@ -204,7 +197,7 @@ define([
                 });
 
                 var whatIsThisBtn = MindMapTemplate['vertex_what_is_this_button'].merge();
-                $(menuListSecondCol).append(whatIsThisBtn);
+                $(vertexMenu).append(whatIsThisBtn);
                 whatIsThisBtn.click(function (event) {
                     event.stopPropagation();
                     var vertex = vertexOfSubHtmlComponent(this);
@@ -215,7 +208,7 @@ define([
                 });
 
                 var suggestionsBtn = MindMapTemplate['vertex_suggestion_button'].merge();
-                $(menuListThirdCol).append(suggestionsBtn);
+                $(vertexMenu).append(suggestionsBtn);
                 suggestionsBtn.click(function (event) {
                     event.stopPropagation();
                     var outOfVertexMenus = $('.peripheral-menu');
@@ -229,7 +222,7 @@ define([
                 $(suggestionsBtn).hide();
 
                 var centerBtn = MindMapTemplate['vertex_center_button'].merge();
-                $(menuListSecondCol).append(centerBtn);
+                $(vertexMenu).append(centerBtn);
                 centerBtn.click(function () {
                     DrawnGraph.getWithNewCentralVertex(
                         vertexOfSubHtmlComponent(this)
@@ -337,7 +330,7 @@ define([
             function onMouseOver() {
                 var vertex = vertexOfSubHtmlComponent(this);
                 vertex.highlight();
-                vertex.showMenu();
+                vertex.showButtons();
             }
 
             function onMouseOut() {
@@ -345,7 +338,7 @@ define([
                 if (!vertex.isLabelInFocus()) {
                     vertex.unhighlight();
                 }
-                vertex.hideMenu();
+                vertex.hideButtons();
             }
 
             function mouseDownToCreateRelationOrAddVertex(mouseDownEvent) {

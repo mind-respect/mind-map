@@ -16,14 +16,11 @@ define([
         t.add('vertex', '<div class="vertex" id="{id}" style="top:{position.y}"></div>');
         t.add('vertex_label_container', '<div class=textfield-container><input type="text" class="label" value="{label}"></div>');
         t.add('vertex_menu', '<div class="menu"></div>');
-        t.add('vertex_menu_list_first_col', '<ul></ul>');
-        t.add('vertex_menu_list_second_col', '<ul></ul>');
-        t.add('vertex_menu_list_third_col', '<ul></ul>');
-        t.add('vertex_move_button', '<li class="move"></li>');
-        t.add('vertex_remove_button', '<li class="remove"><input type="button" value="x" data-role="none"></li>');
-        t.add('vertex_center_button', '<li><input type="button" class="center" data-role="none"></li>');
-        t.add('vertex_what_is_this_button', '<li><input type="button" class="what-is-this" data-role="none" value="?"></li>');
-        t.add('vertex_suggestion_button', '<li class="suggestion"><input type="button" data-role="none" value="S"></li>');
+        t.add('vertex_move_button', '<div class="move"></div>');
+        t.add('vertex_remove_button', '<input type="button" value="x" class="remove" data-role="none">');
+        t.add('vertex_center_button', '<input type="button" class="center" data-role="none">');
+        t.add('vertex_what_is_this_button', '<input type="button" class="what-is-this" data-role="none" value="?">');
+        t.add('vertex_suggestion_button', '<input type="button" data-role="none" value="S" class="suggestion">');
 
         t.add('identification_menu', '<div class="peripheral-menu identification"></div>');
         t.add('identification_menu_explanation_title', '<h2>Identifications</h2>');
