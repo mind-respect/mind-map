@@ -2,9 +2,7 @@
  * Copyright Mozilla Public License 1.1
  */
 
-requirejs.config({
-    baseUrl: 'js'
-});
+requirejs.config(window.config);
 
 requirejs(
     [
