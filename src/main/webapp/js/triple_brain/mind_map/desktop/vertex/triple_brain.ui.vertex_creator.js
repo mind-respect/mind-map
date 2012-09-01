@@ -97,8 +97,8 @@ define([
                 json.position.x -= $(html).width() / 2;
                 json.position.y -= $(html).height() / 2;
                 position();
+                vertex.setNameOfHiddenProperties([]);
                 if (json.is_frontier_vertex_with_hidden_vertices) {
-                    vertex.setNumberOfHiddenConnectedVertices(json.number_of_hidden_connected_vertices);
                     vertex.setNameOfHiddenProperties(json.name_of_hidden_properties);
                     vertex.buildHiddenNeighborPropertiesIndicator();
                 }

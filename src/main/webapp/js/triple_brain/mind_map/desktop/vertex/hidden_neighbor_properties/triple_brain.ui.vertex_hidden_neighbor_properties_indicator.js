@@ -16,8 +16,11 @@ define([
 
         function HiddenNeighborPropertiesIndicator(vertex){
             this.build = function(){
-                var defaultLengthOfHiddenPropertiesContainer = 40;
                 var numberOfHiddenConnectedVertices = vertex.numberOfHiddenConnectedVertices();
+                if(numberOfHiddenConnectedVertices == 0){
+                    return ;
+                }
+                var defaultLengthOfHiddenPropertiesContainer = 40;
                 var lengthInPixels = numberOfHiddenConnectedVertices == 1 ? 1 : defaultLengthOfHiddenPropertiesContainer;
                 var startPoint = Point.fromCoordinates(
                     vertex.position().x + vertex.width(),

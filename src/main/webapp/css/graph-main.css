@@ -150,11 +150,11 @@ body{
 
 .vertex .move {
     background: url('images/icons/vertex/move.png') no-repeat top;
-    min-width:16px;
-    min-height:30px;
-    margin-top:15px;
-    margin-right:10px;
-    margin-left:10px;
+    min-width:25px;
+    min-height:25px;
+    margin-top:11px;
+    margin-right:5px;
+    margin-left:4px;
     float:left;
 }
 

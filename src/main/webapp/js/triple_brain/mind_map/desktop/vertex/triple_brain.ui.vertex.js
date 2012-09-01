@@ -85,9 +85,6 @@ define([
                 $(html).addClass('center-vertex');
                 this.hideCenterButton();
             }
-            this.setNumberOfHiddenConnectedVertices = function (numberOfHiddenConnectedVertices) {
-                $(html).data('numberOfHiddenConnectedVertices', numberOfHiddenConnectedVertices);
-            }
             this.setNameOfHiddenProperties = function (nameOfHiddenProperties) {
                 $(html).data('nameOfHiddenProperties', nameOfHiddenProperties);
             }
@@ -96,7 +93,7 @@ define([
                 propertiesIndicator.build();
             }
             this.numberOfHiddenConnectedVertices = function () {
-                return $(html).data('numberOfHiddenConnectedVertices');
+                return thisVertex.nameOfHiddenProperties().length;
             }
             this.nameOfHiddenProperties = function () {
                 return $(html).data('nameOfHiddenProperties');
@@ -304,12 +301,7 @@ define([
             this.equalsVertex = function (otherVertex) {
                 return thisVertex.getId() == otherVertex.getId();
             }
-            this.numberOfEdgesFromCentralVertex = function () {
-                return $(html).data('numberOfEdgesFromCentralVertex');
-            }
-            this.setNumberOfEdgesFromCentralVertex = function (numberOfEdgesFromCentralVertex) {
-                $(html).data('numberOfEdgesFromCentralVertex', numberOfEdgesFromCentralVertex);
-            }
+
             this.scrollTo = function () {
                 var position = thisVertex.position();
                 window.scroll(
