@@ -130,14 +130,14 @@ public class UserResourceTest extends RestTest {
         JSONObject validUser = validForCreation();
         String username = validUser.getString(USER_NAME);
         assertFalse(
-                modelMaker().hasModel(username)
+                modelMaker().containsNamedModel(username)
         );
         createUserUsingRest(validUser);
         User user = User.withUsernameAndEmail(
                 username, validUser.getString(EMAIL)
         );
         assertTrue(
-                modelMaker().hasModel(
+                modelMaker().containsNamedModel(
                         user.mindMapURIFromSiteURI(SITE_URI)
                 )
         );

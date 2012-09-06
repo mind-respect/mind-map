@@ -1,6 +1,6 @@
 package org.triple_brain.mind_map.service.resources;
 
-import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
+import org.triple_brain.graphmanipulator.jena.graph.JenaUserGraph;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.GraphElementIdentifier;
 import org.triple_brain.module.repository.user.UserRepository;
@@ -33,7 +33,7 @@ public class GraphResource {
     @Produces(MediaType.APPLICATION_XML)
     public Response rdfXML(@GraphElementIdentifier @PathParam("graph_uri") String graphUri){
         User user = userRepository.findByUsername(usernameInURI(URI.create(graphUri)));
-        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
+        JenaUserGraph graphManipulator = JenaUserGraph.withUser(
                 user
         );
         return Response.ok(graphManipulator.toRDFXML()).build();

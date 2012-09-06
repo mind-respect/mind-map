@@ -3,8 +3,9 @@ package org.triple_brain.mind_map.service.resources;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
-import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
+import org.triple_brain.graphmanipulator.jena.graph.JenaUserGraph;
 import org.triple_brain.module.model.User;
+import org.triple_brain.module.model.graph.GraphMaker;
 import org.triple_brain.module.repository.user.NonExistingUserException;
 import org.triple_brain.module.repository.user.UserRepository;
 import org.triple_brain.module.search.GraphIndexer;
@@ -43,6 +44,9 @@ public class UserResource {
 
     @Inject
     GraphIndexer graphIndexer;
+
+    @Inject
+    private GraphMaker graphMaker;
 
     @GET
     @Path("/authenticate")
@@ -120,9 +124,9 @@ public class UserResource {
         }
 
         userRepository.save(user);
-        JenaGraphManipulator.createUserGraph(user);
+        graphMaker.createForUser(user);
         graphIndexer.createUserCore(user);
-        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
+        JenaUserGraph graphManipulator = JenaUserGraph.withUser(
                 user
         );
         graphIndexer.indexVertexOfUser(

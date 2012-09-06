@@ -2,13 +2,13 @@ package org.triple_brain.mind_map.service;
 
 import com.sun.jersey.api.client.ClientResponse;
 import graph.mock.JenaGraphManipulatorMock;
-import graph.scenarios.TestScenarios;
 import graph.scenarios.VerticesCalledABAndC;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.triple_brain.graphmanipulator.jena.JenaConnection;
 import org.triple_brain.module.model.User;
-import org.triple_brain.module.model.graph.Graph;
+import org.triple_brain.module.model.graph.SubGraph;
 import org.triple_brain.module.model.graph.Vertex;
 import org.triple_brain.module.search.GraphIndexer;
 
@@ -16,7 +16,6 @@ import javax.inject.Inject;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.triple_brain.graphmanipulator.jena.JenaConnection.closeConnection;
 
 /*
 * Copyright Mozilla Public License 1.1
@@ -51,29 +50,28 @@ public class GraphManipulationRestTest extends RestTest {
 
     @AfterClass
     public static void afterClass()throws Exception{
-        closeConnection();
+        JenaConnection.closeConnection();
     }
 
     @After
     public void after(){
+
     }
 
     protected VerticesCalledABAndC makeGraphHave3SerialVerticesWithLongLabels(User user) throws Exception {
-        TestScenarios graphScenariosGenerator = TestScenarios.withUserManipulators(
-                user,
-                graphManipulator
+        return testScenarios.makeGraphHave3SerialVerticesWithLongLabels(
+                graphMaker.createForUser(user)
         );
-        return graphScenariosGenerator.makeGraphHave3SerialVerticesWithLongLabels();
     }
 
     protected void actualizeVertexABAndC(){
-        Graph graph = wholeGraph();
+        SubGraph graph = wholeGraph();
         vertexA = graph.vertexWithIdentifier(vertexA.id());
         vertexB = graph.vertexWithIdentifier(vertexB.id());
         vertexC = graph.vertexWithIdentifier(vertexC.id());
     }
 
-    protected Graph wholeGraph(){
+    protected SubGraph wholeGraph(){
         return graphManipulator.graphWithDefaultVertexAndDepth(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES);
     }
 

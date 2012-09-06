@@ -6,7 +6,8 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
-import graph.JenaSQLTestModule;
+import graph.JenaTestModule;
+import graph.scenarios.TestScenarios;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -14,6 +15,7 @@ import org.junit.BeforeClass;
 import org.triple_brain.mind_map.Launcher;
 import org.triple_brain.mind_map.SearchTestModule;
 import org.triple_brain.module.model.User;
+import org.triple_brain.module.model.graph.GraphMaker;
 import org.triple_brain.module.repository.user.UserRepository;
 import org.triple_brain.module.repository_sql.SQLTestModule;
 
@@ -28,26 +30,35 @@ import static org.junit.Assert.assertThat;
 import static org.triple_brain.module.repository_sql.SQLConnection.*;
 
 
-    /**
+/**
  * Copyright Mozilla Public License 1.1
  */
-public abstract class RestTest{
+public abstract class RestTest {
 
-   protected static URI BASE_URI;
-   protected WebResource resource;
-   protected ClientResponse response;
-   static private Launcher launcher;
-   static private Client client;
-   protected NewCookie authCookie;
+    protected static URI BASE_URI;
+    protected static WebResource resource;
+    protected ClientResponse response;
+    static private Launcher launcher;
+    static private Client client;
+    protected NewCookie authCookie;
+
+
+    @Inject
+    protected GraphMaker graphMaker;
+
+    @Inject
+    protected TestScenarios testScenarios;
 
     @Inject
     UserRepository userRepository;
 
+    private static Injector injector;
+
     @BeforeClass
     static public void startServer() throws Exception {
-        Guice.createInjector(
+        injector = Guice.createInjector(
                 new SQLTestModule(),
-                new JenaSQLTestModule(),
+                new JenaTestModule(),
                 new SearchTestModule()
         );
         BASE_URI = new URI("http://localhost:8786/service");
@@ -63,39 +74,44 @@ public abstract class RestTest{
 
     @AfterClass
     static public void stopServer() throws Exception {
+        closeSearchEngine();
         launcher.stop();
     }
 
     @Before
-    public void before_rest_test()throws SQLException{
-        Injector injector = Guice.createInjector(
-                new SQLTestModule(),
-                new JenaSQLTestModule(),
-                new SearchTestModule()
-        );
+    public void before_rest_test() throws SQLException {
         injector.injectMembers(this);
         cleanTables();
         resource = client.resource(BASE_URI);
     }
 
     @After
-    public void after_rest_test()throws SQLException{
+    public void after_rest_test() throws SQLException {
         closeConnection();
     }
 
-    static protected void cleanTables()throws SQLException {
+    private static void closeSearchEngine(){
+        ClientResponse response = resource
+                .path("test")
+                .path("search")
+                .path("close")
+                .get(ClientResponse.class);
+        assertThat(response.getStatus(), is(200));
+    }
+
+    static protected void cleanTables() throws SQLException {
         clearDatabases();
         createTables();
     }
 
 
-    protected User authenticate(){
+    protected User authenticate() {
         return authenticate(
                 createAUser()
         );
     }
 
-    protected User createAUser(){
+    protected User createAUser() {
         User user = User.withUsernameAndEmail(
                 UUID.randomUUID().toString(),
                 UUID.randomUUID().toString() + "@triplebrain.org")

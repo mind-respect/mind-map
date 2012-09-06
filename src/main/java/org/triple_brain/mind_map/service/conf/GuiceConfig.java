@@ -9,8 +9,10 @@ import com.sun.jersey.guice.JerseyServletModule;
 import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
 import org.apache.solr.core.CoreContainer;
 import org.triple_brain.graphmanipulator.jena.JenaConnection;
+import org.triple_brain.graphmanipulator.jena.graph.JenaGraphMaker;
 import org.triple_brain.mind_map.service.SecurityInterceptor;
 import org.triple_brain.mind_map.service.resources.*;
+import org.triple_brain.module.model.graph.GraphMaker;
 import org.triple_brain.module.repository.user.UserRepository;
 import org.triple_brain.module.repository_sql.SQLModule;
 import org.triple_brain.module.repository_sql.SQLUserRepository;
@@ -49,6 +51,8 @@ public class GuiceConfig extends GuiceServletContextListener {
                 install(new SQLModule());
 
                 bind(UserRepository.class).to(SQLUserRepository.class);
+                bind(GraphMaker.class).to(JenaGraphMaker.class);
+
                 bind(DrawnGraphResource.class);
                 bind(GraphResource.class);
                 bind(VertexResource.class);

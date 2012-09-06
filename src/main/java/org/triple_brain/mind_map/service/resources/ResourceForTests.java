@@ -2,9 +2,11 @@ package org.triple_brain.mind_map.service.resources;
 
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
+import org.triple_brain.graphmanipulator.jena.graph.JenaUserGraph;
 import org.triple_brain.module.model.User;
-import org.triple_brain.module.model.graph.Graph;
+import org.triple_brain.module.model.graph.Edge;
+import org.triple_brain.module.model.graph.GraphMaker;
+import org.triple_brain.module.model.graph.SubGraph;
 import org.triple_brain.module.model.graph.Vertex;
 import org.triple_brain.module.repository.user.UserRepository;
 import org.triple_brain.module.search.GraphIndexer;
@@ -40,6 +42,9 @@ public class ResourceForTests {
     @Inject
     SearchUtils searchUtils;
 
+    @Inject
+    private GraphMaker graphMaker;
+
     @Path("login")
     @GET
     public Response createUserAuthenticateAndRedirectToHomePage(@Context HttpServletRequest request) throws Exception {
@@ -48,16 +53,21 @@ public class ResourceForTests {
         userRepository.save(
                 user
         );
-        JenaGraphManipulator.createUserGraph(user);
+        graphMaker.createForUser(user);
         graphIndexer.createUserCore(user);
         deleteAllUserDocumentsForSearch(user);
-        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
+        JenaUserGraph graphManipulator = JenaUserGraph.withUser(
                 user
         );
         graphIndexer.indexVertexOfUser(
                 graphManipulator.defaultVertex(),
                 user
         );
+        Vertex destinationVertex = graphManipulator.defaultVertex();
+        for(int i = 0 ; i < 100; i++){
+            Edge edge = destinationVertex.addVertexAndRelation();
+            destinationVertex = edge.destinationVertex();
+        }
         request.getSession().setAttribute(AUTHENTICATION_ATTRIBUTE_KEY, true);
         request.getSession().setAttribute(AUTHENTICATED_USER_KEY, user);
         return Response.temporaryRedirect(
@@ -77,6 +87,13 @@ public class ResourceForTests {
         graphIndexer.createUserCore(
                 userFromSession(request.getSession())
         );
+        return Response.ok().build();
+    }
+
+    @Path("search/close")
+    @GET
+    public Response closeSearchEngine() {
+        graphIndexer.close();
         return Response.ok().build();
     }
 
@@ -105,10 +122,10 @@ public class ResourceForTests {
     @GET
     public Response indexSessionUserVertices(@Context HttpServletRequest request) {
         User currentUser = userFromSession(request.getSession());
-        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
+        JenaUserGraph graphManipulator = JenaUserGraph.withUser(
                 currentUser
         );
-        Graph userGraph = graphManipulator.graphWithDefaultVertexAndDepth(10);
+        SubGraph userGraph = graphManipulator.graphWithDefaultVertexAndDepth(10);
         for (Vertex vertex : userGraph.vertices()) {
             graphIndexer.indexVertexOfUser(vertex, currentUser);
         }

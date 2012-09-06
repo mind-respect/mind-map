@@ -6,17 +6,18 @@ import graph.scenarios.TestScenarios;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Test;
-import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
 import org.triple_brain.module.model.FriendlyResource;
 import org.triple_brain.module.model.Suggestion;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.Edge;
+import org.triple_brain.module.model.graph.GraphMaker;
 import org.triple_brain.module.model.graph.Vertex;
 import org.triple_brain.module.model.json.ExternalResourceJsonFields;
 import org.triple_brain.module.model.json.SuggestionJsonFields;
 import org.triple_brain.module.model.json.graph.EdgeJsonFields;
 import org.triple_brain.module.model.json.graph.VertexJsonFields;
 
+import javax.inject.Inject;
 import java.net.URI;
 
 import static junit.framework.Assert.assertFalse;
@@ -32,6 +33,9 @@ import static org.triple_brain.module.model.json.StatementJsonFields.*;
  */
 
 public class VertexResourceTest extends GraphManipulationRestTest {
+
+    @Inject
+    private GraphMaker graphMaker;
 
     @Test
     public void can_add_a_vertex() throws Exception {
@@ -76,7 +80,7 @@ public class VertexResourceTest extends GraphManipulationRestTest {
     @Test
     public void cannot_add_a_vertex_that_user_doesnt_own() throws Exception {
         User anotherUser = createAUser();
-        JenaGraphManipulator.createUserGraph(anotherUser);
+        graphMaker.createForUser(anotherUser);
         graphManipulator = JenaGraphManipulatorMock.mockWithUser(anotherUser);
         Vertex anotherUserDefaultVertex = graphManipulator.defaultVertex();
         response = resource.path("vertex").path(encodeURL(anotherUserDefaultVertex.id())).cookie(authCookie).post(ClientResponse.class);
@@ -162,7 +166,7 @@ public class VertexResourceTest extends GraphManipulationRestTest {
 
     private ClientResponse addFoafPersonTypeToVertexA() throws Exception {
         JSONObject personType = ExternalResourceJsonFields.toJson(
-                TestScenarios.personType()
+                testScenarios.personType()
         );
         ClientResponse response = resource
                 .path("vertex")
@@ -176,7 +180,7 @@ public class VertexResourceTest extends GraphManipulationRestTest {
     }
 
     private ClientResponse removeFoafPersonIdentificationToVertexA() throws Exception {
-        FriendlyResource personType = TestScenarios.personType();
+        FriendlyResource personType = testScenarios.personType();
         ClientResponse response = resource
                 .path("vertex")
                 .path(encodeURL(vertexA.id()))

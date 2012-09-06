@@ -2,10 +2,10 @@ package org.triple_brain.mind_map.service.resources;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
-import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
+import org.triple_brain.graphmanipulator.jena.graph.JenaUserGraph;
 import org.triple_brain.module.graphviz_visualisation.GraphToDrawnGraphConverter;
 import org.triple_brain.module.model.User;
-import org.triple_brain.module.model.graph.Graph;
+import org.triple_brain.module.model.graph.SubGraph;
 import org.triple_brain.module.model.graph.GraphElementIdentifier;
 import org.triple_brain.module.repository.user.UserRepository;
 
@@ -40,10 +40,10 @@ public class DrawnGraphResource {
     @GET
     @Path("/{graph_uri}/{depthOfSubVertices}")
     public Response drawnGraph(@GraphElementIdentifier @PathParam("graph_uri") String graphUri, @PathParam("depthOfSubVertices") Integer depthOfSubVertices, @Context HttpServletRequest request) throws JSONException{
-        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
+        JenaUserGraph graphManipulator = JenaUserGraph.withUser(
                 userFromGraphURI(URI.create(graphUri))
         );
-        Graph graph = graphManipulator.graphWithDefaultVertexAndDepth(depthOfSubVertices);
+        SubGraph graph = graphManipulator.graphWithDefaultVertexAndDepth(depthOfSubVertices);
         JSONObject drawnGraph = GraphToDrawnGraphConverter.withGraph(graph).convert();
         return Response.ok(drawnGraph, MediaType.APPLICATION_JSON).build();
     }
@@ -56,10 +56,10 @@ public class DrawnGraphResource {
         }catch(UnsupportedEncodingException e){
             Response.status(Response.Status.BAD_REQUEST).build();
         }
-        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
+        JenaUserGraph graphManipulator = JenaUserGraph.withUser(
                 userFromGraphURI(URI.create(graphUri))
         );
-        Graph graph = graphManipulator.graphWithDepthAndCenterVertexId(depthOfSubVertices, centralVertexId);
+        SubGraph graph = graphManipulator.graphWithDepthAndCenterVertexId(depthOfSubVertices, centralVertexId);
         JSONObject drawnGraph = GraphToDrawnGraphConverter.withGraph(graph).convert();
         return Response.ok(drawnGraph, MediaType.APPLICATION_JSON).build();
     }

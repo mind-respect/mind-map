@@ -1,7 +1,7 @@
 package org.triple_brain.mind_map.service.resources;
 
 import org.codehaus.jettison.json.JSONException;
-import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
+import org.triple_brain.graphmanipulator.jena.graph.JenaUserGraph;
 import org.triple_brain.module.model.graph.Edge;
 import org.triple_brain.module.model.graph.GraphElementIdentifier;
 import org.triple_brain.module.model.graph.Vertex;
@@ -36,7 +36,7 @@ public class EdgeResource {
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
+        JenaUserGraph graphManipulator = JenaUserGraph.withUser(
                 userFromSession(request.getSession())
         );
         Vertex sourceVertex = graphManipulator.vertexWithURI(sourceVertexId);
@@ -53,7 +53,7 @@ public class EdgeResource {
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
+        JenaUserGraph graphManipulator = JenaUserGraph.withUser(
                 userFromSession(request.getSession())
         );
         Edge edge = graphManipulator.edgeWithUri(edgeId);
@@ -69,7 +69,7 @@ public class EdgeResource {
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
+        JenaUserGraph graphManipulator = JenaUserGraph.withUser(
                 userFromSession(request.getSession())
         );
         Edge edge = graphManipulator.edgeWithUri(edgeId);

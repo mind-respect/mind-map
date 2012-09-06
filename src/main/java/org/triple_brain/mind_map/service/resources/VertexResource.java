@@ -3,7 +3,7 @@ package org.triple_brain.mind_map.service.resources;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
-import org.triple_brain.graphmanipulator.jena.graph.JenaGraphManipulator;
+import org.triple_brain.graphmanipulator.jena.graph.JenaUserGraph;
 import org.triple_brain.module.model.FriendlyResource;
 import org.triple_brain.module.model.Suggestion;
 import org.triple_brain.module.model.User;
@@ -52,7 +52,7 @@ public class VertexResource {
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
+        JenaUserGraph graphManipulator = JenaUserGraph.withUser(
                 userFromSession(request.getSession())
         );
         Vertex sourceVertex = graphManipulator.vertexWithURI(sourceVertexId);
@@ -86,7 +86,7 @@ public class VertexResource {
         }
         User authenticatedUser = userFromSession(request.getSession());
 
-        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
+        JenaUserGraph graphManipulator = JenaUserGraph.withUser(
                 authenticatedUser
         );
         graphIndexer.deleteVertexOfUser(
@@ -107,7 +107,7 @@ public class VertexResource {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         User authenticatedUser = userFromSession(request.getSession());
-        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
+        JenaUserGraph graphManipulator = JenaUserGraph.withUser(
                 authenticatedUser
         );
         Vertex vertex = graphManipulator.vertexWithURI(vertexId);
@@ -128,7 +128,7 @@ public class VertexResource {
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
+        JenaUserGraph graphManipulator = JenaUserGraph.withUser(
                 userFromSession(request.getSession())
         );
         Vertex vertex = graphManipulator.vertexWithURI(vertexId);
@@ -159,7 +159,7 @@ public class VertexResource {
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        JenaGraphManipulator graphManipulator= JenaGraphManipulator.withUser(
+        JenaUserGraph graphManipulator= JenaUserGraph.withUser(
                 userFromSession(request.getSession())
         );
         Vertex vertex = graphManipulator.vertexWithURI(vertexId);
@@ -178,7 +178,7 @@ public class VertexResource {
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
+        JenaUserGraph graphManipulator = JenaUserGraph.withUser(
                 userFromSession(request.getSession())
         );
         Vertex vertex = graphManipulator.vertexWithURI(vertexId);
@@ -197,7 +197,7 @@ public class VertexResource {
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        JenaGraphManipulator graphManipulator = JenaGraphManipulator.withUser(
+        JenaUserGraph graphManipulator = JenaUserGraph.withUser(
                 userFromSession(request.getSession())
         );
         Vertex vertex = graphManipulator.vertexWithURI(vertexId);
