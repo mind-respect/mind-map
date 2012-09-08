@@ -5,6 +5,7 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Test;
+import org.triple_brain.module.model.TripleBrainUris;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.repository.user.UserRepository;
 
@@ -17,7 +18,6 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.triple_brain.graphmanipulator.jena.JenaConnection.modelMaker;
-import static org.triple_brain.graphmanipulator.jena.TripleBrainModel.SITE_URI;
 import static org.triple_brain.module.model.json.UserJSONFields.*;
 import static org.triple_brain.module.model.validator.UserValidator.ALREADY_REGISTERED_EMAIL;
 import static org.triple_brain.module.model.validator.UserValidator.USER_NAME_ALREADY_REGISTERED;
@@ -138,7 +138,7 @@ public class UserResourceTest extends RestTest {
         );
         assertTrue(
                 modelMaker().containsNamedModel(
-                        user.mindMapURIFromSiteURI(SITE_URI)
+                        user.mindMapURIFromSiteURI(TripleBrainUris.BASE)
                 )
         );
     }

@@ -1,8 +1,7 @@
 package org.triple_brain.mind_map.service;
 
 import com.sun.jersey.api.client.ClientResponse;
-import graph.mock.JenaGraphManipulatorMock;
-import graph.scenarios.TestScenarios;
+import graph.mock.JenaUserGraphMock;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Test;
@@ -81,7 +80,7 @@ public class VertexResourceTest extends GraphManipulationRestTest {
     public void cannot_add_a_vertex_that_user_doesnt_own() throws Exception {
         User anotherUser = createAUser();
         graphMaker.createForUser(anotherUser);
-        graphManipulator = JenaGraphManipulatorMock.mockWithUser(anotherUser);
+        graphManipulator = JenaUserGraphMock.mockWithUser(anotherUser);
         Vertex anotherUserDefaultVertex = graphManipulator.defaultVertex();
         response = resource.path("vertex").path(encodeURL(anotherUserDefaultVertex.id())).cookie(authCookie).post(ClientResponse.class);
         assertThat(response.getStatus(), is(403));

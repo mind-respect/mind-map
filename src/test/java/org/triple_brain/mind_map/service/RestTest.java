@@ -7,7 +7,6 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
 import graph.JenaTestModule;
-import graph.scenarios.TestScenarios;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -16,6 +15,7 @@ import org.triple_brain.mind_map.Launcher;
 import org.triple_brain.mind_map.SearchTestModule;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.GraphMaker;
+import org.triple_brain.module.model.graph.scenarios.TestScenarios;
 import org.triple_brain.module.repository.user.UserRepository;
 import org.triple_brain.module.repository_sql.SQLTestModule;
 

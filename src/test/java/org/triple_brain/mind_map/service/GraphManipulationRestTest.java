@@ -1,8 +1,7 @@
 package org.triple_brain.mind_map.service;
 
 import com.sun.jersey.api.client.ClientResponse;
-import graph.mock.JenaGraphManipulatorMock;
-import graph.scenarios.VerticesCalledABAndC;
+import graph.mock.JenaUserGraphMock;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -10,6 +9,7 @@ import org.triple_brain.graphmanipulator.jena.JenaConnection;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.SubGraph;
 import org.triple_brain.module.model.graph.Vertex;
+import org.triple_brain.module.model.graph.scenarios.VerticesCalledABAndC;
 import org.triple_brain.module.search.GraphIndexer;
 
 import javax.inject.Inject;
@@ -24,7 +24,7 @@ public class GraphManipulationRestTest extends RestTest {
 
     protected final Integer DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES = 10;
 
-    protected JenaGraphManipulatorMock graphManipulator;
+    protected JenaUserGraphMock graphManipulator;
 
     protected Vertex vertexA;
     protected Vertex vertexB;
@@ -40,7 +40,7 @@ public class GraphManipulationRestTest extends RestTest {
         authenticatedUser = authenticate();
         createUserCore();
         deleteAllUserVerticesFromSearch();
-        graphManipulator = JenaGraphManipulatorMock.mockWithUser(authenticatedUser);
+        graphManipulator = JenaUserGraphMock.mockWithUser(authenticatedUser);
         VerticesCalledABAndC vertexABAndC = makeGraphHave3SerialVerticesWithLongLabels(authenticatedUser);
 
         vertexA = vertexABAndC.vertexA();

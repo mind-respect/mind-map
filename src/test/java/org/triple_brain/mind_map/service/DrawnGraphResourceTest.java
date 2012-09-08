@@ -4,6 +4,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Test;
+import org.triple_brain.module.model.TripleBrainUris;
 import org.triple_brain.module.model.graph.Edge;
 import org.triple_brain.module.model.graph.Vertex;
 
@@ -11,7 +12,6 @@ import static junit.framework.Assert.assertFalse;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertTrue;
-import static org.triple_brain.graphmanipulator.jena.TripleBrainModel.SITE_URI;
 import static org.triple_brain.module.common_utils.CommonUtils.decodeURL;
 import static org.triple_brain.module.common_utils.CommonUtils.encodeURL;
 import static org.triple_brain.module.model.json.drawn_graph.DrawnGraphJSONFields.VERTICES;
@@ -28,7 +28,7 @@ public class DrawnGraphResourceTest extends GraphManipulationRestTest {
         Integer depthOfSubVertices = 2;
         response = resource
                 .path("drawn_graph")
-                .path(encodeURL(authenticatedUser.mindMapURIFromSiteURI(SITE_URI)))
+                .path(encodeURL(authenticatedUser.mindMapURIFromSiteURI(TripleBrainUris.BASE)))
                 .path(depthOfSubVertices.toString())
                 .cookie(authCookie)
                 .get(ClientResponse.class);
@@ -49,7 +49,7 @@ public class DrawnGraphResourceTest extends GraphManipulationRestTest {
         String secondVertexId = encodeURL(newEdge.destinationVertex().id());
         response = resource
                 .path("drawn_graph")
-                .path(encodeURL(authenticatedUser.mindMapURIFromSiteURI(SITE_URI)))
+                .path(encodeURL(authenticatedUser.mindMapURIFromSiteURI(TripleBrainUris.BASE)))
                 .path(depthOfSubVertices.toString())
                 .path(secondVertexId)
                 .cookie(authCookie)
@@ -68,7 +68,7 @@ public class DrawnGraphResourceTest extends GraphManipulationRestTest {
         Integer depthOfSubVertices = 1;
         response = resource
                 .path("drawn_graph")
-                .path(encodeURL(authenticatedUser.mindMapURIFromSiteURI(SITE_URI)))
+                .path(encodeURL(authenticatedUser.mindMapURIFromSiteURI(TripleBrainUris.BASE)))
                 .path(depthOfSubVertices.toString())
                 .cookie(authCookie)
                 .get(ClientResponse.class);
@@ -78,7 +78,7 @@ public class DrawnGraphResourceTest extends GraphManipulationRestTest {
 
         response = resource
                 .path("drawn_graph")
-                .path(encodeURL(authenticatedUser.mindMapURIFromSiteURI(SITE_URI)))
+                .path(encodeURL(authenticatedUser.mindMapURIFromSiteURI(TripleBrainUris.BASE)))
                 .path(depthOfSubVertices.toString())
                 .path(encodeURL(vertexB.id()))
                 .cookie(authCookie)
@@ -88,7 +88,7 @@ public class DrawnGraphResourceTest extends GraphManipulationRestTest {
 
         response = resource
                 .path("drawn_graph")
-                .path(encodeURL(authenticatedUser.mindMapURIFromSiteURI(SITE_URI)))
+                .path(encodeURL(authenticatedUser.mindMapURIFromSiteURI(TripleBrainUris.BASE)))
                 .path(depthOfSubVertices.toString())
                 .path(encodeURL(vertexC.id()))
                 .cookie(authCookie)

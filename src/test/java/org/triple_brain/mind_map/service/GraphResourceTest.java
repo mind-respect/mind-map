@@ -2,10 +2,10 @@ package org.triple_brain.mind_map.service;
 
 import com.sun.jersey.api.client.ClientResponse;
 import org.junit.Test;
+import org.triple_brain.module.model.TripleBrainUris;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.triple_brain.graphmanipulator.jena.TripleBrainModel.*;
 import static org.triple_brain.module.common_utils.CommonUtils.encodeURL;
 
 /**
@@ -30,7 +30,7 @@ public class GraphResourceTest extends GraphManipulationRestTest {
     private ClientResponse getGraphAsXMLRDFUsingRest()throws Exception{
         return  resource
                 .path("graph")
-                .path(encodeURL(authenticatedUser.mindMapURIFromSiteURI(SITE_URI)))
+                .path(encodeURL(authenticatedUser.mindMapURIFromSiteURI(TripleBrainUris.BASE)))
                 .cookie(authCookie)
                 .get(ClientResponse.class);
     }
