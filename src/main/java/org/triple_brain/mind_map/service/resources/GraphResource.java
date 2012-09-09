@@ -36,6 +36,6 @@ public class GraphResource {
         JenaUserGraph graphManipulator = JenaUserGraph.withUser(
                 user
         );
-        return Response.ok(graphManipulator.toRDFXML()).build();
+        return Response.ok(graphManipulator.toRdfXml()).build();
     }
 }

@@ -6,7 +6,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
-import graph.JenaTestModule;
+import org.triple_brain.module.model.graph.jena.JenaTestModule;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

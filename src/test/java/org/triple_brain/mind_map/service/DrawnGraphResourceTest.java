@@ -37,14 +37,14 @@ public class DrawnGraphResourceTest extends GraphManipulationRestTest {
         assertThat(drawnGraph, is(not(nullValue())));
         JSONArray vertices = drawnGraph.getJSONArray(VERTICES);
         assertThat(vertices.length(), is(greaterThan(0)));
-        Vertex centralVertex = graphManipulator.defaultVertex();
+        Vertex centralVertex = userGraph.defaultVertex();
         assertTrue(verticesContainID(vertices, centralVertex.id()));
     }
 
     @Test
     public void can_get_drawn_graph_around_specified_central_vertex() throws Exception {
         Integer depthOfSubVertices = 2;
-        Vertex defaultVertex = graphManipulator.defaultVertex();
+        Vertex defaultVertex = userGraph.defaultVertex();
         Edge newEdge = defaultVertex.addVertexAndRelation();
         String secondVertexId = encodeURL(newEdge.destinationVertex().id());
         response = resource
@@ -95,7 +95,7 @@ public class DrawnGraphResourceTest extends GraphManipulationRestTest {
                 .get(ClientResponse.class);
         drawnGraph = response.getEntity(JSONObject.class);
         assertThat(drawnGraph.getJSONArray(VERTICES).length(), is(2));
-        Vertex defaultVertex = graphManipulator.defaultVertex();
+        Vertex defaultVertex = userGraph.defaultVertex();
         assertFalse(
                 verticesContainID(
                         drawnGraph.getJSONArray(VERTICES),

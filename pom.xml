@@ -152,13 +152,8 @@
             <groupId>org.codehaus.jettison</groupId>
             <artifactId>jettison</artifactId>
             <version>1.2</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>stax</groupId>
-                    <artifactId>stax-api</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
+
         <dependency>
             <groupId>javax.ws.rs</groupId>
             <artifactId>jsr311-api</artifactId>
@@ -199,22 +194,16 @@
 
         <!-- Tests -->
         <dependency>
-            <groupId>org.triple_brain.module</groupId>
-            <artifactId>triple_brain-model</artifactId>
+            <groupId>org.triple_brain.test</groupId>
+            <artifactId>graph_model-test</artifactId>
             <version>1.0.0-SNAPSHOT</version>
             <classifier>tests</classifier>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.triple_brain.module</groupId>
             <artifactId>triple_brain-repository-sql</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-            <classifier>tests</classifier>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.triple_brain.module</groupId>
-            <artifactId>triple_brain-jena-graph-manipulator</artifactId>
             <version>1.0.0-SNAPSHOT</version>
             <classifier>tests</classifier>
             <scope>test</scope>
