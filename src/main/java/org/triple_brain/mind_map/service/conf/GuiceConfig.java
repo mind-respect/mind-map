@@ -94,6 +94,10 @@ public class GuiceConfig extends GuiceServletContextListener {
                         .annotatedWith(Names.named("jenaDatabaseTypeName"))
                         .toProvider(fromJndi(String.class, "jdbc/jenaTripleBrainDBTypeName"));
 
+                bind(String.class)
+                        .annotatedWith(Names.named("tdb_directory_path"))
+                        .toInstance("src/resources/tdb");
+
             }
         });
     }

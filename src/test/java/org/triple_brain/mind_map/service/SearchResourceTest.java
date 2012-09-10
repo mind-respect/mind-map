@@ -4,7 +4,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Test;
-import org.triple_brain.module.common_utils.CommonUtils;
+import org.triple_brain.module.common_utils.Uris;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -22,7 +22,7 @@ public class SearchResourceTest extends GraphManipulationRestTest{
                 .path("search")
                 .path("vertices")
                 .path("auto_complete")
-                .path(CommonUtils.encodeURL("vert"))
+                .path(Uris.encodeURL("vert"))
                 .cookie(authCookie)
                 .type("application/json")
                 .get(ClientResponse.class);
@@ -54,7 +54,7 @@ public class SearchResourceTest extends GraphManipulationRestTest{
                 .path("search")
                 .path("vertices")
                 .path("auto_complete")
-                .path(CommonUtils.encodeURL(textToSearchWith))
+                .path(Uris.encodeURL(textToSearchWith))
                 .cookie(authCookie)
                 .type("application/json")
                 .get(ClientResponse.class);

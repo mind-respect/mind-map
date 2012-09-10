@@ -24,7 +24,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertTrue;
-import static org.triple_brain.module.common_utils.CommonUtils.encodeURL;
+import static org.triple_brain.module.common_utils.Uris.encodeURL;
 import static org.triple_brain.module.model.json.StatementJsonFields.*;
 
 /**

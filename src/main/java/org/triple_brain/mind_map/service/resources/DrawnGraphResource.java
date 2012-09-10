@@ -23,7 +23,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 
 import static org.triple_brain.mind_map.service.ServiceUtils.usernameInURI;
-import static org.triple_brain.module.common_utils.CommonUtils.decodeURL;
+import static org.triple_brain.module.common_utils.Uris.decodeURL;
 
 /**
  * Copyright Mozilla Public License 1.1

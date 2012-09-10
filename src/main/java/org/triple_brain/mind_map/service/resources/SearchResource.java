@@ -2,7 +2,7 @@ package org.triple_brain.mind_map.service.resources;
 
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
-import org.triple_brain.module.common_utils.CommonUtils;
+import org.triple_brain.module.common_utils.Uris;
 import org.triple_brain.module.search.GraphSearch;
 
 import javax.inject.Inject;
@@ -31,7 +31,7 @@ public class SearchResource {
     @Path("vertices/auto_complete/{search_text}")
     public JSONArray searchVerticesForAutoComplete(@PathParam("search_text") String searchText, @Context HttpServletRequest request) throws JSONException, UnsupportedEncodingException {
         return graphSearch.searchVerticesForAutoCompletionByLabelAndUser(
-                CommonUtils.decodeURL(searchText),
+                Uris.decodeURL(searchText),
                 userFromSession(request.getSession())
 
         );

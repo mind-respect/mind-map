@@ -29,7 +29,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.triple_brain.mind_map.service.resources.GraphManipulatorResourceUtils.userFromSession;
-import static org.triple_brain.module.common_utils.CommonUtils.decodeURL;
+import static org.triple_brain.module.common_utils.Uris.decodeURL;
 import static org.triple_brain.module.model.json.StatementJsonFields.*;
 import static org.triple_brain.module.model.json.SuggestionJsonFields.*;
 /**
