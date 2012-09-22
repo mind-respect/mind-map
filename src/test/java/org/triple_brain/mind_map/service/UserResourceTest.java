@@ -39,12 +39,13 @@ public class UserResourceTest extends GraphManipulationRestTest {
                 DEFAULT_PASSWORD
         );
         createUser(rogerLamotheAsJson);
+        JSONObject loginInfo = new JSONObject()
+                .put(UserJSONFields.EMAIL, "roger.lamothe@example.org")
+                .put(UserJSONFields.PASSWORD, "password");
         ClientResponse response = resource
                 .path("users")
                 .path("authenticate")
-                .queryParam("email", "roger.lamothe@example.org")
-                .queryParam("password", "password")
-                .get(ClientResponse.class);
+                .post(ClientResponse.class, loginInfo);
         assertThat(response.getStatus(), is(200));
     }
 

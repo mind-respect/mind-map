@@ -4,7 +4,8 @@
 
 define([
     "require",
-    "jquery"
+    "jquery",
+    "jquery.json.min"
 ],
     function (require, $) {
         var api = {};

@@ -49,12 +49,16 @@ public class UserResource {
     @Inject
     private GraphFactory graphFactory;
 
-    @GET
+    @POST
     @Path("/authenticate")
-    public Response authenticate(@QueryParam("email") String email, @QueryParam("password") String password, @Context HttpServletRequest request) throws JSONException {
+    public Response authenticate(@Context HttpServletRequest request, JSONObject loginInfo) throws JSONException {
         try {
-            User user = userRepository.findByEmail(email);
-            if (user.hasPassword(password)) {
+            User user = userRepository.findByEmail(
+                    loginInfo.getString(UserJSONFields.EMAIL)
+            );
+            if (user.hasPassword(
+                    loginInfo.getString(UserJSONFields.PASSWORD)
+            )) {
                 request.getSession().setAttribute(AUTHENTICATION_ATTRIBUTE_KEY, true);
                 request.getSession().setAttribute(AUTHENTICATED_USER_KEY, user);
                 return Response.ok(

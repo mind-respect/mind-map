@@ -1,7 +1,8 @@
 define([
     "jquery",
     "triple_brain.freebase",
-    "triple_brain.external_resource"
+    "triple_brain.external_resource",
+    "jquery.json.min"
 ],
     function ($, Freebase, ExternalResource) {
         var api = {};

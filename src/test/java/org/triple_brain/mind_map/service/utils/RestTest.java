@@ -90,25 +90,37 @@ public abstract class RestTest {
     }
 
     protected User authenticate(User user) {
-        ClientResponse response = resource
-                .path("users")
-                .path("authenticate")
-                .queryParam("email", user.email())
-                .queryParam("password", DEFAULT_PASSWORD)
-                .get(ClientResponse.class);
-        assertThat(response.getStatus(), is(200));
-        authCookie = response.getCookies().get(0);
-        return user;
+        try{
+            JSONObject loginInfo = new JSONObject()
+                    .put(
+                            UserJSONFields.EMAIL,
+                            user.email()
+                    )
+                    .put(UserJSONFields.PASSWORD, DEFAULT_PASSWORD);
+            ClientResponse response = resource
+                    .path("users")
+                    .path("authenticate")
+                    .post(ClientResponse.class, loginInfo);
+            assertThat(response.getStatus(), is(200));
+            authCookie = response.getCookies().get(0);
+            return user;
+        }catch(JSONException e){
+            throw new RuntimeException(e);
+        }
     }
 
     protected JSONObject authenticate(JSONObject user) {
         try{
+            JSONObject loginInfo = new JSONObject()
+                    .put(
+                            UserJSONFields.EMAIL,
+                            user.getString(UserJSONFields.EMAIL)
+                    )
+                    .put(UserJSONFields.PASSWORD, DEFAULT_PASSWORD);
             ClientResponse response = resource
                     .path("users")
                     .path("authenticate")
-                    .queryParam("email", user.getString(UserJSONFields.EMAIL))
-                    .queryParam("password", DEFAULT_PASSWORD)
-                    .get(ClientResponse.class);
+                    .post(ClientResponse.class, loginInfo);
             assertThat(response.getStatus(), is(200));
             authCookie = response.getCookies().get(0);
             return response.getEntity(JSONObject.class);
