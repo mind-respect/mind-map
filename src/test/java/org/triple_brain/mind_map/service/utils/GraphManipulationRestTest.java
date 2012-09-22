@@ -9,7 +9,6 @@ import org.triple_brain.module.common_utils.Uris;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.json.UserJSONFields;
 
-import javax.ws.rs.core.MediaType;
 import java.net.URI;
 
 import static org.hamcrest.core.Is.is;
@@ -144,10 +143,9 @@ public class GraphManipulationRestTest extends RestTest {
     public JSONObject wholeGraph(){
         ClientResponse response = resource
                 .path("drawn_graph")
-                .path(authenticatedUser.mindMapUri())
+                .path(Uris.encodeURL(authenticatedUser.mindMapUri()))
                 .path(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES.toString())
                 .cookie(authCookie)
-                .type(MediaType.APPLICATION_JSON)
                 .get(ClientResponse.class);
         return response.getEntity(JSONObject.class);
     }

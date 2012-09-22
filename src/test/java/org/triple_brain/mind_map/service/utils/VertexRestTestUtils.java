@@ -43,8 +43,8 @@ public class VertexRestTestUtils {
         ClientResponse response = resource
                 .path("test")
                 .path("vertex")
-                .path("connected_edges")
                 .path(Uris.encodeURL(vertexUri.toString()))
+                .path("connected_edges")
                 .cookie(authCookie)
                 .get(ClientResponse.class);
         return response.getEntity(JSONArray.class);
@@ -59,7 +59,8 @@ public class VertexRestTestUtils {
                 .path(Uris.encodeURL(destinationVertexUri.toString()))
                 .cookie(authCookie)
                 .get(ClientResponse.class);
-        return response.getEntity(Boolean.class);
+        String hasDestinationStr = response.getEntity(String.class);
+        return Boolean.valueOf(hasDestinationStr);
     }
 
     public URI uriOfVertex(JSONObject jsonObject){

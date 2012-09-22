@@ -153,13 +153,13 @@ public class VertexResourceTest extends GraphManipulationRestTest {
 
     @Test
     public void can_add_an_additional_type_to_vertex() throws Exception {
-        JSONObject additionalTypes = vertexA().getJSONObject(VertexJsonFields.TYPES);
+        JSONArray additionalTypes = vertexA().getJSONArray(VertexJsonFields.TYPES);
         assertThat(
                 additionalTypes.length(),
                 is(0)
         );
         addFoafPersonTypeToVertexA();
-        additionalTypes = vertexA().getJSONObject(VertexJsonFields.TYPES);
+        additionalTypes = vertexA().getJSONArray(VertexJsonFields.TYPES);
         assertThat(
                 additionalTypes.length(),
                 is(greaterThan(0))
@@ -169,12 +169,13 @@ public class VertexResourceTest extends GraphManipulationRestTest {
     @Test
     public void can_remove_the_additional_type_of_vertex() throws Exception {
         addFoafPersonTypeToVertexA();
-        JSONObject additionalTypes = vertexA().getJSONObject(VertexJsonFields.TYPES);
+        JSONArray additionalTypes = vertexA().getJSONArray(VertexJsonFields.TYPES);
         assertThat(
                 additionalTypes.length(),
                 is(greaterThan(0))
         );
         removeFoafPersonIdentificationToVertexA();
+        additionalTypes = vertexA().getJSONArray(VertexJsonFields.TYPES);
         assertThat(
                 additionalTypes.length(),
                 is(0)
@@ -216,7 +217,7 @@ public class VertexResourceTest extends GraphManipulationRestTest {
 
     @Test
     public void can_set_suggestions_of_vertex() throws Exception {
-        JSONObject suggestions = vertexA().getJSONObject(VertexJsonFields.SUGGESTIONS);
+        JSONArray suggestions = vertexA().getJSONArray(VertexJsonFields.SUGGESTIONS);
         assertThat(
                 suggestions.length(),
                 is(0)
@@ -227,6 +228,7 @@ public class VertexResourceTest extends GraphManipulationRestTest {
                         SuggestionJsonFields.toJson(suggestion)
                 )
         );
+        suggestions = vertexA().getJSONArray(VertexJsonFields.SUGGESTIONS);
         assertThat(
                 suggestions.length(),
                 is(greaterThan(0))

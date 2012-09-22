@@ -44,8 +44,14 @@ public class RestInterceptor implements MethodInterceptor {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         Object state = beforeAfterEachRestCall.before();
-        Object returnedObject = invocation.proceed();
-        beforeAfterEachRestCall.after(state);
+        Object returnedObject;
+        try{
+            returnedObject = invocation.proceed();
+        }catch(Exception e){
+            throw e;
+        }finally {
+            beforeAfterEachRestCall.after(state);
+        }
         return returnedObject;
     }
 

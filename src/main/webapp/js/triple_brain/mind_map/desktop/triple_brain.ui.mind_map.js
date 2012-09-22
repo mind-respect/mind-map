@@ -41,7 +41,7 @@ define(
                         $("#sub-vertices-depth-slider").slider({
                             value:sliderDefaultValue,
                             min:0,
-                            max:10,
+                            max:20,
                             step:1,
                             orientation:"horizontal",
                             slide:function (event, ui) {

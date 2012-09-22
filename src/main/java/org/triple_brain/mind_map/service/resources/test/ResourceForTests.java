@@ -3,7 +3,6 @@ package org.triple_brain.mind_map.service.resources.test;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.codehaus.jettison.json.JSONArray;
-import org.triple_brain.graphmanipulator.jena.graph.JenaUserGraph;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.*;
 import org.triple_brain.module.model.graph.scenarios.TestScenarios;
@@ -71,14 +70,14 @@ public class ResourceForTests {
         graphFactory.createForUser(user);
         graphIndexer.createUserCore(user);
         deleteAllUserDocumentsForSearch(user);
-        JenaUserGraph graphManipulator = JenaUserGraph.withUser(
+        UserGraph userGraph = graphFactory.loadForUser(
                 user
         );
         graphIndexer.indexVertexOfUser(
-                graphManipulator.defaultVertex(),
+                userGraph.defaultVertex(),
                 user
         );
-        Vertex destinationVertex = graphManipulator.defaultVertex();
+        Vertex destinationVertex = userGraph.defaultVertex();
         for (int i = 0; i < 100; i++) {
             Edge edge = destinationVertex.addVertexAndRelation();
             destinationVertex = edge.destinationVertex();
@@ -137,11 +136,11 @@ public class ResourceForTests {
     @GET
     public Response indexSessionUserVertices(@Context HttpServletRequest request) {
         User currentUser = userFromSession(request.getSession());
-        JenaUserGraph graphManipulator = JenaUserGraph.withUser(
+        UserGraph userGraph = graphFactory.loadForUser(
                 currentUser
         );
-        SubGraph userGraph = graphManipulator.graphWithDefaultVertexAndDepth(10);
-        for (Vertex vertex : userGraph.vertices()) {
+        SubGraph subGraph = userGraph.graphWithDefaultVertexAndDepth(10);
+        for (Vertex vertex : subGraph.vertices()) {
             graphIndexer.indexVertexOfUser(vertex, currentUser);
         }
         return Response.ok().build();

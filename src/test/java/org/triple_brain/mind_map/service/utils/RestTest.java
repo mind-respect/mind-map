@@ -48,6 +48,7 @@ public abstract class RestTest {
         clientConfig.getProperties().put("com.sun.jersey.impl.client.httpclient.handleCookies", true);
         client = Client.create(clientConfig);
         cleanTables();
+        resource = client.resource(BASE_URI);
     }
 
     @AfterClass
@@ -59,7 +60,6 @@ public abstract class RestTest {
     @Before
     public void before_rest_test() throws SQLException {
         cleanTables();
-        resource = client.resource(BASE_URI);
     }
 
     @After
