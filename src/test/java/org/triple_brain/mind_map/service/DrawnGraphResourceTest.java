@@ -4,9 +4,13 @@ import com.sun.jersey.api.client.ClientResponse;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Test;
-import org.triple_brain.module.model.TripleBrainUris;
-import org.triple_brain.module.model.graph.Edge;
-import org.triple_brain.module.model.graph.Vertex;
+import org.triple_brain.mind_map.service.utils.GraphManipulationRestTest;
+import org.triple_brain.module.common_utils.Uris;
+import org.triple_brain.module.model.json.StatementJsonFields;
+import org.triple_brain.module.model.json.graph.EdgeJsonFields;
+import org.triple_brain.module.model.json.graph.VertexJsonFields;
+
+import java.net.URI;
 
 import static junit.framework.Assert.assertFalse;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,9 +30,9 @@ public class DrawnGraphResourceTest extends GraphManipulationRestTest {
     @Test
     public void can_get_drawn_graph_around_default_central_vertex() throws Exception {
         Integer depthOfSubVertices = 2;
-        response = resource
+        ClientResponse response = resource
                 .path("drawn_graph")
-                .path(encodeURL(authenticatedUser.mindMapURIFromSiteURI(TripleBrainUris.BASE)))
+                .path(encodeURL(authenticatedUser.mindMapUri()))
                 .path(depthOfSubVertices.toString())
                 .cookie(authCookie)
                 .get(ClientResponse.class);
@@ -37,19 +41,22 @@ public class DrawnGraphResourceTest extends GraphManipulationRestTest {
         assertThat(drawnGraph, is(not(nullValue())));
         JSONArray vertices = drawnGraph.getJSONArray(VERTICES);
         assertThat(vertices.length(), is(greaterThan(0)));
-        Vertex centralVertex = userGraph.defaultVertex();
-        assertTrue(verticesContainID(vertices, centralVertex.id()));
+        JSONObject defaultVertex = vertexA();
+        assertTrue(vertexUtils.vertexIsInVertices(defaultVertex, vertices));
     }
 
     @Test
     public void can_get_drawn_graph_around_specified_central_vertex() throws Exception {
         Integer depthOfSubVertices = 2;
-        Vertex defaultVertex = userGraph.defaultVertex();
-        Edge newEdge = defaultVertex.addVertexAndRelation();
-        String secondVertexId = encodeURL(newEdge.destinationVertex().id());
-        response = resource
+        JSONObject defaultVertex = vertexA();
+        JSONObject createdStatement = vertexUtils.addAVertexToVertexAWithUri(Uris.get(
+                defaultVertex.getString(VertexJsonFields.ID)
+        )).getEntity(JSONObject.class);
+        JSONObject newEdge = createdStatement.getJSONObject(StatementJsonFields.EDGE);
+        String secondVertexId = encodeURL(newEdge.getString(EdgeJsonFields.DESTINATION_VERTEX_ID));
+        ClientResponse response = resource
                 .path("drawn_graph")
-                .path(encodeURL(authenticatedUser.mindMapURIFromSiteURI(TripleBrainUris.BASE)))
+                .path(encodeURL(authenticatedUser.mindMapUri()))
                 .path(depthOfSubVertices.toString())
                 .path(secondVertexId)
                 .cookie(authCookie)
@@ -66,21 +73,21 @@ public class DrawnGraphResourceTest extends GraphManipulationRestTest {
     @Test
     public void only_a_certain_number_vertices_show_with_specified_depth() throws Exception {
         Integer depthOfSubVertices = 1;
-        response = resource
+        ClientResponse response = resource
                 .path("drawn_graph")
-                .path(encodeURL(authenticatedUser.mindMapURIFromSiteURI(TripleBrainUris.BASE)))
+                .path(encodeURL(authenticatedUser.mindMapUri()))
                 .path(depthOfSubVertices.toString())
                 .cookie(authCookie)
                 .get(ClientResponse.class);
         JSONObject drawnGraph = response.getEntity(JSONObject.class);
         assertThat(drawnGraph.getJSONArray(VERTICES).length(), is(2));
-        assertFalse(verticesContainID(drawnGraph.getJSONArray(VERTICES), vertexC.id()));
+        assertFalse(verticesContainID(drawnGraph.getJSONArray(VERTICES), vertexCUri().toString()));
 
         response = resource
                 .path("drawn_graph")
-                .path(encodeURL(authenticatedUser.mindMapURIFromSiteURI(TripleBrainUris.BASE)))
+                .path(encodeURL(authenticatedUser.mindMapUri()))
                 .path(depthOfSubVertices.toString())
-                .path(encodeURL(vertexB.id()))
+                .path(encodeURL(vertexBUri().toString()))
                 .cookie(authCookie)
                 .get(ClientResponse.class);
         drawnGraph = response.getEntity(JSONObject.class);
@@ -88,18 +95,18 @@ public class DrawnGraphResourceTest extends GraphManipulationRestTest {
 
         response = resource
                 .path("drawn_graph")
-                .path(encodeURL(authenticatedUser.mindMapURIFromSiteURI(TripleBrainUris.BASE)))
+                .path(encodeURL(authenticatedUser.mindMapUri()))
                 .path(depthOfSubVertices.toString())
-                .path(encodeURL(vertexC.id()))
+                .path(encodeURL(vertexCUri().toString()))
                 .cookie(authCookie)
                 .get(ClientResponse.class);
         drawnGraph = response.getEntity(JSONObject.class);
         assertThat(drawnGraph.getJSONArray(VERTICES).length(), is(2));
-        Vertex defaultVertex = userGraph.defaultVertex();
+        URI defaultVertexUri = vertexAUri();
         assertFalse(
                 verticesContainID(
                         drawnGraph.getJSONArray(VERTICES),
-                        defaultVertex.id()
+                        defaultVertexUri.toString()
                 )
         );
     }

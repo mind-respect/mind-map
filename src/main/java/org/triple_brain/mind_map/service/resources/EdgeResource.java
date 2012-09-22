@@ -1,11 +1,10 @@
 package org.triple_brain.mind_map.service.resources;
 
 import org.codehaus.jettison.json.JSONException;
-import org.triple_brain.graphmanipulator.jena.graph.JenaUserGraph;
-import org.triple_brain.module.model.graph.Edge;
-import org.triple_brain.module.model.graph.GraphElementIdentifier;
-import org.triple_brain.module.model.graph.Vertex;
+import org.triple_brain.module.common_utils.Uris;
+import org.triple_brain.module.model.graph.*;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -27,6 +26,9 @@ import static org.triple_brain.module.common_utils.Uris.encodeURL;
 @Produces(MediaType.APPLICATION_JSON)
 public class EdgeResource {
 
+    @Inject
+    GraphFactory graphFactory;
+
     @POST
     @Path("/{sourceVertexId}/{destinationVertexId}")
     public Response addRelation(@GraphElementIdentifier @PathParam("sourceVertexId") String sourceVertexId, @GraphElementIdentifier @PathParam("destinationVertexId") String destinationVertexId, @Context HttpServletRequest request) throws JSONException, URISyntaxException, UnsupportedEncodingException {
@@ -36,11 +38,15 @@ public class EdgeResource {
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        JenaUserGraph graphManipulator = JenaUserGraph.withUser(
+        UserGraph userGraph = graphFactory.loadForUser(
                 userFromSession(request.getSession())
         );
-        Vertex sourceVertex = graphManipulator.vertexWithURI(sourceVertexId);
-        Vertex destinationVertex = graphManipulator.vertexWithURI(destinationVertexId);
+        Vertex sourceVertex = userGraph.vertexWithURI(Uris.get(
+                sourceVertexId
+        ));
+        Vertex destinationVertex = userGraph.vertexWithURI(Uris.get(
+                destinationVertexId
+        ));
         Edge createdEdge = sourceVertex.addRelationToVertex(destinationVertex);
         return Response.created(new URI(request.getRequestURL() + "/" + encodeURL(createdEdge.id()))).build();
     }
@@ -53,10 +59,12 @@ public class EdgeResource {
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        JenaUserGraph graphManipulator = JenaUserGraph.withUser(
+        UserGraph userGraph= graphFactory.loadForUser(
                 userFromSession(request.getSession())
         );
-        Edge edge = graphManipulator.edgeWithUri(edgeId);
+        Edge edge = userGraph.edgeWithUri(Uris.get(
+                edgeId
+        ));
         edge.remove();
         return Response.ok().build();
     }
@@ -69,10 +77,12 @@ public class EdgeResource {
         }catch (UnsupportedEncodingException e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        JenaUserGraph graphManipulator = JenaUserGraph.withUser(
+        UserGraph userGraph = graphFactory.loadForUser(
                 userFromSession(request.getSession())
         );
-        Edge edge = graphManipulator.edgeWithUri(edgeId);
+        Edge edge = userGraph.edgeWithUri(Uris.get(
+                edgeId
+        ));
         edge.label(label);
         return Response.ok().build();
     }

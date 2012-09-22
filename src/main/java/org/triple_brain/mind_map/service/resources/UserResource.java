@@ -3,9 +3,10 @@ package org.triple_brain.mind_map.service.resources;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
-import org.triple_brain.graphmanipulator.jena.graph.JenaUserGraph;
 import org.triple_brain.module.model.User;
-import org.triple_brain.module.model.graph.GraphMaker;
+import org.triple_brain.module.model.graph.GraphFactory;
+import org.triple_brain.module.model.graph.UserGraph;
+import org.triple_brain.module.model.json.UserJSONFields;
 import org.triple_brain.module.repository.user.NonExistingUserException;
 import org.triple_brain.module.repository.user.UserRepository;
 import org.triple_brain.module.search.GraphIndexer;
@@ -46,7 +47,7 @@ public class UserResource {
     GraphIndexer graphIndexer;
 
     @Inject
-    private GraphMaker graphMaker;
+    private GraphFactory graphFactory;
 
     @GET
     @Path("/authenticate")
@@ -56,7 +57,9 @@ public class UserResource {
             if (user.hasPassword(password)) {
                 request.getSession().setAttribute(AUTHENTICATION_ATTRIBUTE_KEY, true);
                 request.getSession().setAttribute(AUTHENTICATED_USER_KEY, user);
-                return Response.ok(user.toJSON()).build();
+                return Response.ok(
+                        UserJSONFields.toJSON(user)
+                ).build();
             }
         } catch (NonExistingUserException e) {
             return Response.status(401).build();
@@ -85,11 +88,14 @@ public class UserResource {
     public Response sessionUser(@Context HttpServletRequest request) throws JSONException {
         if (isUserInSession(request.getSession())) {
             User authenticatedUser = userFromSession(request.getSession());
-            return Response.ok(authenticatedUser.toJSON()).build();
+            return Response.ok(
+                    UserJSONFields.toJSON(
+                            authenticatedUser
+                    )
+            ).build();
         } else {
             return Response.status(Response.Status.FORBIDDEN).build();
         }
-
     }
 
     @POST
@@ -124,13 +130,11 @@ public class UserResource {
         }
 
         userRepository.save(user);
-        graphMaker.createForUser(user);
+        graphFactory.createForUser(user);
+        UserGraph userGraph = graphFactory.loadForUser(user);
         graphIndexer.createUserCore(user);
-        JenaUserGraph graphManipulator = JenaUserGraph.withUser(
-                user
-        );
         graphIndexer.indexVertexOfUser(
-                graphManipulator.defaultVertex(),
+                userGraph.defaultVertex(),
                 user
         );
         return Response.created(new URI(request.getRequestURL() + "/" + user.id())).build();

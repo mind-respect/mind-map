@@ -4,6 +4,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Test;
+import org.triple_brain.mind_map.service.utils.GraphManipulationRestTest;
 import org.triple_brain.module.common_utils.Uris;
 
 import static org.hamcrest.core.Is.is;
@@ -13,7 +14,7 @@ import static org.triple_brain.module.model.json.graph.VertexJsonFields.LABEL;
 /*
 * Copyright Mozilla Public License 1.1
 */
-public class SearchResourceTest extends GraphManipulationRestTest{
+public class SearchResourceTest extends GraphManipulationRestTest {
 
     @Test
     public void can_search_vertices_for_auto_complete()throws Exception{

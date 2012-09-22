@@ -8,14 +8,13 @@ import com.google.inject.servlet.GuiceServletContextListener;
 import com.sun.jersey.guice.JerseyServletModule;
 import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
 import org.apache.solr.core.CoreContainer;
-import org.triple_brain.graphmanipulator.jena.JenaConnection;
-import org.triple_brain.graphmanipulator.jena.graph.JenaGraphMaker;
-import org.triple_brain.mind_map.service.SecurityInterceptor;
+import org.triple_brain.mind_map.service.RestInterceptor;
 import org.triple_brain.mind_map.service.resources.*;
-import org.triple_brain.module.model.graph.GraphMaker;
-import org.triple_brain.module.repository.user.UserRepository;
+import org.triple_brain.mind_map.service.resources.test.*;
+import org.triple_brain.module.model.graph.GraphComponentTest;
+import org.triple_brain.module.model.graph.neo4j.Neo4JGraphComponentTest;
+import org.triple_brain.module.neo4j_graph_manipulator.graph.Neo4JModule;
 import org.triple_brain.module.repository_sql.SQLModule;
-import org.triple_brain.module.repository_sql.SQLUserRepository;
 import org.triple_brain.module.search.GraphIndexer;
 import org.triple_brain.module.search.GraphSearch;
 import org.triple_brain.module.search.SearchUtils;
@@ -43,15 +42,13 @@ public class GuiceConfig extends GuiceServletContextListener {
             @Override
             protected void configureServlets() {
                 bind(Context.class).to(InitialContext.class);
-                SecurityInterceptor securityInterceptor = new SecurityInterceptor();
-                requestInjection(securityInterceptor);
+                RestInterceptor restInterceptor = new RestInterceptor();
+                requestInjection(restInterceptor);
 
                 bindInterceptor(Matchers.any(), Matchers.annotatedWith(Path.class),
-                        securityInterceptor);
-                install(new SQLModule());
+                        restInterceptor);
 
-                bind(UserRepository.class).to(SQLUserRepository.class);
-                bind(GraphMaker.class).to(JenaGraphMaker.class);
+                install(new SQLModule());
 
                 bind(DrawnGraphResource.class);
                 bind(GraphResource.class);
@@ -61,6 +58,10 @@ public class GuiceConfig extends GuiceServletContextListener {
                 bind(SearchResource.class);
                 serve("/service/*").with(GuiceContainer.class);
 
+                bind(DataSource.class)
+                        .annotatedWith(Names.named("nonRdfDb"))
+                        .toProvider(fromJndi(DataSource.class, "jdbc/nonRdfTripleBrainDB"));
+                install(new Neo4JModule());
                 try{
                     final InitialContext jndiContext = new InitialContext();
                     String solrHomePath = (String) jndiContext.lookup("solr_home_path");
@@ -69,34 +70,24 @@ public class GuiceConfig extends GuiceServletContextListener {
                     CoreContainer coreContainer = new CoreContainer(solrHomePath, solrConfigXml);
                     bind(GraphIndexer.class).toInstance(GraphIndexer.withCoreContainer(coreContainer));
                     bind(GraphSearch.class).toInstance(GraphSearch.withCoreContainer(coreContainer));
-                    String isTesting = (String) jndiContext.lookup("is_testing");
-                    if("yes".equals(isTesting)){
+                    String isTestingStr = (String) jndiContext.lookup("is_testing");
+                    Boolean isTesting = "yes".equals(isTestingStr);
+                    if(isTesting){
                         bind(ResourceForTests.class);
+                        bind(VertexResourceTestUtils.class);
+                        bind(EdgeResourceTestUtils.class);
+                        bind(GraphResourceTestUtils.class);
+                        bind(UserResourceTestUtils.class);
                         bind(SearchUtils.class).toInstance(
                                 SearchUtils.usingCoreCoreContainer(coreContainer)
+                        );
+                        bind(GraphComponentTest.class).toInstance(
+                                new Neo4JGraphComponentTest()
                         );
                     }
                 }catch(NamingException | ParserConfigurationException | IOException | SAXException e){
                     throw new RuntimeException(e);
                 }
-
-                bind(DataSource.class)
-                        .annotatedWith(Names.named("nonRdfDb"))
-                        .toProvider(fromJndi(DataSource.class, "jdbc/nonRdfTripleBrainDB"));
-
-                requestStaticInjection(JenaConnection.class);
-
-                bind(DataSource.class)
-                        .annotatedWith(Names.named("jenaDB"))
-                        .toProvider(fromJndi(DataSource.class, "jdbc/jenaTripleBrainDB"));
-
-                bind(String.class)
-                        .annotatedWith(Names.named("jenaDatabaseTypeName"))
-                        .toProvider(fromJndi(String.class, "jdbc/jenaTripleBrainDBTypeName"));
-
-                bind(String.class)
-                        .annotatedWith(Names.named("tdb_directory_path"))
-                        .toInstance("src/resources/tdb");
 
             }
         });

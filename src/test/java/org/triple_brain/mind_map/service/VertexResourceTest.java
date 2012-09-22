@@ -4,23 +4,23 @@ import com.sun.jersey.api.client.ClientResponse;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Test;
+import org.triple_brain.mind_map.service.utils.GraphManipulationRestTest;
+import org.triple_brain.module.common_utils.Uris;
 import org.triple_brain.module.model.FriendlyResource;
 import org.triple_brain.module.model.Suggestion;
 import org.triple_brain.module.model.User;
-import org.triple_brain.module.model.graph.Edge;
-import org.triple_brain.module.model.graph.GraphMaker;
-import org.triple_brain.module.model.graph.UserGraph;
-import org.triple_brain.module.model.graph.Vertex;
+import org.triple_brain.module.model.graph.scenarios.TestScenarios;
 import org.triple_brain.module.model.json.ExternalResourceJsonFields;
 import org.triple_brain.module.model.json.SuggestionJsonFields;
+import org.triple_brain.module.model.json.UserJSONFields;
 import org.triple_brain.module.model.json.graph.EdgeJsonFields;
 import org.triple_brain.module.model.json.graph.VertexJsonFields;
 
-import javax.inject.Inject;
-import java.net.URI;
+import javax.ws.rs.core.MediaType;
 
 import static junit.framework.Assert.assertFalse;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertTrue;
@@ -33,89 +33,105 @@ import static org.triple_brain.module.model.json.StatementJsonFields.*;
 
 public class VertexResourceTest extends GraphManipulationRestTest {
 
-    @Inject
-    private GraphMaker graphMaker;
-
-    protected UserGraph userGraph;
-
     @Test
     public void can_add_a_vertex() throws Exception {
-        int numberOfConnectedEdges = vertexA.connectedEdges().size();
-        addAVertexToVertexAUsingRest();
-        int updatedNumberOfConnectedEdges = vertexA.connectedEdges().size();
+        int numberOfConnectedEdges = vertexUtils.connectedEdgesOfVertexWithURI(
+                vertexAUri()
+        ).length();
+        vertexUtils.addAVertexToVertexAWithUri(vertexAUri());
+        int updatedNumberOfConnectedEdges = vertexUtils.connectedEdgesOfVertexWithURI(
+                vertexAUri()
+        ).length();
         assertThat(updatedNumberOfConnectedEdges, is(numberOfConnectedEdges + 1));
     }
 
     @Test
     public void adding_a_vertex_returns_correct_status() throws Exception {
-        ClientResponse response = addAVertexToVertexAUsingRest();
+        ClientResponse response = vertexUtils.addAVertexToVertexAWithUri(vertexAUri());
         assertThat(response.getStatus(), is(200));
     }
 
     @Test
     public void adding_a_vertex_returns_the_new_edge_and_vertex_id() throws Exception {
-        ClientResponse response = addAVertexToVertexAUsingRest();
+        ClientResponse response = vertexUtils.addAVertexToVertexAWithUri(vertexAUri());
         JSONObject createdStatement = response.getEntity(JSONObject.class);
         JSONObject subject = createdStatement.getJSONObject(SOURCE_VERTEX);
-        assertThat(subject.getString(VertexJsonFields.ID), is(vertexA.id()));
-        Edge newEdge = wholeGraph().edgeWithIdentifier(
-                createdStatement.getJSONObject(EDGE).getString(EdgeJsonFields.ID)
+        assertThat(subject.getString(VertexJsonFields.ID), is(vertexAUri().toString()));
+        JSONObject newEdge = edgeUtils.edgeWithUri(
+                Uris.get(
+                        createdStatement.getJSONObject(EDGE).getString(
+                                EdgeJsonFields.ID
+                        )
+                )
         );
-        Vertex newVertex = wholeGraph().vertexWithIdentifier(
-                createdStatement.getJSONObject(END_VERTEX).getString(VertexJsonFields.ID)
+        JSONObject newVertex = vertexUtils.vertexWithUri(
+                Uris.get(
+                        createdStatement.getJSONObject(END_VERTEX).getString(
+                                VertexJsonFields.ID
+                        )
+                )
         );
-        assertTrue(vertexA.hasEdge(newEdge));
-        assertTrue(vertexA.hasDestinationVertex(newVertex));
-    }
-
-    private ClientResponse addAVertexToVertexAUsingRest() throws Exception {
-        ClientResponse response = resource
-                .path("vertex")
-                .path(encodeURL(vertexA.id()))
-                .cookie(authCookie)
-                .post(ClientResponse.class);
-        actualizeVertexABAndC();
-        return response;
+        JSONArray edgesOfVertexA = vertexUtils.connectedEdgesOfVertexWithURI(
+                vertexAUri()
+        );
+        assertTrue(edgeUtils.edgeIsInEdges(newEdge, edgesOfVertexA));
+        assertTrue(vertexUtils.vertexWithUriHasDestinationVertexWithUri(
+                vertexAUri(),
+                vertexUtils.uriOfVertex(newVertex)
+        ));
     }
 
     @Test
     public void cannot_add_a_vertex_that_user_doesnt_own() throws Exception {
-        User anotherUser = createAUser();
-        graphMaker.createForUser(anotherUser);
-        userGraph = graphMaker.createForUser(anotherUser);
-        Vertex anotherUserDefaultVertex = userGraph.defaultVertex();
-        response = resource.path("vertex").path(encodeURL(anotherUserDefaultVertex.id())).cookie(authCookie).post(ClientResponse.class);
+        JSONObject anotherUserAsJson = userUtils.validForCreation();
+        createAUser(anotherUserAsJson);
+        User anotherUser = User.withUsernameAndEmail(
+                anotherUserAsJson.getString(UserJSONFields.USER_NAME),
+                anotherUserAsJson.getString(UserJSONFields.EMAIL)
+        );
+        anotherUser.password(DEFAULT_PASSWORD);
+        authenticate(anotherUser);
+        ClientResponse response = resource
+                .path("vertex")
+                .path(encodeURL(authenticatedUser.defaultVertexUri().toString()))
+                .cookie(authCookie)
+                .post(ClientResponse.class);
         assertThat(response.getStatus(), is(403));
     }
 
     @Test
     public void can_remove_a_vertex() throws Exception {
-        assertTrue(wholeGraph().containsVertex(vertexB));
-        removeVertexBUsingRest();
-        assertFalse(wholeGraph().containsVertex(vertexB));
+        assertTrue(graphElementWithIdExistsInCurrentGraph(
+                vertexBUri()
+        ));
+        removeVertexB();
+        assertFalse(graphElementWithIdExistsInCurrentGraph(
+                vertexBUri()
+        ));
     }
 
     @Test
     public void removing_vertex_returns_correct_response_status() throws Exception {
-        ClientResponse response = removeVertexBUsingRest();
+        ClientResponse response = removeVertexB();
         assertThat(response.getStatus(), is(200));
     }
 
-    private ClientResponse removeVertexBUsingRest() throws Exception {
+    private ClientResponse removeVertexB() throws Exception {
         ClientResponse response = resource
                 .path("vertex")
-                .path(encodeURL(vertexB.id()))
+                .path(encodeURL(vertexBUri().toString()))
                 .cookie(authCookie)
                 .delete(ClientResponse.class);
-        actualizeVertexABAndC();
         return response;
     }
 
     @Test
     public void can_update_label() throws Exception {
-        assertThat(vertexA.label(), is(not("new vertex label")));
+        String vertexALabel = vertexA().getString(VertexJsonFields.LABEL);
+        assertThat(vertexALabel, is(not("new vertex label")));
         updateVertexALabelUsingRest("new vertex label");
-        assertThat(vertexA.label(), is("new vertex label"));
+        vertexALabel = vertexA().getString(VertexJsonFields.LABEL);
+        assertThat(vertexALabel, is("new vertex label"));
     }
 
     @Test
@@ -127,98 +143,104 @@ public class VertexResourceTest extends GraphManipulationRestTest {
     private ClientResponse updateVertexALabelUsingRest(String label) throws Exception {
         ClientResponse response = resource
                 .path("vertex")
-                .path(encodeURL(vertexA.id()))
+                .path(encodeURL(vertexAUri().toString()))
                 .path("label")
                 .queryParam("label", label)
                 .cookie(authCookie)
                 .post(ClientResponse.class);
-        actualizeVertexABAndC();
         return response;
     }
 
     @Test
     public void can_add_an_additional_type_to_vertex() throws Exception {
-        assertTrue(
-                vertexA.getAdditionalTypes().isEmpty()
+        JSONObject additionalTypes = vertexA().getJSONObject(VertexJsonFields.TYPES);
+        assertThat(
+                additionalTypes.length(),
+                is(0)
         );
         addFoafPersonTypeToVertexA();
-        assertFalse(
-                vertexA.getAdditionalTypes().isEmpty()
+        additionalTypes = vertexA().getJSONObject(VertexJsonFields.TYPES);
+        assertThat(
+                additionalTypes.length(),
+                is(greaterThan(0))
         );
     }
 
     @Test
     public void can_remove_the_additional_type_of_vertex() throws Exception {
         addFoafPersonTypeToVertexA();
-        assertFalse(
-                vertexA.getAdditionalTypes().isEmpty()
+        JSONObject additionalTypes = vertexA().getJSONObject(VertexJsonFields.TYPES);
+        assertThat(
+                additionalTypes.length(),
+                is(greaterThan(0))
         );
         removeFoafPersonIdentificationToVertexA();
-        assertTrue(
-                vertexA.getAdditionalTypes().isEmpty()
+        assertThat(
+                additionalTypes.length(),
+                is(0)
         );
     }
 
     @Test
     public void setting_type_of_a_vertex_returns_correct_response_status() throws Exception {
-        addFoafPersonTypeToVertexA();
+        ClientResponse response = addFoafPersonTypeToVertexA();
         assertThat(response.getStatus(), is(200));
     }
 
     private ClientResponse addFoafPersonTypeToVertexA() throws Exception {
         JSONObject personType = ExternalResourceJsonFields.toJson(
-                testScenarios.personType()
+                TestScenarios.personType()
         );
         ClientResponse response = resource
                 .path("vertex")
-                .path(encodeURL(vertexA.id()))
+                .path(encodeURL(vertexAUri().toString()))
                 .path("type")
                 .cookie(authCookie)
-                .type("application/json")
+                .type(MediaType.APPLICATION_JSON)
                 .post(ClientResponse.class, personType);
-        actualizeVertexABAndC();
         return response;
     }
 
     private ClientResponse removeFoafPersonIdentificationToVertexA() throws Exception {
-        FriendlyResource personType = testScenarios.personType();
+        FriendlyResource personType = TestScenarios.personType();
         ClientResponse response = resource
                 .path("vertex")
-                .path(encodeURL(vertexA.id()))
+                .path(encodeURL(vertexAUri().toString()))
                 .path("identification")
                 .path(encodeURL(personType.uri().toString()))
                 .cookie(authCookie)
-                .type("application/json")
+                .type(MediaType.APPLICATION_JSON)
                 .delete(ClientResponse.class);
-        actualizeVertexABAndC();
         return response;
     }
 
     @Test
     public void can_set_suggestions_of_vertex() throws Exception {
-        assertTrue(vertexA.suggestions().isEmpty());
-        Suggestion suggestion = Suggestion.withTypeDomainAndLabel(
-                new URI("http://rdf.freebase.com/rdf/time/event/start_date"),
-                new URI("http://rdf.freebase.com/rdf/type/datetime"),
-                "Start date"
+        JSONObject suggestions = vertexA().getJSONObject(VertexJsonFields.SUGGESTIONS);
+        assertThat(
+                suggestions.length(),
+                is(0)
         );
+        Suggestion suggestion = TestScenarios.startDateSuggestion();
         setSuggestionsOfVertex(
                 new JSONArray().put(
                         SuggestionJsonFields.toJson(suggestion)
                 )
         );
-        assertFalse(vertexA.suggestions().isEmpty());
+        assertThat(
+                suggestions.length(),
+                is(greaterThan(0))
+        );
     }
 
     private ClientResponse setSuggestionsOfVertex(JSONArray suggestions) throws Exception {
         ClientResponse response = resource
                 .path("vertex")
-                .path(encodeURL(vertexA.id()))
+                .path(encodeURL(vertexAUri().toString()))
                 .path("suggestions")
                 .cookie(authCookie)
-                .type("application/json")
+                .type(MediaType.APPLICATION_JSON)
                 .post(ClientResponse.class, suggestions);
-        actualizeVertexABAndC();
         return response;
     }
 }
