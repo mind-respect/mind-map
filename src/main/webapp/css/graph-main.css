@@ -2,9 +2,12 @@
     display: none;
 }
 body{
-    overflow:hidden;
-    min-width:4500px;
-    min-height:2500px;
+    min-width:20000px;
+    min-height:20000px;
+    cursor:pointer;
+}
+svg{
+    z-index:0;
 }
 #mind_map {
     font-family:arial;
@@ -20,6 +23,7 @@ body{
     opacity: 0.91;
     -moz-border-radius: 15px;
     border-radius: 15px;
+    cursor:default;
 }
 
 #mind_map input[type=button]{
@@ -102,6 +106,7 @@ body{
     min-width:100px;
     position: absolute;
     z-index: 3;
+    cursor:default;
 }
 
 .highlighted-vertex{
@@ -212,6 +217,7 @@ body{
 .edge {
     position: absolute;
     z-index: 2;
+    cursor:default;
 }
 
 .edge .remove {

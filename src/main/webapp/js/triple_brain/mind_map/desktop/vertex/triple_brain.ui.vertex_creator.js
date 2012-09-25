@@ -83,12 +83,6 @@ define([
                 var graphCanvas = Graph.canvas();
                 $(html).draggable({
                     handle:".move",
-                    containment:[
-                        $(graphCanvas).position().left,
-                        $(graphCanvas).position().top,
-                        $(graphCanvas).width(),
-                        $(graphCanvas).height()
-                    ],
                     start:onDragStart,
                     drag:onDrag,
                     stop:onDragStop
@@ -243,14 +237,7 @@ define([
             }
 
             function onDragStart(mouseDownEvent, ui) {
-                var canvasToMoveVertex = MindMapTemplate['canvas_to_move_vertex'].merge();
-                Graph.addHTML(
-                    canvasToMoveVertex
-                );
-                var graphCanvas = Graph.canvas();
-                $(canvasToMoveVertex).attr('width', $(graphCanvas).width());
-                $(canvasToMoveVertex).attr('height', $(graphCanvas).height());
-
+                var vertex = vertexFacade();
                 $('.edge').unbind('mouseenter mouseleave');
                 $("#drawn_graph").data("edgesNormalStateZIndex", $('.edge').css('z-index'));
                 $('.edge').css('z-index', '1');
@@ -259,14 +246,14 @@ define([
                 $("#drawn_graph").data("verticesNormalStateZIndex", $('.vertex').css('z-index'));
                 $('.vertex').css('z-index', '1');
 
-                $(html).addClass('highlighted-vertex');
+                vertex.highlight();
                 $(html).css('z-index', $("#drawn_graph").data("verticesNormalStateZIndex"));
-
-                removeConnectedEdgesArrowLine();
+                if(vertex.hasHiddenProperties()){
+                    vertex.removeHiddenPropertiesIndicator();
+                }
             }
 
             function onDrag(dragEvent, ui) {
-                redrawConnectedEdgesArrowLine();
                 var vertex = Vertex.withHtml(
                     ui.helper
                 );
@@ -279,9 +266,11 @@ define([
             }
 
             function onDragStop(dragStopEvent, ui) {
-                var canvasToMoveVertex = $("#canvasToMoveVertex");
-                $(canvasToMoveVertex).remove();
-                Edge.redrawAllEdges();
+                var vertex = vertexFacade();
+                vertex.redrawConnectedEdgesArrowLine();
+                if(vertex.hasHiddenProperties()){
+                    vertex.buildHiddenNeighborPropertiesIndicator();
+                }
                 var edgesNormalStateZIndex = $("#drawn_graph").data("edgesNormalStateZIndex");
                 $('.edge').css('z-index', edgesNormalStateZIndex);
                 $('.edge').hover(
@@ -294,47 +283,16 @@ define([
                 $('.vertex').css('z-index', verticesNormalStateZIndex);
             }
 
-            function removeConnectedEdgesArrowLine() {
-                Graph.removeAllArrowLines();
-                var allEdges = Edge.allEdges();
-                for (var i = 0; i < allEdges.length; i++) {
-                    var edge = allEdges[i];
-                    if (!edge.isConnectedWithVertex(vertexFacade())) {
-                        edge.arrowLine().drawInContextWithDefaultStyle(
-                            Graph.canvasContext()
-                        );
-                    }
-                }
-            }
-
-            function redrawConnectedEdgesArrowLine() {
-                UiUtils.clearCanvas(
-                    Graph.canvasToMoveAVertex()
-                );
-                var connectedEdges = vertexFacade().connectedEdges();
-                for (var i = 0; i < connectedEdges.length; i++) {
-                    var edge = connectedEdges[i];
-                    edge.setArrowLine(
-                        ArrowLine.ofSourceAndDestinationVertex(
-                            edge.sourceVertex(),
-                            edge.destinationVertex()
-                        )
-                    );
-                    edge.centerOnArrowLine();
-                    edge.arrowLine().drawInContextWithDefaultStyle(
-                        Graph.canvasContextToMoveAVertex()
-                    );
-                }
-            }
-
             function onMouseOver() {
                 var vertex = vertexOfSubHtmlComponent(this);
+                Graph.setVertexMouseOver(vertex);
                 vertex.highlight();
                 vertex.showButtons();
             }
 
             function onMouseOut() {
                 var vertex = vertexOfSubHtmlComponent(this)
+                Graph.unsetVertexMouseOver();
                 if (!vertex.isLabelInFocus()) {
                     vertex.unhighlight();
                 }
@@ -343,50 +301,46 @@ define([
 
             function mouseDownToCreateRelationOrAddVertex(mouseDownEvent) {
                 var sourceVertex = vertexFacade();
-                if (sourceVertex.isMouseOverLabel() || sourceVertex.isMouseOverMoveButton()) {
-                    return;
-                }
-                var canvasForRelation = MindMapTemplate['canvas_for_relation'].merge();
-                var graphCanvas = Graph.canvas();
-                $(canvasForRelation).attr('width', $(graphCanvas).width());
-                $(canvasForRelation).attr('height', $(graphCanvas).height());
-                $(canvasForRelation).css('margin-left', $(graphCanvas).css('margin-left'));
-                $(canvasForRelation).css('margin-top', $(graphCanvas).css('margin-top'));
-                Graph.addHTML(canvasForRelation);
-                var canvasContextForRelation = canvasForRelation[0].getContext("2d");
                 $('.edge').unbind('mouseenter mouseleave');
                 var normalStateEdgesZIndex = $('.edge').css('z-index');
                 $('.edge').css('z-index', '1');
                 var relationMouseMoveEvent;
                 var relationEndPoint = Point.centeredAtOrigin();
-
-                $(canvasForRelation).mousemove(function (mouseMoveEvent) {
-                    sourceVertex.highlight();
+                var arrowLine;
+                sourceVertex.highlight();
+                var selectorThatCoversWholeGraph = "svg";
+                $(selectorThatCoversWholeGraph).mousemove(function (mouseMoveEvent) {
                     relationMouseMoveEvent = mouseMoveEvent;
-                    UiUtils.clearCanvas(canvasForRelation);
-                    canvasContextForRelation.beginPath();
+                    if(arrowLine !== undefined){
+                        arrowLine.remove();
+                    }
                     relationEndPoint = Point.fromCoordinates(
                         mouseMoveEvent.pageX,
                         mouseMoveEvent.pageY
                     );
-                    var arrowLine = ArrowLine.withSegment(
+                    arrowLine = ArrowLine.withSegment(
                         Segment.withStartAndEndPoint(
                             sourceVertex.centerPoint(),
                             relationEndPoint
                         )
                     );
-                    arrowLine.drawInContextWithDefaultStyle(canvasContextForRelation);
+                    arrowLine.drawInWithDefaultStyle();
                 });
 
                 $("body").mouseup(function (mouseUpEvent) {
-
+                    if(arrowLine === undefined){
+                        //something when wrong so return;
+                        $("body").unbind(mouseUpEvent);
+                        $(selectorThatCoversWholeGraph).unbind(relationMouseMoveEvent);
+                        return;
+                    }
+                    arrowLine.remove();
                     $('.edge').hover(Edge.onMouseOver, Edge.onMouseOut);
                     $('.edge').css('z-index', normalStateEdgesZIndex);
-                    $(canvasForRelation).remove();
-                    $(this).unbind(mouseUpEvent);
-                    var isMouseOverAVertex = $(".vertex:hover").size() > 0;
-                    if (isMouseOverAVertex) {
-                        var destinationVertex = Vertex.withHtml($(".vertex:hover"));
+                    $("body").unbind(mouseUpEvent);
+                    $(selectorThatCoversWholeGraph).unbind(relationMouseMoveEvent);
+                    var destinationVertex = Graph.getVertexMouseOver();
+                    if (destinationVertex !== undefined) {
                         if (!sourceVertex.equalsVertex(destinationVertex)) {
                             sourceVertex.unhighlight();
                             EdgeService.add(sourceVertex, destinationVertex);
@@ -397,7 +351,6 @@ define([
                     }
                 });
             }
-
             function vertexFacade() {
                 return Vertex.withHtml(html);
             }

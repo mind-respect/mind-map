@@ -138,9 +138,7 @@ define([
                         )
                     )
                 );
-                edge.arrowLine().drawInContextWithDefaultStyle(
-                    Graph.canvasContext()
-                );
+                edge.arrowLine().drawInWithDefaultStyle();
             }
 
             function edgeFacade(){

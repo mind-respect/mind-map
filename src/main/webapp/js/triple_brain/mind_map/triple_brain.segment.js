@@ -110,6 +110,11 @@ define([
                     this.endPoint.clone());
             }
         }
+//        Segment.prototype.toString = function()
+//        {
+//            return "startPoint: " + this.startPoint + " " +
+//                "endPoint: " this.endPoint;
+//        };
         return api;
     }
 );

@@ -11,9 +11,11 @@ define([
     "triple_brain.ui.vertex_segments",
     "triple_brain.ui.edge",
     "triple_brain.ui.vertex_and_edge_common",
-    "triple_brain.event_bus"
+    "triple_brain.event_bus",
+    "triple_brain.ui.graph",
+    "triple_brain.ui.arrow_line"
 ],
-    function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, Edge, VertexAndEdgeCommon, EventBus) {
+    function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, Edge, VertexAndEdgeCommon, EventBus, Graph, ArrowLine) {
         var api = {};
 
         api.EMPTY_LABEL = "a concept";
@@ -41,12 +43,6 @@ define([
             });
             return vertices;
         };
-        api.redrawAllPropertiesIndicator = function () {
-            $.each(api.allVertices(), function () {
-                var vertex = this;
-                vertex.buildHiddenNeighborPropertiesIndicator();
-            })
-        }
 
         function Vertex(html) {
             var thisVertex = this;
@@ -89,8 +85,26 @@ define([
                 $(html).data('nameOfHiddenProperties', nameOfHiddenProperties);
             }
             this.buildHiddenNeighborPropertiesIndicator = function () {
-                var propertiesIndicator = PropertiesIndicator.withVertex(this);
+                var propertiesIndicator = PropertiesIndicator.withVertex(
+                    thisVertex
+                );
+                $(html).data(
+                    "hidden_properties_indicator",
+                    propertiesIndicator
+                );
                 propertiesIndicator.build();
+            }
+            this.removeHiddenPropertiesIndicator = function(){
+                var propertiesIndicator = $(html).data(
+                    "hidden_properties_indicator"
+                );
+                propertiesIndicator.remove();
+                $(html).removeData(
+                    "hidden_properties_indicator"
+                    );
+            }
+            this.hasHiddenProperties = function(){
+                return thisVertex.numberOfHiddenConnectedVertices() > 0;
             }
             this.numberOfHiddenConnectedVertices = function () {
                 return thisVertex.nameOfHiddenProperties().length;
@@ -115,7 +129,9 @@ define([
                 return $(html).attr('id');
             }
             this.isMouseOver = function () {
-                return $("#" + this.getId() + ":hover").size() > 0;
+                var vertexThatIsMouseOver = Graph.getVertexMouseOver();
+                return  vertexThatIsMouseOver !== undefined &&
+                    vertexThatIsMouseOver.equalsVertex(thisVertex);
             }
             this.hideButtons = function () {
                 thisVertex.hideMenu();
@@ -157,6 +173,20 @@ define([
                 }
                 return connectedEdges;
             }
+            this.redrawConnectedEdgesArrowLine = function(){
+                $.each(thisVertex.connectedEdges(), function(){
+                    var edge = this;
+                    edge.arrowLine().remove();
+                    edge.setArrowLine(
+                        ArrowLine.ofSourceAndDestinationVertex(
+                            edge.sourceVertex(),
+                            edge.destinationVertex()
+                        )
+                    );
+                    edge.centerOnArrowLine();
+                    edge.arrowLine().drawInWithDefaultStyle();
+                });
+            }
             this.isLabelInFocus = function () {
                 return $(this.label()).is(":focus");
             }
@@ -181,12 +211,6 @@ define([
             this.removeStyleOfDefaultText = function () {
                 $(this.label()).removeClass('when-default-graph-element-text');
             }
-            this.isMouseOverLabel = function () {
-                return $(html).find("input[type='text']:hover").size() > 0;
-            }
-            this.isMouseOverMoveButton = function () {
-                return $(html).find(".move:hover").size() > 0;
-            }
             this.isCenterVertex = function () {
                 return $(html).hasClass("center-vertex");
             }
@@ -195,7 +219,7 @@ define([
                 for (var i = 0; i < connectedEdges.length; i++) {
                     connectedEdges[i].remove();
                 }
-                Edge.redrawAllEdges();
+                Edge.drawAllEdges();
             },
                 this.remove = function () {
                     $(html).remove();

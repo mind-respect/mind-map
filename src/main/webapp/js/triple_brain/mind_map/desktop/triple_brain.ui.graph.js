@@ -11,28 +11,31 @@ define([
     function (require, $, Point, EventBus, UiUtils ) {
         var api = {};
         var graphForTraversal;
+        api.getVertexMouseOver = function () {
+            return $("body").data("vertex_mouse_over");
+        };
+        api.setVertexMouseOver = function (vertex) {
+            $("body").data("vertex_mouse_over", vertex);
+        };
+        api.unsetVertexMouseOver = function(){
+            $("body").removeData("vertex_mouse_over");
+        }
+        api.getEdgeMouseOver = function () {
+            return $("body").data("edge_mouse_over");
+        };
+        api.setEdgeMouseOver = function (edge) {
+            $("body").data("edge_mouse_over", edge);
+        };
+        api.unsetEdgeMouseOver = function(){
+            $("body").removeData("edge_mouse_over");
+        }
         api.addHTML = function (html) {
             $("#drawn_graph").append(html);
         };
-        api.removeAllArrowLines = function () {
-            UiUtils.clearCanvas(
-                api.canvas()
-            );
-            var Vertex = require("triple_brain.ui.vertex");
-            Vertex.redrawAllPropertiesIndicator();
-        };
         api.canvas = function () {
-            return $("#graphCanvas");
+            return $("body").data("canvas");
         };
-        api.canvasContext = function () {
-            return api.canvas()[0].getContext("2d");
-        };
-        api.canvasToMoveAVertex = function () {
-            return $("#canvasToMoveVertex");
-        };
-        api.canvasContextToMoveAVertex = function () {
-            return api.canvasToMoveAVertex()[0].getContext("2d");
-        };
+
         api.offset = function () {
             return Point.fromCoordinates(
                 $("body").width() / 2,
@@ -45,6 +48,7 @@ define([
                 graphForTraversal.invalidate();
             }
             graphForTraversal = new crow.Graph();
+            $("#drawn_graph").empty();
         }
 
         api.numberOfEdgesBetween = function(vertexA, vertexB){

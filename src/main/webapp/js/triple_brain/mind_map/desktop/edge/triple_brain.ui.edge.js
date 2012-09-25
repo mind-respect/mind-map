@@ -25,25 +25,23 @@ define([
             });
             return edges;
         };
-        api.redrawAllEdges = function () {
-            Graph.removeAllArrowLines();
+        api.drawAllEdges = function () {
             var edges = api.allEdges();
             for (var i = 0; i < edges.length; i++) {
                 var edge = edges[i];
-                var graphCanvasContext = Graph.canvasContext();
-                var black = "#000000";
-                graphCanvasContext.strokeStyle = black;
-                edge.arrowLine().drawInContext(graphCanvasContext);
+                edge.arrowLine().drawInBlackWithSmallLineWidth();
                 edge.centerOnArrowLine();
             }
         };
         api.onMouseOver = function () {
             var edge = api.withHtml(this);
+            Graph.setEdgeMouseOver(edge);
             edge.highlight();
             edge.showMenu();
         };
         api.onMouseOut = function () {
             var edge = api.withHtml(this);
+            Graph.unsetEdgeMouseOver();
             if (!edge.isTextFieldInFocus()) {
                 edge.unhighlight();
             }
@@ -73,22 +71,18 @@ define([
                 $(html).addClass('highlighted-edge');
                 this.addEdgeSurroundColor("#FFFF00", 4);
             }
-                this.unhighlight = function () {
-                    $(html).removeClass('highlighted-edge');
-                    this.addEdgeSurroundColor("#FFFFFF", 5);
-                }
-                this.addEdgeSurroundColor = function (color, width) {
-                    var graphCanvasContext = Graph.canvasContext();
-                    graphCanvasContext.lineWidth = width;
-                    graphCanvasContext.strokeStyle = color;
-                    this.arrowLine().drawInContext(graphCanvasContext);
-                    graphCanvasContext.lineWidth = 1;
-                    graphCanvasContext.strokeStyle = "#333";
-                    this.arrowLine().drawInContext(graphCanvasContext);
-                }
-                this.isTextFieldInFocus = function () {
-                    return $(label()).is(":focus")
-                }
+            this.unhighlight = function () {
+                $(html).removeClass('highlighted-edge');
+                this.arrowLine().remove();
+                this.arrowLine().drawInBlackWithSmallLineWidth();
+            }
+            this.addEdgeSurroundColor = function (color, width) {
+                this.arrowLine().drawInYellowWithBigLineWidth();
+                this.arrowLine().drawInBlackWithSmallLineWidth();
+            }
+            this.isTextFieldInFocus = function () {
+                return $(label()).is(":focus")
+            }
             this.focus = function () {
                 $(label()).focus();
             }
@@ -133,9 +127,12 @@ define([
                 );
             }
             this.isMouseOver = function () {
-                return $("#" + thisEdge.id() + ":hover").size() > 0;
+                var edgeThatIsMouseOver = Graph.getEdgeMouseOver();
+                return  edgeThatIsMouseOver !== undefined &&
+                    edgeThatIsMouseOver.equalsVertex(thisEdge);
             }
             this.remove = function () {
+                thisEdge.arrowLine().remove();
                 $(html).remove();
             }
             this.showMenu = function () {
@@ -165,7 +162,6 @@ define([
             '/event/ui/graph/relation/deleted',
             function (event, edge) {
                 edge.remove();
-                api.redrawAllEdges();
             }
         );
 

@@ -99,24 +99,30 @@ define(
             '/event/ui/graph/drawing_info/updated/',
             function (event, drawnGraph, centralVertexId) {
                 Graph.reset();
-                $("#drawn_graph").empty();
                 drawnGraph.bounding_box_width = $("body").width();
                 drawnGraph.bounding_box_height = $("body").height();
-                var graphCanvas = MindMapTemplate['graph_canvas'].merge(drawnGraph);
-                $("#drawn_graph").append(graphCanvas);
+//                var graphCanvas = MindMapTemplate['graph_canvas'].merge(drawnGraph);
+//                $("#drawn_graph").append(graphCanvas);
+                $("#drawn_graph").css("min-width", $("body").width());
+                $("#drawn_graph").css("min-height", $("body").height());
+                if($("body").data(("canvas"))){
+                    $("body").data("canvas").clear();
+                }
+                $("body").data(
+                    "canvas",
+                    Raphael(0, 0, $("body").width(), $("body").height())
+                );
                 VertexCreator.createWithArrayOfJsonHavingRelativePosition(
                     drawnGraph.vertices
                 );
-
                 EdgeCreator.createWithArrayOfJsonHavingRelativePosition(
                     drawnGraph.edges
                 );
-
                 var centralVertex = Vertex.withId(centralVertexId);
                 centralVertex.setAsCentral();
                 centralVertex.scrollTo();
 
-                $("body").on('click', "#drawn_graph", function () {
+                $("body").on('click', "svg", function () {
                     var outOfVertexMenus = $('.peripheral-menu');
                     $(outOfVertexMenus).remove();
                 });

@@ -12,12 +12,21 @@ define([
             var distanceBetweenEachDash = 5;
             var radianDirection = segment.radianDirection();
             var dash = segment;
-            var graphCanvasContext = Graph.canvasContext();
+            var canvas = Graph.canvas();
+            var red = "#FF0000";
+            var lineWidth = "1";
+            var drawnComponents = [];
             this.draw = function(){
-                for(j = 1 ; j <= numberOfDashes; j++){
+                for(var j = 1 ; j <= numberOfDashes; j++){
                     updateDashEndPoint();
                     drawDash();
                     updateDashStartPoint();
+                }
+            }
+            this.remove = function(){
+                while(drawnComponents.length != 0){
+                    var drawnComponent =  drawnComponents.pop();
+                    drawnComponent.remove();
                 }
             }
             function updateDashEndPoint(){
@@ -25,12 +34,14 @@ define([
                 dash.endPoint.y = dash.startPoint.y + distanceBetweenEachDash * Math.sin(radianDirection);
             }
             function drawDash(){
-                graphCanvasContext.beginPath();
-                var red = "#FF0000";
-                graphCanvasContext.strokeStyle = red;
-                graphCanvasContext.moveTo(dash.startPoint.x, dash.startPoint.y);
-                graphCanvasContext.lineTo(dash.endPoint.x, dash.endPoint.y);
-                graphCanvasContext.stroke();
+                var dashPath = "M" + dash.startPoint.x + " " +
+                    dash.startPoint.y + " L" + dash.endPoint.x  + " " +
+                    dash.endPoint.y;
+                drawnComponents.push(
+                    canvas.path(dashPath).
+                    attr("stroke-width", lineWidth)
+                    .attr("stroke", red)
+                );
             }
             function updateDashStartPoint(){
                 dash.startPoint.x = dash.endPoint.x + distanceBetweenEachDash * Math.cos(radianDirection);

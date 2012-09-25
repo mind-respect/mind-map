@@ -8,9 +8,7 @@ define([
         var api = {};
         var t = Template.withTemplateGroup(api);
 
-        t.add('graph_canvas', '<canvas id="graphCanvas" width="{bounding_box_width}" height="{bounding_box_height}"></canvas>');
-        t.add('canvas_for_relation', '<canvas id="canvasForRelation"></canvas>');
-        t.add('canvas_to_move_vertex', '<canvas id="canvasToMoveVertex"></canvas>');
+        t.add('graph_canvas', '<div id="graphCanvas" width="{bounding_box_width}" height="{bounding_box_height}"></canvas>');
 
         //vertex html elements
         t.add('vertex', '<div class="vertex" id="{id}" style="top:{position.y}"></div>');

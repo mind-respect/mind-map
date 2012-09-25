@@ -9,27 +9,28 @@ define([
     "triple_brain.segment"
 ],
     function(require, $, Point, Segment) {
+        var surfaceToDragScroll = $("svg");
         return {
             start: function() {
-                $("#graphCanvas").mousedown(function(){
-                    var graphCanvas = this;
-                    $(graphCanvas).data("mouseup", false);
+                $("svg").live("mousedown", function(mouseDownEvent){
+                    var drawnGraph = this;
+                    $(drawnGraph).data("mouseup", false);
                     var mousePosition;
-                    $(graphCanvas).mousemove(moveHandler);
+                    $(drawnGraph).mousemove(moveHandler);
                     function moveHandler(moveEvent){
+                        $("svg").unbind("mousemove");
                         mousePosition = Point.fromCoordinates(
                             moveEvent.pageX,
                             moveEvent.pageY
                         );
-                        $("#graphCanvas").unbind("mousemove");
                         scroll();
-                        if(!$(graphCanvas).data("mouseup")){
-                            $(graphCanvas).bind("mousemove", moveHandler);
+                        if(!$(drawnGraph).data("mouseup")){
+                            $(drawnGraph).bind("mousemove", moveHandler);
                         }
                     }
                     $("body").mouseup(function(){
-                        $(graphCanvas).unbind("mousemove");
-                        $(graphCanvas).data("mouseup", true);
+                        $(drawnGraph).unbind("mousemove");
+                        $(drawnGraph).data("mouseup", true);
                     });
                     var lastPosition;
                     function scroll(){
@@ -40,17 +41,11 @@ define([
                             lastPosition,
                             mousePosition
                         );
-                        var distanceToScroll = distanceToScroll();
-                        function distanceToScroll(){
-                            var distanceToScroll = movementSegment.length();
-                            distanceToScroll = distanceToScroll.invert();
-                            distanceToScroll = distanceToScroll.multiply(1);
-                            return distanceToScroll;
-                        }
+                        var distanceToScroll = getDistanceToScroll();
                         var scrollPosition = Point.fromCoordinates(
                             $("body").scrollLeft(),
                             $("body").scrollTop()
-                        )
+                        );
                         var newScrollPosition = Point.sumOfPoints(
                             distanceToScroll,
                             scrollPosition
@@ -63,6 +58,12 @@ define([
                             distanceToScroll,
                             mousePosition
                         );
+                        function getDistanceToScroll(){
+                            var distanceToScroll = movementSegment.length();
+                            distanceToScroll = distanceToScroll.invert();
+                            distanceToScroll = distanceToScroll.multiply(1);
+                            return distanceToScroll;
+                        }
                     }
                 });
             }

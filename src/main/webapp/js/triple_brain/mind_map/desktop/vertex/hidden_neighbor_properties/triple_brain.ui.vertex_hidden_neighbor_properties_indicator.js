@@ -15,29 +15,38 @@ define([
         }
 
         function HiddenNeighborPropertiesIndicator(vertex){
+            var hiddenNeighborPropertiesContainer;
+            var dashSegments = [];
             this.build = function(){
                 var numberOfHiddenConnectedVertices = vertex.numberOfHiddenConnectedVertices();
                 if(numberOfHiddenConnectedVertices == 0){
                     return ;
                 }
                 var defaultLengthOfHiddenPropertiesContainer = 40;
-                var lengthInPixels = numberOfHiddenConnectedVertices == 1 ? 1 : defaultLengthOfHiddenPropertiesContainer;
+                var lengthInPixels = numberOfHiddenConnectedVertices == 1 ?
+                    1 :
+                    defaultLengthOfHiddenPropertiesContainer;
                 var startPoint = Point.fromCoordinates(
                     vertex.position().x + vertex.width(),
                     vertex.position().y + (vertex.height() / 2)
                 );
-                var distanceBetweenEachDashedSegment = numberOfHiddenConnectedVertices == 1 ? 0: lengthInPixels / (vertex.numberOfHiddenConnectedVertices() - 1);
+                var distanceBetweenEachDashedSegment =
+                    numberOfHiddenConnectedVertices == 1 ?
+                        0:
+                        lengthInPixels / (vertex.numberOfHiddenConnectedVertices() - 1);
                 var plainSegment = Segment.withStartAndEndPointAtOrigin();
                 plainSegment.startPoint = startPoint;
                 var horizontalDistanceOfDashedSegment = 20;
-                plainSegment.endPoint.x = vertex.position().x + vertex.width() + horizontalDistanceOfDashedSegment;
-                for(i = 0; i < numberOfHiddenConnectedVertices; i++){
+                plainSegment.endPoint.x = vertex.position().x +
+                    vertex.width() +
+                    horizontalDistanceOfDashedSegment;
+                for(var i = 0; i < numberOfHiddenConnectedVertices; i++){
                     plainSegment.endPoint.y = startPoint.y - (lengthInPixels / 2) + (i * distanceBetweenEachDashedSegment);
                     var dashedSegment = DashedSegment.withSegment(plainSegment.clone());
                     dashedSegment.draw();
+                    dashSegments.push(dashedSegment);
                 }
-
-                var hiddenNeighborPropertiesContainer = MindMapTemplate[
+                hiddenNeighborPropertiesContainer = MindMapTemplate[
                     'hidden_property_container'
                     ].merge();
                 $("#drawn_graph").append(hiddenNeighborPropertiesContainer);
@@ -80,6 +89,13 @@ define([
                 $(hiddenNeighborPropertiesContainer).mouseleave(function(e){
                     clearTimeout(timer);
                 });
+            }
+            this.remove = function(){
+                $(hiddenNeighborPropertiesContainer).remove();
+                while(dashSegments.length != 0){
+                    var dashSegment = dashSegments.pop();
+                    dashSegment.remove();
+                }
             }
         }
         return api;
