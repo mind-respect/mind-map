@@ -62,6 +62,10 @@ define([
                             type
                         );
                     }
+                    EventBus.publish(
+                        '/event/ui/graph/vertex/type/added',
+                        [vertex, type]
+                    );
                 })
         };
         api.removeIdentification = function(vertex, identification, successCallback){
@@ -88,6 +92,10 @@ define([
                             typeToRemove
                         );
                     }
+                    EventBus.publish(
+                        '/event/ui/graph/vertex/type/removed',
+                        [vertex, typeToRemove]
+                    );
                 }
             );
         };
@@ -107,6 +115,10 @@ define([
                             sameAs
                         );
                     }
+                    EventBus.publish(
+                        '/event/ui/graph/vertex/same_as/added',
+                        [vertex, sameAs]
+                    );
                 })
         };
         api.removeSameAs = function (vertex, sameAs, successCallback) {
@@ -122,6 +134,10 @@ define([
                             sameAs
                         );
                     }
+                    EventBus.publish(
+                        '/event/ui/graph/vertex/same_as/removed',
+                        [vertex, sameAs]
+                    );
                 }
             );
         };
@@ -134,6 +150,10 @@ define([
                 contentType:'application/json;charset=utf-8'
             }).success(function () {
                     vertex.setSuggestions(suggestions);
+                    EventBus.publish(
+                        '/event/ui/graph/vertex/suggestions/updated',
+                        [vertex, suggestions]
+                    );
                 })
         };
         return api;

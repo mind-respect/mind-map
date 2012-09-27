@@ -21,7 +21,7 @@ define([
         api.EMPTY_LABEL = "a concept";
 
         api.withHtml = function (html) {
-            return new Vertex(html);
+            return new TripleBrainVertex(html);
         };
         api.withId = function (id) {
             return api.withHtml($("#" + id));
@@ -44,7 +44,7 @@ define([
             return vertices;
         };
 
-        function Vertex(html) {
+        function TripleBrainVertex(html) {
             var thisVertex = this;
             var segments = VertexSegments.withHTMLVertex(html);
             this._initialize = function () {
@@ -232,10 +232,6 @@ define([
                 suggestions.length > 0 ?
                     thisVertex.showSuggestionButton() :
                     thisVertex.hideSuggestionButton();
-                EventBus.publish(
-                    '/event/ui/graph/vertex/suggestions/updated',
-                    [thisVertex, suggestions]
-                );
             }
             this.removeType = function (type) {
                 var types = thisVertex.removeIdenficationInArray(
@@ -243,13 +239,9 @@ define([
                     thisVertex.getTypes()
                 );
                 $(thisVertex).data("types", types);
-                Vertex.setSuggestions(
+                VertexService.setSuggestions(
                     thisVertex,
                     []
-                );
-                EventBus.publish(
-                    '/event/ui/graph/vertex/type/removed',
-                    [thisVertex, type]
                 );
             }
 
@@ -277,20 +269,12 @@ define([
                 var types = thisVertex.getTypes();
                 types.push(type);
                 thisVertex.setTypes(types);
-                EventBus.publish(
-                    '/event/ui/graph/vertex/type/added',
-                    [thisVertex, type]
-                );
             }
             this.addSameAs = function (sameAs) {
                 sameAs.setType("same_as");
                 var sameAsCollection = thisVertex.getSameAs()
                 sameAsCollection.push(sameAs);
                 thisVertex.setSameAs(sameAsCollection);
-                EventBus.publish(
-                    '/event/ui/graph/vertex/same_as/added',
-                    [thisVertex, sameAs]
-                );
             }
             this.setSameAs = function (sameAsCollection) {
                 $(html).data('sameAs', sameAsCollection);
@@ -301,13 +285,9 @@ define([
                     thisVertex.getTypes()
                 );
                 $(thisVertex).data("sameAs", sameAs);
-                Vertex.setSuggestions(
+                VertexService.setSuggestions(
                     thisVertex,
                     []
-                );
-                EventBus.publish(
-                    '/event/ui/graph/vertex/same_as/removed',
-                    [thisVertex, sameAsToRemove]
                 );
             }
             this.getSameAs = function () {
@@ -384,7 +364,7 @@ define([
             crow.ConnectedNode.apply(this, [thisVertex.getId()]);
         }
 
-        Vertex.prototype = new crow.ConnectedNode();
+        TripleBrainVertex.prototype = new crow.ConnectedNode();
 
         EventBus.subscribe(
             '/event/ui/graph/vertex/label/updated',

@@ -77,11 +77,9 @@ public class ResourceForTests {
                 userGraph.defaultVertex(),
                 user
         );
-        Vertex destinationVertex = userGraph.defaultVertex();
-        for (int i = 0; i < 100; i++) {
-            Edge edge = destinationVertex.addVertexAndRelation();
-            destinationVertex = edge.destinationVertex();
-        }
+//        addALotOfVerticesToVertex(
+//                userGraph.defaultVertex()
+//        );
         request.getSession().setAttribute(AUTHENTICATION_ATTRIBUTE_KEY, true);
         request.getSession().setAttribute(AUTHENTICATED_USER_KEY, user);
         return Response.temporaryRedirect(
@@ -92,7 +90,14 @@ public class ResourceForTests {
                                 + "/"
                 )
         ).build();
+    }
 
+    private void addALotOfVerticesToVertex(Vertex vertex){
+        Vertex destinationVertex = vertex;
+        for (int i = 0; i < 100; i++) {
+            Edge edge = destinationVertex.addVertexAndRelation();
+            destinationVertex = edge.destinationVertex();
+        }
     }
 
     @Path("search/create_core")
