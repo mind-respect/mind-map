@@ -4,7 +4,7 @@
 body{
     min-width:20000px;
     min-height:20000px;
-    cursor:pointer;
+    cursor:all-scroll;
 }
 svg{
     z-index:0;
@@ -251,27 +251,6 @@ svg{
     background-color: transparent;
     font-size: 14px;
     font-family: courier new, monospace;
-}
-
-
-#graphCanvas {
-    position: absolute;
-    left:0;
-    top:0;
-    cursor:pointer;
-}
-
-#canvasForRelation {
-    position: absolute;
-    left:0;
-    top:0;
-    z-index: 2;
-}
-#canvasToMoveVertex {
-    position: absolute;
-    left:0;
-    top:0;
-    z-index: 2;
 }
 
 .peripheral-menu{
