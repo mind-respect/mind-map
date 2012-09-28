@@ -18,7 +18,7 @@ define([
 
         t.add('vertices_list', "<ul id='vertices-list'></ul>");
 
-        t.add('list_element', '<li class="vertices-list-element"><span class="min-number-of-edges-from-center-vertex"></span><span class="label"></span></li>');
+        t.add('list_element', '<li class="vertices-list-element"><span class="min-number-of-edges-from-center-vertex"></span><input class="label link-like-button" type="button"></li>');
         return api;
     }
 );

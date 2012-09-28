@@ -32,7 +32,7 @@ define([
             }
 
             this.setLabel = function(label){
-                $(containerWithLabel()).html(
+                $(labelInput()).val(
                     label
                 )
             }
@@ -44,15 +44,15 @@ define([
             function containerWithDistanceFromCentralVertex(){
                 return $(html).find('.min-number-of-edges-from-center-vertex');
             }
-            function containerWithLabel(){
+            function labelInput(){
                 return $(html).find('.label');
             }
             this.applyStyleOfDefaultText = function(){
-                $(containerWithLabel()).addClass('when-default-graph-element-text');
+                $(labelInput()).addClass('when-default-graph-element-text');
             }
 
             this.removeStyleOfDefaultText = function(){
-                $(containerWithLabel()).removeClass('when-default-graph-element-text');
+                $(labelInput()).removeClass('when-default-graph-element-text');
             }
         }
         return api;
