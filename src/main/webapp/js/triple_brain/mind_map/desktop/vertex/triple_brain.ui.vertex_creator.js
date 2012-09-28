@@ -87,7 +87,6 @@ define([
                     drag:onDrag,
                     stop:onDragStop
                 });
-                $(html).mousedown(mouseDownToCreateRelationOrAddVertex);
                 json.position.x -= $(html).width() / 2;
                 json.position.y -= $(html).height() / 2;
                 position();
@@ -178,6 +177,11 @@ define([
             function createMenu() {
                 var vertexMenu = MindMapTemplate['vertex_menu'].merge();
                 $(html).append(vertexMenu);
+
+                var plusBtn = MindMapTemplate['vertex_plus_button'].merge();
+                $(vertexMenu).append(plusBtn);
+
+                $(plusBtn).on("click", createRelationOrAddVertex);
 
                 var removeBtn = MindMapTemplate['vertex_remove_button'].merge();
                 $(vertexMenu).append(removeBtn);
@@ -299,7 +303,7 @@ define([
                 vertex.hideButtons();
             }
 
-            function mouseDownToCreateRelationOrAddVertex(mouseDownEvent) {
+            function createRelationOrAddVertex(mouseDownEvent) {
                 var sourceVertex = vertexFacade();
                 $('.edge').unbind('mouseenter mouseleave');
                 var normalStateEdgesZIndex = $('.edge').css('z-index');
