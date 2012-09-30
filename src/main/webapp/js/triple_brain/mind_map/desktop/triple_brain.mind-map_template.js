@@ -15,11 +15,11 @@ define([
         t.add('vertex_label_container', '<div class=textfield-container><input type="text" class="label" value="{label}"></div>');
         t.add('vertex_menu', '<div class="menu"></div>');
         t.add('vertex_move_button', '<div class="move"></div>');
-        t.add('vertex_plus_button', '<input type="button" value="+" class="plus" data-role="none">');
-        t.add('vertex_remove_button', '<input type="button" value="x" class="remove" data-role="none">');
-        t.add('vertex_center_button', '<input type="button" class="center" data-role="none">');
-        t.add('vertex_what_is_this_button', '<input type="button" class="what-is-this" data-role="none" value="?">');
-        t.add('vertex_suggestion_button', '<input type="button" data-role="none" value="S" class="suggestion">');
+        t.add('vertex_plus_button', '<input type="button" value="+" class="plus">');
+        t.add('vertex_remove_button', '<input type="button" value="x" class="remove">');
+        t.add('vertex_center_button', '<input type="button" class="center">');
+        t.add('vertex_what_is_this_button', '<input type="button" class="what-is-this"  value="?">');
+        t.add('vertex_suggestion_button', '<input type="button"  value="S" class="suggestion">');
 
         t.add('identification_menu', '<div class="peripheral-menu identification"></div>');
         t.add('identification_menu_explanation_title', '<h2>Identifications</h2>');
@@ -44,7 +44,7 @@ define([
         //edge html elements
         t.add('edge', '<div class="edge" id="{id}" style="left:{label_position.x};top:{label_position.y}" source-vertex-id="{source_vertex_id}" destination-vertex-id="{destination_vertex_id}"></div>');
         t.add('edge_label', '<input type="text" value="{label}">');
-        t.add('edge_remove_button', '<input type="button" class="remove" value="x" data-role="none">');
+        t.add('edge_remove_button', '<input type="button" class="remove" value="x" >');
 
         t.add('auto_complete_suggestion_list', '<ul class="auto-complete-suggestion"></ul>');
         t.add('auto_complete_suggestion_list_element', '<li>{name}</li>');

@@ -2,8 +2,8 @@
     display: none;
 }
 body{
-    min-width:20000px;
-    min-height:20000px;
+    min-width:30000px;
+    min-height:30000px;
     cursor:all-scroll;
 }
 svg{
@@ -148,19 +148,22 @@ svg{
 
 .vertex .center {
     background: url('images/icons/vertex/target.png') no-repeat top;
-    min-width:16px;
-    min-height:14px;
-    margin-top:5px;
 }
 
 .vertex .move {
-    background: url('images/icons/vertex/move.png') no-repeat top;
+    background-image : url('images/icons/vertex/move.png');
     min-width:25px;
     min-height:25px;
     margin-top:11px;
     margin-right:5px;
     margin-left:8px;
     float:left;
+}
+
+.vertex .plus {
+    color: green !important;
+    text-align: center;
+    background: none;
 }
 
 .vertex .remove {
@@ -182,7 +185,9 @@ svg{
 }
 
 .vertex .menu {
-
+    margin-top:10px;
+    margin-left:30px;
+    width:75px;
 }
 
 .vertex .menu ul:first-of-type {
@@ -203,6 +208,24 @@ svg{
 .vertex .menu input{
     display:block;
     float:left;
+    background-color: transparent;
+    background-position:center;
+    padding-left:2px;
+    padding-right:2px;
+    margin:0;
+    display:table;
+    border: 1px solid #e30613;
+    font-weight:bold;
+    font-size:19px;
+    min-width:25px;
+    min-height:14px;
+    margin-top:0px;
+}
+
+.vertex .menu input:hover{
+    box-shadow: 0 0 5px rgba(0, 0, 255, 1);
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 255, 1);
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 255, 1);
 }
 
 .center-vertex {
