@@ -6,8 +6,8 @@ import org.codehaus.jettison.json.JSONObject;
 import org.junit.Test;
 import org.triple_brain.mind_map.service.utils.GraphManipulationRestTest;
 import org.triple_brain.module.common_utils.Uris;
-import org.triple_brain.module.model.FriendlyResource;
-import org.triple_brain.module.model.Suggestion;
+import org.triple_brain.module.model.ExternalFriendlyResource;
+import org.triple_brain.module.model.suggestion.Suggestion;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.scenarios.TestScenarios;
 import org.triple_brain.module.model.json.ExternalResourceJsonFields;
@@ -203,7 +203,7 @@ public class VertexResourceTest extends GraphManipulationRestTest {
     }
 
     private ClientResponse removeFoafPersonIdentificationToVertexA() throws Exception {
-        FriendlyResource personType = TestScenarios.personType();
+        ExternalFriendlyResource personType = TestScenarios.personType();
         ClientResponse response = resource
                 .path("vertex")
                 .path(encodeURL(vertexAUri().toString()))
@@ -223,7 +223,7 @@ public class VertexResourceTest extends GraphManipulationRestTest {
                 is(0)
         );
         Suggestion suggestion = TestScenarios.startDateSuggestion();
-        setSuggestionsOfVertex(
+        addSuggestionsToVertex(
                 new JSONArray().put(
                         SuggestionJsonFields.toJson(suggestion)
                 )
@@ -235,7 +235,7 @@ public class VertexResourceTest extends GraphManipulationRestTest {
         );
     }
 
-    private ClientResponse setSuggestionsOfVertex(JSONArray suggestions) throws Exception {
+    private ClientResponse addSuggestionsToVertex(JSONArray suggestions) throws Exception {
         ClientResponse response = resource
                 .path("vertex")
                 .path(encodeURL(vertexAUri().toString()))

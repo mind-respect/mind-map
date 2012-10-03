@@ -3,8 +3,8 @@ package org.triple_brain.mind_map.service.resources;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
-import org.triple_brain.module.model.FriendlyResource;
-import org.triple_brain.module.model.Suggestion;
+import org.triple_brain.module.model.ExternalFriendlyResource;
+import org.triple_brain.module.model.suggestion.Suggestion;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.*;
 import org.triple_brain.module.model.json.ExternalResourceJsonFields;
@@ -22,8 +22,6 @@ import javax.ws.rs.core.Response;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashSet;
-import java.util.Set;
 
 import static org.triple_brain.mind_map.service.resources.GraphManipulatorResourceUtils.userFromSession;
 import static org.triple_brain.module.common_utils.Uris.decodeURL;
@@ -146,8 +144,8 @@ public class VertexResource {
         return Response.ok().build();
     }
 
-    private FriendlyResource friendlyResourceFromJson(JSONObject externalResource) throws JSONException, URISyntaxException {
-        return FriendlyResource.withUriAndLabel(
+    private ExternalFriendlyResource friendlyResourceFromJson(JSONObject externalResource) throws JSONException, URISyntaxException {
+        return ExternalFriendlyResource.withUriAndLabel(
                 new URI(
                         externalResource.getString(
                                 ExternalResourceJsonFields.URI
@@ -194,7 +192,7 @@ public class VertexResource {
         Vertex vertex = userGraph.vertexWithURI(
                 new URI(vertexId)
         );
-        FriendlyResource type = vertex.friendlyResourceWithUri(
+        ExternalFriendlyResource type = vertex.friendlyResourceWithUri(
                 new URI(friendlyResourceUri)
         );
         vertex.removeFriendlyResource(type);
@@ -203,7 +201,7 @@ public class VertexResource {
 
     @POST
     @Path("{vertexId}/suggestions")
-    public Response setSuggestions(@GraphElementIdentifier @PathParam("vertexId") String vertexId, JSONArray suggestions, @Context HttpServletRequest request) throws JSONException, URISyntaxException {
+    public Response addSuggestions(@GraphElementIdentifier @PathParam("vertexId") String vertexId, JSONArray suggestions, @Context HttpServletRequest request) throws JSONException, URISyntaxException {
         try {
             vertexId = decodeURL(vertexId);
         } catch (UnsupportedEncodingException e) {
@@ -215,21 +213,21 @@ public class VertexResource {
         Vertex vertex = userGraph.vertexWithURI(
                 new URI(vertexId)
         );
-        vertex.suggestions(
+        vertex.addSuggestions(
                 suggestionsSetFromJSONArray(suggestions)
         );
         return Response.ok().build();
     }
 
-    private Set<Suggestion> suggestionsSetFromJSONArray(JSONArray jsonSuggestions) throws JSONException, URISyntaxException {
-        Set<Suggestion> suggestions = new HashSet<Suggestion>();
+    private Suggestion[] suggestionsSetFromJSONArray(JSONArray jsonSuggestions) throws JSONException, URISyntaxException {
+        Suggestion[] suggestions = new Suggestion[jsonSuggestions.length()];
         for (int i = 0; i < jsonSuggestions.length(); i++) {
             JSONObject jsonSuggestion = jsonSuggestions.getJSONObject(i);
-            suggestions.add(Suggestion.withTypeDomainAndLabel(
+            suggestions[i] = Suggestion.withSameAsDomainLabelAndOrigins(
                     new URI(jsonSuggestion.getString(TYPE_URI)),
                     new URI(jsonSuggestion.getString(DOMAIN_URI)),
                     jsonSuggestion.getString(LABEL)
-            ));
+            );
         }
         return suggestions;
     }
