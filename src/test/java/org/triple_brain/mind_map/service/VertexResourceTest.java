@@ -216,7 +216,7 @@ public class VertexResourceTest extends GraphManipulationRestTest {
     }
 
     @Test
-    public void can_set_suggestions_of_vertex() throws Exception {
+    public void can_add_suggestions_to_vertex() throws Exception {
         JSONArray suggestions = vertexA().getJSONArray(VertexJsonFields.SUGGESTIONS);
         assertThat(
                 suggestions.length(),
@@ -244,5 +244,36 @@ public class VertexResourceTest extends GraphManipulationRestTest {
                 .type(MediaType.APPLICATION_JSON)
                 .post(ClientResponse.class, suggestions);
         return response;
+    }
+
+    @Test
+    public void can_get_suggestions_of_vertex() throws Exception {
+        JSONArray suggestions = getSuggestionsOfVertex();
+        assertThat(
+                suggestions.length(),
+                is(0)
+        );
+        Suggestion suggestion = TestScenarios.startDateSuggestion();
+        addSuggestionsToVertex(
+                new JSONArray().put(
+                        SuggestionJsonFields.toJson(suggestion)
+                )
+        );
+        suggestions = getSuggestionsOfVertex();
+        assertThat(
+                suggestions.length(),
+                is(greaterThan(0))
+        );
+    }
+
+    private JSONArray getSuggestionsOfVertex() throws Exception {
+        ClientResponse response = resource
+                .path("vertex")
+                .path(encodeURL(vertexAUri().toString()))
+                .path("suggestions")
+                .cookie(authCookie)
+                .type(MediaType.APPLICATION_JSON)
+                .get(ClientResponse.class);
+        return response.getEntity(JSONArray.class);
     }
 }

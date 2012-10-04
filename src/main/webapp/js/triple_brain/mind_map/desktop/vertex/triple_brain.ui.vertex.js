@@ -227,6 +227,17 @@ define([
             this.suggestions = function () {
                 return $(html).data('suggestions');
             }
+            this.addSuggestions = function (suggestions) {
+                var existingSuggestions = $(html).data('suggestions');
+                existingSuggestions = existingSuggestions === undefined ?
+                    [] :
+                    existingSuggestions;
+                var mergedSuggestions = existingSuggestions.concat(suggestions);
+                $(html).data('suggestions', mergedSuggestions);
+                mergedSuggestions.length > 0 ?
+                    thisVertex.showSuggestionButton() :
+                    thisVertex.hideSuggestionButton();
+            }
             this.setSuggestions = function (suggestions) {
                 $(html).data('suggestions', suggestions);
                 suggestions.length > 0 ?
@@ -239,9 +250,8 @@ define([
                     thisVertex.getTypes()
                 );
                 $(thisVertex).data("types", types);
-                VertexService.setSuggestions(
-                    thisVertex,
-                    []
+                VertexService.getSuggestions(
+                    thisVertex
                 );
             }
 
@@ -285,9 +295,8 @@ define([
                     thisVertex.getTypes()
                 );
                 $(thisVertex).data("sameAs", sameAs);
-                VertexService.setSuggestions(
-                    thisVertex,
-                    []
+                VertexService.getSuggestions(
+                    thisVertex
                 );
             }
             this.getSameAs = function () {

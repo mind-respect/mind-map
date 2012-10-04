@@ -141,7 +141,25 @@ define([
                 }
             );
         };
-        api.setSuggestions = function (vertex, suggestions) {
+        api.getSuggestions = function (vertex) {
+            $.ajax({
+                type:'GET',
+                url:Config.links.app+ '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()) + '/suggestions',
+                dataType:'json'
+            }).success(function (jsonSuggestions) {
+                    var suggestions = Suggestion.fromJsonArrayOfServer(
+                        jsonSuggestions
+                    );
+                    vertex.setSuggestions(
+                        suggestions
+                    );
+                    EventBus.publish(
+                        '/event/ui/graph/vertex/suggestions/updated',
+                        [vertex, suggestions]
+                    );
+                })
+        }
+        api.addSuggestions = function (vertex, suggestions) {
             $.ajax({
                 type:'POST',
                 url:Config.links.app+ '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()) + '/suggestions',
@@ -149,7 +167,7 @@ define([
                 data:Suggestion.formatAllForServer(suggestions),
                 contentType:'application/json;charset=utf-8'
             }).success(function () {
-                    vertex.setSuggestions(suggestions);
+                    vertex.addSuggestions(suggestions);
                     EventBus.publish(
                         '/event/ui/graph/vertex/suggestions/updated',
                         [vertex, suggestions]

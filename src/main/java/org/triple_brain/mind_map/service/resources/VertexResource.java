@@ -10,6 +10,7 @@ import org.triple_brain.module.model.graph.*;
 import org.triple_brain.module.model.json.ExternalResourceJsonFields;
 import org.triple_brain.module.model.json.graph.EdgeJsonFields;
 import org.triple_brain.module.model.json.graph.VertexJsonFields;
+import org.triple_brain.module.model.suggestion.SuggestionOrigin;
 import org.triple_brain.module.search.GraphIndexer;
 
 import javax.inject.Inject;
@@ -199,6 +200,26 @@ public class VertexResource {
         return Response.ok().build();
     }
 
+    @GET
+    @Path("{vertexId}/suggestions")
+    public Response getSuggestions(@GraphElementIdentifier @PathParam("vertexId") String vertexId, @Context HttpServletRequest request) throws JSONException, URISyntaxException {
+        try {
+            vertexId = decodeURL(vertexId);
+        } catch (UnsupportedEncodingException e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        UserGraph userGraph = graphFactory.loadForUser(
+                userFromSession(request.getSession())
+        );
+        Vertex vertex = userGraph.vertexWithURI(
+                new URI(vertexId)
+        );
+        JSONArray suggestions = VertexJsonFields.toJson(vertex)
+                .getJSONArray(VertexJsonFields.SUGGESTIONS);
+
+        return Response.ok(suggestions).build();
+    }
+
     @POST
     @Path("{vertexId}/suggestions")
     public Response addSuggestions(@GraphElementIdentifier @PathParam("vertexId") String vertexId, JSONArray suggestions, @Context HttpServletRequest request) throws JSONException, URISyntaxException {
@@ -226,7 +247,8 @@ public class VertexResource {
             suggestions[i] = Suggestion.withSameAsDomainLabelAndOrigins(
                     new URI(jsonSuggestion.getString(TYPE_URI)),
                     new URI(jsonSuggestion.getString(DOMAIN_URI)),
-                    jsonSuggestion.getString(LABEL)
+                    jsonSuggestion.getString(LABEL),
+                    SuggestionOrigin.valueOf(jsonSuggestion.getString(ORIGIN))
             );
         }
         return suggestions;

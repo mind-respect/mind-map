@@ -6,14 +6,16 @@ define([
 ],
     function ($, Freebase, ExternalResource) {
         var api = {};
-        api.fromFreebaseSuggestion = function (freebaseSuggestion) {
+        api.IDENTIFICATION_PREFIX = "identification_";
+        api.fromFreebaseSuggestionAndTypeUri = function (freebaseSuggestion, typeUri) {
             return new Suggestion(
                 ExternalResource.fromFreebaseSuggestion(
                     freebaseSuggestion
                 ),
                 Freebase.freebaseIdToURI(
                     freebaseSuggestion.expected_type
-                )
+                ),
+                api.IDENTIFICATION_PREFIX + typeUri
             );
         }
         api.formatAllForServer = function (suggestions) {
@@ -47,7 +49,7 @@ define([
             return suggestions;
         }
 
-        function Suggestion(externalResource, domainUri) {
+        function Suggestion(externalResource, domainUri, origin) {
             var thisSuggestion = this;
             this.typeUri = function () {
                 return externalResource.uri();
@@ -58,11 +60,15 @@ define([
             this.label = function () {
                 return externalResource.label();
             }
+            this.origin = function(){
+                return origin;
+            }
             this.serverFormat = function(){
                 return {
                     type_uri : thisSuggestion.typeUri(),
                     domain_uri : thisSuggestion.domainUri(),
-                    label : thisSuggestion.label()
+                    label : thisSuggestion.label(),
+                    origin: thisSuggestion.origin()
                 }
             }
         }

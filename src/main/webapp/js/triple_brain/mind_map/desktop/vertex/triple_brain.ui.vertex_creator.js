@@ -66,7 +66,7 @@ define([
                 createLabel();
                 createMenu();
                 var vertex = vertexFacade();
-                vertex.setSuggestions(
+                vertex.addSuggestions(
                     Suggestion.fromJsonArrayOfServer(
                         json.suggestions
                     )

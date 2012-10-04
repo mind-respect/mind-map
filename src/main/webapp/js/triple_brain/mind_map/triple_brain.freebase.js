@@ -71,12 +71,15 @@ define([
                     $.each(freebaseProperties, function () {
                         var freebaseProperty = this;
                         suggestions.push(
-                            Suggestion.fromFreebaseSuggestion(
-                                freebaseProperty
+                            Suggestion.fromFreebaseSuggestionAndTypeUri(
+                                freebaseProperty,
+                                api.freebaseIdToURI(
+                                    result.result.id
+                                )
                             )
                         )
                     })
-                    vertexService().setSuggestions(
+                    vertexService().addSuggestions(
                         vertex,
                         suggestions
                     );
