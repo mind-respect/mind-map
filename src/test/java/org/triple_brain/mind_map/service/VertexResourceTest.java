@@ -222,16 +222,27 @@ public class VertexResourceTest extends GraphManipulationRestTest {
                 suggestions.length(),
                 is(0)
         );
-        Suggestion suggestion = TestScenarios.startDateSuggestion();
-        addSuggestionsToVertex(
-                new JSONArray().put(
-                        SuggestionJsonFields.toJson(suggestion)
-                )
+
+        addSuggestionToVertex(
+                TestScenarios.startDateSuggestion()
         );
         suggestions = vertexA().getJSONArray(VertexJsonFields.SUGGESTIONS);
         assertThat(
                 suggestions.length(),
                 is(greaterThan(0))
+        );
+    }
+
+    private ClientResponse addSuggestionToVertex(Suggestion suggestion) throws Exception {
+        JSONObject suggestionAsJson = SuggestionJsonFields.toJson(suggestion);
+        suggestionAsJson.put(
+                SuggestionJsonFields.ORIGIN,
+                suggestion.origins().iterator().next().toString()
+        );
+        return addSuggestionsToVertex(
+                new JSONArray().put(
+                        suggestionAsJson
+                )
         );
     }
 
@@ -253,11 +264,8 @@ public class VertexResourceTest extends GraphManipulationRestTest {
                 suggestions.length(),
                 is(0)
         );
-        Suggestion suggestion = TestScenarios.startDateSuggestion();
-        addSuggestionsToVertex(
-                new JSONArray().put(
-                        SuggestionJsonFields.toJson(suggestion)
-                )
+        addSuggestionToVertex(
+                TestScenarios.startDateSuggestion()
         );
         suggestions = getSuggestionsOfVertex();
         assertThat(

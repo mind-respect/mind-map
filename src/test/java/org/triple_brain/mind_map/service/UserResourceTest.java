@@ -9,6 +9,7 @@ import org.triple_brain.mind_map.service.utils.GraphManipulationRestTest;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.json.UserJSONFields;
 
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 
@@ -51,25 +52,10 @@ public class UserResourceTest extends GraphManipulationRestTest {
 
     @Test
     public void can_logout() throws Exception {
-        NewCookie cookie = createAndAuthenticateUser().getCookies().get(0);
-        assertTrue(isThereAnAuthentifiedUser(cookie));
-        logoutUsingCookie(cookie);
-        assertFalse(isThereAnAuthentifiedUser(cookie));
+        assertTrue(isThereAnAuthentifiedUser(authCookie));
+        logoutUsingCookie(authCookie);
+        assertFalse(isThereAnAuthentifiedUser(authCookie));
     }
-
-    private ClientResponse createAndAuthenticateUser() throws Exception{
-        JSONObject user = userUtils.validForCreation();
-        createUser(user);
-        ClientResponse response = resource
-                .path("users")
-                .path("authenticate")
-                .queryParam("email", user.getString(UserJSONFields.EMAIL))
-                .queryParam("password", user.getString(UserJSONFields.PASSWORD))
-                .get(ClientResponse.class);
-        return response;
-    }
-
-
 
     private ClientResponse logoutUsingCookie(NewCookie cookie){
         ClientResponse response = resource
@@ -94,12 +80,16 @@ public class UserResourceTest extends GraphManipulationRestTest {
     public void authentication_returns_user_as_json() throws Exception {
         JSONObject user = userUtils.validForCreation();
         createUser(user);
+        JSONObject loginInfo = new JSONObject()
+                .put(
+                        UserJSONFields.EMAIL,
+                        user.getString(UserJSONFields.EMAIL)
+                )
+                .put(UserJSONFields.PASSWORD, DEFAULT_PASSWORD);
         ClientResponse response = resource
                 .path("users")
                 .path("authenticate")
-                .queryParam("email", user.getString(UserJSONFields.EMAIL))
-                .queryParam("password", user.getString(UserJSONFields.PASSWORD))
-                .get(ClientResponse.class);
+                .post(ClientResponse.class, loginInfo);
         JSONObject userFromResponse = response.getEntity(JSONObject.class);
         String originalUserUsername = user.getString(UserJSONFields.USER_NAME);
         assertThat(
@@ -162,7 +152,8 @@ public class UserResourceTest extends GraphManipulationRestTest {
     private ClientResponse createUser(JSONObject user){
         return resource
                 .path("users")
-                .type("application/json")
+                .type(MediaType.APPLICATION_JSON)
+                .cookie(authCookie)
                 .post(ClientResponse.class, user);
     }
 
