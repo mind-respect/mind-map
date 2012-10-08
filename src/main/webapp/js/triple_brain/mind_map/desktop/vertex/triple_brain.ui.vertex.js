@@ -133,6 +133,18 @@ define([
                 return  vertexThatIsMouseOver !== undefined &&
                     vertexThatIsMouseOver.equalsVertex(thisVertex);
             }
+            this.makeItLowProfile = function(){
+                if (!thisVertex.isLabelInFocus()) {
+                    thisVertex.unhighlight();
+                }
+                thisVertex.hideButtons();
+                thisVertex.hideImages();
+            }
+            this.makeItHighProfile = function(){
+                thisVertex.highlight();
+                thisVertex.showButtons();
+                thisVertex.showImages();
+            }
             this.hideButtons = function () {
                 thisVertex.hideMenu();
                 thisVertex.hideMoveButton();
@@ -143,6 +155,13 @@ define([
             }
             this.hideMenu = function () {
                 $(menu()).css("visibility", "hidden");
+            }
+            this.hideImages = function(){
+                $(thisVertex.imagesContainer()).hide();
+            }
+            this.showImages = function(){
+                $(thisVertex.imagesContainer()).show();
+                thisVertex.adjustImagesPosition();
             }
             this.showMenu = function () {
                 $(menu()).css("visibility", "visible");
@@ -250,6 +269,7 @@ define([
                     thisVertex.getTypes()
                 );
                 $(thisVertex).data("types", types);
+                removeIdentificationCommonBehavior(type);
                 VertexService.getSuggestions(
                     thisVertex
                 );
@@ -279,25 +299,56 @@ define([
                 var types = thisVertex.getTypes();
                 types.push(type);
                 thisVertex.setTypes(types);
+                addedIdentificationCommonBehavior(type);
             }
             this.addSameAs = function (sameAs) {
                 sameAs.setType("same_as");
                 var sameAsCollection = thisVertex.getSameAs()
                 sameAsCollection.push(sameAs);
                 thisVertex.setSameAs(sameAsCollection);
+                addedIdentificationCommonBehavior(sameAs);
             }
+
+            function addedIdentificationCommonBehavior(externalResource){
+                if(externalResource.hasImage()){
+                    thisVertex.addImageWithUrl(
+                        externalResource.imageUrl()
+                    );
+                }
+            }
+
+            this.addImageWithUrl = function(imageUrl){
+                var imageContainer = $(thisVertex.imagesContainer());
+                $(imageContainer).html(
+                    "<img src='"+imageUrl+"'></img>"
+                );
+                thisVertex.adjustImagesPosition();
+            }
+
+            this.removeImageWithUrl = function(imageUrl){
+                $(thisVertex.imagesContainer()).empty();
+            }
+
             this.setSameAs = function (sameAsCollection) {
                 $(html).data('sameAs', sameAsCollection);
             }
             this.removeSameAs = function (sameAsToRemove) {
                 var sameAs = thisVertex.removeIdenficationInArray(
                     sameAsToRemove,
-                    thisVertex.getTypes()
+                    thisVertex.getSameAs()
                 );
                 $(thisVertex).data("sameAs", sameAs);
+                removeIdentificationCommonBehavior(sameAsToRemove);
                 VertexService.getSuggestions(
                     thisVertex
                 );
+            }
+            function removeIdentificationCommonBehavior(externalResource){
+                if(externalResource.hasImage()){
+                    thisVertex.removeImageWithUrl(
+                        externalResource.imageUrl()
+                    );
+                }
             }
             this.getSameAs = function () {
                 return $(html).data('sameAs');
@@ -314,7 +365,34 @@ define([
             this.equalsVertex = function (otherVertex) {
                 return thisVertex.getId() == otherVertex.getId();
             }
+            this.imagesContainer = function(){
+                return $(html).find(".images");
+            }
+            this.adjustImagesPosition = function(){
+                var imagesContainer = thisVertex.imagesContainer();
+                var currentImage = $(imagesContainer).find("img");
+                adjustPosition(currentImage);
+                $(currentImage).load(function(){
+                    adjustPosition(this);
+                });
+                function adjustPosition(currentImage){
+                    var addedImageWidth = $(currentImage).width();
+                    var separationFromVertexInPixels = 5;
+                    var marginLeft = (addedImageWidth + separationFromVertexInPixels) * -1;
+                    $(imagesContainer).css("margin-left", marginLeft);
 
+                    var addedImageHeight = $(currentImage).height();
+                    var vertexHeight = thisVertex.height();
+                    var differenceOfHeight = vertexHeight - addedImageHeight;
+                    if(differenceOfHeight > 0){
+                        $(imagesContainer).css(
+                            "margin-top",
+                            differenceOfHeight/2
+                        );
+                    }
+                }
+
+            }
             this.scrollTo = function () {
                 var position = thisVertex.position();
                 window.scroll(

@@ -4,12 +4,12 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.triple_brain.module.model.ExternalFriendlyResource;
-import org.triple_brain.module.model.suggestion.Suggestion;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.*;
 import org.triple_brain.module.model.json.ExternalResourceJsonFields;
 import org.triple_brain.module.model.json.graph.EdgeJsonFields;
 import org.triple_brain.module.model.json.graph.VertexJsonFields;
+import org.triple_brain.module.model.suggestion.Suggestion;
 import org.triple_brain.module.model.suggestion.SuggestionOrigin;
 import org.triple_brain.module.search.GraphIndexer;
 
@@ -140,22 +140,9 @@ public class VertexResource {
                 new URI(vertexId)
         );
         vertex.addType(
-                friendlyResourceFromJson(type)
+                ExternalResourceJsonFields.fromJson(type)
         );
         return Response.ok().build();
-    }
-
-    private ExternalFriendlyResource friendlyResourceFromJson(JSONObject externalResource) throws JSONException, URISyntaxException {
-        return ExternalFriendlyResource.withUriAndLabel(
-                new URI(
-                        externalResource.getString(
-                                ExternalResourceJsonFields.URI
-                        )
-                ),
-                externalResource.getString(
-                        ExternalResourceJsonFields.LABEL
-                )
-        );
     }
 
     @POST
@@ -173,7 +160,7 @@ public class VertexResource {
                 new URI(vertexId)
         );
         vertex.addSameAs(
-                friendlyResourceFromJson(sameAs)
+                ExternalResourceJsonFields.fromJson(sameAs)
         );
         return Response.ok().build();
     }

@@ -62,6 +62,7 @@ define([
                 Graph.addHTML(
                     html
                 );
+                addImagesContainer();
                 addMoveButton();
                 createLabel();
                 createMenu();
@@ -114,6 +115,7 @@ define([
                         )
                     );
                 });
+                vertex.makeItLowProfile();
                 EventBus.publish(
                     '/event/ui/html/vertex/created/',
                     vertex
@@ -166,6 +168,12 @@ define([
                     vertex.readjustLabelWidth();
                 });
                 return labelContainer;
+            }
+
+            function addImagesContainer(){
+                $(html).append(
+                    MindMapTemplate['vertex_images_container'].merge()
+                );
             }
 
             function addMoveButton() {
@@ -290,17 +298,13 @@ define([
             function onMouseOver() {
                 var vertex = vertexOfSubHtmlComponent(this);
                 Graph.setVertexMouseOver(vertex);
-                vertex.highlight();
-                vertex.showButtons();
+                vertex.makeItHighProfile();
             }
 
             function onMouseOut() {
                 var vertex = vertexOfSubHtmlComponent(this)
                 Graph.unsetVertexMouseOver();
-                if (!vertex.isLabelInFocus()) {
-                    vertex.unhighlight();
-                }
-                vertex.hideButtons();
+                vertex.makeItLowProfile();
             }
 
             function createRelationOrAddVertex(mouseDownEvent) {

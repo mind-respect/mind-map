@@ -20,6 +20,8 @@ define([
         t.add('vertex_center_button', '<input type="button" class="center">');
         t.add('vertex_what_is_this_button', '<input type="button" class="what-is-this"  value="?">');
         t.add('vertex_suggestion_button', '<input type="button"  value="S" class="suggestion">');
+        t.add('vertex_images_container', '<div class="images"></div>');
+
 
         t.add('identification_menu', '<div class="peripheral-menu identification"></div>');
         t.add('identification_menu_explanation_title', '<h2>Identifications</h2>');

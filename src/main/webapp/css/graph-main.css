@@ -109,6 +109,10 @@ svg{
     cursor:default;
 }
 
+.vertex .images{
+    float:left;
+}
+
 .highlighted-vertex{
     border: 1px;
     -moz-border-radius: 15px;

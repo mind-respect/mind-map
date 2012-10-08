@@ -122,7 +122,7 @@ define(
                 centralVertex.setAsCentral();
                 centralVertex.scrollTo();
 
-                $("body").on('click', "svg", function () {
+                $("body").on('click', function () {
                     var outOfVertexMenus = $('.peripheral-menu');
                     $(outOfVertexMenus).remove();
                 });

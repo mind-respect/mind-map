@@ -10,6 +10,7 @@ define([
 ],
     function ($, EventBus, Vertex, VertexService, Suggestion, ExternalResource) {
         var api = {};
+        api.BASE_PATH_FOR_IMAGES = "https://usercontent.googleapis.com/freebase/v1/image/";
         api.freebaseIdToURI = function (freebaseId) {
             return "http://rdf.freebase.com/rdf" + freebaseId;
         };

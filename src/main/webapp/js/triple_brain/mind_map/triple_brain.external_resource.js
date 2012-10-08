@@ -9,6 +9,13 @@ define([
 ],
     function (require, $) {
         var api = {};
+        api.withUriLabelAndImageLink = function(uri, label, imageLink){
+            return new ExternalResource(
+                uri,
+                label,
+                imageLink
+            );
+        }
         api.withUriAndLabel = function(uri, label){
             return new ExternalResource(
                 uri,
@@ -21,23 +28,32 @@ define([
                 Freebase.freebaseIdToURI(
                     freebaseSuggestion.id
                 ),
-                freebaseSuggestion.name
+                freebaseSuggestion.name,
+                Freebase.BASE_PATH_FOR_IMAGES +
+                    freebaseSuggestion.id
             )
         }
         api.fromServerJson = function(serverJson){
             return new ExternalResource(
                 serverJson.uri,
-                serverJson.label
+                serverJson.label,
+                serverJson.image_url
             )
         }
 
-        function ExternalResource(uri, label) {
+        function ExternalResource(uri, label, imageUrl) {
             var thisExternalResource = this;
             this.uri = function () {
                 return uri;
             }
             this.label = function () {
                 return label;
+            }
+            this.hasImage = function(){
+                return imageUrl !== undefined;
+            }
+            this.imageUrl = function(){
+                return imageUrl;
             }
             this.serverFormat = function(){
                 return $.toJSON(
@@ -47,7 +63,8 @@ define([
             this.jsonFormat = function(){
                 return {
                     uri : thisExternalResource.uri(),
-                    label : thisExternalResource.label()
+                    label : thisExternalResource.label(),
+                    image_url : thisExternalResource.imageUrl()
                 }
             }
             this.setType = function(type){
