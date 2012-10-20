@@ -12,6 +12,17 @@ window.config = {
         "jquery.freebase_suggest.min" : "jquery/jquery.freebase_suggest.min",
         "jquery.json.min" : "jquery/jquery.json.min",
         "jquery.tinysort.min" : "jquery/jquery.tinysort.min",
+        "jquery.cookie" :  "jquery/jquery.cookie",
+        "org/cometd" : "cometd/cometd",
+        "org/cometd/AckExtension" : "cometd/plugins/AckExtension",
+        "org/cometd/ReloadExtension" : "cometd/plugins/ReloadExtension",
+        "org/cometd/TimeStampExtension" : "cometd/plugins/TimeStampExtension",
+        "org/cometd/TimeSyncExtension" : "cometd/plugins/TimeSyncExtension",
+        "jquery.cometd" : "jquery/cometd/jquery.cometd",
+        "jquery.cometd-ack" : "jquery/cometd/jquery.cometd-ack",
+        "jquery.cometd-reload" : "jquery/cometd/jquery.cometd-reload",
+        "jquery.cometd-timestamp" : "jquery/cometd/jquery.cometd-timestamp",
+        "jquery.cometd-timesync" : "jquery/cometd/jquery.cometd-timesync",
         "triple_brain.user" : "triple_brain/mind_map/triple_brain.user",
         "triple_brain.event_bus" : "triple_brain/triple_brain.event_bus",
         "triple_brain.drag_scroll" : "triple_brain/triple_brain.drag_scroll",
@@ -44,6 +55,8 @@ window.config = {
         "triple_brain.ui.triple" : "triple_brain/mind_map/triple_brain.ui.triple",
         "triple_brain.template" : "triple_brain/triple_brain.template",
         "triple_brain.ui.vertex_hidden_neighbor_properties_indicator_dashed_segment" : "triple_brain/mind_map/desktop/vertex/hidden_neighbor_properties/triple_brain.ui.vertex_hidden_neighbor_properties_indicator_dashed_segment",
-        "triple_brain.ui.left_panel" : "triple_brain/mind_map/desktop/triple_brain.ui.left_panel"
+        "triple_brain.ui.left_panel" : "triple_brain/mind_map/desktop/triple_brain.ui.left_panel",
+        "triple_brain.image" : "triple_brain/triple_brain.image",
+        "triple_brain.server_subscriber" : "triple_brain/triple_brain.server_subscriber"
     }
 };

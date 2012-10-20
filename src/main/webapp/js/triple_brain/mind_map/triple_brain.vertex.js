@@ -11,7 +11,7 @@ define([
         api.addRelationAndVertexAtPositionToVertex = function (vertex, newVertexPosition, successCallback) {
             $.ajax({
                 type:'POST',
-                url:Config.links.app+ '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()),
+                url:Config.links.app + '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()),
                 dataType:'json'
             }).success(function (tripleJson) {
                     var triple = Triple.fromServerStatementAndNewVertexPosition(
@@ -26,7 +26,7 @@ define([
         api.remove = function (vertex) {
             $.ajax({
                 type:'DELETE',
-                url:Config.links.app+ '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId())
+                url:Config.links.app + '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId())
             }).success(function () {
                     EventBus.publish(
                         '/event/ui/graph/vertex/deleted/',
@@ -37,7 +37,7 @@ define([
         api.updateLabel = function (vertex, label) {
             $.ajax({
                 type:'POST',
-                url:Config.links.app+ '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()) + '/label?label=' + label,
+                url:Config.links.app + '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()) + '/label?label=' + label,
                 dataType:'json'
             }).success(function () {
                     EventBus.publish(
@@ -47,31 +47,34 @@ define([
                 })
         };
         api.addType = function (vertex, type, successCallback) {
-            $.ajax({
-                type:'POST',
-                url:Config.links.app+ '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()) + '/type',
-                dataType:'json',
-                data:type.serverFormat(),
-                contentType:'application/json;charset=utf-8'
-            }).success(function () {
-                    vertex.addType(type);
-                    if (successCallback != undefined) {
-                        successCallback.call(
-                            this,
-                            vertex,
-                            type
+            type.listenForNewImages(addTypeWhenListenerReady);
+            function addTypeWhenListenerReady() {
+                $.ajax({
+                    type:'POST',
+                    url:Config.links.app + '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()) + '/type',
+                    dataType:'json',
+                    data:type.serverFormat(),
+                    contentType:'application/json;charset=utf-8'
+                }).success(function () {
+                        vertex.addType(type);
+                        if (successCallback != undefined) {
+                            successCallback.call(
+                                this,
+                                vertex,
+                                type
+                            );
+                        }
+                        EventBus.publish(
+                            '/event/ui/graph/vertex/type/added',
+                            [vertex, type]
                         );
-                    }
-                    EventBus.publish(
-                        '/event/ui/graph/vertex/type/added',
-                        [vertex, type]
-                    );
-                })
+                    })
+            }
         };
-        api.removeIdentification = function(vertex, identification, successCallback){
+        api.removeIdentification = function (vertex, identification, successCallback) {
             $.ajax({
                 type:'DELETE',
-                url:Config.links.app+
+                url:Config.links.app +
                     '/service/vertex/' +
                     IdUriUtils.encodedUriFromGraphElementId(vertex.getId())
                     + '/identification/'
@@ -83,7 +86,7 @@ define([
             api.removeIdentification(
                 vertex,
                 typeToRemove,
-                function(){
+                function () {
                     vertex.removeType(typeToRemove);
                     if (successCallback != undefined) {
                         successCallback.call(
@@ -100,32 +103,35 @@ define([
             );
         };
         api.addSameAs = function (vertex, sameAs, successCallback) {
-            $.ajax({
-                type:'POST',
-                url:Config.links.app+ '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()) + '/same_as',
-                dataType:'json',
-                data:sameAs.serverFormat(),
-                contentType:'application/json;charset=utf-8'
-            }).success(function () {
-                    vertex.addSameAs(sameAs);
-                    if (successCallback != undefined) {
-                        successCallback.call(
-                            this,
-                            vertex,
-                            sameAs
+            sameAs.listenForNewImages(addSameAsWhenListenerReady);
+            function addSameAsWhenListenerReady() {
+                $.ajax({
+                    type:'POST',
+                    url:Config.links.app + '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()) + '/same_as',
+                    dataType:'json',
+                    data:sameAs.serverFormat(),
+                    contentType:'application/json;charset=utf-8'
+                }).success(function () {
+                        vertex.addSameAs(sameAs);
+                        if (successCallback != undefined) {
+                            successCallback.call(
+                                this,
+                                vertex,
+                                sameAs
+                            );
+                        }
+                        EventBus.publish(
+                            '/event/ui/graph/vertex/same_as/added',
+                            [vertex, sameAs]
                         );
-                    }
-                    EventBus.publish(
-                        '/event/ui/graph/vertex/same_as/added',
-                        [vertex, sameAs]
-                    );
-                })
+                    })
+            }
         };
         api.removeSameAs = function (vertex, sameAs, successCallback) {
             api.removeIdentification(
                 vertex,
                 sameAs,
-                function(){
+                function () {
                     vertex.removeSameAs(sameAs);
                     if (successCallback != undefined) {
                         successCallback.call(
@@ -144,7 +150,7 @@ define([
         api.getSuggestions = function (vertex) {
             $.ajax({
                 type:'GET',
-                url:Config.links.app+ '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()) + '/suggestions',
+                url:Config.links.app + '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()) + '/suggestions',
                 dataType:'json'
             }).success(function (jsonSuggestions) {
                     var suggestions = Suggestion.fromJsonArrayOfServer(
@@ -162,7 +168,7 @@ define([
         api.addSuggestions = function (vertex, suggestions) {
             $.ajax({
                 type:'POST',
-                url:Config.links.app+ '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()) + '/suggestions',
+                url:Config.links.app + '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()) + '/suggestions',
                 dataType:'json',
                 data:Suggestion.formatAllForServer(suggestions),
                 contentType:'application/json;charset=utf-8'

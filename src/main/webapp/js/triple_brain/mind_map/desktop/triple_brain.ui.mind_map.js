@@ -11,9 +11,10 @@ define(
         "triple_brain.ui.edge_creator",
         "triple_brain.search",
         "triple_brain.mind-map_template",
+        "triple_brain.server_subscriber",
         "jquery-ui.min"
     ],
-    function($, UserService, EventBus, DragScroll, DrawnGraph, Graph, Vertex, VertexCreator, EdgeCreator, SearchService, MindMapTemplate){
+    function($, UserService, EventBus, DragScroll, DrawnGraph, Graph, Vertex, VertexCreator, EdgeCreator, SearchService, MindMapTemplate, ServerSubscriber){
         var api = {
             offset:function () {
                 var offset = {};
@@ -25,6 +26,23 @@ define(
             },
             start : function(){
                 $(document).ready(function(){
+//                    var ws = new WebSocket("ws://localhost:8080/MessageWebSocket");
+//
+//                    ws.onopen = function(event) {}
+//
+//                    ws.onmessage = function(event) {
+//                        console.log(event.data + "\n");
+//                    }
+//
+//                    ws.onclose = function(event) {}
+//                    window.sendMessage = function(message){
+//                        ws.send(message);
+//                    }
+
+                    ServerSubscriber.init(function(){
+                        console.log("inited");
+                    });
+
                     $("body").hide();
                     UserService.isAuthenticated(
                         callBackWhenIsAuthenticated,

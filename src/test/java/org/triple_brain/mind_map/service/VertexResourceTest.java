@@ -4,10 +4,11 @@ import com.sun.jersey.api.client.ClientResponse;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Test;
+import org.mortbay.cometd.client.BayeuxClient;
+import org.mortbay.jetty.client.HttpClient;
 import org.triple_brain.mind_map.service.utils.GraphManipulationRestTest;
 import org.triple_brain.module.common_utils.Uris;
 import org.triple_brain.module.model.ExternalFriendlyResource;
-import org.triple_brain.module.model.suggestion.Suggestion;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.scenarios.TestScenarios;
 import org.triple_brain.module.model.json.ExternalResourceJsonFields;
@@ -15,8 +16,10 @@ import org.triple_brain.module.model.json.SuggestionJsonFields;
 import org.triple_brain.module.model.json.UserJSONFields;
 import org.triple_brain.module.model.json.graph.EdgeJsonFields;
 import org.triple_brain.module.model.json.graph.VertexJsonFields;
+import org.triple_brain.module.model.suggestion.Suggestion;
 
 import javax.ws.rs.core.MediaType;
+import java.net.InetSocketAddress;
 
 import static junit.framework.Assert.assertFalse;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -164,6 +167,18 @@ public class VertexResourceTest extends GraphManipulationRestTest {
                 additionalTypes.length(),
                 is(greaterThan(0))
         );
+    }
+
+    @Test
+    public void a_push_notification_is_received_when_adding_a_type()throws Exception{
+        HttpClient httpClient = new HttpClient();
+        BayeuxClient bayeuxClient = new BayeuxClient(
+                httpClient,
+                new InetSocketAddress(BASE_URI.getHost(), BASE_URI.getPort()),
+                BASE_URI + "vertex"
+        );
+        bayeuxClient.start();
+
     }
 
     @Test

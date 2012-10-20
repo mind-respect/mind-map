@@ -5,12 +5,14 @@ define([
     "triple_brain.vertex",
     "triple_brain.suggestion",
     "triple_brain.external_resource",
+    "triple_brain.image",
     "jquery.freebase_suggest.min",
     "jquery.url"
 ],
-    function ($, EventBus, Vertex, VertexService, Suggestion, ExternalResource) {
+    function ($, EventBus, Vertex, VertexService, Suggestion, ExternalResource, Image) {
         var api = {};
-        api.BASE_PATH_FOR_IMAGES = "https://usercontent.googleapis.com/freebase/v1/image/";
+        api.BASE_PATH_FOR_SMALL_IMAGE = "https://usercontent.googleapis.com/freebase/v1/image";
+        api.BASE_PATH_FOR_BIGGER_IMAGE = "http://img.freebase.com/api/trans/raw";
         api.freebaseIdToURI = function (freebaseId) {
             return "http://rdf.freebase.com/rdf" + freebaseId;
         };
@@ -86,6 +88,42 @@ define([
                     );
                 })
         }
+
+        api.getImages= function (vertex, freebaseId) {
+            var imagesQuery = {
+                query:{
+                    "/common/topic/image": [{
+                        "id": null
+                    }],
+                    "id": freebaseId
+                }
+            };
+            $.ajax({
+                type:'GET',
+                url:'https://api.freebase.com/api/service/mqlread?query=' + JSON.stringify(imagesQuery),
+                dataType:'jsonp'
+            }).success(function (result) {
+                    var images = [];
+                    if (result.result) {
+                        images = result.result["/common/topic/image"];
+                    }
+                    var tripleBrainImages = [];
+                    $.each(images, function () {
+                        var imageId = this.id;
+                        tripleBrainImages.push(
+                            Image.withSmallAndBiggerImagesUrl(
+                                api.BASE_PATH_FOR_SMALL_IMAGE + imageId,
+                                api.BASE_PATH_FOR_BIGGER_IMAGE + imageId
+                            )
+                        )
+                    })
+                    vertexService().addSuggestions(
+                        vertex,
+                        suggestions
+                    );
+                })
+        }
+
         api.removeSuggestFeatureOnVertex = function(vertex){
 
             $(vertex.label())

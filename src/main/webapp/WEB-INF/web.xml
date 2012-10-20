@@ -14,6 +14,28 @@
         <session-timeout>60</session-timeout>
     </session-config>
 
+
+    <servlet>
+        <servlet-name>cometd</servlet-name>
+        <servlet-class>org.cometd.server.CometdServlet</servlet-class>
+        <init-param>
+            <param-name>transports</param-name>
+            <param-value>org.cometd.websocket.server.WebSocketTransport</param-value>
+        </init-param>
+        <async-supported>true</async-supported>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>cometd</servlet-name>
+        <url-pattern>/cometd/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>initializer</servlet-name>
+        <servlet-class>org.triple_brain.mind_map.service.BayeuxInitializer</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
     <listener>
         <listener-class>org.triple_brain.mind_map.service.conf.GuiceConfig</listener-class>
     </listener>

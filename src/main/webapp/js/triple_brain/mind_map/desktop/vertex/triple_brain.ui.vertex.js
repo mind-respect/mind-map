@@ -13,9 +13,10 @@ define([
     "triple_brain.ui.vertex_and_edge_common",
     "triple_brain.event_bus",
     "triple_brain.ui.graph",
-    "triple_brain.ui.arrow_line"
+    "triple_brain.ui.arrow_line",
+    "triple_brain.server_subscriber"
 ],
-    function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, Edge, VertexAndEdgeCommon, EventBus, Graph, ArrowLine) {
+    function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, Edge, VertexAndEdgeCommon, EventBus, Graph, ArrowLine, ServerSubscriber) {
         var api = {};
 
         api.EMPTY_LABEL = "a concept";
@@ -299,24 +300,23 @@ define([
                 var types = thisVertex.getTypes();
                 types.push(type);
                 thisVertex.setTypes(types);
-                addedIdentificationCommonBehavior(type);
+                applyCommonBehaviorForAddedIdentification(type);
             }
             this.addSameAs = function (sameAs) {
                 sameAs.setType("same_as");
                 var sameAsCollection = thisVertex.getSameAs()
                 sameAsCollection.push(sameAs);
                 thisVertex.setSameAs(sameAsCollection);
-                addedIdentificationCommonBehavior(sameAs);
+                applyCommonBehaviorForAddedIdentification(sameAs);
             }
 
-            function addedIdentificationCommonBehavior(externalResource){
+            function applyCommonBehaviorForAddedIdentification(externalResource){
                 if(externalResource.hasImage()){
                     thisVertex.addImageWithUrl(
                         externalResource.imageUrl()
                     );
                 }
             }
-
             this.addImageWithUrl = function(imageUrl){
                 var imageContainer = $(thisVertex.imagesContainer());
                 $(imageContainer).html(

@@ -8,9 +8,11 @@ import com.google.inject.servlet.GuiceServletContextListener;
 import com.sun.jersey.guice.JerseyServletModule;
 import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
 import org.apache.solr.core.CoreContainer;
+import org.triple_brain.mind_map.service.MessagesDistributorServlet;
 import org.triple_brain.mind_map.service.RestInterceptor;
 import org.triple_brain.mind_map.service.resources.*;
 import org.triple_brain.mind_map.service.resources.test.*;
+import org.triple_brain.mind_map.service.resources.VertexResource;
 import org.triple_brain.module.model.graph.GraphComponentTest;
 import org.triple_brain.module.model.graph.neo4j.Neo4JGraphComponentTest;
 import org.triple_brain.module.neo4j_graph_manipulator.graph.Neo4JModule;
@@ -56,6 +58,9 @@ public class GuiceConfig extends GuiceServletContextListener {
                 bind(EdgeResource.class);
                 bind(UserResource.class);
                 bind(SearchResource.class);
+
+                serve("/MessageWebSocket").with(MessagesDistributorServlet.class);
+
                 serve("/service/*").with(GuiceContainer.class);
 
                 bind(DataSource.class)

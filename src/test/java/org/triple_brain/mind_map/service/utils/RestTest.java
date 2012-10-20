@@ -32,7 +32,7 @@ public abstract class RestTest {
     protected static URI BASE_URI;
     protected static WebResource resource;
     static private Launcher launcher;
-    static private Client client;
+    static public Client client;
     protected NewCookie authCookie;
 
     public static final String DEFAULT_PASSWORD = "password";

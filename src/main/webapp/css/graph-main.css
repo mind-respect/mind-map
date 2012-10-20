@@ -103,7 +103,7 @@ svg{
 
 .vertex{
     white-space: nowrap;
-    min-width:100px;
+    min-width:120px;
     position: absolute;
     z-index: 3;
     cursor:default;

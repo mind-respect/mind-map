@@ -5,9 +5,11 @@
 define([
     "require",
     "jquery",
+    "triple_brain.server_subscriber",
+    "triple_brain.id_uri",
     "jquery.json.min"
 ],
-    function (require, $) {
+    function (require, $, ServerSubscriber, IdUriUtils) {
         var api = {};
         api.withUriLabelAndImageLink = function(uri, label, imageLink){
             return new ExternalResource(
@@ -29,7 +31,7 @@ define([
                     freebaseSuggestion.id
                 ),
                 freebaseSuggestion.name,
-                Freebase.BASE_PATH_FOR_IMAGES +
+                Freebase.BASE_PATH_FOR_SMALL_IMAGE +
                     freebaseSuggestion.id
             )
         }
@@ -54,6 +56,17 @@ define([
             }
             this.imageUrl = function(){
                 return imageUrl;
+            }
+            this.listenForNewImages = function(listenerReadyCallBack){
+                ServerSubscriber.subscribe(
+                    "/identification/" + IdUriUtils.encodeUri(thisExternalResource.uri()) +  "/images/updated",
+                    updateImages,
+                    listenerReadyCallBack
+                )
+            }
+            function updateImages(images){
+                console.log("images updated");
+                console.log(images);
             }
             this.serverFormat = function(){
                 return $.toJSON(

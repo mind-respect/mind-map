@@ -3,10 +3,15 @@ package org.triple_brain.mind_map.service.resources;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+import org.triple_brain.mind_map.service.BayeuxInitializer;
+import org.triple_brain.module.common_utils.Uris;
 import org.triple_brain.module.model.ExternalFriendlyResource;
+import org.triple_brain.module.model.FreebaseExternalFriendlyResource;
+import org.triple_brain.module.model.Image;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.*;
 import org.triple_brain.module.model.json.ExternalResourceJsonFields;
+import org.triple_brain.module.model.json.ImageJson;
 import org.triple_brain.module.model.json.graph.EdgeJsonFields;
 import org.triple_brain.module.model.json.graph.VertexJsonFields;
 import org.triple_brain.module.model.suggestion.Suggestion;
@@ -23,6 +28,9 @@ import javax.ws.rs.core.Response;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Set;
 
 import static org.triple_brain.mind_map.service.resources.GraphManipulatorResourceUtils.userFromSession;
 import static org.triple_brain.module.common_utils.Uris.decodeURL;
@@ -32,7 +40,8 @@ import static org.triple_brain.module.model.json.SuggestionJsonFields.*;
 /**
  * Copyright Mozilla Public License 1.1
  */
-@Path("/vertex")
+@Path("/vertex"
+)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Singleton
@@ -43,6 +52,9 @@ public class VertexResource {
 
     @Inject
     GraphFactory graphFactory;
+
+//    @Inject
+//    ExternalFriendlyResourceModifier externalFriendlyResourceModifier;
 
     @POST
     @Path("/{sourceVertexId}")
@@ -139,11 +151,46 @@ public class VertexResource {
         Vertex vertex = userGraph.vertexWithURI(
                 new URI(vertexId)
         );
+        ExternalFriendlyResource externalFriendlyResource = ExternalResourceJsonFields.fromJson(type);
         vertex.addType(
-                ExternalResourceJsonFields.fromJson(type)
+                externalFriendlyResource
+        );
+        updateImagesOfExternalResource(externalFriendlyResource);
+        BayeuxInitializer.notificationService.notifyChannelMessage(
+                "/identification/" +
+                        Uris.encodeURL(externalFriendlyResource.uri()) +
+                        "/updated",
+                type
+
         );
         return Response.ok().build();
     }
+
+    public void updateImagesOfExternalResource(ExternalFriendlyResource externalFriendlyResource){
+        if (FreebaseExternalFriendlyResource.isFromFreebase(externalFriendlyResource)) {
+            FreebaseExternalFriendlyResource freebaseResource = FreebaseExternalFriendlyResource.fromExternalResource(
+                    externalFriendlyResource
+            );
+            freebaseResource.getImages(
+                    externalResourceImagesUpdateHandler
+            );
+        }
+    }
+
+    private Observer externalResourceImagesUpdateHandler = new Observer() {
+        @Override
+        public void update(Observable observable, Object o) {
+            FreebaseExternalFriendlyResource freebaseExternalFriendlyResource = (FreebaseExternalFriendlyResource) observable;
+            ExternalFriendlyResource externalResource = freebaseExternalFriendlyResource.get();
+            Set<Image> images = (Set<Image>) o;
+            BayeuxInitializer.notificationService.notifyChannelMessage(
+                    "/identification/" +
+                            Uris.encodeURL(externalResource.uri()) +
+                            "/images/updated",
+                    ImageJson.fromCollection(images)
+            );
+        }
+    };
 
     @POST
     @Path("{vertexId}/same_as")
@@ -159,9 +206,11 @@ public class VertexResource {
         Vertex vertex = userGraph.vertexWithURI(
                 new URI(vertexId)
         );
+        ExternalFriendlyResource externalFriendlyResource = ExternalResourceJsonFields.fromJson(sameAs);
         vertex.addSameAs(
-                ExternalResourceJsonFields.fromJson(sameAs)
+                externalFriendlyResource
         );
+        updateImagesOfExternalResource(externalFriendlyResource);
         return Response.ok().build();
     }
 
