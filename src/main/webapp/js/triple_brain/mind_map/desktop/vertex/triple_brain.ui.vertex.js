@@ -37,6 +37,13 @@ define([
                 $('.center-vertex')
             );
         };
+        api.visitAllVertices = function(visitor){
+            $(".vertex").each(function () {
+                visitor(
+                    api.withHtml(this)
+                );
+            });
+        }
         api.allVertices = function () {
             var vertices = new Array();
             $(".vertex").each(function () {
@@ -118,6 +125,9 @@ define([
             }
             this.height = function () {
                 return $(html).height();
+            }
+            this.html = function(){
+                return html;
             }
             this.centerPoint = function () {
                 return Point.fromCoordinates(
@@ -292,6 +302,11 @@ define([
             this.getTypes = function () {
                 return $(html).data('types');
             }
+            this.getIdentifications = function(){
+                return thisVertex.getTypes().concat(
+                    thisVertex.getSameAs()
+                );
+            }
             this.setTypes = function (types) {
                 return $(html).data('types', types);
             }
@@ -311,16 +326,17 @@ define([
             }
 
             function applyCommonBehaviorForAddedIdentification(externalResource){
-                if(externalResource.hasImage()){
-                    thisVertex.addImageWithUrl(
-                        externalResource.imageUrl()
-                    );
-                }
+                thisVertex.addImages(
+                    externalResource.images()
+                );
             }
-            this.addImageWithUrl = function(imageUrl){
+            this.addImages = function(images){
+                if(images.length == 0){
+                    return;
+                }
                 var imageContainer = $(thisVertex.imagesContainer());
                 $(imageContainer).html(
-                    "<img src='"+imageUrl+"'></img>"
+                    "<img src='"+images[0].getUrlForSmall()+"'></img>"
                 );
                 thisVertex.adjustImagesPosition();
             }
@@ -344,11 +360,7 @@ define([
                 );
             }
             function removeIdentificationCommonBehavior(externalResource){
-                if(externalResource.hasImage()){
-                    thisVertex.removeImageWithUrl(
-                        externalResource.imageUrl()
-                    );
-                }
+                //todo should remove vertex related images
             }
             this.getSameAs = function () {
                 return $(html).data('sameAs');

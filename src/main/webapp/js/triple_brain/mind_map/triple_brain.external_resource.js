@@ -6,16 +6,18 @@ define([
     "require",
     "jquery",
     "triple_brain.server_subscriber",
+    "triple_brain.ui.vertex",
     "triple_brain.id_uri",
+    "triple_brain.image",
     "jquery.json.min"
 ],
-    function (require, $, ServerSubscriber, IdUriUtils) {
+    function (require, $, ServerSubscriber, Vertex, IdUriUtils, Image) {
         var api = {};
-        api.withUriLabelAndImageLink = function(uri, label, imageLink){
+        api.withUriLabelAndImages = function(uri, label, images){
             return new ExternalResource(
                 uri,
                 label,
-                imageLink
+                images
             );
         }
         api.withUriAndLabel = function(uri, label){
@@ -31,19 +33,18 @@ define([
                     freebaseSuggestion.id
                 ),
                 freebaseSuggestion.name,
-                Freebase.BASE_PATH_FOR_SMALL_IMAGE +
-                    freebaseSuggestion.id
+                []
             )
         }
         api.fromServerJson = function(serverJson){
             return new ExternalResource(
                 serverJson.uri,
                 serverJson.label,
-                serverJson.image_url
+                Image.arrayFromServerJson(serverJson.images)
             )
         }
 
-        function ExternalResource(uri, label, imageUrl) {
+        function ExternalResource(uri, label, images) {
             var thisExternalResource = this;
             this.uri = function () {
                 return uri;
@@ -51,22 +52,26 @@ define([
             this.label = function () {
                 return label;
             }
-            this.hasImage = function(){
-                return imageUrl !== undefined;
-            }
-            this.imageUrl = function(){
-                return imageUrl;
+            this.images = function(){
+                return images;
             }
             this.listenForNewImages = function(listenerReadyCallBack){
                 ServerSubscriber.subscribe(
                     "/identification/" + IdUriUtils.encodeUri(thisExternalResource.uri()) +  "/images/updated",
                     updateImages,
                     listenerReadyCallBack
-                )
+                );
             }
-            function updateImages(images){
-                console.log("images updated");
-                console.log(images);
+            function updateImages(imagesAsJson){
+                var images = Image.arrayFromServerJson(imagesAsJson);
+                getVertex().visitAllVertices(function(vertex){
+                    $.each(vertex.getIdentifications(), function(){
+                        var identification = this;
+                        if(identification.uri() === thisExternalResource.uri()){
+                            vertex.addImages(images);
+                        }
+                    });
+                });
             }
             this.serverFormat = function(){
                 return $.toJSON(
@@ -77,7 +82,7 @@ define([
                 return {
                     uri : thisExternalResource.uri(),
                     label : thisExternalResource.label(),
-                    image_url : thisExternalResource.imageUrl()
+                    images : thisExternalResource.images
                 }
             }
             this.setType = function(type){
@@ -86,6 +91,12 @@ define([
             this.getType = function(){
                 return thisExternalResource.type;
             }
+        }
+        function getVertex(){
+            if(Vertex === undefined){
+                Vertex = require("triple_brain.ui.vertex")
+            }
+            return Vertex;
         }
         return api;
     }

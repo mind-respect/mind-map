@@ -11,7 +11,7 @@ import org.triple_brain.module.common_utils.Uris;
 import org.triple_brain.module.model.ExternalFriendlyResource;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.scenarios.TestScenarios;
-import org.triple_brain.module.model.json.ExternalResourceJsonFields;
+import org.triple_brain.module.model.json.ExternalResourceJson;
 import org.triple_brain.module.model.json.SuggestionJsonFields;
 import org.triple_brain.module.model.json.UserJSONFields;
 import org.triple_brain.module.model.json.graph.EdgeJsonFields;
@@ -204,7 +204,7 @@ public class VertexResourceTest extends GraphManipulationRestTest {
     }
 
     private ClientResponse addFoafPersonTypeToVertexA() throws Exception {
-        JSONObject personType = ExternalResourceJsonFields.toJson(
+        JSONObject personType = ExternalResourceJson.get(
                 TestScenarios.personType()
         );
         ClientResponse response = resource

@@ -48,7 +48,7 @@ define([
             });
             return suggestions;
         }
-
+        return api;
         function Suggestion(externalResource, domainUri, origin) {
             var thisSuggestion = this;
             this.typeUri = function () {
@@ -72,6 +72,5 @@ define([
                 }
             }
         }
-        return api;
     }
 );

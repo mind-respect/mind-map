@@ -3,6 +3,7 @@
  */
 
 define([
+    "require",
     "jquery",
     "triple_brain.freebase",
     "triple_brain.mind-map_template",
@@ -10,9 +11,10 @@ define([
     "triple_brain.point",
     "triple_brain.external_resource",
     "triple_brain.vertex",
-    "triple_brain.edge"
+    "triple_brain.edge",
+    "triple_brain.ui.utils"
 ],
-    function ($, Freebase, MindMapTemplate, Graph, Point, ExternalResource, VertexService, EdgeService) {
+    function (require, $, Freebase, MindMapTemplate, Graph, Point, ExternalResource, VertexService, EdgeService, UiUtils) {
         var api = {
             ofVertex:function (vertex) {
                 return new SuggestionMenu(vertex);
@@ -68,6 +70,7 @@ define([
                     $(suggestionsList).append(htmlSuggestion);
                     $(htmlSuggestion).bind('dragstop', function (event) {
                         var currentSuggestion = this;
+                        Point = require("triple_brain.point");
                         var newVertexPosition = Point.fromCoordinates(
                             $(this).offset().left + $(this).width() / 2,
                             $(this).offset().top
@@ -100,25 +103,10 @@ define([
             }
 
             function position() {
-                var menuOffset = Point.fromCoordinates(
-                    vertex.width(),
-                    vertex.height() / 2 - $(html).height() / 2
+                UiUtils.positionRight(
+                    html,
+                    vertex.html()
                 )
-
-                var menuPosition = Point.sumOfPoints(
-                    vertex.position(),
-                    menuOffset
-                );
-                if (isMenuPositionOffScreen(menuPosition)) {
-                    menuPosition.y = 10;
-                }
-
-                $(html).css('left', menuPosition.x);
-                $(html).css('top', menuPosition.y);
-            }
-
-            function isMenuPositionOffScreen(menuPosition) {
-                return menuPosition.y < 10;
             }
         }
 

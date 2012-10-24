@@ -1,4 +1,5 @@
 define([
+    "require",
     "jquery",
     "triple_brain.config",
     "triple_brain.event_bus",
@@ -6,7 +7,7 @@ define([
     "triple_brain.ui.triple",
     "triple_brain.suggestion"
 ],
-    function ($, Config, EventBus, IdUriUtils, Triple, Suggestion) {
+    function (require, $, Config, EventBus, IdUriUtils, Triple, Suggestion) {
         var api = {};
         api.addRelationAndVertexAtPositionToVertex = function (vertex, newVertexPosition, successCallback) {
             $.ajax({
@@ -153,7 +154,7 @@ define([
                 url:Config.links.app + '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()) + '/suggestions',
                 dataType:'json'
             }).success(function (jsonSuggestions) {
-                    var suggestions = Suggestion.fromJsonArrayOfServer(
+                    var suggestions = getSuggestion().fromJsonArrayOfServer(
                         jsonSuggestions
                     );
                     vertex.setSuggestions(
@@ -170,7 +171,7 @@ define([
                 type:'POST',
                 url:Config.links.app + '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()) + '/suggestions',
                 dataType:'json',
-                data:Suggestion.formatAllForServer(suggestions),
+                data:getSuggestion().formatAllForServer(suggestions),
                 contentType:'application/json;charset=utf-8'
             }).success(function () {
                     vertex.addSuggestions(suggestions);
@@ -180,6 +181,12 @@ define([
                     );
                 })
         };
+        function getSuggestion(){
+            if(Suggestion === undefined){
+                Suggestion = require("triple_brain.suggestion");
+            }
+            return Suggestion;
+        }
         return api;
     }
 );

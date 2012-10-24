@@ -12,6 +12,7 @@ define([
 ],
     function ($, EventBus) {
         var api = {};
+        var NUMBER_OF_SUBSCRIPTIONS_INDEX = 1;
         var cometd = $.cometd;
         // Function that manages the connection status with the Bayeux server]
         var _connected = false;
@@ -23,13 +24,13 @@ define([
 
         var cometURL = location.protocol + "//" + location.host + "/cometd";
         cometd.configure({
-            url: cometURL
+            url:cometURL
 //            logLevel: 'debug'
         });
 
-        api.init = function(callback){
+        api.init = function (callback) {
             console.log("intiliazing cometd");
-            cometd.addListener('/meta/handshake', function(handshake){
+            cometd.addListener('/meta/handshake', function (handshake) {
                 _metaHandshake(handshake, callback)
             });
             cometd.addListener('/meta/connect', _metaConnect);
@@ -38,28 +39,36 @@ define([
         };
 
         api.subscribe = function (event, notificationCallBack, subscriptionDoneCallBack) {
-            try{
+            try {
                 EventBus.subscribe(
                     "/subscription" + event,
                     subscriptionDoneCallBack
                 );
-                cometd.subscribe(event, function(message){
+                var subscriptionInfo = cometd.subscribe(event, function (message) {
                     notificationCallBack(
-                        message.data
+                        $.parseJSON(
+                            message.data
+                        )
                     );
                 });
-            }catch(e){
+                var numberOfSubscription = subscriptionInfo[
+                    NUMBER_OF_SUBSCRIPTIONS_INDEX
+                    ];
+                if(numberOfSubscription > 0){
+                    subscriptionDoneCallBack();
+                }
+            } catch (e) {
                 console.log("cometd subscription failed");
                 api.init();
             }
         };
         api.unsubscribe = function (event, fn) {
-             $(this).unbind(event, fn);
+            $(this).unbind(event, fn);
         };
 
         return api;
-        function _metaConnect(message){
-            if (cometd.isDisconnected()){
+        function _metaConnect(message) {
+            if (cometd.isDisconnected()) {
                 _connected = false;
                 console.log("push server connection closed");
                 return;
@@ -67,15 +76,15 @@ define([
 
             var wasConnected = _connected;
             _connected = message.successful === true;
-            if (!wasConnected && _connected){
+            if (!wasConnected && _connected) {
                 console.log("push server connection established");
             }
-            else if (wasConnected && !_connected){
+            else if (wasConnected && !_connected) {
                 console.log("push server connection broken");
             }
         }
 
-        function _metaSubscribe(subscribeInfo){
+        function _metaSubscribe(subscribeInfo) {
             EventBus.publish(
                 "/subscription" + subscribeInfo.subscription,
                 [subscribeInfo]
@@ -84,10 +93,10 @@ define([
 
         // Function invoked when first contacting the server and
         // when the server has lost the state of this client
-        function _metaHandshake(handshake, callback){
-            if (handshake.successful === true){
+        function _metaHandshake(handshake, callback) {
+            if (handshake.successful === true) {
                 callback();
-            }else{
+            } else {
                 console.log("failed to handshake push server")
             }
         }

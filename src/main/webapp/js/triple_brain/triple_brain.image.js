@@ -6,6 +6,23 @@ define([
         api.withSmallAndBiggerImagesUrl = function(urlForSmall, urlForBigger){
             return new Image(urlForSmall, urlForBigger);
         }
+        api.fromServerJson = function(imageAsServerJson){
+            return new Image(
+                imageAsServerJson.small_image_url,
+                imageAsServerJson.bigger_image_url
+            );
+        }
+        api.arrayFromServerJson = function(imagesAsServerJson){
+            var images = [];
+            $.each(imagesAsServerJson, function(){
+                var imageAsJson = this;
+                images.push(
+                    api.fromServerJson(imageAsJson)
+                );
+            })
+            return images;
+        }
+        return api;
         function Image(urlForSmall, urlForBigger){
             var thisImage = this;
             this.getUrlForSmall = function(){

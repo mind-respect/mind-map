@@ -5,12 +5,9 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.triple_brain.mind_map.service.BayeuxInitializer;
 import org.triple_brain.module.common_utils.Uris;
-import org.triple_brain.module.model.ExternalFriendlyResource;
-import org.triple_brain.module.model.FreebaseExternalFriendlyResource;
-import org.triple_brain.module.model.Image;
-import org.triple_brain.module.model.User;
+import org.triple_brain.module.model.*;
 import org.triple_brain.module.model.graph.*;
-import org.triple_brain.module.model.json.ExternalResourceJsonFields;
+import org.triple_brain.module.model.json.ExternalResourceJson;
 import org.triple_brain.module.model.json.ImageJson;
 import org.triple_brain.module.model.json.graph.EdgeJsonFields;
 import org.triple_brain.module.model.json.graph.VertexJsonFields;
@@ -53,8 +50,11 @@ public class VertexResource {
     @Inject
     GraphFactory graphFactory;
 
-//    @Inject
-//    ExternalFriendlyResourceModifier externalFriendlyResourceModifier;
+    @Inject
+    ExternalFriendlyResourcePersistenceUtils externalFriendlyResourcePersistenceUtils;
+
+    @Inject
+    BeforeAfterEachRestCall beforeAfterEachRestCall;
 
     @POST
     @Path("/{sourceVertexId}")
@@ -151,7 +151,7 @@ public class VertexResource {
         Vertex vertex = userGraph.vertexWithURI(
                 new URI(vertexId)
         );
-        ExternalFriendlyResource externalFriendlyResource = ExternalResourceJsonFields.fromJson(type);
+        ExternalFriendlyResource externalFriendlyResource = ExternalResourceJson.fromJson(type);
         vertex.addType(
                 externalFriendlyResource
         );
@@ -166,7 +166,7 @@ public class VertexResource {
         return Response.ok().build();
     }
 
-    public void updateImagesOfExternalResource(ExternalFriendlyResource externalFriendlyResource){
+    public void updateImagesOfExternalResource(ExternalFriendlyResource externalFriendlyResource) {
         if (FreebaseExternalFriendlyResource.isFromFreebase(externalFriendlyResource)) {
             FreebaseExternalFriendlyResource freebaseResource = FreebaseExternalFriendlyResource.fromExternalResource(
                     externalFriendlyResource
@@ -183,6 +183,18 @@ public class VertexResource {
             FreebaseExternalFriendlyResource freebaseExternalFriendlyResource = (FreebaseExternalFriendlyResource) observable;
             ExternalFriendlyResource externalResource = freebaseExternalFriendlyResource.get();
             Set<Image> images = (Set<Image>) o;
+            Object state = beforeAfterEachRestCall.before();
+            try {
+                externalFriendlyResourcePersistenceUtils.addImages(
+                        externalResource,
+                        images
+                );
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            finally{
+                beforeAfterEachRestCall.after(state);
+            }
             BayeuxInitializer.notificationService.notifyChannelMessage(
                     "/identification/" +
                             Uris.encodeURL(externalResource.uri()) +
@@ -194,7 +206,7 @@ public class VertexResource {
 
     @POST
     @Path("{vertexId}/same_as")
-    public Response setSameAs(@GraphElementIdentifier @PathParam("vertexId") String vertexId, JSONObject sameAs, @Context HttpServletRequest request) throws JSONException, URISyntaxException {
+    public Response addSameAs(@GraphElementIdentifier @PathParam("vertexId") String vertexId, JSONObject sameAs, @Context HttpServletRequest request) throws JSONException, URISyntaxException {
         try {
             vertexId = decodeURL(vertexId);
         } catch (UnsupportedEncodingException e) {
@@ -206,7 +218,7 @@ public class VertexResource {
         Vertex vertex = userGraph.vertexWithURI(
                 new URI(vertexId)
         );
-        ExternalFriendlyResource externalFriendlyResource = ExternalResourceJsonFields.fromJson(sameAs);
+        ExternalFriendlyResource externalFriendlyResource = ExternalResourceJson.fromJson(sameAs);
         vertex.addSameAs(
                 externalFriendlyResource
         );

@@ -9,11 +9,11 @@ define([
     "triple_brain.mind-map_template",
     "triple_brain.ui.graph",
     "triple_brain.id_uri",
-    "triple_brain.point",
+    "triple_brain.ui.utils",
     "triple_brain.freebase",
     "jquery.freebase_suggest.min"
 ],
-    function ($, ExternalResource, VertexService, MindMapTemplate, Graph, IdUriUtils, Point, Freebase) {
+    function ($, ExternalResource, VertexService, MindMapTemplate, Graph, IdUriUtils, UiUtils, Freebase) {
 
         var api = {
             ofVertex:function (vertex) {
@@ -126,25 +126,10 @@ define([
             }
 
             function position() {
-                var menuOffset = Point.fromCoordinates(
-                    vertex.width(),
-                    vertex.height() / 2 - $(html).height() / 2
-                )
-
-                var menuPosition = Point.sumOfPoints(
-                    vertex.position(),
-                    menuOffset
+                UiUtils.positionRight(
+                    html,
+                    vertex.html()
                 );
-                if (isMenuPositionOffScreen(menuPosition)) {
-                    menuPosition.y = 10;
-                }
-
-                $(html).css('left', menuPosition.x);
-                $(html).css('top', menuPosition.y);
-            }
-
-            function isMenuPositionOffScreen(menuPosition) {
-                return menuPosition.y < 10;
             }
 
             function addIdentificationTextField() {
