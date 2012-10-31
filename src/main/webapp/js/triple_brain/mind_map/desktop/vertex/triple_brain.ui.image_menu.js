@@ -58,22 +58,25 @@ define(
             }
 
             function positionNextToText(image){
-                var separationFromVertexInPixels = -30;
-                adjustPosition(image, separationFromVertexInPixels);
+                adjustPosition(image, true);
             }
 
             function positionNextToVertex(image){
-                var separationFromVertexInPixels = 5;
-                adjustPosition(image, separationFromVertexInPixels);
+                adjustPosition(image, false);
             }
 
-            function adjustPosition(image, horizontalDistanceFromVertexInPixels) {
+            function adjustPosition(image, isNextToText) {
+                var horizontalDistanceFromVertexInPixels = isNextToText ?
+                    -30 :
+                    5;
                 var addedImageWidth = $(image).width();
                 var marginLeft = (addedImageWidth + horizontalDistanceFromVertexInPixels) * -1;
                 $(html).css("margin-left", marginLeft);
                 var addedImageHeight = $(image).height();
-                var vertexHeight = vertex.height();
-                var differenceOfHeight = vertexHeight - addedImageHeight;
+                var staticComponentHeight = isNextToText ?
+                    $(vertex.label()).height() * 2:
+                    vertex.height();
+                var differenceOfHeight = staticComponentHeight - addedImageHeight;
                 $(html).css(
                     "margin-top",
                     differenceOfHeight / 2

@@ -222,10 +222,10 @@ define([
                 });
             }
             this.isLabelInFocus = function () {
-                return $(this.label()).is(":focus");
+                return $(thisVertex.label()).is(":focus");
             }
             this.focus = function () {
-                $(this.label()).focus();
+                $(thisVertex.label()).focus();
             }
             this.readjustLabelWidth = function () {
                 VertexAndEdgeCommon.adjustTextFieldWidthToNumberOfChars(
