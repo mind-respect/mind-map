@@ -21,7 +21,6 @@ define(
             this.create = function () {
                 html = MindMapTemplate['image_container'].merge();
                 addHtmlToVertex();
-                position();
                 return imageMenu;
             }
             this.refreshImages = function () {
@@ -35,46 +34,54 @@ define(
                 $(html).append(
                     image
                 );
-                adjustPosition(image);
+                var positioningFunction = vertex.isCenterVertex() ?
+                    positionNextToVertex:
+                    positionNextToText;
+                positioningFunction(image);
                 $(image).load(function () {
-                    adjustPosition(this);
+                    positioningFunction(this);
                 });
-                function adjustPosition(image) {
-                    var addedImageWidth = $(image).width();
-                    var separationFromVertexInPixels = 5;
-                    var marginLeft = (addedImageWidth + separationFromVertexInPixels) * -1;
-                    $(html).css("margin-left", marginLeft);
+            }
 
-                    var addedImageHeight = $(image).height();
-                    var vertexHeight = vertex.height();
-                    var differenceOfHeight = vertexHeight - addedImageHeight;
-                    $(html).css(
-                        "margin-top",
-                        differenceOfHeight / 2
-                    );
-                }
+            this.positionNextToText = function(){
+                positionNextToText(
+                    $(html).find("img")
+                );
             }
-            this.reEvaluatePosition = function () {
-                position();
+            this.positionNextToVertex = function(){
+                positionNextToVertex(
+                    $(html).find("img")
+                );
             }
-            this.show = function () {
-                $(html).remove();
-                addHtmlToVertex();
-                $(html).show();
-                position();
+
+            function positionNextToText(image){
+                var separationFromVertexInPixels = -20;
+                adjustPosition(image, separationFromVertexInPixels);
             }
-            this.hide = function () {
-                $(html).hide();
+
+            function positionNextToVertex(image){
+                var separationFromVertexInPixels = 5;
+                adjustPosition(image, separationFromVertexInPixels);
+            }
+
+            function adjustPosition(image, horizontalDistanceFromVertexInPixels) {
+                var addedImageWidth = $(image).width();
+                var marginLeft = (addedImageWidth + horizontalDistanceFromVertexInPixels) * -1;
+                $(html).css("margin-left", marginLeft);
+
+                var addedImageHeight = $(image).height();
+                var vertexHeight = vertex.height();
+                var differenceOfHeight = vertexHeight - addedImageHeight;
+                $(html).css(
+                    "margin-top",
+                    differenceOfHeight / 2
+                );
             }
 
             function addHtmlToVertex() {
                 $(vertex.getHtml()).prepend(
                     html
                 );
-            }
-
-            function position() {
-
             }
         }
 

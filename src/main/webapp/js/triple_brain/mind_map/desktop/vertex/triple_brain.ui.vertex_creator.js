@@ -119,9 +119,6 @@ define([
                     '/event/ui/html/vertex/created/',
                     vertex
                 );
-                if(vertex.hasImagesMenu()){
-                    vertex.getImageMenu().reEvaluatePosition();
-                }
                 return vertex;
             }
             function createLabel() {
@@ -273,9 +270,6 @@ define([
                 }
                 if (vertex.hasSuggestionMenu()) {
                     vertex.getSuggestionMenu().reEvaluatePosition();
-                }
-                if(vertex.hasImagesMenu()){
-                    vertex.getImageMenu().reEvaluatePosition();
                 }
             }
 

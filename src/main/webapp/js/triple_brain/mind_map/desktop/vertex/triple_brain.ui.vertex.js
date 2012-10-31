@@ -150,10 +150,19 @@ define([
                     thisVertex.unhighlight();
                 }
                 thisVertex.hideButtons();
+                if(thisVertex.hasImages()){
+                    var positioningFunction = thisVertex.isCenterVertex() ?
+                        thisVertex.getImageMenu().positionNextToVertex:
+                        thisVertex.getImageMenu().positionNextToText
+                    positioningFunction();
+                }
             }
             this.makeItHighProfile = function(){
                 thisVertex.highlight();
                 thisVertex.showButtons();
+                if(thisVertex.hasImages()){
+                    thisVertex.getImageMenu().positionNextToVertex();
+                }
             }
             this.hideButtons = function () {
                 thisVertex.hideMenu();
@@ -347,6 +356,10 @@ define([
 
             this.hasImagesMenu = function(){
                 return $(html).data("images_menu") !== undefined;
+            }
+
+            this.hasImages = function(){
+                return thisVertex.getImages().length > 0;
             }
 
             this.getImageMenu = function(){
