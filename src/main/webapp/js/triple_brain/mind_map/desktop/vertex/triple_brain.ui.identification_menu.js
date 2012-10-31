@@ -128,7 +128,7 @@ define([
             function position() {
                 UiUtils.positionRight(
                     html,
-                    vertex.html()
+                    vertex.getHtml()
                 );
             }
 

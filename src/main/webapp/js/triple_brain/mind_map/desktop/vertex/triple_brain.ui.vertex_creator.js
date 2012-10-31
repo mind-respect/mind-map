@@ -62,7 +62,6 @@ define([
                 Graph.addHTML(
                     html
                 );
-                addImagesContainer();
                 addMoveButton();
                 createLabel();
                 createMenu();
@@ -120,6 +119,9 @@ define([
                     '/event/ui/html/vertex/created/',
                     vertex
                 );
+                if(vertex.hasImagesMenu()){
+                    vertex.getImageMenu().reEvaluatePosition();
+                }
                 return vertex;
             }
             function createLabel() {
@@ -168,12 +170,6 @@ define([
                     vertex.readjustLabelWidth();
                 });
                 return labelContainer;
-            }
-
-            function addImagesContainer(){
-                $(html).append(
-                    MindMapTemplate['vertex_images_container'].merge()
-                );
             }
 
             function addMoveButton() {
@@ -274,6 +270,12 @@ define([
                 }
                 if (vertex.hasSuggestionMenu()) {
                     vertex.getSuggestionMenu().reEvaluatePosition();
+                }
+                if (vertex.hasSuggestionMenu()) {
+                    vertex.getSuggestionMenu().reEvaluatePosition();
+                }
+                if(vertex.hasImagesMenu()){
+                    vertex.getImageMenu().reEvaluatePosition();
                 }
             }
 

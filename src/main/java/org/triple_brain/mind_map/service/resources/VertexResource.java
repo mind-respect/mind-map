@@ -155,25 +155,20 @@ public class VertexResource {
         vertex.addType(
                 externalFriendlyResource
         );
-        updateImagesOfExternalResource(externalFriendlyResource);
-        BayeuxInitializer.notificationService.notifyChannelMessage(
-                "/identification/" +
-                        Uris.encodeURL(externalFriendlyResource.uri()) +
-                        "/updated",
-                type
-
-        );
+        updateImagesOfExternalResourceIfNecessary(externalFriendlyResource);
         return Response.ok().build();
     }
 
-    public void updateImagesOfExternalResource(ExternalFriendlyResource externalFriendlyResource) {
-        if (FreebaseExternalFriendlyResource.isFromFreebase(externalFriendlyResource)) {
-            FreebaseExternalFriendlyResource freebaseResource = FreebaseExternalFriendlyResource.fromExternalResource(
-                    externalFriendlyResource
-            );
-            freebaseResource.getImages(
-                    externalResourceImagesUpdateHandler
-            );
+    public void updateImagesOfExternalResourceIfNecessary(ExternalFriendlyResource externalFriendlyResource) {
+        if(!externalFriendlyResource.gotTheImages()){
+            if (FreebaseExternalFriendlyResource.isFromFreebase(externalFriendlyResource)) {
+                FreebaseExternalFriendlyResource freebaseResource = FreebaseExternalFriendlyResource.fromExternalResource(
+                        externalFriendlyResource
+                );
+                freebaseResource.getImages(
+                        externalResourceImagesUpdateHandler
+                );
+            }
         }
     }
 
@@ -222,7 +217,9 @@ public class VertexResource {
         vertex.addSameAs(
                 externalFriendlyResource
         );
-        updateImagesOfExternalResource(externalFriendlyResource);
+
+        updateImagesOfExternalResourceIfNecessary(externalFriendlyResource);
+
         return Response.ok().build();
     }
 

@@ -4,35 +4,77 @@
 
 define(
     [
-        "jQuery",
+        "jquery",
         "triple_brain.mind-map_template",
-        "triple_brain.ui.utils"
+        "jquery.fancybox"
     ],
-    function($, MindMapTemplate, UiUtils){
+    function ($, MindMapTemplate) {
         var api = {}
         api.ofVertex = function (vertex) {
             return new ImageMenu(vertex);
         }
         return api;
 
-        function ImageMenu(vertex){
+        function ImageMenu(vertex) {
             var imageMenu = this;
             var html;
-            this.create = function(){
-                html = MindMapTemplate['images_menu'].merge();
-                addContainer();
-                addMenu();
-                UiUtils.positionLeft(html, vertex.html());
+            this.create = function () {
+                html = MindMapTemplate['image_container'].merge();
+                addHtmlToVertex();
+                position();
+                return imageMenu;
             }
-            function addContainer(){
-                html.append(
-                    MindMapTemplate['images_container'].merge()
-                )
+            this.refreshImages = function () {
+                $(html).empty();
+                var images = vertex.getImages();
+                if (images.length <= 0) return;
+                var image = MindMapTemplate["image_container_image"].merge({
+                        src:images[0].getUrlForSmall()
+                    }
+                );
+                $(html).append(
+                    image
+                );
+                adjustPosition(image);
+                $(image).load(function () {
+                    adjustPosition(this);
+                });
+                function adjustPosition(image) {
+                    var addedImageWidth = $(image).width();
+                    var separationFromVertexInPixels = 5;
+                    var marginLeft = (addedImageWidth + separationFromVertexInPixels) * -1;
+                    $(html).css("margin-left", marginLeft);
+
+                    var addedImageHeight = $(image).height();
+                    var vertexHeight = vertex.height();
+                    var differenceOfHeight = vertexHeight - addedImageHeight;
+                    $(html).css(
+                        "margin-top",
+                        differenceOfHeight / 2
+                    );
+                }
             }
-            function addMenu(){
-                html.append(
-                    MindMapTemplate['images_menu'].merge()
-                )
+            this.reEvaluatePosition = function () {
+                position();
+            }
+            this.show = function () {
+                $(html).remove();
+                addHtmlToVertex();
+                $(html).show();
+                position();
+            }
+            this.hide = function () {
+                $(html).hide();
+            }
+
+            function addHtmlToVertex() {
+                $(vertex.getHtml()).prepend(
+                    html
+                );
+            }
+
+            function position() {
+
             }
         }
 

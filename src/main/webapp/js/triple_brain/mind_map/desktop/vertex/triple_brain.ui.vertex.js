@@ -14,9 +14,10 @@ define([
     "triple_brain.event_bus",
     "triple_brain.ui.graph",
     "triple_brain.ui.arrow_line",
-    "triple_brain.server_subscriber"
+    "triple_brain.server_subscriber",
+    "triple_brain.ui.image_menu"
 ],
-    function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, Edge, VertexAndEdgeCommon, EventBus, Graph, ArrowLine, ServerSubscriber) {
+    function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, Edge, VertexAndEdgeCommon, EventBus, Graph, ArrowLine, ServerSubscriber, ImageMenu) {
         var api = {};
 
         api.EMPTY_LABEL = "a concept";
@@ -126,7 +127,7 @@ define([
             this.height = function () {
                 return $(html).height();
             }
-            this.html = function(){
+            this.getHtml = function(){
                 return html;
             }
             this.centerPoint = function () {
@@ -149,12 +150,10 @@ define([
                     thisVertex.unhighlight();
                 }
                 thisVertex.hideButtons();
-                thisVertex.hideImages();
             }
             this.makeItHighProfile = function(){
                 thisVertex.highlight();
                 thisVertex.showButtons();
-                thisVertex.showImages();
             }
             this.hideButtons = function () {
                 thisVertex.hideMenu();
@@ -166,13 +165,6 @@ define([
             }
             this.hideMenu = function () {
                 $(menu()).css("visibility", "hidden");
-            }
-            this.hideImages = function(){
-                $(thisVertex.imagesContainer()).hide();
-            }
-            this.showImages = function(){
-                $(thisVertex.imagesContainer()).show();
-                thisVertex.adjustImagesPosition();
             }
             this.showMenu = function () {
                 $(menu()).css("visibility", "visible");
@@ -331,18 +323,34 @@ define([
                 );
             }
             this.addImages = function(images){
-                if(images.length == 0){
-                    return;
-                }
-                var imageContainer = $(thisVertex.imagesContainer());
-                $(imageContainer).html(
-                    "<img src='"+images[0].getUrlForSmall()+"'></img>"
-                );
-                thisVertex.adjustImagesPosition();
+                var existingImages = thisVertex.getImages();
+                $(html).data("images", existingImages.concat(
+                    images
+                ));
+                var imageMenu =
+                    thisVertex.hasImagesMenu() ?
+                        thisVertex.getImageMenu() :
+                        createImageMenu();
+                imageMenu.refreshImages();
             }
 
-            this.removeImageWithUrl = function(imageUrl){
-                $(thisVertex.imagesContainer()).empty();
+            this.getImages = function(){
+                return $(html).data("images") === undefined ?
+                    [] :
+                    $(html).data("images");
+            }
+            function createImageMenu(){
+                var imageMenu = ImageMenu.ofVertex(thisVertex).create();
+                $(html).data("images_menu", imageMenu);
+                return imageMenu;
+            }
+
+            this.hasImagesMenu = function(){
+                return $(html).data("images_menu") !== undefined;
+            }
+
+            this.getImageMenu = function(){
+                return $(html).data("images_menu");
             }
 
             this.setSameAs = function (sameAsCollection) {
@@ -376,34 +384,6 @@ define([
             }
             this.equalsVertex = function (otherVertex) {
                 return thisVertex.getId() == otherVertex.getId();
-            }
-            this.imagesContainer = function(){
-                return $(html).find(".images");
-            }
-            this.adjustImagesPosition = function(){
-                var imagesContainer = thisVertex.imagesContainer();
-                var currentImage = $(imagesContainer).find("img");
-                adjustPosition(currentImage);
-                $(currentImage).load(function(){
-                    adjustPosition(this);
-                });
-                function adjustPosition(currentImage){
-                    var addedImageWidth = $(currentImage).width();
-                    var separationFromVertexInPixels = 5;
-                    var marginLeft = (addedImageWidth + separationFromVertexInPixels) * -1;
-                    $(imagesContainer).css("margin-left", marginLeft);
-
-                    var addedImageHeight = $(currentImage).height();
-                    var vertexHeight = thisVertex.height();
-                    var differenceOfHeight = vertexHeight - addedImageHeight;
-                    if(differenceOfHeight > 0){
-                        $(imagesContainer).css(
-                            "margin-top",
-                            differenceOfHeight/2
-                        );
-                    }
-                }
-
             }
             this.scrollTo = function () {
                 var position = thisVertex.position();

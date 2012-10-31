@@ -4,6 +4,7 @@
 
 window.config = {
     baseUrl: 'js',
+    urlArgs: "bust=" + 8,
     paths: {
         module : '../module',
         "jquery-ui.min" : "jquery/jquery-ui.min",
@@ -13,6 +14,7 @@ window.config = {
         "jquery.json.min" : "jquery/jquery.json.min",
         "jquery.tinysort.min" : "jquery/jquery.tinysort.min",
         "jquery.cookie" :  "jquery/jquery.cookie",
+        "jquery.fancybox" : "jquery/jquery.fancybox.pack",
         "org/cometd" : "cometd/cometd",
         "org/cometd/AckExtension" : "cometd/plugins/AckExtension",
         "org/cometd/ReloadExtension" : "cometd/plugins/ReloadExtension",

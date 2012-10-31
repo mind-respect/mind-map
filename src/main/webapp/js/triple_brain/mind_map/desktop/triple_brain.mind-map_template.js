@@ -20,8 +20,6 @@ define([
         t.add('vertex_center_button', '<input type="button" class="center">');
         t.add('vertex_what_is_this_button', '<input type="button" class="what-is-this"  value="?">');
         t.add('vertex_suggestion_button', '<input type="button"  value="S" class="suggestion">');
-        t.add('vertex_images_container', '<div class="images"></div>');
-
 
         t.add('identification_menu', '<div class="peripheral-menu identification"></div>');
         t.add('identification_menu_explanation_title', '<h2>Identifications</h2>');
@@ -37,14 +35,8 @@ define([
         t.add('suggestions_menu_title', '<h2>Suggestions of properties</h2>');
         t.add('suggestions_menu_sub_title', '<h3>( Drag a property outside the box<br/> to add it to your mind map )</h3>');
 
-        t.add('images_menu', '<div class="peripheral-menu images"></div>');
-        t.add('images_container', '<div class="images_container"></div>');
-        t.add('images_menu', '<div class="images_menu">' +
-            '<span class="back">&larr;</span>' +
-            '<span class="forward">&rarr;</span>' +
-            '<span class="zoom">zoom</span>' +
-            '</div>');
-
+        t.add('image_container', '<div class="image_container"></div>');
+        t.add('image_container_image', "<img src='{src}'>");
 
         t.add('hidden_property_container', '<div class="hidden-properties-container"></div>');
         t.add('hidden_property_menu', '<div class="peripheral-menu"></div>');

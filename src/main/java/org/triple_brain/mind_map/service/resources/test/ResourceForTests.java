@@ -64,9 +64,11 @@ public class ResourceForTests {
     public Response createUserAuthenticateAndRedirectToHomePage(@Context HttpServletRequest request) throws Exception {
         User user = User.withUsernameAndEmail("test_user", "test@triple_brain.org")
                 .password("password");
-        userRepository.save(
-                user
-        );
+        if(!userRepository.emailExists(user.email())){
+            userRepository.save(
+                    user
+            );
+        }
         graphFactory.createForUser(user);
         graphIndexer.createUserCore(user);
         deleteAllUserDocumentsForSearch(user);
