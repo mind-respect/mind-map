@@ -39,6 +39,9 @@ define(
                     positionNextToText;
                 positioningFunction(image);
                 $(image).load(function () {
+                    var positioningFunction = vertex.isCenterVertex() ?
+                        positionNextToVertex:
+                        positionNextToText;
                     positioningFunction(this);
                 });
             }
@@ -55,7 +58,7 @@ define(
             }
 
             function positionNextToText(image){
-                var separationFromVertexInPixels = -20;
+                var separationFromVertexInPixels = -30;
                 adjustPosition(image, separationFromVertexInPixels);
             }
 
@@ -68,7 +71,6 @@ define(
                 var addedImageWidth = $(image).width();
                 var marginLeft = (addedImageWidth + horizontalDistanceFromVertexInPixels) * -1;
                 $(html).css("margin-left", marginLeft);
-
                 var addedImageHeight = $(image).height();
                 var vertexHeight = vertex.height();
                 var differenceOfHeight = vertexHeight - addedImageHeight;

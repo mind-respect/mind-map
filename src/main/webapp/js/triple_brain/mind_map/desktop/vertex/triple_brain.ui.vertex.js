@@ -86,9 +86,12 @@ define([
             }
             this.setAsCentral = function () {
                 var centralVertex = api.centralVertex();
-                centralVertex.setAsNonCentral()
+                centralVertex.setAsNonCentral();
                 $(html).addClass('center-vertex');
-                this.hideCenterButton();
+                thisVertex.hideCenterButton();
+                if(thisVertex.hasImages()){
+                    thisVertex.getImageMenu().positionNextToVertex();
+                }
             }
             this.setNameOfHiddenProperties = function (nameOfHiddenProperties) {
                 $(html).data('nameOfHiddenProperties', nameOfHiddenProperties);
