@@ -4,13 +4,11 @@ import com.sun.jersey.api.client.ClientResponse;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Test;
-import org.mortbay.cometd.client.BayeuxClient;
-import org.mortbay.jetty.client.HttpClient;
 import org.triple_brain.mind_map.service.utils.GraphManipulationRestTest;
 import org.triple_brain.module.common_utils.Uris;
 import org.triple_brain.module.model.ExternalFriendlyResource;
+import org.triple_brain.module.model.ModelTestScenarios;
 import org.triple_brain.module.model.User;
-import org.triple_brain.module.model.graph.scenarios.TestScenarios;
 import org.triple_brain.module.model.json.ExternalResourceJson;
 import org.triple_brain.module.model.json.SuggestionJsonFields;
 import org.triple_brain.module.model.json.UserJSONFields;
@@ -19,7 +17,6 @@ import org.triple_brain.module.model.json.graph.VertexJsonFields;
 import org.triple_brain.module.model.suggestion.Suggestion;
 
 import javax.ws.rs.core.MediaType;
-import java.net.InetSocketAddress;
 
 import static junit.framework.Assert.assertFalse;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -170,18 +167,6 @@ public class VertexResourceTest extends GraphManipulationRestTest {
     }
 
     @Test
-    public void a_push_notification_is_received_when_adding_a_type()throws Exception{
-        HttpClient httpClient = new HttpClient();
-        BayeuxClient bayeuxClient = new BayeuxClient(
-                httpClient,
-                new InetSocketAddress(BASE_URI.getHost(), BASE_URI.getPort()),
-                BASE_URI + "vertex"
-        );
-        bayeuxClient.start();
-
-    }
-
-    @Test
     public void can_remove_the_additional_type_of_vertex() throws Exception {
         addFoafPersonTypeToVertexA();
         JSONArray additionalTypes = vertexA().getJSONArray(VertexJsonFields.TYPES);
@@ -205,7 +190,7 @@ public class VertexResourceTest extends GraphManipulationRestTest {
 
     private ClientResponse addFoafPersonTypeToVertexA() throws Exception {
         JSONObject personType = ExternalResourceJson.get(
-                TestScenarios.personType()
+                ModelTestScenarios.personType()
         );
         ClientResponse response = resource
                 .path("vertex")
@@ -218,7 +203,7 @@ public class VertexResourceTest extends GraphManipulationRestTest {
     }
 
     private ClientResponse removeFoafPersonIdentificationToVertexA() throws Exception {
-        ExternalFriendlyResource personType = TestScenarios.personType();
+        ExternalFriendlyResource personType = ModelTestScenarios.personType();
         ClientResponse response = resource
                 .path("vertex")
                 .path(encodeURL(vertexAUri().toString()))
@@ -239,7 +224,7 @@ public class VertexResourceTest extends GraphManipulationRestTest {
         );
 
         addSuggestionToVertex(
-                TestScenarios.startDateSuggestion()
+                ModelTestScenarios.startDateSuggestion()
         );
         suggestions = vertexA().getJSONArray(VertexJsonFields.SUGGESTIONS);
         assertThat(
@@ -280,7 +265,7 @@ public class VertexResourceTest extends GraphManipulationRestTest {
                 is(0)
         );
         addSuggestionToVertex(
-                TestScenarios.startDateSuggestion()
+                ModelTestScenarios.startDateSuggestion()
         );
         suggestions = getSuggestionsOfVertex();
         assertThat(
