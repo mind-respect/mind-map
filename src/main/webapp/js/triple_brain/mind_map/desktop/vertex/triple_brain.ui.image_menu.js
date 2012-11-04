@@ -6,7 +6,7 @@ define(
     [
         "jquery",
         "triple_brain.mind-map_template",
-        "jquery.fancybox"
+        "jquery.colorbox"
     ],
     function ($, MindMapTemplate) {
         var api = {}
@@ -43,7 +43,34 @@ define(
                         positionNextToVertex:
                         positionNextToText;
                     positioningFunction(this);
+                    setUpBiggerImagesView();
                 });
+
+                function setUpBiggerImagesView(){
+                    var vertexId = vertex.getId();
+                    var images = vertex.getImages();
+                    var visibleSmallImage = $(html).find("img:first");
+                        $(visibleSmallImage).wrap("<a rel='"+
+                            vertexId
+                        +"' href='"+
+                            images[0].getUrlForBigger()+
+                            "'/>");
+                    for(var i = 1 ; i < images.length ; i++){
+                        var image = images[i];
+                        var bigImageAnchor = $("<a rel='"+
+                            vertexId
+                            +"' href='"
+                            + image.getUrlForBigger() +
+                            "'/>");
+                        $(html).append(
+                            bigImageAnchor
+                        );
+                    }
+                    $("a[rel="+vertexId+"]").colorbox({
+                        photo:true,
+                        rel:vertexId
+                    });
+                }
             }
 
             this.positionNextToText = function(){
