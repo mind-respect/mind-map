@@ -353,6 +353,7 @@ li.identification{
 
 .hidden-properties-container{
     position: absolute;
+    z-index:10;
 }
 
 .link-like-button{

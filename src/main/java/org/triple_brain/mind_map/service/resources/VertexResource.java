@@ -3,12 +3,10 @@ package org.triple_brain.mind_map.service.resources;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
-import org.triple_brain.mind_map.service.BayeuxInitializer;
-import org.triple_brain.module.common_utils.Uris;
+import org.triple_brain.mind_map.service.ExternalResourceServiceUtils;
 import org.triple_brain.module.model.*;
 import org.triple_brain.module.model.graph.*;
 import org.triple_brain.module.model.json.ExternalResourceJson;
-import org.triple_brain.module.model.json.ImageJson;
 import org.triple_brain.module.model.json.graph.EdgeJsonFields;
 import org.triple_brain.module.model.json.graph.VertexJsonFields;
 import org.triple_brain.module.model.suggestion.Suggestion;
@@ -25,9 +23,6 @@ import javax.ws.rs.core.Response;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Set;
 
 import static org.triple_brain.mind_map.service.resources.GraphManipulatorResourceUtils.userFromSession;
 import static org.triple_brain.module.common_utils.Uris.decodeURL;
@@ -37,8 +32,7 @@ import static org.triple_brain.module.model.json.SuggestionJsonFields.*;
 /**
  * Copyright Mozilla Public License 1.1
  */
-@Path("/vertex"
-)
+@Path("/vertex")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Singleton
@@ -51,10 +45,10 @@ public class VertexResource {
     GraphFactory graphFactory;
 
     @Inject
-    ExternalFriendlyResourcePersistenceUtils externalFriendlyResourcePersistenceUtils;
+    BeforeAfterEachRestCall beforeAfterEachRestCall;
 
     @Inject
-    BeforeAfterEachRestCall beforeAfterEachRestCall;
+    ExternalResourceServiceUtils externalResourceServiceUtils;
 
     @POST
     @Path("/{sourceVertexId}")
@@ -156,6 +150,7 @@ public class VertexResource {
                 externalFriendlyResource
         );
         updateImagesOfExternalResourceIfNecessary(externalFriendlyResource);
+        updateDescriptionOfExternalResourceIfNecessary(externalFriendlyResource);
         return Response.ok().build();
     }
 
@@ -166,38 +161,24 @@ public class VertexResource {
                         externalFriendlyResource
                 );
                 freebaseResource.getImages(
-                        externalResourceImagesUpdateHandler
+                        externalResourceServiceUtils.imagesUpdateHandler
                 );
             }
         }
     }
 
-    private Observer externalResourceImagesUpdateHandler = new Observer() {
-        @Override
-        public void update(Observable observable, Object o) {
-            FreebaseExternalFriendlyResource freebaseExternalFriendlyResource = (FreebaseExternalFriendlyResource) observable;
-            ExternalFriendlyResource externalResource = freebaseExternalFriendlyResource.get();
-            Set<Image> images = (Set<Image>) o;
-            Object state = beforeAfterEachRestCall.before();
-            try {
-                externalFriendlyResourcePersistenceUtils.addImages(
-                        externalResource,
-                        images
+    public void updateDescriptionOfExternalResourceIfNecessary(ExternalFriendlyResource externalFriendlyResource) {
+        if(!externalFriendlyResource.gotADescription()){
+            if(FreebaseExternalFriendlyResource.isFromFreebase(externalFriendlyResource)){
+                FreebaseExternalFriendlyResource freebaseResource = FreebaseExternalFriendlyResource.fromExternalResource(
+                        externalFriendlyResource
                 );
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+                freebaseResource.getDescription(
+                        externalResourceServiceUtils.descriptionUpdateHandler
+                );
             }
-            finally{
-                beforeAfterEachRestCall.after(state);
-            }
-            BayeuxInitializer.notificationService.notifyChannelMessage(
-                    "/identification/" +
-                            Uris.encodeURL(externalResource.uri()) +
-                            "/images/updated",
-                    ImageJson.fromCollection(images)
-            );
         }
-    };
+    }
 
     @POST
     @Path("{vertexId}/same_as")
@@ -219,7 +200,7 @@ public class VertexResource {
         );
 
         updateImagesOfExternalResourceIfNecessary(externalFriendlyResource);
-
+        updateDescriptionOfExternalResourceIfNecessary(externalFriendlyResource);
         return Response.ok().build();
     }
 

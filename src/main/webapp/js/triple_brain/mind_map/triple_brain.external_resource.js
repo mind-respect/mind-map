@@ -9,17 +9,11 @@ define([
     "triple_brain.ui.vertex",
     "triple_brain.id_uri",
     "triple_brain.image",
+    "triple_brain.event_bus",
     "jquery.json.min"
 ],
-    function (require, $, ServerSubscriber, Vertex, IdUriUtils, Image) {
+    function (require, $, ServerSubscriber, Vertex, IdUriUtils, Image, EventBus) {
         var api = {};
-        api.withUriLabelAndImages = function(uri, label, images){
-            return new ExternalResource(
-                uri,
-                label,
-                images
-            );
-        }
         api.withUriAndLabel = function(uri, label){
             return new ExternalResource(
                 uri,
@@ -33,6 +27,7 @@ define([
                     freebaseSuggestion.id
                 ),
                 freebaseSuggestion.name,
+                undefined,
                 []
             )
         }
@@ -40,11 +35,12 @@ define([
             return new ExternalResource(
                 serverJson.uri,
                 serverJson.label,
+                serverJson.description,
                 Image.arrayFromServerJson(serverJson.images)
             )
         }
 
-        function ExternalResource(uri, label, images) {
+        function ExternalResource(uri, label, description, images) {
             var thisExternalResource = this;
             this.uri = function () {
                 return uri;
@@ -52,18 +48,31 @@ define([
             this.label = function () {
                 return label;
             }
+            this.description = function(){
+                return description === undefined ? "" : description;
+            }
             this.images = function(){
                 return images;
             }
-            this.listenForNewImages = function(listenerReadyCallBack){
+            this.listenForUpdates = function(listenerReadyCallBack){
                 ServerSubscriber.subscribe(
-                    "/identification/" + IdUriUtils.encodeUri(thisExternalResource.uri()) +  "/images/updated",
-                    updateImages,
+                    "/identification/" + IdUriUtils.encodeUri(thisExternalResource.uri()) +  "/updated",
+                    updateWithServerJson,
                     listenerReadyCallBack
                 );
             }
-            function updateImages(imagesAsJson){
-                var images = Image.arrayFromServerJson(imagesAsJson);
+            function updateWithServerJson(externalResourceAsJson){
+                var externalResource = api.fromServerJson(
+                    externalResourceAsJson
+                );
+                uri = externalResource.uri();
+                label = externalResource.label();
+                description = externalResource.description();
+                images = externalResource.images();
+                EventBus.publish(
+                    "/identification/updated",
+                    [externalResource]
+                );
                 getVertex().visitAllVertices(function(vertex){
                     $.each(vertex.getIdentifications(), function(){
                         var identification = this;
@@ -73,6 +82,7 @@ define([
                     });
                 });
             }
+
             this.serverFormat = function(){
                 return $.toJSON(
                     thisExternalResource.jsonFormat()

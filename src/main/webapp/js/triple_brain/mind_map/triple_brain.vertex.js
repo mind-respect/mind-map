@@ -48,7 +48,7 @@ define([
                 })
         };
         api.addType = function (vertex, type, successCallback) {
-            type.listenForNewImages(addTypeWhenListenerReady);
+            type.listenForUpdates(addTypeWhenListenerReady);
             function addTypeWhenListenerReady() {
                 $.ajax({
                     type:'POST',
@@ -104,7 +104,7 @@ define([
             );
         };
         api.addSameAs = function (vertex, sameAs, successCallback) {
-            sameAs.listenForNewImages(addSameAsWhenListenerReady);
+            sameAs.listenForUpdates(addSameAsWhenListenerReady);
             function addSameAsWhenListenerReady() {
                 $.ajax({
                     type:'POST',
