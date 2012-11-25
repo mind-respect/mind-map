@@ -28,7 +28,7 @@ define([
         t.add('identification_existing_identity','<h3 class="type-label identification" identification-uri="{identification_uri}">{type_label}' +
             '<input type="button" class="remove-identification" value="x">'+
             '</h3>'+
-            '<div class="group description">allo :)</div>');
+            '<div class="group description">{description}</div>');
         t.add('identification_textfield', '<input type="text" placeholder="Identify" class="semantic-textfield">');
 
         t.add('suggestions_menu', '<div class="peripheral-menu suggestion"></div>');

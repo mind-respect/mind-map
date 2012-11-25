@@ -320,6 +320,13 @@ input[type="button"] {
     padding-top : 10px;
     padding-bottom: 10px;
     margin:auto;
+    overflow: hidden;
+}
+
+.peripheral-menu.identification .description{
+    font-size:0.8em;
+    width:300px;
+    text-align:justify;
 }
 
 .peripheral-menu.identification input.remove-identification{

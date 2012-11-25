@@ -98,7 +98,9 @@ define([
             function addIdentificationAsListElement(identification) {
                 var identificationListElement = MindMapTemplate['identification_existing_identity'].merge({
                     identification_uri:IdUriUtils.encodeUri(identification.uri()),
-                    type_label:identification.label()
+                    type_label:identification.label(),
+                    description:identification.description()
+                        .replace("\n", "<br/><br/>")
                 });
                 $(identificationListElement).data("identification", identification);
                 $(listHtml()).append(
