@@ -57,7 +57,6 @@ define([
                 $(hiddenNeighborPropertiesContainer).css('top', startPoint.y - (defaultLengthOfHiddenPropertiesContainer / 2));
                 var timer;
                 $(hiddenNeighborPropertiesContainer).mouseenter(function(e){
-                    console.log("mouseenter");
                     if(timer) {
                         clearTimeout(timer);
                         timer = null

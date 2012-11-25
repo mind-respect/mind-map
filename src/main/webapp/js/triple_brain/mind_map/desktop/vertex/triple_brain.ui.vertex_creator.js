@@ -127,8 +127,6 @@ define([
                 var label = $(labelContainer).find("input[type='text']:first");
                 var vertex = vertexFacade();
                 vertex.readjustLabelWidth();
-                $(label).draggable('disabled');
-
                 if (vertex.hasDefaultText()) {
                     vertex.applyStyleOfDefaultText();
                 }

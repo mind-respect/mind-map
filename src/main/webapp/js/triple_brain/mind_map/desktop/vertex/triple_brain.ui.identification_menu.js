@@ -11,7 +11,8 @@ define([
     "triple_brain.id_uri",
     "triple_brain.ui.utils",
     "triple_brain.freebase",
-    "jquery.freebase_suggest.min"
+    "jquery.freebase_suggest.min",
+    "jquery-ui.min"
 ],
     function ($, ExternalResource, VertexService, MindMapTemplate, Graph, IdUriUtils, UiUtils, Freebase) {
 
@@ -40,11 +41,11 @@ define([
             }
 
             function listHtml() {
-                return $(html).find(".identification-list")
+                return $(html).find(".list")
             }
 
             function listElements() {
-                return $(html).find(".identification-list").find("li");
+                return $(listHtml()).find(".identification");
             }
 
             function buildMenu() {
@@ -83,6 +84,15 @@ define([
                         this
                     );
                 });
+                makeListElementsCollapsible();
+            }
+
+            function makeListElementsCollapsible(){
+                $(listHtml()).accordion().accordion("destroy");
+                $(listHtml()).accordion({
+                    collapsible: true,
+                    active : false
+                });
             }
 
             function addIdentificationAsListElement(identification) {
@@ -97,7 +107,7 @@ define([
                 $(identificationListElement).find(".remove-identification").click(function () {
                     var identificationListElement = this;
                     var identification = $(identificationListElement).closest(
-                        'li.identification'
+                        '.identification'
                     ).data("identification");
                     var semanticMenu = $(identificationListElement).closest(
                         '.peripheral-menu'
@@ -115,6 +125,7 @@ define([
                                 var listElement = this;
                                 var listElementIdentification = $(listElement).data("identification");
                                 if(identification.uri() == listElementIdentification.uri()){
+                                    $(listElement).next(".description").remove();
                                     $(listElement).remove();
                                     return false;
                                 }
@@ -148,6 +159,7 @@ define([
                             freebaseSuggestion,
                             function (vertex, identification) {
                                 addIdentificationAsListElement(identification);
+                                makeListElementsCollapsible();
                             }
                         );
                     });

@@ -69,10 +69,6 @@ define([
                 label = externalResource.label();
                 description = externalResource.description();
                 images = externalResource.images();
-                EventBus.publish(
-                    "/identification/updated",
-                    [externalResource]
-                );
                 getVertex().visitAllVertices(function(vertex){
                     $.each(vertex.getIdentifications(), function(){
                         var identification = this;

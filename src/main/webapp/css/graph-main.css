@@ -9,15 +9,12 @@ body{
 svg{
     z-index:0;
 }
-#mind_map {
-    font-family:arial;
+[data-role=page]{
+    font-family:helvetica;
+    font-size:1em;
 }
 
-#mind_map label{
-    font-size:12px;
-}
-
-#mind_map .main-panel{
+body .main-panel{
     z-index:12;
     background-color: white;
     opacity: 0.91;
@@ -26,11 +23,11 @@ svg{
     cursor:default;
 }
 
-#mind_map input[type=button]{
+body input[type=button]{
     color: #1919AC
 }
 
-#mind_map input[type=button]:hover{
+body input[type=button]:hover{
     color:#47A3FF;
 }
 
@@ -44,10 +41,11 @@ svg{
     float:left;
     margin-left:15px;
 }
+#top-panel .link-like-button{
+    font-size:0.9em;
+}
 #redraw-graph-btn{
     border : 1px solid black;
-    font-size:12px;
-    font-family:arial;
     padding: 3px;
     background-color:white;
     font-weight:normal;
@@ -79,8 +77,7 @@ svg{
 }
 
 #left-panel h2{
-    font-size:12px;
-    font-family:arial;
+    font-size:0.8em;
     text-decoration:underline
 }
 
@@ -91,6 +88,7 @@ svg{
 
 #sub-vertices-depth-index{
     border: 0;
+    font-size:1.2em;
 }
 
 .graph {
@@ -138,13 +136,14 @@ svg{
     margin-top: 15px;
 }
 
-.vertex input[type="button"] {
+input[type="button"] {
     border-size: 0px;
     border-style: none;
     font: inherit;
     padding: 0 0 0 0;
     font-weight: bold;
     font-size:15px;
+    background: none;
 }
 
 .vertex .center {
@@ -294,14 +293,14 @@ svg{
 }
 
 .peripheral-menu h2{
-    font-size: 12px;
+    font-size: 1em;
     white-space: nowrap;
 }
 
 .peripheral-menu h3{
     margin-top:5px;
-    font-size: 10px;
     font-weight:normal;
+    font-size:0.8em;
 }
 
 .peripheral-menu ul{
@@ -326,9 +325,39 @@ svg{
 .peripheral-menu.identification input.remove-identification{
     padding-bottom: 10px;
     margin:auto;
+    float:right;
+    color:red;
 }
-li.identification{
-    white-space: nowrap;
+
+/*.list .identification h3 {*/
+    /*margin: 0;*/
+    /*background-color: rgb(228,10,85);*/
+    /*background-image: linear-gradient(bottom, rgb(228,10,85) 14%, rgb(255,36,111) 57%);*/
+    /*background-image: -o-linear-gradient(bottom, rgb(228,10,85) 14%, rgb(255,36,111) 57%);*/
+    /*background-image: -moz-linear-gradient(bottom, rgb(228,10,85) 14%, rgb(255,36,111) 57%);*/
+    /*background-image: -webkit-linear-gradient(bottom, rgb(228,10,85) 14%, rgb(255,36,111) 57%);*/
+    /*background-image: -ms-linear-gradient(bottom, rgb(228,10,85) 14%, rgb(255,36,111) 57%);*/
+/*}*/
+
+/*.list .identification h3 a {*/
+    /*background: url("images/icons/collapsible_sprite.png") 15px 2px no-repeat;*/
+    /*display: block;*/
+    /*padding-left: 32px;*/
+    /*margin: 0;*/
+    /*color: #fff;*/
+    /*font-size:13px;*/
+    /*text-decoration: none;*/
+    /*font-weight: normal;*/
+    /*border-bottom: 1px solid rgba(128, 10, 85, 0.5);*/
+    /*text-shadow: 1px 1px 1px rgb(128,10,85);*/
+/*}*/
+/*.list .identification h3:hover { background: rgb(228,10,85); }*/
+/*.list .identification h3.open  { background: rgb(255,70,120); }*/
+/*.list .identification h3.open a { background-position: 13px -25px; }*/
+/*.list .identification h3 + div { padding: 10px; }*/
+
+.ui-accordion{
+    font-size: 0.9em;
 }
 
 .suggestion ul{
@@ -345,7 +374,6 @@ li.identification{
     background: -webkit-gradient(linear, left right, left right, from(#CDFFCD), to(#ffffff));
     width:100%;
     text-align:center;
-    font-family: comic Sans MS;
     padding-bottom: 3px;
     padding-top: 3px;
     border : 1px solid green;
@@ -359,8 +387,7 @@ li.identification{
 .link-like-button{
     border-size: 0px;
     border-style: none;
-    font-size:12px;
-    font-family:arial;
+    font-size:0.7em;
     padding: 0 0 0 0;
     background-color:transparent;
     font-weight:normal;

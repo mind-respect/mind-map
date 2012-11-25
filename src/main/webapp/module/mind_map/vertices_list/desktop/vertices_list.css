@@ -3,11 +3,12 @@
 }
 
 #vertices-list{
-    font-size:12px;
+    font-size:1.2em;
     font-family:arial;
     margin-top:5px;
     list-style:none;
 }
+
 
 #vertices-list li{
     margin-left:-36px;
@@ -16,6 +17,9 @@
     -moz-border-radius: 15px;
     border-radius: 15px;
     width:175px;
+}
+#vertices-list .link-like-button{
+
 }
 #vertices-list-sort-options{
     margin-left: 0;
@@ -42,8 +46,10 @@
 
 #vertices-list .min-number-of-edges-from-center-vertex{
     margin-right:5px;
+    font-size:0.7em;
 }
 
 .sort-vertices-btn{
     z-index: 3;
+    font-size:0.9em;
 }
