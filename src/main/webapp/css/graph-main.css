@@ -321,6 +321,7 @@ input[type="button"] {
     padding-bottom: 10px;
     margin:auto;
     overflow: hidden;
+    font-size:0.9em;
 }
 
 .peripheral-menu.identification .description{
@@ -334,6 +335,23 @@ input[type="button"] {
     margin:auto;
     float:right;
     color:red;
+}
+
+.close_button {
+    cursor: pointer;
+    color: white;
+    border: 1px solid #AEAEAE;
+    border-radius: 30px;
+    background: #605F61;
+    font-size: 1em;
+    font-weight: bold;
+    display: inline-block;
+    line-height: 0px;
+    padding: 11px 3px;
+    float:left;
+    position:relative;
+    top:-15px;
+    left:-15px;
 }
 
 /*.list .identification h3 {*/

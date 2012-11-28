@@ -10,11 +10,12 @@ define([
     "triple_brain.ui.graph",
     "triple_brain.id_uri",
     "triple_brain.ui.utils",
+    "triple_brain.peripheral_menu",
     "triple_brain.freebase",
     "jquery.freebase_suggest.min",
     "jquery-ui.min"
 ],
-    function ($, ExternalResource, VertexService, MindMapTemplate, Graph, IdUriUtils, UiUtils, Freebase) {
+    function ($, ExternalResource, VertexService, MindMapTemplate, Graph, IdUriUtils, UiUtils, PeripheralMenu, Freebase) {
 
         var api = {
             ofVertex:function (vertex) {
@@ -37,6 +38,9 @@ define([
                     e.stopPropagation();
                 });
                 $(html).data("vertex", vertex);
+                PeripheralMenu.makeHtmlAPeripheralMenu(
+                    html
+                );
                 return identificationMenu;
             }
 
