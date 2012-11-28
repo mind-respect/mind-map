@@ -10,6 +10,9 @@ define([
                 "<span class='close_button'>&#10006;"+
                 "</span>"
             );
+            $(html).find(".close_button").on("click", function(){
+                $(this).closest(".peripheral-menu").remove();
+            })
     }
         return api;
     }

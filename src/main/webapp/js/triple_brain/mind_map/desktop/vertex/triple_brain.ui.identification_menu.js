@@ -34,9 +34,6 @@ define([
                 html = MindMapTemplate['identification_menu'].merge();
                 Graph.addHTML(html);
                 buildMenu();
-                $(html).click(function (e) {
-                    e.stopPropagation();
-                });
                 $(html).data("vertex", vertex);
                 PeripheralMenu.makeHtmlAPeripheralMenu(
                     html

@@ -12,9 +12,10 @@ define([
     "triple_brain.external_resource",
     "triple_brain.vertex",
     "triple_brain.edge",
+    "triple_brain.peripheral_menu",
     "triple_brain.ui.utils"
 ],
-    function (require, $, Freebase, MindMapTemplate, Graph, Point, ExternalResource, VertexService, EdgeService, UiUtils) {
+    function (require, $, Freebase, MindMapTemplate, Graph, Point, ExternalResource, VertexService, EdgeService, PeripheralMenu, UiUtils) {
         var api = {
             ofVertex:function (vertex) {
                 return new SuggestionMenu(vertex);
@@ -33,9 +34,9 @@ define([
                 addSubTitle();
                 addSuggestionList();
                 position();
-                html.click(function (menuClickEvent) {
-                    menuClickEvent.stopPropagation();
-                });
+                PeripheralMenu.makeHtmlAPeripheralMenu(
+                    html
+                );
                 return suggestionMenu;
             }
 

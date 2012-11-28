@@ -140,10 +140,6 @@ define(
                 centralVertex.setAsCentral();
                 centralVertex.scrollTo();
 
-                $("body").on('click', function () {
-                    var outOfVertexMenus = $('.peripheral-menu');
-                    $(outOfVertexMenus).remove();
-                });
                 DragScroll.start();
                 EventBus.publish('/event/ui/graph/drawn');
             }
