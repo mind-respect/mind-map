@@ -98,7 +98,7 @@ define([
 
             function addIdentificationAsListElement(identification) {
                 var identificationListElement = MindMapTemplate['identification_existing_identity'].merge({
-                    identification_uri:IdUriUtils.encodeUri(identification.uri()),
+                    identification_uri:identification.uri(),
                     type_label:identification.label(),
                     description:identification.description()
                         .replace("\n", "<br/><br/>")
@@ -146,6 +146,29 @@ define([
                 );
             }
 
+            function setTemporaryDescription(identification){
+                $(
+                    descriptionFromIdentification(
+                        identification
+                    )
+                ).text(
+                    $(".fbs-topic-article").text()
+                );
+            }
+
+
+            function descriptionFromIdentification(identification){
+                return $(
+                    titleFromIdentification(identification)
+                ).next(".description");
+            }
+
+            function titleFromIdentification(identification){
+                return $(html).find(
+                    "[identification-uri='"+identification.uri()+"']"
+                );
+            }
+
             function addIdentificationTextField() {
                 var identificationTextField = MindMapTemplate[
                     'identification_textfield'
@@ -163,6 +186,7 @@ define([
                             function (vertex, identification) {
                                 addIdentificationAsListElement(identification);
                                 makeListElementsCollapsible();
+                                setTemporaryDescription(identification);
                             }
                         );
                     });
