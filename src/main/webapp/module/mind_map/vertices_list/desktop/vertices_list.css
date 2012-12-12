@@ -7,6 +7,7 @@
     font-family:arial;
     margin-top:5px;
     list-style:none;
+    padding-left:40px;
 }
 
 
@@ -19,7 +20,8 @@
     width:175px;
 }
 #vertices-list .link-like-button{
-
+    font-size:0.9em;
+    font-family: courier new, monospace;
 }
 #vertices-list-sort-options{
     margin-left: 0;
@@ -28,6 +30,7 @@
     margin-top:3px;
     margin-bottom:0px;
     white-space: nowrap;
+    font-size:0.9em;
 }
 
 #vertices-list-sort-options li {

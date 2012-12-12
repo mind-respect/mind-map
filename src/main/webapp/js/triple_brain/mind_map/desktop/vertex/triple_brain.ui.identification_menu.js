@@ -175,7 +175,10 @@ define([
                     ].merge();
                 $(html).append(identificationTextField);
                 $(identificationTextField).suggest({
-                    "zIndex":20
+                    key:"AIzaSyBHOqdqbswxnNmNb4k59ARSx-RWokLZhPA",
+                    "zIndex":20,
+                    scoring:"schema",
+                    lang: "en"
                 })
                     .bind("fb-select", function (e, freebaseSuggestion) {
                         var semanticMenu = $(this).closest('.peripheral-menu');

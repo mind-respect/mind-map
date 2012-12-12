@@ -15,6 +15,7 @@ import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -59,8 +60,7 @@ public class UserResource {
             if (user.hasPassword(
                     loginInfo.getString(UserJSONFields.PASSWORD)
             )) {
-                request.getSession().setAttribute(AUTHENTICATION_ATTRIBUTE_KEY, true);
-                request.getSession().setAttribute(AUTHENTICATED_USER_KEY, user);
+                authenticateUserInSession(user, request.getSession());
                 return Response.ok(
                         UserJSONFields.toJSON(user)
                 ).build();
@@ -141,7 +141,13 @@ public class UserResource {
                 userGraph.defaultVertex(),
                 user
         );
+        authenticateUserInSession(user, request.getSession());
         return Response.created(new URI(request.getRequestURL() + "/" + user.id())).build();
+    }
+
+    private void authenticateUserInSession(User user, HttpSession session){
+        session.setAttribute(AUTHENTICATION_ATTRIBUTE_KEY, true);
+        session.setAttribute(AUTHENTICATED_USER_KEY, user);
     }
 
 }

@@ -13,25 +13,21 @@ define([
         api.authenticatedUserInCache = function () {
             return authenticatedUserInCache;
         }
-        api.register = function (userObject) {
+        api.register = function (userObject, successCallback, errorCallback) {
             $.ajax({
                 type:'POST',
                 url:config.links.app + '/service/users/',
                 data:$.toJSON(userObject),
                 dataType:'json',
                 contentType:'application/json;charset=utf-8'
-            }).success(function (user) {
-                    eventBus.publish(
-                        '/event/ui/user/registration/success',
-                        userObject
+            })
+                .success(successCallback)
+                .error(function(xhr) {
+                    errorCallback(
+                        $.parseJSON(xhr.responseText)
                     );
-                }).error(function (xhr) {
-                    eventBus.publish(
-                        '/event/ui/users/registration/errors',
-                        [$.parseJSON(xhr.responseText)]
-                    );
-                })
-        };
+                });
+        }
         api.authenticatedUser = function (callback) {
             $.ajax({
                 type:'GET',

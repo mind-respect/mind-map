@@ -1,0 +1,73 @@
+<div class="security-form-wrapper">
+
+    <p id="mandatory_user_name" class="alert alert-error" style="display:none">
+        Username is mandatory
+    </p>
+
+    <p id="invalid_user_name" class="alert alert-error" style="display:none">
+        Username is invalid, it can only contain letters, numbers, underscores and hyphens
+    </p>
+
+    <p id="user_name_too_long" class="alert alert-error" style="display:none">
+        Username can't exceed 15 characters
+    </p>
+
+    <p id="user_name_already_registered" class="alert alert-error" style="display:none">
+        This username is already taken
+    </p>
+
+    <p id="mandatory_email" class="alert alert-error" style="display:none">
+        Email is mandatory
+    </p>
+
+    <p id="invalid_email" class="alert alert-error" style="display:none">
+        This email is invalid
+    </p>
+
+    <p id="email_too_long" class="alert alert-error" style="display:none">
+        Email can't exceed 50 characters
+    </p>
+
+    <p id="already_registered_email" class="alert alert-error" style="display:none">
+        This email is already registered
+    </p>
+
+    <p id="mandatory_password" class="alert alert-error" style="display:none">
+        Password is mandatory
+    </p>
+
+    <p id="password_too_short" class="alert alert-error" style="display:none">
+        The password needs a minimum of 6 characters
+    </p>
+
+    <p id="password_verification_error" class="alert alert-error" style="display:none">
+        Passwords don't match
+    </p>
+
+    <form id="register-form" class="well">
+        <fieldset>
+            <legend>Register</legend>
+
+            <label for="register-user_name">
+                Username
+            </label>
+            <input id="register-user_name" class="large" name="user_name" type="text">
+
+            <label for="register-email">
+                Email
+            </label>
+            <input id="register-email" class="large" name="email" type="text">
+
+            <label for="register-password">Password</label>
+            <input id="register-password" class="large" name="password" type="password"/>
+
+            <label for="register-retype_password">Retype Password</label>
+            <input id="register-retype_password" class="large" name="password_verification"
+                   type="password"/>
+            <button id="register-button" type="button" class="btn">Register</button>
+            <a id="login-link">I have an account, log me in !</a>
+        </fieldset>
+
+    </form>
+
+</div>

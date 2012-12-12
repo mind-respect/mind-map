@@ -2,6 +2,7 @@ package org.triple_brain.mind_map.service.utils;
 
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import javax.ws.rs.core.MediaType;
@@ -35,12 +36,16 @@ public class UserRestTestUtils {
         return Boolean.valueOf(emailExistsStr);
     }
 
-    public JSONObject validForCreation() throws Exception{
+    public JSONObject validForCreation(){
         JSONObject user = new JSONObject();
-        user.put(USER_NAME, randomUsername());
-        user.put(EMAIL, randomEmail());
-        user.put(PASSWORD, RestTest.DEFAULT_PASSWORD);
-        user.put(PASSWORD_VERIFICATION, RestTest.DEFAULT_PASSWORD);
+        try{
+            user.put(USER_NAME, randomUsername());
+            user.put(EMAIL, randomEmail());
+            user.put(PASSWORD, RestTest.DEFAULT_PASSWORD);
+            user.put(PASSWORD_VERIFICATION, RestTest.DEFAULT_PASSWORD);
+        }catch(JSONException e){
+            throw new RuntimeException(e);
+        }
         return user;
     }
 

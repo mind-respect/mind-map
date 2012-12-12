@@ -3,6 +3,7 @@ define(
         "jquery",
         "triple_brain.user",
         "triple_brain.event_bus",
+        "triple_brain.login_handler",
         "triple_brain.drag_scroll",
         "triple_brain.drawn_graph",
         "triple_brain.ui.graph",
@@ -14,7 +15,7 @@ define(
         "triple_brain.server_subscriber",
         "jquery-ui.min"
     ],
-    function($, UserService, EventBus, DragScroll, DrawnGraph, Graph, Vertex, VertexCreator, EdgeCreator, SearchService, MindMapTemplate, ServerSubscriber){
+    function($, UserService, EventBus, LoginHandler, DragScroll, DrawnGraph, Graph, Vertex, VertexCreator, EdgeCreator, SearchService, MindMapTemplate, ServerSubscriber){
         var api = {
             offset:function () {
                 var offset = {};
@@ -42,20 +43,18 @@ define(
                     ServerSubscriber.init(function(){
                         console.log("inited");
                     });
-
                     $("body").hide();
                     UserService.isAuthenticated(
                         callBackWhenIsAuthenticated,
-                        function(){
-                            window.location = "login.html";
-                        }
+                        showCredentialsFlow
                     )
                     function callBackWhenIsAuthenticated(){
+                        $("html").addClass("authenticated");
                         $("body").show();
-                        handleIfNotAuthentifiedRedirectToAuthPage();
+                        handleIfNotAuthenticatedShowCredentialsFlow();
                         handleDisconnectButton();
                         var sliderDefaultValue = 5;
-                        $("#sub-vertices-depth-index").val(sliderDefaultValue);
+                        $("#sub-vertices-depth-index").text(sliderDefaultValue);
                         $("#sub-vertices-depth-slider").slider({
                             value:sliderDefaultValue,
                             min:0,
@@ -63,10 +62,10 @@ define(
                             step:1,
                             orientation:"horizontal",
                             slide:function (event, ui) {
-                                $("#sub-vertices-depth-index").val(ui.value);
+                                $("#sub-vertices-depth-index").text(ui.value);
                             },
                             change:function (event, ui) {
-                                $("#sub-vertices-depth-index").val(ui.value);
+                                $("#sub-vertices-depth-index").text(ui.value);
                                 if (event.originalEvent) {
                                     DrawnGraph.getWithNewCentralVertex(
                                         Vertex.centralVertex()
@@ -145,17 +144,23 @@ define(
             }
         );
 
-        function handleIfNotAuthentifiedRedirectToAuthPage(){
+        function handleIfNotAuthenticatedShowCredentialsFlow(){
             $("html").ajaxError(function (e, jqxhr, settings, exception){
                 if(jqxhr.status == 403){
-                    window.location = "login.html";
+                    showCredentialsFlow();
                 }
             });
         }
+
+        function showCredentialsFlow(){
+            $("body").show();
+            LoginHandler.startFlow();
+        }
+
         function handleDisconnectButton(){
             $("#disconnect-btn").click(function(){
                 UserService.logout(function(){
-                    window.location = "login.html";
+                    window.location = "/";
                 })
             })
         }

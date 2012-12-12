@@ -66,14 +66,18 @@ public class UserResourceTest extends GraphManipulationRestTest {
         return response;
     }
 
-    private boolean isThereAnAuthentifiedUser(NewCookie cookie)throws JSONException{
+    private boolean isThereAnAuthentifiedUser(NewCookie cookie){
         ClientResponse response = resource
                 .path("users")
                 .path("is_authenticated")
                 .cookie(cookie)
                 .get(ClientResponse.class);
-        return response.getEntity(JSONObject.class)
-                .getBoolean("is_authenticated");
+        try{
+            return response.getEntity(JSONObject.class)
+                    .getBoolean("is_authenticated");
+        }catch(JSONException e){
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
@@ -112,6 +116,16 @@ public class UserResourceTest extends GraphManipulationRestTest {
                         user.getString(EMAIL)
                 )
         );
+    }
+
+    @Test
+    public void user_is_authenticated_after_creation(){
+        logoutUsingCookie(authCookie);
+        assertFalse(isThereAnAuthentifiedUser(authCookie));
+        ClientResponse response = createUser(userUtils.validForCreation());
+        assertTrue(isThereAnAuthentifiedUser(
+                authCookie
+        ));
     }
 
     @Test

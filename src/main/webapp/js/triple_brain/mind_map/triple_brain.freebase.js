@@ -26,7 +26,7 @@ define([
                 .indexOf("freebase.com") != -1;
         }
         api.handleIdentificationToServer = function(vertex, freebaseSuggestion, successCallBack){
-            var typeId = freebaseSuggestion['n:type'].id;
+            var typeId = freebaseSuggestion.notable.id;
             var externalResource = ExternalResource.fromFreebaseSuggestion(
                 freebaseSuggestion
             );

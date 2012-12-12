@@ -11,7 +11,7 @@ define([
         t.add('graph_canvas', '<div id="graphCanvas" width="{bounding_box_width}" height="{bounding_box_height}"></canvas>');
 
         //vertex html elements
-        t.add('vertex', '<div class="vertex" id="{id}" style="top:{position.y}"></div>');
+        t.add('vertex', '<div class="vertex graph-element" id="{id}" style="top:{position.y}"></div>');
         t.add('vertex_label_container', '<div class=textfield-container><input type="text" class="label" value="{label}"></div>');
         t.add('vertex_menu', '<div class="menu"></div>');
         t.add('vertex_move_button', '<div class="move"></div>');
@@ -47,7 +47,7 @@ define([
         t.add('hidden_property', '<li>{name}</li>');
 
         //edge html elements
-        t.add('edge', '<div class="edge" id="{id}" style="left:{label_position.x};top:{label_position.y}" source-vertex-id="{source_vertex_id}" destination-vertex-id="{destination_vertex_id}"></div>');
+        t.add('edge', '<div class="edge graph-element" id="{id}" style="left:{label_position.x};top:{label_position.y}" source-vertex-id="{source_vertex_id}" destination-vertex-id="{destination_vertex_id}"></div>');
         t.add('edge_label', '<input type="text" value="{label}">');
         t.add('edge_remove_button', '<input type="button" class="remove" value="x" >');
 

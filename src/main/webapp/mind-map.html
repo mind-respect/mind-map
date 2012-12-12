@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-au">
 <head>
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="stylesheet" href="css/twitter_bootstrap/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/twitter_bootstrap/bootstrap-responsive.min.css"/>
     <link rel="stylesheet" href="css/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.min.css"/>
     <link rel="stylesheet" href="css/jquery/colorbox/colorbox.css"/>
     <link rel="stylesheet" href="css/freebase/suggest.min.css"/>
-    <link rel="stylesheet" href="css/graph-main.css"/>
+    <link rel="stylesheet" href="css/application.css"/>
 
     <!--Vertices list module-->
     <link rel="stylesheet" href="module/mind_map/vertices_list/desktop/vertices_list.css"/>
@@ -37,16 +38,16 @@
                 </div>
                 <h2>Distance from center concept</h2>
                 <div id="sub-vertices-depth-slider" ></div>
-                <input type="text" id="sub-vertices-depth-index"/>
+                <label id="sub-vertices-depth-index"></label>
             </div>
             <div id="drawn_graph">
             </div>
             <div id="top-panel" class="main-panel">
                 <div class="redraw-button-panel menu-item">
-                    <input type="button" id="redraw-graph-btn" value="redraw"/>
+                    <input type="button" id="redraw-graph-btn" value="redraw" class="link-like-button"/>
                 </div>
                 <div class="menu-item">
-                    <input type="button" id="disconnect-btn" value="disconnect" class="link-like-button top-menu-link-like-button">
+                    <input type="button" id="disconnect-btn" value="disconnect" class="link-like-button">
                 </div>
             </div>
         </div>

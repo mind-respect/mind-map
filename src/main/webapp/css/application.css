@@ -1,3 +1,24 @@
+#mind_map h2, #mind_map h3{
+    line-height: inherit;
+}
+#cboxClose{
+    left:-5px;
+}
+
+#login-button, #register-button{
+    display:block;
+    margin-bottom: 1.2em;
+}
+
+.security-form-wrapper{
+    background-color: white;
+    height:100%;
+}
+#register-link, #login-link{
+    display:block;
+    text-align:center;
+}
+
 .ui-loader {
     display: none;
 }
@@ -43,24 +64,7 @@ body input[type=button]:hover{
 }
 #top-panel .link-like-button{
     font-size:0.9em;
-}
-#redraw-graph-btn{
-    border : 1px solid black;
-    padding: 3px;
-    background-color:white;
-    font-weight:normal;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
-
-}
-#redraw-graph-btn:hover{
-    color:white !important;
-    background: #6B6B6B;
-    background: -webkit-gradient(linear, left top, left bottom, from(#D1D1D1), to(#6B6B6B));
-    background: -webkit-linear-gradient(top, #D1D1D1, #6B6B6B);
-    background: -moz-linear-gradient(top, #D1D1D1, #6B6B6B);
-    background: -ms-linear-gradient(top, #D1D1D1, #6B6B6B);
-    background: -o-linear-gradient(top, #D1D1D1, #6B6B6B);
+    margin-top:4px;
 }
 
 .redraw-button-panel{
@@ -77,7 +81,8 @@ body input[type=button]:hover{
 }
 
 #left-panel h2{
-    font-size:0.8em;
+    font-size:1em;
+    white-space:nowrap;
     text-decoration:underline
 }
 
@@ -97,6 +102,13 @@ body input[type=button]:hover{
 
 .when-default-graph-element-text{
     font-style:italic;
+}
+
+.graph-element input[type='text']{
+    text-shadow: none;
+    box-shadow: none;
+    color:black;
+    font-weight:normal;
 }
 
 .vertex{
@@ -141,8 +153,6 @@ input[type="button"] {
     border-style: none;
     font: inherit;
     padding: 0 0 0 0;
-    font-weight: bold;
-    font-size:15px;
     background: none;
 }
 
@@ -316,7 +326,7 @@ input[type="button"] {
     font-size:12px;
 }
 
-.peripheral-menu.identification .type-label{
+.peripheral-menu.identification .type-  label{
     padding-top : 10px;
     padding-bottom: 10px;
     margin:auto;
@@ -416,8 +426,4 @@ input[type="button"] {
     padding: 0 0 0 0;
     background-color:transparent;
     font-weight:normal;
-}
-
-.top-menu-link-like-button{
-    margin-top:4px;
 }
