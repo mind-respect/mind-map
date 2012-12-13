@@ -13,7 +13,7 @@ define(
         "triple_brain.search",
         "triple_brain.mind-map_template",
         "triple_brain.server_subscriber",
-        "jquery-ui.min"
+        "jquery-ui"
     ],
     function($, UserService, EventBus, LoginHandler, DragScroll, DrawnGraph, Graph, Vertex, VertexCreator, EdgeCreator, SearchService, MindMapTemplate, ServerSubscriber){
         var api = {

@@ -23,11 +23,11 @@ define([
                 addSortMenu();
                 addVerticesList();
                 $('.sort-vertices-btn').css('padding', '0px');
-                $('#sort-by-label').click(function (e) {
+                $('#sort-by-label').click(function() {
                     var verticesList = VerticesList.get();
                     verticesList.sortByLabel();
                 });
-                $('#sort-by-min-number-of-edges-from-center-vertex').click(function (e) {
+                $('#sort-by-min-number-of-edges-from-center-vertex').click(function() {
                     var verticesList = VerticesList.get();
                     verticesList.sortByDistanceFromCentralVertex();
                 });

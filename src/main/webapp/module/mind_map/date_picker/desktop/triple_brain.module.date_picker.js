@@ -1,21 +1,40 @@
 /**
  * Copyright Mozilla Public License 1.1
  */
-if (triple_brain.module.date_picker == undefined) {
-    (function($) {
-        triple_brain.module.date_picker = {};
-
-        triple_brain.event_bus.subscribe(
+define([
+    "triple_brain.event_bus",
+    "jquery",
+    "jquery-ui"
+],
+    function(EventBus, $){
+        var api = {};
+        EventBus.subscribe(
             '/event/ui/graph/vertex/type/added',
             function(event, vertex, type){
-                if(type.uri() == "http://rdf.freebase.com/rdf/type/datetime"){
-    //                vertex.label().attr('id',  vertex.getId() + '_label');
-    //                new JsDatePick({
-    //                    useMode:2,
-    //                    target:vertex.label().attr('id')
-    //                });
+                if(isIdentificationADate(type)){
+                    applyDatePickerToVertex(vertex);
                 }
             }
         );
-    })(jQuery);
-}
+        EventBus.subscribe(
+            '/event/ui/html/vertex/created/',
+            function(event, vertex){
+                $.each(vertex.getIdentifications(), function(){
+                    var identification = this;
+                    if(isIdentificationADate(identification)){
+                        applyDatePickerToVertex(vertex);
+                    }
+                    return false;
+                });
+            }
+        );
+        function applyDatePickerToVertex(vertex){
+            $(vertex.label()).datepicker()
+        }
+        function isIdentificationADate(identification){
+            return identification.uri() == "http://rdf.freebase.com/rdf/type/datetime"
+        }
+        return api;
+
+    }
+);

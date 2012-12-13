@@ -8,7 +8,7 @@ window.config = {
     paths: {
         module : '../module',
         "jquery" : "jquery/jquery-1.8.2.min",
-        "jquery-ui.min" : "jquery/jquery-ui.min",
+        "jquery-ui" : "jquery/jquery-ui.min",
         "jquery.url" : "jquery/jquery.url",
         "jquery.nano" : "jquery/jquery.nano",
         "jquery.freebase_suggest.min" : "jquery/jquery.freebase_suggest.min",
@@ -69,7 +69,7 @@ window.config = {
         "triple_brain.server_subscriber" : "triple_brain/triple_brain.server_subscriber"
     },
     shim : {
-        "jquery-ui.min" : ["jquery"],
+        "jquery-ui" : ["jquery"],
         "jquery.url" : ["jquery"],
         "jquery.nano" : ["jquery"],
         "jquery.freebase_suggest.min" : ["jquery"],

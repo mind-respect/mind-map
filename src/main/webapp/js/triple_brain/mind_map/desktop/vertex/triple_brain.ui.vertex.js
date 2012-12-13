@@ -15,9 +15,10 @@ define([
     "triple_brain.ui.graph",
     "triple_brain.ui.arrow_line",
     "triple_brain.server_subscriber",
-    "triple_brain.ui.image_menu"
+    "triple_brain.ui.image_menu",
+    "triple_brain.freebase"
 ],
-    function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, Edge, VertexAndEdgeCommon, EventBus, Graph, ArrowLine, ServerSubscriber, ImageMenu) {
+    function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, Edge, VertexAndEdgeCommon, EventBus, Graph, ArrowLine, ServerSubscriber, ImageMenu, Freebase) {
         var api = {};
 
         api.EMPTY_LABEL = "a concept";
@@ -436,6 +437,28 @@ define([
             this.getSuggestionMenu = function () {
                 return $(html).data("suggestion_menu");
             }
+            this.prepareAsYouTypeSuggestions = function(){
+                var vertexTypes = thisVertex.getTypes();
+                if(vertexTypes.length == 0){
+                    return;
+                }
+                var filterValue = "(all ";
+                $.each(vertexTypes, function(){
+                    var identification = this;
+                    if(Freebase.isFreebaseUri(identification.uri())){
+                        filterValue += "type:" + Freebase.idInFreebaseURI(identification.uri());
+                    }
+                });
+                filterValue += ")";
+                $(thisVertex.label()).suggest({
+                    key:"AIzaSyBHOqdqbswxnNmNb4k59ARSx-RWokLZhPA",
+                    filter : filterValue,
+                    "zIndex":20,
+                    scoring:"schema",
+                    lang: "en"
+                });
+            }
+
             function suggestionButton() {
                 return $(html).find('.suggestion');
             }

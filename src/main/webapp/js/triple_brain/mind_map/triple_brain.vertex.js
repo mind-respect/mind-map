@@ -59,11 +59,7 @@ define([
                 }).success(function () {
                         vertex.addType(type);
                         if (successCallback != undefined) {
-                            successCallback.call(
-                                this,
-                                vertex,
-                                type
-                            );
+                            successCallback(vertex,type);
                         }
                         EventBus.publish(
                             '/event/ui/graph/vertex/type/added',

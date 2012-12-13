@@ -13,7 +13,7 @@ define([
     "triple_brain.peripheral_menu",
     "triple_brain.freebase",
     "jquery.freebase_suggest.min",
-    "jquery-ui.min"
+    "jquery-ui"
 ],
     function ($, ExternalResource, VertexService, MindMapTemplate, Graph, IdUriUtils, UiUtils, PeripheralMenu, Freebase) {
 

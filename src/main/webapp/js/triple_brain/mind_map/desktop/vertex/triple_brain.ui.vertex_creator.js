@@ -22,7 +22,7 @@ define([
     "triple_brain.ui.arrow_line",
     "triple_brain.point",
     "triple_brain.segment",
-    "jquery-ui.min"
+    "jquery-ui"
 ], function (require, $, EventBus, Graph, Vertex, VertexService, Edge, EdgeService, Suggestion, IdUriUtils, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, DrawnGraph, UiUtils, ArrowLine, Point, Segment) {
         var api = {};
         api.createWithArrayOfJsonHavingRelativePosition = function (jsonArray) {
@@ -114,6 +114,7 @@ define([
                         )
                     );
                 });
+                vertex.prepareAsYouTypeSuggestions();
                 vertex.makeItLowProfile();
                 EventBus.publish(
                     '/event/ui/html/vertex/created/',
