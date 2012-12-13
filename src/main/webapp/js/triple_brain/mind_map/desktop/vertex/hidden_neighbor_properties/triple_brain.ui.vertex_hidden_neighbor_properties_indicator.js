@@ -5,9 +5,10 @@ define([
     "triple_brain.ui.vertex_hidden_neighbor_properties_indicator_dashed_segment",
     "triple_brain.point",
     "triple_brain.segment",
-    "triple_brain.mind-map_template"
+    "triple_brain.mind-map_template",
+    "triple_brain.peripheral_menu"
 ],
-    function($, Edge, DashedSegment, Point, Segment, MindMapTemplate){
+    function($, Edge, DashedSegment, Point, Segment, MindMapTemplate, PeripheralMenu){
         var api = {
             withVertex : function(vertex){
                 return new HiddenNeighborPropertiesIndicator(vertex);
@@ -82,7 +83,9 @@ define([
 
                         $(hiddenPropertyMenu).css('left', $(hiddenNeighborPropertiesContainer).position().left + 30);
                         $(hiddenPropertyMenu).css('top', ($(hiddenNeighborPropertiesContainer).position().top + $(hiddenNeighborPropertiesContainer).height() / 2) - (parseInt($(hiddenPropertyMenu).css('height')) / 2));
-
+                        PeripheralMenu.makeHtmlAPeripheralMenu(
+                            hiddenPropertyMenu
+                        );
                     }, 1000)
 
                 });
