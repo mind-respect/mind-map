@@ -292,7 +292,7 @@ input[type="button"] {
 
 .peripheral-menu{
     position:absolute;
-    z-index: 3;
+    z-index: 10;
     background: -moz-linear-gradient(100% 100% 90deg, #ffffff, #eeeeee);
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), to(#eeeeee));
     opacity: 0.96;
