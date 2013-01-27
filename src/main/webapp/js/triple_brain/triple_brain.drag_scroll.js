@@ -6,9 +6,10 @@ define([
     "require",
     "jquery",
     "triple_brain.point",
-    "triple_brain.segment"
+    "triple_brain.segment",
+    "triple_brain.ui.utils"
 ],
-    function(require, $, Point, Segment) {
+    function(require, $, Point, Segment, UiUtils) {
         var surfaceToDragScroll = $("svg");
         return {
             start: function() {
@@ -43,9 +44,8 @@ define([
                         );
                         var distanceToScroll = getDistanceToScroll();
                         var scrollPosition = Point.fromCoordinates(
-                            //html for firefox and body for chrome.
-                            $("html, body").scrollLeft(),
-                            $("html, body").scrollTop()
+                            UiUtils.getBrowserSafeScrollX(),
+                            UiUtils.getBrowserSafeScrollY()
                         );
                         var newScrollPosition = Point.sumOfPoints(
                             distanceToScroll,

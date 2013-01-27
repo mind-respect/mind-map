@@ -55,6 +55,14 @@ define(
             );
         }
 
+        api.getBrowserSafeScrollX = function(){
+            return Math.max($('body').scrollLeft(), $('html').scrollLeft());
+        }
+
+        api.getBrowserSafeScrollY = function(){
+            return Math.max($('body').scrollTop(), $('html').scrollTop())
+        }
+
         function isPositionVerticallyOffScreen(position) {
             return position.y < 10;
         }
