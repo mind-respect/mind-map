@@ -18,7 +18,7 @@ define([
                     var mousePosition;
                     $(drawnGraph).mousemove(moveHandler);
                     function moveHandler(moveEvent){
-                        $("svg").unbind("mousemove");
+                        $(drawnGraph).unbind("mousemove");
                         mousePosition = Point.fromCoordinates(
                             moveEvent.pageX,
                             moveEvent.pageY
@@ -43,8 +43,9 @@ define([
                         );
                         var distanceToScroll = getDistanceToScroll();
                         var scrollPosition = Point.fromCoordinates(
-                            $("body").scrollLeft(),
-                            $("body").scrollTop()
+                            //html for firefox and body for chrome.
+                            $("html, body").scrollLeft(),
+                            $("html, body").scrollTop()
                         );
                         var newScrollPosition = Point.sumOfPoints(
                             distanceToScroll,
