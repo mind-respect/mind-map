@@ -34,7 +34,7 @@ define([
                 _metaHandshake(handshake, callback)
             });
             cometd.addListener('/meta/connect', _metaConnect);
-            cometd.addListener('/meta/subscribe', _metaSubscribe)
+            cometd.addListener('/meta/subscribe', _metaSubscribe);
             cometd.handshake();
         };
 
