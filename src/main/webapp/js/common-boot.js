@@ -40,6 +40,8 @@ window.config = {
         "triple_brain.ui.vertex_segments" : "triple_brain/mind_map/desktop/vertex/triple_brain.ui.vertex_segments",
         "triple_brain.ui.edge_creator" : "triple_brain/mind_map/desktop/edge/triple_brain.ui.edge_creator",
         "triple_brain.search" : "triple_brain/mind_map/triple_brain.search",
+        "triple_brain.ui.search" : "triple_brain/mind_map/triple_brain.ui.search",
+        "triple_brain.ui.depth_slider" : "triple_brain/mind_map/triple_brain.ui.depth_slider",
         "triple_brain.mind-map_template" : "triple_brain/mind_map/desktop/triple_brain.mind-map_template",
         "triple_brain.config" : "triple_brain/triple_brain.config",
         "triple_brain.id_uri" : "triple_brain/triple_brain.id_uri",

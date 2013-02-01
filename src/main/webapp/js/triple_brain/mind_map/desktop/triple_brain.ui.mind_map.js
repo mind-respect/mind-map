@@ -10,12 +10,12 @@ define(
         "triple_brain.ui.vertex",
         "triple_brain.ui.vertex_creator",
         "triple_brain.ui.edge_creator",
-        "triple_brain.search",
         "triple_brain.mind-map_template",
         "triple_brain.server_subscriber",
-        "jquery-ui"
+        "triple_brain.ui.search",
+        "triple_brain.ui.depth_slider"
     ],
-    function ($, UserService, EventBus, LoginHandler, DragScroll, DrawnGraph, Graph, Vertex, VertexCreator, EdgeCreator, SearchService, MindMapTemplate, ServerSubscriber) {
+    function ($, UserService, EventBus, LoginHandler, DragScroll, DrawnGraph, Graph, Vertex, VertexCreator, EdgeCreator, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider) {
         var api = {
             offset:function () {
                 var offset = {};
@@ -39,8 +39,8 @@ define(
                     $("html").addClass("authenticated");
                     handleIfNotAuthenticatedShowCredentialsFlow();
                     handleDisconnectButton();
-                    initGraphDepthSlider();
-                    prepareSearchFeature();
+                    DepthSlider.init();
+                    SearchUi.init();
                     UserService.authenticatedUser(
                         DrawnGraph.getWithDefaultCentralVertex
                     );
@@ -49,53 +49,6 @@ define(
                             Vertex.centralVertex()
                         );
                     });
-                }
-                function initGraphDepthSlider() {
-                    var sliderDefaultValue = 5;
-                    $("#sub-vertices-depth-index").text(sliderDefaultValue);
-                    $("#sub-vertices-depth-slider").slider({
-                        value:sliderDefaultValue,
-                        min:0,
-                        max:20,
-                        step:1,
-                        orientation:"horizontal",
-                        slide:function (event, ui) {
-                            $("#sub-vertices-depth-index").text(ui.value);
-                        },
-                        change:function (event, ui) {
-                            $("#sub-vertices-depth-index").text(ui.value);
-                            if (event.originalEvent) {
-                                DrawnGraph.getWithNewCentralVertex(
-                                    Vertex.centralVertex()
-                                );
-                            }
-                        }
-                    });
-                }
-
-                function prepareSearchFeature() {
-                    $("#vertex-search-input").autocomplete({
-                        source:function (request, response) {
-                            SearchService.search_for_auto_complete(
-                                request.term,
-                                function (searchResults) {
-                                    response($.map(searchResults, function (searchResult) {
-                                        return {
-                                            label:searchResult.label,
-                                            value:searchResult.label,
-                                            id:searchResult.id
-                                        }
-                                    }));
-                                }
-                            );
-                        },
-                        select:function (event, ui) {
-                            var vertexUri = ui.item.id;
-                            DrawnGraph.getFromNewCentralVertexUri(
-                                vertexUri
-                            );
-                        }
-                    })
                 }
 
                 function handleIfNotAuthenticatedShowCredentialsFlow() {
