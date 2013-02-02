@@ -101,6 +101,9 @@ define([
                 return isSourceVertex(vertex) ||
                     isDestinationVertex(vertex);
             }
+            this.equalsEdge = function (otherEdge) {
+                return thisEdge.getId() == otherEdge.getId();
+            }
             this.hasDefaultText = function () {
                 return $(label()).val() == api.EMPTY_LABEL;
             }
@@ -129,7 +132,7 @@ define([
             this.isMouseOver = function () {
                 var edgeThatIsMouseOver = Graph.getEdgeMouseOver();
                 return  edgeThatIsMouseOver !== undefined &&
-                    edgeThatIsMouseOver.equalsVertex(thisEdge);
+                    edgeThatIsMouseOver.equalsEdge(thisEdge);
             }
             this.remove = function () {
                 thisEdge.arrowLine().remove();
