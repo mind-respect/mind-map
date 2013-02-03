@@ -4,9 +4,9 @@
 define([
     "require",
     "jquery",
-    "./triple_brain.template.vertices_list",
+    "./triple_brain.template.vertices_list.js",
     "triple_brain.ui.left_panel",
-    "./triple_brain.template.vertices_list"
+    "./triple_brain.template.vertices_list.js"
 ],
     function(require, $, Template, LeftPanel, VerticesList) {
         var api = {
