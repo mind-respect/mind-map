@@ -68,7 +68,10 @@ window.config = {
         "triple_brain.ui.vertex_hidden_neighbor_properties_indicator_dashed_segment" : "triple_brain/mind_map/desktop/vertex/hidden_neighbor_properties/triple_brain.ui.vertex_hidden_neighbor_properties_indicator_dashed_segment",
         "triple_brain.ui.left_panel" : "triple_brain/mind_map/desktop/triple_brain.ui.left_panel",
         "triple_brain.image" : "triple_brain/triple_brain.image",
-        "triple_brain.server_subscriber" : "triple_brain/triple_brain.server_subscriber"
+        "triple_brain.server_subscriber" : "triple_brain/triple_brain.server_subscriber",
+        "triple_brain.positions_calculator" : "triple_brain/vertices_and_edges/triple_brain.vertices_and_edges_displayer",
+        "triple_brain.graph_positions_calculator" : "triple_brain/vertices_and_edges/triple_brain.graph_positions_calculator",
+        "triple_brain.tree_positions_calculator" : "triple_brain/vertices_and_edges/triple_brain.tree_positions_calculator"
     },
     shim : {
         "jquery-ui" : ["jquery"],
