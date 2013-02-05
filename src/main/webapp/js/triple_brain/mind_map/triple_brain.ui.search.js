@@ -5,10 +5,10 @@
 define([
     "jquery",
     "triple_brain.search",
-    "triple_brain.drawn_graph",
+    "triple_brain.positions_calculator",
     "jquery-ui"
 ],
-    function ($, SearchService, DrawnGraph) {
+    function ($, SearchService, PositionsCalculator) {
         return {
             init:function() {
                 $("#vertex-search-input").autocomplete({
@@ -28,7 +28,7 @@ define([
                     },
                     select:function (event, ui) {
                         var vertexUri = ui.item.id;
-                        DrawnGraph.getFromNewCentralVertexUri(
+                        PositionsCalculator.calculateUsingNewCentralVertexUri(
                             vertexUri
                         );
                     }

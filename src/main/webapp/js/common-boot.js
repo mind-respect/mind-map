@@ -69,9 +69,10 @@ window.config = {
         "triple_brain.ui.left_panel" : "triple_brain/mind_map/triple_brain.ui.left_panel",
         "triple_brain.image" : "triple_brain/triple_brain.image",
         "triple_brain.server_subscriber" : "triple_brain/triple_brain.server_subscriber",
-        "triple_brain.positions_calculator" : "triple_brain/vertices_and_edges/triple_brain.vertices_and_edges_displayer",
-        "triple_brain.graph_positions_calculator" : "triple_brain/vertices_and_edges/triple_brain.graph_positions_calculator",
-        "triple_brain.tree_positions_calculator" : "triple_brain/vertices_and_edges/triple_brain.tree_positions_calculator"
+        "triple_brain.positions_calculator" : "triple_brain/mind_map/vertices_and_edges/triple_brain.positions_calculator",
+        "triple_brain.graph_positions_calculator" : "triple_brain/mind_map/vertices_and_edges/triple_brain.graph_positions_calculator",
+        "triple_brain.tree_positions_calculator" : "triple_brain/mind_map/vertices_and_edges/triple_brain.tree_positions_calculator",
+        "triple_brain.mind_map_info" : "triple_brain/mind_map/triple_brain.mind_map_info"
     },
     shim : {
         "jquery-ui" : ["jquery"],

@@ -16,9 +16,10 @@ define([
     "triple_brain.ui.arrow_line",
     "triple_brain.server_subscriber",
     "triple_brain.ui.image_menu",
-    "triple_brain.freebase"
+    "triple_brain.freebase",
+    "triple_brain.user"
 ],
-    function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, Edge, VertexAndEdgeCommon, EventBus, Graph, ArrowLine, ServerSubscriber, ImageMenu, Freebase) {
+    function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, Edge, VertexAndEdgeCommon, EventBus, Graph, ArrowLine, ServerSubscriber, ImageMenu, Freebase, UserService) {
         var api = {};
 
         api.EMPTY_LABEL = "a concept";
@@ -53,7 +54,13 @@ define([
             });
             return vertices;
         };
-
+        api.defaultVertexId = function(){
+            var username = UserService.authenticatedUserInCache().user_name;
+            return IdUriUtils.graphElementIdFromUri(
+                IdUriUtils.baseUri + username +
+                    '/default'
+            );
+        };
         function TripleBrainVertex(html) {
             var thisVertex = this;
             var segments = VertexSegments.withHTMLVertex(html);

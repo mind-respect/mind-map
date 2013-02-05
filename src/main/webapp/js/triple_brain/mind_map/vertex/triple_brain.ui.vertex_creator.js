@@ -17,13 +17,13 @@ define([
     "triple_brain.external_resource",
     "triple_brain.ui.identification_menu",
     "triple_brain.ui.suggestion_menu",
-    "triple_brain.drawn_graph",
     "triple_brain.ui.all",
     "triple_brain.ui.arrow_line",
     "triple_brain.point",
     "triple_brain.segment",
+    "triple_brain.positions_calculator",
     "jquery-ui"
-], function (require, $, EventBus, Graph, Vertex, VertexService, Edge, EdgeService, Suggestion, IdUriUtils, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, DrawnGraph, UiUtils, ArrowLine, Point, Segment) {
+], function (require, $, EventBus, Graph, Vertex, VertexService, Edge, EdgeService, Suggestion, IdUriUtils, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, UiUtils, ArrowLine, Point, Segment, PositionsCalculator) {
         var api = {};
         api.createWithArrayOfJsonHavingRelativePosition = function (jsonArray) {
             $.each(jsonArray, function () {
@@ -222,7 +222,7 @@ define([
                 var centerBtn = MindMapTemplate['vertex_center_button'].merge();
                 $(vertexMenu).append(centerBtn);
                 centerBtn.click(function () {
-                    DrawnGraph.getWithNewCentralVertex(
+                    PositionsCalculator.calculateUsingNewCentralVertex(
                         vertexOfSubHtmlComponent(this)
                     );
                 });

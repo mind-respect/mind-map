@@ -5,7 +5,6 @@ define(
         "triple_brain.event_bus",
         "triple_brain.login_handler",
         "triple_brain.drag_scroll",
-        "triple_brain.drawn_graph",
         "triple_brain.ui.graph",
         "triple_brain.ui.vertex",
         "triple_brain.ui.vertex_creator",
@@ -13,9 +12,11 @@ define(
         "triple_brain.mind-map_template",
         "triple_brain.server_subscriber",
         "triple_brain.ui.search",
-        "triple_brain.ui.depth_slider"
+        "triple_brain.ui.depth_slider",
+        "triple_brain.positions_calculator",
+        "triple_brain.graph_positions_calculator"
     ],
-    function ($, UserService, EventBus, LoginHandler, DragScroll, DrawnGraph, Graph, Vertex, VertexCreator, EdgeCreator, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider) {
+    function ($, UserService, EventBus, LoginHandler, DragScroll, Graph, Vertex, VertexCreator, EdgeCreator, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, PositionsCalculator, GraphPositionsCalculator) {
         var api = {
             offset:function () {
                 var offset = {};
@@ -41,11 +42,14 @@ define(
                     handleDisconnectButton();
                     DepthSlider.init();
                     SearchUi.init();
+                    PositionsCalculator.setImplementation(
+                        GraphPositionsCalculator
+                    );
                     UserService.authenticatedUser(
-                        DrawnGraph.getWithDefaultCentralVertex
+                        PositionsCalculator.calculateUsingDefaultVertex
                     );
                     $("#redraw-graph-btn").click(function () {
-                        DrawnGraph.getWithNewCentralVertex(
+                        PositionsCalculator.calculateUsingNewCentralVertex(
                             Vertex.centralVertex()
                         );
                     });
@@ -72,7 +76,6 @@ define(
                 }
             }
         };
-
         EventBus.subscribe(
             '/event/ui/graph/drawing_info/updated/',
             function (event, drawnGraph, centralVertexId) {

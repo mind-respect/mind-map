@@ -4,11 +4,11 @@
 
 define([
     "jquery",
-    "triple_brain.drawn_graph",
     "triple_brain.ui.vertex",
+    "triple_brain.positions_calculator",
     "jquery-ui"
 ],
-    function ($, DrawnGraph, Vertex) {
+    function ($, Vertex, PositionsCalculator){
         return {
             init:function() {
                 var sliderDefaultValue = 5;
@@ -25,12 +25,15 @@ define([
                     change:function (event, ui) {
                         $("#sub-vertices-depth-index").text(ui.value);
                         if (event.originalEvent) {
-                            DrawnGraph.getWithNewCentralVertex(
+                            PositionsCalculator.calculateUsingNewCentralVertex(
                                 Vertex.centralVertex()
                             );
                         }
                     }
                 });
+            },
+            currentDepth : function(){
+                return $("#sub-vertices-depth-slider").slider('value');
             }
         };
     }
