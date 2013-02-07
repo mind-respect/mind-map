@@ -80,10 +80,6 @@ define(
             '/event/ui/graph/drawing_info/updated/',
             function (event, drawnGraph, centralVertexId) {
                 Graph.reset();
-                drawnGraph.bounding_box_width = $("body").width();
-                drawnGraph.bounding_box_height = $("body").height();
-                $("#drawn_graph").css("min-width", $("body").width());
-                $("#drawn_graph").css("min-height", $("body").height());
                 if ($("body").data(("canvas"))) {
                     $("body").data("canvas").clear();
                 }
@@ -94,7 +90,7 @@ define(
                 VertexCreator.createWithArrayOfJsonHavingRelativePosition(
                     drawnGraph.vertices
                 );
-                EdgeCreator.createWithArrayOfJsonHavingRelativePosition(
+                EdgeCreator.arrayFromServerFormatArray(
                     drawnGraph.edges
                 );
                 var centralVertex = Vertex.withId(centralVertexId);

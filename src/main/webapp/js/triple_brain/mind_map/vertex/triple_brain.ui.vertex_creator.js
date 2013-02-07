@@ -28,16 +28,16 @@ define([
         api.createWithArrayOfJsonHavingRelativePosition = function (jsonArray) {
             $.each(jsonArray, function () {
                 var json = this;
-                api.withArrayOfJsonHavingRelativePosition(
+                api.withJsonHavingRelativePosition(
                     json
                 ).create();
             });
         };
 
-        api.withArrayOfJsonHavingAbsolutePosition = function (json) {
+        api.withJsonHavingAbsolutePosition = function (json) {
             return new VertexCreator(json);
         };
-        api.withArrayOfJsonHavingRelativePosition = function (json) {
+        api.withJsonHavingRelativePosition = function (json) {
             api.addGraphOffsetToJsonPosition(json);
             return new VertexCreator(json);
         };

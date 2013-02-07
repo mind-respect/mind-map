@@ -21,12 +21,6 @@ define([
                         edgeJSON.id = decodeURIComponent(
                             responseURI.substring(responseURI.lastIndexOf("/") + 1)
                         );
-                        var arrowLine = ArrowLine.ofSourceAndDestinationVertex(
-                            sourceVertex,
-                            destinationVertex
-                        );
-                        edgeJSON.arrowLineStartPoint = arrowLine.segment().startPoint;
-                        edgeJSON.arrowLineEndPoint = arrowLine.segment().endPoint;
 
                         edgeJSON.source_vertex_id = IdUriUtils.uriFromGraphElementId(
                             sourceVertex.getId());

@@ -171,7 +171,7 @@ define([
         EventBus.subscribe(
             '/event/ui/graph/relation/added/',
             function (event, newEdgeJSON) {
-                var edgeCreator = EdgeCreator.withArrayOfJsonHavingAbsolutePosition(newEdgeJSON);
+                var edgeCreator = EdgeCreator.fromServerFormat(newEdgeJSON);
                 var edge = edgeCreator.create();
                 edge.focus();
             }

@@ -8,8 +8,6 @@ define([
         var api = {};
         var t = Template.withTemplateGroup(api);
 
-        t.add('graph_canvas', '<div id="graphCanvas" width="{bounding_box_width}" height="{bounding_box_height}"></canvas>');
-
         //vertex html elements
         t.add('vertex', '<div class="vertex graph-element" id="{id}" style="top:{position.y}"></div>');
         t.add('vertex_label_container', '<div class=textfield-container><input type="text" class="label" value="{label}"></div>');

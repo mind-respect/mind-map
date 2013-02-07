@@ -16,29 +16,16 @@ define([
 ],
     function(require, $, Graph, MindMapTemplate, IdUriUtils, VertexAndEdgeCommon, EdgeService, ArrowLine, EventBus, Segment){
         var api = {};
-        api.createWithArrayOfJsonHavingRelativePosition = function(jsonArray){
+        api.arrayFromServerFormatArray = function(jsonArray){
             $.each(jsonArray, function(){
                 var json = this;
-                json.arrowLineStartPoint = json.arrow_line_bezier_points[0];
-                json.arrowLineEndPoint = json.arrow_line_bezier_points[3];
-                api.withArrayOfJsonHavingRelativePosition(
+                api.fromServerFormat(
                     json
                 ).create();
             });
         };
-        api.withArrayOfJsonHavingAbsolutePosition = function(json){
+        api.fromServerFormat = function(json){
             return new EdgeCreator(json);
-        };
-        api.withArrayOfJsonHavingRelativePosition = function(json){
-            api.addGraphOffsetToJsonPosition(json);
-            return new EdgeCreator(json);
-        };
-        api.addGraphOffsetToJsonPosition = function(json){
-            var graphOffset = Graph.offset();
-            json.arrowLineStartPoint.x += graphOffset.x;
-            json.arrowLineStartPoint.y += graphOffset.y ;
-            json.arrowLineEndPoint.x += graphOffset.x;
-            json.arrowLineEndPoint.y += graphOffset.y;
         };
 
         function EdgeCreator(json){
@@ -131,11 +118,8 @@ define([
             function drawArrowLine(){
                 var edge = edgeFacade();
                 edge.setArrowLine(
-                    ArrowLine.withSegment(
-                        Segment.withStartAndEndPoint(
-                            json.arrowLineStartPoint,
-                            json.arrowLineEndPoint
-                        )
+                    ArrowLine.ofEdgeHavingUndefinedArrowLine(
+                        edge
                     )
                 );
                 edge.arrowLine().drawInWithDefaultStyle();

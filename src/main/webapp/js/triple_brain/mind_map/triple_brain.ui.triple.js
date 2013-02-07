@@ -22,7 +22,7 @@ define([
                 y : newVertexPosition.y
             };
 
-            var destinationVertex = VertexCreator.withArrayOfJsonHavingAbsolutePosition(
+            var destinationVertex = VertexCreator.withJsonHavingAbsolutePosition(
                 tripleJson.end_vertex
             ).create();
 
@@ -31,14 +31,8 @@ define([
                     tripleJson.source_vertex.id
                 )
             );
-            var arrowLine = ArrowLine.ofSourceAndDestinationVertex(
-                sourceVertex,
-                destinationVertex
-            );
-            var arrowLineSegment = arrowLine.segment();
-            tripleJson.edge.arrowLineStartPoint = arrowLineSegment.startPoint;
-            tripleJson.edge.arrowLineEndPoint = arrowLineSegment.endPoint;
-            var edge = EdgeCreator.withArrayOfJsonHavingAbsolutePosition(
+
+            var edge = EdgeCreator.fromServerFormat(
                 tripleJson.edge
             ).create();
 

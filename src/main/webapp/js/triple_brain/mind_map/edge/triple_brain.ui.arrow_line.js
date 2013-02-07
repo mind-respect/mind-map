@@ -9,25 +9,29 @@ define([
     "triple_brain.ui.graph"
 ],
     function(Segment, MindMapTemplate, Graph){
-        var api = {
-            withSegment : function(segment){
-                return new ArrowLine(segment)
-            },
-            ofSourceAndDestinationVertex : function(sourceVertex, destinationVertex){
-                var segment = Segment.withStartAndEndPoint(
-                    sourceVertex.centerPoint(),
-                    destinationVertex.centerPoint()
-                );
-                try{
-                    segment.startPoint = sourceVertex.intersectionPointWithSegment(segment);
-                    segment.endPoint = destinationVertex.intersectionPointWithSegment(segment);
-                }catch(error){
-                    segment = Segment.withStartAndEndPointAtOrigin();
-                }
-                return new ArrowLine(segment);
+        var api = {};
+        api.withSegment = function(segment){
+            return new ArrowLine(segment);
+        };
+        api.ofSourceAndDestinationVertex = function(sourceVertex, destinationVertex){
+            var segment = Segment.withStartAndEndPoint(
+                sourceVertex.centerPoint(),
+                destinationVertex.centerPoint()
+            );
+            try{
+                segment.startPoint = sourceVertex.intersectionPointWithSegment(segment);
+                segment.endPoint = destinationVertex.intersectionPointWithSegment(segment);
+            }catch(error){
+                segment = Segment.withStartAndEndPointAtOrigin();
             }
-        }
-
+            return new ArrowLine(segment);
+        };
+        api.ofEdgeHavingUndefinedArrowLine = function(edge){
+            return api.ofSourceAndDestinationVertex(
+                edge.sourceVertex(),
+                edge.destinationVertex()
+            );
+        };
         function ArrowLine(segment){
             var drawnComponents = [];
             var defaultStrokeWidth = "1";
