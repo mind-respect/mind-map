@@ -71,18 +71,12 @@ public class VertexRestTestUtils {
         }
     }
 
-    public boolean vertexIsInVertices(JSONObject vertex, JSONArray vertices){
+    public boolean vertexIsInVertices(JSONObject vertex, JSONObject vertices){
         try{
-            for(int i = 0 ; i < vertices.length() ; i++){
-                JSONObject edgeToCompare = vertices.getJSONObject(i);
-                if(uriOfVertex(edgeToCompare).equals(uriOfVertex(vertex))){
-                    return true;
-                }
-            }
+            return vertices.has(vertex.getString(VertexJsonFields.ID));
         }catch(JSONException e){
             throw new RuntimeException(e);
         }
-        return false;
     }
 
     public ClientResponse addAVertexToVertexAWithUri(URI vertexUri) throws Exception {

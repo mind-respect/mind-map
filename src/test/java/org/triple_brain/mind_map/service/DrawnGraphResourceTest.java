@@ -1,7 +1,6 @@
 package org.triple_brain.mind_map.service;
 
 import com.sun.jersey.api.client.ClientResponse;
-import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Test;
 import org.triple_brain.mind_map.service.utils.GraphManipulationRestTest;
@@ -19,7 +18,6 @@ import static org.junit.Assert.assertTrue;
 import static org.triple_brain.module.common_utils.Uris.decodeURL;
 import static org.triple_brain.module.common_utils.Uris.encodeURL;
 import static org.triple_brain.module.model.json.drawn_graph.DrawnGraphJSONFields.VERTICES;
-import static org.triple_brain.module.model.json.drawn_graph.DrawnVertexJSONFields.ID;
 
 /**
  * Copyright Mozilla Public License 1.1
@@ -39,7 +37,7 @@ public class DrawnGraphResourceTest extends GraphManipulationRestTest {
         assertThat(response.getStatus(), is(200));
         JSONObject drawnGraph = response.getEntity(JSONObject.class);
         assertThat(drawnGraph, is(not(nullValue())));
-        JSONArray vertices = drawnGraph.getJSONArray(VERTICES);
+        JSONObject vertices = drawnGraph.getJSONObject(VERTICES);
         assertThat(vertices.length(), is(greaterThan(0)));
         JSONObject defaultVertex = vertexA();
         assertTrue(vertexUtils.vertexIsInVertices(defaultVertex, vertices));
@@ -65,7 +63,7 @@ public class DrawnGraphResourceTest extends GraphManipulationRestTest {
         secondVertexId = decodeURL(secondVertexId);
         JSONObject drawnGraph = response.getEntity(JSONObject.class);
         assertThat(drawnGraph, is(not(nullValue())));
-        JSONArray vertices = drawnGraph.getJSONArray(VERTICES);
+        JSONObject vertices = drawnGraph.getJSONObject(VERTICES);
         assertThat(vertices.length(), is(greaterThan(0)));
         assertTrue(verticesContainID(vertices, secondVertexId));
     }
@@ -80,8 +78,8 @@ public class DrawnGraphResourceTest extends GraphManipulationRestTest {
                 .cookie(authCookie)
                 .get(ClientResponse.class);
         JSONObject drawnGraph = response.getEntity(JSONObject.class);
-        assertThat(drawnGraph.getJSONArray(VERTICES).length(), is(2));
-        assertFalse(verticesContainID(drawnGraph.getJSONArray(VERTICES), vertexCUri().toString()));
+        assertThat(drawnGraph.getJSONObject(VERTICES).length(), is(2));
+        assertFalse(verticesContainID(drawnGraph.getJSONObject(VERTICES), vertexCUri().toString()));
 
         response = resource
                 .path("drawn_graph")
@@ -91,7 +89,7 @@ public class DrawnGraphResourceTest extends GraphManipulationRestTest {
                 .cookie(authCookie)
                 .get(ClientResponse.class);
         drawnGraph = response.getEntity(JSONObject.class);
-        assertThat(drawnGraph.getJSONArray(VERTICES).length(), is(3));
+        assertThat(drawnGraph.getJSONObject(VERTICES).length(), is(3));
 
         response = resource
                 .path("drawn_graph")
@@ -101,23 +99,18 @@ public class DrawnGraphResourceTest extends GraphManipulationRestTest {
                 .cookie(authCookie)
                 .get(ClientResponse.class);
         drawnGraph = response.getEntity(JSONObject.class);
-        assertThat(drawnGraph.getJSONArray(VERTICES).length(), is(2));
+        assertThat(drawnGraph.getJSONObject(VERTICES).length(), is(2));
         URI defaultVertexUri = vertexAUri();
         assertFalse(
                 verticesContainID(
-                        drawnGraph.getJSONArray(VERTICES),
+                        drawnGraph.getJSONObject(VERTICES),
                         defaultVertexUri.toString()
                 )
         );
     }
 
-    private boolean verticesContainID(JSONArray vertices, String vertexIdToTest) throws Exception {
-        for (int i = 0; i < vertices.length(); i++) {
-            if (vertices.getJSONObject(i).getString(ID).equals(vertexIdToTest)) {
-                return true;
-            }
-        }
-        return false;
+    private boolean verticesContainID(JSONObject vertices, String vertexIdToTest) throws Exception {
+        return vertices.has(vertexIdToTest);
     }
 
 

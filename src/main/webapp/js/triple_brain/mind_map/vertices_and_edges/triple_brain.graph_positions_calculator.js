@@ -4,11 +4,13 @@
 define([
     "jquery",
     "triple_brain.config",
-    "triple_brain.mind_map_info"
+    "triple_brain.mind_map_info",
+    "triple_brain.id_uri"
 ],
-    function($, Config, MindMapInfo){
+    function($, Config, MindMapInfo, IdUriUtils){
         var api = {};
-        api.calculateUsingCentralVertexEncodedUriAndDepth = function(centralVertexEncodedUri, depth, callback){
+        api.calculateUsingDepthAndCentralVertexUri = function(centralVertexUri, depth, callback){
+            var centralVertexEncodedUri = IdUriUtils.encodeUri(centralVertexUri);
             $.ajax({
                 type:'GET',
                 url:Config.links.app + '/service/drawn_graph/' + MindMapInfo.uri() + "/" + depth + '/' + centralVertexEncodedUri,

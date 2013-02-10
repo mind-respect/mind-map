@@ -11,6 +11,11 @@ define([
                 uri
             );
         };
+        api.decodeUri = function(uri){
+            return decodeURIComponent(
+                uri
+            );
+        }
         api.graphElementIdFromUri = function (uri) {
             var segments = $.url(uri).segment();
             var graphElementId = segments[1];

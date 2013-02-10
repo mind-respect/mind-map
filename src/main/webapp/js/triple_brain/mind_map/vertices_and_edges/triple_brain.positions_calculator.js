@@ -51,10 +51,10 @@ define([
         }
         function calculateUsingCentralVertexId(centralVertexId){
             publishAboutToUpdate();
-            var centralVertexUri = IdUriUtils.encodedUriFromGraphElementId(
+            var centralVertexUri = IdUriUtils.uriFromGraphElementId(
                 centralVertexId
             );
-            _implementation.calculateUsingCentralVertexEncodedUriAndDepth(
+            _implementation.calculateUsingDepthAndCentralVertexUri(
                 centralVertexUri,
                 currentDepth(),
                 function(drawingInfo){
