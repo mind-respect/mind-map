@@ -8,8 +8,10 @@ define([
     "triple_brain.id_uri"
 ],
     function ($, Config, MindMapInfo, IdUriUtils) {
+        var HORIZONTAL_DISTANCE_OF_VERTICES = 300;
+        var VERTICAL_DISTANCE_OF_VERTICES = 100;
         var api = {};
-        api.calculateUsingCentralVertexEncodedUriAndDepth = function (centralVertexUri, depth, callback) {
+        api.calculateUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
             var centralVertexEncodedUri = IdUriUtils.encodeUri(centralVertexUri);
             $.ajax({
                 type:'GET',
@@ -25,92 +27,145 @@ define([
         };
         return api;
         function TreeMakerFromServerGraph(centralVertexUri, serverGraph) {
-            var verticesTreeInfo = {};
+            var vertices = serverGraph.vertices;
             this.make = function () {
-                var sourceShortId;
-                var destinationShortId;
+                var sourceId;
+                var destinationId;
                 var edges = serverGraph.edges;
-                for (var i = 0; i < edges.length; i++) {
-                    updateVerticesTreeInfoWithEdge(
-                        edges[i]
+
+                defineChildrenInVertices();
+                definePositionsInVertices();
+
+                return serverGraph;
+
+                function defineChildrenInVertices(){
+                    $.each(
+                        edges, function(){
+                            updateVerticesChildrenWithEdge(this);
+                        }
                     );
                 }
 
-                function updateVerticesTreeInfoWithEdge(edge) {
-                    sourceShortId = IdUriUtils.graphElementIdFromUri(edge.source_vertex_id);
-                    destinationShortId = IdUriUtils.graphElementIdFromUri(edge.destination_vertex_id);
+                function definePositionsInVertices(){
+                    var centralVertex = vertices[centralVertexUri];
+                    centralVertex.position = {
+                        x : 0,
+                        y : 0
+                    };
+                    definePositionsOfVerticesFromRoot(centralVertex);
+                    function definePositionsOfVerticesFromRoot(rootVertex){
+                        var childrenOfRoot = rootVertex.children;
+                        var numberOfChildren = childrenOfRoot.length;
+                        if(numberOfChildren === 0){
+                            return;
+                        }
+                        var middleIndex = Math.floor(numberOfChildren / 2);
+                        var rootVertexPosition = rootVertex.position;
+                        var middleVertexPosition = {
+                            x : rootVertexPosition.x + HORIZONTAL_DISTANCE_OF_VERTICES,
+                            y : rootVertexPosition.y
+                        };
+                        var middleVertex = vertexWithId(childrenOfRoot[middleIndex]);
+                        middleVertex.position = middleVertexPosition;
+                        definePositionsOfVerticesFromRoot(middleVertex);
+
+                        for(var i = middleIndex - 1 ; i >= 0 ; i--){
+                            var currentVertex = vertexWithId(childrenOfRoot[i]);
+                            definePositionOfVertex(
+                                currentVertex,
+                                vertexWithId(childrenOfRoot[i + 1])
+                            );
+                            definePositionsOfVerticesFromRoot(currentVertex);
+                        }
+                        for(var i = middleIndex + 1 ; i < numberOfChildren; i++){
+                            var currentVertex = vertexWithId(childrenOfRoot[i]);
+                            definePositionOfVertex(
+                                currentVertex,
+                                vertexWithId(childrenOfRoot[i - 1])
+                            );
+                            definePositionsOfVerticesFromRoot(currentVertex);
+                        }
+                    }
+
+                    function definePositionOfVertex(currentVertex, previousVertex){
+                        var previousVertexPosition = previousVertex.position;
+                        var heightOfPreviousSiblingTree = heightOfTreeInVertices(
+                            previousVertex
+                        ) * VERTICAL_DISTANCE_OF_VERTICES;
+                        var position = {
+                            x: previousVertexPosition.x,
+                            y : previousVertexPosition.y + heightOfPreviousSiblingTree + VERTICAL_DISTANCE_OF_VERTICES
+                        }
+                        currentVertex.position = position;
+                    }
+
+                    function heightOfTreeInVertices(rootVertexOfGreaterTree){
+                        var numberOfSignificantChild = 0;
+                        compileHeightOfTree(rootVertexOfGreaterTree);
+                        function compileHeightOfTree(rootVertex){
+                            var numberOfChildren = rootVertex.children.length;
+                            if(numberOfChildren === 0){
+                                return;
+                            }
+                            numberOfSignificantChild += numberOfChildren - 1;
+                            for(var i = 0; i < rootVertex.children.length ; i++){
+                                compileHeightOfTree(vertexWithId(rootVertex.children[i]));
+                            }
+                        }
+                        return numberOfSignificantChild;
+                    }
+
+                    function setPositionOfVertexWithId(vertexId, position){
+                        vertexWithId(vertexId).position = position;
+                    }
+
+                    function vertexWithId(vertexId){
+                        return vertices[vertexId]
+                    }
+                }
+
+                function updateVerticesChildrenWithEdge(edge) {
+                    sourceId = edge.source_vertex_id;
+                    destinationId = edge.destination_vertex_id;
                     applyToBoth([
                         initVertexInTreeInfoIfNecessary
                     ]);
                     var parentId,
                         childId;
-                    if(isCentralVertex(destinationShortId)){
-                        parentId = destinationShortId;
-                        childId = sourceShortId
+                    if(isCentralVertex(destinationId)){
+                        parentId = destinationId;
+                        childId = sourceId
                     }else{
-                        parentId = sourceShortId;
-                        childId = destinationShortId;
+                        parentId = sourceId;
+                        childId = destinationId;
                     }
                     addChild(parentId, childId);
                 }
 
-
-                function initVertexInTreeInfoIfNecessary(shortId) {
-                    if (verticesTreeInfo[shortId] === undefined) {
-                        verticesTreeInfo[shortId] = {
-                            children:[]
-                        };
+                function initVertexInTreeInfoIfNecessary(vertexId) {
+                    var vertex = vertices[vertexId];
+                    if(vertex.children === undefined){
+                        vertex.children = [];
                     }
                 }
 
-                function setCentralVertex(shortId){
-                    verticesTreeInfo.centralVertexShortId = shortId;
+                function isCentralVertex(vertexId){
+                    return vertexId === centralVertexUri;
                 }
 
-                function isCentralVertex(shortId){
-                    return shortId === IdUriUtils.graphElementIdFromUri(centralVertexUri);
-                }
-
-                function addChild(shortId, childrenShortId) {
-                    verticesTreeInfo[shortId].children.push(
-                        childrenShortId
+                function addChild(vertexId, childrenId) {
+                    vertices[vertexId].children.push(
+                        childrenId
                     );
-                }
-
-                function isRelationDefined() {
-                    return vertexHasChild(sourceShortId, destinationShortId) ||
-                        vertexHasChild(destinationShortId, sourceShortId);
-                }
-
-                function vertexHasChild(shortId, otherShortId){
-                    var children = verticesTreeInfo[shortId].children;
-                    var hasChild = false;
-                    $.each(children, function(){
-                        var childId = this;
-                        if(childId === otherShortId){
-                            hasChild = true;
-                            return -1;
-                        }
-                    });
-                    return hasChild;
                 }
 
                 function applyToBoth(functions) {
                     $.each(functions, function () {
                         var func = this;
-                        func(sourceShortId);
-                        func(destinationShortId);
+                        func(sourceId);
+                        func(destinationId);
                     });
                 }
-
-                function setDepth(shortId, depth) {
-                    verticesTreeInfo[shortId].depth = depth;
-                }
-
-                function getDepth(shortId) {
-                    return verticesTreeInfo[shortId].depth;
-                }
-
             };
         }
     }

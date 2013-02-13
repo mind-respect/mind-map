@@ -14,9 +14,10 @@ define(
         "triple_brain.ui.search",
         "triple_brain.ui.depth_slider",
         "triple_brain.positions_calculator",
-        "triple_brain.graph_positions_calculator"
+        "triple_brain.graph_positions_calculator",
+        "triple_brain.tree_positions_calculator"
     ],
-    function ($, UserService, EventBus, LoginHandler, DragScroll, Graph, Vertex, VertexCreator, EdgeCreator, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, PositionsCalculator, GraphPositionsCalculator) {
+    function ($, UserService, EventBus, LoginHandler, DragScroll, Graph, Vertex, VertexCreator, EdgeCreator, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, PositionsCalculator, GraphPositionsCalculator, TreePositionsCalculator) {
         var api = {
             offset:function () {
                 var offset = {};
