@@ -32,10 +32,11 @@ define([
                 var sourceId;
                 var destinationId;
                 var edges = serverGraph.edges;
-
+                initChildrenOfVertex(
+                    vertexWithId(centralVertexUri)
+                );
                 defineChildrenInVertices();
                 definePositionsInVertices();
-
                 return serverGraph;
 
                 function defineChildrenInVertices(){
@@ -71,7 +72,7 @@ define([
 
                         for(var i = middleIndex - 1 ; i >= 0 ; i--){
                             var currentVertex = vertexWithId(childrenOfRoot[i]);
-                            definePositionOfVertex(
+                            definePositionOfVertexAbovePrevious(
                                 currentVertex,
                                 vertexWithId(childrenOfRoot[i + 1])
                             );
@@ -79,7 +80,7 @@ define([
                         }
                         for(var i = middleIndex + 1 ; i < numberOfChildren; i++){
                             var currentVertex = vertexWithId(childrenOfRoot[i]);
-                            definePositionOfVertex(
+                            definePositionOfVertexUnderPrevious(
                                 currentVertex,
                                 vertexWithId(childrenOfRoot[i - 1])
                             );
@@ -87,14 +88,26 @@ define([
                         }
                     }
 
-                    function definePositionOfVertex(currentVertex, previousVertex){
+                    function definePositionOfVertexAbovePrevious(currentVertex, previousVertex){
+                        return definePositionOfVertex(currentVertex, previousVertex, true);
+                    }
+
+                    function definePositionOfVertexUnderPrevious(currentVertex, previousVertex){
+                        return definePositionOfVertex(currentVertex, previousVertex, false);
+                    }
+
+                    function definePositionOfVertex(currentVertex, previousVertex, isPositioningAbovePrevious){
                         var previousVertexPosition = previousVertex.position;
                         var heightOfPreviousSiblingTree = heightOfTreeInVertices(
                             previousVertex
                         ) * VERTICAL_DISTANCE_OF_VERTICES;
+                        var yOffsetFromPrevious = heightOfPreviousSiblingTree + VERTICAL_DISTANCE_OF_VERTICES;
+                        if(isPositioningAbovePrevious){
+                            yOffsetFromPrevious *= -1;
+                        }
                         var position = {
                             x: previousVertexPosition.x,
-                            y : previousVertexPosition.y + heightOfPreviousSiblingTree + VERTICAL_DISTANCE_OF_VERTICES
+                            y : previousVertexPosition.y + yOffsetFromPrevious
                         }
                         currentVertex.position = position;
                     }
@@ -117,10 +130,6 @@ define([
 
                     function setPositionOfVertexWithId(vertexId, position){
                         vertexWithId(vertexId).position = position;
-                    }
-
-                    function vertexWithId(vertexId){
-                        return vertices[vertexId]
                     }
                 }
 
@@ -145,12 +154,20 @@ define([
                 function initVertexInTreeInfoIfNecessary(vertexId) {
                     var vertex = vertices[vertexId];
                     if(vertex.children === undefined){
-                        vertex.children = [];
+                        initChildrenOfVertex(vertex);
                     }
+                }
+
+                function initChildrenOfVertex(vertex){
+                    vertex.children = [];
                 }
 
                 function isCentralVertex(vertexId){
                     return vertexId === centralVertexUri;
+                }
+
+                function vertexWithId(vertexId){
+                    return vertices[vertexId]
                 }
 
                 function addChild(vertexId, childrenId) {
