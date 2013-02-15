@@ -33,7 +33,6 @@ window.config = {
         "triple_brain.registration_handler" : "triple_brain/triple_brain.registration_handler",
         "triple_brain.event_bus" : "triple_brain/triple_brain.event_bus",
         "triple_brain.drag_scroll" : "triple_brain/triple_brain.drag_scroll",
-        "triple_brain.drawn_graph" : "triple_brain/mind_map/triple_brain.drawn_graph",
         "triple_brain.ui.graph" : "triple_brain/mind_map/triple_brain.ui.graph",
         "triple_brain.ui.vertex" : "triple_brain/mind_map/vertex/triple_brain.ui.vertex",
         "triple_brain.ui.vertex_creator" : "triple_brain/mind_map/vertex/triple_brain.ui.vertex_creator",
@@ -69,9 +68,12 @@ window.config = {
         "triple_brain.ui.left_panel" : "triple_brain/mind_map/triple_brain.ui.left_panel",
         "triple_brain.image" : "triple_brain/triple_brain.image",
         "triple_brain.server_subscriber" : "triple_brain/triple_brain.server_subscriber",
+        "triple_brain.graph" : "triple_brain/mind_map/triple_brain.graph",
         "triple_brain.positions_calculator" : "triple_brain/mind_map/vertices_and_edges/triple_brain.positions_calculator",
         "triple_brain.graph_positions_calculator" : "triple_brain/mind_map/vertices_and_edges/triple_brain.graph_positions_calculator",
-        "triple_brain.tree_positions_calculator" : "triple_brain/mind_map/vertices_and_edges/triple_brain.tree_positions_calculator",
+        "triple_brain.tree_absolute_positions_calculator" : "triple_brain/mind_map/vertices_and_edges/tree/triple_brain.tree_absolute_positions_calculator",
+        "triple_brain.tree_relative_positions_calculator" : "triple_brain/mind_map/vertices_and_edges/tree/triple_brain.tree_relative_positions_calculator",
+        "triple_brain.tree_positioning_common" : "triple_brain/mind_map/vertices_and_edges/tree/triple_brain.tree_positioning_common",
         "triple_brain.mind_map_info" : "triple_brain/mind_map/triple_brain.mind_map_info"
     },
     shim : {

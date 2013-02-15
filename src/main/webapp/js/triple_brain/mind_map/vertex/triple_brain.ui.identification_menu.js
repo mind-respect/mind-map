@@ -15,7 +15,7 @@ define([
     "jquery.freebase_suggest.min",
     "jquery-ui"
 ],
-    function ($, ExternalResource, VertexService, MindMapTemplate, Graph, IdUriUtils, UiUtils, PeripheralMenu, Freebase) {
+    function ($, ExternalResource, VertexService, MindMapTemplate, GraphUi, IdUriUtils, UiUtils, PeripheralMenu, Freebase) {
 
         var api = {
             ofVertex:function (vertex) {
@@ -32,7 +32,7 @@ define([
             }
             this.create = function () {
                 html = MindMapTemplate['identification_menu'].merge();
-                Graph.addHTML(html);
+                GraphUi.addHTML(html);
                 buildMenu();
                 $(html).data("vertex", vertex);
                 PeripheralMenu.makeHtmlAPeripheralMenu(

@@ -15,7 +15,7 @@ define([
     "triple_brain.peripheral_menu",
     "triple_brain.ui.utils"
 ],
-    function (require, $, Freebase, MindMapTemplate, Graph, Point, ExternalResource, VertexService, EdgeService, PeripheralMenu, UiUtils) {
+    function (require, $, Freebase, MindMapTemplate, GraphUi, Point, ExternalResource, VertexService, EdgeService, PeripheralMenu, UiUtils) {
         var api = {
             ofVertex:function (vertex) {
                 return new SuggestionMenu(vertex);
@@ -27,7 +27,7 @@ define([
             var html;
             this.create = function () {
                 html = MindMapTemplate['suggestions_menu'].merge();
-                Graph.addHTML(
+                GraphUi.addHTML(
                     html
                 );
                 addTitle();

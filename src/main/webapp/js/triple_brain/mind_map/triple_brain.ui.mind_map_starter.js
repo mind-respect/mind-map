@@ -15,9 +15,10 @@ define(
         "triple_brain.ui.depth_slider",
         "triple_brain.positions_calculator",
         "triple_brain.graph_positions_calculator",
-        "triple_brain.tree_positions_calculator"
+        "triple_brain.tree_absolute_positions_calculator",
+        "triple_brain.tree_relative_positions_calculator"
     ],
-    function ($, UserService, EventBus, LoginHandler, DragScroll, Graph, Vertex, VertexCreator, EdgeCreator, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, PositionsCalculator, GraphPositionsCalculator, TreePositionsCalculator) {
+    function ($, UserService, EventBus, LoginHandler, DragScroll, GraphUi, Vertex, VertexCreator, EdgeCreator, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, PositionsCalculator, GraphPositionsCalculator, TreeAbsolutePositionsCalculator, TreeRelativePositionsCalculator) {
         var api = {
             offset:function () {
                 var offset = {};
@@ -44,7 +45,7 @@ define(
                     DepthSlider.init();
                     SearchUi.init();
                     PositionsCalculator.setImplementation(
-                        GraphPositionsCalculator
+                        TreeAbsolutePositionsCalculator
                     );
                     UserService.authenticatedUser(
                         PositionsCalculator.calculateUsingDefaultVertex
@@ -80,7 +81,7 @@ define(
         EventBus.subscribe(
             '/event/ui/graph/drawing_info/updated/',
             function (event, drawnGraph, centralVertexId) {
-                Graph.reset();
+                GraphUi.reset();
                 if ($("body").data(("canvas"))) {
                     $("body").data("canvas").clear();
                 }

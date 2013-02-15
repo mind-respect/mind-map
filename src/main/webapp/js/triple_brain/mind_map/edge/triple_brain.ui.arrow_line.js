@@ -8,7 +8,7 @@ define([
     "triple_brain.mind-map_template",
     "triple_brain.ui.graph"
 ],
-    function(Segment, MindMapTemplate, Graph){
+    function(Segment, MindMapTemplate, GraphUi){
         var api = {};
         api.withSegment = function(segment){
             return new ArrowLine(segment);
@@ -74,7 +74,7 @@ define([
                     " "
                     + segment.endPoint.y + "Z";
 
-                var canvas = Graph.canvas();
+                var canvas = GraphUi.canvas();
                 drawnComponents.push(
                     canvas.path(arrowLinePath).
                     attr("stroke-width", lineWidth)
@@ -107,7 +107,7 @@ define([
                         "L" + arrowHead.summit3.x + " " +
                         arrowHead.summit3.y + "Z" ;
 
-                var canvas = Graph.canvas();
+                var canvas = GraphUi.canvas();
                 drawnComponents.push(
                     canvas.path(arrowHeadhPath)
                     .attr({

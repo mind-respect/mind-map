@@ -10,7 +10,7 @@ define([
     "triple_brain.event_bus",
     "triple_brain.ui.edge_creator"
 ],
-    function (require, $, Graph, VertexAndEdgeCommon, EventBus, EdgeCreator) {
+    function (require, $, GraphUi, VertexAndEdgeCommon, EventBus, EdgeCreator) {
         var api = {};
 
         api.EMPTY_LABEL = "a property";
@@ -35,13 +35,13 @@ define([
         };
         api.onMouseOver = function () {
             var edge = api.withHtml(this);
-            Graph.setEdgeMouseOver(edge);
+            GraphUi.setEdgeMouseOver(edge);
             edge.highlight();
             edge.showMenu();
         };
         api.onMouseOut = function () {
             var edge = api.withHtml(this);
-            Graph.unsetEdgeMouseOver();
+            GraphUi.unsetEdgeMouseOver();
             if (!edge.isTextFieldInFocus()) {
                 edge.unhighlight();
             }
@@ -130,7 +130,7 @@ define([
                 );
             }
             this.isMouseOver = function () {
-                var edgeThatIsMouseOver = Graph.getEdgeMouseOver();
+                var edgeThatIsMouseOver = GraphUi.getEdgeMouseOver();
                 return  edgeThatIsMouseOver !== undefined &&
                     edgeThatIsMouseOver.equalsEdge(thisEdge);
             }

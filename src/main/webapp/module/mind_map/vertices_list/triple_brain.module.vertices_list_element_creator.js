@@ -15,7 +15,7 @@ define([
         };
 
         function VerticesListElementCreator(vertex, centralVertex){
-            var Graph = require("triple_brain.ui.graph");
+            var GraphUi = require("triple_brain.ui.graph");
             var VerticesList = require("./triple_brain.module.vertices_list");
             var html = Template['list_element'].merge();
             var verticesListElement = VerticesListElement.withHtml(html);
@@ -23,7 +23,7 @@ define([
                 VerticesList.get().addHtml(html);
                 $(html).data('vertexId', vertex.getId());
                 verticesListElement.setDistanceFromCentralVertex(
-                    Graph.numberOfEdgesBetween(
+                    GraphUi.numberOfEdgesBetween(
                         vertex,
                         centralVertex
                     )

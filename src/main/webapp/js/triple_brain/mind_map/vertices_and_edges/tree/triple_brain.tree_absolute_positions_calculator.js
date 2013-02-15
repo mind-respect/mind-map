@@ -3,50 +3,32 @@
  */
 define([
     "jquery",
-    "triple_brain.config",
-    "triple_brain.mind_map_info",
-    "triple_brain.id_uri"
+    "triple_brain.graph",
+    "triple_brain.tree_positioning_common"
 ],
-    function ($, Config, MindMapInfo, IdUriUtils) {
+    function ($, Graph, TreePositioningCommon) {
         var HORIZONTAL_DISTANCE_OF_VERTICES = 300;
         var VERTICAL_DISTANCE_OF_VERTICES = 100;
         var api = {};
         api.calculateUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
-            var centralVertexEncodedUri = IdUriUtils.encodeUri(centralVertexUri);
-            $.ajax({
-                type:'GET',
-                url:Config.links.app + '/service/graph/' + MindMapInfo.uri() + "/" + depth + '/' + centralVertexEncodedUri,
-                dataType:'json'
-            }).success(function (graph) {
-                    var drawnTree = new TreeMakerFromServerGraph(
-                        centralVertexUri,
-                        graph
-                    ).make();
-                    callback(drawnTree);
-                });
+            Graph.getForCentralVertexUriAndDepth(centralVertexUri, depth, function(graph){
+                var drawnTree = new TreeMakerFromServerGraph(
+                    centralVertexUri,
+                    graph
+                ).make();
+                callback(drawnTree);
+            });
         };
         return api;
         function TreeMakerFromServerGraph(centralVertexUri, serverGraph) {
             var vertices = serverGraph.vertices;
             this.make = function () {
-                var sourceId;
-                var destinationId;
-                var edges = serverGraph.edges;
-                initChildrenOfVertex(
-                    vertexWithId(centralVertexUri)
+                TreePositioningCommon.defineChildrenInVertices(
+                    serverGraph,
+                    centralVertexUri
                 );
-                defineChildrenInVertices();
                 definePositionsInVertices();
                 return serverGraph;
-
-                function defineChildrenInVertices(){
-                    $.each(
-                        edges, function(){
-                            updateVerticesChildrenWithEdge(this);
-                        }
-                    );
-                }
-
                 function definePositionsInVertices(){
                     var centralVertex = vertices[centralVertexUri];
                     centralVertex.position = {
@@ -127,61 +109,9 @@ define([
                         }
                         return numberOfSignificantChild;
                     }
-
-                    function setPositionOfVertexWithId(vertexId, position){
-                        vertexWithId(vertexId).position = position;
-                    }
                 }
-
-                function updateVerticesChildrenWithEdge(edge) {
-                    sourceId = edge.source_vertex_id;
-                    destinationId = edge.destination_vertex_id;
-                    applyToBoth([
-                        initVertexInTreeInfoIfNecessary
-                    ]);
-                    var parentId,
-                        childId;
-                    if(isCentralVertex(destinationId)){
-                        parentId = destinationId;
-                        childId = sourceId
-                    }else{
-                        parentId = sourceId;
-                        childId = destinationId;
-                    }
-                    addChild(parentId, childId);
-                }
-
-                function initVertexInTreeInfoIfNecessary(vertexId) {
-                    var vertex = vertices[vertexId];
-                    if(vertex.children === undefined){
-                        initChildrenOfVertex(vertex);
-                    }
-                }
-
-                function initChildrenOfVertex(vertex){
-                    vertex.children = [];
-                }
-
-                function isCentralVertex(vertexId){
-                    return vertexId === centralVertexUri;
-                }
-
                 function vertexWithId(vertexId){
                     return vertices[vertexId]
-                }
-
-                function addChild(vertexId, childrenId) {
-                    vertices[vertexId].children.push(
-                        childrenId
-                    );
-                }
-
-                function applyToBoth(functions) {
-                    $.each(functions, function () {
-                        var func = this;
-                        func(sourceId);
-                        func(destinationId);
-                    });
                 }
             };
         }

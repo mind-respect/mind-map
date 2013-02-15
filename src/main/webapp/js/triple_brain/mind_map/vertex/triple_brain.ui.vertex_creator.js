@@ -23,7 +23,7 @@ define([
     "triple_brain.segment",
     "triple_brain.positions_calculator",
     "jquery-ui"
-], function (require, $, EventBus, Graph, Vertex, VertexService, Edge, EdgeService, Suggestion, IdUriUtils, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, UiUtils, ArrowLine, Point, Segment, PositionsCalculator) {
+], function (require, $, EventBus, GraphUi, Vertex, VertexService, Edge, EdgeService, Suggestion, IdUriUtils, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, UiUtils, ArrowLine, Point, Segment, PositionsCalculator) {
         var api = {};
         api.createWithArrayOfJsonHavingRelativePosition = function (jsonArray) {
             $.each(jsonArray, function () {
@@ -42,7 +42,7 @@ define([
             return new VertexCreator(json);
         };
         api.addGraphOffsetToJsonPosition = function (json) {
-            var graphOffset = Graph.offset();
+            var graphOffset = GraphUi.offset();
             json.position.x += graphOffset.x;
             json.position.y += graphOffset.y;
         }

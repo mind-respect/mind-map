@@ -19,7 +19,7 @@ define([
     "triple_brain.freebase",
     "triple_brain.user"
 ],
-    function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, Edge, VertexAndEdgeCommon, EventBus, Graph, ArrowLine, ServerSubscriber, ImageMenu, Freebase, UserService) {
+    function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, Edge, VertexAndEdgeCommon, EventBus, GraphUi, ArrowLine, ServerSubscriber, ImageMenu, Freebase, UserService) {
         var api = {};
 
         api.EMPTY_LABEL = "a concept";
@@ -152,7 +152,7 @@ define([
                 return $(html).attr('id');
             };
             this.isMouseOver = function () {
-                var vertexThatIsMouseOver = Graph.getVertexMouseOver();
+                var vertexThatIsMouseOver = GraphUi.getVertexMouseOver();
                 return  vertexThatIsMouseOver !== undefined &&
                     vertexThatIsMouseOver.equalsVertex(thisVertex);
             };
