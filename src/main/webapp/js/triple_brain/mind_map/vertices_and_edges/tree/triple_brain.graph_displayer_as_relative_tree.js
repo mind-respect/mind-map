@@ -4,7 +4,7 @@
 define([
     "jquery",
     "triple_brain.graph",
-    "triple_brain.as_tree_graph_displayer_common",
+    "triple_brain.graph_displayer_as_tree_common",
     "triple_brain.mind-map_template"
 ], function($, Graph, TreeDisplayerCommon, MindMapTemplate){
     var api = {};

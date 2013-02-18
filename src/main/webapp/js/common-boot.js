@@ -70,10 +70,10 @@ window.config = {
         "triple_brain.server_subscriber" : "triple_brain/triple_brain.server_subscriber",
         "triple_brain.graph" : "triple_brain/mind_map/triple_brain.graph",
         "triple_brain.graph_displayer" : "triple_brain/mind_map/vertices_and_edges/triple_brain.graph_displayer",
-        "triple_brain.as_graph_graph_displayer" : "triple_brain/mind_map/vertices_and_edges/triple_brain.as_graph_graph_displayer",
-        "triple_brain.as_absolute_tree_graph_displayer" : "triple_brain/mind_map/vertices_and_edges/tree/triple_brain.as_absolute_tree_graph_displayer",
-        "triple_brain.as_relative_tree_graph_displayer" : "triple_brain/mind_map/vertices_and_edges/tree/triple_brain.as_relative_tree_graph_displayer",
-        "triple_brain.as_tree_graph_displayer_common" : "triple_brain/mind_map/vertices_and_edges/tree/triple_brain.as_tree_graph_displayer_common",
+        "triple_brain.graph_displayer_as_graph" : "triple_brain/mind_map/vertices_and_edges/triple_brain.graph_displayer_as_graph",
+        "triple_brain.graph_displayer_as_absolute_tree" : "triple_brain/mind_map/vertices_and_edges/tree/triple_brain.graph_displayer_as_absolute_tree",
+        "triple_brain.graph_displayer_as_relative_tree" : "triple_brain/mind_map/vertices_and_edges/tree/triple_brain.graph_displayer_as_relative_tree",
+        "triple_brain.graph_displayer_as_tree_common" : "triple_brain/mind_map/vertices_and_edges/tree/triple_brain.graph_displayer_as_tree_common",
         "triple_brain.mind_map_info" : "triple_brain/mind_map/triple_brain.mind_map_info"
     },
     shim : {

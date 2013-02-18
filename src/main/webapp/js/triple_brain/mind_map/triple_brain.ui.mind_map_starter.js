@@ -14,9 +14,9 @@ define(
         "triple_brain.ui.search",
         "triple_brain.ui.depth_slider",
         "triple_brain.graph_displayer",
-        "triple_brain.as_graph_graph_displayer",
-        "triple_brain.as_absolute_tree_graph_displayer",
-        "triple_brain.as_relative_tree_graph_displayer"
+        "triple_brain.graph_displayer_as_graph",
+        "triple_brain.graph_displayer_as_absolute_tree",
+        "triple_brain.graph_displayer_as_relative_tree"
     ],
     function ($, UserService, EventBus, LoginHandler, DragScroll, GraphUi, Vertex, VertexHtmlBuilder, EdgeCreator, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerAsGraph, GraphDisplayerAsAbsoluteTree, GraphDisplayerAsRelativeTree) {
         var api = {
