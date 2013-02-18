@@ -9,7 +9,8 @@ define([
         var t = Template.withTemplateGroup(api);
 
         //vertex html elements
-        t.add('vertex', '<div class="vertex graph-element" id="{id}" style="top:{position.y}"></div>');
+        t.add('vertex', '<div class="vertex graph-element" id="{id}" style="top:{position.y};position:absolute"></div>');
+        t.add('relative_vertex', '<div class="vertex graph-element" id="{id}" style="position:relative;margin:1em 0 1em 0"></div>');
         t.add('vertex_label_container', '<div class=textfield-container><input type="text" class="label" value="{label}"></div>');
         t.add('vertex_menu', '<div class="menu"></div>');
         t.add('vertex_move_button', '<div class="move"></div>');

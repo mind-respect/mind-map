@@ -114,11 +114,9 @@ body input[type=button]:hover{
 .vertex{
     white-space: nowrap;
     min-width:120px;
-    position: absolute;
     z-index: 3;
     cursor:default;
 }
-
 
 .highlighted-vertex{
     border: 1px;

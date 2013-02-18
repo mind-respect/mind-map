@@ -13,18 +13,18 @@ define([
         api.setImplementation = function(implementation){
             _implementation = implementation;
         };
-        api.calculateUsingDefaultVertex = function(){
-            calculateUsingCentralVertexId(
+        api.displayUsingDefaultVertex = function(){
+            displayUsingCentralVertexId(
                 Vertex.defaultVertexId()
             );
         };
-        api.calculateUsingNewCentralVertex = function(centralVertex){
-            calculateUsingCentralVertexId(
+        api.displayUsingNewCentralVertex = function(centralVertex){
+            displayUsingCentralVertexId(
                 centralVertex.getId()
             );
         };
-        api.calculateUsingNewCentralVertexUri = function(newCentralVertexUri){
-            calculateUsingCentralVertexId(
+        api.displayUsingNewCentralVertexUri = function(newCentralVertexUri){
+            displayUsingCentralVertexId(
                 IdUriUtils.graphElementIdFromUri(
                     newCentralVertexUri
                 )
@@ -49,12 +49,12 @@ define([
                 [drawingInfo, centralVertexId]
             );
         }
-        function calculateUsingCentralVertexId(centralVertexId){
+        function displayUsingCentralVertexId(centralVertexId){
             publishAboutToUpdate();
             var centralVertexUri = IdUriUtils.uriFromGraphElementId(
                 centralVertexId
             );
-            _implementation.calculateUsingDepthAndCentralVertexUri(
+            _implementation.displayUsingDepthAndCentralVertexUri(
                 centralVertexUri,
                 currentDepth(),
                 function(drawingInfo){

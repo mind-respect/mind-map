@@ -21,17 +21,20 @@ define([
     "triple_brain.ui.arrow_line",
     "triple_brain.point",
     "triple_brain.segment",
-    "triple_brain.positions_calculator",
+    "triple_brain.graph_displayer",
     "jquery-ui"
-], function (require, $, EventBus, GraphUi, Vertex, VertexService, Edge, EdgeService, Suggestion, IdUriUtils, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, UiUtils, ArrowLine, Point, Segment, PositionsCalculator) {
+], function (require, $, EventBus, GraphUi, Vertex, VertexService, Edge, EdgeService, Suggestion, IdUriUtils, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, UiUtils, ArrowLine, Point, Segment, GraphDisplayer) {
         var api = {};
         api.createWithArrayOfJsonHavingRelativePosition = function (jsonArray) {
+            var verticesHtml = [];
             $.each(jsonArray, function () {
                 var json = this;
-                api.withJsonHavingRelativePosition(
+                var vertexHtml = api.withJsonHavingRelativePosition(
                     json
-                ).create();
+                    ).create();
+                verticesHtml.push(vertexHtml);
             });
+            return verticesHtml;
         };
 
         api.withJsonHavingAbsolutePosition = function (json) {
@@ -48,7 +51,6 @@ define([
         }
 
         function VertexCreator(json) {
-            var Graph = require("triple_brain.ui.graph");
             var IdUriUtils = require("triple_brain.id_uri");
             var MindMapTemplate = require("triple_brain.mind-map_template");
             var Vertex = require("triple_brain.ui.vertex");
@@ -59,9 +61,6 @@ define([
             json.id = IdUriUtils.graphElementIdFromUri(json.id);
             var html = MindMapTemplate['vertex'].merge(json);
             this.create = function () {
-                Graph.addHTML(
-                    html
-                );
                 addMoveButton();
                 createLabel();
                 createMenu();
@@ -80,7 +79,6 @@ define([
                     onMouseOver,
                     onMouseOut
                 );
-                var graphCanvas = Graph.canvas();
                 $(html).draggable({
                     handle:".move",
                     start:onDragStart,
@@ -175,6 +173,9 @@ define([
             }
 
             function createMenu() {
+                GraphUi.addHTML(
+                    html
+                );
                 var vertexMenu = MindMapTemplate['vertex_menu'].merge();
                 $(html).append(vertexMenu);
 
@@ -222,7 +223,7 @@ define([
                 var centerBtn = MindMapTemplate['vertex_center_button'].merge();
                 $(vertexMenu).append(centerBtn);
                 centerBtn.click(function () {
-                    PositionsCalculator.calculateUsingNewCentralVertex(
+                    GraphDisplayer.displayUsingNewCentralVertex(
                         vertexOfSubHtmlComponent(this)
                     );
                 });
@@ -292,13 +293,13 @@ define([
 
             function onMouseOver() {
                 var vertex = vertexOfSubHtmlComponent(this);
-                Graph.setVertexMouseOver(vertex);
+                GraphUi.setVertexMouseOver(vertex);
                 vertex.makeItHighProfile();
             }
 
             function onMouseOut() {
                 var vertex = vertexOfSubHtmlComponent(this)
-                Graph.unsetVertexMouseOver();
+                GraphUi.unsetVertexMouseOver();
                 vertex.makeItLowProfile();
             }
 
@@ -342,7 +343,7 @@ define([
                     $('.edge').css('z-index', normalStateEdgesZIndex);
                     $("body").unbind(mouseUpEvent);
                     $(selectorThatCoversWholeGraph).unbind(relationMouseMoveEvent);
-                    var destinationVertex = Graph.getVertexMouseOver();
+                    var destinationVertex = GraphUi.getVertexMouseOver();
                     if (destinationVertex !== undefined) {
                         if (!sourceVertex.equalsVertex(destinationVertex)) {
                             sourceVertex.unhighlight();

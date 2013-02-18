@@ -9,7 +9,7 @@ define([
 ],
     function($, Config, MindMapInfo, IdUriUtils){
         var api = {};
-        api.calculateUsingDepthAndCentralVertexUri = function(centralVertexUri, depth, callback){
+        api.displayUsingDepthAndCentralVertexUri = function(centralVertexUri, depth, callback){
             var centralVertexEncodedUri = IdUriUtils.encodeUri(centralVertexUri);
             $.ajax({
                 type:'GET',

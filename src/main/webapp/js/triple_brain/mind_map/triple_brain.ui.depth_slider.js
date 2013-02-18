@@ -5,10 +5,10 @@
 define([
     "jquery",
     "triple_brain.ui.vertex",
-    "triple_brain.positions_calculator",
+    "triple_brain.graph_displayer",
     "jquery-ui"
 ],
-    function ($, Vertex, PositionsCalculator){
+    function ($, Vertex, GraphDisplayer){
         return {
             init:function() {
                 var sliderDefaultValue = 5;
@@ -25,7 +25,7 @@ define([
                     change:function (event, ui) {
                         $("#sub-vertices-depth-index").text(ui.value);
                         if (event.originalEvent) {
-                            PositionsCalculator.calculateUsingNewCentralVertex(
+                            GraphDisplayer.displayUsingNewCentralVertex(
                                 Vertex.centralVertex()
                             );
                         }

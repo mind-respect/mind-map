@@ -4,13 +4,13 @@
 define([
     "jquery",
     "triple_brain.graph",
-    "triple_brain.tree_positioning_common"
+    "triple_brain.as_tree_graph_displayer_common"
 ],
-    function ($, Graph, TreePositioningCommon) {
+    function ($, Graph, TreeDisplayerCommon) {
         var HORIZONTAL_DISTANCE_OF_VERTICES = 300;
         var VERTICAL_DISTANCE_OF_VERTICES = 100;
         var api = {};
-        api.calculateUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
+        api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
             Graph.getForCentralVertexUriAndDepth(centralVertexUri, depth, function(graph){
                 var drawnTree = new TreeMakerFromServerGraph(
                     centralVertexUri,
@@ -23,7 +23,7 @@ define([
         function TreeMakerFromServerGraph(centralVertexUri, serverGraph) {
             var vertices = serverGraph.vertices;
             this.make = function () {
-                TreePositioningCommon.defineChildrenInVertices(
+                TreeDisplayerCommon.defineChildrenInVertices(
                     serverGraph,
                     centralVertexUri
                 );

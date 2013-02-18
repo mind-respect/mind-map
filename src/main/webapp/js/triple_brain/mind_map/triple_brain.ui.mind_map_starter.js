@@ -7,18 +7,18 @@ define(
         "triple_brain.drag_scroll",
         "triple_brain.ui.graph",
         "triple_brain.ui.vertex",
-        "triple_brain.ui.vertex_creator",
+        "triple_brain.ui.vertex_html_builder",
         "triple_brain.ui.edge_creator",
         "triple_brain.mind-map_template",
         "triple_brain.server_subscriber",
         "triple_brain.ui.search",
         "triple_brain.ui.depth_slider",
-        "triple_brain.positions_calculator",
-        "triple_brain.graph_positions_calculator",
-        "triple_brain.tree_absolute_positions_calculator",
-        "triple_brain.tree_relative_positions_calculator"
+        "triple_brain.graph_displayer",
+        "triple_brain.as_graph_graph_displayer",
+        "triple_brain.as_absolute_tree_graph_displayer",
+        "triple_brain.as_relative_tree_graph_displayer"
     ],
-    function ($, UserService, EventBus, LoginHandler, DragScroll, GraphUi, Vertex, VertexCreator, EdgeCreator, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, PositionsCalculator, GraphPositionsCalculator, TreeAbsolutePositionsCalculator, TreeRelativePositionsCalculator) {
+    function ($, UserService, EventBus, LoginHandler, DragScroll, GraphUi, Vertex, VertexHtmlBuilder, EdgeCreator, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerAsGraph, GraphDisplayerAsAbsoluteTree, GraphDisplayerAsRelativeTree) {
         var api = {
             offset:function () {
                 var offset = {};
@@ -44,14 +44,14 @@ define(
                     handleDisconnectButton();
                     DepthSlider.init();
                     SearchUi.init();
-                    PositionsCalculator.setImplementation(
-                        TreeAbsolutePositionsCalculator
+                    GraphDisplayer.setImplementation(
+                        GraphDisplayerAsAbsoluteTree
                     );
                     UserService.authenticatedUser(
-                        PositionsCalculator.calculateUsingDefaultVertex
+                        GraphDisplayer.displayUsingDefaultVertex
                     );
                     $("#redraw-graph-btn").click(function () {
-                        PositionsCalculator.calculateUsingNewCentralVertex(
+                        GraphDisplayer.displayUsingNewCentralVertex(
                             Vertex.centralVertex()
                         );
                     });
@@ -89,9 +89,13 @@ define(
                     "canvas",
                     Raphael(0, 0, $("body").width(), $("body").height())
                 );
-                VertexCreator.createWithArrayOfJsonHavingRelativePosition(
+                var verticesHtml = VertexHtmlBuilder.createWithArrayOfJsonHavingRelativePosition(
                     drawnGraph.vertices
                 );
+                $.each(verticesHtml, function(){
+                    var vertexHtml = this;
+                    GraphUi.addHTML(vertexHtml);
+                });
                 EdgeCreator.arrayFromServerFormatArray(
                     drawnGraph.edges
                 );
