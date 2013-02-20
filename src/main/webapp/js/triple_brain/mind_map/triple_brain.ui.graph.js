@@ -5,10 +5,9 @@ define([
     "require",
     "jquery",
     "triple_brain.point",
-    "triple_brain.event_bus",
-    "triple_brain.ui.all"
+    "triple_brain.event_bus"
 ],
-    function (require, $, Point, EventBus, UiUtils ) {
+    function (require, $, Point, EventBus) {
         var api = {};
         var graphForTraversal;
         api.getVertexMouseOver = function () {

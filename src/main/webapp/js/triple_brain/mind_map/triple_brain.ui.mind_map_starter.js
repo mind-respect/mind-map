@@ -5,9 +5,7 @@ define(
         "triple_brain.event_bus",
         "triple_brain.login_handler",
         "triple_brain.drag_scroll",
-        "triple_brain.ui.graph",
         "triple_brain.ui.vertex",
-        "triple_brain.ui.vertex_html_builder",
         "triple_brain.ui.edge_creator",
         "triple_brain.mind-map_template",
         "triple_brain.server_subscriber",
@@ -18,7 +16,7 @@ define(
         "triple_brain.graph_displayer_as_absolute_tree",
         "triple_brain.graph_displayer_as_relative_tree"
     ],
-    function ($, UserService, EventBus, LoginHandler, DragScroll, GraphUi, Vertex, VertexHtmlBuilder, EdgeCreator, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerAsGraph, GraphDisplayerAsAbsoluteTree, GraphDisplayerAsRelativeTree) {
+    function ($, UserService, EventBus, LoginHandler, DragScroll, Vertex, EdgeCreator, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerAsGraph, GraphDisplayerAsAbsoluteTree, GraphDisplayerAsRelativeTree) {
         var api = {
             offset:function () {
                 var offset = {};
@@ -45,7 +43,7 @@ define(
                     DepthSlider.init();
                     SearchUi.init();
                     GraphDisplayer.setImplementation(
-                        GraphDisplayerAsAbsoluteTree
+                        GraphDisplayerAsGraph
                     );
                     UserService.authenticatedUser(
                         GraphDisplayer.displayUsingDefaultVertex
@@ -81,7 +79,6 @@ define(
         EventBus.subscribe(
             '/event/ui/graph/drawing_info/updated/',
             function (event, drawnGraph, centralVertexId) {
-                GraphUi.reset();
                 if ($("body").data(("canvas"))) {
                     $("body").data("canvas").clear();
                 }
@@ -89,13 +86,6 @@ define(
                     "canvas",
                     Raphael(0, 0, $("body").width(), $("body").height())
                 );
-                var verticesHtml = VertexHtmlBuilder.createWithArrayOfJsonHavingRelativePosition(
-                    drawnGraph.vertices
-                );
-                $.each(verticesHtml, function(){
-                    var vertexHtml = this;
-                    GraphUi.addHTML(vertexHtml);
-                });
                 EdgeCreator.arrayFromServerFormatArray(
                     drawnGraph.edges
                 );

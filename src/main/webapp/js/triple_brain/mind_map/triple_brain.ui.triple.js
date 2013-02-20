@@ -6,9 +6,10 @@ define([
     "triple_brain.ui.edge_creator",
     "triple_brain.id_uri",
     "triple_brain.ui.arrow_line",
-    "triple_brain.event_bus"
+    "triple_brain.event_bus",
+    "triple_brain.graph_displayer"
 ],
-    function (require, EdgeCreator, IdUriUtils, ArrowLine, EventBus) {
+    function (require, EdgeCreator, IdUriUtils, ArrowLine, EventBus, GraphDisplayer) {
         var api = {};
         api.fromServerStatementAndNewVertexPosition = function (tripleJson, newVertexPosition) {
             var VertexHtmlBuilder = require("triple_brain.ui.vertex_html_builder");
@@ -22,14 +23,19 @@ define([
                 y : newVertexPosition.y
             };
 
-            var destinationVertex = VertexHtmlBuilder.withJsonHavingAbsolutePosition(
-                tripleJson.end_vertex
-            ).create();
-
             var sourceVertex = Vertex.withId(
                 IdUriUtils.graphElementIdFromUri(
                     tripleJson.source_vertex.id
                 )
+            );
+
+            var destinationVertex = VertexHtmlBuilder.withJsonHavingAbsolutePosition(
+                tripleJson.end_vertex
+            ).create();
+
+            GraphDisplayer.addVertex(
+                destinationVertex,
+                sourceVertex
             );
 
             var edge = EdgeCreator.fromServerFormat(

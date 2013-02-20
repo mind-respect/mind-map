@@ -16,6 +16,13 @@ define([
                     "/mind_map"
             );
         };
+        api.defaultVertexId = function(){
+            var username = UserService.authenticatedUserInCache().user_name;
+            return IdUriUtils.graphElementIdFromUri(
+                IdUriUtils.baseUri + username +
+                    '/default'
+            );
+        };
         return api;
     }
 );

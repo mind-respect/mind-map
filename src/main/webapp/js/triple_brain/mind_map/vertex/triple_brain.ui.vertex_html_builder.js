@@ -25,34 +25,41 @@ define([
     "jquery-ui"
 ], function (require, $, EventBus, GraphUi, Vertex, VertexService, Edge, EdgeService, Suggestion, IdUriUtils, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, UiUtils, ArrowLine, Point, Segment, GraphDisplayer) {
         var api = {};
-        api.createWithArrayOfJsonHavingRelativePosition = function (jsonArray) {
-            var verticesHtml = [];
-            $.each(jsonArray, function () {
-                var json = this;
+        api.createWithArrayOfJsonHavingRelativePosition = function (arrayOfServerVertex, addHtml) {
+            $.each(arrayOfServerVertex, function () {
+                var serverVertex = this;
+                initAdjustedPosition(serverVertex);
                 var vertexHtml = api.withJsonHavingRelativePosition(
-                    json
+                    serverVertex
                     ).create();
-                verticesHtml.push(vertexHtml);
+                addHtml(vertexHtml);
             });
-            return verticesHtml;
         };
 
-        api.withJsonHavingAbsolutePosition = function (json) {
-            return new VertexCreator(json);
+        api.withJsonHavingAbsolutePosition = function (serverVertex) {
+            initAdjustedPosition(serverVertex);
+            return new VertexCreator(serverVertex);
         };
-        api.withJsonHavingRelativePosition = function (json) {
-            api.addGraphOffsetToJsonPosition(json);
-            return new VertexCreator(json);
+        api.withJsonHavingRelativePosition = function (serverVertex) {
+            initAdjustedPosition(serverVertex);
+            api.addGraphOffsetToJsonPosition(serverVertex);
+            return new VertexCreator(serverVertex);
         };
-        api.addGraphOffsetToJsonPosition = function (json) {
+        api.addGraphOffsetToJsonPosition = function (serverVertex) {
             var graphOffset = GraphUi.offset();
-            json.position.x += graphOffset.x;
-            json.position.y += graphOffset.y;
+            serverVertex.adjustedPosition.x += graphOffset.x;
+            serverVertex.adjustedPosition.y += graphOffset.y;
+        }
+
+        function initAdjustedPosition(serverVertex){
+            serverVertex.adjustedPosition = {
+                x:serverVertex.position.x,
+                y:serverVertex.position.y
+            };
         }
 
         function VertexCreator(json) {
             var IdUriUtils = require("triple_brain.id_uri");
-            var MindMapTemplate = require("triple_brain.mind-map_template");
             var Vertex = require("triple_brain.ui.vertex");
             var VertexService = require("triple_brain.vertex");
             var Suggestion = require("triple_brain.suggestion");
@@ -85,8 +92,8 @@ define([
                     drag:onDrag,
                     stop:onDragStop
                 });
-                json.position.x -= $(html).width() / 2;
-                json.position.y -= $(html).height() / 2;
+                json.adjustedPosition.x -= $(html).width() / 2;
+                json.adjustedPosition.y -= $(html).height() / 2;
                 position();
                 vertex.setNameOfHiddenProperties([]);
                 if (json.is_frontier_vertex_with_hidden_vertices) {
@@ -173,9 +180,6 @@ define([
             }
 
             function createMenu() {
-                GraphUi.addHTML(
-                    html
-                );
                 var vertexMenu = MindMapTemplate['vertex_menu'].merge();
                 $(html).append(vertexMenu);
 
@@ -237,8 +241,8 @@ define([
             }
 
             function position() {
-                $(html).css('left', json.position.x);
-                $(html).css('top', json.position.y);
+                $(html).css('left', json.adjustedPosition.x);
+                $(html).css('top', json.adjustedPosition.y);
             }
 
             function onDragStart(mouseDownEvent, ui) {

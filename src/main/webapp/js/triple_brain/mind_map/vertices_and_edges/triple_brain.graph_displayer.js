@@ -4,10 +4,11 @@
 define([
     "require",
     "triple_brain.event_bus",
-    "triple_brain.ui.vertex",
-    "triple_brain.id_uri"
+    "triple_brain.mind_map_info",
+    "triple_brain.id_uri",
+    "triple_brain.ui.graph"
     ],
-    function(require, EventBus, Vertex, IdUriUtils){
+    function(require, EventBus, MindMapInfo, IdUriUtils, GraphUi){
         var _implementation;
         var api = {};
         api.setImplementation = function(implementation){
@@ -15,7 +16,7 @@ define([
         };
         api.displayUsingDefaultVertex = function(){
             displayUsingCentralVertexId(
-                Vertex.defaultVertexId()
+                MindMapInfo.defaultVertexId()
             );
         };
         api.displayUsingNewCentralVertex = function(centralVertex){
@@ -30,6 +31,11 @@ define([
                 )
             );
         };
+
+        api.addVertex = function(newVertex, parentVertex){
+            _implementation.addVertex(newVertex, parentVertex);
+        }
+
         return api;
         function currentDepth(){
             return getDepthSlider().currentDepth();
@@ -50,6 +56,7 @@ define([
             );
         }
         function displayUsingCentralVertexId(centralVertexId){
+            GraphUi.reset();
             publishAboutToUpdate();
             var centralVertexUri = IdUriUtils.uriFromGraphElementId(
                 centralVertexId

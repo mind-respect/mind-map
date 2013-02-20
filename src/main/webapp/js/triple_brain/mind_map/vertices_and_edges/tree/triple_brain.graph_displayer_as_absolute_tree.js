@@ -4,9 +4,11 @@
 define([
     "jquery",
     "triple_brain.graph",
-    "triple_brain.graph_displayer_as_tree_common"
+    "triple_brain.graph_displayer_as_tree_common",
+    "triple_brain.ui.vertex_html_builder",
+    "triple_brain.ui.graph"
 ],
-    function ($, Graph, TreeDisplayerCommon) {
+    function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, GraphUi) {
         var HORIZONTAL_DISTANCE_OF_VERTICES = 300;
         var VERTICAL_DISTANCE_OF_VERTICES = 100;
         var api = {};
@@ -18,6 +20,11 @@ define([
                 ).make();
                 callback(drawnTree);
             });
+        };
+        api.addVertex = function(newVertex){
+            GraphUi.addHTML(
+                newVertex.getHtml()
+            );
         };
         return api;
         function TreeMakerFromServerGraph(centralVertexUri, serverGraph) {
@@ -35,6 +42,7 @@ define([
                         x : 0,
                         y : 0
                     };
+                    addVertexToHtml(centralVertex);
                     definePositionsOfVerticesFromRoot(centralVertex);
                     function definePositionsOfVerticesFromRoot(rootVertex){
                         var childrenOfRoot = rootVertex.children;
@@ -50,14 +58,15 @@ define([
                         };
                         var middleVertex = vertexWithId(childrenOfRoot[middleIndex]);
                         middleVertex.position = middleVertexPosition;
+                        addVertexToHtml(middleVertex);
                         definePositionsOfVerticesFromRoot(middleVertex);
-
                         for(var i = middleIndex - 1 ; i >= 0 ; i--){
                             var currentVertex = vertexWithId(childrenOfRoot[i]);
                             definePositionOfVertexAbovePrevious(
                                 currentVertex,
                                 vertexWithId(childrenOfRoot[i + 1])
                             );
+                            addVertexToHtml(currentVertex);
                             definePositionsOfVerticesFromRoot(currentVertex);
                         }
                         for(var i = middleIndex + 1 ; i < numberOfChildren; i++){
@@ -66,6 +75,7 @@ define([
                                 currentVertex,
                                 vertexWithId(childrenOfRoot[i - 1])
                             );
+                            addVertexToHtml(currentVertex);
                             definePositionsOfVerticesFromRoot(currentVertex);
                         }
                     }
@@ -87,11 +97,10 @@ define([
                         if(isPositioningAbovePrevious){
                             yOffsetFromPrevious *= -1;
                         }
-                        var position = {
+                        currentVertex.position = {
                             x: previousVertexPosition.x,
                             y : previousVertexPosition.y + yOffsetFromPrevious
-                        }
-                        currentVertex.position = position;
+                        };
                     }
 
                     function heightOfTreeInVertices(rootVertexOfGreaterTree){
@@ -108,6 +117,13 @@ define([
                             }
                         }
                         return numberOfSignificantChild;
+                    }
+                    function addVertexToHtml(vertex){
+                        api.addVertex(
+                            VertexHtmlBuilder.withJsonHavingRelativePosition(
+                                vertex
+                            ).create()
+                        );
                     }
                 }
                 function vertexWithId(vertexId){
