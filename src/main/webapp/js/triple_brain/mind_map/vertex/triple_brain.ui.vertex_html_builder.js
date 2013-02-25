@@ -38,19 +38,21 @@ define([
 
         api.withJsonHavingAbsolutePosition = function (serverVertex) {
             initAdjustedPosition(serverVertex);
-            return new VertexCreator(serverVertex);
+            return new VertexCreator(serverVertex, true);
         };
         api.withJsonHavingRelativePosition = function (serverVertex) {
             initAdjustedPosition(serverVertex);
             api.addGraphOffsetToJsonPosition(serverVertex);
-            return new VertexCreator(serverVertex);
+            return new VertexCreator(serverVertex, true);
         };
         api.addGraphOffsetToJsonPosition = function (serverVertex) {
             var graphOffset = GraphUi.offset();
             serverVertex.adjustedPosition.x += graphOffset.x;
             serverVertex.adjustedPosition.y += graphOffset.y;
+        };
+        api.withJsonHavingNoPosition = function (serverVertex) {
+            return new VertexCreator(serverVertex, false);
         }
-
         function initAdjustedPosition(serverVertex){
             serverVertex.adjustedPosition = {
                 x:serverVertex.position.x,
@@ -58,7 +60,7 @@ define([
             };
         }
 
-        function VertexCreator(json) {
+        function VertexCreator(json, isAbsolutePositioning) {
             var IdUriUtils = require("triple_brain.id_uri");
             var Vertex = require("triple_brain.ui.vertex");
             var VertexService = require("triple_brain.vertex");
@@ -66,7 +68,11 @@ define([
             var IdentificationMenu = require("triple_brain.ui.identification_menu");
             var SuggestionMenu = require("triple_brain.ui.suggestion_menu");
             json.id = IdUriUtils.graphElementIdFromUri(json.id);
-            var html = MindMapTemplate['vertex'].merge(json);
+            var html = MindMapTemplate[
+                isAbsolutePositioning ?
+                    'vertex':
+                    'relative_vertex'
+                ].merge(json);
             this.create = function () {
                 addMoveButton();
                 createLabel();
@@ -92,9 +98,11 @@ define([
                     drag:onDrag,
                     stop:onDragStop
                 });
-                json.adjustedPosition.x -= $(html).width() / 2;
-                json.adjustedPosition.y -= $(html).height() / 2;
-                position();
+                if(isAbsolutePositioning){
+                    json.adjustedPosition.x -= $(html).width() / 2;
+                    json.adjustedPosition.y -= $(html).height() / 2;
+                    position();
+                }
                 vertex.setNameOfHiddenProperties([]);
                 if (json.is_frontier_vertex_with_hidden_vertices) {
                     vertex.setNameOfHiddenProperties(json.name_of_hidden_properties);

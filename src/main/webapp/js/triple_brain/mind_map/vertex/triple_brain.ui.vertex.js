@@ -143,6 +143,13 @@ define([
             this.getId = function () {
                 return $(html).attr('id');
             };
+
+            this.getUri = function () {
+                return IdUriUtils.uriFromGraphElementId(
+                    thisVertex.getId()
+                );
+            };
+
             this.isMouseOver = function () {
                 var vertexThatIsMouseOver = GraphUi.getVertexMouseOver();
                 return  vertexThatIsMouseOver !== undefined &&
