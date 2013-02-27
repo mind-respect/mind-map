@@ -1,12 +1,15 @@
-.root-vertex-children-container.vertices-children-container{
-    display:block;
-    padding-left:0;
+.root-vertex-super-container{
     position:absolute;
 }
 
 .vertices-children-container{
     display:table-cell;
     padding-left:15em;
+}
+
+.vertices-children-container.left-oriented{
+    padding-left:0;
+    padding-right:15em;
 }
 
 .vertex-tree-container{

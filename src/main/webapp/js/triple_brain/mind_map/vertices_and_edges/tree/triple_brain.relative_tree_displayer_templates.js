@@ -8,8 +8,8 @@ define([
         var api = {};
         var t = Template.withTemplateGroup(api);
         t.add(
-            'root_vertex_children_container',
-            "<div class='root-vertex-children-container vertices-children-container' style='"+
+            'root_vertex_super_container',
+            "<div class='root-vertex-super-container' style='"+
                 "top:{offset.y}px;" +
                 "left:{offset.x}px;" +
                 "'></div>"

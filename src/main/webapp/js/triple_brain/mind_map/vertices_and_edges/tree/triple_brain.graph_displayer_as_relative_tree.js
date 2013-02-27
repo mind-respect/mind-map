@@ -41,7 +41,7 @@ define([
                 ).create();
                 var graphOffset = GraphUi.offset();
                 var verticesContainer = RelativeTreeTemplates[
-                    "root_vertex_children_container"
+                    "root_vertex_super_container"
                     ].merge({
                     offset:graphOffset
                 });
@@ -51,18 +51,22 @@ define([
                 var vertexContainer= RelativeTreeTemplates["vertex_container"].merge();
                 $(verticesContainer).append(vertexContainer);
                 $(vertexContainer).append(rootVertex.getHtml());
-                buildTreeHtmlRecursively(
-                    rootVertex
+                buildChildrenHtmlTreeRecursively(
+                    rootVertex,
+                    false
                 );
-                function buildTreeHtmlRecursively(parentVertexHtmlFacade) {
+                function buildChildrenHtmlTreeRecursively(parentVertexHtmlFacade, isLeftOriented) {
                     var serverParentVertex = vertexWithId(
                         parentVertexHtmlFacade.getUri()
                     );
                     var childrenContainer = RelativeTreeTemplates[
                         "vertices_children_container"
                         ].merge();
+                    if(isLeftOriented){
+                        $(childrenContainer).addClass("left-oriented");
+                    }
                     parentVertexHtmlFacade.getHtml().closest(
-                        ".vertices-children-container"
+                        ".vertices-children-container, .root-vertex-super-container"
                     ).append(childrenContainer);
                     $.each(serverParentVertex.children, function () {
                         var childVertex = vertexWithId(this);
@@ -83,7 +87,7 @@ define([
                             childVertexHtmlFacade.getHtml()
                         );
                         childTreeContainer.append(
-                            buildTreeHtmlRecursively(childVertexHtmlFacade)
+                            buildChildrenHtmlTreeRecursively(childVertexHtmlFacade, isLeftOriented)
                         );
                     });
                     return childrenContainer;
