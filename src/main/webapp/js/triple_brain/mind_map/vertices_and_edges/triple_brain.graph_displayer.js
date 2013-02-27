@@ -31,11 +31,15 @@ define([
                 )
             );
         };
-
         api.addVertex = function(newVertex, parentVertex){
             _implementation.addVertex(newVertex, parentVertex);
-        }
-
+        };
+        api.allowsMovingVertices = function(){
+            return _implementation.allowsMovingVertices();
+        };
+        api.positionOfNewVertex = function(sourceVertex){
+            return _implementation.positionOfNewVertex(sourceVertex);
+        };
         return api;
         function currentDepth(){
             return getDepthSlider().currentDepth();

@@ -74,7 +74,9 @@ define([
                     'relative_vertex'
                 ].merge(json);
             this.create = function () {
-                addMoveButton();
+                if(GraphDisplayer.allowsMovingVertices()){
+                    addMoveButton();
+                }
                 createLabel();
                 createMenu();
                 var vertex = vertexFacade();
@@ -194,7 +196,17 @@ define([
                 var plusBtn = MindMapTemplate['vertex_plus_button'].merge();
                 $(vertexMenu).append(plusBtn);
 
-                $(plusBtn).on("click", createRelationOrAddVertex);
+                $(plusBtn).on("click", function(event){
+                    if(GraphDisplayer.allowsMovingVertices()){
+                        createRelationOrAddVertex(event);
+                    }else{
+                        var sourceVertex = vertexFacade();
+                        VertexService.addRelationAndVertexAtPositionToVertex(
+                            sourceVertex,
+                            GraphDisplayer
+                        );
+                    }
+                });
 
                 var removeBtn = MindMapTemplate['vertex_remove_button'].merge();
                 $(vertexMenu).append(removeBtn);

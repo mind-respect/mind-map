@@ -27,6 +27,9 @@ define([
                 newVertex.getHtml()
             );
         };
+        api.allowsMovingVertices = function(){
+            return true;
+        };
         return api;
         function addVerticesToHtml(vertices) {
             VertexHtmlBuilder.createWithArrayOfJsonHavingRelativePosition(

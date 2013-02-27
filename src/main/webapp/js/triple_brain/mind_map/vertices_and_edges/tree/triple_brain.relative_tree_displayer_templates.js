@@ -20,19 +20,19 @@ define([
         t.add(
             'vertices_children_container',
             "<div class='vertices-children-container' style='" +
-                "margin:0 0 0 15em;position:relative;top:-100%;'></div>"
+                "padding-left:15em;position:relative;display:table-cell;'></div>"
         );
 
         t.add(
             'vertex_tree_container',
             "<div class='vertices-children-container' style='" +
-                "position:relative;top:-100%;'></div>"
+                "position:relative;display:table;'></div>"
         );
 
         t.add(
             'vertex_container',
             "<div class='vertex-container' style='" +
-                "float:left;position:relative;top:50%'></div>"
+                "position:relative;display:table-cell;vertical-align:middle'></div>"
         );
 
         return api;

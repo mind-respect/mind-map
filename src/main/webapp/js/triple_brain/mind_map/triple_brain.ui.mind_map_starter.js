@@ -43,7 +43,7 @@ define(
                     DepthSlider.init();
                     SearchUi.init();
                     GraphDisplayer.setImplementation(
-                        GraphDisplayerAsAbsoluteTree
+                        GraphDisplayerAsRelativeTree
                     );
                     UserService.authenticatedUser(
                         GraphDisplayer.displayUsingDefaultVertex

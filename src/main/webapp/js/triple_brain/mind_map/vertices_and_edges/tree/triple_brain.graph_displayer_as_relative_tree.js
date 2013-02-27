@@ -22,6 +22,9 @@ define([
     api.addVertex = function (newVertex, parentVertex) {
 
     };
+    api.allowsMovingVertices = function(){
+        return false;
+    }
     return api;
     function TreeMakerFromServerGraph(centralVertexUri, serverGraph) {
         var vertices = serverGraph.vertices;
@@ -49,9 +52,9 @@ define([
                 buildTreeHtmlRecursively(
                     rootVertex
                 );
-                $(verticesContainer).append(
-                    "<div style='clear:both'></div>"
-                );
+//                $(verticesContainer).append(
+//                    "<div style='clear:both;display:inline-block;'></div>"
+//                );
                 function buildTreeHtmlRecursively(parentVertexHtmlFacade) {
                     var serverParentVertex = vertexWithId(
                         parentVertexHtmlFacade.getUri()
@@ -83,9 +86,9 @@ define([
                         childTreeContainer.append(
                             buildTreeHtmlRecursively(childVertexHtmlFacade)
                         );
-                        childTreeContainer.append(
-                            "<div style='clear:both'></div>"
-                        );
+//                        childTreeContainer.append(
+//                            "<div style='clear:both'></div>"
+//                        );
                     });
                     return childrenContainer;
                 }

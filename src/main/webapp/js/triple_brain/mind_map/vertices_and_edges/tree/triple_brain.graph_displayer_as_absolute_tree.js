@@ -26,6 +26,12 @@ define([
                 newVertex.getHtml()
             );
         };
+        api.allowsMovingVertices = function(){
+            return false;
+        };
+        api.positionOfNewVertex = function(sourceVertex){
+
+        }
         return api;
         function TreeMakerFromServerGraph(centralVertexUri, serverGraph) {
             var vertices = serverGraph.vertices;

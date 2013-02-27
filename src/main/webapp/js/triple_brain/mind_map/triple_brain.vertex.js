@@ -15,14 +15,14 @@ define([
                 url:Config.links.app + '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()),
                 dataType:'json'
             }).success(function (tripleJson) {
-                    var triple = Triple.fromServerStatementAndNewVertexPosition(
+                    var triple = Triple.createUsingServerTripleAndNewVertexPosition(
                         tripleJson,
                         newVertexPosition
-                    )
+                    );
                     if (successCallback != undefined) {
                         successCallback.call(this, triple);
                     }
-                })
+                });
         };
         api.remove = function (vertex) {
             $.ajax({
