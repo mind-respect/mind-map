@@ -1,0 +1,19 @@
+.root-vertex-children-container.vertices-children-container{
+    display:block;
+    padding-left:0;
+    position:absolute;
+}
+
+.vertices-children-container{
+    display:table-cell;
+    padding-left:15em;
+}
+
+.vertex-tree-container{
+    display:table;
+}
+
+.vertex-container{
+    display:table-cell;
+    vertical-align:middle;
+}

@@ -8,31 +8,25 @@ define([
         var api = {};
         var t = Template.withTemplateGroup(api);
         t.add(
-            'root_vertex_container',
-            "<div class='vertices-children-container' style='"+
-                "position:absolute;" +
+            'root_vertex_children_container',
+            "<div class='root-vertex-children-container vertices-children-container' style='"+
                 "top:{offset.y}px;" +
                 "left:{offset.x}px;" +
-                "height:100%;" +
-                "min-height:100%" +
                 "'></div>"
         );
         t.add(
             'vertices_children_container',
-            "<div class='vertices-children-container' style='" +
-                "padding-left:15em;position:relative;display:table-cell;'></div>"
+            "<div class='vertices-children-container'></div>"
         );
 
         t.add(
             'vertex_tree_container',
-            "<div class='vertices-children-container' style='" +
-                "position:relative;display:table;'></div>"
+            "<div class='vertex-tree-container'></div>"
         );
 
         t.add(
             'vertex_container',
-            "<div class='vertex-container' style='" +
-                "position:relative;display:table-cell;vertical-align:middle'></div>"
+            "<div class='vertex-container'></div>"
         );
 
         return api;

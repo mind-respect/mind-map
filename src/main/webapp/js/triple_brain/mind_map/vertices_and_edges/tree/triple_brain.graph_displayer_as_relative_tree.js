@@ -40,7 +40,9 @@ define([
                     serverRootVertex
                 ).create();
                 var graphOffset = GraphUi.offset();
-                var verticesContainer = RelativeTreeTemplates.root_vertex_container.merge({
+                var verticesContainer = RelativeTreeTemplates[
+                    "root_vertex_children_container"
+                    ].merge({
                     offset:graphOffset
                 });
                 GraphUi.addHTML(
@@ -52,9 +54,6 @@ define([
                 buildTreeHtmlRecursively(
                     rootVertex
                 );
-//                $(verticesContainer).append(
-//                    "<div style='clear:both;display:inline-block;'></div>"
-//                );
                 function buildTreeHtmlRecursively(parentVertexHtmlFacade) {
                     var serverParentVertex = vertexWithId(
                         parentVertexHtmlFacade.getUri()
@@ -86,9 +85,6 @@ define([
                         childTreeContainer.append(
                             buildTreeHtmlRecursively(childVertexHtmlFacade)
                         );
-//                        childTreeContainer.append(
-//                            "<div style='clear:both'></div>"
-//                        );
                     });
                     return childrenContainer;
                 }
