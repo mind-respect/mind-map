@@ -51,49 +51,77 @@ define([
                 var vertexContainer= RelativeTreeTemplates["vertex_container"].merge();
                 $(verticesContainer).append(vertexContainer);
                 $(vertexContainer).append(rootVertex.getHtml());
-                buildChildrenHtmlTreeRecursively(
-                    rootVertex,
-                    false
+                var leftChildrenContainer = addChildrenContainerToVertex(
+                    rootVertex
                 );
+                var rightChildrenContainer = addChildrenContainerToVertex(
+                    rootVertex
+                );
+                for(var i = 0 ; i < serverRootVertex.children.length; i++){
+                    var isLeftOriented = i % 2 != 0;
+                    var childVertex = vertexWithId(serverRootVertex.children[i]);
+                    var container = isLeftOriented ?
+                        leftChildrenContainer:
+                        rightChildrenContainer;
+                    buildVertexHtmlIntoContainer(
+                        childVertex,
+                        container,
+                        isLeftOriented
+                    );
+                }
+
                 function buildChildrenHtmlTreeRecursively(parentVertexHtmlFacade, isLeftOriented) {
                     var serverParentVertex = vertexWithId(
                         parentVertexHtmlFacade.getUri()
                     );
-                    var childrenContainer = RelativeTreeTemplates[
-                        "vertices_children_container"
-                        ].merge();
-                    if(isLeftOriented){
-                        $(childrenContainer).addClass("left-oriented");
-                    }
-                    parentVertexHtmlFacade.getHtml().closest(
-                        ".vertices-children-container, .root-vertex-super-container"
-                    ).append(childrenContainer);
+                    var childrenContainer = addChildrenContainerToVertex(
+                        parentVertexHtmlFacade
+                    );
                     $.each(serverParentVertex.children, function () {
-                        var childVertex = vertexWithId(this);
-                        var childVertexHtmlFacade = VertexHtmlBuilder.withJsonHavingNoPosition(
-                            childVertex
-                        ).create();
-                        var childTreeContainer = RelativeTreeTemplates[
-                            "vertex_tree_container"
-                            ].merge();
-                        childrenContainer.append(
-                            childTreeContainer
-                        );
-                        var vertexContainer = RelativeTreeTemplates["vertex_container"].merge();
-                        childTreeContainer.append(
-                            vertexContainer
-                        );
-                        vertexContainer.append(
-                            childVertexHtmlFacade.getHtml()
-                        );
-                        childTreeContainer.append(
-                            buildChildrenHtmlTreeRecursively(childVertexHtmlFacade, isLeftOriented)
+                        buildVertexHtmlIntoContainer(
+                            vertexWithId(this),
+                            childrenContainer,
+                            isLeftOriented
                         );
                     });
                     return childrenContainer;
                 }
-            }
 
+                function addChildrenContainerToVertex(vertexHtmlFacade){
+                    var childrenContainer = RelativeTreeTemplates[
+                        "vertices_children_container"
+                        ].merge();
+                    vertexHtmlFacade.getHtml().closest(
+                        ".vertices-children-container, .root-vertex-super-container"
+                    ).append(childrenContainer);
+                    return childrenContainer;
+                }
+
+                function buildVertexHtmlIntoContainer(vertex, container, isLeftOriented){
+                    var childVertexHtmlFacade = VertexHtmlBuilder.withJsonHavingNoPosition(
+                        vertex
+                    ).create();
+                    var childTreeContainer = RelativeTreeTemplates[
+                        "vertex_tree_container"
+                        ].merge();
+                    container.append(
+                        childTreeContainer
+                    );
+                    if(isLeftOriented){
+                        $(childTreeContainer).addClass("left-oriented");
+                    }
+                    var vertexContainer = RelativeTreeTemplates["vertex_container"].merge();
+                    childTreeContainer.append(
+                        vertexContainer
+                    );
+                    vertexContainer.append(
+                        childVertexHtmlFacade.getHtml()
+                    );
+                    childTreeContainer.append(
+                        buildChildrenHtmlTreeRecursively(childVertexHtmlFacade, isLeftOriented)
+                    );
+                }
+            }
             return serverGraph;
             function vertexWithId(vertexId) {
                 return vertices[vertexId]

@@ -4,16 +4,15 @@
 
 .vertices-children-container{
     display:table-cell;
-    padding-left:15em;
+    vertical-align: middle;
 }
-
-.vertices-children-container.left-oriented{
-    padding-left:0;
-    padding-right:15em;
+.vertex-tree-container.left-oriented{
+    margin-left:-25em;
 }
 
 .vertex-tree-container{
     display:table;
+    margin-left:10em;
 }
 
 .vertex-container{
