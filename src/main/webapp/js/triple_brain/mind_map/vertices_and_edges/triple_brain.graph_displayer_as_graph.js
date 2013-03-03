@@ -36,7 +36,14 @@ define([
         };
         return api;
         function addVerticesToHtml(vertices) {
-            $.each(vertices, api.addVertex);
+            $.each(vertices, function(uri, vertex){
+                var vertexHtmlFacade = VertexHtmlBuilder.withJsonHavingRelativePosition(
+                    vertex
+                ).create();
+                GraphUi.addHTML(
+                    vertexHtmlFacade.getHtml()
+                );
+            });
         }
     }
 );

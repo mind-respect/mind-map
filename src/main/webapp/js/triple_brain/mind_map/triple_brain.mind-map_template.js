@@ -9,7 +9,7 @@ define([
         var t = Template.withTemplateGroup(api);
 
         //vertex html elements
-        t.add('vertex', '<div class="vertex graph-element" id="{id}" style="top:{position.y};position:absolute"></div>');
+        t.add('vertex', '<div class="vertex graph-element" id="{id}" style="top:{adjustedPosition.y};left:{adjustedPosition.x};position:absolute"></div>');
         t.add(
             'relative_vertex',
             '<div class="vertex graph-element" id="{id}" style="position:relative;margin:50% 0 0 0"></div>'

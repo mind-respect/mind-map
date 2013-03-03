@@ -101,8 +101,6 @@ define([
                     stop:onDragStop
                 });
                 if(isAbsolutePositioning){
-                    json.adjustedPosition.x -= $(html).width() / 2;
-                    json.adjustedPosition.y -= $(html).height() / 2;
                     position();
                 }
                 vertex.setNameOfHiddenProperties([]);
