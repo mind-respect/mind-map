@@ -44,7 +44,9 @@ define([
     }
     return api;
     function shouldAddLeft(){
-        return $(leftVerticesContainer()).children().length < $(rightVerticesContainer()).children().length;
+        var numberOfDirectChildrenLeft = $(leftVerticesContainer()).children().length;
+        var numberOfDirectChildrenRight = $(rightVerticesContainer()).children().length;
+        return  numberOfDirectChildrenLeft < numberOfDirectChildrenRight;
     }
     function leftVerticesContainer(){
         return $(
