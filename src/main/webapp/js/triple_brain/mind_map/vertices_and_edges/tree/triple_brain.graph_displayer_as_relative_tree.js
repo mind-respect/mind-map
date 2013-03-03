@@ -23,7 +23,14 @@ define([
     };
     api.addVertex = function (newVertex, parentVertex) {
         var treeMaker = new TreeMaker();
-        var container = treeMaker.childrenVertexContainer(parentVertex);
+        var container;
+        if(parentVertex.isCenterVertex()){
+            container = shouldAddLeft() ?
+                leftVerticesContainer() :
+                rightVerticesContainer();
+        }else{
+            container = treeMaker.childrenVertexContainer(parentVertex);
+        }
         newVertex.children = [];
         var vertexHtmlFacade = treeMaker.buildVertexHtmlIntoContainer(
             newVertex,
@@ -36,6 +43,19 @@ define([
         return false;
     }
     return api;
+    function shouldAddLeft(){
+        return $(leftVerticesContainer()).children().length < $(rightVerticesContainer()).children().length;
+    }
+    function leftVerticesContainer(){
+        return $(
+            ".vertices-children-container.left-oriented"
+        );
+    }
+    function rightVerticesContainer(){
+        return $(".center-vertex").closest(".vertex-container").siblings(
+            ".vertices-children-container:not(.left-oriented):first"
+        );
+    }
     function TreeMaker() {
         var treeMaker = this;
         this.makeUsingServerGraphAndCentralVertexUri = function(serverGraph, centralVertexUri) {
