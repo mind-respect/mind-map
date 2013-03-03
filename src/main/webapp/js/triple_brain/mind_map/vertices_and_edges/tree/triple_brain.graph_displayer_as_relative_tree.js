@@ -7,8 +7,9 @@ define([
     "triple_brain.graph_displayer_as_tree_common",
     "triple_brain.ui.vertex_html_builder",
     "triple_brain.ui.graph",
-    "triple_brain.relative_tree_displayer_templates"
-], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, GraphUi, RelativeTreeTemplates) {
+    "triple_brain.relative_tree_displayer_templates",
+    "triple_brain.ui.edge"
+], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi) {
     var api = {};
     api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
         Graph.getForCentralVertexUriAndDepth(centralVertexUri, depth, function (graph) {
@@ -28,6 +29,7 @@ define([
             newVertex,
             container
         );
+        EdgeUi.redrawAllEdges();
         return vertexHtmlFacade;
     };
     api.allowsMovingVertices = function(){

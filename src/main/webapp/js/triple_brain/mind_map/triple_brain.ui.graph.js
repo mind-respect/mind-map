@@ -18,7 +18,7 @@ define([
         };
         api.unsetVertexMouseOver = function(){
             $("body").removeData("vertex_mouse_over");
-        }
+        };
         api.getEdgeMouseOver = function () {
             return $("body").data("edge_mouse_over");
         };
@@ -27,7 +27,7 @@ define([
         };
         api.unsetEdgeMouseOver = function(){
             $("body").removeData("edge_mouse_over");
-        }
+        };
         api.addHTML = function (html) {
             $("#drawn_graph").append(html);
         };
@@ -48,7 +48,7 @@ define([
             }
             graphForTraversal = new crow.Graph();
             $("#drawn_graph").empty();
-        }
+        };
 
         api.numberOfEdgesBetween = function(vertexA, vertexB){
             return graphForTraversal.findGoal({

@@ -8,9 +8,10 @@ define([
     "triple_brain.ui.graph",
     "triple_brain.ui.vertex_and_edge_common",
     "triple_brain.event_bus",
-    "triple_brain.ui.edge_creator"
+    "triple_brain.ui.edge_creator",
+    "triple_brain.ui.arrow_line"
 ],
-    function (require, $, GraphUi, VertexAndEdgeCommon, EventBus, EdgeCreator) {
+    function (require, $, GraphUi, VertexAndEdgeCommon, EventBus, EdgeCreator, ArrowLine) {
         var api = {};
 
         api.EMPTY_LABEL = "a property";
@@ -26,13 +27,29 @@ define([
             return edges;
         };
         api.drawAllEdges = function () {
+            drawEdges(false);
+        };
+        api.redrawAllEdges = function(){
+
+            drawEdges(true);
+        };
+        function drawEdges(recalculate){
             var edges = api.allEdges();
             for (var i = 0; i < edges.length; i++) {
                 var edge = edges[i];
+                var arrowLine;
+                if(recalculate){
+                    edge.arrowLine().remove();
+                    arrowLine = ArrowLine.ofSourceAndDestinationVertex(
+                        edge.sourceVertex(),
+                        edge.destinationVertex()
+                    );
+                    edge.setArrowLine(arrowLine);
+                }
                 edge.arrowLine().drawInBlackWithSmallLineWidth();
                 edge.centerOnArrowLine();
             }
-        };
+        }
         api.onMouseOver = function () {
             var edge = api.withHtml(this);
             GraphUi.setEdgeMouseOver(edge);
