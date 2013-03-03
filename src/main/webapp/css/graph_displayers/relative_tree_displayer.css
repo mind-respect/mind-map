@@ -6,7 +6,7 @@
     display:table-cell;
     vertical-align: middle;
 }
-.vertex-tree-container.left-oriented{
+.left-oriented .vertex-tree-container{
     margin-left:-25em;
 }
 

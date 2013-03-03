@@ -12,23 +12,32 @@ define([
     var api = {};
     api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
         Graph.getForCentralVertexUriAndDepth(centralVertexUri, depth, function (graph) {
-            var drawnTree = new TreeMakerFromServerGraph(
-                centralVertexUri,
-                graph
-            ).make();
+            var drawnTree = new TreeMaker()
+                .makeUsingServerGraphAndCentralVertexUri(
+                graph,
+                centralVertexUri
+            );
             callback(drawnTree);
         });
     };
     api.addVertex = function (newVertex, parentVertex) {
-
+        var treeMaker = new TreeMaker();
+        var container = treeMaker.childrenVertexContainer(parentVertex);
+        newVertex.children = [];
+        var vertexHtmlFacade = treeMaker.buildVertexHtmlIntoContainer(
+            newVertex,
+            container
+        );
+        return vertexHtmlFacade;
     };
     api.allowsMovingVertices = function(){
         return false;
     }
     return api;
-    function TreeMakerFromServerGraph(centralVertexUri, serverGraph) {
-        var vertices = serverGraph.vertices;
-        this.make = function () {
+    function TreeMaker() {
+        var treeMaker = this;
+        this.makeUsingServerGraphAndCentralVertexUri = function(serverGraph, centralVertexUri) {
+            var vertices = serverGraph.vertices;
             TreeDisplayerCommon.defineChildrenInVertices(
                 serverGraph,
                 centralVertexUri
@@ -51,10 +60,11 @@ define([
                 var vertexContainer= RelativeTreeTemplates["vertex_container"].merge();
                 $(verticesContainer).append(vertexContainer);
                 $(vertexContainer).append(rootVertex.getHtml());
-                var leftChildrenContainer = addChildrenContainerToVertex(
+                var leftChildrenContainer = treeMaker.addChildrenContainerToVertex(
                     rootVertex
                 );
-                var rightChildrenContainer = addChildrenContainerToVertex(
+                $(leftChildrenContainer).addClass("left-oriented");
+                var rightChildrenContainer = treeMaker.addChildrenContainerToVertex(
                     rootVertex
                 );
                 for(var i = 0 ; i < serverRootVertex.children.length; i++){
@@ -63,69 +73,75 @@ define([
                     var container = isLeftOriented ?
                         leftChildrenContainer:
                         rightChildrenContainer;
-                    buildVertexHtmlIntoContainer(
+                    var childHtmlFacade = treeMaker.buildVertexHtmlIntoContainer(
                         childVertex,
-                        container,
-                        isLeftOriented
+                        container
+                    );
+                    buildChildrenHtmlTreeRecursively(
+                        childHtmlFacade
                     );
                 }
-
-                function buildChildrenHtmlTreeRecursively(parentVertexHtmlFacade, isLeftOriented) {
+                function buildChildrenHtmlTreeRecursively(parentVertexHtmlFacade) {
                     var serverParentVertex = vertexWithId(
                         parentVertexHtmlFacade.getUri()
                     );
-                    var childrenContainer = addChildrenContainerToVertex(
-                        parentVertexHtmlFacade
-                    );
+                    var childrenContainer = treeMaker.childrenVertexContainer(parentVertexHtmlFacade);
                     $.each(serverParentVertex.children, function () {
-                        buildVertexHtmlIntoContainer(
+                        var childVertexHtmlFacade = treeMaker.buildVertexHtmlIntoContainer(
                             vertexWithId(this),
-                            childrenContainer,
-                            isLeftOriented
+                            childrenContainer
+                        );
+                        var treeContainer = childVertexHtmlFacade.getHtml().closest(
+                            ".vertex-tree-container"
+                        );
+                        $(treeContainer).append(
+                            buildChildrenHtmlTreeRecursively(
+                                childVertexHtmlFacade
+                            )
                         );
                     });
                     return childrenContainer;
                 }
-
-                function addChildrenContainerToVertex(vertexHtmlFacade){
-                    var childrenContainer = RelativeTreeTemplates[
-                        "vertices_children_container"
-                        ].merge();
-                    vertexHtmlFacade.getHtml().closest(
-                        ".vertices-children-container, .root-vertex-super-container"
-                    ).append(childrenContainer);
-                    return childrenContainer;
-                }
-
-                function buildVertexHtmlIntoContainer(vertex, container, isLeftOriented){
-                    var childVertexHtmlFacade = VertexHtmlBuilder.withJsonHavingNoPosition(
-                        vertex
-                    ).create();
-                    var childTreeContainer = RelativeTreeTemplates[
-                        "vertex_tree_container"
-                        ].merge();
-                    container.append(
-                        childTreeContainer
-                    );
-                    if(isLeftOriented){
-                        $(childTreeContainer).addClass("left-oriented");
-                    }
-                    var vertexContainer = RelativeTreeTemplates["vertex_container"].merge();
-                    childTreeContainer.append(
-                        vertexContainer
-                    );
-                    vertexContainer.append(
-                        childVertexHtmlFacade.getHtml()
-                    );
-                    childTreeContainer.append(
-                        buildChildrenHtmlTreeRecursively(childVertexHtmlFacade, isLeftOriented)
-                    );
-                }
             }
+
             return serverGraph;
             function vertexWithId(vertexId) {
                 return vertices[vertexId]
             }
         };
+
+        this.buildVertexHtmlIntoContainer = function(vertex, container){
+            var childVertexHtmlFacade = VertexHtmlBuilder.withJsonHavingNoPosition(
+                vertex
+            ).create();
+            var childTreeContainer = RelativeTreeTemplates[
+                "vertex_tree_container"
+                ].merge();
+            $(container).append(
+                childTreeContainer
+            );
+            var vertexContainer = RelativeTreeTemplates["vertex_container"].merge();
+            childTreeContainer.append(
+                vertexContainer
+            );
+            vertexContainer.append(
+                childVertexHtmlFacade.getHtml()
+            );
+            treeMaker.addChildrenContainerToVertex(childVertexHtmlFacade);
+            return childVertexHtmlFacade;
+        };
+        this.addChildrenContainerToVertex = function(vertexHtmlFacade){
+            var childrenContainer = RelativeTreeTemplates[
+                "vertices_children_container"
+                ].merge();
+            vertexHtmlFacade.getHtml().closest(
+                ".vertex-tree-container, .root-vertex-super-container"
+            ).append(childrenContainer);
+            return childrenContainer;
+        };
+        this.childrenVertexContainer = function(vertexHtmlFacade){
+            return vertexHtmlFacade.getHtml().closest(".vertex-container"
+            ).siblings(".vertices-children-container");
+        }
     }
 });

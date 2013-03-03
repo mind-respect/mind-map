@@ -23,19 +23,20 @@ define([
                 });
         };
         api.addVertex = function(newVertex){
+            var newVertexHtmlFacade = VertexHtmlBuilder.withJsonHavingAbsolutePosition(
+                newVertex
+            ).create();
             GraphUi.addHTML(
-                newVertex.getHtml()
+                newVertexHtmlFacade.getHtml()
             );
+            return newVertexHtmlFacade;
         };
         api.allowsMovingVertices = function(){
             return true;
         };
         return api;
         function addVerticesToHtml(vertices) {
-            VertexHtmlBuilder.createWithArrayOfJsonHavingRelativePosition(
-                vertices,
-                api.addVertex
-            );
+            $.each(vertices, api.addVertex);
         }
     }
 );

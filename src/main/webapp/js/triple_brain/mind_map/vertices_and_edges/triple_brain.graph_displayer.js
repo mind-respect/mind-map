@@ -32,7 +32,7 @@ define([
             );
         };
         api.addVertex = function(newVertex, parentVertex){
-            _implementation.addVertex(newVertex, parentVertex);
+            return _implementation.addVertex(newVertex, parentVertex);
         };
         api.allowsMovingVertices = function(){
             return _implementation.allowsMovingVertices();
