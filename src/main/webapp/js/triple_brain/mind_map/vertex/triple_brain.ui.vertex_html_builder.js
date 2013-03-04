@@ -67,7 +67,7 @@ define([
             var Suggestion = require("triple_brain.suggestion");
             var IdentificationMenu = require("triple_brain.ui.identification_menu");
             var SuggestionMenu = require("triple_brain.ui.suggestion_menu");
-            json.id = IdUriUtils.graphElementIdFromUri(json.id);
+            json.graphElementId = IdUriUtils.graphElementIdFromUri(json.id);
             var html = MindMapTemplate[
                 isAbsolutePositioning ?
                     'vertex':

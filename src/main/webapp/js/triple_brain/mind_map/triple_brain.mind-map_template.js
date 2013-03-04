@@ -9,10 +9,10 @@ define([
         var t = Template.withTemplateGroup(api);
 
         //vertex html elements
-        t.add('vertex', '<div class="vertex graph-element" id="{id}" style="top:{adjustedPosition.y};left:{adjustedPosition.x};position:absolute"></div>');
+        t.add('vertex', '<div class="vertex graph-element" id="{graphElementId}" style="top:{adjustedPosition.y};left:{adjustedPosition.x};position:absolute"></div>');
         t.add(
             'relative_vertex',
-            '<div class="vertex graph-element" id="{id}" style="position:relative;margin:50% 0 0 0"></div>'
+            '<div class="vertex graph-element" id="{graphElementId}" style="position:relative;margin:50% 0 0 0"></div>'
         );
         t.add('vertex_label_container', '<div class=textfield-container><input type="text" class="label" value="{label}"></div>');
         t.add('vertex_menu', '<div class="menu"></div>');
