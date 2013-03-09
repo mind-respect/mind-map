@@ -3,13 +3,11 @@
  */
 define([
     "require",
-    "triple_brain.ui.edge_creator",
     "triple_brain.id_uri",
-    "triple_brain.ui.arrow_line",
     "triple_brain.event_bus",
     "triple_brain.graph_displayer"
 ],
-    function (require, EdgeCreator, IdUriUtils, ArrowLine, EventBus, GraphDisplayer) {
+    function (require, IdUriUtils, EventBus, GraphDisplayer) {
         var api = {};
         api.createUsingServerTripleAndNewVertexPosition = function (tripleJson, newVertexPosition) {
             var Vertex = require("triple_brain.ui.vertex");
@@ -28,10 +26,7 @@ define([
                 tripleJson.end_vertex,
                 sourceVertex
             );
-
-            var edge = EdgeCreator.fromServerFormat(
-                tripleJson.edge
-            ).create();
+            var edge = GraphDisplayer.addEdge(tripleJson.edge);
 
             var newTriple  = new Triple(
                 sourceVertex,

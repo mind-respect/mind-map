@@ -369,7 +369,11 @@ define([
                     if (destinationVertex !== undefined) {
                         if (!sourceVertex.equalsVertex(destinationVertex)) {
                             sourceVertex.unhighlight();
-                            EdgeService.add(sourceVertex, destinationVertex);
+                            EdgeService.add(
+                                sourceVertex,
+                                destinationVertex,
+                                GraphDisplayer.addEdgeBetweenExistingVertices
+                            );
                         }
                     } else {
                         sourceVertex.unhighlight();

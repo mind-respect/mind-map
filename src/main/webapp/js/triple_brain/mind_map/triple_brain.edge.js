@@ -3,12 +3,11 @@ define([
     "jquery",
     "triple_brain.config",
     "triple_brain.event_bus",
-    "triple_brain.id_uri",
-    "triple_brain.ui.arrow_line"
+    "triple_brain.id_uri"
 ],
-    function(require, $, Config, EventBus, IdUriUtils, ArrowLine) {
+    function(require, $, Config, EventBus, IdUriUtils) {
         var api = {
-            add: function(sourceVertex, destinationVertex) {
+            add: function(sourceVertex, destinationVertex, callback) {
                 var Edge = require("triple_brain.ui.edge");
                 var sourceVertexURI = IdUriUtils.encodedUriFromGraphElementId(sourceVertex.getId());
                 var destinationVertexURI = IdUriUtils.encodedUriFromGraphElementId(destinationVertex.getId());
@@ -28,10 +27,7 @@ define([
                             destinationVertex.getId());
 
                         edgeJSON.label = Edge.EMPTY_LABEL;
-                        EventBus.publish(
-                            '/event/ui/graph/relation/added/',
-                            edgeJSON
-                        );
+                        callback(edgeJSON);
                     })
             },
             remove: function(edge) {

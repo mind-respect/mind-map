@@ -34,6 +34,12 @@ define([
         api.addVertex = function(newVertex, parentVertex){
             return _implementation.addVertex(newVertex, parentVertex);
         };
+        api.addEdge = function(newEdge){
+            return _implementation.addEdge(newEdge);
+        };
+        api.addEdgeBetweenExistingVertices = function(newEdge){
+            return _implementation.addEdgeBetweenExistingVertices(newEdge);
+        }
         api.allowsMovingVertices = function(){
             return _implementation.allowsMovingVertices();
         };

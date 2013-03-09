@@ -8,9 +8,9 @@ define([
     "triple_brain.id_uri",
     "triple_brain.ui.vertex_html_builder",
     "triple_brain.ui.graph",
-    "triple_brain.ui.edge_creator"
+    "triple_brain.graph_displayer_as_graph_edge_creator"
 ],
-    function ($, Config, MindMapInfo, IdUriUtils, VertexHtmlBuilder, GraphUi, EdgeCreator) {
+    function ($, Config, MindMapInfo, IdUriUtils, VertexHtmlBuilder, GraphUi, EdgeCreatorForGraph) {
         var api = {};
         api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
             var centralVertexEncodedUri = IdUriUtils.encodeUri(centralVertexUri);
@@ -32,11 +32,20 @@ define([
             );
             return newVertexHtmlFacade;
         };
+        api.addEdge = function(edgeServer){
+            return EdgeCreatorForGraph.fromServerFormat(
+                edgeServer
+            ).create();
+        };
+        api.addEdgeBetweenExistingVertices = function(edgeServer){
+            var edge = api.addEdge(edgeServer);
+            edge.focus();
+        };
         api.allowsMovingVertices = function(){
             return true;
         };
         api.integrateEdges = function(edges){
-            EdgeCreator.arrayFromServerFormatArray(
+            EdgeCreatorForGraph.arrayFromServerFormatArray(
                 edges
             );
         };

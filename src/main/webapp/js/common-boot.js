@@ -4,7 +4,7 @@
 
 window.config = {
     baseUrl: 'js',
-    urlArgs: "bust=" + 8,
+    urlArgs: "bust=" + 9,
     paths: {
         module : '../module',
         "jquery" : "jquery/jquery-1.8.2.min",
@@ -37,7 +37,6 @@ window.config = {
         "triple_brain.ui.vertex" : "triple_brain/mind_map/vertex/triple_brain.ui.vertex",
         "triple_brain.ui.vertex_html_builder" : "triple_brain/mind_map/vertex/triple_brain.ui.vertex_html_builder",
         "triple_brain.ui.vertex_segments" : "triple_brain/mind_map/vertex/triple_brain.ui.vertex_segments",
-        "triple_brain.ui.edge_creator" : "triple_brain/mind_map/edge/triple_brain.ui.edge_creator",
         "triple_brain.search" : "triple_brain/mind_map/triple_brain.search",
         "triple_brain.ui.search" : "triple_brain/mind_map/triple_brain.ui.search",
         "triple_brain.ui.depth_slider" : "triple_brain/mind_map/triple_brain.ui.depth_slider",
@@ -70,10 +69,11 @@ window.config = {
         "triple_brain.server_subscriber" : "triple_brain/triple_brain.server_subscriber",
         "triple_brain.graph" : "triple_brain/mind_map/triple_brain.graph",
         "triple_brain.graph_displayer" : "triple_brain/mind_map/vertices_and_edges/triple_brain.graph_displayer",
-        "triple_brain.graph_displayer_as_graph" : "triple_brain/mind_map/vertices_and_edges/triple_brain.graph_displayer_as_graph",
-        "triple_brain.graph_displayer_as_absolute_tree" : "triple_brain/mind_map/vertices_and_edges/tree/triple_brain.graph_displayer_as_absolute_tree",
-        "triple_brain.graph_displayer_as_relative_tree" : "triple_brain/mind_map/vertices_and_edges/tree/triple_brain.graph_displayer_as_relative_tree",
-        "triple_brain.relative_tree_displayer_templates" : "triple_brain/mind_map/vertices_and_edges/tree/triple_brain.relative_tree_displayer_templates",
+        "triple_brain.graph_displayer_as_graph" : "triple_brain/mind_map/vertices_and_edges/graph/triple_brain.graph_displayer_as_graph",
+        "triple_brain.graph_displayer_as_graph_edge_creator" : "triple_brain/mind_map/vertices_and_edges/graph/triple_brain.graph_displayer_as_graph_edge_creator",
+        "triple_brain.graph_displayer_as_absolute_tree" : "triple_brain/mind_map/vertices_and_edges/tree/absolute/triple_brain.graph_displayer_as_absolute_tree",
+        "triple_brain.graph_displayer_as_relative_tree" : "triple_brain/mind_map/vertices_and_edges/tree/relative/triple_brain.graph_displayer_as_relative_tree",
+        "triple_brain.relative_tree_displayer_templates" : "triple_brain/mind_map/vertices_and_edges/tree/relative/triple_brain.relative_tree_displayer_templates",
         "triple_brain.graph_displayer_as_tree_common" : "triple_brain/mind_map/vertices_and_edges/tree/triple_brain.graph_displayer_as_tree_common",
         "triple_brain.mind_map_info" : "triple_brain/mind_map/triple_brain.mind_map_info"
     },

@@ -8,8 +8,9 @@ define([
     "triple_brain.ui.vertex_html_builder",
     "triple_brain.ui.graph",
     "triple_brain.relative_tree_displayer_templates",
-    "triple_brain.ui.edge"
-], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi) {
+    "triple_brain.ui.edge",
+    "triple_brain.event_bus"
+], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus) {
     var api = {};
     api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
         Graph.getForCentralVertexUriAndDepth(centralVertexUri, depth, function (graph) {
@@ -43,7 +44,13 @@ define([
         return false;
     }
     api.integrateEdges = function(edges){
-
+        $.each(edges, function(){
+            var edge = this;
+            EventBus.publish(
+                '/event/ui/html/edge/created/',
+                edge
+            );
+        });
     };
     return api;
     function shouldAddLeft(){
