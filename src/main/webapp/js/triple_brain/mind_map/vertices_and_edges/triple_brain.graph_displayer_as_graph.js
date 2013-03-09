@@ -7,9 +7,10 @@ define([
     "triple_brain.mind_map_info",
     "triple_brain.id_uri",
     "triple_brain.ui.vertex_html_builder",
-    "triple_brain.ui.graph"
+    "triple_brain.ui.graph",
+    "triple_brain.ui.edge_creator"
 ],
-    function ($, Config, MindMapInfo, IdUriUtils, VertexHtmlBuilder, GraphUi) {
+    function ($, Config, MindMapInfo, IdUriUtils, VertexHtmlBuilder, GraphUi, EdgeCreator) {
         var api = {};
         api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
             var centralVertexEncodedUri = IdUriUtils.encodeUri(centralVertexUri);
@@ -33,6 +34,11 @@ define([
         };
         api.allowsMovingVertices = function(){
             return true;
+        };
+        api.integrateEdges = function(edges){
+            EdgeCreator.arrayFromServerFormatArray(
+                edges
+            );
         };
         return api;
         function addVerticesToHtml(vertices) {

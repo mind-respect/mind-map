@@ -42,6 +42,9 @@ define([
     api.allowsMovingVertices = function(){
         return false;
     }
+    api.integrateEdges = function(edges){
+
+    };
     return api;
     function shouldAddLeft(){
         var numberOfDirectChildrenLeft = $(leftVerticesContainer()).children().length;

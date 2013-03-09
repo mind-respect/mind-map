@@ -6,7 +6,6 @@ define(
         "triple_brain.login_handler",
         "triple_brain.drag_scroll",
         "triple_brain.ui.vertex",
-        "triple_brain.ui.edge_creator",
         "triple_brain.mind-map_template",
         "triple_brain.server_subscriber",
         "triple_brain.ui.search",
@@ -16,7 +15,7 @@ define(
         "triple_brain.graph_displayer_as_absolute_tree",
         "triple_brain.graph_displayer_as_relative_tree"
     ],
-    function ($, UserService, EventBus, LoginHandler, DragScroll, Vertex, EdgeCreator, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerAsGraph, GraphDisplayerAsAbsoluteTree, GraphDisplayerAsRelativeTree) {
+    function ($, UserService, EventBus, LoginHandler, DragScroll, Vertex, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerAsGraph, GraphDisplayerAsAbsoluteTree, GraphDisplayerAsRelativeTree) {
         var api = {
             offset:function () {
                 var offset = {};
@@ -43,7 +42,7 @@ define(
                     DepthSlider.init();
                     SearchUi.init();
                     GraphDisplayer.setImplementation(
-                        GraphDisplayerAsRelativeTree
+                        GraphDisplayerAsGraph
                     );
                     UserService.authenticatedUser(
                         GraphDisplayer.displayUsingDefaultVertex
@@ -86,7 +85,7 @@ define(
                     "canvas",
                     Raphael(0, 0, $("body").width(), $("body").height())
                 );
-                EdgeCreator.arrayFromServerFormatArray(
+                GraphDisplayer.integrateEdges(
                     drawnGraph.edges
                 );
                 var centralVertex = Vertex.withId(centralVertexId);

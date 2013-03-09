@@ -40,6 +40,9 @@ define([
         api.positionOfNewVertex = function(sourceVertex){
             return _implementation.positionOfNewVertex(sourceVertex);
         };
+        api.integrateEdges = function(edges){
+            return _implementation.integrateEdges(edges);
+        };
         return api;
         function currentDepth(){
             return getDepthSlider().currentDepth();
