@@ -1,11 +1,11 @@
 define([
     "require",
     "jquery",
-    "triple_brain.config",
     "triple_brain.event_bus",
-    "triple_brain.id_uri"
+    "triple_brain.id_uri",
+
 ],
-    function(require, $, Config, EventBus, IdUriUtils) {
+    function(require, $, EventBus, IdUriUtils) {
         var api = {
             add: function(sourceVertex, destinationVertex, callback) {
                 var Edge = require("triple_brain.ui.edge");
@@ -33,7 +33,7 @@ define([
             remove: function(edge) {
                 $.ajax({
                     type: 'DELETE',
-                    url: Config.links.app + '/service/edge/' + IdUriUtils.encodedUriFromGraphElementId(edge.id())
+                    url: IdUriUtils.encodedUriFromGraphElementId(edge.id())
                 }).success(function() {
                         EventBus.publish(
                             '/event/ui/graph/relation/deleted',
@@ -44,7 +44,7 @@ define([
             updateLabel: function(edge, label) {
                 $.ajax({
                     type: 'POST',
-                    url: Config.links.app + '/service/edge/label/' + IdUriUtils.encodedUriFromGraphElementId(edge.id()) + '?label=' + label,
+                    url: IdUriUtils.encodedUriFromGraphElementId(edge.id()) + "label" + '?label=' + label,
                     dataType: 'json'
                 }).success(function() {
                         EventBus.publish(

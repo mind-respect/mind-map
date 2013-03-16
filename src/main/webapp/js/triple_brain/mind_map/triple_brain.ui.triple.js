@@ -17,10 +17,8 @@ define([
                 y : newVertexPosition.y
             };
 
-            var sourceVertex = Vertex.withId(
-                IdUriUtils.graphElementIdFromUri(
-                    tripleJson.source_vertex.id
-                )
+            var sourceVertex = Vertex.withUri(
+                tripleJson.source_vertex.id
             );
             var destinationVertex = GraphDisplayer.addVertex(
                 tripleJson.end_vertex,

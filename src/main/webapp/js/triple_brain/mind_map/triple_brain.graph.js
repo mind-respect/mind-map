@@ -4,19 +4,22 @@
 define([
     "jquery",
     "triple_brain.id_uri",
-    "triple_brain.config",
-    "triple_brain.mind_map_info"
+    "triple_brain.user"
 ],
-    function($, IdUriUtils, Config, MindMapInfo){
+    function($, IdUriUtils, UserService){
         var api = {};
         api.getForCentralVertexUriAndDepth = function (centralVertexUri, depth, callback){
             var centralVertexEncodedUri = IdUriUtils.encodeUri(centralVertexUri);
             $.ajax({
                 type:'GET',
-                url:Config.links.app + '/service/graph/' + MindMapInfo.uri() + "/" + depth + '/' + centralVertexEncodedUri,
+                url:graphUri()  +'/' + depth + '/' + centralVertexEncodedUri,
                 dataType:'json'
             }).success(callback);
         };
         return api;
+
+        function graphUri(){
+            return UserService.currentUserUri() + "/graph";
+        }
     }
 );

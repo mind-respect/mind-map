@@ -2,6 +2,7 @@ package org.triple_brain.mind_map.service.conf;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.matcher.Matchers;
 import com.google.inject.name.Names;
 import com.google.inject.servlet.GuiceServletContextListener;
@@ -12,7 +13,6 @@ import org.triple_brain.mind_map.service.MessagesDistributorServlet;
 import org.triple_brain.mind_map.service.RestInterceptor;
 import org.triple_brain.mind_map.service.resources.*;
 import org.triple_brain.mind_map.service.resources.test.*;
-import org.triple_brain.mind_map.service.resources.VertexResource;
 import org.triple_brain.module.model.graph.GraphComponentTest;
 import org.triple_brain.module.model.graph.neo4j.Neo4JGraphComponentTest;
 import org.triple_brain.module.neo4j_graph_manipulator.graph.Neo4JModule;
@@ -52,16 +52,21 @@ public class GuiceConfig extends GuiceServletContextListener {
 
                 install(new SQLModule());
 
-                bind(DrawnGraphResource.class);
-                bind(GraphResource.class);
-                bind(VertexResource.class);
-                bind(EdgeResource.class);
                 bind(UserResource.class);
-                bind(SearchResource.class);
+                install(new FactoryModuleBuilder()
+                        .build(DrawnGraphResourceFactory.class));
+                install(new FactoryModuleBuilder()
+                        .build(GraphResourceFactory.class));
+                install(new FactoryModuleBuilder()
+                        .build(VertexResourceFactory.class));
+                install(new FactoryModuleBuilder()
+                        .build(EdgeResourceFactory.class));
+                install(new FactoryModuleBuilder()
+                        .build(SearchResourceFactory.class));
 
                 serve("/MessageWebSocket").with(MessagesDistributorServlet.class);
 
-                serve("/service/*").with(GuiceContainer.class);
+                serve("/users/*").with(GuiceContainer.class);
 
                 bind(DataSource.class)
                         .annotatedWith(Names.named("nonRdfDb"))
@@ -86,6 +91,7 @@ public class GuiceConfig extends GuiceServletContextListener {
                         bind(SearchUtils.class).toInstance(
                                 SearchUtils.usingCoreCoreContainer(coreContainer)
                         );
+
                         bind(GraphComponentTest.class).toInstance(
                                 new Neo4JGraphComponentTest()
                         );

@@ -67,12 +67,12 @@ define([
             var Suggestion = require("triple_brain.suggestion");
             var IdentificationMenu = require("triple_brain.ui.identification_menu");
             var SuggestionMenu = require("triple_brain.ui.suggestion_menu");
-            json.graphElementId = IdUriUtils.graphElementIdFromUri(json.id);
             var html = MindMapTemplate[
                 isAbsolutePositioning ?
                     'vertex':
                     'relative_vertex'
                 ].merge(json);
+            $(html).uniqueId();
             this.create = function () {
                 if(GraphDisplayer.allowsMovingVertices()){
                     addMoveButton();
@@ -80,6 +80,7 @@ define([
                 createLabel();
                 createMenu();
                 var vertex = vertexFacade();
+                vertex.setUri(json.id);
                 vertex.addSuggestions(
                     Suggestion.fromJsonArrayOfServer(
                         json.suggestions

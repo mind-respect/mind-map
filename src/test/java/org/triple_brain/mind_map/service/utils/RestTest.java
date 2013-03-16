@@ -12,10 +12,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.triple_brain.mind_map.Launcher;
 import org.triple_brain.module.model.User;
-import org.triple_brain.module.model.json.UserJSONFields;
+import org.triple_brain.module.model.json.UserJsonFields;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
+import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.sql.SQLException;
 
@@ -39,7 +40,7 @@ public abstract class RestTest {
 
     @BeforeClass
     static public void startServer() throws Exception {
-        BASE_URI = new URI("http://localhost:8786/service");
+        BASE_URI = new URI("http://localhost:8786/");
 
         launcher = new Launcher(BASE_URI.getPort());
         launcher.launch();
@@ -69,6 +70,7 @@ public abstract class RestTest {
 
     private static void closeSearchEngine() {
         ClientResponse response = resource
+                .path("users")
                 .path("test")
                 .path("search")
                 .path("close")
@@ -82,24 +84,25 @@ public abstract class RestTest {
     }
 
     protected void createAUser(JSONObject userAsJson) {
-        ClientResponse response = resource
-                .path("users")
+       ClientResponse response = resource
+                .path("users/")
                 .cookie(authCookie)
                 .type(MediaType.APPLICATION_JSON)
                 .post(ClientResponse.class, userAsJson);
+        assertThat(response.getStatus(), is(Response.Status.CREATED.getStatusCode()));
     }
 
     protected User authenticate(User user) {
         try{
             JSONObject loginInfo = new JSONObject()
                     .put(
-                            UserJSONFields.EMAIL,
+                            UserJsonFields.EMAIL,
                             user.email()
                     )
-                    .put(UserJSONFields.PASSWORD, DEFAULT_PASSWORD);
+                    .put(UserJsonFields.PASSWORD, DEFAULT_PASSWORD);
             ClientResponse response = resource
                     .path("users")
-                    .path("authenticate")
+                    .path("session")
                     .post(ClientResponse.class, loginInfo);
             assertThat(response.getStatus(), is(200));
             authCookie = response.getCookies().get(0);
@@ -113,15 +116,15 @@ public abstract class RestTest {
         try{
             JSONObject loginInfo = new JSONObject()
                     .put(
-                            UserJSONFields.EMAIL,
-                            user.getString(UserJSONFields.EMAIL)
+                            UserJsonFields.EMAIL,
+                            user.getString(UserJsonFields.EMAIL)
                     )
-                    .put(UserJSONFields.PASSWORD, DEFAULT_PASSWORD);
+                    .put(UserJsonFields.PASSWORD, DEFAULT_PASSWORD);
             ClientResponse response = resource
                     .path("users")
-                    .path("authenticate")
+                    .path("session")
                     .post(ClientResponse.class, loginInfo);
-            assertThat(response.getStatus(), is(200));
+            assertThat(response.getStatus(), is(Response.Status.OK.getStatusCode()));
             authCookie = response.getCookies().get(0);
             return response.getEntity(JSONObject.class);
         }catch(JSONException e){

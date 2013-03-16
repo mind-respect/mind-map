@@ -25,12 +25,37 @@ define([
             });
             return edges;
         };
+        api.visitAllEdges = function (visitor) {
+            $.each(api.allEdges(), function(){
+                var edge = this;
+                return visitor(edge);
+            });
+        };
         api.drawAllEdges = function () {
             drawEdges(false);
         };
         api.redrawAllEdges = function(){
             drawEdges(true);
         };
+        api.connectedToVertex = function(vertex){
+            var edgesConnectedToVertex = [];
+            var vertexId = vertex.getId();
+            api.visitAllEdges(function(edge){
+                var sourceVertexId = $(edge.getHtml()).data(
+                    "source_vertex_id"
+                );
+                var destinationVertexId = $(edge.getHtml()).data(
+                    "destination_vertex_id"
+                );
+                if(vertexId === sourceVertexId || vertexId === destinationVertexId){
+                    edgesConnectedToVertex.push(
+                        edge
+                    );
+                }
+            });
+            return edgesConnectedToVertex;
+        };
+
         function drawEdges(recalculate){
             var edges = api.allEdges();
             for (var i = 0; i < edges.length; i++) {
@@ -71,10 +96,14 @@ define([
                 return $(html).attr('id');
             };
             this.destinationVertex = function () {
-                return Vertex.withId($(html).attr('destination-vertex-id'));
+                return Vertex.withId(
+                    $(html).data('destination_vertex_id')
+                );
             };
             this.sourceVertex = function () {
-                return Vertex.withId($(html).attr('source-vertex-id'));
+                return Vertex.withId(
+                    $(html).data("source_vertex_id")
+                );
             };
             this.arrowLine = function () {
                 return $(html).data("arrowLine");
@@ -158,6 +187,9 @@ define([
             };
             this.hideMenu = function () {
                 $(menu()).hide();
+            };
+            this.getHtml = function(){
+                return html;
             };
             function menu() {
                 return $(html).find('.remove');

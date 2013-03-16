@@ -30,9 +30,14 @@ define([
             return api.withHtml($("#" + id));
         };
         api.withUri = function (uri) {
-            return api.withId(
-                IdUriUtils.graphElementIdFromUri(uri)
-            );
+            var vertexWithUri;
+            api.visitAllVertices(function(vertex){
+                if(vertex.getUri() === uri){
+                    vertexWithUri = vertex;
+                    return -1;
+                }
+            });
+            return vertexWithUri;
         };
         api.centralVertex = function () {
             return api.withHtml(
@@ -41,7 +46,7 @@ define([
         };
         api.visitAllVertices = function(visitor){
             $(".vertex").each(function () {
-                visitor(
+                 return visitor(
                     api.withHtml(this)
                 );
             });
@@ -145,10 +150,18 @@ define([
             };
 
             this.getUri = function () {
-                return IdUriUtils.uriFromGraphElementId(
-                    thisVertex.getId()
+                return $(html).data(
+                    "uri"
                 );
             };
+
+            this.setUri = function (uri) {
+                $(html).data(
+                    "uri",
+                    uri
+                )
+            };
+
 
             this.isMouseOver = function () {
                 var vertexThatIsMouseOver = GraphUi.getVertexMouseOver();
@@ -207,12 +220,9 @@ define([
                 $(html).removeClass('highlighted-vertex');
             };
             this.connectedEdges = function () {
-                var connectedHTMLEdges = $(".edge[source-vertex-id=" + thisVertex.getId() + "],[destination-vertex-id=" + thisVertex.getId() + "]");
-                var connectedEdges = new Array();
-                for (var i = 0; i < connectedHTMLEdges.length; i++) {
-                    connectedEdges.push(EdgeUi.withHtml(connectedHTMLEdges[i]));
-                }
-                return connectedEdges;
+                return EdgeUi.connectedToVertex(
+                    thisVertex
+                );
             };
             this.redrawConnectedEdgesArrowLine = function(){
                 $.each(thisVertex.connectedEdges(), function(){

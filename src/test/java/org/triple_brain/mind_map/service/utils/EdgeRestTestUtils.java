@@ -37,6 +37,7 @@ public class EdgeRestTestUtils {
 
     public JSONObject edgeWithUri(URI edgeUri){
         ClientResponse response = resource
+                .path("users")
                 .path("test")
                 .path("edge")
                 .path(Uris.encodeURL(edgeUri.toString()))
@@ -63,8 +64,12 @@ public class EdgeRestTestUtils {
         try{
             for(int i = 0 ; i < edges.length(); i++){
                 JSONObject edge = edges.getJSONObject(i);
-                URI sourceVertexId = Uris.get(edge.getString(EdgeJsonFields.SOURCE_VERTEX_ID));
-                URI destinationVertexId = Uris.get(edge.getString(EdgeJsonFields.DESTINATION_VERTEX_ID));
+                URI sourceVertexId = URI.create(
+                        edge.getString(EdgeJsonFields.SOURCE_VERTEX_ID)
+                );
+                URI destinationVertexId = URI.create(
+                        edge.getString(EdgeJsonFields.DESTINATION_VERTEX_ID)
+                );
                 if(oneOfTwoUriIsUri(firstVertexUri, secondVertexUri, sourceVertexId) &&
                         oneOfTwoUriIsUri(firstVertexUri, secondVertexUri, destinationVertexId)){
                     return edge;

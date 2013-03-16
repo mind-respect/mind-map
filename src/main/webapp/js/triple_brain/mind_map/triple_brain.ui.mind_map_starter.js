@@ -78,7 +78,7 @@ define(
         };
         EventBus.subscribe(
             '/event/ui/graph/drawing_info/updated/',
-            function (event, drawnGraph, centralVertexId) {
+            function (event, drawnGraph, centralVertexUri) {
                 if ($("body").data(("canvas"))) {
                     $("body").data("canvas").clear();
                 }
@@ -89,7 +89,7 @@ define(
                 GraphDisplayer.integrateEdges(
                     drawnGraph.edges
                 );
-                var centralVertex = Vertex.withId(centralVertexId);
+                var centralVertex = Vertex.withUri(centralVertexUri);
                 centralVertex.setAsCentral();
                 centralVertex.scrollTo();
 

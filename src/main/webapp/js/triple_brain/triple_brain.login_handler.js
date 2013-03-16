@@ -2,13 +2,13 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "triple_brain.config",
+    "jquery",
     "triple_brain.registration_handler",
     "triple_brain.overlay_dialog",
-    "jquery",
+    "triple_brain.user",
     "jquery.json.min"
 ],
-    function (Config, RegistrationHandler, OverlayDialog, $) {
+    function ($, RegistrationHandler, OverlayDialog, UserService) {
         var api = {};
         var access = defineAccess();
         api.startFlow = function () {
@@ -22,24 +22,21 @@ define([
         }
         return api;
         function handleLoginForm() {
-            $(access.loginButton()).click(function (e) {
+            $(access.loginButton()).click(function () {
                 var loginInfo = {
                     email:$(access.emailField()).val(),
                     password:$(access.passwordField()).val()
                 };
-                $.ajax({
-                    type:'POST',
-                    data:$.toJSON(loginInfo),
-                    url:Config.links.app + '/service/users/authenticate',
-                    dataType:'json',
-                    contentType:'application/json;charset=utf-8'
-                }).success(
+                UserService.authenticate(
+                    loginInfo,
                     function () {
                         window.location = "/";
-                    }).error(function () {
+                    },
+                    function () {
                         $(access.errorMessage()).show();
                         OverlayDialog.adjustSize();
-                    });
+                    }
+                );
             });
             $(access.errorMessage()).hide();
             access.loginForm().reset();

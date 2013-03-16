@@ -12,9 +12,9 @@ define([
     "triple_brain.edge",
     "triple_brain.ui.arrow_line",
     "triple_brain.event_bus",
-    "triple_brain.segment"
+    "triple_brain.ui.vertex"
 ],
-    function(require, $, GraphUi, MindMapTemplate, IdUriUtils, VertexAndEdgeCommon, EdgeService, ArrowLine, EventBus, Segment){
+    function(require, $, GraphUi, MindMapTemplate, IdUriUtils, VertexAndEdgeCommon, EdgeService, ArrowLine, EventBus, VertexUi){
         var api = {};
         api.arrayFromServerFormatArray = function(jsonArray){
             $.each(jsonArray, function(){
@@ -31,12 +31,18 @@ define([
         function EdgeCreator(json){
             var Edge = require("triple_brain.ui.edge");
             json.id = IdUriUtils.graphElementIdFromUri(json.id);
-            json.source_vertex_id = IdUriUtils.graphElementIdFromUri(json.source_vertex_id);
-            json.destination_vertex_id = IdUriUtils.graphElementIdFromUri(json.destination_vertex_id);
             var html = MindMapTemplate['edge'].merge(json);
             this.create = function(){
                 GraphUi.addHTML(
                     html
+                );
+                $(html).data(
+                    "source_vertex_id",
+                    VertexUi.withUri(json.source_vertex_id).getId()
+                );
+                $(html).data(
+                    "destination_vertex_id",
+                    VertexUi.withUri(json.destination_vertex_id).getId()
                 );
                 $(html).hover(
                     Edge.onMouseOver,

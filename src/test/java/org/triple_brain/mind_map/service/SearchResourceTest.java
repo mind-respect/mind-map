@@ -20,6 +20,8 @@ public class SearchResourceTest extends GraphManipulationRestTest {
     public void can_search_vertices_for_auto_complete()throws Exception{
         indexAllVertices();
         ClientResponse response = resource
+                .path("users")
+                .path(authenticatedUser.username())
                 .path("search")
                 .path("vertices")
                 .path("auto_complete")
@@ -52,6 +54,8 @@ public class SearchResourceTest extends GraphManipulationRestTest {
 
     private ClientResponse searchForAutoCompleteUsingRest(String textToSearchWith)throws Exception{
         return resource
+                .path("users")
+                .path(authenticatedUser.username())
                 .path("search")
                 .path("vertices")
                 .path("auto_complete")

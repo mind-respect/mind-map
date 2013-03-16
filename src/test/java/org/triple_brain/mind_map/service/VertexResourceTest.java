@@ -9,14 +9,16 @@ import org.triple_brain.module.common_utils.Uris;
 import org.triple_brain.module.model.ExternalFriendlyResource;
 import org.triple_brain.module.model.ModelTestScenarios;
 import org.triple_brain.module.model.User;
+import org.triple_brain.module.model.UserUris;
 import org.triple_brain.module.model.json.ExternalResourceJson;
 import org.triple_brain.module.model.json.SuggestionJsonFields;
-import org.triple_brain.module.model.json.UserJSONFields;
+import org.triple_brain.module.model.json.UserJsonFields;
 import org.triple_brain.module.model.json.graph.EdgeJsonFields;
 import org.triple_brain.module.model.json.graph.VertexJsonFields;
 import org.triple_brain.module.model.suggestion.Suggestion;
 
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import static junit.framework.Assert.assertFalse;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -47,8 +49,10 @@ public class VertexResourceTest extends GraphManipulationRestTest {
 
     @Test
     public void adding_a_vertex_returns_correct_status() throws Exception {
-        ClientResponse response = vertexUtils.addAVertexToVertexAWithUri(vertexAUri());
-        assertThat(response.getStatus(), is(200));
+        ClientResponse response = vertexUtils.addAVertexToVertexAWithUri(
+                vertexAUri()
+        );
+        assertThat(response.getStatus(), is(Response.Status.OK.getStatusCode()));
     }
 
     @Test
@@ -86,17 +90,16 @@ public class VertexResourceTest extends GraphManipulationRestTest {
         JSONObject anotherUserAsJson = userUtils.validForCreation();
         createAUser(anotherUserAsJson);
         User anotherUser = User.withUsernameAndEmail(
-                anotherUserAsJson.getString(UserJSONFields.USER_NAME),
-                anotherUserAsJson.getString(UserJSONFields.EMAIL)
+                anotherUserAsJson.getString(UserJsonFields.USER_NAME),
+                anotherUserAsJson.getString(UserJsonFields.EMAIL)
         );
         anotherUser.password(DEFAULT_PASSWORD);
         authenticate(anotherUser);
         ClientResponse response = resource
-                .path("vertex")
-                .path(encodeURL(authenticatedUser.defaultVertexUri().toString()))
+                .path(new UserUris(authenticatedUser).defaultVertexUri().getPath())
                 .cookie(authCookie)
                 .post(ClientResponse.class);
-        assertThat(response.getStatus(), is(403));
+        assertThat(response.getStatus(), is(Response.Status.FORBIDDEN.getStatusCode()));
     }
 
     @Test
@@ -113,13 +116,12 @@ public class VertexResourceTest extends GraphManipulationRestTest {
     @Test
     public void removing_vertex_returns_correct_response_status() throws Exception {
         ClientResponse response = removeVertexB();
-        assertThat(response.getStatus(), is(200));
+        assertThat(response.getStatus(), is(Response.Status.OK.getStatusCode()));
     }
 
     private ClientResponse removeVertexB() throws Exception {
         ClientResponse response = resource
-                .path("vertex")
-                .path(encodeURL(vertexBUri().toString()))
+                .path(vertexBUri().getPath())
                 .cookie(authCookie)
                 .delete(ClientResponse.class);
         return response;
@@ -137,13 +139,12 @@ public class VertexResourceTest extends GraphManipulationRestTest {
     @Test
     public void updating_label_returns_correct_status() throws Exception {
         ClientResponse response = updateVertexALabelUsingRest("new vertex label");
-        assertThat(response.getStatus(), is(200));
+        assertThat(response.getStatus(), is(Response.Status.OK.getStatusCode()));
     }
 
     private ClientResponse updateVertexALabelUsingRest(String label) throws Exception {
         ClientResponse response = resource
-                .path("vertex")
-                .path(encodeURL(vertexAUri().toString()))
+                .path(vertexAUri().getPath())
                 .path("label")
                 .queryParam("label", label)
                 .cookie(authCookie)
@@ -185,7 +186,7 @@ public class VertexResourceTest extends GraphManipulationRestTest {
     @Test
     public void setting_type_of_a_vertex_returns_correct_response_status() throws Exception {
         ClientResponse response = addFoafPersonTypeToVertexA();
-        assertThat(response.getStatus(), is(200));
+        assertThat(response.getStatus(), is(Response.Status.OK.getStatusCode()));
     }
 
     private ClientResponse addFoafPersonTypeToVertexA() throws Exception {
@@ -193,8 +194,7 @@ public class VertexResourceTest extends GraphManipulationRestTest {
                 ModelTestScenarios.personType()
         );
         ClientResponse response = resource
-                .path("vertex")
-                .path(encodeURL(vertexAUri().toString()))
+                .path(vertexAUri().getPath())
                 .path("type")
                 .cookie(authCookie)
                 .type(MediaType.APPLICATION_JSON)
@@ -205,8 +205,7 @@ public class VertexResourceTest extends GraphManipulationRestTest {
     private ClientResponse removeFoafPersonIdentificationToVertexA() throws Exception {
         ExternalFriendlyResource personType = ModelTestScenarios.personType();
         ClientResponse response = resource
-                .path("vertex")
-                .path(encodeURL(vertexAUri().toString()))
+                .path(vertexAUri().getPath())
                 .path("identification")
                 .path(encodeURL(personType.uri().toString()))
                 .cookie(authCookie)
@@ -248,8 +247,7 @@ public class VertexResourceTest extends GraphManipulationRestTest {
 
     private ClientResponse addSuggestionsToVertex(JSONArray suggestions) throws Exception {
         ClientResponse response = resource
-                .path("vertex")
-                .path(encodeURL(vertexAUri().toString()))
+                .path(vertexAUri().getPath())
                 .path("suggestions")
                 .cookie(authCookie)
                 .type(MediaType.APPLICATION_JSON)
@@ -276,8 +274,7 @@ public class VertexResourceTest extends GraphManipulationRestTest {
 
     private JSONArray getSuggestionsOfVertex() throws Exception {
         ClientResponse response = resource
-                .path("vertex")
-                .path(encodeURL(vertexAUri().toString()))
+                .path(vertexAUri().getPath())
                 .path("suggestions")
                 .cookie(authCookie)
                 .type(MediaType.APPLICATION_JSON)

@@ -15,20 +15,18 @@ define([
             _implementation = implementation;
         };
         api.displayUsingDefaultVertex = function(){
-            displayUsingCentralVertexId(
-                MindMapInfo.defaultVertexId()
+            displayUsingCentralVertexUri(
+                MindMapInfo.defaultVertexUri()
             );
         };
         api.displayUsingNewCentralVertex = function(centralVertex){
-            displayUsingCentralVertexId(
-                centralVertex.getId()
+            displayUsingCentralVertexUri(
+                centralVertex.getUri()
             );
         };
         api.displayUsingNewCentralVertexUri = function(newCentralVertexUri){
-            displayUsingCentralVertexId(
-                IdUriUtils.graphElementIdFromUri(
-                    newCentralVertexUri
-                )
+            displayUsingCentralVertexUri(
+                newCentralVertexUri
             );
         };
         api.addVertex = function(newVertex, parentVertex){
@@ -62,25 +60,22 @@ define([
                 []
             );
         }
-        function publishDrawingInfoUpdated(drawingInfo, centralVertexId){
+        function publishDrawingInfoUpdated(drawingInfo, centralVertexUri){
             EventBus.publish(
                 '/event/ui/graph/drawing_info/updated/',
-                [drawingInfo, centralVertexId]
+                [drawingInfo, centralVertexUri]
             );
         }
-        function displayUsingCentralVertexId(centralVertexId){
+        function displayUsingCentralVertexUri(centralVertexUri){
             GraphUi.reset();
             publishAboutToUpdate();
-            var centralVertexUri = IdUriUtils.uriFromGraphElementId(
-                centralVertexId
-            );
             _implementation.displayUsingDepthAndCentralVertexUri(
                 centralVertexUri,
                 currentDepth(),
                 function(drawingInfo){
                     publishDrawingInfoUpdated(
                         drawingInfo,
-                        centralVertexId
+                        centralVertexUri
                     )
                 }
             );

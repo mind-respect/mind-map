@@ -11,8 +11,6 @@ import org.triple_brain.module.model.json.graph.VertexJsonFields;
 import javax.ws.rs.core.NewCookie;
 import java.net.URI;
 
-import static org.triple_brain.module.common_utils.Uris.encodeURL;
-
 /*
 * Copyright Mozilla Public License 1.1
 */
@@ -31,6 +29,7 @@ public class VertexRestTestUtils {
 
     public JSONObject vertexWithUri(URI vertexUri){
         ClientResponse response = resource
+                .path("users")
                 .path("test")
                 .path("vertex")
                 .path(Uris.encodeURL(vertexUri.toString()))
@@ -41,6 +40,7 @@ public class VertexRestTestUtils {
 
     public JSONArray connectedEdgesOfVertexWithURI(URI vertexUri) {
         ClientResponse response = resource
+                .path("users")
                 .path("test")
                 .path("vertex")
                 .path(Uris.encodeURL(vertexUri.toString()))
@@ -52,6 +52,7 @@ public class VertexRestTestUtils {
 
     public boolean vertexWithUriHasDestinationVertexWithUri(URI vertexUri, URI destinationVertexUri){
         ClientResponse response = resource
+                .path("users")
                 .path("test")
                 .path("vertex")
                 .path(Uris.encodeURL(vertexUri.toString()))
@@ -81,8 +82,7 @@ public class VertexRestTestUtils {
 
     public ClientResponse addAVertexToVertexAWithUri(URI vertexUri) throws Exception {
         ClientResponse response = resource
-                .path("vertex")
-                .path(encodeURL(vertexUri.toString()))
+                .path(vertexUri.getPath())
                 .cookie(authCookie)
                 .post(ClientResponse.class);
         return response;

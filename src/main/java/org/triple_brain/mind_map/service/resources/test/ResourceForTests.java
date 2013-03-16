@@ -7,7 +7,7 @@ import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.*;
 import org.triple_brain.module.model.graph.scenarios.TestScenarios;
 import org.triple_brain.module.model.graph.scenarios.VerticesCalledABAndC;
-import org.triple_brain.module.model.json.UserJSONFields;
+import org.triple_brain.module.model.json.UserJsonFields;
 import org.triple_brain.module.model.json.graph.VertexJsonFields;
 import org.triple_brain.module.repository.user.UserRepository;
 import org.triple_brain.module.search.GraphIndexer;
@@ -162,7 +162,7 @@ public class ResourceForTests {
                 .password("password");
         userRepository.save(user);
         return Response.ok(
-                UserJSONFields.toJSON(user)
+                UserJsonFields.toJson(user)
         ).build();
     }
 

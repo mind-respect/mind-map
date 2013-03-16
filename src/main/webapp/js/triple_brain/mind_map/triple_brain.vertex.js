@@ -1,18 +1,17 @@
 define([
     "require",
     "jquery",
-    "triple_brain.config",
     "triple_brain.event_bus",
     "triple_brain.id_uri",
     "triple_brain.ui.triple",
     "triple_brain.suggestion"
 ],
-    function (require, $, Config, EventBus, IdUriUtils, Triple, Suggestion) {
+    function (require, $, EventBus, IdUriUtils, Triple, Suggestion) {
         var api = {};
         api.addRelationAndVertexAtPositionToVertex = function (vertex, newVertexPosition, successCallback) {
             $.ajax({
                 type:'POST',
-                url:Config.links.app + '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()),
+                url:vertex.getUri(),
                 dataType:'json'
             }).success(function (tripleJson) {
                     var triple = Triple.createUsingServerTripleAndNewVertexPosition(
@@ -27,7 +26,7 @@ define([
         api.remove = function (vertex) {
             $.ajax({
                 type:'DELETE',
-                url:Config.links.app + '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId())
+                url:vertex.getUri()
             }).success(function () {
                     EventBus.publish(
                         '/event/ui/graph/vertex/deleted/',
@@ -38,7 +37,7 @@ define([
         api.updateLabel = function (vertex, label) {
             $.ajax({
                 type:'POST',
-                url:Config.links.app + '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()) + '/label?label=' + label,
+                url:vertex.getUri() + '/label?label=' + label,
                 dataType:'json'
             }).success(function () {
                     EventBus.publish(
@@ -52,7 +51,7 @@ define([
             function addTypeWhenListenerReady() {
                 $.ajax({
                     type:'POST',
-                    url:Config.links.app + '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()) + '/type',
+                    url:vertex.getUri() + '/type',
                     dataType:'json',
                     data:type.serverFormat(),
                     contentType:'application/json;charset=utf-8'
@@ -71,9 +70,7 @@ define([
         api.removeIdentification = function (vertex, identification, successCallback) {
             $.ajax({
                 type:'DELETE',
-                url:Config.links.app +
-                    '/service/vertex/' +
-                    IdUriUtils.encodedUriFromGraphElementId(vertex.getId())
+                url: vertex.getUri()
                     + '/identification/'
                     + IdUriUtils.encodeUri(identification.uri()),
                 dataType:'json'
@@ -104,7 +101,7 @@ define([
             function addSameAsWhenListenerReady() {
                 $.ajax({
                     type:'POST',
-                    url:Config.links.app + '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()) + '/same_as',
+                    url:vertex.getUri() + '/same_as',
                     dataType:'json',
                     data:sameAs.serverFormat(),
                     contentType:'application/json;charset=utf-8'
@@ -147,7 +144,7 @@ define([
         api.getSuggestions = function (vertex) {
             $.ajax({
                 type:'GET',
-                url:Config.links.app + '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()) + '/suggestions',
+                url:vertex.getUri() + '/suggestions',
                 dataType:'json'
             }).success(function (jsonSuggestions) {
                     var suggestions = getSuggestion().fromJsonArrayOfServer(
@@ -165,7 +162,7 @@ define([
         api.addSuggestions = function (vertex, suggestions) {
             $.ajax({
                 type:'POST',
-                url:Config.links.app + '/service/vertex/' + IdUriUtils.encodedUriFromGraphElementId(vertex.getId()) + '/suggestions',
+                url:vertex.getUri() + '/suggestions',
                 dataType:'json',
                 data:getSuggestion().formatAllForServer(suggestions),
                 contentType:'application/json;charset=utf-8'

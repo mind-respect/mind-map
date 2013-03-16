@@ -1,13 +1,12 @@
 package org.triple_brain.mind_map.service.resources;
 
+import com.google.inject.Injector;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.triple_brain.module.model.User;
 import org.triple_brain.module.model.graph.GraphFactory;
 import org.triple_brain.module.model.graph.UserGraph;
-import org.triple_brain.module.model.json.UserJSONFields;
-import org.triple_brain.module.repository.user.NonExistingUserException;
 import org.triple_brain.module.repository.user.UserRepository;
 import org.triple_brain.module.search.GraphIndexer;
 
@@ -15,7 +14,6 @@ import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -24,22 +22,21 @@ import java.net.URI;
 import java.util.Map;
 
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
-import static org.triple_brain.mind_map.service.SecurityInterceptor.AUTHENTICATED_USER_KEY;
-import static org.triple_brain.mind_map.service.SecurityInterceptor.AUTHENTICATION_ATTRIBUTE_KEY;
 import static org.triple_brain.mind_map.service.resources.GraphManipulatorResourceUtils.isUserInSession;
 import static org.triple_brain.mind_map.service.resources.GraphManipulatorResourceUtils.userFromSession;
-import static org.triple_brain.module.model.json.UserJSONFields.*;
+import static org.triple_brain.module.model.json.UserJsonFields.*;
 import static org.triple_brain.module.model.validator.UserValidator.*;
 
 /**
  * Copyright Mozilla Public License 1.1
  */
 
-@Path("/users")
+@Path("/")
 @PermitAll
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 @Singleton
-public class UserResource {
+public class UserResource{
 
     @Inject
     UserRepository userRepository;
@@ -50,62 +47,67 @@ public class UserResource {
     @Inject
     private GraphFactory graphFactory;
 
-    @POST
-    @Path("/authenticate")
-    public Response authenticate(@Context HttpServletRequest request, JSONObject loginInfo) throws JSONException {
-        try {
-            User user = userRepository.findByEmail(
-                    loginInfo.getString(UserJSONFields.EMAIL)
+    @Inject
+    GraphResourceFactory graphResourceFactory;
+
+    @Inject
+    DrawnGraphResourceFactory drawnGraphResourceFactory;
+
+    @Inject
+    SearchResourceFactory searchResourceFactory;
+
+    @Inject
+    private Injector injector;
+
+    @Context
+    HttpServletRequest request;
+
+    @Path("{username}/graph")
+    public GraphResource graphResource(
+            @PathParam("username") String username
+    ) {
+        if (isAllowed(username, request)) {
+            return graphResourceFactory.withUser(
+                    userFromSession(request.getSession())
             );
-            if (user.hasPassword(
-                    loginInfo.getString(UserJSONFields.PASSWORD)
-            )) {
-                authenticateUserInSession(user, request.getSession());
-                return Response.ok(
-                        UserJSONFields.toJSON(user)
-                ).build();
-            }
-        } catch (NonExistingUserException e) {
-            return Response.status(401).build();
         }
-        return Response.status(401).build();
+        throw new WebApplicationException(Response.Status.FORBIDDEN);
     }
 
-    @GET
-    @Path("/logout")
-    public Response logout(@Context HttpServletRequest request) throws JSONException {
-        request.getSession().setAttribute(AUTHENTICATION_ATTRIBUTE_KEY, false);
-        request.getSession().setAttribute(AUTHENTICATED_USER_KEY, null);
-        return Response.ok().build();
-    }
-
-    @GET
-    @Path("/is_authenticated")
-    public Response isAuthenticated(@Context HttpServletRequest request) throws JSONException {
-        return Response.ok(new JSONObject()
-                .put("is_authenticated",isUserInSession(request.getSession()))
-        ).build();
-    }
-
-    @GET
-    @Path("/")
-    public Response sessionUser(@Context HttpServletRequest request) throws JSONException {
-        if (isUserInSession(request.getSession())) {
-            User authenticatedUser = userFromSession(request.getSession());
-            return Response.ok(
-                    UserJSONFields.toJSON(
-                            authenticatedUser
-                    )
-            ).build();
-        } else {
-            return Response.status(Response.Status.FORBIDDEN).build();
+    @Path("{username}/drawn_graph")
+    public DrawnGraphResource drawnGraphResource(
+            @PathParam("username") String username
+    ) {
+        if (isAllowed(username, request)) {
+            return drawnGraphResourceFactory.withUser(
+                    userFromSession(request.getSession())
+            );
         }
+        throw new WebApplicationException(Response.Status.FORBIDDEN);
+    }
+
+    @Path("{username}/search")
+    public SearchResource searchResource(
+            @PathParam("username") String username
+    ) {
+        if (isAllowed(username, request)) {
+            return searchResourceFactory.withUser(
+                    userFromSession(request.getSession())
+            );
+        }
+        throw new WebApplicationException(Response.Status.FORBIDDEN);
+    }
+
+    @Path("session")
+    public UserSessionResource sessionResource(){
+        return injector.getInstance(
+                UserSessionResource.class
+        );
     }
 
     @POST
     @Path("/")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response create(JSONObject jsonUser, @Context HttpServletRequest request) throws Exception {
+    public Response createUser(JSONObject jsonUser) throws Exception {
         User user = User.withUsernameAndEmail(jsonUser.optString(USER_NAME, ""), jsonUser.optString(EMAIL, ""))
                 .password(jsonUser.optString(PASSWORD, ""));
 
@@ -141,13 +143,31 @@ public class UserResource {
                 userGraph.defaultVertex(),
                 user
         );
-        authenticateUserInSession(user, request.getSession());
-        return Response.created(new URI(request.getRequestURL() + "/" + user.id())).build();
+        UserSessionResource.authenticateUserInSession(
+                user, request.getSession()
+        );
+        return Response.created(URI.create(
+                user.username()
+        )).build();
     }
 
-    private void authenticateUserInSession(User user, HttpSession session){
-        session.setAttribute(AUTHENTICATION_ATTRIBUTE_KEY, true);
-        session.setAttribute(AUTHENTICATED_USER_KEY, user);
+    @GET
+    @Path("/is_authenticated")
+    public Response isAuthenticated(@Context HttpServletRequest request) throws JSONException {
+        return Response.ok(new JSONObject()
+                .put("is_authenticated", isUserInSession(request.getSession()))
+        ).build();
+    }
+
+    private Boolean isAllowed(String userName, HttpServletRequest request) {
+        if(!isUserInSession(request.getSession())){
+            return false;
+        }
+        User authenticatedUser = userFromSession(request.getSession());
+        if (!authenticatedUser.username().equals(userName)) {
+            return false;
+        }
+        return true;
     }
 
 }

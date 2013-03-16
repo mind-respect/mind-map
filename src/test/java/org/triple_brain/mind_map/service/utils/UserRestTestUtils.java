@@ -8,7 +8,7 @@ import org.codehaus.jettison.json.JSONObject;
 import javax.ws.rs.core.MediaType;
 import java.util.UUID;
 
-import static org.triple_brain.module.model.json.UserJSONFields.*;
+import static org.triple_brain.module.model.json.UserJsonFields.*;
 
 /*
 * Copyright Mozilla Public License 1.1
@@ -27,6 +27,7 @@ public class UserRestTestUtils {
 
     public boolean emailExists(String email){
         ClientResponse response = resource
+                .path("users")
                 .path("test")
                 .path("users")
                 .path(email)

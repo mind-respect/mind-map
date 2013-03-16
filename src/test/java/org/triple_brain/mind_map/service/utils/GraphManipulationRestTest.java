@@ -7,7 +7,7 @@ import org.codehaus.jettison.json.JSONObject;
 import org.junit.Before;
 import org.triple_brain.module.common_utils.Uris;
 import org.triple_brain.module.model.User;
-import org.triple_brain.module.model.json.UserJSONFields;
+import org.triple_brain.module.model.json.UserJsonFields;
 
 import java.net.URI;
 
@@ -40,8 +40,8 @@ public class GraphManipulationRestTest extends RestTest {
         createAUser(userAsJson);
         authenticate(userAsJson);
         authenticatedUser = User.withUsernameAndEmail(
-                userAsJson.getString(UserJSONFields.USER_NAME),
-                userAsJson.getString(UserJSONFields.EMAIL)
+                userAsJson.getString(UserJsonFields.USER_NAME),
+                userAsJson.getString(UserJsonFields.EMAIL)
         );
         authenticatedUser.password(DEFAULT_PASSWORD);
 
@@ -60,6 +60,7 @@ public class GraphManipulationRestTest extends RestTest {
 
     protected void makeGraphHave3SerialVerticesWithLongLabels() {
         ClientResponse response = resource
+                .path("users")
                 .path("test")
                 .path("make_graph_have_3_serial_vertices_with_long_labels")
                 .cookie(authCookie)
@@ -86,6 +87,7 @@ public class GraphManipulationRestTest extends RestTest {
 
     private void createUserCore() {
         ClientResponse response = resource
+                .path("users")
                 .path("test")
                 .path("search")
                 .path("create_core")
@@ -96,6 +98,7 @@ public class GraphManipulationRestTest extends RestTest {
 
     private void deleteAllUserVerticesFromSearch() {
         ClientResponse response = resource
+                .path("users")
                 .path("test")
                 .path("search")
                 .path("delete_all_documents")
@@ -106,6 +109,7 @@ public class GraphManipulationRestTest extends RestTest {
 
     protected void indexAllVertices() {
         ClientResponse response = resource
+                .path("users")
                 .path("test")
                 .path("search")
                 .path("index_all_vertices")
@@ -129,6 +133,7 @@ public class GraphManipulationRestTest extends RestTest {
 
     public boolean graphElementWithIdExistsInCurrentGraph(URI graphElementId){
         ClientResponse response = resource
+                .path("users")
                 .path("test")
                 .path("graph")
                 .path("graph_element")
@@ -142,8 +147,9 @@ public class GraphManipulationRestTest extends RestTest {
 
     public JSONObject wholeGraph(){
         ClientResponse response = resource
+                .path("users")
+                .path(authenticatedUser.username())
                 .path("drawn_graph")
-                .path(Uris.encodeURL(authenticatedUser.mindMapUri()))
                 .path(DEPTH_OF_SUB_VERTICES_COVERING_ALL_GRAPH_VERTICES.toString())
                 .cookie(authCookie)
                 .get(ClientResponse.class);

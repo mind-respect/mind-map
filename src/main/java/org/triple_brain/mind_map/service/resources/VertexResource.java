@@ -1,11 +1,15 @@
 package org.triple_brain.mind_map.service.resources;
 
+import com.google.inject.assistedinject.Assisted;
+import com.google.inject.assistedinject.AssistedInject;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.triple_brain.mind_map.service.ExternalResourceServiceUtils;
 import org.triple_brain.module.model.*;
-import org.triple_brain.module.model.graph.*;
+import org.triple_brain.module.model.graph.Edge;
+import org.triple_brain.module.model.graph.UserGraph;
+import org.triple_brain.module.model.graph.Vertex;
 import org.triple_brain.module.model.json.ExternalResourceJson;
 import org.triple_brain.module.model.json.graph.EdgeJsonFields;
 import org.triple_brain.module.model.json.graph.VertexJsonFields;
@@ -14,7 +18,6 @@ import org.triple_brain.module.model.suggestion.SuggestionOrigin;
 import org.triple_brain.module.search.GraphIndexer;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -22,7 +25,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
-import java.net.URISyntaxException;
 
 import static org.triple_brain.mind_map.service.resources.GraphManipulatorResourceUtils.userFromSession;
 import static org.triple_brain.module.common_utils.Uris.decodeURL;
@@ -32,17 +34,12 @@ import static org.triple_brain.module.model.json.SuggestionJsonFields.*;
 /**
  * Copyright Mozilla Public License 1.1
  */
-@Path("/vertex")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@Singleton
 public class VertexResource {
 
     @Inject
     GraphIndexer graphIndexer;
-
-    @Inject
-    GraphFactory graphFactory;
 
     @Inject
     BeforeAfterEachRestCall beforeAfterEachRestCall;
@@ -50,20 +47,23 @@ public class VertexResource {
     @Inject
     ExternalResourceServiceUtils externalResourceServiceUtils;
 
+    private UserGraph userGraph;
+
+    @AssistedInject
+    public VertexResource(
+            @Assisted UserGraph userGraph
+    ){
+        this.userGraph = userGraph;
+    }
+
     @POST
     @Path("/{sourceVertexId}")
-    public Response addVertexAndEdgeToSourceVertex(@GraphElementIdentifier @PathParam("sourceVertexId") String sourceVertexId, @Context HttpServletRequest request) throws JSONException, URISyntaxException {
-        try {
-            sourceVertexId = decodeURL(sourceVertexId);
-        } catch (UnsupportedEncodingException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-        UserGraph userGraph = graphFactory.loadForUser(
-                userFromSession(request.getSession())
-        );
-        Vertex sourceVertex = userGraph.vertexWithURI(
-                new URI(sourceVertexId)
-        );
+    public Response addVertexAndEdgeToSourceVertex(
+            @Context HttpServletRequest request
+    ) {
+        Vertex sourceVertex = userGraph.vertexWithURI(URI.create(
+            request.getRequestURI()
+        ));
         Edge createdEdge = sourceVertex.addVertexAndRelation();
         Vertex createdVertex = createdEdge.destinationVertex();
         graphIndexer.indexVertexOfUser(
@@ -71,79 +71,69 @@ public class VertexResource {
                 userFromSession(request.getSession())
         );
         JSONObject jsonCreatedStatement = new JSONObject();
-        jsonCreatedStatement.put(
-                SOURCE_VERTEX, VertexJsonFields.toJson(sourceVertex)
-        );
-        jsonCreatedStatement.put(
-                EDGE, EdgeJsonFields.toJson(createdEdge)
-        );
-        jsonCreatedStatement.put(
-                END_VERTEX, VertexJsonFields.toJson(createdVertex)
-        );
+        try {
+            jsonCreatedStatement.put(
+                    SOURCE_VERTEX, VertexJsonFields.toJson(sourceVertex)
+            );
+            jsonCreatedStatement.put(
+                    EDGE, EdgeJsonFields.toJson(createdEdge)
+            );
+            jsonCreatedStatement.put(
+                    END_VERTEX, VertexJsonFields.toJson(createdVertex)
+            );
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
         //TODO response should be of type created
         return Response.ok(jsonCreatedStatement).build();
     }
 
     @DELETE
     @Path("/{vertexId}")
-    public Response removeVertex(@GraphElementIdentifier @PathParam("vertexId") String vertexId, @Context HttpServletRequest request) throws JSONException, URISyntaxException {
-        try {
-            vertexId = decodeURL(vertexId);
-        } catch (UnsupportedEncodingException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-        User authenticatedUser = userFromSession(request.getSession());
-        UserGraph userGraph = graphFactory.loadForUser(
-                userFromSession(request.getSession())
-        );
+    public Response removeVertex(
+            @Context HttpServletRequest request
+    ) {
         graphIndexer.deleteVertexOfUser(
-                userGraph.vertexWithURI(new URI(vertexId)),
-                authenticatedUser
+                userGraph.vertexWithURI(URI.create(
+                    request.getRequestURI()
+                )),
+                userGraph.user()
         );
-        Vertex vertex = userGraph.vertexWithURI(new URI(vertexId));
+        Vertex vertex = userGraph.vertexWithURI(URI.create(
+                request.getRequestURI()
+        ));
         vertex.remove();
         return Response.ok().build();
     }
 
     @POST
-    @Path("{vertexId}/label")
-    public Response updateVertexLabel(@GraphElementIdentifier @PathParam("vertexId") String vertexId, @QueryParam("label") String label, @Context HttpServletRequest request) throws JSONException, URISyntaxException {
-        try {
-            vertexId = decodeURL(vertexId);
-        } catch (UnsupportedEncodingException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-        User authenticatedUser = userFromSession(request.getSession());
-        UserGraph userGraph = graphFactory.loadForUser(
-                authenticatedUser
-        );
+    @Path("{shortId}/label")
+    public Response updateVertexLabel(
+            @PathParam("shortId") String shortId,
+            @QueryParam("label") String label
+    ) {
+        URI vertexId = uriFromShortId(shortId);
         Vertex vertex = userGraph.vertexWithURI(
-                new URI(vertexId)
+                vertexId
         );
         vertex.label(label);
 
         graphIndexer.indexVertexOfUser(
-                userGraph.vertexWithURI(
-                        new URI(vertexId)
-                ),
-                authenticatedUser
+                vertex,
+                userGraph.user()
         );
         return Response.ok().build();
     }
 
     @POST
-    @Path("{vertexId}/type")
-    public Response addType(@GraphElementIdentifier @PathParam("vertexId") String vertexId, JSONObject type, @Context HttpServletRequest request) throws JSONException, URISyntaxException {
-        try {
-            vertexId = decodeURL(vertexId);
-        } catch (UnsupportedEncodingException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-        UserGraph userGraph = graphFactory.loadForUser(
-                userFromSession(request.getSession())
-        );
+    @Path("{shortId}/type")
+    public Response addType(
+            @PathParam("shortId") String shortId,
+            JSONObject type
+    ) {
+        URI vertexId = uriFromShortId(shortId);
         Vertex vertex = userGraph.vertexWithURI(
-                new URI(vertexId)
+                vertexId
         );
         ExternalFriendlyResource externalFriendlyResource = ExternalResourceJson.fromJson(type);
         vertex.addType(
@@ -155,7 +145,7 @@ public class VertexResource {
     }
 
     public void updateImagesOfExternalResourceIfNecessary(ExternalFriendlyResource externalFriendlyResource) {
-        if(!externalFriendlyResource.gotTheImages()){
+        if (!externalFriendlyResource.gotTheImages()) {
             if (FreebaseExternalFriendlyResource.isFromFreebase(externalFriendlyResource)) {
                 FreebaseExternalFriendlyResource freebaseResource = FreebaseExternalFriendlyResource.fromExternalResource(
                         externalFriendlyResource
@@ -168,8 +158,8 @@ public class VertexResource {
     }
 
     public void updateDescriptionOfExternalResourceIfNecessary(ExternalFriendlyResource externalFriendlyResource) {
-        if(!externalFriendlyResource.gotADescription()){
-            if(FreebaseExternalFriendlyResource.isFromFreebase(externalFriendlyResource)){
+        if (!externalFriendlyResource.gotADescription()) {
+            if (FreebaseExternalFriendlyResource.isFromFreebase(externalFriendlyResource)) {
                 FreebaseExternalFriendlyResource freebaseResource = FreebaseExternalFriendlyResource.fromExternalResource(
                         externalFriendlyResource
                 );
@@ -181,18 +171,14 @@ public class VertexResource {
     }
 
     @POST
-    @Path("{vertexId}/same_as")
-    public Response addSameAs(@GraphElementIdentifier @PathParam("vertexId") String vertexId, JSONObject sameAs, @Context HttpServletRequest request) throws JSONException, URISyntaxException {
-        try {
-            vertexId = decodeURL(vertexId);
-        } catch (UnsupportedEncodingException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-        UserGraph userGraph = graphFactory.loadForUser(
-                userFromSession(request.getSession())
-        );
+    @Path("{shortId}/same_as")
+    public Response addSameAs(
+            @PathParam("shortId") String shortId,
+            JSONObject sameAs
+    ) {
+        URI vertexId = uriFromShortId(shortId);
         Vertex vertex = userGraph.vertexWithURI(
-                new URI(vertexId)
+            vertexId
         );
         ExternalFriendlyResource externalFriendlyResource = ExternalResourceJson.fromJson(sameAs);
         vertex.addSameAs(
@@ -205,60 +191,54 @@ public class VertexResource {
     }
 
     @DELETE
-    @Path("{vertexId}/identification/{friendly_resource_uri}")
-    public Response removeFriendlyResource(@GraphElementIdentifier @PathParam("vertexId") String vertexId, @PathParam("friendly_resource_uri") String friendlyResourceUri, @Context HttpServletRequest request) throws URISyntaxException, JSONException {
-        try {
-            vertexId = decodeURL(vertexId);
+    @Path("{shortId}/identification/{friendly_resource_uri}")
+    public Response removeFriendlyResource(
+            @PathParam("shortId") String shortId,
+            @PathParam("friendly_resource_uri") String friendlyResourceUri
+    ) {
+        try{
             friendlyResourceUri = decodeURL(friendlyResourceUri);
         } catch (UnsupportedEncodingException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        UserGraph userGraph = graphFactory.loadForUser(
-                userFromSession(request.getSession())
-        );
+        URI vertexId = uriFromShortId(shortId);
         Vertex vertex = userGraph.vertexWithURI(
-                new URI(vertexId)
+                vertexId
         );
         ExternalFriendlyResource type = vertex.friendlyResourceWithUri(
-                new URI(friendlyResourceUri)
+                URI.create(friendlyResourceUri)
         );
         vertex.removeFriendlyResource(type);
         return Response.ok().build();
     }
 
     @GET
-    @Path("{vertexId}/suggestions")
-    public Response getSuggestions(@GraphElementIdentifier @PathParam("vertexId") String vertexId, @Context HttpServletRequest request) throws JSONException, URISyntaxException {
-        try {
-            vertexId = decodeURL(vertexId);
-        } catch (UnsupportedEncodingException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-        UserGraph userGraph = graphFactory.loadForUser(
-                userFromSession(request.getSession())
-        );
+    @Path("{shortId}/suggestions")
+    public Response getSuggestions(
+            @PathParam("shortId") String shortId
+    ) {
+        URI vertexId = uriFromShortId(shortId);
         Vertex vertex = userGraph.vertexWithURI(
-                new URI(vertexId)
+                vertexId
         );
-        JSONArray suggestions = VertexJsonFields.toJson(vertex)
-                .getJSONArray(VertexJsonFields.SUGGESTIONS);
-
-        return Response.ok(suggestions).build();
+        try {
+            JSONArray suggestions = VertexJsonFields.toJson(vertex)
+                    .getJSONArray(VertexJsonFields.SUGGESTIONS);
+            return Response.ok(suggestions).build();
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @POST
-    @Path("{vertexId}/suggestions")
-    public Response addSuggestions(@GraphElementIdentifier @PathParam("vertexId") String vertexId, JSONArray suggestions, @Context HttpServletRequest request) throws JSONException, URISyntaxException {
-        try {
-            vertexId = decodeURL(vertexId);
-        } catch (UnsupportedEncodingException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-        UserGraph userGraph = graphFactory.loadForUser(
-                userFromSession(request.getSession())
-        );
+    @Path("{shortId}/suggestions")
+    public Response addSuggestions(
+            @PathParam("shortId") String shortId,
+            JSONArray suggestions
+    ) {        
+        URI vertexId = uriFromShortId(shortId);
         Vertex vertex = userGraph.vertexWithURI(
-                new URI(vertexId)
+            vertexId
         );
         vertex.addSuggestions(
                 suggestionsSetFromJSONArray(suggestions)
@@ -266,18 +246,30 @@ public class VertexResource {
         return Response.ok().build();
     }
 
-    private Suggestion[] suggestionsSetFromJSONArray(JSONArray jsonSuggestions) throws JSONException, URISyntaxException {
+    private Suggestion[] suggestionsSetFromJSONArray(JSONArray jsonSuggestions) {
         Suggestion[] suggestions = new Suggestion[jsonSuggestions.length()];
         for (int i = 0; i < jsonSuggestions.length(); i++) {
-            JSONObject jsonSuggestion = jsonSuggestions.getJSONObject(i);
-            suggestions[i] = Suggestion.withSameAsDomainLabelAndOrigins(
-                    new URI(jsonSuggestion.getString(TYPE_URI)),
-                    new URI(jsonSuggestion.getString(DOMAIN_URI)),
-                    jsonSuggestion.getString(LABEL),
-                    SuggestionOrigin.valueOf(jsonSuggestion.getString(ORIGIN))
-            );
+            try {
+                JSONObject jsonSuggestion = jsonSuggestions.getJSONObject(i);
+                suggestions[i] = Suggestion.withSameAsDomainLabelAndOrigins(
+                        URI.create(jsonSuggestion.getString(TYPE_URI)),
+                        URI.create(jsonSuggestion.getString(DOMAIN_URI)),
+                        jsonSuggestion.getString(LABEL),
+                        SuggestionOrigin.valueOf(jsonSuggestion.getString(ORIGIN))
+                );
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
         }
         return suggestions;
+    }
+
+    private URI uriFromShortId(String shortId){
+        return  new UserUris(
+                userGraph.user()
+        ).vertexUriFromShortId(
+                shortId
+        );
     }
 
 }

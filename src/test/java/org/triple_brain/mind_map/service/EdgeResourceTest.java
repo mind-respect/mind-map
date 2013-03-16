@@ -5,6 +5,7 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Test;
 import org.triple_brain.mind_map.service.utils.GraphManipulationRestTest;
+import org.triple_brain.module.model.UserUris;
 import org.triple_brain.module.model.json.graph.EdgeJsonFields;
 import org.triple_brain.module.model.json.graph.GraphJSONFields;
 
@@ -49,22 +50,20 @@ public class EdgeResourceTest extends GraphManipulationRestTest {
                 allEdges
         );
         assertThat(
-                response.getHeaders().get("Location").get(0),
-                is(
-                        BASE_URI + "/edge/" +
-                                encodeURL(vertexAUri().toString())
-                                + "/" +
-                                encodeURL(vertexCUri().toString())
-                                + "/" +
-                                encodeURL(edgeBetweenAAndC.getString(EdgeJsonFields.ID))
-                ));
+            response.getHeaders().get("Location").get(0),
+            is(
+                BASE_URI + edgeBetweenAAndC.getString(
+                        EdgeJsonFields.ID
+                )
+            )
+        );
     }
 
     private ClientResponse addRelationBetweenVertexAAndC() throws Exception{
         ClientResponse response = resource
-                .path("edge")
-                .path(encodeURL(vertexAUri().toString()))
-                .path(encodeURL(vertexCUri().toString()))
+                .path(new UserUris(authenticatedUser).baseEdgeUri().getPath())
+                .queryParam("sourceVertexId", encodeURL(vertexAUri().toString()))
+                .queryParam("destinationVertexId", encodeURL(vertexCUri().toString()))
                 .cookie(authCookie)
                 .post(ClientResponse.class);
         return response;
@@ -90,8 +89,8 @@ public class EdgeResourceTest extends GraphManipulationRestTest {
 
     private ClientResponse removeEdgeBetweenVertexAAndB() throws Exception{
         JSONObject edgeBetweenAAndB = edgeBetweenAAndB();
-        ClientResponse response = resource.path("edge")
-                .path(encodeURL(edgeBetweenAAndB.getString(EdgeJsonFields.ID)))
+        ClientResponse response = resource
+                .path(edgeBetweenAAndB.getString(EdgeJsonFields.ID))
                 .cookie(authCookie)
                 .delete(ClientResponse.class);
         return response;
@@ -121,8 +120,8 @@ public class EdgeResourceTest extends GraphManipulationRestTest {
     private ClientResponse updateEdgeLabelBetweenAAndB(String label)throws Exception{
         JSONObject edgeBetweenAAndB = edgeBetweenAAndB();
         ClientResponse response = resource
-                .path("edge/label/")
-                .path(encodeURL(edgeBetweenAAndB.getString(EdgeJsonFields.ID)))
+                .path(edgeBetweenAAndB.getString(EdgeJsonFields.ID))
+                .path("label")
                 .queryParam("label", label)
                 .cookie(authCookie)
                 .post(ClientResponse.class);

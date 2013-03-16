@@ -9,10 +9,10 @@ define([
         var t = Template.withTemplateGroup(api);
 
         //vertex html elements
-        t.add('vertex', '<div class="vertex graph-element" id="{graphElementId}" style="top:{adjustedPosition.y};left:{adjustedPosition.x};position:absolute"></div>');
+        t.add('vertex', '<div class="vertex graph-element" style="top:{adjustedPosition.y};left:{adjustedPosition.x};position:absolute"></div>');
         t.add(
             'relative_vertex',
-            '<div class="vertex graph-element" id="{graphElementId}" style="position:relative;margin:50% 0 0 0"></div>'
+            '<div class="vertex graph-element" style="position:relative;margin:50% 0 0 0"></div>'
         );
         t.add('vertex_label_container', '<div class=textfield-container><input type="text" class="label" value="{label}"></div>');
         t.add('vertex_menu', '<div class="menu"></div>');
@@ -49,7 +49,7 @@ define([
         t.add('hidden_property', '<li>{name}</li>');
 
         //edge html elements
-        t.add('edge', '<div class="edge graph-element" id="{id}" style="left:{label_position.x};top:{label_position.y}" source-vertex-id="{source_vertex_id}" destination-vertex-id="{destination_vertex_id}"></div>');
+        t.add('edge', '<div class="edge graph-element" id="{id}" style="left:{label_position.x};top:{label_position.y}"></div>');
         t.add('edge_label', '<input type="text" value="{label}">');
         t.add('edge_remove_button', '<input type="button" class="remove" value="x" >');
 

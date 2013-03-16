@@ -93,6 +93,7 @@ public class SecurityInterceptor implements MethodInterceptor {
 
     private boolean isGraphElementIdentifierAnnotation(Annotation annotation){
         return annotation.annotationType().getCanonicalName().equals(GraphElementIdentifier.class.getCanonicalName());
+
     }
 
     private <T> T getClassAnnotations(Class clazz, Class<T> annotationClass) {
