@@ -454,6 +454,17 @@ define([
             this.getSuggestionMenu = function () {
                 return $(html).data("suggestion_menu");
             };
+            this.setOriginalServerObject = function(serverJson){
+                $(html).data(
+                    "originalServerObject",
+                    serverJson
+                );
+            };
+            this.getOriginalServerObject = function(){
+                return $(html).data(
+                    "originalServerObject"
+                );
+            };
             this.prepareAsYouTypeSuggestions = function(){
                 var vertexTypes = thisVertex.getTypes();
                 if(vertexTypes.length == 0){

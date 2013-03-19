@@ -12,7 +12,6 @@ define([
     "triple_brain.ui.edge",
     "triple_brain.edge",
     "triple_brain.suggestion",
-    "triple_brain.id_uri",
     "triple_brain.mind-map_template",
     "triple_brain.external_resource",
     "triple_brain.ui.identification_menu",
@@ -23,7 +22,7 @@ define([
     "triple_brain.segment",
     "triple_brain.graph_displayer",
     "jquery-ui"
-], function (require, $, EventBus, GraphUi, Vertex, VertexService, Edge, EdgeService, Suggestion, IdUriUtils, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, UiUtils, ArrowLine, Point, Segment, GraphDisplayer) {
+], function (require, $, EventBus, GraphUi, Vertex, VertexService, Edge, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, UiUtils, ArrowLine, Point, Segment, GraphDisplayer) {
         var api = {};
         api.createWithArrayOfJsonHavingRelativePosition = function (arrayOfServerVertex, addHtml) {
             $.each(arrayOfServerVertex, function () {
@@ -61,7 +60,6 @@ define([
         }
 
         function VertexCreator(json, isAbsolutePositioning) {
-            var IdUriUtils = require("triple_brain.id_uri");
             var Vertex = require("triple_brain.ui.vertex");
             var VertexService = require("triple_brain.vertex");
             var Suggestion = require("triple_brain.suggestion");
@@ -130,6 +128,9 @@ define([
                 });
                 vertex.prepareAsYouTypeSuggestions();
                 vertex.makeItLowProfile();
+                vertex.setOriginalServerObject(
+                    json
+                );
                 EventBus.publish(
                     '/event/ui/html/vertex/created/',
                     vertex

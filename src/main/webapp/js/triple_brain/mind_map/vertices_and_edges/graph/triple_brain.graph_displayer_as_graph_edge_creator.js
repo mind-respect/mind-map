@@ -30,6 +30,7 @@ define([
 
         function EdgeCreator(json){
             var Edge = require("triple_brain.ui.edge");
+            var uri = json.id;
             json.id = IdUriUtils.graphElementIdFromUri(json.id);
             var html = MindMapTemplate['edge'].merge(json);
             this.create = function(){
@@ -52,6 +53,7 @@ define([
                 createMenu();
                 drawArrowLine();
                 var edge = edgeFacade();
+                edge.setUri(uri);
                 edge.centerOnArrowLine();
                 edge.hideMenu();
                 edge.adjustWidth();

@@ -7,9 +7,10 @@ define([
     "triple_brain.ui.vertex_html_builder",
     "triple_brain.ui.graph",
     "triple_brain.graph_displayer_as_graph_edge_creator",
-    "triple_brain.user"
+    "triple_brain.user",
+    "triple_brain.ui.arrow_line"
 ],
-    function ($, IdUriUtils, VertexHtmlBuilder, GraphUi, EdgeCreatorForGraph, UserService) {
+    function ($, IdUriUtils, VertexHtmlBuilder, GraphUi, EdgeCreatorForGraph, UserService, ArrowLine) {
         var api = {};
         api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
             var centralVertexEncodedUri = IdUriUtils.encodeUri(centralVertexUri);
@@ -19,6 +20,10 @@ define([
                 dataType:'json'
             }).success(function (drawnGraph) {
                     addVerticesToHtml(drawnGraph.vertices);
+                    ArrowLine.resetDrawingCanvas();
+                    api.integrateEdges(
+                        drawnGraph.edges
+                    );
                     callback(drawnGraph);
                 });
         };

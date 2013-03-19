@@ -28,7 +28,7 @@ define([
         };
         api.uriFromGraphElementId = function (id) {
             var username = UserService.authenticatedUserInCache().user_name;
-            return api.baseUri + username + "/" + id
+            return "/users" + username + "/" + id
         };
         return api;
     }

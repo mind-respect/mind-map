@@ -95,6 +95,17 @@ define([
             this.id = function () {
                 return $(html).attr('id');
             };
+            this.setUri = function(uri){
+                $(html).data(
+                    "uri",
+                    uri
+                );
+            };
+            this.getUri = function(){
+                return $(html).data(
+                    "uri"
+                );
+            }
             this.destinationVertex = function () {
                 return Vertex.withId(
                     $(html).data('destination_vertex_id')

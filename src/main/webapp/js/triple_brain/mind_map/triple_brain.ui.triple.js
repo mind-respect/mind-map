@@ -24,7 +24,7 @@ define([
                 tripleJson.end_vertex,
                 sourceVertex
             );
-            var edge = GraphDisplayer.addEdge(tripleJson.edge);
+            var edge = GraphDisplayer.addEdge(tripleJson.edge, sourceVertex, destinationVertex);
 
             var newTriple  = new Triple(
                 sourceVertex,

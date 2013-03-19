@@ -34,7 +34,7 @@ define([
                     parentId = sourceId;
                     childId = destinationId;
                 }
-                addChild(parentId, childId);
+                addChild(parentId, childId, edge);
             }
 
             function initVertexInTreeInfoIfNecessary(vertexId) {
@@ -52,10 +52,11 @@ define([
                 return vertexId === centralVertexUri;
             }
 
-            function addChild(vertexId, childrenId) {
-                vertices[vertexId].children.push(
-                    childrenId
-                );
+            function addChild(vertexId, childrenId, edge) {
+                vertices[vertexId].children.push({
+                    vertexUri : childrenId,
+                    edge : edge
+                });
             }
 
             function applyToBoth(functions) {

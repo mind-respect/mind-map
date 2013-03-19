@@ -13,9 +13,10 @@ define(
         "triple_brain.graph_displayer",
         "triple_brain.graph_displayer_as_graph",
         "triple_brain.graph_displayer_as_absolute_tree",
-        "triple_brain.graph_displayer_as_relative_tree"
+        "triple_brain.graph_displayer_as_relative_tree",
+        "triple_brain.ui.arrow_line"
     ],
-    function ($, UserService, EventBus, LoginHandler, DragScroll, Vertex, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerAsGraph, GraphDisplayerAsAbsoluteTree, GraphDisplayerAsRelativeTree) {
+    function ($, UserService, EventBus, LoginHandler, DragScroll, Vertex, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerAsGraph, GraphDisplayerAsAbsoluteTree, GraphDisplayerAsRelativeTree, ArrowLine) {
         var api = {
             offset:function () {
                 var offset = {};
@@ -42,8 +43,8 @@ define(
                     DepthSlider.init();
                     SearchUi.init();
                     GraphDisplayer.setImplementation(
-                        GraphDisplayerAsGraph
-//                        GraphDisplayerAsRelativeTree
+//                        GraphDisplayerAsGraph
+                        GraphDisplayerAsRelativeTree
                     );
                     UserService.authenticatedUser(
                         GraphDisplayer.displayUsingDefaultVertex
@@ -79,20 +80,13 @@ define(
         EventBus.subscribe(
             '/event/ui/graph/drawing_info/updated/',
             function (event, drawnGraph, centralVertexUri) {
-                if ($("body").data(("canvas"))) {
-                    $("body").data("canvas").clear();
-                }
-                $("body").data(
-                    "canvas",
-                    Raphael(0, 0, $("body").width(), $("body").height())
-                );
+                ArrowLine.resetDrawingCanvas();
                 GraphDisplayer.integrateEdges(
                     drawnGraph.edges
                 );
                 var centralVertex = Vertex.withUri(centralVertexUri);
                 centralVertex.setAsCentral();
                 centralVertex.scrollTo();
-
                 DragScroll.start();
                 EventBus.publish('/event/ui/graph/drawn');
             }
