@@ -40,7 +40,7 @@ public abstract class RestTest {
 
     @BeforeClass
     static public void startServer() throws Exception {
-        BASE_URI = new URI("http://localhost:8786/");
+        BASE_URI = new URI("http://localhost:8786");
 
         launcher = new Launcher(BASE_URI.getPort());
         launcher.launch();

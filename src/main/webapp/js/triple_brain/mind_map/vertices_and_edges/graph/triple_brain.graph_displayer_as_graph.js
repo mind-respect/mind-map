@@ -20,10 +20,6 @@ define([
                 dataType:'json'
             }).success(function (drawnGraph) {
                     addVerticesToHtml(drawnGraph.vertices);
-                    ArrowLine.resetDrawingCanvas();
-                    api.integrateEdges(
-                        drawnGraph.edges
-                    );
                     callback(drawnGraph);
                 });
         };

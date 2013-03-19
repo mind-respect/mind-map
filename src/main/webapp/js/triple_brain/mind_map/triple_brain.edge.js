@@ -21,7 +21,7 @@ define([
                         var edgeServerFormatted = {};
                         edgeServerFormatted.id = responseUri;
                         edgeServerFormatted.source_vertex_id = sourceVertex.getUri();
-                        edgeServerFormatted.destination_vertex_id = destinationVertex.getId();
+                        edgeServerFormatted.destination_vertex_id = destinationVertex.getUri();
                         edgeServerFormatted.label = Edge.EMPTY_LABEL;
                         callback(edgeServerFormatted);
                     })

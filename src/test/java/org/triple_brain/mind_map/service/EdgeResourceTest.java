@@ -2,6 +2,7 @@ package org.triple_brain.mind_map.service;
 
 import com.sun.jersey.api.client.ClientResponse;
 import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Test;
 import org.triple_brain.mind_map.service.utils.GraphManipulationRestTest;
@@ -41,7 +42,7 @@ public class EdgeResourceTest extends GraphManipulationRestTest {
     }
 
     @Test
-    public void adding_a_relation_returns_correct_headers() throws Exception{
+    public void adding_a_relation_returns_correct_headers()throws JSONException{
         ClientResponse response = addRelationBetweenVertexAAndC();
         JSONArray allEdges = wholeGraph().getJSONArray(GraphJSONFields.EDGES);
         JSONObject edgeBetweenAAndC = edgeUtils.edgeBetweenTwoVerticesUriGivenEdges(
@@ -59,7 +60,7 @@ public class EdgeResourceTest extends GraphManipulationRestTest {
         );
     }
 
-    private ClientResponse addRelationBetweenVertexAAndC() throws Exception{
+    private ClientResponse addRelationBetweenVertexAAndC(){
         ClientResponse response = resource
                 .path(new UserUris(authenticatedUser).baseEdgeUri().getPath())
                 .queryParam("sourceVertexId", encodeURL(vertexAUri().toString()))

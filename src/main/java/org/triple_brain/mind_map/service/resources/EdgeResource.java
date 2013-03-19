@@ -61,7 +61,7 @@ public class EdgeResource {
         ));
         Edge createdEdge = sourceVertex.addRelationToVertex(destinationVertex);
         return Response.created(URI.create(
-                uriInfo.getBaseUri() + createdEdge.id()
+                UserUris.edgeShortId(createdEdge.id())
         )).build();
     }
 
