@@ -12,6 +12,7 @@
 
 .vertex-tree-container{
     display:table;
+    max-height: 100px;
     margin-left:10em;
 }
 

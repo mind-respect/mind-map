@@ -5,7 +5,7 @@ define([
     "jquery",
     "triple_brain.graph",
     "triple_brain.graph_displayer_as_tree_common",
-    "triple_brain.ui.vertex_html_builder",
+    "triple_brain.vertex_html_builder_for_tree_displayer",
     "triple_brain.ui.graph"
 ],
     function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, GraphUi) {
@@ -126,7 +126,7 @@ define([
                     }
                     function addVertexToHtml(vertex){
                         api.addVertex(
-                            VertexHtmlBuilder.withJsonHavingRelativePosition(
+                            VertexHtmlBuilder.with(
                                 vertex
                             ).create()
                         );

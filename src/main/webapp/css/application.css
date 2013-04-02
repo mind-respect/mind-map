@@ -112,21 +112,22 @@ body input[type=button]:hover{
 }
 
 .vertex{
-    white-space: nowrap;
-    min-width:120px;
     z-index: 3;
     cursor:default;
 }
 
-.highlighted-vertex{
-    border: 1px;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
-    border-color: green;
-    border-style: solid;
-    background-color: white;
-    opacity: 0.96;
-    z-index: 10;
+.vertex.absolute{
+    height:100%;
+    overflow:auto;
+    white-space: nowrap;
+    position:absolute;
+    min-width:120px;
+}
+
+.vertex.relative{
+    position:relative;
+    min-width:0;
+    margin:0 0 0 0;
 }
 
 .vertex .textfield-container {
@@ -134,16 +135,44 @@ body input[type=button]:hover{
 }
 
 .vertex input[type="text"] {
-    border: 0px;
-    padding: 0px;
-    spacing: 0px;
+    border: 0;
+    padding: 0;
+    spacing: 0;
     outline: none;
     font-family: courier new, monospace;
     text-align: left;
     font-size: 14px;
     vertical-align: middle;
     background-color: transparent;
-    margin-top: 15px;
+    /*margin-top: 15px;*/
+    width:auto;
+    overflow: hidden;
+}
+
+.vertex .textfield-container{
+    padding:1em;
+}
+
+.vertex.highlighted{
+    background-color: white;
+    opacity: 0.96;
+    z-index: 10;
+}
+
+.vertex.center-vertex .textfield-container{
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    -webkit-box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.1);
+    -moz-box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.1);
+    box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.5);
+}
+
+.vertex.highlighted:not(.center-vertex) .textfield-container{
+    border: 1px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    border-color: green;
+    border-style: solid;
 }
 
 input[type="button"] {
@@ -168,34 +197,39 @@ input[type="button"] {
     float:left;
 }
 
-.vertex .plus {
+.vertex .menu {
+    margin-top:10px;
+    margin-left:30px;
+    width:75px;
+}
+
+.vertex.relative .menu {
+    margin: 0;
+    padding-top:10px;
+}
+
+.vertex .menu .plus {
     color: green !important;
     text-align: center;
     background: none;
 }
 
-.vertex .remove {
+.vertex .menu .remove {
     color: red !important;
     text-align: center;
     background: none;
 }
 
-.vertex .what-is-this{
+.vertex .menu .what-is-this{
     color: black !important;
     text-align: center;
     background: none;
 }
 
-.vertex .suggestion input[type="button"]{
+.vertex .menu .suggestion input[type="button"]{
     color: green !important;
     text-align: center;
     background: none;
-}
-
-.vertex .menu {
-    margin-top:10px;
-    margin-left:30px;
-    width:75px;
 }
 
 .vertex .menu ul:first-of-type {
@@ -238,15 +272,6 @@ input[type="button"] {
 
 .vertex .image_container{
     position:absolute;
-}
-
-.center-vertex {
-    -moz-border-radius: 15px;
-  border-radius: 15px;
-  -webkit-box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.1);
-  -moz-box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.1);
-  box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.5);
-
 }
 
 .edge {

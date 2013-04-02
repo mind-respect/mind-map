@@ -4,13 +4,12 @@
 define([
     "jquery",
     "triple_brain.id_uri",
-    "triple_brain.ui.vertex_html_builder",
+    "triple_brain.vertex_html_builder_for_graph_displayer",
     "triple_brain.ui.graph",
-    "triple_brain.graph_displayer_as_graph_edge_creator",
-    "triple_brain.user",
-    "triple_brain.ui.arrow_line"
+    "triple_brain.edge_html_builder_for_graph_displayer",
+    "triple_brain.user"
 ],
-    function ($, IdUriUtils, VertexHtmlBuilder, GraphUi, EdgeCreatorForGraph, UserService, ArrowLine) {
+    function ($, IdUriUtils, VertexHtmlBuilder, GraphUi, EdgeHtmlBuilder, UserService) {
         var api = {};
         api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
             var centralVertexEncodedUri = IdUriUtils.encodeUri(centralVertexUri);
@@ -33,7 +32,7 @@ define([
             return newVertexHtmlFacade;
         };
         api.addEdge = function(edgeServer){
-            return EdgeCreatorForGraph.fromServerFormat(
+            return EdgeHtmlBuilder.fromServerFormat(
                 edgeServer
             ).create();
         };
@@ -45,7 +44,7 @@ define([
             return true;
         };
         api.integrateEdges = function(edges){
-            EdgeCreatorForGraph.arrayFromServerFormatArray(
+            EdgeHtmlBuilder.arrayFromServerFormatArray(
                 edges
             );
         };

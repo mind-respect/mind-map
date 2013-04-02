@@ -214,10 +214,14 @@ define([
                 $(centerButton()).hide();
             };
             this.highlight = function () {
-                $(html).addClass('highlighted-vertex');
+                $(html).addClass(
+                    'highlighted'
+                );
             };
             this.unhighlight = function () {
-                $(html).removeClass('highlighted-vertex');
+                $(html).removeClass(
+                    'highlighted'
+                );
             };
             this.connectedEdges = function () {
                 return EdgeUi.connectedToVertex(
@@ -416,6 +420,7 @@ define([
             this.label = function () {
                 return $(html).find(".label");
             };
+
             this.equalsVertex = function (otherVertex) {
                 return thisVertex.getId() == otherVertex.getId();
             };
@@ -427,7 +432,7 @@ define([
                 );
             };
             this.adjustWidth = function () {
-                var intuitiveWidthBuffer = 7;
+                var intuitiveWidthBuffer = 40;
                 $(html).css(
                     "width",
                     menuWidth()

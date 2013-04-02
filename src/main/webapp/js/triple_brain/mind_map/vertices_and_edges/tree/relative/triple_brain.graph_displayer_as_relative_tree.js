@@ -5,7 +5,7 @@ define([
     "jquery",
     "triple_brain.graph",
     "triple_brain.graph_displayer_as_tree_common",
-    "triple_brain.ui.vertex_html_builder",
+    "triple_brain.vertex_html_builder_for_tree_displayer",
     "triple_brain.ui.graph",
     "triple_brain.relative_tree_displayer_templates",
     "triple_brain.ui.edge",
@@ -125,7 +125,7 @@ define([
             buildVerticesHtml();
             function buildVerticesHtml() {
                 var serverRootVertex = vertexWithId(centralVertexUri);
-                var rootVertex = VertexHtmlBuilder.withJsonHavingNoPosition(
+                var rootVertex = VertexHtmlBuilder.withServerJson(
                     serverRootVertex
                 ).create();
                 var graphOffset = GraphUi.offset();
@@ -193,7 +193,7 @@ define([
         };
 
         this.buildVertexHtmlIntoContainer = function(vertex, container){
-            var childVertexHtmlFacade = VertexHtmlBuilder.withJsonHavingNoPosition(
+            var childVertexHtmlFacade = VertexHtmlBuilder.withServerJson(
                 vertex
             ).create();
             var childTreeContainer = RelativeTreeTemplates[

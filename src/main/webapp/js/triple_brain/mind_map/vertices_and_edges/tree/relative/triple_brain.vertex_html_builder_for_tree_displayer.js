@@ -1,0 +1,285 @@
+/**
+ * Copyright Mozilla Public License 1.1
+ */
+
+define([
+    "require",
+    "jquery",
+    "triple_brain.event_bus",
+    "triple_brain.ui.graph",
+    "triple_brain.ui.vertex",
+    "triple_brain.vertex",
+    "triple_brain.ui.edge",
+    "triple_brain.edge",
+    "triple_brain.suggestion",
+    "triple_brain.mind-map_template",
+    "triple_brain.external_resource",
+    "triple_brain.ui.identification_menu",
+    "triple_brain.ui.suggestion_menu",
+    "triple_brain.ui.all",
+    "triple_brain.ui.arrow_line",
+    "triple_brain.point",
+    "triple_brain.segment",
+    "triple_brain.graph_displayer",
+    "jquery-ui"
+], function (require, $, EventBus, GraphUi, Vertex, VertexService, Edge, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, UiUtils, ArrowLine, Point, Segment, GraphDisplayer) {
+        var api = {};
+        api.withServerJson = function (serverVertex) {
+            return new VertexCreator(serverVertex);
+        };
+        function VertexCreator(json) {
+            var Vertex = require("triple_brain.ui.vertex");
+            var VertexService = require("triple_brain.vertex");
+            var Suggestion = require("triple_brain.suggestion");
+            var IdentificationMenu = require("triple_brain.ui.identification_menu");
+            var SuggestionMenu = require("triple_brain.ui.suggestion_menu");
+            var html = MindMapTemplate['relative_vertex'].merge(json);
+            $(html).uniqueId();
+            this.create = function () {
+                createLabel();
+                createMenu();
+                var vertex = vertexFacade();
+                vertex.setUri(json.id);
+                vertex.addSuggestions(
+                    Suggestion.fromJsonArrayOfServer(
+                        json.suggestions
+                    )
+                );
+                if (json.suggestions.length > 0) {
+                    vertex.showSuggestionButton();
+                }
+                vertex.hideButtons();
+                $(html).hover(
+                    onMouseOver,
+                    onMouseOut
+                );
+
+                vertex.setNameOfHiddenProperties([]);
+                if (json.is_frontier_vertex_with_hidden_vertices) {
+                    vertex.setNameOfHiddenProperties(json.name_of_hidden_properties);
+                    vertex.buildHiddenNeighborPropertiesIndicator();
+                }
+                vertex.setTypes([]);
+                vertex.setSameAs([]);
+                $.each(json.types, function () {
+                    var typeFromServer = this;
+                    vertex.addType(
+                        ExternalResource.fromServerJson(
+                            typeFromServer
+                        )
+                    );
+                });
+
+                $.each(json.same_as, function () {
+                    var sameAsFromServer = this;
+                    vertex.addSameAs(
+                        ExternalResource.fromServerJson(
+                            sameAsFromServer
+                        )
+                    );
+                });
+                vertex.prepareAsYouTypeSuggestions();
+                vertex.makeItLowProfile();
+                vertex.setOriginalServerObject(
+                    json
+                );
+                EventBus.publish(
+                    '/event/ui/html/vertex/created/',
+                    vertex
+                );
+                vertex.adjustWidth();
+                return vertex;
+            }
+            function createLabel() {
+                var labelContainer = MindMapTemplate['vertex_label_container'].merge(json);
+                $(html).append(labelContainer);
+                var label = $(labelContainer).find("input[type='text']:first");
+                var vertex = vertexFacade();
+                vertex.readjustLabelWidth();
+                if (vertex.hasDefaultText()) {
+                    vertex.applyStyleOfDefaultText();
+                }
+                label.focus(function (e) {
+                    var vertex = vertexOfSubHtmlComponent(this);
+                    vertex.highlight();
+                    vertex.removeStyleOfDefaultText();
+                    if (vertex.hasDefaultText()) {
+                        $(this).val("");
+                        vertex.readjustLabelWidth();
+                    }
+                });
+                label.blur(function (e) {
+                    var vertex = vertexOfSubHtmlComponent(this);
+                    if (!vertex.isMouseOver()) {
+                        vertex.unhighlight();
+                    }
+                    if ($(this).val() == "") {
+                        $(this).val(Vertex.EMPTY_LABEL);
+                        vertex.applyStyleOfDefaultText();
+                        vertex.readjustLabelWidth()
+                    } else {
+                        vertex.removeStyleOfDefaultText();
+                    }
+                });
+
+                label.change(function (e) {
+                    VertexService.updateLabel(vertexOfSubHtmlComponent(this), $(this).val());
+                });
+
+                label.keydown(function (e) {
+                    vertexOfSubHtmlComponent(this).readjustLabelWidth();
+                });
+                label.keyup(function (e) {
+                    var vertex = vertexOfSubHtmlComponent(this);
+                    vertex.readjustLabelWidth();
+                });
+                return labelContainer;
+            }
+
+            function createMenu() {
+                var vertexMenu = MindMapTemplate['vertex_menu'].merge();
+                $(html).append(vertexMenu);
+
+                var plusBtn = MindMapTemplate['vertex_plus_button'].merge();
+                $(vertexMenu).append(plusBtn);
+
+                $(plusBtn).on("click", function(event){
+                    if(GraphDisplayer.allowsMovingVertices()){
+                        createRelationOrAddVertex(event);
+                    }else{
+                        var sourceVertex = vertexFacade();
+                        VertexService.addRelationAndVertexAtPositionToVertex(
+                            sourceVertex,
+                            GraphDisplayer
+                        );
+                    }
+                });
+
+                var removeBtn = MindMapTemplate['vertex_remove_button'].merge();
+                $(vertexMenu).append(removeBtn);
+
+                removeBtn.click(function (event) {
+                    event.stopPropagation();
+                    var vertex = vertexOfSubHtmlComponent(this);
+                    if (!vertex.isCenterVertex() && vertex.getId() != "default") {
+                        VertexService.remove(vertex);
+                    }
+                });
+
+                var whatIsThisBtn = MindMapTemplate['vertex_what_is_this_button'].merge();
+                $(vertexMenu).append(whatIsThisBtn);
+                whatIsThisBtn.click(function (event) {
+                    event.stopPropagation();
+                    var vertex = vertexOfSubHtmlComponent(this);
+                    vertex.setIdentificationMenu(
+                        IdentificationMenu.ofVertex(vertex)
+                            .create()
+                    );
+                });
+
+                var suggestionsBtn = MindMapTemplate['vertex_suggestion_button'].merge();
+                $(vertexMenu).append(suggestionsBtn);
+                suggestionsBtn.click(function (event) {
+                    event.stopPropagation();
+                    var outOfVertexMenus = $('.peripheral-menu');
+                    $(outOfVertexMenus).remove();
+                    var vertex = vertexOfSubHtmlComponent(this);
+                    vertex.setSuggestionMenu(
+                        SuggestionMenu.ofVertex(vertex)
+                            .create()
+                    )
+                });
+                $(suggestionsBtn).hide();
+
+                var centerBtn = MindMapTemplate['vertex_center_button'].merge();
+                $(vertexMenu).append(centerBtn);
+                centerBtn.click(function () {
+                    GraphDisplayer.displayUsingNewCentralVertex(
+                        vertexOfSubHtmlComponent(this)
+                    );
+                });
+                return vertexMenu;
+            }
+
+            function vertexOfSubHtmlComponent(htmlOfSubComponent) {
+                return Vertex.withHtml(
+                    $(htmlOfSubComponent).closest('.vertex')
+                );
+            }
+
+            function onMouseOver() {
+                var vertex = vertexOfSubHtmlComponent(this);
+                GraphUi.setVertexMouseOver(vertex);
+                vertex.makeItHighProfile();
+            }
+
+            function onMouseOut() {
+                var vertex = vertexOfSubHtmlComponent(this)
+                GraphUi.unsetVertexMouseOver();
+                vertex.makeItLowProfile();
+            }
+
+            function createRelationOrAddVertex(mouseDownEvent) {
+                var sourceVertex = vertexFacade();
+                $('.edge').unbind('mouseenter mouseleave');
+                var normalStateEdgesZIndex = $('.edge').css('z-index');
+                $('.edge').css('z-index', '1');
+                var relationMouseMoveEvent;
+                var relationEndPoint = Point.centeredAtOrigin();
+                var arrowLine;
+                sourceVertex.highlight();
+                var selectorThatCoversWholeGraph = "svg";
+                $(selectorThatCoversWholeGraph).mousemove(function (mouseMoveEvent) {
+                    relationMouseMoveEvent = mouseMoveEvent;
+                    if(arrowLine !== undefined){
+                        arrowLine.remove();
+                    }
+                    relationEndPoint = Point.fromCoordinates(
+                        mouseMoveEvent.pageX,
+                        mouseMoveEvent.pageY
+                    );
+                    arrowLine = ArrowLine.withSegment(
+                        Segment.withStartAndEndPoint(
+                            sourceVertex.centerPoint(),
+                            relationEndPoint
+                        )
+                    );
+                    arrowLine.drawInWithDefaultStyle();
+                });
+
+                $("body").mouseup(function (mouseUpEvent) {
+                    if(arrowLine === undefined){
+                        //something when wrong so return;
+                        $("body").unbind(mouseUpEvent);
+                        $(selectorThatCoversWholeGraph).unbind(relationMouseMoveEvent);
+                        return;
+                    }
+                    arrowLine.remove();
+                    $('.edge').hover(Edge.onMouseOver, Edge.onMouseOut);
+                    $('.edge').css('z-index', normalStateEdgesZIndex);
+                    $("body").unbind(mouseUpEvent);
+                    $(selectorThatCoversWholeGraph).unbind(relationMouseMoveEvent);
+                    var destinationVertex = GraphUi.getVertexMouseOver();
+                    if (destinationVertex !== undefined) {
+                        if (!sourceVertex.equalsVertex(destinationVertex)) {
+                            sourceVertex.unhighlight();
+                            EdgeService.add(
+                                sourceVertex,
+                                destinationVertex,
+                                GraphDisplayer.addEdgeBetweenExistingVertices
+                            );
+                        }
+                    } else {
+                        sourceVertex.unhighlight();
+                        VertexService.addRelationAndVertexAtPositionToVertex(sourceVertex, relationEndPoint);
+                    }
+                });
+            }
+            function vertexFacade() {
+                return Vertex.withHtml(html);
+            }
+        }
+        return api;
+    }
+)
+

@@ -24,34 +24,20 @@ define([
     "jquery-ui"
 ], function (require, $, EventBus, GraphUi, Vertex, VertexService, Edge, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, UiUtils, ArrowLine, Point, Segment, GraphDisplayer) {
         var api = {};
-        api.createWithArrayOfJsonHavingRelativePosition = function (arrayOfServerVertex, addHtml) {
-            $.each(arrayOfServerVertex, function () {
-                var serverVertex = this;
-                initAdjustedPosition(serverVertex);
-                var vertexHtml = api.withJsonHavingRelativePosition(
-                    serverVertex
-                    ).create();
-                addHtml(vertexHtml);
-            });
-        };
-
         api.withJsonHavingAbsolutePosition = function (serverVertex) {
             initAdjustedPosition(serverVertex);
-            return new VertexCreator(serverVertex, true);
+            return new VertexCreator(serverVertex);
         };
         api.withJsonHavingRelativePosition = function (serverVertex) {
             initAdjustedPosition(serverVertex);
             api.addGraphOffsetToJsonPosition(serverVertex);
-            return new VertexCreator(serverVertex, true);
+            return new VertexCreator(serverVertex);
         };
         api.addGraphOffsetToJsonPosition = function (serverVertex) {
             var graphOffset = GraphUi.offset();
             serverVertex.adjustedPosition.x += graphOffset.x;
             serverVertex.adjustedPosition.y += graphOffset.y;
         };
-        api.withJsonHavingNoPosition = function (serverVertex) {
-            return new VertexCreator(serverVertex, false);
-        }
         function initAdjustedPosition(serverVertex){
             serverVertex.adjustedPosition = {
                 x:serverVertex.position.x,
@@ -59,22 +45,16 @@ define([
             };
         }
 
-        function VertexCreator(json, isAbsolutePositioning) {
+        function VertexCreator(json) {
             var Vertex = require("triple_brain.ui.vertex");
             var VertexService = require("triple_brain.vertex");
             var Suggestion = require("triple_brain.suggestion");
             var IdentificationMenu = require("triple_brain.ui.identification_menu");
             var SuggestionMenu = require("triple_brain.ui.suggestion_menu");
-            var html = MindMapTemplate[
-                isAbsolutePositioning ?
-                    'vertex':
-                    'relative_vertex'
-                ].merge(json);
+            var html = MindMapTemplate['vertex'].merge(json);
             $(html).uniqueId();
             this.create = function () {
-                if(GraphDisplayer.allowsMovingVertices()){
-                    addMoveButton();
-                }
+                addMoveButton();
                 createLabel();
                 createMenu();
                 var vertex = vertexFacade();
@@ -99,9 +79,7 @@ define([
                     drag:onDrag,
                     stop:onDragStop
                 });
-                if(isAbsolutePositioning){
-                    position();
-                }
+                position();
                 vertex.setNameOfHiddenProperties([]);
                 if (json.is_frontier_vertex_with_hidden_vertices) {
                     vertex.setNameOfHiddenProperties(json.name_of_hidden_properties);
