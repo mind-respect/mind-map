@@ -117,8 +117,6 @@ body input[type=button]:hover{
 }
 
 .vertex.absolute{
-    height:100%;
-    overflow:auto;
     white-space: nowrap;
     position:absolute;
     min-width:120px;
