@@ -114,8 +114,7 @@ define([
                         var vertex = Vertex.withId(
                             $(this).closest(".vertex").attr("id")
                         );
-                        vertex.readjustLabelWidth();
-                        vertexService().updateLabel(vertex, vertex.text());
+                        vertex.triggerChange();
                         api.handleIdentificationToServer(vertex, freebaseSuggestion);
                     });
             }

@@ -6,13 +6,12 @@
     display:table-cell;
     vertical-align: middle;
 }
-.left-oriented .vertex-tree-container{
+.vertices-children-container.left-oriented .vertex-tree-container{
     margin-left:-25em;
 }
 
 .vertex-tree-container{
     display:table;
-    max-height: 100px;
     margin-left:10em;
 }
 

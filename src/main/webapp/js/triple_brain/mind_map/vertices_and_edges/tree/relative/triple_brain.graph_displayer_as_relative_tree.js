@@ -28,11 +28,11 @@ define([
     api.addVertex = function (newVertex, parentVertex) {
         var treeMaker = new TreeMaker();
         var container;
-        if(parentVertex.isCenterVertex()){
+        if (parentVertex.isCenterVertex()) {
             container = shouldAddLeft() ?
                 leftVerticesContainer() :
                 rightVerticesContainer();
-        }else{
+        } else {
             container = treeMaker.childrenVertexContainer(parentVertex);
         }
         newVertex.children = [];
@@ -43,14 +43,14 @@ define([
         EdgeUi.redrawAllEdges();
         return vertexHtmlFacade;
     };
-    api.allowsMovingVertices = function(){
+    api.allowsMovingVertices = function () {
         return false;
     };
-    api.integrateEdges = function(edges){
+    api.integrateEdges = function (edges) {
         VertexUi.visitAllVertices(integrateEdgesOfVertex);
-        function integrateEdgesOfVertex(vertex){
+        function integrateEdgesOfVertex(vertex) {
             var vertexServerFormat = vertex.getOriginalServerObject();
-            $.each(vertexServerFormat.children, function(){
+            $.each(vertexServerFormat.children, function () {
                 var childInfo = this;
                 buildEdge(
                     childInfo.edge,
@@ -60,7 +60,7 @@ define([
             });
         }
     };
-    api.addEdge = function(serverEdge, sourceVertex, destinationVertex){
+    api.addEdge = function (serverEdge, sourceVertex, destinationVertex) {
         return buildEdge(
             serverEdge,
             sourceVertex,
@@ -68,22 +68,25 @@ define([
         );
     };
     return api;
-    function shouldAddLeft(){
+    function shouldAddLeft() {
         var numberOfDirectChildrenLeft = $(leftVerticesContainer()).children().length;
         var numberOfDirectChildrenRight = $(rightVerticesContainer()).children().length;
         return  numberOfDirectChildrenLeft < numberOfDirectChildrenRight;
     }
-    function leftVerticesContainer(){
+
+    function leftVerticesContainer() {
         return $(
             ".vertices-children-container.left-oriented"
         );
     }
-    function rightVerticesContainer(){
+
+    function rightVerticesContainer() {
         return $(".center-vertex").closest(".vertex-container").siblings(
             ".vertices-children-container:not(.left-oriented):first"
         );
     }
-    function buildEdge(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade){
+
+    function buildEdge(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
         var edgeHtml = $("<div class='edge' style='display:none'></div>");
         $(edgeHtml).attr(
             "id",
@@ -114,15 +117,27 @@ define([
         );
         return edgeFacade;
     }
+
     function TreeMaker() {
         var treeMaker = this;
-        this.makeUsingServerGraphAndCentralVertexUri = function(serverGraph, centralVertexUri) {
+        this.makeUsingServerGraphAndCentralVertexUri = function (serverGraph, centralVertexUri) {
             var vertices = serverGraph.vertices;
             TreeDisplayerCommon.defineChildrenInVertices(
                 serverGraph,
                 centralVertexUri
             );
             buildVerticesHtml();
+            $.each($(".left-oriented .vertex"), function(){
+                var html = this;
+                var label = $(html).find(".label")
+                var width = label.width();
+                var parentWidth = $(html).closest(".vertices-children-container")
+                    .siblings(".vertex-container")
+                    .find(".label").width();
+                $(html).closest(".vertex-tree-container").css(
+                    "margin-left", "-" + (parentWidth + width + 200) + "px"
+                );
+            });
             function buildVerticesHtml() {
                 var serverRootVertex = vertexWithId(centralVertexUri);
                 var rootVertex = VertexHtmlBuilder.withServerJson(
@@ -132,12 +147,12 @@ define([
                 var verticesContainer = RelativeTreeTemplates[
                     "root_vertex_super_container"
                     ].merge({
-                    offset:graphOffset
-                });
+                        offset:graphOffset
+                    });
                 GraphUi.addHTML(
                     verticesContainer
                 );
-                var vertexContainer= RelativeTreeTemplates["vertex_container"].merge();
+                var vertexContainer = RelativeTreeTemplates["vertex_container"].merge();
                 $(verticesContainer).append(vertexContainer);
                 $(vertexContainer).append(rootVertex.getHtml());
                 var leftChildrenContainer = treeMaker.addChildrenContainerToVertex(
@@ -147,11 +162,11 @@ define([
                 var rightChildrenContainer = treeMaker.addChildrenContainerToVertex(
                     rootVertex
                 );
-                for(var i = 0 ; i < serverRootVertex.children.length; i++){
+                for (var i = 0; i < serverRootVertex.children.length; i++) {
                     var isLeftOriented = i % 2 != 0;
                     var childVertex = vertexWithId(serverRootVertex.children[i].vertexUri);
                     var container = isLeftOriented ?
-                        leftChildrenContainer:
+                        leftChildrenContainer :
                         rightChildrenContainer;
                     var childHtmlFacade = treeMaker.buildVertexHtmlIntoContainer(
                         childVertex,
@@ -186,13 +201,14 @@ define([
                     return childrenContainer;
                 }
             }
+
             return serverGraph;
             function vertexWithId(vertexId) {
                 return vertices[vertexId]
             }
         };
 
-        this.buildVertexHtmlIntoContainer = function(vertex, container){
+        this.buildVertexHtmlIntoContainer = function (vertex, container) {
             var childVertexHtmlFacade = VertexHtmlBuilder.withServerJson(
                 vertex
             ).create();
@@ -212,7 +228,7 @@ define([
             treeMaker.addChildrenContainerToVertex(childVertexHtmlFacade);
             return childVertexHtmlFacade;
         };
-        this.addChildrenContainerToVertex = function(vertexHtmlFacade){
+        this.addChildrenContainerToVertex = function (vertexHtmlFacade) {
             var childrenContainer = RelativeTreeTemplates[
                 "vertices_children_container"
                 ].merge();
@@ -221,7 +237,7 @@ define([
             ).append(childrenContainer);
             return childrenContainer;
         };
-        this.childrenVertexContainer = function(vertexHtmlFacade){
+        this.childrenVertexContainer = function (vertexHtmlFacade) {
             return $(vertexHtmlFacade.getHtml()).closest(".vertex-container"
             ).siblings(".vertices-children-container");
         }

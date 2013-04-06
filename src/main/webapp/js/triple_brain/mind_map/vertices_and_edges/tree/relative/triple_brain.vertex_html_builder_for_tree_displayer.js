@@ -105,7 +105,7 @@ define([
                     vertex.removeStyleOfDefaultText();
                     if (vertex.hasDefaultText()) {
                         $(this).val("");
-                        vertex.readjustLabelWidth();
+                        $(vertex.label()).keydown();
                     }
                 });
                 label.blur(function (e) {
@@ -116,22 +116,38 @@ define([
                     if ($(this).val() == "") {
                         $(this).val(Vertex.EMPTY_LABEL);
                         vertex.applyStyleOfDefaultText();
-                        vertex.readjustLabelWidth()
+                        $(vertex.label()).keydown();
                     } else {
                         vertex.removeStyleOfDefaultText();
                     }
                 });
 
                 label.change(function (e) {
+                    var vertex = vertexOfSubHtmlComponent(this);
+                    $(vertex.label()).keydown();
                     VertexService.updateLabel(vertexOfSubHtmlComponent(this), $(this).val());
                 });
 
                 label.keydown(function (e) {
-                    vertexOfSubHtmlComponent(this).readjustLabelWidth();
-                });
-                label.keyup(function (e) {
                     var vertex = vertexOfSubHtmlComponent(this);
                     vertex.readjustLabelWidth();
+                    var html = vertex.getHtml();
+                    if (!$(html).parents(".left-oriented").length > 0) {
+                        return;
+                    }
+                    var children = $(html).closest(
+                        ".vertex-tree-container"
+                    ).find(
+                        ".vertices-children-container .vertex-tree-container"
+                    );
+                    var parentLabelWidth = $(vertex.label()).width();
+                    $.each(children, function () {
+                        var child = this;
+                        var width = $(child).find(".label").width();
+                        $(child).closest(".vertex-tree-container").css(
+                            "margin-left", "-" + (width + parentLabelWidth + 200) + "px"
+                        );
+                    });
                 });
                 return labelContainer;
             }
@@ -143,10 +159,10 @@ define([
                 var plusBtn = MindMapTemplate['vertex_plus_button'].merge();
                 $(vertexMenu).append(plusBtn);
 
-                $(plusBtn).on("click", function(event){
-                    if(GraphDisplayer.allowsMovingVertices()){
+                $(plusBtn).on("click", function (event) {
+                    if (GraphDisplayer.allowsMovingVertices()) {
                         createRelationOrAddVertex(event);
-                    }else{
+                    } else {
                         var sourceVertex = vertexFacade();
                         VertexService.addRelationAndVertexAtPositionToVertex(
                             sourceVertex,
@@ -231,7 +247,7 @@ define([
                 var selectorThatCoversWholeGraph = "svg";
                 $(selectorThatCoversWholeGraph).mousemove(function (mouseMoveEvent) {
                     relationMouseMoveEvent = mouseMoveEvent;
-                    if(arrowLine !== undefined){
+                    if (arrowLine !== undefined) {
                         arrowLine.remove();
                     }
                     relationEndPoint = Point.fromCoordinates(
@@ -240,7 +256,7 @@ define([
                     );
                     arrowLine = ArrowLine.withSegment(
                         Segment.withStartAndEndPoint(
-                            sourceVertex.centerPoint(),
+                            sourceVertex.labelCenterPoint(),
                             relationEndPoint
                         )
                     );
@@ -248,7 +264,7 @@ define([
                 });
 
                 $("body").mouseup(function (mouseUpEvent) {
-                    if(arrowLine === undefined){
+                    if (arrowLine === undefined) {
                         //something when wrong so return;
                         $("body").unbind(mouseUpEvent);
                         $(selectorThatCoversWholeGraph).unbind(relationMouseMoveEvent);
@@ -275,10 +291,12 @@ define([
                     }
                 });
             }
+
             function vertexFacade() {
                 return Vertex.withHtml(html);
             }
         }
+
         return api;
     }
 )

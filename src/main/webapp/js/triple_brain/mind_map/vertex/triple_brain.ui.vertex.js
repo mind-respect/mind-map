@@ -138,10 +138,11 @@ define([
             this.getHtml = function(){
                 return html;
             };
-            this.centerPoint = function () {
+            this.labelCenterPoint = function () {
+                var label = thisVertex.label();
                 return Point.fromCoordinates(
-                    $(html).offset().left + $(html).width() / 2,
-                    $(html).offset().top + $(html).height() / 2
+                    $(label).offset().left + $(label).width() / 2,
+                    $(label).offset().top + $(label).height() / 2
                 )
             };
 
@@ -417,10 +418,12 @@ define([
             this.hideSuggestionButton = function () {
                 $(suggestionButton()).hide();
             };
+            this.triggerChange = function(){
+                $(html).trigger("change");
+            }
             this.label = function () {
                 return $(html).find(".label");
             };
-
             this.equalsVertex = function (otherVertex) {
                 return thisVertex.getId() == otherVertex.getId();
             };
@@ -433,12 +436,13 @@ define([
             };
             this.adjustWidth = function () {
                 var intuitiveWidthBuffer = 40;
+                var labelWidth = $(this.label()).width();
+                var width = menuWidth()
+                    + labelWidth
+                    + intuitiveWidthBuffer;
                 $(html).css(
                     "width",
-                    menuWidth()
-                        + $(this.label()).width()
-                        + intuitiveWidthBuffer +
-                        "px"
+                    width + "px"
                 );
             };
             this.hasIdentificationMenu = function () {

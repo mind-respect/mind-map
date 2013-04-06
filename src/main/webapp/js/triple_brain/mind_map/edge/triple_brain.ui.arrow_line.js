@@ -24,8 +24,8 @@ define([
         };
         api.ofSourceAndDestinationVertex = function(sourceVertex, destinationVertex){
             var segment = Segment.withStartAndEndPoint(
-                sourceVertex.centerPoint(),
-                destinationVertex.centerPoint()
+                sourceVertex.labelCenterPoint(),
+                destinationVertex.labelCenterPoint()
             );
             try{
                 segment.startPoint = sourceVertex.intersectionPointWithSegment(segment);

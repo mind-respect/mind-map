@@ -148,6 +148,7 @@ define([
                 });
 
                 label.change(function (e) {
+                    vertex.readjustLabelWidth();
                     VertexService.updateLabel(vertexOfSubHtmlComponent(this), $(this).val());
                 });
 
@@ -326,7 +327,7 @@ define([
                     );
                     arrowLine = ArrowLine.withSegment(
                         Segment.withStartAndEndPoint(
-                            sourceVertex.centerPoint(),
+                            sourceVertex.labelCenterPoint(),
                             relationEndPoint
                         )
                     );
