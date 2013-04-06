@@ -58,11 +58,13 @@ body input[type=button]:hover{
     right:0.1em;
     top:0.5em;
 }
-#top-panel div.menu-item {
+
+#top-panel input[type=button]{
     float:left;
     margin-left:15px;
 }
-#top-panel .link-like-button{
+
+#top-panel input[type=button].link-like-button{
     font-size:0.9em;
     margin-top:4px;
 }
