@@ -12,9 +12,10 @@ define(
         "triple_brain.ui.depth_slider",
         "triple_brain.graph_displayer",
         "triple_brain.graph_displayer_factory",
-        "triple_brain.ui.arrow_line"
+        "triple_brain.ui.arrow_line",
+        "triple_brain.menu"
     ],
-    function ($, UserService, EventBus, LoginHandler, DragScroll, Vertex, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, ArrowLine) {
+    function ($, UserService, EventBus, LoginHandler, DragScroll, Vertex, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, ArrowLine, Menu) {
         var api = {
             offset:function () {
                 var offset = {};
@@ -48,15 +49,11 @@ define(
                     UserService.authenticatedUser(
                         GraphDisplayer.displayUsingDefaultVertex
                     );
-                    var redrawButton = $("#redraw-graph-btn");
-                    $(redrawButton).click(function () {
+                    $(Menu.redrawButton()).click(function () {
                         GraphDisplayer.displayUsingNewCentralVertex(
                             Vertex.centralVertex()
                         );
                     });
-                    if(!GraphDisplayer.allowsMovingVertices()){
-                        $(redrawButton).hide();
-                    }
                     switchDisplayerButtons().click(function(){
                         var displayerName = $(this).attr("data-displayer_name");
                         GraphDisplayer.setImplementation(

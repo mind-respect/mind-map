@@ -27,6 +27,7 @@ window.config = {
         "org/cometd/TimeStampExtension" : "cometd/plugins/TimeStampExtension",
         "org/cometd/TimeSyncExtension" : "cometd/plugins/TimeSyncExtension",
         "triple_brain.overlay_dialog" : "triple_brain/triple_brain.overlay_dialog",
+        "triple_brain.menu" : "triple_brain/triple_brain.menu",
         "triple_brain.ui.utils" : "triple_brain/triple_brain.ui.utils",
         "triple_brain.user" : "triple_brain/mind_map/triple_brain.user",
         "triple_brain.login_handler" : "triple_brain/triple_brain.login_handler",

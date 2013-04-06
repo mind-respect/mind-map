@@ -6,16 +6,22 @@ define([
     "triple_brain.event_bus",
     "triple_brain.mind_map_info",
     "triple_brain.id_uri",
-    "triple_brain.ui.graph"
+    "triple_brain.ui.graph",
+    "triple_brain.menu"
     ],
-    function(require, EventBus, MindMapInfo, IdUriUtils, GraphUi){
+    function(require, EventBus, MindMapInfo, IdUriUtils, GraphUi, Menu){
         var _implementation;
         var api = {};
         api.setImplementation = function(implementation){
             _implementation = implementation;
             var isGraph = _implementation.name() === "graph";
-            getShowAsGraphButton()[isGraph ? "hide" : "show"]();
-            getShowAsTreeButton()[isGraph ? "show" : "hide"]();
+            Menu.showAsGraphButton()[isGraph ? "hide" : "show"]();
+            Menu.showAsTreeButton()[isGraph ? "show" : "hide"]();
+            Menu.redrawButton()[
+                _implementation.allowsMovingVertices() ?
+                    "show" :
+                    "hide"
+                ]();
         };
         api.name = function(){
             return _implementation.name();
@@ -89,17 +95,6 @@ define([
                     )
                 }
             );
-        }
-        function getHeaderMenu(){
-            return $("#top-panel");
-        }
-
-        function getShowAsGraphButton(){
-            return getHeaderMenu().find("[data-displayer_name=graph]");
-        }
-
-        function getShowAsTreeButton(){
-            return getHeaderMenu().find("[data-displayer_name=relative_tree]");
         }
     }
 );

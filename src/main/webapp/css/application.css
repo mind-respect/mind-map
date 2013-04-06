@@ -67,11 +67,6 @@ body input[type=button]:hover{
     margin-top:4px;
 }
 
-.redraw-button-panel{
-    text-align:right;
-    margin-bottom:5px;
-}
-
 #left-panel {
     margin-left: 5px;
     position:fixed;
