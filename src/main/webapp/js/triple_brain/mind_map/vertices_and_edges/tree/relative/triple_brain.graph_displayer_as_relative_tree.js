@@ -43,8 +43,22 @@ define([
             newVertex,
             container
         );
+        if (isLeftOrientedVertex()) {
+            adjustNewVertexMargin();
+        }
         EdgeUi.redrawAllEdges();
         return vertexHtmlFacade;
+        function isLeftOrientedVertex(){
+            return $(vertexHtmlFacade.getHtml()).parents(".left-oriented").length > 0;
+        }
+        function adjustNewVertexMargin(){
+            var parentLabelWidth = $(parentVertex.label()).width();
+            var html = vertexHtmlFacade.getHtml();
+            var width = $(html).find(".label").width();
+            $(html).closest(".vertex-tree-container").css(
+                "margin-left", "-" + (width + parentLabelWidth + 200) + "px"
+            );
+        }
     };
     api.allowsMovingVertices = function () {
         return false;
