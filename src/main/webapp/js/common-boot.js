@@ -68,6 +68,7 @@ window.config = {
         "triple_brain.server_subscriber" : "triple_brain/triple_brain.server_subscriber",
         "triple_brain.graph" : "triple_brain/mind_map/triple_brain.graph",
         "triple_brain.graph_displayer" : "triple_brain/mind_map/vertices_and_edges/triple_brain.graph_displayer",
+        "triple_brain.graph_displayer_factory" : "triple_brain/mind_map/vertices_and_edges/triple_brain.graph_displayer_factory",
         "triple_brain.graph_displayer_as_graph" : "triple_brain/mind_map/vertices_and_edges/graph/triple_brain.graph_displayer_as_graph",
         "triple_brain.edge_html_builder_for_graph_displayer" : "triple_brain/mind_map/vertices_and_edges/graph/triple_brain.edge_html_builder_for_graph_displayer",
         "triple_brain.vertex_html_builder_for_graph_displayer" : "triple_brain/mind_map/vertices_and_edges/graph/triple_brain.vertex_html_builder_for_graph_displayer",

@@ -11,12 +11,10 @@ define(
         "triple_brain.ui.search",
         "triple_brain.ui.depth_slider",
         "triple_brain.graph_displayer",
-        "triple_brain.graph_displayer_as_graph",
-        "triple_brain.graph_displayer_as_absolute_tree",
-        "triple_brain.graph_displayer_as_relative_tree",
+        "triple_brain.graph_displayer_factory",
         "triple_brain.ui.arrow_line"
     ],
-    function ($, UserService, EventBus, LoginHandler, DragScroll, Vertex, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerAsGraph, GraphDisplayerAsAbsoluteTree, GraphDisplayerAsRelativeTree, ArrowLine) {
+    function ($, UserService, EventBus, LoginHandler, DragScroll, Vertex, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, ArrowLine) {
         var api = {
             offset:function () {
                 var offset = {};
@@ -43,17 +41,39 @@ define(
                     DepthSlider.init();
                     SearchUi.init();
                     GraphDisplayer.setImplementation(
-//                        GraphDisplayerAsGraph
-                        GraphDisplayerAsRelativeTree
+                        GraphDisplayerFactory.getByName(
+                            "relative_tree"
+                        )
                     );
                     UserService.authenticatedUser(
                         GraphDisplayer.displayUsingDefaultVertex
                     );
-                    $("#redraw-graph-btn").click(function () {
+                    var redrawButton = $("#redraw-graph-btn");
+                    $(redrawButton).click(function () {
                         GraphDisplayer.displayUsingNewCentralVertex(
                             Vertex.centralVertex()
                         );
                     });
+                    if(!GraphDisplayer.allowsMovingVertices()){
+                        $(redrawButton).hide();
+                    }
+                    switchDisplayerButtons().click(function(){
+                        var displayerName = $(this).attr("data-displayer_name");
+                        GraphDisplayer.setImplementation(
+                            GraphDisplayerFactory.getByName(
+                                displayerName
+                            )
+                        );
+                        GraphDisplayer.displayUsingNewCentralVertex(
+                            Vertex.centralVertex()
+                        );
+                    });
+                }
+                function getHeaderMenu(){
+                    return $("#top-panel");
+                }
+                function switchDisplayerButtons(){
+                    return getHeaderMenu().find(".switch-displayer");
                 }
 
                 function handleIfNotAuthenticatedShowCredentialsFlow() {

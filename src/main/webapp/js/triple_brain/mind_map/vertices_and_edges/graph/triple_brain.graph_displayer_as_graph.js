@@ -22,6 +22,9 @@ define([
                     callback(drawnGraph);
                 });
         };
+        api.name = function(){
+            return "graph";
+        };
         api.addVertex = function(newVertex){
             var newVertexHtmlFacade = VertexHtmlBuilder.withJsonHavingAbsolutePosition(
                 newVertex

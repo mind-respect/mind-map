@@ -25,6 +25,9 @@ define([
             callback(drawnTree);
         });
     };
+    api.name = function(){
+        return "relative_tree";
+    };
     api.addVertex = function (newVertex, parentVertex) {
         var treeMaker = new TreeMaker();
         var container;

@@ -13,6 +13,12 @@ define([
         var api = {};
         api.setImplementation = function(implementation){
             _implementation = implementation;
+            var isGraph = _implementation.name() === "graph";
+            getShowAsGraphButton()[isGraph ? "hide" : "show"]();
+            getShowAsTreeButton()[isGraph ? "show" : "hide"]();
+        };
+        api.name = function(){
+            return _implementation.name();
         };
         api.displayUsingDefaultVertex = function(){
             displayUsingCentralVertexUri(
@@ -83,6 +89,17 @@ define([
                     )
                 }
             );
+        }
+        function getHeaderMenu(){
+            return $("#top-panel");
+        }
+
+        function getShowAsGraphButton(){
+            return getHeaderMenu().find("[data-displayer_name=graph]");
+        }
+
+        function getShowAsTreeButton(){
+            return getHeaderMenu().find("[data-displayer_name=relative_tree]");
         }
     }
 );
