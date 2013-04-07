@@ -2,7 +2,8 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-], function(){
+    "jquery"
+], function($){
     var api = {};
     api.redrawButton = function(){
         return headerMenu().find(".redraw");

@@ -75,6 +75,7 @@ window.config = {
         "triple_brain.vertex_html_builder_for_graph_displayer" : "triple_brain/mind_map/vertices_and_edges/graph/triple_brain.vertex_html_builder_for_graph_displayer",
         "triple_brain.graph_displayer_as_absolute_tree" : "triple_brain/mind_map/vertices_and_edges/tree/absolute/triple_brain.graph_displayer_as_absolute_tree",
         "triple_brain.graph_displayer_as_relative_tree" : "triple_brain/mind_map/vertices_and_edges/tree/relative/triple_brain.graph_displayer_as_relative_tree",
+        "triple_brain.relative_vertex" : "triple_brain/mind_map/vertices_and_edges/tree/relative/triple_brain.relative_vertex",
         "triple_brain.vertex_html_builder_for_tree_displayer" : "triple_brain/mind_map/vertices_and_edges/tree/relative/triple_brain.vertex_html_builder_for_tree_displayer",
         "triple_brain.relative_tree_displayer_templates" : "triple_brain/mind_map/vertices_and_edges/tree/relative/triple_brain.relative_tree_displayer_templates",
         "triple_brain.graph_displayer_as_tree_common" : "triple_brain/mind_map/vertices_and_edges/tree/triple_brain.graph_displayer_as_tree_common",

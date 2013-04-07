@@ -21,8 +21,9 @@ define([
     "triple_brain.point",
     "triple_brain.segment",
     "triple_brain.graph_displayer",
+    "triple_brain.relative_vertex",
     "jquery-ui"
-], function (require, $, EventBus, GraphUi, Vertex, VertexService, Edge, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, UiUtils, ArrowLine, Point, Segment, GraphDisplayer) {
+], function (require, $, EventBus, GraphUi, Vertex, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, UiUtils, ArrowLine, Point, Segment, GraphDisplayer, RelativeVertex) {
         var api = {};
         api.withServerJson = function (serverVertex) {
             return new VertexCreator(serverVertex);
@@ -126,6 +127,11 @@ define([
                     var vertex = vertexOfSubHtmlComponent(this);
                     $(vertex.label()).keydown();
                     VertexService.updateLabel(vertexOfSubHtmlComponent(this), $(this).val());
+                    var relativeVertex = RelativeVertex.withVertex(vertex);
+                    if(relativeVertex.isToTheLeft()){
+                        relativeVertex.adjustPosition();
+                    }
+                    EdgeUi.redrawAllEdges();
                 });
 
                 label.keydown(function (e) {
@@ -271,7 +277,7 @@ define([
                         return;
                     }
                     arrowLine.remove();
-                    $('.edge').hover(Edge.onMouseOver, Edge.onMouseOut);
+                    $('.edge').hover(EdgeUi.onMouseOver, EdgeUi.onMouseOut);
                     $('.edge').css('z-index', normalStateEdgesZIndex);
                     $("body").unbind(mouseUpEvent);
                     $(selectorThatCoversWholeGraph).unbind(relationMouseMoveEvent);

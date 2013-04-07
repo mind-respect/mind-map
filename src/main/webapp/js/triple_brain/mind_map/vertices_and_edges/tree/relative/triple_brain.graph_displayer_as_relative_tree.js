@@ -12,8 +12,9 @@ define([
     "triple_brain.event_bus",
     "triple_brain.ui.vertex",
     "triple_brain.ui.arrow_line",
-    "triple_brain.id_uri"
-], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, VertexUi, ArrowLine, IdUriUtils) {
+    "triple_brain.id_uri",
+    "triple_brain.relative_vertex"
+], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, VertexUi, ArrowLine, IdUriUtils, RelativeVertex) {
     var api = {};
     api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
         Graph.getForCentralVertexUriAndDepth(centralVertexUri, depth, function (graph) {
@@ -43,22 +44,12 @@ define([
             newVertex,
             container
         );
-        if (isLeftOrientedVertex()) {
-            adjustNewVertexMargin();
+        var relativeVertex = RelativeVertex.withVertex(vertexHtmlFacade);
+        if (relativeVertex.isToTheLeft()) {
+            relativeVertex.adjustPosition(parentVertex.getHtml());
         }
         EdgeUi.redrawAllEdges();
         return vertexHtmlFacade;
-        function isLeftOrientedVertex(){
-            return $(vertexHtmlFacade.getHtml()).parents(".left-oriented").length > 0;
-        }
-        function adjustNewVertexMargin(){
-            var parentLabelWidth = $(parentVertex.label()).width();
-            var html = vertexHtmlFacade.getHtml();
-            var width = $(html).find(".label").width();
-            $(html).closest(".vertex-tree-container").css(
-                "margin-left", "-" + (width + parentLabelWidth + 200) + "px"
-            );
-        }
     };
     api.allowsMovingVertices = function () {
         return false;
@@ -145,15 +136,8 @@ define([
             );
             buildVerticesHtml();
             $.each($(".left-oriented .vertex"), function(){
-                var html = this;
-                var label = $(html).find(".label")
-                var width = label.width();
-                var parentWidth = $(html).closest(".vertices-children-container")
-                    .siblings(".vertex-container")
-                    .find(".label").width();
-                $(html).closest(".vertex-tree-container").css(
-                    "margin-left", "-" + (parentWidth + width + 200) + "px"
-                );
+                var relativeVertex = RelativeVertex.withVertexHtml(this);
+                relativeVertex.adjustPosition();
             });
             function buildVerticesHtml() {
                 var serverRootVertex = vertexWithId(centralVertexUri);
