@@ -88,7 +88,6 @@ define([
                     '/event/ui/html/vertex/created/',
                     vertex
                 );
-                vertex.adjustWidth();
                 return vertex;
             }
             function createLabel() {

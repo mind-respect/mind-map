@@ -156,6 +156,7 @@ define([
                 var vertexContainer = RelativeTreeTemplates["vertex_container"].merge();
                 $(verticesContainer).append(vertexContainer);
                 $(vertexContainer).append(rootVertex.getHtml());
+                rootVertex.adjustWidth();
                 var leftChildrenContainer = treeMaker.addChildrenContainerToVertex(
                     rootVertex
                 );
@@ -226,6 +227,7 @@ define([
             vertexContainer.append(
                 childVertexHtmlFacade.getHtml()
             );
+            childVertexHtmlFacade.adjustWidth();
             treeMaker.addChildrenContainerToVertex(childVertexHtmlFacade);
             return childVertexHtmlFacade;
         };

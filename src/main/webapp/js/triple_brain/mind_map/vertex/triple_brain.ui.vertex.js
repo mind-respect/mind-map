@@ -203,10 +203,10 @@ define([
                 $(menu()).css("visibility", "visible");
             };
             this.hideMoveButton = function () {
-                $(moveButton()).css("visibility", "hidden");
+                thisVertex.moveButton().css("visibility", "hidden");
             };
             this.showMoveButton = function () {
-                $(moveButton()).css("visibility", "visible");
+                thisVertex.moveButton().css("visibility", "visible");
             };
             this.showCenterButton = function () {
                 $(centerButton()).hide();
@@ -435,10 +435,19 @@ define([
                 );
             };
             this.adjustWidth = function () {
-                var intuitiveWidthBuffer = 40;
+                var intuitiveWidthBuffer = 60;
                 var labelWidth = $(this.label()).width();
-                var width = menuWidth()
-                    + labelWidth
+                var imageWidth = thisVertex.hasImagesMenu() ?
+                    thisVertex.getImageMenu().width():
+                    0;
+
+                var width =
+                    Math.max(
+                        menuWidth(),
+                        labelWidth
+                    ) +
+                    thisVertex.moveButton().width() +
+                    imageWidth
                     + intuitiveWidthBuffer;
                 $(html).css(
                     "width",
@@ -496,12 +505,15 @@ define([
                 });
             };
 
+            this.hasMoveButton = function(){
+                return thisVertex.moveButton().length > 0;
+            }
+            this.moveButton = function(){
+                return $(html).find('.move');
+            };
+
             function suggestionButton() {
                 return $(html).find('.suggestion');
-            }
-
-            function moveButton() {
-                return $(html).find('.move');
             }
 
             function menu() {

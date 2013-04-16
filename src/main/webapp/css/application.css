@@ -127,6 +127,8 @@ body input[type=button]:hover{
 
 .vertex .textfield-container {
     display: inline;
+    padding:1em;
+    margin-left:0.3em;
 }
 
 .vertex input[type="text"] {
@@ -142,10 +144,6 @@ body input[type=button]:hover{
     /*margin-top: 15px;*/
     width:auto;
     overflow: hidden;
-}
-
-.vertex .textfield-container{
-    padding:1em;
 }
 
 .vertex.highlighted{
@@ -193,7 +191,7 @@ input[type="button"] {
 
 .vertex .menu {
     float:right;
-    margin-right:1em;
+    /*margin-right:2em;*/
     width:75px;
     padding-top:10px;
 }
@@ -261,7 +259,7 @@ input[type="button"] {
 }
 
 .vertex .image_container{
-    position:absolute;
+    float:left;
 }
 
 .edge {
