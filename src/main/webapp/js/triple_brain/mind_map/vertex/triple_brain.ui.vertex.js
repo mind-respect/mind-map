@@ -94,9 +94,6 @@ define([
                 centralVertex.setAsNonCentral();
                 $(html).addClass('center-vertex');
                 thisVertex.hideCenterButton();
-                if(thisVertex.hasImages()){
-                    thisVertex.getImageMenu().positionNextToVertex();
-                }
             };
             this.setNameOfHiddenProperties = function (nameOfHiddenProperties) {
                 $(html).data('nameOfHiddenProperties', nameOfHiddenProperties);
@@ -174,19 +171,10 @@ define([
                     thisVertex.unhighlight();
                 }
                 thisVertex.hideButtons();
-                if(thisVertex.hasImages()){
-                    var positioningFunction = thisVertex.isCenterVertex() ?
-                        thisVertex.getImageMenu().positionNextToVertex:
-                        thisVertex.getImageMenu().positionNextToText
-                    positioningFunction();
-                }
             };
             this.makeItHighProfile = function(){
                 thisVertex.highlight();
                 thisVertex.showButtons();
-                if(thisVertex.hasImages()){
-                    thisVertex.getImageMenu().positionNextToVertex();
-                }
             };
             this.hideButtons = function () {
                 thisVertex.hideMenu();
