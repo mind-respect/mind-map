@@ -52,10 +52,9 @@ define(
                     (b * tx - a * ty) / determinant
                 );
             },
-
-                this.determinant = function () {
-                    return a * d - b * c;
-                }
+            this.determinant = function () {
+                return a * d - b * c;
+            }
         }
     }
 );

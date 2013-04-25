@@ -14,7 +14,7 @@ define([
                     Point.centeredAtOrigin()
                 );
             }
-        }
+        };
 
         function Segment(startPoint, endPoint) {
             this.startPoint = startPoint;
@@ -24,7 +24,7 @@ define([
                     (this.startPoint.x + this.endPoint.x) / 2,
                     (this.startPoint.y + this.endPoint.y) / 2
                 )
-            }
+            };
             this.intersectsWithSegment = function (segmentToCompare) {
                 var lengthCross = this.length().cross(segmentToCompare.length());
                 var distanceFromSegment = segmentToCompare.distanceFromSegment(this);
@@ -34,7 +34,7 @@ define([
                     return true;
                 }
                 return false;
-            }
+            };
             this.intersectionPointWithSegment = function (segmentToCompare) {
                 if (!this.intersectsWithSegment(segmentToCompare)) {
                     throw(
@@ -77,38 +77,45 @@ define([
 
                 return intersectionPoint;
 
-            }
+            };
 
             this.toMatrix = function () {
                 return TransformMatrix2d.fromSegment(this);
-            }
+            };
             this.length = function () {
                 var lengthAsPoint = Point.centeredAtOrigin();
                 lengthAsPoint.x = this.endPoint.x - this.startPoint.x;
                 lengthAsPoint.y = this.endPoint.y - this.startPoint.y;
                 return lengthAsPoint;
-            }
+            };
+            this.distance = function(){
+                var x = startPoint.x;
+                var y = startPoint.y;
+                var x0 = endPoint.x;
+                var y0 = endPoint.y;
+                return Math.sqrt((x -= x0) * x + (y -= y0) * y);
+            };
             this.distanceFromSegment = function (segmentToCompare) {
                 var distancePoint = Point.centeredAtOrigin();
                 distancePoint.x = this.startPoint.x - segmentToCompare.startPoint.x;
                 distancePoint.y = this.startPoint.y - segmentToCompare.startPoint.y;
                 return distancePoint;
-            }
+            };
 
             this.radianDirection = function () {
                 return Math.atan2(
                     this.endPoint.y - this.startPoint.y,
                     this.endPoint.x - this.startPoint.x
                 );
-            }
+            };
             this.isValid = function () {
                 return this.startPoint != undefined && this.endPoint != undefined;
-            }
+            };
             this.clone = function () {
                 return api.withStartAndEndPoint(
                     this.startPoint.clone(),
                     this.endPoint.clone());
-            }
+            };
         }
 //        Segment.prototype.toString = function()
 //        {

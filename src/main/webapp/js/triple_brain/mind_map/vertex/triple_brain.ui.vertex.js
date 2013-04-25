@@ -60,7 +60,6 @@ define([
         };
         function TripleBrainVertex(html) {
             var thisVertex = this;
-            var segments = VertexSegments.withHTMLVertex(html);
             this._initialize = function () {
             };
             this.position = function () {
@@ -70,20 +69,22 @@ define([
                 );
             };
             this.intersectsWithSegment = function (segment) {
-                return segments.intersectsWithSegment(segment);
+                return getSegments().intersectsWithSegment(
+                    segment
+                );
             };
             this.intersectionPointWithSegment = function (segmentToCompare) {
-                if (!this.intersectsWithSegment(segmentToCompare)) {
+                if (!thisVertex.intersectsWithSegment(segmentToCompare)) {
                     throw(
                         Error.withName(
                             "no_intersection"
                         )
                         );
                 }
-                return segments.intersectionPointWithSegment(segmentToCompare);
+                return getSegments().intersectionPointWithSegment(segmentToCompare);
             };
             this.sideClosestToEdge = function () {
-                return segments.sideThatIntersectsWithAnotherSegmentUsingMarginOfError(10);
+                return getSegments().sideThatIntersectsWithAnotherSegmentUsingMarginOfError(10);
             };
             this.setAsNonCentral = function () {
                 $(html).removeClass('center-vertex');
@@ -338,7 +339,6 @@ define([
                 thisVertex.setSameAs(sameAsCollection);
                 applyCommonBehaviorForAddedIdentification(sameAs);
             };
-
             function applyCommonBehaviorForAddedIdentification(externalResource){
                 thisVertex.addImages(
                     externalResource.images()
@@ -514,6 +514,12 @@ define([
 
             function centerButton() {
                 return $(html).find('.center');
+            }
+
+            function getSegments(){
+                return VertexSegments.withHTMLVertex(
+                    thisVertex.label()
+                );
             }
 
             crow.ConnectedNode.apply(this, [thisVertex.getId()]);

@@ -17,7 +17,9 @@ define([
         api.withUriAndLabel = function(uri, label){
             return new ExternalResource(
                 uri,
-                label
+                label,
+                "",
+                []
             );
         }
         api.fromFreebaseSuggestion = function(freebaseSuggestion){

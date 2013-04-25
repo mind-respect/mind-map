@@ -62,7 +62,6 @@ define([
                         function getDistanceToScroll(){
                             var distanceToScroll = movementSegment.length();
                             distanceToScroll = distanceToScroll.invert();
-                            distanceToScroll = distanceToScroll.multiply(1);
                             return distanceToScroll;
                         }
                     }

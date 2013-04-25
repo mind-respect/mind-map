@@ -25,23 +25,21 @@ define(
                     Math.pow(pointToCompare.x - this.x, 2) +
                         Math.pow(pointToCompare.y - this.y, 2)
                 );
-            }
-
+            };
             this.cross = function(pointToCompare){
                 return this.x * pointToCompare.y - pointToCompare.x * this.y;
-            },
-
-                this.clone = function(){
-                    return api.fromCoordinates(this.x, this.y);
-                }
+            };
+            this.clone = function(){
+                return api.fromCoordinates(this.x, this.y);
+            };
             this.multiply = function(factor){
                 this.x *= factor;
                 this.y *= factor;
                 return point;
-            }
+            };
             this.invert = function(){
                 return point.multiply(-1);
-            }
+            };
         }
 
         function addTwoPoints(pointA, pointB){

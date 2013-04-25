@@ -30,6 +30,7 @@ define([
             try{
                 segment.startPoint = sourceVertex.intersectionPointWithSegment(segment);
                 segment.endPoint = destinationVertex.intersectionPointWithSegment(segment);
+
             }catch(error){
                 segment = Segment.withStartAndEndPointAtOrigin();
             }
