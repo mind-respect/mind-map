@@ -4,14 +4,16 @@
 
 define([
     "jquery",
-    "triple_brain.config"
+    "triple_brain.config",
+    "triple_brain.user"
 ],
-    function ($, config) {
+    function ($, config, UserService) {
         return {
             search_for_auto_complete:function (searchText, successCallback) {
                 $.ajax({
                     type:'GET',
-                    url:config.links.app + '/service/search/vertices/auto_complete/' + searchText
+                    url: UserService.currentUserUri() +
+                        "/search/vertices/auto_complete/" + searchText
                 }).success(successCallback)
             }
         };
