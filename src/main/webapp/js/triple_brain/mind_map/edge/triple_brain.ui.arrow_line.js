@@ -12,7 +12,7 @@ define([
         var api = {};
         api.resetDrawingCanvas = function(){
             if ($("body").data(("canvas"))) {
-                $("body").data("canvas").clear();
+                $("body").data("canvas").remove();
             }
             $("body").data(
                 "canvas",
@@ -29,10 +29,13 @@ define([
             );
             try{
                 segment.startPoint = sourceVertex.intersectionPointWithSegment(segment);
-                segment.endPoint = destinationVertex.intersectionPointWithSegment(segment);
-
             }catch(error){
-                segment = Segment.withStartAndEndPointAtOrigin();
+                segment.startPoint = sourceVertex.closestPointToSegment(segment);
+            }
+            try{
+                segment.endPoint = destinationVertex.intersectionPointWithSegment(segment);
+            }catch(error){
+                segment.endPoint = destinationVertex.closestPointToSegment(segment);
             }
             return new ArrowLine(segment);
         };
@@ -104,10 +107,11 @@ define([
                 arrowHead.summit2 = {};
                 arrowHead.summit3 = {};
 
-                arrowHead.summit2.y = arrowHead.topSummit.y - arrowHeadLength * Math.sin(endAngle1);
-                arrowHead.summit3.y = arrowHead.topSummit.y - arrowHeadLength * Math.sin(endAngle2);
                 arrowHead.summit2.x = arrowHead.topSummit.x - arrowHeadLength * Math.cos(endAngle1);
+                arrowHead.summit2.y = arrowHead.topSummit.y - arrowHeadLength * Math.sin(endAngle1);
                 arrowHead.summit3.x = arrowHead.topSummit.x - arrowHeadLength * Math.cos(endAngle2);
+                arrowHead.summit3.y = arrowHead.topSummit.y - arrowHeadLength * Math.sin(endAngle2);
+
 
                 var arrowHeadhPath =
                     "M" + arrowHead.summit2.x + " " +

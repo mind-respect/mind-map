@@ -12,15 +12,13 @@ define([
 ],
     function (require, $, GraphUi, VertexAndEdgeCommon, EventBus, ArrowLine) {
         var api = {};
-
         api.EMPTY_LABEL = "a property";
-
         api.withHtml = function (Html) {
-            return new Edge(Html);
+            return new api.Object(Html);
         };
         api.allEdges = function () {
             var edges = new Array();
-            $(".edge").each(function () {
+            $(".relation").each(function () {
                 edges.push(api.withHtml(this));
             });
             return edges;
@@ -73,23 +71,9 @@ define([
                 edge.centerOnArrowLine();
             }
         }
-        api.onMouseOver = function () {
-            var edge = api.withHtml(this);
-            GraphUi.setEdgeMouseOver(edge);
-            edge.highlight();
-            edge.showMenu();
-        };
-        api.onMouseOut = function () {
-            var edge = api.withHtml(this);
-            GraphUi.unsetEdgeMouseOver();
-            if (!edge.isTextFieldInFocus()) {
-                edge.unhighlight();
-            }
-            edge.hideMenu();
-        };
 
-        function Edge(html) {
-            var Vertex = require("triple_brain.ui.vertex");
+        api.Object = function (html) {
+            var Vertex;
             var thisEdge = this;
 
             this.id = function () {
@@ -107,12 +91,12 @@ define([
                 );
             }
             this.destinationVertex = function () {
-                return Vertex.withId(
+                return getVertex().withId(
                     $(html).data('destination_vertex_id')
                 );
             };
             this.sourceVertex = function () {
-                return Vertex.withId(
+                return getVertex().withId(
                     $(html).data("source_vertex_id")
                 );
             };
@@ -141,16 +125,14 @@ define([
             this.focus = function () {
                 $(label()).focus();
             };
-            this.setText = function (text) {
-                $(label()).val(text);
-            };
-            this.text = function () {
-                return $(label()).val();
-            };
             this.centerOnArrowLine = function () {
-                var arrowLineMiddlePoint = this.arrowLine().middlePoint();
-                $(html).css('left', arrowLineMiddlePoint.x);
-                $(html).css('top', arrowLineMiddlePoint.y);
+                thisEdge.positionAt(
+                    this.arrowLine().middlePoint()
+                );
+            };
+            this.positionAt = function(position){
+                $(html).css('left', position.x);
+                $(html).css('top', position.y);
             };
             this.isConnectedWithVertex = function (vertex) {
                 return isSourceVertex(vertex) ||
@@ -169,7 +151,7 @@ define([
                 $(label()).removeClass('when-default-graph-element-text');
             };
             this.readjustLabelWidth = function () {
-                VertexAndEdgeCommon.adjustTextFieldWidthToNumberOfChars(
+                VertexAndEdgeCommon.adjustWidthToNumberOfChars(
                     label()
                 );
                 this.adjustWidth();
@@ -216,6 +198,13 @@ define([
 
             function isDestinationVertex(vertex) {
                 return thisEdge.destinationVertex().getId() == vertex.getId()
+            }
+
+            function getVertex(){
+                if(Vertex === undefined){
+                    Vertex = require("triple_brain.ui.vertex");
+                }
+                return Vertex;
             }
         }
 

@@ -73,6 +73,11 @@ define([
                     segment
                 );
             };
+            this.closestPointToSegment = function (segment) {
+                return getSegments().closestPointToSegment(
+                    segment
+                );
+            };
             this.intersectionPointWithSegment = function (segmentToCompare) {
                 if (!thisVertex.intersectsWithSegment(segmentToCompare)) {
                     throw(
@@ -137,10 +142,10 @@ define([
                 return html;
             };
             this.labelCenterPoint = function () {
-                var label = thisVertex.label();
+                var textContainer = thisVertex.textContainer();
                 return Point.fromCoordinates(
-                    $(label).offset().left + $(label).width() / 2,
-                    $(label).offset().top + $(label).height() / 2
+                    $(textContainer).offset().left + thisVertex.textContainerWidth() / 2,
+                    $(textContainer).offset().top + $(textContainer).height() / 2
                 )
             };
 
@@ -158,9 +163,8 @@ define([
                 $(html).data(
                     "uri",
                     uri
-                )
+                );
             };
-
 
             this.isMouseOver = function () {
                 var vertexThatIsMouseOver = GraphUi.getVertexMouseOver();
@@ -239,13 +243,24 @@ define([
                 $(thisVertex.label()).focus();
             };
             this.readjustLabelWidth = function () {
-                VertexAndEdgeCommon.adjustTextFieldWidthToNumberOfChars(
+                VertexAndEdgeCommon.adjustWidthToNumberOfChars(
                     this.label()
                 );
                 thisVertex.adjustWidth();
             };
             this.text = function () {
                 return $(this.label()).val();
+            };
+            this.textContainer = function(){
+                return $(this.label()).closest(".textfield-container");
+            };
+            this.textContainerWidth = function(){
+                var width = 0;
+                $.each(thisVertex.textContainer().children(), function(){
+                    var child = this;
+                    width += $(child).width();
+                });
+                return width;
             };
             this.hasDefaultText = function () {
                 return $(this.label()).val() == api.EMPTY_LABEL;
@@ -410,7 +425,7 @@ define([
                 $(html).trigger("change");
             }
             this.label = function () {
-                return $(html).find(".label");
+                return $(html).find("input.label");
             };
             this.equalsVertex = function (otherVertex) {
                 return thisVertex.getId() == otherVertex.getId();
@@ -423,8 +438,8 @@ define([
                 );
             };
             this.adjustWidth = function () {
-                var intuitiveWidthBuffer = 60;
-                var labelWidth = $(this.label()).width();
+                var intuitiveWidthBuffer = 70;
+                var textContainerWidth = thisVertex.textContainerWidth();
                 var imageWidth = thisVertex.hasImagesMenu() ?
                     thisVertex.getImageMenu().width():
                     0;
@@ -432,7 +447,7 @@ define([
                 var width =
                     Math.max(
                         menuWidth(),
-                        labelWidth
+                        textContainerWidth
                     ) +
                     thisVertex.moveButton().width() +
                     imageWidth
@@ -517,8 +532,8 @@ define([
             }
 
             function getSegments(){
-                return VertexSegments.withHTMLVertex(
-                    thisVertex.label()
+                return VertexSegments.withHtmlVertex(
+                    thisVertex.textContainer()
                 );
             }
 

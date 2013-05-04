@@ -19,3 +19,28 @@
     display:table-cell;
     vertical-align:middle;
 }
+
+span.relation{
+    vertical-align: top;
+    margin-right:1em;
+}
+
+.left-oriented span.relation{
+    margin-right:0;
+    margin-left:1em;
+}
+input.relation{
+    border-radius: 3px 3px 3px 3px;
+    border-color:#3A87AD;
+    padding: 0;
+    spacing: 0;
+    outline: none;
+    font-family: courier new, monospace;
+    font-size: 14px;
+    vertical-align: middle;
+    background-color: transparent;
+    /*margin-top: 15px;*/
+    width:auto;
+    overflow: hidden;
+}
+

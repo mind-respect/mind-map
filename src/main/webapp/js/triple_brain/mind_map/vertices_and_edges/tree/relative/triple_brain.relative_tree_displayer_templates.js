@@ -28,7 +28,14 @@ define([
             'vertex_container',
             "<div class='vertex-container'></div>"
         );
-
+        t.add(
+            'edge',
+            '<span class="label label-info relation">{label}</span>'
+        );
+        t.add(
+            'edge_input',
+            '<input class="relation" type="text" value="{label}"></span>'
+        );
         return api;
     }
 );

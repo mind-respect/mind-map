@@ -52,7 +52,7 @@ define([
         t.add('hidden_property', '<li>{name}</li>');
 
         //edge html elements
-        t.add('edge', '<div class="edge graph-element" id="{id}" style="left:{label_position.x};top:{label_position.y}"></div>');
+        t.add('edge', '<div class="edge relation graph-element" id="{id}" style="left:{label_position.x};top:{label_position.y}"></div>');
         t.add('edge_label', '<input type="text" value="{label}">');
         t.add('edge_remove_button', '<input type="button" class="remove" value="x" >');
 

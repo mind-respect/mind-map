@@ -131,7 +131,7 @@ body input[type=button]:hover{
     margin-left:0.3em;
 }
 
-.vertex input[type="text"] {
+.vertex input[type="text"].label {
     border: 0;
     padding: 0;
     spacing: 0;

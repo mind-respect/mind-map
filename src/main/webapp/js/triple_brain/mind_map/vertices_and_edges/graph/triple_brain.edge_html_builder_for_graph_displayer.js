@@ -12,9 +12,10 @@ define([
     "triple_brain.edge",
     "triple_brain.ui.arrow_line",
     "triple_brain.event_bus",
-    "triple_brain.ui.vertex"
+    "triple_brain.ui.vertex",
+    "triple_brain.graph_edge"
 ],
-    function(require, $, GraphUi, MindMapTemplate, IdUriUtils, VertexAndEdgeCommon, EdgeService, ArrowLine, EventBus, VertexUi){
+    function(require, $, GraphUi, MindMapTemplate, IdUriUtils, VertexAndEdgeCommon, EdgeService, ArrowLine, EventBus, VertexUi, GraphEdge){
         var api = {};
         api.arrayFromServerFormatArray = function(jsonArray){
             $.each(jsonArray, function(){
@@ -29,7 +30,6 @@ define([
         };
 
         function EdgeCreator(json){
-            var Edge = require("triple_brain.ui.edge");
             var uri = json.id;
             json.id = IdUriUtils.graphElementIdFromUri(json.id);
             var html = MindMapTemplate['edge'].merge(json);
@@ -46,8 +46,8 @@ define([
                     VertexUi.withUri(json.destination_vertex_id).getId()
                 );
                 $(html).hover(
-                    Edge.onMouseOver,
-                    Edge.onMouseOut
+                    GraphEdge.onMouseOver,
+                    GraphEdge.onMouseOut
                 );
                 createLabel();
                 createMenu();
@@ -66,7 +66,7 @@ define([
             function createLabel(){
                 var label = MindMapTemplate['edge_label'].merge(json);
                 $(html).append(label);
-                VertexAndEdgeCommon.adjustTextFieldWidthToNumberOfChars(
+                VertexAndEdgeCommon.adjustWidthToNumberOfChars(
                     label
                 );
                 label.focus(function(e) {
@@ -84,7 +84,7 @@ define([
                         edge.unhighlight();
                     }
                     if($(this).val() == ""){
-                        $(this).val(Edge.EMPTY_LABEL);
+                        $(this).val(GraphEdge.EMPTY_LABEL);
                         edge.applyStyleOfDefaultText();
                         edge.readjustLabelWidth()
                     }else{
@@ -92,7 +92,6 @@ define([
                     }
                 });
 
-                //save the label when the user changes it
                 label.change(function(e) {
                     var edge = edgeOfSubHtmlComponent(this);
                     EdgeService.updateLabel(edge, edge.text());
@@ -118,7 +117,7 @@ define([
             }
 
             function edgeOfSubHtmlComponent(htmlOfSubComponent){
-                return Edge.withHtml(
+                return GraphEdge.withHtml(
                     $(htmlOfSubComponent).closest('.edge')
                 );
             }
@@ -134,7 +133,7 @@ define([
             }
 
             function edgeFacade(){
-                return Edge.withHtml(html);
+                return GraphEdge.withHtml(html);
             }
         }
         return api;

@@ -127,9 +127,8 @@ define([
                     $(vertex.label()).keydown();
                     VertexService.updateLabel(vertexOfSubHtmlComponent(this), $(this).val());
                     var relativeVertex = RelativeVertex.withVertex(vertex);
-                    if(relativeVertex.isToTheLeft()){
-                        relativeVertex.adjustPosition();
-                    }
+                    relativeVertex.adjustPositionIfApplicable();
+                    relativeVertex.adjustAllChildrenPositionIfApplicable();
                     EdgeUi.redrawAllEdges();
                 });
 

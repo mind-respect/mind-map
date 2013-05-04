@@ -13,8 +13,9 @@ define([
     "triple_brain.ui.vertex",
     "triple_brain.ui.arrow_line",
     "triple_brain.id_uri",
-    "triple_brain.relative_vertex"
-], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, VertexUi, ArrowLine, IdUriUtils, RelativeVertex) {
+    "triple_brain.relative_vertex",
+    "triple_brain.edge_html_builder_for_relative_tree"
+], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, VertexUi, ArrowLine, IdUriUtils, RelativeVertex, EdgeBuilder) {
     var api = {};
     api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
         Graph.getForCentralVertexUriAndDepth(centralVertexUri, depth, function (graph) {
@@ -60,20 +61,30 @@ define([
             var vertexServerFormat = vertex.getOriginalServerObject();
             $.each(vertexServerFormat.children, function () {
                 var childInfo = this;
-                buildEdge(
+                EdgeBuilder.get(
                     childInfo.edge,
                     vertex,
                     VertexUi.withId(childInfo.vertexHtmlId)
-                );
+                ).create();
+//                buildEdge(
+//                    childInfo.edge,
+//                    vertex,
+//                    VertexUi.withId(childInfo.vertexHtmlId)
+//                );
             });
         }
     };
     api.addEdge = function (serverEdge, sourceVertex, destinationVertex) {
-        return buildEdge(
+//        return buildEdge(
+//            serverEdge,
+//            sourceVertex,
+//            destinationVertex
+//        );
+        return EdgeBuilder.get(
             serverEdge,
             sourceVertex,
             destinationVertex
-        );
+        ).create();
     };
     return api;
     function shouldAddLeft() {

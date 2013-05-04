@@ -9,7 +9,7 @@ define([
     "triple_brain.ui.graph",
     "triple_brain.ui.vertex",
     "triple_brain.vertex",
-    "triple_brain.ui.edge",
+    "triple_brain.graph_edge",
     "triple_brain.edge",
     "triple_brain.suggestion",
     "triple_brain.mind-map_template",
@@ -22,7 +22,7 @@ define([
     "triple_brain.segment",
     "triple_brain.graph_displayer",
     "jquery-ui"
-], function (require, $, EventBus, GraphUi, Vertex, VertexService, Edge, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, UiUtils, ArrowLine, Point, Segment, GraphDisplayer) {
+], function (require, $, EventBus, GraphUi, Vertex, VertexService, GraphEdge, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, UiUtils, ArrowLine, Point, Segment, GraphDisplayer) {
         var api = {};
         api.withJsonHavingAbsolutePosition = function (serverVertex) {
             initAdjustedPosition(serverVertex);
@@ -285,8 +285,8 @@ define([
                 var edgesNormalStateZIndex = $("#drawn_graph").data("edgesNormalStateZIndex");
                 $('.edge').css('z-index', edgesNormalStateZIndex);
                 $('.edge').hover(
-                    Edge.onMouseOver,
-                    Edge.onMouseOut
+                    GraphEdge.onMouseOver,
+                    GraphEdge.onMouseOut
                 );
 
                 var verticesNormalStateZIndex = $("#drawn_graph").data("verticesNormalStateZIndex");
@@ -342,7 +342,7 @@ define([
                         return;
                     }
                     arrowLine.remove();
-                    $('.edge').hover(Edge.onMouseOver, Edge.onMouseOut);
+                    $('.edge').hover(GraphEdge.onMouseOver, GraphEdge.onMouseOut);
                     $('.edge').css('z-index', normalStateEdgesZIndex);
                     $("body").unbind(mouseUpEvent);
                     $(selectorThatCoversWholeGraph).unbind(relationMouseMoveEvent);
