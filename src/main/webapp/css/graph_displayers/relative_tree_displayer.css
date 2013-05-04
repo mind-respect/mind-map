@@ -31,6 +31,7 @@ span.relation{
 }
 input.relation{
     border-radius: 3px 3px 3px 3px;
+    border-width:0.2em;
     border-color:#3A87AD;
     padding: 0;
     spacing: 0;
