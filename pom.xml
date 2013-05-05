@@ -50,12 +50,6 @@
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
-         <dependency>
-            <groupId>org.triple_brain.module</groupId>
-            <artifactId>triple_brain-jena-graph-manipulator</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-
         <dependency>
             <groupId>org.triple_brain.module</groupId>
             <artifactId>triple_brain-search</artifactId>
