@@ -194,7 +194,10 @@ define([
                     event.stopPropagation();
                     var vertex = vertexOfSubHtmlComponent(this);
                     if (!vertex.isCenterVertex() && vertex.getId() != "default") {
-                        VertexService.remove(vertex);
+                        VertexService.remove(vertex, function(vertex){
+                            vertex.removeConnectedEdges();
+                            vertex.remove();
+                        });
                     }
                 });
 

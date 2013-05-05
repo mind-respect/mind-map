@@ -23,15 +23,16 @@ define([
                     }
                 });
         };
-        api.remove = function (vertex) {
+        api.remove = function (vertex, callback) {
             $.ajax({
                 type:'DELETE',
                 url:vertex.getUri()
             }).success(function () {
+                    callback(vertex);
                     EventBus.publish(
                         '/event/ui/graph/vertex/deleted/',
                         vertex
-                    )
+                    );
                 })
         };
         api.updateLabel = function (vertex, label) {

@@ -550,15 +550,6 @@ define([
                 );
             }
         );
-
-        EventBus.subscribe(
-            '/event/ui/graph/vertex/deleted/',
-            function (event, vertex) {
-                vertex.removeConnectedEdges();
-                vertex.remove();
-            }
-        );
-
         EventBus.subscribe(
             '/event/ui/graph/vertex_and_relation/added/',
             function (event, triple) {

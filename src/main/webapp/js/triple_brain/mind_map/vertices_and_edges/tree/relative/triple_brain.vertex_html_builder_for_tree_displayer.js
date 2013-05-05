@@ -182,7 +182,18 @@ define([
                     event.stopPropagation();
                     var vertex = vertexOfSubHtmlComponent(this);
                     if (!vertex.isCenterVertex() && vertex.getId() != "default") {
-                        VertexService.remove(vertex);
+                        VertexService.remove(vertex, function(vertex){
+                            var relativeVertex = RelativeVertex.withVertex(
+                                vertex
+                            );
+                            relativeVertex.visitChildren(function(childVertex){
+                                vertex.removeConnectedEdges();
+                                childVertex.remove();
+                            });
+                            vertex.removeConnectedEdges();
+                            vertex.remove();
+                            EdgeUi.redrawAllEdges();
+                        });
                     }
                 });
 
