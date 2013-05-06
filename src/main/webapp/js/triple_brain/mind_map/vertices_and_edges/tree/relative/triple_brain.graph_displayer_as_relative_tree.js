@@ -66,20 +66,10 @@ define([
                     vertex,
                     VertexUi.withId(childInfo.vertexHtmlId)
                 ).create();
-//                buildEdge(
-//                    childInfo.edge,
-//                    vertex,
-//                    VertexUi.withId(childInfo.vertexHtmlId)
-//                );
             });
         }
     };
     api.addEdge = function (serverEdge, sourceVertex, destinationVertex) {
-//        return buildEdge(
-//            serverEdge,
-//            sourceVertex,
-//            destinationVertex
-//        );
         return EdgeBuilder.get(
             serverEdge,
             sourceVertex,
@@ -103,38 +93,6 @@ define([
         return $(".center-vertex").closest(".vertex-container").siblings(
             ".vertices-children-container:not(.left-oriented):first"
         );
-    }
-
-    function buildEdge(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
-        var edgeHtml = $("<div class='edge' style='display:none'></div>");
-        $(edgeHtml).attr(
-            "id",
-            IdUriUtils.graphElementIdFromUri(edgeServer.id)
-        );
-        GraphUi.addHTML(
-            edgeHtml
-        );
-        $(edgeHtml).data(
-            "source_vertex_id",
-            parentVertexHtmlFacade.getId()
-        );
-        $(edgeHtml).data(
-            "destination_vertex_id",
-            childVertexHtmlFacade.getId()
-        );
-        var edgeFacade = EdgeUi.withHtml(edgeHtml);
-        edgeFacade.setUri(edgeServer.id);
-        edgeFacade.setArrowLine(
-            ArrowLine.ofEdgeHavingUndefinedArrowLine(
-                edgeFacade
-            )
-        );
-        edgeFacade.arrowLine().drawInWithDefaultStyle();
-        EventBus.publish(
-            '/event/ui/html/edge/created/',
-            edgeFacade
-        );
-        return edgeFacade;
     }
 
     function TreeMaker() {

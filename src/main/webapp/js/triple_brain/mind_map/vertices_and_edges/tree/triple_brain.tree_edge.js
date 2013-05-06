@@ -7,7 +7,6 @@ define([
 ],
     function ($, Edge) {
         var api = {};
-        var api = {};
         api.EMPTY_LABEL = Edge.EMPTY_LABEL;
         api.redrawAllEdges = Edge.redrawAllEdges;
         api.withHtml = function (html) {
@@ -17,12 +16,18 @@ define([
         return api;
         function Object(html){
             this.setText = function (text) {
-                label().val(text);
+                var label = getLabel();
+                label.is(":input") ?
+                    label.val(text) :
+                    label.text(text);
             };
             this.text = function () {
-                return label().val();
+                var label = getLabel();
+                label.is(":input") ?
+                    label.val() :
+                    label.text();
             };
-            function label(){
+            function getLabel(){
                 return html;
             }
             Edge.Object.apply(this, [html]);
