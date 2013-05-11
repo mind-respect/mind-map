@@ -1,16 +1,11 @@
 package org.triple_brain.mind_map;
 
-import org.eclipse.jetty.security.HashLoginService;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerCollection;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.eclipse.jetty.xml.XmlConfiguration;
 
 import java.io.File;
-
-/**
- * @author VincentBlouin
- */
 
 public class Launcher {
     private Server server;
@@ -26,14 +21,14 @@ public class Launcher {
         server = new Server(port);
         HandlerCollection handlers = new HandlerCollection();
 
-        WebAppContext wac = new WebAppContext("src/main/webapp", "/");
-        handlers.addHandler(wac);
+        WebAppContext mindMapWebappContext = new WebAppContext("src/main/webapp", "/test");
+        handlers.addHandler(mindMapWebappContext);
 
-        HashLoginService myrealm = new HashLoginService("Localhost", "src/test/webapp/WEB-INF/realm.properties");
-        server.addBean(myrealm);
-
-        XmlConfiguration conf = new XmlConfiguration(new File("src/test/webapp/WEB-INF/jetty-web.xml").toURI().toURL().openStream());
-        conf.configure(wac);
+        String serviceWebappBasePath = "/home/vince/Projects/triple_brain/webapp/service/src/";
+        WebAppContext serviceWebappContext = new WebAppContext(serviceWebappBasePath + "/main/webapp", "/");
+        handlers.addHandler(serviceWebappContext);
+        XmlConfiguration conf = new XmlConfiguration(new File(serviceWebappBasePath +  "test/webapp/WEB-INF/jetty-web.xml").toURI().toURL().openStream());
+        conf.configure(serviceWebappContext);
 
         server.setHandler(handlers);
     }

@@ -48,7 +48,7 @@ define([
             return formAsJson;
         }
         function handleRegistrationSuccess(){
-            window.location = "/";
+            window.location.reload();
         }
         function handleRegistrationError(errors){
             $(access.errorMessages()).hide();

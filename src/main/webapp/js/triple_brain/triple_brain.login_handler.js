@@ -30,7 +30,7 @@ define([
                 UserService.authenticate(
                     loginInfo,
                     function () {
-                        window.location = "/";
+                        window.location.reload();
                     },
                     function () {
                         $(access.errorMessage()).show();
