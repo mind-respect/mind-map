@@ -8,7 +8,7 @@ define([
 ],
     function ($, EventBus) {
         var api = {};
-        var usersResourceUrl = "/users/";
+        var usersResourceUrl = "/service/users/";
         var sessionResourceUrl = usersResourceUrl + "session/";
         var authenticatedUserInCache = undefined;
         api.authenticatedUserInCache = function () {

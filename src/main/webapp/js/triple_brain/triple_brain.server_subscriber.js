@@ -22,7 +22,7 @@ define([
 //            cometd.disconnect(true);
 //        });
 
-        var cometURL = location.protocol + "//" + location.host + "/cometd";
+        var cometURL = location.protocol + "//" + location.host + "/service/cometd";
         cometd.configure({
             url:cometURL
 //            logLevel: 'debug'
