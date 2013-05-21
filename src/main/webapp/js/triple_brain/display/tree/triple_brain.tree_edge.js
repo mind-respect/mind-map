@@ -23,7 +23,7 @@ define([
             };
             this.text = function () {
                 var label = getLabel();
-                label.is(":input") ?
+                return label.is(":input") ?
                     label.val() :
                     label.text();
             };
