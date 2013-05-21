@@ -16,13 +16,12 @@ define([
     "triple_brain.external_resource",
     "triple_brain.ui.identification_menu",
     "triple_brain.ui.suggestion_menu",
-    "triple_brain.ui.all",
     "triple_brain.ui.arrow_line",
     "triple_brain.point",
     "triple_brain.segment",
     "triple_brain.graph_displayer",
     "jquery-ui"
-], function (require, $, EventBus, GraphUi, Vertex, VertexService, GraphEdge, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, UiUtils, ArrowLine, Point, Segment, GraphDisplayer) {
+], function (require, $, EventBus, GraphUi, Vertex, VertexService, GraphEdge, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, ArrowLine, Point, Segment, GraphDisplayer) {
         var api = {};
         api.withJsonHavingAbsolutePosition = function (serverVertex) {
             initAdjustedPosition(serverVertex);

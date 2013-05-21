@@ -16,14 +16,13 @@ define([
     "triple_brain.external_resource",
     "triple_brain.ui.identification_menu",
     "triple_brain.ui.suggestion_menu",
-    "triple_brain.ui.all",
     "triple_brain.ui.arrow_line",
     "triple_brain.point",
     "triple_brain.segment",
     "triple_brain.graph_displayer",
     "triple_brain.relative_vertex",
     "jquery-ui"
-], function (require, $, EventBus, GraphUi, Vertex, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, UiUtils, ArrowLine, Point, Segment, GraphDisplayer, RelativeVertex) {
+], function (require, $, EventBus, GraphUi, Vertex, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, ArrowLine, Point, Segment, GraphDisplayer, RelativeVertex) {
         var api = {};
         api.withServerJson = function (serverVertex) {
             return new VertexCreator(serverVertex);
