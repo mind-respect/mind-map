@@ -5,7 +5,7 @@ define(
     [],
     function(){
         var api = {};
-        api.patate = "agrumes";
+        api.patate = "agrume";
         return api;
     }
 );
