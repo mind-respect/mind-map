@@ -101,3 +101,5 @@ window.config = {
         "jquery.colorbox" : ["jquery"]
     }
 };
+
+requirejs.config(window.config);

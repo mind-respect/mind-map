@@ -35,12 +35,34 @@
                     <specRunnerTemplate>REQUIRE_JS</specRunnerTemplate>
                     <preloadSources>
                         <source>require.js</source>
+                        <source>common-boot.js</source>
                     </preloadSources>
-                    <jsSrcDir>src/main/webapp/js/</jsSrcDir>
+                    <jsSrcDir>src/main/webapp/js</jsSrcDir>
                     <jsTestSrcDir>src/test/webapp/js</jsTestSrcDir>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jslint-maven-plugin</artifactId>
+                <version>1.0.1</version>
+                <executions>
+                    <execution>
+                        <id>execute-jslint</id>
+                        <goals>
+                            <goal>jslint</goal>
+                            <goal>test-jslint</goal>
+                        </goals>
+                        <configuration>
+                            <sourceJsFolder>
+                                src/main/webapp/js/triple_brain
+                            </sourceJsFolder>
+                            <failOnIssues>false</failOnIssues>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+
 </project>
 

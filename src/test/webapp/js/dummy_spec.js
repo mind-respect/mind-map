@@ -9,11 +9,3 @@ define(['dummy'], function(dummy) {
         });
     });
 });
-
-//define("dummy", function(dummy) {
-//    describe("dummy.patate", function() {
-//        it("should return agrume", function() {
-//            expect(dummy.patate()).toBe("agrume");
-//        });
-//    });
-//});
