@@ -3,7 +3,7 @@ define([
     "triple_brain.transform_matrix_2d",
     "triple_brain.error"
 ],
-    function(Point, TransformMatrix2d, Error) {
+    function (Point, TransformMatrix2d, Error) {
         var api = {
             withStartAndEndPoint:function (startPoint, endPoint) {
                 return new Segment(startPoint, endPoint);
@@ -88,7 +88,7 @@ define([
                 lengthAsPoint.y = this.endPoint.y - this.startPoint.y;
                 return lengthAsPoint;
             };
-            this.distance = function(){
+            this.distance = function () {
                 var x = startPoint.x;
                 var y = startPoint.y;
                 var x0 = endPoint.x;
@@ -117,6 +117,7 @@ define([
                     this.endPoint.clone());
             };
         }
+
 //        Segment.prototype.toString = function()
 //        {
 //            return "startPoint: " + this.startPoint + " " +
