@@ -124,7 +124,9 @@ define([
                 label.change(function (e) {
                     var vertex = vertexOfSubHtmlComponent(this);
                     $(vertex.label()).keydown();
-                    VertexService.updateLabel(vertexOfSubHtmlComponent(this), $(this).val());
+                    VertexService.updateLabel(
+                        vertexOfSubHtmlComponent(this), $(this).val()
+                    );
                     var relativeVertex = RelativeVertex.withVertex(vertex);
                     relativeVertex.adjustPositionIfApplicable();
                     relativeVertex.adjustAllChildrenPositionIfApplicable();

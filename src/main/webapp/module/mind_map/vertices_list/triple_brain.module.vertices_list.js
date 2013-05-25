@@ -110,7 +110,10 @@ define([
             }
 
             function sortByLabel() {
-                sortVerticesWithCriteria(labelSortCriteria());
+                $(verticesList()).find('li').tsort(
+                    labelSortCriteria(),
+                    {useVal : true}
+                );
             }
 
             function sortByDistanceFromCentralVertex() {
