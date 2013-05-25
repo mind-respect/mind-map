@@ -101,7 +101,7 @@ define(
                 GraphDisplayer.integrateEdges(
                     drawnGraph.edges
                 );
-                var centralVertex = Vertex.withUri(centralVertexUri);
+                var centralVertex = Vertex.withUri(centralVertexUri)[0];
                 centralVertex.setAsCentral();
                 centralVertex.scrollTo();
                 DragScroll.start();

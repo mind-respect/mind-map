@@ -15,6 +15,7 @@ define([
                 dataType:'json'
             }).success(function (tripleJson) {
                     var triple = Triple.createUsingServerTripleAndNewVertexPosition(
+                        vertex,
                         tripleJson,
                         newVertexPosition
                     );
@@ -35,7 +36,7 @@ define([
                     );
                 })
         };
-        api.updateLabel = function (vertex, label) {
+        api.updateLabel = function (vertex, label, callback) {
             $.ajax({
                 type:'POST',
                 url:vertex.getUri() + '/label?label=' + label,
@@ -44,7 +45,8 @@ define([
                     EventBus.publish(
                         '/event/ui/graph/vertex/label/updated',
                         vertex
-                    )
+                    );
+                    callback(vertex);
                 })
         };
         api.addType = function (vertex, type, successCallback) {

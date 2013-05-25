@@ -82,6 +82,7 @@ window.config = {
         "triple_brain.vertex_html_builder_for_tree_displayer" : "triple_brain/display/tree/relative/triple_brain.vertex_html_builder_for_tree_displayer",
         "triple_brain.relative_tree_displayer_templates" : "triple_brain/display/tree/relative/triple_brain.relative_tree_displayer_templates",
         "triple_brain.tree_edge" : "triple_brain/display/tree/triple_brain.tree_edge",
+        "triple_brain.tree_vertex" : "triple_brain/display/tree/triple_brain.tree_vertex",
         "triple_brain.graph_displayer_as_tree_common" : "triple_brain/display/tree/triple_brain.graph_displayer_as_tree_common",
         "triple_brain.mind_map_info" : "triple_brain/triple_brain.mind_map_info"
     },

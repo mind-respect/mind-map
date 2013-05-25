@@ -63,6 +63,9 @@ define([
         api.integrateEdges = function(edges){
             return _implementation.integrateEdges(edges);
         };
+        api.couldHaveDuplicates = function(){
+            return !api.allowsMovingVertices();
+        };
         return api;
         function currentDepth(){
             return getDepthSlider().currentDepth();

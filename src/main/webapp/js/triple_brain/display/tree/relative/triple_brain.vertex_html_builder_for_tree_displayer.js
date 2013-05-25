@@ -21,8 +21,10 @@ define([
     "triple_brain.segment",
     "triple_brain.graph_displayer",
     "triple_brain.relative_vertex",
+    "triple_brain.tree_vertex",
+    "triple_brain.ui.vertex_and_edge_common",
     "jquery-ui"
-], function (require, $, EventBus, GraphUi, Vertex, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, ArrowLine, Point, Segment, GraphDisplayer, RelativeVertex) {
+], function (require, $, EventBus, GraphUi, Vertex, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, ArrowLine, Point, Segment, GraphDisplayer, RelativeVertex, TreeVertex, VertexAndEdgeCommon) {
         var api = {};
         api.withServerJson = function (serverVertex) {
             return new VertexCreator(serverVertex);
@@ -104,7 +106,7 @@ define([
                     vertex.removeStyleOfDefaultText();
                     if (vertex.hasDefaultText()) {
                         $(this).val("");
-                        $(vertex.label()).keydown();
+                        $(vertex.label()).keyup();
                     }
                 });
                 label.blur(function (e) {
@@ -115,7 +117,7 @@ define([
                     if ($(this).val() == "") {
                         $(this).val(Vertex.EMPTY_LABEL);
                         vertex.applyStyleOfDefaultText();
-                        $(vertex.label()).keydown();
+                        $(vertex.label()).keyup();
                     } else {
                         vertex.removeStyleOfDefaultText();
                     }
@@ -123,36 +125,56 @@ define([
 
                 label.change(function (e) {
                     var vertex = vertexOfSubHtmlComponent(this);
-                    $(vertex.label()).keydown();
+                    $(vertex.label()).keyup();
                     VertexService.updateLabel(
-                        vertexOfSubHtmlComponent(this), $(this).val()
+                        vertexOfSubHtmlComponent(this),
+                        $(this).val(),
+                        function(vertex){
+                            var otherInstances = TreeVertex.ofVertex(
+                                vertex
+                            ).getOtherInstances();
+                            $.each(otherInstances, function(){
+                                var vertex = this;
+                                VertexAndEdgeCommon.highlightLabel(
+                                    vertex.getId()
+                                );
+                            });
+                        }
                     );
                     var relativeVertex = RelativeVertex.withVertex(vertex);
                     relativeVertex.adjustPositionIfApplicable();
                     relativeVertex.adjustAllChildrenPositionIfApplicable();
+                    var otherInstances = TreeVertex.withHtml(
+                        html
+                    ).getOtherInstances();
+                    $.each(otherInstances, function(){
+                        var relativeVertex = RelativeVertex.withVertex(
+                            this
+                        );
+                        relativeVertex.adjustPositionIfApplicable();
+                        relativeVertex.adjustAllChildrenPositionIfApplicable();
+                    });
                     EdgeUi.redrawAllEdges();
                 });
 
-                label.keydown(function (e) {
+                label.keyup(function (e) {
                     var vertex = vertexOfSubHtmlComponent(this);
-                    vertex.readjustLabelWidth();
                     var html = vertex.getHtml();
-                    if (!$(html).parents(".left-oriented").length > 0) {
-                        return;
+                    updateLabelsOfVerticesWithSameUri();
+                    vertex.readjustLabelWidth();
+                    function updateLabelsOfVerticesWithSameUri(){
+                        var text = vertex.text();
+                        var otherInstances = TreeVertex.withHtml(
+                            html
+                        ).getOtherInstances();
+                        $.each(otherInstances, function(){
+                            var sameVertex = this;
+                            sameVertex.setText(
+                                text
+                            );
+                            sameVertex.readjustLabelWidth();
+                        });
                     }
-                    var children = $(html).closest(
-                        ".vertex-tree-container"
-                    ).find(
-                        ".vertices-children-container .vertex-tree-container"
-                    );
-                    var parentLabelWidth = $(vertex.label()).width();
-                    $.each(children, function () {
-                        var child = this;
-                        var width = $(child).find(".label").width();
-                        $(child).closest(".vertex-tree-container").css(
-                            "margin-left", "-" + (width + parentLabelWidth + 200) + "px"
-                        );
-                    });
                 });
                 return labelContainer;
             }

@@ -24,20 +24,21 @@ define([
         api.EMPTY_LABEL = "a concept";
 
         api.withHtml = function (html) {
-            return new TripleBrainVertex(html);
+            return new api.Object(html);
         };
         api.withId = function (id) {
             return api.withHtml($("#" + id));
         };
         api.withUri = function (uri) {
-            var vertexWithUri;
+            var verticesWithUri = [];
             api.visitAllVertices(function(vertex){
                 if(vertex.getUri() === uri){
-                    vertexWithUri = vertex;
-                    return -1;
+                    verticesWithUri.push(
+                        vertex
+                    );
                 }
             });
-            return vertexWithUri;
+            return verticesWithUri;
         };
         api.centralVertex = function () {
             return api.withHtml(
@@ -51,14 +52,7 @@ define([
                 );
             });
         };
-        api.allVertices = function () {
-            var vertices = new Array();
-            $(".vertex").each(function () {
-                vertices.push(api.withHtml(this));
-            });
-            return vertices;
-        };
-        function TripleBrainVertex(html) {
+        api.Object = function(html){
             var thisVertex = this;
             this._initialize = function () {
             };
@@ -251,6 +245,11 @@ define([
             this.text = function () {
                 return $(this.label()).val();
             };
+            this.setText = function (label) {
+                return $(thisVertex.label()).val(
+                    label
+                );
+           };
             this.textContainer = function(){
                 return $(this.label()).closest(".textfield-container");
             };
@@ -540,7 +539,7 @@ define([
             crow.ConnectedNode.apply(this, [thisVertex.getId()]);
         }
 
-        TripleBrainVertex.prototype = new crow.ConnectedNode();
+        api.Object.prototype = new crow.ConnectedNode();
 
         EventBus.subscribe(
             '/event/ui/graph/vertex/label/updated',

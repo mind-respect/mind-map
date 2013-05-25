@@ -10,8 +10,7 @@ define([
         api.EMPTY_LABEL = Edge.EMPTY_LABEL;
         api.redrawAllEdges = Edge.redrawAllEdges;
         api.withHtml = function (html) {
-            html = $(html);
-            return new Object(html);
+            return new Object($(html));
         };
         return api;
         function Object(html){

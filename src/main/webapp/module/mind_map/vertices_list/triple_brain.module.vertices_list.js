@@ -8,9 +8,11 @@ define([
     "./triple_brain.module.vertices_list_element_creator.js",
     "./triple_brain.module.vertices_list_element.js",
     "triple_brain.event_bus",
+    "triple_brain.graph_displayer",
+    "triple_brain.tree_vertex",
     "jquery.tinysort.min"
 ],
-    function ($, Vertex, VerticesListCreator, VerticesListElementCreator, VerticesListElement, EventBus) {
+    function ($, Vertex, VerticesListCreator, VerticesListElementCreator, VerticesListElement, EventBus, GraphDisplayer, TreeVertex) {
         var api = {};
         var SORT_TYPE_LABEL = 1;
         var SORT_TYPE_DISTANCE_FROM_CENTRAL_VERTEX = 2;
@@ -57,9 +59,9 @@ define([
 
             this.rebuild = function () {
                 this.empty();
-                $.each(Vertex.allVertices(), function () {
+                Vertex.visitAllVertices(function(vertex){
                     thisVerticesList.buildForAVertex(
-                        this
+                        vertex
                     );
                 });
                 var verticesList = api.get();
@@ -153,14 +155,29 @@ define([
                     var vertex = Vertex.withHtml(
                         $(this).closest(".vertex")
                     );
-                    var verticesListElement = VerticesListElement.withVertex(
+                    updateLabelInListForVertex(
                         vertex
                     );
-                    verticesListElement.setLabel(vertex.text());
-                    if ($(this).val() == "" || vertex.hasDefaultText()) {
-                        verticesListElement.applyStyleOfDefaultText();
-                    } else {
-                        verticesListElement.removeStyleOfDefaultText();
+                    if(GraphDisplayer.couldHaveDuplicates()){
+                        var otherInstances = TreeVertex.withHtml(
+                            vertex.getHtml()
+                        ).getOtherInstances();
+                        $.each(otherInstances, function(){
+                            updateLabelInListForVertex(
+                                this
+                            );
+                        });
+                    }
+                    function updateLabelInListForVertex(vertex){
+                        var verticesListElement = VerticesListElement.withVertex(
+                            vertex
+                        );
+                        verticesListElement.setLabel(vertex.text());
+                        if (vertex.label().val() == "" || vertex.hasDefaultText()) {
+                            verticesListElement.applyStyleOfDefaultText();
+                        } else {
+                            verticesListElement.removeStyleOfDefaultText();
+                        }
                     }
                 });
             }

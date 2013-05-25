@@ -39,11 +39,11 @@ define([
                 );
                 $(html).data(
                     "source_vertex_id",
-                    VertexUi.withUri(json.source_vertex_id).getId()
+                    VertexUi.withUri(json.source_vertex_id)[0].getId()
                 );
                 $(html).data(
                     "destination_vertex_id",
-                    VertexUi.withUri(json.destination_vertex_id).getId()
+                    VertexUi.withUri(json.destination_vertex_id)[0].getId()
                 );
                 $(html).hover(
                     GraphEdge.onMouseOver,
