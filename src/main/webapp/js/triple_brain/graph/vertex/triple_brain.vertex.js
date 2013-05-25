@@ -46,7 +46,9 @@ define([
                         '/event/ui/graph/vertex/label/updated',
                         vertex
                     );
-                    callback(vertex);
+                    if(callback !== undefined){
+                        callback(vertex);
+                    }
                 })
         };
         api.addType = function (vertex, type, successCallback) {
