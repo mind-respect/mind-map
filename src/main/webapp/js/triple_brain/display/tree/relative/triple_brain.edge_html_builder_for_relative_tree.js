@@ -32,13 +32,17 @@ define([
                 GraphUi.addHTML(
                     html
                 );
+                var isInverse = edgeServer.source_vertex_id !== parentVertexHtmlFacade.getUri();
+                if(isInverse){
+                    $(html).addClass("inverse");
+                }
                 $(html).data(
                     "source_vertex_id",
-                    parentVertexHtmlFacade.getId()
+                    isInverse ? childVertexHtmlFacade.getId() : parentVertexHtmlFacade.getId()
                 );
                 $(html).data(
                     "destination_vertex_id",
-                    childVertexHtmlFacade.getId()
+                    isInverse ? parentVertexHtmlFacade.getId() : childVertexHtmlFacade.getId()
                 );
                 $(html).click(function(){
                     changeToInput($(this));
@@ -48,7 +52,6 @@ define([
                     childVertexHtmlFacade
                 );
                 var textContainer = childVertexHtmlFacade.textContainer();
-
                 var isToTheLeft = relativeVertex.isToTheLeft();
                 if(isToTheLeft){
                     textContainer.append(html);
@@ -75,16 +78,20 @@ define([
                 var input = RelativeTreeTemplates['edge_input'].merge({
                     label : html.text()
                 });
-                $(input).data(
+                input = $(input);
+                if(previousEdge.isInverse()){
+                    input.addClass("inverse");
+                }
+                input.data(
                     "source_vertex_id",
                     previousEdge.sourceVertex().getId()
                 );
-                $(input).data(
+                input.data(
                     "destination_vertex_id",
                     previousEdge.destinationVertex().getId()
                 );
                 if(input.val() === TreeEdge.EMPTY_LABEL){
-                    $(input).val("");
+                    input.val("");
                 }
                 input.blur(function(){
                     var html = $(this);
@@ -134,7 +141,10 @@ define([
                 var html = RelativeTreeTemplates['edge'].merge({
                     label: previousEdge.text()
                 });
-                var html = $(html);
+                html = $(html);
+                if(previousEdge.isInverse()){
+                    html.addClass("inverse");
+                }
                 html.data(
                     "source_vertex_id",
                     previousEdge.sourceVertex().getId()

@@ -45,3 +45,10 @@ input.relation{
     overflow: hidden;
 }
 
+span.relation.inverse{
+    background: red;
+}
+
+input[type=text].relation.inverse{
+    border-color:red;
+}

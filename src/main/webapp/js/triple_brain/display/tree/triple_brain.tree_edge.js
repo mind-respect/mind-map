@@ -27,6 +27,9 @@ define([
                     label.val() :
                     label.text();
             };
+            this.isInverse = function(){
+                return $(html).hasClass("inverse");
+            };
             function getLabel(){
                 return html;
             }
