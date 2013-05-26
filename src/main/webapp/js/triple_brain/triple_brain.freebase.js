@@ -24,9 +24,9 @@ define([
                 .host
                 .toLowerCase()
                 .indexOf("freebase.com") != -1;
-        }
+        };
         api.handleIdentificationToServer = function(vertex, freebaseSuggestion, successCallBack){
-            var typeId = freebaseSuggestion.id;
+            var typeId = freebaseSuggestion.notable.id;
             var externalResource = ExternalResource.fromFreebaseSuggestion(
                 freebaseSuggestion
             );
@@ -43,24 +43,22 @@ define([
                     successCallBack
                 );
             }
-        }
+        };
         api.listPropertiesOfFreebaseTypeId = function (vertex, freebaseId) {
             Suggestion = require("triple_brain.suggestion")
             var propertiesOfTypeQuery = {
-                query:{
-                    id:freebaseId,
-                    type:"/type/type",
-                    properties:[
-                        {   id:null,
-                            name:null,
-                            expected_type:null
-                        }
-                    ]
-                }
+                id:freebaseId,
+                type:"/type/type",
+                properties:[
+                    {   id:null,
+                        name:null,
+                        expected_type:null
+                    }
+                ]
             };
             $.ajax({
                 type:'GET',
-                url:'https://api.freebase.com/api/service/mqlread?query=' + JSON.stringify(propertiesOfTypeQuery),
+                url:'https://www.googleapis.com/freebase/v1/mqlread?query=' + JSON.stringify(propertiesOfTypeQuery),
                 dataType:'jsonp'
             }).success(function (result) {
                     var freebaseProperties = [];
@@ -84,15 +82,14 @@ define([
                         suggestions
                     );
                 })
-        }
-
+        };
         api.removeSuggestFeatureOnVertex = function(vertex){
-
             $(vertex.label())
                 .unbind(".suggest")
                 .unbind("fb-select")
                 .removeData("suggest");
-        }
+        };
+
         EventBus.subscribe(
             '/event/ui/graph/vertex/type/added',
             function (event, vertex, type) {
