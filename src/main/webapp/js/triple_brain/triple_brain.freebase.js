@@ -104,7 +104,7 @@ define([
                 );
                 $(vertex.label()).suggest({
                     "zIndex":20,
-                    "type":typeId
+                    "all type":typeId
                 })
                     .bind("fb-select", function (e, freebaseSuggestion) {
                         Vertex = require("triple_brain.ui.vertex");
