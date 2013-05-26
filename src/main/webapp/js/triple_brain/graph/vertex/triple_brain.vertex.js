@@ -88,8 +88,7 @@ define([
                 function () {
                     vertex.removeType(typeToRemove);
                     if (successCallback != undefined) {
-                        successCallback.call(
-                            this,
+                        successCallback(
                             vertex,
                             typeToRemove
                         );

@@ -319,7 +319,7 @@ define([
                 var i = 0;
                 $.each(array, function () {
                     var identification = this;
-                    if (identification.uri() == identificationToRemove.uri()) {
+                    if (identification.uri() === identificationToRemove.uri()) {
                         array.splice(i, 1);
                         return false;
                     }
@@ -369,7 +369,19 @@ define([
                         createImageMenu();
                 imageMenu.refreshImages();
             };
-
+            this.removeImage = function(imageToRemove){
+                var images = [];
+                $.each(thisVertex.getImages(), function(){
+                    var image = this;
+                    if(image.getUrlForSmall() !== imageToRemove.getUrlForSmall()){
+                        images.push(image);
+                    }
+                });
+                $(html).data(
+                    "images",
+                    images
+                );
+            };
             this.getImages = function(){
                 return $(html).data("images") === undefined ?
                     [] :
@@ -409,7 +421,11 @@ define([
                 );
             };
             function removeIdentificationCommonBehavior(externalResource){
-                //todo should remove vertex related images
+                $.each(externalResource.images(), function(){
+                    var image = this;
+                    thisVertex.removeImage(image);
+                });
+                thisVertex.getImageMenu().refreshImages();
             }
             this.getSameAs = function () {
                 return $(html).data('sameAs');
