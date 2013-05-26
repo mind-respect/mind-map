@@ -115,7 +115,10 @@ define([
                             $(this).closest(".vertex").attr("id")
                         );
                         vertex.triggerChange();
-                        api.handleIdentificationToServer(vertex, freebaseSuggestion);
+                        api.handleIdentificationToServer(
+                            vertex,
+                            freebaseSuggestion
+                        );
                     });
             }
         );

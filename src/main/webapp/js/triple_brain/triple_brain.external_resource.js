@@ -14,7 +14,7 @@ define([
 ],
     function (require, $, ServerSubscriber, Vertex, IdUriUtils, Image, EventBus) {
         var api = {};
-        api.withUriAndLabel = function(uri, label){
+        api.withUriAndLabel = function (uri, label) {
             return new ExternalResource(
                 uri,
                 label,
@@ -22,7 +22,7 @@ define([
                 []
             );
         }
-        api.fromFreebaseSuggestion = function(freebaseSuggestion){
+        api.fromFreebaseSuggestion = function (freebaseSuggestion) {
             var Freebase = require("triple_brain.freebase");
             return new ExternalResource(
                 Freebase.freebaseIdToURI(
@@ -33,7 +33,7 @@ define([
                 []
             )
         }
-        api.fromServerJson = function(serverJson){
+        api.fromServerJson = function (serverJson) {
             return new ExternalResource(
                 serverJson.uri,
                 serverJson.label,
@@ -46,24 +46,24 @@ define([
             var thisExternalResource = this;
             this.uri = function () {
                 return uri;
-            }
+            };
             this.label = function () {
                 return label;
-            }
-            this.description = function(){
+            };
+            this.description = function () {
                 return description === undefined ? "" : description;
-            }
-            this.images = function(){
+            };
+            this.images = function () {
                 return images;
-            }
-            this.listenForUpdates = function(listenerReadyCallBack){
+            };
+            this.listenForUpdates = function (listenerReadyCallBack) {
                 ServerSubscriber.subscribe(
-                    "/identification/" + IdUriUtils.encodeUri(thisExternalResource.uri()) +  "/updated",
+                    "/identification/" + IdUriUtils.encodeUri(thisExternalResource.uri()) + "/updated",
                     updateWithServerJson,
                     listenerReadyCallBack
                 );
-            }
-            function updateWithServerJson(externalResourceAsJson){
+            };
+            function updateWithServerJson(externalResourceAsJson) {
                 var externalResource = api.fromServerJson(
                     externalResourceAsJson
                 );
@@ -71,41 +71,43 @@ define([
                 label = externalResource.label();
                 description = externalResource.description();
                 images = externalResource.images();
-                getVertex().visitAllVertices(function(vertex){
-                    $.each(vertex.getIdentifications(), function(){
+                getVertex().visitAllVertices(function (vertex) {
+                    $.each(vertex.getIdentifications(), function () {
                         var identification = this;
-                        if(identification.uri() === thisExternalResource.uri()){
+                        if (identification.uri() === thisExternalResource.uri()) {
                             vertex.addImages(images);
                         }
                     });
                 });
             }
 
-            this.serverFormat = function(){
+            this.serverFormat = function () {
                 return $.toJSON(
                     thisExternalResource.jsonFormat()
                 );
-            }
-            this.jsonFormat = function(){
+            };
+            this.jsonFormat = function () {
                 return {
-                    uri : thisExternalResource.uri(),
-                    label : thisExternalResource.label(),
-                    images : thisExternalResource.images
+                    uri:thisExternalResource.uri(),
+                    label:thisExternalResource.label(),
+                    images:thisExternalResource.images
                 }
-            }
-            this.setType = function(type){
+            };
+            this.setType = function (type) {
                 thisExternalResource.type = type;
-            }
-            this.getType = function(){
+            };
+            this.getType = function () {
                 return thisExternalResource.type;
-            }
+            };
         }
-        function getVertex(){
-            if(Vertex === undefined){
+
+        function getVertex() {
+            if (Vertex === undefined) {
                 Vertex = require("triple_brain.ui.vertex")
             }
             return Vertex;
         }
+
         return api;
     }
 );
