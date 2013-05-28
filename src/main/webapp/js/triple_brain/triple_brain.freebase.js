@@ -26,10 +26,10 @@ define([
                 .indexOf("freebase.com") != -1;
         };
         api.handleIdentificationToServer = function(vertex, freebaseSuggestion, successCallBack){
-            var typeId = freebaseSuggestion.notable.id;
             var externalResource = ExternalResource.fromFreebaseSuggestion(
                 freebaseSuggestion
             );
+            var typeId = getTypeId();
             if (api.isOfTypeTypeFromTypeId(typeId)) {
                 vertexService().addType(
                     vertex,
@@ -42,6 +42,13 @@ define([
                     externalResource,
                     successCallBack
                 );
+            }
+            function getTypeId(){
+                if(freebaseSuggestion.notable === undefined){
+                    return "";
+                }else{
+                    return freebaseSuggestion.notable.id;
+                }
             }
         };
         api.listPropertiesOfFreebaseTypeId = function (vertex, freebaseId) {
