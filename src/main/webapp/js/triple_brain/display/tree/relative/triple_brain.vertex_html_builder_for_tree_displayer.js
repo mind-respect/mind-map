@@ -206,16 +206,26 @@ define([
                     var vertex = vertexOfSubHtmlComponent(this);
                     if (!vertex.isCenterVertex() && vertex.getId() != "default") {
                         VertexService.remove(vertex, function(vertex){
-                            var relativeVertex = RelativeVertex.withVertex(
-                                vertex
-                            );
-                            relativeVertex.visitChildren(function(childVertex){
-                                vertex.removeConnectedEdges();
-                                childVertex.remove();
+                            removeChildren(vertex);
+                            TreeVertex.ofVertex(vertex).applyToOtherInstances(function(vertex){
+                                removeChildren(vertex);
+                                removeEdges(vertex);
                             });
-                            vertex.removeConnectedEdges();
-                            vertex.remove();
+                            removeEdges(vertex);
                             EdgeUi.redrawAllEdges();
+                            function removeChildren(vertex){
+                                var relativeVertex = RelativeVertex.withVertex(
+                                    vertex
+                                );
+                                relativeVertex.visitChildren(function(childVertex){
+                                    vertex.removeConnectedEdges();
+                                    childVertex.remove();
+                                });
+                            }
+                            function removeEdges(vertex){
+                                vertex.removeConnectedEdges();
+                                vertex.remove();
+                            }
                         });
                     }
                 });
