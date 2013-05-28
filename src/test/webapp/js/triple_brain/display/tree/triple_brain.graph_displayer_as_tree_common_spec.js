@@ -9,14 +9,14 @@ define([
     var vertexC;
     var abcGraph;
     describe("graph_displayer_as_tree_common", function () {
-        it("adds_vertices_if_graph_is_not_a_tree", function () {
-            abcGraph = initLinearAbcGraph();
+        it("duplicates vertices if graph is not a tree", function () {
+            initLinearAbcGraph();
             TreeDisplayerCommon.defineChildrenInVertices(
                 abcGraph,
                 vertexA.id
             );
             expect(numberOfVertices()).toBe(3);
-            abcGraph = initLinearAbcGraph();
+            initLinearAbcGraph();
             addEdge(
                 makeEdgeBetween(vertexC, vertexA)
             );
@@ -48,26 +48,37 @@ define([
         }
     }
     function initLinearAbcGraph() {
-        vertexA = makeVertex("vertex a");
-        vertexB = makeVertex("vertex b");
-        vertexC = makeVertex("vertex c");
-        var vertices = {};
-        vertices[vertexA.id] = vertexA;
-        vertices[vertexB.id] = vertexB;
-        vertices[vertexC.id] = vertexC;
-        var edges = [
-            makeEdgeBetween(vertexA, vertexB),
-            makeEdgeBetween(vertexB, vertexC)
-        ];
-        return {
-            vertices: vertices,
-            edges:edges
+        abcGraph = {
+            vertices: {},
+            edges:[]
         };
+        vertexA = addVertex(
+            makeVertex("vertex a")
+        );
+        vertexB = addVertex(
+            makeVertex("vertex b")
+        );
+        vertexC = addVertex(
+            makeVertex("vertex c")
+        );
+        addEdge(
+            makeEdgeBetween(vertexA, vertexB)
+        );
+        addEdge(
+            makeEdgeBetween(vertexB, vertexC)
+        );
+        return abcGraph;
     }
     function addEdge(edge){
         abcGraph.edges.push(
             edge
         );
+        return edge;
+    }
+
+    function addVertex(vertex){
+        abcGraph.vertices[vertex.id] = vertex;
+        return vertex;
     }
     function makeEdgeBetween(sourceVertex, destinationVertex){
         return {

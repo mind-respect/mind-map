@@ -64,7 +64,7 @@ define([
                 EdgeBuilder.get(
                     childInfo.edge,
                     vertex,
-                    VertexUi.withId(childInfo.vertexHtmlId)
+                    VertexUi.withId(childInfo[vertex.getId()].vertexHtmlId)
                 ).create();
             });
         }
@@ -143,7 +143,9 @@ define([
                         childVertex,
                         container
                     );
-                    serverRootVertex.children[i].vertexHtmlId = childHtmlFacade.getId();
+                    serverRootVertex.children[i][rootVertex.getId()] = {
+                        vertexHtmlId : childHtmlFacade.getId()
+                    };
                     buildChildrenHtmlTreeRecursively(
                         childHtmlFacade
                     );
@@ -159,7 +161,9 @@ define([
                             vertexWithId(childInfo.vertexUri),
                             childrenContainer
                         );
-                        childInfo.vertexHtmlId = childVertexHtmlFacade.getId();
+                        childInfo[parentVertexHtmlFacade.getId()] = {
+                            vertexHtmlId : childVertexHtmlFacade.getId()
+                        };
                         var treeContainer = childVertexHtmlFacade.getHtml().closest(
                             ".vertex-tree-container"
                         );
