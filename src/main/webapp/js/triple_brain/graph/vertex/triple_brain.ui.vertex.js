@@ -53,7 +53,7 @@ define([
             });
         };
         api.Object = function(html){
-            var thisVertex = this;
+            var self = this;
             this._initialize = function () {
             };
             this.position = function () {
@@ -73,7 +73,7 @@ define([
                 );
             };
             this.intersectionPointWithSegment = function (segmentToCompare) {
-                if (!thisVertex.intersectsWithSegment(segmentToCompare)) {
+                if (!self.intersectsWithSegment(segmentToCompare)) {
                     throw(
                         Error.withName(
                             "no_intersection"
@@ -93,14 +93,14 @@ define([
                 var centralVertex = api.centralVertex();
                 centralVertex.setAsNonCentral();
                 $(html).addClass('center-vertex');
-                thisVertex.hideCenterButton();
+                self.hideCenterButton();
             };
             this.setNameOfHiddenProperties = function (nameOfHiddenProperties) {
                 $(html).data('nameOfHiddenProperties', nameOfHiddenProperties);
             };
             this.buildHiddenNeighborPropertiesIndicator = function () {
                 var propertiesIndicator = PropertiesIndicator.withVertex(
-                    thisVertex
+                    self
                 );
                 $(html).data(
                     "hidden_properties_indicator",
@@ -118,10 +118,10 @@ define([
                     );
             };
             this.hasHiddenProperties = function(){
-                return thisVertex.numberOfHiddenConnectedVertices() > 0;
+                return self.numberOfHiddenConnectedVertices() > 0;
             };
             this.numberOfHiddenConnectedVertices = function () {
-                return thisVertex.nameOfHiddenProperties().length;
+                return self.nameOfHiddenProperties().length;
             };
             this.nameOfHiddenProperties = function () {
                 return $(html).data('nameOfHiddenProperties');
@@ -136,9 +136,9 @@ define([
                 return html;
             };
             this.labelCenterPoint = function () {
-                var textContainer = thisVertex.textContainer();
+                var textContainer = self.textContainer();
                 return Point.fromCoordinates(
-                    $(textContainer).offset().left + thisVertex.textContainerWidth() / 2,
+                    $(textContainer).offset().left + self.textContainerWidth() / 2,
                     $(textContainer).offset().top + $(textContainer).height() / 2
                 )
             };
@@ -163,25 +163,25 @@ define([
             this.isMouseOver = function () {
                 var vertexThatIsMouseOver = GraphUi.getVertexMouseOver();
                 return  vertexThatIsMouseOver !== undefined &&
-                    vertexThatIsMouseOver.equalsVertex(thisVertex);
+                    vertexThatIsMouseOver.equalsVertex(self);
             };
             this.makeItLowProfile = function(){
-                if (!thisVertex.isLabelInFocus()) {
-                    thisVertex.unhighlight();
+                if (!self.isLabelInFocus()) {
+                    self.unhighlight();
                 }
-                thisVertex.hideButtons();
+                self.hideButtons();
             };
             this.makeItHighProfile = function(){
-                thisVertex.highlight();
-                thisVertex.showButtons();
+                self.highlight();
+                self.showButtons();
             };
             this.hideButtons = function () {
-                thisVertex.hideMenu();
-                thisVertex.hideMoveButton();
+                self.hideMenu();
+                self.hideMoveButton();
             };
             this.showButtons = function () {
-                thisVertex.showMenu();
-                thisVertex.showMoveButton();
+                self.showMenu();
+                self.showMoveButton();
             };
             this.hideMenu = function () {
                 $(menu()).css("visibility", "hidden");
@@ -190,10 +190,10 @@ define([
                 $(menu()).css("visibility", "visible");
             };
             this.hideMoveButton = function () {
-                thisVertex.moveButton().css("visibility", "hidden");
+                self.moveButton().css("visibility", "hidden");
             };
             this.showMoveButton = function () {
-                thisVertex.moveButton().css("visibility", "visible");
+                self.moveButton().css("visibility", "visible");
             };
             this.showCenterButton = function () {
                 $(centerButton()).hide();
@@ -213,11 +213,11 @@ define([
             };
             this.connectedEdges = function () {
                 return EdgeUi.connectedToVertex(
-                    thisVertex
+                    self
                 );
             };
             this.redrawConnectedEdgesArrowLine = function(){
-                $.each(thisVertex.connectedEdges(), function(){
+                $.each(self.connectedEdges(), function(){
                     var edge = this;
                     edge.arrowLine().remove();
                     edge.setArrowLine(
@@ -231,22 +231,22 @@ define([
                 });
             };
             this.isLabelInFocus = function () {
-                return $(thisVertex.label()).is(":focus");
+                return $(self.label()).is(":focus");
             };
             this.focus = function () {
-                $(thisVertex.label()).focus();
+                $(self.label()).focus();
             };
             this.readjustLabelWidth = function () {
                 VertexAndEdgeCommon.adjustWidthToNumberOfChars(
                     this.label()
                 );
-                thisVertex.adjustWidth();
+                self.adjustWidth();
             };
             this.text = function () {
                 return $(this.label()).val();
             };
             this.setText = function (label) {
-                return $(thisVertex.label()).val(
+                return $(self.label()).val(
                     label
                 );
            };
@@ -255,7 +255,7 @@ define([
             };
             this.textContainerWidth = function(){
                 var width = 0;
-                $.each(thisVertex.textContainer().children(), function(){
+                $.each(self.textContainer().children(), function(){
                     var child = this;
                     width += $(child).width();
                 });
@@ -294,24 +294,24 @@ define([
                 var mergedSuggestions = existingSuggestions.concat(suggestions);
                 $(html).data('suggestions', mergedSuggestions);
                 mergedSuggestions.length > 0 ?
-                    thisVertex.showSuggestionButton() :
-                    thisVertex.hideSuggestionButton();
+                    self.showSuggestionButton() :
+                    self.hideSuggestionButton();
             };
             this.setSuggestions = function (suggestions) {
                 $(html).data('suggestions', suggestions);
                 suggestions.length > 0 ?
-                    thisVertex.showSuggestionButton() :
-                    thisVertex.hideSuggestionButton();
+                    self.showSuggestionButton() :
+                    self.hideSuggestionButton();
             };
             this.removeType = function (type) {
-                var types = thisVertex.removeIdenficationInArray(
+                var types = self.removeIdenficationInArray(
                     type,
-                    thisVertex.getTypes()
+                    self.getTypes()
                 );
-                $(thisVertex).data("types", types);
+                $(self).data("types", types);
                 removeIdentificationCommonBehavior(type);
                 VertexService.getSuggestions(
-                    thisVertex
+                    self
                 );
             };
 
@@ -332,8 +332,8 @@ define([
                 return $(html).data('types');
             };
             this.getIdentifications = function(){
-                return thisVertex.getTypes().concat(
-                    thisVertex.getSameAs()
+                return self.getTypes().concat(
+                    self.getSameAs()
                 );
             };
             this.setTypes = function (types) {
@@ -341,37 +341,37 @@ define([
             };
             this.addType = function (type) {
                 type.setType("type");
-                var types = thisVertex.getTypes();
+                var types = self.getTypes();
                 types.push(type);
-                thisVertex.setTypes(types);
+                self.setTypes(types);
                 applyCommonBehaviorForAddedIdentification(type);
             };
             this.addSameAs = function (sameAs) {
                 sameAs.setType("same_as");
-                var sameAsCollection = thisVertex.getSameAs()
+                var sameAsCollection = self.getSameAs()
                 sameAsCollection.push(sameAs);
-                thisVertex.setSameAs(sameAsCollection);
+                self.setSameAs(sameAsCollection);
                 applyCommonBehaviorForAddedIdentification(sameAs);
             };
             function applyCommonBehaviorForAddedIdentification(externalResource){
-                thisVertex.addImages(
+                self.addImages(
                     externalResource.images()
                 );
             }
             this.addImages = function(images){
-                var existingImages = thisVertex.getImages();
+                var existingImages = self.getImages();
                 $(html).data("images", existingImages.concat(
                     images
                 ));
                 var imageMenu =
-                    thisVertex.hasImagesMenu() ?
-                        thisVertex.getImageMenu() :
+                    self.hasImagesMenu() ?
+                        self.getImageMenu() :
                         createImageMenu();
                 imageMenu.refreshImages();
             };
             this.removeImage = function(imageToRemove){
                 var images = [];
-                $.each(thisVertex.getImages(), function(){
+                $.each(self.getImages(), function(){
                     var image = this;
                     if(image.getUrlForSmall() !== imageToRemove.getUrlForSmall()){
                         images.push(image);
@@ -389,7 +389,7 @@ define([
             };
 
             function createImageMenu(){
-                var imageMenu = ImageMenu.ofVertex(thisVertex).create();
+                var imageMenu = ImageMenu.ofVertex(self).create();
                 $(html).data("images_menu", imageMenu);
                 return imageMenu;
             }
@@ -399,7 +399,7 @@ define([
             };
 
             this.hasImages = function(){
-                return thisVertex.getImages().length > 0;
+                return self.getImages().length > 0;
             };
 
             this.getImageMenu = function(){
@@ -410,22 +410,22 @@ define([
                 $(html).data('sameAs', sameAsCollection);
             };
             this.removeSameAs = function (sameAsToRemove) {
-                var sameAs = thisVertex.removeIdenficationInArray(
+                var sameAs = self.removeIdenficationInArray(
                     sameAsToRemove,
-                    thisVertex.getSameAs()
+                    self.getSameAs()
                 );
-                $(thisVertex).data("sameAs", sameAs);
+                $(self).data("sameAs", sameAs);
                 removeIdentificationCommonBehavior(sameAsToRemove);
                 VertexService.getSuggestions(
-                    thisVertex
+                    self
                 );
             };
             function removeIdentificationCommonBehavior(externalResource){
                 $.each(externalResource.images(), function(){
                     var image = this;
-                    thisVertex.removeImage(image);
+                    self.removeImage(image);
                 });
-                thisVertex.getImageMenu().refreshImages();
+                self.getImageMenu().refreshImages();
             }
             this.getSameAs = function () {
                 return $(html).data('sameAs');
@@ -443,10 +443,10 @@ define([
                 return $(html).find("input.label");
             };
             this.equalsVertex = function (otherVertex) {
-                return thisVertex.getId() == otherVertex.getId();
+                return self.getId() == otherVertex.getId();
             };
             this.scrollTo = function () {
-                var position = thisVertex.position();
+                var position = self.position();
                 window.scroll(
                     position.x - screen.width / 2,
                     position.y - screen.height / 4
@@ -454,9 +454,9 @@ define([
             };
             this.adjustWidth = function () {
                 var intuitiveWidthBuffer = 70;
-                var textContainerWidth = thisVertex.textContainerWidth();
-                var imageWidth = thisVertex.hasImagesMenu() ?
-                    thisVertex.getImageMenu().width():
+                var textContainerWidth = self.textContainerWidth();
+                var imageWidth = self.hasImagesMenu() ?
+                    self.getImageMenu().width():
                     0;
 
                 var width =
@@ -464,7 +464,7 @@ define([
                         menuWidth(),
                         textContainerWidth
                     ) +
-                    thisVertex.moveButton().width() +
+                    self.moveButton().width() +
                     imageWidth
                     + intuitiveWidthBuffer;
                 $(html).css(
@@ -473,10 +473,10 @@ define([
                 );
             };
             this.hasIdentificationMenu = function () {
-                return thisVertex.getIdentificationMenu() != undefined;
+                return self.getIdentificationMenu() != undefined;
             };
             this.hasSuggestionMenu = function () {
-                return thisVertex.getSuggestionMenu() != undefined;
+                return self.getSuggestionMenu() != undefined;
             };
             this.setIdentificationMenu = function (identificationMenu) {
                 $(html).data("identification_menu", identificationMenu);
@@ -502,7 +502,7 @@ define([
                 );
             };
             this.prepareAsYouTypeSuggestions = function(){
-                var vertexTypes = thisVertex.getTypes();
+                var vertexTypes = self.getTypes();
                 if(vertexTypes.length == 0){
                     return;
                 }
@@ -514,7 +514,7 @@ define([
                     }
                 });
                 filterValue += ")";
-                $(thisVertex.label()).suggest({
+                $(self.label()).suggest({
                     key:"AIzaSyBHOqdqbswxnNmNb4k59ARSx-RWokLZhPA",
                     filter : filterValue,
                     "zIndex":20,
@@ -522,12 +522,33 @@ define([
                     lang: "en"
                 });
             };
-
             this.hasMoveButton = function(){
-                return thisVertex.moveButton().length > 0;
-            }
+                return self.moveButton().length > 0;
+            };
+
             this.moveButton = function(){
                 return $(html).find('.move');
+            };
+
+            this.serverFormat = function(){
+                return {
+                    label : self.text(),
+                    suggestions : self.suggestions(),
+                    is_frontier_vertex_with_hidden_vertices : self.hasHiddenProperties(),
+                    name_of_hidden_properties : self.nameOfHiddenProperties(),
+                    types : getCollectionAsServerFormat(self.getTypes()),
+                    same_as : getCollectionAsServerFormat(self.getSameAs())
+                };
+                function getCollectionAsServerFormat(collection){
+                    var serverFormat = [];
+                    $.each(collection, function(){
+                        var item = this;
+                        serverFormat.push(
+                            item.jsonFormat()
+                        );
+                    });
+                    return serverFormat;
+                }
             };
 
             function suggestionButton() {
@@ -548,11 +569,11 @@ define([
 
             function getSegments(){
                 return VertexSegments.withHtmlVertex(
-                    thisVertex.textContainer()
+                    self.textContainer()
                 );
             }
 
-            crow.ConnectedNode.apply(this, [thisVertex.getId()]);
+            crow.ConnectedNode.apply(this, [self.getId()]);
         }
 
         api.Object.prototype = new crow.ConnectedNode();

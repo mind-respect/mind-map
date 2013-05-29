@@ -4,9 +4,10 @@
 define([
     "jquery",
     "triple_brain.ui.vertex",
-    "triple_brain.event_bus"
+    "triple_brain.event_bus",
+    "triple_brain.tree_edge"
 ],
-    function($, Vertex, EventBus){
+    function($, Vertex, EventBus, TreeEdge){
         var api = {};
         api.withHtml = function(html){
             return new Object(
@@ -48,6 +49,9 @@ define([
                     );
                 }
                 return html.data(otherInstancesKey);
+            };
+            this.resetOtherInstances = function(){
+                html.removeData(otherInstancesKey)
             };
             Vertex.Object.apply(this, [html]);
         }

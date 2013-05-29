@@ -8,7 +8,18 @@ define([
 ],
     function (require, $, EventBus, IdUriUtils, Triple, Suggestion) {
         var api = {};
-        api.addRelationAndVertexAtPositionToVertex = function (vertex, newVertexPosition, successCallback) {
+        api.addRelationAndVertexToVertex = function (vertex, callback) {
+            var dummyPosition = {
+                x : 0,
+                y: 0
+            };
+            api.addRelationAndVertexAtPositionToVertex(
+                vertex,
+                dummyPosition,
+                callback
+            );
+        };
+        api.addRelationAndVertexAtPositionToVertex = function (vertex, newVertexPosition, callback) {
             $.ajax({
                 type:'POST',
                 url:vertex.getUri(),
@@ -19,8 +30,8 @@ define([
                         tripleJson,
                         newVertexPosition
                     );
-                    if (successCallback != undefined) {
-                        successCallback.call(this, triple);
+                    if (callback != undefined) {
+                        callback(triple, tripleJson);
                     }
                 });
         };

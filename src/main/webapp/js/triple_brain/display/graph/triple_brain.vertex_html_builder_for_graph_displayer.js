@@ -175,15 +175,7 @@ define([
                 $(vertexMenu).append(plusBtn);
 
                 $(plusBtn).on("click", function(event){
-                    if(GraphDisplayer.allowsMovingVertices()){
-                        createRelationOrAddVertex(event);
-                    }else{
-                        var sourceVertex = vertexFacade();
-                        VertexService.addRelationAndVertexAtPositionToVertex(
-                            sourceVertex,
-                            GraphDisplayer
-                        );
-                    }
+                    createRelationOrAddVertex(event);
                 });
 
                 var removeBtn = MindMapTemplate['vertex_remove_button'].merge();

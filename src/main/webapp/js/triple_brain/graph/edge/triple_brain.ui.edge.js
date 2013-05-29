@@ -53,7 +53,6 @@ define([
             });
             return edgesConnectedToVertex;
         };
-
         function drawEdges(recalculate){
             var edges = api.allEdges();
             for (var i = 0; i < edges.length; i++) {
@@ -74,7 +73,7 @@ define([
 
         api.Object = function (html) {
             var Vertex;
-            var thisEdge = this;
+            var self = this;
 
             this.id = function () {
                 return $(html).attr('id');
@@ -126,7 +125,7 @@ define([
                 $(label()).focus();
             };
             this.centerOnArrowLine = function () {
-                thisEdge.positionAt(
+                self.positionAt(
                     this.arrowLine().middlePoint()
                 );
             };
@@ -139,7 +138,7 @@ define([
                     isDestinationVertex(vertex);
             };
             this.equalsEdge = function (otherEdge) {
-                return thisEdge.getId() == otherEdge.getId();
+                return self.getId() == otherEdge.getId();
             };
             this.hasDefaultText = function () {
                 return $(label()).val() == api.EMPTY_LABEL;
@@ -169,10 +168,10 @@ define([
             this.isMouseOver = function () {
                 var edgeThatIsMouseOver = GraphUi.getEdgeMouseOver();
                 return  edgeThatIsMouseOver !== undefined &&
-                    edgeThatIsMouseOver.equalsEdge(thisEdge);
+                    edgeThatIsMouseOver.equalsEdge(self);
             };
             this.remove = function () {
-                thisEdge.arrowLine().remove();
+                self.arrowLine().remove();
                 $(html).remove();
             };
             this.showMenu = function () {
@@ -187,17 +186,16 @@ define([
             function menu() {
                 return $(html).find('.remove');
             }
-
             function label() {
                 return $(html).find("input[type='text']");
             }
 
             function isSourceVertex(vertex) {
-                return thisEdge.sourceVertex().getId() == vertex.getId()
+                return self.sourceVertex().getId() == vertex.getId()
             }
 
             function isDestinationVertex(vertex) {
-                return thisEdge.destinationVertex().getId() == vertex.getId()
+                return self.destinationVertex().getId() == vertex.getId()
             }
 
             function getVertex(){

@@ -8,6 +8,17 @@ define([
 ],
     function (IdUriUtils, EventBus, GraphDisplayer) {
         var api = {};
+        api.createUsingServerTriple = function (sourceVertex, tripleJson) {
+            var dummyPosition = {
+                x: 0,
+                y: 0
+            };
+            api.createUsingServerTripleAndNewVertexPosition(
+                sourceVertex,
+                tripleJson,
+                dummyPosition
+            );
+        };
         api.createUsingServerTripleAndNewVertexPosition = function (sourceVertex, tripleJson, newVertexPosition) {
             tripleJson.end_vertex.position = {
                 x : newVertexPosition.x,
@@ -33,18 +44,23 @@ define([
                 [newTriple]
             );
             return newTriple;
-        }
+        };
 
         function Triple(sourceVertex, edge, destinationVertex) {
             this.sourceVertex = function(){
                 return sourceVertex;
-            }
+            };
             this.edge = function(){
                 return edge;
-            }
+            };
             this.destinationVertex = function(){
                 return destinationVertex;
-            }
+            };
+            this.serverFormat = function(){
+                return {
+
+                };
+            };
         }
         return api;
     }

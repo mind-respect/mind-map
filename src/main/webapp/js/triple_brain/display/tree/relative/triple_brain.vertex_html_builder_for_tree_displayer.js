@@ -23,31 +23,32 @@ define([
     "triple_brain.relative_vertex",
     "triple_brain.tree_vertex",
     "triple_brain.ui.vertex_and_edge_common",
+    "triple_brain.ui.triple",
     "jquery-ui"
-], function (require, $, EventBus, GraphUi, Vertex, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, ArrowLine, Point, Segment, GraphDisplayer, RelativeVertex, TreeVertex, VertexAndEdgeCommon) {
+], function (require, $, EventBus, GraphUi, Vertex, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, ArrowLine, Point, Segment, GraphDisplayer, RelativeVertex, TreeVertex, VertexAndEdgeCommon, Triple) {
         var api = {};
         api.withServerJson = function (serverVertex) {
             return new VertexCreator(serverVertex);
         };
-        function VertexCreator(json) {
+        function VertexCreator(serverFormat) {
             var Vertex = require("triple_brain.ui.vertex");
             var VertexService = require("triple_brain.vertex");
             var Suggestion = require("triple_brain.suggestion");
             var IdentificationMenu = require("triple_brain.ui.identification_menu");
             var SuggestionMenu = require("triple_brain.ui.suggestion_menu");
-            var html = MindMapTemplate['relative_vertex'].merge(json);
+            var html = MindMapTemplate['relative_vertex'].merge(serverFormat);
             $(html).uniqueId();
             this.create = function () {
                 createLabel();
                 createMenu();
                 var vertex = vertexFacade();
-                vertex.setUri(json.id);
+                vertex.setUri(serverFormat.id);
                 vertex.addSuggestions(
                     Suggestion.fromJsonArrayOfServer(
-                        json.suggestions
+                        serverFormat.suggestions
                     )
                 );
-                if (json.suggestions.length > 0) {
+                if (serverFormat.suggestions.length > 0) {
                     vertex.showSuggestionButton();
                 }
                 vertex.hideButtons();
@@ -57,13 +58,13 @@ define([
                 );
 
                 vertex.setNameOfHiddenProperties([]);
-                if (json.is_frontier_vertex_with_hidden_vertices) {
-                    vertex.setNameOfHiddenProperties(json.name_of_hidden_properties);
+                if (serverFormat.is_frontier_vertex_with_hidden_vertices) {
+                    vertex.setNameOfHiddenProperties(serverFormat.name_of_hidden_properties);
                     vertex.buildHiddenNeighborPropertiesIndicator();
                 }
                 vertex.setTypes([]);
                 vertex.setSameAs([]);
-                $.each(json.types, function () {
+                $.each(serverFormat.types, function () {
                     var typeFromServer = this;
                     vertex.addType(
                         ExternalResource.fromServerJson(
@@ -72,7 +73,7 @@ define([
                     );
                 });
 
-                $.each(json.same_as, function () {
+                $.each(serverFormat.same_as, function () {
                     var sameAsFromServer = this;
                     vertex.addSameAs(
                         ExternalResource.fromServerJson(
@@ -83,16 +84,16 @@ define([
                 vertex.prepareAsYouTypeSuggestions();
                 vertex.makeItLowProfile();
                 vertex.setOriginalServerObject(
-                    json
+                    serverFormat
                 );
                 EventBus.publish(
                     '/event/ui/html/vertex/created/',
                     vertex
                 );
                 return vertex;
-            }
+            };
             function createLabel() {
-                var labelContainer = MindMapTemplate['vertex_label_container'].merge(json);
+                var labelContainer = MindMapTemplate['vertex_label_container'].merge(serverFormat);
                 $(html).append(labelContainer);
                 var label = $(labelContainer).find("input[type='text']:first");
                 var vertex = vertexFacade();
@@ -129,11 +130,11 @@ define([
                     VertexService.updateLabel(
                         vertexOfSubHtmlComponent(this),
                         $(this).val(),
-                        function(vertex){
+                        function (vertex) {
                             var otherInstances = TreeVertex.ofVertex(
                                 vertex
                             ).getOtherInstances();
-                            $.each(otherInstances, function(){
+                            $.each(otherInstances, function () {
                                 var vertex = this;
                                 VertexAndEdgeCommon.highlightLabel(
                                     vertex.getId()
@@ -147,7 +148,7 @@ define([
                     var otherInstances = TreeVertex.withHtml(
                         html
                     ).getOtherInstances();
-                    $.each(otherInstances, function(){
+                    $.each(otherInstances, function () {
                         var relativeVertex = RelativeVertex.withVertex(
                             this
                         );
@@ -162,12 +163,12 @@ define([
                     var html = vertex.getHtml();
                     updateLabelsOfVerticesWithSameUri();
                     vertex.readjustLabelWidth();
-                    function updateLabelsOfVerticesWithSameUri(){
+                    function updateLabelsOfVerticesWithSameUri() {
                         var text = vertex.text();
                         var otherInstances = TreeVertex.withHtml(
                             html
                         ).getOtherInstances();
-                        $.each(otherInstances, function(){
+                        $.each(otherInstances, function () {
                             var sameVertex = this;
                             sameVertex.setText(
                                 text
@@ -186,16 +187,25 @@ define([
                 var plusBtn = MindMapTemplate['vertex_plus_button'].merge();
                 $(vertexMenu).append(plusBtn);
 
-                $(plusBtn).on("click", function (event) {
-                    if (GraphDisplayer.allowsMovingVertices()) {
-                        createRelationOrAddVertex(event);
-                    } else {
-                        var sourceVertex = vertexFacade();
-                        VertexService.addRelationAndVertexAtPositionToVertex(
-                            sourceVertex,
-                            GraphDisplayer
-                        );
-                    }
+                $(plusBtn).click(function () {
+                    var sourceVertex = vertexFacade();
+                    VertexService.addRelationAndVertexToVertex(
+                        sourceVertex, function (triple, tripleServerFormat) {
+                            var sourceVertex = TreeVertex.ofVertex(
+                                triple.sourceVertex()
+                            );
+                            TreeVertex.ofVertex(
+                                triple.destinationVertex()
+                            ).resetOtherInstances();
+                            sourceVertex.applyToOtherInstances(function (vertex) {
+                                    Triple.createUsingServerTriple(
+                                        vertex,
+                                        tripleServerFormat
+                                    );
+
+                            });
+                        }
+                    );
                 });
 
                 var removeBtn = MindMapTemplate['vertex_remove_button'].merge();
@@ -205,24 +215,25 @@ define([
                     event.stopPropagation();
                     var vertex = vertexOfSubHtmlComponent(this);
                     if (!vertex.isCenterVertex() && vertex.getId() != "default") {
-                        VertexService.remove(vertex, function(vertex){
+                        VertexService.remove(vertex, function (vertex) {
                             removeChildren(vertex);
-                            TreeVertex.ofVertex(vertex).applyToOtherInstances(function(vertex){
+                            TreeVertex.ofVertex(vertex).applyToOtherInstances(function (vertex) {
                                 removeChildren(vertex);
                                 removeEdges(vertex);
                             });
                             removeEdges(vertex);
                             EdgeUi.redrawAllEdges();
-                            function removeChildren(vertex){
+                            function removeChildren(vertex) {
                                 var relativeVertex = RelativeVertex.withVertex(
                                     vertex
                                 );
-                                relativeVertex.visitChildren(function(childVertex){
+                                relativeVertex.visitChildren(function (childVertex) {
                                     vertex.removeConnectedEdges();
                                     childVertex.remove();
                                 });
                             }
-                            function removeEdges(vertex){
+
+                            function removeEdges(vertex) {
                                 vertex.removeConnectedEdges();
                                 vertex.remove();
                             }
@@ -281,63 +292,6 @@ define([
                 var vertex = vertexOfSubHtmlComponent(this)
                 GraphUi.unsetVertexMouseOver();
                 vertex.makeItLowProfile();
-            }
-
-            function createRelationOrAddVertex(mouseDownEvent) {
-                var sourceVertex = vertexFacade();
-                $('.edge').unbind('mouseenter mouseleave');
-                var normalStateEdgesZIndex = $('.edge').css('z-index');
-                $('.edge').css('z-index', '1');
-                var relationMouseMoveEvent;
-                var relationEndPoint = Point.centeredAtOrigin();
-                var arrowLine;
-                sourceVertex.highlight();
-                var selectorThatCoversWholeGraph = "svg";
-                $(selectorThatCoversWholeGraph).mousemove(function (mouseMoveEvent) {
-                    relationMouseMoveEvent = mouseMoveEvent;
-                    if (arrowLine !== undefined) {
-                        arrowLine.remove();
-                    }
-                    relationEndPoint = Point.fromCoordinates(
-                        mouseMoveEvent.pageX,
-                        mouseMoveEvent.pageY
-                    );
-                    arrowLine = ArrowLine.withSegment(
-                        Segment.withStartAndEndPoint(
-                            sourceVertex.labelCenterPoint(),
-                            relationEndPoint
-                        )
-                    );
-                    arrowLine.drawInWithDefaultStyle();
-                });
-
-                $("body").mouseup(function (mouseUpEvent) {
-                    if (arrowLine === undefined) {
-                        //something when wrong so return;
-                        $("body").unbind(mouseUpEvent);
-                        $(selectorThatCoversWholeGraph).unbind(relationMouseMoveEvent);
-                        return;
-                    }
-                    arrowLine.remove();
-                    $('.edge').hover(EdgeUi.onMouseOver, EdgeUi.onMouseOut);
-                    $('.edge').css('z-index', normalStateEdgesZIndex);
-                    $("body").unbind(mouseUpEvent);
-                    $(selectorThatCoversWholeGraph).unbind(relationMouseMoveEvent);
-                    var destinationVertex = GraphUi.getVertexMouseOver();
-                    if (destinationVertex !== undefined) {
-                        if (!sourceVertex.equalsVertex(destinationVertex)) {
-                            sourceVertex.unhighlight();
-                            EdgeService.add(
-                                sourceVertex,
-                                destinationVertex,
-                                GraphDisplayer.addEdgeBetweenExistingVertices
-                            );
-                        }
-                    } else {
-                        sourceVertex.unhighlight();
-                        VertexService.addRelationAndVertexAtPositionToVertex(sourceVertex, relationEndPoint);
-                    }
-                });
             }
 
             function vertexFacade() {

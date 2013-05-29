@@ -12,8 +12,14 @@ define([
         api.withHtml = function (html) {
             return new Object($(html));
         };
+        api.ofEdge = function(edge){
+            return api.withHtml(
+                edge.getHtml()
+            );
+        };
         return api;
         function Object(html){
+            var self = this;
             this.setText = function (text) {
                 var label = getLabel();
                 label.is(":input") ?
@@ -28,6 +34,13 @@ define([
             };
             this.isInverse = function(){
                 return $(html).hasClass("inverse");
+            };
+            this.serverFormat = function(){
+                return {
+                    label : self.text(),
+                    source_vertex_id : self.sourceVertex().getId(),
+                    destination_vertex_id : self.destinationVertex().getId()
+                }
             };
             function getLabel(){
                 return html;
