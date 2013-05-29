@@ -352,7 +352,13 @@ define([
                         }
                     } else {
                         sourceVertex.unhighlight();
-                        VertexService.addRelationAndVertexAtPositionToVertex(sourceVertex, relationEndPoint);
+                        VertexService.addRelationAndVertexAtPositionToVertex(
+                            sourceVertex,
+                            relationEndPoint,
+                            function(triple){
+                                triple.destinationVertex().focus();
+                            }
+                        );
                     }
                 });
             }

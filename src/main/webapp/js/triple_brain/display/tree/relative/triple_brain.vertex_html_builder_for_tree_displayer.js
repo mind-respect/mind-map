@@ -194,6 +194,7 @@ define([
                             var sourceVertex = TreeVertex.ofVertex(
                                 triple.sourceVertex()
                             );
+                            triple.destinationVertex().focus();
                             TreeVertex.ofVertex(
                                 triple.destinationVertex()
                             ).resetOtherInstances();

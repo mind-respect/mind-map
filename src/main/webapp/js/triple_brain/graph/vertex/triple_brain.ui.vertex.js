@@ -586,12 +586,6 @@ define([
                 );
             }
         );
-        EventBus.subscribe(
-            '/event/ui/graph/vertex_and_relation/added/',
-            function (event, triple) {
-                triple.destinationVertex().focus();
-            }
-        );
         return api;
     }
 );
