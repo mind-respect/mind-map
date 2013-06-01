@@ -13,7 +13,7 @@ define([
         var surfaceToDragScroll = $("svg");
         return {
             start: function() {
-                $("svg").live("mousedown", function(mouseDownEvent){
+                $("svg").on("mousedown", function(mouseDownEvent){
                     var drawnGraph = this;
                     $(drawnGraph).data("mouseup", false);
                     var mousePosition;

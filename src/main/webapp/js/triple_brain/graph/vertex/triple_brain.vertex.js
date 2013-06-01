@@ -50,8 +50,7 @@ define([
         api.updateLabel = function (vertex, label, callback) {
             $.ajax({
                 type:'POST',
-                url:vertex.getUri() + '/label?label=' + label,
-                dataType:'json'
+                url:vertex.getUri() + '/label?label=' + label
             }).success(function () {
                     EventBus.publish(
                         '/event/ui/graph/vertex/label/updated',
@@ -68,7 +67,6 @@ define([
                 $.ajax({
                     type:'POST',
                     url:vertex.getUri() + '/type',
-                    dataType:'json',
                     data:type.serverFormat(),
                     contentType:'application/json;charset=utf-8'
                 }).success(function () {
@@ -117,7 +115,6 @@ define([
                 $.ajax({
                     type:'POST',
                     url:vertex.getUri() + '/same_as',
-                    dataType:'json',
                     data:sameAs.serverFormat(),
                     contentType:'application/json;charset=utf-8'
                 }).success(function () {
@@ -178,7 +175,6 @@ define([
             $.ajax({
                 type:'POST',
                 url:vertex.getUri() + '/suggestions',
-                dataType:'json',
                 data:getSuggestion().formatAllForServer(suggestions),
                 contentType:'application/json;charset=utf-8'
             }).success(function () {

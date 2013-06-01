@@ -32,7 +32,6 @@ define([
                 type:'POST',
                 url:usersResourceUrl,
                 data:$.toJSON(userObject),
-                dataType:'json',
                 contentType:'application/json;charset=utf-8'
             })
                 .success(successCallback)

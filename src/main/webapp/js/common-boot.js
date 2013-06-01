@@ -7,11 +7,11 @@ window.config = {
     urlArgs: "bust=" + 9,
     paths: {
         module : '../module',
-        "jquery" : "jquery/jquery-1.8.2.min",
+        "jquery" : "jquery/jquery-2.0.2.min",
         "jquery-ui" : "jquery/jquery-ui.min",
         "jquery.url" : "jquery/jquery.url",
         "jquery.nano" : "jquery/jquery.nano",
-        "jquery.freebase_suggest.min" : "jquery/jquery.freebase_suggest.min",
+        "jquery.freebase_suggest" : "jquery/jquery.freebase_suggest",
         "jquery.json.min" : "jquery/jquery.json.min",
         "jquery.tinysort.min" : "jquery/jquery.tinysort.min",
         "jquery.cookie" :  "jquery/jquery.cookie",

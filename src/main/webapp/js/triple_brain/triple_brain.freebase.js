@@ -5,7 +5,7 @@ define([
     "triple_brain.vertex",
     "triple_brain.suggestion",
     "triple_brain.external_resource",
-    "jquery.freebase_suggest.min",
+    "jquery.freebase_suggest",
     "jquery.url"
 ],
     function ($, EventBus, Vertex, VertexService, Suggestion, ExternalResource) {

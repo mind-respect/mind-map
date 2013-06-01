@@ -40,8 +40,7 @@ define([
             updateLabel: function(edge, label) {
                 $.ajax({
                     type: 'POST',
-                    url: edge.getUri() + "/label" + '?label=' + label,
-                    dataType: 'json'
+                    url: edge.getUri() + "/label" + '?label=' + label
                 }).success(function() {
                         EventBus.publish(
                             '/event/ui/graph/edge/label/updated',
