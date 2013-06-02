@@ -9,23 +9,31 @@ define([
     var vertexC;
     var abcGraph;
     describe("graph_displayer_as_tree_common", function () {
-        it("duplicates vertices if graph is not a tree", function () {
-            initLinearAbcGraph();
-            TreeDisplayerCommon.defineChildrenInVertices(
-                abcGraph,
-                vertexA.id
-            );
-            expect(numberOfVertices()).toBe(3);
-            initLinearAbcGraph();
-            addEdge(
-                makeEdgeBetween(vertexC, vertexA)
-            );
-            TreeDisplayerCommon.defineChildrenInVertices(
-                abcGraph,
-                vertexA.id
-            );
-            expect(numberOfVertices()).toBe(4);
-        });
+//        it("duplicates vertices if graph is not a tree", function () {
+//            initLinearAbcGraph();
+//            TreeDisplayerCommon.defineChildrenInVertices(
+//                abcGraph,
+//                vertexA.id
+//            );
+//            expect(numberOfVertices()).toBe(3);
+//            initLinearAbcGraph();
+//            addEdge(
+//                makeEdgeBetween(vertexC, vertexA)
+//            );
+//            TreeDisplayerCommon.defineChildrenInVertices(
+//                abcGraph,
+//                vertexA.id
+//            );
+//            expect(numberOfVertices()).toBe(4);
+//        });
+//        it("has right number of vertices when edges going to center vertex are all reversed", function () {
+//            initLinearAbcGraph();
+//            TreeDisplayerCommon.defineChildrenInVertices(
+//                abcGraph,
+//                vertexC.id
+//            );
+//            expect(numberOfVertices()).toBe(3);
+//        });
     });
     function centerVertex(){
         return vertexInGraphWithId(vertexA.id);

@@ -4,9 +4,9 @@
 define([
     "jquery"
 ],
-    function($){
+    function ($) {
         var api = {};
-        api.defineChildrenInVertices = function(serverGraph, centralVertexUri){
+        api.defineChildrenInVertices = function (serverGraph, centralVertexUri) {
             var sourceId;
             var destinationId;
             var vertices = serverGraph.vertices;
@@ -14,8 +14,7 @@ define([
             initChildrenOfVertex(
                 vertexWithId(centralVertexUri)
             );
-            $.each(
-                edges, function(){
+            $.each(edges, function () {
                     updateVerticesChildrenWithEdge(this);
                 }
             );
@@ -25,37 +24,41 @@ define([
                 applyToBoth([
                     initVertexInTreeInfoIfNecessary
                 ]);
-                var parentId,
-                    childId;
-                if(isCentralVertex(destinationId)){
-                    parentId = destinationId;
-                    childId = sourceId
-                }else{
-                    parentId = sourceId;
-                    childId = destinationId;
-                }
-                addChild(parentId, childId, edge);
+//                var parentId,
+//                    childId;
+//                if (isCentralVertex(destinationId)) {
+//                    parentId = destinationId;
+//                    childId = sourceId
+//                } else {
+//                    parentId = sourceId;
+//                    childId = destinationId;
+//                }
+                setNeighbors(sourceId, destinationId, edge);
             }
 
             function initVertexInTreeInfoIfNecessary(vertexId) {
                 var vertex = vertices[vertexId];
-                if(vertex.children === undefined){
+                if (vertex.neighbors === undefined) {
                     initChildrenOfVertex(vertex);
                 }
             }
 
-            function initChildrenOfVertex(vertex){
-                vertex.children = [];
+            function initChildrenOfVertex(vertex) {
+                vertex.neighbors = [];
             }
 
-            function isCentralVertex(vertexId){
+            function isCentralVertex(vertexId) {
                 return vertexId === centralVertexUri;
             }
 
-            function addChild(vertexId, childrenId, edge) {
-                vertices[vertexId].children.push({
-                    vertexUri : childrenId,
-                    edge : edge
+            function setNeighbors(vertexId, childrenId, edge) {
+                vertices[vertexId].neighbors.push({
+                    vertexUri:childrenId,
+                    edge:edge
+                });
+                vertices[childrenId].neighbors.push({
+                    vertexUri:vertexId,
+                    edge:edge
                 });
             }
 
@@ -67,7 +70,7 @@ define([
                 });
             }
 
-            function vertexWithId(vertexId){
+            function vertexWithId(vertexId) {
                 return vertices[vertexId]
             }
         }

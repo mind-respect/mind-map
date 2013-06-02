@@ -40,7 +40,7 @@ define([
         } else {
             container = treeMaker.childrenVertexContainer(parentVertex);
         }
-        newVertex.children = [];
+        newVertex.neighbors = [];
         var vertexHtmlFacade = treeMaker.buildVertexHtmlIntoContainer(
             newVertex,
             container
@@ -59,8 +59,11 @@ define([
         VertexUi.visitAllVertices(integrateEdgesOfVertex);
         function integrateEdgesOfVertex(vertex) {
             var vertexServerFormat = vertex.getOriginalServerObject();
-            $.each(vertexServerFormat.children, function () {
+            $.each(vertexServerFormat.neighbors, function () {
                 var childInfo = this;
+                if(childInfo[vertex.getId()] === undefined){
+                    return;
+                }
                 EdgeBuilder.get(
                     childInfo.edge,
                     vertex,
@@ -133,9 +136,9 @@ define([
                 var rightChildrenContainer = treeMaker.addChildrenContainerToVertex(
                     rootVertex
                 );
-                for (var i = 0; i < serverRootVertex.children.length; i++) {
+                for (var i = 0; i < serverRootVertex.neighbors.length; i++) {
                     var isLeftOriented = i % 2 != 0;
-                    var childVertex = vertexWithId(serverRootVertex.children[i].vertexUri);
+                    var childVertex = vertexWithId(serverRootVertex.neighbors[i].vertexUri);
                     var container = isLeftOriented ?
                         leftChildrenContainer :
                         rightChildrenContainer;
@@ -143,20 +146,24 @@ define([
                         childVertex,
                         container
                     );
-                    serverRootVertex.children[i][rootVertex.getId()] = {
+                    serverRootVertex.neighbors[i][rootVertex.getId()] = {
                         vertexHtmlId : childHtmlFacade.getId()
                     };
                     buildChildrenHtmlTreeRecursively(
-                        childHtmlFacade
+                        childHtmlFacade,
+                        serverRootVertex.id
                     );
                 }
-                function buildChildrenHtmlTreeRecursively(parentVertexHtmlFacade) {
+                function buildChildrenHtmlTreeRecursively(parentVertexHtmlFacade, grandParentUri) {
                     var serverParentVertex = vertexWithId(
                         parentVertexHtmlFacade.getUri()
                     );
                     var childrenContainer = treeMaker.childrenVertexContainer(parentVertexHtmlFacade);
-                    $.each(serverParentVertex.children, function () {
+                    $.each(serverParentVertex.neighbors, function () {
                         var childInfo = this;
+                        if(grandParentUri === childInfo.vertexUri){
+                            return;
+                        }
                         var childVertexHtmlFacade = treeMaker.buildVertexHtmlIntoContainer(
                             vertexWithId(childInfo.vertexUri),
                             childrenContainer
@@ -169,7 +176,8 @@ define([
                         );
                         $(treeContainer).append(
                             buildChildrenHtmlTreeRecursively(
-                                childVertexHtmlFacade
+                                childVertexHtmlFacade,
+                                parentVertexHtmlFacade.getUri()
                             )
                         );
                     });
