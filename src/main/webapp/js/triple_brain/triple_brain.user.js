@@ -22,8 +22,7 @@ define([
                 type:'POST',
                 data:$.toJSON(loginInfo),
                 url:sessionResourceUrl,
-                dataType:'json',
-                contentType:'application/json;charset=utf-8'
+                contentType:'application/json'
             }).success(callback)
                 .error(errorCallback);
         };
