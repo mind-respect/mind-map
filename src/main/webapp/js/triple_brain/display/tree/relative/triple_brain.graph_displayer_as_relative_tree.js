@@ -113,6 +113,7 @@ define([
             });
             function buildVerticesHtml() {
                 var serverRootVertex = vertexWithId(centralVertexUri);
+                serverRootVertex.added = true;
                 var rootVertex = VertexHtmlBuilder.withServerJson(
                     serverRootVertex
                 ).create();
@@ -139,6 +140,7 @@ define([
                 for (var i = 0; i < serverRootVertex.neighbors.length; i++) {
                     var isLeftOriented = i % 2 != 0;
                     var childVertex = vertexWithId(serverRootVertex.neighbors[i].vertexUri);
+                    childVertex.added = true;
                     var container = isLeftOriented ?
                         leftChildrenContainer :
                         rightChildrenContainer;
@@ -174,12 +176,16 @@ define([
                         var treeContainer = childVertexHtmlFacade.getHtml().closest(
                             ".vertex-tree-container"
                         );
-                        $(treeContainer).append(
-                            buildChildrenHtmlTreeRecursively(
-                                childVertexHtmlFacade,
-                                parentVertexHtmlFacade.getUri()
-                            )
-                        );
+                        if(childInfo.added === undefined){
+                            childInfo.added = true;
+                        }else{
+                            $(treeContainer).append(
+                                buildChildrenHtmlTreeRecursively(
+                                    childVertexHtmlFacade,
+                                    parentVertexHtmlFacade.getUri()
+                                )
+                            );
+                        }
                     });
                     return childrenContainer;
                 }
