@@ -15,7 +15,7 @@ define([
                 abcGraph,
                 vertexA.id
             );
-            expect(vertexA.neighbors.length).toBe(2);
+            expect(vertexA.neighbors.length).toBe(1);
 //            initLinearAbcGraph();
 //            addEdge(
 //                makeEdgeBetween(vertexC, vertexA)
