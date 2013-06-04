@@ -9,13 +9,13 @@ define([
     var vertexC;
     var abcGraph;
     describe("graph_displayer_as_tree_common", function () {
-//        it("duplicates vertices if graph is not a tree", function () {
-//            initLinearAbcGraph();
-//            TreeDisplayerCommon.defineChildrenInVertices(
-//                abcGraph,
-//                vertexA.id
-//            );
-//            expect(numberOfVertices()).toBe(3);
+        it("adds neighbors", function () {
+            initLinearAbcGraph();
+            TreeDisplayerCommon.defineChildrenInVertices(
+                abcGraph,
+                vertexA.id
+            );
+            expect(vertexA.neighbors.length).toBe(2);
 //            initLinearAbcGraph();
 //            addEdge(
 //                makeEdgeBetween(vertexC, vertexA)
@@ -25,7 +25,7 @@ define([
 //                vertexA.id
 //            );
 //            expect(numberOfVertices()).toBe(4);
-//        });
+        });
 //        it("has right number of vertices when edges going to center vertex are all reversed", function () {
 //            initLinearAbcGraph();
 //            TreeDisplayerCommon.defineChildrenInVertices(
