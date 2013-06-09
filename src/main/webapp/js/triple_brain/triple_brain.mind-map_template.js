@@ -40,7 +40,7 @@ define([
         t.add('suggestions_list', '<ul></ul>');
         t.add('suggestion', '<li type-id="{domain_id}">{label}</li>');
         t.add('suggestions_menu_title', '<h2>Suggestions of properties</h2>');
-        t.add('suggestions_menu_sub_title', '<h3>( Drag a property outside the box<br/> to add it to your mind map )</h3>');
+        t.add('suggestions_menu_sub_title', '<h3>( Drag a relation outside the box<br/> to add it to your mind map )</h3>');
 
         t.add('image_container', '<div class="image_container"></div>');
         t.add('image_container_image', "<img src='{src}'>");

@@ -12,7 +12,7 @@ define([
 ],
     function (require, $, GraphUi, VertexAndEdgeCommon, EventBus, ArrowLine) {
         var api = {};
-        api.EMPTY_LABEL = "a property";
+        api.EMPTY_LABEL = "relation";
         api.withHtml = function (Html) {
             return new api.Object(Html);
         };

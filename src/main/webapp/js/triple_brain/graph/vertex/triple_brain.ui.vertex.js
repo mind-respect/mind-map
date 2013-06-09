@@ -21,7 +21,7 @@ define([
     function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, GraphUi, ArrowLine, ServerSubscriber, ImageMenu, Freebase) {
         var api = {};
 
-        api.EMPTY_LABEL = "a concept";
+        api.EMPTY_LABEL = "concept";
 
         api.withHtml = function (html) {
             return new api.Object(html);
