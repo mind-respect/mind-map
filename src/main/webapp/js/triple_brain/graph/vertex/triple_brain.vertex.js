@@ -86,8 +86,7 @@ define([
                 type:'DELETE',
                 url: vertex.getUri()
                     + '/identification/'
-                    + IdUriUtils.encodeUri(identification.uri()),
-                dataType:'json'
+                    + IdUriUtils.encodeUri(identification.uri())
             }).success(successCallback);
         };
         api.removeType = function (vertex, typeToRemove, successCallback) {
