@@ -10,8 +10,8 @@ define([
         var api = {};
         api.addRelationAndVertexToVertex = function (vertex, callback) {
             var dummyPosition = {
-                x : 0,
-                y: 0
+                x:0,
+                y:0
             };
             api.addRelationAndVertexAtPositionToVertex(
                 vertex,
@@ -56,7 +56,7 @@ define([
                         '/event/ui/graph/vertex/label/updated',
                         vertex
                     );
-                    if(callback !== undefined){
+                    if (callback !== undefined) {
                         callback(vertex);
                     }
                 })
@@ -72,7 +72,7 @@ define([
                 }).success(function () {
                         vertex.addType(type);
                         if (successCallback != undefined) {
-                            successCallback(vertex,type);
+                            successCallback(vertex, type);
                         }
                         EventBus.publish(
                             '/event/ui/graph/vertex/type/added',
@@ -84,7 +84,7 @@ define([
         api.removeIdentification = function (vertex, identification, successCallback) {
             $.ajax({
                 type:'DELETE',
-                url: vertex.getUri()
+                url:vertex.getUri()
                     + '/identification/'
                     + IdUriUtils.encodeUri(identification.uri())
             }).success(successCallback);
@@ -184,12 +184,13 @@ define([
                     );
                 })
         };
-        function getSuggestion(){
-            if(Suggestion === undefined){
+        function getSuggestion() {
+            if (Suggestion === undefined) {
                 Suggestion = require("triple_brain.suggestion");
             }
             return Suggestion;
         }
+
         return api;
     }
 );
