@@ -31,8 +31,8 @@ define([
         };
         api.withUri = function (uri) {
             var verticesWithUri = [];
-            api.visitAllVertices(function(vertex){
-                if(vertex.getUri() === uri){
+            api.visitAllVertices(function (vertex) {
+                if (vertex.getUri() === uri) {
                     verticesWithUri.push(
                         vertex
                     );
@@ -45,14 +45,14 @@ define([
                 $('.center-vertex')
             );
         };
-        api.visitAllVertices = function(visitor){
+        api.visitAllVertices = function (visitor) {
             $(".vertex").each(function () {
-                 return visitor(
+                return visitor(
                     api.withHtml(this)
                 );
             });
         };
-        api.Object = function(html){
+        api.Object = function (html) {
             var self = this;
             this._initialize = function () {
             };
@@ -108,16 +108,16 @@ define([
                 );
                 propertiesIndicator.build();
             };
-            this.removeHiddenPropertiesIndicator = function(){
+            this.removeHiddenPropertiesIndicator = function () {
                 var propertiesIndicator = $(html).data(
                     "hidden_properties_indicator"
                 );
                 propertiesIndicator.remove();
                 $(html).removeData(
                     "hidden_properties_indicator"
-                    );
+                );
             };
-            this.hasHiddenProperties = function(){
+            this.hasHiddenProperties = function () {
                 return self.numberOfHiddenConnectedVertices() > 0;
             };
             this.numberOfHiddenConnectedVertices = function () {
@@ -132,7 +132,7 @@ define([
             this.height = function () {
                 return $(html).height();
             };
-            this.getHtml = function(){
+            this.getHtml = function () {
                 return html;
             };
             this.labelCenterPoint = function () {
@@ -165,13 +165,13 @@ define([
                 return  vertexThatIsMouseOver !== undefined &&
                     vertexThatIsMouseOver.equalsVertex(self);
             };
-            this.makeItLowProfile = function(){
+            this.makeItLowProfile = function () {
                 if (!self.isLabelInFocus()) {
                     self.unhighlight();
                 }
                 self.hideButtons();
             };
-            this.makeItHighProfile = function(){
+            this.makeItHighProfile = function () {
                 self.highlight();
                 self.showButtons();
             };
@@ -216,8 +216,8 @@ define([
                     self
                 );
             };
-            this.redrawConnectedEdgesArrowLine = function(){
-                $.each(self.connectedEdges(), function(){
+            this.redrawConnectedEdgesArrowLine = function () {
+                $.each(self.connectedEdges(), function () {
                     var edge = this;
                     edge.arrowLine().remove();
                     edge.setArrowLine(
@@ -249,13 +249,19 @@ define([
                 return $(self.label()).val(
                     label
                 );
-           };
-            this.textContainer = function(){
+            };
+            this.setNote = function(note){
+                html.data("note", note);
+            };
+            this.getNote = function(){
+                return html.data("note");
+            };
+            this.textContainer = function () {
                 return $(this.label()).closest(".textfield-container");
             };
-            this.textContainerWidth = function(){
+            this.textContainerWidth = function () {
                 var width = 0;
-                $.each(self.textContainer().children(), function(){
+                $.each(self.textContainer().children(), function () {
                     var child = this;
                     width += $(child).width();
                 });
@@ -331,7 +337,7 @@ define([
             this.getTypes = function () {
                 return $(html).data('types');
             };
-            this.getIdentifications = function(){
+            this.getIdentifications = function () {
                 return self.getTypes().concat(
                     self.getSameAs()
                 );
@@ -353,12 +359,14 @@ define([
                 self.setSameAs(sameAsCollection);
                 applyCommonBehaviorForAddedIdentification(sameAs);
             };
-            function applyCommonBehaviorForAddedIdentification(externalResource){
+
+            function applyCommonBehaviorForAddedIdentification(externalResource) {
                 self.addImages(
                     externalResource.images()
                 );
             }
-            this.addImages = function(images){
+
+            this.addImages = function (images) {
                 var existingImages = self.getImages();
                 $(html).data("images", existingImages.concat(
                     images
@@ -369,11 +377,11 @@ define([
                         createImageMenu();
                 imageMenu.refreshImages();
             };
-            this.removeImage = function(imageToRemove){
+            this.removeImage = function (imageToRemove) {
                 var images = [];
-                $.each(self.getImages(), function(){
+                $.each(self.getImages(), function () {
                     var image = this;
-                    if(image.getUrlForSmall() !== imageToRemove.getUrlForSmall()){
+                    if (image.getUrlForSmall() !== imageToRemove.getUrlForSmall()) {
                         images.push(image);
                     }
                 });
@@ -382,27 +390,27 @@ define([
                     images
                 );
             };
-            this.getImages = function(){
+            this.getImages = function () {
                 return $(html).data("images") === undefined ?
                     [] :
                     $(html).data("images");
             };
 
-            function createImageMenu(){
+            function createImageMenu() {
                 var imageMenu = ImageMenu.ofVertex(self).create();
                 $(html).data("images_menu", imageMenu);
                 return imageMenu;
             }
 
-            this.hasImagesMenu = function(){
+            this.hasImagesMenu = function () {
                 return $(html).data("images_menu") !== undefined;
             };
 
-            this.hasImages = function(){
+            this.hasImages = function () {
                 return self.getImages().length > 0;
             };
 
-            this.getImageMenu = function(){
+            this.getImageMenu = function () {
                 return $(html).data("images_menu");
             };
 
@@ -420,13 +428,14 @@ define([
                     self
                 );
             };
-            function removeIdentificationCommonBehavior(externalResource){
-                $.each(externalResource.images(), function(){
+            function removeIdentificationCommonBehavior(externalResource) {
+                $.each(externalResource.images(), function () {
                     var image = this;
                     self.removeImage(image);
                 });
                 self.getImageMenu().refreshImages();
             }
+
             this.getSameAs = function () {
                 return $(html).data('sameAs');
             };
@@ -436,7 +445,7 @@ define([
             this.hideSuggestionButton = function () {
                 $(suggestionButton()).hide();
             };
-            this.triggerChange = function(){
+            this.triggerChange = function () {
                 $(html).trigger("change");
             }
             this.label = function () {
@@ -456,7 +465,7 @@ define([
                 var intuitiveWidthBuffer = 70;
                 var textContainerWidth = self.textContainerWidth();
                 var imageWidth = self.hasImagesMenu() ?
-                    self.getImageMenu().width():
+                    self.getImageMenu().width() :
                     0;
 
                 var width =
@@ -464,9 +473,9 @@ define([
                         menuWidth(),
                         textContainerWidth
                     ) +
-                    self.moveButton().width() +
-                    imageWidth
-                    + intuitiveWidthBuffer;
+                        self.moveButton().width() +
+                        imageWidth
+                        + intuitiveWidthBuffer;
                 $(html).css(
                     "width",
                     width + "px"
@@ -490,58 +499,58 @@ define([
             this.getSuggestionMenu = function () {
                 return $(html).data("suggestion_menu");
             };
-            this.setOriginalServerObject = function(serverJson){
+            this.setOriginalServerObject = function (serverJson) {
                 $(html).data(
                     "originalServerObject",
                     serverJson
                 );
             };
-            this.getOriginalServerObject = function(){
+            this.getOriginalServerObject = function () {
                 return $(html).data(
                     "originalServerObject"
                 );
             };
-            this.prepareAsYouTypeSuggestions = function(){
+            this.prepareAsYouTypeSuggestions = function () {
                 var vertexTypes = self.getTypes();
-                if(vertexTypes.length == 0){
+                if (vertexTypes.length == 0) {
                     return;
                 }
                 var filterValue = "(all ";
-                $.each(vertexTypes, function(){
+                $.each(vertexTypes, function () {
                     var identification = this;
-                    if(Freebase.isFreebaseUri(identification.uri())){
+                    if (Freebase.isFreebaseUri(identification.uri())) {
                         filterValue += "type:" + Freebase.idInFreebaseURI(identification.uri());
                     }
                 });
                 filterValue += ")";
                 $(self.label()).suggest({
                     key:"AIzaSyBHOqdqbswxnNmNb4k59ARSx-RWokLZhPA",
-                    filter : filterValue,
+                    filter:filterValue,
                     "zIndex":20,
                     scoring:"schema",
-                    lang: "en"
+                    lang:"en"
                 });
             };
-            this.hasMoveButton = function(){
+            this.hasMoveButton = function () {
                 return self.moveButton().length > 0;
             };
 
-            this.moveButton = function(){
+            this.moveButton = function () {
                 return $(html).find('.move');
             };
 
-            this.serverFormat = function(){
+            this.serverFormat = function () {
                 return {
-                    label : self.text(),
-                    suggestions : self.suggestions(),
-                    is_frontier_vertex_with_hidden_vertices : self.hasHiddenProperties(),
-                    name_of_hidden_properties : self.nameOfHiddenProperties(),
-                    types : getCollectionAsServerFormat(self.getTypes()),
-                    same_as : getCollectionAsServerFormat(self.getSameAs())
+                    label:self.text(),
+                    suggestions:self.suggestions(),
+                    is_frontier_vertex_with_hidden_vertices:self.hasHiddenProperties(),
+                    name_of_hidden_properties:self.nameOfHiddenProperties(),
+                    types:getCollectionAsServerFormat(self.getTypes()),
+                    same_as:getCollectionAsServerFormat(self.getSameAs())
                 };
-                function getCollectionAsServerFormat(collection){
+                function getCollectionAsServerFormat(collection) {
                     var serverFormat = [];
-                    $.each(collection, function(){
+                    $.each(collection, function () {
                         var item = this;
                         serverFormat.push(
                             item.jsonFormat()
@@ -567,7 +576,7 @@ define([
                 return $(html).find('.center');
             }
 
-            function getSegments(){
+            function getSegments() {
                 return VertexSegments.withHtmlVertex(
                     self.textContainer()
                 );

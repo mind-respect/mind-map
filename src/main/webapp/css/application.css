@@ -235,6 +235,21 @@ input[type="button"] {
     min-width:12px;
 }
 
+.vertex-note textarea {
+    width:95%;
+    height:93%;
+    margin-bottom:0;
+}
+
+.vertex-note.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset{
+    float:none;
+    text-align: center;
+}
+
+.vertex-note.ui-dialog .ui-dialog-content{
+    padding:0;
+}
+
 .vertex .menu input{
     display:block;
     float:left;
@@ -250,6 +265,14 @@ input[type="button"] {
     min-width:25px;
     min-height:14px;
     margin-top:0px;
+}
+
+.vertex .menu .ui-button{
+    float:left;
+    border: 1px solid #e30613;
+    background-color: white;
+    width:1.7em;
+    height:1.8em;
 }
 
 .vertex .menu input:hover{

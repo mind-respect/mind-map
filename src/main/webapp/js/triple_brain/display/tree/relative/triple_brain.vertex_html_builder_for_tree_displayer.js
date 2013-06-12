@@ -24,8 +24,9 @@ define([
     "triple_brain.tree_vertex",
     "triple_brain.ui.vertex_and_edge_common",
     "triple_brain.ui.triple",
+    "triple_brain.vertex_html_builder_common",
     "jquery-ui"
-], function (require, $, EventBus, GraphUi, Vertex, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, ArrowLine, Point, Segment, GraphDisplayer, RelativeVertex, TreeVertex, VertexAndEdgeCommon, Triple) {
+], function (require, $, EventBus, GraphUi, Vertex, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, ArrowLine, Point, Segment, GraphDisplayer, RelativeVertex, TreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon) {
         var api = {};
         api.withServerJson = function (serverVertex) {
             return new VertexCreator(serverVertex);
@@ -43,6 +44,9 @@ define([
                 createMenu();
                 var vertex = vertexFacade();
                 vertex.setUri(serverFormat.id);
+                vertex.setNote(
+                    serverFormat.note
+                );
                 vertex.addSuggestions(
                     Suggestion.fromJsonArrayOfServer(
                         serverFormat.suggestions
@@ -274,6 +278,9 @@ define([
                         vertexOfSubHtmlComponent(this)
                     );
                 });
+                VertexHtmlCommon.addNoteButton(
+                    vertexMenu
+                );
                 return vertexMenu;
             }
 

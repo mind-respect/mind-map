@@ -20,8 +20,9 @@ define([
     "triple_brain.point",
     "triple_brain.segment",
     "triple_brain.graph_displayer",
+    "triple_brain.vertex_html_builder_common",
     "jquery-ui"
-], function (require, $, EventBus, GraphUi, Vertex, VertexService, GraphEdge, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, ArrowLine, Point, Segment, GraphDisplayer) {
+], function (require, $, EventBus, GraphUi, Vertex, VertexService, GraphEdge, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, ArrowLine, Point, Segment, GraphDisplayer, VertexHtmlCommon) {
         var api = {};
         api.withJsonHavingAbsolutePosition = function (serverVertex) {
             initAdjustedPosition(serverVertex);
@@ -44,26 +45,29 @@ define([
             };
         }
 
-        function VertexCreator(json) {
+        function VertexCreator(serverFormat) {
             var Vertex = require("triple_brain.ui.vertex");
             var VertexService = require("triple_brain.vertex");
             var Suggestion = require("triple_brain.suggestion");
             var IdentificationMenu = require("triple_brain.ui.identification_menu");
             var SuggestionMenu = require("triple_brain.ui.suggestion_menu");
-            var html = MindMapTemplate['vertex'].merge(json);
+            var html = MindMapTemplate['vertex'].merge(serverFormat);
             $(html).uniqueId();
             this.create = function () {
                 addMoveButton();
                 createLabel();
                 createMenu();
                 var vertex = vertexFacade();
-                vertex.setUri(json.id);
+                vertex.setUri(serverFormat.id);
+                vertex.setNote(
+                    serverFormat.note
+                );
                 vertex.addSuggestions(
                     Suggestion.fromJsonArrayOfServer(
-                        json.suggestions
+                        serverFormat.suggestions
                     )
                 );
-                if (json.suggestions.length > 0) {
+                if (serverFormat.suggestions.length > 0) {
                     vertex.showSuggestionButton();
                 }
                 vertex.adjustWidth();
@@ -80,13 +84,13 @@ define([
                 });
                 position();
                 vertex.setNameOfHiddenProperties([]);
-                if (json.is_frontier_vertex_with_hidden_vertices) {
-                    vertex.setNameOfHiddenProperties(json.name_of_hidden_properties);
+                if (serverFormat.is_frontier_vertex_with_hidden_vertices) {
+                    vertex.setNameOfHiddenProperties(serverFormat.name_of_hidden_properties);
                     vertex.buildHiddenNeighborPropertiesIndicator();
                 }
                 vertex.setTypes([]);
                 vertex.setSameAs([]);
-                $.each(json.types, function () {
+                $.each(serverFormat.types, function () {
                     var typeFromServer = this;
                     vertex.addType(
                         ExternalResource.fromServerJson(
@@ -95,7 +99,7 @@ define([
                     );
                 });
 
-                $.each(json.same_as, function () {
+                $.each(serverFormat.same_as, function () {
                     var sameAsFromServer = this;
                     vertex.addSameAs(
                         ExternalResource.fromServerJson(
@@ -106,7 +110,7 @@ define([
                 vertex.prepareAsYouTypeSuggestions();
                 vertex.makeItLowProfile();
                 vertex.setOriginalServerObject(
-                    json
+                    serverFormat
                 );
                 EventBus.publish(
                     '/event/ui/html/vertex/created/',
@@ -115,7 +119,7 @@ define([
                 return vertex;
             }
             function createLabel() {
-                var labelContainer = MindMapTemplate['vertex_label_container'].merge(json);
+                var labelContainer = MindMapTemplate['vertex_label_container'].merge(serverFormat);
                 $(html).append(labelContainer);
                 var label = $(labelContainer).find("input[type='text']:first");
                 var vertex = vertexFacade();
@@ -224,6 +228,9 @@ define([
                         vertexOfSubHtmlComponent(this)
                     );
                 });
+                VertexHtmlCommon.addNoteButton(
+                    vertexMenu
+                );
                 return vertexMenu;
             }
 
@@ -234,8 +241,8 @@ define([
             }
 
             function position() {
-                $(html).css('left', json.adjustedPosition.x);
-                $(html).css('top', json.adjustedPosition.y);
+                $(html).css('left', serverFormat.adjustedPosition.x);
+                $(html).css('top', serverFormat.adjustedPosition.y);
             }
 
             function onDragStart(mouseDownEvent, ui) {

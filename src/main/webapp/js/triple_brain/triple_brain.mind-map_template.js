@@ -20,6 +20,7 @@ define([
         t.add('vertex_label_container', '<div class=textfield-container><input type="text" class="label" value="{label}"></div>');
         t.add('vertex_menu', '<div class="menu"></div>');
         t.add('vertex_move_button', '<div class="move"></div>');
+        t.add('vertex_note_button', '<button></button>');
         t.add('vertex_plus_button', '<input type="button" value="+" class="plus">');
         t.add('vertex_remove_button', '<input type="button" value="x" class="remove">');
         t.add('vertex_center_button', '<input type="button" class="center">');

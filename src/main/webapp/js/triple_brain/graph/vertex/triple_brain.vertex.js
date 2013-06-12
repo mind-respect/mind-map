@@ -59,7 +59,24 @@ define([
                     if (callback !== undefined) {
                         callback(vertex);
                     }
-                })
+                });
+        };
+        api.updateNote = function(vertex, note, callback){
+            $.ajax({
+                type:'POST',
+                url:vertex.getUri() + '/note',
+                data:note,
+                contentType: "text/plain"
+            }).success(function () {
+                    EventBus.publish(
+                        '/event/ui/graph/vertex/note/updated',
+                        vertex
+                    );
+                    vertex.setNote(note);
+                    if (callback !== undefined) {
+                        callback(vertex);
+                    }
+                });
         };
         api.addType = function (vertex, type, successCallback) {
             type.listenForUpdates(addTypeWhenListenerReady);
@@ -78,7 +95,7 @@ define([
                             '/event/ui/graph/vertex/type/added',
                             [vertex, type]
                         );
-                    })
+                    });
             }
         };
         api.removeIdentification = function (vertex, identification, successCallback) {
