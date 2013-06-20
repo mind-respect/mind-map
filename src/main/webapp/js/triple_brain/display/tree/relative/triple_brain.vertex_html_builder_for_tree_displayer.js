@@ -251,10 +251,12 @@ define([
                 whatIsThisBtn.click(function (event) {
                     event.stopPropagation();
                     var vertex = vertexOfSubHtmlComponent(this);
+                    var identificationMenu = IdentificationMenu.ofVertex(vertex)
+                        .create();
                     vertex.setIdentificationMenu(
-                        IdentificationMenu.ofVertex(vertex)
-                            .create()
+
                     );
+                    identificationMenu.html().centerOnScreen();
                 });
 
                 var suggestionsBtn = MindMapTemplate['vertex_suggestion_button'].merge();

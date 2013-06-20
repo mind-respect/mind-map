@@ -388,6 +388,22 @@ input[type="button"] {
     font-size:1.3em;
 }
 
+.peripheral-menu.identification ::-webkit-input-placeholder {
+    color: black;
+}
+
+.peripheral-menu.identification :-moz-placeholder { /* Firefox 18- */
+    color: black;
+}
+
+.peripheral-menu.identification ::-moz-placeholder {  /* Firefox 19+ */
+    color: black;
+}
+
+.peripheral-menu.identification :-ms-input-placeholder {
+    color: black;
+}
+
 .close_button {
     cursor: pointer;
     color: white;
@@ -468,3 +484,55 @@ input[type="button"] {
     background-color:transparent;
     font-weight:normal;
 }
+
+.ui-menu .ui-menu-item a{
+    white-space: nowrap;
+}
+.ui-menu .ui-menu-item span{
+    white-space: nowrap;
+}
+
+.ui-menu .ui-menu-item .info {
+    font-size:11px;
+    margin-left:0.5em;
+}
+
+.ui-menu .ui-menu-item .info *{
+    font-size:11px;
+}
+
+.ui-menu .ui-menu-item .distinction{
+    font-weight:bold;
+    margin-right:1em;
+}
+
+.ui-menu .ui-menu-item .info a{
+    color: #1919AC;
+    display:inline;
+    padding:0;
+    white-space: nowrap;
+}
+.ui-menu .ui-menu-item .info a:hover{
+    color:#47A3FF;
+}
+
+.identification-autocomplete-flyout{
+    position:absolute;
+    width:300px;
+    z-index:1000;
+}
+
+.identification-autocomplete-flyout img{
+    float:left;
+    margin-right:0.7em;
+}
+
+.identification-autocomplete-flyout .title{
+    font-weight:bold;
+}
+
+.identification-autocomplete-flyout .source{
+    font-weight:lighter;
+    font-size:85%;
+}
+

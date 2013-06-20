@@ -21,7 +21,15 @@ define([
                 "",
                 []
             );
-        }
+        };
+        api.withUriLabelAndDescription = function (uri, label, description) {
+            return new ExternalResource(
+                uri,
+                label,
+                description,
+                []
+            );
+        };
         api.fromFreebaseSuggestion = function (freebaseSuggestion) {
             var Freebase = require("triple_brain.freebase");
             return new ExternalResource(
@@ -32,7 +40,7 @@ define([
                 undefined,
                 []
             )
-        }
+        };
         api.fromServerJson = function (serverJson) {
             return new ExternalResource(
                 serverJson.uri,
@@ -40,7 +48,7 @@ define([
                 serverJson.description,
                 Image.arrayFromServerJson(serverJson.images)
             )
-        }
+        };
 
         function ExternalResource(uri, label, description, images) {
             var thisExternalResource = this;
@@ -90,6 +98,7 @@ define([
                 return {
                     uri:thisExternalResource.uri(),
                     label:thisExternalResource.label(),
+                    description:thisExternalResource.description(),
                     images:thisExternalResource.images
                 }
             };

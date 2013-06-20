@@ -16,7 +16,8 @@ define([
     "triple_brain.ui.arrow_line",
     "triple_brain.server_subscriber",
     "triple_brain.ui.image_menu",
-    "triple_brain.freebase"
+    "triple_brain.freebase",
+    "jquery.center-on-screen"
 ],
     function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, GraphUi, ArrowLine, ServerSubscriber, ImageMenu, Freebase) {
         var api = {};
@@ -54,6 +55,7 @@ define([
         };
         api.Object = function (html) {
             var self = this;
+            html = $(html);
             this._initialize = function () {
             };
             this.position = function () {
@@ -455,11 +457,12 @@ define([
                 return self.getId() == otherVertex.getId();
             };
             this.scrollTo = function () {
-                var position = self.position();
-                window.scroll(
-                    position.x - screen.width / 2,
-                    position.y - screen.height / 4
-                );
+                html.centerOnScreen();
+//                var position = self.position();
+//                window.scroll(
+//                    position.x - screen.width / 2,
+//                    position.y - screen.height / 4
+//                );
             };
             this.adjustWidth = function () {
                 var intuitiveWidthBuffer = 70;
@@ -524,7 +527,7 @@ define([
                 });
                 filterValue += ")";
                 $(self.label()).suggest({
-                    key:"AIzaSyBHOqdqbswxnNmNb4k59ARSx-RWokLZhPA",
+                    key:Freebase.key,
                     filter:filterValue,
                     "zIndex":20,
                     scoring:"schema",

@@ -35,7 +35,8 @@ define([
             '<input type="button" class="remove-identification" value="x">'+
             '</h3>'+
             '<div class="group description">{description}</div>');
-        t.add('identification_textfield', '<input type="text" placeholder="Identify" class="semantic-textfield">');
+        t.add('identification_textfield', '<input type="text" placeholder="Identify to another source">');
+        t.add('identification_type_textfield', '<input type="text" placeholder="Add a category">');
 
         t.add('suggestions_menu', '<div class="peripheral-menu suggestion"></div>');
         t.add('suggestions_list', '<ul></ul>');

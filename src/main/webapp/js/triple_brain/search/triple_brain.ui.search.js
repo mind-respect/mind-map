@@ -13,7 +13,7 @@ define([
             init:function() {
                 $("#vertex-search-input").autocomplete({
                     source:function (request, response) {
-                        SearchService.search_for_auto_complete(
+                        SearchService.searchAutoComplete(
                             request.term,
                             function (searchResults) {
                                 response($.map(searchResults, function (searchResult) {

@@ -11,12 +11,12 @@ define([
     "triple_brain.id_uri",
     "triple_brain.ui.utils",
     "triple_brain.peripheral_menu",
-    "triple_brain.freebase",
-    "jquery.freebase_suggest",
+    "triple_brain.freebase_autocomplete_provider",
+    "triple_brain.user_map_autocomplete_provider",
+    "jquery.triple_brain.search",
     "jquery-ui"
 ],
-    function ($, ExternalResource, VertexService, MindMapTemplate, GraphUi, IdUriUtils, UiUtils, PeripheralMenu, Freebase) {
-
+    function ($, ExternalResource, VertexService, MindMapTemplate, GraphUi, IdUriUtils, UiUtils, PeripheralMenu, FreebaseAutocompleteProvider, UserMapAutocompleteProvider) {
         var api = {
             ofVertex:function (vertex) {
                 return new IdentificationMenu(vertex);
@@ -29,18 +29,21 @@ define([
             this.rebuildList = function () {
                 $(listHtml()).remove();
                 addIdentifications();
-            }
+            };
             this.create = function () {
                 html = MindMapTemplate['identification_menu'].merge();
+                html = $(html);
                 GraphUi.addHTML(html);
                 buildMenu();
-                $(html).data("vertex", vertex);
+                html.data("vertex", vertex);
                 PeripheralMenu.makeHtmlAPeripheralMenu(
                     html
                 );
                 return identificationMenu;
-            }
-
+            };
+            this.html = function(){
+                return html;
+            };
             function listHtml() {
                 return $(html).find(".list")
             }
@@ -56,6 +59,7 @@ define([
                 position();
                 var identificationTextField = addIdentificationTextField();
                 $(identificationTextField).focus();
+                addTypeIdentificationTextField();
                 position();
             }
 
@@ -88,11 +92,11 @@ define([
                 makeListElementsCollapsible();
             }
 
-            function makeListElementsCollapsible(){
+            function makeListElementsCollapsible() {
                 $(listHtml()).accordion().accordion("destroy");
                 $(listHtml()).accordion({
-                    collapsible: true,
-                    active : false
+                    collapsible:true,
+                    active:false
                 });
             }
 
@@ -124,10 +128,10 @@ define([
                         vertex,
                         identification,
                         function (vertex, identification) {
-                            $.each(listElements(), function(){
+                            $.each(listElements(), function () {
                                 var listElement = this;
                                 var listElementIdentification = $(listElement).data("identification");
-                                if(identification.uri() == listElementIdentification.uri()){
+                                if (identification.uri() == listElementIdentification.uri()) {
                                     $(listElement).next(".description").remove();
                                     $(listElement).remove();
                                     return false;
@@ -146,26 +150,25 @@ define([
                 );
             }
 
-            function setTemporaryDescription(identification){
+            function setTemporaryDescription(identification) {
                 $(
                     descriptionFromIdentification(
                         identification
                     )
                 ).text(
-                    $(".fbs-topic-article").text()
+                    identification.description()
                 );
             }
 
-
-            function descriptionFromIdentification(identification){
+            function descriptionFromIdentification(identification) {
                 return $(
                     titleFromIdentification(identification)
                 ).next(".description");
             }
 
-            function titleFromIdentification(identification){
+            function titleFromIdentification(identification) {
                 return $(html).find(
-                    "[identification-uri='"+identification.uri()+"']"
+                    "[identification-uri='" + identification.uri() + "']"
                 );
             }
 
@@ -174,26 +177,68 @@ define([
                     'identification_textfield'
                     ].merge();
                 $(html).append(identificationTextField);
-                $(identificationTextField).suggest({
-                    key:"AIzaSyBHOqdqbswxnNmNb4k59ARSx-RWokLZhPA",
-                    "zIndex":20,
-                    scoring:"schema",
-                    lang: "en"
-                })
-                    .bind("fb-select", function (e, freebaseSuggestion) {
-                        var semanticMenu = $(this).closest('.peripheral-menu');
-                        var vertex = $(semanticMenu).data("vertex");
-                        Freebase.handleIdentificationToServer(
-                            vertex,
-                            freebaseSuggestion,
-                            function (vertex, identification) {
-                                addIdentificationAsListElement(identification);
-                                makeListElementsCollapsible();
-                                setTemporaryDescription(identification);
-                            }
-                        );
+                setUpAutocomplete();
+                function setUpAutocomplete() {
+                    identificationTextField.tripleBrainAutocomplete({
+                        select:function (event, ui) {
+                            var semanticMenu = $(this).closest('.peripheral-menu');
+                            var vertex = $(semanticMenu).data("vertex");
+                            var searchResult = ui.item;
+                            identifyUsingServerIdentificationFctn(
+                                vertex,
+                                searchResult,
+                                VertexService.addSameAs
+                            );
+                        },
+                        resultsProviders : [
+                            UserMapAutocompleteProvider,
+                            FreebaseAutocompleteProvider.forFetchingAnything()
+                        ]
                     });
+                }
                 return identificationTextField;
+            }
+
+            function addTypeIdentificationTextField(){
+                var typeIdentificationTextField = MindMapTemplate[
+                    'identification_type_textfield'
+                    ].merge();
+                $(html).append(typeIdentificationTextField);
+                setUpAutocomplete();
+                function setUpAutocomplete() {
+                    typeIdentificationTextField.tripleBrainAutocomplete({
+                        select:function (event, ui) {
+                            var semanticMenu = $(this).closest('.peripheral-menu');
+                            var vertex = $(semanticMenu).data("vertex");
+                            var searchResult = ui.item;
+                            identifyUsingServerIdentificationFctn(
+                                vertex,
+                                searchResult,
+                                VertexService.addType
+                            );
+                        },
+                        resultsProviders : [
+                            UserMapAutocompleteProvider,
+                            FreebaseAutocompleteProvider.forFetchingTypes()
+                        ]
+                    });
+                }
+                return typeIdentificationTextField;
+            }
+
+            function identifyUsingServerIdentificationFctn(vertex, searchResult, serverIdentificationFctn){
+                var identificationResource = ExternalResource.withUriLabelAndDescription(
+                    searchResult.uri,
+                    searchResult.label,
+                    searchResult.description
+                );
+                serverIdentificationFctn(
+                    vertex,
+                    identificationResource
+                );
+                addIdentificationAsListElement(identificationResource);
+                makeListElementsCollapsible();
+                setTemporaryDescription(identificationResource);
             }
         }
         return api;
