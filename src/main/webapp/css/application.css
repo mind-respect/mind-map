@@ -518,6 +518,7 @@ input[type="button"] {
 .identification-autocomplete-flyout{
     position:absolute;
     width:300px;
+    background-color: white;
     z-index:1000;
 }
 
