@@ -190,9 +190,8 @@ input[type="button"] {
 }
 
 .vertex .menu {
-    float:right;
-    /*margin-right:2em;*/
-    width:75px;
+    float:left;
+    width:125px;
     padding-top:10px;
 }
 
