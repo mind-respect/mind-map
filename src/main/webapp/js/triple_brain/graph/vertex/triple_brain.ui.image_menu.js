@@ -35,7 +35,7 @@ define(
                     image
                 );
                 $(image).load(function () {
-//                    setUpBiggerImagesView();
+                    setUpBiggerImagesView();
                     vertex.adjustWidth();
                 });
 
