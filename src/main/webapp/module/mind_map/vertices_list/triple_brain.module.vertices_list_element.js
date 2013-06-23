@@ -23,28 +23,24 @@ define([
             }
         };
         function VerticesListElement(html){
-
             this.associatedVertex = function(){
                 return Vertex.withUri(
                     $(html).data('vertexUri')
-                );
-            }
-
+                )[0];
+            };
             this.setDistanceFromCentralVertex= function(distanceFromCentralVertex){
                 $(containerWithDistanceFromCentralVertex()).html(
                     distanceFromCentralVertex
                 )
-            }
-
+            };
             this.setLabel = function(label){
                 $(labelInput()).val(
                     label
                 )
-            }
-
+            };
             this.remove = function(){
                 $(html).remove();
-            }
+            };
 
             function containerWithDistanceFromCentralVertex(){
                 return $(html).find('.min-number-of-edges-from-center-vertex');
