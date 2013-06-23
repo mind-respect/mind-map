@@ -19,47 +19,49 @@ define([
     "jquery.cursor-at-end"
 
 ],
-    function(require, $, GraphUi, MindMapTemplate, IdUriUtils, VertexAndEdgeCommon, TreeEdge, EdgeService, ArrowLine, EventBus, RelativeVertex, RelativeTreeTemplates, Vertex){
+    function (require, $, GraphUi, MindMapTemplate, IdUriUtils, VertexAndEdgeCommon, TreeEdge, EdgeService, ArrowLine, EventBus, RelativeVertex, RelativeTreeTemplates, Vertex) {
         var api = {};
-        api.get = function(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade){
+        api.get = function (edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
             return new EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade);
         };
-        function EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade){
+        function EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
             var uri = edgeServer.id;
             edgeServer.id = IdUriUtils.graphElementIdFromUri(edgeServer.id);
             var html = RelativeTreeTemplates['edge'].merge(edgeServer);
-            this.create = function(){
+            html = $(html);
+            this.create = function () {
                 GraphUi.addHTML(
                     html
                 );
                 var isInverse = edgeServer.source_vertex_id !== parentVertexHtmlFacade.getUri();
-                if(isInverse){
-                    $(html).addClass("inverse");
+                if (isInverse) {
+                    html.addClass("inverse");
                 }
-                $(html).data(
+                html.data(
                     "source_vertex_id",
                     isInverse ? childVertexHtmlFacade.getId() : parentVertexHtmlFacade.getId()
                 );
-                $(html).data(
+                html.data(
                     "destination_vertex_id",
                     isInverse ? parentVertexHtmlFacade.getId() : childVertexHtmlFacade.getId()
                 );
-                $(html).click(function(){
+
+                html.click(function () {
                     changeToInput($(this));
                 });
-                createMenu();
+                showRemoveButtonOnlyIfMouseOver(html);
                 var relativeVertex = RelativeVertex.withVertex(
                     childVertexHtmlFacade
                 );
                 var textContainer = childVertexHtmlFacade.textContainer();
                 var isToTheLeft = relativeVertex.isToTheLeft();
-                if(isToTheLeft){
+                if (isToTheLeft) {
                     textContainer.append(html);
-                }else{
+                } else {
                     textContainer.prepend(html);
                 }
                 childVertexHtmlFacade.adjustWidth();
-                if(isToTheLeft){
+                if (isToTheLeft) {
                     relativeVertex.adjustPosition();
                 }
                 drawArrowLine();
@@ -73,13 +75,48 @@ define([
                 return edge;
             }
 
-            function changeToInput(html){
-                var previousEdge = edgeOfSubHtmlComponent(html);
+            function showRemoveButtonOnlyIfMouseOver(html) {
+                html.hover(
+                    function () {
+                        var removeButton = $("<span class='close_button'>&#10006</span>");
+                        $(this).append(
+                            removeButton
+                        );
+                        removeButton.on("click", function (event) {
+                            event.stopPropagation();
+                            var edge = edgeFromHtml(
+                                $(this).closest(".relation")
+                            );
+                            EdgeService.remove(edge,
+                                function (edge) {
+                                    var vertex = edge.childVertexInDisplay();
+                                    var relativeVertex = RelativeVertex.withVertex(
+                                        vertex
+                                    );
+                                    relativeVertex.visitChildren(function (childVertex) {
+                                        childVertex.removeConnectedEdges();
+                                        childVertex.remove();
+                                    });
+                                    edge.remove();
+                                    vertex.remove();
+                                    TreeEdge.redrawAllEdges();
+                               }
+                            );
+                        });
+                    },
+                    function () {
+                        $(this).find("> .close_button").remove();
+                    }
+                );
+            }
+
+            function changeToInput(html) {
+                var previousEdge = edgeFromHtml(html);
                 var input = RelativeTreeTemplates['edge_input'].merge({
-                    label : html.text()
+                    label:previousEdge.text()
                 });
                 input = $(input);
-                if(previousEdge.isInverse()){
+                if (previousEdge.isInverse()) {
                     input.addClass("inverse");
                 }
                 input.data(
@@ -90,25 +127,25 @@ define([
                     "destination_vertex_id",
                     previousEdge.destinationVertex().getId()
                 );
-                if(input.val() === TreeEdge.EMPTY_LABEL){
+                if (input.val() === TreeEdge.EMPTY_LABEL) {
                     input.val("");
                 }
-                input.blur(function(){
+                input.blur(function () {
                     var html = $(this);
                     changeToSpan(html);
                 });
                 VertexAndEdgeCommon.adjustWidthToNumberOfChars(
                     input
                 );
-                input.change(function() {
+                input.change(function () {
                     var html = $(this);
-                    var edge = edgeOfSubHtmlComponent(html);
+                    var edge = edgeFromHtml(html);
                     EdgeService.updateLabel(edge, edge.text());
                 });
-                input.keydown(function() {
+                input.keydown(function () {
                     $(this).keyup();
                 });
-                input.keyup(function() {
+                input.keyup(function () {
                     var html = $(this);
                     VertexAndEdgeCommon.adjustWidthToNumberOfChars(
                         html
@@ -123,7 +160,7 @@ define([
                 $(html).replaceWith(
                     input
                 );
-                var edge = edgeOfSubHtmlComponent(input);
+                var edge = edgeFromHtml(input);
                 edge.setUri(uri);
                 edge.setArrowLine(arrowLine);
                 input.focus();
@@ -134,15 +171,16 @@ define([
                 vertex.adjustWidth();
             }
 
-            function changeToSpan(previousHtml){
-                var previousEdge = edgeOfSubHtmlComponent(
+            function changeToSpan(previousHtml) {
+                var previousEdge = edgeFromHtml(
                     previousHtml
                 );
                 var html = RelativeTreeTemplates['edge'].merge({
-                    label: previousEdge.text()
+                    label:previousEdge.text()
                 });
                 html = $(html);
-                if(previousEdge.isInverse()){
+                showRemoveButtonOnlyIfMouseOver(html);
+                if (previousEdge.isInverse()) {
                     html.addClass("inverse");
                 }
                 html.data(
@@ -153,13 +191,13 @@ define([
                     "destination_vertex_id",
                     previousEdge.destinationVertex().getId()
                 );
-                html.click(function(){
+                html.click(function () {
                     changeToInput($(this));
                 });
                 var uri = previousEdge.getUri();
                 var arrowLine = previousEdge.arrowLine();
                 previousHtml.replaceWith(html);
-                var edge = edgeOfSubHtmlComponent(html);
+                var edge = edgeFromHtml(html);
                 edge.setUri(uri);
                 edge.setArrowLine(arrowLine);
                 var vertex = Vertex.withHtml(html.closest(".vertex"));
@@ -169,23 +207,16 @@ define([
                 TreeEdge.redrawAllEdges();
             }
 
-            function createMenu(){
-                var removeButton = MindMapTemplate['edge_remove_button'].merge();
-                $(html).append(removeButton);
-
-                removeButton.click(function() {
-                    var edge = edgeOfSubHtmlComponent(this);
-                    EdgeService.remove(edge);
-                });
-            }
-
-            function edgeOfSubHtmlComponent(htmlOfSubComponent){
+            function edgeFromHtml(htmlComponent) {
+                htmlComponent = $(htmlComponent);
+                var html = htmlComponent.hasClass("relation") ?
+                    htmlComponent : htmlComponent.closest(".relation");
                 return TreeEdge.withHtml(
-                    htmlOfSubComponent
+                    html
                 );
             }
 
-            function drawArrowLine(){
+            function drawArrowLine() {
                 var edge = edgeFacade();
                 edge.setArrowLine(
                     ArrowLine.ofEdgeHavingUndefinedArrowLine(
@@ -195,10 +226,11 @@ define([
                 edge.arrowLine().drawInWithDefaultStyle();
             }
 
-            function edgeFacade(){
+            function edgeFacade() {
                 return TreeEdge.withHtml(html);
             }
         }
+
         return api;
     }
 );

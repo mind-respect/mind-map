@@ -10,18 +10,23 @@ define([
             withHtml : function(html){
                 return new VerticesListElement(html);
             },
-            withVertex : function(vertex){
+            withVertexUri : function(vertexUri){
                 var htmlOfVertexListElement = $('.vertices-list-element').filter(function() {
-                    return $(this).data("vertexId") == vertex.getId();
+                    return $(this).data("vertexUri") === vertexUri;
                 });
                 return new VerticesListElement(htmlOfVertexListElement);
+            },
+            withVertex : function(vertex){
+                return api.withVertexUri(
+                    vertex.getUri()
+                );
             }
         };
         function VerticesListElement(html){
 
             this.associatedVertex = function(){
-                return Vertex.withId(
-                    $(html).data('vertexId')
+                return Vertex.withUri(
+                    $(html).data('vertexUri')
                 );
             }
 

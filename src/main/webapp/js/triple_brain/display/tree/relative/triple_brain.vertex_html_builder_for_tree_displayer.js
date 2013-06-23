@@ -37,13 +37,18 @@ define([
             var Suggestion = require("triple_brain.suggestion");
             var IdentificationMenu = require("triple_brain.ui.identification_menu");
             var SuggestionMenu = require("triple_brain.ui.suggestion_menu");
-            var html = MindMapTemplate['relative_vertex'].merge(serverFormat);
-            $(html).uniqueId();
+            var html = $(
+                MindMapTemplate['relative_vertex'].merge(serverFormat)
+            );
+            html.data(
+                "uri",
+                serverFormat.id
+            );
+            html.uniqueId();
             this.create = function () {
                 createLabel();
                 createMenu();
                 var vertex = vertexFacade();
-                vertex.setUri(serverFormat.id);
                 vertex.setNote(
                     serverFormat.note
                 );

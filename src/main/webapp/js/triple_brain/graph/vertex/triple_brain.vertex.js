@@ -40,10 +40,11 @@ define([
                 type:'DELETE',
                 url:vertex.getUri()
             }).success(function () {
+                    var vertexUri = vertex.getUri();
                     callback(vertex);
                     EventBus.publish(
                         '/event/ui/graph/vertex/deleted/',
-                        vertex
+                        vertexUri
                     );
                 })
         };

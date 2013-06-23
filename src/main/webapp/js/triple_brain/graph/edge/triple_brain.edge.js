@@ -26,15 +26,28 @@ define([
                         callback(edgeServerFormatted);
                     })
             },
-            remove: function(edge) {
+            remove: function(edge, callback) {
+                var edgeUri = edge.getUri();
                 $.ajax({
                     type: 'DELETE',
-                    url: edge.getUri()
+                    url: edgeUri
                 }).success(function() {
+                        var sourceVertexUri = edge.sourceVertex().getUri();
+                        var destinationVertexUri = edge.destinationVertex().getUri();
+                        callback(
+                            edge,
+                            edgeUri,
+                            sourceVertexUri,
+                            destinationVertexUri
+                        );
                         EventBus.publish(
-                            '/event/ui/graph/relation/deleted',
-                            edge
-                        )
+                            '/event/ui/graph/relation/deleted',[
+                                edge,
+                                edgeUri,
+                                sourceVertexUri,
+                                destinationVertexUri
+                            ]
+                        );
                     })
             },
             updateLabel: function(edge, label) {

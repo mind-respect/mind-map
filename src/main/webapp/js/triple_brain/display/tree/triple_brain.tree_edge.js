@@ -2,10 +2,12 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
+    "require",
     "jquery",
-    "triple_brain.ui.edge"
+    "triple_brain.ui.edge",
+    "triple_brain.tree_vertex"
 ],
-    function ($, Edge) {
+    function (require, $, Edge, TreeVertex) {
         var api = {};
         api.EMPTY_LABEL = Edge.EMPTY_LABEL;
         api.redrawAllEdges = Edge.redrawAllEdges;
@@ -32,8 +34,13 @@ define([
                     label.val() :
                     label.text();
             };
+            this.childVertexInDisplay = function(){
+                return treeVertexInstance().withHtml(
+                    html.closest(".vertex")
+                );
+            };
             this.isInverse = function(){
-                return $(html).hasClass("inverse");
+                return html.hasClass("inverse");
             };
             this.serverFormat = function(){
                 return {
@@ -43,7 +50,12 @@ define([
                 }
             };
             function getLabel(){
-                return html;
+                return html.is(":input") ?
+                    html :
+                    html.find("> span.label");
+            }
+            function treeVertexInstance(){
+                return require("triple_brain.tree_vertex");
             }
             Edge.Object.apply(this, [html]);
         }

@@ -199,8 +199,10 @@ define([
 
         EventBus.subscribe(
             '/event/ui/graph/vertex/deleted/',
-            function (event, vertex) {
-                var verticesListElement = VerticesListElement.withVertex(vertex);
+            function (event, vertexUri) {
+                var verticesListElement = VerticesListElement.withVertexUri(
+                    vertexUri
+                );
                 verticesListElement.remove();
                 var verticesList = api.get();
                 verticesList.rebuild();

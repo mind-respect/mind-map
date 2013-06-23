@@ -22,6 +22,8 @@
 
 span.relation{
     vertical-align: top;
+    padding:0;
+    margin-top:0;
     margin-right:1em;
 }
 
@@ -45,7 +47,7 @@ input.relation{
     overflow: hidden;
 }
 
-span.relation.inverse{
+.relation.inverse .label{
     background: red;
 }
 

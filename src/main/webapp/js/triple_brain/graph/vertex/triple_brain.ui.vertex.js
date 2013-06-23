@@ -585,7 +585,7 @@ define([
                 );
             }
 
-            crow.ConnectedNode.apply(this, [self.getId()]);
+            crow.ConnectedNode.apply(this, [self.getUri()]);
         }
 
         api.Object.prototype = new crow.ConnectedNode();

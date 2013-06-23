@@ -21,7 +21,7 @@ define([
             var verticesListElement = VerticesListElement.withHtml(html);
             this.create = function(){
                 VerticesList.get().addHtml(html);
-                $(html).data('vertexId', vertex.getId());
+                $(html).data('vertexUri', vertex.getUri());
                 verticesListElement.setDistanceFromCentralVertex(
                     GraphUi.numberOfEdgesBetween(
                         vertex,

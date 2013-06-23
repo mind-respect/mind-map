@@ -207,13 +207,6 @@ define([
         }
 
         EventBus.subscribe(
-            '/event/ui/graph/relation/deleted',
-            function (event, edge) {
-                edge.remove();
-            }
-        );
-
-        EventBus.subscribe(
             '/event/ui/graph/edge/label/updated',
             function (event, edge) {
                 VertexAndEdgeCommon.highlightLabel(edge.id());

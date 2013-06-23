@@ -30,7 +30,7 @@ define([
         );
         t.add(
             'edge',
-            '<span class="label label-info relation">{label}</span>'
+            '<span class="relation" style="display:inline;"><span class="label label-info">{label}</span></span>'
         );
         t.add(
             'edge_input',

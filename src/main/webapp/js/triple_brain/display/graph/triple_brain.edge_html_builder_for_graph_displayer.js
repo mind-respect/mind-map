@@ -112,7 +112,9 @@ define([
 
                 removeButton.click(function() {
                     var edge = edgeOfSubHtmlComponent(this);
-                    EdgeService.remove(edge);
+                    EdgeService.remove(edge, function(edge){
+                        edge.remove();
+                    });
                 });
             }
 
