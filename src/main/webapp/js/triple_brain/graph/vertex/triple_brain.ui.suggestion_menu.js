@@ -94,10 +94,7 @@ define([
                                 );
                                 VertexService.addType(
                                     triple.destinationVertex(),
-                                    type,
-                                    function(vertex){
-                                        vertex.prepareAsYouTypeSuggestions();
-                                    }
+                                    type
                                 );
                             }
                         );

@@ -16,10 +16,9 @@ define([
     "triple_brain.ui.arrow_line",
     "triple_brain.server_subscriber",
     "triple_brain.ui.image_menu",
-    "triple_brain.freebase",
     "jquery.center-on-screen"
 ],
-    function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, GraphUi, ArrowLine, ServerSubscriber, ImageMenu, Freebase) {
+    function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, GraphUi, ArrowLine, ServerSubscriber, ImageMenu) {
         var api = {};
 
         api.EMPTY_LABEL = "concept";
@@ -513,27 +512,7 @@ define([
                     "originalServerObject"
                 );
             };
-            this.prepareAsYouTypeSuggestions = function () {
-                var vertexTypes = self.getTypes();
-                if (vertexTypes.length == 0) {
-                    return;
-                }
-                var filterValue = "(all ";
-                $.each(vertexTypes, function () {
-                    var identification = this;
-                    if (Freebase.isFreebaseUri(identification.uri())) {
-                        filterValue += "type:" + Freebase.idInFreebaseURI(identification.uri());
-                    }
-                });
-                filterValue += ")";
-                $(self.label()).suggest({
-                    key:Freebase.key,
-                    filter:filterValue,
-                    "zIndex":20,
-                    scoring:"schema",
-                    lang:"en"
-                });
-            };
+
             this.hasMoveButton = function () {
                 return self.moveButton().length > 0;
             };

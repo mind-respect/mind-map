@@ -3,6 +3,7 @@
  */
 
 define([
+
     "jquery",
     "triple_brain.external_resource",
     "triple_brain.vertex",

@@ -112,7 +112,6 @@ define([
                         )
                     );
                 });
-                vertex.prepareAsYouTypeSuggestions();
                 vertex.makeItLowProfile();
                 vertex.setOriginalServerObject(
                     serverFormat

@@ -1,14 +1,15 @@
 define([
+    "require",
     "jquery",
     "triple_brain.event_bus",
     "triple_brain.ui.vertex",
     "triple_brain.vertex",
     "triple_brain.suggestion",
     "triple_brain.external_resource",
-    "jquery.freebase_suggest",
+    "triple_brain.freebase_autocomplete_provider",
     "jquery.url"
 ],
-    function ($, EventBus, Vertex, VertexService, Suggestion, ExternalResource) {
+    function (require, $, EventBus, Vertex, VertexService, Suggestion, ExternalResource, FreebaseAutocompleteProvider) {
         var api = {};
         api.key = "AIzaSyBHOqdqbswxnNmNb4k59ARSx-RWokLZhPA";
         api.BASE_URL = "https://www.googleapis.com/freebase/v1";
@@ -103,10 +104,7 @@ define([
                 })
         };
         api.removeSuggestFeatureOnVertex = function(vertex){
-            $(vertex.label())
-                .unbind(".suggest")
-                .unbind("fb-select")
-                .removeData("suggest");
+            $(vertex.label()).autocomplete( "destroy" );
         };
 
         EventBus.subscribe(
@@ -121,23 +119,78 @@ define([
                     vertex,
                     typeId
                 );
-                $(vertex.label()).suggest({
-                    "zIndex":20,
-                    "all type":typeId
-                })
-                    .bind("fb-select", function (e, freebaseSuggestion) {
-                        Vertex = require("triple_brain.ui.vertex");
-                        var vertex = Vertex.withId(
+                vertex.label().tripleBrainAutocomplete({
+                    select:function (event, ui) {
+                        var vertex = require("triple_brain.ui.vertex").withId(
                             $(this).closest(".vertex").attr("id")
                         );
                         vertex.triggerChange();
-                        api.handleIdentificationToServer(
-                            vertex,
-                            freebaseSuggestion
+                        var searchResult = ui.item;
+                        var identificationResource = ExternalResource.withUriLabelAndDescription(
+                            searchResult.uri,
+                            searchResult.label,
+                            searchResult.description
                         );
-                    });
+                        vertexService().addSameAs(
+                            vertex,
+                            identificationResource
+                        );
+                    },
+                    resultsProviders : [
+                        require(
+                            "triple_brain.freebase_autocomplete_provider"
+                        ).toFetchForTypeId(typeId)
+                    ]
+                });
             }
         );
+
+        EventBus.subscribe(
+            '/event/ui/html/vertex/created/',
+            function(event, vertex){
+                prepareAsYouTypeSuggestions(vertex);
+            }
+        );
+
+        function prepareAsYouTypeSuggestions(vertex){
+            var vertexTypes = vertex.getTypes();
+            if (vertexTypes.length == 0) {
+                return;
+            }
+            var filterValue = "(all ";
+            $.each(vertexTypes, function () {
+                var identification = this;
+                if (api.isFreebaseUri(identification.uri())) {
+                    filterValue += "type:" + api.idInFreebaseURI(identification.uri());
+                }
+            });
+            filterValue += ")";
+            vertex.label().tripleBrainAutocomplete({
+                select:function (event, ui) {
+                    var vertex = require("triple_brain.ui.vertex").withId(
+                        $(this).closest(".vertex").attr("id")
+                    );
+                    vertex.triggerChange();
+                    var searchResult = ui.item;
+                    var identificationResource = ExternalResource.withUriLabelAndDescription(
+                        searchResult.uri,
+                        searchResult.label,
+                        searchResult.description
+                    );
+                    vertexService().addSameAs(
+                        vertex,
+                        identificationResource
+                    );
+                },
+                resultsProviders : [
+                    require(
+                        "triple_brain.freebase_autocomplete_provider"
+                    ).fetchUsingOptions({
+                            filter:filterValue
+                    })
+                ]
+            });
+        };
 
         EventBus.subscribe(
             '/event/ui/graph/vertex/type/removed',

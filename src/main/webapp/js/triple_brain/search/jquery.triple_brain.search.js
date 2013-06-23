@@ -12,24 +12,39 @@ require([
             select:options.select,
             source:function (request, response) {
                 var searchTerm = request.term;
-                $.when.apply(
-                    $,
-                    makeFetchMethodsArray()
-                ).done(function () {
-                        var allResults = [],
-                            i = 0;
-                        $.each(arguments, function () {
-                            var results = this[0];
-                            var resultProvider = options.resultsProviders[i];
-                            allResults = allResults.concat(
-                                resultProvider.formatResults(
+                if (options.resultsProviders.length === 1) {
+                    var singleResultsProvider = options.resultsProviders[0];
+                    $.when(
+                        singleResultsProvider.getFetchMethod(searchTerm)
+                    ).done(function (results) {
+                            response(
+                                singleResultsProvider.formatResults(
                                     results
                                 )
                             );
-                            i++;
                         });
-                        response(allResults);
+                } else {
+                    $.when.apply(
+                        $,
+                        makeFetchMethodsArray()
+                    ).done(gatherAndReturnResults);
+                }
+                function gatherAndReturnResults() {
+                    var allResults = [],
+                        i = 0;
+                    $.each(arguments, function () {
+                        var results = jQuery.isArray(this) ? this[0] : this;
+                        var resultProvider = options.resultsProviders[i];
+                        allResults = allResults.concat(
+                            resultProvider.formatResults(
+                                results
+                            )
+                        );
+                        i++;
                     });
+                    response(allResults);
+                }
+
                 function makeFetchMethodsArray() {
                     var fetchMethods = [];
                     $.each(options.resultsProviders, function () {
@@ -48,7 +63,7 @@ require([
                 var searchResult = ui.item;
                 searchResult.provider.getMoreInfoForSearchResult(
                     searchResult,
-                    function(moreInfo){
+                    function (moreInfo) {
                         $(".identification-autocomplete-flyout").remove();
                         displayDescriptionPanel(
                             event.currentTarget,
@@ -82,7 +97,7 @@ require([
                         sourceContainer,
                         "<br/>"
                     );
-                    if(description.source !== undefined){
+                    if (description.source !== undefined) {
                         var descriptionSource = $("<span class='source'>").append(
                             "[" + description.source + "] "
                         );
