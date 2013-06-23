@@ -60,14 +60,14 @@ define([
         function integrateEdgesOfVertex(vertex) {
             var vertexServerFormat = vertex.getOriginalServerObject();
             $.each(vertexServerFormat.neighbors, function () {
-                var childInfo = this;
-                if(childInfo[vertex.getId()] === undefined){
+                var neighborInfo = this;
+                if(neighborInfo[vertex.getId()] === undefined){
                     return;
                 }
                 EdgeBuilder.get(
-                    childInfo.edge,
+                    neighborInfo.edge,
                     vertex,
-                    VertexUi.withId(childInfo[vertex.getId()].vertexHtmlId)
+                    VertexUi.withId(neighborInfo[vertex.getId()].vertexHtmlId)
                 ).create();
             });
         }
@@ -162,30 +162,28 @@ define([
                     );
                     var childrenContainer = treeMaker.childrenVertexContainer(parentVertexHtmlFacade);
                     $.each(serverParentVertex.neighbors, function () {
-                        var childInfo = this;
-                        if(grandParentUri === childInfo.vertexUri){
+                        var neighborInfo = this;
+                        var childInfo = vertexWithId(neighborInfo.vertexUri);
+                        if(grandParentUri === childInfo.id || childInfo.added === true){
                             return;
                         }
                         var childVertexHtmlFacade = treeMaker.buildVertexHtmlIntoContainer(
-                            vertexWithId(childInfo.vertexUri),
+                            vertexWithId(childInfo.id),
                             childrenContainer
                         );
-                        childInfo[parentVertexHtmlFacade.getId()] = {
+                        neighborInfo[parentVertexHtmlFacade.getId()] = {
                             vertexHtmlId : childVertexHtmlFacade.getId()
                         };
                         var treeContainer = childVertexHtmlFacade.getHtml().closest(
                             ".vertex-tree-container"
                         );
-                        if(childInfo.added === undefined){
-                            childInfo.added = true;
-                        }else{
-                            $(treeContainer).append(
-                                buildChildrenHtmlTreeRecursively(
-                                    childVertexHtmlFacade,
-                                    parentVertexHtmlFacade.getUri()
-                                )
-                            );
-                        }
+                        childInfo.added = true;
+                        $(treeContainer).append(
+                            buildChildrenHtmlTreeRecursively(
+                                childVertexHtmlFacade,
+                                parentVertexHtmlFacade.getUri()
+                            )
+                        );
                     });
                     return childrenContainer;
                 }
