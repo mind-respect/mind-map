@@ -32,11 +32,16 @@ define([
                 dialogClass: "vertex-note",
                 modal:true,
                 buttons: {
-                    "Save": function() {
+                    "Update": function(event) {
                         var dialog = $(this);
+                        var textContainer = $(event.currentTarget).find(".ui-button-text");
+                        textContainer.text("Saving ...");
                         VertexService.updateNote(
                             vertex,
-                            dialog.find("textarea").val()
+                            dialog.find("textarea").val(),
+                            function(){
+                                $(dialog).dialog("close");
+                            }
                         )
                     }
                 }
