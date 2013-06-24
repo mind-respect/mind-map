@@ -6,32 +6,22 @@ define([
     "jquery",
     "triple_brain.search",
     "triple_brain.graph_displayer",
+    "triple_brain.user_map_autocomplete_provider",
     "jquery-ui"
 ],
-    function ($, SearchService, GraphDisplayer) {
+    function ($, SearchService, GraphDisplayer, UserMapAutocompleteProvider) {
         return {
             init:function() {
-                $("#vertex-search-input").autocomplete({
-                    source:function (request, response) {
-                        SearchService.searchAutoComplete(
-                            request.term,
-                            function (searchResults) {
-                                response($.map(searchResults, function (searchResult) {
-                                    return {
-                                        label:searchResult.label,
-                                        value:searchResult.label,
-                                        id:searchResult.id
-                                    }
-                                }));
-                            }
-                        );
-                    },
+                $("#vertex-search-input").tripleBrainAutocomplete({
                     select:function (event, ui) {
-                        var vertexUri = ui.item.id;
+                        var vertexUri = ui.item.uri;
                         GraphDisplayer.displayUsingNewCentralVertexUri(
                             vertexUri
                         );
-                    }
+                    },
+                    resultsProviders : [
+                        UserMapAutocompleteProvider
+                    ]
                 });
             }
         };
