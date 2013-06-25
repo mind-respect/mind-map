@@ -77,7 +77,7 @@ define([
                     if(GraphDisplayer.allowsMovingVertices()){
                         htmlSuggestion.draggable();
                         htmlSuggestion.bind('dragstop', function(){
-                            var htmlSuggestion = this;
+                            var htmlSuggestion = $(this);
                             addHtmlSuggestionAsVertexAndRelationInMap(htmlSuggestion);
                         });
                     }else{
