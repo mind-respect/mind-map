@@ -23,19 +23,19 @@ define([
         function Object(html){
             var self = this;
             this.setText = function (text) {
-                var label = getLabel();
+                var label = self.getLabel();
                 label.is(":input") ?
                     label.val(text) :
                     label.text(text);
             };
             this.text = function () {
-                var label = getLabel();
+                var label = self.getLabel();
                 return label.is(":input") ?
                     label.val() :
                     label.text();
             };
             this.childVertexInDisplay = function(){
-                return treeVertexInstance().withHtml(
+                return getTreeVertex().withHtml(
                     html.closest(".vertex")
                 );
             };
@@ -49,13 +49,19 @@ define([
                     destination_vertex_id : self.destinationVertex().getId()
                 }
             };
-            function getLabel(){
+            this.getLabel = function(){
                 return html.is(":input") ?
                     html :
                     html.find("> span.label");
-            }
-            function treeVertexInstance(){
-                return require("triple_brain.tree_vertex");
+            };
+            this.readjustLabelWidth = function(){
+                //do nothing;
+            };
+            function getTreeVertex(){
+                if(TreeVertex === undefined){
+                    TreeVertex = require("triple_brain.tree_vertex");
+                }
+                return TreeVertex;
             }
             Edge.Object.apply(this, [html]);
         }

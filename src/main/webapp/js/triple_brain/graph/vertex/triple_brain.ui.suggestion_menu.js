@@ -13,9 +13,10 @@ define([
     "triple_brain.vertex",
     "triple_brain.edge",
     "triple_brain.peripheral_menu",
-    "triple_brain.ui.utils"
+    "triple_brain.ui.utils",
+    "triple_brain.graph_displayer"
 ],
-    function (require, $, Freebase, MindMapTemplate, GraphUi, Point, ExternalResource, VertexService, EdgeService, PeripheralMenu, UiUtils) {
+    function (require, $, Freebase, MindMapTemplate, GraphUi, Point, ExternalResource, VertexService, EdgeService, PeripheralMenu, UiUtils, GraphDisplayer) {
         var api = {
             ofVertex:function (vertex) {
                 return new SuggestionMenu(vertex);
@@ -31,7 +32,9 @@ define([
                     html
                 );
                 addTitle();
-                addSubTitle();
+                if(GraphDisplayer.allowsMovingVertices()){
+                    addInstructions();
+                }
                 addSuggestionList();
                 position();
                 PeripheralMenu.makeHtmlAPeripheralMenu(
@@ -50,9 +53,9 @@ define([
                 );
             }
 
-            function addSubTitle() {
+            function addInstructions() {
                 $(html).append(
-                    MindMapTemplate['suggestions_menu_sub_title'].merge()
+                    MindMapTemplate['suggestions_instructions'].merge()
                 );
             }
 
@@ -63,44 +66,73 @@ define([
                 );
                 $.each(vertex.suggestions(), function () {
                     var suggestion = this;
-                    var htmlSuggestion = MindMapTemplate['suggestion'].merge({
-                        domain_id:Freebase.idInFreebaseURI(suggestion.domainUri()),
+                    var htmlSuggestion = $(MindMapTemplate['suggestion'].merge({
                         label:suggestion.label()
-                    });
-                    $(htmlSuggestion).draggable();
-                    $(suggestionsList).append(htmlSuggestion);
-                    $(htmlSuggestion).bind('dragstop', function (event) {
-                        var currentSuggestion = this;
-                        Point = require("triple_brain.point");
-                        var newVertexPosition = Point.fromCoordinates(
-                            $(this).offset().left + $(this).width() / 2,
-                            $(this).offset().top
+                    }));
+                    htmlSuggestion.data(
+                        "typeId",
+                        Freebase.idInFreebaseURI(suggestion.domainUri())
+                    );
+                    suggestionsList.append(htmlSuggestion);
+                    if(GraphDisplayer.allowsMovingVertices()){
+                        htmlSuggestion.draggable();
+                        htmlSuggestion.bind('dragstop', function(){
+                            var htmlSuggestion = this;
+                            addHtmlSuggestionAsVertexAndRelationInMap(htmlSuggestion);
+                        });
+                    }else{
+                        var addSuggestionButton = $(
+                            "<input type='button' value='+' >"
                         );
-                        VertexService.addRelationAndVertexAtPositionToVertex(
-                            vertex,
-                            newVertexPosition,
-                            function (triple) {
-                                var edgeLabel = $(currentSuggestion).html();
-                                EdgeService.updateLabel(
-                                    triple.edge(),
-                                    edgeLabel
-                                );
-                                triple.edge().setText(edgeLabel);
-                                var typeId = $(currentSuggestion).attr('type-id');
-                                var typeUri = Freebase.freebaseIdToURI(typeId);
-                                var type = ExternalResource.withUriAndLabel(
-                                    typeUri,
-                                    $(currentSuggestion).text()
-                                );
-                                VertexService.addType(
-                                    triple.destinationVertex(),
-                                    type
-                                );
-                            }
+                        addSuggestionButton.on("click", function(){
+                            addHtmlSuggestionAsVertexAndRelationInMap(
+                                $(this).closest("li")
+                            );
+                        });
+                        htmlSuggestion.prepend(
+                            addSuggestionButton
                         );
-                        $(this).remove();
-                    });
+                    }
                 });
+
+                function addHtmlSuggestionAsVertexAndRelationInMap(suggestionAsHtml){
+                    suggestionAsHtml = $(suggestionAsHtml);
+                    Point = require("triple_brain.point");
+                    var offset = suggestionAsHtml.offset();
+                    var newVertexPosition = Point.fromCoordinates(
+                        offset.left + suggestionAsHtml.width() / 2,
+                        offset.top
+                    );
+                    VertexService.addRelationAndVertexAtPositionToVertex(
+                        vertex,
+                        newVertexPosition,
+                        function (triple) {
+                            var suggestionLabel = suggestionAsHtml.find(
+                                "> .text"
+                            ).text();
+                            EdgeService.updateLabel(
+                                triple.edge(),
+                                suggestionLabel
+                            );
+                            triple.edge().setText(suggestionLabel);
+                            var typeId = $(suggestionAsHtml).data(
+                                'typeId'
+                            );
+                            var typeUri = Freebase.freebaseIdToURI(typeId);
+                            var type = ExternalResource.withUriAndLabel(
+                                typeUri,
+                                suggestionLabel
+                            );
+                            triple.edge().readjustLabelWidth();
+                            triple.destinationVertex().readjustLabelWidth();
+                            VertexService.addType(
+                                triple.destinationVertex(),
+                                type
+                            );
+                        }
+                    );
+                    $(suggestionAsHtml).remove();
+                }
             }
 
             function position() {

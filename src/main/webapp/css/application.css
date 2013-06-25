@@ -338,6 +338,7 @@ input[type="button"] {
 .peripheral-menu h2{
     font-size: 1em;
     white-space: nowrap;
+    margin-top:1.8em;
 }
 
 .peripheral-menu h3{
@@ -469,17 +470,34 @@ input[type="button"] {
 }
 
 .suggestion li{
-    font-size: 12px;
+    font-size: 0.9em;
     font-weight:normal;
     margin-left: 0;
     padding:0;
     background: -moz-linear-gradient(left, #CDFFCD,  #ffffff);
     background: -webkit-gradient(linear, left right, left right, from(#CDFFCD), to(#ffffff));
     width:100%;
-    text-align:center;
+    text-align:left;
     padding-bottom: 3px;
     padding-top: 3px;
     border : 1px solid green;
+    line-height:2.5em;
+}
+
+.suggestion li .text{
+    margin-left:0.5em;
+}
+
+.suggestion li input[type="button"]{
+    font-weight:bold;
+    font-size:2em;
+    margin-left:0.4em;
+    color:green;
+    margin-bottom:0.2em;
+}
+
+.suggestion li input[type="button"]:hover{
+    color: #00d100;
 }
 
 .hidden-properties-container{

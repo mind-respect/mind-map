@@ -74,7 +74,6 @@ define([
         api.Object = function (html) {
             var Vertex;
             var self = this;
-
             this.id = function () {
                 return $(html).attr('id');
             };
@@ -119,10 +118,10 @@ define([
                 this.arrowLine().drawInBlackWithSmallLineWidth();
             };
             this.isTextFieldInFocus = function () {
-                return $(label()).is(":focus")
+                return self.getLabel().is(":focus")
             };
             this.focus = function () {
-                $(label()).focus();
+                self.getLabel().focus();
             };
             this.centerOnArrowLine = function () {
                 self.positionAt(
@@ -141,26 +140,20 @@ define([
                 return self.getId() == otherEdge.getId();
             };
             this.hasDefaultText = function () {
-                return $(label()).val() == api.EMPTY_LABEL;
+                return self.getLabel().val() == api.EMPTY_LABEL;
             };
             this.applyStyleOfDefaultText = function () {
-                $(label()).addClass('when-default-graph-element-text');
+                self.getLabel().addClass('when-default-graph-element-text');
             };
             this.removeStyleOfDefaultText = function () {
-                $(label()).removeClass('when-default-graph-element-text');
-            };
-            this.readjustLabelWidth = function () {
-                VertexAndEdgeCommon.adjustWidthToNumberOfChars(
-                    label()
-                );
-                this.adjustWidth();
+                self.getLabel().removeClass('when-default-graph-element-text');
             };
             this.adjustWidth = function () {
                 var intuitiveWidthBuffer = 14;
                 $(html).css(
                     "width",
                     $(menu()).width()
-                        + $(label()).width()
+                        + self.getLabel().width()
                         + intuitiveWidthBuffer +
                         "px"
                 );
@@ -185,9 +178,6 @@ define([
             };
             function menu() {
                 return $(html).find('.remove');
-            }
-            function label() {
-                return $(html).find("input[type='text']");
             }
 
             function isSourceVertex(vertex) {

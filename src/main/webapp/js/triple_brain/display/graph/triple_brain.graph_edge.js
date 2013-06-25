@@ -4,9 +4,10 @@
 define([
     "jquery",
     "triple_brain.ui.graph",
-    "triple_brain.ui.edge"
+    "triple_brain.ui.edge",
+    "triple_brain.ui.vertex_and_edge_common"
 ],
-    function ($, GraphUi, Edge) {
+    function ($, GraphUi, Edge, VertexAndEdgeCommon) {
         var api = {};
         api.EMPTY_LABEL = Edge.EMPTY_LABEL;
         api.withHtml = function (html) {
@@ -27,15 +28,22 @@ define([
             edge.hideMenu();
         };
         function GraphEdge(html){
+            var self = this;
             this.setText = function (text) {
-                $(label()).val(text);
+                self.getLabel().val(text);
             };
             this.text = function () {
-                return $(label()).val();
+                self.getLabel().val();
             };
-            function label() {
+            this.readjustLabelWidth = function () {
+                VertexAndEdgeCommon.adjustWidthToNumberOfChars(
+                    self.getLabel()
+                );
+                this.adjustWidth();
+            };
+            this.getLabel = function(){
                 return $(html).find("input[type='text']");
-            }
+            };
             Edge.Object.apply(this, [html]);
         }
         GraphEdge.prototype = new Edge.Object();
