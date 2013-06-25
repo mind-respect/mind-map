@@ -96,12 +96,14 @@ define([
                 });
 
                 function addHtmlSuggestionAsVertexAndRelationInMap(suggestionAsHtml){
-                    suggestionAsHtml = $(suggestionAsHtml);
                     Point = require("triple_brain.point");
                     var offset = suggestionAsHtml.offset();
                     var newVertexPosition = Point.fromCoordinates(
                         offset.left + suggestionAsHtml.width() / 2,
                         offset.top
+                    );
+                    var typeId = suggestionAsHtml.data(
+                        'typeId'
                     );
                     VertexService.addRelationAndVertexAtPositionToVertex(
                         vertex,
@@ -115,9 +117,6 @@ define([
                                 suggestionLabel
                             );
                             triple.edge().setText(suggestionLabel);
-                            var typeId = $(suggestionAsHtml).data(
-                                'typeId'
-                            );
                             var typeUri = Freebase.freebaseIdToURI(typeId);
                             var type = ExternalResource.withUriAndLabel(
                                 typeUri,
