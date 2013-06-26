@@ -1,32 +1,30 @@
 /**
  * Copyright Mozilla Public License 1.1
  */
-
 define([
-
     "jquery",
     "triple_brain.external_resource",
     "triple_brain.vertex",
     "triple_brain.mind-map_template",
     "triple_brain.ui.graph",
     "triple_brain.id_uri",
-    "triple_brain.ui.utils",
     "triple_brain.peripheral_menu",
     "triple_brain.freebase_autocomplete_provider",
     "triple_brain.user_map_autocomplete_provider",
     "jquery.triple_brain.search",
     "jquery-ui"
 ],
-    function ($, ExternalResource, VertexService, MindMapTemplate, GraphUi, IdUriUtils, UiUtils, PeripheralMenu, FreebaseAutocompleteProvider, UserMapAutocompleteProvider) {
+    function ($, ExternalResource, VertexService, MindMapTemplate, GraphUi, IdUriUtils, PeripheralMenu, FreebaseAutocompleteProvider, UserMapAutocompleteProvider) {
         var api = {
             ofVertex:function (vertex) {
                 return new IdentificationMenu(vertex);
             }
-        }
+        };
 
         function IdentificationMenu(vertex) {
             var identificationMenu = this;
             var html;
+            var peripheralMenu;
             this.rebuildList = function () {
                 $(listHtml()).remove();
                 addIdentifications();
@@ -37,14 +35,17 @@ define([
                 GraphUi.addHTML(html);
                 buildMenu();
                 html.data("vertex", vertex);
-                PeripheralMenu.makeHtmlAPeripheralMenu(
-                    html
-                );
+                peripheralMenu = PeripheralMenu.peripheralMenuForMenuHtmlAndVertex(
+                    html,
+                    vertex
+                ).init();
                 return identificationMenu;
             };
-            this.html = function(){
-                return html;
+
+            this.reEvaluatePosition = function () {
+                peripheralMenu.position();
             };
+
             function listHtml() {
                 return $(html).find(".list")
             }
@@ -57,15 +58,9 @@ define([
                 addTitle();
                 addIdentifications();
                 addIndications();
-                position();
                 var identificationTextField = addIdentificationTextField();
                 $(identificationTextField).focus();
                 addTypeIdentificationTextField();
-                position();
-            }
-
-            this.reEvaluatePosition = function () {
-                position();
             }
 
             function addTitle() {
@@ -142,13 +137,6 @@ define([
                     )
                 });
                 return identificationListElement;
-            }
-
-            function position() {
-                UiUtils.positionRight(
-                    html,
-                    vertex.getHtml()
-                );
             }
 
             function setTemporaryDescription(identification) {

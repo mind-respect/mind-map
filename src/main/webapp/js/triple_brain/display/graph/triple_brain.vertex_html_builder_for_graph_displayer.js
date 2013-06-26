@@ -177,7 +177,7 @@ define([
 
             function createMenu() {
                 var vertexMenu = MindMapTemplate['vertex_menu'].merge();
-                $(html).append(vertexMenu);
+                html.append(vertexMenu);
 
                 var plusBtn = MindMapTemplate['vertex_plus_button'].merge();
                 $(vertexMenu).append(plusBtn);
@@ -200,7 +200,9 @@ define([
                     }
                 });
 
-                var whatIsThisBtn = MindMapTemplate['vertex_what_is_this_button'].merge();
+                var whatIsThisBtn = MindMapTemplate[
+                    'vertex_what_is_this_button'
+                    ].merge();
                 $(vertexMenu).append(whatIsThisBtn);
                 whatIsThisBtn.click(function (event) {
                     event.stopPropagation();
@@ -232,6 +234,9 @@ define([
                         vertexOfSubHtmlComponent(this)
                     );
                 });
+                VertexHtmlCommon.addLinkToFarVertexButton(
+                    vertexMenu
+                );
                 VertexHtmlCommon.addNoteButton(
                     vertexMenu
                 );

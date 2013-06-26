@@ -21,11 +21,12 @@ define([
             ofVertex:function (vertex) {
                 return new SuggestionMenu(vertex);
             }
-        }
+        };
 
         function SuggestionMenu(vertex) {
             var suggestionMenu = this;
             var html;
+            var peripheralMenu;
             this.create = function () {
                 html = MindMapTemplate['suggestions_menu'].merge();
                 GraphUi.addHTML(
@@ -36,16 +37,16 @@ define([
                     addInstructions();
                 }
                 addSuggestionList();
-                position();
-                PeripheralMenu.makeHtmlAPeripheralMenu(
-                    html
-                );
+                peripheralMenu = PeripheralMenu.peripheralMenuForMenuHtmlAndVertex(
+                    html,
+                    vertex
+                ).init();
                 return suggestionMenu;
-            }
+            };
 
             this.reEvaluatePosition = function () {
-                position();
-            }
+                peripheralMenu.position();
+            };
 
             function addTitle() {
                 $(html).append(
@@ -78,7 +79,9 @@ define([
                         htmlSuggestion.draggable();
                         htmlSuggestion.bind('dragstop', function(){
                             var htmlSuggestion = $(this);
-                            addHtmlSuggestionAsVertexAndRelationInMap(htmlSuggestion);
+                            addHtmlSuggestionAsVertexAndRelationInMap(
+                                htmlSuggestion
+                            );
                         });
                     }else{
                         var addSuggestionButton = $(
@@ -117,7 +120,9 @@ define([
                                 suggestionLabel
                             );
                             triple.edge().setText(suggestionLabel);
-                            var typeUri = Freebase.freebaseIdToURI(typeId);
+                            var typeUri = Freebase.freebaseIdToURI(
+                                typeId
+                            );
                             var type = ExternalResource.withUriAndLabel(
                                 typeUri,
                                 suggestionLabel

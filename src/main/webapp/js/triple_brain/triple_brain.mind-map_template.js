@@ -26,17 +26,29 @@ define([
         t.add('vertex_center_button', '<input type="button" class="center">');
         t.add('vertex_what_is_this_button', '<input type="button" class="what-is-this"  value="?">');
         t.add('vertex_suggestion_button', '<input type="button"  value="S" class="suggestion">');
+        t.add('vertex_link_to_far_vertex_button', '<button></button>');
 
         t.add('identification_menu', '<div class="peripheral-menu identification"></div>');
         t.add('identification_menu_explanation_title', '<h2>Identifications</h2>');
         t.add('identification_menu_indications', '<h3>Find as many concepts that identify or are a generalization of this one.</h3>');
         t.add('identification_existing_identities', '<div class="list"></div>');
-        t.add('identification_existing_identity','<h3 class="type-label identification" identification-uri="{identification_uri}">{type_label}' +
+        t.add(
+            'identification_existing_identity',
+            '<h3 class="type-label identification" identification-uri="{identification_uri}">{type_label}' +
             '<input type="button" class="remove-identification" value="x">'+
             '</h3>'+
-            '<div class="group description">{description}</div>');
+            '<div class="group description">{description}</div>'
+        );
         t.add('identification_textfield', '<input type="text" placeholder="Identify to another source">');
-        t.add('identification_type_textfield', '<input type="text" placeholder="Add a category">');
+        t.add(
+            'identification_type_textfield',
+            '<input type="text" placeholder="Add a category">'
+        );
+
+        t.add(
+            'link_to_far_vertex_menu',
+            '<div class="peripheral-menu link-to-far-vertex-menu"></div>'
+        );
 
         t.add('suggestions_menu', '<div class="peripheral-menu suggestion"></div>');
         t.add('suggestions_list', '<ul></ul>');

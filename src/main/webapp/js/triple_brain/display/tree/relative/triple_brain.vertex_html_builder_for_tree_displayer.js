@@ -258,9 +258,8 @@ define([
                     var identificationMenu = IdentificationMenu.ofVertex(vertex)
                         .create();
                     vertex.setIdentificationMenu(
-
+                        identificationMenu
                     );
-                    identificationMenu.html().centerOnScreen();
                 });
 
                 var suggestionsBtn = MindMapTemplate['vertex_suggestion_button'].merge();
@@ -285,6 +284,9 @@ define([
                     );
                 });
                 VertexHtmlCommon.addNoteButton(
+                    vertexMenu
+                );
+                VertexHtmlCommon.addLinkToFarVertexButton(
                     vertexMenu
                 );
                 return vertexMenu;

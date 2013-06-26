@@ -49,9 +49,10 @@ define(
                     UserService.authenticatedUser(
                         GraphDisplayer.displayUsingDefaultVertex
                     );
-                    $(Menu.redrawButton()).click(function () {
+                    $(Menu.redrawButton()).click(function() {
                         GraphDisplayer.displayUsingNewCentralVertex(
-                            Vertex.centralVertex()
+                            Vertex.centralVertex(),
+                            callback
                         );
                     });
                     switchDisplayerButtons().click(function(){

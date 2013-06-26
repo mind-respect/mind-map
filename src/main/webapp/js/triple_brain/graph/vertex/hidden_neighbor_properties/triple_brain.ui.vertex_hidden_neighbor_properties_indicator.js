@@ -83,7 +83,7 @@ define([
 
                         $(hiddenPropertyMenu).css('left', $(hiddenNeighborPropertiesContainer).position().left + 30);
                         $(hiddenPropertyMenu).css('top', ($(hiddenNeighborPropertiesContainer).position().top + $(hiddenNeighborPropertiesContainer).height() / 2) - (parseInt($(hiddenPropertyMenu).css('height')) / 2));
-                        PeripheralMenu.makeHtmlAPeripheralMenu(
+                        PeripheralMenu.peripheralMenuForMenuHtmlAndVertex(
                             hiddenPropertyMenu
                         );
                     }, 1000)

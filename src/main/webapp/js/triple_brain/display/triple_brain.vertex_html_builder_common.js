@@ -6,8 +6,9 @@ define([
     "triple_brain.ui.vertex",
     "triple_brain.vertex",
     "triple_brain.mind-map_template",
+    "triple_brain.link_to_far_vertex_menu",
     "jquery-ui"
-], function($, Vertex, VertexService, MindMapTemplate){
+], function($, Vertex, VertexService, MindMapTemplate, LinkToFarVertexMenu){
     var api = {};
     api.addNoteButton = function(vertexMenu){
         var noteButton = MindMapTemplate['vertex_note_button'].merge();
@@ -46,6 +47,26 @@ define([
                     }
                 }
             });
+        });
+    };
+    api.addLinkToFarVertexButton = function(vertexMenu){
+        var linkToFarVertexButton = MindMapTemplate[
+            'vertex_link_to_far_vertex_button'
+            ].merge();
+        vertexMenu.append(
+            linkToFarVertexButton
+        );
+        linkToFarVertexButton.button({
+            icons: {
+                primary: "ui-icon ui-icon-arrowthick-1-e"
+            },
+            text: false
+        });
+        linkToFarVertexButton.click(function(){
+            var vertex = vertexOfSubHtmlComponent(this);
+            var linkToFarVertexMenu = LinkToFarVertexMenu.ofVertex(
+                vertex
+            ).create();
         });
     };
     return api;

@@ -55,6 +55,7 @@ window.config = {
         "triple_brain.external_resource" : "triple_brain/triple_brain.external_resource",
         "triple_brain.peripheral_menu" : "triple_brain/triple_brain.peripheral_menu",
         "triple_brain.ui.identification_menu" : "triple_brain/graph/vertex/triple_brain.ui.identification_menu",
+        "triple_brain.link_to_far_vertex_menu" : "triple_brain/graph/vertex/triple_brain.link_to_far_vertex_menu",
         "triple_brain.ui.suggestion_menu" : "triple_brain/graph/vertex/triple_brain.ui.suggestion_menu",
         "triple_brain.ui.image_menu" : "triple_brain/graph/vertex/triple_brain.ui.image_menu",
         "triple_brain.ui.all" : "triple_brain/triple_brain.ui.all",
