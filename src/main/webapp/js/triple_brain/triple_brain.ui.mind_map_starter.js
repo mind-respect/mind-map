@@ -99,8 +99,8 @@ define(
             '/event/ui/graph/drawing_info/updated/',
             function (event, drawnGraph, centralVertexUri) {
                 ArrowLine.resetDrawingCanvas();
-                GraphDisplayer.integrateEdges(
-                    drawnGraph.edges
+                GraphDisplayer.integrateEdgesOfServerGraph(
+                    drawnGraph
                 );
                 var centralVertex = Vertex.withUri(centralVertexUri)[0];
                 centralVertex.setAsCentral();

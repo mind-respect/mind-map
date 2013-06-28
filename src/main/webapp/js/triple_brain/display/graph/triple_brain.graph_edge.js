@@ -11,7 +11,9 @@ define([
         var api = {};
         api.EMPTY_LABEL = Edge.EMPTY_LABEL;
         api.withHtml = function (html) {
-            return new GraphEdge(html);
+            return new GraphEdge(
+                $(html)
+            );
         };
         api.onMouseOver = function () {
             var edge = api.withHtml(this);
@@ -42,7 +44,10 @@ define([
                 this.adjustWidth();
             };
             this.getLabel = function(){
-                return $(html).find("input[type='text']");
+                return html.find("input[type='text']");
+            };
+            this.focus = function(){
+                self.getLabel().focus();
             };
             Edge.Object.apply(this, [html]);
         }

@@ -41,6 +41,14 @@ define([
                 newCentralVertexUri
             );
         };
+        api.connectVertexToVertexWithUri = function(parentVertex, destinationVertexUri, callback){
+            _implementation.connectVertexToVertexWithUri(
+                parentVertex,
+                destinationVertexUri,
+                callback
+            );
+        };
+
         api.addVertex = function(newVertex, parentVertex){
             return _implementation.addVertex(newVertex, parentVertex);
         };
@@ -60,8 +68,10 @@ define([
         api.positionOfNewVertex = function(sourceVertex){
             return _implementation.positionOfNewVertex(sourceVertex);
         };
-        api.integrateEdges = function(edges){
-            return _implementation.integrateEdges(edges);
+        api.integrateEdgesOfServerGraph = function(drawnGraph){
+            return _implementation.integrateEdgesOfServerGraph(
+                drawnGraph
+            );
         };
         api.couldHaveDuplicates = function(){
             return !api.allowsMovingVertices();

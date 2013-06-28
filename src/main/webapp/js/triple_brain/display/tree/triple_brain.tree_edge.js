@@ -57,6 +57,9 @@ define([
             this.readjustLabelWidth = function(){
                 //do nothing;
             };
+            this.focus = function(){
+                html.centerOnScreen();
+            };
             function getTreeVertex(){
                 if(TreeVertex === undefined){
                     TreeVertex = require("triple_brain.tree_vertex");

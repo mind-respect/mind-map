@@ -120,9 +120,6 @@ define([
             this.isTextFieldInFocus = function () {
                 return self.getLabel().is(":focus")
             };
-            this.focus = function () {
-                self.getLabel().focus();
-            };
             this.centerOnArrowLine = function () {
                 self.positionAt(
                     this.arrowLine().middlePoint()

@@ -7,8 +7,12 @@ define([
     "triple_brain.mind-map_template",
     "triple_brain.ui.graph",
     "triple_brain.peripheral_menu",
-    "triple_brain.user_map_autocomplete_provider"
-], function($, MindMapTemplate, GraphUi, PeripheralMenu, UserMapAutocompleteProvider){
+    "triple_brain.user_map_autocomplete_provider",
+    "triple_brain.edge",
+    "triple_brain.ui.edge",
+    "triple_brain.graph_displayer",
+    "triple_brain.ui.vertex"
+], function($, MindMapTemplate, GraphUi, PeripheralMenu, UserMapAutocompleteProvider, EdgeService, Edge, GraphDisplayer, Vertex){
     var api = {};
     api.ofVertex = function(vertex){
         return new LinkToFarVertexMenu(
@@ -28,9 +32,9 @@ define([
                 "vertex",
                 vertex
             );
+            GraphUi.addHTML(html);
             addTitle();
             addSearchBox();
-            GraphUi.addHTML(html);
             peripheralMenu = PeripheralMenu.peripheralMenuForMenuHtmlAndVertex(
                 html,
                 vertex
@@ -50,8 +54,35 @@ define([
             searchBox.tripleBrainAutocomplete({
                 select:function (event, ui) {
                     var menu = $(this).closest('.peripheral-menu');
-                    var vertex = $(menu).data("vertex");
-                    var searchResult = ui.item;
+                    var parentVertex = $(menu).data("vertex");
+                    html.find("input").blur();
+                    html.remove();
+                    var farVertexUri = ui.item.uri;
+                    GraphDisplayer.connectVertexToVertexWithUri(
+                        parentVertex,
+                        farVertexUri,
+                        function(drawnTree){
+                            var farVertex = Vertex.withId(
+                                drawnTree.vertices[farVertexUri].uiIds[0]
+                            );
+                            EdgeService.add(
+                                parentVertex,
+                                farVertex,
+                                function(edgeServerFormatted){
+                                    var edge = GraphDisplayer.addEdge(
+                                        edgeServerFormatted,
+                                        parentVertex,
+                                        farVertex
+                                    );
+                                    GraphDisplayer.integrateEdgesOfServerGraph(
+                                        drawnTree
+                                    );
+                                    Edge.redrawAllEdges();
+                                    edge.focus();
+                                }
+                            );
+                        }
+                    );
 
                 },
                 resultsProviders : [
@@ -61,6 +92,7 @@ define([
             html.append(
                 searchBox
             );
+            searchBox.focus();
         }
     }
 });

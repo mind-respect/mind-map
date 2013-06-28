@@ -22,6 +22,9 @@ define([
                     callback(drawnGraph);
                 });
         };
+        api.connectVertexToVertexWithUri = function(parentVertex, destinationVertexUri, callback){
+            callback();
+        };
         api.name = function(){
             return "graph";
         };
@@ -46,9 +49,9 @@ define([
         api.allowsMovingVertices = function(){
             return true;
         };
-        api.integrateEdges = function(edges){
+        api.integrateEdgesOfServerGraph = function(drawnGraph){
             EdgeHtmlBuilder.arrayFromServerFormatArray(
-                edges
+                drawnGraph.edges
             );
         };
         return api;
