@@ -61,10 +61,7 @@ define([
                     GraphDisplayer.connectVertexToVertexWithUri(
                         parentVertex,
                         farVertexUri,
-                        function(drawnTree){
-                            var farVertex = Vertex.withId(
-                                drawnTree.vertices[farVertexUri].uiIds[0]
-                            );
+                        function(drawnTree, farVertex){
                             EdgeService.add(
                                 parentVertex,
                                 farVertex,

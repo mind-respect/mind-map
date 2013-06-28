@@ -32,9 +32,10 @@ define([
         );
     };
     api.connectVertexToVertexWithUri = function (parentVertex, destinationVertexUri, callback) {
+        var depth = 1;
         Graph.getForCentralVertexUriAndDepth(
             destinationVertexUri,
-            5,
+            depth,
             function (serverGraph) {
                 var treeMaker = new TreeMaker();
                 var drawnTree = treeMaker.makeForRelativeCenterVertexInContainerUsingServerGraphAndCentralVertexUri(
@@ -42,7 +43,10 @@ define([
                     destinationVertexUri,
                     parentVertex
                 );
-                callback(drawnTree);
+                var farVertex = VertexUi.withId(
+                    drawnTree.vertices[destinationVertexUri].uiIds[0]
+                );
+                callback(drawnTree, farVertex);
             }
         );
     };
