@@ -202,6 +202,33 @@ define([
                     );
                 })
         };
+        api.makePrivate = function(vertex, callback){
+            setPrivacy(
+                false,
+                vertex,
+                function(){
+                    vertex.makePrivate();
+                    if(callback !== undefined){
+                        callback();
+                    }
+                }
+            );
+        };
+        api.makePublic = function(vertex, callback){
+            setPrivacy(
+                true,
+                vertex,
+                function(){
+                    vertex.makePublic();
+                    if(callback !== undefined){
+                        callback();
+                    }
+                }
+            );
+        };
+        function setPrivacy(isPublic, vertex, callback){
+            callback();
+        }
         function getSuggestion() {
             if (Suggestion === undefined) {
                 Suggestion = require("triple_brain.suggestion");

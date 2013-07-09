@@ -7,8 +7,9 @@ define([
     "triple_brain.vertex",
     "triple_brain.mind-map_template",
     "triple_brain.link_to_far_vertex_menu",
+    "triple_brain.privacy_management_menu",
     "jquery-ui"
-], function($, Vertex, VertexService, MindMapTemplate, LinkToFarVertexMenu){
+], function($, Vertex, VertexService, MindMapTemplate, LinkToFarVertexMenu, PrivacyManagementMenu){
     var api = {};
     api.addNoteButton = function(vertexMenu){
         var noteButton = MindMapTemplate['vertex_note_button'].merge();
@@ -65,6 +66,26 @@ define([
         linkToFarVertexButton.click(function(){
             var vertex = vertexOfSubHtmlComponent(this);
             var linkToFarVertexMenu = LinkToFarVertexMenu.ofVertex(
+                vertex
+            ).create();
+        });
+    };
+    api.addPrivacyManagementButton = function(vertexMenu){
+        var privacyManagementButton = MindMapTemplate[
+            'vertex_privacy_management_button'
+            ].merge();
+        vertexMenu.append(
+            privacyManagementButton
+        );
+        privacyManagementButton.button({
+            icons: {
+                primary: "ui-icon ui-icon-locked"
+            },
+            text: false
+        });
+        privacyManagementButton.click(function(){
+            var vertex = vertexOfSubHtmlComponent(this);
+            PrivacyManagementMenu.ofVertex(
                 vertex
             ).create();
         });

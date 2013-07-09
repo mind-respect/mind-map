@@ -289,6 +289,9 @@ define([
                 VertexHtmlCommon.addLinkToFarVertexButton(
                     vertexMenu
                 );
+                VertexHtmlCommon.addPrivacyManagementButton(
+                    vertexMenu
+                );
                 return vertexMenu;
             }
 

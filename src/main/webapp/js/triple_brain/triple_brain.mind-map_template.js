@@ -27,6 +27,7 @@ define([
         t.add('vertex_what_is_this_button', '<input type="button" class="what-is-this"  value="?">');
         t.add('vertex_suggestion_button', '<input type="button"  value="S" class="suggestion">');
         t.add('vertex_link_to_far_vertex_button', '<button></button>');
+        t.add('vertex_privacy_management_button', '<button></button>');
 
         t.add('identification_menu', '<div class="peripheral-menu identification"></div>');
         t.add('identification_menu_explanation_title', '<h2>Identifications</h2>');
@@ -48,6 +49,11 @@ define([
         t.add(
             'link_to_far_vertex_menu',
             '<div class="peripheral-menu link-to-far-vertex-menu"></div>'
+        );
+
+        t.add(
+            'privacy_management_menu',
+            '<div class="peripheral-menu privacy-management-menu"></div>'
         );
 
         t.add('suggestions_menu', '<div class="peripheral-menu suggestion"></div>');

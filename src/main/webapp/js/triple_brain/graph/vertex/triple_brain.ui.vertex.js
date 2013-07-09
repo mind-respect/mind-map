@@ -541,6 +541,23 @@ define([
                     return serverFormat;
                 }
             };
+            this.makePrivate = function(){
+                console.log("private");
+                setIsPublic(false);
+            };
+            this.makePublic = function(){
+                console.log("public");
+                setIsPublic(true);
+            };
+            this.isPublic = function(){
+                return html.data("isPublic");
+            };
+            function setIsPublic(isPublic){
+                html.data(
+                    "isPublic",
+                    isPublic
+                );
+            }
 
             function suggestionButton() {
                 return $(html).find('.suggestion');
