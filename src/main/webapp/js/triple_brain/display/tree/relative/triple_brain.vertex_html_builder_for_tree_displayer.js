@@ -47,6 +47,10 @@ define([
             html.uniqueId();
             this.create = function () {
                 createLabel();
+                html.data(
+                    "isPublic",
+                    serverFormat.is_public
+                );
                 createMenu();
                 var vertex = vertexFacade();
                 vertex.setNote(

@@ -93,6 +93,11 @@ define([
                     vertex.setNameOfHiddenProperties(serverFormat.name_of_hidden_properties);
                     vertex.buildHiddenNeighborPropertiesIndicator();
                 }
+                vertex[
+                    serverFormat.is_public ?
+                        "makePublic" :
+                        "makePrivate"
+                    ]();
                 vertex.setTypes([]);
                 vertex.setSameAs([]);
                 $.each(serverFormat.types, function () {

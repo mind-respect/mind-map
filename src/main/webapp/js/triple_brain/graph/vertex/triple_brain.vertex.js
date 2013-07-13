@@ -62,12 +62,12 @@ define([
                     }
                 });
         };
-        api.updateNote = function(vertex, note, callback){
+        api.updateNote = function (vertex, note, callback) {
             $.ajax({
                 type:'POST',
                 url:vertex.getUri() + '/note',
                 data:note,
-                contentType: "text/plain"
+                contentType:"text/plain"
             }).success(function () {
                     EventBus.publish(
                         '/event/ui/graph/vertex/note/updated',
@@ -147,7 +147,7 @@ define([
                             '/event/ui/graph/vertex/same_as/added',
                             [vertex, sameAs]
                         );
-                    })
+                    });
             }
         };
         api.removeSameAs = function (vertex, sameAs, successCallback) {
@@ -186,8 +186,8 @@ define([
                         '/event/ui/graph/vertex/suggestions/updated',
                         [vertex, suggestions]
                     );
-                })
-        }
+                });
+        };
         api.addSuggestions = function (vertex, suggestions) {
             $.ajax({
                 type:'POST',
@@ -202,33 +202,37 @@ define([
                     );
                 })
         };
-        api.makePrivate = function(vertex, callback){
+        api.makePrivate = function (vertex, callback) {
             setPrivacy(
                 false,
                 vertex,
-                function(){
+                function () {
                     vertex.makePrivate();
-                    if(callback !== undefined){
+                    if (callback !== undefined) {
                         callback();
                     }
                 }
             );
         };
-        api.makePublic = function(vertex, callback){
+        api.makePublic = function (vertex, callback) {
             setPrivacy(
                 true,
                 vertex,
-                function(){
+                function () {
                     vertex.makePublic();
-                    if(callback !== undefined){
+                    if (callback !== undefined) {
                         callback();
                     }
                 }
             );
         };
-        function setPrivacy(isPublic, vertex, callback){
-            callback();
+        function setPrivacy(isPublic, vertex, callback) {
+            $.ajax({
+                type:isPublic ? 'POST' : 'DELETE',
+                url:vertex.getUri() + '/public_access'
+            }).success(callback);
         }
+
         function getSuggestion() {
             if (Suggestion === undefined) {
                 Suggestion = require("triple_brain.suggestion");
