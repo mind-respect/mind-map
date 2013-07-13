@@ -77,18 +77,39 @@ define([
         vertexMenu.append(
             privacyManagementButton
         );
-        privacyManagementButton.button({
-            icons: {
-                primary: "ui-icon ui-icon-locked"
-            },
-            text: false
-        });
-        privacyManagementButton.click(function(){
-            var vertex = vertexOfSubHtmlComponent(this);
-            PrivacyManagementMenu.ofVertex(
-                vertex
-            ).create();
-        });
+        var vertex = vertexOfSubHtmlComponent(vertexMenu);
+        privacyManagementButton.data("vertex", vertex);
+        vertex.isPublic() ?
+            setupForPublic(privacyManagementButton) :
+            setupForPrivate(privacyManagementButton);
+        function setupForPublic(button){
+            button.button({
+                icons: {
+                    primary: "ui-icon ui-icon-unlocked"
+                },
+                text: false
+            });
+            button.off().on("click", function(){
+                var button = $(this);
+                var vertex = button.data("vertex");
+                VertexService.makePrivate(vertex);
+                setupForPrivate(button);
+            });
+        }
+        function setupForPrivate(button){
+            button.button({
+                icons: {
+                    primary: "ui-icon ui-icon-locked"
+                },
+                text: false
+            });
+            button.off().on("click", function(){
+                var button = $(this);
+                var vertex = button.data("vertex");
+                VertexService.makePublic(vertex);
+                setupForPublic(button);
+            });
+        }
     };
     return api;
 
