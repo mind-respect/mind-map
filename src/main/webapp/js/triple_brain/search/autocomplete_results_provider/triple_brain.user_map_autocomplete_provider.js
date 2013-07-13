@@ -13,14 +13,13 @@ define([
         );
     };
     api.formatResults = function(searchResults){
-        var userName = UserService.authenticatedUserInCache().user_name;
         return $.map(searchResults, function (searchResult) {
             var format = {
                 nonFormattedSearchResult: searchResult,
                 description:searchResult.note,
                 label:searchResult.label,
                 value:searchResult.label,
-                source:"user " + userName,
+                source:"user " + searchResult.owner_username,
                 uri:searchResult.id,
                 provider:api
             };
