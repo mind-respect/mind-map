@@ -210,6 +210,9 @@ define([
                 VertexHtmlCommon.addNoteButton(
                     vertexMenu
                 );
+                VertexHtmlCommon.addPrivacyManagementButton(
+                    vertexMenu
+                );
                 return vertexMenu;
                 function removeButtonClickBehaviour(event){
                     event.stopPropagation();
