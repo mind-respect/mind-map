@@ -20,14 +20,6 @@ define([
         t.add('vertex_label_container', '<div class=textfield-container><input type="text" class="label" value="{label}"></div>');
         t.add('vertex_menu', '<div class="menu"></div>');
         t.add('vertex_move_button', '<div class="move"></div>');
-        t.add('vertex_note_button', '<button></button>');
-        t.add('vertex_plus_button', '<input type="button" value="+" class="plus">');
-        t.add('vertex_remove_button', '<input type="button" value="x" class="remove">');
-        t.add('vertex_center_button', '<input type="button" class="center">');
-        t.add('vertex_what_is_this_button', '<input type="button" class="what-is-this"  value="?">');
-        t.add('vertex_suggestion_button', '<input type="button"  value="S" class="suggestion">');
-        t.add('vertex_link_to_far_vertex_button', '<button></button>');
-        t.add('vertex_privacy_management_button', '<button></button>');
 
         t.add('identification_menu', '<div class="peripheral-menu identification"></div>');
         t.add('identification_menu_explanation_title', '<h2>Identifications</h2>');

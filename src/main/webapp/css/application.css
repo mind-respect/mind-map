@@ -176,10 +176,6 @@ input[type="button"] {
     background: none;
 }
 
-.vertex .center {
-    background: url('images/icons/vertex/target.png') no-repeat top;
-}
-
 .vertex .move {
     background-image : url('images/icons/vertex/move.png');
     min-width:25px;
@@ -193,30 +189,6 @@ input[type="button"] {
     float:left;
     width:125px;
     padding-top:10px;
-}
-
-.vertex .menu .plus {
-    color: green !important;
-    text-align: center;
-    background: none;
-}
-
-.vertex .menu .remove {
-    color: red !important;
-    text-align: center;
-    background: none;
-}
-
-.vertex .menu .what-is-this{
-    color: black !important;
-    text-align: center;
-    background: none;
-}
-
-.vertex .menu .suggestion input[type="button"]{
-    color: green !important;
-    text-align: center;
-    background: none;
 }
 
 .vertex .menu ul:first-of-type {

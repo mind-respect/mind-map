@@ -11,16 +11,50 @@ define([
     "jquery-ui"
 ], function($, Vertex, VertexService, MindMapTemplate, LinkToFarVertexMenu, PrivacyManagementMenu){
     var api = {};
+    api.addPlusButton = function(vertexMenu, clickBehavior){
+        return makeVertexMenuButtonUsingClass(
+            vertexMenu,
+            "ui-icon-plus",
+            clickBehavior
+        );
+    };
+    api.addRemoveButton = function(vertexMenu, clickBehavior){
+        return makeVertexMenuButtonUsingClass(
+            vertexMenu,
+            "ui-icon-trash",
+            clickBehavior
+        );
+    };
+    api.addWhatIsThisButton = function(vertexMenu, clickBehavior){
+        return makeVertexMenuButtonUsingClass(
+            vertexMenu,
+            "ui-icon-info",
+            clickBehavior
+        );
+    };
+    api.addSuggestionsButton = function(vertexMenu, clickBehavior){
+        var button = makeVertexMenuButtonUsingClass(
+            vertexMenu,
+            "ui-icon-lightbulb",
+            clickBehavior
+        );
+        button.addClass("suggestion");
+        button.hide();
+    };
+    api.addCenterButton = function(vertexMenu, clickBehavior){
+        return makeVertexMenuButtonUsingClass(
+            vertexMenu,
+            "ui-icon-home",
+            clickBehavior
+        );
+    };
     api.addNoteButton = function(vertexMenu){
-        var noteButton = MindMapTemplate['vertex_note_button'].merge();
-        $(vertexMenu).append(noteButton);
-        $(noteButton).button({
-            icons: {
-                primary: "ui-icon ui-icon-note"
-            },
-            text: false
-        });
-        noteButton.click(function(){
+        return makeVertexMenuButtonUsingClass(
+            vertexMenu,
+            "ui-icon-note",
+            clickBehaviour
+        );
+        function clickBehaviour(){
             var vertex = vertexOfSubHtmlComponent(this);
             var noteDialog = $("<div title='"+vertex.text()+"'></div>");
             noteDialog.append(
@@ -48,32 +82,23 @@ define([
                     }
                 }
             });
-        });
+        }
     };
     api.addLinkToFarVertexButton = function(vertexMenu){
-        var linkToFarVertexButton = MindMapTemplate[
-            'vertex_link_to_far_vertex_button'
-            ].merge();
-        vertexMenu.append(
-            linkToFarVertexButton
+        return makeVertexMenuButtonUsingClass(
+            vertexMenu,
+            "ui-icon-arrowthick-1-e",
+            clickBehaviour
         );
-        linkToFarVertexButton.button({
-            icons: {
-                primary: "ui-icon ui-icon-arrowthick-1-e"
-            },
-            text: false
-        });
-        linkToFarVertexButton.click(function(){
+        function clickBehaviour(){
             var vertex = vertexOfSubHtmlComponent(this);
-            var linkToFarVertexMenu = LinkToFarVertexMenu.ofVertex(
+            LinkToFarVertexMenu.ofVertex(
                 vertex
             ).create();
-        });
+        }
     };
     api.addPrivacyManagementButton = function(vertexMenu){
-        var privacyManagementButton = MindMapTemplate[
-            'vertex_privacy_management_button'
-            ].merge();
+        var privacyManagementButton = $("<button>");
         vertexMenu.append(
             privacyManagementButton
         );
@@ -117,5 +142,17 @@ define([
         return Vertex.withHtml(
             $(htmlOfSubComponent).closest('.vertex')
         );
+    }
+
+    function makeVertexMenuButtonUsingClass(vertexMenu, uiClass, clickBehaviour){
+        var button = $("<button>");
+        vertexMenu.append(button);
+        button.button({
+            icons: {
+                primary: "ui-icon " + uiClass
+            },
+            text: false
+        });
+        return button.on("click", clickBehaviour);
     }
 });

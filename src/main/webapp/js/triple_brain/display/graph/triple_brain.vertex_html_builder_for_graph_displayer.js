@@ -184,17 +184,34 @@ define([
                 var vertexMenu = MindMapTemplate['vertex_menu'].merge();
                 html.append(vertexMenu);
 
-                var plusBtn = MindMapTemplate['vertex_plus_button'].merge();
-                $(vertexMenu).append(plusBtn);
-
-                $(plusBtn).on("click", function(event){
-                    createRelationOrAddVertex(event);
-                });
-
-                var removeBtn = MindMapTemplate['vertex_remove_button'].merge();
-                $(vertexMenu).append(removeBtn);
-
-                removeBtn.click(function (event) {
+                VertexHtmlCommon.addPlusButton(
+                    vertexMenu,
+                    createRelationOrAddVertex
+                );
+                VertexHtmlCommon.addRemoveButton(
+                    vertexMenu,
+                    removeButtonClickBehaviour
+                );
+                VertexHtmlCommon.addWhatIsThisButton(
+                    vertexMenu,
+                    whatIsThisButtonClickBehaviour
+                );
+                VertexHtmlCommon.addSuggestionsButton(
+                    vertexMenu,
+                    suggestionsButtonClickBehaviour
+                );
+                VertexHtmlCommon.addCenterButton(
+                    vertexMenu,
+                    centerButtonClickBehaviour
+                );
+                VertexHtmlCommon.addLinkToFarVertexButton(
+                    vertexMenu
+                );
+                VertexHtmlCommon.addNoteButton(
+                    vertexMenu
+                );
+                return vertexMenu;
+                function removeButtonClickBehaviour(event){
                     event.stopPropagation();
                     var vertex = vertexOfSubHtmlComponent(this);
                     if (!vertex.isCenterVertex() && vertex.getId() != "default") {
@@ -203,24 +220,8 @@ define([
                             vertex.remove();
                         });
                     }
-                });
-
-                var whatIsThisBtn = MindMapTemplate[
-                    'vertex_what_is_this_button'
-                    ].merge();
-                $(vertexMenu).append(whatIsThisBtn);
-                whatIsThisBtn.click(function (event) {
-                    event.stopPropagation();
-                    var vertex = vertexOfSubHtmlComponent(this);
-                    vertex.setIdentificationMenu(
-                        IdentificationMenu.ofVertex(vertex)
-                            .create()
-                    );
-                });
-
-                var suggestionsBtn = MindMapTemplate['vertex_suggestion_button'].merge();
-                $(vertexMenu).append(suggestionsBtn);
-                suggestionsBtn.click(function (event) {
+                }
+                function suggestionsButtonClickBehaviour(event){
                     event.stopPropagation();
                     var outOfVertexMenus = $('.peripheral-menu');
                     $(outOfVertexMenus).remove();
@@ -228,24 +229,21 @@ define([
                     vertex.setSuggestionMenu(
                         SuggestionMenu.ofVertex(vertex)
                             .create()
-                    )
-                });
-                $(suggestionsBtn).hide();
-
-                var centerBtn = MindMapTemplate['vertex_center_button'].merge();
-                $(vertexMenu).append(centerBtn);
-                centerBtn.click(function () {
+                    );
+                }
+                function whatIsThisButtonClickBehaviour(event){
+                    event.stopPropagation();
+                    var vertex = vertexOfSubHtmlComponent(this);
+                    vertex.setIdentificationMenu(
+                        IdentificationMenu.ofVertex(vertex)
+                            .create()
+                    );
+                }
+                function centerButtonClickBehaviour(){
                     GraphDisplayer.displayUsingNewCentralVertex(
                         vertexOfSubHtmlComponent(this)
                     );
-                });
-                VertexHtmlCommon.addLinkToFarVertexButton(
-                    vertexMenu
-                );
-                VertexHtmlCommon.addNoteButton(
-                    vertexMenu
-                );
-                return vertexMenu;
+                }
             }
 
             function vertexOfSubHtmlComponent(htmlOfSubComponent) {
