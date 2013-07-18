@@ -113,6 +113,15 @@ body input[type=button]:hover{
     cursor:default;
 }
 
+.vertex .textfield-container{
+    border-radius: 20px;
+    background-color:#E6E6FF;
+}
+
+.vertex.public .textfield-container{
+    background-color:#FFE8E8;
+}
+
 .vertex.absolute{
     white-space: nowrap;
     position:absolute !important;
@@ -153,7 +162,6 @@ body input[type=button]:hover{
 }
 
 .vertex.center-vertex .textfield-container{
-    -moz-border-radius: 15px;
     border-radius: 15px;
     -webkit-box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.1);
     -moz-box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.1);
@@ -248,9 +256,9 @@ input[type="button"] {
 }
 
 .vertex .menu input:hover{
-    box-shadow: 0 0 5px rgba(0, 0, 255, 1);
-    -webkit-box-shadow: 0 0 5px rgba(0, 0, 255, 1);
-    -moz-box-shadow: 0 0 5px rgba(0, 0, 255, 1);
+    /*box-shadow: 0 0 5px rgba(0, 0, 255, 1);*/
+    /*-webkit-box-shadow: 0 0 5px rgba(0, 0, 255, 1);*/
+    /*-moz-box-shadow: 0 0 5px rgba(0, 0, 255, 1);*/
 }
 
 .vertex .image_container{

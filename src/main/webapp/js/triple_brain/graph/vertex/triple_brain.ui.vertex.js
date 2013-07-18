@@ -542,11 +542,11 @@ define([
                 }
             };
             this.makePrivate = function(){
-                console.log("private");
+                html.removeClass("public");
                 setIsPublic(false);
             };
             this.makePublic = function(){
-                console.log("public");
+                html.addClass("public");
                 setIsPublic(true);
             };
             this.isPublic = function(){

@@ -31,6 +31,15 @@ define([
         api.addHTML = function (html) {
             $("#drawn_graph").append(html);
         };
+        api.resetDrawingCanvas = function(){
+            if ($("body").data(("canvas"))) {
+                $("body").data("canvas").remove();
+            }
+            $("body").data(
+                "canvas",
+                Raphael(0, 0, $("body").width(), $("body").height())
+            );
+        };
         api.canvas = function () {
             return $("body").data("canvas");
         };

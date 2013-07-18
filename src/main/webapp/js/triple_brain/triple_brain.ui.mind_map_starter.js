@@ -13,9 +13,10 @@ define(
         "triple_brain.graph_displayer",
         "triple_brain.graph_displayer_factory",
         "triple_brain.ui.arrow_line",
-        "triple_brain.menu"
+        "triple_brain.menu",
+        "triple_brain.ui.graph"
     ],
-    function ($, UserService, EventBus, LoginHandler, DragScroll, Vertex, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, ArrowLine, Menu) {
+    function ($, UserService, EventBus, LoginHandler, DragScroll, Vertex, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, ArrowLine, Menu, GraphUi) {
         var api = {
             offset:function () {
                 var offset = {};
@@ -98,10 +99,21 @@ define(
         EventBus.subscribe(
             '/event/ui/graph/drawing_info/updated/',
             function (event, drawnGraph, centralVertexUri) {
-                ArrowLine.resetDrawingCanvas();
+                GraphUi.resetDrawingCanvas();
                 GraphDisplayer.integrateEdgesOfServerGraph(
                     drawnGraph
                 );
+//                Vertex.visitAllVertices(function(vertex){
+//                    var canvas = GraphUi.canvas();
+//                    var centerPoint = vertex.labelCenterPoint();
+//                    var circle = canvas.circle(
+//                        centerPoint.x,
+//                        centerPoint.y,
+//                        60
+//                    );
+//                    circle.attr("fill", "#f00");
+//                    circle.attr("stroke", "#f00");
+//                });
                 var centralVertex = Vertex.withUri(centralVertexUri)[0];
                 centralVertex.setAsCentral();
                 centralVertex.scrollTo();

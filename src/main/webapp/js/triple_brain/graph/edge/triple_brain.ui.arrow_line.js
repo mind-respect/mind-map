@@ -10,15 +10,6 @@ define([
 ],
     function(Segment, MindMapTemplate, GraphUi){
         var api = {};
-        api.resetDrawingCanvas = function(){
-            if ($("body").data(("canvas"))) {
-                $("body").data("canvas").remove();
-            }
-            $("body").data(
-                "canvas",
-                Raphael(0, 0, $("body").width(), $("body").height())
-            );
-        };
         api.withSegment = function(segment){
             return new ArrowLine(segment);
         };

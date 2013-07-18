@@ -276,7 +276,7 @@ define([
                 $(verticesContainer).append(vertexContainer);
                 $(vertexContainer).append(rootVertex.getHtml());
                 rootVertex.adjustWidth();
-                var leftChildrenContainer
+                var leftChildrenContainer;
                 if(canAddToLeft){
                     leftChildrenContainer = self.addChildrenContainerToVertex(
                         rootVertex
