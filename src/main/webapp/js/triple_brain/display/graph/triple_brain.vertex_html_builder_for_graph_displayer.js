@@ -62,6 +62,10 @@ define([
             this.create = function () {
                 addMoveButton();
                 createLabel();
+                html.data(
+                    "isPublic",
+                    serverFormat.is_public
+                );
                 createMenu();
                 var vertex = vertexFacade();
                 vertex.setNote(

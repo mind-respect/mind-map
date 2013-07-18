@@ -98,6 +98,9 @@ define([
                 vertex.setOriginalServerObject(
                     serverFormat
                 );
+                vertex.isPublic() ?
+                    vertex.makePublic() :
+                    vertex.makePrivate();
                 EventBus.publish(
                     '/event/ui/html/vertex/created/',
                     vertex
