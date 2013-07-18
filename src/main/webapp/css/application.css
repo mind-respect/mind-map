@@ -52,6 +52,24 @@ body input[type=button]:hover{
     color:#47A3FF;
 }
 
+#bottom-center-panel{
+    position:fixed;
+    left:45%;
+    top:90%;
+}
+
+.legend{
+    display:inline;
+    padding:0.3em;
+}
+
+.private.legend{
+    background-color:#E6E6FF;
+}
+.public.legend{
+    background-color:#FFE8E8;
+}
+
 #top-panel {
     margin-right: 5px;
     position:fixed;
