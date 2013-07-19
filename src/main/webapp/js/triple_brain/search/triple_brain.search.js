@@ -9,12 +9,24 @@ define([
 ],
     function ($, config, UserService) {
         var api = {};
-        api.searchAutoComplete = function (searchText, successCallback) {
-            api.searchAjaxCall(
+        api.searchForOwnVerticesAndPublicOnes = function (searchText, successCallback) {
+            api.searchForOwnVerticesAndPublicOnesAjaxCall(
                 searchText
             ).success(successCallback);
         };
-        api.searchAjaxCall = function(searchText){
+        api.searchForOwnVerticesOnly = function (searchText, successCallback) {
+            api.searchForOwnVerticesOnly(
+                searchText
+            ).success(successCallback);
+        };
+        api.searchForOnlyOwnVerticesAjaxCall = function(searchText){
+            return $.ajax({
+                type:'GET',
+                url: UserService.currentUserUri() +
+                    "/search/own_vertices/auto_complete/" + searchText
+            });
+        };
+        api.searchForOwnVerticesAndPublicOnesAjaxCall = function(searchText){
             return $.ajax({
                 type:'GET',
                 url: UserService.currentUserUri() +

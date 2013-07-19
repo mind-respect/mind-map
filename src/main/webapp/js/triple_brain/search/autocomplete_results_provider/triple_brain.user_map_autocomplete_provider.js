@@ -7,15 +7,19 @@ define([
 ], function ($, SearchService) {
     var api = {};
     api.toFetchOnlyCurrentUserVertices = function(){
-        return new UserMapAutoCompleteProvider();
+        return new UserMapAutoCompleteProvider(true);
     };
     api.toFetchCurrentUserVerticesAndPublicOnes = function(){
-        return new UserMapAutoCompleteProvider();
+        return new UserMapAutoCompleteProvider(false);
     };
     return api;
-    function UserMapAutoCompleteProvider(){
+    function UserMapAutoCompleteProvider(isOnlyForOwnVertices){
+        var self = this;
         this.getFetchMethod = function (searchTerm) {
-            return SearchService.searchAjaxCall(
+            var fetchMethod = isOnlyForOwnVertices ?
+                SearchService.searchForOnlyOwnVerticesAjaxCall :
+                SearchService.searchForOwnVerticesAndPublicOnesAjaxCall;
+            return fetchMethod(
                 searchTerm
             );
         };
@@ -28,7 +32,7 @@ define([
                     value:searchResult.label,
                     source:"user " + searchResult.owner_username,
                     uri:searchResult.id,
-                    provider:api
+                    provider:self
                 };
                 format.somethingToDistinguish = searchResult.relations_name.filter(
                     function (relationName) {
