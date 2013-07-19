@@ -80,24 +80,12 @@ define([
                 });
         };
         api.addType = function (vertex, type, successCallback) {
-            type.listenForUpdates(addTypeWhenListenerReady);
-            function addTypeWhenListenerReady() {
-                $.ajax({
-                    type:'POST',
-                    url:vertex.getUri() + '/type',
-                    data:type.serverFormat(),
-                    contentType:'application/json;charset=utf-8'
-                }).success(function () {
-                        vertex.addType(type);
-                        if (successCallback != undefined) {
-                            successCallback(vertex, type);
-                        }
-                        EventBus.publish(
-                            '/event/ui/graph/vertex/type/added',
-                            [vertex, type]
-                        );
-                    });
-            }
+            type.type = "type";
+            addIdentification(
+                vertex,
+                type,
+                successCallback
+            );
         };
         api.removeIdentification = function (vertex, identification, successCallback) {
             $.ajax({
@@ -127,28 +115,12 @@ define([
             );
         };
         api.addSameAs = function (vertex, sameAs, successCallback) {
-            sameAs.listenForUpdates(addSameAsWhenListenerReady);
-            function addSameAsWhenListenerReady() {
-                $.ajax({
-                    type:'POST',
-                    url:vertex.getUri() + '/same_as',
-                    data:sameAs.serverFormat(),
-                    contentType:'application/json;charset=utf-8'
-                }).success(function () {
-                        vertex.addSameAs(sameAs);
-                        if (successCallback != undefined) {
-                            successCallback.call(
-                                this,
-                                vertex,
-                                sameAs
-                            );
-                        }
-                        EventBus.publish(
-                            '/event/ui/graph/vertex/same_as/added',
-                            [vertex, sameAs]
-                        );
-                    });
-            }
+            sameAs.type = "same_as";
+            addIdentification(
+                vertex,
+                sameAs,
+                successCallback
+            );
         };
         api.removeSameAs = function (vertex, sameAs, successCallback) {
             api.removeIdentification(
@@ -226,6 +198,37 @@ define([
                 }
             );
         };
+        function addIdentification(vertex, identification, successCallback){
+            identification.listenForUpdates(addIdentificationWhenListenerReady);
+            function addIdentificationWhenListenerReady() {
+                var identificationJson = identification.jsonFormat();
+                identificationJson.type = identification.type;
+                $.ajax({
+                    type:'POST',
+                    url:vertex.getUri() + '/identification',
+                    data:$.toJSON(identificationJson),
+                    contentType:'application/json;charset=utf-8'
+                }).success(function () {
+                        identification.type === "type" ?
+                            vertex.addType(identification) :
+                            vertex.addSameAs(identification) ;
+                        if (successCallback != undefined) {
+                            successCallback.call(
+                                this,
+                                vertex,
+                                identification
+                            );
+                        }
+                        var eventBusMessage = identification.type === "type" ?
+                            '/event/ui/graph/vertex/type/added':
+                            '/event/ui/graph/vertex/same_as/added';
+                        EventBus.publish(
+                            eventBusMessage,
+                            [vertex, identification]
+                        );
+                    });
+            }
+        }
         function setPrivacy(isPublic, vertex, callback) {
             $.ajax({
                 type:isPublic ? 'POST' : 'DELETE',
