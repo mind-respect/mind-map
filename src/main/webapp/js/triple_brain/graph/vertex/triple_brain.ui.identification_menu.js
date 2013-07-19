@@ -180,7 +180,7 @@ define([
                             );
                         },
                         resultsProviders : [
-                            UserMapAutocompleteProvider,
+                            UserMapAutocompleteProvider.toFetchCurrentUserVerticesAndPublicOnes(),
                             FreebaseAutocompleteProvider.forFetchingAnything()
                         ]
                     });

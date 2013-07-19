@@ -20,7 +20,7 @@ define([
                         );
                     },
                     resultsProviders : [
-                        UserMapAutocompleteProvider
+                        UserMapAutocompleteProvider.toFetchOnlyCurrentUserVertices()
                     ]
                 });
             }

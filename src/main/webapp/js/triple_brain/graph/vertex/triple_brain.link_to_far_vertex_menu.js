@@ -83,7 +83,7 @@ define([
 
                 },
                 resultsProviders : [
-                    UserMapAutocompleteProvider
+                    UserMapAutocompleteProvider.toFetchOnlyCurrentUserVertices()
                 ]
             });
             html.append(
