@@ -2,24 +2,19 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "jquery",
-    "triple_brain.id_uri",
-    "triple_brain.user"
+    "jquery"
 ],
-    function($, IdUriUtils, UserService){
+    function($){
         var api = {};
         api.getForCentralVertexUriAndDepth = function (centralVertexUri, depth, callback){
-            var centralVertexEncodedUri = IdUriUtils.encodeUri(centralVertexUri);
             $.ajax({
                 type:'GET',
-                url:graphUri()  +'/' + depth + '/' + centralVertexEncodedUri,
-                dataType:'json'
+                url: api.graphUriForCentralVertexUriAndDepth(centralVertexUri, depth)
             }).success(callback);
         };
+        api.graphUriForCentralVertexUriAndDepth = function(centralVertexUri, depth){
+            return centralVertexUri  +'/surround_graph/' + depth;
+        };
         return api;
-
-        function graphUri(){
-            return UserService.currentUserUri() + "/graph";
-        }
     }
 );

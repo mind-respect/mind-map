@@ -3,6 +3,7 @@
  */
 define([
     "jquery",
+    "triple_brain.graph",
     "triple_brain.id_uri",
     "triple_brain.vertex_html_builder_for_graph_displayer",
     "triple_brain.ui.graph",
@@ -10,7 +11,7 @@ define([
     "triple_brain.edge_html_builder_for_graph_displayer",
     "triple_brain.user"
 ],
-    function ($, IdUriUtils, VertexHtmlBuilder, GraphUi, Vertex, EdgeHtmlBuilder, UserService) {
+    function ($, GraphService, IdUriUtils, VertexHtmlBuilder, GraphUi, Vertex, EdgeHtmlBuilder, UserService) {
         var api = {};
         api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
             getDrawnGraphFromServer(
@@ -76,12 +77,16 @@ define([
         return api;
 
         function getDrawnGraphFromServer(centralVertexUri, depth, callback) {
-            var centralVertexEncodedUri = IdUriUtils.encodeUri(centralVertexUri);
             $.ajax({
                 type:'GET',
-                url:UserService.currentUserUri() + "/drawn_graph/" + depth + '/' + centralVertexEncodedUri,
-                dataType:'json'
+                url:uri()
             }).success(callback);
+            function uri(){
+                return GraphService.graphUriForCentralVertexUriAndDepth(
+                    centralVertexUri,
+                    depth
+                )  + "/drawn";
+            }
         }
 
         function addVerticesToHtml(vertices) {
