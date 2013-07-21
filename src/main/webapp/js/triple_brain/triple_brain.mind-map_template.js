@@ -22,8 +22,8 @@ define([
         t.add('vertex_move_button', '<div class="move"></div>');
 
         t.add('identification_menu', '<div class="peripheral-menu identification"></div>');
-        t.add('identification_menu_explanation_title', '<h2>Identifications</h2>');
-        t.add('identification_menu_indications', '<h3>Find as many concepts that identify or are a generalization of this one.</h3>');
+        t.add('identification_menu_explanation_title', '<h2 data-i18n="vertex.menu.identification.title"></h2>');
+        t.add('identification_menu_indications', '<h3 data-i18n="vertex.menu.identification.instruction"></h3>');
         t.add('identification_existing_identities', '<div class="list"></div>');
         t.add(
             'identification_existing_identity',

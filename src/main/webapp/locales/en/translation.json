@@ -1,0 +1,19 @@
+{
+    "login" : {
+        "title" : "Login",
+        "email" : "Email",
+        "password" : "Password",
+        "login" : "Login",
+        "register": "create an account instead",
+        "error" : "Invalid credentials"
+    },
+
+    "vertex" : {
+        "menu" : {
+            "identification" :{
+                "title" : "Identifications",
+                "instruction" : "Find as many concepts that identify or are a generalization of this one."
+            }
+        }
+    }
+}

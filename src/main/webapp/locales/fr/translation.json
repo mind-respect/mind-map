@@ -1,0 +1,10 @@
+{
+    "vertex" : {
+        "menu" : {
+            "identification" :{
+                "title" : "Identifications",
+                "instruction" : "Trouvez des concepts qui identifient ou sont une généralisation de celui-ci"
+            }
+        }
+    }
+}

@@ -14,7 +14,8 @@ define(
         "triple_brain.graph_displayer_factory",
         "triple_brain.ui.arrow_line",
         "triple_brain.menu",
-        "triple_brain.ui.graph"
+        "triple_brain.ui.graph",
+        "jquery.i18next"
     ],
     function ($, UserService, EventBus, LoginHandler, DragScroll, Vertex, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, ArrowLine, Menu, GraphUi) {
         var api = {
@@ -28,13 +29,21 @@ define(
             },
             start:function () {
                 $(document).ready(function () {
-                    ServerSubscriber.init(function () {
-                        console.log("cometd initialized");
+                    loadLocaleContent(function(){
+                        ServerSubscriber.init(function () {
+                            console.log("cometd initialized");
+                        });
+                        UserService.isAuthenticated(
+                            callBackWhenIsAuthenticated,
+                            showCredentialsFlow
+                        );
                     });
-                    UserService.isAuthenticated(
-                        callBackWhenIsAuthenticated,
-                        showCredentialsFlow
-                    );
+                    function loadLocaleContent(callback){
+                        $.i18n.init({
+                            useLocalStorage: false,
+                            debug: true
+                        }, callback);
+                    }
                 });
                 function callBackWhenIsAuthenticated() {
                     $("html").addClass("authenticated");

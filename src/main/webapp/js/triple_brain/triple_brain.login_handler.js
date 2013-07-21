@@ -14,7 +14,7 @@ define([
         api.startFlow = function () {
             OverlayDialog.showLinearFlowWithOptions({
                 href:"login-form.html",
-                onComplete:function(){
+                onComplete:function(test){
                     handleLoginForm();
                     handleRegisterLink();
                 }
@@ -24,8 +24,8 @@ define([
         function handleLoginForm() {
             $(access.loginButton()).click(function () {
                 var loginInfo = {
-                    email:$(access.emailField()).val(),
-                    password:$(access.passwordField()).val()
+                    email:access.emailField().val(),
+                    password:access.passwordField().val()
                 };
                 UserService.authenticate(
                     loginInfo,
@@ -33,36 +33,42 @@ define([
                         window.location.reload();
                     },
                     function () {
-                        $(access.errorMessage()).show();
+                        access.errorMessage().show();
                         OverlayDialog.adjustSize();
                     }
                 );
             });
-            $(access.errorMessage()).hide();
+            access.errorMessage().hide();
             access.loginForm().reset();
+            access.loginPage().i18n();
+            OverlayDialog.adjustSize();
         }
 
 
         function defineAccess() {
-            var access = {};
-            access.errorMessage = function () {
-                return $('#login-error');
-            }
-            access.loginButton = function () {
-                return $('#login-button');
-            }
-            access.emailField = function () {
-                return $("#login-email");
-            }
-            access.passwordField = function () {
-                return $("#login-password");
-            }
-            access.loginForm = function () {
-                return $('#login-form')[0];
-            }
-            access.registerLink = function(){
-                return $("#register-link");
-            }
+            var access = {
+                loginPage : function () {
+                    return $('#login-page');
+                },
+                errorMessage : function () {
+                    return $('#login-error');
+                },
+                loginButton : function () {
+                    return $('#login-button');
+                },
+                emailField : function () {
+                    return $("#login-email");
+                },
+                passwordField : function () {
+                    return $("#login-password");
+                },
+                loginForm : function () {
+                    return $('#login-form')[0];
+                },
+                registerLink : function(){
+                    return $("#register-link");
+                }
+            };
             return access;
         }
         function handleRegisterLink(){

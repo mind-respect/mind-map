@@ -27,6 +27,7 @@ window.config = {
         "org/cometd/ReloadExtension" : "cometd/plugins/ReloadExtension",
         "org/cometd/TimeStampExtension" : "cometd/plugins/TimeStampExtension",
         "org/cometd/TimeSyncExtension" : "cometd/plugins/TimeSyncExtension",
+        "jquery.i18next" : "plugins/i18next.amd.withJQuery-1.6.3",
         "jquery.triple_brain.search" : "triple_brain/search/jquery.triple_brain.search",
         "triple_brain.overlay_dialog" : "triple_brain/triple_brain.overlay_dialog",
         "triple_brain.menu" : "triple_brain/triple_brain.menu",

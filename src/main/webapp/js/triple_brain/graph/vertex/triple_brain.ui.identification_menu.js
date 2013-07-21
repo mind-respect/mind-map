@@ -39,6 +39,7 @@ define([
                     html,
                     vertex
                 ).init();
+                html.i18n();
                 return identificationMenu;
             };
 
