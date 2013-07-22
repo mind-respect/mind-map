@@ -44,11 +44,11 @@ body .main-panel{
     cursor:default;
 }
 
-body input[type=button]{
+body input[type=button], body button{
     color: #1919AC
 }
 
-body input[type=button]:hover{
+body input[type=button]:hover, body button:hover{
     color:#47A3FF;
 }
 
@@ -77,12 +77,12 @@ body input[type=button]:hover{
     top:0.5em;
 }
 
-#top-panel input[type=button]{
+#top-panel input[type=button], #top-panel button{
     float:left;
     margin-left:15px;
 }
 
-#top-panel input[type=button].link-like-button{
+#top-panel input[type=button].link-like-button, #top-panel button.link-like-button{
     font-size:0.9em;
     margin-top:4px;
 }
@@ -194,7 +194,7 @@ body input[type=button]:hover{
     border-style: solid;
 }
 
-input[type="button"] {
+input[type="button"], button {
     border-size: 0px;
     border-style: none;
     font: inherit;
@@ -487,7 +487,7 @@ input[type="button"] {
     margin-left:0.5em;
 }
 
-.suggestion li input[type="button"]{
+.suggestion li input[type="button"], .suggestion li button{
     font-weight:bold;
     font-size:2em;
     margin-left:0.4em;
@@ -495,7 +495,7 @@ input[type="button"] {
     margin-bottom:0.2em;
 }
 
-.suggestion li input[type="button"]:hover{
+.suggestion li input[type="button"]:hover, .suggestion li button:hover{
     color: #00d100;
 }
 

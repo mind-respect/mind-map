@@ -7,7 +7,7 @@ window.config = {
     urlArgs: "bust=" + 9,
     paths: {
         module : '../module',
-        "jquery" : "jquery/jquery-2.0.2.min",
+        "jquery" : "jquery/jquery-2.0.3",
         "jquery-ui" : "jquery/jquery-ui.min",
         "jquery.url" : "jquery/jquery.url",
         "jquery.nano" : "jquery/jquery.nano",

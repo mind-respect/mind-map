@@ -65,8 +65,8 @@ define([
                 url:usersResourceUrl + "is_authenticated"
             }).success(function (isAuthenticated) {
                     isAuthenticated.is_authenticated ?
-                        isAuthenticatedCallBack.call() :
-                        isNotAuthenticatedCallBack.call()
+                        isAuthenticatedCallBack() :
+                        isNotAuthenticatedCallBack()
                 }).error(isNotAuthenticatedCallBack)
         };
         api.logout = function (successCallBack) {

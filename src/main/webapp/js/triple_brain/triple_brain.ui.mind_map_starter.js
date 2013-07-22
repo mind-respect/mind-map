@@ -39,10 +39,19 @@ define(
                         );
                     });
                     function loadLocaleContent(callback){
+                        var locale = localeIsFrench() ?
+                            "fr" :
+                            "en";
                         $.i18n.init({
+                            lng : locale,
                             useLocalStorage: false,
                             debug: true
                         }, callback);
+                        function localeIsFrench(){
+                            return $.i18n.detectLanguage().indexOf(
+                                "fr"
+                            ) >= 0;
+                        }
                     }
                 });
                 function callBackWhenIsAuthenticated() {
@@ -76,6 +85,10 @@ define(
                             Vertex.centralVertex()
                         );
                     });
+                    translateText();
+                }
+                function translateText(){
+                    $("html").i18n();
                 }
                 function getHeaderMenu(){
                     return $("#top-panel");
@@ -101,7 +114,7 @@ define(
                         UserService.logout(function () {
                             window.location = "/";
                         })
-                    })
+                    });
                 }
             }
         };

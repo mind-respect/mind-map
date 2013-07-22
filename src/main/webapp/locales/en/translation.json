@@ -29,8 +29,10 @@
             "passwords_dont_match" : "Passwords don't match"
         }
     },
-
-
+    "top_menu" : {
+        "disconnect" : "disconnect",
+        "show_as_graph" : "show as graph"
+    },
     "vertex" : {
         "menu" : {
             "identification" :{
