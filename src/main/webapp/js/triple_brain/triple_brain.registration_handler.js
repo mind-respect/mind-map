@@ -8,7 +8,7 @@ define([
     "jquery"
 ],
     function (Require, OverlayDialog, UserService, $) {
-        var api = {}
+        var api = {};
         var access = defineAccess();
         api.startFlow = function () {
             OverlayDialog.showLinearFlowWithOptions({
@@ -19,21 +19,23 @@ define([
                     handleLoginLink();
                 }
             });
-        }
+        };
         return api;
         function handleRegisterForm(){
-            $(access.errorMessages()).hide();
+            access.errorMessages().hide();
             access.registerForm().reset();
-            $(access.registerButton()).on("click", function () {
+            access.registerButton().on("click", function () {
                 UserService.register(
                     formAsJSon(),
                     handleRegistrationSuccess,
                     handleRegistrationError
                 );
             });
+            access.registerPage().i18n();
+            OverlayDialog.adjustSize();
         }
         function handleLoginLink(){
-            $(access.loginLink()).on("click", function(){
+            access.loginLink().on("click", function(){
                 var LoginHandler = require("triple_brain.login_handler");
                 LoginHandler.startFlow();
             });
@@ -51,39 +53,42 @@ define([
             window.location.reload();
         }
         function handleRegistrationError(errors){
-            $(access.errorMessages()).hide();
+           access.errorMessages().hide();
             for (var i in errors) {
                 $('#' + errors[i].reason).show();
             }
             OverlayDialog.adjustSize();
         }
         function defineAccess() {
-            var access = {};
-            access.errorMessages = function () {
-                return $('#error-panel');
-            }
-            access.registerButton = function () {
-                return $('#register-button');
-            }
-            access.userNameField = function () {
-                return $("#register-user_name");
-            }
-            access.emailField = function () {
-                return $("#register-email");
-            }
-            access.passwordField = function () {
-                return $("#register-password");
-            }
-            access.passwordConfirmationField = function(){
-                return $("#register-retype_password");
-            }
-            access.registerForm = function () {
-                return $('#register-form')[0];
-            }
-            access.loginLink = function(){
-                return $("#login-link");
-            }
-            return access;
+            return {
+                registerPage : function(){
+                    return $("#registration-page");
+                },
+                errorMessages : function () {
+                    return $('.alert-error');
+                },
+                registerButton : function () {
+                    return $('#register-button');
+                },
+                userNameField : function () {
+                    return $("#register-user_name");
+                },
+                emailField : function () {
+                    return $("#register-email");
+                },
+                passwordField : function () {
+                    return $("#register-password");
+                },
+                passwordConfirmationField : function(){
+                    return $("#register-retype_password");
+                },
+                registerForm : function () {
+                    return $('#register-form')[0];
+                },
+                loginLink : function(){
+                    return $("#login-link");
+                }
+            };
         }
     }
 )

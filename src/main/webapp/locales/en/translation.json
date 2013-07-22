@@ -8,6 +8,29 @@
         "error" : "Invalid credentials"
     },
 
+    "register" : {
+        "title" : "Register",
+        "username" : "Username",
+        "email" : "Email",
+        "password" : "Password",
+        "retype_password" : "Retype Password",
+        "register" : "Register",
+        "login" : "I have an account, log me in !",
+        "error" : {
+            "mandatory" : "Username is mandatory",
+            "invalid" : "Username is invalid, it can only contain letters, numbers, underscores and hyphens",
+            "too_long" : "Username can't exceed 50 characters",
+            "taken" : "This username is already taken",
+            "email_mandatory": "Email is mandatory",
+            "email_invalid" : "This email is invalid",
+            "email_already_exists" : "This email is already registered",
+            "password_mandatory" : "Password is mandatory",
+            "password_too_short" : "The password needs a minimum of 6 characters",
+            "passwords_dont_match" : "Passwords don't match"
+        }
+    },
+
+
     "vertex" : {
         "menu" : {
             "identification" :{

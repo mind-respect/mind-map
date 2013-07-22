@@ -14,15 +14,15 @@ define([
         api.startFlow = function () {
             OverlayDialog.showLinearFlowWithOptions({
                 href:"login-form.html",
-                onComplete:function(test){
+                onComplete:function(){
                     handleLoginForm();
                     handleRegisterLink();
                 }
             })
-        }
+        };
         return api;
         function handleLoginForm() {
-            $(access.loginButton()).click(function () {
+            access.loginButton().click(function () {
                 var loginInfo = {
                     email:access.emailField().val(),
                     password:access.passwordField().val()
@@ -43,10 +43,8 @@ define([
             access.loginPage().i18n();
             OverlayDialog.adjustSize();
         }
-
-
         function defineAccess() {
-            var access = {
+            return {
                 loginPage : function () {
                     return $('#login-page');
                 },
@@ -69,7 +67,6 @@ define([
                     return $("#register-link");
                 }
             };
-            return access;
         }
         function handleRegisterLink(){
             $(access.registerLink()).on("click", function(){
