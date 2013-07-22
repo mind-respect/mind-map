@@ -20,35 +20,35 @@
     <script src="js/common-boot.js"></script>
     <script src="js/mind_map-boot.js"></script>
 
-    <!--&lt;!&ndash;Date picker module&ndash;&gt;-->
-    <!--<script src="module/mind_map/date_picker/desktop/jsdatepick-calendar/jsDatePick.full.1.3.js"></script>-->
-    <!--<script src="module/mind_map/date_picker/desktop/triple_brain.module.date_picker.js"></script>-->
-
 </head>
 <body>
     <div id="mind_map" data-role="page" data-url="mind-map.html">
         <div data-role="content">
             <div id="left-panel" class="main-panel">
-                <h2>Search concepts</h2>
+                <h2 data-i18n="left_menu.search"></h2>
                 <div class="ui-widget">
                     <label for="vertex-search-input"></label>
                     <input id="vertex-search-input"/>
                 </div>
-                <h2>Distance from center concept</h2>
+                <h2 data-i18n="left_menu.distance"></h2>
                 <div id="sub-vertices-depth-slider" ></div>
                 <label id="sub-vertices-depth-index"></label>
             </div>
             <div id="drawn_graph"></div>
             <div id="bottom-center-panel" class="main-panel">
-                Legend: <div class="private legend">private</div>
-                <div class="public legend">public</div>
+                <span data-i18n="legend.title"></span>:
+                <div class="private legend" data-i18n="legend.private"></div>
+                <div class="public legend" data-i18n="legend.public"></div>
             </div>
             <div id="top-panel" class="main-panel">
                 <button data-displayer_name="graph"
                         class="switch-displayer link-like-button"
                         data-i18n="top_menu.show_as_graph"></button>
-                <input type="button" value="show as tree" data-displayer_name="relative_tree" class="switch-displayer link-like-button"/>
-                <input type="button" value="redraw" class="redraw link-like-button"/>
+                <button data-displayer_name="relative_tree"
+                        class="switch-displayer link-like-button"
+                        data-i18n="top_menu.show_as_tree"></button>
+                <button class="redraw link-like-button"
+                        data-i18n="top_menu.redraw"></button>
                 <button id="disconnect-btn"
                         data-i18n="top_menu.disconnect"
                         class="link-like-button"></button>

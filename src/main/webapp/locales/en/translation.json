@@ -31,7 +31,18 @@
     },
     "top_menu" : {
         "disconnect" : "disconnect",
-        "show_as_graph" : "show as graph"
+        "show_as_graph" : "show as graph",
+        "show_as_tree" : "show as tree",
+        "redraw" : "redraw"
+    },
+    "left_menu" : {
+        "search" : "Search concepts",
+        "distance" : "Distance from center concept"
+    },
+    "legend" : {
+        "title" : "Legend",
+        "private" : "private",
+        "public" : "public"
     },
     "vertex" : {
         "menu" : {
