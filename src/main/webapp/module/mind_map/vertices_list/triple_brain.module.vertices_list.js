@@ -25,7 +25,7 @@ define([
             if(api.exists()){
                 api.get().rebuild();
             }
-        }
+        };
         api.exists = function () {
             return $("#vertices-list-panel").length > 0;
         };
@@ -33,7 +33,7 @@ define([
             var thisVerticesList = this;
             this.addHtml = function (htmlToAdd) {
                 $(html).append(htmlToAdd);
-            }
+            };
 
             this.sort = function () {
                 if (sortType() == SORT_TYPE_LABEL) {
@@ -41,21 +41,21 @@ define([
                 } else {
                     sortByDistanceFromCentralVertex();
                 }
-            }
+            };
 
             this.sortByLabel = function () {
                 sortByLabel();
                 setSortType(SORT_TYPE_LABEL);
-            }
+            };
 
             this.sortByDistanceFromCentralVertex = function () {
                 sortByDistanceFromCentralVertex();
                 setSortType(SORT_TYPE_DISTANCE_FROM_CENTRAL_VERTEX);
-            }
+            };
 
             this.empty = function () {
                 $(verticesList()).empty();
-            }
+            };
 
             this.rebuild = function () {
                 this.empty();
@@ -66,14 +66,14 @@ define([
                 });
                 var verticesList = api.get();
                 verticesList.sort();
-            }
+            };
 
             this.buildForAVertex = function (vertex) {
                 VerticesListElementCreator.withVertexAndCentralVertex(
                     vertex,
                     Vertex.centralVertex()
                 ).create();
-            }
+            };
 
             this.containsVertex = function(vertex){
                 var vertexFound = false;
@@ -85,7 +85,7 @@ define([
                     }
                 });
                 return vertexFound;
-            }
+            };
 
             function getVerticesListElement(){
                 var verticesListElement = [];

@@ -8,38 +8,48 @@ define([
     "triple_brain.ui.left_panel",
     "./triple_brain.template.vertices_list.js"
 ],
-    function(require, $, Template, LeftPanel, VerticesList) {
+    function (require, $, Template, LeftPanel, VerticesList) {
         var api = {
-            create : function(){
+            create:function () {
                 return new VerticesListCreator().create()
             }
         };
-        function VerticesListCreator(){
-            var html = Template['panel'].merge();
-            this.create = function(){
+
+        function VerticesListCreator() {
+            var html = $(
+                Template['panel'].merge()
+            );
+            this.create = function () {
                 VerticesList = require("./triple_brain.module.vertices_list");
                 LeftPanel.addHTML(html);
                 addTitle();
                 addSortMenu();
                 addVerticesList();
                 $('.sort-vertices-btn').css('padding', '0px');
-                $('#sort-by-label').click(function() {
+                $('#sort-by-label').click(function () {
                     var verticesList = VerticesList.get();
                     verticesList.sortByLabel();
                 });
-                $('#sort-by-min-number-of-edges-from-center-vertex').click(function() {
+                $('#sort-by-min-number-of-edges-from-center-vertex').click(function () {
                     var verticesList = VerticesList.get();
                     verticesList.sortByDistanceFromCentralVertex();
                 });
+                $.i18n.loadNamespace(
+                    "vertices_list",
+                   function(){
+                       html.i18n();
+                   }
+                );
                 return VerticesList.get();
             }
 
-            function addTitle(){
+            function addTitle() {
                 $(html).append(
                     Template['title'].merge()
                 )
             }
-            function addSortMenu(){
+
+            function addSortMenu() {
                 var sortMenu = Template['sort_menu'].merge();
                 $(html).append(sortMenu);
                 var title = Template['sort_menu_title'].merge();
@@ -51,12 +61,14 @@ define([
                 var sortByDistanceFromCentralVertex = Template['sort_by_distance_from_central_vertex'].merge();
                 $(optionsList).append(sortByDistanceFromCentralVertex);
             }
-            function addVerticesList(){
+
+            function addVerticesList() {
                 $(html).append(
                     Template['vertices_list'].merge()
                 );
             }
         }
+
         return api;
     }
 );

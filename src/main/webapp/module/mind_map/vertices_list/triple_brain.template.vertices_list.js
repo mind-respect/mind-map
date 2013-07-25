@@ -8,7 +8,7 @@ define([
         var api = {};
         var t = Template.withTemplateGroup(api);
         t.add('panel', "<div id='vertices-list-panel'></div>");
-        t.add('title', "<h2>Concepts on page</h2>");
+        t.add('title', "<h2 data-i18n='vertices_list:title'></h2>");
 
         t.add('sort_menu', "<div id='vertices_list_sort_menu'></div>");
         t.add('sort_menu_title', "<label for='vertices_list_sort-options'>Sort by:</label>");

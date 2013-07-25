@@ -45,7 +45,23 @@ define(
                         $.i18n.init({
                             lng : locale,
                             useLocalStorage: false,
-                            debug: true
+                            debug: true,
+                            customLoad : function(lng, ns, options, loadComplete){
+                                var basePath = ns === "translation" ?
+                                    "locales/" :
+                                    "module/mind_map/" + ns + "/locales/";
+                                var url =  basePath + lng + "/" + "translation" + ".json";
+                                $.ajax({
+                                    url : url,
+                                    dataType:'json'
+                                }).success(function(data){
+                                        loadComplete(
+                                            null,
+                                            data
+                                        );
+                                    });
+
+                            }
                         }, callback);
                         function localeIsFrench(){
                             return $.i18n.detectLanguage().indexOf(
