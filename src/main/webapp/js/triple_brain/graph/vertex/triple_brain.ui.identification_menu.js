@@ -208,7 +208,7 @@ define([
                             );
                         },
                         resultsProviders : [
-                            UserMapAutocompleteProvider,
+                            UserMapAutocompleteProvider.toFetchCurrentUserVerticesAndPublicOnes(),
                             FreebaseAutocompleteProvider.forFetchingTypes()
                         ]
                     });
