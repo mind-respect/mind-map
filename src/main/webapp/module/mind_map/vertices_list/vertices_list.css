@@ -45,7 +45,7 @@
 }
 
 
-#vertices-list-sort-options li:marker { padding-right: 0px; }
+#vertices-list-sort-options li { padding-right: 0px; }
 
 #vertices-list .min-number-of-edges-from-center-vertex{
     margin-right:5px;

@@ -37,7 +37,9 @@ define([
                 $.i18n.loadNamespace(
                     "vertices_list",
                    function(){
-                       html.i18n();
+                       html.i18n({
+                           ns : "vertices_list"
+                       });
                    }
                 );
                 return VerticesList.get();
