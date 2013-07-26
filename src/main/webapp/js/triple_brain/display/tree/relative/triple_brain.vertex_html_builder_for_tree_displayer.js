@@ -108,7 +108,11 @@ define([
                 return vertex;
             };
             function createLabel() {
-                var labelContainer = MindMapTemplate['vertex_label_container'].merge(serverFormat);
+                var labelContainer = MindMapTemplate['vertex_label_container'].merge({
+                    label : serverFormat.label.trim() === "" ?
+                        Vertex.getWhenEmptyLabel() :
+                        serverFormat.label
+                });
                 $(html).append(labelContainer);
                 var label = $(labelContainer).find("input[type='text']:first");
                 var vertex = vertexFacade();
@@ -131,7 +135,7 @@ define([
                         vertex.unhighlight();
                     }
                     if ($(this).val() == "") {
-                        $(this).val(Vertex.EMPTY_LABEL);
+                        $(this).val(Vertex.getWhenEmptyLabel());
                         vertex.applyStyleOfDefaultText();
                         $(vertex.label()).keyup();
                     } else {

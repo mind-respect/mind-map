@@ -9,7 +9,9 @@ define([
 ],
     function (require, $, Edge, TreeVertex) {
         var api = {};
-        api.EMPTY_LABEL = Edge.EMPTY_LABEL;
+        api.getWhenEmptyLabel = function(){
+            return Edge.getWhenEmptyLabel();
+        };
         api.redrawAllEdges = Edge.redrawAllEdges;
         api.withHtml = function (html) {
             return new Object($(html));

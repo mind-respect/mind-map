@@ -44,11 +44,19 @@
         "private" : "private",
         "public" : "public"
     },
+    "edge": {
+        "default" : "orange"
+    },
     "vertex" : {
+        "default" : "legume",
         "menu" : {
             "identification" :{
                 "title" : "Identifications",
-                "instruction" : "Find as many concepts that identify or are a generalization of this one."
+                "instruction" : "Find as many concepts that identify or are a generalization of this one.",
+                "placeholder" : {
+                    "to_another_source" : "Identify to another source",
+                    "to_a_category" : "Add a category"
+                }
             }
         }
     }

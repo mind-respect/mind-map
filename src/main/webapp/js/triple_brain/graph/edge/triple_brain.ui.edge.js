@@ -12,7 +12,9 @@ define([
 ],
     function (require, $, GraphUi, VertexAndEdgeCommon, EventBus, ArrowLine) {
         var api = {};
-        api.EMPTY_LABEL = "relation";
+        api.getWhenEmptyLabel = function(){
+            return $.t("edge.default");
+        };
         api.withHtml = function (Html) {
             return new api.Object(Html);
         };
@@ -137,7 +139,7 @@ define([
                 return self.getId() == otherEdge.getId();
             };
             this.hasDefaultText = function () {
-                return self.getLabel().val() == api.EMPTY_LABEL;
+                return self.getLabel().val() == api.getWhenEmptyLabel();
             };
             this.applyStyleOfDefaultText = function () {
                 self.getLabel().addClass('when-default-graph-element-text');

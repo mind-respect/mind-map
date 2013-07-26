@@ -2,9 +2,10 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
+    "jquery",
     "triple_brain.template"
 ],
-    function (Template) {
+    function ($, Template) {
         var api = {};
         var t = Template.withTemplateGroup(api);
 
@@ -17,7 +18,12 @@ define([
             'relative_vertex',
             '<div class="vertex graph-element relative"></div>'
         );
-        t.add('vertex_label_container', '<div class=textfield-container><input type="text" class="label" value="{label}"></div>');
+        t.add(
+            'vertex_label_container',
+            '<div class=textfield-container>' +
+                '<input type="text" class="label" value="{label}">' +
+                '</div>'
+        );
         t.add('vertex_menu', '<div class="menu"></div>');
         t.add('vertex_move_button', '<div class="move"></div>');
 
@@ -32,10 +38,13 @@ define([
             '</h3>'+
             '<div class="group description">{description}</div>'
         );
-        t.add('identification_textfield', '<input type="text" placeholder="Identify to another source">');
+        t.add(
+            'identification_textfield',
+            '<input type="text" data-i18n="[placeholder]vertex.menu.identification.placeholder.to_another_source">'
+        );
         t.add(
             'identification_type_textfield',
-            '<input type="text" placeholder="Add a category">'
+            '<input type="text" data-i18n="[placeholder]vertex.menu.identification.placeholder.to_a_category">'
         );
 
         t.add(
@@ -68,7 +77,10 @@ define([
 
         //edge html elements
         t.add('edge', '<div class="edge relation graph-element" id="{id}" style="left:{label_position.x};top:{label_position.y}"></div>');
-        t.add('edge_label', '<input type="text" value="{label}">');
+        t.add(
+            'edge_label',
+            '<input type="text" value="{label}">'
+        );
         t.add('edge_remove_button', '<input type="button" class="remove" value="x" >');
 
         t.add('auto_complete_suggestion_list', '<ul class="auto-complete-suggestion"></ul>');

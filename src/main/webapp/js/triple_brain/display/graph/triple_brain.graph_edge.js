@@ -9,7 +9,9 @@ define([
 ],
     function ($, GraphUi, Edge, VertexAndEdgeCommon) {
         var api = {};
-        api.EMPTY_LABEL = Edge.EMPTY_LABEL;
+        api.getWhenEmptyLabel = function(){
+            return Edge.getWhenEmptyLabel();
+        };
         api.withHtml = function (html) {
             return new GraphEdge(
                 $(html)

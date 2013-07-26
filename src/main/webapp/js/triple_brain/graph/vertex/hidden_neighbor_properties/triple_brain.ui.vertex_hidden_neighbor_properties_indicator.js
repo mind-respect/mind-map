@@ -74,7 +74,7 @@ define([
                             var property = MindMapTemplate[
                                 'hidden_property'
                                 ].merge({
-                                    name : nameOfHiddenProperty == "" ? Edge.EMPTY_LABEL : nameOfHiddenProperty
+                                    name : nameOfHiddenProperty == "" ? Edge.getWhenEmptyLabel() : nameOfHiddenProperty
                                 });
                             $(propertyList).append(property);
                         });

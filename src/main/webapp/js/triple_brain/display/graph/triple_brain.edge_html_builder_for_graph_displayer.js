@@ -64,7 +64,11 @@ define([
                 return edge;
             }
             function createLabel(){
-                var label = MindMapTemplate['edge_label'].merge(json);
+                var label = MindMapTemplate['edge_label'].merge({
+                    label : json.label === "" ?
+                        GraphEdge.getWhenEmptyLabel() :
+                        json.label
+                });
                 $(html).append(label);
                 VertexAndEdgeCommon.adjustWidthToNumberOfChars(
                     label
@@ -84,7 +88,7 @@ define([
                         edge.unhighlight();
                     }
                     if($(this).val() == ""){
-                        $(this).val(GraphEdge.EMPTY_LABEL);
+                        $(this).val(GraphEdge.getWhenEmptyLabel());
                         edge.applyStyleOfDefaultText();
                         edge.readjustLabelWidth()
                     }else{

@@ -27,7 +27,11 @@ define([
         function EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
             var uri = edgeServer.id;
             edgeServer.id = IdUriUtils.graphElementIdFromUri(edgeServer.id);
-            var html = RelativeTreeTemplates['edge'].merge(edgeServer);
+            var html = RelativeTreeTemplates['edge'].merge({
+                label : edgeServer.label === "" ?
+                    TreeEdge.getWhenEmptyLabel() :
+                    edgeServer.label
+            });
             html = $(html);
             this.create = function () {
                 GraphUi.addHTML(
@@ -127,7 +131,7 @@ define([
                     "destination_vertex_id",
                     previousEdge.destinationVertex().getId()
                 );
-                if (input.val() === TreeEdge.EMPTY_LABEL) {
+                if (input.val() === TreeEdge.getWhenEmptyLabel()) {
                     input.val("");
                 }
                 input.blur(function () {

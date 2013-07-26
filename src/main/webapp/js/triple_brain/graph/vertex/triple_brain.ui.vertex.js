@@ -21,8 +21,9 @@ define([
     function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, GraphUi, ArrowLine, ServerSubscriber, ImageMenu) {
         var api = {};
 
-        api.EMPTY_LABEL = "concept";
-
+        api.getWhenEmptyLabel = function(){
+            return $.t("vertex.default");
+        };
         api.withHtml = function (html) {
             return new api.Object(html);
         };
@@ -269,7 +270,7 @@ define([
                 return width;
             };
             this.hasDefaultText = function () {
-                return $(this.label()).val() == api.EMPTY_LABEL;
+                return $(this.label()).val() == api.getWhenEmptyLabel();
             };
             this.applyStyleOfDefaultText = function () {
                 $(this.label()).addClass('when-default-graph-element-text');
