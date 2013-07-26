@@ -76,7 +76,7 @@ define([
                     edgeServerFormatted.id = responseUri;
                     edgeServerFormatted.source_vertex_id = sourceVertexUri;
                     edgeServerFormatted.destination_vertex_id = destinationVertexUri;
-                    edgeServerFormatted.label = Edge.EMPTY_LABEL;
+                    edgeServerFormatted.label = Edge.getWhenEmptyLabel();
                     callback(edgeServerFormatted);
                 }
             );
