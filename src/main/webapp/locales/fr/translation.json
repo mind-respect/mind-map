@@ -1,79 +1,83 @@
 {
     "login" : {
-        "title" : "Login",
-        "email" : "Email",
-        "password" : "Password",
-        "login" : "Login",
-        "register": "create an account instead",
-        "error" : "Invalid credentials"
+        "title" : "Authentification",
+        "email" : "Courriel",
+        "password" : "Mot de passe",
+        "login" : "S'authentifier",
+        "register": "créer un compte",
+        "error" : "Courriel ou mot de passe invalide(s)"
     },
 
     "register" : {
-        "title" : "Register",
-        "username" : "Username",
-        "email" : "Email",
-        "password" : "Password",
-        "retype_password" : "Retype Password",
-        "register" : "Register",
-        "login" : "I have an account, log me in !",
+        "title" : "Enregistrement",
+        "username" : "Nom d'utilisateur",
+        "email" : "Courriel",
+        "password" : "Mot de passe",
+        "retype_password" : "Retaper le mot de passe",
+        "register" : "S'enregistrer",
+        "login" : "S'authentifier plutôt!",
         "error" : {
-            "mandatory" : "Username is mandatory",
-            "invalid" : "Username is invalid, it can only contain letters, numbers, underscores and hyphens",
-            "too_long" : "Username can't exceed 50 characters",
-            "taken" : "This username is already taken",
-            "email_mandatory": "Email is mandatory",
-            "email_invalid" : "This email is invalid",
-            "email_already_exists" : "This email is already registered",
-            "password_mandatory" : "Password is mandatory",
-            "password_too_short" : "The password needs a minimum of 6 characters",
-            "passwords_dont_match" : "Passwords don't match"
+            "mandatory" : "Le nom d'usager est obligatoire",
+            "invalid" : "Le nom d'usager est invalide, il peut contenir des lettres, des nombres, des soulignements (underscores) et des traits d'union",
+            "too_long" : "Le nom d'usager ne peut excéder 50 caractères",
+            "taken" : "Ce nom d'usager est déjà pris",
+            "email_mandatory": "Le courriel est obligatoire",
+            "email_invalid" : "Ce courriel est invalide",
+            "email_already_exists" : "Ce courriel est déjà enregistré",
+            "password_mandatory" : "Le mot de passe est obligatoire",
+            "password_too_short" : "Le mot de passe requiert un minimum de 6 caractères",
+            "passwords_dont_match" : "Les mots de passe ne correspondent pas"
         }
     },
     "top_menu" : {
-        "disconnect" : "disconnect",
-        "show_as_graph" : "show as graph",
-        "show_as_tree" : "show as tree",
-        "redraw" : "redraw"
+        "disconnect" : "déconnecter",
+        "show_as_graph" : "voir en graphe",
+        "show_as_tree" : "voir en arbre",
+        "redraw" : "redessiner"
     },
     "left_menu" : {
-        "search" : "Search concepts",
-        "distance" : "Distance from center concept"
+        "search" : "Chercher des concepts",
+        "distance" : "Distance du concept central"
     },
-    "legend" : {
-        "title" : "Legend",
-        "private" : "private",
+    "caption" : {
+        "title" : "Légende",
+        "private" : "privé",
         "public" : "public"
     },
     "edge": {
-        "default" : "orange"
+        "default" : "relation"
     },
     "vertex" : {
-        "default" : "legume",
+        "default" : "concept",
+        "search" : {
+            "user" : "usager",
+            "source" : "source"
+        },
         "menu" : {
             "identification" :{
                 "title" : "Identifications",
-                "instruction" : "Find as many concepts that identify or are a generalization of this one.",
+                "instruction" : "Trouver autant de concepts qui identifie ou sont une généralisation de celui-ci.",
                 "placeholder" : {
-                    "to_another_source" : "Identify to another source",
-                    "to_a_category" : "Add a category"
+                    "to_another_source" : "Identifier à une autre source",
+                    "to_a_category" : "Ajouter une catégorie"
                 }
             },
             "note":{
-                "update" : "Update",
-                "saving" : "Saving"
+                "update" : "Mettre à jour",
+                "saving" : "Sauvegarde"
             },
             "link_to_far_vertex": {
-                "title" : "Search for a concept to link to"
+                "title" : "Chercher un concept pour le lié à celui-ci"
             },
             "suggestion" : {
-                "title" : "Relation suggestions",
+                "title" : "Suggestions de relation",
                 "instruction" : {
-                    "1" : "Drag a relation outside the box",
-                    "2" : "to add it to your mind map"
+                    "1" : "Faites glisser une relation en dehors de la boîte",
+                    "2" : "pour l'ajouter à votre carte"
                 }
             },
             "hidden_relation" : {
-                "title" : "Hidden properties of concept"
+                "title" : "Relation cachés du concept"
             }
         }
     }

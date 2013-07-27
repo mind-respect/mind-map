@@ -39,8 +39,8 @@
         "search" : "Search concepts",
         "distance" : "Distance from center concept"
     },
-    "legend" : {
-        "title" : "Legend",
+    "caption" : {
+        "title" : "Caption",
         "private" : "private",
         "public" : "public"
     },
