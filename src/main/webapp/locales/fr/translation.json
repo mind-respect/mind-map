@@ -1,9 +1,79 @@
 {
+    "login" : {
+        "title" : "Login",
+        "email" : "Email",
+        "password" : "Password",
+        "login" : "Login",
+        "register": "create an account instead",
+        "error" : "Invalid credentials"
+    },
+
+    "register" : {
+        "title" : "Register",
+        "username" : "Username",
+        "email" : "Email",
+        "password" : "Password",
+        "retype_password" : "Retype Password",
+        "register" : "Register",
+        "login" : "I have an account, log me in !",
+        "error" : {
+            "mandatory" : "Username is mandatory",
+            "invalid" : "Username is invalid, it can only contain letters, numbers, underscores and hyphens",
+            "too_long" : "Username can't exceed 50 characters",
+            "taken" : "This username is already taken",
+            "email_mandatory": "Email is mandatory",
+            "email_invalid" : "This email is invalid",
+            "email_already_exists" : "This email is already registered",
+            "password_mandatory" : "Password is mandatory",
+            "password_too_short" : "The password needs a minimum of 6 characters",
+            "passwords_dont_match" : "Passwords don't match"
+        }
+    },
+    "top_menu" : {
+        "disconnect" : "disconnect",
+        "show_as_graph" : "show as graph",
+        "show_as_tree" : "show as tree",
+        "redraw" : "redraw"
+    },
+    "left_menu" : {
+        "search" : "Search concepts",
+        "distance" : "Distance from center concept"
+    },
+    "legend" : {
+        "title" : "Legend",
+        "private" : "private",
+        "public" : "public"
+    },
+    "edge": {
+        "default" : "orange"
+    },
     "vertex" : {
+        "default" : "legume",
         "menu" : {
             "identification" :{
                 "title" : "Identifications",
-                "instruction" : "Trouvez des concepts qui identifient ou sont une généralisation de celui-ci"
+                "instruction" : "Find as many concepts that identify or are a generalization of this one.",
+                "placeholder" : {
+                    "to_another_source" : "Identify to another source",
+                    "to_a_category" : "Add a category"
+                }
+            },
+            "note":{
+                "update" : "Update",
+                "saving" : "Saving"
+            },
+            "link_to_far_vertex": {
+                "title" : "Search for a concept to link to"
+            },
+            "suggestion" : {
+                "title" : "Relation suggestions",
+                "instruction" : {
+                    "1" : "Drag a relation outside the box",
+                    "2" : "to add it to your mind map"
+                }
+            },
+            "hidden_relation" : {
+                "title" : "Hidden properties of concept"
             }
         }
     }

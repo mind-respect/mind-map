@@ -63,15 +63,24 @@ define([
             'suggestion',
             '<li><span class="text">{label}</span></li>'
         );
-        t.add('suggestions_menu_title', '<h2>Relation suggestions</h2>');
-        t.add('suggestions_instructions', '<h3>( Drag a relation outside the box<br/> to add it to your mind map )</h3>');
+        t.add(
+            'suggestions_menu_title',
+            "<h2 data-i18n='vertex.menu.suggestion.title'></h2>"
+        );
+        t.add(
+            'suggestions_instructions',
+            "<h3>( <span data-i18n='vertex.menu.suggestion.instruction.1'></span><br/><span data-i18n='vertex.menu.suggestion.instruction.2'></span> )</h3>"
+        );
 
         t.add('image_container', '<div class="image_container"></div>');
         t.add('image_container_image', "<img src='{src}'>");
 
         t.add('hidden_property_container', '<div class="hidden-properties-container"></div>');
         t.add('hidden_property_menu', '<div class="peripheral-menu"></div>');
-        t.add('hidden_properties_title', '<h2>Hidden properties of concept</h2>');
+        t.add(
+            'hidden_properties_title',
+            "<h2 data-i18n='vertex.menu.hidden_relation.title'></h2>"
+        );
         t.add('hidden_property_list', '<ul></ul>');
         t.add('hidden_property', '<li>{name}</li>');
 

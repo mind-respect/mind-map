@@ -45,10 +45,14 @@
         "public" : "public"
     },
     "edge": {
-        "default" : "orange"
+        "default" : "relation"
     },
     "vertex" : {
-        "default" : "legume",
+        "default" : "concept",
+        "search" : {
+            "user" : "user",
+            "source" : "source"
+        },
         "menu" : {
             "identification" :{
                 "title" : "Identifications",
@@ -57,6 +61,23 @@
                     "to_another_source" : "Identify to another source",
                     "to_a_category" : "Add a category"
                 }
+            },
+            "note":{
+                "update" : "Update",
+                "saving" : "Saving"
+            },
+            "link_to_far_vertex": {
+                "title" : "Search for a concept to link to"
+            },
+            "suggestion" : {
+                "title" : "Relation suggestions",
+                "instruction" : {
+                    "1" : "Drag a relation outside the box",
+                    "2" : "to add it to your mind map"
+                }
+            },
+            "hidden_relation" : {
+                "title" : "Hidden properties of concept"
             }
         }
     }

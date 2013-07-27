@@ -62,25 +62,27 @@ define([
                     vertex.getNote() +
                     "</textarea>"
             );
+            var buttonsOptions = {};
+            buttonsOptions[$.t("vertex.menu.note.update")] = function(event) {
+                var dialog = $(this);
+                var textContainer = $(event.currentTarget).find(".ui-button-text");
+                textContainer.text(
+                    $.t("vertex.menu.note.saving") + " ..."
+                );
+                VertexService.updateNote(
+                    vertex,
+                    dialog.find("textarea").val(),
+                    function(){
+                        $(dialog).dialog("close");
+                    }
+                );
+            };
             noteDialog.dialog({
                 height:350,
                 width:500,
                 dialogClass: "vertex-note",
                 modal:true,
-                buttons: {
-                    "Update": function(event) {
-                        var dialog = $(this);
-                        var textContainer = $(event.currentTarget).find(".ui-button-text");
-                        textContainer.text("Saving ...");
-                        VertexService.updateNote(
-                            vertex,
-                            dialog.find("textarea").val(),
-                            function(){
-                                $(dialog).dialog("close");
-                            }
-                        )
-                    }
-                }
+                buttons: buttonsOptions
             });
         }
     };

@@ -30,7 +30,7 @@ define([
                     description:searchResult.note,
                     label:searchResult.label,
                     value:searchResult.label,
-                    source:"user " + searchResult.owner_username,
+                    source: $.t("vertex.search.user") + " " + searchResult.owner_username,
                     uri:searchResult.id,
                     provider:self
                 };

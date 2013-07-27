@@ -86,6 +86,7 @@ define([
                         PeripheralMenu.peripheralMenuForMenuHtmlAndVertex(
                             hiddenPropertyMenu
                         );
+                        hiddenNeighborPropertiesContainer.i18n();
                     }, 1000)
 
                 });

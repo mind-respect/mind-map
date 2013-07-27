@@ -39,6 +39,7 @@ define([
                 html,
                 vertex
             ).init();
+            html.i18n();
             return self;
         };
         this.reEvaluatePosition = function () {
@@ -46,7 +47,7 @@ define([
         };
         function addTitle(){
             html.append(
-                "<h2>Search for a concept to link to</h2>"
+                "<h2 data-i18n='vertex.menu.link_to_far_vertex.title'></h2>"
             );
         }
         function addSearchBox(){

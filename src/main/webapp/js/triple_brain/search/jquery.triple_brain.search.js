@@ -85,7 +85,8 @@ require([
                     var searchResult = description.conciseSearchResult;
                     var sourceContainer = $("<span>");
                     sourceContainer.append(
-                        "source:" + searchResult.source
+                        $.t("vertex.search.source") + ": " +
+                            searchResult.source
                     );
                     var text = $("<span>").append(
                         description.text + " "

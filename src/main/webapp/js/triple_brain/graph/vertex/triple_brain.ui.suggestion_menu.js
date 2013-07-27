@@ -28,7 +28,11 @@ define([
             var html;
             var peripheralMenu;
             this.create = function () {
-                html = MindMapTemplate['suggestions_menu'].merge();
+                html = $(
+                    MindMapTemplate[
+                        'suggestions_menu'
+                        ].merge()
+                );
                 GraphUi.addHTML(
                     html
                 );
@@ -41,6 +45,7 @@ define([
                     html,
                     vertex
                 ).init();
+                html.i18n();
                 return suggestionMenu;
             };
 
