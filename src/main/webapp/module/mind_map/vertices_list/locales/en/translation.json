@@ -1,8 +1,8 @@
 {
-    "title": "Concepts sur la page",
+    "title": "Concepts on page",
     "sort" : {
-        "title" : "Trier par",
-        "1" : "texte",
-        "2" : "distance du concept central"
+        "title" : "Sort by",
+        "1" : "label",
+        "2" : "distance from center concept"
     }
 }

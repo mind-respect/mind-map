@@ -99,7 +99,6 @@ define([
                 label.change(function(e) {
                     var edge = edgeOfSubHtmlComponent(this);
                     EdgeService.updateLabel(edge, edge.text());
-
                 });
 
                 label.keydown(function(e) {

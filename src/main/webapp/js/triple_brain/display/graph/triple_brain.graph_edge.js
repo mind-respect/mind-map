@@ -37,7 +37,7 @@ define([
                 self.getLabel().val(text);
             };
             this.text = function () {
-                self.getLabel().val();
+                return self.getLabel().val();
             };
             this.readjustLabelWidth = function () {
                 VertexAndEdgeCommon.adjustWidthToNumberOfChars(
