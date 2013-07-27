@@ -208,9 +208,6 @@ define([
                 var edge = edgeFromHtml(html);
                 edge.setUri(uri);
                 edge.setArrowLine(arrowLine);
-                VertexAndEdgeCommon.adjustWidthToNumberOfChars(
-                    html
-                );
                 var vertex = Vertex.withHtml(html.closest(".vertex"));
                 vertex.adjustWidth();
                 var relativeVertex = RelativeVertex.withVertex(vertex);
