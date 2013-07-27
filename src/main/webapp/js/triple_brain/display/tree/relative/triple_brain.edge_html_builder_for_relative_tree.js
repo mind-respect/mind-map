@@ -179,8 +179,12 @@ define([
                 var previousEdge = edgeFromHtml(
                     previousHtml
                 );
+                var label = previousEdge.text();
+                previousEdge.setText(label);
                 var html = RelativeTreeTemplates['edge'].merge({
-                    label:previousEdge.text()
+                    label: label.trim() === "" ?
+                    TreeEdge.getWhenEmptyLabel() :
+                    previousEdge.text()
                 });
                 html = $(html);
                 showRemoveButtonOnlyIfMouseOver(html);
@@ -204,7 +208,11 @@ define([
                 var edge = edgeFromHtml(html);
                 edge.setUri(uri);
                 edge.setArrowLine(arrowLine);
+                VertexAndEdgeCommon.adjustWidthToNumberOfChars(
+                    html
+                );
                 var vertex = Vertex.withHtml(html.closest(".vertex"));
+                vertex.adjustWidth();
                 var relativeVertex = RelativeVertex.withVertex(vertex);
                 relativeVertex.adjustPositionIfApplicable();
                 relativeVertex.adjustAllChildrenPositionIfApplicable();
