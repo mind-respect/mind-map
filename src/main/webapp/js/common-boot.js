@@ -30,7 +30,7 @@ window.config = {
         "jquery.i18next" : "plugins/i18next.amd.withJQuery-1.6.3",
         "jquery.triple_brain.search" : "triple_brain/search/jquery.triple_brain.search",
         "triple_brain.language_manager" : "triple_brain/triple_brain.language_manager",
-        "triple_brain.overlay_dialog" : "triple_brain/triple_brain.overlay_dialog",
+        "triple_brain.external_page_loader" : "triple_brain/triple_brain.external_page_loader",
         "triple_brain.menu" : "triple_brain/triple_brain.menu",
         "triple_brain.ui.utils" : "triple_brain/triple_brain.ui.utils",
         "triple_brain.user" : "triple_brain/triple_brain.user",

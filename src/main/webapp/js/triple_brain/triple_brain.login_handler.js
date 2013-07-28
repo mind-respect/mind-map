@@ -4,15 +4,15 @@
 define([
     "jquery",
     "triple_brain.registration_handler",
-    "triple_brain.overlay_dialog",
+    "triple_brain.external_page_loader",
     "triple_brain.user",
     "jquery.json.min"
 ],
-    function ($, RegistrationHandler, OverlayDialog, UserService) {
+    function ($, RegistrationHandler, ExternalPageLoader, UserService) {
         var api = {};
         var access = defineAccess();
         api.startFlow = function () {
-            OverlayDialog.showLinearFlowWithOptions({
+            ExternalPageLoader.showLinearFlowWithOptions({
                 href:"login-form.html",
                 onComplete:function(){
                     handleLoginForm();

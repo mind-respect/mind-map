@@ -4,15 +4,15 @@
 define([
     "require",
     "jquery",
-    "triple_brain.overlay_dialog",
+    "triple_brain.external_page_loader",
     "triple_brain.user",
     "triple_brain.language_manager"
 ],
-    function (Require, $, OverlayDialog, UserService, LanguageManager) {
+    function (Require, $, ExternalPageLoader, UserService, LanguageManager) {
         var api = {};
         var access = defineAccess();
         api.startFlow = function () {
-            OverlayDialog.showLinearFlowWithOptions({
+            ExternalPageLoader.showLinearFlowWithOptions({
                 href:"register-form.html",
                 onComplete:function () {
                     handleRegisterForm();
