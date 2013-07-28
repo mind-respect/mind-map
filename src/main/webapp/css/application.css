@@ -12,7 +12,9 @@
 }
 
 #registration-page .language-list h5{
-    height:6em;
+    height:3.5em;
+    display:table-cell;
+    vertical-align: bottom;
 }
 
 #login-button, #register-button{

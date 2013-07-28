@@ -14,7 +14,7 @@
         "email" : "Courriel",
         "password" : "Mot de passe",
         "retype_password" : "Retaper le mot de passe",
-        "selected_languages" : "Langues acquises en ordre de préférence",
+        "selected_languages" : "Langues que je connais en ordre de préférence",
         "available_languages" : "Langues disponibles",
         "register" : "S'enregistrer",
         "login" : "S'authentifier plutôt!",

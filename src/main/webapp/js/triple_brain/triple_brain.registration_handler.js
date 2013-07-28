@@ -18,7 +18,9 @@ define([
                     OverlayDialog.adjustSize();
                     handleRegisterForm();
                     handleLoginLink();
-                }
+                },
+                width:500,
+                title:$.t("register.title")
             });
         };
         return api;

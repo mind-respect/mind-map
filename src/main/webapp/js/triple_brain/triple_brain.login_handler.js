@@ -17,8 +17,9 @@ define([
                 onComplete:function(){
                     handleLoginForm();
                     handleRegisterLink();
-                }
-            })
+                },
+                title:$.t("login.title")
+            });
         };
         return api;
         function handleLoginForm() {

@@ -5,25 +5,38 @@ define([
     "jquery",
     "jquery.colorbox"
 ],
-    function(){
+    function () {
         var api = {};
-        api.showLinearFlowWithOptions = function(configuration){
-            console.log("adfasdf " + configuration.href);
-            configuration.overlayClose = false;
-            configuration.escKey = false;
-            configuration.scrolling = false;
-            configuration.onLoad = hideCloseButton;
-            $.colorbox(configuration);
-        }
-        api.close = function(){
+        api.showLinearFlowWithOptions = function (configuration) {
+            var options = $.extend({
+                width:300,
+                closeOnEscape:false,
+                modal:true,
+                draggable:false
+            }, configuration);
+            $("#mind_map").load(
+                configuration.href,
+                function(){
+                    configuration.onComplete();
+                    $("#mind_map").dialog(options);
+                    hideCloseButton();
+                }
+            );
+//            $(".ui-dialog")
+//                .css("position", "fixed")
+//                .css("left", "40%")
+//                .css("top", "0");
+            hideCloseButton();
+        };
+        api.close = function () {
             $.colorbox.close();
         }
-        api.adjustSize = function(){
+        api.adjustSize = function () {
             $.colorbox.resize();
         }
         return api;
         function hideCloseButton() {
-            $("#cboxClose").hide();
+            $(".ui-dialog-titlebar-close").hide()
         }
     }
 )
