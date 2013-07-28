@@ -8,7 +8,7 @@ window.config = {
     paths: {
         module : '../module',
         "jquery" : "jquery/jquery-2.0.3",
-        "jquery-ui" : "jquery/jquery-ui.min",
+        "jquery-ui" : "jquery/jquery-ui-10-2/jquery-ui.min",
         "jquery.url" : "jquery/jquery.url",
         "jquery.nano" : "jquery/jquery.nano",
         "jquery.json.min" : "jquery/jquery.json.min",
