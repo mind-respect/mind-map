@@ -35,14 +35,12 @@ define([
                     },
                     function () {
                         access.errorMessage().show();
-                        OverlayDialog.adjustSize();
                     }
                 );
             });
             access.errorMessage().hide();
             access.loginForm().reset();
             access.loginPage().i18n();
-            OverlayDialog.adjustSize();
         }
         function defineAccess() {
             return {
@@ -70,7 +68,8 @@ define([
             };
         }
         function handleRegisterLink(){
-            $(access.registerLink()).on("click", function(){
+            access.registerLink().on("click", function(event){
+                event.preventDefault();
                 RegistrationHandler.startFlow();
             });
         }

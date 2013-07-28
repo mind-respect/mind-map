@@ -1,6 +1,12 @@
+#mind_map{
+    min-width:30000px;
+    min-height:30000px;
+    cursor:all-scroll;
+}
 #mind_map h2, #mind_map h3{
     line-height: inherit;
 }
+
 #cboxClose{
     left:-5px;
 }
@@ -54,11 +60,7 @@
 .ui-loader {
     display: none;
 }
-body{
-    min-width:30000px;
-    min-height:30000px;
-    cursor:all-scroll;
-}
+body{}
 svg{
     z-index:0;
 }

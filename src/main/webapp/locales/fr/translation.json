@@ -3,8 +3,8 @@
         "title" : "Authentification",
         "email" : "Courriel",
         "password" : "Mot de passe",
-        "login" : "S'authentifier",
-        "register": "créer un compte",
+        "login" : "Authentifier",
+        "register": "créer un compte plutôt",
         "error" : "Courriel ou mot de passe invalide(s)"
     },
 
@@ -16,8 +16,8 @@
         "retype_password" : "Retaper le mot de passe",
         "selected_languages" : "Langues que je connais en ordre de préférence",
         "available_languages" : "Langues disponibles",
-        "register" : "S'enregistrer",
-        "login" : "S'authentifier plutôt!",
+        "register" : "Enregistrer",
+        "login" : "s'authentifier plutôt",
         "error" : {
             "mandatory" : "Le nom d'usager est obligatoire",
             "invalid" : "Le nom d'usager est invalide, il peut contenir des lettres, des nombres, des soulignements (underscores) et des traits d'union",

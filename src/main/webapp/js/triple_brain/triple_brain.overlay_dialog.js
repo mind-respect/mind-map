@@ -2,8 +2,7 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "jquery",
-    "jquery.colorbox"
+    "jquery"
 ],
     function () {
         var api = {};
@@ -12,31 +11,42 @@ define([
                 width:300,
                 closeOnEscape:false,
                 modal:true,
-                draggable:false
+                draggable:false,
+                resizable:false
             }, configuration);
-            $("#mind_map").load(
+            if(isThereCurrentlyADialog()){
+                removeCurrentDialog();
+            }
+            getOtherPageContainer().show().load(
                 configuration.href,
                 function(){
                     configuration.onComplete();
-                    $("#mind_map").dialog(options);
+                    getOtherPageContainer().dialog(options);
                     hideCloseButton();
                 }
             );
-//            $(".ui-dialog")
-//                .css("position", "fixed")
-//                .css("left", "40%")
-//                .css("top", "0");
+            getMindMapContainer().hide();
             hideCloseButton();
         };
-        api.close = function () {
-            $.colorbox.close();
-        }
-        api.adjustSize = function () {
-            $.colorbox.resize();
-        }
         return api;
         function hideCloseButton() {
-            $(".ui-dialog-titlebar-close").hide()
+            $(
+                ".ui-dialog-titlebar-close"
+            ).hide();
+        }
+        function getMindMapContainer(){
+            return $("#mind_map");
+        }
+        function isThereCurrentlyADialog(){
+            return getOtherPageContainer().hasClass(
+                "ui-dialog-content"
+            );
+        }
+        function getOtherPageContainer(){
+            return $("#other-page-container");
+        }
+        function removeCurrentDialog(){
+            $("#other-page-container").dialog("destroy");
         }
     }
 )

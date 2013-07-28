@@ -15,7 +15,6 @@ define([
             OverlayDialog.showLinearFlowWithOptions({
                 href:"register-form.html",
                 onComplete:function () {
-                    OverlayDialog.adjustSize();
                     handleRegisterForm();
                     handleLoginLink();
                 },
@@ -36,11 +35,11 @@ define([
                 );
             });
             access.registerPage().i18n();
-            OverlayDialog.adjustSize();
         }
 
         function handleLoginLink() {
-            access.loginLink().on("click", function () {
+            access.loginLink().on("click", function (event) {
+                event.preventDefault();
                 var LoginHandler = require("triple_brain.login_handler");
                 LoginHandler.startFlow();
             });
@@ -127,7 +126,6 @@ define([
             for (var i in errors) {
                 $('#' + errors[i].reason).show();
             }
-            OverlayDialog.adjustSize();
         }
 
         function defineAccess() {
