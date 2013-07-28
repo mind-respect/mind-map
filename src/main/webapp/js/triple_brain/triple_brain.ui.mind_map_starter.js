@@ -15,9 +15,9 @@ define(
         "triple_brain.ui.arrow_line",
         "triple_brain.menu",
         "triple_brain.ui.graph",
-        "jquery.i18next"
+        "triple_brain.language_manager"
     ],
-    function ($, UserService, EventBus, LoginHandler, DragScroll, Vertex, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, ArrowLine, Menu, GraphUi) {
+    function ($, UserService, EventBus, LoginHandler, DragScroll, Vertex, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, ArrowLine, Menu, GraphUi, LanguageManager) {
         var api = {
             offset:function () {
                 var offset = {};
@@ -29,7 +29,7 @@ define(
             },
             start:function () {
                 $(document).ready(function () {
-                    loadLocaleContent(function(){
+                    LanguageManager.loadLocaleContent(function(){
                         ServerSubscriber.init(function () {
                             console.log("cometd initialized");
                         });
@@ -38,37 +38,6 @@ define(
                             showCredentialsFlow
                         );
                     });
-                    function loadLocaleContent(callback){
-                        var locale = localeIsFrench() ?
-                            "fr" :
-                            "en";
-                        $.i18n.init({
-                            lng : locale,
-                            useLocalStorage: false,
-                            debug: true,
-                            customLoad : function(lng, ns, options, loadComplete){
-                                var basePath = ns === "translation" ?
-                                    "locales/" :
-                                    "module/mind_map/" + ns + "/locales/";
-                                var url =  basePath + lng + "/" + "translation" + ".json";
-                                $.ajax({
-                                    url : url,
-                                    dataType:'json'
-                                }).success(function(data){
-                                        loadComplete(
-                                            null,
-                                            data
-                                        );
-                                    });
-
-                            }
-                        }, callback);
-                        function localeIsFrench(){
-                            return $.i18n.detectLanguage().indexOf(
-                                "fr"
-                            ) >= 0;
-                        }
-                    }
                 });
                 function callBackWhenIsAuthenticated() {
                     $("html").addClass("authenticated");

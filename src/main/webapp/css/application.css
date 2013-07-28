@@ -5,9 +5,39 @@
     left:-5px;
 }
 
+#registration-page .language-list{
+    float:left;
+    width:50%;
+    margin-bottom: 2em;
+}
+
+#registration-page .language-list h5{
+    height:6em;
+}
+
 #login-button, #register-button{
     display:block;
     margin-bottom: 1.2em;
+}
+
+#selectedLanguages, #availableLanguages{
+    list-style-type: none;
+    margin: 0;
+    padding: 0 0 2.5em;
+    float: left;
+    min-height: 1em;
+    background-color: gray;
+    min-height: 2em;
+    min-width: 75%;
+    /*margin-right: 10px;*/
+    /*width:100%;*/
+}
+#selectedLanguages li, #availableLanguages li {
+    font-size: 1.2em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    text-align: center;
+    width: 100%;
 }
 
 .security-form-wrapper{

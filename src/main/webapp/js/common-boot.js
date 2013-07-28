@@ -29,6 +29,7 @@ window.config = {
         "org/cometd/TimeSyncExtension" : "cometd/plugins/TimeSyncExtension",
         "jquery.i18next" : "plugins/i18next.amd.withJQuery-1.6.3",
         "jquery.triple_brain.search" : "triple_brain/search/jquery.triple_brain.search",
+        "triple_brain.language_manager" : "triple_brain/triple_brain.language_manager",
         "triple_brain.overlay_dialog" : "triple_brain/triple_brain.overlay_dialog",
         "triple_brain.menu" : "triple_brain/triple_brain.menu",
         "triple_brain.ui.utils" : "triple_brain/triple_brain.ui.utils",
