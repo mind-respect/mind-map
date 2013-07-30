@@ -22,7 +22,7 @@
     vertical-align: bottom;
     padding-bottom:0.8em;
 }
-#registration-page .language-list button{
+#registration-page .language-list > button{
     margin-top:0.7em;
 }
 
@@ -34,11 +34,7 @@
 #selectedLanguages, .registration-available-languages{
     list-style-type: none;
     margin: 0;
-    padding: 0 0 2.5em;
-    min-height: 1em;
     background-color: gray;
-    min-height: 2em;
-    min-width: 75%;
     /*margin-right: 10px;*/
     /*width:100%;*/
 }
@@ -47,6 +43,10 @@
     padding-bottom: 0.5em;
     width: 100%;
 }
+#selectedLanguages li .ui-icon, .registration-available-languages li .ui-icon{
+    display:inline-block;
+}
+
 
 #selectedLanguages li label, .registration-available-languages li label {
     margin-left:0.4em;

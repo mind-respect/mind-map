@@ -55,7 +55,7 @@ define([
                     LanguageManager.englishLanguage();
                 var selectedLanguagesList = access.getSelectedLanguagesList();
                 selectedLanguagesList.append(
-                    makeListElementUsingLanguage(
+                    makeListElementForSelectedLanguages(
                         currentLanguage
                     )
                 );
@@ -102,7 +102,7 @@ define([
                                 );
                                 selectedListElement.remove();
                                 access.getSelectedLanguagesList().append(
-                                    makeListElementUsingLanguage(
+                                    makeListElementForSelectedLanguages(
                                         language
                                     )
                                 );
@@ -115,6 +115,16 @@ define([
                     }
                 }
             }
+
+            function makeListElementForSelectedLanguages(language){
+                var listElement = makeListElementUsingLanguage(language);
+                var moveButton = $(
+                    "<span class='ui-icon ui-icon-arrowthick-2-n-s'>"
+                );
+                listElement.prepend(moveButton);
+                return listElement;
+            }
+
             function makeListElementUsingLanguage(language) {
                 var label = $("<label>");
                 label.append(
