@@ -14,13 +14,16 @@
 #registration-page .language-list{
     float:left;
     width:50%;
-    margin-bottom: 2em;
+    margin-bottom: 1em;
 }
 
 #registration-page .language-list h5{
-    height:3.5em;
     display:table-cell;
     vertical-align: bottom;
+    padding-bottom:0.8em;
+}
+#registration-page .language-list button{
+    margin-top:0.7em;
 }
 
 #login-button, #register-button{
@@ -28,11 +31,10 @@
     margin-bottom: 1.2em;
 }
 
-#selectedLanguages, #availableLanguages{
+#selectedLanguages, .registration-available-languages{
     list-style-type: none;
     margin: 0;
     padding: 0 0 2.5em;
-    float: left;
     min-height: 1em;
     background-color: gray;
     min-height: 2em;
@@ -40,12 +42,16 @@
     /*margin-right: 10px;*/
     /*width:100%;*/
 }
-#selectedLanguages li, #availableLanguages li {
-    font-size: 1.2em;
+#selectedLanguages li, .registration-available-languages li {
     padding-top: 0.5em;
     padding-bottom: 0.5em;
-    text-align: center;
     width: 100%;
+}
+
+#selectedLanguages li label, .registration-available-languages li label {
+    margin-left:0.4em;
+    font-size: 1.2em;
+    display:inline-block;
 }
 
 .security-form-wrapper{
@@ -393,6 +399,10 @@ input[type="button"], button {
     font-size:12px;
 }
 
+.peripheral-menu.identification{
+    width:16em;
+}
+
 .peripheral-menu.identification h3{
     text-align: left;
     font-size:0.9em;
@@ -497,6 +507,19 @@ input[type="button"], button {
     font-size: 0.9em;
 }
 
+button.add-button-in-list{
+    color:green;
+    font-weight:bold;
+    font-size:2em;
+    margin-left:0.2em;
+    margin-bottom:0.2em;
+    float:left;
+}
+
+button.add-button-in-list:hover{
+    color: #00d100;
+}
+
 .suggestion ul{
     list-style-type: none;
     white-space: nowrap;
@@ -519,18 +542,6 @@ input[type="button"], button {
 
 .suggestion li .text{
     margin-left:0.5em;
-}
-
-.suggestion li input[type="button"], .suggestion li button{
-    font-weight:bold;
-    font-size:2em;
-    margin-left:0.4em;
-    color:green;
-    margin-bottom:0.2em;
-}
-
-.suggestion li input[type="button"]:hover, .suggestion li button:hover{
-    color: #00d100;
 }
 
 .hidden-properties-container{

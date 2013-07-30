@@ -16,8 +16,11 @@
         "retype_password" : "Retype Password",
         "register" : "Register",
         "login" : "I have an account, log me in !",
-        "selected_languages" : "Languages I understand in order of preference",
-        "available_languages" : "Available languages",
+        "language" : {
+            "selected_languages" : "Languages I understand in order of preference",
+            "more_languages" : "Add language(s)",
+            "available_languages" : "Available languages"
+        },
         "error" : {
             "mandatory" : "Username is mandatory",
             "invalid" : "Username is invalid, it can only contain letters, numbers, underscores and hyphens",

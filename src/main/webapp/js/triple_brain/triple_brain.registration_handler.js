@@ -18,13 +18,13 @@ define([
                     handleRegisterForm();
                     handleLoginLink();
                 },
-                width:500,
+                width:450,
                 title:$.t("register.title")
             });
         };
         return api;
         function handleRegisterForm() {
-            setupLanguageLists();
+            setupLanguageMenu();
             access.errorMessages().hide();
             access.registerForm().reset();
             access.registerButton().on("click", function () {
@@ -45,49 +45,86 @@ define([
             });
         }
 
-        function setupLanguageLists() {
+        function setupLanguageMenu() {
             var currentLocale = LanguageManager.getLocale();
-            setupAvailableLanguagesList();
+            handleAddLanguageButton();
             setupSelectedLanguagesList();
-            $(
-                ".connectedSortable"
-            ).sortable({
-                connectWith: ".connectedSortable"
-            }).disableSelection();
-
             function setupSelectedLanguagesList() {
                 var currentLanguage = LanguageManager.isLocaleFrench() ?
                     LanguageManager.frenchLanguage() :
                     LanguageManager.englishLanguage();
-                access.selectedLanguagesList().append(
+                var selectedLanguagesList = access.getSelectedLanguagesList();
+                selectedLanguagesList.append(
                     makeListElementUsingLanguage(
                         currentLanguage
                     )
                 );
+                selectedLanguagesList.sortable().disableSelection();
             }
 
-            function setupAvailableLanguagesList() {
-                var availableLanguagesList = access.availableLanguagesList();
-                availableLanguagesList.empty();
-                var languagesWithoutCurrentLocale = getLanguagesWithoutLocale(
-                    currentLocale,
-                    LanguageManager.getPossibleLanguages()
-                );
-                $.each(languagesWithoutCurrentLocale, function () {
-                    availableLanguagesList.append(
-                        makeListElementUsingLanguage(this)
-                    );
+            function handleAddLanguageButton(){
+                access.getAddLanguagesButton().on("click", function(event){
+                    event.preventDefault();
+                    setupAvailableLanguagesList();
                 });
+                function setupAvailableLanguagesList() {
+                    var availableLanguagesList = $(
+                        "<ul class='registration-available-languages'>"
+                    );
+                    var languagesWithoutCurrentLocale = getLanguagesWithoutLocale(
+                        currentLocale,
+                        LanguageManager.getPossibleLanguages()
+                    );
+                    $.each(languagesWithoutCurrentLocale, function () {
+                        availableLanguagesList.append(
+                            makeListElementForAvailableLanguages(this)
+                        );
+                    });
+                    availableLanguagesList.dialog({
+                        title:$.t("register.language.available_languages")
+                    });
+                    function makeListElementForAvailableLanguages(language){
+                        var listElement = makeListElementUsingLanguage(language);
+                        var addButton = $("<button class='add-button-in-list'>");
+                        addButton.append(
+                            "+"
+                        );
+                        addButton.on(
+                            "click",
+                            function(){
+                                var selectedListElement = $(this).closest(
+                                    "li"
+                                );
+                                var language = selectedListElement.data(
+                                    "language"
+                                );
+                                selectedListElement.remove();
+                                access.getSelectedLanguagesList().append(
+                                    makeListElementUsingLanguage(
+                                        language
+                                    )
+                                );
+                            }
+                        );
+                        listElement.prepend(
+                            addButton
+                        );
+                        return listElement;
+                    }
+                }
             }
-
             function makeListElementUsingLanguage(language) {
+                var label = $("<label>");
+                label.append(
+                    language.fullname
+                );
                 return $("<li>")
                     .append(
-                    language.fullname
+                    label
                 )
-                    .prop(
-                    "data-locale",
-                    language.locale
+                    .data(
+                    "language",
+                    language
                 )
                     .addClass(
                     "ui-state-default"
@@ -157,11 +194,11 @@ define([
                 loginLink:function () {
                     return $("#login-link");
                 },
-                selectedLanguagesList:function () {
+                getSelectedLanguagesList:function () {
                     return $("#selectedLanguages");
                 },
-                availableLanguagesList:function () {
-                    return $("#availableLanguages");
+                getAddLanguagesButton:function(){
+                    return $("#more-languages-link");
                 }
             };
         }

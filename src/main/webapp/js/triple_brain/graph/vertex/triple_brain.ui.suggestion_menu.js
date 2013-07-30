@@ -90,7 +90,10 @@ define([
                         });
                     }else{
                         var addSuggestionButton = $(
-                            "<input type='button' value='+' >"
+                            "<button class='add-button-in-list'>"
+                        );
+                        addSuggestionButton.append(
+                            "+"
                         );
                         addSuggestionButton.on("click", function(){
                             addHtmlSuggestionAsVertexAndRelationInMap(

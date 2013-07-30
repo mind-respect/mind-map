@@ -4,7 +4,7 @@
         "email" : "Courriel",
         "password" : "Mot de passe",
         "login" : "Authentifier",
-        "register": "créer un compte plutôt",
+        "register": "créer un compte",
         "error" : "Courriel ou mot de passe invalide(s)"
     },
 
@@ -14,10 +14,13 @@
         "email" : "Courriel",
         "password" : "Mot de passe",
         "retype_password" : "Retaper le mot de passe",
-        "selected_languages" : "Langues que je connais en ordre de préférence",
-        "available_languages" : "Langues disponibles",
         "register" : "Enregistrer",
-        "login" : "s'authentifier plutôt",
+        "login" : "s'authentifier",
+        "language" : {
+            "selected_languages" : "Langues que je connais en ordre de préférence",
+            "more_languages" : "Ajouter langue(s)",
+            "available_languages" : "Langues disponibles"
+        },
         "error" : {
             "mandatory" : "Le nom d'usager est obligatoire",
             "invalid" : "Le nom d'usager est invalide, il peut contenir des lettres, des nombres, des soulignements (underscores) et des traits d'union",
