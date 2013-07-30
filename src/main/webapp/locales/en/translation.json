@@ -4,7 +4,7 @@
         "email" : "Email",
         "password" : "Password",
         "login" : "Login",
-        "register": "create an account instead",
+        "register": "create an account",
         "error" : "Invalid credentials"
     },
 

@@ -85,7 +85,9 @@ define([
                     });
                     function makeListElementForAvailableLanguages(language){
                         var listElement = makeListElementUsingLanguage(language);
-                        var addButton = $("<button class='add-button-in-list'>");
+                        var addButton = $(
+                            "<button class='add-button-in-list'>"
+                        );
                         addButton.append(
                             "+"
                         );
