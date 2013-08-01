@@ -19,7 +19,8 @@
         "language" : {
             "selected_languages" : "Languages I understand in order of preference",
             "more_languages" : "Add language(s)",
-            "available_languages" : "Available languages"
+            "available_languages" : "Available languages",
+            "filter" : "Filter"
         },
         "error" : {
             "mandatory" : "Username is mandatory",

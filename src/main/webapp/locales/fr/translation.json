@@ -19,7 +19,8 @@
         "language" : {
             "selected_languages" : "Langues que je connais en ordre de préférence",
             "more_languages" : "Ajouter langue(s)",
-            "available_languages" : "Langues disponibles"
+            "available_languages" : "Langues disponibles",
+            "filter" : "Trier"
         },
         "error" : {
             "mandatory" : "Le nom d'usager est obligatoire",

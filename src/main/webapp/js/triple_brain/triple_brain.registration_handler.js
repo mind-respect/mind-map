@@ -65,9 +65,31 @@ define([
             function handleAddLanguageButton(){
                 access.getAddLanguagesButton().on("click", function(event){
                     event.preventDefault();
-                    setupAvailableLanguagesList();
+                    setupAvailableLanguagesMenu();
                 });
-                function setupAvailableLanguagesList() {
+                function setupAvailableLanguagesMenu() {
+                    var menu = $('<div>');
+                    var filterLanguagesInput = $(
+                        "<input type='text' placeholder='"+
+                            $.t("register.language.filter")
+                        +"'>");
+                    menu.append(filterLanguagesInput);
+                    filterLanguagesInput.on(
+                        "keyup",
+                        function(){
+                            var filterInput = $(this);
+                            var list = filterInput.siblings(
+                                ".registration-available-languages"
+                            );
+                            list.find("> li").hide()
+                                .filter(function(){
+                                    var listElement = $(this);
+                                    return listElement.text().toLowerCase().indexOf(
+                                        filterInput.val().toLowerCase()
+                                    ) !== -1;
+                                }).show()
+                            return false;
+                    });
                     var availableLanguagesList = $(
                         "<ul class='registration-available-languages'>"
                     );
@@ -80,7 +102,8 @@ define([
                             makeListElementForAvailableLanguages(this)
                         );
                     });
-                    availableLanguagesList.dialog({
+                    menu.append(availableLanguagesList);
+                    menu.dialog({
                         title:$.t("register.language.available_languages")
                     });
                     function makeListElementForAvailableLanguages(language){
