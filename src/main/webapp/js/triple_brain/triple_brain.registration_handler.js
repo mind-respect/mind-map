@@ -145,14 +145,15 @@ define([
                     "<span class='ui-icon ui-icon-arrowthick-2-n-s'>"
                 );
                 listElement.prepend(moveInstruction);
-                var removeButton = $("<button>")
-//                    .peripheral-menu.identification input.remove-identification{
-//                    margin:auto;
-//                    float:right;
-//                    color:red;
-//                    font-weight:bold;
-//                    font-size:1.3em;
-//                }
+                var removeButton = $(
+                    "<button class='remove-button-in-list'>"
+                ).append("x");
+                removeButton.on("click", function(){
+                    $(this).closest("li").remove();
+                });
+                listElement.append(
+                    removeButton
+                );
                 return listElement;
             }
 

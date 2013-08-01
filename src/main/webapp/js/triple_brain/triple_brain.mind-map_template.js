@@ -34,7 +34,7 @@ define([
         t.add(
             'identification_existing_identity',
             '<h3 class="type-label identification" identification-uri="{identification_uri}">{type_label}' +
-            '<input type="button" class="remove-identification" value="x">'+
+            '<button class="remove-button-in-list">x</button>'+
             '</h3>'+
             '<div class="group description">{description}</div>'
         );
