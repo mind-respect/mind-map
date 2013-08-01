@@ -10,10 +10,10 @@ define([
         return $.i18n.detectLanguage();
     };
     api.getPossibleLanguages = function(){
-        return [
-            api.englishLanguage(),
-            api.frenchLanguage()
-        ];
+        return makeLanguages([
+            ["en", "english"],
+            ["fr", "français"]
+        ]);
     };
     api.englishLanguage = function(){
         return makeLanguage(
@@ -64,5 +64,17 @@ define([
             fullname : fullname,
             locale : locale
         };
+    }
+    function makeLanguages(languages){
+        var formattedLanguages = [];
+        $.each(languages, function(){
+            formattedLanguages.push(
+                makeLanguage(
+                    this[1],
+                    this[0]
+                )
+            );
+        });
+        return formattedLanguages;
     }
 });

@@ -71,11 +71,11 @@ define([
                     var availableLanguagesList = $(
                         "<ul class='registration-available-languages'>"
                     );
-                    var languagesWithoutCurrentLocale = getLanguagesWithoutLocale(
-                        currentLocale,
-                        LanguageManager.getPossibleLanguages()
+                    var languagesWithoutSelectedLanguages = filterLanguages(
+                        LanguageManager.getPossibleLanguages(),
+                        getSelectedLanguages()
                     );
-                    $.each(languagesWithoutCurrentLocale, function () {
+                    $.each(languagesWithoutSelectedLanguages, function () {
                         availableLanguagesList.append(
                             makeListElementForAvailableLanguages(this)
                         );
@@ -118,10 +118,18 @@ define([
 
             function makeListElementForSelectedLanguages(language){
                 var listElement = makeListElementUsingLanguage(language);
-                var moveButton = $(
+                var moveInstruction = $(
                     "<span class='ui-icon ui-icon-arrowthick-2-n-s'>"
                 );
-                listElement.prepend(moveButton);
+                listElement.prepend(moveInstruction);
+                var removeButton = $("<button>")
+//                    .peripheral-menu.identification input.remove-identification{
+//                    margin:auto;
+//                    float:right;
+//                    color:red;
+//                    font-weight:bold;
+//                    font-size:1.3em;
+//                }
                 return listElement;
             }
 
@@ -143,17 +151,28 @@ define([
                 );
             }
 
-            function getLanguagesWithoutLocale(locale, languages) {
+            function filterLanguages(languages, languagesToRemove) {
                 var filteredLanguages = [];
                 $.each(languages, function () {
                     var language = this;
-                    if (language.locale !== locale) {
+                    if(!languagesToRemoveContainLanguage(language)){
                         filteredLanguages.push(
                             language
                         );
                     }
                 });
                 return filteredLanguages;
+                function languagesToRemoveContainLanguage(language){
+                    var containsLanguage = false;
+                    $.each(languagesToRemove, function(){
+                        var languageToRemove = this;
+                        if (language.locale === languageToRemove.locale) {
+                            containsLanguage = true;
+                            return -1;
+                        }
+                    });
+                    return containsLanguage;
+                }
             }
         }
 
@@ -175,6 +194,17 @@ define([
             for (var i in errors) {
                 $('#' + errors[i].reason).show();
             }
+        }
+
+        function getSelectedLanguages(){
+            var selectedLanguages = [];
+            $.each(access.getSelectedLanguagesList().find("> li"), function(){
+                var lisElement = $(this);
+                selectedLanguages.push(
+                    lisElement.data("language")
+                );
+            });
+            return selectedLanguages;
         }
 
         function defineAccess() {
