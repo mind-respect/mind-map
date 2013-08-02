@@ -45,6 +45,9 @@ define([
                 type:'GET',
                 url:sessionResourceUrl
             }).success(function (authenticatedUser) {
+                    authenticatedUser.preferred_locales = $.parseJSON(
+                        authenticatedUser.preferred_locales
+                    );
                     authenticatedUserInCache = authenticatedUser;
                     if (callback != undefined) {
                         callback.call(this, authenticatedUser);

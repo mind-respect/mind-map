@@ -206,7 +206,17 @@ define([
             formAsJson.email = access.emailField().val();
             formAsJson.password = access.passwordField().val();
             formAsJson.password_verification = access.passwordConfirmationField().val();
+            formAsJson.preferred_locales = getListOfSelectedLocales();
             return formAsJson;
+            function getListOfSelectedLocales(){
+                var list = [];
+                $.each(access.getSelectedLanguagesList().find("> li"), function(){
+                    list.push(
+                        $(this).data("language").locale
+                    );
+                });
+                return list;
+            }
         }
 
         function handleRegistrationSuccess() {
