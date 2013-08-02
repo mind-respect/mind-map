@@ -39,7 +39,7 @@ define([
                         $.parseJSON(xhr.responseText)
                     );
                 });
-        }
+        };
         api.authenticatedUser = function (callback) {
             $.ajax({
                 type:'GET',
@@ -48,6 +48,7 @@ define([
                     authenticatedUser.preferred_locales = $.parseJSON(
                         authenticatedUser.preferred_locales
                     );
+                    console.log(authenticatedUser);
                     authenticatedUserInCache = authenticatedUser;
                     if (callback != undefined) {
                         callback.call(this, authenticatedUser);
@@ -60,7 +61,7 @@ define([
                     EventBus.publish(
                         '/event/ui/users/get_authenticated/errors'
                     );
-                })
+                });
         };
         api.isAuthenticated = function (isAuthenticatedCallBack, isNotAuthenticatedCallBack) {
             $.ajax({
@@ -70,13 +71,13 @@ define([
                     isAuthenticated.is_authenticated ?
                         isAuthenticatedCallBack() :
                         isNotAuthenticatedCallBack()
-                }).error(isNotAuthenticatedCallBack)
+                }).error(isNotAuthenticatedCallBack);
         };
         api.logout = function (successCallBack) {
             $.ajax({
                 type:'DELETE',
                 url:sessionResourceUrl
-            }).success(successCallBack)
-        }
+            }).success(successCallBack);
+        };
         return api;
     });

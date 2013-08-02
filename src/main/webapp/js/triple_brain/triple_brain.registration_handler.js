@@ -46,17 +46,16 @@ define([
         }
 
         function setupLanguageMenu() {
-            var currentLocale = LanguageManager.getLocale();
             handleAddLanguageButton();
             setupSelectedLanguagesList();
             function setupSelectedLanguagesList() {
-                var currentLanguage = LanguageManager.isLocaleFrench() ?
-                    LanguageManager.frenchLanguage() :
-                    LanguageManager.englishLanguage();
+                var currentLocale = LanguageManager.getLocale();
                 var selectedLanguagesList = access.getSelectedLanguagesList();
                 selectedLanguagesList.append(
                     makeListElementForSelectedLanguages(
-                        currentLanguage
+                        getLanguageOfLocale(
+                            LanguageManager.getLocale()
+                        )
                     )
                 );
                 selectedLanguagesList.sortable().disableSelection();
@@ -198,6 +197,17 @@ define([
                     return containsLanguage;
                 }
             }
+        }
+
+        function getLanguageOfLocale(locale){
+            var language = LanguageManager.englishLanguage();
+            $.each(LanguageManager.getPossibleLanguages(), function(){
+                if(this.locale === locale){
+                    language = this;
+                    return -1;
+                }
+            });
+            return language;
         }
 
         function formAsJSon() {
