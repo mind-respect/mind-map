@@ -3,10 +3,15 @@
  */
 define([
     "jquery",
+    "triple_brain.user",
     "jquery.i18next"
-], function($){
+], function($, User){
+    var localesHavingAvailableTranslation = [
+        "fr",
+        "en"
+    ];
     var api = {};
-    api.getLocale = function(){
+    api.getBrowserLocale = function(){
         return $.i18n.detectLanguage();
     };
     api.getPossibleLanguages = function(){
@@ -177,15 +182,8 @@ define([
             "fr"
         );
     };
-    api.isLocaleFrench = function(){
-        return api.getLocale().indexOf(
-            "fr"
-        ) >= 0;
-    };
     api.loadLocaleContent = function(callback){
-        var locale = api.isLocaleFrench() ?
-            "fr" :
-            "en";
+        var locale = getLocaleUsedForSiteTranslation();
         $.i18n.init({
             lng : locale,
             useLocalStorage: false,
@@ -209,6 +207,19 @@ define([
         }, callback);
     };
     return api;
+
+    function isLocaleFrench(locale){
+        return locale.indexOf(
+            "fr"
+        ) >= 0;
+    }
+
+    function isLocaleEnglish(locale){
+        return locale.indexOf(
+            "en"
+        ) >= 0;
+    }
+
     function makeLanguage(fullname, locale){
         return {
             fullname : fullname,
@@ -226,5 +237,31 @@ define([
             );
         });
         return formattedLanguages;
+    }
+
+    function getLocaleUsedForSiteTranslation(){
+        var currentUser = User.authenticatedUserInCache();
+        return currentUser === undefined ?
+            getFromBrowser() :
+            getFromUser();
+        function getFromUser(){
+            var localeUsedForSiteTranslation = "en";
+            $.each(currentUser.preferred_locales, function(){
+                var locale = this;
+                if(isLocaleEnglish(locale)){
+                    return false;
+                }
+                if(isLocaleFrench(locale)){
+                    localeUsedForSiteTranslation = "fr";
+                    return false;
+                }
+            });
+            return localeUsedForSiteTranslation;
+        }
+        function getFromBrowser(){
+            return isLocaleFrench(api.getBrowserLocale())?
+                "fr" :
+                "en";
+        }
     }
 });

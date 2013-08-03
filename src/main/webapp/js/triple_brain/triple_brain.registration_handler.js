@@ -49,12 +49,12 @@ define([
             handleAddLanguageButton();
             setupSelectedLanguagesList();
             function setupSelectedLanguagesList() {
-                var currentLocale = LanguageManager.getLocale();
+                var currentLocale = LanguageManager.getBrowserLocale();
                 var selectedLanguagesList = access.getSelectedLanguagesList();
                 selectedLanguagesList.append(
                     makeListElementForSelectedLanguages(
                         getLanguageOfLocale(
-                            LanguageManager.getLocale()
+                            LanguageManager.getBrowserLocale()
                         )
                     )
                 );

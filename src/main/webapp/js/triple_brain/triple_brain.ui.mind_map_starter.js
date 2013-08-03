@@ -29,15 +29,13 @@ define(
             },
             start:function () {
                 $(document).ready(function () {
-                    LanguageManager.loadLocaleContent(function(){
-                        ServerSubscriber.init(function () {
-                            console.log("cometd initialized");
-                        });
-                        UserService.isAuthenticated(
-                            callBackWhenIsAuthenticated,
-                            showCredentialsFlow
-                        );
+                    ServerSubscriber.init(function () {
+                        console.log("cometd initialized");
                     });
+                    UserService.isAuthenticated(
+                        callBackWhenIsAuthenticated,
+                        showCredentialsFlow
+                    );
                 });
                 function callBackWhenIsAuthenticated() {
                     $("html").addClass("authenticated");
@@ -50,35 +48,40 @@ define(
                             "relative_tree"
                         )
                     );
-                    UserService.authenticatedUser(
-                        GraphDisplayer.displayUsingDefaultVertex
+                    UserService.authenticatedUser(function () {
+                            LanguageManager.loadLocaleContent(function () {
+                                GraphDisplayer.displayUsingDefaultVertex();
+                                $(Menu.redrawButton()).click(function () {
+                                    GraphDisplayer.displayUsingNewCentralVertex(
+                                        Vertex.centralVertex(),
+                                        callback
+                                    );
+                                });
+                                switchDisplayerButtons().click(function () {
+                                    var displayerName = $(this).attr("data-displayer_name");
+                                    GraphDisplayer.setImplementation(
+                                        GraphDisplayerFactory.getByName(
+                                            displayerName
+                                        )
+                                    );
+                                    GraphDisplayer.displayUsingNewCentralVertex(
+                                        Vertex.centralVertex()
+                                    );
+                                });
+                                translateText();
+                            });
+                        }
                     );
-                    $(Menu.redrawButton()).click(function() {
-                        GraphDisplayer.displayUsingNewCentralVertex(
-                            Vertex.centralVertex(),
-                            callback
-                        );
-                    });
-                    switchDisplayerButtons().click(function(){
-                        var displayerName = $(this).attr("data-displayer_name");
-                        GraphDisplayer.setImplementation(
-                            GraphDisplayerFactory.getByName(
-                                displayerName
-                            )
-                        );
-                        GraphDisplayer.displayUsingNewCentralVertex(
-                            Vertex.centralVertex()
-                        );
-                    });
-                    translateText();
                 }
-                function translateText(){
+                function translateText() {
                     $("html").i18n();
                 }
-                function getHeaderMenu(){
+
+                function getHeaderMenu() {
                     return $("#top-panel");
                 }
-                function switchDisplayerButtons(){
+
+                function switchDisplayerButtons() {
                     return getHeaderMenu().find(".switch-displayer");
                 }
 
@@ -91,7 +94,9 @@ define(
                 }
 
                 function showCredentialsFlow() {
-                    LoginHandler.startFlow();
+                    LanguageManager.loadLocaleContent(function () {
+                        LoginHandler.startFlow();
+                    });
                 }
 
                 function handleDisconnectButton() {
