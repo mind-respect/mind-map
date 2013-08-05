@@ -456,16 +456,14 @@ input[type="button"], button {
     left:-15px;
 }
 
-.relation .close_button{
-    float:none;
-    padding: 9px 3px;
-    border-color: #d10000;
-    background: red;
-    font-size: 0.7em;
-    border-radius: 20px;
-    left:0;
-    top:0;
+.relation .relation-menu{
     margin-left:0.3em;
+}
+
+.relation .ui-button{
+    width:1.7em;
+    height:1.8em;
+    margin:0;
 }
 
 /*.list .identification h3 {*/

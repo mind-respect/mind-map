@@ -28,7 +28,7 @@ define([
             var uri = edgeServer.id;
             edgeServer.id = IdUriUtils.graphElementIdFromUri(edgeServer.id);
             var html = RelativeTreeTemplates['edge'].merge({
-                label : edgeServer.label === "" ?
+                label:edgeServer.label === "" ?
                     TreeEdge.getWhenEmptyLabel() :
                     edgeServer.label
             });
@@ -82,34 +82,74 @@ define([
             function showRemoveButtonOnlyIfMouseOver(html) {
                 html.hover(
                     function () {
-                        var removeButton = $("<span class='close_button'>&#10006</span>");
-                        $(this).append(
-                            removeButton
+                        var html = $(this);
+                        var vertex = Vertex.withHtml(
+                            html.closest(".vertex")
                         );
-                        removeButton.on("click", function (event) {
-                            event.stopPropagation();
-                            var edge = edgeFromHtml(
-                                $(this).closest(".relation")
+                        vertex.hideMenu();
+                        var menu = $("<span class='relation-menu'>");
+                        html.append(menu);
+                        addIdentificationButton();
+                        addRemoveButton();
+                        vertex.adjustWidth();
+                        function addIdentificationButton() {
+                            var identificationButton = $("<button class='identification'>");
+                            identificationButton.button({
+                                icons:{
+                                    primary:"ui-icon ui-icon-info"
+                                },
+                                text:false
+                            });
+                            menu.append(identificationButton);
+                            identificationButton.on(
+                                "click",
+                                function(event){
+                                    event.stopPropagation();
+                                }
                             );
-                            EdgeService.remove(edge,
-                                function (edge) {
-                                    var vertex = edge.childVertexInDisplay();
-                                    var relativeVertex = RelativeVertex.withVertex(
-                                        vertex
-                                    );
-                                    relativeVertex.visitChildren(function (childVertex) {
-                                        childVertex.removeConnectedEdges();
-                                        childVertex.remove();
-                                    });
-                                    edge.remove();
-                                    vertex.remove();
-                                    TreeEdge.redrawAllEdges();
-                               }
+                        }
+
+                        function addRemoveButton() {
+                            var removeButton = $("<button>");
+                            menu.append(
+                                removeButton
                             );
-                        });
+                            removeButton.button({
+                                icons:{
+                                    primary:"ui-icon ui-icon-trash"
+                                },
+                                text:false
+                            });
+                            removeButton.on("click", function (event) {
+                                event.stopPropagation();
+                                var edge = edgeFromHtml(
+                                    $(this).closest(".relation")
+                                );
+                                EdgeService.remove(edge,
+                                    function (edge) {
+                                        var vertex = edge.childVertexInDisplay();
+                                        var relativeVertex = RelativeVertex.withVertex(
+                                            vertex
+                                        );
+                                        relativeVertex.visitChildren(function (childVertex) {
+                                            childVertex.removeConnectedEdges();
+                                            childVertex.remove();
+                                        });
+                                        edge.remove();
+                                        vertex.remove();
+                                        TreeEdge.redrawAllEdges();
+                                    }
+                                );
+                            });
+                        }
+
                     },
                     function () {
-                        $(this).find("> .close_button").remove();
+                        var html = $(this);
+                        Vertex.withHtml(
+                            html.closest(".vertex")
+                        ).showMenu();
+                        html.find(".relation-menu").remove();
                     }
                 );
             }
@@ -182,9 +222,9 @@ define([
                 var label = previousEdge.text();
                 previousEdge.setText(label);
                 var html = RelativeTreeTemplates['edge'].merge({
-                    label: label.trim() === "" ?
-                    TreeEdge.getWhenEmptyLabel() :
-                    previousEdge.text()
+                    label:label.trim() === "" ?
+                        TreeEdge.getWhenEmptyLabel() :
+                        previousEdge.text()
                 });
                 html = $(html);
                 showRemoveButtonOnlyIfMouseOver(html);
