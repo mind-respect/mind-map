@@ -284,7 +284,7 @@ define([
 
                 function suggestionsButtonClickBehaviour(event) {
                     event.stopPropagation();
-                    var outOfVertexMenus = $('.peripheral-menu');
+                    var outOfVertexMenus = $('.graph-element-menu');
                     $(outOfVertexMenus).remove();
                     var vertex = vertexOfSubHtmlComponent(this);
                     vertex.setSuggestionMenu(

@@ -48,7 +48,9 @@ define([
             var searchBox = $("<input type='text'>");
             searchBox.tripleBrainAutocomplete({
                 select:function (event, ui) {
-                    var menu = $(this).closest('.peripheral-menu');
+                    var menu = $(this).closest(
+                        '.link-to-far-vertex-menu'
+                    );
                     var parentVertex = $(menu).data("vertex");
                     html.find("input").blur();
                     html.remove();

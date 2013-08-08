@@ -27,7 +27,7 @@ define([
         t.add('vertex_menu', '<div class="menu"></div>');
         t.add('vertex_move_button', '<div class="move"></div>');
 
-        t.add('identification_menu', '<div class="peripheral-menu identification"></div>');
+        t.add('identification_menu', '<div class="identification"></div>');
         t.add('identification_menu_explanation_title', '<h2 data-i18n="vertex.menu.identification.title"></h2>');
         t.add('identification_menu_indications', '<h3 data-i18n="vertex.menu.identification.instruction"></h3>');
         t.add('identification_existing_identities', '<div class="list"></div>');
@@ -49,10 +49,10 @@ define([
 
         t.add(
             'link_to_far_vertex_menu',
-            '<div class="peripheral-menu link-to-far-vertex-menu"></div>'
+            '<div class="link-to-far-vertex-menu"></div>'
         );
 
-        t.add('suggestions_menu', '<div class="peripheral-menu suggestion"></div>');
+        t.add('suggestions_menu', '<div class="suggestion"></div>');
         t.add('suggestions_list', '<ul></ul>');
         t.add(
             'suggestion',
@@ -71,7 +71,7 @@ define([
         t.add('image_container_image', "<img src='{src}'>");
 
         t.add('hidden_property_container', '<div class="hidden-properties-container"></div>');
-        t.add('hidden_property_menu', '<div class="peripheral-menu"></div>');
+        t.add('hidden_property_menu', '<div></div>');
         t.add(
             'hidden_properties_title',
             "<h2 data-i18n='vertex.menu.hidden_relation.title'></h2>"

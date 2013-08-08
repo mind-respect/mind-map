@@ -372,53 +372,49 @@ input[type="button"], button {
     font-family: courier new, monospace;
 }
 
-.peripheral-menu{
-    position:absolute;
-    /*z-index: 10;*/
-    background: -moz-linear-gradient(100% 100% 90deg, #ffffff, #eeeeee);
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), to(#eeeeee));
+.graph-element-menu{
     opacity: 0.96;
     margin-right:auto;
-    border:1px solid black;
-    padding:5px;
     text-align:center;
 }
 
-.peripheral-menu h2{
-    font-size: 1em;
-    white-space: nowrap;
-    margin-top:1.8em;
+.graph-element-menu h2, .graph-element-menu h3{
+    line-height:inherit;
 }
 
-.peripheral-menu h3{
+.graph-element-menu h2{
+    font-size: 1em;
+}
+
+.graph-element-menu h3{
     margin-top:5px;
     font-weight:normal;
     font-size:0.8em;
 }
 
-.peripheral-menu ul{
+.graph-element-menu ul{
     margin-left: 0px;
     margin-bottom:5px;
     padding:0;
     list-style-type: none;
 }
 
-.peripheral-menu li{
+.graph-element-menu li{
     margin-left: 0px;
     padding:0;
     font-size:12px;
 }
 
-.peripheral-menu.identification{
+.graph-element-menu.identification{
     width:16em;
 }
 
-.peripheral-menu.identification h3{
+.graph-element-menu.identification h3{
     text-align: left;
     font-size:0.9em;
 }
 
-.peripheral-menu.identification .type-label{
+.graph-element-menu.identification .type-label{
     text-align: center;
     padding-top : 10px;
     padding-bottom: 10px;
@@ -427,25 +423,25 @@ input[type="button"], button {
     font-size:1em;
 }
 
-.peripheral-menu.identification .description{
+.graph-element-menu .identification .description{
     font-size:0.9em;
     width:300px;
     text-align:left;
 }
 
-.peripheral-menu.identification ::-webkit-input-placeholder {
+.graph-element-menu .identification ::-webkit-input-placeholder {
     color: black;
 }
 
-.peripheral-menu.identification :-moz-placeholder { /* Firefox 18- */
+.graph-element-menu .identification :-moz-placeholder { /* Firefox 18- */
     color: black;
 }
 
-.peripheral-menu.identification ::-moz-placeholder {  /* Firefox 19+ */
+.graph-element-menu .identification ::-moz-placeholder {  /* Firefox 19+ */
     color: black;
 }
 
-.peripheral-menu.identification :-ms-input-placeholder {
+.graph-element-menu .identification :-ms-input-placeholder {
     color: black;
 }
 
@@ -598,23 +594,24 @@ button.add-button-in-list:hover{
     color:#47A3FF;
 }
 
-.identification-autocomplete-flyout{
+.autocomplete-flyout{
     position:absolute;
     width:300px;
     background-color: white;
-    /*z-index:1000;*/
+    /*one more than jquery ui dialog*/
+    z-index:101;
 }
 
-.identification-autocomplete-flyout img{
+.autocomplete-flyout img{
     float:left;
     margin-right:0.7em;
 }
 
-.identification-autocomplete-flyout .title{
+.autocomplete-flyout .title{
     font-weight:bold;
 }
 
-.identification-autocomplete-flyout .source{
+.autocomplete-flyout .source{
     font-weight:lighter;
     font-size:85%;
 }

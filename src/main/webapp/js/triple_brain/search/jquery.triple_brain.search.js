@@ -86,14 +86,14 @@ require([
                     }
                 },
                 close:function () {
-                    $(".identification-autocomplete-flyout").remove();
+                    $(".autocomplete-flyout").remove();
                 },
                 focus:function (event, ui) {
                     var searchResult = ui.item;
                     searchResult.provider.getMoreInfoForSearchResult(
                         searchResult,
                         function (moreInfo) {
-                            $(".identification-autocomplete-flyout").remove();
+                            $(".autocomplete-flyout").remove();
                             displayDescriptionPanel(
                                 event.currentTarget,
                                 moreInfo
@@ -102,7 +102,7 @@ require([
                     );
                     function displayDescriptionPanel(list, description) {
                         var moreInfoPanel = $("<div>");
-                        moreInfoPanel.addClass("identification-autocomplete-flyout");
+                        moreInfoPanel.addClass("autocomplete-flyout");
                         list = $(list);
                         var image = $("<img src='" + description.imageUrl + "'>");
                         moreInfoPanel.append(

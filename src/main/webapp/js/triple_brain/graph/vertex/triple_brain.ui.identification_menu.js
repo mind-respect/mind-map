@@ -108,7 +108,7 @@ define([
                         '.identification'
                     ).data("identification");
                     var semanticMenu = $(identificationListElement).closest(
-                        '.peripheral-menu'
+                        '.identification'
                     );
                     var vertex = $(semanticMenu).data("vertex");
                     var removeIdentification = identification.getType() == "type" ?
@@ -165,7 +165,9 @@ define([
                 function setUpAutocomplete() {
                     identificationTextField.tripleBrainAutocomplete({
                         select:function (event, ui) {
-                            var semanticMenu = $(this).closest('.peripheral-menu');
+                            var semanticMenu = $(this).closest(
+                                '.identification'
+                            );
                             var vertex = $(semanticMenu).data("vertex");
                             var searchResult = ui.item;
                             identifyUsingServerIdentificationFctn(
@@ -192,7 +194,7 @@ define([
                 function setUpAutocomplete() {
                     typeIdentificationTextField.tripleBrainAutocomplete({
                         select:function (event, ui) {
-                            var semanticMenu = $(this).closest('.peripheral-menu');
+                            var semanticMenu = $(this).closest('.identification');
                             var vertex = $(semanticMenu).data("vertex");
                             var searchResult = ui.item;
                             identifyUsingServerIdentificationFctn(
