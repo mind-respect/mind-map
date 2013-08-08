@@ -60,8 +60,8 @@ define([
             };
             this.position = function () {
                 return Point.fromCoordinates(
-                    $(html).offset().left,
-                    $(html).offset().top
+                    html.offset().left,
+                    html.offset().top
                 );
             };
             this.intersectsWithSegment = function (segment) {
@@ -100,7 +100,7 @@ define([
             this.setNameOfHiddenProperties = function (nameOfHiddenProperties) {
                 $(html).data('nameOfHiddenProperties', nameOfHiddenProperties);
             };
-            this.buildHiddenNeighborPropertiesIndicator = function () {
+            this.buildHiddenNeighborPropertiesIndicatorIfApplicable = function () {
                 var propertiesIndicator = PropertiesIndicator.withVertex(
                     self
                 );
@@ -458,11 +458,6 @@ define([
             };
             this.scrollTo = function () {
                 html.centerOnScreen();
-//                var position = self.position();
-//                window.scroll(
-//                    position.x - screen.width / 2,
-//                    position.y - screen.height / 4
-//                );
             };
             this.adjustWidth = function () {
                 var intuitiveWidthBuffer = 70;
@@ -484,12 +479,7 @@ define([
                     width + "px"
                 );
             };
-            this.hasIdentificationMenu = function () {
-                return self.getIdentificationMenu() != undefined;
-            };
-            this.hasSuggestionMenu = function () {
-                return self.getSuggestionMenu() != undefined;
-            };
+
             this.setIdentificationMenu = function (identificationMenu) {
                 $(html).data("identification_menu", identificationMenu);
             };

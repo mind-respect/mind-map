@@ -236,6 +236,7 @@ define([
                 childVertexHtmlFacade.getHtml()
             );
             childVertexHtmlFacade.adjustWidth();
+            childVertexHtmlFacade.buildHiddenNeighborPropertiesIndicatorIfApplicable();
             self.addChildrenContainerToVertex(childVertexHtmlFacade);
             return childVertexHtmlFacade;
         };
@@ -276,6 +277,7 @@ define([
                 $(verticesContainer).append(vertexContainer);
                 $(vertexContainer).append(rootVertex.getHtml());
                 rootVertex.adjustWidth();
+                rootVertex.buildHiddenNeighborPropertiesIndicatorIfApplicable();
                 var leftChildrenContainer;
                 if(canAddToLeft){
                     leftChildrenContainer = self.addChildrenContainerToVertex(

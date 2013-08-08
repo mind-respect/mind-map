@@ -12,12 +12,11 @@ define(
         "triple_brain.ui.depth_slider",
         "triple_brain.graph_displayer",
         "triple_brain.graph_displayer_factory",
-        "triple_brain.ui.arrow_line",
         "triple_brain.menu",
         "triple_brain.ui.graph",
-        "triple_brain.language_manager"
+        "triple_brain.language_manager",
     ],
-    function ($, UserService, EventBus, LoginHandler, DragScroll, Vertex, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, ArrowLine, Menu, GraphUi, LanguageManager) {
+    function ($, UserService, EventBus, LoginHandler, DragScroll, Vertex, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, Menu, GraphUi, LanguageManager) {
         var api = {
             offset:function () {
                 var offset = {};
@@ -50,12 +49,15 @@ define(
                     );
                     UserService.authenticatedUser(function () {
                             LanguageManager.loadLocaleContent(function () {
+                                GraphUi.resetDrawingCanvas();
                                 GraphDisplayer.displayUsingDefaultVertex();
-                                $(Menu.redrawButton()).click(function () {
-                                    GraphDisplayer.displayUsingNewCentralVertex(
-                                        Vertex.centralVertex(),
-                                        callback
-                                    );
+                                Menu.redrawButton().on(
+                                    "click",
+                                    function () {
+                                        GraphUi.resetDrawingCanvas();
+                                        GraphDisplayer.displayUsingNewCentralVertex(
+                                            Vertex.centralVertex()
+                                        );
                                 });
                                 switchDisplayerButtons().click(function () {
                                     var displayerName = $(this).attr("data-displayer_name");
@@ -111,7 +113,6 @@ define(
         EventBus.subscribe(
             '/event/ui/graph/drawing_info/updated/',
             function (event, drawnGraph, centralVertexUri) {
-                GraphUi.resetDrawingCanvas();
                 GraphDisplayer.integrateEdgesOfServerGraph(
                     drawnGraph
                 );

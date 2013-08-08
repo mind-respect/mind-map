@@ -52,11 +52,6 @@ define([
             '<div class="peripheral-menu link-to-far-vertex-menu"></div>'
         );
 
-        t.add(
-            'privacy_management_menu',
-            '<div class="peripheral-menu privacy-management-menu"></div>'
-        );
-
         t.add('suggestions_menu', '<div class="peripheral-menu suggestion"></div>');
         t.add('suggestions_list', '<ul></ul>');
         t.add(

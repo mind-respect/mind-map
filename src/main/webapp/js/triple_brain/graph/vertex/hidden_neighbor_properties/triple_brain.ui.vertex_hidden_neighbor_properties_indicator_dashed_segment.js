@@ -36,11 +36,13 @@ define([
             function drawDash(){
                 var dashPath = "M" + dash.startPoint.x + " " +
                     dash.startPoint.y + " L" + dash.endPoint.x  + " " +
-                    dash.endPoint.y;
+                    dash.endPoint.y + "Z"
                 drawnComponents.push(
-                    canvas.path(dashPath).
-                    attr("stroke-width", lineWidth)
-                    .attr("stroke", red)
+                    canvas.path(dashPath)
+                    .attr({
+                       "stroke-width" : lineWidth,
+                       stroke : red
+                    })
                 );
             }
             function updateDashStartPoint(){

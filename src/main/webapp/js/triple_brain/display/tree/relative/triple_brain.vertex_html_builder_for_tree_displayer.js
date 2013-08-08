@@ -69,12 +69,11 @@ define([
                     onMouseOver,
                     onMouseOut
                 );
-
-                vertex.setNameOfHiddenProperties([]);
-                if (serverFormat.is_frontier_vertex_with_hidden_vertices) {
-                    vertex.setNameOfHiddenProperties(serverFormat.name_of_hidden_properties);
-                    vertex.buildHiddenNeighborPropertiesIndicator();
-                }
+                vertex.setNameOfHiddenProperties(
+                    serverFormat.is_frontier_vertex_with_hidden_vertices ?
+                        serverFormat.name_of_hidden_properties :
+                        []
+                );
                 vertex.setTypes([]);
                 vertex.setSameAs([]);
                 $.each(serverFormat.types, function () {
@@ -109,7 +108,7 @@ define([
             };
             function createLabel() {
                 var labelContainer = MindMapTemplate['vertex_label_container'].merge({
-                    label : serverFormat.label.trim() === "" ?
+                    label:serverFormat.label.trim() === "" ?
                         Vertex.getWhenEmptyLabel() :
                         serverFormat.label
                 });
@@ -231,7 +230,7 @@ define([
                 VertexHtmlCommon.addPrivacyManagementButton(
                     vertexMenu
                 );
-                function addButtonClickBehaviour(){
+                function addButtonClickBehaviour() {
                     var sourceVertex = vertexFacade();
                     VertexService.addRelationAndVertexToVertex(
                         sourceVertex, function (triple, tripleServerFormat) {
@@ -252,7 +251,8 @@ define([
                         }
                     );
                 }
-                function removeButtonClickBehaviour(event){
+
+                function removeButtonClickBehaviour(event) {
                     event.stopPropagation();
                     var vertex = vertexOfSubHtmlComponent(this);
                     if (!vertex.isCenterVertex() && vertex.getId() != "default") {
@@ -281,7 +281,8 @@ define([
                         });
                     }
                 }
-                function suggestionsButtonClickBehaviour(event){
+
+                function suggestionsButtonClickBehaviour(event) {
                     event.stopPropagation();
                     var outOfVertexMenus = $('.peripheral-menu');
                     $(outOfVertexMenus).remove();
@@ -291,7 +292,8 @@ define([
                             .create()
                     );
                 }
-                function whatIsThisButtonClickBehaviour(event){
+
+                function whatIsThisButtonClickBehaviour(event) {
                     event.stopPropagation();
                     var vertex = vertexOfSubHtmlComponent(this);
                     var identificationMenu = IdentificationMenu.ofVertex(vertex)
@@ -300,11 +302,13 @@ define([
                         identificationMenu
                     );
                 }
-                function centerButtonClickBehaviour(){
+
+                function centerButtonClickBehaviour() {
                     GraphDisplayer.displayUsingNewCentralVertex(
                         vertexOfSubHtmlComponent(this)
                     );
                 }
+
                 return vertexMenu;
             }
 

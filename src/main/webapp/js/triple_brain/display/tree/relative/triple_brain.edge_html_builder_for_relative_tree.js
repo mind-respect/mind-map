@@ -91,7 +91,6 @@ define([
                         html.append(menu);
                         addIdentificationButton();
                         addRemoveButton();
-                        vertex.adjustWidth();
                         function addIdentificationButton() {
                             var identificationButton = $("<button class='identification'>");
                             identificationButton.button({

@@ -54,6 +54,15 @@ body{
     display:inline-block;
 }
 
+.ui-dialog{
+    opacity:0.9;
+}
+
+.ui-autocomplete{
+    /*z-index one more than ui-dialog*/
+    z-index:101;
+}
+
 .security-form-wrapper{
     background-color: white;
     height:100%;
@@ -174,6 +183,7 @@ body input[type=button]:hover, body button:hover{
 .vertex .textfield-container{
     border-radius: 20px;
     background-color:#E6E6FF;
+    white-space: nowrap;
 }
 
 .vertex.public .textfield-container{
@@ -364,7 +374,7 @@ input[type="button"], button {
 
 .peripheral-menu{
     position:absolute;
-    z-index: 10;
+    /*z-index: 10;*/
     background: -moz-linear-gradient(100% 100% 90deg, #ffffff, #eeeeee);
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), to(#eeeeee));
     opacity: 0.96;
@@ -458,7 +468,6 @@ input[type="button"], button {
 
 .relation .relation-menu{
     margin-left:0.3em;
-    white-space: nowrap;
 }
 
 .relation .ui-button{
@@ -593,7 +602,7 @@ button.add-button-in-list:hover{
     position:absolute;
     width:300px;
     background-color: white;
-    z-index:1000;
+    /*z-index:1000;*/
 }
 
 .identification-autocomplete-flyout img{

@@ -6,13 +6,12 @@ define([
     "jquery",
     "triple_brain.mind-map_template",
     "triple_brain.ui.graph",
-    "triple_brain.peripheral_menu",
     "triple_brain.user_map_autocomplete_provider",
     "triple_brain.edge",
     "triple_brain.ui.edge",
     "triple_brain.graph_displayer",
-    "triple_brain.ui.vertex"
-], function($, MindMapTemplate, GraphUi, PeripheralMenu, UserMapAutocompleteProvider, EdgeService, Edge, GraphDisplayer, Vertex){
+    "triple_brain.graph_element_menu"
+], function($, MindMapTemplate, GraphUi, UserMapAutocompleteProvider, EdgeService, Edge, GraphDisplayer, GraphElementMenu){
     var api = {};
     api.ofVertex = function(vertex){
         return new LinkToFarVertexMenu(
@@ -23,7 +22,6 @@ define([
     function LinkToFarVertexMenu(vertex){
         var self = this;
         var html;
-        var peripheralMenu;
         this.create = function () {
             html = $(
                 MindMapTemplate['link_to_far_vertex_menu'].merge()
@@ -35,15 +33,11 @@ define([
             GraphUi.addHTML(html);
             addTitle();
             addSearchBox();
-            peripheralMenu = PeripheralMenu.peripheralMenuForMenuHtmlAndVertex(
+            GraphElementMenu.makeForMenuContentAndGraphElement(
                 html,
                 vertex
-            ).init();
-            html.i18n();
+            );
             return self;
-        };
-        this.reEvaluatePosition = function () {
-            peripheralMenu.position();
         };
         function addTitle(){
             html.append(

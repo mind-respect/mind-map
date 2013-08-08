@@ -12,11 +12,11 @@ define([
     "triple_brain.external_resource",
     "triple_brain.vertex",
     "triple_brain.edge",
-    "triple_brain.peripheral_menu",
     "triple_brain.ui.utils",
-    "triple_brain.graph_displayer"
+    "triple_brain.graph_displayer",
+    "triple_brain.graph_element_menu"
 ],
-    function (require, $, Freebase, MindMapTemplate, GraphUi, Point, ExternalResource, VertexService, EdgeService, PeripheralMenu, UiUtils, GraphDisplayer) {
+    function (require, $, Freebase, MindMapTemplate, GraphUi, Point, ExternalResource, VertexService, EdgeService, UiUtils, GraphDisplayer, GraphElementMenu) {
         var api = {
             ofVertex:function (vertex) {
                 return new SuggestionMenu(vertex);
@@ -41,11 +41,10 @@ define([
                     addInstructions();
                 }
                 addSuggestionList();
-                peripheralMenu = PeripheralMenu.peripheralMenuForMenuHtmlAndVertex(
+                GraphElementMenu.makeForMenuContentAndGraphElement(
                     html,
                     vertex
-                ).init();
-                html.i18n();
+                );
                 return suggestionMenu;
             };
 

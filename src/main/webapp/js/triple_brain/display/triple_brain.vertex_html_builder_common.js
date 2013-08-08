@@ -7,9 +7,9 @@ define([
     "triple_brain.vertex",
     "triple_brain.mind-map_template",
     "triple_brain.link_to_far_vertex_menu",
-    "triple_brain.privacy_management_menu",
+    "triple_brain.graph_element_menu",
     "jquery-ui"
-], function($, Vertex, VertexService, MindMapTemplate, LinkToFarVertexMenu, PrivacyManagementMenu){
+], function($, Vertex, VertexService, MindMapTemplate, LinkToFarVertexMenu, GraphElementMenu){
     var api = {};
     api.addPlusButton = function(vertexMenu, clickBehavior){
         return makeVertexMenuButtonUsingClass(
@@ -77,13 +77,18 @@ define([
                     }
                 );
             };
-            noteDialog.dialog({
+            var menuExtraOptions = {
                 height:350,
                 width:500,
                 dialogClass: "vertex-note",
                 modal:true,
                 buttons: buttonsOptions
-            });
+            };
+            GraphElementMenu.makeForMenuContentAndGraphElement(
+                noteDialog,
+                vertex,
+                menuExtraOptions
+            );
         }
     };
     api.addLinkToFarVertexButton = function(vertexMenu){

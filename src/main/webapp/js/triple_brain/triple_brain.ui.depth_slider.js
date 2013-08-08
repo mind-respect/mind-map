@@ -6,9 +6,10 @@ define([
     "jquery",
     "triple_brain.ui.vertex",
     "triple_brain.graph_displayer",
+    "triple_brain.ui.graph",
     "jquery-ui"
 ],
-    function ($, Vertex, GraphDisplayer){
+    function ($, Vertex, GraphDisplayer, GraphUi){
         return {
             init:function() {
                 var sliderDefaultValue = 5;
@@ -25,6 +26,7 @@ define([
                     change:function (event, ui) {
                         $("#sub-vertices-depth-index").text(ui.value);
                         if (event.originalEvent) {
+                            GraphUi.resetDrawingCanvas();
                             GraphDisplayer.displayUsingNewCentralVertex(
                                 Vertex.centralVertex()
                             );

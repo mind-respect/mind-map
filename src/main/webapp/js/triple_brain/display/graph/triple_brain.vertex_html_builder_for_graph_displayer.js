@@ -88,14 +88,13 @@ define([
                 $(html).draggable({
                     handle:".move",
                     start:onDragStart,
-                    drag:onDrag,
                     stop:onDragStop
                 });
                 position();
                 vertex.setNameOfHiddenProperties([]);
                 if (serverFormat.is_frontier_vertex_with_hidden_vertices) {
                     vertex.setNameOfHiddenProperties(serverFormat.name_of_hidden_properties);
-                    vertex.buildHiddenNeighborPropertiesIndicator();
+                    vertex.buildHiddenNeighborPropertiesIndicatorIfApplicable();
                 }
                 vertex[
                     serverFormat.is_public ?
@@ -285,26 +284,11 @@ define([
                 }
             }
 
-            function onDrag(dragEvent, ui) {
-                var vertex = Vertex.withHtml(
-                    ui.helper
-                );
-                if (vertex.hasIdentificationMenu()) {
-                    vertex.getIdentificationMenu().reEvaluatePosition();
-                }
-                if (vertex.hasSuggestionMenu()) {
-                    vertex.getSuggestionMenu().reEvaluatePosition();
-                }
-                if (vertex.hasSuggestionMenu()) {
-                    vertex.getSuggestionMenu().reEvaluatePosition();
-                }
-            }
-
             function onDragStop(dragStopEvent, ui) {
                 var vertex = vertexFacade();
                 vertex.redrawConnectedEdgesArrowLine();
                 if(vertex.hasHiddenProperties()){
-                    vertex.buildHiddenNeighborPropertiesIndicator();
+                    vertex.buildHiddenNeighborPropertiesIndicatorIfApplicable();
                 }
                 var edgesNormalStateZIndex = $("#drawn_graph").data("edgesNormalStateZIndex");
                 $('.edge').css('z-index', edgesNormalStateZIndex);

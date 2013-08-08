@@ -55,6 +55,11 @@ define([
             });
             return edgesConnectedToVertex;
         };
+        api.removeAllArrowLines = function(){
+            api.visitAllEdges(function(edge){
+                edge.arrowLine().remove();
+            });
+        };
         function drawEdges(recalculate){
             var edges = api.allEdges();
             for (var i = 0; i < edges.length; i++) {

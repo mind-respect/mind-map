@@ -5,9 +5,10 @@ define([
     "require",
     "jquery",
     "triple_brain.point",
-    "triple_brain.event_bus"
+    "triple_brain.event_bus",
+    "triple_brain.ui.edge"
 ],
-    function (require, $, Point, EventBus) {
+    function (require, $, Point, EventBus, Edge) {
         var api = {};
         var graphForTraversal;
         api.getVertexMouseOver = function () {
@@ -56,6 +57,8 @@ define([
                 graphForTraversal.invalidate();
             }
             graphForTraversal = new crow.Graph();
+            var Edge = require("triple_brain.ui.edge");
+            Edge.removeAllArrowLines();
             $("#drawn_graph").empty();
         };
 

@@ -1,4 +1,3 @@
-
 define([
     "jquery",
     "triple_brain.ui.edge",
@@ -6,22 +5,23 @@ define([
     "triple_brain.point",
     "triple_brain.segment",
     "triple_brain.mind-map_template",
-    "triple_brain.peripheral_menu"
+    "triple_brain.graph_element_menu",
+    "triple_brain.ui.graph"
 ],
-    function($, Edge, DashedSegment, Point, Segment, MindMapTemplate, PeripheralMenu){
+    function ($, Edge, DashedSegment, Point, Segment, MindMapTemplate, GraphElementMenu, GraphUi) {
         var api = {
-            withVertex : function(vertex){
+            withVertex:function (vertex) {
                 return new HiddenNeighborPropertiesIndicator(vertex);
             }
-        }
-
-        function HiddenNeighborPropertiesIndicator(vertex){
+        };
+        return api;
+        function HiddenNeighborPropertiesIndicator(vertex) {
             var hiddenNeighborPropertiesContainer;
             var dashSegments = [];
-            this.build = function(){
+            this.build = function () {
                 var numberOfHiddenConnectedVertices = vertex.numberOfHiddenConnectedVertices();
-                if(numberOfHiddenConnectedVertices == 0){
-                    return ;
+                if (numberOfHiddenConnectedVertices == 0) {
+                    return;
                 }
                 var defaultLengthOfHiddenPropertiesContainer = 40;
                 var lengthInPixels = numberOfHiddenConnectedVertices == 1 ?
@@ -33,7 +33,7 @@ define([
                 );
                 var distanceBetweenEachDashedSegment =
                     numberOfHiddenConnectedVertices == 1 ?
-                        0:
+                        0 :
                         lengthInPixels / (vertex.numberOfHiddenConnectedVertices() - 1);
                 var plainSegment = Segment.withStartAndEndPointAtOrigin();
                 plainSegment.startPoint = startPoint;
@@ -41,67 +41,76 @@ define([
                 plainSegment.endPoint.x = vertex.position().x +
                     vertex.width() +
                     horizontalDistanceOfDashedSegment;
-                for(var i = 0; i < numberOfHiddenConnectedVertices; i++){
+                for (var i = 0; i < numberOfHiddenConnectedVertices; i++) {
                     plainSegment.endPoint.y = startPoint.y - (lengthInPixels / 2) + (i * distanceBetweenEachDashedSegment);
                     var dashedSegment = DashedSegment.withSegment(plainSegment.clone());
                     dashedSegment.draw();
                     dashSegments.push(dashedSegment);
                 }
-                hiddenNeighborPropertiesContainer = MindMapTemplate[
-                    'hidden_property_container'
-                    ].merge();
-                $("#drawn_graph").append(hiddenNeighborPropertiesContainer);
+                hiddenNeighborPropertiesContainer = $(
+                    MindMapTemplate[
+                        'hidden_property_container'
+                        ].merge()
+                );
+                GraphUi.addHTML(
+                    hiddenNeighborPropertiesContainer
+                );
 
-                $(hiddenNeighborPropertiesContainer).css('min-width', defaultLengthOfHiddenPropertiesContainer);
-                $(hiddenNeighborPropertiesContainer).css('min-height', defaultLengthOfHiddenPropertiesContainer);
-                $(hiddenNeighborPropertiesContainer).css('left', startPoint.x);
-                $(hiddenNeighborPropertiesContainer).css('top', startPoint.y - (defaultLengthOfHiddenPropertiesContainer / 2));
-                var timer;
-                $(hiddenNeighborPropertiesContainer).mouseenter(function(e){
-                    if(timer) {
-                        clearTimeout(timer);
-                        timer = null
-                    }
-                    timer = setTimeout(function() {
-                        var hiddenPropertyMenu = MindMapTemplate['hidden_property_menu'].merge();
-                        $("#drawn_graph").append(hiddenPropertyMenu);
-                        $(hiddenPropertyMenu).append(MindMapTemplate['hidden_properties_title'].merge());
-                        var propertyList = MindMapTemplate['hidden_property_list'].merge();
-                        $(hiddenPropertyMenu).append(propertyList);
-                        var nameOfHiddenProperties = vertex.nameOfHiddenProperties();
-                        $.each(nameOfHiddenProperties, function(){
-                            var nameOfHiddenProperty = this;
-                            var property = MindMapTemplate[
-                                'hidden_property'
-                                ].merge({
-                                    name : nameOfHiddenProperty == "" ? Edge.getWhenEmptyLabel() : nameOfHiddenProperty
-                                });
-                            $(propertyList).append(property);
-                        });
-
-                        $(hiddenNeighborPropertiesContainer).css('top', startPoint.y - (lengthInPixels / 2));
-
-                        $(hiddenPropertyMenu).css('left', $(hiddenNeighborPropertiesContainer).position().left + 30);
-                        $(hiddenPropertyMenu).css('top', ($(hiddenNeighborPropertiesContainer).position().top + $(hiddenNeighborPropertiesContainer).height() / 2) - (parseInt($(hiddenPropertyMenu).css('height')) / 2));
-                        PeripheralMenu.peripheralMenuForMenuHtmlAndVertex(
-                            hiddenPropertyMenu
-                        );
-                        hiddenNeighborPropertiesContainer.i18n();
-                    }, 1000)
-
-                });
-                $(hiddenNeighborPropertiesContainer).mouseleave(function(e){
-                    clearTimeout(timer);
-                });
-            }
-            this.remove = function(){
+                hiddenNeighborPropertiesContainer
+                    .css('min-width', defaultLengthOfHiddenPropertiesContainer)
+                    .css('min-height', defaultLengthOfHiddenPropertiesContainer)
+                    .css('left', startPoint.x)
+                    .css('top', startPoint.y - (defaultLengthOfHiddenPropertiesContainer / 2))
+                    .data("vertex", vertex)
+                    .on(
+                    "click",
+                    showHiddenRelation
+                );
+            };
+            this.remove = function () {
                 $(hiddenNeighborPropertiesContainer).remove();
-                while(dashSegments.length != 0){
+                while (dashSegments.length != 0) {
                     var dashSegment = dashSegments.pop();
                     dashSegment.remove();
                 }
+            };
+
+            function showHiddenRelation(){
+                var vertex = $(this).data("vertex");
+                var hiddenPropertyMenu = $(
+                    MindMapTemplate[
+                        'hidden_property_menu'
+                        ].merge()
+                );
+                GraphUi.addHTML(
+                    hiddenPropertyMenu
+                )
+                hiddenPropertyMenu.append(
+                    MindMapTemplate['hidden_properties_title'].merge()
+                );
+                var propertyList = $(
+                    MindMapTemplate['hidden_property_list'].merge()
+                );
+                hiddenPropertyMenu.append(
+                    propertyList
+                );
+                var nameOfHiddenProperties = vertex.nameOfHiddenProperties();
+                $.each(nameOfHiddenProperties, function () {
+                    var nameOfHiddenProperty = this;
+                    var property = MindMapTemplate[
+                        'hidden_property'
+                        ].merge({
+                            name:nameOfHiddenProperty == "" ?
+                                Edge.getWhenEmptyLabel() :
+                                nameOfHiddenProperty
+                        });
+                    propertyList.append(property);
+                });
+                GraphElementMenu.makeForMenuContentAndGraphElement(
+                    hiddenPropertyMenu,
+                    vertex
+                );
             }
         }
-        return api;
     }
 );
