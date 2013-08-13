@@ -80,9 +80,21 @@ define([
                     );
                     suggestionsList.append(htmlSuggestion);
                     if(GraphDisplayer.allowsMovingVertices()){
-                        htmlSuggestion.draggable();
-                        htmlSuggestion.bind('dragstop', function(){
-                            var htmlSuggestion = $(this);
+                        htmlSuggestion.draggable({
+                            appendTo : $("body"),
+                            zIndex:101,
+                            helper:"clone",
+                            start:function(event, ui){
+                                var htmlSuggestion = $(
+                                    ui.helper
+                                );
+                                htmlSuggestion.addClass(
+                                    "suggestion"
+                                );
+                            }
+                        });
+                        htmlSuggestion.bind('dragstop', function(event, ui){
+                            var htmlSuggestion = $(ui.helper);
                             addHtmlSuggestionAsVertexAndRelationInMap(
                                 htmlSuggestion
                             );
