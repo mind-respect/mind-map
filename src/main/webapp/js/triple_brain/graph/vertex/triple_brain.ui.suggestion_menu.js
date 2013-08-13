@@ -95,6 +95,10 @@ define([
                         });
                         htmlSuggestion.bind('dragstop', function(event, ui){
                             var htmlSuggestion = $(ui.helper);
+                            htmlSuggestion.data(
+                                "typeId",
+                                $(this).data("typeId")
+                            );
                             addHtmlSuggestionAsVertexAndRelationInMap(
                                 htmlSuggestion
                             );
