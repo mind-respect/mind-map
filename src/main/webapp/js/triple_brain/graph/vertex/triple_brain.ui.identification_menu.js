@@ -75,7 +75,7 @@ define([
                 $(html).append(
                     identitiesList
                 );
-                $.each(vertex.getTypes().concat(vertex.getSameAs()), function () {
+                $.each(vertex.getIdentifications(), function () {
                     addIdentificationAsListElement(
                         this
                     );
@@ -92,7 +92,9 @@ define([
             }
 
             function addIdentificationAsListElement(identification) {
-                var identificationListElement = MindMapTemplate['identification_existing_identity'].merge({
+                var identificationListElement = MindMapTemplate[
+                    'identification_existing_identity'
+                    ].merge({
                     identification_uri:identification.uri(),
                     type_label:identification.label(),
                     description:identification.description()

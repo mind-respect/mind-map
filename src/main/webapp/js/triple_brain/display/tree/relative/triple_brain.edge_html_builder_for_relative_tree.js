@@ -104,6 +104,7 @@ define([
                                 "click",
                                 function(event){
                                     event.stopPropagation();
+
                                 }
                             );
                         }
