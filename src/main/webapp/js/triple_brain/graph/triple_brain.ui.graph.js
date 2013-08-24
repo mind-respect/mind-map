@@ -29,7 +29,7 @@ define([
         api.unsetEdgeMouseOver = function(){
             $("body").removeData("edge_mouse_over");
         };
-        api.addHTML = function (html) {
+        api.addHtml = function (html) {
             $("#drawn_graph").append(html);
         };
         api.resetDrawingCanvas = function(){

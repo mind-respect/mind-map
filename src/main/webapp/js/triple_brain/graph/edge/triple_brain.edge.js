@@ -3,9 +3,10 @@ define([
     "jquery",
     "triple_brain.event_bus",
     "triple_brain.id_uri",
-    "triple_brain.user"
+    "triple_brain.user",
+    "triple_brain.graph_element"
 ],
-    function (require, $, EventBus, IdUriUtils, UserService) {
+    function (require, $, EventBus, IdUriUtils, UserService, GraphElement) {
         var api = {};
         api.add = function (sourceVertex, destinationVertex, callback) {
             add(
@@ -55,6 +56,52 @@ define([
                         edge
                     );
                 });
+        };
+        api.addSameAs = function (edge, sameAs, callback) {
+            sameAs.type = "same_as";
+            GraphElement.addIdentification(
+                edge,
+                sameAs,
+                callback
+            );
+        };
+        api.removeSameAs = function (edge, sameAs, callback) {
+            GraphElement.removeIdentification(
+                edge,
+                sameAs,
+                function () {
+                    edge.removeSameAs(sameAs);
+                    if (callback != undefined) {
+                        callback(
+                            edge,
+                            sameAs
+                        );
+                    }
+                }
+            );
+        };
+        api.addType = function(edge, type, callback){
+            type.type = "type";
+            GraphElement.addIdentification(
+                edge,
+                type,
+                callback
+            );
+        };
+        api.removeType = function(edge, type, callback){
+            GraphElement.removeIdentification(
+                edge,
+                type,
+                function () {
+                    edge.removeType(type);
+                    if (callback != undefined) {
+                        callback(
+                            edge,
+                            type
+                        );
+                    }
+                }
+            );
         };
         return api;
         function edgesUrl() {

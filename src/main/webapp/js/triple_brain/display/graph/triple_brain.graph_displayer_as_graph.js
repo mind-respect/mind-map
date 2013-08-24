@@ -52,7 +52,7 @@ define([
             var newVertexHtmlFacade = VertexHtmlBuilder.withJsonHavingAbsolutePosition(
                 newVertex
             ).create();
-            GraphUi.addHTML(
+            GraphUi.addHtml(
                 newVertexHtmlFacade.getHtml()
             );
             return newVertexHtmlFacade;
@@ -101,7 +101,7 @@ define([
             var vertexHtmlFacade = VertexHtmlBuilder.withJsonHavingRelativePosition(
                 vertexServerFormat
             ).create();
-            GraphUi.addHTML(
+            GraphUi.addHtml(
                 vertexHtmlFacade.getHtml()
             );
             return vertexHtmlFacade;

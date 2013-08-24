@@ -16,10 +16,12 @@ define([
     "triple_brain.relative_vertex",
     "triple_brain.relative_tree_displayer_templates",
     "triple_brain.ui.vertex",
+    "triple_brain.ui.identification_menu",
+    "triple_brain.external_resource",
     "jquery.cursor-at-end"
 
 ],
-    function (require, $, GraphUi, MindMapTemplate, IdUriUtils, VertexAndEdgeCommon, TreeEdge, EdgeService, ArrowLine, EventBus, RelativeVertex, RelativeTreeTemplates, Vertex) {
+    function (require, $, GraphUi, MindMapTemplate, IdUriUtils, VertexAndEdgeCommon, TreeEdge, EdgeService, ArrowLine, EventBus, RelativeVertex, RelativeTreeTemplates, Vertex, IdentificationMenu, ExternalResource) {
         var api = {};
         api.get = function (edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
             return new EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade);
@@ -34,7 +36,7 @@ define([
             });
             html = $(html);
             this.create = function () {
-                GraphUi.addHTML(
+                GraphUi.addHtml(
                     html
                 );
                 var isInverse = edgeServer.source_vertex_id !== parentVertexHtmlFacade.getUri();
@@ -57,6 +59,7 @@ define([
                 var relativeVertex = RelativeVertex.withVertex(
                     childVertexHtmlFacade
                 );
+
                 var textContainer = childVertexHtmlFacade.textContainer();
                 var isToTheLeft = relativeVertex.isToTheLeft();
                 if (isToTheLeft) {
@@ -72,6 +75,25 @@ define([
                 var edge = edgeFacade();
                 edge.setUri(uri);
                 edge.hideMenu();
+                edge.setTypes([]);
+                edge.setSameAs([]);
+                $.each(edgeServer.types, function () {
+                    var typeFromServer = this;
+                    edge.addType(
+                        ExternalResource.fromServerJson(
+                            typeFromServer
+                        )
+                    );
+                });
+
+                $.each(edgeServer.same_as, function () {
+                    var sameAsFromServer = this;
+                    edge.addSameAs(
+                        ExternalResource.fromServerJson(
+                            sameAsFromServer
+                        )
+                    );
+                });
                 EventBus.publish(
                     '/event/ui/html/edge/created/',
                     edge
@@ -104,7 +126,11 @@ define([
                                 "click",
                                 function(event){
                                     event.stopPropagation();
-
+                                    IdentificationMenu.ofGraphElement(
+                                        edgeFromHtml(
+                                            $(this).closest(".relation")
+                                        )
+                                    ).create();
                                 }
                             );
                         }
@@ -170,6 +196,14 @@ define([
                 input.data(
                     "destination_vertex_id",
                     previousEdge.destinationVertex().getId()
+                );
+                input.data(
+                    "types",
+                    previousEdge.getTypes()
+                );
+                input.data(
+                    "sameAs",
+                    previousEdge.getSameAs()
                 );
                 if (input.val() === TreeEdge.getWhenEmptyLabel()) {
                     input.val("");
@@ -238,6 +272,14 @@ define([
                 html.data(
                     "destination_vertex_id",
                     previousEdge.destinationVertex().getId()
+                );
+                html.data(
+                    "types",
+                    previousEdge.getTypes()
+                );
+                html.data(
+                    "sameAs",
+                    previousEdge.getSameAs()
                 );
                 html.click(function () {
                     changeToInput($(this));

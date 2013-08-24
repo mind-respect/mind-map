@@ -33,7 +33,7 @@ define([
                         'suggestions_menu'
                         ].merge()
                 );
-                GraphUi.addHTML(
+                GraphUi.addHtml(
                     html
                 );
                 addTitle();

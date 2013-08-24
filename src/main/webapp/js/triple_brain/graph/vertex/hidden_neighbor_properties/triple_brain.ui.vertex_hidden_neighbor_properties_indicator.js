@@ -52,7 +52,7 @@ define([
                         'hidden_property_container'
                         ].merge()
                 );
-                GraphUi.addHTML(
+                GraphUi.addHtml(
                     hiddenNeighborPropertiesContainer
                 );
 
@@ -82,7 +82,7 @@ define([
                         'hidden_property_menu'
                         ].merge()
                 );
-                GraphUi.addHTML(
+                GraphUi.addHtml(
                     hiddenPropertyMenu
                 )
                 hiddenPropertyMenu.append(

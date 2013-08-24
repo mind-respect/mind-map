@@ -22,7 +22,7 @@ define([
             });
         };
         api.addVertex = function(newVertex){
-            GraphUi.addHTML(
+            GraphUi.addHtml(
                 newVertex.getHtml()
             );
         };

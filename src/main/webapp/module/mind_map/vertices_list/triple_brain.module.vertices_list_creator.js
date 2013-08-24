@@ -21,7 +21,7 @@ define([
             );
             this.create = function () {
                 VerticesList = require("./triple_brain.module.vertices_list");
-                LeftPanel.addHTML(html);
+                LeftPanel.addHtml(html);
                 addTitle();
                 addSortMenu();
                 addVerticesList();

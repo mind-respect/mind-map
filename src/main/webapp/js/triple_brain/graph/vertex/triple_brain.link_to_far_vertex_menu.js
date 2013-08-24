@@ -30,7 +30,7 @@ define([
                 "vertex",
                 vertex
             );
-            GraphUi.addHTML(html);
+            GraphUi.addHtml(html);
             addTitle();
             addSearchBox();
             GraphElementMenu.makeForMenuContentAndGraphElement(

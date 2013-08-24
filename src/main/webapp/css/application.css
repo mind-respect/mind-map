@@ -178,6 +178,8 @@ body input[type=button]:hover, body button:hover{
 .vertex{
     z-index: 3;
     cursor:default;
+    /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */
+    white-space: nowrap;
 }
 
 .vertex .textfield-container{
@@ -405,16 +407,13 @@ input[type="button"], button {
     font-size:12px;
 }
 
-.graph-element-menu.identification{
-    width:16em;
-}
 
-.graph-element-menu.identification h3{
+.graph-element-menu .identifications h3{
     text-align: left;
     font-size:0.9em;
 }
 
-.graph-element-menu.identification .type-label{
+.graph-element-menu .identifications .type-label{
     text-align: center;
     padding-top : 10px;
     padding-bottom: 10px;
@@ -423,25 +422,24 @@ input[type="button"], button {
     font-size:1em;
 }
 
-.graph-element-menu .identification .description{
+.graph-element-menu .identifications .description{
     font-size:0.9em;
-    width:300px;
     text-align:left;
 }
 
-.graph-element-menu .identification ::-webkit-input-placeholder {
+.graph-element-menu .identifications ::-webkit-input-placeholder {
     color: black;
 }
 
-.graph-element-menu .identification :-moz-placeholder { /* Firefox 18- */
+.graph-element-menu .identifications :-moz-placeholder { /* Firefox 18- */
     color: black;
 }
 
-.graph-element-menu .identification ::-moz-placeholder {  /* Firefox 19+ */
+.graph-element-menu .identifications ::-moz-placeholder {  /* Firefox 19+ */
     color: black;
 }
 
-.graph-element-menu .identification :-ms-input-placeholder {
+.graph-element-menu .identifications :-ms-input-placeholder {
     color: black;
 }
 

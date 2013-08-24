@@ -34,7 +34,7 @@ define([
             json.id = IdUriUtils.graphElementIdFromUri(json.id);
             var html = MindMapTemplate['edge'].merge(json);
             this.create = function(){
-                GraphUi.addHTML(
+                GraphUi.addHtml(
                     html
                 );
                 $(html).data(

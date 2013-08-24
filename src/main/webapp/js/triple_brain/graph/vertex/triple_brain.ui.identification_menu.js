@@ -4,7 +4,6 @@
 define([
     "jquery",
     "triple_brain.external_resource",
-    "triple_brain.vertex",
     "triple_brain.mind-map_template",
     "triple_brain.ui.graph",
     "triple_brain.id_uri",
@@ -14,29 +13,26 @@ define([
     "jquery-ui",
     "jquery.triple_brain.search"
 ],
-    function ($, ExternalResource, VertexService, MindMapTemplate, GraphUi, IdUriUtils, FreebaseAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu) {
+    function ($, ExternalResource, MindMapTemplate, GraphUi, IdUriUtils, FreebaseAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu) {
         var api = {
-            ofVertex:function (vertex) {
-                return new IdentificationMenu(vertex);
+            ofGraphElement:function (graphElementUi) {
+                return new IdentificationMenu(graphElementUi);
             }
         };
 
-        function IdentificationMenu(vertex) {
+        function IdentificationMenu(graphElement){
             var identificationMenu = this;
             var html;
-            this.rebuildList = function () {
-                $(listHtml()).remove();
-                addIdentifications();
-            };
             this.create = function () {
-                html = MindMapTemplate['identification_menu'].merge();
-                html = $(html);
-                GraphUi.addHTML(html);
+                html = $("<div>").addClass(
+                    "identifications"
+                );
+                GraphUi.addHtml(html);
                 buildMenu();
-                html.data("vertex", vertex);
+                html.data("graphElement", graphElement);
                 GraphElementMenu.makeForMenuContentAndGraphElement(
                     html,
-                    vertex
+                    graphElement
                 );
                 return identificationMenu;
             };
@@ -75,7 +71,7 @@ define([
                 $(html).append(
                     identitiesList
                 );
-                $.each(vertex.getIdentifications(), function () {
+                $.each(graphElement.getIdentifications(), function () {
                     addIdentificationAsListElement(
                         this
                     );
@@ -104,23 +100,25 @@ define([
                 $(listHtml()).append(
                     identificationListElement
                 );
-                $(identificationListElement).find(".remove-identification").click(function () {
-                    var identificationListElement = this;
-                    var identification = $(identificationListElement).closest(
-                        '.identification'
-                    ).data("identification");
-                    var semanticMenu = $(identificationListElement).closest(
+                $(identificationListElement).find(".remove-button-in-list").click(function () {
+                    var identificationListElement = $(this).closest(
                         '.identification'
                     );
-                    var vertex = $(semanticMenu).data("vertex");
+                    var identification = identificationListElement.data(
+                        "identification"
+                    );
+                    var semanticMenu = identificationListElement.closest(
+                        '.identifications'
+                    );
+                    var graphElement = $(semanticMenu).data("graphElement");
                     var removeIdentification = identification.getType() == "type" ?
-                        VertexService.removeType :
-                        VertexService.removeSameAs;
+                        graphElement.serverFacade().removeType :
+                        graphElement.serverFacade().removeSameAs;
                     removeIdentification.call(
                         this,
-                        vertex,
+                        graphElement,
                         identification,
-                        function (vertex, identification) {
+                        function (graphElement, identification) {
                             $.each(listElements(), function () {
                                 var listElement = this;
                                 var listElementIdentification = $(listElement).data("identification");
@@ -168,14 +166,14 @@ define([
                     identificationTextField.tripleBrainAutocomplete({
                         select:function (event, ui) {
                             var semanticMenu = $(this).closest(
-                                '.identification'
+                                '.identifications'
                             );
-                            var vertex = $(semanticMenu).data("vertex");
+                            var graphElement = $(semanticMenu).data("graphElement");
                             var searchResult = ui.item;
                             identifyUsingServerIdentificationFctn(
-                                vertex,
+                                graphElement,
                                 searchResult,
-                                VertexService.addSameAs
+                                graphElement.serverFacade().addSameAs
                             );
                         },
                         resultsProviders : [
@@ -196,13 +194,13 @@ define([
                 function setUpAutocomplete() {
                     typeIdentificationTextField.tripleBrainAutocomplete({
                         select:function (event, ui) {
-                            var semanticMenu = $(this).closest('.identification');
-                            var vertex = $(semanticMenu).data("vertex");
+                            var semanticMenu = $(this).closest('.identifications');
+                            var graphElement = $(semanticMenu).data("graphElement");
                             var searchResult = ui.item;
                             identifyUsingServerIdentificationFctn(
-                                vertex,
+                                graphElement,
                                 searchResult,
-                                VertexService.addType
+                                graphElement.serverFacade().addType
                             );
                         },
                         resultsProviders : [
@@ -214,14 +212,14 @@ define([
                 return typeIdentificationTextField;
             }
 
-            function identifyUsingServerIdentificationFctn(vertex, searchResult, serverIdentificationFctn){
+            function identifyUsingServerIdentificationFctn(graphElement, searchResult, serverIdentificationFctn){
                 var identificationResource = ExternalResource.withUriLabelAndDescription(
                     searchResult.uri,
                     searchResult.label,
                     searchResult.description
                 );
                 serverIdentificationFctn(
-                    vertex,
+                    graphElement,
                     identificationResource
                 );
                 addIdentificationAsListElement(identificationResource);

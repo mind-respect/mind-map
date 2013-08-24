@@ -16,9 +16,10 @@ define([
     "triple_brain.ui.arrow_line",
     "triple_brain.server_subscriber",
     "triple_brain.ui.image_menu",
+    "triple_brain.ui.graph_element",
     "jquery.center-on-screen"
 ],
-    function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, GraphUi, ArrowLine, ServerSubscriber, ImageMenu) {
+    function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, GraphUi, ArrowLine, ServerSubscriber, ImageMenu, GraphElement) {
         var api = {};
 
         api.getWhenEmptyLabel = function(){
@@ -58,6 +59,7 @@ define([
             html = $(html);
             this._initialize = function () {
             };
+            GraphElement.Object.apply(self, [html]);
             this.position = function () {
                 return Point.fromCoordinates(
                     html.offset().left,
@@ -311,62 +313,12 @@ define([
                     self.showSuggestionButton() :
                     self.hideSuggestionButton();
             };
-            this.removeType = function (type) {
-                var types = self.removeIdenficationInArray(
-                    type,
-                    self.getTypes()
-                );
-                $(self).data("types", types);
-                removeIdentificationCommonBehavior(type);
-                VertexService.getSuggestions(
-                    self
-                );
-            };
 
-            this.removeIdenficationInArray = function (identificationToRemove, array) {
-                var i = 0;
-                $.each(array, function () {
-                    var identification = this;
-                    if (identification.uri() === identificationToRemove.uri()) {
-                        array.splice(i, 1);
-                        return false;
-                    }
-                    i++;
-                });
-                return array;
-            };
-
-            this.getTypes = function () {
-                return $(html).data('types');
-            };
-            this.getIdentifications = function () {
-                return self.getTypes().concat(
-                    self.getSameAs()
-                );
-            };
-            this.setTypes = function (types) {
-                return $(html).data('types', types);
-            };
-            this.addType = function (type) {
-                type.setType("type");
-                var types = self.getTypes();
-                types.push(type);
-                self.setTypes(types);
-                applyCommonBehaviorForAddedIdentification(type);
-            };
-            this.addSameAs = function (sameAs) {
-                sameAs.setType("same_as");
-                var sameAsCollection = self.getSameAs()
-                sameAsCollection.push(sameAs);
-                self.setSameAs(sameAsCollection);
-                applyCommonBehaviorForAddedIdentification(sameAs);
-            };
-
-            function applyCommonBehaviorForAddedIdentification(externalResource) {
+            this.applyCommonBehaviorForAddedIdentification = function(externalResource) {
                 self.addImages(
                     externalResource.images()
                 );
-            }
+            };
 
             this.addImages = function (images) {
                 var existingImages = self.getImages();
@@ -398,6 +350,10 @@ define([
                     $(html).data("images");
             };
 
+            this.serverFacade = function(){
+                return VertexService;
+            };
+
             function createImageMenu() {
                 var imageMenu = ImageMenu.ofVertex(self).create();
                 $(html).data("images_menu", imageMenu);
@@ -413,34 +369,20 @@ define([
             };
 
             this.getImageMenu = function () {
-                return $(html).data("images_menu");
+                return html.data("images_menu");
             };
 
-            this.setSameAs = function (sameAsCollection) {
-                $(html).data('sameAs', sameAsCollection);
-            };
-            this.removeSameAs = function (sameAsToRemove) {
-                var sameAs = self.removeIdenficationInArray(
-                    sameAsToRemove,
-                    self.getSameAs()
-                );
-                $(self).data("sameAs", sameAs);
-                removeIdentificationCommonBehavior(sameAsToRemove);
-                VertexService.getSuggestions(
-                    self
-                );
-            };
-            function removeIdentificationCommonBehavior(externalResource) {
+            this.removeIdentificationCommonBehavior = function(externalResource) {
                 $.each(externalResource.images(), function () {
                     var image = this;
                     self.removeImage(image);
                 });
                 self.getImageMenu().refreshImages();
-            }
-
-            this.getSameAs = function () {
-                return $(html).data('sameAs');
+                VertexService.getSuggestions(
+                    self
+                );
             };
+
             this.showSuggestionButton = function () {
                 $(suggestionButton()).show();
             };
@@ -449,7 +391,7 @@ define([
             };
             this.triggerChange = function () {
                 $(html).trigger("change");
-            }
+            };
             this.label = function () {
                 return $(html).find("input.label");
             };
@@ -480,18 +422,6 @@ define([
                 );
             };
 
-            this.setIdentificationMenu = function (identificationMenu) {
-                $(html).data("identification_menu", identificationMenu);
-            };
-            this.getIdentificationMenu = function () {
-                return $(html).data("identification_menu");
-            };
-            this.setSuggestionMenu = function (suggestionMenu) {
-                $(html).data("suggestion_menu", suggestionMenu);
-            };
-            this.getSuggestionMenu = function () {
-                return $(html).data("suggestion_menu");
-            };
             this.setOriginalServerObject = function (serverJson) {
                 $(html).data(
                     "originalServerObject",

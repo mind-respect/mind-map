@@ -2,11 +2,11 @@ define([
     "require",
     "jquery",
     "triple_brain.event_bus",
-    "triple_brain.id_uri",
     "triple_brain.ui.triple",
-    "triple_brain.suggestion"
+    "triple_brain.suggestion",
+    "triple_brain.graph_element"
 ],
-    function (require, $, EventBus, IdUriUtils, Triple, Suggestion) {
+    function (require, $, EventBus, Triple, Suggestion, GraphElement) {
         var api = {};
         api.addRelationAndVertexToVertex = function (vertex, callback) {
             var dummyPosition = {
@@ -88,12 +88,11 @@ define([
             );
         };
         api.removeIdentification = function (vertex, identification, successCallback) {
-            $.ajax({
-                type:'DELETE',
-                url:vertex.getUri()
-                    + '/identification/'
-                    + IdUriUtils.encodeUri(identification.uri())
-            }).success(successCallback);
+            GraphElement.removeIdentification(
+                vertex,
+                identification,
+                successCallback
+            );
         };
         api.removeType = function (vertex, typeToRemove, successCallback) {
             api.removeIdentification(
@@ -129,8 +128,7 @@ define([
                 function () {
                     vertex.removeSameAs(sameAs);
                     if (successCallback != undefined) {
-                        successCallback.call(
-                            this,
+                        successCallback(
                             vertex,
                             sameAs
                         );
@@ -172,7 +170,7 @@ define([
                         '/event/ui/graph/vertex/suggestions/updated',
                         [vertex, suggestions]
                     );
-                })
+                });
         };
         api.makePrivate = function (vertex, callback) {
             setPrivacy(
@@ -198,37 +196,25 @@ define([
                 }
             );
         };
-        function addIdentification(vertex, identification, successCallback){
-            identification.listenForUpdates(addIdentificationWhenListenerReady);
-            function addIdentificationWhenListenerReady() {
-                var identificationJson = identification.jsonFormat();
-                identificationJson.type = identification.type;
-                $.ajax({
-                    type:'POST',
-                    url:vertex.getUri() + '/identification',
-                    data:$.toJSON(identificationJson),
-                    contentType:'application/json;charset=utf-8'
-                }).success(function () {
-                        identification.type === "type" ?
-                            vertex.addType(identification) :
-                            vertex.addSameAs(identification) ;
-                        if (successCallback != undefined) {
-                            successCallback.call(
-                                this,
-                                vertex,
-                                identification
-                            );
-                        }
-                        var eventBusMessage = identification.type === "type" ?
-                            '/event/ui/graph/vertex/type/added':
-                            '/event/ui/graph/vertex/same_as/added';
-                        EventBus.publish(
-                            eventBusMessage,
-                            [vertex, identification]
-                        );
-                    });
-            }
+        function addIdentification(vertex, identification, successCallback) {
+            GraphElement.addIdentification(
+                vertex,
+                identification,
+                function () {
+                    if (successCallback != undefined) {
+                        successCallback();
+                    }
+                    var eventBusMessage = identification.type === "type" ?
+                        '/event/ui/graph/vertex/type/added' :
+                        '/event/ui/graph/vertex/same_as/added';
+                    EventBus.publish(
+                        eventBusMessage,
+                        [vertex, identification]
+                    );
+                }
+            );
         }
+
         function setPrivacy(isPublic, vertex, callback) {
             $.ajax({
                 type:isPublic ? 'POST' : 'DELETE',

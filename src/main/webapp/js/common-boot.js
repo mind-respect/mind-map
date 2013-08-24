@@ -51,6 +51,8 @@ window.config = {
         "triple_brain.config" : "triple_brain/triple_brain.config",
         "triple_brain.id_uri" : "triple_brain/triple_brain.id_uri",
         "triple_brain.ui.arrow_line" : "triple_brain/graph/edge/triple_brain.ui.arrow_line",
+        "triple_brain.graph_element" : "triple_brain/graph/triple_brain.graph_element",
+        "triple_brain.ui.graph_element" : "triple_brain/graph/triple_brain.ui.graph_element",
         "triple_brain.vertex" : "triple_brain/graph/vertex/triple_brain.vertex",
         "triple_brain.ui.edge" : "triple_brain/graph/edge/triple_brain.ui.edge",
         "triple_brain.edge" : "triple_brain/graph/edge/triple_brain.edge",

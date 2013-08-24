@@ -287,20 +287,18 @@ define([
                     var outOfVertexMenus = $('.graph-element-menu');
                     $(outOfVertexMenus).remove();
                     var vertex = vertexOfSubHtmlComponent(this);
-                    vertex.setSuggestionMenu(
-                        SuggestionMenu.ofVertex(vertex)
-                            .create()
-                    );
+                    SuggestionMenu.ofVertex(
+                        vertex
+                    ).create();
                 }
 
                 function whatIsThisButtonClickBehaviour(event) {
                     event.stopPropagation();
                     var vertex = vertexOfSubHtmlComponent(this);
-                    var identificationMenu = IdentificationMenu.ofVertex(vertex)
-                        .create();
-                    vertex.setIdentificationMenu(
-                        identificationMenu
-                    );
+                    IdentificationMenu.ofGraphElement(
+                        vertex
+                    ).create();
+
                 }
 
                 function centerButtonClickBehaviour() {

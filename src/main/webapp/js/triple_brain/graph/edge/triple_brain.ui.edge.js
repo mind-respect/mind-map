@@ -8,9 +8,11 @@ define([
     "triple_brain.ui.graph",
     "triple_brain.ui.vertex_and_edge_common",
     "triple_brain.event_bus",
-    "triple_brain.ui.arrow_line"
+    "triple_brain.ui.arrow_line",
+    "triple_brain.ui.graph_element",
+    "triple_brain.edge"
 ],
-    function (require, $, GraphUi, VertexAndEdgeCommon, EventBus, ArrowLine) {
+    function (require, $, GraphUi, VertexAndEdgeCommon, EventBus, ArrowLine, GraphElement, EdgeService) {
         var api = {};
         api.getWhenEmptyLabel = function(){
             return $.t("edge.default");
@@ -81,42 +83,56 @@ define([
         api.Object = function (html) {
             var Vertex;
             var self = this;
+            html = $(html);
+            GraphElement.Object.apply(self, [html]);
             this.id = function () {
                 return $(html).attr('id');
             };
             this.setUri = function(uri){
-                $(html).data(
+                html.data(
                     "uri",
                     uri
                 );
             };
             this.getUri = function(){
-                return $(html).data(
+                return html.data(
                     "uri"
                 );
-            }
+            };
+            this.serverFacade = function(){
+                return EdgeService;
+            };
             this.destinationVertex = function () {
                 return getVertex().withId(
-                    $(html).data('destination_vertex_id')
+                    html.data('destination_vertex_id')
                 );
             };
             this.sourceVertex = function () {
                 return getVertex().withId(
-                    $(html).data("source_vertex_id")
+                    html.data("source_vertex_id")
                 );
             };
             this.arrowLine = function () {
-                return $(html).data("arrowLine");
+                return html.data("arrowLine");
             };
             this.setArrowLine = function (arrowLine) {
-                $(html).data("arrowLine", arrowLine);
+                html.data("arrowLine", arrowLine);
+            };
+            this.removeIdentificationCommonBehavior = function(){
+                //do nothing
+            };
+            this.applyCommonBehaviorForAddedIdentification = function(){
+                //do nothingt
+            };
+            this.serverFacade = function(){
+                return EdgeService;
             };
             this.highlight = function () {
-                $(html).addClass('highlighted-edge');
+                html.addClass('highlighted-edge');
                 this.addEdgeSurroundColor("#FFFF00", 4);
             };
             this.unhighlight = function () {
-                $(html).removeClass('highlighted-edge');
+                html.removeClass('highlighted-edge');
                 this.arrowLine().remove();
                 this.arrowLine().drawInBlackWithSmallLineWidth();
             };
@@ -133,8 +149,8 @@ define([
                 );
             };
             this.positionAt = function(position){
-                $(html).css('left', position.x);
-                $(html).css('top', position.y);
+                html.css('left', position.x);
+                html.css('top', position.y);
             };
             this.isConnectedWithVertex = function (vertex) {
                 return isSourceVertex(vertex) ||
@@ -154,7 +170,7 @@ define([
             };
             this.adjustWidth = function () {
                 var intuitiveWidthBuffer = 14;
-                $(html).css(
+                html.css(
                     "width",
                     $(menu()).width()
                         + self.getLabel().width()
@@ -169,7 +185,7 @@ define([
             };
             this.remove = function () {
                 self.arrowLine().remove();
-                $(html).remove();
+                html.remove();
             };
             this.showMenu = function () {
                 $(menu()).show();
@@ -181,7 +197,7 @@ define([
                 return html;
             };
             function menu() {
-                return $(html).find('.remove');
+                return html.find('.remove');
             }
 
             function isSourceVertex(vertex) {
@@ -198,7 +214,7 @@ define([
                 }
                 return Vertex;
             }
-        }
+        };
 
         EventBus.subscribe(
             '/event/ui/graph/edge/label/updated',

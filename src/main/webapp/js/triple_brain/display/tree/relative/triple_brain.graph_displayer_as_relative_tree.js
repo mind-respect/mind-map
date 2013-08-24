@@ -163,7 +163,7 @@ define([
                 ].merge({
                     offset:graphOffset
                 });
-            GraphUi.addHTML(
+            GraphUi.addHtml(
                 verticesContainer
             );
             return makeInContainerUsingServerGraphAndCentralVertexUri(

@@ -6,7 +6,7 @@ define([
     ],
     function($) {
         return {
-            addHTML : function(html){
+            addHtml : function(html){
                 $("#left-panel").append(html);
             }
         };

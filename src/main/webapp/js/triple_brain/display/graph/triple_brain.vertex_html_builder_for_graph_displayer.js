@@ -236,18 +236,16 @@ define([
                     var outOfVertexMenus = $('.graph-element-menu');
                     $(outOfVertexMenus).remove();
                     var vertex = vertexOfSubHtmlComponent(this);
-                    vertex.setSuggestionMenu(
-                        SuggestionMenu.ofVertex(vertex)
-                            .create()
-                    );
+                    SuggestionMenu.ofVertex(
+                        vertex
+                    ).create();
+
                 }
                 function whatIsThisButtonClickBehaviour(event){
                     event.stopPropagation();
                     var vertex = vertexOfSubHtmlComponent(this);
-                    vertex.setIdentificationMenu(
-                        IdentificationMenu.ofVertex(vertex)
-                            .create()
-                    );
+                    IdentificationMenu.ofGraphElement(vertex)
+                        .create();
                 }
                 function centerButtonClickBehaviour(){
                     GraphDisplayer.displayUsingNewCentralVertex(
