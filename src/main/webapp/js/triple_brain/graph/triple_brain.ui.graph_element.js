@@ -5,6 +5,10 @@ define([
     "jquery"
 ],function($){
     var api = {};
+    api.types = {
+        "CONCEPT" : "concept",
+        "RELATION" : "relation"
+    };
     api.Object = function(html){
         var self = this;
         this.removeType = function (type) {
@@ -67,6 +71,9 @@ define([
             );
             html.data("sameAs", sameAs);
             self.removeIdentificationCommonBehavior(sameAsToRemove);
+        };
+        this.isConcept = function(){
+            return self.getGraphElementType() === api.types.CONCEPT;
         };
     };
     return api;

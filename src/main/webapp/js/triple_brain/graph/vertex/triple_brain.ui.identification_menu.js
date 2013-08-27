@@ -20,7 +20,7 @@ define([
             }
         };
 
-        function IdentificationMenu(graphElement){
+        function IdentificationMenu(graphElement) {
             var identificationMenu = this;
             var html;
             this.create = function () {
@@ -48,21 +48,31 @@ define([
             function buildMenu() {
                 addTitle();
                 addIdentifications();
-                addIndications();
-                var identificationTextField = addIdentificationTextField();
-                $(identificationTextField).focus();
-                addTypeIdentificationTextField();
+                addInstructions();
+                addIdentificationTextField().focus();
+                if (graphElement.isConcept()) {
+                    addTypeIdentificationTextField();
+                }
             }
 
             function addTitle() {
                 $(html).append(
-                    MindMapTemplate['identification_menu_explanation_title'].merge()
+                    MindMapTemplate['identification_menu_title'].merge()
                 );
             }
 
-            function addIndications() {
-                $(html).append(
-                    MindMapTemplate['identification_menu_indications'].merge()
+            function addInstructions() {
+                html.append(
+                    $(
+                        "<h3>"
+                    ).attr(
+                        "data-i18n",
+                        (
+                            graphElement.isConcept() ?
+                                "vertex.menu.identification.instruction.concept" :
+                                "vertex.menu.identification.instruction.relation"
+                            )
+                    )
                 );
             }
 
@@ -91,11 +101,11 @@ define([
                 var identificationListElement = MindMapTemplate[
                     'identification_existing_identity'
                     ].merge({
-                    identification_uri:identification.uri(),
-                    type_label:identification.label(),
-                    description:identification.description()
-                        .replace("\n", "<br/><br/>")
-                });
+                        identification_uri:identification.uri(),
+                        type_label:identification.label(),
+                        description:identification.description()
+                            .replace("\n", "<br/><br/>")
+                    });
                 $(identificationListElement).data("identification", identification);
                 $(listHtml()).append(
                     identificationListElement
@@ -157,11 +167,14 @@ define([
             }
 
             function addIdentificationTextField() {
-                var identificationTextField = MindMapTemplate[
-                    'identification_textfield'
-                    ].merge();
-                $(html).append(identificationTextField);
+                var identificationTextField = $(
+                    MindMapTemplate[
+                        'identification_textfield'
+                        ].merge()
+                );
+                html.append(identificationTextField);
                 setUpAutocomplete();
+                return identificationTextField;
                 function setUpAutocomplete() {
                     identificationTextField.tripleBrainAutocomplete({
                         select:function (event, ui) {
@@ -176,16 +189,26 @@ define([
                                 graphElement.serverFacade().addSameAs
                             );
                         },
-                        resultsProviders : [
+                        resultsProviders:graphElement.isConcept() ?
+                            getResultsProviderForVertex() :
+                            getResultsProviderForRelations()
+                    });
+                    function getResultsProviderForVertex() {
+                        return [
                             UserMapAutocompleteProvider.toFetchCurrentUserVerticesAndPublicOnes(),
                             FreebaseAutocompleteProvider.forFetchingAnything()
-                        ]
-                    });
+                        ];
+                    }
+
+                    function getResultsProviderForRelations() {
+                        return [
+                            UserMapAutocompleteProvider.toFetchRelations()
+                        ];
+                    }
                 }
-                return identificationTextField;
             }
 
-            function addTypeIdentificationTextField(){
+            function addTypeIdentificationTextField() {
                 var typeIdentificationTextField = MindMapTemplate[
                     'identification_type_textfield'
                     ].merge();
@@ -203,16 +226,17 @@ define([
                                 graphElement.serverFacade().addType
                             );
                         },
-                        resultsProviders : [
+                        resultsProviders:[
                             UserMapAutocompleteProvider.toFetchCurrentUserVerticesAndPublicOnes(),
                             FreebaseAutocompleteProvider.forFetchingTypes()
                         ]
                     });
                 }
+
                 return typeIdentificationTextField;
             }
 
-            function identifyUsingServerIdentificationFctn(graphElement, searchResult, serverIdentificationFctn){
+            function identifyUsingServerIdentificationFctn(graphElement, searchResult, serverIdentificationFctn) {
                 var identificationResource = ExternalResource.withUriLabelAndDescription(
                     searchResult.uri,
                     searchResult.label,
@@ -227,6 +251,7 @@ define([
                 setTemporaryDescription(identificationResource);
             }
         }
+
         return api;
     }
 );

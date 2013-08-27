@@ -60,6 +60,11 @@ define([
             this._initialize = function () {
             };
             GraphElement.Object.apply(self, [html]);
+
+            this.getGraphElementType = function(){
+                return GraphElement.types.CONCEPT;
+            };
+
             this.position = function () {
                 return Point.fromCoordinates(
                     html.offset().left,

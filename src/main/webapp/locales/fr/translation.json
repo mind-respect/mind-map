@@ -63,7 +63,10 @@
         "menu" : {
             "identification" :{
                 "title" : "Identifications",
-                "instruction" : "Trouver autant de concepts qui identifie ou sont une généralisation de celui-ci.",
+                "instruction" : {
+                    "concept" : "Trouvez autant de concepts qui identifient ou sont une généralisation de celui-ci.",
+                    "relation" : "Identifiez cette relation à une autre qui signifie la même chose."
+                },
                 "placeholder" : {
                     "to_another_source" : "Identifier à une autre source",
                     "to_a_category" : "Ajouter une catégorie"

@@ -99,6 +99,9 @@ define([
                     "uri"
                 );
             };
+            this.getGraphElementType = function(){
+                return GraphElement.types.RELATION;
+            };
             this.serverFacade = function(){
                 return EdgeService;
             };

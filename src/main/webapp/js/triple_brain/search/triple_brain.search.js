@@ -33,6 +33,13 @@ define([
                     "/search/vertices/auto_complete/" + searchText
             });
         };
+        api.searchForOwnRelationsAjaxCall = function(searchText){
+            return $.ajax({
+                type:'GET',
+                url: UserService.currentUserUri() +
+                    "/search/relations/auto_complete/" + searchText
+            });
+        };
         return api;
     }
 );

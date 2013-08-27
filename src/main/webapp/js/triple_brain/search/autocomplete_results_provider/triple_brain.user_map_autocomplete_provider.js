@@ -7,18 +7,24 @@ define([
 ], function ($, SearchService) {
     var api = {};
     api.toFetchOnlyCurrentUserVertices = function(){
-        return new UserMapAutoCompleteProvider(true);
+        return new UserMapAutoCompleteProvider(
+            SearchService.searchForOnlyOwnVerticesAjaxCall
+        );
     };
     api.toFetchCurrentUserVerticesAndPublicOnes = function(){
-        return new UserMapAutoCompleteProvider(false);
+        return new UserMapAutoCompleteProvider(
+            SearchService.searchForOwnVerticesAndPublicOnesAjaxCall
+        );
+    };
+    api.toFetchRelations = function(){
+        return new UserMapAutoCompleteProvider(
+            SearchService.searchForOwnRelationsAjaxCall
+        );
     };
     return api;
-    function UserMapAutoCompleteProvider(isOnlyForOwnVertices){
+    function UserMapAutoCompleteProvider(fetchMethod){
         var self = this;
         this.getFetchMethod = function (searchTerm) {
-            var fetchMethod = isOnlyForOwnVertices ?
-                SearchService.searchForOnlyOwnVerticesAjaxCall :
-                SearchService.searchForOwnVerticesAndPublicOnesAjaxCall;
             return fetchMethod(
                 searchTerm
             );
