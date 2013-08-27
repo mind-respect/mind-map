@@ -224,6 +224,9 @@ define([
                 VertexHtmlCommon.addNoteButton(
                     vertexMenu
                 );
+                VertexHtmlCommon.addImageButton(
+                    vertexMenu
+                );
                 VertexHtmlCommon.addLinkToFarVertexButton(
                     vertexMenu
                 );

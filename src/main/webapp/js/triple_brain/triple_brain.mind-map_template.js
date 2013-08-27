@@ -27,7 +27,7 @@ define([
         t.add('vertex_menu', '<div class="menu"></div>');
         t.add('vertex_move_button', '<div class="move"></div>');
 
-        t.add('identification_menu_title', '<h2 data-i18n="vertex.menu.identification.title"></h2>');
+        t.add('identification_menu_title', '<h2 data-i18n="graph_element.menu.identification.title"></h2>');
         t.add('identification_existing_identities', '<div class="list"></div>');
         t.add(
             'identification_existing_identity',
@@ -38,11 +38,11 @@ define([
         );
         t.add(
             'identification_textfield',
-            '<input type="text" data-i18n="[placeholder]vertex.menu.identification.placeholder.to_another_source">'
+            '<input type="text" data-i18n="[placeholder]graph_element.menu.identification.placeholder.to_another_source">'
         );
         t.add(
             'identification_type_textfield',
-            '<input type="text" data-i18n="[placeholder]vertex.menu.identification.placeholder.to_a_category">'
+            '<input type="text" data-i18n="[placeholder]graph_element.menu.identification.placeholder.to_a_category">'
         );
 
         t.add(

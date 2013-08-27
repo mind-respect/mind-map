@@ -15,11 +15,11 @@ define([
     "triple_brain.ui.graph",
     "triple_brain.ui.arrow_line",
     "triple_brain.server_subscriber",
-    "triple_brain.ui.image_menu",
+    "triple_brain.image_displayer",
     "triple_brain.ui.graph_element",
     "jquery.center-on-screen"
 ],
-    function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, GraphUi, ArrowLine, ServerSubscriber, ImageMenu, GraphElement) {
+    function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, GraphUi, ArrowLine, ServerSubscriber, ImageDisplayer, GraphElement) {
         var api = {};
 
         api.getWhenEmptyLabel = function(){
@@ -360,7 +360,7 @@ define([
             };
 
             function createImageMenu() {
-                var imageMenu = ImageMenu.ofVertex(self).create();
+                var imageMenu = ImageDisplayer.ofVertex(self).create();
                 $(html).data("images_menu", imageMenu);
                 return imageMenu;
             }

@@ -69,8 +69,8 @@ define([
                         "data-i18n",
                         (
                             graphElement.isConcept() ?
-                                "vertex.menu.identification.instruction.concept" :
-                                "vertex.menu.identification.instruction.relation"
+                                "graph_element.menu.identification.instruction.concept" :
+                                "graph_element.menu.identification.instruction.relation"
                             )
                     )
                 );

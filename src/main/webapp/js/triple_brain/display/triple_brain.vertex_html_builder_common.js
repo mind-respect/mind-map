@@ -8,8 +8,9 @@ define([
     "triple_brain.mind-map_template",
     "triple_brain.link_to_far_vertex_menu",
     "triple_brain.graph_element_menu",
+    "triple_brain.image_menu",
     "jquery-ui"
-], function($, Vertex, VertexService, MindMapTemplate, LinkToFarVertexMenu, GraphElementMenu){
+], function($, Vertex, VertexService, MindMapTemplate, LinkToFarVertexMenu, GraphElementMenu, ImageMenu){
     var api = {};
     api.addPlusButton = function(vertexMenu, clickBehavior){
         return makeVertexMenuButtonUsingClass(
@@ -47,6 +48,18 @@ define([
             "ui-icon-home",
             clickBehavior
         );
+    };
+    api.addImageButton = function(vertexMenu){
+        return makeVertexMenuButtonUsingClass(
+            vertexMenu,
+            "ui-icon-image",
+            clickBehaviour
+        );
+        function clickBehaviour(){
+            ImageMenu.ofVertex(
+                vertexOfSubHtmlComponent(this)
+            ).build();
+        }
     };
     api.addNoteButton = function(vertexMenu){
         return makeVertexMenuButtonUsingClass(

@@ -54,12 +54,7 @@
     "edge": {
         "default" : "relation"
     },
-    "vertex" : {
-        "default" : "concept",
-        "search" : {
-            "user" : "usager",
-            "source" : "source"
-        },
+    "graph_element" : {
         "menu" : {
             "identification" :{
                 "title" : "Identifications",
@@ -71,7 +66,16 @@
                     "to_another_source" : "Identifier à une autre source",
                     "to_a_category" : "Ajouter une catégorie"
                 }
-            },
+            }
+        }
+    },
+    "vertex" : {
+        "default" : "concept",
+        "search" : {
+            "user" : "usager",
+            "source" : "source"
+        },
+        "menu" : {
             "note":{
                 "update" : "Mettre à jour",
                 "saving" : "Sauvegarde"
