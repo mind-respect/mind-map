@@ -76,6 +76,9 @@
             "source" : "source"
         },
         "menu" : {
+            "image" : {
+                "select" : "Select a file"
+            },
             "note":{
                 "update" : "Update",
                 "saving" : "Saving"

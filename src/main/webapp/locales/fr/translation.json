@@ -76,6 +76,9 @@
             "source" : "source"
         },
         "menu" : {
+            "image" : {
+                "select" : "Choisissez un fichier"
+            },
             "note":{
                 "update" : "Mettre à jour",
                 "saving" : "Sauvegarde"
