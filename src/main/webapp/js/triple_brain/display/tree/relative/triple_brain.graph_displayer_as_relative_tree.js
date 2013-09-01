@@ -310,7 +310,7 @@ define([
                     };
                     buildChildrenHtmlTreeRecursively(
                         childHtmlFacade,
-                        serverRootVertex.id
+                        serverRootVertex.uri
                     );
                 }
                 function buildChildrenHtmlTreeRecursively(parentVertexHtmlFacade, grandParentUri) {
@@ -321,10 +321,10 @@ define([
                     $.each(serverParentVertex.neighbors, function () {
                         var neighborInfo = this;
                         var childInfo = vertexWithId(neighborInfo.vertexUri);
-                        if (grandParentUri === childInfo.id || childInfo.added === true) {
+                        if (grandParentUri === childInfo.uri || childInfo.added === true) {
                             return;
                         }
-                        var vertexServerFormat = vertexWithId(childInfo.id);
+                        var vertexServerFormat = vertexWithId(childInfo.uri);
                         var childVertexHtmlFacade = self.buildVertexHtmlIntoContainer(
                             vertexServerFormat,
                             childrenContainer

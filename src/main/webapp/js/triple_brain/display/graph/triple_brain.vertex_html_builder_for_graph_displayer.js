@@ -56,7 +56,7 @@ define([
             );
             html.data(
                 "uri",
-                serverFormat.id
+                serverFormat.uri
             );
             html.uniqueId();
             this.create = function () {

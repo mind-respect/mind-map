@@ -27,8 +27,8 @@ define([
             return new EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade);
         };
         function EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
-            var uri = edgeServer.id;
-            edgeServer.id = IdUriUtils.graphElementIdFromUri(edgeServer.id);
+            var uri = edgeServer.uri;
+            edgeServer.uri= IdUriUtils.graphElementIdFromUri(edgeServer.uri);
             var html = RelativeTreeTemplates['edge'].merge({
                 label:edgeServer.label === "" ?
                     TreeEdge.getWhenEmptyLabel() :

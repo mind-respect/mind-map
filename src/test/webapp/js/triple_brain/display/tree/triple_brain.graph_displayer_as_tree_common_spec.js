@@ -13,7 +13,7 @@ define([
             initLinearAbcGraph();
             TreeDisplayerCommon.defineChildrenInVertices(
                 abcGraph,
-                vertexA.id
+                vertexA.uri
             );
             expect(vertexA.neighbors.length).toBe(1);
 //            initLinearAbcGraph();
@@ -36,7 +36,7 @@ define([
 //        });
     });
     function centerVertex(){
-        return vertexInGraphWithId(vertexA.id);
+        return vertexInGraphWithId(vertexA.uri);
     }
     function vertexInGraphWithId(vertexId){
         return abcGraph.vertices[vertexId];
@@ -85,14 +85,14 @@ define([
     }
 
     function addVertex(vertex){
-        abcGraph.vertices[vertex.id] = vertex;
+        abcGraph.vertices[vertex.uri] = vertex;
         return vertex;
     }
     function makeEdgeBetween(sourceVertex, destinationVertex){
         return {
             id :  generateEdgeUri(),
-            source_vertex_id : sourceVertex.id,
-            destination_vertex_id : destinationVertex.id,
+            source_vertex_id : sourceVertex.uri,
+            destination_vertex_id : destinationVertex.uri,
             label : "between " + sourceVertex.label + " and " + destinationVertex.label
         }
     }

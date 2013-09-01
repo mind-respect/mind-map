@@ -30,8 +30,8 @@ define([
         };
 
         function EdgeCreator(json){
-            var uri = json.id;
-            json.id = IdUriUtils.graphElementIdFromUri(json.id);
+            var uri = json.uri;
+            json.uri = IdUriUtils.graphElementIdFromUri(json.uri);
             var html = MindMapTemplate['edge'].merge(json);
             this.create = function(){
                 GraphUi.addHtml(

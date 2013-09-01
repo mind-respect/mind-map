@@ -42,7 +42,7 @@ define([
             );
             html.data(
                 "uri",
-                serverFormat.id
+                serverFormat.uri
             );
             html.uniqueId();
             this.create = function () {
@@ -119,7 +119,7 @@ define([
                 if (vertex.hasDefaultText()) {
                     vertex.applyStyleOfDefaultText();
                 }
-                label.focus(function (e) {
+                label.focus(function(){
                     var vertex = vertexOfSubHtmlComponent(this);
                     vertex.highlight();
                     vertex.removeStyleOfDefaultText();
