@@ -37,7 +37,7 @@ define([
                     label:searchResult.label,
                     value:searchResult.label,
                     source: $.t("vertex.search.user") + " " + searchResult.owner_username,
-                    uri:searchResult.id,
+                    uri:searchResult.uri,
                     provider:self
                 };
                 format.somethingToDistinguish = searchResult.relations_name.filter(

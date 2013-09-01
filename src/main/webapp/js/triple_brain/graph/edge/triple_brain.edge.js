@@ -124,6 +124,8 @@ define([
                     edgeServerFormatted.source_vertex_id = sourceVertexUri;
                     edgeServerFormatted.destination_vertex_id = destinationVertexUri;
                     edgeServerFormatted.label = Edge.getWhenEmptyLabel();
+                    edgeServerFormatted.types = [];
+                    edgeServerFormatted.same_as = [];
                     callback(edgeServerFormatted);
                 }
             );
