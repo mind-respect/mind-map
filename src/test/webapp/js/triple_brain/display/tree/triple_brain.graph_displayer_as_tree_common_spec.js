@@ -90,7 +90,7 @@ define([
     }
     function makeEdgeBetween(sourceVertex, destinationVertex){
         return {
-            id :  generateEdgeUri(),
+            uri :  generateEdgeUri(),
             source_vertex_id : sourceVertex.uri,
             destination_vertex_id : destinationVertex.uri,
             label : "between " + sourceVertex.label + " and " + destinationVertex.label
@@ -99,7 +99,7 @@ define([
 
     function makeVertex(label){
         return  {
-            id : generateVertexUri(),
+            uri : generateVertexUri(),
             label : label,
             same_as : [],
             suggestions : [],
