@@ -4,9 +4,10 @@
 define([
     "jquery",
     "triple_brain.graph_element_menu",
-    "triple_brain.ui.graph"
+    "triple_brain.ui.graph",
+    "triple_brain.image"
 ],
-    function ($, GraphElementMenu, GraphUi) {
+    function ($, GraphElementMenu, GraphUi, Image) {
         var api = {};
         api.ofVertex = function (vertex) {
             return new ImageMenu(
@@ -98,8 +99,13 @@ define([
                                 data:formData,
                                 processData:false,
                                 contentType:false,
-                                success:function (res) {
-                                    console.log("success " + res);
+                                success:function (data, textStatus, xhr) {
+                                    var addedImage = Image.fromInternalImageBaseUri(
+                                        xhr.getResponseHeader('Location')
+                                    );
+                                    vertex.addImages(
+                                        addedImage
+                                    );
                                 }
                             });
                         }

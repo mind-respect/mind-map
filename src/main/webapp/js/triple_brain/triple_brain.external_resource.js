@@ -9,10 +9,9 @@ define([
     "triple_brain.ui.vertex",
     "triple_brain.id_uri",
     "triple_brain.image",
-    "triple_brain.event_bus",
     "jquery.json.min"
 ],
-    function (require, $, ServerSubscriber, Vertex, IdUriUtils, Image, EventBus) {
+    function (require, $, ServerSubscriber, Vertex, IdUriUtils, Image) {
         var api = {};
         api.withUriAndLabel = function (uri, label) {
             return new ExternalResource(
