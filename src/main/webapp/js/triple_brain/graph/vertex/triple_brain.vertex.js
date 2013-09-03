@@ -65,7 +65,7 @@ define([
         api.updateNote = function (vertex, note, callback) {
             $.ajax({
                 type:'POST',
-                url:vertex.getUri() + '/note',
+                url:vertex.getUri() + '/comment',
                 data:note,
                 contentType:"text/plain"
             }).success(function () {

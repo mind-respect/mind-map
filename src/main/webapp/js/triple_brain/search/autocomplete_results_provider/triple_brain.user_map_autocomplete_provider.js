@@ -33,7 +33,7 @@ define([
             return $.map(searchResults, function (searchResult) {
                 var format = {
                     nonFormattedSearchResult: searchResult,
-                    description:searchResult.note,
+                    description:searchResult.comment,
                     label:searchResult.label,
                     value:searchResult.label,
                     source: $.t("vertex.search.user") + " " + searchResult.owner_username,
@@ -53,7 +53,7 @@ define([
             callback({
                     conciseSearchResult:searchResult,
                     title:searchResult.label,
-                    text: searchResult.nonFormattedSearchResult.note,
+                    text: searchResult.nonFormattedSearchResult.comment,
                     imageUrl:""
                 }
             );

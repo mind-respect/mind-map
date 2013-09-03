@@ -69,7 +69,7 @@ define([
                 createMenu();
                 var vertex = vertexFacade();
                 vertex.setNote(
-                    serverFormat.note
+                    serverFormat.comment
                 );
                 vertex.addSuggestions(
                     Suggestion.fromJsonArrayOfServer(
