@@ -21,8 +21,9 @@ define([
     "triple_brain.segment",
     "triple_brain.graph_displayer",
     "triple_brain.vertex_html_builder_common",
+    "triple_brain.image",
     "jquery-ui"
-], function (require, $, EventBus, GraphUi, Vertex, VertexService, GraphEdge, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, ArrowLine, Point, Segment, GraphDisplayer, VertexHtmlCommon) {
+], function (require, $, EventBus, GraphUi, Vertex, VertexService, GraphEdge, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, ArrowLine, Point, Segment, GraphDisplayer, VertexHtmlCommon, Image) {
         var api = {};
         api.withJsonHavingAbsolutePosition = function (serverVertex) {
             initAdjustedPosition(serverVertex);
@@ -120,6 +121,16 @@ define([
                         )
                     );
                 });
+                var images = [];
+                $.each(serverFormat.images, function(){
+                    var imageServerFormat = this;
+                    images.push(
+                        Image.fromServerJson(
+                            imageServerFormat
+                        )
+                    );
+                });
+                vertex.addImages(images);
                 vertex.makeItLowProfile();
                 vertex.setOriginalServerObject(
                     serverFormat
@@ -215,6 +226,9 @@ define([
                     vertexMenu
                 );
                 VertexHtmlCommon.addNoteButton(
+                    vertexMenu
+                );
+                VertexHtmlCommon.addImageButton(
                     vertexMenu
                 );
                 VertexHtmlCommon.addPrivacyManagementButton(
