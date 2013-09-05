@@ -30,7 +30,8 @@ define([
             );
         };
         this.formatResults = function(searchResults){
-            return $.map(searchResults, function (searchResult) {
+            var nonDuplicatedSearchResults = getNonDuplicatedResults();
+            return $.map(nonDuplicatedSearchResults, function (searchResult) {
                 var format = {
                     nonFormattedSearchResult: searchResult,
                     comment:searchResult.comment,
@@ -48,6 +49,30 @@ define([
                 format.distinctionType = "relations";
                 return format;
             });
+            function getNonDuplicatedResults(){
+                var nonDuplicatedResults = [];
+                $.each(searchResults, function(){
+                    var searchResult = this;
+                    var toKeep = true;
+                    $.each(searchResult.identifications, function(){
+                        var identification = this + "";
+                        $.each(searchResults, function(){
+                            var otherSearchResult = this;
+                            if(identification === otherSearchResult.uri){
+                                toKeep = false;
+                                //break the loop
+                                return false;
+                            }
+                        });
+                    });
+                    if(toKeep){
+                        nonDuplicatedResults.push(
+                            searchResult
+                        );
+                    }
+                });
+                return nonDuplicatedResults;
+            }
         };
         this.getMoreInfoForSearchResult = function (searchResult, callback) {
             callback({
