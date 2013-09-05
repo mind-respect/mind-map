@@ -44,9 +44,16 @@ define([
             return new ExternalResource(
                 serverJson.uri,
                 serverJson.label,
-                serverJson.description,
+                serverJson.comment,
                 Image.arrayFromServerJson(serverJson.images)
             )
+        };
+        api.fromSearchResult = function(searchResult){
+            return api.withUriLabelAndDescription(
+                searchResult.uri,
+                searchResult.label,
+                searchResult.comment
+            );
         };
 
         function ExternalResource(uri, label, description, images) {
@@ -97,7 +104,7 @@ define([
                 return {
                     uri:thisExternalResource.uri(),
                     label:thisExternalResource.label(),
-                    description:thisExternalResource.description(),
+                    comment:thisExternalResource.description(),
                     images:thisExternalResource.images
                 }
             };

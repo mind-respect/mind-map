@@ -237,10 +237,8 @@ define([
             }
 
             function identifyUsingServerIdentificationFctn(graphElement, searchResult, serverIdentificationFctn) {
-                var identificationResource = ExternalResource.withUriLabelAndDescription(
-                    searchResult.uri,
-                    searchResult.label,
-                    searchResult.description
+                var identificationResource = ExternalResource.fromSearchResult(
+                    searchResult
                 );
                 serverIdentificationFctn(
                     graphElement,

@@ -45,7 +45,7 @@ define([
             return $.map(searchResults.result, function (searchResult) {
                 var format = {
                     nonFormattedSearchResult: searchResult,
-                    description : "",
+                    comment : "",
                     label:searchResult.name,
                     value:searchResult.name,
                     source:"Freebase.com",
