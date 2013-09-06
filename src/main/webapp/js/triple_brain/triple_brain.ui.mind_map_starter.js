@@ -15,8 +15,9 @@ define(
         "triple_brain.menu",
         "triple_brain.ui.graph",
         "triple_brain.language_manager",
+        "triple_brain.vertex"
     ],
-    function ($, UserService, EventBus, LoginHandler, DragScroll, Vertex, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, Menu, GraphUi, LanguageManager) {
+    function ($, UserService, EventBus, LoginHandler, DragScroll, Vertex, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, Menu, GraphUi, LanguageManager, VertexService) {
         var api = {
             offset:function () {
                 var offset = {};
@@ -40,6 +41,7 @@ define(
                     $("html").addClass("authenticated");
                     handleIfNotAuthenticatedShowCredentialsFlow();
                     handleDisconnectButton();
+                    handleCreateNewConceptButton();
                     DepthSlider.init();
                     SearchUi.init();
                     GraphDisplayer.setImplementation(
@@ -107,6 +109,19 @@ define(
                             window.location = "/";
                         })
                     });
+                }
+
+                function handleCreateNewConceptButton() {
+                    $("#create-concept").on(
+                        "click",
+                        function () {
+                            VertexService.createVertex(function(newVertex){
+                                GraphDisplayer.displayUsingNewCentralVertexUri(
+                                    newVertex.uri
+                                );
+                            });
+                        }
+                    );
                 }
             }
         };

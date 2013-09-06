@@ -37,6 +37,7 @@
         }
     },
     "top_menu" : {
+        "create_concept" : "nouveau concept",
         "disconnect" : "déconnecter",
         "show_as_graph" : "voir en graphe",
         "show_as_tree" : "voir en arbre",

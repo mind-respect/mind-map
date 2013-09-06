@@ -4,10 +4,18 @@ define([
     "triple_brain.event_bus",
     "triple_brain.ui.triple",
     "triple_brain.suggestion",
-    "triple_brain.graph_element"
+    "triple_brain.graph_element",
+    "triple_brain.user"
 ],
-    function (require, $, EventBus, Triple, Suggestion, GraphElement) {
+    function (require, $, EventBus, Triple, Suggestion, GraphElement, UserService) {
         var api = {};
+        api.createVertex = function(callback){
+            $.ajax({
+                type:'POST',
+                url:verticesUrl(),
+                dataType:'json'
+            }).success(callback);
+        };
         api.addRelationAndVertexToVertex = function (vertex, callback) {
             var dummyPosition = {
                 x:0,
@@ -230,5 +238,9 @@ define([
         }
 
         return api;
+
+        function verticesUrl(){
+            return UserService.currentUserUri() + "/graph/vertex"
+        }
     }
 );
