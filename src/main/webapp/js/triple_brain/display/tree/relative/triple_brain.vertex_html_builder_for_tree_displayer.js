@@ -75,18 +75,10 @@ define([
                         serverFormat.name_of_hidden_properties :
                         []
                 );
-                vertex.setTypes([]);
-                vertex.setSameAs([]);
-
-                $.each(serverFormat.types, function () {
-                    var typeFromServer = this;
-                    vertex.addType(
-                        ExternalResource.fromServerJson(
-                            typeFromServer
-                        )
-                    );
-                });
-
+                VertexHtmlCommon.setUpIdentifications(
+                    serverFormat,
+                    vertex
+                );
                 var images = [];
                 $.each(serverFormat.images, function(){
                     var imageServerFormat = this;
@@ -97,14 +89,6 @@ define([
                     );
                 });
                 vertex.addImages(images);
-                $.each(serverFormat.same_as, function () {
-                    var sameAsFromServer = this;
-                    vertex.addSameAs(
-                        ExternalResource.fromServerJson(
-                            sameAsFromServer
-                        )
-                    );
-                });
                 vertex.makeItLowProfile();
                 vertex.setOriginalServerObject(
                     serverFormat
@@ -207,6 +191,9 @@ define([
                         });
                     }
                 });
+                VertexHtmlCommon.applyAutoCompleteIdentificationToLabelInput(
+                    label
+                );
                 return labelContainer;
             }
 

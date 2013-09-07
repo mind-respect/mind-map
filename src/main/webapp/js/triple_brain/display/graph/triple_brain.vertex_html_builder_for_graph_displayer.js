@@ -102,25 +102,10 @@ define([
                         "makePublic" :
                         "makePrivate"
                     ]();
-                vertex.setTypes([]);
-                vertex.setSameAs([]);
-                $.each(serverFormat.types, function () {
-                    var typeFromServer = this;
-                    vertex.addType(
-                        ExternalResource.fromServerJson(
-                            typeFromServer
-                        )
-                    );
-                });
-
-                $.each(serverFormat.same_as, function () {
-                    var sameAsFromServer = this;
-                    vertex.addSameAs(
-                        ExternalResource.fromServerJson(
-                            sameAsFromServer
-                        )
-                    );
-                });
+                VertexHtmlCommon.setUpIdentifications(
+                    serverFormat,
+                    vertex
+                );
                 var images = [];
                 $.each(serverFormat.images, function(){
                     var imageServerFormat = this;
@@ -189,6 +174,9 @@ define([
                     var vertex = vertexOfSubHtmlComponent(this);
                     vertex.readjustLabelWidth();
                 });
+                VertexHtmlCommon.applyAutoCompleteIdentificationToLabelInput(
+                    label
+                );
                 return labelContainer;
             }
 

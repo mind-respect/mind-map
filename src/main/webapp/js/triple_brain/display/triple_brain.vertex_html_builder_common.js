@@ -9,9 +9,59 @@ define([
     "triple_brain.link_to_far_vertex_menu",
     "triple_brain.graph_element_menu",
     "triple_brain.image_menu",
-    "jquery-ui"
-], function($, Vertex, VertexService, MindMapTemplate, LinkToFarVertexMenu, GraphElementMenu, ImageMenu){
+    "triple_brain.external_resource",
+    "triple_brain.user_map_autocomplete_provider",
+    "triple_brain.freebase_autocomplete_provider",
+    "jquery-ui",
+    "jquery.triple_brain.search"
+], function($, Vertex, VertexService, MindMapTemplate, LinkToFarVertexMenu, GraphElementMenu, ImageMenu, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider){
     var api = {};
+    api.applyAutoCompleteIdentificationToLabelInput = function(input){
+        input.tripleBrainAutocomplete({
+            select:function (event, ui) {
+                var vertex = vertexOfSubHtmlComponent($(this));
+                var identificationResource = ExternalResource.fromSearchResult(
+                    ui.item
+                );
+                VertexService.addGenericIdentification(
+                    vertex,
+                    identificationResource
+                );
+            },
+            resultsProviders : [
+                UserMapAutocompleteProvider.toFetchCurrentUserVerticesAndPublicOnes(),
+                FreebaseAutocompleteProvider.forFetchingAnything()
+            ]
+        });
+    };
+    api.setUpIdentifications = function(serverFormat, vertex){
+        setup(
+            vertex.setTypes,
+            "types",
+            vertex.addType
+        );
+        setup(
+            vertex.setSameAs,
+            "same_as",
+            vertex.addSameAs
+        );
+        setup(
+            vertex.setGenericIdentifications,
+            "generic_identifications",
+            vertex.addGenericIdentification
+        );
+        function setup(identificationsSetter, identificationProperty, addFctn){
+            identificationsSetter([]);
+            $.each(serverFormat[identificationProperty], function () {
+                var identificationFromServer = this;
+                addFctn(
+                    ExternalResource.fromServerJson(
+                        identificationFromServer
+                    )
+                );
+            });
+        }
+    };
     api.addPlusButton = function(vertexMenu, clickBehavior){
         return makeVertexMenuButtonUsingClass(
             vertexMenu,

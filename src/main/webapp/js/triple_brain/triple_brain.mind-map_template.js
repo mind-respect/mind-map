@@ -38,11 +38,7 @@ define([
         );
         t.add(
             'identification_textfield',
-            '<input type="text" data-i18n="[placeholder]graph_element.menu.identification.placeholder.to_another_source">'
-        );
-        t.add(
-            'identification_type_textfield',
-            '<input type="text" data-i18n="[placeholder]graph_element.menu.identification.placeholder.to_a_category">'
+            '<input type="text" data-i18n="[placeholder]graph_element.menu.identification.placeholder">'
         );
 
         t.add(

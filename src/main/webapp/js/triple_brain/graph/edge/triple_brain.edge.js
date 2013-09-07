@@ -62,7 +62,12 @@ define([
             GraphElement.addIdentification(
                 edge,
                 sameAs,
-                callback
+                function(){
+                    edge.adjustWidth();
+                    if(callback !== undefined){
+                        callback();
+                    }
+                }
             );
         };
         api.removeSameAs = function (edge, sameAs, callback) {

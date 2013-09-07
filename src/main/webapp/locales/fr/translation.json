@@ -37,15 +37,15 @@
         }
     },
     "top_menu" : {
-        "create_concept" : "nouveau concept",
+        "create_concept" : "nouvelle bulle",
         "disconnect" : "déconnecter",
         "show_as_graph" : "voir en graphe",
         "show_as_tree" : "voir en arbre",
         "redraw" : "redessiner"
     },
     "left_menu" : {
-        "search" : "Chercher des concepts",
-        "distance" : "Distance du concept central"
+        "search" : "Chercher des bulles",
+        "distance" : "Distance de la bulle centrale"
     },
     "caption" : {
         "title" : "Légende",
@@ -60,18 +60,15 @@
             "identification" :{
                 "title" : "Identifications",
                 "instruction" : {
-                    "concept" : "Trouvez autant de concepts qui identifient ou sont une généralisation de celui-ci.",
+                    "concept" : "Trouvez autant de resources qui identifient ou sont une généralisation de celle-ci.",
                     "relation" : "Identifiez cette relation à une autre qui signifie la même chose."
                 },
-                "placeholder" : {
-                    "to_another_source" : "Identifier à une autre source",
-                    "to_a_category" : "Ajouter une catégorie"
-                }
+                "placeholder" : "Identifier"
             }
         }
     },
     "vertex" : {
-        "default" : "concept",
+        "default" : "bulle",
         "search" : {
             "user" : "usager",
             "source" : "source"
@@ -85,7 +82,7 @@
                 "saving" : "Sauvegarde"
             },
             "link_to_far_vertex": {
-                "title" : "Chercher un concept pour le lié à celui-ci"
+                "title" : "Chercher une bulle pour la lié à celle-ci"
             },
             "suggestion" : {
                 "title" : "Suggestions de relation",
@@ -95,7 +92,7 @@
                 }
             },
             "hidden_relation" : {
-                "title" : "Relation cachés du concept"
+                "title" : "Relation cachés de la bulle"
             }
         }
     }

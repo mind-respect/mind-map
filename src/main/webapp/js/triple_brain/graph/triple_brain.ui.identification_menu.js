@@ -50,9 +50,6 @@ define([
                 addIdentifications();
                 addInstructions();
                 addIdentificationTextField().focus();
-                if (graphElement.isConcept()) {
-                    addTypeIdentificationTextField();
-                }
             }
 
             function addTitle() {
@@ -121,11 +118,7 @@ define([
                         '.identifications'
                     );
                     var graphElement = $(semanticMenu).data("graphElement");
-                    var removeIdentification = identification.getType() == "type" ?
-                        graphElement.serverFacade().removeType :
-                        graphElement.serverFacade().removeSameAs;
-                    removeIdentification.call(
-                        this,
+                    getServerRemoveIdentificationFunction()(
                         graphElement,
                         identification,
                         function (graphElement, identification) {
@@ -139,7 +132,17 @@ define([
                                 }
                             });
                         }
-                    )
+                    );
+                    function getServerRemoveIdentificationFunction(){
+                        switch(identification.getType()){
+                            case "type" :
+                                return graphElement.serverFacade().removeType;
+                            case "same_as" :
+                                return graphElement.serverFacade().removeSameAs;
+                            default :
+                                return graphElement.serverFacade().removeGenericIdentification;
+                        }
+                    }
                 });
                 return identificationListElement;
             }
@@ -186,7 +189,7 @@ define([
                             identifyUsingServerIdentificationFctn(
                                 graphElement,
                                 searchResult,
-                                graphElement.serverFacade().addSameAs
+                                getServerIdentificationFctn()
                             );
                         },
                         resultsProviders:graphElement.isConcept() ?
@@ -205,35 +208,12 @@ define([
                             UserMapAutocompleteProvider.toFetchRelations()
                         ];
                     }
+                    function getServerIdentificationFctn(){
+                        return graphElement.isConcept() ?
+                            graphElement.serverFacade().addGenericIdentification :
+                            graphElement.serverFacade().addSameAs;
+                    }
                 }
-            }
-
-            function addTypeIdentificationTextField() {
-                var typeIdentificationTextField = MindMapTemplate[
-                    'identification_type_textfield'
-                    ].merge();
-                $(html).append(typeIdentificationTextField);
-                setUpAutocomplete();
-                function setUpAutocomplete() {
-                    typeIdentificationTextField.tripleBrainAutocomplete({
-                        select:function (event, ui) {
-                            var semanticMenu = $(this).closest('.identifications');
-                            var graphElement = $(semanticMenu).data("graphElement");
-                            var searchResult = ui.item;
-                            identifyUsingServerIdentificationFctn(
-                                graphElement,
-                                searchResult,
-                                graphElement.serverFacade().addType
-                            );
-                        },
-                        resultsProviders:[
-                            UserMapAutocompleteProvider.toFetchCurrentUserVerticesAndPublicOnes(),
-                            FreebaseAutocompleteProvider.forFetchingTypes()
-                        ]
-                    });
-                }
-
-                return typeIdentificationTextField;
             }
 
             function identifyUsingServerIdentificationFctn(graphElement, searchResult, serverIdentificationFctn) {

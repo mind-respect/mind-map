@@ -38,8 +38,39 @@ define([
         };
         this.getIdentifications = function () {
             return self.getTypes().concat(
-                self.getSameAs()
+                self.getSameAs(),
+                self.getGenericIdentifications()
             );
+        };
+        this.setGenericIdentifications = function (genericIdentifications){
+            html.data(
+                'genericIdentifications',
+                genericIdentifications
+            );
+        };
+        this.getGenericIdentifications = function(){
+            return html.data(
+                'genericIdentifications'
+            );
+        };
+        this.addGenericIdentification = function (genericIdentification) {
+            genericIdentification.setType("generic");
+            var genericIdentifications = self.getGenericIdentifications();
+            genericIdentifications.push(genericIdentification);
+            self.setGenericIdentifications(
+                genericIdentifications
+            );
+            self.applyCommonBehaviorForAddedIdentification(genericIdentification);
+        };
+        this.removeGenericIdentification = function (genericIdentification) {
+            var genericIdentifications = self.removeIdenficationInArray(
+                genericIdentification,
+                self.getGenericIdentifications()
+            );
+            self.setGenericIdentifications(
+                genericIdentifications
+            )
+            self.removeIdentificationCommonBehavior(genericIdentification);
         };
         this.setTypes = function (types) {
             return html.data('types', types);

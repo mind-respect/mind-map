@@ -148,6 +148,36 @@ define([
                 }
             );
         };
+        api.removeGenericIdentification = function (vertex, genericIdentification, callback) {
+            api.removeIdentification(
+                vertex,
+                genericIdentification,
+                function () {
+                    vertex.removeGenericIdentification(genericIdentification);
+                    if (callback!= undefined) {
+                        callback(
+                            vertex,
+                            genericIdentification
+                        );
+                    }
+                }
+            );
+        };
+        api.addGenericIdentification = function (vertex, identification, callback) {
+            identification.type = "generic";
+            addIdentification(
+                vertex,
+                identification,
+                function(){
+                    vertex.addGenericIdentification(
+                        identification
+                    );
+                    if(callback !== undefined){
+                        callback();
+                    }
+                }
+            );
+        };
         api.getSuggestions = function (vertex) {
             $.ajax({
                 type:'GET',

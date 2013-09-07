@@ -78,6 +78,7 @@ define([
                 edge.hideMenu();
                 edge.setTypes([]);
                 edge.setSameAs([]);
+                edge.setGenericIdentifications([]);
                 $.each(edgeServer.types, function () {
                     var typeFromServer = this;
                     edge.addType(
@@ -206,6 +207,10 @@ define([
                     "sameAs",
                     previousEdge.getSameAs()
                 );
+                input.data(
+                    "genericIdentifications",
+                    previousEdge.getGenericIdentifications()
+                );
                 if (input.val() === TreeEdge.getWhenEmptyLabel()) {
                     input.val("");
                 }
@@ -296,6 +301,10 @@ define([
                 html.data(
                     "sameAs",
                     previousEdge.getSameAs()
+                );
+                html.data(
+                    "genericIdentifications",
+                    previousEdge.getGenericIdentifications()
                 );
                 html.click(function () {
                     changeToInput($(this));

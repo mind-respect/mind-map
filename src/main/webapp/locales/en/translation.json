@@ -37,15 +37,15 @@
         }
     },
     "top_menu" : {
-        "create_concept" : "new concept",
+        "create_concept" : "new bubble",
         "disconnect" : "disconnect",
         "show_as_graph" : "show as graph",
         "show_as_tree" : "show as tree",
         "redraw" : "redraw"
     },
     "left_menu" : {
-        "search" : "Search concepts",
-        "distance" : "Distance from center concept"
+        "search" : "Search bubbles",
+        "distance" : "Distance from center bubble"
     },
     "caption" : {
         "title" : "Caption",
@@ -60,18 +60,15 @@
             "identification" :{
                 "title" : "Identifications",
                 "instruction" : {
-                    "concept" : "Find as many concepts that identify or are a generalization of this one.",
+                    "concept" : "Find as many resources that identify or are a generalization of this one.",
                     "relation" : "Identify this relation to another that means the same"
                 },
-                "placeholder" : {
-                    "to_another_source" : "Identify to another source",
-                    "to_a_category" : "Add a category"
-                }
+                "placeholder" : "Identify"
             }
         }
     },
     "vertex" : {
-        "default" : "concept",
+        "default" : "bubble",
         "search" : {
             "user" : "user",
             "source" : "source"
@@ -85,7 +82,7 @@
                 "saving" : "Saving"
             },
             "link_to_far_vertex": {
-                "title" : "Search for a concept to link to"
+                "title" : "Search for a bubble to link to"
             },
             "suggestion" : {
                 "title" : "Relation suggestions",
@@ -95,7 +92,7 @@
                 }
             },
             "hidden_relation" : {
-                "title" : "Hidden properties of concept"
+                "title" : "Hidden properties of bubble"
             }
         }
     }
