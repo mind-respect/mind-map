@@ -1,8 +1,8 @@
 {
-    "title": "Concepts on page",
+    "title": "Bubbles on page",
     "sort" : {
         "title" : "Sort by",
         "1" : "label",
-        "2" : "distance from center concept"
+        "2" : "distance from center bubble"
     }
 }
