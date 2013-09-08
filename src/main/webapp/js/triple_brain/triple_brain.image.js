@@ -30,24 +30,29 @@ define([
         };
         return api;
         function Image(urlForSmall, urlForBigger){
-            var thisImage = this;
+            var self = this;
+            this.isUploadedByUser = function(){
+                return self.getUrlForSmall().indexOf(
+                    window.location.hostname
+                ) != -1;
+            };
             this.getUrlForSmall = function(){
                 return urlForSmall;
-            }
+            };
             this.getUrlForBigger = function(){
                 return urlForBigger;
-            }
+            };
             this.serverFormat = function(){
                 return $.toJSON(
-                    thisImage.jsonFormat()
+                    self.jsonFormat()
                 );
-            }
+            };
             this.jsonFormat = function(){
                 return {
-                    url_for_small : thisImage.getUrlForSmall(),
-                    url_for_bigger : thisImage.getUrlForBigger()
+                    url_for_small : self.getUrlForSmall(),
+                    url_for_bigger : self.getUrlForBigger()
                 }
-            }
+            };
         }
     }
 );

@@ -27,6 +27,7 @@ define(
                 $(html).empty();
                 var images = vertex.getImages();
                 if (images.length <= 0) return;
+                images = imagesInOrderThatPrioritizeUserUploadedImages(images);
                 var image = MindMapTemplate["image_container_image"].merge({
                         src:images[0].getUrlForSmall()
                     }
@@ -74,6 +75,20 @@ define(
                 vertex.hasMoveButton() ?
                     vertex.moveButton().after(html) :
                     $(vertex.getHtml()).prepend(html);
+            }
+
+            function imagesInOrderThatPrioritizeUserUploadedImages(images){
+                return images.sort(function(image1, image2){
+                    var isImage1UploadedByUser = image1.isUploadedByUser();
+                    var isImage2UploadedByUser = image2.isUploadedByUser();
+                    if(isImage1UploadedByUser && isImage2UploadedByUser){
+                        return 0;
+                    }else if(isImage1UploadedByUser){
+                        return -1;
+                    }else{
+                        return 1;
+                    }
+                });
             }
         }
 
