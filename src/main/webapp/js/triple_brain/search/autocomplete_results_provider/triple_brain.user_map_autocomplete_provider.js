@@ -30,7 +30,9 @@ define([
             );
         };
         this.formatResults = function(searchResults){
-            var nonDuplicatedSearchResults = getNonDuplicatedResults();
+            var nonDuplicatedSearchResults = keepOneResultForResultsThatMeanTheSame(
+                searchResults
+            );
             return $.map(nonDuplicatedSearchResults, function (searchResult) {
                 var format = {
                     nonFormattedSearchResult: searchResult,
@@ -49,30 +51,6 @@ define([
                 format.distinctionType = "relations";
                 return format;
             });
-            function getNonDuplicatedResults(){
-                var nonDuplicatedResults = [];
-                $.each(searchResults, function(){
-                    var searchResult = this;
-                    var toKeep = true;
-                    $.each(searchResult.identifications, function(){
-                        var identification = this + "";
-                        $.each(searchResults, function(){
-                            var otherSearchResult = this;
-                            if(identification === otherSearchResult.uri){
-                                toKeep = false;
-                                //break the loop
-                                return false;
-                            }
-                        });
-                    });
-                    if(toKeep){
-                        nonDuplicatedResults.push(
-                            searchResult
-                        );
-                    }
-                });
-                return nonDuplicatedResults;
-            }
         };
         this.getMoreInfoForSearchResult = function (searchResult, callback) {
             callback({
@@ -83,5 +61,45 @@ define([
                 }
             );
         };
+
+        function keepOneResultForResultsThatMeanTheSame(searchResults){
+            var nonDuplicatedResults = [];
+            $.each(searchResults, function(){
+                var searchResult = this;
+                var toKeep = true;
+                $.each(searchResult.identifications, function(){
+                    var identification = this + "";
+                    $.each(searchResults, function(){
+                        var otherSearchResult = this;
+                        if(identification === otherSearchResult.uri){
+                            toKeep = false;
+                            //break the loop
+                            return false;
+                        }
+                        $.each(otherSearchResult.identifications, function(){
+                            var otherSearchResultIdentification = this + "";
+                            if(otherSearchResultIdentification === identification){
+                                toKeep = false;
+                                return false;
+                            }
+                        });
+                        if(!toKeep){
+                            //break the loop
+                            return false;
+                        }
+                    });
+                    if(!toKeep){
+                        //break the loop
+                        return false;
+                    }
+                });
+                if(toKeep){
+                    nonDuplicatedResults.push(
+                        searchResult
+                    );
+                }
+            });
+            return nonDuplicatedResults;
+        }
     }
 });
