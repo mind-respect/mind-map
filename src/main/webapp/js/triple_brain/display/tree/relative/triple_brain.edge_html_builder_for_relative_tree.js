@@ -238,7 +238,9 @@ define([
                         );
                     },
                     resultsProviders : [
-                        UserMapAutocompleteProvider.toFetchRelations()
+                        UserMapAutocompleteProvider.toFetchRelationsForIdentification(
+                            previousEdge
+                        )
                     ]
                 });
                 input.keydown(function () {

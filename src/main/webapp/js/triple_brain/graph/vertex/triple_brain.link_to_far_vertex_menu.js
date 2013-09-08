@@ -80,7 +80,9 @@ define([
 
                 },
                 resultsProviders : [
-                    UserMapAutocompleteProvider.toFetchOnlyCurrentUserVertices()
+                    UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesExcept(
+                        vertex
+                    )
                 ]
             });
             html.append(

@@ -8,21 +8,34 @@ define([
     var api = {};
     api.toFetchOnlyCurrentUserVertices = function(){
         return new UserMapAutoCompleteProvider(
-            SearchService.searchForOnlyOwnVerticesAjaxCall
+            SearchService.searchForOnlyOwnVerticesAjaxCall,
+            false,
+            undefined
         );
     };
-    api.toFetchCurrentUserVerticesAndPublicOnes = function(){
+    api.toFetchOnlyCurrentUserVerticesExcept = function(vertexToIgnore){
         return new UserMapAutoCompleteProvider(
-            SearchService.searchForOwnVerticesAndPublicOnesAjaxCall
+            SearchService.searchForOnlyOwnVerticesAjaxCall,
+            false,
+            vertexToIgnore
         );
     };
-    api.toFetchRelations = function(){
+    api.toFetchCurrentUserVerticesAndPublicOnesForIdentification = function(vertexToIdentify){
         return new UserMapAutoCompleteProvider(
-            SearchService.searchForOwnRelationsAjaxCall
+            SearchService.searchForOwnVerticesAndPublicOnesAjaxCall,
+            true,
+            vertexToIdentify
+        );
+    };
+    api.toFetchRelationsForIdentification = function(edgeToIdentify){
+        return new UserMapAutoCompleteProvider(
+            SearchService.searchForOwnRelationsAjaxCall,
+            true,
+            edgeToIdentify
         );
     };
     return api;
-    function UserMapAutoCompleteProvider(fetchMethod){
+    function UserMapAutoCompleteProvider(fetchMethod, isForIdentification, graphElementToIgnore){
         var self = this;
         this.getFetchMethod = function (searchTerm) {
             return fetchMethod(
@@ -30,10 +43,8 @@ define([
             );
         };
         this.formatResults = function(searchResults){
-            var nonDuplicatedSearchResults = keepOneResultForResultsThatMeanTheSame(
-                searchResults
-            );
-            return $.map(nonDuplicatedSearchResults, function (searchResult) {
+            var searchResults = filteredSearchResults();
+            return $.map(searchResults, function (searchResult) {
                 var format = {
                     nonFormattedSearchResult: searchResult,
                     comment:searchResult.comment,
@@ -51,6 +62,19 @@ define([
                 format.distinctionType = "relations";
                 return format;
             });
+            function filteredSearchResults(){
+                if(isForIdentification){
+                    return keepOneResultForResultsThatMeanTheSame(
+                        searchResults
+                    );
+                }else if(graphElementToIgnore !== undefined){
+                    return removeGraphElementToIgnoreFromResults(
+                        searchResults
+                    );
+                }else{
+                    return searchResults;
+                }
+            }
         };
         this.getMoreInfoForSearchResult = function (searchResult, callback) {
             callback({
@@ -62,10 +86,24 @@ define([
             );
         };
 
+        function removeGraphElementToIgnoreFromResults(searchResults){
+            var filteredResults = [];
+            $.each(searchResults, function(){
+                var searchResult = this;
+                if(searchResult.uri !== graphElementToIgnore.getUri()){
+                    filteredResults.push(searchResult);
+                }
+            });
+            return filteredResults;
+        }
+
         function keepOneResultForResultsThatMeanTheSame(searchResults){
             var nonDuplicatedResults = [];
             $.each(searchResults, function(){
                 var searchResult = this;
+                if(searchResult.uri = graphElementToIgnore.getUri()){
+                    return breakLoop();
+                }
                 var toKeep = true;
                 $.each(searchResult.identifications, function(){
                     var identification = this + "";
@@ -73,24 +111,21 @@ define([
                         var otherSearchResult = this;
                         if(identification === otherSearchResult.uri){
                             toKeep = false;
-                            //break the loop
-                            return false;
+                            return breakLoop();
                         }
                         $.each(otherSearchResult.identifications, function(){
                             var otherSearchResultIdentification = this + "";
                             if(otherSearchResultIdentification === identification){
                                 toKeep = false;
-                                return false;
+                                return breakLoop();
                             }
                         });
                         if(!toKeep){
-                            //break the loop
-                            return false;
+                            return breakLoop();
                         }
                     });
                     if(!toKeep){
-                        //break the loop
-                        return false;
+                        return breakLoop();
                     }
                 });
                 if(toKeep){
@@ -100,6 +135,9 @@ define([
                 }
             });
             return nonDuplicatedResults;
+            function breakLoop(){
+                return false;
+            }
         }
     }
 });

@@ -198,14 +198,14 @@ define([
                     });
                     function getResultsProviderForVertex() {
                         return [
-                            UserMapAutocompleteProvider.toFetchCurrentUserVerticesAndPublicOnes(),
+                            UserMapAutocompleteProvider.toFetchCurrentUserVerticesAndPublicOnesForIdentification(graphElement),
                             FreebaseAutocompleteProvider.forFetchingAnything()
                         ];
                     }
 
                     function getResultsProviderForRelations() {
                         return [
-                            UserMapAutocompleteProvider.toFetchRelations()
+                            UserMapAutocompleteProvider.toFetchRelationsForIdentification(graphElement)
                         ];
                     }
                     function getServerIdentificationFctn(){

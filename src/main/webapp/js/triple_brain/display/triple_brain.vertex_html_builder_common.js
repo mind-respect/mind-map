@@ -29,7 +29,9 @@ define([
                 );
             },
             resultsProviders : [
-                UserMapAutocompleteProvider.toFetchCurrentUserVerticesAndPublicOnes(),
+                UserMapAutocompleteProvider.toFetchCurrentUserVerticesAndPublicOnesForIdentification(
+                    vertexOfSubHtmlComponent(input)
+                ),
                 FreebaseAutocompleteProvider.forFetchingAnything()
             ]
         });
