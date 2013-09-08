@@ -228,13 +228,19 @@ define([
                 });
                 input.tripleBrainAutocomplete({
                     select:function (event, ui) {
-                        var edge = edgeFromHtml($(this));
+                        var edge = changeToSpan($(this));
                         var identificationResource = ExternalResource.fromSearchResult(
                             ui.item
                         );
                         EdgeService.addSameAs(
                             edge,
                             identificationResource
+                        );
+                        var newLabel = ui.item.label;
+                        edge.setText(newLabel);
+                        EdgeService.updateLabel(
+                            edge,
+                            newLabel
                         );
                     },
                     resultsProviders : [
@@ -323,6 +329,7 @@ define([
                 relativeVertex.adjustPositionIfApplicable();
                 relativeVertex.adjustAllChildrenPositionIfApplicable();
                 TreeEdge.redrawAllEdges();
+                return edge;
             }
 
             function edgeFromHtml(htmlComponent) {
