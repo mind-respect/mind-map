@@ -370,7 +370,7 @@ define([
                             sourceVertex,
                             relationEndPoint,
                             function(triple){
-                                triple.destinationVertex().focus();
+                                triple.edge().focus();
                             }
                         );
                     }
