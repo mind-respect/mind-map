@@ -239,8 +239,6 @@ define([
                             var sourceVertex = TreeVertex.ofVertex(
                                 triple.sourceVertex()
                             );
-                            var newEdge = triple.edge();
-                            newEdge.getLabel().click();
                             triple.destinationVertex().getHtml().centerOnScreen();
                             TreeVertex.ofVertex(
                                 triple.destinationVertex()
