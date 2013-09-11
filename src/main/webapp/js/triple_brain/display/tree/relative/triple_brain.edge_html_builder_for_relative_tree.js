@@ -19,10 +19,11 @@ define([
     "triple_brain.ui.identification_menu",
     "triple_brain.external_resource",
     "triple_brain.user_map_autocomplete_provider",
+    "triple_brain.freebase_autocomplete_provider",
     "jquery.cursor-at-end"
 
 ],
-    function (require, $, GraphUi, MindMapTemplate, IdUriUtils, VertexAndEdgeCommon, TreeEdge, EdgeService, ArrowLine, EventBus, RelativeVertex, RelativeTreeTemplates, Vertex, IdentificationMenu, ExternalResource, UserMapAutocompleteProvider) {
+    function (require, $, GraphUi, MindMapTemplate, IdUriUtils, VertexAndEdgeCommon, TreeEdge, EdgeService, ArrowLine, EventBus, RelativeVertex, RelativeTreeTemplates, Vertex, IdentificationMenu, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider) {
         var api = {};
         api.get = function (edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
             return new EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade);
@@ -227,6 +228,7 @@ define([
                     EdgeService.updateLabel(edge, edge.text());
                 });
                 input.tripleBrainAutocomplete({
+                    limitNbRequests: true,
                     select:function (event, ui) {
                         var edge = changeToSpan($(this));
                         var identificationResource = ExternalResource.fromSearchResult(
@@ -246,7 +248,8 @@ define([
                     resultsProviders : [
                         UserMapAutocompleteProvider.toFetchRelationsForIdentification(
                             previousEdge
-                        )
+                        ),
+                        FreebaseAutocompleteProvider.forFetchingAnything()
                     ]
                 });
                 input.keydown(function () {

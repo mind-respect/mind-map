@@ -193,19 +193,20 @@ define([
                             );
                         },
                         resultsProviders:graphElement.isConcept() ?
-                            getResultsProviderForVertex() :
-                            getResultsProviderForRelations()
+                            getResultsProvidersForVertex() :
+                            getResultsProvidersForRelations()
                     });
-                    function getResultsProviderForVertex() {
+                    function getResultsProvidersForVertex() {
                         return [
                             UserMapAutocompleteProvider.toFetchCurrentUserVerticesAndPublicOnesForIdentification(graphElement),
                             FreebaseAutocompleteProvider.forFetchingAnything()
                         ];
                     }
 
-                    function getResultsProviderForRelations() {
+                    function getResultsProvidersForRelations() {
                         return [
-                            UserMapAutocompleteProvider.toFetchRelationsForIdentification(graphElement)
+                            UserMapAutocompleteProvider.toFetchRelationsForIdentification(graphElement),
+                            FreebaseAutocompleteProvider.forFetchingAnything()
                         ];
                     }
                     function getServerIdentificationFctn(){
