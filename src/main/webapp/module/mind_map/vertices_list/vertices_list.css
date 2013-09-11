@@ -18,6 +18,8 @@
     -moz-border-radius: 15px;
     border-radius: 15px;
     width:175px;
+    overflow:hidden;
+    white-space: nowrap;
 }
 #vertices-list .link-like-button{
     font-size:0.9em;
