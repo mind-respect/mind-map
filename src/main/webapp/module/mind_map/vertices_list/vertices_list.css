@@ -18,7 +18,7 @@
     -moz-border-radius: 15px;
     border-radius: 15px;
     width:175px;
-    overflow:hidden;
+    overflow-x:hidden;
     white-space: nowrap;
 }
 #vertices-list .link-like-button{
