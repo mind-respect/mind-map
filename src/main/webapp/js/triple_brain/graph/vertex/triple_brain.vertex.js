@@ -160,6 +160,10 @@ define([
                             genericIdentification
                         );
                     }
+                    EventBus.publish(
+                        '/event/ui/graph/vertex/generic_identification/removed',
+                        [vertex, sameAs]
+                    );
                 }
             );
         };
@@ -242,15 +246,22 @@ define([
                     if (successCallback != undefined) {
                         successCallback();
                     }
-                    var eventBusMessage = identification.type === "type" ?
-                        '/event/ui/graph/vertex/type/added' :
-                        '/event/ui/graph/vertex/same_as/added';
                     EventBus.publish(
-                        eventBusMessage,
+                        getEventBusKey(),
                         [vertex, identification]
                     );
                 }
             );
+            function getEventBusKey(){
+                switch(identification.type){
+                    case "type" :
+                        return '/event/ui/graph/vertex/type/added';
+                    case "same_as" :
+                        return '/event/ui/graph/vertex/same_as/added';
+                    default :
+                        return '/event/ui/graph/vertex/generic_identification/added'
+                }
+            }
         }
 
         function setPrivacy(isPublic, vertex, callback) {

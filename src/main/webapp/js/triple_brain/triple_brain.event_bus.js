@@ -6,14 +6,14 @@ define([
 ],
     function ($) {
        return {
-            subscribe:function (event, fn) {
-                $(this).bind(event, fn);
+            subscribe:function (events, fn) {
+                $(this).on(events, fn);
             },
-            unsubscribe:function (event, fn) {
-                $(this).unbind(event, fn);
+            unsubscribe:function (events, fn) {
+                $(this).off(events, fn);
             },
-            publish:function (event, args) {
-                $(this).trigger(event, args);
+            publish:function (events, args) {
+                $(this).trigger(events, args);
             }
         };
     });

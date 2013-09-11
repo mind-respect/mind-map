@@ -6,34 +6,38 @@ define([
     "jquery",
     "jquery-ui"
 ],
-    function(EventBus, $){
+    function (EventBus, $) {
         var api = {};
         EventBus.subscribe(
-            '/event/ui/graph/vertex/type/added',
-            function(event, vertex, type){
-                if(isIdentificationADate(type)){
+            '/event/ui/graph/vertex/type/added ' +
+                '/event/ui/graph/vertex/same_as/added ' +
+                '/event/ui/graph/vertex/generic_identification/added',
+            function (event, vertex, identification) {
+                if (isIdentificationADate(identification)) {
                     applyDatePickerToVertex(vertex);
                 }
             }
         );
         EventBus.subscribe(
             '/event/ui/html/vertex/created/',
-            function(event, vertex){
-                $.each(vertex.getIdentifications(), function(){
+            function (event, vertex) {
+                $.each(vertex.getIdentifications(), function () {
                     var identification = this;
-                    if(isIdentificationADate(identification)){
+                    if (isIdentificationADate(identification)) {
                         applyDatePickerToVertex(vertex);
                     }
                     return false;
                 });
             }
         );
-        function applyDatePickerToVertex(vertex){
+        function applyDatePickerToVertex(vertex) {
             $(vertex.label()).datepicker()
         }
-        function isIdentificationADate(identification){
+
+        function isIdentificationADate(identification) {
             return identification.uri() == "http://rdf.freebase.com/rdf/type/datetime"
         }
+
         return api;
 
     }

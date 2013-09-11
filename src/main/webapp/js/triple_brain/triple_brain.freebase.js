@@ -15,11 +15,11 @@ define([
         api.BASE_URL = "https://www.googleapis.com/freebase/v1";
         api.SEARCH_URL = api.BASE_URL + "/search";
         api.IMAGE_URL = api.BASE_URL + "/image";
-        api.thumbnailImageUrlFromFreebaseId = function(freebaseId){
+        api.thumbnailImageUrlFromFreebaseId = function (freebaseId) {
             var options = {
-                key: api.key,
+                key:api.key,
                 maxwidth:55,
-                errorid : "/freebase/no_image_png"
+                errorid:"/freebase/no_image_png"
             };
             return api.IMAGE_URL + freebaseId + "?" + $.param(options);
         };
@@ -38,7 +38,7 @@ define([
                 .toLowerCase()
                 .indexOf("freebase.com") != -1;
         };
-        api.handleIdentificationToServer = function(vertex, freebaseSuggestion, successCallBack){
+        api.handleIdentificationToServer = function (vertex, freebaseSuggestion, successCallBack) {
             var externalResource = ExternalResource.fromFreebaseSuggestion(
                 freebaseSuggestion
             );
@@ -56,10 +56,10 @@ define([
                     successCallBack
                 );
             }
-            function getTypeId(){
-                if(freebaseSuggestion.notable === undefined){
+            function getTypeId() {
+                if (freebaseSuggestion.notable === undefined) {
                     return "";
-                }else{
+                } else {
                     return freebaseSuggestion.notable.id;
                 }
             }
@@ -103,21 +103,23 @@ define([
                     );
                 })
         };
-        api.removeSuggestFeatureOnVertex = function(vertex){
-            $(vertex.label()).autocomplete( "destroy" );
+        api.removeSuggestFeatureOnVertex = function (vertex) {
+            $(vertex.label()).autocomplete("destroy");
         };
 
         EventBus.subscribe(
-            '/event/ui/graph/vertex/type/added',
-            function (event, vertex, type) {
-                var typeUri = type.uri();
-                if (!api.isFreebaseUri(typeUri)) {
+            '/event/ui/graph/vertex/type/added ' +
+                '/event/ui/graph/vertex/same_as/added ' +
+                '/event/ui/graph/vertex/generic_identification/added',
+            function (event, vertex, identification) {
+                var identificationUri = identification.uri();
+                if (!api.isFreebaseUri(identificationUri)) {
                     return;
                 }
-                var typeId = api.idInFreebaseURI(typeUri);
+                var identificationId = api.idInFreebaseURI(identificationUri);
                 api.listPropertiesOfFreebaseTypeId(
                     vertex,
-                    typeId
+                    identificationId
                 );
                 vertex.label().tripleBrainAutocomplete({
                     select:function (event, ui) {
@@ -131,15 +133,15 @@ define([
                             searchResult.label,
                             searchResult.description
                         );
-                        vertexService().addSameAs(
+                        vertexService().addIdentification(
                             vertex,
                             identificationResource
                         );
                     },
-                    resultsProviders : [
+                    resultsProviders:[
                         require(
                             "triple_brain.freebase_autocomplete_provider"
-                        ).toFetchForTypeId(typeId)
+                        ).toFetchForTypeId(identificationId)
                     ]
                 });
             }
@@ -147,12 +149,12 @@ define([
 
         EventBus.subscribe(
             '/event/ui/html/vertex/created/',
-            function(event, vertex){
+            function (event, vertex) {
                 prepareAsYouTypeSuggestions(vertex);
             }
         );
 
-        function prepareAsYouTypeSuggestions(vertex){
+        function prepareAsYouTypeSuggestions(vertex) {
             var vertexTypes = vertex.getTypes();
             if (vertexTypes.length == 0) {
                 return;
@@ -182,19 +184,21 @@ define([
                         identificationResource
                     );
                 },
-                resultsProviders : [
+                resultsProviders:[
                     require(
                         "triple_brain.freebase_autocomplete_provider"
                     ).fetchUsingOptions({
                             filter:filterValue
-                    })
+                        })
                 ]
             });
-        };
+        }
+
+        ;
 
         EventBus.subscribe(
             '/event/ui/graph/vertex/type/removed',
-            function(event, vertex, removedType){
+            function (event, vertex, removedType) {
                 if (api.isFreebaseUri(removedType.uri())) {
                     api.removeSuggestFeatureOnVertex(
                         vertex
@@ -202,11 +206,12 @@ define([
                 }
             }
         );
-        function vertexService(){
+        function vertexService() {
             return VertexService === undefined ?
                 require("triple_brain.vertex") :
                 VertexService;
         }
+
         return api;
     }
 );

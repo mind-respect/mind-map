@@ -66,6 +66,15 @@ define([
             }
         );
         EventBus.subscribe(
+            '/event/ui/graph/vertex/generic_identification/added',
+            function(event, vertex, genericIdentification){
+                var treeVertex = api.ofVertex(vertex);
+                treeVertex.applyToOtherInstances(function(vertex){
+                    vertex.addGenericIdentification(genericIdentification);
+                });
+            }
+        );
+        EventBus.subscribe(
             '/event/ui/graph/vertex/type/added',
             function(event, vertex, type){
                 var treeVertex = api.ofVertex(vertex);
@@ -80,6 +89,15 @@ define([
                 var treeVertex = api.ofVertex(vertex);
                 treeVertex.applyToOtherInstances(function(vertex){
                     vertex.removeType(typeToRemove);
+                });
+            }
+        );
+        EventBus.subscribe(
+            '/event/ui/graph/vertex/generic_identification/removed',
+            function(event, vertex, genericIdentification){
+                var treeVertex = api.ofVertex(vertex);
+                treeVertex.applyToOtherInstances(function(vertex){
+                    vertex.removeGenericIdentification(genericIdentification);
                 });
             }
         );
