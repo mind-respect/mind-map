@@ -18,9 +18,18 @@ define([
                 data:$.toJSON(identificationJson),
                 contentType:'application/json;charset=utf-8'
             }).success(function () {
-                    identification.type === "type" ?
-                        graphElement.addType(identification) :
-                        graphElement.addSameAs(identification);
+                    switch (identification.type) {
+                        case "type" :
+                            graphElement.addType(identification)
+                            break;
+                        case "same_as"  :
+                            graphElement.addSameAs(identification);
+                            break;
+                        default :
+                            graphElement.addGenericIdentification(
+                                identification
+                            )
+                    }
                     if (successCallback != undefined) {
                         successCallback.call(
                             this,
@@ -32,7 +41,7 @@ define([
             );
         }
     };
-    api.removeIdentification = function(graphElement, identification, successCallback){
+    api.removeIdentification = function (graphElement, identification, successCallback) {
         $.ajax({
             type:'DELETE',
             url:graphElement.getUri()
@@ -41,4 +50,5 @@ define([
         }).success(successCallback);
     };
     return api;
-});
+})
+;

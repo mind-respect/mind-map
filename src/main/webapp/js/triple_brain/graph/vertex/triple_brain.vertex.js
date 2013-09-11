@@ -173,9 +173,6 @@ define([
                 vertex,
                 identification,
                 function(){
-                    vertex.addGenericIdentification(
-                        identification
-                    );
                     if(callback !== undefined){
                         callback();
                     }
