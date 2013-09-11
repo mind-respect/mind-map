@@ -63,6 +63,9 @@ require([
                         return fetchMethods;
                     }
                 },
+                change : function(){
+                    $(".autocomplete-flyout").remove();
+                },
                 close:function () {
                     $(".autocomplete-flyout").remove();
                 },
