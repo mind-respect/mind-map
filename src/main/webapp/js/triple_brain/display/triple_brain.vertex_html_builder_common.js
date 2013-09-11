@@ -18,6 +18,7 @@ define([
     var api = {};
     api.applyAutoCompleteIdentificationToLabelInput = function(input){
         input.tripleBrainAutocomplete({
+            limitNbRequests: true,
             select:function (event, ui) {
                 var vertex = vertexOfSubHtmlComponent($(this));
                 var identificationResource = ExternalResource.fromSearchResult(

@@ -7,35 +7,13 @@ require([
     "jquery-ui"
 ], function ($) {
     $.fn.tripleBrainAutocomplete = function (options) {
-        var textInput = this;
-        $(textInput).autocomplete($.extend(
+        var textInput = $(this);
+        setupNbRequestsIfApplicable();
+        textInput.autocomplete($.extend(
             getAutocompleteOptions(),
             options
         )
-        ).data("ui-autocomplete")._renderItem = function (ul, item) {
-            var listElement = $("<li>");
-            var moreInfoContainer = $("<span class='info'>");
-            if (item.somethingToDistinguish !== undefined && item.somethingToDistinguish !== "") {
-                var distinctionContainer = $("<span class='distinction'>");
-                if (item.distinctionType === "relations") {
-                    moreInfoContainer.append("-> ")
-                }
-                distinctionContainer.append(
-                    item.somethingToDistinguish
-                );
-                moreInfoContainer.append(
-                    distinctionContainer
-                );
-            }
-            var itemLink = $("<a>");
-            itemLink
-                .append(item.label + " ")
-                .append(moreInfoContainer);
-            listElement.append(
-                itemLink
-            );
-            return listElement.appendTo(ul);
-        };
+        ).data("ui-autocomplete")._renderItem = renderItemCustom;
         return this;
         function getAutocompleteOptions() {
             return {
@@ -156,6 +134,93 @@ require([
                     }
                 }
             };
+        }
+
+        function setupNbRequestsIfApplicable(){
+            if(!options.limitNbRequests){
+                return;
+            }
+            textInput.on(
+                "change",
+                function(){
+                    resetInputData($(this));
+                }
+            );
+            textInput.on(
+                "autocompletecreate",
+                function(){
+                resetInputData($(this));
+                }
+            );
+            textInput.on(
+                "autocompletecreate",
+                function(){
+                resetInputData($(this));
+                }
+            );
+            textInput.on(
+                "autocompletesearch",
+                function(){
+                    var input = $(this);
+                    if(isSearchDisabled(input)){
+                        input.autocomplete("option", "disabled", true);
+                    }
+                    addOneRequest(input);
+                }
+            );
+        }
+
+        function resetInputData(input){
+            input.autocomplete("option", "disabled", false);
+            setNbRequests(
+                input,
+                0
+            );
+        }
+        function addOneRequest(input){
+            setNbRequests(
+                input,
+                getNbRequests(input) + 1
+            );
+        }
+        function isSearchDisabled(input){
+            return getNbRequests(input) >= 4;
+        }
+        function setNbRequests(input, nbRequests){
+            input.data(
+                "jquery.triple_brain.search.nbRequests",
+                nbRequests
+            );
+        }
+        function getNbRequests(input){
+            return input.data(
+                "jquery.triple_brain.search.nbRequests"
+            );
+        }
+
+        function renderItemCustom(ul, item) {
+                var listElement = $("<li>");
+                var moreInfoContainer = $("<span class='info'>");
+                if (item.somethingToDistinguish !== undefined && item.somethingToDistinguish !== "") {
+                    var distinctionContainer = $("<span class='distinction'>");
+                    if (item.distinctionType === "relations") {
+                        moreInfoContainer.append("-> ")
+                    }
+                    distinctionContainer.append(
+                        item.somethingToDistinguish
+                    );
+                    moreInfoContainer.append(
+                        distinctionContainer
+                    );
+                }
+                var itemLink = $("<a>");
+                itemLink
+                    .append(item.label + " ")
+                    .append(moreInfoContainer);
+                listElement.append(
+                    itemLink
+                );
+                return listElement.appendTo(ul);
         }
     }
 });
