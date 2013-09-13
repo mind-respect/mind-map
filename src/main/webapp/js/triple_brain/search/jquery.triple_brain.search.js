@@ -14,6 +14,12 @@ require([
             options
         )
         ).data("ui-autocomplete")._renderItem = renderItemCustom;
+        textInput.on(
+            "autocompleteselect",
+            function() {
+                removeSearchFlyout();
+            }
+        );
         return this;
         function getAutocompleteOptions() {
             return {
@@ -64,17 +70,17 @@ require([
                     }
                 },
                 change : function(){
-                    $(".autocomplete-flyout").remove();
+                    removeSearchFlyout();
                 },
                 close:function () {
-                    $(".autocomplete-flyout").remove();
+                    removeSearchFlyout();
                 },
                 focus:function (event, ui) {
                     var searchResult = ui.item;
                     searchResult.provider.getMoreInfoForSearchResult(
                         searchResult,
                         function (moreInfo) {
-                            $(".autocomplete-flyout").remove();
+                            removeSearchFlyout();
                             displayDescriptionPanel(
                                 event.currentTarget,
                                 moreInfo
@@ -82,6 +88,7 @@ require([
                         }
                     );
                     function displayDescriptionPanel(list, description) {
+                        removeSearchFlyout();
                         var moreInfoPanel = $("<div>");
                         moreInfoPanel.addClass("autocomplete-flyout");
                         list = $(list);
@@ -224,6 +231,10 @@ require([
                     itemLink
                 );
                 return listElement.appendTo(ul);
+        }
+
+        function removeSearchFlyout(){
+            $(".autocomplete-flyout").remove();
         }
     }
 });
