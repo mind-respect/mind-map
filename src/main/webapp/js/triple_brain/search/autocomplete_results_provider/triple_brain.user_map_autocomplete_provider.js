@@ -101,7 +101,7 @@ define([
             var nonDuplicatedResults = [];
             $.each(searchResults, function(){
                 var searchResult = this;
-                if(searchResult.uri = graphElementToIgnore.getUri()){
+                if(searchResult.uri === graphElementToIgnore.getUri()){
                     return breakLoop();
                 }
                 var toKeep = true;
