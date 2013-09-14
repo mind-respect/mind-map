@@ -4,7 +4,7 @@
 
 window.config = {
     baseUrl: 'js',
-    urlArgs: "bust=" + 9,
+    urlArgs: "bust=" + 10,
     paths: {
         module : '../module',
         "jquery" : "jquery/jquery-2.0.3",
