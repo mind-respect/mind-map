@@ -24,8 +24,8 @@ define([
         };
         api.fromInternalImageBaseUri = function(imageBaseUri){
             return new Image(
-                imageBaseUri + "small",
-                imageBaseUri + "big"
+                imageBaseUri + "/small",
+                imageBaseUri + "/big"
             );
         };
         return api;
