@@ -162,7 +162,7 @@ define([
                     }
                     EventBus.publish(
                         '/event/ui/graph/vertex/generic_identification/removed',
-                        [vertex, sameAs]
+                        [vertex, genericIdentification]
                     );
                 }
             );
