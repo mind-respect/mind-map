@@ -105,12 +105,6 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>3.0.1</version>
         </dependency>
-        <dependency>
-            <groupId>org.neo4j.app</groupId>
-            <artifactId>neo4j-server</artifactId>
-            <classifier>static-web</classifier>
-            <version>${neo4j.version}</version>
-        </dependency>
     </dependencies>
 </project>
 
