@@ -43,11 +43,9 @@ define([
     };
     api.removeIdentification = function (graphElement, identification, successCallback) {
         $.ajax({
-            type:'post',
+            type:'DELETE',
             url:graphElement.getUri()
-                + '/identification/delete',
-            data:$.toJSON(identification.jsonFormat()),
-            contentType:'application/json;charset=utf-8'
+                + '/identification?uri=' + identification.uri()
         }).success(successCallback);
     };
     return api;

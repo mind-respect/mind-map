@@ -23,21 +23,21 @@ define([
             return $.ajax({
                 type:'GET',
                 url: UserService.currentUserUri() +
-                    "/search/own_vertices/auto_complete/" + searchText
+                    "/search/own_vertices/auto_complete?text=" + searchText
             });
         };
         api.searchForOwnVerticesAndPublicOnesAjaxCall = function(searchText){
             return $.ajax({
                 type:'GET',
                 url: UserService.currentUserUri() +
-                    "/search/vertices/auto_complete/" + searchText
+                    "/search/vertices/auto_complete?text=" + searchText
             });
         };
         api.searchForOwnRelationsAjaxCall = function(searchText){
             return $.ajax({
                 type:'GET',
                 url: UserService.currentUserUri() +
-                    "/search/relations/auto_complete/" + searchText
+                    "/search/relations/auto_complete?text=" + searchText
             });
         };
         return api;
