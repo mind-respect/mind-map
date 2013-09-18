@@ -52,8 +52,8 @@ define([
                 }
             };
             this.getLabel = function(){
-                return html.is(":input") ?
-                    html :
+                return html.find("> input").length > 0 ?
+                    html.find("> input") :
                     html.find("> span.label");
             };
             this.readjustLabelWidth = function(){

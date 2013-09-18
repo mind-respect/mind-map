@@ -102,7 +102,7 @@ define([
             $.each(searchResults, function(){
                 var searchResult = this;
                 if(searchResult.uri === graphElementToIgnore.getUri()){
-                    return breakLoop();
+                    return;
                 }
                 var toKeep = true;
                 $.each(searchResult.identifications, function(){

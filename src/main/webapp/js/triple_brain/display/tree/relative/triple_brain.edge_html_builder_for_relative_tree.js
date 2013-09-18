@@ -30,13 +30,12 @@ define([
         };
         function EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
             var uri = edgeServer.uri;
-            edgeServer.uri= IdUriUtils.graphElementIdFromUri(edgeServer.uri);
-            var html = RelativeTreeTemplates['edge'].merge({
-                label:edgeServer.label === "" ?
-                    TreeEdge.getWhenEmptyLabel() :
-                    edgeServer.label
-            });
-            html = $(html);
+            edgeServer.uri = IdUriUtils.graphElementIdFromUri(edgeServer.uri);
+            var html = $(
+                "<span>"
+            ).addClass(
+                "relation"
+            ).css("display", "inline");
             this.create = function () {
                 GraphUi.addHtml(
                     html
@@ -55,13 +54,17 @@ define([
                 );
 
                 html.click(function () {
-                    changeToInput($(this));
+                    changeToInput(
+                        edgeFromHtml($(this))
+                    );
                 });
-                showRemoveButtonOnlyIfMouseOver(html);
+                makeSpanInnerHtml(
+                    html,
+                    edgeServer.label
+                );
                 var relativeVertex = RelativeVertex.withVertex(
                     childVertexHtmlFacade
                 );
-
                 var textContainer = childVertexHtmlFacade.textContainer();
                 var isToTheLeft = relativeVertex.isToTheLeft();
                 if (isToTheLeft) {
@@ -105,15 +108,17 @@ define([
             }
 
             function showRemoveButtonOnlyIfMouseOver(html) {
-                html.hover(
-                    function () {
-                        var html = $(this);
+                html.off(
+                    "mouseenter mouseleave"
+                ).hover(function () {
+                        var edge = edgeFromHtml($(this));
+                        var edgeHtml = edge.getHtml();
                         var vertex = Vertex.withHtml(
-                            html.closest(".vertex")
+                            edgeHtml.closest(".vertex")
                         );
                         vertex.hideMenu();
                         var menu = $("<span class='relation-menu'>");
-                        html.append(menu);
+                        edgeHtml.append(menu);
                         addIdentificationButton();
                         addRemoveButton();
                         function addIdentificationButton() {
@@ -127,11 +132,11 @@ define([
                             menu.append(identificationButton);
                             identificationButton.on(
                                 "click",
-                                function(event){
+                                function (event) {
                                     event.stopPropagation();
                                     IdentificationMenu.ofGraphElement(
                                         edgeFromHtml(
-                                            $(this).closest(".relation")
+                                            $(this)
                                         )
                                     ).create();
                                 }
@@ -152,7 +157,7 @@ define([
                             removeButton.on("click", function (event) {
                                 event.stopPropagation();
                                 var edge = edgeFromHtml(
-                                    $(this).closest(".relation")
+                                    $(this)
                                 );
                                 EdgeService.remove(edge,
                                     function (edge) {
@@ -171,53 +176,31 @@ define([
                                 );
                             });
                         }
-
                     },
                     function () {
-                        var html = $(this);
+                        var edgeHtml = edgeFromHtml(
+                            $(this)
+                        ).getHtml();
                         Vertex.withHtml(
-                            html.closest(".vertex")
+                            edgeHtml.closest(".vertex")
                         ).showMenu();
-                        html.find(".relation-menu").remove();
+                        edgeHtml.find(".relation-menu").remove();
                     }
                 );
             }
 
-            function changeToInput(html) {
-                var previousEdge = edgeFromHtml(html);
+            function changeToInput(edge) {
                 var input = RelativeTreeTemplates['edge_input'].merge({
-                    label:previousEdge.text()
+                    label:edge.text()
                 });
                 input = $(input);
-                if (previousEdge.isInverse()) {
-                    input.addClass("inverse");
-                }
-                input.data(
-                    "source_vertex_id",
-                    previousEdge.sourceVertex().getId()
-                );
-                input.data(
-                    "destination_vertex_id",
-                    previousEdge.destinationVertex().getId()
-                );
-                input.data(
-                    "types",
-                    previousEdge.getTypes()
-                );
-                input.data(
-                    "sameAs",
-                    previousEdge.getSameAs()
-                );
-                input.data(
-                    "genericIdentifications",
-                    previousEdge.getGenericIdentifications()
-                );
                 if (input.val() === TreeEdge.getWhenEmptyLabel()) {
                     input.val("");
                 }
                 input.blur(function () {
-                    var html = $(this);
-                    changeToSpan(html);
+                    changeToSpan(
+                        edgeFromHtml($(this))
+                    );
                 });
                 VertexAndEdgeCommon.adjustWidthToNumberOfChars(
                     input
@@ -228,9 +211,10 @@ define([
                     EdgeService.updateLabel(edge, edge.text());
                 });
                 input.tripleBrainAutocomplete({
-                    limitNbRequests: true,
+                    limitNbRequests:true,
                     select:function (event, ui) {
-                        var edge = changeToSpan($(this));
+                        var edge = edgeFromHtml($(this));
+                        changeToSpan(edge);
                         var identificationResource = ExternalResource.fromSearchResult(
                             ui.item
                         );
@@ -245,9 +229,9 @@ define([
                             newLabel
                         );
                     },
-                    resultsProviders : [
+                    resultsProviders:[
                         UserMapAutocompleteProvider.toFetchRelationsForIdentification(
-                            previousEdge
+                            edge
                         ),
                         FreebaseAutocompleteProvider.forFetchingAnything()
                     ]
@@ -265,14 +249,9 @@ define([
                     );
                     vertex.adjustWidth();
                 });
-                var uri = previousEdge.getUri();
-                var arrowLine = previousEdge.arrowLine();
-                $(html).replaceWith(
+                edge.getHtml().html(
                     input
                 );
-                var edge = edgeFromHtml(input);
-                edge.setUri(uri);
-                edge.setArrowLine(arrowLine);
                 input.focus();
                 input.setCursorToTextEnd();
                 var vertex = Vertex.withHtml(
@@ -281,51 +260,11 @@ define([
                 vertex.adjustWidth();
             }
 
-            function changeToSpan(previousHtml) {
-                var previousEdge = edgeFromHtml(
-                    previousHtml
-                );
-                var label = previousEdge.text();
-                previousEdge.setText(label);
-                var html = RelativeTreeTemplates['edge'].merge({
-                    label:label.trim() === "" ?
-                        TreeEdge.getWhenEmptyLabel() :
-                        previousEdge.text()
-                });
-                html = $(html);
-                showRemoveButtonOnlyIfMouseOver(html);
-                if (previousEdge.isInverse()) {
-                    html.addClass("inverse");
-                }
-                html.data(
-                    "source_vertex_id",
-                    previousEdge.sourceVertex().getId()
-                );
-                html.data(
-                    "destination_vertex_id",
-                    previousEdge.destinationVertex().getId()
-                );
-                html.data(
-                    "types",
-                    previousEdge.getTypes()
-                );
-                html.data(
-                    "sameAs",
-                    previousEdge.getSameAs()
-                );
-                html.data(
-                    "genericIdentifications",
-                    previousEdge.getGenericIdentifications()
-                );
-                html.click(function () {
-                    changeToInput($(this));
-                });
-                var uri = previousEdge.getUri();
-                var arrowLine = previousEdge.arrowLine();
-                previousHtml.replaceWith(html);
-                var edge = edgeFromHtml(html);
-                edge.setUri(uri);
-                edge.setArrowLine(arrowLine);
+            function changeToSpan(edge) {
+                makeSpanInnerHtml(
+                    edge.getHtml(),
+                    edge.text()
+                )
                 var vertex = Vertex.withHtml(html.closest(".vertex"));
                 vertex.adjustWidth();
                 var relativeVertex = RelativeVertex.withVertex(vertex);
@@ -333,6 +272,25 @@ define([
                 relativeVertex.adjustAllChildrenPositionIfApplicable();
                 TreeEdge.redrawAllEdges();
                 return edge;
+            }
+
+            function makeSpanInnerHtml(html, label) {
+                var innerHtml = $(
+                    "<span>"
+                ).addClass(
+                    "label label-info"
+                ).text(
+                    label.trim() === "" ?
+                        TreeEdge.getWhenEmptyLabel() :
+                        label
+                );
+                showRemoveButtonOnlyIfMouseOver(html);
+                innerHtml.click(function () {
+                    changeToInput(
+                        edgeFromHtml($(this))
+                    );
+                });
+                html.html(innerHtml);
             }
 
             function edgeFromHtml(htmlComponent) {

@@ -20,18 +20,18 @@
     vertical-align:middle;
 }
 
-span.relation{
+.relation{
     vertical-align: top;
     padding:0;
     margin-top:0;
     margin-right:1em;
 }
 
-.left-oriented span.relation{
+.left-oriented .relation{
     margin-right:0;
     margin-left:1em;
 }
-input.relation{
+.relation input{
     border-radius: 3px 3px 3px 3px;
     border-width:0.2em;
     border-color:#3A87AD;
@@ -51,6 +51,6 @@ input.relation{
     background: red;
 }
 
-input[type=text].relation.inverse{
+.relation.inverse input[type=text]{
     border-color:red;
 }
