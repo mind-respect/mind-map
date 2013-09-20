@@ -54,14 +54,20 @@ define([
                     uri:searchResult.uri,
                     provider:self
                 };
-                format.somethingToDistinguish = searchResult.relations_name.filter(
-                    function (relationName) {
-                        return relationName !== "";
-                    }
+                format.somethingToDistinguish = removedEmptyAndDuplicateRelationsName(
+                    searchResult.relations_name
                 ).join(", ");
                 format.distinctionType = "relations";
                 return format;
             });
+            function removedEmptyAndDuplicateRelationsName(relationsName){
+                return relationsName.filter(
+                    function (relationName, position) {
+                        return relationName !== "" &&
+                            relationsName.indexOf(relationName) == position;
+                    }
+                );
+            }
             function filteredSearchResults(){
                 if(isForIdentification){
                     return keepOneResultForResultsThatMeanTheSame(
