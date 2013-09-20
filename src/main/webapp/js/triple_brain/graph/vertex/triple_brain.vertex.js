@@ -9,6 +9,13 @@ define([
 ],
     function (require, $, EventBus, Triple, Suggestion, GraphElement, UserService) {
         var api = {};
+        api.getByUri = function(uri, callback){
+            return $.ajax({
+                type:'GET',
+                url:uri,
+                dataType:'json'
+            }).success(callback);
+        };
         api.createVertex = function(callback){
             $.ajax({
                 type:'POST',

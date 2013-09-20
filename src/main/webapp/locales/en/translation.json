@@ -71,7 +71,9 @@
         "default" : "bubble",
         "search" : {
             "user" : "user",
-            "source" : "source"
+            "source" : "source",
+            "source_bubble" : "Source bubble",
+            "destination_bubble" : "Destination bubble"
         },
         "menu" : {
             "image" : {

@@ -3,8 +3,9 @@
  */
 define([
     "jquery",
-    "triple_brain.search"
-], function ($, SearchService) {
+    "triple_brain.search",
+    "triple_brain.vertex"
+], function ($, SearchService, VertexService) {
     var api = {};
     api.toFetchOnlyCurrentUserVertices = function(){
         return new UserMapAutoCompleteProvider(
@@ -83,15 +84,36 @@ define([
             }
         };
         this.getMoreInfoForSearchResult = function (searchResult, callback) {
-            callback({
-                    conciseSearchResult:searchResult,
-                    title:searchResult.label,
-                    text: searchResult.nonFormattedSearchResult.comment,
-                    imageUrl:""
-                }
-            );
+            var originalSearchResult = searchResult.nonFormattedSearchResult;
+            if(originalSearchResult.source_vertex_uri !== undefined){
+                $.when(
+                    VertexService.getByUri(originalSearchResult.source_vertex_uri),
+                    VertexService.getByUri(originalSearchResult.destination_vertex_uri)
+                ).done(function(sourceVertexArray, destinationVertexArray) {
+                        var sourceVertex = sourceVertexArray[0];
+                        var destinationVertex = destinationVertexArray[0];
+                        var text = $.t("vertex.search.destination_bubble") + ": " +
+                            destinationVertex.label + "<br>" +
+                            $.t("vertex.search.source_bubble") + ": " +
+                            sourceVertex.label
+                        callback({
+                                conciseSearchResult:searchResult,
+                                title:searchResult.label,
+                                text: text,
+                                imageUrl:""
+                            }
+                        );
+                });
+            }else{
+                callback({
+                        conciseSearchResult:searchResult,
+                        title:searchResult.label,
+                        text: originalSearchResult.comment,
+                        imageUrl:""
+                    }
+                );
+            }
         };
-
         function removeGraphElementToIgnoreFromResults(searchResults){
             var filteredResults = [];
             $.each(searchResults, function(){

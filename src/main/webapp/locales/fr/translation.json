@@ -71,7 +71,9 @@
         "default" : "bulle",
         "search" : {
             "user" : "usager",
-            "source" : "source"
+            "source" : "source",
+            "source_bubble" : "Bulle source",
+            "destination_bubble" : "Bulle destination"
         },
         "menu" : {
             "image" : {
