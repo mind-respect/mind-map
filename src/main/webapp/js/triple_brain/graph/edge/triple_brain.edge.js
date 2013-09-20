@@ -125,7 +125,7 @@ define([
             }).success(function () {
                     var responseUri = response.getResponseHeader("Location");
                     var edgeServerFormatted = {};
-                    edgeServerFormatted.id = responseUri;
+                    edgeServerFormatted.uri = responseUri;
                     edgeServerFormatted.source_vertex_id = sourceVertexUri;
                     edgeServerFormatted.destination_vertex_id = destinationVertexUri;
                     edgeServerFormatted.label = Edge.getWhenEmptyLabel();
