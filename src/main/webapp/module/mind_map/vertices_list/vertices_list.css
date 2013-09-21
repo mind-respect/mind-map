@@ -1,11 +1,13 @@
-.vertices-list-panel{
-
+#vertices-list-panel input.filter{
+    margin-left:25px;
+    margin-bottom:0;
+    padding-bottom:0;
+    width:100%;
 }
 
 #vertices-list{
     font-size:1.2em;
     font-family:arial;
-    margin-top:5px;
     list-style:none;
     padding-left:40px;
 }
@@ -58,3 +60,4 @@
     z-index: 3;
     font-size:1em;
 }
+

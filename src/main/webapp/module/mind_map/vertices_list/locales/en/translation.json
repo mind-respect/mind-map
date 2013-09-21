@@ -4,5 +4,6 @@
         "title" : "Sort by",
         "1" : "label",
         "2" : "distance from center bubble"
-    }
+    },
+    "filter" : "Filter"
 }

@@ -24,6 +24,7 @@ define([
                 LeftPanel.addHtml(html);
                 addTitle();
                 addSortMenu();
+                addFilterInput();
                 addVerticesList();
                 $('.sort-vertices-btn').css('padding', '0px');
                 $('#sort-by-label').click(function () {
@@ -64,13 +65,54 @@ define([
                 $(optionsList).append(sortByDistanceFromCentralVertex);
             }
 
+            function addFilterInput(){
+                var filterInput = $(
+                    "<input type='text' class='filter'>"
+                ).attr(
+                    "data-i18n",
+                    "[placeholder]filter"
+                );
+                filterInput.on(
+                    "keyup",
+                    function(){
+                        var val = $(this).val().toLowerCase();
+                        console.log(val);
+                        getActualList().find("> li").each(function(){
+                            var listElement = $(this);
+                            var text = listElement.find(
+                                "> input"
+                            ).val().toLowerCase();
+                            console.log(text);
+                            console.log(text.search(val));
+                            if (text.search(val) > -1) {
+                                listElement.show();
+                            }
+                            else {
+                                listElement.hide();
+                            }
+                        });
+                    }
+                );
+                filterInput.on(
+                    "blur",
+                    function(){
+                        getActualList().find("li").show();
+                    }
+                );
+                html.append(
+                    filterInput
+                );
+            }
+
             function addVerticesList() {
                 $(html).append(
                     Template['vertices_list'].merge()
                 );
             }
         }
-
         return api;
+        function getActualList(){
+            return $("#vertices-list");
+        }
     }
 );
