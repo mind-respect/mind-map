@@ -93,12 +93,6 @@ define([
                         });
                     }
                 );
-                filterInput.on(
-                    "blur",
-                    function(){
-                        getActualList().find("li").show();
-                    }
-                );
                 html.append(
                     filterInput
                 );
