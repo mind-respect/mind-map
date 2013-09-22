@@ -76,14 +76,11 @@ define([
                     "keyup",
                     function(){
                         var val = $(this).val().toLowerCase();
-                        console.log(val);
                         getActualList().find("> li").each(function(){
                             var listElement = $(this);
                             var text = listElement.find(
                                 "> input"
                             ).val().toLowerCase();
-                            console.log(text);
-                            console.log(text.search(val));
                             if (text.search(val) > -1) {
                                 listElement.show();
                             }
