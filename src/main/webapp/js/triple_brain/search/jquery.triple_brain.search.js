@@ -21,10 +21,8 @@ require([
             }
         ).on(
             "blur",
-            function(){
-                removeSearchFlyout();
-            }
-        )
+            removeSearchFlyout
+        );
         return this;
         function getAutocompleteOptions() {
             return {
