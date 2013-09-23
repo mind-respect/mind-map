@@ -97,5 +97,14 @@
                 "title" : "Relation cachés de la bulle"
             }
         }
+    },
+    "identification" : {
+        "context" : {
+            "bubble" : "Bulle",
+            "with_relations" : "avec relations",
+            "relation" : "Relation",
+            "source_bubble" : "Bulle source",
+            "destination_bubble" : "Bulle destination"
+        }
     }
 }

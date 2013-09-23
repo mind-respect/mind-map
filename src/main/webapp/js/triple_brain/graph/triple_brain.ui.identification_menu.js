@@ -10,10 +10,12 @@ define([
     "triple_brain.freebase_autocomplete_provider",
     "triple_brain.user_map_autocomplete_provider",
     "triple_brain.graph_element_menu",
+    "triple_brain.search",
+    "triple_brain.identification_context",
     "jquery-ui",
     "jquery.triple_brain.search"
 ],
-    function ($, ExternalResource, MindMapTemplate, GraphUi, IdUriUtils, FreebaseAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu) {
+    function ($, ExternalResource, MindMapTemplate, GraphUi, IdUriUtils, FreebaseAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu, SearchService, IdentificationContext) {
         var api = {
             ofGraphElement:function (graphElementUi) {
                 return new IdentificationMenu(graphElementUi);
@@ -37,12 +39,12 @@ define([
                 return identificationMenu;
             };
 
-            function listHtml() {
+            function getlistHtml() {
                 return $(html).find(".list")
             }
 
             function listElements() {
-                return $(listHtml()).find(".identification");
+                return $(getlistHtml()).find(".identification");
             }
 
             function buildMenu() {
@@ -87,65 +89,125 @@ define([
             }
 
             function makeListElementsCollapsible() {
-                $(listHtml()).accordion().accordion("destroy");
-                $(listHtml()).accordion({
+                var listHtml = getlistHtml();
+                listHtml.accordion().accordion("destroy");
+                listHtml.accordion({
                     collapsible:true,
-                    active:false
+                    active:false,
+                    heightStyle:"content"
                 });
             }
 
             function addIdentificationAsListElement(identification) {
-                var identificationListElement = MindMapTemplate[
-                    'identification_existing_identity'
-                    ].merge({
-                        identification_uri:identification.uri(),
-                        type_label:identification.label(),
-                        description:identification.description()
-                            .replace("\n", "<br/><br/>")
-                    });
-                $(identificationListElement).data("identification", identification);
-                $(listHtml()).append(
-                    identificationListElement
+                var title = makeTitle();
+                var description = makeDescription();
+                $(getlistHtml()).append(
+                    title,
+                    description
                 );
-                $(identificationListElement).find(".remove-button-in-list").click(function () {
-                    var identificationListElement = $(this).closest(
-                        '.identification'
-                    );
-                    var identification = identificationListElement.data(
-                        "identification"
-                    );
-                    var semanticMenu = identificationListElement.closest(
-                        '.identifications'
-                    );
-                    var graphElement = $(semanticMenu).data("graphElement");
-                    getServerRemoveIdentificationFunction()(
-                        graphElement,
-                        identification,
-                        function (graphElement, identification) {
-                            $.each(listElements(), function () {
-                                var listElement = this;
-                                var listElementIdentification = $(listElement).data("identification");
-                                if (identification.uri() == listElementIdentification.uri()) {
-                                    $(listElement).next(".description").remove();
-                                    $(listElement).remove();
-                                    return false;
+                return $(title, description);
+                function makeTitle(){
+                    return $(
+                        "<h3 class='type-label identification'>"
+                    ).attr(
+                        "identification-uri", identification.uri()
+                    ).append(
+                        identification.label()
+                    ).append(
+                        makeRemoveButton()
+                    ).data(
+                        "identification",
+                        identification
+                    ).on(
+                        "click",
+                        function(){
+                            var title = $(this);
+                            addContextIfApplicable();
+                            function addContextIfApplicable(){
+                                var identification = title.data("identification");
+                                if(!identification.isAGraphElement()){
+                                    return;
                                 }
-                            });
+                                var context = title.data("has_context");
+                                if(context === undefined){
+                                    title.data(
+                                        "has_context",
+                                        true
+                                    );
+                                    SearchService.getSearchResultByUri(
+                                        identification.uri(),
+                                        function(searchResult){
+                                            IdentificationContext.build(
+                                                searchResult,
+                                                function(context){
+                                                    descriptionDivFromTitleDiv(title).prepend(
+                                                        context
+                                                    );
+                                                    getlistHtml().accordion("refresh");
+                                                }
+                                            );
+                                        }
+                                    );
+                                }
+                            }
                         }
                     );
-                    function getServerRemoveIdentificationFunction(){
-                        switch(identification.getType()){
-                            case "type" :
-                                return graphElement.serverFacade().removeType;
-                            case "same_as" :
-                                return graphElement.serverFacade().removeSameAs;
-                            default :
-                                return graphElement.serverFacade().removeGenericIdentification;
-                        }
+                    function makeRemoveButton() {
+                        return $(
+                            "<button class='remove-button-in-list'>"
+                        ).append(
+                            "x"
+                        ).click(function (event) {
+                                event.stopPropagation();
+                                var identificationListElement = $(this).closest(
+                                    '.identification'
+                                );
+                                var identification = identificationListElement.data(
+                                    "identification"
+                                );
+                                var semanticMenu = identificationListElement.closest(
+                                    '.identifications'
+                                );
+                                var graphElement = $(semanticMenu).data("graphElement");
+                                getServerRemoveIdentificationFunction()(
+                                    graphElement,
+                                    identification,
+                                    function (graphElement, identification) {
+                                        $.each(listElements(), function () {
+                                            var listElement = this;
+                                            var listElementIdentification = $(listElement).data("identification");
+                                            if (identification.uri() == listElementIdentification.uri()) {
+                                                $(listElement).next(".description").remove();
+                                                $(listElement).remove();
+                                                return false;
+                                            }
+                                        });
+                                    }
+                                );
+                                function getServerRemoveIdentificationFunction() {
+                                    switch (identification.getType()) {
+                                        case "type" :
+                                            return graphElement.serverFacade().removeType;
+                                        case "same_as" :
+                                            return graphElement.serverFacade().removeSameAs;
+                                        default :
+                                            return graphElement.serverFacade().removeGenericIdentification;
+                                    }
+                                }
+                            }
+                        );
                     }
-                });
-                return identificationListElement;
+                }
+                function makeDescription(){
+                    return $(
+                        "<div class='group description'>"
+                    ).append(
+                        identification.description()
+                            .replace("\n", "<br/><br/>")
+                    );
+                }
             }
+
 
             function setTemporaryDescription(identification) {
                 $(
@@ -157,10 +219,14 @@ define([
                 );
             }
 
+            function descriptionDivFromTitleDiv(title){
+                return title.next(".description")
+            }
+
             function descriptionFromIdentification(identification) {
-                return $(
+                return descriptionDivFromTitleDiv(
                     titleFromIdentification(identification)
-                ).next(".description");
+                );
             }
 
             function titleFromIdentification(identification) {
@@ -209,7 +275,8 @@ define([
                             FreebaseAutocompleteProvider.forFetchingAnything()
                         ];
                     }
-                    function getServerIdentificationFctn(){
+
+                    function getServerIdentificationFctn() {
                         return graphElement.isConcept() ?
                             graphElement.serverFacade().addGenericIdentification :
                             graphElement.serverFacade().addSameAs;

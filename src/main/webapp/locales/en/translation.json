@@ -97,5 +97,14 @@
                 "title" : "Hidden properties of bubble"
             }
         }
+    },
+    "identification" : {
+        "context" : {
+            "bubble" : "Bubble",
+            "with_relations" : "with relations",
+            "relation" : "Relation",
+            "source_bubble" : "Source bubble",
+            "destination_bubble" : "Destination bubble"
+        }
     }
 }

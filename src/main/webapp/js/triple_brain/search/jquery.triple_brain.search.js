@@ -106,7 +106,8 @@ require([
                                 searchResult.source
                         );
                         var text = $("<span>").append(
-                            description.text + " "
+                            description.text,
+                            " "
                         );
                         $("body").append(moreInfoPanel.hide());
                         moreInfoPanel.append(

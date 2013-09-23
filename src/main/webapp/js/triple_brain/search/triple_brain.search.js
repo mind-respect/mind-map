@@ -40,6 +40,20 @@ define([
                     "/search/relations/auto_complete?text=" + searchText
             });
         };
+        api.getSearchResultByUri = function(uri, callback){
+            api.getSearchResultByUriAjaxCall(
+                uri
+            ).success(
+                callback
+            );
+        };
+        api.getSearchResultByUriAjaxCall = function(uri){
+            return $.ajax({
+                type:'GET',
+                url: UserService.currentUserUri() +
+                    "/search/uri?uri=" + uri
+            })
+        };
         return api;
     }
 );

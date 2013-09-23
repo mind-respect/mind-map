@@ -77,6 +77,9 @@ define([
                     listenerReadyCallBack
                 );
             };
+            this.isAGraphElement = function(){
+                return uri.startsWith("/service");
+            };
             function updateWithServerJson(externalResourceAsJson) {
                 var externalResource = api.fromServerJson(
                     externalResourceAsJson
