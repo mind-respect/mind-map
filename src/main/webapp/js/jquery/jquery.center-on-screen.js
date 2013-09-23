@@ -9,8 +9,8 @@ define([
             var element = this;
             var position = element.offset();
             window.scroll(
-                position.left - screen.width / 2 + element.width() / 2,
-                position.top - screen.height / 4 + element.height() / 2
+                scrollLeftFromPosition(position, element),
+                scrollTopFromPosition(position, element)
             );
             return this;
         };
@@ -18,10 +18,17 @@ define([
             var element = this;
             var position = element.offset();
             $('html, body').animate({
-                scrollTop: position.top - screen.height / 4 + element.height() / 2,
-                scrollLeft: position.left - screen.width / 2 + element.width() / 2
+                scrollLeft: scrollLeftFromPosition(position, element),
+                scrollTop: scrollTopFromPosition(position, element)
             }, 500);
             return this;
         };
+        function scrollTopFromPosition(position, element){
+            return position.top - screen.height / 4 + element.height() / 2;
+        }
+        function scrollLeftFromPosition(position, element){
+            return position.left - screen.width / 2 + element.width() / 2;
+        }
+
     }
 );
