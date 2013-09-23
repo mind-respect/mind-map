@@ -19,7 +19,12 @@ require([
             function() {
                 removeSearchFlyout();
             }
-        );
+        ).on(
+            "blur",
+            function(){
+                removeSearchFlyout();
+            }
+        )
         return this;
         function getAutocompleteOptions() {
             return {
@@ -80,7 +85,6 @@ require([
                     searchResult.provider.getMoreInfoForSearchResult(
                         searchResult,
                         function (moreInfo) {
-                            removeSearchFlyout();
                             displayDescriptionPanel(
                                 event.currentTarget,
                                 moreInfo
