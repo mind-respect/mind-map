@@ -239,7 +239,7 @@ define([
                             var sourceVertex = TreeVertex.ofVertex(
                                 triple.sourceVertex()
                             );
-                            triple.destinationVertex().getHtml().centerOnScreen();
+                            triple.destinationVertex().getHtml().centerOnScreenWithAnimation();
                             TreeVertex.ofVertex(
                                 triple.destinationVertex()
                             ).resetOtherInstances();

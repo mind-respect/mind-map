@@ -14,5 +14,14 @@ define([
             );
             return this;
         };
+        $.fn.centerOnScreenWithAnimation = function () {
+            var element = this;
+            var position = element.offset();
+            $('html, body').animate({
+                scrollTop: position.top - screen.height / 4 + element.height() / 2,
+                scrollLeft: position.left - screen.width / 2 + element.width() / 2
+            }, 500);
+            return this;
+        };
     }
 );
