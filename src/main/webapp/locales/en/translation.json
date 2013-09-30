@@ -98,6 +98,9 @@
             },
             "hidden_relation" : {
                 "title" : "Hidden properties of bubble"
+            },
+            "included_vertices" : {
+                "title" : "Bubbles that compose this one"
             }
         }
     },

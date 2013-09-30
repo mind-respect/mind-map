@@ -98,6 +98,9 @@
             },
             "hidden_relation" : {
                 "title" : "Relation cachés de la bulle"
+            },
+            "included_vertices" : {
+                "title" : "Bulles comprises dans celle-ci"
             }
         }
     },

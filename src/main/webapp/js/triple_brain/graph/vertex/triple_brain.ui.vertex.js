@@ -493,6 +493,15 @@ define([
             this.select = function(){
                 html.addClass("selected");
             };
+            this.setIncludedVertices = function(includedVertices){
+                html.data(
+                    "includedVertices",
+                    includedVertices
+                );
+            };
+            this.getIncludedVertices = function(){
+                return html.data("includedVertices");
+            };
             function setIsPublic(isPublic){
                 html.data(
                     "isPublic",

@@ -64,6 +64,7 @@ window.config = {
         "triple_brain.identification_context" : "triple_brain/triple_brain.identification_context",
         "triple_brain.ui.identification_menu" : "triple_brain/graph/triple_brain.ui.identification_menu",
         "triple_brain.link_to_far_vertex_menu" : "triple_brain/graph/vertex/triple_brain.link_to_far_vertex_menu",
+        "triple_brain.included_vertices_menu" : "triple_brain/graph/vertex/triple_brain.included_vertices_menu",
         "triple_brain.ui.suggestion_menu" : "triple_brain/graph/vertex/triple_brain.ui.suggestion_menu",
         "triple_brain.image_displayer" : "triple_brain/graph/vertex/triple_brain.image_displayer",
         "triple_brain.image_menu" : "triple_brain/graph/vertex/triple_brain.image_menu",

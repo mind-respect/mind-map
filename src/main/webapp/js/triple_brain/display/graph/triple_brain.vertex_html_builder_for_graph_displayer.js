@@ -116,6 +116,7 @@ define([
                     );
                 });
                 vertex.addImages(images);
+                vertex.setIncludedVertices(serverFormat.included_vertices);
                 vertex.makeItLowProfile();
                 vertex.setOriginalServerObject(
                     serverFormat
@@ -198,6 +199,11 @@ define([
                     vertexMenu,
                     removeButtonClickBehaviour
                 );
+                if(serverFormat.included_vertices.length > 0){
+                    VertexHtmlCommon.addIncludedVerticesButton(
+                        vertexMenu
+                    );
+                }
                 VertexHtmlCommon.addWhatIsThisButton(
                     vertexMenu,
                     whatIsThisButtonClickBehaviour

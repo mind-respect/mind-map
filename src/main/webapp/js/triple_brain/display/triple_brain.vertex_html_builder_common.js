@@ -12,9 +12,10 @@ define([
     "triple_brain.external_resource",
     "triple_brain.user_map_autocomplete_provider",
     "triple_brain.freebase_autocomplete_provider",
+    "triple_brain.included_vertices_menu",
     "jquery-ui",
     "jquery.triple_brain.search"
-], function($, Vertex, VertexService, MindMapTemplate, LinkToFarVertexMenu, GraphElementMenu, ImageMenu, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider){
+], function($, Vertex, VertexService, MindMapTemplate, LinkToFarVertexMenu, GraphElementMenu, ImageMenu, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, IncludedVerticesMenu){
     var api = {};
     api.applyAutoCompleteIdentificationToLabelInput = function(input){
         input.tripleBrainAutocomplete({
@@ -78,6 +79,19 @@ define([
             "ui-icon-trash",
             clickBehavior
         );
+    };
+    api.addIncludedVerticesButton = function(vertexMenu){
+        return makeVertexMenuButtonUsingClass(
+            vertexMenu,
+            "ui-icon-folder-open",
+            clickBehavior
+        );
+        function clickBehavior(){
+            var vertex = vertexOfSubHtmlComponent(this);
+            IncludedVerticesMenu.ofVertex(
+                vertex
+            ).create();
+        }
     };
     api.addWhatIsThisButton = function(vertexMenu, clickBehavior){
         return makeVertexMenuButtonUsingClass(
