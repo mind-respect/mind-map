@@ -48,7 +48,7 @@ define([
             }
             var parentWidth = $(parentVertexHtml).width();
             html.closest(".vertex-tree-container").css(
-                "margin-left", "-" + (parentWidth + width + 155) + "px"
+                "margin-left", "-" + (parentWidth + width + 50) + "px"
             );
         };
         this.visitChildren = function (visitor) {

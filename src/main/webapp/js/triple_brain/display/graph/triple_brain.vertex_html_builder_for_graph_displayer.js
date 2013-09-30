@@ -16,14 +16,14 @@ define([
     "triple_brain.external_resource",
     "triple_brain.ui.identification_menu",
     "triple_brain.ui.suggestion_menu",
-    "triple_brain.ui.arrow_line",
+    "triple_brain.straight_arrow_edge_drawer",
     "triple_brain.point",
     "triple_brain.segment",
     "triple_brain.graph_displayer",
     "triple_brain.vertex_html_builder_common",
     "triple_brain.image",
     "jquery-ui"
-], function (require, $, EventBus, GraphUi, Vertex, VertexService, GraphEdge, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, ArrowLine, Point, Segment, GraphDisplayer, VertexHtmlCommon, Image) {
+], function (require, $, EventBus, GraphUi, Vertex, VertexService, GraphEdge, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, StraightArrowEdgeDrawer, Point, Segment, GraphDisplayer, VertexHtmlCommon, Image) {
         var api = {};
         api.withJsonHavingAbsolutePosition = function (serverVertex) {
             initAdjustedPosition(serverVertex);
@@ -339,7 +339,7 @@ define([
                         mouseMoveEvent.pageX,
                         mouseMoveEvent.pageY
                     );
-                    arrowLine = ArrowLine.withSegment(
+                    arrowLine = StraightArrowEdgeDrawer.withSegment(
                         Segment.withStartAndEndPoint(
                             sourceVertex.labelCenterPoint(),
                             relationEndPoint

@@ -11,7 +11,6 @@ define([
     "triple_brain.ui.vertex_and_edge_common",
     "triple_brain.tree_edge",
     "triple_brain.edge",
-    "triple_brain.ui.arrow_line",
     "triple_brain.event_bus",
     "triple_brain.relative_vertex",
     "triple_brain.relative_tree_displayer_templates",
@@ -20,10 +19,11 @@ define([
     "triple_brain.external_resource",
     "triple_brain.user_map_autocomplete_provider",
     "triple_brain.freebase_autocomplete_provider",
+    "triple_brain.graph_displayer",
     "jquery.cursor-at-end"
 
 ],
-    function (require, $, GraphUi, MindMapTemplate, IdUriUtils, VertexAndEdgeCommon, TreeEdge, EdgeService, ArrowLine, EventBus, RelativeVertex, RelativeTreeTemplates, Vertex, IdentificationMenu, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider) {
+    function (require, $, GraphUi, MindMapTemplate, IdUriUtils, VertexAndEdgeCommon, TreeEdge, EdgeService, EventBus, RelativeVertex, RelativeTreeTemplates, Vertex, IdentificationMenu, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphDisplayer) {
         var api = {};
         api.get = function (edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
             return new EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade);
@@ -305,7 +305,7 @@ define([
             function drawArrowLine() {
                 var edge = edgeFacade();
                 edge.setArrowLine(
-                    ArrowLine.ofEdgeHavingUndefinedArrowLine(
+                    GraphDisplayer.getEdgeDrawer().ofEdgeHavingUndefinedArrowLine(
                         edge
                     )
                 );

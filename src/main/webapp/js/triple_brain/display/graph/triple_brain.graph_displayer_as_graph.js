@@ -8,10 +8,11 @@ define([
     "triple_brain.vertex_html_builder_for_graph_displayer",
     "triple_brain.ui.graph",
     "triple_brain.ui.vertex",
+    "triple_brain.straight_arrow_edge_drawer",
     "triple_brain.edge_html_builder_for_graph_displayer",
     "triple_brain.user"
 ],
-    function ($, GraphService, IdUriUtils, VertexHtmlBuilder, GraphUi, Vertex, EdgeHtmlBuilder, UserService) {
+    function ($, GraphService, IdUriUtils, VertexHtmlBuilder, GraphUi, Vertex, StraightArrowEdgeDrawer, EdgeHtmlBuilder) {
         var api = {};
         api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
             getDrawnGraphFromServer(
@@ -73,6 +74,9 @@ define([
             EdgeHtmlBuilder.arrayFromServerFormatArray(
                 drawnGraph.edges
             );
+        };
+        api.getEdgeDrawer = function(){
+            return StraightArrowEdgeDrawer;
         };
         return api;
 

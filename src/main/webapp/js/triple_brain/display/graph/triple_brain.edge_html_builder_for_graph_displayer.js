@@ -10,12 +10,12 @@ define([
     "triple_brain.id_uri",
     "triple_brain.ui.vertex_and_edge_common",
     "triple_brain.edge",
-    "triple_brain.ui.arrow_line",
+    "triple_brain.straight_arrow_edge_drawer",
     "triple_brain.event_bus",
     "triple_brain.ui.vertex",
     "triple_brain.graph_edge"
 ],
-    function(require, $, GraphUi, MindMapTemplate, IdUriUtils, VertexAndEdgeCommon, EdgeService, ArrowLine, EventBus, VertexUi, GraphEdge){
+    function(require, $, GraphUi, MindMapTemplate, IdUriUtils, VertexAndEdgeCommon, EdgeService, StraightArrowEdgeDrawer, EventBus, VertexUi, GraphEdge){
         var api = {};
         api.arrayFromServerFormatArray = function(jsonArray){
             $.each(jsonArray, function(){
@@ -130,7 +130,7 @@ define([
             function drawArrowLine(){
                 var edge = edgeFacade();
                 edge.setArrowLine(
-                    ArrowLine.ofEdgeHavingUndefinedArrowLine(
+                    StraightArrowEdgeDrawer.ofEdgeHavingUndefinedArrowLine(
                         edge
                     )
                 );

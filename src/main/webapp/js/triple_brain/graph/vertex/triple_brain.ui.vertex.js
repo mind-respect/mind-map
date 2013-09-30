@@ -13,13 +13,13 @@ define([
     "triple_brain.ui.vertex_and_edge_common",
     "triple_brain.event_bus",
     "triple_brain.ui.graph",
-    "triple_brain.ui.arrow_line",
     "triple_brain.server_subscriber",
     "triple_brain.image_displayer",
     "triple_brain.ui.graph_element",
+    "triple_brain.graph_displayer",
     "jquery.center-on-screen"
 ],
-    function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, GraphUi, ArrowLine, ServerSubscriber, ImageDisplayer, GraphElement) {
+    function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, GraphUi, ServerSubscriber, ImageDisplayer, GraphElement, GraphDisplayer) {
         var api = {};
 
         api.getWhenEmptyLabel = function(){
@@ -242,7 +242,7 @@ define([
                     var edge = this;
                     edge.arrowLine().remove();
                     edge.setArrowLine(
-                        ArrowLine.ofSourceAndDestinationVertex(
+                        GraphDisplayer.getEdgeDrawer().ofSourceAndDestinationVertex(
                             edge.sourceVertex(),
                             edge.destinationVertex()
                         )

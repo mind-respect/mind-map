@@ -19,6 +19,12 @@ define([
         function Segment(startPoint, endPoint) {
             this.startPoint = startPoint;
             this.endPoint = endPoint;
+            this.getStartPoint = function(){
+                return startPoint;
+            };
+            this.getEndPoint = function(){
+                return endPoint;
+            };
             this.middlePoint = function () {
                 return Point.fromCoordinates(
                     (this.startPoint.x + this.endPoint.x) / 2,

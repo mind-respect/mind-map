@@ -16,7 +16,6 @@ define([
     "triple_brain.external_resource",
     "triple_brain.ui.identification_menu",
     "triple_brain.ui.suggestion_menu",
-    "triple_brain.ui.arrow_line",
     "triple_brain.point",
     "triple_brain.segment",
     "triple_brain.graph_displayer",
@@ -27,7 +26,7 @@ define([
     "triple_brain.vertex_html_builder_common",
     "triple_brain.image",
     "jquery-ui"
-], function (require, $, EventBus, GraphUi, Vertex, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, ArrowLine, Point, Segment, GraphDisplayer, RelativeVertex, TreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, Image) {
+], function (require, $, EventBus, GraphUi, Vertex, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, Point, Segment, GraphDisplayer, RelativeVertex, TreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, Image) {
         var api = {};
         api.withServerJson = function (serverVertex) {
             return new VertexCreator(serverVertex);

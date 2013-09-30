@@ -132,11 +132,11 @@ define(
             '/event/ui/graph/drawing_info/updated/',
             function (event, drawnGraph, centralVertexUri) {
                 SelectionHandler.reset();
+                var centralVertex = Vertex.withUri(centralVertexUri)[0];
+                centralVertex.setAsCentral();
                 GraphDisplayer.integrateEdgesOfServerGraph(
                     drawnGraph
                 );
-                var centralVertex = Vertex.withUri(centralVertexUri)[0];
-                centralVertex.setAsCentral();
                 centralVertex.scrollTo();
                 DragScroll.start();
                 EventBus.publish('/event/ui/graph/drawn');

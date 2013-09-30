@@ -8,11 +8,11 @@ define([
     "triple_brain.ui.graph",
     "triple_brain.ui.vertex_and_edge_common",
     "triple_brain.event_bus",
-    "triple_brain.ui.arrow_line",
+    "triple_brain.graph_displayer",
     "triple_brain.ui.graph_element",
     "triple_brain.edge"
 ],
-    function (require, $, GraphUi, VertexAndEdgeCommon, EventBus, ArrowLine, GraphElement, EdgeService) {
+    function (require, $, GraphUi, VertexAndEdgeCommon, EventBus, GraphDisplayer, GraphElement, EdgeService) {
         var api = {};
         api.getWhenEmptyLabel = function(){
             return $.t("edge.default");
@@ -69,7 +69,7 @@ define([
                 var arrowLine;
                 if(recalculate){
                     edge.arrowLine().remove();
-                    arrowLine = ArrowLine.ofSourceAndDestinationVertex(
+                    arrowLine = GraphDisplayer.getEdgeDrawer().ofSourceAndDestinationVertex(
                         edge.sourceVertex(),
                         edge.destinationVertex()
                     );

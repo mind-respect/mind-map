@@ -76,6 +76,9 @@ define([
         api.couldHaveDuplicates = function(){
             return !api.allowsMovingVertices();
         };
+        api.getEdgeDrawer = function(){
+            return _implementation.getEdgeDrawer();
+        };
         return api;
         function currentDepth(){
             return getDepthSlider().currentDepth();

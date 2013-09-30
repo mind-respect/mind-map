@@ -11,11 +11,11 @@ define([
     "triple_brain.ui.edge",
     "triple_brain.event_bus",
     "triple_brain.ui.vertex",
-    "triple_brain.ui.arrow_line",
+    "triple_brain.straight_and_square_edge_drawer",
     "triple_brain.id_uri",
     "triple_brain.relative_vertex",
     "triple_brain.edge_html_builder_for_relative_tree"
-], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, VertexUi, ArrowLine, IdUriUtils, RelativeVertex, EdgeBuilder) {
+], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, VertexUi, StraightAndSquareEdgeDrawer, IdUriUtils, RelativeVertex, EdgeBuilder) {
     var api = {};
     api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
         Graph.getForCentralVertexUriAndDepth(
@@ -134,6 +134,9 @@ define([
             sourceVertex,
             destinationVertex
         ).create();
+    };
+    api.getEdgeDrawer = function(){
+        return StraightAndSquareEdgeDrawer;
     };
     return api;
     function shouldAddLeft() {

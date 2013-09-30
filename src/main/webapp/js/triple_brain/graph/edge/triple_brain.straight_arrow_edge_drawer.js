@@ -42,27 +42,27 @@ define([
             var defaultColor = "black";
             this.drawInWithDefaultStyle = function(){
                 this.drawInBlackWithSmallLineWidth();
-            }
+            };
             this.drawInBlackWithSmallLineWidth = function(){
                 drawWithColorAndLineWidth(defaultColor, defaultStrokeWidth);
-            }
+            };
             this.middlePoint = function(){
                 return segment.middlePoint();
-            }
+            };
             this.segment = function(){
                 return segment
-            }
+            };
 
             this.drawInYellowWithBigLineWidth = function(){
                 drawWithColorAndLineWidth("yellow", "3");
-            }
+            };
 
             this.remove = function(){
                 while(drawnComponents.length != 0){
                     var drawnComponent =  drawnComponents.pop();
                     drawnComponent.remove();
                 }
-            }
+            };
 
             function drawWithColorAndLineWidth(color, lineWidth){
                 drawLineOfArrow(color, lineWidth);
