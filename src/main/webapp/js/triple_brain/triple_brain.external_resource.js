@@ -78,7 +78,7 @@ define([
                 );
             };
             this.isAGraphElement = function(){
-                return uri.startsWith("/service");
+                return uri.indexOf("/service") === 0;
             };
             function updateWithServerJson(externalResourceAsJson) {
                 var externalResource = api.fromServerJson(
