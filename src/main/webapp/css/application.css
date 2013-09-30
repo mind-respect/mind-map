@@ -558,7 +558,6 @@ input[type="button"], button {
 .ui-accordion{
     font-size: 0.9em;
 }
-
 li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-button-in-list{
     margin:auto;
     margin-right:0.5em;
