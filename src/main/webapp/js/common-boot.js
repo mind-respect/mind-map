@@ -28,6 +28,7 @@ window.config = {
         "org/cometd/TimeStampExtension" : "cometd/plugins/TimeStampExtension",
         "org/cometd/TimeSyncExtension" : "cometd/plugins/TimeSyncExtension",
         "jquery.i18next" : "plugins/i18next.amd.withJQuery-1.6.3",
+        "twitter_bootstrap" : "plugins/twitter_bootstrap/3-0/js/bootstrap.min",
         "jquery.triple_brain.search" : "triple_brain/search/jquery.triple_brain.search",
         "triple_brain.selection_handler" : "triple_brain/triple_brain.selection_handler",
         "triple_brain.scroll_on_mouse_frontier" : "triple_brain/triple_brain.scroll_on_mouse_frontier",
@@ -113,7 +114,8 @@ window.config = {
         "jquery.cometd-reload" : ["jquery"],
         "jquery.cometd-timestamp" : ["jquery"],
         "jquery.cometd-timesync" : ["jquery"],
-        "jquery.colorbox" : ["jquery"]
+        "jquery.colorbox" : ["jquery"],
+        "twitter_bootstrap" : ["jquery"]
     }
 };
 
