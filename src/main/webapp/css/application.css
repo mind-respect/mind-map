@@ -3,6 +3,9 @@ body{
     min-height:30000px;
     cursor:all-scroll;
 }
+body.select{
+    cursor:crosshair;
+}
 #mind_map h2, #mind_map h3{
     line-height: inherit;
 }
@@ -54,6 +57,20 @@ body{
     display:inline-block;
 }
 
+#top-center-menu{
+    position:fixed;
+    left:40%;
+    top:0.5em;
+    width:20em;
+}
+
+#top-center-menu .ui-button{
+    padding:.4em 1em;
+    cursor: pointer;
+    z-index: 3;
+    font-size:0.9em;
+}
+
 .ui-dialog{
     opacity:0.9;
 }
@@ -67,9 +84,35 @@ body{
     background-color: white;
     height:100%;
 }
+.security-form a{
+    float :left;
+}
 #register-link, #login-link{
     display:block;
     text-align:center;
+}
+.frontier{
+    position:fixed;
+    background-color: transparent;
+    z-index:0;
+}
+.left{
+    height:100%;
+    min-width:2em;
+}
+.right{
+    height:100%;
+    min-width:2em;
+    right:0;
+}
+.top{
+    width:100%;
+    min-height:2em;
+}
+.bottom{
+    width:100%;
+    min-height:2em;
+    bottom:0;
 }
 
 .ui-loader {
@@ -93,11 +136,11 @@ body .main-panel{
     cursor:default;
 }
 
-body input[type=button], body button{
+body input[type=button].link-like-button, body button.link-like-button{
     color: #1919AC
 }
 
-body input[type=button]:hover, body button:hover{
+body input[type=button].link-like-button:hover, body button.link-like-button:hover{
     color:#47A3FF;
 }
 
@@ -131,7 +174,7 @@ body input[type=button]:hover, body button:hover{
     margin-left:15px;
 }
 
-#top-panel input[type=button].link-like-button, #top-panel button.link-like-button{
+.top-panel.main-panel input[type=button].link-like-button, .top-panel.main-panel button.link-like-button{
     font-size:0.9em;
     margin-top:4px;
 }
@@ -158,6 +201,13 @@ body input[type=button]:hover, body button:hover{
 #sub-vertices-depth-index{
     border: 0;
     font-size:1.2em;
+}
+
+.ui-dialog-content a{
+    color: #1919AC
+}
+.ui-dialog-content a:hover{
+    color:#47A3FF;
 }
 
 .graph {
@@ -231,6 +281,14 @@ body input[type=button]:hover, body button:hover{
     z-index: 10;
 }
 
+.vertex.selected .textfield-container{
+    border-radius: 15px;
+    box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb;
+}
+.vertex.center-vertex.selected .textfield-container{
+    box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb;
+    border: solid red;
+}
 .vertex.center-vertex .textfield-container{
     border-radius: 15px;
     -webkit-box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.1);
@@ -501,7 +559,7 @@ input[type="button"], button {
     font-size: 0.9em;
 }
 
-button.remove-button-in-list{
+li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-button-in-list{
     margin:auto;
     margin-right:0.5em;
     float:right;
@@ -627,3 +685,10 @@ button.add-button-in-list:hover{
     font-size:85%;
 }
 
+.selection-box{
+    min-width:75px;
+    min-height:50px;
+    z-index: 100;
+    background: rgba(0, 203, 255, 0.1);
+    border:solid black;
+}

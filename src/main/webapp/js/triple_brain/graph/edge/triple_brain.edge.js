@@ -123,7 +123,7 @@ define([
                     '?sourceVertexId=' + sourceVertexUriFormatted +
                     '&destinationVertexId=' + destinationVertexUriFormatted
             }).success(function () {
-                    var responseUri = response.getResponseHeader("Location");
+                        var responseUri = response.getResponseHeader("Location");
                     var edgeServerFormatted = {};
                     edgeServerFormatted.uri = responseUri;
                     edgeServerFormatted.source_vertex_id = sourceVertexUri;

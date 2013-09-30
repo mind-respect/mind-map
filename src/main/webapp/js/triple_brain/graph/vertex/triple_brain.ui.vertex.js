@@ -54,6 +54,18 @@ define([
                 );
             });
         };
+        api.resetSelection = function(){
+            $(".vertex.selected").removeClass(
+                "selected"
+            );
+        };
+        api.visitSelected = function(visitor){
+            $(".vertex.selected").each(function () {
+                return visitor(
+                    api.withHtml(this)
+                );
+            });
+        };
         api.Object = function (html) {
             var self = this;
             html = $(html);
@@ -477,6 +489,9 @@ define([
             };
             this.isPublic = function(){
                 return html.data("isPublic");
+            };
+            this.select = function(){
+                html.addClass("selected");
             };
             function setIsPublic(isPublic){
                 html.data(

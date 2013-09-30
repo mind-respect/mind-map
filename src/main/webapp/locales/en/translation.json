@@ -43,6 +43,9 @@
         "show_as_tree" : "show as tree",
         "redraw" : "redraw"
     },
+    "top_center_menu" : {
+        "select": "select"
+    },
     "left_menu" : {
         "search" : "Search bubbles",
         "distance" : "Distance from center bubble"
@@ -106,5 +109,9 @@
             "source_bubble" : "Source bubble",
             "destination_bubble" : "Destination bubble"
         }
+    },
+    "selection" : {
+        "selected_bubbles" : "bubble(s) selected",
+        "group" : "group"
     }
 }

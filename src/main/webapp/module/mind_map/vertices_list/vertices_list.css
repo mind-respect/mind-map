@@ -1,5 +1,5 @@
 #vertices-list-panel input.filter{
-    margin-left:25px;
+    margin-left:5px;
     margin-bottom:0;
     padding-bottom:0;
     width:100%;
@@ -10,6 +10,7 @@
     font-family:arial;
     list-style:none;
     padding-left:40px;
+    margin-left:5px;
 }
 
 

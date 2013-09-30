@@ -43,6 +43,9 @@
         "show_as_tree" : "voir en arbre",
         "redraw" : "redessiner"
     },
+    "top_center_menu" : {
+        "select": "sélection"
+    },
     "left_menu" : {
         "search" : "Chercher des bulles",
         "distance" : "Distance de la bulle centrale"
@@ -106,5 +109,9 @@
             "source_bubble" : "Bulle source",
             "destination_bubble" : "Bulle destination"
         }
+    },
+    "selection" : {
+        "selected_bubbles" : "bulle(s) sélectionnée(s)",
+        "group" : "grouper"
     }
 }

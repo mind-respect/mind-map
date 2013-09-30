@@ -9,17 +9,17 @@ define([
 ],
     function (require, $, EventBus, Triple, Suggestion, GraphElement, UserService) {
         var api = {};
-        api.getByUri = function(uri, callback){
+        api.getByUri = function (uri, callback) {
             return $.ajax({
                 type:'GET',
                 url:uri,
                 dataType:'json'
             }).success(callback);
         };
-        api.createVertex = function(callback){
+        api.createVertex = function (callback) {
             $.ajax({
                 type:'POST',
-                url:verticesUrl(),
+                url:getVerticesUrl(),
                 dataType:'json'
             }).success(callback);
         };
@@ -161,7 +161,7 @@ define([
                 genericIdentification,
                 function () {
                     vertex.removeGenericIdentification(genericIdentification);
-                    if (callback!= undefined) {
+                    if (callback != undefined) {
                         callback(
                             vertex,
                             genericIdentification
@@ -179,8 +179,8 @@ define([
             addIdentification(
                 vertex,
                 identification,
-                function(){
-                    if(callback !== undefined){
+                function () {
+                    if (callback !== undefined) {
                         callback();
                     }
                 }
@@ -242,6 +242,31 @@ define([
                 }
             );
         };
+        api.group = function (vertices, callback) {
+            var uris = [];
+            $.each(vertices, function () {
+                var vertex = this;
+                uris.push(
+                    vertex.getUri()
+                );
+            });
+            var response = $.ajax({
+                type:'POST',
+                url:getVerticesUrl() + '/group',
+                data:$.toJSON(uris),
+                contentType:'application/json;charset=utf-8'
+            }).success(function () {
+                    var createdVertexUri = response.getResponseHeader("Location");
+                    var relativeUri = createdVertexUri.substring(
+                        createdVertexUri.indexOf("/service")
+                    );
+                    callback(
+                        relativeUri
+                    );
+                }
+            );
+        };
+        return api;
         function addIdentification(vertex, identification, successCallback) {
             GraphElement.addIdentification(
                 vertex,
@@ -256,8 +281,8 @@ define([
                     );
                 }
             );
-            function getEventBusKey(){
-                switch(identification.type){
+            function getEventBusKey() {
+                switch (identification.type) {
                     case "type" :
                         return '/event/ui/graph/vertex/type/added';
                     case "same_as" :
@@ -282,10 +307,9 @@ define([
             return Suggestion;
         }
 
-        return api;
-
-        function verticesUrl(){
+        function getVerticesUrl() {
             return UserService.currentUserUri() + "/graph/vertex"
         }
     }
-);
+)
+;

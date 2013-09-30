@@ -15,9 +15,11 @@ define(
         "triple_brain.menu",
         "triple_brain.ui.graph",
         "triple_brain.language_manager",
-        "triple_brain.vertex"
+        "triple_brain.vertex",
+        "triple_brain.top_center_menu",
+        "triple_brain.selection_handler"
     ],
-    function ($, UserService, EventBus, LoginHandler, DragScroll, Vertex, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, Menu, GraphUi, LanguageManager, VertexService) {
+    function ($, UserService, EventBus, LoginHandler, DragScroll, Vertex, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, Menu, GraphUi, LanguageManager, VertexService, TopCenterMenu, SelectionHandler) {
         var api = {
             offset:function () {
                 var offset = {};
@@ -42,6 +44,7 @@ define(
                     handleIfNotAuthenticatedShowCredentialsFlow();
                     handleDisconnectButton();
                     handleCreateNewConceptButton();
+                    TopCenterMenu.init();
                     DepthSlider.init();
                     SearchUi.init();
                     GraphDisplayer.setImplementation(
@@ -128,20 +131,10 @@ define(
         EventBus.subscribe(
             '/event/ui/graph/drawing_info/updated/',
             function (event, drawnGraph, centralVertexUri) {
+                SelectionHandler.reset();
                 GraphDisplayer.integrateEdgesOfServerGraph(
                     drawnGraph
                 );
-//                Vertex.visitAllVertices(function(vertex){
-//                    var canvas = GraphUi.canvas();
-//                    var centerPoint = vertex.labelCenterPoint();
-//                    var circle = canvas.circle(
-//                        centerPoint.x,
-//                        centerPoint.y,
-//                        60
-//                    );
-//                    circle.attr("fill", "#f00");
-//                    circle.attr("stroke", "#f00");
-//                });
                 var centralVertex = Vertex.withUri(centralVertexUri)[0];
                 centralVertex.setAsCentral();
                 centralVertex.scrollTo();

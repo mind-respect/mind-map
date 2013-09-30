@@ -27,7 +27,7 @@ define(
 
             $(componentToPosition).css('left', componentPosition.x);
             $(componentToPosition).css('top', componentPosition.y);
-        }
+        };
         api.positionRight = function(componentToPosition, staticComponent){
             var componentOffset = Point.fromCoordinates(
                 $(staticComponent).width(),
@@ -46,22 +46,40 @@ define(
 
             $(componentToPosition).css('left', componentPosition.x);
             $(componentToPosition).css('top', componentPosition.y);
-        }
+        };
 
         api.componentPosition = function(component){
             return Point.fromCoordinates(
                 $(component).offset().left,
                 $(component).offset().top
             );
-        }
+        };
 
         api.getBrowserSafeScrollX = function(){
             return Math.max($('body').scrollLeft(), $('html').scrollLeft());
-        }
+        };
 
         api.getBrowserSafeScrollY = function(){
             return Math.max($('body').scrollTop(), $('html').scrollTop())
-        }
+        };
+
+        api.doComponentsCollide = function($div1, $div2){
+            var x1 = $div1.offset().left;
+            var y1 = $div1.offset().top;
+            var h1 = $div1.outerHeight(true);
+            var w1 = $div1.outerWidth(true);
+            var b1 = y1 + h1;
+            var r1 = x1 + w1;
+
+            var x2 = $div2.offset().left;
+            var y2 = $div2.offset().top;
+            var h2 = $div2.outerHeight(true);
+            var w2 = $div2.outerWidth(true);
+            var b2 = y2 + h2;
+            var r2 = x2 + w2;
+
+            return !(b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2);
+        };
 
         function isPositionVerticallyOffScreen(position) {
             return position.y < 10;

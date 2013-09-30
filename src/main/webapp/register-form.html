@@ -66,7 +66,7 @@
        data-i18n="register.error.locales_mandatory">
     </p>
 
-    <form id="register-form" class="well">
+    <form id="register-form" class="security-form well">
         <fieldset>
             <label for="register-user_name" data-i18n="register.username"></label>
             <input id="register-user_name" class="large" name="user_name" type="text">
@@ -81,12 +81,11 @@
             <div class="language-list">
                 <h5 data-i18n="register.language.selected_languages"></h5>
                 <ul id="selectedLanguages"></ul>
-                <button id="more-languages-link" class="link-like-button" data-i18n="register.language.more_languages"></button>
+                <a id="more-languages-link" href="#" data-i18n="register.language.more_languages"></a>
             </div>
             <div style="clear:both"></div>
-
-            <button id="register-button" type="button" class="btn" data-i18n="register.register"></button>
-            <button id="login-link" class="link-like-button" data-i18n="register.login"></button>
+            <button id="register-button" class="btn" data-i18n="register.register"></button>
+            <a id="login-link" href="#" data-i18n="register.login"></a>
         </fieldset>
     </form>
 </div>

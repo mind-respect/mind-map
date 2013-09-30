@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="module/mind_map/vertices_list/vertices_list.css"/>
 
     <script src="js/plugins/crow.micro.js"></script>
+    <script src="js/plugins/crow.micro.js"></script>
     <script src="js/plugins/polyk.js"></script>
     <script src="js/plugins/raphael-min.js"></script>
     <script src="js/require.js"></script>
@@ -41,7 +42,17 @@
                 <div class="private legend" data-i18n="caption.private"></div>
                 <div class="public legend" data-i18n="caption.public"></div>
             </div>
-            <div id="top-panel" class="main-panel">
+            <div id="top-center-menu" class="main-panel top-panel">
+                <button id="bubbles-selected" class="link-like-button" style="display:none">
+                    <span class='nb'></span>
+                    <span data-i18n='selection.selected_bubbles'></span>
+                </button>
+                <div class='buttons'>
+                    <button id="group-selected" style="display:none" data-i18n='selection.group'></button>
+                    <button data-i18n="top_center_menu.select" class='select'></button>
+                </div>
+            </div>
+            <div id="top-panel" class="main-panel top-panel">
                 <button id="create-concept" class="link-like-button"
                         data-i18n="top_menu.create_concept"></button>
                 <button data-displayer_name="graph"
@@ -58,5 +69,9 @@
             </div>
         </div>
     </div>
+    <div class='frontier left'></div>
+    <div class='frontier right'></div>
+    <div class='frontier top'></div>
+    <div class='frontier bottom'></div>
 </body>
 </html>

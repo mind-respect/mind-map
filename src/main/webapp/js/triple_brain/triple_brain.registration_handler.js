@@ -25,9 +25,11 @@ define([
         return api;
         function handleRegisterForm() {
             setupLanguageMenu();
+            submitWhenPressingEnter();
             access.errorMessages().hide();
-            access.registerForm().reset();
-            access.registerButton().on("click", function () {
+            access.registerForm()[0].reset();
+            access.registerButton().on("click", function (event) {
+                event.preventDefault();
                 UserService.register(
                     formAsJSon(),
                     handleRegistrationSuccess,
@@ -35,6 +37,18 @@ define([
                 );
             });
             access.registerPage().i18n();
+        }
+
+        function submitWhenPressingEnter(){
+            access.registerForm().find("input").on(
+                "keyup",
+                function(event){
+                    var enterKeyCode = 13;
+                    if(event.keyCode === enterKeyCode){
+                        access.registerButton().click();
+                    }
+                }
+            );
         }
 
         function handleLoginLink() {
@@ -145,7 +159,7 @@ define([
                 );
                 listElement.prepend(moveInstruction);
                 var removeButton = $(
-                    "<button class='remove-button-in-list'>"
+                    "<a class='remove-button-in-list'>"
                 ).append("x");
                 removeButton.on("click", function(){
                     $(this).closest("li").remove();
@@ -275,7 +289,7 @@ define([
                     return $("#register-retype_password");
                 },
                 registerForm:function () {
-                    return $('#register-form')[0];
+                    return $('#register-form');
                 },
                 loginLink:function () {
                     return $("#login-link");

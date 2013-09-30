@@ -23,6 +23,7 @@ define([
         };
         return api;
         function handleLoginForm() {
+            submitWhenPressingEnter();
             access.loginButton().click(function () {
                 var loginInfo = {
                     email:access.emailField().val(),
@@ -39,7 +40,7 @@ define([
                 );
             });
             access.errorMessage().hide();
-            access.loginForm().reset();
+            access.loginForm()[0].reset();
             access.loginPage().i18n();
         }
         function defineAccess() {
@@ -60,7 +61,7 @@ define([
                     return $("#login-password");
                 },
                 loginForm : function () {
-                    return $('#login-form')[0];
+                    return $('#login-form');
                 },
                 registerLink : function(){
                     return $("#register-link");
@@ -68,10 +69,23 @@ define([
             };
         }
         function handleRegisterLink(){
-            access.registerLink().on("click", function(event){
-                event.preventDefault();
-                RegistrationHandler.startFlow();
+            access.registerLink().on(
+                "click",
+                function(event){
+                    event.preventDefault();
+                    RegistrationHandler.startFlow();
             });
+        }
+        function submitWhenPressingEnter(){
+            access.loginForm().find("input").on(
+                "keyup",
+                function(event){
+                    var enterKeyCode = 13;
+                    if(event.keyCode === enterKeyCode){
+                        access.loginButton().click();
+                    }
+                }
+            );
         }
     }
 )
