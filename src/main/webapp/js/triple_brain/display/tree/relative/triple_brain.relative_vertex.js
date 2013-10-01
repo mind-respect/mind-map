@@ -43,12 +43,15 @@ define([
         };
         this.adjustPosition = function (parentVertexHtml) {
             var width = html.width();
+            var vertex = Vertex.withHtml(html);
+            var imageOffset = vertex.hasImages() && !vertex.getImageMenu().isDoneLoadingImage() ?
+                60 : 0;
             if (parentVertexHtml === undefined) {
                 parentVertexHtml = getParentVertex();
             }
             var parentWidth = $(parentVertexHtml).width();
             html.closest(".vertex-tree-container").css(
-                "margin-left", "-" + (parentWidth + width + 50) + "px"
+                "margin-left", "-" + (parentWidth + width + 70 + imageOffset) + "px"
             );
         };
         this.visitChildren = function (visitor) {

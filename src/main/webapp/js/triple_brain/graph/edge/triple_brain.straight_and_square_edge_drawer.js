@@ -66,16 +66,19 @@ define([
         }
 
         function buildFirstSegment(){
+            var isGoingLeft = sourceHtml.offset().left > destinationHtml.offset().left;
             var sourcePoint = Point.fromCoordinates(
-                sourceHtml.offset().left  + sourceVertex.textContainerWidth() / 2,
+                sourceHtml.offset().left + (sourceVertex.textContainerWidth() / 2),
                 sourceHtml.offset().top + 3
             );
             sourcePoint.y += false ?
                 sourceHtml.outerHeight() / 2 :
                 sourceHtml.outerHeight();
-            var isGoingLeft = sourcePoint.x > destinationHtml.offset().left;
             var endPoint = Point.fromPoint(sourcePoint);
-            var horizontalDistance = 40 + sourceVertex.width() / 2;
+            var horizontalDistance = 40 + (sourceVertex.textContainerWidth() / 2);
+            if(sourceVertex.hasImages()){
+                horizontalDistance += 60;
+            }
             endPoint.x += isGoingLeft ? -1 * horizontalDistance : horizontalDistance;
             return Segment.withStartAndEndPoint(
                 sourcePoint,

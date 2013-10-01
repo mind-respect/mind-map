@@ -18,6 +18,7 @@ define(
         function ImageMenu(vertex) {
             var imageMenu = this;
             var html;
+            var isImageLoaded = false;
             this.create = function () {
                 html = MindMapTemplate['image_container'].merge();
                 addHtmlToVertex();
@@ -37,7 +38,7 @@ define(
                 );
                 $(image).load(function () {
                     setUpBiggerImagesView();
-                    vertex.adjustWidth();
+                    isImageLoaded = true;
                 });
 
                 function setUpBiggerImagesView() {
@@ -65,6 +66,10 @@ define(
                         rel:vertexId
                     });
                 }
+            };
+
+            this.isDoneLoadingImage = function(){
+                return isImageLoaded;
             };
 
             this.width = function () {
