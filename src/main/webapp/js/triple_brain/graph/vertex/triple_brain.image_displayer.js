@@ -6,9 +6,10 @@ define(
     [
         "jquery",
         "triple_brain.mind-map_template",
+        "triple_brain.event_bus",
         "jquery.colorbox"
     ],
-    function ($, MindMapTemplate) {
+    function ($, MindMapTemplate, EventBus) {
         var api = {}
         api.ofVertex = function (vertex) {
             return new ImageMenu(vertex);
@@ -38,6 +39,11 @@ define(
                 );
                 $(image).load(function () {
                     setUpBiggerImagesView();
+                    vertex.adjustWidth();
+                    EventBus.publish(
+                        "/event/ui/graph/vertex/image/updated",
+                        vertex
+                    );
                     isImageLoaded = true;
                 });
 

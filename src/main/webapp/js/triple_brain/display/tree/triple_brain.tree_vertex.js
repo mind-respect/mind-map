@@ -4,10 +4,9 @@
 define([
     "jquery",
     "triple_brain.ui.vertex",
-    "triple_brain.event_bus",
-    "triple_brain.tree_edge"
+    "triple_brain.event_bus"
 ],
-    function($, Vertex, EventBus, TreeEdge){
+    function($, Vertex, EventBus){
         var api = {};
         api.withHtml = function(html){
             return new Object(

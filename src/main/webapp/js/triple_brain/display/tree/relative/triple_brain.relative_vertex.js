@@ -3,8 +3,9 @@
  */
 define([
     "jquery",
-    "triple_brain.ui.vertex"
-], function ($, Vertex) {
+    "triple_brain.ui.vertex",
+    "triple_brain.event_bus"
+], function ($, Vertex, EventBus) {
     var api = {};
     api.withVertex = function (vertex) {
         return new RelativeVertex(vertex.getHtml());
@@ -12,6 +13,15 @@ define([
     api.withVertexHtml = function (vertexHtml) {
         return new RelativeVertex(vertexHtml);
     };
+    EventBus.subscribe(
+        "/event/ui/graph/vertex/image/updated",
+        function(event, vertex){
+            var relativeVertex = api.withVertex(vertex);
+            api.withVertexHtml(
+                relativeVertex.getParentVertexHtml()
+            ).adjustAllChildrenPositionIfApplicable();
+        }
+    );
     return api;
     function RelativeVertex(html) {
         html = $(html);
@@ -44,14 +54,12 @@ define([
         this.adjustPosition = function (parentVertexHtml) {
             var width = html.width();
             var vertex = Vertex.withHtml(html);
-            var imageOffset = vertex.hasImages() && !vertex.getImageMenu().isDoneLoadingImage() ?
-                60 : 0;
             if (parentVertexHtml === undefined) {
-                parentVertexHtml = getParentVertex();
+                parentVertexHtml = thisRelativeVertex.getParentVertexHtml();
             }
             var parentWidth = $(parentVertexHtml).width();
             html.closest(".vertex-tree-container").css(
-                "margin-left", "-" + (parentWidth + width + 70 + imageOffset) + "px"
+                "margin-left", "-" + (parentWidth + width + 40) + "px"
             );
         };
         this.visitChildren = function (visitor) {
@@ -72,7 +80,7 @@ define([
                 visitor(vertex);
             });
         };
-        function getParentVertex() {
+        this.getParentVertexHtml = function(){
             return html.closest(".vertices-children-container")
                 .siblings(".vertex-container");
         }
