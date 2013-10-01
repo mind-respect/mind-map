@@ -4,8 +4,9 @@
 define([
     "jquery",
     "triple_brain.ui.vertex",
+    "triple_brain.ui.edge",
     "triple_brain.event_bus"
-], function ($, Vertex, EventBus) {
+], function ($, Vertex, EdgeUi, EventBus) {
     var api = {};
     api.withVertex = function (vertex) {
         return new RelativeVertex(vertex.getHtml());
@@ -20,6 +21,7 @@ define([
             api.withVertexHtml(
                 relativeVertex.getParentVertexHtml()
             ).adjustAllChildrenPositionIfApplicable();
+            EdgeUi.redrawAllEdges();
         }
     );
     return api;
@@ -43,13 +45,12 @@ define([
             if (thisRelativeVertex.isToTheLeft() || vertex.isCenterVertex()) {
                 var visit = vertex.isCenterVertex() ?
                     thisRelativeVertex.visitCenterVertexLeftVertices :
-                    thisRelativeVertex.visitChildren
+                    thisRelativeVertex.visitChildren;
                 visit(function (vertex) {
                     var relativeVertex = api.withVertex(vertex);
                     relativeVertex.adjustPosition();
                 });
             }
-            ;
         };
         this.adjustPosition = function (parentVertexHtml) {
             var width = html.width();
@@ -83,6 +84,6 @@ define([
         this.getParentVertexHtml = function(){
             return html.closest(".vertices-children-container")
                 .siblings(".vertex-container");
-        }
+        };
     }
 });
