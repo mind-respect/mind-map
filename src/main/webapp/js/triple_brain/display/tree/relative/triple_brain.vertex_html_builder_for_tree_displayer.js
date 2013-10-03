@@ -25,7 +25,9 @@ define([
     "triple_brain.ui.triple",
     "triple_brain.vertex_html_builder_common",
     "triple_brain.image",
-    "jquery-ui"
+    "jquery-ui",
+    "jquery.is-fully-on-screen",
+    "jquery.center-on-screen"
 ], function (require, $, EventBus, GraphUi, Vertex, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, Point, Segment, GraphDisplayer, RelativeVertex, TreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, Image) {
         var api = {};
         api.withServerJson = function (serverVertex) {
@@ -244,7 +246,10 @@ define([
                             var sourceVertex = TreeVertex.ofVertex(
                                 triple.sourceVertex()
                             );
-                            triple.destinationVertex().getHtml().centerOnScreenWithAnimation();
+                            var destinationHtml = triple.destinationVertex().getHtml();
+                            if(!destinationHtml.isFullyOnScreen()){
+                                destinationHtml.centerOnScreenWithAnimation();
+                            }
                             TreeVertex.ofVertex(
                                 triple.destinationVertex()
                             ).resetOtherInstances();

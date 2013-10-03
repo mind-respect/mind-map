@@ -17,6 +17,7 @@ window.config = {
         "jquery.colorbox" : "jquery/jquery.colorbox-min",
         "jquery.cursor-at-end" : "jquery/jquery.cursor-at-end",
         "jquery.center-on-screen" : "jquery/jquery.center-on-screen",
+        "jquery.is-fully-on-screen" : "jquery/jquery.is-fully-on-screen",
         "org/cometd" : "cometd/cometd",
         "jquery.cometd" : "jquery/cometd/jquery.cometd",
         "jquery.cometd-ack" : "jquery/cometd/jquery.cometd-ack",
