@@ -81,11 +81,17 @@ define(
             return !(b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2);
         };
 
+        api.isElementFullyOnScreen = function(element){
+            var docViewTop = $(window).scrollTop();
+            var docViewBottom = docViewTop + $(window).height();
+
+            var elemTop = $(element).offset().top;
+            var elemBottom = elemTop + $(element).height();
+            return ((docViewTop < elemTop) && (docViewBottom > elemBottom));
+        };
+        return api;
         function isPositionVerticallyOffScreen(position) {
             return position.y < 10;
         }
-
-        return api;
-
     }
 )

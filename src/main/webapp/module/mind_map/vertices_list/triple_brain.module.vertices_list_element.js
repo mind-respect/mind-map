@@ -24,9 +24,9 @@ define([
         };
         function VerticesListElement(html){
             this.associatedVertex = function(){
-                return Vertex.withUri(
-                    $(html).data('vertexUri')
-                )[0];
+                return Vertex.withId(
+                    $(html).data('vertexId')
+                );
             };
             this.setDistanceFromCentralVertex= function(distanceFromCentralVertex){
                 $(containerWithDistanceFromCentralVertex()).html(

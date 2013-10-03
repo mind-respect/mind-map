@@ -17,11 +17,11 @@ define([
         function VerticesListElementCreator(vertex, centralVertex){
             var GraphUi = require("triple_brain.ui.graph");
             var VerticesList = require("./triple_brain.module.vertices_list");
-            var html = Template['list_element'].merge();
+            var html = $(Template['list_element'].merge());
             var verticesListElement = VerticesListElement.withHtml(html);
             this.create = function(){
                 VerticesList.get().addHtml(html);
-                $(html).data('vertexUri', vertex.getUri());
+                html.data('vertexId', vertex.getId());
                 verticesListElement.setDistanceFromCentralVertex(
                     GraphUi.numberOfEdgesBetween(
                         vertex,
@@ -29,7 +29,7 @@ define([
                     )
                 );
                 verticesListElement.setLabel(vertex.text());
-                $(html).click(function(){
+                html.click(function(){
                     var verticesListElement = VerticesListElement.withHtml(this);
                     var vertex = verticesListElement.associatedVertex();
                     vertex.focus();

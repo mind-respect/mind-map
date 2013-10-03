@@ -25,10 +25,11 @@ define([
     "triple_brain.ui.triple",
     "triple_brain.vertex_html_builder_common",
     "triple_brain.image",
+    "triple_brain.ui.utils",
     "jquery-ui",
     "jquery.is-fully-on-screen",
     "jquery.center-on-screen"
-], function (require, $, EventBus, GraphUi, Vertex, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, Point, Segment, GraphDisplayer, RelativeVertex, TreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, Image) {
+], function (require, $, EventBus, GraphUi, Vertex, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, Point, Segment, GraphDisplayer, RelativeVertex, TreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, Image, UiUtils) {
         var api = {};
         api.withServerJson = function (serverVertex) {
             return new VertexCreator(serverVertex);
@@ -247,7 +248,7 @@ define([
                                 triple.sourceVertex()
                             );
                             var destinationHtml = triple.destinationVertex().getHtml();
-                            if(!destinationHtml.isFullyOnScreen()){
+                            if(!UiUtils.isElementFullyOnScreen(destinationHtml)){
                                 destinationHtml.centerOnScreenWithAnimation();
                             }
                             TreeVertex.ofVertex(
