@@ -31,6 +31,11 @@ define([
             }
             edge.hideMenu();
         };
+        api.ofEdge = function(edge){
+            return api.withHtml(
+                edge.getHtml()
+            );
+        };
         function GraphEdge(html){
             var self = this;
             this.setText = function (text) {

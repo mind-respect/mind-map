@@ -4,23 +4,29 @@
 define([
     "triple_brain.ui.graph",
     "triple_brain.point",
-    "triple_brain.segment"
-], function(GraphUi, Point, Segment){
+    "triple_brain.segment",
+    "triple_brain.graph_displayer"
+], function(GraphUi, Point, Segment, GraphDisplayer){
     var api = {};
-    api.ofSourceAndDestinationVertex = function(sourceVertex, destinationVertex){
-        return new PathBetweenVertices(sourceVertex, destinationVertex);
-    };
-    api.ofEdgeHavingUndefinedArrowLine = function(edge){
-        return api.ofSourceAndDestinationVertex(
-            edge.sourceVertex(),
-            edge.destinationVertex()
+    api.ofEdge = function(edge){
+        var sourceVertexAsSeenOnScreen = edge.sourceVertex();
+        var destinationVertexAsSeenOnScreen = edge.destinationVertex();
+        if(GraphDisplayer.couldDestinationBubbleAppearAsSourceBubble()){
+            if(edge.isInverse()){
+                sourceVertexAsSeenOnScreen = edge.destinationVertex();
+                destinationVertexAsSeenOnScreen = edge.sourceVertex();
+            }
+        }
+        return new PathBetweenVertices(
+            sourceVertexAsSeenOnScreen,
+            destinationVertexAsSeenOnScreen
         );
     };
     return api;
-    function PathBetweenVertices(sourceVertex, destinationVertex){
+    function PathBetweenVertices(sourceVertexAsSeenOnScreen, destinationVertexAsSeenOnScreen){
         var drawnComponents = [];
-        var sourceHtml = sourceVertex.textContainer();
-        var destinationHtml = destinationVertex.textContainer();
+        var sourceHtml = sourceVertexAsSeenOnScreen.textContainer();
+        var destinationHtml = destinationVertexAsSeenOnScreen.textContainer();
         var defaultStrokeWidth = "1";
         var defaultColor = "black";
         this.drawInWithDefaultStyle = function(){
@@ -38,7 +44,7 @@ define([
                 firstSegment.getStartPoint().y +
                 lineToPoint(firstSegment.getEndPoint()) +
                 lineToPoint(endPointOfSecondSegment) +
-                lineToPoint(endPointOfThirdSegment)
+                lineToPoint(endPointOfThirdSegment);
 
             var canvas = GraphUi.canvas();
             drawnComponents.push(
@@ -68,15 +74,13 @@ define([
         function buildFirstSegment(){
             var isGoingLeft = sourceHtml.offset().left > destinationHtml.offset().left;
             var sourcePoint = Point.fromCoordinates(
-                sourceHtml.offset().left + (sourceVertex.textContainerWidth() / 2),
+                sourceHtml.offset().left + (sourceVertexAsSeenOnScreen.textContainerWidth() / 2),
                 sourceHtml.offset().top + 3
             );
-            sourcePoint.y += false ?
-                sourceHtml.outerHeight() / 2 :
-                sourceHtml.outerHeight();
+            sourcePoint.y += sourceHtml.outerHeight();
             var endPoint = Point.fromPoint(sourcePoint);
-            var horizontalDistance = 40 + (sourceVertex.textContainerWidth() / 2);
-            if(sourceVertex.hasImages()){
+            var horizontalDistance = 40 + (sourceVertexAsSeenOnScreen.textContainerWidth() / 2);
+            if(sourceVertexAsSeenOnScreen.hasImages()){
                 horizontalDistance += 60;
             }
             endPoint.x += isGoingLeft ? -1 * horizontalDistance : horizontalDistance;
@@ -95,7 +99,7 @@ define([
 
         function buildEndPointOfThirdSegment(){
             return Point.fromCoordinates(
-                destinationHtml.offset().left  + destinationVertex.textContainerWidth() / 2,
+                destinationHtml.offset().left  + destinationVertexAsSeenOnScreen.textContainerWidth() / 2,
                 destinationHtml.offset().top + destinationHtml.outerHeight() + 3
             );
         }

@@ -105,7 +105,7 @@ define([
                     edge
                 );
                 return edge;
-            }
+            };
 
             function showRemoveButtonOnlyIfMouseOver(html) {
                 html.off(
@@ -264,7 +264,7 @@ define([
                 makeSpanInnerHtml(
                     edge.getHtml(),
                     edge.text()
-                )
+                );
                 var vertex = Vertex.withHtml(html.closest(".vertex"));
                 vertex.adjustWidth();
                 var relativeVertex = RelativeVertex.withVertex(vertex);
@@ -305,7 +305,7 @@ define([
             function drawArrowLine() {
                 var edge = edgeFacade();
                 edge.setArrowLine(
-                    GraphDisplayer.getEdgeDrawer().ofEdgeHavingUndefinedArrowLine(
+                    GraphDisplayer.getEdgeDrawer().ofEdge(
                         edge
                     )
                 );

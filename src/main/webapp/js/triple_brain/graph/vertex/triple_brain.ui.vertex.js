@@ -242,9 +242,8 @@ define([
                     var edge = this;
                     edge.arrowLine().remove();
                     edge.setArrowLine(
-                        GraphDisplayer.getEdgeDrawer().ofSourceAndDestinationVertex(
-                            edge.sourceVertex(),
-                            edge.destinationVertex()
+                        GraphDisplayer.getEdgeDrawer().ofEdge(
+                            edge
                         )
                     );
                     edge.centerOnArrowLine();

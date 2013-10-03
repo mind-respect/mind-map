@@ -13,7 +13,9 @@ define([
         api.withSegment = function(segment){
             return new ArrowLine(segment);
         };
-        api.ofSourceAndDestinationVertex = function(sourceVertex, destinationVertex){
+        api.ofEdge = function(edge){
+            var sourceVertex = edge.sourceVertex();
+            var destinationVertex = edge.destinationVertex();
             var segment = Segment.withStartAndEndPoint(
                 sourceVertex.labelCenterPoint(),
                 destinationVertex.labelCenterPoint()
@@ -29,12 +31,6 @@ define([
                 segment.endPoint = destinationVertex.closestPointToSegment(segment);
             }
             return new ArrowLine(segment);
-        };
-        api.ofEdgeHavingUndefinedArrowLine = function(edge){
-            return api.ofSourceAndDestinationVertex(
-                edge.sourceVertex(),
-                edge.destinationVertex()
-            );
         };
         function ArrowLine(segment){
             var drawnComponents = [];

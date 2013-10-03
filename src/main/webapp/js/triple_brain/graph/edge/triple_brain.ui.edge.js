@@ -69,9 +69,10 @@ define([
                 var arrowLine;
                 if(recalculate){
                     edge.arrowLine().remove();
-                    arrowLine = GraphDisplayer.getEdgeDrawer().ofSourceAndDestinationVertex(
-                        edge.sourceVertex(),
-                        edge.destinationVertex()
+                    arrowLine = GraphDisplayer.getEdgeDrawer().ofEdge(
+                        GraphDisplayer.getEdgeSelector().ofEdge(
+                            edge
+                        )
                     );
                     edge.setArrowLine(arrowLine);
                 }

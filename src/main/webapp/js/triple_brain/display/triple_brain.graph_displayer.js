@@ -61,7 +61,7 @@ define([
         };
         api.addEdgeBetweenExistingVertices = function(newEdge){
             return _implementation.addEdgeBetweenExistingVertices(newEdge);
-        }
+        };
         api.allowsMovingVertices = function(){
             return _implementation.allowsMovingVertices();
         };
@@ -78,6 +78,12 @@ define([
         };
         api.getEdgeDrawer = function(){
             return _implementation.getEdgeDrawer();
+        };
+        api.couldDestinationBubbleAppearAsSourceBubble = function(){
+            return !api.allowsMovingVertices();
+        };
+        api.getEdgeSelector = function(){
+            return _implementation.getEdgeSelector();
         };
         return api;
         function currentDepth(){

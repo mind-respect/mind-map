@@ -130,7 +130,7 @@ define([
             function drawArrowLine(){
                 var edge = edgeFacade();
                 edge.setArrowLine(
-                    StraightArrowEdgeDrawer.ofEdgeHavingUndefinedArrowLine(
+                    StraightArrowEdgeDrawer.ofEdge(
                         edge
                     )
                 );
