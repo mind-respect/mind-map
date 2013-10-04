@@ -25,8 +25,8 @@ define([
     return api;
     function PathBetweenVertices(sourceVertexAsSeenOnScreen, destinationVertexAsSeenOnScreen){
         var drawnComponents = [];
-        var sourceHtml = sourceVertexAsSeenOnScreen.textContainer();
-        var destinationHtml = destinationVertexAsSeenOnScreen.textContainer();
+        var sourceHtml = sourceVertexAsSeenOnScreen.getTextContainer();
+        var destinationHtml = destinationVertexAsSeenOnScreen.getTextContainer();
         var defaultStrokeWidth = "1";
         var defaultColor = "black";
         this.drawInWithDefaultStyle = function(){

@@ -374,13 +374,22 @@ input[type="button"], button {
     margin-top:0px;
 }
 
+.vertex .ui-button{
+    width:1.7em;
+    height:1.8em;
+    margin-right:0;
+}
+
 .vertex .menu .ui-button{
     float:left;
     border: 1px solid #e30613;
     background-color: white;
-    width:1.7em;
-    height:1.8em;
-    margin-right:0;
+}
+
+.vertex .duplicate.ui-button{
+    position:absolute;
+    left:-15px;
+    top:-30px;
 }
 
 .vertex .menu input:hover{

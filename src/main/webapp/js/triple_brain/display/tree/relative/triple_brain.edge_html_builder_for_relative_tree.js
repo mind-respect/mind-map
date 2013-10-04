@@ -65,7 +65,7 @@ define([
                 var relativeVertex = RelativeVertex.withVertex(
                     childVertexHtmlFacade
                 );
-                var textContainer = childVertexHtmlFacade.textContainer();
+                var textContainer = childVertexHtmlFacade.getTextContainer();
                 var isToTheLeft = relativeVertex.isToTheLeft();
                 if (isToTheLeft) {
                     textContainer.append(html);

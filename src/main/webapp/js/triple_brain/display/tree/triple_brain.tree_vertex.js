@@ -27,6 +27,9 @@ define([
                     apply(vertex);
                 });
             };
+            this.hasOtherInstances = function(){
+                return self.getOtherInstances().length > 0;
+            };
             this.getOtherInstances = function(){
                 var vertex = Vertex.withHtml(html);
                 if(html.data(otherInstancesKey) === undefined){

@@ -157,7 +157,7 @@ define([
                 return html;
             };
             this.labelCenterPoint = function () {
-                var textContainer = self.textContainer();
+                var textContainer = self.getTextContainer();
                 return Point.fromCoordinates(
                     $(textContainer).offset().left + self.textContainerWidth() / 2,
                     $(textContainer).offset().top + $(textContainer).height() / 2
@@ -276,12 +276,12 @@ define([
             this.getNote = function(){
                 return html.data("note");
             };
-            this.textContainer = function () {
+            this.getTextContainer = function () {
                 return $(this.label()).closest(".textfield-container");
             };
             this.textContainerWidth = function () {
                 var width = 0;
-                $.each(self.textContainer().children(), function () {
+                $.each(self.getTextContainer().children(), function () {
                     var child = this;
                     width += $(child).width();
                 });
@@ -526,7 +526,7 @@ define([
 
             function getSegments() {
                 return VertexSegments.withHtmlVertex(
-                    self.textContainer()
+                    self.getTextContainer()
                 );
             }
 

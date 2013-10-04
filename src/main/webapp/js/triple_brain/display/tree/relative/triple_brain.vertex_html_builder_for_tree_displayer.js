@@ -34,6 +34,40 @@ define([
         api.withServerJson = function (serverVertex) {
             return new VertexCreator(serverVertex);
         };
+        EventBus.subscribe('/event/ui/graph/drawn', addDuplicateVerticesButton);
+        return api;
+        function addDuplicateVerticesButton(){
+            Vertex.visitAllVertices(function(vertex){
+                if(TreeVertex.ofVertex(vertex).hasOtherInstances()){
+                    addDuplicateButton(vertex);
+                };
+            });
+            function addDuplicateButton(vertex){
+                vertex.getTextContainer().prepend(
+                    buildDuplicateButton()
+                );
+            }
+            function buildDuplicateButton(){
+                return $(
+                    "<button class='duplicate'>"
+                ).button({
+                    icons: {
+                        primary: "ui-icon ui-icon-link"
+                    },
+                    text: false
+                }).on(
+                    "click",
+                    function(){
+                        var vertex = vertexOfSubHtmlComponent($(this));
+                        $(
+                            TreeVertex.ofVertex(
+                                vertex
+                            ).getOtherInstances()[0].getHtml()
+                        ).centerOnScreenWithAnimation();
+                    }
+                );
+            }
+        }
         function VertexCreator(serverFormat) {
             var Vertex = require("triple_brain.ui.vertex");
             var VertexService = require("triple_brain.vertex");
@@ -106,13 +140,12 @@ define([
                 return vertex;
             };
             function createLabel() {
-                var labelContainer = MindMapTemplate['vertex_label_container'].merge({
+                var labelContainer = $(MindMapTemplate['vertex_label_container'].merge({
                     label:serverFormat.label.trim() === "" ?
                         Vertex.getWhenEmptyLabel() :
                         serverFormat.label
-                });
-                $(html).append(labelContainer);
-                var label = $(labelContainer).find("input[type='text']:first");
+                })).appendTo(html);
+                var label = labelContainer.find("input[type='text']:first");
                 var vertex = vertexFacade();
                 vertex.readjustLabelWidth();
                 if (vertex.hasDefaultText()) {
@@ -126,8 +159,7 @@ define([
                         $(this).val("");
                         $(vertex.label()).keyup();
                     }
-                });
-                label.blur(function (e) {
+                }).blur(function () {
                     var vertex = vertexOfSubHtmlComponent(this);
                     if (!vertex.isMouseOver()) {
                         vertex.unhighlight();
@@ -139,9 +171,7 @@ define([
                     } else {
                         vertex.removeStyleOfDefaultText();
                     }
-                });
-
-                label.change(function (e) {
+                }).change(function () {
                     var vertex = vertexOfSubHtmlComponent(this);
                     $(vertex.label()).keyup();
                     VertexService.updateLabel(
@@ -175,7 +205,7 @@ define([
                     EdgeUi.redrawAllEdges();
                 });
 
-                label.keyup(function (e) {
+                label.keyup(function() {
                     var vertex = vertexOfSubHtmlComponent(this);
                     var html = vertex.getHtml();
                     updateLabelsOfVerticesWithSameUri();
@@ -199,7 +229,6 @@ define([
                 );
                 return labelContainer;
             }
-
             function createMenu() {
                 var vertexMenu = MindMapTemplate['vertex_menu'].merge();
                 $(html).append(vertexMenu);
@@ -323,12 +352,6 @@ define([
                 return vertexMenu;
             }
 
-            function vertexOfSubHtmlComponent(htmlOfSubComponent) {
-                return Vertex.withHtml(
-                    $(htmlOfSubComponent).closest('.vertex')
-                );
-            }
-
             function onMouseOver() {
                 var vertex = vertexOfSubHtmlComponent(this);
                 GraphUi.setVertexMouseOver(vertex);
@@ -336,7 +359,7 @@ define([
             }
 
             function onMouseOut() {
-                var vertex = vertexOfSubHtmlComponent(this)
+                var vertex = vertexOfSubHtmlComponent(this);
                 GraphUi.unsetVertexMouseOver();
                 vertex.makeItLowProfile();
             }
@@ -346,7 +369,11 @@ define([
             }
         }
 
-        return api;
+        function vertexOfSubHtmlComponent(htmlOfSubComponent) {
+            return Vertex.withHtml(
+                $(htmlOfSubComponent).closest('.vertex')
+            );
+        }
     }
-)
+);
 
