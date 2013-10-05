@@ -12,12 +12,12 @@ define([
     function ($, Vertex, GraphDisplayer, GraphUi){
         return {
             init:function() {
-                var sliderDefaultValue = 5;
+                var sliderDefaultValue = 1;
                 $("#sub-vertices-depth-index").text(sliderDefaultValue);
                 $("#sub-vertices-depth-slider").slider({
                     value:sliderDefaultValue,
-                    min:0,
-                    max:20,
+                    min:1,
+                    max:5,
                     step:1,
                     orientation:"horizontal",
                     slide:function (event, ui) {

@@ -10,7 +10,6 @@ define([
     "triple_brain.ui.vertex",
     "triple_brain.straight_arrow_edge_drawer",
     "triple_brain.edge_html_builder_for_graph_displayer",
-    "triple_brain.user",
     "triple_brain.graph_edge"
 ],
     function ($, GraphService, IdUriUtils, VertexHtmlBuilder, GraphUi, Vertex, StraightArrowEdgeDrawer, EdgeHtmlBuilder, GraphEdge) {

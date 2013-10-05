@@ -117,7 +117,7 @@ define([
                 self.hideCenterButton();
             };
             this.setNameOfHiddenProperties = function (nameOfHiddenProperties) {
-                $(html).data('nameOfHiddenProperties', nameOfHiddenProperties);
+                html.data('nameOfHiddenProperties', nameOfHiddenProperties);
             };
             this.buildHiddenNeighborPropertiesIndicatorIfApplicable = function () {
                 var propertiesIndicator = PropertiesIndicator.withVertex(
@@ -140,6 +140,11 @@ define([
             };
             this.hasHiddenProperties = function () {
                 return self.numberOfHiddenConnectedVertices() > 0;
+            };
+            this.getHiddenPropertiesContainer = function(){
+                return html.data(
+                    "hidden_properties_indicator"
+                );
             };
             this.numberOfHiddenConnectedVertices = function () {
                 return self.nameOfHiddenProperties().length;
@@ -307,7 +312,10 @@ define([
                 EdgeUi.drawAllEdges();
             };
             this.remove = function () {
-                $(html).remove();
+                if(self.hasHiddenProperties()){
+                    self.getHiddenPropertiesContainer().remove();
+                }
+                html.remove();
             };
             this.suggestions = function () {
                 return $(html).data('suggestions');
@@ -435,6 +443,10 @@ define([
                 $(html).css(
                     "width",
                     width + "px"
+                );
+                EventBus.publish(
+                    "/event/ui/graph/vertex/width-modified",
+                    self
                 );
             };
 

@@ -62,6 +62,10 @@ define([
             html.closest(".vertex-tree-container").css(
                 "margin-left", "-" + (parentWidth + width + 40) + "px"
             );
+            EventBus.publish(
+                "/event/ui/graph/vertex/position-changed",
+                vertex
+            );
         };
         this.visitChildren = function (visitor) {
             var children = html.closest(".vertex-container").siblings(

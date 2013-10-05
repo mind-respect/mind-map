@@ -105,8 +105,8 @@ define([
             );
         }
         function displayUsingCentralVertexUri(centralVertexUri){
-            GraphUi.reset();
             publishAboutToUpdate();
+            GraphUi.reset();
             _implementation.displayUsingDepthAndCentralVertexUri(
                 centralVertexUri,
                 currentDepth(),

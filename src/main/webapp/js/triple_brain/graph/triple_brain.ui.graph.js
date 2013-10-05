@@ -6,9 +6,10 @@ define([
     "jquery",
     "triple_brain.point",
     "triple_brain.event_bus",
-    "triple_brain.ui.edge"
+    "triple_brain.ui.edge",
+    "triple_brain.ui.vertex"
 ],
-    function (require, $, Point, EventBus, Edge) {
+    function (require, $, Point, EventBus, Edge, Vertex) {
         var api = {};
         var graphForTraversal;
         api.getVertexMouseOver = function () {
@@ -57,8 +58,12 @@ define([
                 graphForTraversal.invalidate();
             }
             graphForTraversal = new crow.Graph();
-            var Edge = require("triple_brain.ui.edge");
+            Edge = require("triple_brain.ui.edge");
             Edge.removeAllArrowLines();
+            Vertex= require("triple_brain.ui.vertex");
+            Vertex.visitAllVertices(function(vertex){
+                vertex.remove();
+            });
             $("#drawn_graph").empty();
         };
 

@@ -34,14 +34,21 @@ define([
         api.withServerJson = function (serverVertex) {
             return new VertexCreator(serverVertex);
         };
-        EventBus.subscribe('/event/ui/graph/drawn', addDuplicateVerticesButton);
+        EventBus.subscribe(
+            '/event/ui/vertex/visit_after_graph_drawn',
+            handleVisitAfterGraphDrawn
+        );
         return api;
-        function addDuplicateVerticesButton(){
-            Vertex.visitAllVertices(function(vertex){
-                if(TreeVertex.ofVertex(vertex).hasOtherInstances()){
-                    addDuplicateButton(vertex);
-                };
-            });
+
+        function handleVisitAfterGraphDrawn(event, vertex){
+            addDuplicateVerticesButtonIfApplicable(
+                vertex
+            );
+        }
+        function addDuplicateVerticesButtonIfApplicable(vertex){
+            if(TreeVertex.ofVertex(vertex).hasOtherInstances()){
+                addDuplicateButton(vertex);
+            }
             function addDuplicateButton(vertex){
                 vertex.getTextContainer().prepend(
                     buildDuplicateButton()
@@ -83,6 +90,12 @@ define([
             );
             html.uniqueId();
             this.create = function () {
+                var vertex = vertexFacade();
+                vertex.setNameOfHiddenProperties(
+                    serverFormat.is_frontier_vertex_with_hidden_vertices ?
+                        serverFormat.name_of_hidden_properties :
+                        []
+                );
                 createLabel();
                 html.data(
                     "isPublic",
@@ -106,11 +119,7 @@ define([
                     onMouseOver,
                     onMouseOut
                 );
-                vertex.setNameOfHiddenProperties(
-                    serverFormat.is_frontier_vertex_with_hidden_vertices ?
-                        serverFormat.name_of_hidden_properties :
-                        []
-                );
+
                 VertexHtmlCommon.setUpIdentifications(
                     serverFormat,
                     vertex

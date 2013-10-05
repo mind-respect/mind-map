@@ -140,6 +140,12 @@ define(
                 centralVertex.scrollTo();
                 DragScroll.start();
                 EventBus.publish('/event/ui/graph/drawn');
+                Vertex.visitAllVertices(function(vertex){
+                    EventBus.publish(
+                        '/event/ui/vertex/visit_after_graph_drawn',
+                        vertex
+                    );
+                });
             }
         );
         return api;

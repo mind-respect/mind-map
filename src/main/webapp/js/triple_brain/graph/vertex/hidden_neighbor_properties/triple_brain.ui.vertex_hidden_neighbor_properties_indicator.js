@@ -6,16 +6,51 @@ define([
     "triple_brain.segment",
     "triple_brain.mind-map_template",
     "triple_brain.graph_element_menu",
-    "triple_brain.ui.graph"
+    "triple_brain.ui.graph",
+    "triple_brain.event_bus"
 ],
-    function ($, Edge, DashedSegment, Point, Segment, MindMapTemplate, GraphElementMenu, GraphUi) {
+    function ($, Edge, DashedSegment, Point, Segment, MindMapTemplate, GraphElementMenu, GraphUi, EventBus) {
         var api = {
             withVertex:function (vertex) {
                 return new HiddenNeighborPropertiesIndicator(vertex);
             }
         };
+
+        EventBus.subscribe(
+            '/event/ui/graph/drawing_info/about_to/update',
+            function(){
+                EventBus.unsubscribe(
+                    "/event/ui/graph/vertex/width-modified " +
+                        "/event/ui/graph/vertex/position-changed " +
+                        "/event/ui/vertex/visit_after_graph_drawn",
+                        adjustPositionHandler
+                );
+                EventBus.subscribe(
+                    '/event/ui/vertex/visit_after_graph_drawn',
+                    graphDrawnHandler
+                );
+        });
+
+        function graphDrawnHandler(event){
+            EventBus.unsubscribe(
+                '/event/ui/graph/drawn',
+                graphDrawnHandler
+            );
+            EventBus.subscribe(
+                "/event/ui/graph/vertex/width-modified " +
+                "/event/ui/graph/vertex/position-changed " +
+                "/event/ui/vertex/visit_after_graph_drawn",
+                adjustPositionHandler
+            );
+        }
         return api;
+        function adjustPositionHandler(event, vertex){
+            if(vertex.hasHiddenProperties()){
+                vertex.getHiddenPropertiesContainer().adjustPosition();
+            }
+        }
         function HiddenNeighborPropertiesIndicator(vertex) {
+            var self = this;
             var hiddenNeighborPropertiesContainer;
             var dashSegments = [];
             this.build = function () {
@@ -74,7 +109,13 @@ define([
                     dashSegment.remove();
                 }
             };
-
+            this.adjustPosition = function(){
+                self.remove();
+                self.build();
+            };
+            this.hide = function(){
+                hiddenNeighborPropertiesContainer.hide();
+            };
             function showHiddenRelation(){
                 var vertex = $(this).data("vertex");
                 var hiddenPropertyMenu = $(
