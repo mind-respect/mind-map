@@ -3,10 +3,10 @@
  */
 define([
     "jquery",
-    "triple_brain.ui.vertex",
+    "triple_brain.tree_vertex",
     "triple_brain.ui.edge",
     "triple_brain.event_bus"
-], function ($, Vertex, EdgeUi, EventBus) {
+], function ($, TreeVertex, EdgeUi, EventBus) {
     var api = {};
     api.withVertex = function (vertex) {
         return new RelativeVertex(vertex.getHtml());
@@ -41,7 +41,7 @@ define([
             }
         };
         this.adjustAllChildrenPositionIfApplicable = function () {
-            var vertex = Vertex.withHtml(html);
+            var vertex = TreeVertex.withHtml(html);
             if (thisRelativeVertex.isToTheLeft() || vertex.isCenterVertex()) {
                 var visit = vertex.isCenterVertex() ?
                     thisRelativeVertex.visitCenterVertexLeftVertices :
@@ -54,7 +54,7 @@ define([
         };
         this.adjustPosition = function (parentVertexHtml) {
             var width = html.width();
-            var vertex = Vertex.withHtml(html);
+            var vertex = TreeVertex.withHtml(html);
             if (parentVertexHtml === undefined) {
                 parentVertexHtml = thisRelativeVertex.getParentVertexHtml();
             }
@@ -72,7 +72,7 @@ define([
                 ".vertices-children-container"
             ).find(".vertex");
             $.each(children, function () {
-                var vertex = Vertex.withHtml(this);
+                var vertex = TreeVertex.withHtml(this);
                 visitor(vertex);
             });
         };
@@ -81,7 +81,7 @@ define([
                 ".vertices-children-container.left-oriented"
             ).find(".vertex");
             $.each(children, function () {
-                var vertex = Vertex.withHtml(this);
+                var vertex = TreeVertex.withHtml(this);
                 visitor(vertex);
             });
         };

@@ -3,6 +3,7 @@
  */
 define([
     "jquery",
+    "triple_brain.graph_displayer",
     "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
     "triple_brain.vertex",
     "triple_brain.id_uri",
@@ -12,16 +13,13 @@ define([
     "triple_brain.ui.edge",
     "triple_brain.ui.vertex_and_edge_common",
     "triple_brain.event_bus",
-    "triple_brain.ui.graph",
     "triple_brain.server_subscriber",
     "triple_brain.image_displayer",
     "triple_brain.ui.graph_element",
-    "triple_brain.graph_displayer",
     "jquery.center-on-screen"
 ],
-    function ($, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, GraphUi, ServerSubscriber, ImageDisplayer, GraphElement, GraphDisplayer) {
+    function ($, GraphDisplayer, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, ServerSubscriber, ImageDisplayer, GraphElement) {
         var api = {};
-
         api.getWhenEmptyLabel = function(){
             return $.t("vertex.default");
         };
@@ -29,7 +27,7 @@ define([
             return new api.Object(html);
         };
         api.withId = function (id) {
-            return api.withHtml($("#" + id));
+            return getGraphDisplayer().getVertexSelector().withHtml($("#" + id));
         };
         api.withUri = function (uri) {
             var verticesWithUri = [];
@@ -43,14 +41,14 @@ define([
             return verticesWithUri;
         };
         api.centralVertex = function () {
-            return api.withHtml(
+            return getGraphDisplayer().getVertexSelector().withHtml(
                 $('.center-vertex')
             );
         };
         api.visitAllVertices = function (visitor) {
             $(".vertex").each(function () {
                 return visitor(
-                    api.withHtml(this)
+                    getGraphDisplayer().getVertexSelector().withHtml(this)
                 );
             });
         };
@@ -62,9 +60,18 @@ define([
         api.visitSelected = function(visitor){
             $(".vertex.selected").each(function () {
                 return visitor(
-                    api.withHtml(this)
+                    getGraphDisplayer().getVertexSelector().withHtml(this)
                 );
             });
+        };
+        api.getVertexMouseOver = function () {
+            return $("body").data("vertex_mouse_over");
+        };
+        api.setVertexMouseOver = function (vertex) {
+            $("body").data("vertex_mouse_over", vertex);
+        };
+        api.unsetVertexMouseOver = function(){
+            $("body").removeData("vertex_mouse_over");
         };
         api.Object = function (html) {
             var self = this;
@@ -141,6 +148,9 @@ define([
             this.hasHiddenProperties = function () {
                 return self.numberOfHiddenConnectedVertices() > 0;
             };
+            this.hasHiddenPropertiesContainer = function () {
+                return undefined !== self.getHiddenPropertiesContainer();
+            };
             this.getHiddenPropertiesContainer = function(){
                 return html.data(
                     "hidden_properties_indicator"
@@ -187,7 +197,7 @@ define([
             };
 
             this.isMouseOver = function () {
-                var vertexThatIsMouseOver = GraphUi.getVertexMouseOver();
+                var vertexThatIsMouseOver = api.getVertexMouseOver();
                 return  vertexThatIsMouseOver !== undefined &&
                     vertexThatIsMouseOver.equalsVertex(self);
             };
@@ -247,7 +257,7 @@ define([
                     var edge = this;
                     edge.arrowLine().remove();
                     edge.setArrowLine(
-                        GraphDisplayer.getEdgeDrawer().ofEdge(
+                        getGraphDisplayer().getEdgeDrawer().ofEdge(
                             edge
                         )
                     );
@@ -555,6 +565,22 @@ define([
                 );
             }
         );
+
+        EventBus.subscribe(
+            '/event/ui/graph/reset',
+            function(){
+                api.visitAllVertices(function(vertex){
+                    vertex.remove();
+                });
+            }
+        );
+
         return api;
+        function getGraphDisplayer(){
+            if(GraphDisplayer === undefined){
+                GraphDisplayer = require("triple_brain.graph_displayer");
+            }
+            return GraphDisplayer;
+        }
     }
 );

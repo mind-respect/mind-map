@@ -3,9 +3,9 @@
  */
 define([
     "jquery",
-    "triple_brain.ui.vertex"
+    "triple_brain.graph_displayer"
 ],
-    function($, Vertex) {
+    function($, GraphDisplayer) {
         var api = {
             withHtml : function(html){
                 return new VerticesListElement(html);
@@ -24,7 +24,7 @@ define([
         };
         function VerticesListElement(html){
             this.associatedVertex = function(){
-                return Vertex.withId(
+                return GraphDisplayer.getVertexSelector().withId(
                     $(html).data('vertexId')
                 );
             };

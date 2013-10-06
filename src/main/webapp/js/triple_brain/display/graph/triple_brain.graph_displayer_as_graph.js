@@ -7,12 +7,13 @@ define([
     "triple_brain.id_uri",
     "triple_brain.vertex_html_builder_for_graph_displayer",
     "triple_brain.ui.graph",
-    "triple_brain.ui.vertex",
+    "triple_brain.graph_vertex",
     "triple_brain.straight_arrow_edge_drawer",
     "triple_brain.edge_html_builder_for_graph_displayer",
-    "triple_brain.graph_edge"
+    "triple_brain.graph_edge",
+    "triple_brain.graph_vertex"
 ],
-    function ($, GraphService, IdUriUtils, VertexHtmlBuilder, GraphUi, Vertex, StraightArrowEdgeDrawer, EdgeHtmlBuilder, GraphEdge) {
+    function ($, GraphService, IdUriUtils, VertexHtmlBuilder, GraphUi, GraphVertex, StraightArrowEdgeDrawer, EdgeHtmlBuilder, GraphEdge, GraphVertex) {
         var api = {};
         api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
             getDrawnGraphFromServer(
@@ -38,12 +39,12 @@ define([
                             vertex
                         );
                     });
-                    var centerVertex = Vertex.withUri(destinationVertexUri)[0];
+                    var centerVertex = GraphVertex.withUri(destinationVertexUri)[0];
                     callback(drawnGraph, centerVertex);
                 }
             );
             function vertexWithUriExists(uri){
-                return Vertex.withUri(uri).length > 0;
+                return GraphVertex.withUri(uri).length > 0;
             }
         };
         api.name = function () {
@@ -80,6 +81,9 @@ define([
         };
         api.getEdgeSelector = function(){
             return GraphEdge;
+        };
+        api.getVertexSelector = function(){
+            return GraphVertex;
         };
         return api;
 

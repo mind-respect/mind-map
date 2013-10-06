@@ -4,12 +4,11 @@
 
 define([
     "jquery",
-    "triple_brain.ui.vertex",
     "triple_brain.graph_displayer",
     "triple_brain.ui.graph",
     "jquery-ui"
 ],
-    function ($, Vertex, GraphDisplayer, GraphUi){
+    function ($, GraphDisplayer, GraphUi){
         return {
             init:function() {
                 var sliderDefaultValue = 1;
@@ -28,7 +27,7 @@ define([
                         if (event.originalEvent) {
                             GraphUi.resetDrawingCanvas();
                             GraphDisplayer.displayUsingNewCentralVertex(
-                                Vertex.centralVertex()
+                                GraphDisplayer.getVertexSelector().centralVertex()
                             );
                         }
                     }

@@ -1,4 +1,5 @@
 define([
+    "require",
     "jquery",
     "triple_brain.ui.edge",
     "triple_brain.ui.vertex_hidden_neighbor_properties_indicator_dashed_segment",
@@ -9,7 +10,7 @@ define([
     "triple_brain.ui.graph",
     "triple_brain.event_bus"
 ],
-    function ($, Edge, DashedSegment, Point, Segment, MindMapTemplate, GraphElementMenu, GraphUi, EventBus) {
+    function (require, $, Edge, DashedSegment, Point, Segment, MindMapTemplate, GraphElementMenu, GraphUi, EventBus) {
         var api = {
             withVertex:function (vertex) {
                 return new HiddenNeighborPropertiesIndicator(vertex);
@@ -45,7 +46,7 @@ define([
         }
         return api;
         function adjustPositionHandler(event, vertex){
-            if(vertex.hasHiddenProperties()){
+            if(vertex.hasHiddenPropertiesContainer()){
                 vertex.getHiddenPropertiesContainer().adjustPosition();
             }
         }
@@ -87,7 +88,7 @@ define([
                         'hidden_property_container'
                         ].merge()
                 );
-                GraphUi.addHtml(
+                getGraphUi().addHtml(
                     hiddenNeighborPropertiesContainer
                 );
 
@@ -113,9 +114,6 @@ define([
                 self.remove();
                 self.build();
             };
-            this.hide = function(){
-                hiddenNeighborPropertiesContainer.hide();
-            };
             function showHiddenRelation(){
                 var vertex = $(this).data("vertex");
                 var hiddenPropertyMenu = $(
@@ -123,7 +121,7 @@ define([
                         'hidden_property_menu'
                         ].merge()
                 );
-                GraphUi.addHtml(
+                getGraphUi().addHtml(
                     hiddenPropertyMenu
                 )
                 hiddenPropertyMenu.append(
@@ -152,6 +150,12 @@ define([
                     vertex
                 );
             }
+        }
+        function getGraphUi(){
+            if(GraphUi === undefined){
+                GraphUi = require("triple_brain.ui.graph");
+            }
+            return GraphUi;
         }
     }
 );

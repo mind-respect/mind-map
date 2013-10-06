@@ -6,21 +6,11 @@ define([
     "jquery",
     "triple_brain.point",
     "triple_brain.event_bus",
-    "triple_brain.ui.edge",
     "triple_brain.ui.vertex"
 ],
-    function (require, $, Point, EventBus, Edge, Vertex) {
+    function (require, $, Point, EventBus, VertexUi) {
         var api = {};
         var graphForTraversal;
-        api.getVertexMouseOver = function () {
-            return $("body").data("vertex_mouse_over");
-        };
-        api.setVertexMouseOver = function (vertex) {
-            $("body").data("vertex_mouse_over", vertex);
-        };
-        api.unsetVertexMouseOver = function(){
-            $("body").removeData("vertex_mouse_over");
-        };
         api.getEdgeMouseOver = function () {
             return $("body").data("edge_mouse_over");
         };
@@ -53,20 +43,6 @@ define([
             )
         };
 
-        api.reset = function(){
-            if(graphForTraversal != undefined){
-                graphForTraversal.invalidate();
-            }
-            graphForTraversal = new crow.Graph();
-            Edge = require("triple_brain.ui.edge");
-            Edge.removeAllArrowLines();
-            Vertex= require("triple_brain.ui.vertex");
-            Vertex.visitAllVertices(function(vertex){
-                vertex.remove();
-            });
-            $("#drawn_graph").empty();
-        };
-
         api.numberOfEdgesBetween = function(vertexA, vertexB){
             return graphForTraversal.findGoal({
                 start: graphForTraversal.getNode(vertexA.getUri()),
@@ -74,6 +50,16 @@ define([
                 algorithm: "dijkstra"
             }).length;
         };
+
+        EventBus.subscribe(
+            '/event/ui/graph/reset',
+            function(){
+                if(graphForTraversal != undefined){
+                    graphForTraversal.invalidate();
+                }
+                graphForTraversal = new crow.Graph();
+            }
+        );
 
         EventBus.subscribe(
             '/event/ui/html/vertex/created/',
@@ -173,7 +159,9 @@ define([
         );
 
         function addVertexToGraphTraversal(vertex){
-            graphForTraversal.addNode(vertex);
+            graphForTraversal.addNode(
+                getVertexUi().withHtml(vertex.getHtml())
+            );
         }
 
         function connectVerticesOfEdgeForTraversal(edge){
@@ -188,5 +176,11 @@ define([
             );
         }
         return api;
+        function getVertexUi(){
+            if(VertexUi === undefined){
+                VertexUi = require("triple_brain.ui.vertex");
+            }
+            return VertexUi;
+        }
     }
 )

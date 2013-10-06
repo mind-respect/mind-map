@@ -12,10 +12,10 @@ define([
     "triple_brain.edge",
     "triple_brain.straight_arrow_edge_drawer",
     "triple_brain.event_bus",
-    "triple_brain.ui.vertex",
+    "triple_brain.graph_vertex",
     "triple_brain.graph_edge"
 ],
-    function(require, $, GraphUi, MindMapTemplate, IdUriUtils, VertexAndEdgeCommon, EdgeService, StraightArrowEdgeDrawer, EventBus, VertexUi, GraphEdge){
+    function(require, $, GraphUi, MindMapTemplate, IdUriUtils, VertexAndEdgeCommon, EdgeService, StraightArrowEdgeDrawer, EventBus, GraphVertex, GraphEdge){
         var api = {};
         api.arrayFromServerFormatArray = function(jsonArray){
             $.each(jsonArray, function(){
@@ -39,11 +39,11 @@ define([
                 );
                 $(html).data(
                     "source_vertex_id",
-                    VertexUi.withUri(json.source_vertex_id)[0].getId()
+                    GraphVertex.withUri(json.source_vertex_id)[0].getId()
                 );
                 $(html).data(
                     "destination_vertex_id",
-                    VertexUi.withUri(json.destination_vertex_id)[0].getId()
+                    GraphVertex.withUri(json.destination_vertex_id)[0].getId()
                 );
                 $(html).hover(
                     GraphEdge.onMouseOver,

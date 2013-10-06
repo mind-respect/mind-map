@@ -12,9 +12,8 @@ define([
     "triple_brain.tree_edge",
     "triple_brain.edge",
     "triple_brain.event_bus",
-    "triple_brain.relative_vertex",
+    "triple_brain.relative_tree_vertex",
     "triple_brain.relative_tree_displayer_templates",
-    "triple_brain.ui.vertex",
     "triple_brain.ui.identification_menu",
     "triple_brain.external_resource",
     "triple_brain.user_map_autocomplete_provider",
@@ -23,7 +22,7 @@ define([
     "jquery.cursor-at-end"
 
 ],
-    function (require, $, GraphUi, MindMapTemplate, IdUriUtils, VertexAndEdgeCommon, TreeEdge, EdgeService, EventBus, RelativeVertex, RelativeTreeTemplates, Vertex, IdentificationMenu, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphDisplayer) {
+    function (require, $, GraphUi, MindMapTemplate, IdUriUtils, VertexAndEdgeCommon, TreeEdge, EdgeService, EventBus, RelativeTreeVertex, RelativeTreeTemplates, IdentificationMenu, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphDisplayer) {
         var api = {};
         api.get = function (edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
             return new EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade);
@@ -62,11 +61,8 @@ define([
                     html,
                     edgeServer.label
                 );
-                var relativeVertex = RelativeVertex.withVertex(
-                    childVertexHtmlFacade
-                );
                 var textContainer = childVertexHtmlFacade.getTextContainer();
-                var isToTheLeft = relativeVertex.isToTheLeft();
+                var isToTheLeft = childVertexHtmlFacade.isToTheLeft();
                 if (isToTheLeft) {
                     textContainer.append(html);
                 } else {
@@ -74,7 +70,7 @@ define([
                 }
                 childVertexHtmlFacade.adjustWidth();
                 if (isToTheLeft) {
-                    relativeVertex.adjustPosition();
+                    childVertexHtmlFacade.adjustPosition();
                 }
                 drawArrowLine();
                 var edge = edgeFacade();
@@ -113,7 +109,7 @@ define([
                 ).hover(function () {
                         var edge = edgeFromHtml($(this));
                         var edgeHtml = edge.getHtml();
-                        var vertex = Vertex.withHtml(
+                        var vertex = RelativeTreeVertex.withHtml(
                             edgeHtml.closest(".vertex")
                         );
                         vertex.hideMenu();
@@ -162,10 +158,7 @@ define([
                                 EdgeService.remove(edge,
                                     function (edge) {
                                         var vertex = edge.childVertexInDisplay();
-                                        var relativeVertex = RelativeVertex.withVertex(
-                                            vertex
-                                        );
-                                        relativeVertex.visitChildren(function (childVertex) {
+                                        vertex.visitChildren(function (childVertex) {
                                             childVertex.removeConnectedEdges();
                                             childVertex.remove();
                                         });
@@ -181,7 +174,7 @@ define([
                         var edgeHtml = edgeFromHtml(
                             $(this)
                         ).getHtml();
-                        Vertex.withHtml(
+                        RelativeTreeVertex.withHtml(
                             edgeHtml.closest(".vertex")
                         ).showMenu();
                         edgeHtml.find(".relation-menu").remove();
@@ -244,7 +237,7 @@ define([
                     VertexAndEdgeCommon.adjustWidthToNumberOfChars(
                         html
                     );
-                    var vertex = Vertex.withHtml(
+                    var vertex = VertexUi.withHtml(
                         html.closest(".vertex")
                     );
                     vertex.adjustWidth();
@@ -254,7 +247,7 @@ define([
                 );
                 input.focus();
                 input.setCursorToTextEnd();
-                var vertex = Vertex.withHtml(
+                var vertex = VertexUi.withHtml(
                     input.closest(".vertex")
                 );
                 vertex.adjustWidth();
@@ -265,11 +258,10 @@ define([
                     edge.getHtml(),
                     edge.text()
                 );
-                var vertex = Vertex.withHtml(html.closest(".vertex"));
+                var vertex = RelativeTreeVertex.withHtml(html.closest(".vertex"));
                 vertex.adjustWidth();
-                var relativeVertex = RelativeVertex.withVertex(vertex);
-                relativeVertex.adjustPositionIfApplicable();
-                relativeVertex.adjustAllChildrenPositionIfApplicable();
+                vertex.adjustPositionIfApplicable();
+                vertex.adjustAllChildrenPositionIfApplicable();
                 TreeEdge.redrawAllEdges();
                 return edge;
             }

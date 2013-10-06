@@ -2,14 +2,14 @@ define([
     "require",
     "jquery",
     "triple_brain.event_bus",
-    "triple_brain.ui.vertex",
+    "triple_brain.graph_displayer",
     "triple_brain.vertex",
     "triple_brain.suggestion",
     "triple_brain.external_resource",
     "triple_brain.freebase_autocomplete_provider",
     "jquery.url"
 ],
-    function (require, $, EventBus, Vertex, VertexService, Suggestion, ExternalResource, FreebaseAutocompleteProvider) {
+    function (require, $, EventBus, GraphDisplayer, VertexService, Suggestion, ExternalResource, FreebaseAutocompleteProvider) {
         var api = {};
         api.key = "AIzaSyBHOqdqbswxnNmNb4k59ARSx-RWokLZhPA";
         api.BASE_URL = "https://www.googleapis.com/freebase/v1";
@@ -123,7 +123,7 @@ define([
                 );
                 vertex.label().tripleBrainAutocomplete({
                     select:function (event, ui) {
-                        var vertex = require("triple_brain.ui.vertex").withId(
+                        var vertex = GraphDisplayer.getVertexSelector().withId(
                             $(this).closest(".vertex").attr("id")
                         );
                         vertex.triggerChange();
@@ -169,7 +169,7 @@ define([
             filterValue += ")";
             vertex.label().tripleBrainAutocomplete({
                 select:function (event, ui) {
-                    var vertex = require("triple_brain.ui.vertex").withId(
+                    var vertex = GraphDisplayer.getVertexSelector().withId(
                         $(this).closest(".vertex").attr("id")
                     );
                     vertex.triggerChange();

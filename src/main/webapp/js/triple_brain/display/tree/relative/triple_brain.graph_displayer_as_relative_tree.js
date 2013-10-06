@@ -10,13 +10,12 @@ define([
     "triple_brain.relative_tree_displayer_templates",
     "triple_brain.ui.edge",
     "triple_brain.event_bus",
-    "triple_brain.ui.vertex",
     "triple_brain.straight_and_square_edge_drawer",
     "triple_brain.id_uri",
-    "triple_brain.relative_vertex",
+    "triple_brain.relative_tree_vertex",
     "triple_brain.edge_html_builder_for_relative_tree",
     "triple_brain.tree_edge"
-], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, VertexUi, StraightAndSquareEdgeDrawer, IdUriUtils, RelativeVertex, EdgeBuilder, TreeEdge) {
+], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, StraightAndSquareEdgeDrawer, IdUriUtils, RelativeTreeVertex, EdgeBuilder, TreeEdge) {
     var api = {};
     api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
         Graph.getForCentralVertexUriAndDepth(
@@ -44,7 +43,7 @@ define([
                     destinationVertexUri,
                     parentVertex
                 );
-                var farVertex = VertexUi.withId(
+                var farVertex = RelativeTreeVertex.withId(
                     drawnTree.vertices[destinationVertexUri].uiIds[0]
                 );
                 callback(drawnTree, farVertex);
@@ -69,7 +68,7 @@ define([
             newVertex,
             container
         );
-        var relativeVertex = RelativeVertex.withVertex(vertexHtmlFacade);
+        var relativeVertex = RelativeTreeVertex.ofVertex(vertexHtmlFacade);
         if (relativeVertex.isToTheLeft()) {
             relativeVertex.adjustPosition(parentVertex.getHtml());
         }
@@ -104,7 +103,7 @@ define([
                 if(addedUids[uiId] !== undefined){
                     return;
                 }
-                integrateEdgesOfVertex(VertexUi.withId(
+                integrateEdgesOfVertex(RelativeTreeVertex.withId(
                     uiId
                 ));
                 addedUids[uiId] = {};
@@ -121,7 +120,7 @@ define([
                 EdgeBuilder.get(
                     neighborInfo.edge,
                     vertex,
-                    VertexUi.withId(neighborInfo[vertex.getId()].vertexHtmlId)
+                    RelativeTreeVertex.withId(neighborInfo[vertex.getId()].vertexHtmlId)
                 ).create();
             });
         }
@@ -141,6 +140,9 @@ define([
     };
     api.getEdgeSelector = function(){
         return TreeEdge;
+    };
+    api.getVertexSelector = function(){
+        return RelativeTreeVertex;
     };
     return api;
     function shouldAddLeft() {
@@ -218,8 +220,8 @@ define([
                             destinationVertexUri === centralVertexUri;
                     }
                     function oneOfVerticesIsAlreadyInGraph(){
-                        return VertexUi.withUri(sourceVertexUri).length > 0 ||
-                            VertexUi.withUri(sourceVertexUri).length > 0;
+                        return RelativeTreeVertex.withUri(sourceVertexUri).length > 0 ||
+                            RelativeTreeVertex.withUri(sourceVertexUri).length > 0;
                     }
                 });
                 serverGraph.edges = edgesWithoutDuplicateVertices;
@@ -268,7 +270,7 @@ define([
             );
             buildVerticesHtml();
             $.each($(".left-oriented .vertex"), function () {
-                var relativeVertex = RelativeVertex.withVertexHtml(this);
+                var relativeVertex = RelativeTreeVertex.withHtml(this);
                 relativeVertex.adjustPosition();
             });
             function buildVerticesHtml() {

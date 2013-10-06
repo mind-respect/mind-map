@@ -5,9 +5,9 @@ define([
     "require",
     "jquery",
     "triple_brain.ui.edge",
-    "triple_brain.tree_vertex"
+    "triple_brain.graph_displayer"
 ],
-    function (require, $, Edge, TreeVertex) {
+    function (require, $, Edge, GraphDisplayer) {
         var api = {};
         api.getWhenEmptyLabel = function () {
             return Edge.getWhenEmptyLabel();
@@ -45,7 +45,7 @@ define([
                     label.text();
             };
             this.childVertexInDisplay = function () {
-                return getTreeVertex().withHtml(
+                return GraphDisplayer.getVertexSelector().withHtml(
                     html.closest(".vertex")
                 );
             };
@@ -70,13 +70,6 @@ define([
             this.focus = function () {
                 html.centerOnScreen();
             };
-            function getTreeVertex() {
-                if (TreeVertex === undefined) {
-                    TreeVertex = require("triple_brain.tree_vertex");
-                }
-                return TreeVertex;
-            }
-
             Edge.Object.apply(this, [html]);
         }
 

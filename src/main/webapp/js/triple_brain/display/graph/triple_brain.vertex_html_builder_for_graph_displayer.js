@@ -7,7 +7,7 @@ define([
     "jquery",
     "triple_brain.event_bus",
     "triple_brain.ui.graph",
-    "triple_brain.ui.vertex",
+    "triple_brain.graph_vertex",
     "triple_brain.vertex",
     "triple_brain.graph_edge",
     "triple_brain.edge",
@@ -23,7 +23,7 @@ define([
     "triple_brain.vertex_html_builder_common",
     "triple_brain.image",
     "jquery-ui"
-], function (require, $, EventBus, GraphUi, Vertex, VertexService, GraphEdge, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, StraightArrowEdgeDrawer, Point, Segment, GraphDisplayer, VertexHtmlCommon, Image) {
+], function (require, $, EventBus, GraphUi, GraphVertex, VertexService, GraphEdge, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, StraightArrowEdgeDrawer, Point, Segment, GraphDisplayer, VertexHtmlCommon, Image) {
         var api = {};
         api.withJsonHavingAbsolutePosition = function (serverVertex) {
             initAdjustedPosition(serverVertex);
@@ -47,7 +47,6 @@ define([
         }
 
         function VertexCreator(serverFormat) {
-            var Vertex = require("triple_brain.ui.vertex");
             var VertexService = require("triple_brain.vertex");
             var Suggestion = require("triple_brain.suggestion");
             var IdentificationMenu = require("triple_brain.ui.identification_menu");
@@ -69,6 +68,9 @@ define([
                 );
                 createMenu();
                 var vertex = vertexFacade();
+                console.log(
+                    vertex.getChildrenOrientation()
+                );
                 vertex.setNote(
                     serverFormat.comment
                 );
@@ -130,7 +132,7 @@ define([
             function createLabel() {
                 var labelContainer = MindMapTemplate['vertex_label_container'].merge({
                     label : serverFormat.label.trim() === "" ?
-                        Vertex.getWhenEmptyLabel() :
+                        GraphVertex.getWhenEmptyLabel() :
                         serverFormat.label
                 });
                 $(html).append(labelContainer);
@@ -155,7 +157,7 @@ define([
                         vertex.unhighlight();
                     }
                     if ($(this).val() === "") {
-                        $(this).val(Vertex.getWhenEmptyLabel());
+                        $(this).val(GraphVertex.getWhenEmptyLabel());
                         vertex.applyStyleOfDefaultText();
                         vertex.readjustLabelWidth()
                     } else {
@@ -263,7 +265,7 @@ define([
             }
 
             function vertexOfSubHtmlComponent(htmlOfSubComponent) {
-                return Vertex.withHtml(
+                return GraphVertex.withHtml(
                     $(htmlOfSubComponent).closest('.vertex')
                 );
             }
@@ -310,13 +312,13 @@ define([
 
             function onMouseOver() {
                 var vertex = vertexOfSubHtmlComponent(this);
-                GraphUi.setVertexMouseOver(vertex);
+                GraphVertex.setVertexMouseOver(vertex);
                 vertex.makeItHighProfile();
             }
 
             function onMouseOut() {
                 var vertex = vertexOfSubHtmlComponent(this)
-                GraphUi.unsetVertexMouseOver();
+                GraphVertex.unsetVertexMouseOver();
                 vertex.makeItLowProfile();
             }
 
@@ -360,7 +362,7 @@ define([
                     $('.edge').css('z-index', normalStateEdgesZIndex);
                     $("body").unbind(mouseUpEvent);
                     $(selectorThatCoversWholeGraph).unbind(relationMouseMoveEvent);
-                    var destinationVertex = GraphUi.getVertexMouseOver();
+                    var destinationVertex = GraphVertex.getVertexMouseOver();
                     if (destinationVertex !== undefined) {
                         if (!sourceVertex.equalsVertex(destinationVertex)) {
                             sourceVertex.unhighlight();
@@ -383,7 +385,7 @@ define([
                 });
             }
             function vertexFacade() {
-                return Vertex.withHtml(html);
+                return GraphVertex.withHtml(html);
             }
         }
         return api;

@@ -5,16 +5,15 @@ define([
     "jquery",
     "triple_brain.ui.graph",
     "triple_brain.scroll_on_mouse_frontier",
-    "triple_brain.ui.vertex",
     "triple_brain.ui.utils",
     "triple_brain.vertex",
     "triple_brain.graph_displayer",
     "jquery-ui"
-], function($, GraphUi, ScrollOnMouseFrontier, VertexUi, UiUtils, VertexService, GraphDisplayer){
+], function($, GraphUi, ScrollOnMouseFrontier, UiUtils, VertexService, GraphDisplayer){
     var api = {};
     api.reset = function(){
         setNbSelectedBubbles(0);
-        VertexUi.resetSelection();
+        GraphDisplayer.getVertexSelector().resetSelection();
     };
     api.handleSelectionManagementClick = function(event){
         event.preventDefault();
@@ -38,7 +37,7 @@ define([
     };
     api.handleGroupButtonClick = function(){
         var selectedVertices = [];
-        VertexUi.visitSelected(function(vertex){
+        GraphDisplayer.getVertexSelector().visitSelected(function(vertex){
             selectedVertices.push(vertex);
         });
         VertexService.group(
@@ -69,9 +68,9 @@ define([
                 start:ScrollOnMouseFrontier.doIt,
                 stop: function(){
                     ScrollOnMouseFrontier.disable();
-                    VertexUi.resetSelection();
+                    GraphDisplayer.getVertexSelector().resetSelection();
                     var nbSelected = 0;
-                    VertexUi.visitAllVertices(function(vertex){
+                    GraphDisplayer.getVertexSelector().visitAllVertices(function(vertex){
                         if(UiUtils.doComponentsCollide(
                             vertex.getHtml(),
                             getSelectBox()

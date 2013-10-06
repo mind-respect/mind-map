@@ -3,16 +3,14 @@
  */
 define([
     "jquery",
-    "triple_brain.ui.vertex",
     "./triple_brain.module.vertices_list_creator.js",
     "./triple_brain.module.vertices_list_element_creator.js",
     "./triple_brain.module.vertices_list_element.js",
     "triple_brain.event_bus",
     "triple_brain.graph_displayer",
-    "triple_brain.tree_vertex",
     "jquery.tinysort.min"
 ],
-    function ($, Vertex, VerticesListCreator, VerticesListElementCreator, VerticesListElement, EventBus, GraphDisplayer, TreeVertex) {
+    function ($, VerticesListCreator, VerticesListElementCreator, VerticesListElement, EventBus, GraphDisplayer) {
         var api = {};
         var SORT_TYPE_LABEL = 1;
         var SORT_TYPE_DISTANCE_FROM_CENTRAL_VERTEX = 2;
@@ -59,7 +57,7 @@ define([
 
             this.rebuild = function () {
                 this.empty();
-                Vertex.visitAllVertices(function(vertex){
+                GraphDisplayer.getVertexSelector().visitAllVertices(function(vertex){
                     thisVerticesList.buildForAVertex(
                         vertex
                     );
@@ -71,7 +69,7 @@ define([
             this.buildForAVertex = function (vertex) {
                 VerticesListElementCreator.withVertexAndCentralVertex(
                     vertex,
-                    Vertex.centralVertex()
+                    GraphDisplayer.getVertexSelector().centralVertex()
                 ).create();
             };
 
@@ -152,16 +150,14 @@ define([
             '/event/ui/html/vertex/created/',
             function (event, vertex) {
                 $(vertex.label()).on("keyup blur focus", function () {
-                    var vertex = Vertex.withHtml(
+                    var vertex = GraphDisplayer.getVertexSelector().withHtml(
                         $(this).closest(".vertex")
                     );
                     updateLabelInListForVertex(
                         vertex
                     );
                     if(GraphDisplayer.couldHaveDuplicates()){
-                        var otherInstances = TreeVertex.withHtml(
-                            vertex.getHtml()
-                        ).getOtherInstances();
+                        var otherInstances = vertex.getOtherInstances();
                         $.each(otherInstances, function(){
                             updateLabelInListForVertex(
                                 this

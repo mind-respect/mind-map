@@ -5,7 +5,6 @@ define(
         "triple_brain.event_bus",
         "triple_brain.login_handler",
         "triple_brain.drag_scroll",
-        "triple_brain.ui.vertex",
         "triple_brain.mind-map_template",
         "triple_brain.server_subscriber",
         "triple_brain.ui.search",
@@ -19,7 +18,7 @@ define(
         "triple_brain.top_center_menu",
         "triple_brain.selection_handler"
     ],
-    function ($, UserService, EventBus, LoginHandler, DragScroll, Vertex, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, Menu, GraphUi, LanguageManager, VertexService, TopCenterMenu, SelectionHandler) {
+    function ($, UserService, EventBus, LoginHandler, DragScroll, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, Menu, GraphUi, LanguageManager, VertexService, TopCenterMenu, SelectionHandler) {
         var api = {
             offset:function () {
                 var offset = {};
@@ -61,7 +60,7 @@ define(
                                     function () {
                                         GraphUi.resetDrawingCanvas();
                                         GraphDisplayer.displayUsingNewCentralVertex(
-                                            Vertex.centralVertex()
+                                            GraphDisplayer.getVertexSelector().centralVertex()
                                         );
                                 });
                                 switchDisplayerButtons().click(function () {
@@ -72,7 +71,7 @@ define(
                                         )
                                     );
                                     GraphDisplayer.displayUsingNewCentralVertex(
-                                        Vertex.centralVertex()
+                                        GraphDisplayer.getVertexSelector().centralVertex()
                                     );
                                 });
                                 translateText();
@@ -132,7 +131,7 @@ define(
             '/event/ui/graph/drawing_info/updated/',
             function (event, drawnGraph, centralVertexUri) {
                 SelectionHandler.reset();
-                var centralVertex = Vertex.withUri(centralVertexUri)[0];
+                var centralVertex = GraphDisplayer.getVertexSelector().withUri(centralVertexUri)[0];
                 centralVertex.setAsCentral();
                 GraphDisplayer.integrateEdgesOfServerGraph(
                     drawnGraph
@@ -140,7 +139,7 @@ define(
                 centralVertex.scrollTo();
                 DragScroll.start();
                 EventBus.publish('/event/ui/graph/drawn');
-                Vertex.visitAllVertices(function(vertex){
+                GraphDisplayer.getVertexSelector().visitAllVertices(function(vertex){
                     EventBus.publish(
                         '/event/ui/vertex/visit_after_graph_drawn',
                         vertex

@@ -6,10 +6,9 @@ define([
     "triple_brain.event_bus",
     "triple_brain.mind_map_info",
     "triple_brain.id_uri",
-    "triple_brain.ui.graph",
     "triple_brain.menu"
     ],
-    function(require, EventBus, MindMapInfo, IdUriUtils, GraphUi, Menu){
+    function(require, EventBus, MindMapInfo, IdUriUtils, Menu){
         var _implementation;
         var api = {};
         api.setImplementation = function(implementation){
@@ -85,6 +84,9 @@ define([
         api.getEdgeSelector = function(){
             return _implementation.getEdgeSelector();
         };
+        api.getVertexSelector = function(){
+            return _implementation.getVertexSelector();
+        };
         return api;
         function currentDepth(){
             return getDepthSlider().currentDepth();
@@ -98,6 +100,12 @@ define([
                 []
             );
         }
+        function publishResetGraph(){
+            EventBus.publish(
+                '/event/ui/graph/reset',
+                []
+            );
+        }
         function publishDrawingInfoUpdated(drawingInfo, centralVertexUri){
             EventBus.publish(
                 '/event/ui/graph/drawing_info/updated/',
@@ -106,7 +114,8 @@ define([
         }
         function displayUsingCentralVertexUri(centralVertexUri){
             publishAboutToUpdate();
-            GraphUi.reset();
+            publishResetGraph();
+            $("#drawn_graph").empty();
             _implementation.displayUsingDepthAndCentralVertexUri(
                 centralVertexUri,
                 currentDepth(),

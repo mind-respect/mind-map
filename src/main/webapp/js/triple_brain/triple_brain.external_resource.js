@@ -6,12 +6,12 @@ define([
     "require",
     "jquery",
     "triple_brain.server_subscriber",
-    "triple_brain.ui.vertex",
+    "triple_brain.graph_displayer",
     "triple_brain.id_uri",
     "triple_brain.image",
     "jquery.json.min"
 ],
-    function (require, $, ServerSubscriber, Vertex, IdUriUtils, Image) {
+    function (require, $, ServerSubscriber, GraphDisplayer, IdUriUtils, Image) {
         var api = {};
         api.withUriAndLabel = function (uri, label) {
             return new ExternalResource(
@@ -88,7 +88,7 @@ define([
                 label = externalResource.label();
                 description = externalResource.description();
                 images = externalResource.images();
-                getVertex().visitAllVertices(function (vertex) {
+                GraphDisplayer.getVertexSelector().visitAllVertices(function (vertex) {
                     $.each(vertex.getIdentifications(), function () {
                         var identification = this;
                         if (identification.uri() === thisExternalResource.uri()) {
@@ -117,13 +117,6 @@ define([
             this.getType = function () {
                 return thisExternalResource.type;
             };
-        }
-
-        function getVertex() {
-            if (Vertex === undefined) {
-                Vertex = require("triple_brain.ui.vertex")
-            }
-            return Vertex;
         }
 
         return api;

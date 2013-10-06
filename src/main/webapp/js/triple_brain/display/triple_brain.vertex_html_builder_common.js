@@ -3,7 +3,7 @@
  */
 define([
     "jquery",
-    "triple_brain.ui.vertex",
+    "triple_brain.graph_displayer",
     "triple_brain.vertex",
     "triple_brain.mind-map_template",
     "triple_brain.link_to_far_vertex_menu",
@@ -15,7 +15,7 @@ define([
     "triple_brain.included_vertices_menu",
     "jquery-ui",
     "jquery.triple_brain.search"
-], function($, Vertex, VertexService, MindMapTemplate, LinkToFarVertexMenu, GraphElementMenu, ImageMenu, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, IncludedVerticesMenu){
+], function($, GraphDisplayer, VertexService, MindMapTemplate, LinkToFarVertexMenu, GraphElementMenu, ImageMenu, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, IncludedVerticesMenu){
     var api = {};
     api.applyAutoCompleteIdentificationToLabelInput = function(input){
         input.tripleBrainAutocomplete({
@@ -226,7 +226,7 @@ define([
     return api;
 
     function vertexOfSubHtmlComponent(htmlOfSubComponent) {
-        return Vertex.withHtml(
+        return GraphDisplayer.getVertexSelector().withHtml(
             $(htmlOfSubComponent).closest('.vertex')
         );
     }

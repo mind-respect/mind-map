@@ -7,7 +7,6 @@ define([
     "jquery",
     "triple_brain.event_bus",
     "triple_brain.ui.graph",
-    "triple_brain.ui.vertex",
     "triple_brain.vertex",
     "triple_brain.ui.edge",
     "triple_brain.edge",
@@ -19,8 +18,7 @@ define([
     "triple_brain.point",
     "triple_brain.segment",
     "triple_brain.graph_displayer",
-    "triple_brain.relative_vertex",
-    "triple_brain.tree_vertex",
+    "triple_brain.relative_tree_vertex",
     "triple_brain.ui.vertex_and_edge_common",
     "triple_brain.ui.triple",
     "triple_brain.vertex_html_builder_common",
@@ -29,7 +27,7 @@ define([
     "jquery-ui",
     "jquery.is-fully-on-screen",
     "jquery.center-on-screen"
-], function (require, $, EventBus, GraphUi, Vertex, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, Point, Segment, GraphDisplayer, RelativeVertex, TreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, Image, UiUtils) {
+], function (require, $, EventBus, GraphUi, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, Point, Segment, GraphDisplayer, RelativeTreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, Image, UiUtils) {
         var api = {};
         api.withServerJson = function (serverVertex) {
             return new VertexCreator(serverVertex);
@@ -46,7 +44,7 @@ define([
             );
         }
         function addDuplicateVerticesButtonIfApplicable(vertex){
-            if(TreeVertex.ofVertex(vertex).hasOtherInstances()){
+            if(RelativeTreeVertex.ofVertex(vertex).hasOtherInstances()){
                 addDuplicateButton(vertex);
             }
             function addDuplicateButton(vertex){
@@ -67,7 +65,7 @@ define([
                     function(){
                         var vertex = vertexOfSubHtmlComponent($(this));
                         $(
-                            TreeVertex.ofVertex(
+                            RelativeTreeVertex.ofVertex(
                                 vertex
                             ).getOtherInstances()[0].getHtml()
                         ).centerOnScreenWithAnimation();
@@ -76,7 +74,6 @@ define([
             }
         }
         function VertexCreator(serverFormat) {
-            var Vertex = require("triple_brain.ui.vertex");
             var VertexService = require("triple_brain.vertex");
             var Suggestion = require("triple_brain.suggestion");
             var IdentificationMenu = require("triple_brain.ui.identification_menu");
@@ -91,6 +88,9 @@ define([
             html.uniqueId();
             this.create = function () {
                 var vertex = vertexFacade();
+                console.log(
+                    vertex.getChildrenOrientation()
+                );
                 vertex.setNameOfHiddenProperties(
                     serverFormat.is_frontier_vertex_with_hidden_vertices ?
                         serverFormat.name_of_hidden_properties :
@@ -151,7 +151,7 @@ define([
             function createLabel() {
                 var labelContainer = $(MindMapTemplate['vertex_label_container'].merge({
                     label:serverFormat.label.trim() === "" ?
-                        Vertex.getWhenEmptyLabel() :
+                        RelativeTreeVertex.getWhenEmptyLabel() :
                         serverFormat.label
                 })).appendTo(html);
                 var label = labelContainer.find("input[type='text']:first");
@@ -174,7 +174,7 @@ define([
                         vertex.unhighlight();
                     }
                     if ($(this).val() == "") {
-                        $(this).val(Vertex.getWhenEmptyLabel());
+                        $(this).val(RelativeTreeVertex.getWhenEmptyLabel());
                         vertex.applyStyleOfDefaultText();
                         $(vertex.label()).keyup();
                     } else {
@@ -187,7 +187,7 @@ define([
                         vertexOfSubHtmlComponent(this),
                         $(this).val(),
                         function (vertex) {
-                            var otherInstances = TreeVertex.ofVertex(
+                            var otherInstances = RelativeTreeVertex.ofVertex(
                                 vertex
                             ).getOtherInstances();
                             $.each(otherInstances, function () {
@@ -198,14 +198,14 @@ define([
                             });
                         }
                     );
-                    var relativeVertex = RelativeVertex.withVertex(vertex);
+                    var relativeVertex = RelativeTreeVertex.ofVertex(vertex);
                     relativeVertex.adjustPositionIfApplicable();
                     relativeVertex.adjustAllChildrenPositionIfApplicable();
-                    var otherInstances = TreeVertex.withHtml(
+                    var otherInstances = RelativeTreeVertex.withHtml(
                         html
                     ).getOtherInstances();
                     $.each(otherInstances, function () {
-                        var relativeVertex = RelativeVertex.withVertex(
+                        var relativeVertex = RelativeTreeVertex.ofVertex(
                             this
                         );
                         relativeVertex.adjustPositionIfApplicable();
@@ -221,7 +221,7 @@ define([
                     vertex.readjustLabelWidth();
                     function updateLabelsOfVerticesWithSameUri() {
                         var text = vertex.text();
-                        var otherInstances = TreeVertex.withHtml(
+                        var otherInstances = RelativeTreeVertex.withHtml(
                             html
                         ).getOtherInstances();
                         $.each(otherInstances, function () {
@@ -282,14 +282,14 @@ define([
                     var sourceVertex = vertexFacade();
                     VertexService.addRelationAndVertexToVertex(
                         sourceVertex, function (triple, tripleServerFormat) {
-                            var sourceVertex = TreeVertex.ofVertex(
+                            var sourceVertex = RelativeTreeVertex.ofVertex(
                                 triple.sourceVertex()
                             );
                             var destinationHtml = triple.destinationVertex().getHtml();
                             if(!UiUtils.isElementFullyOnScreen(destinationHtml)){
                                 destinationHtml.centerOnScreenWithAnimation();
                             }
-                            TreeVertex.ofVertex(
+                            RelativeTreeVertex.ofVertex(
                                 triple.destinationVertex()
                             ).resetOtherInstances();
                             sourceVertex.applyToOtherInstances(function (vertex) {
@@ -309,14 +309,14 @@ define([
                     if (!vertex.isCenterVertex() && vertex.getId() != "default") {
                         VertexService.remove(vertex, function (vertex) {
                             removeChildren(vertex);
-                            TreeVertex.ofVertex(vertex).applyToOtherInstances(function (vertex) {
+                            RelativeTreeVertex.ofVertex(vertex).applyToOtherInstances(function (vertex) {
                                 removeChildren(vertex);
                                 removeEdges(vertex);
                             });
                             removeEdges(vertex);
                             EdgeUi.redrawAllEdges();
                             function removeChildren(vertex) {
-                                var relativeVertex = RelativeVertex.withVertex(
+                                var relativeVertex = RelativeTreeVertex.ofVertex(
                                     vertex
                                 );
                                 relativeVertex.visitChildren(function (childVertex) {
@@ -363,23 +363,23 @@ define([
 
             function onMouseOver() {
                 var vertex = vertexOfSubHtmlComponent(this);
-                GraphUi.setVertexMouseOver(vertex);
+                RelativeTreeVertex.setVertexMouseOver(vertex);
                 vertex.makeItHighProfile();
             }
 
             function onMouseOut() {
                 var vertex = vertexOfSubHtmlComponent(this);
-                GraphUi.unsetVertexMouseOver();
+                RelativeTreeVertex.unsetVertexMouseOver();
                 vertex.makeItLowProfile();
             }
 
             function vertexFacade() {
-                return Vertex.withHtml(html);
+                return RelativeTreeVertex.withHtml(html);
             }
         }
 
         function vertexOfSubHtmlComponent(htmlOfSubComponent) {
-            return Vertex.withHtml(
+            return RelativeTreeVertex.withHtml(
                 $(htmlOfSubComponent).closest('.vertex')
             );
         }

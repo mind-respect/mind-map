@@ -69,8 +69,8 @@ define([
                 var arrowLine;
                 if(recalculate){
                     edge.arrowLine().remove();
-                    arrowLine = GraphDisplayer.getEdgeDrawer().ofEdge(
-                        GraphDisplayer.getEdgeSelector().ofEdge(
+                    arrowLine = getGraphDisplayer().getEdgeDrawer().ofEdge(
+                        getGraphDisplayer().getEdgeSelector().ofEdge(
                             edge
                         )
                     );
@@ -107,12 +107,12 @@ define([
                 return EdgeService;
             };
             this.destinationVertex = function () {
-                return getVertex().withId(
+                return getGraphDisplayer().getVertexSelector().withId(
                     html.data('destination_vertex_id')
                 );
             };
             this.sourceVertex = function () {
-                return getVertex().withId(
+                return getGraphDisplayer().getVertexSelector().withId(
                     html.data("source_vertex_id")
                 );
             };
@@ -211,13 +211,6 @@ define([
             function isDestinationVertex(vertex) {
                 return self.destinationVertex().getId() == vertex.getId()
             }
-
-            function getVertex(){
-                if(Vertex === undefined){
-                    Vertex = require("triple_brain.ui.vertex");
-                }
-                return Vertex;
-            }
         };
 
         EventBus.subscribe(
@@ -226,7 +219,21 @@ define([
                 VertexAndEdgeCommon.highlightLabel(edge.id());
             }
         );
+
+        EventBus.subscribe(
+            '/event/ui/graph/reset',
+            function(){
+                api.removeAllArrowLines();
+            }
+        );
+
         return api;
+        function getGraphDisplayer(){
+            if(GraphDisplayer === undefined){
+                GraphDisplayer = require("triple_brain.graph_displayer");
+            }
+            return GraphDisplayer;
+        }
     }
 )
 ;
