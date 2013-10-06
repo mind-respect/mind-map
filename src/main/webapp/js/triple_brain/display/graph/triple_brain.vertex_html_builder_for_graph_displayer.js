@@ -68,9 +68,6 @@ define([
                 );
                 createMenu();
                 var vertex = vertexFacade();
-                console.log(
-                    vertex.getChildrenOrientation()
-                );
                 vertex.setNote(
                     serverFormat.comment
                 );

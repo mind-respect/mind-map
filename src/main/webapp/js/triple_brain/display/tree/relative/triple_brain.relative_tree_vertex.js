@@ -123,7 +123,9 @@ define([
                 html.removeData(otherInstancesKey)
             };
             this.getChildrenOrientation = function(){
-                return "left";
+                return self.isToTheLeft() ?
+                    "left" :
+                    "right"
             };
             VertexUi.Object.apply(this, [html]);
         }

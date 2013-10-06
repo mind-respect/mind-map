@@ -59,14 +59,18 @@ define([
                 if (numberOfHiddenConnectedVertices == 0) {
                     return;
                 }
+                var isLeftOriented = vertex.getChildrenOrientation() === "left";
                 var defaultLengthOfHiddenPropertiesContainer = 40;
                 var lengthInPixels = numberOfHiddenConnectedVertices == 1 ?
                     1 :
                     defaultLengthOfHiddenPropertiesContainer;
                 var startPoint = Point.fromCoordinates(
-                    vertex.position().x + vertex.width(),
+                    vertex.position().x,
                     vertex.position().y + (vertex.height() / 2)
                 );
+                if(!isLeftOriented){
+                    startPoint.x += vertex.width();
+                }
                 var distanceBetweenEachDashedSegment =
                     numberOfHiddenConnectedVertices == 1 ?
                         0 :
@@ -74,11 +78,16 @@ define([
                 var plainSegment = Segment.withStartAndEndPointAtOrigin();
                 plainSegment.startPoint = startPoint;
                 var horizontalDistanceOfDashedSegment = 20;
-                plainSegment.endPoint.x = vertex.position().x +
-                    vertex.width() +
-                    horizontalDistanceOfDashedSegment;
+                plainSegment.endPoint.x = vertex.position().x;
+                if(isLeftOriented){
+                    plainSegment.endPoint.x -= horizontalDistanceOfDashedSegment;
+                }else{
+                    plainSegment.endPoint.x += vertex.width() + horizontalDistanceOfDashedSegment;
+                }
                 for (var i = 0; i < numberOfHiddenConnectedVertices; i++) {
-                    plainSegment.endPoint.y = startPoint.y - (lengthInPixels / 2) + (i * distanceBetweenEachDashedSegment);
+                    plainSegment.endPoint.y = startPoint.y -
+                        (lengthInPixels / 2) +
+                        (i * distanceBetweenEachDashedSegment);
                     var dashedSegment = DashedSegment.withSegment(plainSegment.clone());
                     dashedSegment.draw();
                     dashSegments.push(dashedSegment);
@@ -95,7 +104,7 @@ define([
                 hiddenNeighborPropertiesContainer
                     .css('min-width', defaultLengthOfHiddenPropertiesContainer)
                     .css('min-height', defaultLengthOfHiddenPropertiesContainer)
-                    .css('left', startPoint.x)
+                    .css('left', isLeftOriented ? startPoint.x - defaultLengthOfHiddenPropertiesContainer : startPoint.x)
                     .css('top', startPoint.y - (defaultLengthOfHiddenPropertiesContainer / 2))
                     .data("vertex", vertex)
                     .on(
