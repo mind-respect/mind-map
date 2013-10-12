@@ -88,9 +88,6 @@ define([
             html.uniqueId();
             this.create = function () {
                 var vertex = vertexFacade();
-                console.log(
-                    vertex.getChildrenOrientation()
-                );
                 vertex.setNameOfHiddenProperties(
                     serverFormat.is_frontier_vertex_with_hidden_vertices ?
                         serverFormat.name_of_hidden_properties :

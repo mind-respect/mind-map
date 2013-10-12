@@ -48,7 +48,6 @@ define([
                     authenticatedUser.preferred_locales = $.parseJSON(
                         authenticatedUser.preferred_locales
                     );
-                    console.log(authenticatedUser);
                     authenticatedUserInCache = authenticatedUser;
                     if (callback != undefined) {
                         callback.call(this, authenticatedUser);

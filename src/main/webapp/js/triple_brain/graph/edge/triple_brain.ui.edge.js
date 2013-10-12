@@ -38,6 +38,7 @@ define([
         };
         api.redrawAllEdges = function(){
             drawEdges(true);
+            console.log("patate");
         };
         api.connectedToVertex = function(vertex){
             var edgesConnectedToVertex = [];

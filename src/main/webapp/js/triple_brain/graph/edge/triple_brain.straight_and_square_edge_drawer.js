@@ -75,9 +75,9 @@ define([
             var isGoingLeft = sourceHtml.offset().left > destinationHtml.offset().left;
             var sourcePoint = Point.fromCoordinates(
                 sourceHtml.offset().left + (sourceVertexAsSeenOnScreen.textContainerWidth() / 2),
-                sourceHtml.offset().top + 3
+                sourceHtml.offset().top
             );
-            sourcePoint.y += sourceHtml.outerHeight();
+            sourcePoint.y += sourceHtml.outerHeight() / 2;
             var endPoint = Point.fromPoint(sourcePoint);
             var horizontalDistance = 40 + (sourceVertexAsSeenOnScreen.textContainerWidth() / 2);
             if(sourceVertexAsSeenOnScreen.hasImages()){
@@ -93,14 +93,14 @@ define([
         function buildEndPointOfSecondSegment(endPointOfLastSegment){
             return Point.fromCoordinates(
                 endPointOfLastSegment.x,
-                destinationHtml.offset().top + destinationHtml.outerHeight() + 3
+                destinationHtml.offset().top + destinationHtml.outerHeight() / 2
             );
         }
 
         function buildEndPointOfThirdSegment(){
             return Point.fromCoordinates(
                 destinationHtml.offset().left  + destinationVertexAsSeenOnScreen.textContainerWidth() / 2,
-                destinationHtml.offset().top + destinationHtml.outerHeight() + 3
+                destinationHtml.offset().top + destinationHtml.outerHeight() / 2
             );
         }
     }
