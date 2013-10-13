@@ -65,13 +65,6 @@ define([
         t.add('image_container_image', "<img src='{src}'>");
 
         t.add('hidden_property_container', '<div class="hidden-properties-container"></div>');
-        t.add('hidden_property_menu', '<div></div>');
-        t.add(
-            'hidden_properties_title',
-            "<h2 data-i18n='vertex.menu.hidden_relation.title'></h2>"
-        );
-        t.add('hidden_property_list', '<ul></ul>');
-        t.add('hidden_property', '<li>{name}</li>');
 
         //edge html elements
         t.add(

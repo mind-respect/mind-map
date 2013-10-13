@@ -21,8 +21,12 @@ define([
         VertexUi
     );
     api.Object = function(html){
+        var self = this;
         this.getChildrenOrientation = function(){
             return "right";
+        };
+        this.isALeaf = function(){
+            return self.connectedEdges().length === 1;
         };
         VertexUi.Object.apply(this, [html]);
     };

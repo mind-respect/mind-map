@@ -123,10 +123,18 @@ define([
                 $(html).addClass('center-vertex');
                 self.hideCenterButton();
             };
-            this.setNameOfHiddenProperties = function (nameOfHiddenProperties) {
-                html.data('nameOfHiddenProperties', nameOfHiddenProperties);
+            this.setTotalNumberOfEdges = function (totalNumberOfEdges) {
+                html.data(
+                    "totalNumberOfEdges",
+                    totalNumberOfEdges
+                );
             };
-            this.buildHiddenNeighborPropertiesIndicatorIfApplicable = function () {
+            this.getTotalNumberOfEdges = function () {
+                return html.data(
+                    "totalNumberOfEdges"
+                );
+            };
+            this.buildHiddenNeighborPropertiesIndicator = function () {
                 var propertiesIndicator = PropertiesIndicator.withVertex(
                     self
                 );
@@ -145,22 +153,16 @@ define([
                     "hidden_properties_indicator"
                 );
             };
-            this.hasHiddenProperties = function () {
-                return self.numberOfHiddenConnectedVertices() > 0;
+            this.hasHiddenRelations = function () {
+                return self.isALeaf() && self.getTotalNumberOfEdges() > 1;
             };
-            this.hasHiddenPropertiesContainer = function () {
-                return undefined !== self.getHiddenPropertiesContainer();
+            this.hasHiddenRelationsContainer = function () {
+                return undefined !== self.getHiddenRelationsContainer();
             };
-            this.getHiddenPropertiesContainer = function(){
+            this.getHiddenRelationsContainer = function(){
                 return html.data(
                     "hidden_properties_indicator"
                 );
-            };
-            this.numberOfHiddenConnectedVertices = function () {
-                return self.nameOfHiddenProperties().length;
-            };
-            this.nameOfHiddenProperties = function () {
-                return $(html).data('nameOfHiddenProperties');
             };
             this.width = function () {
                 return $(html).width();
@@ -322,8 +324,8 @@ define([
                 EdgeUi.drawAllEdges();
             };
             this.remove = function () {
-                if(self.hasHiddenProperties()){
-                    self.getHiddenPropertiesContainer().remove();
+                if(self.hasHiddenRelationsContainer()){
+                    self.getHiddenRelationsContainer().remove();
                 }
                 html.remove();
             };
@@ -484,8 +486,6 @@ define([
                 return {
                     label:self.text(),
                     suggestions:self.suggestions(),
-                    is_frontier_vertex_with_hidden_vertices:self.hasHiddenProperties(),
-                    name_of_hidden_properties:self.nameOfHiddenProperties(),
                     types:getCollectionAsServerFormat(self.getTypes()),
                     same_as:getCollectionAsServerFormat(self.getSameAs())
                 };

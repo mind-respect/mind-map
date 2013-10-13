@@ -184,7 +184,7 @@ define([
                 );
             };
             this.isMouseOver = function () {
-                var edgeThatIsMouseOver = GraphUi.getEdgeMouseOver();
+                var edgeThatIsMouseOver = getGraphUi().getEdgeMouseOver();
                 return  edgeThatIsMouseOver !== undefined &&
                     edgeThatIsMouseOver.equalsEdge(self);
             };
@@ -211,6 +211,12 @@ define([
 
             function isDestinationVertex(vertex) {
                 return self.destinationVertex().getId() == vertex.getId()
+            }
+            function getGraphUi(){
+                if(GraphUi === undefined){
+                    GraphUi = require("triple_brain.ui.graph");
+                }
+                return GraphUi;
             }
         };
 

@@ -96,9 +96,6 @@
                     "2" : "to add it to your mind map"
                 }
             },
-            "hidden_relation" : {
-                "title" : "Hidden properties of bubble"
-            },
             "included_vertices" : {
                 "title" : "Bubbles that compose this one"
             }

@@ -67,11 +67,9 @@ define([
                 );
             };
             this.visitChildren = function (visitor) {
-                var children = html.closest(".vertex-container").siblings(
-                    ".vertices-children-container"
-                ).find(".vertex");
+                var children = getChildren();
                 $.each(children, function () {
-                    var vertex = TreeVertex.withHtml(this);
+                    var vertex = api.withHtml(this);
                     visitor(vertex);
                 });
             };
@@ -127,7 +125,16 @@ define([
                     "left" :
                     "right"
             };
+            this.isALeaf = function(){
+                return getChildren().length === 0;
+            };
             VertexUi.Object.apply(this, [html]);
+
+            function getChildren(){
+                return html.closest(".vertex-container").siblings(
+                    ".vertices-children-container"
+                ).find(".vertex");
+            }
         }
         Object.prototype = new VertexUi.Object();
         EventBus.subscribe(

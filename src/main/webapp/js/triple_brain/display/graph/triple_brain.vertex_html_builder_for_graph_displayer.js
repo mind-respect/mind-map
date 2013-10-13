@@ -91,11 +91,9 @@ define([
                     stop:onDragStop
                 });
                 position();
-                vertex.setNameOfHiddenProperties([]);
-                if (serverFormat.is_frontier_vertex_with_hidden_vertices) {
-                    vertex.setNameOfHiddenProperties(serverFormat.name_of_hidden_properties);
-                    vertex.buildHiddenNeighborPropertiesIndicatorIfApplicable();
-                }
+                vertex.setTotalNumberOfEdges(
+                    serverFormat.number_of_connected_edges
+                );
                 vertex[
                     serverFormat.is_public ?
                         "makePublic" :
@@ -284,7 +282,7 @@ define([
 
                 vertex.highlight();
                 $(html).css('z-index', $("#drawn_graph").data("verticesNormalStateZIndex"));
-                if(vertex.hasHiddenProperties()){
+                if(vertex.hasHiddenRelations()){
                     vertex.removeHiddenPropertiesIndicator();
                 }
             }
@@ -292,8 +290,8 @@ define([
             function onDragStop(dragStopEvent, ui) {
                 var vertex = vertexFacade();
                 vertex.redrawConnectedEdgesArrowLine();
-                if(vertex.hasHiddenProperties()){
-                    vertex.buildHiddenNeighborPropertiesIndicatorIfApplicable();
+                if(vertex.hasHiddenRelations()){
+                    vertex.buildHiddenNeighborPropertiesIndicator();
                 }
                 var edgesNormalStateZIndex = $("#drawn_graph").data("edgesNormalStateZIndex");
                 $('.edge').css('z-index', edgesNormalStateZIndex);

@@ -22,8 +22,7 @@ define([
             function(){
                 EventBus.unsubscribe(
                     "/event/ui/graph/vertex/width-modified " +
-                        "/event/ui/graph/vertex/position-changed " +
-                        "/event/ui/vertex/visit_after_graph_drawn",
+                        "/event/ui/graph/vertex/position-changed",
                         adjustPositionHandler
                 );
                 EventBus.subscribe(
@@ -32,6 +31,15 @@ define([
                 );
         });
 
+        EventBus.subscribe(
+            "/event/ui/vertex/visit_after_graph_drawn",
+            function(event, vertex){
+                if(vertex.hasHiddenRelations()){
+                    vertex.buildHiddenNeighborPropertiesIndicator();
+                }
+            }
+        );
+
         function graphDrawnHandler(event){
             EventBus.unsubscribe(
                 '/event/ui/graph/drawn',
@@ -39,15 +47,14 @@ define([
             );
             EventBus.subscribe(
                 "/event/ui/graph/vertex/width-modified " +
-                "/event/ui/graph/vertex/position-changed " +
-                "/event/ui/vertex/visit_after_graph_drawn",
+                "/event/ui/graph/vertex/position-changed",
                 adjustPositionHandler
             );
         }
         return api;
         function adjustPositionHandler(event, vertex){
-            if(vertex.hasHiddenPropertiesContainer()){
-                vertex.getHiddenPropertiesContainer().adjustPosition();
+            if(vertex.hasHiddenRelationsContainer()){
+                vertex.getHiddenRelationsContainer().adjustPosition();
             }
         }
         function HiddenNeighborPropertiesIndicator(vertex) {
@@ -55,13 +62,13 @@ define([
             var hiddenNeighborPropertiesContainer;
             var dashSegments = [];
             this.build = function () {
-                var numberOfHiddenConnectedVertices = vertex.numberOfHiddenConnectedVertices();
-                if (numberOfHiddenConnectedVertices == 0) {
+                if (!vertex.hasHiddenRelations()) {
                     return;
                 }
+                var numberOfHiddenConnectedRelations = vertex.getTotalNumberOfEdges() - 1;
                 var isLeftOriented = vertex.getChildrenOrientation() === "left";
                 var defaultLengthOfHiddenPropertiesContainer = 40;
-                var lengthInPixels = numberOfHiddenConnectedVertices == 1 ?
+                var lengthInPixels = numberOfHiddenConnectedRelations == 1 ?
                     1 :
                     defaultLengthOfHiddenPropertiesContainer;
                 var startPoint = Point.fromCoordinates(
@@ -72,9 +79,9 @@ define([
                     startPoint.x += vertex.width();
                 }
                 var distanceBetweenEachDashedSegment =
-                    numberOfHiddenConnectedVertices == 1 ?
+                    numberOfHiddenConnectedRelations == 1 ?
                         0 :
-                        lengthInPixels / (vertex.numberOfHiddenConnectedVertices() - 1);
+                        lengthInPixels / (numberOfHiddenConnectedRelations - 1);
                 var plainSegment = Segment.withStartAndEndPointAtOrigin();
                 plainSegment.startPoint = startPoint;
                 var horizontalDistanceOfDashedSegment = 20;
@@ -84,7 +91,7 @@ define([
                 }else{
                     plainSegment.endPoint.x += vertex.width() + horizontalDistanceOfDashedSegment;
                 }
-                for (var i = 0; i < numberOfHiddenConnectedVertices; i++) {
+                for (var i = 0; i < numberOfHiddenConnectedRelations; i++) {
                     plainSegment.endPoint.y = startPoint.y -
                         (lengthInPixels / 2) +
                         (i * distanceBetweenEachDashedSegment);
@@ -106,11 +113,7 @@ define([
                     .css('min-height', defaultLengthOfHiddenPropertiesContainer)
                     .css('left', isLeftOriented ? startPoint.x - defaultLengthOfHiddenPropertiesContainer : startPoint.x)
                     .css('top', startPoint.y - (defaultLengthOfHiddenPropertiesContainer / 2))
-                    .data("vertex", vertex)
-                    .on(
-                    "click",
-                    showHiddenRelation
-                );
+                    .data("vertex", vertex);
             };
             this.remove = function () {
                 $(hiddenNeighborPropertiesContainer).remove();
@@ -123,42 +126,6 @@ define([
                 self.remove();
                 self.build();
             };
-            function showHiddenRelation(){
-                var vertex = $(this).data("vertex");
-                var hiddenPropertyMenu = $(
-                    MindMapTemplate[
-                        'hidden_property_menu'
-                        ].merge()
-                );
-                getGraphUi().addHtml(
-                    hiddenPropertyMenu
-                )
-                hiddenPropertyMenu.append(
-                    MindMapTemplate['hidden_properties_title'].merge()
-                );
-                var propertyList = $(
-                    MindMapTemplate['hidden_property_list'].merge()
-                );
-                hiddenPropertyMenu.append(
-                    propertyList
-                );
-                var nameOfHiddenProperties = vertex.nameOfHiddenProperties();
-                $.each(nameOfHiddenProperties, function () {
-                    var nameOfHiddenProperty = this;
-                    var property = MindMapTemplate[
-                        'hidden_property'
-                        ].merge({
-                            name:nameOfHiddenProperty == "" ?
-                                Edge.getWhenEmptyLabel() :
-                                nameOfHiddenProperty
-                        });
-                    propertyList.append(property);
-                });
-                GraphElementMenu.makeForMenuContentAndGraphElement(
-                    hiddenPropertyMenu,
-                    vertex
-                );
-            }
         }
         function getGraphUi(){
             if(GraphUi === undefined){

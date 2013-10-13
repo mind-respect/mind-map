@@ -88,10 +88,8 @@ define([
             html.uniqueId();
             this.create = function () {
                 var vertex = vertexFacade();
-                vertex.setNameOfHiddenProperties(
-                    serverFormat.is_frontier_vertex_with_hidden_vertices ?
-                        serverFormat.name_of_hidden_properties :
-                        []
+                vertex.setTotalNumberOfEdges(
+                    serverFormat.number_of_connected_edges
                 );
                 createLabel();
                 html.data(
