@@ -38,7 +38,9 @@ define([
         };
         api.redrawAllEdges = function(){
             drawEdges(true);
-            console.log("patate");
+            EventBus.publish(
+                "/event/ui/graph/edges/redrawn"
+            );
         };
         api.connectedToVertex = function(vertex){
             var edgesConnectedToVertex = [];

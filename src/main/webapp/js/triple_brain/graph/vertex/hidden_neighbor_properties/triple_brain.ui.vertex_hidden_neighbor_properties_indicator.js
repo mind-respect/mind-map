@@ -23,7 +23,11 @@ define([
                 EventBus.unsubscribe(
                     "/event/ui/graph/vertex/width-modified " +
                         "/event/ui/graph/vertex/position-changed",
-                        adjustPositionHandler
+                        adjustPositionOfVertexHandler
+                );
+                EventBus.unsubscribe(
+                    "/event/ui/graph/edges/redrawn",
+                    adjustPositionOfAllVerticesHandler
                 );
                 EventBus.subscribe(
                     '/event/ui/vertex/visit_after_graph_drawn',
@@ -46,13 +50,26 @@ define([
                 graphDrawnHandler
             );
             EventBus.subscribe(
+                "/event/ui/graph/edges/redrawn",
+                adjustPositionOfAllVerticesHandler
+            );
+            EventBus.subscribe(
                 "/event/ui/graph/vertex/width-modified " +
                 "/event/ui/graph/vertex/position-changed",
-                adjustPositionHandler
+                adjustPositionOfVertexHandler
             );
         }
         return api;
-        function adjustPositionHandler(event, vertex){
+        function adjustPositionOfAllVerticesHandler(){
+            visitHiddenPropertiesContainers(function(){
+                var vertex = $(this).data("vertex");
+                vertex.getHiddenRelationsContainer().adjustPosition();
+            });
+        }
+        function visitHiddenPropertiesContainers(visitor){
+            $(".hidden-properties-container").each(visitor);
+        }
+        function adjustPositionOfVertexHandler(event, vertex){
             if(vertex.hasHiddenRelationsContainer()){
                 vertex.getHiddenRelationsContainer().adjustPosition();
             }
