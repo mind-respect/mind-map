@@ -46,7 +46,7 @@ define([
                         self.visitCenterVertexLeftVertices :
                         self.visitChildren;
                     visit(function (vertex) {
-                        var relativeVertex = api.withVertex(vertex);
+                        var relativeVertex = api.ofVertex(vertex);
                         relativeVertex.adjustPosition();
                     });
                 }
