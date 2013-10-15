@@ -78,9 +78,14 @@ define([
                     ".vertices-children-container.left-oriented"
                 ).find(".vertex");
                 $.each(children, function () {
-                    var vertex = TreeVertex.withHtml(this);
+                    var vertex = api.withHtml(this);
                     visitor(vertex);
                 });
+            };
+            this.getParentVertex = function(){
+                return api.withHtml(
+                    self.getParentVertexHtml().find("> .vertex")
+                );
             };
             this.getParentVertexHtml = function(){
                 return html.closest(".vertices-children-container")

@@ -23,11 +23,75 @@ define([
             depth,
             function (graph) {
                 var drawnTree = new TreeMaker()
-                    .makeForAbsoluteCenterVertexInContainerUsingServerGraphAndCentralVertexUri(
+                    .makeForAbsoluteCenterVertexInContainer(
                     graph,
                     centralVertexUri
                 );
                 callback(drawnTree);
+            }
+        );
+    };
+    api.getChildrenTree = function(parentVertex, callback){
+        var depth = 1;
+        var parentUri = parentVertex.getUri();
+        Graph.getForCentralVertexUriAndDepth(
+            parentUri,
+            depth,
+            function (serverGraph) {
+                var treeMaker = new TreeMaker();
+                removeGrandParentFromServerGraph();
+                var parentVertexServerFormat = serverGraph.vertices[parentUri];
+                TreeDisplayerCommon.defineChildrenInVertices(
+                    serverGraph,
+                    parentUri
+                );
+                var parentVertexId = parentVertex.getId();
+                parentVertexServerFormat.uiIds = [
+                    parentVertexId
+                ];
+                serverGraph.vertices[parentUri] = parentVertexServerFormat;
+//                var container = treeMaker.childrenVertexContainer(
+//                    parentVertex
+//                );
+//                $.each(serverGraph.vertices, function(){
+//                    var vertexServerFormat = this;
+//                    if(vertexServerFormat.uri === parentUri){
+//                        return;
+//                    }
+//                    var htmlFacade = treeMaker.buildVertexHtmlIntoContainer(
+//                        this,
+//                        container
+//                    );
+//                    vertexServerFormat.neighbors[parentVertexId] = {
+//                        vertexHtmlId:childVertexHtmlFacade.getId()
+//                    };
+//                    vertexServerFormat.uiIds = [
+//                        htmlFacade.getId()
+//                    ];
+//                });
+                treeMaker.buildChildrenHtmlTreeRecursively(
+                    parentVertex,
+                    serverGraph.vertices,
+                    parentVertex.getParentVertex().getUri()
+                );
+                parentVertex.setOriginalServerObject(
+                    serverGraph.vertices[parentUri]
+                );
+                callback(serverGraph);
+                function removeGrandParentFromServerGraph(){
+                    var grandParentUri = parentVertex.getParentVertex().getUri();
+                    delete serverGraph.vertices[grandParentUri];
+                    serverGraph.edges = serverGraph.edges.filter(function(edge){
+                        var sourceAndDestinationId = [
+                            edge.source_vertex_id,
+                            edge.destination_vertex_id
+                        ];
+                        return $.inArray(
+                                grandParentUri,
+                                sourceAndDestinationId
+                            ) === -1
+                    });
+                }
             }
         );
     };
@@ -38,7 +102,7 @@ define([
             depth,
             function (serverGraph) {
                 var treeMaker = new TreeMaker();
-                var drawnTree = treeMaker.makeForRelativeCenterVertexInContainerUsingServerGraphAndCentralVertexUri(
+                var drawnTree = treeMaker.makeForRelativeCenterVertexInContainer(
                     serverGraph,
                     destinationVertexUri,
                     parentVertex
@@ -165,7 +229,7 @@ define([
 
     function TreeMaker() {
         var self = this;
-        this.makeForAbsoluteCenterVertexInContainerUsingServerGraphAndCentralVertexUri = function(serverGraph, centralVertexUri){
+        this.makeForAbsoluteCenterVertexInContainer = function(serverGraph, centralVertexUri){
             var graphOffset = GraphUi.offset();
             var verticesContainer = RelativeTreeTemplates[
                 "root_vertex_super_container"
@@ -182,7 +246,7 @@ define([
                 true
             );
         };
-        this.makeForRelativeCenterVertexInContainerUsingServerGraphAndCentralVertexUri = function(serverGraph, centralVertexUri, parentVertex){
+        this.makeForRelativeCenterVertexInContainer = function(serverGraph, centralVertexUri, parentVertex){
             var treeContainer = $(RelativeTreeTemplates[
                 "vertex_tree_container"
                 ].merge()
@@ -261,6 +325,49 @@ define([
             return $(vertexHtmlFacade.getHtml()).closest(".vertex-container"
             ).siblings(".vertices-children-container");
         };
+        this.buildChildrenHtmlTreeRecursively = function(parentVertexHtmlFacade, vertices, grandParentUri) {
+            var serverParentVertex = vertexWithId(
+                parentVertexHtmlFacade.getUri()
+            );
+            var childrenContainer = self.childrenVertexContainer(parentVertexHtmlFacade);
+            $.each(serverParentVertex.neighbors, function () {
+                var neighborInfo = this;
+                var childInfo = vertexWithId(neighborInfo.vertexUri);
+                if (grandParentUri === childInfo.uri || childInfo.added === true) {
+                    return;
+                }
+                var vertexServerFormat = vertexWithId(childInfo.uri);
+                var childVertexHtmlFacade = self.buildVertexHtmlIntoContainer(
+                    vertexServerFormat,
+                    childrenContainer
+                );
+                if(vertexServerFormat.uiIds === undefined){
+                    vertexServerFormat.uiIds = [];
+                }
+                vertexServerFormat.uiIds.push(
+                    childVertexHtmlFacade.getId()
+                );
+                neighborInfo[parentVertexHtmlFacade.getId()] = {
+                    vertexHtmlId:childVertexHtmlFacade.getId()
+                };
+                var treeContainer = childVertexHtmlFacade.getHtml().closest(
+                    ".vertex-tree-container"
+                );
+                childInfo.added = true;
+                $(treeContainer).append(
+                    self.buildChildrenHtmlTreeRecursively(
+                        childVertexHtmlFacade,
+                        vertices,
+                        parentVertexHtmlFacade.getUri()
+                    )
+                );
+            });
+            return childrenContainer;
+            function vertexWithId(vertexId) {
+                return vertices[vertexId]
+            }
+        }
+
         function makeInContainerUsingServerGraphAndCentralVertexUri(serverGraph, centralVertexUri, verticesContainer, canAddToLeft) {
             var vertices = serverGraph.vertices;
             TreeDisplayerCommon.defineChildrenInVertices(
@@ -315,51 +422,13 @@ define([
                     serverRootVertex.neighbors[i][rootVertex.getId()] = {
                         vertexHtmlId:childHtmlFacade.getId()
                     };
-                    buildChildrenHtmlTreeRecursively(
+                    self.buildChildrenHtmlTreeRecursively(
                         childHtmlFacade,
+                        vertices,
                         serverRootVertex.uri
                     );
                 }
-                function buildChildrenHtmlTreeRecursively(parentVertexHtmlFacade, grandParentUri) {
-                    var serverParentVertex = vertexWithId(
-                        parentVertexHtmlFacade.getUri()
-                    );
-                    var childrenContainer = self.childrenVertexContainer(parentVertexHtmlFacade);
-                    $.each(serverParentVertex.neighbors, function () {
-                        var neighborInfo = this;
-                        var childInfo = vertexWithId(neighborInfo.vertexUri);
-                        if (grandParentUri === childInfo.uri || childInfo.added === true) {
-                            return;
-                        }
-                        var vertexServerFormat = vertexWithId(childInfo.uri);
-                        var childVertexHtmlFacade = self.buildVertexHtmlIntoContainer(
-                            vertexServerFormat,
-                            childrenContainer
-                        );
-                        if(vertexServerFormat.uiIds === undefined){
-                            vertexServerFormat.uiIds = [];
-                        }
-                        vertexServerFormat.uiIds.push(
-                            childVertexHtmlFacade.getId()
-                        );
-                        neighborInfo[parentVertexHtmlFacade.getId()] = {
-                            vertexHtmlId:childVertexHtmlFacade.getId()
-                        };
-                        var treeContainer = childVertexHtmlFacade.getHtml().closest(
-                            ".vertex-tree-container"
-                        );
-                        childInfo.added = true;
-                        $(treeContainer).append(
-                            buildChildrenHtmlTreeRecursively(
-                                childVertexHtmlFacade,
-                                parentVertexHtmlFacade.getUri()
-                            )
-                        );
-                    });
-                    return childrenContainer;
-                }
             }
-
             return serverGraph;
             function vertexWithId(vertexId) {
                 return vertices[vertexId]

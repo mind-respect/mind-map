@@ -8,9 +8,10 @@ define([
     "triple_brain.mind-map_template",
     "triple_brain.graph_element_menu",
     "triple_brain.ui.graph",
-    "triple_brain.event_bus"
+    "triple_brain.event_bus",
+    "triple_brain.graph_displayer"
 ],
-    function (require, $, Edge, DashedSegment, Point, Segment, MindMapTemplate, GraphElementMenu, GraphUi, EventBus) {
+    function (require, $, Edge, DashedSegment, Point, Segment, MindMapTemplate, GraphElementMenu, GraphUi, EventBus, GraphDisplayer) {
         var api = {
             withVertex:function (vertex) {
                 return new HiddenNeighborPropertiesIndicator(vertex);
@@ -30,7 +31,7 @@ define([
                     adjustPositionOfAllVerticesHandler
                 );
                 EventBus.subscribe(
-                    '/event/ui/vertex/visit_after_graph_drawn',
+                    '/event/ui/graph/drawn',
                     graphDrawnHandler
                 );
         });
@@ -130,7 +131,8 @@ define([
                     .css('min-height', defaultLengthOfHiddenPropertiesContainer)
                     .css('left', isLeftOriented ? startPoint.x - defaultLengthOfHiddenPropertiesContainer : startPoint.x)
                     .css('top', startPoint.y - (defaultLengthOfHiddenPropertiesContainer / 2))
-                    .data("vertex", vertex);
+                    .data("vertex", vertex)
+                    .click(handleHiddenPropertiesContainerClick);
             };
             this.remove = function () {
                 $(hiddenNeighborPropertiesContainer).remove();
@@ -149,6 +151,23 @@ define([
                 GraphUi = require("triple_brain.ui.graph");
             }
             return GraphUi;
+        }
+        function handleHiddenPropertiesContainerClick(){
+            var vertex = $(this).data("vertex");
+            GraphDisplayer.getChildrenTree(
+                vertex,
+                function(drawnTree){
+                    GraphDisplayer.integrateEdgesOfServerGraph(
+                        drawnTree
+                    );
+                    Edge.redrawAllEdges();
+                    vertex.visitChildren(function(child){
+                        if(child.hasHiddenRelations()){
+                            child.buildHiddenNeighborPropertiesIndicator();
+                        }
+                    });
+                }
+            );
         }
     }
 );

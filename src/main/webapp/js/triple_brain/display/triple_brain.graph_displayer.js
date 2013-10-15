@@ -87,6 +87,12 @@ define([
         api.getVertexSelector = function(){
             return _implementation.getVertexSelector();
         };
+        api.getChildrenTree = function(parentVertex, callback){
+            return _implementation.getChildrenTree(
+                parentVertex,
+                callback
+            );
+        };
         return api;
         function currentDepth(){
             return getDepthSlider().currentDepth();

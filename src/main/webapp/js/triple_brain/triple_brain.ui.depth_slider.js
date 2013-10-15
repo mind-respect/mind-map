@@ -15,7 +15,7 @@ define([
                 $("#sub-vertices-depth-index").text(sliderDefaultValue);
                 $("#sub-vertices-depth-slider").slider({
                     value:sliderDefaultValue,
-                    min:1,
+                    min:0,
                     max:5,
                     step:1,
                     orientation:"horizontal",
