@@ -31,7 +31,10 @@ define([
             }
         );
     };
-    api.getChildrenTree = function(parentVertex, callback){
+    api.canAddChildTree = function(){
+        return true;
+    };
+    api.addChildTree = function(parentVertex, callback){
         var depth = 1;
         var parentUri = parentVertex.getUri();
         Graph.getForCentralVertexUriAndDepth(
@@ -50,25 +53,6 @@ define([
                     parentVertexId
                 ];
                 serverGraph.vertices[parentUri] = parentVertexServerFormat;
-//                var container = treeMaker.childrenVertexContainer(
-//                    parentVertex
-//                );
-//                $.each(serverGraph.vertices, function(){
-//                    var vertexServerFormat = this;
-//                    if(vertexServerFormat.uri === parentUri){
-//                        return;
-//                    }
-//                    var htmlFacade = treeMaker.buildVertexHtmlIntoContainer(
-//                        this,
-//                        container
-//                    );
-//                    vertexServerFormat.neighbors[parentVertexId] = {
-//                        vertexHtmlId:childVertexHtmlFacade.getId()
-//                    };
-//                    vertexServerFormat.uiIds = [
-//                        htmlFacade.getId()
-//                    ];
-//                });
                 treeMaker.buildChildrenHtmlTreeRecursively(
                     parentVertex,
                     serverGraph.vertices,

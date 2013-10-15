@@ -153,8 +153,11 @@ define([
             return GraphUi;
         }
         function handleHiddenPropertiesContainerClick(){
+            if(!GraphDisplayer.canAddChildTree()){
+                return;
+            }
             var vertex = $(this).data("vertex");
-            GraphDisplayer.getChildrenTree(
+            GraphDisplayer.addChildTree(
                 vertex,
                 function(drawnTree){
                     GraphDisplayer.integrateEdgesOfServerGraph(
@@ -166,6 +169,7 @@ define([
                             child.buildHiddenNeighborPropertiesIndicator();
                         }
                     });
+                    vertex.getHtml().centerOnScreenWithAnimation();
                 }
             );
         }

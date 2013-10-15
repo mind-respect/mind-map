@@ -85,6 +85,9 @@ define([
         api.getVertexSelector = function(){
             return GraphVertex;
         };
+        api.canAddChildTree = function(){
+            return false;
+        };
         return api;
 
         function getDrawnGraphFromServer(centralVertexUri, depth, callback) {

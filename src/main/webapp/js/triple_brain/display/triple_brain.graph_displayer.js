@@ -87,8 +87,11 @@ define([
         api.getVertexSelector = function(){
             return _implementation.getVertexSelector();
         };
-        api.getChildrenTree = function(parentVertex, callback){
-            return _implementation.getChildrenTree(
+        api.canAddChildTree = function(){
+            return _implementation.canAddChildTree();
+        };
+        api.addChildTree = function(parentVertex, callback){
+            return _implementation.addChildTree(
                 parentVertex,
                 callback
             );
