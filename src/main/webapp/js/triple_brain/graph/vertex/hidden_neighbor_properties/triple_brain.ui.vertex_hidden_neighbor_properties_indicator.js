@@ -20,11 +20,11 @@ define([
 
         EventBus.subscribe(
             '/event/ui/graph/drawing_info/about_to/update',
-            function(){
+            function () {
                 EventBus.unsubscribe(
                     "/event/ui/graph/vertex/width-modified " +
                         "/event/ui/graph/vertex/position-changed",
-                        adjustPositionOfVertexHandler
+                    adjustPositionOfVertexHandler
                 );
                 EventBus.unsubscribe(
                     "/event/ui/graph/edges/redrawn",
@@ -34,18 +34,18 @@ define([
                     '/event/ui/graph/drawn',
                     graphDrawnHandler
                 );
-        });
+            });
 
         EventBus.subscribe(
             "/event/ui/vertex/visit_after_graph_drawn",
-            function(event, vertex){
-                if(vertex.hasHiddenRelations()){
+            function (event, vertex) {
+                if (vertex.hasHiddenRelations()) {
                     vertex.buildHiddenNeighborPropertiesIndicator();
                 }
             }
         );
 
-        function graphDrawnHandler(event){
+        function graphDrawnHandler(event) {
             EventBus.unsubscribe(
                 '/event/ui/graph/drawn',
                 graphDrawnHandler
@@ -56,25 +56,29 @@ define([
             );
             EventBus.subscribe(
                 "/event/ui/graph/vertex/width-modified " +
-                "/event/ui/graph/vertex/position-changed",
+                    "/event/ui/graph/vertex/position-changed",
                 adjustPositionOfVertexHandler
             );
         }
+
         return api;
-        function adjustPositionOfAllVerticesHandler(){
-            visitHiddenPropertiesContainers(function(){
+        function adjustPositionOfAllVerticesHandler() {
+            visitHiddenPropertiesContainers(function () {
                 var vertex = $(this).data("vertex");
                 vertex.getHiddenRelationsContainer().adjustPosition();
             });
         }
-        function visitHiddenPropertiesContainers(visitor){
+
+        function visitHiddenPropertiesContainers(visitor) {
             $(".hidden-properties-container").each(visitor);
         }
-        function adjustPositionOfVertexHandler(event, vertex){
-            if(vertex.hasHiddenRelationsContainer()){
+
+        function adjustPositionOfVertexHandler(event, vertex) {
+            if (vertex.hasHiddenRelationsContainer()) {
                 vertex.getHiddenRelationsContainer().adjustPosition();
             }
         }
+
         function HiddenNeighborPropertiesIndicator(vertex) {
             var self = this;
             var hiddenNeighborPropertiesContainer;
@@ -93,7 +97,7 @@ define([
                     vertex.position().x,
                     vertex.position().y + (vertex.height() / 2)
                 );
-                if(!isLeftOriented){
+                if (!isLeftOriented) {
                     startPoint.x += vertex.width();
                 }
                 var distanceBetweenEachDashedSegment =
@@ -104,9 +108,9 @@ define([
                 plainSegment.startPoint = startPoint;
                 var horizontalDistanceOfDashedSegment = 20;
                 plainSegment.endPoint.x = vertex.position().x;
-                if(isLeftOriented){
+                if (isLeftOriented) {
                     plainSegment.endPoint.x -= horizontalDistanceOfDashedSegment;
-                }else{
+                } else {
                     plainSegment.endPoint.x += vertex.width() + horizontalDistanceOfDashedSegment;
                 }
                 for (var i = 0; i < numberOfHiddenConnectedRelations; i++) {
@@ -132,7 +136,7 @@ define([
                     .css('left', isLeftOriented ? startPoint.x - defaultLengthOfHiddenPropertiesContainer : startPoint.x)
                     .css('top', startPoint.y - (defaultLengthOfHiddenPropertiesContainer / 2))
                     .data("vertex", vertex)
-                    .click(handleHiddenPropertiesContainerClick);
+                    .one("click",handleHiddenPropertiesContainerClick);
             };
             this.remove = function () {
                 $(hiddenNeighborPropertiesContainer).remove();
@@ -141,31 +145,33 @@ define([
                     dashSegment.remove();
                 }
             };
-            this.adjustPosition = function(){
+            this.adjustPosition = function () {
                 self.remove();
                 self.build();
             };
         }
-        function getGraphUi(){
-            if(GraphUi === undefined){
+
+        function getGraphUi() {
+            if (GraphUi === undefined) {
                 GraphUi = require("triple_brain.ui.graph");
             }
             return GraphUi;
         }
-        function handleHiddenPropertiesContainerClick(){
-            if(!GraphDisplayer.canAddChildTree()){
+
+        function handleHiddenPropertiesContainerClick() {
+            if (!GraphDisplayer.canAddChildTree()) {
                 return;
             }
             var vertex = $(this).data("vertex");
             GraphDisplayer.addChildTree(
                 vertex,
-                function(drawnTree){
+                function (drawnTree) {
                     GraphDisplayer.integrateEdgesOfServerGraph(
                         drawnTree
                     );
                     Edge.redrawAllEdges();
-                    vertex.visitChildren(function(child){
-                        if(child.hasHiddenRelations()){
+                    vertex.visitChildren(function (child) {
+                        if (child.hasHiddenRelations()) {
                             child.buildHiddenNeighborPropertiesIndicator();
                         }
                     });
