@@ -40,6 +40,7 @@ define([
             addDuplicateButton(vertex);
             $.each(otherInstances, function(){
                 var otherInstance = this;
+                otherInstance.resetOtherInstances();
                 if(!otherInstance.hasTheDuplicateButton()){
                     addDuplicateButton(otherInstance);
                 }
