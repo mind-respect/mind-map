@@ -61,6 +61,11 @@ define([
                 parentVertex.setOriginalServerObject(
                     serverGraph.vertices[parentUri]
                 );
+                parentVertex.visitChildren(function(child){
+                    VertexHtmlBuilder.addDuplicateVerticesButtonIfApplicable(
+                        child
+                    );
+                });
                 callback(serverGraph);
                 function removeGrandParentFromServerGraph(){
                     var grandParentUri = parentVertex.getParentVertex().getUri();

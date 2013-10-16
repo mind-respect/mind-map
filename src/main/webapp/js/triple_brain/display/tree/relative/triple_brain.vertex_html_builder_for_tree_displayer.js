@@ -32,21 +32,18 @@ define([
         api.withServerJson = function (serverVertex) {
             return new VertexCreator(serverVertex);
         };
-        EventBus.subscribe(
-            '/event/ui/vertex/visit_after_graph_drawn',
-            handleVisitAfterGraphDrawn
-        );
-        return api;
-
-        function handleVisitAfterGraphDrawn(event, vertex){
-            addDuplicateVerticesButtonIfApplicable(
-                vertex
-            );
-        }
-        function addDuplicateVerticesButtonIfApplicable(vertex){
-            if(RelativeTreeVertex.ofVertex(vertex).hasOtherInstances()){
-                addDuplicateButton(vertex);
+        api.addDuplicateVerticesButtonIfApplicable = function(vertex){
+            var otherInstances = vertex.getOtherInstances();
+            if(otherInstances.length === 0){
+                return;
             }
+            addDuplicateButton(vertex);
+            $.each(otherInstances, function(){
+                var otherInstance = this;
+                if(!otherInstance.hasTheDuplicateButton()){
+                    addDuplicateButton(otherInstance);
+                }
+            });
             function addDuplicateButton(vertex){
                 vertex.getTextContainer().prepend(
                     buildDuplicateButton()
@@ -56,22 +53,31 @@ define([
                 return $(
                     "<button class='duplicate'>"
                 ).button({
-                    icons: {
-                        primary: "ui-icon ui-icon-link"
-                    },
-                    text: false
-                }).on(
+                        icons: {
+                            primary: "ui-icon ui-icon-link"
+                        },
+                        text: false
+                    }).on(
                     "click",
                     function(){
                         var vertex = vertexOfSubHtmlComponent($(this));
                         $(
-                            RelativeTreeVertex.ofVertex(
-                                vertex
-                            ).getOtherInstances()[0].getHtml()
+                            vertex.getOtherInstances()[0].getHtml()
                         ).centerOnScreenWithAnimation();
                     }
                 );
             }
+        };
+        EventBus.subscribe(
+            '/event/ui/vertex/visit_after_graph_drawn',
+            handleVisitAfterGraphDrawn
+        );
+        return api;
+
+        function handleVisitAfterGraphDrawn(event, vertex){
+            api.addDuplicateVerticesButtonIfApplicable(
+                vertex
+            );
         }
         function VertexCreator(serverFormat) {
             var VertexService = require("triple_brain.vertex");

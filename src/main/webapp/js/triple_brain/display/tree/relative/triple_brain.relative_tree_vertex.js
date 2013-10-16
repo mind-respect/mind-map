@@ -133,6 +133,11 @@ define([
             this.isALeaf = function(){
                 return getChildren().length === 0;
             };
+            this.hasTheDuplicateButton = function(){
+                return self.getTextContainer().find(
+                    "button.duplicate"
+                ).length > 0 ;
+            };
             VertexUi.Object.apply(this, [html]);
 
             function getChildren(){
