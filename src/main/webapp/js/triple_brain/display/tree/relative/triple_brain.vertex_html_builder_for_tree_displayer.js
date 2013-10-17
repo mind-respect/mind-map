@@ -32,35 +32,36 @@ define([
         api.withServerJson = function (serverVertex) {
             return new VertexCreator(serverVertex);
         };
-        api.addDuplicateVerticesButtonIfApplicable = function(vertex){
+        api.addDuplicateVerticesButtonIfApplicable = function (vertex) {
             var otherInstances = vertex.getOtherInstances();
-            if(otherInstances.length === 0){
+            if (otherInstances.length === 0) {
                 return;
             }
             addDuplicateButton(vertex);
-            $.each(otherInstances, function(){
+            $.each(otherInstances, function () {
                 var otherInstance = this;
                 otherInstance.resetOtherInstances();
-                if(!otherInstance.hasTheDuplicateButton()){
+                if (!otherInstance.hasTheDuplicateButton()) {
                     addDuplicateButton(otherInstance);
                 }
             });
-            function addDuplicateButton(vertex){
+            function addDuplicateButton(vertex) {
                 vertex.getTextContainer().prepend(
                     buildDuplicateButton()
                 );
             }
-            function buildDuplicateButton(){
+
+            function buildDuplicateButton() {
                 return $(
                     "<button class='duplicate'>"
                 ).button({
-                        icons: {
-                            primary: "ui-icon ui-icon-link"
+                        icons:{
+                            primary:"ui-icon ui-icon-link"
                         },
-                        text: false
+                        text:false
                     }).on(
                     "click",
-                    function(){
+                    function () {
                         var vertex = vertexOfSubHtmlComponent($(this));
                         $(
                             vertex.getOtherInstances()[0].getHtml()
@@ -75,11 +76,14 @@ define([
         );
         return api;
 
-        function handleVisitAfterGraphDrawn(event, vertex){
-            api.addDuplicateVerticesButtonIfApplicable(
-                vertex
-            );
+        function handleVisitAfterGraphDrawn(event, vertex) {
+            if("relative_tree" === GraphDisplayer.name()){
+                api.addDuplicateVerticesButtonIfApplicable(
+                    vertex
+                );
+            }
         }
+
         function VertexCreator(serverFormat) {
             var VertexService = require("triple_brain.vertex");
             var Suggestion = require("triple_brain.suggestion");
@@ -127,7 +131,7 @@ define([
                     vertex
                 );
                 var images = [];
-                $.each(serverFormat.images, function(){
+                $.each(serverFormat.images, function () {
                     var imageServerFormat = this;
                     images.push(
                         Image.fromServerJson(
@@ -162,7 +166,7 @@ define([
                 if (vertex.hasDefaultText()) {
                     vertex.applyStyleOfDefaultText();
                 }
-                label.focus(function(){
+                label.focus(function () {
                     var vertex = vertexOfSubHtmlComponent(this);
                     vertex.highlight();
                     vertex.removeStyleOfDefaultText();
@@ -171,52 +175,52 @@ define([
                         $(vertex.label()).keyup();
                     }
                 }).blur(function () {
-                    var vertex = vertexOfSubHtmlComponent(this);
-                    if (!vertex.isMouseOver()) {
-                        vertex.unhighlight();
-                    }
-                    if ($(this).val() == "") {
-                        $(this).val(RelativeTreeVertex.getWhenEmptyLabel());
-                        vertex.applyStyleOfDefaultText();
-                        $(vertex.label()).keyup();
-                    } else {
-                        vertex.removeStyleOfDefaultText();
-                    }
-                }).change(function () {
-                    var vertex = vertexOfSubHtmlComponent(this);
-                    $(vertex.label()).keyup();
-                    VertexService.updateLabel(
-                        vertexOfSubHtmlComponent(this),
-                        $(this).val(),
-                        function (vertex) {
-                            var otherInstances = RelativeTreeVertex.ofVertex(
-                                vertex
-                            ).getOtherInstances();
-                            $.each(otherInstances, function () {
-                                var vertex = this;
-                                VertexAndEdgeCommon.highlightLabel(
-                                    vertex.getId()
-                                );
-                            });
+                        var vertex = vertexOfSubHtmlComponent(this);
+                        if (!vertex.isMouseOver()) {
+                            vertex.unhighlight();
                         }
-                    );
-                    var relativeVertex = RelativeTreeVertex.ofVertex(vertex);
-                    relativeVertex.adjustPositionIfApplicable();
-                    relativeVertex.adjustAllChildrenPositionIfApplicable();
-                    var otherInstances = RelativeTreeVertex.withHtml(
-                        html
-                    ).getOtherInstances();
-                    $.each(otherInstances, function () {
-                        var relativeVertex = RelativeTreeVertex.ofVertex(
-                            this
+                        if ($(this).val() == "") {
+                            $(this).val(RelativeTreeVertex.getWhenEmptyLabel());
+                            vertex.applyStyleOfDefaultText();
+                            $(vertex.label()).keyup();
+                        } else {
+                            vertex.removeStyleOfDefaultText();
+                        }
+                    }).change(function () {
+                        var vertex = vertexOfSubHtmlComponent(this);
+                        $(vertex.label()).keyup();
+                        VertexService.updateLabel(
+                            vertexOfSubHtmlComponent(this),
+                            $(this).val(),
+                            function (vertex) {
+                                var otherInstances = RelativeTreeVertex.ofVertex(
+                                    vertex
+                                ).getOtherInstances();
+                                $.each(otherInstances, function () {
+                                    var vertex = this;
+                                    VertexAndEdgeCommon.highlightLabel(
+                                        vertex.getId()
+                                    );
+                                });
+                            }
                         );
+                        var relativeVertex = RelativeTreeVertex.ofVertex(vertex);
                         relativeVertex.adjustPositionIfApplicable();
                         relativeVertex.adjustAllChildrenPositionIfApplicable();
+                        var otherInstances = RelativeTreeVertex.withHtml(
+                            html
+                        ).getOtherInstances();
+                        $.each(otherInstances, function () {
+                            var relativeVertex = RelativeTreeVertex.ofVertex(
+                                this
+                            );
+                            relativeVertex.adjustPositionIfApplicable();
+                            relativeVertex.adjustAllChildrenPositionIfApplicable();
+                        });
+                        EdgeUi.redrawAllEdges();
                     });
-                    EdgeUi.redrawAllEdges();
-                });
 
-                label.keyup(function() {
+                label.keyup(function () {
                     var vertex = vertexOfSubHtmlComponent(this);
                     var html = vertex.getHtml();
                     updateLabelsOfVerticesWithSameUri();
@@ -240,6 +244,7 @@ define([
                 );
                 return labelContainer;
             }
+
             function createMenu() {
                 var vertexMenu = MindMapTemplate['vertex_menu'].merge();
                 $(html).append(vertexMenu);
@@ -251,7 +256,7 @@ define([
                     vertexMenu,
                     removeButtonClickBehaviour
                 );
-                if(serverFormat.included_vertices.length > 0){
+                if (serverFormat.included_vertices.length > 0) {
                     VertexHtmlCommon.addIncludedVerticesButton(
                         vertexMenu
                     );
@@ -288,7 +293,7 @@ define([
                                 triple.sourceVertex()
                             );
                             var destinationHtml = triple.destinationVertex().getHtml();
-                            if(!UiUtils.isElementFullyOnScreen(destinationHtml)){
+                            if (!UiUtils.isElementFullyOnScreen(destinationHtml)) {
                                 destinationHtml.centerOnScreenWithAnimation();
                             }
                             RelativeTreeVertex.ofVertex(
@@ -304,10 +309,8 @@ define([
                         }
                     );
                 }
-
-                function removeButtonClickBehaviour(event) {
+                function removeButtonClickBehaviour(event, vertex) {
                     event.stopPropagation();
-                    var vertex = vertexOfSubHtmlComponent(this);
                     if (!vertex.isCenterVertex() && vertex.getId() != "default") {
                         VertexService.remove(vertex, function (vertex) {
                             removeChildren(vertex);

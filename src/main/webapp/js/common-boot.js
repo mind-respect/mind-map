@@ -71,6 +71,7 @@ window.config = {
         "triple_brain.included_vertices_menu" : "triple_brain/graph/vertex/triple_brain.included_vertices_menu",
         "triple_brain.ui.suggestion_menu" : "triple_brain/graph/vertex/triple_brain.ui.suggestion_menu",
         "triple_brain.image_displayer" : "triple_brain/graph/vertex/triple_brain.image_displayer",
+        "triple_brain.delete_menu" : "triple_brain/graph/triple_brain.delete_menu",
         "triple_brain.image_menu" : "triple_brain/graph/vertex/triple_brain.image_menu",
         "triple_brain.ui.all" : "triple_brain/triple_brain.ui.all",
         "triple_brain.point" : "triple_brain/triple_brain.point",

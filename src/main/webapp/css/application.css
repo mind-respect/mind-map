@@ -63,11 +63,12 @@ body.select{
     top:0.5em;
     width:20em;
 }
-
 #top-center-menu .ui-button{
+    z-index: 3;
+}
+.ui-button{
     padding:.4em 1em;
     cursor: pointer;
-    z-index: 3;
     font-size:0.9em;
 }
 
@@ -378,6 +379,8 @@ input[type="button"], button {
     width:1.7em;
     height:1.8em;
     margin-right:0;
+    font-size:1.1em;
+    padding:0;
 }
 
 .vertex .menu .ui-button{

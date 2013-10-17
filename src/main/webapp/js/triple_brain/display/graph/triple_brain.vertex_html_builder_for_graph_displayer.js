@@ -226,9 +226,8 @@ define([
                     vertexMenu
                 );
                 return vertexMenu;
-                function removeButtonClickBehaviour(event){
+                function removeButtonClickBehaviour(event, vertex){
                     event.stopPropagation();
-                    var vertex = vertexOfSubHtmlComponent(this);
                     if (!vertex.isCenterVertex() && vertex.getId() != "default") {
                         VertexService.remove(vertex, function(vertex){
                             vertex.removeConnectedEdges();

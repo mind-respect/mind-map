@@ -26,9 +26,20 @@ define([
                 extraOptions
             );
         }
+        menuContent.addClass("html-content");
         menuContent.i18n();
         menuContent.dialog(options);
         menuContent.centerOnScreen();
     };
+    api.fromContentComponent = function(component){
+        return new GraphElementMenu(
+            component.closest(".html-content")
+        );
+    };
     return api;
+    function GraphElementMenu(htmlContent){
+        this.close = function(){
+            htmlContent.dialog("close");
+        };
+    }
 });

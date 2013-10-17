@@ -98,6 +98,13 @@
             },
             "included_vertices" : {
                 "title" : "Bubbles that compose this one"
+            },
+            "delete" : {
+                "title" : "Do you really want to delete this bubble?",
+                "button" : {
+                    "confirm" : "Yes",
+                    "cancel" : "No"
+                }
             }
         }
     },

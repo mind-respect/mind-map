@@ -98,6 +98,13 @@
             },
             "included_vertices" : {
                 "title" : "Bulles comprises dans celle-ci"
+            },
+            "delete" : {
+                "title" : "Voulez-vous vraiment effacer cette bulle?",
+                "button" : {
+                    "confirm" : "Oui",
+                    "cancel" : "Non"
+                }
             }
         }
     },

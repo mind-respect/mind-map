@@ -13,9 +13,10 @@ define([
     "triple_brain.user_map_autocomplete_provider",
     "triple_brain.freebase_autocomplete_provider",
     "triple_brain.included_vertices_menu",
+    "triple_brain.delete_menu",
     "jquery-ui",
     "jquery.triple_brain.search"
-], function($, GraphDisplayer, VertexService, MindMapTemplate, LinkToFarVertexMenu, GraphElementMenu, ImageMenu, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, IncludedVerticesMenu){
+], function($, GraphDisplayer, VertexService, MindMapTemplate, LinkToFarVertexMenu, GraphElementMenu, ImageMenu, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, IncludedVerticesMenu, DeleteMenu){
     var api = {};
     api.applyAutoCompleteIdentificationToLabelInput = function(input){
         input.tripleBrainAutocomplete({
@@ -73,12 +74,18 @@ define([
             clickBehavior
         );
     };
-    api.addRemoveButton = function(vertexMenu, clickBehavior){
+    api.addRemoveButton = function(vertexMenu, deleteCallback){
         return makeVertexMenuButtonUsingClass(
             vertexMenu,
             "ui-icon-trash",
             clickBehavior
         );
+        function clickBehavior(){
+            DeleteMenu.ofVertexAndDeletionBehavior(
+                vertexOfSubHtmlComponent(this),
+                deleteCallback
+            ).build();
+        }
     };
     api.addIncludedVerticesButton = function(vertexMenu){
         return makeVertexMenuButtonUsingClass(
