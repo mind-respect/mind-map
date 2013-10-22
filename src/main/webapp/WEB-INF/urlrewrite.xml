@@ -22,7 +22,7 @@
     <rule>
         <note></note>
         <from>/manoir*</from>
-        <to type="redirect">http://triple-brain.org:2015/manoir</to>
+        <to type="redirect">http://216.14.122.39:2015/manoir</to>
     </rule>
 
     <outbound-rule>
