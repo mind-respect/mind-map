@@ -75,6 +75,10 @@ define([
                     if(isInverse){
                         arrowHeadEdge.x += headSize;
                     }
+                }else{
+                    if(!isInverse){
+                        arrowHeadEdge.x += headSize;
+                    }
                 }
                 var upperEnd = Point.fromCoordinates(
                     arrowHeadEdge.x - headSize * directionFactor,
