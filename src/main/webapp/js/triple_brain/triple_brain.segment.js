@@ -114,9 +114,6 @@ define([
                     this.endPoint.x - this.startPoint.x
                 );
             };
-            this.isValid = function () {
-                return this.startPoint != undefined && this.endPoint != undefined;
-            };
             this.clone = function () {
                 return api.withStartAndEndPoint(
                     this.startPoint.clone(),
