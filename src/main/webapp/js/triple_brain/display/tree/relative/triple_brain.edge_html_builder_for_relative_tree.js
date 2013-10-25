@@ -116,6 +116,7 @@ define([
                         var menu = $("<span class='relation-menu'>");
                         edgeHtml.append(menu);
                         addIdentificationButton();
+                        addInverseButton();
                         addRemoveButton();
                         function addIdentificationButton() {
                             var identificationButton = $("<button class='identification'>");
@@ -137,6 +138,22 @@ define([
                                     ).create();
                                 }
                             );
+                        }
+
+                        function addInverseButton() {
+                            var buttonClass = vertex.isToTheLeft() ?
+                                "ui-icon-arrowreturnthick-1-e" :
+                                "ui-icon-arrowreturnthick-1-w";
+                            $(
+                                "<button>"
+                            ).appendTo(
+                                menu
+                            ).button({
+                                icons:{
+                                    primary:"ui-icon " + buttonClass
+                                },
+                                text:false
+                            });
                         }
 
                         function addRemoveButton() {
