@@ -107,7 +107,6 @@ define([
                 distancePoint.y = this.startPoint.y - segmentToCompare.startPoint.y;
                 return distancePoint;
             };
-
             this.radianDirection = function () {
                 return Math.atan2(
                     this.endPoint.y - this.startPoint.y,
