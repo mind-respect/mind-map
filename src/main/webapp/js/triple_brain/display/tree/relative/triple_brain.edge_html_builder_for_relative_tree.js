@@ -116,7 +116,7 @@ define([
                         var menu = $("<span class='relation-menu'>");
                         edgeHtml.append(menu);
                         addIdentificationButton();
-                        addInverseButton();
+//                        addInverseButton();
                         addRemoveButton();
                         function addIdentificationButton() {
                             var identificationButton = $("<button class='identification'>");
