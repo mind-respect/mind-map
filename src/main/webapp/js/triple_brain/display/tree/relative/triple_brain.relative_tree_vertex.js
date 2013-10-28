@@ -202,13 +202,25 @@ define([
             }
         );
         EventBus.subscribe(
+            "/event/ui/graph/vertex/image/about_to_load",
+            function(){
+                api.numberImagesToLoad = api.numberImagesToLoad === undefined ?
+                    1 :
+                    api.numberImagesToLoad++;
+            }
+        );
+        EventBus.subscribe(
             "/event/ui/graph/vertex/image/updated",
             function(event, vertex){
+                api.numberImagesToLoad--;
                 var relativeVertex = api.ofVertex(vertex);
                 api.withHtml(
                     relativeVertex.getParentVertexHtml()
                 ).adjustAllChildrenPositionIfApplicable();
-                EdgeUi.redrawAllEdges();
+                relativeVertex.adjustPositionIfApplicable();
+                if(api.numberImagesToLoad === 0){
+                    EdgeUi.redrawAllEdges();
+                }
             }
         );
         return api;

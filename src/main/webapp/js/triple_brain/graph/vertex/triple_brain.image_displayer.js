@@ -37,6 +37,10 @@ define(
                 $(html).append(
                     image
                 );
+                EventBus.publish(
+                    "/event/ui/graph/vertex/image/about_to_load",
+                    vertex
+                );
                 $(image).load(function () {
                     setUpBiggerImagesView();
                     /*
