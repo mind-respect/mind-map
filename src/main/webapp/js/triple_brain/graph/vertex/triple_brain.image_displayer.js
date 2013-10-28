@@ -39,7 +39,12 @@ define(
                 );
                 $(image).load(function () {
                     setUpBiggerImagesView();
-                    vertex.adjustWidth();
+                    /*
+                        adjustWidth should be sufficient but display is better
+                          when calling readjustLabelWidth() which adjust label width
+                          call vertex.adjustWidth() afterwards
+                     */
+                    vertex.readjustLabelWidth();
                     EventBus.publish(
                         "/event/ui/graph/vertex/image/updated",
                         vertex
