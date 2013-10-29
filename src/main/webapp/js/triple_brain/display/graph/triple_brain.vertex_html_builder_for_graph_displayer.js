@@ -370,10 +370,7 @@ define([
                         sourceVertex.unhighlight();
                         VertexService.addRelationAndVertexAtPositionToVertex(
                             sourceVertex,
-                            relationEndPoint,
-                            function(triple){
-                                triple.destinationVertex().scrollTo();
-                            }
+                            relationEndPoint
                         );
                     }
                 });
