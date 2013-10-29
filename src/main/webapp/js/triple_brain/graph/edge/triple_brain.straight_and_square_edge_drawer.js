@@ -57,9 +57,13 @@ define([
                     endPointOfSecondSegment,
                     endPointOfThirdSegment
                 );
-                var arrowHeadEdge = Segment.withStartAndEndPoint(
+                var middlePoint = Segment.withStartAndEndPoint(
                     endPointOfSecondSegment,
                     lastSegment.middlePoint()
+                ).middlePoint();
+                var arrowHeadEdge = Segment.withStartAndEndPoint(
+                    endPointOfSecondSegment,
+                    middlePoint
                 ).middlePoint();
                 var isGoingLeft = getIsGoingLeft();
                 var headSize = 10;
@@ -68,10 +72,6 @@ define([
                     isInverse ? -1 : 1;
 
                 if(isGoingLeft){
-                    arrowHeadEdge = Segment.withStartAndEndPoint(
-                        endPointOfSecondSegment,
-                        arrowHeadEdge
-                    ).middlePoint();
                     if(isInverse){
                         arrowHeadEdge.x += headSize;
                     }
