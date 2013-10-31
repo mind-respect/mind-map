@@ -175,7 +175,6 @@ define([
                             child.buildHiddenNeighborPropertiesIndicator();
                         }
                     });
-                    vertex.getHtml().centerOnScreenWithAnimation();
                 }
             );
         }
