@@ -139,7 +139,6 @@ define([
                 ).length > 0 ;
             };
             VertexUi.Object.apply(this, [html]);
-
             function getChildren(){
                 return html.closest(".vertex-container").siblings(
                     ".vertices-children-container"

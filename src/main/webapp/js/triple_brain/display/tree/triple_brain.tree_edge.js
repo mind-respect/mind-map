@@ -7,10 +7,10 @@ define([
     "triple_brain.ui.edge",
     "triple_brain.graph_displayer"
 ],
-    function (require, $, Edge, GraphDisplayer) {
+    function (require, $, EdgeUi, GraphDisplayer) {
         var api = {};
         api.getWhenEmptyLabel = function () {
-            return Edge.getWhenEmptyLabel();
+            return EdgeUi.getWhenEmptyLabel();
         };
         api.visitAllEdges = function(visitor){
             $(".relation").each(function () {
@@ -19,7 +19,7 @@ define([
                 );
             });
         };
-        api.redrawAllEdges = Edge.redrawAllEdges;
+        api.redrawAllEdges = EdgeUi.redrawAllEdges;
 
         api.withHtml = function (html) {
             return new Object($(html));
@@ -70,10 +70,18 @@ define([
             this.focus = function () {
                 html.centerOnScreen();
             };
-            Edge.Object.apply(this, [html]);
+            this.inverse = function(){
+                html[
+                    html.hasClass("inverse") ?
+                        "removeClass" :
+                        "addClass"
+                    ]("inverse");
+                EdgeUi.withHtml(html).inverseAbstract();
+            };
+            EdgeUi.Object.apply(this, [html]);
         }
 
-        Object.prototype = new Edge.Object();
+        Object.prototype = new EdgeUi.Object();
         return api;
     }
 );

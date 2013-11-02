@@ -116,7 +116,7 @@ define([
                         var menu = $("<span class='relation-menu'>");
                         edgeHtml.append(menu);
                         addIdentificationButton();
-//                        addInverseButton();
+                        addInverseButton();
                         addRemoveButton();
                         function addIdentificationButton() {
                             var identificationButton = $("<button class='identification'>");
@@ -153,7 +153,17 @@ define([
                                     primary:"ui-icon " + buttonClass
                                 },
                                 text:false
-                            });
+                            }).on(
+                                "click",
+                                function(event){
+                                    event.stopPropagation();
+                                    var edge = edgeFromHtml(this);
+                                    EdgeService.inverse(
+                                        edge,
+                                        edge.inverse
+                                    );
+                                }
+                            );
                         }
 
                         function addRemoveButton() {
@@ -254,7 +264,7 @@ define([
                     VertexAndEdgeCommon.adjustWidthToNumberOfChars(
                         html
                     );
-                    var vertex = VertexUi.withHtml(
+                    var vertex = RelativeTreeVertex.withHtml(
                         html.closest(".vertex")
                     );
                     vertex.adjustWidth();
@@ -264,7 +274,7 @@ define([
                 );
                 input.focus();
                 input.setCursorToTextEnd();
-                var vertex = VertexUi.withHtml(
+                var vertex = RelativeTreeVertex.withHtml(
                     input.closest(".vertex")
                 );
                 vertex.adjustWidth();

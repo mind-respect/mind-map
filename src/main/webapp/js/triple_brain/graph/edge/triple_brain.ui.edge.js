@@ -68,19 +68,9 @@ define([
         function drawEdges(recalculate){
             var edges = api.allEdges();
             for (var i = 0; i < edges.length; i++) {
-                var edge = edges[i];
-                var arrowLine;
-                if(recalculate){
-                    edge.arrowLine().remove();
-                    arrowLine = getGraphDisplayer().getEdgeDrawer().ofEdge(
-                        getGraphDisplayer().getEdgeSelector().ofEdge(
-                            edge
-                        )
-                    );
-                    edge.setArrowLine(arrowLine);
-                }
-                edge.arrowLine().drawInBlackWithSmallLineWidth();
-                edge.centerOnArrowLine();
+                edges[i].redraw(
+                    recalculate
+                );
             }
         }
 
@@ -103,6 +93,20 @@ define([
                     "uri"
                 );
             };
+            this.redraw = function(recalculate){
+                var arrowLine;
+                if(recalculate){
+                    self.arrowLine().remove();
+                    arrowLine = getGraphDisplayer().getEdgeDrawer().ofEdge(
+                        getGraphDisplayer().getEdgeSelector().ofEdge(
+                            self
+                        )
+                    );
+                    self.setArrowLine(arrowLine);
+                }
+                self.arrowLine().drawInBlackWithSmallLineWidth();
+                self.centerOnArrowLine();
+            };
             this.getGraphElementType = function(){
                 return GraphElement.types.RELATION;
             };
@@ -118,6 +122,19 @@ define([
                 return getGraphDisplayer().getVertexSelector().withId(
                     html.data("source_vertex_id")
                 );
+            };
+            this.inverseAbstract = function(){
+                var sourceVertexUri = html.data("source_vertex_id");
+                var destinationVertexUri = html.data("destination_vertex_id");
+                html.data(
+                    "source_vertex_id",
+                    destinationVertexUri
+                );
+                html.data(
+                    "destination_vertex_id",
+                    sourceVertexUri
+                );
+                self.redraw(true);
             };
             this.arrowLine = function () {
                 return html.data("arrowLine");
