@@ -192,9 +192,9 @@ define([
                     vertexMenu,
                     createRelationOrAddVertex
                 );
-                VertexHtmlCommon.addRemoveButton(
+                VertexHtmlCommon.addRemoveButtonIfApplicable(
                     vertexMenu,
-                    removeButtonClickBehaviour
+                    removeButtonAfterConfirmationBehavior
                 );
                 if(serverFormat.included_vertices.length > 0){
                     VertexHtmlCommon.addIncludedVerticesButton(
@@ -226,14 +226,12 @@ define([
                     vertexMenu
                 );
                 return vertexMenu;
-                function removeButtonClickBehaviour(event, vertex){
+                function removeButtonAfterConfirmationBehavior(event, vertex){
                     event.stopPropagation();
-                    if (!vertex.isCenterVertex() && vertex.getId() != "default") {
-                        VertexService.remove(vertex, function(vertex){
-                            vertex.removeConnectedEdges();
-                            vertex.remove();
-                        });
-                    }
+                    VertexService.remove(vertex, function(vertex){
+                        vertex.removeConnectedEdges();
+                        vertex.remove();
+                    });
                 }
                 function suggestionsButtonClickBehaviour(event){
                     event.stopPropagation();

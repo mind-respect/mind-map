@@ -252,9 +252,9 @@ define([
                     vertexMenu,
                     addButtonClickBehaviour
                 );
-                VertexHtmlCommon.addRemoveButton(
+                VertexHtmlCommon.addRemoveButtonIfApplicable(
                     vertexMenu,
-                    removeButtonClickBehaviour
+                    removeButtonAfterConfirmationBehavior
                 );
                 if (serverFormat.included_vertices.length > 0) {
                     VertexHtmlCommon.addIncludedVerticesButton(
@@ -309,33 +309,31 @@ define([
                         }
                     );
                 }
-                function removeButtonClickBehaviour(event, vertex) {
+                function removeButtonAfterConfirmationBehavior(event, vertex) {
                     event.stopPropagation();
-                    if (!vertex.isCenterVertex() && vertex.getId() != "default") {
-                        VertexService.remove(vertex, function (vertex) {
+                    VertexService.remove(vertex, function (vertex) {
+                        removeChildren(vertex);
+                        RelativeTreeVertex.ofVertex(vertex).applyToOtherInstances(function (vertex) {
                             removeChildren(vertex);
-                            RelativeTreeVertex.ofVertex(vertex).applyToOtherInstances(function (vertex) {
-                                removeChildren(vertex);
-                                removeEdges(vertex);
-                            });
                             removeEdges(vertex);
-                            EdgeUi.redrawAllEdges();
-                            function removeChildren(vertex) {
-                                var relativeVertex = RelativeTreeVertex.ofVertex(
-                                    vertex
-                                );
-                                relativeVertex.visitChildren(function (childVertex) {
-                                    vertex.removeConnectedEdges();
-                                    childVertex.remove();
-                                });
-                            }
-
-                            function removeEdges(vertex) {
-                                vertex.removeConnectedEdges();
-                                vertex.remove();
-                            }
                         });
-                    }
+                        removeEdges(vertex);
+                        EdgeUi.redrawAllEdges();
+                        function removeChildren(vertex) {
+                            var relativeVertex = RelativeTreeVertex.ofVertex(
+                                vertex
+                            );
+                            relativeVertex.visitChildren(function (childVertex) {
+                                vertex.removeConnectedEdges();
+                                childVertex.remove();
+                            });
+                        }
+
+                        function removeEdges(vertex) {
+                            vertex.removeConnectedEdges();
+                            vertex.remove();
+                        }
+                    });
                 }
 
                 function suggestionsButtonClickBehaviour(event) {

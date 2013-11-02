@@ -523,6 +523,11 @@ define([
             this.getIncludedVertices = function(){
                 return html.data("includedVertices");
             };
+
+            this.isAbsoluteDefaultVertex = function(){
+                return self.getUri().indexOf("default") !== -1;
+            };
+
             function setIsPublic(isPublic){
                 html.data(
                     "isPublic",

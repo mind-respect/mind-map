@@ -74,7 +74,11 @@ define([
             clickBehavior
         );
     };
-    api.addRemoveButton = function(vertexMenu, deleteCallback){
+    api.addRemoveButtonIfApplicable = function(vertexMenu, deleteAfterConfirmationBehavior){
+        var vertex = vertexOfSubHtmlComponent(vertexMenu);
+        if(vertex.isAbsoluteDefaultVertex()){
+            return;
+        }
         return makeVertexMenuButtonUsingClass(
             vertexMenu,
             "ui-icon-trash",
@@ -83,7 +87,7 @@ define([
         function clickBehavior(){
             DeleteMenu.ofVertexAndDeletionBehavior(
                 vertexOfSubHtmlComponent(this),
-                deleteCallback
+                deleteAfterConfirmationBehavior
             ).build();
         }
     };
