@@ -20,17 +20,18 @@ define([
 ],
     function ($, GraphDisplayer, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, ServerSubscriber, ImageDisplayer, GraphElement) {
         var api = {};
-        api.getWhenEmptyLabel = function(){
+        api.getWhenEmptyLabel = function () {
             return $.t("vertex.default");
         };
         api.withHtml = function (html) {
             return new api.Object(html);
         };
         api.withId = function (id) {
-            return getGraphDisplayer().getVertexSelector().withHtml($("#" + id));
+            return GraphDisplayer.getVertexSelector().withHtml($("#" + id));
         };
         api.withUri = function (uri) {
             var verticesWithUri = [];
+            //todo find a more efficient way to get vertex with uri.
             api.visitAllVertices(function (vertex) {
                 if (vertex.getUri() === uri) {
                     verticesWithUri.push(
@@ -41,26 +42,26 @@ define([
             return verticesWithUri;
         };
         api.centralVertex = function () {
-            return getGraphDisplayer().getVertexSelector().withHtml(
+            return GraphDisplayer.getVertexSelector().withHtml(
                 $('.center-vertex')
             );
         };
         api.visitAllVertices = function (visitor) {
-            $(".vertex").each(function () {
+            $("#drawn_graph .vertex").each(function () {
                 return visitor(
-                    getGraphDisplayer().getVertexSelector().withHtml(this)
+                    GraphDisplayer.getVertexSelector().withHtml(this)
                 );
             });
         };
-        api.resetSelection = function(){
+        api.resetSelection = function () {
             $(".vertex.selected").removeClass(
                 "selected"
             );
         };
-        api.visitSelected = function(visitor){
+        api.visitSelected = function (visitor) {
             $(".vertex.selected").each(function () {
                 return visitor(
-                    getGraphDisplayer().getVertexSelector().withHtml(this)
+                    GraphDisplayer.getVertexSelector().withHtml(this)
                 );
             });
         };
@@ -70,7 +71,7 @@ define([
         api.setVertexMouseOver = function (vertex) {
             $("body").data("vertex_mouse_over", vertex);
         };
-        api.unsetVertexMouseOver = function(){
+        api.unsetVertexMouseOver = function () {
             $("body").removeData("vertex_mouse_over");
         };
         api.Object = function (html) {
@@ -80,7 +81,7 @@ define([
             };
             GraphElement.Object.apply(self, [html]);
 
-            this.getGraphElementType = function(){
+            this.getGraphElementType = function () {
                 return GraphElement.types.CONCEPT;
             };
 
@@ -159,7 +160,7 @@ define([
             this.hasHiddenRelationsContainer = function () {
                 return undefined !== self.getHiddenRelationsContainer();
             };
-            this.getHiddenRelationsContainer = function(){
+            this.getHiddenRelationsContainer = function () {
                 return html.data(
                     "hidden_properties_indicator"
                 );
@@ -259,7 +260,7 @@ define([
                     var edge = this;
                     edge.arrowLine().remove();
                     edge.setArrowLine(
-                        getGraphDisplayer().getEdgeDrawer().ofEdge(
+                        GraphDisplayer.getEdgeDrawer().ofEdge(
                             edge
                         )
                     );
@@ -287,10 +288,10 @@ define([
                     label
                 );
             };
-            this.setNote = function(note){
+            this.setNote = function (note) {
                 html.data("note", note);
             };
-            this.getNote = function(){
+            this.getNote = function () {
                 return html.data("note");
             };
             this.getTextContainer = function () {
@@ -324,7 +325,7 @@ define([
                 EdgeUi.drawAllEdges();
             };
             this.remove = function () {
-                if(self.hasHiddenRelationsContainer()){
+                if (self.hasHiddenRelationsContainer()) {
                     self.getHiddenRelationsContainer().remove();
                 }
                 html.remove();
@@ -350,7 +351,7 @@ define([
                     self.hideSuggestionButton();
             };
 
-            this.applyCommonBehaviorForAddedIdentification = function(externalResource) {
+            this.applyCommonBehaviorForAddedIdentification = function (externalResource) {
                 self.addImages(
                     externalResource.images()
                 );
@@ -386,7 +387,7 @@ define([
                     $(html).data("images");
             };
 
-            this.serverFacade = function(){
+            this.serverFacade = function () {
                 return VertexService;
             };
 
@@ -408,7 +409,7 @@ define([
                 return html.data("images_menu");
             };
 
-            this.removeIdentificationCommonBehavior = function(externalResource) {
+            this.removeIdentificationCommonBehavior = function (externalResource) {
                 $.each(externalResource.images(), function () {
                     var image = this;
                     self.removeImage(image);
@@ -500,35 +501,46 @@ define([
                     return serverFormat;
                 }
             };
-            this.makePrivate = function(){
+            this.makePrivate = function () {
                 html.removeClass("public");
                 setIsPublic(false);
             };
-            this.makePublic = function(){
+            this.makePublic = function () {
                 html.addClass("public");
                 setIsPublic(true);
             };
-            this.isPublic = function(){
+            this.isPublic = function () {
                 return html.data("isPublic");
             };
-            this.select = function(){
+            this.select = function () {
                 html.addClass("selected");
             };
-            this.setIncludedVertices = function(includedVertices){
+            this.isSelected = function () {
+                return html.hasClass("selected");
+            };
+            this.setIncludedVertices = function (includedVertices) {
                 html.data(
                     "includedVertices",
                     includedVertices
                 );
             };
-            this.getIncludedVertices = function(){
+            this.getIncludedVertices = function () {
                 return html.data("includedVertices");
             };
-
-            this.isAbsoluteDefaultVertex = function(){
+            this.setIncludedEdges = function (includedEdges) {
+                html.data(
+                    "includedEdges",
+                    includedEdges
+                );
+            };
+            this.getIncludedEdges = function () {
+                return html.data("includedEdges");
+            };
+            this.isAbsoluteDefaultVertex = function () {
                 return self.getUri().indexOf("default") !== -1;
             };
 
-            function setIsPublic(isPublic){
+            function setIsPublic(isPublic) {
                 html.data(
                     "isPublic",
                     isPublic
@@ -558,10 +570,8 @@ define([
             }
 
             crow.ConnectedNode.apply(this, [self.getUri()]);
-        }
-
+        };
         api.Object.prototype = new crow.ConnectedNode();
-
         EventBus.subscribe(
             '/event/ui/graph/vertex/label/updated',
             function (event, vertex) {
@@ -573,19 +583,12 @@ define([
 
         EventBus.subscribe(
             '/event/ui/graph/reset',
-            function(){
-                api.visitAllVertices(function(vertex){
+            function () {
+                api.visitAllVertices(function (vertex) {
                     vertex.remove();
                 });
             }
         );
-
         return api;
-        function getGraphDisplayer(){
-            if(GraphDisplayer === undefined){
-                GraphDisplayer = require("triple_brain.graph_displayer");
-            }
-            return GraphDisplayer;
-        }
     }
 );

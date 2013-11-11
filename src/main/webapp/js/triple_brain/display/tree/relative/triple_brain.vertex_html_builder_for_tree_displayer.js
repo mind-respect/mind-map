@@ -6,7 +6,6 @@ define([
     "require",
     "jquery",
     "triple_brain.event_bus",
-    "triple_brain.ui.graph",
     "triple_brain.vertex",
     "triple_brain.ui.edge",
     "triple_brain.edge",
@@ -27,7 +26,7 @@ define([
     "jquery-ui",
     "jquery.is-fully-on-screen",
     "jquery.center-on-screen"
-], function (require, $, EventBus, GraphUi, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, Point, Segment, GraphDisplayer, RelativeTreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, Image, UiUtils) {
+], function (require, $, EventBus, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, Point, Segment, GraphDisplayer, RelativeTreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, Image, UiUtils) {
         var api = {};
         api.withServerJson = function (serverVertex) {
             return new VertexCreator(serverVertex);
@@ -141,6 +140,7 @@ define([
                 });
                 vertex.addImages(images);
                 vertex.setIncludedVertices(serverFormat.included_vertices);
+                vertex.setIncludedEdges(serverFormat.included_edges);
                 vertex.makeItLowProfile();
                 vertex.setOriginalServerObject(
                     serverFormat
@@ -256,8 +256,8 @@ define([
                     vertexMenu,
                     removeButtonAfterConfirmationBehavior
                 );
-                if (serverFormat.included_vertices.length > 0) {
-                    VertexHtmlCommon.addIncludedVerticesButton(
+                if (Object.keys(serverFormat.included_vertices).length > 0) {
+                    VertexHtmlCommon.addIncludedGraphElementsButton(
                         vertexMenu
                     );
                 }

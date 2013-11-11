@@ -3,7 +3,6 @@
  */
 
 define([
-    "require",
     "jquery",
     "triple_brain.ui.graph",
     "triple_brain.ui.vertex_and_edge_common",
@@ -12,7 +11,7 @@ define([
     "triple_brain.ui.graph_element",
     "triple_brain.edge"
 ],
-    function (require, $, GraphUi, VertexAndEdgeCommon, EventBus, GraphDisplayer, GraphElement, EdgeService) {
+    function ($, GraphUi, VertexAndEdgeCommon, EventBus, GraphDisplayer, GraphElement, EdgeService) {
         var api = {};
         api.getWhenEmptyLabel = function(){
             return $.t("edge.default");
@@ -22,7 +21,7 @@ define([
         };
         api.allEdges = function () {
             var edges = new Array();
-            $(".relation").each(function () {
+            $("#drawn_graph .relation").each(function () {
                 edges.push(api.withHtml(this));
             });
             return edges;
@@ -97,8 +96,8 @@ define([
                 var arrowLine;
                 if(recalculate){
                     self.arrowLine().remove();
-                    arrowLine = getGraphDisplayer().getEdgeDrawer().ofEdge(
-                        getGraphDisplayer().getEdgeSelector().ofEdge(
+                    arrowLine = GraphDisplayer.getEdgeDrawer().ofEdge(
+                        GraphDisplayer.getEdgeSelector().ofEdge(
                             self
                         )
                     );
@@ -114,12 +113,12 @@ define([
                 return EdgeService;
             };
             this.destinationVertex = function () {
-                return getGraphDisplayer().getVertexSelector().withId(
+                return GraphDisplayer.getVertexSelector().withId(
                     html.data('destination_vertex_id')
                 );
             };
             this.sourceVertex = function () {
-                return getGraphDisplayer().getVertexSelector().withId(
+                return GraphDisplayer.getVertexSelector().withId(
                     html.data("source_vertex_id")
                 );
             };
@@ -203,7 +202,7 @@ define([
                 );
             };
             this.isMouseOver = function () {
-                var edgeThatIsMouseOver = getGraphUi().getEdgeMouseOver();
+                var edgeThatIsMouseOver = GraphUi.getEdgeMouseOver();
                 return  edgeThatIsMouseOver !== undefined &&
                     edgeThatIsMouseOver.equalsEdge(self);
             };
@@ -231,12 +230,6 @@ define([
             function isDestinationVertex(vertex) {
                 return self.destinationVertex().getId() == vertex.getId()
             }
-            function getGraphUi(){
-                if(GraphUi === undefined){
-                    GraphUi = require("triple_brain.ui.graph");
-                }
-                return GraphUi;
-            }
         };
 
         EventBus.subscribe(
@@ -254,12 +247,6 @@ define([
         );
 
         return api;
-        function getGraphDisplayer(){
-            if(GraphDisplayer === undefined){
-                GraphDisplayer = require("triple_brain.graph_displayer");
-            }
-            return GraphDisplayer;
-        }
     }
 )
 ;

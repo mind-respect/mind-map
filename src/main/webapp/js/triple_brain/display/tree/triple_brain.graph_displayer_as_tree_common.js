@@ -24,15 +24,6 @@ define([
                 applyToBoth([
                     initVertexInTreeInfoIfNecessary
                 ]);
-//                var parentId,
-//                    childId;
-//                if (isCentralVertex(destinationId)) {
-//                    parentId = destinationId;
-//                    childId = sourceId
-//                } else {
-//                    parentId = sourceId;
-//                    childId = destinationId;
-//                }
                 setNeighbors(sourceId, destinationId, edge);
             }
 

@@ -2,15 +2,11 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "require",
     "jquery",
-    "triple_brain.point",
-    "triple_brain.event_bus",
-    "triple_brain.ui.vertex"
+    "triple_brain.point"
 ],
-    function (require, $, Point, EventBus, VertexUi) {
+    function ($, Point) {
         var api = {};
-        var graphForTraversal;
         api.getEdgeMouseOver = function () {
             return $("body").data("edge_mouse_over");
         };
@@ -24,12 +20,15 @@ define([
             $("#drawn_graph").append(html);
         };
         api.resetDrawingCanvas = function(){
-            if ($("body").data(("canvas"))) {
-                $("body").data("canvas").remove();
+            var body = $("body");
+            if (body.data(("canvas"))) {
+                body.data("canvas").remove();
             }
-            $("body").data(
+            var paper = Raphael(0, 0, body.width(), body.height());
+            paper.canvas.className.baseVal="main";
+            body.data(
                 "canvas",
-                Raphael(0, 0, $("body").width(), $("body").height())
+                 paper
             );
         };
         api.canvas = function () {
@@ -40,147 +39,8 @@ define([
             return Point.fromCoordinates(
                 $("body").width() / 2,
                 $("body").height() / 2
-            )
+            );
         };
-
-        api.numberOfEdgesBetween = function(vertexA, vertexB){
-            return graphForTraversal.findGoal({
-                start: graphForTraversal.getNode(vertexA.getUri()),
-                goal: graphForTraversal.getNode(vertexB.getUri()),
-                algorithm: "dijkstra"
-            }).length;
-        };
-
-        EventBus.subscribe(
-            '/event/ui/graph/reset',
-            function(){
-                if(graphForTraversal != undefined){
-                    graphForTraversal.invalidate();
-                }
-                graphForTraversal = new crow.Graph();
-            }
-        );
-
-        EventBus.subscribe(
-            '/event/ui/html/vertex/created/',
-            function(event, vertex){
-                addVertexToGraphTraversal(vertex);
-            }
-        );
-
-        EventBus.subscribe(
-            '/event/ui/graph/vertex_and_relation/added/',
-            function(event, triple){
-                addVertexToGraphTraversal(triple.destinationVertex());
-                connectVerticesOfEdgeForTraversal(triple.edge());
-                EventBus.publish(
-                    "/event/graph_traversal/triple_added",
-                    triple
-                );
-            }
-        );
-
-        EventBus.subscribe(
-            '/event/ui/graph/relation/deleted',
-            function(event, edge, edgeUri, sourceVertexUri, destinationVertexUri){
-                removeEdgeInGraphForTraversal(
-                    sourceVertexUri,
-                    destinationVertexUri
-                );
-                EventBus.publish(
-                    "/event/graph_traversal/edge/removed",[
-                        edgeUri,
-                        sourceVertexUri,
-                        destinationVertexUri
-                    ]
-                );
-            }
-        );
-
-        function removeEdgeInGraphForTraversal(sourceVertexUri, destinationVertexUri){
-            var sourceVertex = graphForTraversal.getNode(
-                sourceVertexUri
-            );
-            var destinationVertex = graphForTraversal.getNode(
-                destinationVertexUri
-            );
-            removeVertexInConnections(destinationVertexUri, sourceVertex.connections);
-            removeVertexInConnections(sourceVertexUri, destinationVertex.connections);
-        }
-
-        EventBus.subscribe(
-            '/event/ui/graph/vertex/deleted/',
-            function(event, vertexUri){
-                removeVertexInGraphForTraversal(vertexUri);
-            }
-        );
-
-        function removeVertexInGraphForTraversal(vertexUri){
-            graphForTraversal.removeNode(
-                graphForTraversal.getNode(vertexUri)
-            );
-            var node = findVertexInGraphForTraversalNodesAfterItWasDeleted(
-                vertexUri
-            );
-            $.each(node.connections, function(){
-                var connection = this;
-                var connectedNode = graphForTraversal.getNode(connection.id);
-                removeVertexInConnections(vertexUri, connectedNode.connections);
-            });
-        }
-        function removeVertexInConnections(vertexUri, connections){
-            for(var j in connections){
-                var connection = connections[j];
-                if(connection.id == vertexUri){
-                    connections.splice(j,1);
-                }
-            }
-        }
-
-        function findVertexInGraphForTraversalNodesAfterItWasDeleted(vertexUri){
-            for(var i in graphForTraversal.nodes){
-                var node = graphForTraversal.nodes[i];
-                if(node.id == vertexUri){
-                    return node;
-                }
-            }
-        }
-
-
-        EventBus.subscribe(
-            '/event/ui/html/edge/created/',
-            function(event, edge){
-                connectVerticesOfEdgeForTraversal(edge);
-                EventBus.publish(
-                    "/event/graph_traversal/edge_added",
-                    edge
-                );
-            }
-        );
-
-        function addVertexToGraphTraversal(vertex){
-            graphForTraversal.addNode(
-                getVertexUi().withHtml(vertex.getHtml())
-            );
-        }
-
-        function connectVerticesOfEdgeForTraversal(edge){
-            var sourceVertex = graphForTraversal.getNode(
-                edge.sourceVertex().getUri()
-            );
-            var destinationVertex = graphForTraversal.getNode(
-                edge.destinationVertex().getUri()
-            );
-            sourceVertex.connectTo(
-                destinationVertex
-            );
-        }
         return api;
-        function getVertexUi(){
-            if(VertexUi === undefined){
-                VertexUi = require("triple_brain.ui.vertex");
-            }
-            return VertexUi;
-        }
     }
 )

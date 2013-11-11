@@ -2,12 +2,11 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "require",
     "triple_brain.id_uri",
     "triple_brain.event_bus",
     "triple_brain.graph_displayer"
 ],
-    function (require, IdUriUtils, EventBus, GraphDisplayer) {
+    function (IdUriUtils, EventBus, GraphDisplayer) {
         var api = {};
         api.createUsingServerTriple = function (sourceVertex, tripleJson) {
             var dummyPosition = {
@@ -26,11 +25,11 @@ define([
                 y : newVertexPosition.y
             };
 
-            var destinationVertex = getGraphDisplayer().addVertex(
+            var destinationVertex = GraphDisplayer.addVertex(
                 tripleJson.end_vertex,
                 sourceVertex
             );
-            var edge = getGraphDisplayer().addEdge(
+            var edge = GraphDisplayer.addEdge(
                 tripleJson.edge,
                 sourceVertex,
                 destinationVertex
@@ -64,11 +63,5 @@ define([
             };
         }
         return api;
-        function getGraphDisplayer(){
-            if(GraphDisplayer === undefined){
-                GraphDisplayer = require("triple_brain.graph_displayer");
-            }
-            return GraphDisplayer;
-        }
     }
 );

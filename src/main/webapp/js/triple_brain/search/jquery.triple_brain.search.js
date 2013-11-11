@@ -1,8 +1,7 @@
 /*
  * Copyright Mozilla Public License 1.1
  */
-
-require([
+define([
     "jquery",
     "jquery-ui"
 ], function ($) {

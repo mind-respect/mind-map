@@ -5,9 +5,7 @@
 define([
     "require",
     "jquery",
-    "triple_brain.ui.graph",
     "triple_brain.mind-map_template",
-    "triple_brain.id_uri",
     "triple_brain.ui.vertex_and_edge_common",
     "triple_brain.tree_edge",
     "triple_brain.edge",
@@ -20,25 +18,20 @@ define([
     "triple_brain.freebase_autocomplete_provider",
     "triple_brain.graph_displayer",
     "jquery.cursor-at-end"
-
 ],
-    function (require, $, GraphUi, MindMapTemplate, IdUriUtils, VertexAndEdgeCommon, TreeEdge, EdgeService, EventBus, RelativeTreeVertex, RelativeTreeTemplates, IdentificationMenu, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphDisplayer) {
+    function (require, $, MindMapTemplate, VertexAndEdgeCommon, TreeEdge, EdgeService, EventBus, RelativeTreeVertex, RelativeTreeTemplates, IdentificationMenu, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphDisplayer) {
         var api = {};
         api.get = function (edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
             return new EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade);
         };
         function EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
             var uri = edgeServer.uri;
-            edgeServer.uri = IdUriUtils.graphElementIdFromUri(edgeServer.uri);
             var html = $(
                 "<span>"
             ).addClass(
                 "relation"
             ).css("display", "inline");
             this.create = function () {
-                GraphUi.addHtml(
-                    html
-                );
                 var isInverse = edgeServer.source_vertex_id !== parentVertexHtmlFacade.getUri();
                 if (isInverse) {
                     html.addClass("inverse");
@@ -51,7 +44,6 @@ define([
                     "destination_vertex_id",
                     isInverse ? parentVertexHtmlFacade.getId() : childVertexHtmlFacade.getId()
                 );
-
                 html.click(function () {
                     changeToInput(
                         edgeFromHtml($(this))

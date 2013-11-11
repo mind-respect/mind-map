@@ -96,8 +96,8 @@
                     "2" : "to add it to your mind map"
                 }
             },
-            "included_vertices" : {
-                "title" : "Bubbles that compose this one"
+            "included_graph_elements" : {
+                "title" : "Bubbles and relations that compose this one"
             },
             "delete" : {
                 "title" : "Do you really want to delete this bubble?",

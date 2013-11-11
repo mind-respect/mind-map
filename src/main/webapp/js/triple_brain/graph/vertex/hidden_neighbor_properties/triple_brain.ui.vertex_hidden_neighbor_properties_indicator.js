@@ -1,5 +1,4 @@
 define([
-    "require",
     "jquery",
     "triple_brain.ui.edge",
     "triple_brain.ui.vertex_hidden_neighbor_properties_indicator_dashed_segment",
@@ -11,7 +10,7 @@ define([
     "triple_brain.event_bus",
     "triple_brain.graph_displayer"
 ],
-    function (require, $, Edge, DashedSegment, Point, Segment, MindMapTemplate, GraphElementMenu, GraphUi, EventBus, GraphDisplayer) {
+    function ($, Edge, DashedSegment, Point, Segment, MindMapTemplate, GraphElementMenu, GraphUi, EventBus, GraphDisplayer) {
         var api = {
             withVertex:function (vertex) {
                 return new HiddenNeighborPropertiesIndicator(vertex);
@@ -126,7 +125,7 @@ define([
                         'hidden_property_container'
                         ].merge()
                 );
-                getGraphUi().addHtml(
+                GraphUi.addHtml(
                     hiddenNeighborPropertiesContainer
                 );
 
@@ -149,13 +148,6 @@ define([
                 self.remove();
                 self.build();
             };
-        }
-
-        function getGraphUi() {
-            if (GraphUi === undefined) {
-                GraphUi = require("triple_brain.ui.graph");
-            }
-            return GraphUi;
         }
 
         function handleHiddenPropertiesContainerClick() {

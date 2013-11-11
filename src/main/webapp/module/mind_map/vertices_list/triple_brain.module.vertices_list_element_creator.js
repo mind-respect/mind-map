@@ -15,7 +15,7 @@ define([
         };
 
         function VerticesListElementCreator(vertex, centralVertex){
-            var GraphUi = require("triple_brain.ui.graph");
+            var BubbleDistanceCalculator = require("triple_brain.bubble_distance_calculator");
             var VerticesList = require("./triple_brain.module.vertices_list");
             var html = $(Template['list_element'].merge());
             var verticesListElement = VerticesListElement.withHtml(html);
@@ -23,7 +23,7 @@ define([
                 VerticesList.get().addHtml(html);
                 html.data('vertexId', vertex.getId());
                 verticesListElement.setDistanceFromCentralVertex(
-                    GraphUi.numberOfEdgesBetween(
+                    BubbleDistanceCalculator.numberOfEdgesBetween(
                         vertex,
                         centralVertex
                     )

@@ -1,0 +1,142 @@
+/*
+ * Copyright Mozilla Public License 1.1
+ */
+define([
+    "triple_brain.ui.vertex",
+    "triple_brain.event_bus"
+], function(VertexUi, EventBus){
+    var graphForTraversal;
+    var api = {};
+    api.numberOfEdgesBetween = function(vertexA, vertexB){
+        return graphForTraversal.findGoal({
+            start: graphForTraversal.getNode(vertexA.getUri()),
+            goal: graphForTraversal.getNode(vertexB.getUri()),
+            algorithm: "dijkstra"
+        }).length;
+    };
+    EventBus.subscribe(
+        '/event/ui/graph/reset',
+        function(){
+            if(graphForTraversal != undefined){
+                graphForTraversal.invalidate();
+            }
+            graphForTraversal = new crow.Graph();
+        }
+    );
+
+    EventBus.subscribe(
+        '/event/ui/html/vertex/created/',
+        function(event, vertex){
+            addVertexToGraphTraversal(vertex);
+        }
+    );
+
+    EventBus.subscribe(
+        '/event/ui/graph/vertex_and_relation/added/',
+        function(event, triple){
+            addVertexToGraphTraversal(triple.destinationVertex());
+            connectVerticesOfEdgeForTraversal(triple.edge());
+            EventBus.publish(
+                "/event/graph_traversal/triple_added",
+                triple
+            );
+        }
+    );
+
+    EventBus.subscribe(
+        '/event/ui/graph/relation/deleted',
+        function(event, edge, edgeUri, sourceVertexUri, destinationVertexUri){
+            removeEdgeInGraphForTraversal(
+                sourceVertexUri,
+                destinationVertexUri
+            );
+            EventBus.publish(
+                "/event/graph_traversal/edge/removed",[
+                    edgeUri,
+                    sourceVertexUri,
+                    destinationVertexUri
+                ]
+            );
+        }
+    );
+
+    function removeEdgeInGraphForTraversal(sourceVertexUri, destinationVertexUri){
+        var sourceVertex = graphForTraversal.getNode(
+            sourceVertexUri
+        );
+        var destinationVertex = graphForTraversal.getNode(
+            destinationVertexUri
+        );
+        removeVertexInConnections(destinationVertexUri, sourceVertex.connections);
+        removeVertexInConnections(sourceVertexUri, destinationVertex.connections);
+    }
+
+    EventBus.subscribe(
+        '/event/ui/graph/vertex/deleted/',
+        function(event, vertexUri){
+            removeVertexInGraphForTraversal(vertexUri);
+        }
+    );
+
+    function removeVertexInGraphForTraversal(vertexUri){
+        graphForTraversal.removeNode(
+            graphForTraversal.getNode(vertexUri)
+        );
+        var node = findVertexInGraphForTraversalNodesAfterItWasDeleted(
+            vertexUri
+        );
+        $.each(node.connections, function(){
+            var connection = this;
+            var connectedNode = graphForTraversal.getNode(connection.id);
+            removeVertexInConnections(vertexUri, connectedNode.connections);
+        });
+    }
+    function removeVertexInConnections(vertexUri, connections){
+        for(var j in connections){
+            var connection = connections[j];
+            if(connection.id == vertexUri){
+                connections.splice(j,1);
+            }
+        }
+    }
+
+    function findVertexInGraphForTraversalNodesAfterItWasDeleted(vertexUri){
+        for(var i in graphForTraversal.nodes){
+            var node = graphForTraversal.nodes[i];
+            if(node.id == vertexUri){
+                return node;
+            }
+        }
+    }
+
+
+    EventBus.subscribe(
+        '/event/ui/html/edge/created/',
+        function(event, edge){
+            connectVerticesOfEdgeForTraversal(edge);
+            EventBus.publish(
+                "/event/graph_traversal/edge_added",
+                edge
+            );
+        }
+    );
+
+    function addVertexToGraphTraversal(vertex){
+        graphForTraversal.addNode(
+            VertexUi.withHtml(vertex.getHtml())
+        );
+    }
+
+    function connectVerticesOfEdgeForTraversal(edge){
+        var sourceVertex = graphForTraversal.getNode(
+            edge.sourceVertex().getUri()
+        );
+        var destinationVertex = graphForTraversal.getNode(
+            edge.destinationVertex().getUri()
+        );
+        sourceVertex.connectTo(
+            destinationVertex
+        );
+    }
+    return api;
+});

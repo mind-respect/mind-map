@@ -242,18 +242,11 @@ define([
                 }
             );
         };
-        api.group = function (vertices, callback) {
-            var uris = [];
-            $.each(vertices, function () {
-                var vertex = this;
-                uris.push(
-                    vertex.getUri()
-                );
-            });
+        api.group = function (graphElementsUris, callback) {
             var response = $.ajax({
                 type:'POST',
                 url:getVerticesUrl() + '/group',
-                data:$.toJSON(uris),
+                data:$.toJSON(graphElementsUris),
                 contentType:'application/json;charset=utf-8'
             }).success(function () {
                     var createdVertexUri = response.getResponseHeader("Location");

@@ -14,7 +14,10 @@ define([
                 collision: 'none'
             },
             dialogClass:dialogClass,
-            title : graphElement.text()
+            title : graphElement.text(),
+            close: function(){
+                $(this).dialog("destroy").remove();
+            }
         };
         if(extraOptions !== undefined){
             if(extraOptions.dialogClass !== undefined){

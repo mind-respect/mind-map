@@ -2,11 +2,10 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "triple_brain.ui.graph",
     "triple_brain.point",
     "triple_brain.segment",
     "triple_brain.graph_displayer"
-], function (GraphUi, Point, Segment, GraphDisplayer) {
+], function (Point, Segment, GraphDisplayer) {
     var api = {};
     api.ofEdge = function (edge) {
         return new PathBetweenVertices(
@@ -45,7 +44,9 @@ define([
                 lineToPoint(firstSegment.getEndPoint()) +
                 lineToPoint(endPointOfSecondSegment) +
                 lineToPoint(endPointOfThirdSegment);
-            var canvas = GraphUi.canvas();
+            var canvas = sourceVertex.getHtml().closest(
+                ".canvas-parent"
+            ).data("canvas");
             drawnComponents.push(
                 canvas.path(linePath).
                     attr("stroke-width", defaultStrokeWidth)
@@ -122,9 +123,10 @@ define([
 
         function buildFirstSegment() {
             var isGoingLeft = getIsGoingLeft();
+            var sourceHtmlOffset = getOffset(sourceHtml);
             var sourcePoint = Point.fromCoordinates(
-                sourceHtml.offset().left + (sourceVertexAsSeenOnScreen.textContainerWidth() / 2),
-                sourceHtml.offset().top
+                sourceHtmlOffset.left + (sourceVertexAsSeenOnScreen.textContainerWidth() / 2),
+                sourceHtmlOffset.top
             );
             sourcePoint.y += sourceHtml.outerHeight() / 2;
             var endPoint = Point.fromPoint(sourcePoint);
@@ -139,17 +141,35 @@ define([
             );
         }
 
+        function getOffset(html){
+            return html.offset();
+            //todo ... it doesnt work for now
+//            var dialog = $(".ui-dialog-content");
+//            if(dialog.length === 0){
+//                return html.offset();
+//            }
+//            var d1ToD4 = html.offset().top;
+//            var d1ToD2 = dialog.offset().top;
+//            var d2ToD3 = dialog.scrollTop();
+//            var d3ToD4 = Math.abs(d1ToD4 - (d1ToD2 + d2ToD3));
+//            return {
+//                top : d3ToD4,
+//                left: html.offset().left - 13
+//            }
+        }
+
         function buildEndPointOfSecondSegment(endPointOfLastSegment) {
             return Point.fromCoordinates(
                 endPointOfLastSegment.x,
-                destinationHtml.offset().top + destinationHtml.outerHeight() / 2
+                getOffset(destinationHtml).top + destinationHtml.outerHeight() / 2
             );
         }
 
         function buildEndPointOfThirdSegment() {
+            var destinationHtmlOffset = getOffset(destinationHtml);
             return Point.fromCoordinates(
-                destinationHtml.offset().left + destinationVertexAsSeenOnScreen.textContainerWidth() / 2,
-                destinationHtml.offset().top + destinationHtml.outerHeight() / 2
+                destinationHtmlOffset.left + destinationVertexAsSeenOnScreen.textContainerWidth() / 2,
+                destinationHtmlOffset.top + destinationHtml.outerHeight() / 2
             );
         }
 

@@ -2,13 +2,13 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "require",
     "triple_brain.event_bus",
     "triple_brain.mind_map_info",
     "triple_brain.id_uri",
-    "triple_brain.menu"
+    "triple_brain.menu",
+    "triple_brain.ui.depth_slider"
     ],
-    function(require, EventBus, MindMapInfo, IdUriUtils, Menu){
+    function(EventBus, MindMapInfo, IdUriUtils, Menu, DepthSlider){
         var _implementation;
         var api = {};
         api.setImplementation = function(implementation){
@@ -96,13 +96,23 @@ define([
                 callback
             );
         };
+        api.buildIncludedGraphElementsView = function(vertex, container){
+            return _implementation.buildIncludedGraphElementsView(
+                vertex,
+                container
+            );
+        };
+        api.integrateEdgesOfServerGraphForViewOnly = function(drawnGraph){
+            return _implementation.integrateEdgesOfServerGraphForViewOnly(
+                drawnGraph
+            );
+        };
         return api;
+
         function currentDepth(){
-            return getDepthSlider().currentDepth();
+            return DepthSlider.currentDepth();
         }
-        function getDepthSlider(){
-            return require("triple_brain.ui.depth_slider");
-        }
+
         function publishAboutToUpdate(){
             EventBus.publish(
                 '/event/ui/graph/drawing_info/about_to/update',

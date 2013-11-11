@@ -96,8 +96,8 @@
                     "2" : "pour l'ajouter à votre carte"
                 }
             },
-            "included_vertices" : {
-                "title" : "Bulles comprises dans celle-ci"
+            "included_graph_elements" : {
+                "title" : "Bulles et relations comprises dans celle-ci"
             },
             "delete" : {
                 "title" : "Voulez-vous vraiment effacer cette bulle?",

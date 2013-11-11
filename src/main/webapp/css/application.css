@@ -121,7 +121,7 @@ body.select{
 }
 body{}
 svg{
-    z-index:0;
+    z-index:1;
 }
 [data-role=page]{
     font-family:helvetica;

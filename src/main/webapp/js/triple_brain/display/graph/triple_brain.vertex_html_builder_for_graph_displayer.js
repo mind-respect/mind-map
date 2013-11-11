@@ -113,7 +113,12 @@ define([
                     );
                 });
                 vertex.addImages(images);
-                vertex.setIncludedVertices(serverFormat.included_vertices);
+                vertex.setIncludedVertices(
+                    serverFormat.included_vertices
+                );
+                vertex.setIncludedEdges(
+                    serverFormat.included_edges
+                );
                 vertex.makeItLowProfile();
                 vertex.setOriginalServerObject(
                     serverFormat
@@ -196,11 +201,6 @@ define([
                     vertexMenu,
                     removeButtonAfterConfirmationBehavior
                 );
-                if(serverFormat.included_vertices.length > 0){
-                    VertexHtmlCommon.addIncludedVerticesButton(
-                        vertexMenu
-                    );
-                }
                 VertexHtmlCommon.addWhatIsThisButton(
                     vertexMenu,
                     whatIsThisButtonClickBehaviour
@@ -323,7 +323,7 @@ define([
                 var relationEndPoint = Point.centeredAtOrigin();
                 var arrowLine;
                 sourceVertex.highlight();
-                var selectorThatCoversWholeGraph = "svg";
+                var selectorThatCoversWholeGraph = "svg.main";
                 $(selectorThatCoversWholeGraph).mousemove(function (mouseMoveEvent) {
                     relationMouseMoveEvent = mouseMoveEvent;
                     if(arrowLine !== undefined){

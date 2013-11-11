@@ -20,6 +20,11 @@
     vertical-align:middle;
 }
 
+.vertex.view-only{
+    margin-top:2em;
+    margin-bottom:2em;
+}
+
 .relation{
     vertical-align: top;
     padding:0;

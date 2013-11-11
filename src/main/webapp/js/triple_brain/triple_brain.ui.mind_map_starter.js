@@ -4,7 +4,6 @@ define(
         "triple_brain.user",
         "triple_brain.event_bus",
         "triple_brain.login_handler",
-        "triple_brain.drag_scroll",
         "triple_brain.mind-map_template",
         "triple_brain.server_subscriber",
         "triple_brain.ui.search",
@@ -16,9 +15,11 @@ define(
         "triple_brain.language_manager",
         "triple_brain.vertex",
         "triple_brain.top_center_menu",
-        "triple_brain.selection_handler"
+        "triple_brain.selection_handler",
+        "triple_brain.bubble_distance_calculator",
+        "jquery.triple_brain.drag_scroll"
     ],
-    function ($, UserService, EventBus, LoginHandler, DragScroll, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, Menu, GraphUi, LanguageManager, VertexService, TopCenterMenu, SelectionHandler) {
+    function ($, UserService, EventBus, LoginHandler, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, Menu, GraphUi, LanguageManager, VertexService, TopCenterMenu, SelectionHandler) {
         var api = {
             offset:function () {
                 var offset = {};
@@ -137,7 +138,7 @@ define(
                     drawnGraph
                 );
                 centralVertex.scrollTo();
-                DragScroll.start();
+                $("svg.main").dragScroll();
                 EventBus.publish('/event/ui/graph/drawn');
                 GraphDisplayer.getVertexSelector().visitAllVertices(function(vertex){
                     EventBus.publish(

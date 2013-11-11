@@ -1,8 +1,7 @@
 define([
-    "require",
     "triple_brain.ui.graph"
 ],
-    function(require, GraphUi){
+    function(GraphUi){
         var api = {
             withSegment : function(segment){
                 return new DashedSegment(segment);
@@ -13,7 +12,7 @@ define([
             var distanceBetweenEachDash = 5;
             var radianDirection = segment.radianDirection();
             var dash = segment;
-            var canvas = getGraphUi().canvas();
+            var canvas = GraphUi.canvas();
             var red = "#FF0000";
             var lineWidth = "1";
             var drawnComponents = [];
@@ -52,11 +51,5 @@ define([
             }
         }
         return api;
-        function getGraphUi(){
-            if(GraphUi === undefined){
-                GraphUi = require("triple_brain.ui.graph");
-            }
-            return GraphUi;
-        }
     }
 );
