@@ -2,11 +2,14 @@ body{
     min-width:30000px;
     min-height:30000px;
     cursor:all-scroll;
-    overflow:hidden;
 }
 body.select{
     cursor:crosshair;
 }
+.canvas-parent, .included-vertices-container.canvas-parent{
+    overflow:hidden;
+}
+
 #mind_map h2, #mind_map h3{
     line-height: inherit;
 }

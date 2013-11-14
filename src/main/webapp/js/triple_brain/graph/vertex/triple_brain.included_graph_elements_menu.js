@@ -19,7 +19,7 @@ define([
         var self = this;
         var html;
         this.create = function () {
-            html = $("<div class='canvas-parent'>");
+            html = $("<div class='canvas-parent included-vertices-container'>");
             GraphUi.addHtml(html);
             addTitle();
             var paper = Raphael(html[0], 30000, 30000);
