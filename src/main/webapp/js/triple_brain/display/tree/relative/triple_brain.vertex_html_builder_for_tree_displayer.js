@@ -257,6 +257,7 @@ define([
                     removeButtonAfterConfirmationBehavior
                 );
                 if (Object.keys(serverFormat.included_vertices).length > 0) {
+                    html.addClass("include-vertices");
                     VertexHtmlCommon.addIncludedGraphElementsButton(
                         vertexMenu
                     );

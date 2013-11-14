@@ -272,6 +272,11 @@ body input[type=button].link-like-button:hover, body button.link-like-button:hov
     margin-left:0.3em;
 }
 
+.vertex.include-vertices .textfield-container {
+    padding-top:2em;
+    padding-bottom:2em;
+}
+
 .vertex input[type="text"].label {
     border: 0;
     padding: 0;
