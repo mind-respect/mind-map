@@ -244,6 +244,13 @@ body input[type=button].link-like-button:hover, body button.link-like-button:hov
     white-space: nowrap;
 }
 
+.vertex .included-graph-elements-flag{
+    position: absolute;
+    top: 25px;
+    left: 30%;
+    font-weight:bold;
+}
+
 .vertex .textfield-container{
     border-radius: 20px;
     background-color:#E6E6FF;
@@ -272,8 +279,7 @@ body input[type=button].link-like-button:hover, body button.link-like-button:hov
     margin-left:0.3em;
 }
 
-.vertex.include-vertices .textfield-container {
-    padding-top:2em;
+.vertex.includes-vertices .textfield-container {
     padding-bottom:2em;
 }
 

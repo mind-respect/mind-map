@@ -96,8 +96,9 @@ define([
                 serverFormat.uri
             );
             html.uniqueId();
+            var vertex;
             this.create = function () {
-                var vertex = vertexFacade();
+                vertex = vertexFacade();
                 vertex.setTotalNumberOfEdges(
                     serverFormat.number_of_connected_edges
                 );
@@ -105,9 +106,13 @@ define([
                 html.data(
                     "isPublic",
                     serverFormat.is_public
-                );
+                )
+                vertex.setIncludedVertices(serverFormat.included_vertices);
+                vertex.setIncludedEdges(serverFormat.included_edges);
+                if(vertex.hasIncludedGraphElements()){
+                    showItHasIncludedGraphElements();
+                }
                 createMenu();
-                var vertex = vertexFacade();
                 vertex.setNote(
                     serverFormat.comment
                 );
@@ -139,8 +144,6 @@ define([
                     );
                 });
                 vertex.addImages(images);
-                vertex.setIncludedVertices(serverFormat.included_vertices);
-                vertex.setIncludedEdges(serverFormat.included_edges);
                 vertex.makeItLowProfile();
                 vertex.setOriginalServerObject(
                     serverFormat
@@ -245,9 +248,17 @@ define([
                 return labelContainer;
             }
 
+            function showItHasIncludedGraphElements(){
+                html.append(
+                    $("<div class='included-graph-elements-flag'>").text(
+                        ". . ."
+                    )
+                ).addClass("includes-vertices")
+            }
+
             function createMenu() {
                 var vertexMenu = MindMapTemplate['vertex_menu'].merge();
-                $(html).append(vertexMenu);
+                html.append(vertexMenu);
                 VertexHtmlCommon.addPlusButton(
                     vertexMenu,
                     addButtonClickBehaviour
@@ -256,8 +267,7 @@ define([
                     vertexMenu,
                     removeButtonAfterConfirmationBehavior
                 );
-                if (Object.keys(serverFormat.included_vertices).length > 0) {
-                    html.addClass("include-vertices");
+                if (vertex.hasIncludedGraphElements()) {
                     VertexHtmlCommon.addIncludedGraphElementsButton(
                         vertexMenu
                     );

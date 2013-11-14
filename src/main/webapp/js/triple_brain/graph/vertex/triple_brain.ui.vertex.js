@@ -524,6 +524,9 @@ define([
                     includedVertices
                 );
             };
+            this.hasIncludedGraphElements = function(){
+                return Object.keys(self.getIncludedVertices()).length > 0;
+            };
             this.getIncludedVertices = function () {
                 return html.data("includedVertices");
             };
