@@ -185,7 +185,17 @@ body input[type=button].link-like-button:hover, body button.link-like-button:hov
     position:fixed;
     left:0.1em;
     top:0.5em;
-    width:175px;
+    overflow:hidden;
+    width:225px;
+}
+
+#toggle-left-panel-collapse{
+    float:right;
+    position:fixed;
+    left:235px;
+    top:10px;
+    z-index:2;
+    font-size:1em;
 }
 
 #left-panel h2{

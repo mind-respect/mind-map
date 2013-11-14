@@ -15,11 +15,12 @@ define(
         "triple_brain.language_manager",
         "triple_brain.vertex",
         "triple_brain.top_center_menu",
+        "triple_brain.ui.left_panel",
         "triple_brain.selection_handler",
         "triple_brain.bubble_distance_calculator",
         "jquery.triple_brain.drag_scroll"
     ],
-    function ($, UserService, EventBus, LoginHandler, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, Menu, GraphUi, LanguageManager, VertexService, TopCenterMenu, SelectionHandler) {
+    function ($, UserService, EventBus, LoginHandler, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, Menu, GraphUi, LanguageManager, VertexService, TopCenterMenu, LeftPanel, SelectionHandler) {
         var api = {
             offset:function () {
                 var offset = {};
@@ -45,6 +46,7 @@ define(
                     handleDisconnectButton();
                     handleCreateNewConceptButton();
                     TopCenterMenu.init();
+                    LeftPanel.init();
                     DepthSlider.init();
                     SearchUi.init();
                     GraphDisplayer.setImplementation(
