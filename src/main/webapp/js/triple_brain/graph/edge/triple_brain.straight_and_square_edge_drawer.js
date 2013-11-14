@@ -58,43 +58,44 @@ define([
                     endPointOfSecondSegment,
                     endPointOfThirdSegment
                 );
-                var middlePoint = Segment.withStartAndEndPoint(
-                    endPointOfSecondSegment,
-                    lastSegment.middlePoint()
-                ).middlePoint();
-                var arrowHeadEdge = Segment.withStartAndEndPoint(
-                    endPointOfSecondSegment,
-                    middlePoint
-                ).middlePoint();
                 var isGoingLeft = getIsGoingLeft();
-                var headSize = 10;
-                var directionFactor = isGoingLeft ?
-                    isInverse ? 1 : -1 :
-                    isInverse ? -1 : 1;
+                var isPointingLeft =
+                    (isGoingLeft && !isInverse) ||
+                        (!isGoingLeft && isInverse);
 
+                var xDistance = isGoingLeft  ? -10 : 10;
+
+                var arrowHeadEdgePoint = Point.fromCoordinates(
+                    endPointOfSecondSegment.x + xDistance,
+                    endPointOfSecondSegment.y
+                );
+                var headSize = 10;
+                var directionFactor = isPointingLeft ?
+                    -1 :
+                    1;
                 if(isGoingLeft){
-                    if(isInverse){
-                        arrowHeadEdge.x += headSize;
+                    if(!isInverse){
+                        arrowHeadEdgePoint.x -= headSize;
                     }
                 }else{
                     if(!isInverse){
-                        arrowHeadEdge.x += headSize;
+                        arrowHeadEdgePoint.x += headSize;
                     }
                 }
                 var upperEnd = Point.fromCoordinates(
-                    arrowHeadEdge.x - headSize * directionFactor,
-                    arrowHeadEdge.y - headSize * directionFactor
+                    arrowHeadEdgePoint.x - headSize * directionFactor,
+                    arrowHeadEdgePoint.y - headSize * directionFactor
                 );
                 var lowerEnd = Point.fromCoordinates(
-                    arrowHeadEdge.x - headSize * directionFactor,
-                    arrowHeadEdge.y + headSize * directionFactor
+                    arrowHeadEdgePoint.x - headSize * directionFactor,
+                    arrowHeadEdgePoint.y + headSize * directionFactor
                 );
                 var arrowHeadPath = "M" +
-                    arrowHeadEdge.x +
+                    arrowHeadEdgePoint.x +
                     " " +
-                    arrowHeadEdge.y +
+                    arrowHeadEdgePoint.y +
                     lineToPoint(upperEnd) +
-                    lineToPoint(arrowHeadEdge) +
+                    lineToPoint(arrowHeadEdgePoint) +
                     lineToPoint(lowerEnd);
                 drawnComponents.push(
                     canvas.path(arrowHeadPath).
@@ -125,15 +126,15 @@ define([
             var isGoingLeft = getIsGoingLeft();
             var sourceHtmlOffset = getOffset(sourceHtml);
             var sourcePoint = Point.fromCoordinates(
-                sourceHtmlOffset.left + (sourceVertexAsSeenOnScreen.textContainerWidth() / 2),
+                sourceHtmlOffset.left + (sourceHtml.outerWidth() / 2),
                 sourceHtmlOffset.top
             );
             sourcePoint.y += sourceHtml.outerHeight() / 2;
             var endPoint = Point.fromPoint(sourcePoint);
-            var horizontalDistance = 40 + (sourceVertexAsSeenOnScreen.textContainerWidth() / 2);
-            if (sourceVertexAsSeenOnScreen.hasImages()) {
-                horizontalDistance += 60;
-            }
+            var horizontalDistance = 40 + (sourceHtml.outerWidth() / 2);
+//            if (sourceVertexAsSeenOnScreen.hasImages()) {
+//                horizontalDistance += 60;
+//            }
             endPoint.x += isGoingLeft ? -1 * horizontalDistance : horizontalDistance;
             return Segment.withStartAndEndPoint(
                 sourcePoint,
@@ -141,7 +142,7 @@ define([
             );
         }
 
-        function getOffset(html){
+        function getOffset(html) {
             return html.offset();
             //todo ... it doesnt work for now
 //            var dialog = $(".ui-dialog-content");
@@ -173,7 +174,7 @@ define([
             );
         }
 
-        function getIsGoingLeft(){
+        function getIsGoingLeft() {
             return sourceHtml.offset().left > destinationHtml.offset().left;
         }
     }
