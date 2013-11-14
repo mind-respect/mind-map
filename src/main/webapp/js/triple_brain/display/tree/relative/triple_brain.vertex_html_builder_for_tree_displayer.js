@@ -164,7 +164,6 @@ define([
                         serverFormat.label
                 })).appendTo(html);
                 var label = labelContainer.find("input[type='text']:first");
-                var vertex = vertexFacade();
                 vertex.readjustLabelWidth();
                 if (vertex.hasDefaultText()) {
                     vertex.applyStyleOfDefaultText();
