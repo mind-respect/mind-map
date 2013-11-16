@@ -16,11 +16,11 @@ define([
     "triple_brain.delete_menu",
     "jquery-ui",
     "jquery.triple_brain.search"
-], function($, GraphDisplayer, VertexService, MindMapTemplate, LinkToFarVertexMenu, GraphElementMenu, ImageMenu, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, IncludedGraphElementsMenu, DeleteMenu){
+], function ($, GraphDisplayer, VertexService, MindMapTemplate, LinkToFarVertexMenu, GraphElementMenu, ImageMenu, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, IncludedGraphElementsMenu, DeleteMenu) {
     var api = {};
-    api.applyAutoCompleteIdentificationToLabelInput = function(input){
+    api.applyAutoCompleteIdentificationToLabelInput = function (input) {
         input.tripleBrainAutocomplete({
-            limitNbRequests: true,
+            limitNbRequests:true,
             select:function (event, ui) {
                 var vertex = vertexOfSubHtmlComponent($(this));
                 var identificationResource = ExternalResource.fromSearchResult(
@@ -31,7 +31,7 @@ define([
                     identificationResource
                 );
             },
-            resultsProviders : [
+            resultsProviders:[
                 UserMapAutocompleteProvider.toFetchCurrentUserVerticesAndPublicOnesForIdentification(
                     vertexOfSubHtmlComponent(input)
                 ),
@@ -39,7 +39,7 @@ define([
             ]
         });
     };
-    api.setUpIdentifications = function(serverFormat, vertex){
+    api.setUpIdentifications = function (serverFormat, vertex) {
         setup(
             vertex.setTypes,
             "types",
@@ -55,7 +55,7 @@ define([
             "generic_identifications",
             vertex.addGenericIdentification
         );
-        function setup(identificationsSetter, identificationProperty, addFctn){
+        function setup(identificationsSetter, identificationProperty, addFctn) {
             identificationsSetter([]);
             $.each(serverFormat[identificationProperty], function () {
                 var identificationFromServer = this;
@@ -67,16 +67,16 @@ define([
             });
         }
     };
-    api.addPlusButton = function(vertexMenu, clickBehavior){
+    api.addPlusButton = function (vertexMenu, clickBehavior) {
         return makeVertexMenuButtonUsingClass(
             vertexMenu,
             "ui-icon-plus",
             clickBehavior
         );
     };
-    api.addRemoveButtonIfApplicable = function(vertexMenu, deleteAfterConfirmationBehavior){
+    api.addRemoveButtonIfApplicable = function (vertexMenu, deleteAfterConfirmationBehavior) {
         var vertex = vertexOfSubHtmlComponent(vertexMenu);
-        if(vertex.isAbsoluteDefaultVertex()){
+        if (vertex.isAbsoluteDefaultVertex()) {
             return;
         }
         return makeVertexMenuButtonUsingClass(
@@ -84,34 +84,34 @@ define([
             "ui-icon-trash",
             clickBehavior
         );
-        function clickBehavior(){
+        function clickBehavior() {
             DeleteMenu.ofVertexAndDeletionBehavior(
                 vertexOfSubHtmlComponent(this),
                 deleteAfterConfirmationBehavior
             ).build();
         }
     };
-    api.addIncludedGraphElementsButton = function(vertexMenu){
+    api.addIncludedGraphElementsButton = function (vertexMenu) {
         return makeVertexMenuButtonUsingClass(
             vertexMenu,
             "ui-icon-folder-open",
             clickBehavior
         );
-        function clickBehavior(){
+        function clickBehavior() {
             var vertex = vertexOfSubHtmlComponent(this);
             IncludedGraphElementsMenu.ofVertex(
                 vertex
             ).create();
         }
     };
-    api.addWhatIsThisButton = function(vertexMenu, clickBehavior){
+    api.addWhatIsThisButton = function (vertexMenu, clickBehavior) {
         return makeVertexMenuButtonUsingClass(
             vertexMenu,
             "ui-icon-info",
             clickBehavior
         );
     };
-    api.addSuggestionsButton = function(vertexMenu, clickBehavior){
+    api.addSuggestionsButton = function (vertexMenu, clickBehavior) {
         var button = makeVertexMenuButtonUsingClass(
             vertexMenu,
             "ui-icon-lightbulb",
@@ -120,47 +120,50 @@ define([
         button.addClass("suggestion");
         button.hide();
     };
-    api.addCenterButton = function(vertexMenu, clickBehavior){
+    api.addCenterButton = function (vertexMenu, clickBehavior) {
         return makeVertexMenuButtonUsingClass(
             vertexMenu,
             "ui-icon-home",
             clickBehavior
         );
     };
-    api.addImageButton = function(vertexMenu){
+    api.addImageButton = function (vertexMenu) {
         return makeVertexMenuButtonUsingClass(
             vertexMenu,
             "ui-icon-image",
             clickBehaviour
         );
-        function clickBehaviour(){
+        function clickBehaviour() {
             ImageMenu.ofVertex(
                 vertexOfSubHtmlComponent(this)
             ).build();
         }
     };
-    api.addNoteButton = function(vertex){
+    api.addNoteButton = function (vertex) {
         var noteButton = makeVertexMenuButtonUsingClass(
-            getMenuHtml(vertex),
+            vertex.getMenuHtml(),
             "ui-icon-note",
             clickBehaviour
-        );
-        if(vertex.hasNote()){
-            vertex.getTextContainer().prepend(
+        ).addClass("note-button");
+        if (vertex.hasNote()) {
+            vertex.label().before(
                 noteButton
             );
         }
         return noteButton;
-        function clickBehaviour(){
+        function clickBehaviour() {
             var vertex = vertexOfSubHtmlComponent(this);
-            var noteDialog = $("<div title='"+vertex.text()+"'></div>");
-            noteDialog.append(
-                "<textarea rows='' cols=''>"+
-                    vertex.getNote() +
-                    "</textarea>"
+            var noteDialog = $(
+                "<div>"
+            ).attr(
+                "title", vertex.text()
+            ).append(
+                $("<textarea rows='' cols=''>").append(
+                    vertex.getNote()
+                )
             );
             var buttonsOptions = {};
-            buttonsOptions[$.t("vertex.menu.note.update")] = function(event) {
+            buttonsOptions[$.t("vertex.menu.note.update")] = function (event) {
                 var dialog = $(this);
                 var textContainer = $(event.currentTarget).find(".ui-button-text");
                 textContainer.text(
@@ -169,7 +172,24 @@ define([
                 VertexService.updateNote(
                     vertex,
                     dialog.find("textarea").val(),
-                    function(){
+                    function (vertex) {
+                        if (vertex.hasNote()) {
+                            vertex.label()[
+                                !GraphDisplayer.allowsMovingVertices() && vertex.isToTheLeft() ?
+                                    "after" :
+                                    "before"
+                                ](
+                                vertex.getMenuHtml().find(
+                                    "> .note-button"
+                                )
+                            );
+                        } else {
+                            vertex.getTextContainer().find(
+                                "> .note-button"
+                            ).appendTo(
+                                vertex.getMenuHtml()
+                            );
+                        }
                         $(dialog).dialog("close");
                     }
                 );
@@ -177,9 +197,9 @@ define([
             var menuExtraOptions = {
                 height:350,
                 width:500,
-                dialogClass: "vertex-note",
+                dialogClass:"vertex-note",
                 modal:true,
-                buttons: buttonsOptions
+                buttons:buttonsOptions
             };
             GraphElementMenu.makeForMenuContentAndGraphElement(
                 noteDialog,
@@ -188,20 +208,20 @@ define([
             );
         }
     };
-    api.addLinkToFarVertexButton = function(vertexMenu){
+    api.addLinkToFarVertexButton = function (vertexMenu) {
         return makeVertexMenuButtonUsingClass(
             vertexMenu,
             "ui-icon-arrowthick-1-e",
             clickBehaviour
         );
-        function clickBehaviour(){
+        function clickBehaviour() {
             var vertex = vertexOfSubHtmlComponent(this);
             LinkToFarVertexMenu.ofVertex(
                 vertex
             ).create();
         }
     };
-    api.addPrivacyManagementButton = function(vertexMenu){
+    api.addPrivacyManagementButton = function (vertexMenu) {
         var privacyManagementButton = $("<button>");
         vertexMenu.append(
             privacyManagementButton
@@ -211,28 +231,29 @@ define([
         vertex.isPublic() ?
             setupForPublic(privacyManagementButton) :
             setupForPrivate(privacyManagementButton);
-        function setupForPublic(button){
+        function setupForPublic(button) {
             button.button({
-                icons: {
-                    primary: "ui-icon ui-icon-unlocked"
+                icons:{
+                    primary:"ui-icon ui-icon-unlocked"
                 },
-                text: false
+                text:false
             });
-            button.off().on("click", function(){
+            button.off().on("click", function () {
                 var button = $(this);
                 var vertex = button.data("vertex");
                 VertexService.makePrivate(vertex);
                 setupForPrivate(button);
             });
         }
-        function setupForPrivate(button){
+
+        function setupForPrivate(button) {
             button.button({
-                icons: {
-                    primary: "ui-icon ui-icon-locked"
+                icons:{
+                    primary:"ui-icon ui-icon-locked"
                 },
-                text: false
+                text:false
             });
-            button.off().on("click", function(){
+            button.off().on("click", function () {
                 var button = $(this);
                 var vertex = button.data("vertex");
                 VertexService.makePublic(vertex);
@@ -248,18 +269,15 @@ define([
         );
     }
 
-    function makeVertexMenuButtonUsingClass(vertexMenu, uiClass, clickBehaviour){
+    function makeVertexMenuButtonUsingClass(vertexMenu, uiClass, clickBehaviour) {
         var button = $("<button>");
         vertexMenu.append(button);
         button.button({
-            icons: {
-                primary: "ui-icon " + uiClass
+            icons:{
+                primary:"ui-icon " + uiClass
             },
-            text: false
+            text:false
         });
         return button.on("click", clickBehaviour);
-    }
-    function getMenuHtml(vertex){
-        return vertex.getHtml().find("> .menu")
     }
 });

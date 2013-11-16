@@ -223,10 +223,14 @@ define([
                 self.showMoveButton();
             };
             this.hideMenu = function () {
-                $(menu()).css("visibility", "hidden");
+                self.getMenuHtml().css(
+                    "visibility", "hidden"
+                );
             };
             this.showMenu = function () {
-                $(menu()).css("visibility", "visible");
+                self.getMenuHtml().css(
+                    "visibility", "visible"
+                );
             };
             this.hideMoveButton = function () {
                 self.moveButton().css("visibility", "hidden");
@@ -298,7 +302,9 @@ define([
                 return self.getNote().trim().length > 0;
             };
             this.getTextContainer = function () {
-                return $(this.label()).closest(".textfield-container");
+                return html.find(
+                    "> .textfield-container"
+                );
             };
             this.textContainerWidth = function () {
                 var width = 0;
@@ -545,7 +551,9 @@ define([
             this.isAbsoluteDefaultVertex = function () {
                 return self.getUri().indexOf("default") !== -1;
             };
-
+            this.getMenuHtml = function(){
+                return html.find('> .menu');
+            };
             function setIsPublic(isPublic) {
                 html.data(
                     "isPublic",
@@ -557,12 +565,8 @@ define([
                 return $(html).find('.suggestion');
             }
 
-            function menu() {
-                return $(html).find('.menu');
-            }
-
             function menuWidth() {
-                return $(menu()).find("ul").width() * 4;
+                return self.getMenuHtml().find("ul").width() * 4;
             }
 
             function centerButton() {

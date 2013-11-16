@@ -59,6 +59,7 @@ define([
                 serverFormat.uri
             );
             html.uniqueId();
+            var vertex = vertexFacade();
             this.create = function () {
                 addMoveButton();
                 createLabel();
@@ -66,11 +67,10 @@ define([
                     "isPublic",
                     serverFormat.is_public
                 );
-                createMenu();
-                var vertex = vertexFacade();
                 vertex.setNote(
                     serverFormat.comment
                 );
+                createMenu();
                 vertex.addSuggestions(
                     Suggestion.fromJsonArrayOfServer(
                         serverFormat.suggestions
@@ -217,7 +217,7 @@ define([
                     vertexMenu
                 );
                 VertexHtmlCommon.addNoteButton(
-                    vertexMenu
+                    vertex
                 );
                 VertexHtmlCommon.addImageButton(
                     vertexMenu

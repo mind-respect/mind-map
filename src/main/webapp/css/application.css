@@ -260,7 +260,7 @@ body input[type=button].link-like-button:hover, body button.link-like-button:hov
     white-space: nowrap;
 }
 
-.vertex .textfield-container .ui-button{
+.vertex .textfield-container .note-button{
     margin-right:5px;
     margin-top:-10px;
 }

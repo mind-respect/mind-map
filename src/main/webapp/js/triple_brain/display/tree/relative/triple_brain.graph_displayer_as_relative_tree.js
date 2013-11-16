@@ -430,6 +430,11 @@ define([
             $.each($(".left-oriented .vertex"), function () {
                 var relativeVertex = RelativeTreeVertex.withHtml(this);
                 relativeVertex.adjustPosition();
+                relativeVertex.label().after(
+                    relativeVertex.getTextContainer().find(
+                        "> .note-button"
+                    )
+                );
             });
             function buildVerticesHtml() {
                 var serverRootVertex = vertexWithId(centralVertexUri);

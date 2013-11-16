@@ -36,6 +36,9 @@
     margin-right:0;
     margin-left:1em;
 }
+.left-oriented .vertex .textfield-container .note-button{
+    margin-right:0;
+}
 .relation input{
     border-radius: 3px 3px 3px 3px;
     border-width:0.2em;
