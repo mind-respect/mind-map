@@ -3,9 +3,8 @@
  */
 
 define([
-    "jquery",
-    "triple_brain.id_uri"
-], function ($, IdUriUtils) {
+    "jquery"
+], function ($) {
     var api = {};
     api.addIdentification = function (graphElement, identification, successCallback) {
         identification.listenForUpdates(addIdentificationWhenListenerReady);

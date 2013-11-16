@@ -107,6 +107,9 @@ define([
                 drawnGraph
             );
         };
+        api.canGetIsToTheLeft = function(){
+            return !api.allowsMovingVertices();
+        };
         return api;
 
         function currentDepth(){

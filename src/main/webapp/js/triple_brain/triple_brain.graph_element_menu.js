@@ -3,14 +3,18 @@
  */
 define([
     "jquery",
+    "triple_brain.graph_displayer",
     "jquery-ui"
-], function($){
+], function($, GraphDisplayer){
     var api = {};
     api.makeForMenuContentAndGraphElement = function(menuContent, graphElement, extraOptions){
         var dialogClass = "graph-element-menu";
+        var horizontalPosition = getHorizontalPosition();
         var options = {
             position : {
-                of:graphElement.getHtml(),
+                of:graphElement.getLabel(),
+                my: horizontalPosition.my + " center",
+                at: horizontalPosition.at + " right top",
                 collision: 'none'
             },
             dialogClass:dialogClass,
@@ -33,6 +37,28 @@ define([
         menuContent.i18n();
         menuContent.dialog(options);
         menuContent.centerOnScreen();
+        function getHorizontalPosition(){
+            var positionDialogToRight = {
+                "my" : "left",
+                "at" : "right"
+                },
+                positionDialogToLeft = {
+                    "my" : "right",
+                    "at" : "left"
+                };
+            if(!GraphDisplayer.canGetIsToTheLeft()){
+                return positionDialogToRight;
+            }
+            var isConcept = graphElement.isConcept();
+            if(isConcept){
+                return graphElement.isToTheLeft() ?
+                    positionDialogToLeft : positionDialogToRight;
+            }else{
+                return graphElement.isLeftOfCenterVertex ?
+                    positionDialogToRight :
+                    positionDialogToLeft
+            }
+        }
     };
     api.fromContentComponent = function(component){
         return new GraphElementMenu(

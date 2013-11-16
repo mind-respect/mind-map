@@ -438,7 +438,11 @@ define([
             this.triggerChange = function () {
                 $(html).trigger("change");
             };
+            //@Deprecated
             this.label = function () {
+                return self.getLabel();
+            };
+            this.getLabel = function(){
                 return $(html).find("input.label");
             };
             this.equalsVertex = function (otherVertex) {
