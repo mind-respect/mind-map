@@ -132,10 +132,12 @@ define([
             sourcePoint.y += sourceHtml.outerHeight() / 2;
             var endPoint = Point.fromPoint(sourcePoint);
             var horizontalDistance = 40 + (sourceHtml.outerWidth() / 2);
-//            if (sourceVertexAsSeenOnScreen.hasImages()) {
-//                horizontalDistance += 60;
-//            }
-            endPoint.x += isGoingLeft ? -1 * horizontalDistance : horizontalDistance;
+            if (isGoingLeft && sourceVertexAsSeenOnScreen.hasImages()) {
+                horizontalDistance += 60;
+            }
+            endPoint.x += isGoingLeft ?
+                -1 * horizontalDistance :
+                horizontalDistance;
             return Segment.withStartAndEndPoint(
                 sourcePoint,
                 endPoint
