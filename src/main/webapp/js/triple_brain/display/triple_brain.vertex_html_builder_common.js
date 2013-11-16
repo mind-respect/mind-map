@@ -139,12 +139,18 @@ define([
             ).build();
         }
     };
-    api.addNoteButton = function(vertexMenu){
-        return makeVertexMenuButtonUsingClass(
-            vertexMenu,
+    api.addNoteButton = function(vertex){
+        var noteButton = makeVertexMenuButtonUsingClass(
+            getMenuHtml(vertex),
             "ui-icon-note",
             clickBehaviour
         );
+        if(vertex.hasNote()){
+            vertex.getTextContainer().prepend(
+                noteButton
+            );
+        }
+        return noteButton;
         function clickBehaviour(){
             var vertex = vertexOfSubHtmlComponent(this);
             var noteDialog = $("<div title='"+vertex.text()+"'></div>");
@@ -252,5 +258,8 @@ define([
             text: false
         });
         return button.on("click", clickBehaviour);
+    }
+    function getMenuHtml(vertex){
+        return vertex.getHtml().find("> .menu")
     }
 });

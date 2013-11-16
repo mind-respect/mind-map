@@ -112,10 +112,10 @@ define([
                 if(vertex.hasIncludedGraphElements()){
                     showItHasIncludedGraphElements();
                 }
-                createMenu();
                 vertex.setNote(
                     serverFormat.comment
                 );
+                createMenu();
                 vertex.addSuggestions(
                     Suggestion.fromJsonArrayOfServer(
                         serverFormat.suggestions
@@ -284,8 +284,9 @@ define([
                     centerButtonClickBehaviour
                 );
                 VertexHtmlCommon.addNoteButton(
-                    vertexMenu
+                    vertex
                 );
+
                 VertexHtmlCommon.addImageButton(
                     vertexMenu
                 );

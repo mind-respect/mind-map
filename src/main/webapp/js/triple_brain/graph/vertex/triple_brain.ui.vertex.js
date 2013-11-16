@@ -201,7 +201,7 @@ define([
 
             this.isMouseOver = function () {
                 var vertexThatIsMouseOver = api.getVertexMouseOver();
-                return  vertexThatIsMouseOver !== undefined &&
+                return vertexThatIsMouseOver !== undefined &&
                     vertexThatIsMouseOver.equalsVertex(self);
             };
             this.makeItLowProfile = function () {
@@ -293,6 +293,9 @@ define([
             };
             this.getNote = function () {
                 return html.data("note");
+            };
+            this.hasNote = function(){
+                return self.getNote().trim().length > 0;
             };
             this.getTextContainer = function () {
                 return $(this.label()).closest(".textfield-container");
