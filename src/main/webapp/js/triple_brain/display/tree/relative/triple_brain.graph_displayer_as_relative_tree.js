@@ -64,10 +64,18 @@ define([
                 parentVertex.setOriginalServerObject(
                     serverGraph.vertices[parentUri]
                 );
+                var isGoingLeft = parentVertex.isToTheLeft();
                 parentVertex.visitChildren(function(child){
                     VertexHtmlBuilder.addDuplicateVerticesButtonIfApplicable(
                         child
                     );
+                    if(isGoingLeft){
+                        child.label().after(
+                            child.getTextContainer().find(
+                                "> .note-button"
+                            )
+                        );
+                    }
                 });
                 callback(serverGraph);
                 function removeGrandParentFromServerGraph(){
@@ -418,7 +426,7 @@ define([
             function vertexWithId(vertexId) {
                 return vertices[vertexId]
             }
-        }
+        };
 
         function makeInContainerUsingServerGraphAndCentralVertexUri(serverGraph, centralVertexUri, verticesContainer, canAddToLeft) {
             var vertices = serverGraph.vertices;
