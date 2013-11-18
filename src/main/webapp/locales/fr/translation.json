@@ -87,7 +87,7 @@
                 "saving" : "Sauvegarde"
             },
             "link_to_far_vertex": {
-                "title" : "Chercher une bulle pour la lié à celle-ci"
+                "title" : "Chercher une bulle pour la lier à celle-ci"
             },
             "suggestion" : {
                 "title" : "Suggestions de relation",

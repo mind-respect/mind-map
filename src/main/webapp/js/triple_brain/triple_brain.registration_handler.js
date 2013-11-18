@@ -8,7 +8,7 @@ define([
     "triple_brain.user",
     "triple_brain.language_manager"
 ],
-    function (Require, $, ExternalPageLoader, UserService, LanguageManager) {
+    function (require, $, ExternalPageLoader, UserService, LanguageManager) {
         var api = {};
         var access = defineAccess();
         api.startFlow = function () {
@@ -117,7 +117,8 @@ define([
                     });
                     menu.append(availableLanguagesList);
                     menu.dialog({
-                        title:$.t("register.language.available_languages")
+                        title:$.t("register.language.available_languages"),
+                        width:"400px"
                     });
                     function makeListElementForAvailableLanguages(language){
                         var listElement = makeListElementUsingLanguage(language);

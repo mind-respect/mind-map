@@ -18,6 +18,11 @@ body.select{
     left:-5px;
 }
 
+#registration-page{
+    overflow-y: scroll;
+    max-height:500px;
+}
+
 #registration-page .language-list{
     float:left;
     width:100%;
@@ -42,9 +47,12 @@ body.select{
     list-style-type: none;
     margin: 0;
     background-color: gray;
-    /*margin-right: 10px;*/
-    /*width:100%;*/
+    overflow-x: hidden;
+    overflow-y: scroll;
+    width: 350px;
+    max-height:400px;
 }
+
 #selectedLanguages li, .registration-available-languages li {
     padding-top: 0.5em;
     padding-bottom: 0.5em;
@@ -83,6 +91,8 @@ body.select{
 .ui-autocomplete{
     /*z-index one more than ui-dialog*/
     z-index:101;
+    height:200px;
+    overflow-y:scroll;
 }
 
 .security-form-wrapper{
@@ -216,6 +226,11 @@ body input[type=button].link-like-button:hover, body button.link-like-button:hov
 #sub-vertices-depth-index{
     border: 0;
     font-size:1.2em;
+}
+
+.ui-dialog-content ul{
+    overflow-y: scroll;
+    max-height: 400px;
 }
 
 .ui-dialog-content a{

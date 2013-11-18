@@ -33,10 +33,11 @@ define([
                 extraOptions
             );
         }
-        menuContent.addClass("html-content");
-        menuContent.i18n();
-        menuContent.dialog(options);
-        menuContent.centerOnScreen();
+        menuContent.addClass(
+            "html-content"
+        ).i18n().dialog(
+            options
+        ).centerOnScreen();
         function getHorizontalPosition(){
             var positionDialogToRight = {
                 "my" : "left",
