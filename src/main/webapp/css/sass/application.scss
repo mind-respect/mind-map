@@ -1,0 +1,684 @@
+body {
+  min-width: 30000px;
+  min-height: 30000px;
+  cursor: all-scroll;
+}
+
+input[type=button].link-like-button, button.link-like-button {
+  color: #1919AC
+}
+
+input[type=button].link-like-button:hover, button.link-like-button:hover {
+  color: #47A3FF;
+}
+
+input[type="button"], button {
+  border-size: 0px;
+  border-style: none;
+  font: inherit;
+  padding: 0 0 0 0;
+  background: none;
+}
+
+li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-button-in-list {
+  margin: auto;
+  margin-right: 0.5em;
+  float: right;
+  color: red;
+  font-weight: bold;
+  font-size: 1.3em;
+}
+
+button{
+  .add-button-in-list {
+    color: green;
+    font-weight: bold;
+    font-size: 2em;
+    margin-left: 0.2em;
+    margin-bottom: 0.2em;
+    float: left;
+    &:hover {
+      color: #00d100;
+    }
+  }
+}
+
+.canvas-parent, .included-vertices-container.canvas-parent {
+  overflow: hidden;
+}
+
+#mind_map h2, #mind_map h3 {
+  line-height: inherit;
+}
+
+#cboxClose {
+  left: -5px;
+}
+
+/************ Registration and login *********************/
+#registration-page {
+  overflow-y: scroll;
+  max-height: 500px;
+  .language-list {
+    float: left;
+    width: 100%;
+    margin-bottom: 1em;
+    h5 {
+      display: table-cell;
+      vertical-align: bottom;
+      padding-bottom: 0.8em;
+    }
+    > button {
+      margin-top: 0.7em;
+    }
+  }
+}
+
+#login-button, #register-button {
+  display: block;
+  margin-bottom: 1.2em;
+}
+
+#selectedLanguages, .registration-available-languages {
+  list-style-type: none;
+  margin: 0;
+  background-color: gray;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  width: 350px;
+  max-height: 400px;
+}
+
+#selectedLanguages li, .registration-available-languages li {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  width: 100%;
+}
+
+#selectedLanguages li .ui-icon, .registration-available-languages li .ui-icon {
+  display: inline-block;
+}
+
+#selectedLanguages li label, .registration-available-languages li label {
+  margin-left: 0.4em;
+  font-size: 1.2em;
+  display: inline-block;
+}
+
+.security-form-wrapper {
+  background-color: white;
+  height: 100%;
+}
+
+.security-form a {
+  float: left;
+}
+
+#register-link, #login-link {
+  display: block;
+  text-align: center;
+}
+
+#top-center-menu {
+  position: fixed;
+  left: 40%;
+  top: 0.5em;
+  width: 20em;
+  .ui-button {
+    z-index: 3;
+  }
+}
+
+.ui-button {
+  padding: .4em 1em;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.ui-accordion {
+  font-size: 0.9em;
+}
+
+.ui-dialog {
+  opacity: 0.9;
+}
+
+.ui-autocomplete {
+/*z-index one more than ui-dialog*/
+  z-index: 101;
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.ui-menu{
+  .ui-menu-item{
+    a {
+      white-space: nowrap;
+    }
+    span {
+      white-space: nowrap;
+    }
+    .info {
+      font-size: 11px;
+      margin-left: 0.5em;
+      * {
+        font-size: 11px;
+      }
+      a {
+        color: #1919AC;
+        display: inline;
+        padding: 0;
+        white-space: nowrap;
+        &:hover {
+          color: #47A3FF;
+        }
+      }
+    }
+    .distinction {
+      font-weight: bold;
+      margin-right: 1em;
+    }
+  }
+}
+
+.frontier {
+  position: fixed;
+  background-color: transparent;
+  z-index: 0;
+}
+
+.left {
+  height: 100%;
+  min-width: 2em;
+}
+
+.right {
+  height: 100%;
+  min-width: 2em;
+  right: 0;
+}
+
+.top {
+  width: 100%;
+  min-height: 2em;
+}
+
+.bottom {
+  width: 100%;
+  min-height: 2em;
+  bottom: 0;
+}
+
+.ui-loader {
+  display: none;
+}
+
+body {
+}
+
+svg {
+  z-index: 1;
+}
+
+[data-role=page] {
+  font-family: helvetica;
+  font-size: 1em;
+}
+
+.main-panel {
+  z-index: 12;
+  background-color: white;
+  opacity: 0.91;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  cursor: default;
+}
+
+#bottom-center-panel {
+  position: fixed;
+  left: 45%;
+  top: 95%;
+}
+
+.legend {
+  display: inline;
+  padding: 0.3em;
+}
+
+.private.legend {
+  background-color: #E6E6FF;
+}
+
+.public.legend {
+  background-color: #FFE8E8;
+}
+
+#top-panel {
+  margin-right: 5px;
+  position: fixed;
+  right: 0.1em;
+  top: 0.5em;
+}
+
+#top-panel input[type=button], #top-panel button {
+  float: left;
+  margin-left: 15px;
+}
+
+.top-panel.main-panel input[type=button].link-like-button, .top-panel.main-panel button.link-like-button {
+  font-size: 0.9em;
+  margin-top: 4px;
+}
+
+#left-panel {
+  margin-left: 5px;
+  position: fixed;
+  left: 0.1em;
+  top: 0.5em;
+  overflow: hidden;
+  width: 225px;
+}
+
+#toggle-left-panel-collapse {
+  float: right;
+  position: fixed;
+  left: 235px;
+  top: 10px;
+  z-index: 2;
+  font-size: 1em;
+}
+
+#left-panel h2 {
+  font-size: 1em;
+  white-space: nowrap;
+  text-decoration: underline
+}
+
+#sub-vertices-depth-slider {
+  z-index: 3;
+  width: 120px;
+}
+
+#sub-vertices-depth-index {
+  border: 0;
+  font-size: 1.2em;
+}
+
+.ui-dialog-content ul {
+  overflow-y: scroll;
+  max-height: 400px;
+}
+
+.ui-dialog-content a {
+  color: #1919AC
+}
+
+.ui-dialog-content a:hover {
+  color: #47A3FF;
+}
+
+.graph {
+  background-color: white;
+}
+
+.when-default-graph-element-text {
+  font-style: italic;
+}
+
+.graph-element input[type='text'] {
+  text-shadow: none;
+  box-shadow: none;
+  color: black;
+  font-weight: normal;
+}
+
+.vertex {
+  z-index: 3;
+  cursor: default;
+/*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */
+  white-space: nowrap;
+  &.public {
+    .textfield-container {
+      background-color: #FFE8E8;
+    }
+  }
+  &.absolute {
+    white-space: nowrap;
+    position: absolute !important;
+    min-width: 120px;
+  }
+  &.relative {
+    position: relative;
+    min-width: 0;
+    margin: 0 0 0 0;
+  }
+  &.includes-vertices {
+    .textfield-container {
+      padding-bottom: 2em;
+    }
+  }
+  &.highlighted {
+    background-color: white;
+    opacity: 0.96;
+    z-index: 10;
+    &:not(.center-vertex) {
+      .textfield-container {
+        border: 1px;
+        -moz-border-radius: 15px;
+        border-radius: 15px;
+        border-color: green;
+        border-style: solid;
+      }
+    }
+  }
+  &.selected {
+    .textfield-container {
+      border-radius: 15px;
+      box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb;
+    }
+  }
+  &.center-vertex {
+    .textfield-container {
+      border-radius: 15px;
+      -webkit-box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.1);
+      -moz-box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.1);
+      box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.5);
+    }
+    &.selected {
+      .textfield-container {
+        box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb;
+        border: solid red;
+      }
+    }
+  }
+  input[type="text"].label {
+    border: 0;
+    padding: 0;
+    spacing: 0;
+    outline: none;
+    font-family: courier new, monospace;
+    text-align: left;
+    font-size: 14px;
+    vertical-align: middle;
+    background-color: transparent;
+  /*margin-top: 15px;*/
+    width: auto;
+    overflow: hidden;
+  }
+  .included-graph-elements-flag {
+    position: absolute;
+    top: 25px;
+    left: 30%;
+    font-weight: bold;
+  }
+  .textfield-container {
+    border-radius: 20px;
+    background-color: #E6E6FF;
+    white-space: nowrap;
+    display: inline;
+    padding: 1em;
+    margin-left: 0.3em;
+    .note-button {
+      margin-right: 5px;
+      margin-top: -10px;
+    }
+  }
+  .image_container {
+    float: left;
+    a {
+      min-width: 60px;
+    }
+  }
+  .move {
+    background-image: url('images/icons/vertex/move.png');
+    min-width: 25px;
+    min-height: 25px;
+    margin-right: 5px;
+    margin-left: 8px;
+    float: left;
+  }
+  .ui-button {
+    width: 1.7em;
+    height: 1.8em;
+    margin-right: 0;
+    font-size: 1.1em;
+    padding: 0;
+    &.duplicate {
+      position: absolute;
+      left: -15px;
+      top: -30px;
+    }
+  }
+  .menu {
+    float: left;
+    width: 125px;
+    padding-top: 10px;
+    ul:first-of-type {
+      padding-left: 5px;
+    }
+    ul {
+      list-style: none;
+      font-family: courier new, monospace;
+      font-size: 18px;
+      padding: 0 5px 0 0;
+      margin: 0 0 0 0;
+      display: inline;
+      float: left;
+      min-width: 12px;
+    }
+    input {
+      display: block;
+      float: left;
+      background-color: transparent;
+      background-position: center;
+      padding-left: 2px;
+      padding-right: 2px;
+      margin: 0;
+      display: table;
+      border: 1px solid #e30613;
+      font-weight: bold;
+      font-size: 19px;
+      min-width: 25px;
+      min-height: 14px;
+      margin-top: 0px;
+    }
+    .ui-button {
+      float: left;
+      background-color: white;
+    }
+  }
+}
+
+.vertex-note {
+  &.ui-dialog {
+    .ui-dialog-buttonpane .ui-dialog-buttonset {
+      float: none;
+      text-align: center;
+    }
+    .ui-dialog-content {
+      padding: 0;
+    }
+  }
+  textarea {
+    width: 95%;
+    height: 93%;
+    margin-bottom: 0;
+  }
+}
+
+.edge {
+  position: absolute;
+  z-index: 2;
+  cursor: default;
+  input[type="text"] {
+    border: 0px;
+    padding: 0px;
+    spacing: 0px;
+    margin: 0px 0px 0px;
+    outline: none;
+    width: auto;
+    text-align: left;
+    background-color: transparent;
+    font-size: 14px;
+    font-family: courier new, monospace;
+  }
+  .remove {
+    background-color: transparent;
+    border-size: 0px;
+    border-style: none;
+    padding: 0px;
+    font-weight: bold;
+    color: red !important;
+    text-align: center;
+  }
+}
+
+.highlighted-edge {
+  border: 1px;
+  border-color: green;
+  border-style: solid;
+  background-color: white;
+  opacity: 0.96;
+  background-color: rgba(255, 255, 255, 1);
+  z-index: 10;
+}
+
+.graph-element-menu {
+  opacity: 0.96;
+  margin-right: auto;
+  text-align: center;
+  h2, h3 {
+    line-height: inherit;
+  }
+  h2 {
+    font-size: 1em;
+  }
+  h3 {
+    margin-top: 5px;
+    font-weight: normal;
+    font-size: 0.8em;
+  }
+  ul {
+    margin-left: 0px;
+    margin-bottom: 5px;
+    padding: 0;
+    list-style-type: none;
+  }
+  li {
+    margin-left: 0px;
+    padding: 0;
+    font-size: 12px;
+  }
+  .identifications {
+    h3 {
+      text-align: left;
+      font-size: 0.9em;
+    }
+    .type-label {
+      text-align: center;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      margin: auto;
+      overflow: hidden;
+      font-size: 1em;
+    }
+    .description {
+      font-size: 0.9em;
+      text-align: left;
+    }
+  /*:-moz-placeholder for firefox 18-
+    and ::-moz-placeholder for firefox 19+
+  */
+    ::-webkit-input-placeholder, :-moz-placeholder, ::-moz-placeholder, :-ms-input-placeholder {
+      color: black;
+    }
+  }
+}
+
+.relation {
+  .relation-menu {
+    margin-left: 0.3em;
+  }
+  .ui-button {
+    width: 1.7em;
+    height: 1.8em;
+    margin: 0;
+  }
+}
+
+.suggestion{
+  &.ui-draggable {
+    list-style-type: none;
+    font-size: 1em;
+    font-weight: normal;
+    background: -moz-linear-gradient(left, #CDFFCD, #ffffff);
+    background: -webkit-gradient(linear, left right, left right, from(#CDFFCD), to(#ffffff));
+    border: 1px solid green;
+    line-height: 2.5em;
+    min-width: 20em;
+    padding-bottom: 3px;
+    padding-top: 3px;
+  }
+  ul {
+    list-style-type: none;
+    white-space: nowrap;
+  }
+  li {
+    font-size: 0.9em;
+    font-weight: normal;
+    margin-left: 0;
+    padding: 0;
+    background: -moz-linear-gradient(left, #CDFFCD, #ffffff);
+    background: -webkit-gradient(linear, left right, left right, from(#CDFFCD), to(#ffffff));
+    width: 100%;
+    text-align: left;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    border: 1px solid green;
+    line-height: 2.5em;
+    .text {
+      margin-left: 0.5em;
+    }
+  }
+}
+
+.hidden-properties-container {
+  position: absolute;
+  z-index: 10;
+}
+
+.link-like-button {
+  border-size: 0px;
+  border-style: none;
+  font-size: 0.7em;
+  padding: 0 0 0 0;
+  background-color: transparent;
+  font-weight: normal;
+}
+
+.autocomplete-flyout {
+  position: absolute;
+  width: 300px;
+  background-color: white;
+/*one more than jquery ui dialog*/
+  z-index: 101;
+  img {
+    float: left;
+    margin-right: 0.7em;
+  }
+  .title {
+    font-weight: bold;
+  }
+  .source {
+    font-weight: lighter;
+    font-size: 85%;
+  }
+}
+
+.selection-box {
+  min-width: 75px;
+  min-height: 50px;
+  z-index: 100;
+  background: rgba(0, 203, 255, 0.1);
+  border: solid black;
+}
