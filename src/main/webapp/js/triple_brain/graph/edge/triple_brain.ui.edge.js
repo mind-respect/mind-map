@@ -9,9 +9,10 @@ define([
     "triple_brain.event_bus",
     "triple_brain.graph_displayer",
     "triple_brain.ui.graph_element",
-    "triple_brain.edge"
+    "triple_brain.edge",
+    "triple_brain.graph_element_button"
 ],
-    function ($, GraphUi, VertexAndEdgeCommon, EventBus, GraphDisplayer, GraphElement, EdgeService) {
+    function ($, GraphUi, VertexAndEdgeCommon, EventBus, GraphDisplayer, GraphElement, EdgeService, GraphElementButton) {
         var api = {};
         api.getWhenEmptyLabel = function(){
             return $.t("edge.default");
@@ -219,8 +220,23 @@ define([
             this.getHtml = function(){
                 return html;
             };
+            this.visitMenuButtons = function(visitor){
+                $.each(getMenuButtonsHtml(), function(){
+                    visitor(
+                        GraphElementButton.fromHtml(
+                            $(this)
+                        )
+                    );
+                });
+            };
             function getMenu() {
                 return html.find('.relation-menu');
+            }
+
+            function getMenuButtonsHtml(){
+                return getMenu().find(
+                    ">button"
+                );
             }
 
             function isSourceVertex(vertex) {

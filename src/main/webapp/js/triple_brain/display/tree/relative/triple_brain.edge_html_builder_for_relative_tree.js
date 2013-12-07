@@ -12,16 +12,16 @@ define([
     "triple_brain.event_bus",
     "triple_brain.relative_tree_vertex",
     "triple_brain.relative_tree_displayer_templates",
-    "triple_brain.ui.identification_menu",
     "triple_brain.external_resource",
     "triple_brain.user_map_autocomplete_provider",
     "triple_brain.freebase_autocomplete_provider",
     "triple_brain.graph_displayer",
     "triple_brain.keyboard_utils",
     "triple_brain.selection_handler",
+    "triple_brain.graph_element_main_menu",
     "jquery.cursor-at-end"
 ],
-    function (require, $, MindMapTemplate, VertexAndEdgeCommon, TreeEdge, EdgeService, EventBus, RelativeTreeVertex, RelativeTreeTemplates, IdentificationMenu, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphDisplayer, KeyboardUtils, SelectionHandler) {
+    function (require, $, MindMapTemplate, VertexAndEdgeCommon, TreeEdge, EdgeService, EventBus, RelativeTreeVertex, RelativeTreeTemplates, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphDisplayer, KeyboardUtils, SelectionHandler, GraphElementMainMenu) {
         var api = {};
         api.get = function (edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
             return new EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade);
@@ -99,87 +99,14 @@ define([
                 );
                 var menu = $("<span class='relation-menu'>");
                 edgeHtml.append(menu);
-                addIdentificationButton();
-                addInverseButton();
-                addRemoveButton();
-                function addIdentificationButton() {
-                    var identificationButton = $("<button class='identification'>");
-                    identificationButton.button({
-                        icons:{
-                            primary:"ui-icon ui-icon-info"
-                        },
-                        text:false
-                    });
-                    menu.append(identificationButton);
-                    identificationButton.on(
-                        "click",
-                        function (event) {
-                            event.stopPropagation();
-                            IdentificationMenu.ofGraphElement(
-                                edgeFromHtml(
-                                    $(this)
-                                )
-                            ).create();
-                        }
-                    );
-                }
-
-                function addInverseButton() {
-                    var buttonClass = vertex.isToTheLeft() ?
-                        "ui-icon-arrowreturnthick-1-e" :
-                        "ui-icon-arrowreturnthick-1-w";
-                    $(
-                        "<button>"
-                    ).appendTo(
-                        menu
-                    ).button({
-                            icons:{
-                                primary:"ui-icon " + buttonClass
-                            },
-                            text:false
-                        }).on(
-                        "click",
-                        function(event){
-                            event.stopPropagation();
-                            var edge = edgeFromHtml(this);
-                            EdgeService.inverse(
-                                edge,
-                                edge.inverse
-                            );
-                        }
-                    );
-                }
-
-                function addRemoveButton() {
-                    var removeButton = $("<button>");
-                    menu.append(
-                        removeButton
-                    );
-                    removeButton.button({
-                        icons:{
-                            primary:"ui-icon ui-icon-trash"
-                        },
-                        text:false
-                    });
-                    removeButton.on("click", function (event) {
-                        event.stopPropagation();
-                        var edge = edgeFromHtml(
-                            $(this)
-                        );
-                        EdgeService.remove(edge,
-                            function (edge) {
-                                var vertex = edge.childVertexInDisplay();
-                                vertex.visitChildren(function (childVertex) {
-                                    childVertex.removeConnectedEdges();
-                                    childVertex.remove();
-                                });
-                                edge.remove();
-                                vertex.remove();
-                                TreeEdge.redrawAllEdges();
-                            }
-                        );
-                    });
-                }
+                var clickHandler = GraphDisplayer.getRelationMenuHandler().forSingle();
+                GraphElementMainMenu.visitButtons(function(button){
+                    if(!button.canActionBePossiblyMade(clickHandler)){
+                        return;
+                    }
+                    button.cloneInto(menu);
+                });
+                menu.find("button").show();
             }
 
             function buildLabelAsInput(edge){

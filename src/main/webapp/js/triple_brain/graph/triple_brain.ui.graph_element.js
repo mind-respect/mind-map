@@ -2,8 +2,11 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "jquery"
-],function($){
+    "jquery",
+    "triple_brain.event_bus",
+    "triple_brain.selection_handler",
+    "triple_brain.graph_displayer"
+],function($, EventBus, SelectionHandler, GraphDisplayer){
     var api = {};
     api.types = {
         "CONCEPT" : "concept",
@@ -107,5 +110,32 @@ define([
             return self.getGraphElementType() === api.types.CONCEPT;
         };
     };
+    EventBus.subscribe("/event/ui/selection/changed",
+        function (event, selectedElements) {
+            var onlyOneGraphElementSelected = 1 === SelectionHandler.getNbSelected();
+            if(!onlyOneGraphElementSelected){
+                $.each(selectedElements, function(){
+                    var selectedElement = this;
+                    selectedElement.hideMenu();
+                });
+                return;
+            }
+            selectedElements.showMenu();
+            displayOnlyRelevantButtonsInGraphElementMenu(
+                selectedElements
+            );
+        }
+    );
     return api;
+    function displayOnlyRelevantButtonsInGraphElementMenu(graphElement){
+        var clickHandler = graphElement.isConcept() ?
+            GraphDisplayer.getVertexMenuHandler().forSingle() :
+            GraphDisplayer.getRelationMenuHandler().forSingle();
+        graphElement.visitMenuButtons(function(button){
+            button.showOnlyIfApplicable(
+                clickHandler,
+                graphElement
+            );
+        });
+    }
 });

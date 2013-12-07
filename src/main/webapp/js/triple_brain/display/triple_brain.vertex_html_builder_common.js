@@ -75,41 +75,11 @@ define([
             button.cloneInto(menuContainer);
         });
     };
-    EventBus.subscribe("/event/ui/selection/changed",
-        function (event, selectedElements) {
-            var onlyOneGraphElementSelected = 1 === SelectionHandler.getNbSelected();
-            if(!onlyOneGraphElementSelected){
-                $.each(selectedElements, function(){
-                    var selectedElement = this;
-                    if(!selectedElement.isConcept()){
-                        return;
-                    }
-                    selectedElement.hideMenu();
-                });
-                return;
-            }
-            if(!selectedElements.isConcept()){
-                return;
-            }
-            selectedElements.showMenu();
-            displayOnlyRelevantButtonsInVertexMenu(
-                selectedElements
-            );
-        }
-    );
+
     return api;
     function vertexOfSubHtmlComponent(htmlOfSubComponent) {
         return GraphDisplayer.getVertexSelector().withHtml(
             $(htmlOfSubComponent).closest('.vertex')
         );
-    }
-    function displayOnlyRelevantButtonsInVertexMenu(vertex){
-        var clickHandler = GraphDisplayer.getVertexMenuHandler().forSingle();
-        vertex.visitMenuButtons(function(button){
-            button.showOnlyIfApplicable(
-                clickHandler,
-                vertex
-            );
-        });
     }
 });
