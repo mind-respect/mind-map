@@ -11,11 +11,9 @@ define([
     "triple_brain.user_map_autocomplete_provider",
     "triple_brain.freebase_autocomplete_provider",
     "triple_brain.graph_element_main_menu",
-    "triple_brain.event_bus",
-    "triple_brain.selection_handler",
     "jquery-ui",
     "jquery.triple_brain.search"
-], function ($, GraphDisplayer, VertexService, MindMapTemplate, GraphElementMenu, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementMainMenu, EventBus, SelectionHandler) {
+], function ($, GraphDisplayer, VertexService, MindMapTemplate, GraphElementMenu, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementMainMenu) {
     var api = {};
     api.applyAutoCompleteIdentificationToLabelInput = function (input) {
         input.tripleBrainAutocomplete({
