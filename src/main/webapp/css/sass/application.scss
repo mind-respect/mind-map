@@ -388,7 +388,7 @@ svg {
   &.highlighted {
     background-color: white;
     opacity: 0.96;
-    z-index: 10;
+    z-index: 11;
     &:not(.center-vertex) {
       .in-bubble-content {
         border: 1px;
@@ -400,7 +400,7 @@ svg {
     }
   }
   &.selected {
-    z-index:11;
+    z-index:12;
     .in-bubble-content {
       border-radius: 15px;
       box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb;

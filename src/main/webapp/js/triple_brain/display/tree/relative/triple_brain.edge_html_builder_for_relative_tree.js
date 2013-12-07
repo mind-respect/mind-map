@@ -302,15 +302,20 @@ define([
                     "click",
                     function(event){
                         event.stopPropagation();
-                        if(!KeyboardUtils.isCtrlPressed()){
-                            SelectionHandler.reset();
-                        }
                         var edge = edgeFromHtml(
                             $(this).closest(".relation")
                         );
-                        edge.select();
+                        if(KeyboardUtils.isCtrlPressed()){
+                            if(edge.isSelected()){
+                                edge.deselect();
+                            }else{
+                                edge.select();
+                            }
+                        }else{
+                            SelectionHandler.reset();
+                            edge.select();
+                        }
                         SelectionHandler.refreshSelectionMenu();
-                        edge.showMenu();
                     }
                 );
                 var overlay = $(

@@ -59,7 +59,8 @@ define([
                         text:false
                     }).on(
                     "click",
-                    function () {
+                    function (event) {
+                        event.stopPropagation();
                         var vertex = vertexOfSubHtmlComponent($(this));
                         $(
                             vertex.getOtherInstances()[0].getHtml()

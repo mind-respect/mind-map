@@ -4,8 +4,5 @@
 define([
 ], function(){
     var api = {};
-    api.remove = function(elements){
-
-    };
     return api;
 });
