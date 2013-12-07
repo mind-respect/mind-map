@@ -69,17 +69,6 @@ define(
                                             GraphDisplayer.getVertexSelector().centralVertex()
                                         );
                                 });
-                                switchDisplayerButtons().click(function () {
-                                    var displayerName = $(this).attr("data-displayer_name");
-                                    GraphDisplayer.setImplementation(
-                                        GraphDisplayerFactory.getByName(
-                                            displayerName
-                                        )
-                                    );
-                                    GraphDisplayer.displayUsingNewCentralVertex(
-                                        GraphDisplayer.getVertexSelector().centralVertex()
-                                    );
-                                });
                                 translateText();
                             });
                         }
@@ -87,14 +76,6 @@ define(
                 }
                 function translateText() {
                     $("html").i18n();
-                }
-
-                function getHeaderMenu() {
-                    return $("#top-panel");
-                }
-
-                function switchDisplayerButtons() {
-                    return getHeaderMenu().find(".switch-displayer");
                 }
 
                 function handleIfNotAuthenticatedShowCredentialsFlow() {

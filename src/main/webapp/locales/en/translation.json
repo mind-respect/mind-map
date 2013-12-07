@@ -39,8 +39,6 @@
     "top_menu" : {
         "create_concept" : "new bubble",
         "disconnect" : "disconnect",
-        "show_as_graph" : "show as graph",
-        "show_as_tree" : "show as tree",
         "redraw" : "redraw"
     },
     "top_center_menu" : {
