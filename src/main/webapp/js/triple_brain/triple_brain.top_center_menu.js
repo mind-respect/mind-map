@@ -17,13 +17,8 @@ define([
                 "click",
                 SelectionHandler.handleSelectionManagementClick
             );
-            SelectionHandler.getGroupButton().on(
-                "click",
-                SelectionHandler.handleGroupButtonClick
-            );
         };
         return api;
-
         function getSelectionButton() {
             return getButtons().filter(".select");
         }

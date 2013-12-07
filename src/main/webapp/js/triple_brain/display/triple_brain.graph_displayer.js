@@ -102,6 +102,18 @@ define([
                 container
             );
         };
+        api.getVertexMenuHandler = function(){
+            return _implementation.getVertexMenuHandler();
+        };
+        api.getRelationMenuHandler = function(){
+            return _implementation.getRelationMenuHandler();
+        };
+        api.getGraphElementMenuHandler = function(){
+            return _implementation.getGraphElementMenuHandler();
+        };
+        api.getGraphMenuHandler = function(){
+            return _implementation.getGraphMenuHandler();
+        };
         api.integrateEdgesOfServerGraphForViewOnly = function(drawnGraph){
             return _implementation.integrateEdgesOfServerGraphForViewOnly(
                 drawnGraph

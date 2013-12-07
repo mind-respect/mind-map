@@ -20,7 +20,7 @@ define([
         );
         t.add(
             'vertex_label_container',
-            '<div class=textfield-container>' +
+            '<div class="in-bubble-content">' +
                 '<input type="text" class="label" value="{label}">' +
                 '</div>'
         );

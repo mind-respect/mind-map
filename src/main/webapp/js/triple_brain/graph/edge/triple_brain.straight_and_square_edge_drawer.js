@@ -24,8 +24,8 @@ define([
             sourceVertex :
             destinationVertex;
         var drawnComponents = [];
-        var sourceHtml = sourceVertexAsSeenOnScreen.getTextContainer();
-        var destinationHtml = destinationVertexAsSeenOnScreen.getTextContainer();
+        var sourceHtml = sourceVertexAsSeenOnScreen.getInBubbleContainer();
+        var destinationHtml = destinationVertexAsSeenOnScreen.getInBubbleContainer();
         var defaultStrokeWidth = "1";
         var defaultColor = "black";
         this.drawInWithDefaultStyle = function () {
@@ -171,7 +171,7 @@ define([
         function buildEndPointOfThirdSegment() {
             var destinationHtmlOffset = getOffset(destinationHtml);
             return Point.fromCoordinates(
-                destinationHtmlOffset.left + destinationVertexAsSeenOnScreen.textContainerWidth() / 2,
+                destinationHtmlOffset.left + destinationVertexAsSeenOnScreen.getInBubbleContentWidth() / 2,
                 destinationHtmlOffset.top + destinationHtml.outerHeight() / 2
             );
         }

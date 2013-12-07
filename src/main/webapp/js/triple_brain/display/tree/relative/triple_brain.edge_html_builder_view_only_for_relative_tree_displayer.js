@@ -31,7 +31,7 @@ define([
                 "destination_vertex_id",
                 isInverse ? parentVertexHtmlFacade.getId() : childVertexHtmlFacade.getId()
             );
-            var textContainer = childVertexHtmlFacade.getTextContainer();
+            var textContainer = childVertexHtmlFacade.getInBubbleContainer();
             var isToTheLeft = childVertexHtmlFacade.isToTheLeft();
             if (isToTheLeft) {
                 textContainer.append(html);

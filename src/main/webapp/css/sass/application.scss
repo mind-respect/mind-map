@@ -43,6 +43,18 @@ button{
   }
 }
 
+.overlay-container{
+  position:relative;
+  display:inline;
+}
+.overlay{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  top:0;
+}
+
 .canvas-parent, .included-vertices-container.canvas-parent {
   overflow: hidden;
 }
@@ -128,7 +140,23 @@ button{
     z-index: 3;
   }
 }
-
+#graph-element-menu{
+  position:fixed;
+  right: 10px;
+  top: 100px;
+  border: 1px solid #0088CC;
+  border-radius: 9px;
+  max-width:94px;
+  padding:1em;
+  padding-top:2em;
+  cursor: all-scroll;
+  margin-right:0;
+  margin-left:0;
+  button{
+    margin-bottom: 0.5em;
+    width:1.7em;
+  }
+}
 .ui-button {
   padding: .4em 1em;
   cursor: pointer;
@@ -338,7 +366,7 @@ svg {
 /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */
   white-space: nowrap;
   &.public {
-    .textfield-container {
+    .in-bubble-content {
       background-color: #FFE8E8;
     }
   }
@@ -353,7 +381,7 @@ svg {
     margin: 0 0 0 0;
   }
   &.includes-vertices {
-    .textfield-container {
+    .in-bubble-content {
       padding-bottom: 2em;
     }
   }
@@ -362,7 +390,7 @@ svg {
     opacity: 0.96;
     z-index: 10;
     &:not(.center-vertex) {
-      .textfield-container {
+      .in-bubble-content {
         border: 1px;
         -moz-border-radius: 15px;
         border-radius: 15px;
@@ -372,20 +400,21 @@ svg {
     }
   }
   &.selected {
-    .textfield-container {
+    z-index:11;
+    .in-bubble-content {
       border-radius: 15px;
       box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb;
     }
   }
   &.center-vertex {
-    .textfield-container {
+    .in-bubble-content {
       border-radius: 15px;
       -webkit-box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.1);
       -moz-box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.1);
       box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.5);
     }
     &.selected {
-      .textfield-container {
+      .in-bubble-content {
         box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb;
         border: solid red;
       }
@@ -401,6 +430,7 @@ svg {
     font-size: 14px;
     vertical-align: middle;
     background-color: transparent;
+    margin-bottom:0.4em;
   /*margin-top: 15px;*/
     width: auto;
     overflow: hidden;
@@ -411,13 +441,16 @@ svg {
     left: 30%;
     font-weight: bold;
   }
-  .textfield-container {
+  .in-bubble-content {
     border-radius: 20px;
     background-color: #E6E6FF;
     white-space: nowrap;
-    display: inline;
     padding: 1em;
+    padding-bottom:0.7em;
+    padding-top:0.7em;
     margin-left: 0.3em;
+    position:relative;
+    display:inline-flex;
     .note-button {
       margin-right: 5px;
       margin-top: -10px;
@@ -452,7 +485,8 @@ svg {
   .menu {
     float: left;
     width: 125px;
-    padding-top: 10px;
+    padding-top: 3px;
+    position:absolute;
     ul:first-of-type {
       padding-left: 5px;
     }
@@ -598,6 +632,7 @@ svg {
 .relation {
   .relation-menu {
     margin-left: 0.3em;
+    z-index:11;
   }
   .ui-button {
     width: 1.7em;

@@ -5,9 +5,10 @@ define([
     "require",
     "jquery",
     "triple_brain.ui.edge",
-    "triple_brain.graph_displayer"
+    "triple_brain.graph_displayer",
+    "triple_brain.selection_handler"
 ],
-    function (require, $, EdgeUi, GraphDisplayer) {
+    function (require, $, EdgeUi, GraphDisplayer, SelectionHandler) {
         var api = {};
         api.getWhenEmptyLabel = function () {
             return EdgeUi.getWhenEmptyLabel();
@@ -17,6 +18,20 @@ define([
                 visitor(
                     api.withHtml(this)
                 );
+            });
+        };
+        api.visitSelected = function(visitor){
+            $(".relation.selected").each(function(){
+                visitor(
+                    api.withHtml(
+                        $(this)
+                    )
+                );
+            });
+        };
+        api.resetSelection = function(){
+            api.visitSelected(function(edge){
+                edge.deselect();
             });
         };
         api.redrawAllEdges = EdgeUi.redrawAllEdges;
@@ -60,9 +75,9 @@ define([
                 }
             };
             this.getLabel = function () {
-                return html.find("> input").length > 0 ?
+                return html.find("> input").is(":visible") ?
                     html.find("> input") :
-                    html.find("> span.label");
+                    html.find("span.label");
             };
             this.readjustLabelWidth = function () {
                 //do nothing;
@@ -80,6 +95,19 @@ define([
             };
             this.isLeftOfCenterVertex = function(){
                 return self.childVertexInDisplay().isToTheLeft();
+            };
+            this.select = function(){
+                html.addClass("selected");
+                if(1 === SelectionHandler.getNbSelected()){
+                    self.showMenu();
+                }
+            };
+            this.deselect = function(){
+                html.removeClass("selected");
+                self.hideMenu();
+            };
+            this.isSelected = function(){
+                return html.hasClass("selected");
             };
             EdgeUi.Object.apply(this, [html]);
         }

@@ -12,8 +12,6 @@ define([
     "triple_brain.suggestion",
     "triple_brain.mind-map_template",
     "triple_brain.external_resource",
-    "triple_brain.ui.identification_menu",
-    "triple_brain.ui.suggestion_menu",
     "triple_brain.point",
     "triple_brain.segment",
     "triple_brain.graph_displayer",
@@ -22,11 +20,12 @@ define([
     "triple_brain.ui.triple",
     "triple_brain.vertex_html_builder_common",
     "triple_brain.image",
-    "triple_brain.ui.utils",
+    "triple_brain.selection_handler",
+    "triple_brain.keyboard_utils",
     "jquery-ui",
     "jquery.is-fully-on-screen",
     "jquery.center-on-screen"
-], function (require, $, EventBus, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, IdentificationMenu, SuggestionMenu, Point, Segment, GraphDisplayer, RelativeTreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, Image, UiUtils) {
+], function (require, $, EventBus, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, Point, Segment, GraphDisplayer, RelativeTreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, Image, SelectionHandler, KeyboardUtils) {
         var api = {};
         api.withServerJson = function (serverVertex) {
             return new VertexCreator(serverVertex);
@@ -45,7 +44,7 @@ define([
                 }
             });
             function addDuplicateButton(vertex) {
-                vertex.getTextContainer().prepend(
+                vertex.getInBubbleContainer().prepend(
                     buildDuplicateButton()
                 );
             }
@@ -74,9 +73,8 @@ define([
             handleVisitAfterGraphDrawn
         );
         return api;
-
         function handleVisitAfterGraphDrawn(event, vertex) {
-            if("relative_tree" === GraphDisplayer.name()){
+            if ("relative_tree" === GraphDisplayer.name()) {
                 api.addDuplicateVerticesButtonIfApplicable(
                     vertex
                 );
@@ -86,14 +84,41 @@ define([
         function VertexCreator(serverFormat) {
             var VertexService = require("triple_brain.vertex");
             var Suggestion = require("triple_brain.suggestion");
-            var IdentificationMenu = require("triple_brain.ui.identification_menu");
-            var SuggestionMenu = require("triple_brain.ui.suggestion_menu");
             var html = $(
                 MindMapTemplate['relative_vertex'].merge(serverFormat)
             );
             html.data(
                 "uri",
                 serverFormat.uri
+            ).on(
+                "dblclick",
+                function(event){
+                    event.stopPropagation();
+                    var vertex = RelativeTreeVertex.withHtml(
+                        $(this)
+                    );
+                    vertex.deselect();
+                    SelectionHandler.refreshSelectionMenu();
+                    vertex.getLabel().focus().setCursorToEndOfText();
+                }
+            ).on(
+                "click",
+                function(){
+                    var vertex = RelativeTreeVertex.withHtml(
+                        $(this)
+                    );
+                    if(KeyboardUtils.isCtrlPressed()){
+                        if(vertex.isSelected()){
+                            vertex.deselect();
+                        }else{
+                            vertex.select();
+                        }
+                    }else{
+                        SelectionHandler.reset();
+                        vertex.select();
+                    }
+                    SelectionHandler.refreshSelectionMenu();
+                }
             );
             html.uniqueId();
             var vertex;
@@ -102,14 +127,16 @@ define([
                 vertex.setTotalNumberOfEdges(
                     serverFormat.number_of_connected_edges
                 );
-                createLabel();
+                buildLabelHtml(
+                    buildInsideBubbleContainer()
+                );
                 html.data(
                     "isPublic",
                     serverFormat.is_public
                 )
                 vertex.setIncludedVertices(serverFormat.included_vertices);
                 vertex.setIncludedEdges(serverFormat.included_edges);
-                if(vertex.hasIncludedGraphElements()){
+                if (vertex.hasIncludedGraphElements()) {
                     showItHasIncludedGraphElements();
                 }
                 vertex.setNote(
@@ -121,9 +148,6 @@ define([
                         serverFormat.suggestions
                     )
                 );
-                if (serverFormat.suggestions.length > 0) {
-                    vertex.showSuggestionButton();
-                }
                 vertex.hideButtons();
                 $(html).hover(
                     onMouseOver,
@@ -157,13 +181,27 @@ define([
                 );
                 return vertex;
             };
-            function createLabel() {
-                var labelContainer = $(MindMapTemplate['vertex_label_container'].merge({
-                    label:serverFormat.label.trim() === "" ?
+            function buildInsideBubbleContainer(){
+                return $(
+                    "<div class='in-bubble-content'>"
+                ).appendTo(html);
+            }
+            function buildLabelHtml(inContentContainer) {
+                var labelContainer = $(
+                    "<div class='overlay-container'>"
+                ).appendTo(
+                    inContentContainer
+                );
+                var overlay = $("<div class='overlay'>").appendTo(
+                    labelContainer
+                );
+                var label = $(
+                    "<input type='text' class='label'>"
+                ).val(
+                    serverFormat.label.trim() === "" ?
                         RelativeTreeVertex.getWhenEmptyLabel() :
                         serverFormat.label
-                })).appendTo(html);
-                var label = labelContainer.find("input[type='text']:first");
+                ).appendTo(labelContainer);
                 vertex.readjustLabelWidth();
                 if (vertex.hasDefaultText()) {
                     vertex.applyStyleOfDefaultText();
@@ -181,8 +219,10 @@ define([
                         if (!vertex.isMouseOver()) {
                             vertex.unhighlight();
                         }
-                        if ($(this).val() == "") {
-                            $(this).val(RelativeTreeVertex.getWhenEmptyLabel());
+                        if ("" === $(this).val()) {
+                            $(this).val(
+                                RelativeTreeVertex.getWhenEmptyLabel()
+                            );
                             vertex.applyStyleOfDefaultText();
                             $(vertex.label()).keyup();
                         } else {
@@ -220,34 +260,31 @@ define([
                             relativeVertex.adjustAllChildrenPositionIfApplicable();
                         });
                         EdgeUi.redrawAllEdges();
+                    }).keyup(function () {
+                        var vertex = vertexOfSubHtmlComponent(this);
+                        var html = vertex.getHtml();
+                        updateLabelsOfVerticesWithSameUri();
+                        vertex.readjustLabelWidth();
+                        function updateLabelsOfVerticesWithSameUri() {
+                            var text = vertex.text();
+                            var otherInstances = RelativeTreeVertex.withHtml(
+                                html
+                            ).getOtherInstances();
+                            $.each(otherInstances, function () {
+                                var sameVertex = this;
+                                sameVertex.setText(
+                                    text
+                                );
+                                sameVertex.readjustLabelWidth();
+                            });
+                        }
                     });
-
-                label.keyup(function () {
-                    var vertex = vertexOfSubHtmlComponent(this);
-                    var html = vertex.getHtml();
-                    updateLabelsOfVerticesWithSameUri();
-                    vertex.readjustLabelWidth();
-                    function updateLabelsOfVerticesWithSameUri() {
-                        var text = vertex.text();
-                        var otherInstances = RelativeTreeVertex.withHtml(
-                            html
-                        ).getOtherInstances();
-                        $.each(otherInstances, function () {
-                            var sameVertex = this;
-                            sameVertex.setText(
-                                text
-                            );
-                            sameVertex.readjustLabelWidth();
-                        });
-                    }
-                });
                 VertexHtmlCommon.applyAutoCompleteIdentificationToLabelInput(
                     label
                 );
                 return labelContainer;
             }
-
-            function showItHasIncludedGraphElements(){
+            function showItHasIncludedGraphElements() {
                 html.append(
                     $("<div class='included-graph-elements-flag'>").text(
                         ". . ."
@@ -256,122 +293,13 @@ define([
             }
 
             function createMenu() {
-                var vertexMenu = MindMapTemplate['vertex_menu'].merge();
+                var vertexMenu = $(
+                    MindMapTemplate['vertex_menu'].merge()
+                );
                 html.append(vertexMenu);
-                VertexHtmlCommon.addPlusButton(
-                    vertexMenu,
-                    addButtonClickBehaviour
-                );
-                VertexHtmlCommon.addRemoveButtonIfApplicable(
-                    vertexMenu,
-                    removeButtonAfterConfirmationBehavior
-                );
-                if (vertex.hasIncludedGraphElements()) {
-                    VertexHtmlCommon.addIncludedGraphElementsButton(
-                        vertexMenu
-                    );
-                }
-                VertexHtmlCommon.addWhatIsThisButton(
-                    vertexMenu,
-                    whatIsThisButtonClickBehaviour
-                );
-                VertexHtmlCommon.addSuggestionsButton(
-                    vertexMenu,
-                    suggestionsButtonClickBehaviour
-                );
-                VertexHtmlCommon.addCenterButton(
-                    vertexMenu,
-                    centerButtonClickBehaviour
-                );
-                VertexHtmlCommon.addNoteButton(
-                    vertex
-                );
-
-                VertexHtmlCommon.addImageButton(
+                VertexHtmlCommon.addRelevantButtonsInMenu(
                     vertexMenu
                 );
-                VertexHtmlCommon.addLinkToFarVertexButton(
-                    vertexMenu
-                );
-                VertexHtmlCommon.addPrivacyManagementButton(
-                    vertexMenu
-                );
-                function addButtonClickBehaviour() {
-                    var sourceVertex = vertexFacade();
-                    VertexService.addRelationAndVertexToVertex(
-                        sourceVertex, function (triple, tripleServerFormat) {
-                            var sourceVertex = RelativeTreeVertex.ofVertex(
-                                triple.sourceVertex()
-                            );
-                            var destinationHtml = triple.destinationVertex().getHtml();
-                            if (!UiUtils.isElementFullyOnScreen(destinationHtml)) {
-                                destinationHtml.centerOnScreenWithAnimation();
-                            }
-                            RelativeTreeVertex.ofVertex(
-                                triple.destinationVertex()
-                            ).resetOtherInstances();
-                            sourceVertex.applyToOtherInstances(function (vertex) {
-                                Triple.createUsingServerTriple(
-                                    vertex,
-                                    tripleServerFormat
-                                );
-
-                            });
-                        }
-                    );
-                }
-                function removeButtonAfterConfirmationBehavior(event, vertex) {
-                    event.stopPropagation();
-                    VertexService.remove(vertex, function (vertex) {
-                        removeChildren(vertex);
-                        RelativeTreeVertex.ofVertex(vertex).applyToOtherInstances(function (vertex) {
-                            removeChildren(vertex);
-                            removeEdges(vertex);
-                        });
-                        removeEdges(vertex);
-                        EdgeUi.redrawAllEdges();
-                        function removeChildren(vertex) {
-                            var relativeVertex = RelativeTreeVertex.ofVertex(
-                                vertex
-                            );
-                            relativeVertex.visitChildren(function (childVertex) {
-                                vertex.removeConnectedEdges();
-                                childVertex.remove();
-                            });
-                        }
-
-                        function removeEdges(vertex) {
-                            vertex.removeConnectedEdges();
-                            vertex.remove();
-                        }
-                    });
-                }
-
-                function suggestionsButtonClickBehaviour(event) {
-                    event.stopPropagation();
-                    var outOfVertexMenus = $('.graph-element-menu');
-                    $(outOfVertexMenus).remove();
-                    var vertex = vertexOfSubHtmlComponent(this);
-                    SuggestionMenu.ofVertex(
-                        vertex
-                    ).create();
-                }
-
-                function whatIsThisButtonClickBehaviour(event) {
-                    event.stopPropagation();
-                    var vertex = vertexOfSubHtmlComponent(this);
-                    IdentificationMenu.ofGraphElement(
-                        vertex
-                    ).create();
-
-                }
-
-                function centerButtonClickBehaviour() {
-                    GraphDisplayer.displayUsingNewCentralVertex(
-                        vertexOfSubHtmlComponent(this)
-                    );
-                }
-
                 return vertexMenu;
             }
 

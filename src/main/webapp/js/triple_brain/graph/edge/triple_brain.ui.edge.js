@@ -195,7 +195,7 @@ define([
                 var intuitiveWidthBuffer = 14;
                 html.css(
                     "width",
-                    $(menu()).width()
+                    $(getMenu()).width()
                         + self.getLabel().width()
                         + intuitiveWidthBuffer +
                         "px"
@@ -211,16 +211,16 @@ define([
                 html.remove();
             };
             this.showMenu = function () {
-                $(menu()).show();
+                $(getMenu()).show();
             };
             this.hideMenu = function () {
-                $(menu()).hide();
+                $(getMenu()).hide();
             };
             this.getHtml = function(){
                 return html;
             };
-            function menu() {
-                return html.find('.remove');
+            function getMenu() {
+                return html.find('.relation-menu');
             }
 
             function isSourceVertex(vertex) {

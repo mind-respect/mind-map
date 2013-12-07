@@ -118,7 +118,7 @@
         }
     },
     "selection" : {
-        "selected_bubbles" : "bubble(s) selected",
+        "selected_graph_elements" : "graph element(s) selected",
         "group" : "group"
     }
 }

@@ -17,9 +17,11 @@ define([
     "triple_brain.user_map_autocomplete_provider",
     "triple_brain.freebase_autocomplete_provider",
     "triple_brain.graph_displayer",
+    "triple_brain.keyboard_utils",
+    "triple_brain.selection_handler",
     "jquery.cursor-at-end"
 ],
-    function (require, $, MindMapTemplate, VertexAndEdgeCommon, TreeEdge, EdgeService, EventBus, RelativeTreeVertex, RelativeTreeTemplates, IdentificationMenu, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphDisplayer) {
+    function (require, $, MindMapTemplate, VertexAndEdgeCommon, TreeEdge, EdgeService, EventBus, RelativeTreeVertex, RelativeTreeTemplates, IdentificationMenu, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphDisplayer, KeyboardUtils, SelectionHandler) {
         var api = {};
         api.get = function (edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
             return new EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade);
@@ -39,35 +41,31 @@ define([
                 html.data(
                     "source_vertex_id",
                     isInverse ? childVertexHtmlFacade.getId() : parentVertexHtmlFacade.getId()
-                );
-                html.data(
+                ).data(
                     "destination_vertex_id",
                     isInverse ? parentVertexHtmlFacade.getId() : childVertexHtmlFacade.getId()
                 );
-                html.click(function () {
-                    changeToInput(
-                        edgeFromHtml($(this))
-                    );
-                });
-                makeSpanInnerHtml(
+                var inBubbleContainer = childVertexHtmlFacade.getInBubbleContainer();
+                var isToTheLeft = childVertexHtmlFacade.isToTheLeft();
+                html[isToTheLeft ? "appendTo" : "prependTo"](
+                    inBubbleContainer
+                ).css(
+                    isToTheLeft ? "margin-left" : "margin-right", "1em"
+                ).append(html);
+                buildNonInputLabel(
                     html,
                     edgeServer.label
-                );
-                var textContainer = childVertexHtmlFacade.getTextContainer();
-                var isToTheLeft = childVertexHtmlFacade.isToTheLeft();
-                if (isToTheLeft) {
-                    textContainer.append(html);
-                } else {
-                    textContainer.prepend(html);
-                }
+                ).show();
                 childVertexHtmlFacade.adjustWidth();
                 if (isToTheLeft) {
                     childVertexHtmlFacade.adjustPosition();
                 }
                 drawArrowLine();
                 var edge = edgeFacade();
-                edge.setUri(uri);
+                buildLabelAsInput(edge).hide();
+                buildMenu(edge);
                 edge.hideMenu();
+                edge.setUri(uri);
                 edge.setTypes([]);
                 edge.setSameAs([]);
                 edge.setGenericIdentifications([]);
@@ -94,114 +92,97 @@ define([
                 );
                 return edge;
             };
-
-            function showRemoveButtonOnlyIfMouseOver(html) {
-                html.off(
-                    "mouseenter mouseleave"
-                ).hover(function () {
-                        var edge = edgeFromHtml($(this));
-                        var edgeHtml = edge.getHtml();
-                        var vertex = RelativeTreeVertex.withHtml(
-                            edgeHtml.closest(".vertex")
-                        );
-                        vertex.hideMenu();
-                        var menu = $("<span class='relation-menu'>");
-                        edgeHtml.append(menu);
-                        addIdentificationButton();
-                        addInverseButton();
-                        addRemoveButton();
-                        function addIdentificationButton() {
-                            var identificationButton = $("<button class='identification'>");
-                            identificationButton.button({
-                                icons:{
-                                    primary:"ui-icon ui-icon-info"
-                                },
-                                text:false
-                            });
-                            menu.append(identificationButton);
-                            identificationButton.on(
-                                "click",
-                                function (event) {
-                                    event.stopPropagation();
-                                    IdentificationMenu.ofGraphElement(
-                                        edgeFromHtml(
-                                            $(this)
-                                        )
-                                    ).create();
-                                }
-                            );
-                        }
-
-                        function addInverseButton() {
-                            var buttonClass = vertex.isToTheLeft() ?
-                                "ui-icon-arrowreturnthick-1-e" :
-                                "ui-icon-arrowreturnthick-1-w";
-                            $(
-                                "<button>"
-                            ).appendTo(
-                                menu
-                            ).button({
-                                icons:{
-                                    primary:"ui-icon " + buttonClass
-                                },
-                                text:false
-                            }).on(
-                                "click",
-                                function(event){
-                                    event.stopPropagation();
-                                    var edge = edgeFromHtml(this);
-                                    EdgeService.inverse(
-                                        edge,
-                                        edge.inverse
-                                    );
-                                }
-                            );
-                        }
-
-                        function addRemoveButton() {
-                            var removeButton = $("<button>");
-                            menu.append(
-                                removeButton
-                            );
-                            removeButton.button({
-                                icons:{
-                                    primary:"ui-icon ui-icon-trash"
-                                },
-                                text:false
-                            });
-                            removeButton.on("click", function (event) {
-                                event.stopPropagation();
-                                var edge = edgeFromHtml(
-                                    $(this)
-                                );
-                                EdgeService.remove(edge,
-                                    function (edge) {
-                                        var vertex = edge.childVertexInDisplay();
-                                        vertex.visitChildren(function (childVertex) {
-                                            childVertex.removeConnectedEdges();
-                                            childVertex.remove();
-                                        });
-                                        edge.remove();
-                                        vertex.remove();
-                                        TreeEdge.redrawAllEdges();
-                                    }
-                                );
-                            });
-                        }
-                    },
-                    function () {
-                        var edgeHtml = edgeFromHtml(
-                            $(this)
-                        ).getHtml();
-                        RelativeTreeVertex.withHtml(
-                            edgeHtml.closest(".vertex")
-                        ).showMenu();
-                        edgeHtml.find(".relation-menu").remove();
-                    }
+            function buildMenu(edge){
+                var edgeHtml = edge.getHtml();
+                var vertex = RelativeTreeVertex.withHtml(
+                    edgeHtml.closest(".vertex")
                 );
+                var menu = $("<span class='relation-menu'>");
+                edgeHtml.append(menu);
+                addIdentificationButton();
+                addInverseButton();
+                addRemoveButton();
+                function addIdentificationButton() {
+                    var identificationButton = $("<button class='identification'>");
+                    identificationButton.button({
+                        icons:{
+                            primary:"ui-icon ui-icon-info"
+                        },
+                        text:false
+                    });
+                    menu.append(identificationButton);
+                    identificationButton.on(
+                        "click",
+                        function (event) {
+                            event.stopPropagation();
+                            IdentificationMenu.ofGraphElement(
+                                edgeFromHtml(
+                                    $(this)
+                                )
+                            ).create();
+                        }
+                    );
+                }
+
+                function addInverseButton() {
+                    var buttonClass = vertex.isToTheLeft() ?
+                        "ui-icon-arrowreturnthick-1-e" :
+                        "ui-icon-arrowreturnthick-1-w";
+                    $(
+                        "<button>"
+                    ).appendTo(
+                        menu
+                    ).button({
+                            icons:{
+                                primary:"ui-icon " + buttonClass
+                            },
+                            text:false
+                        }).on(
+                        "click",
+                        function(event){
+                            event.stopPropagation();
+                            var edge = edgeFromHtml(this);
+                            EdgeService.inverse(
+                                edge,
+                                edge.inverse
+                            );
+                        }
+                    );
+                }
+
+                function addRemoveButton() {
+                    var removeButton = $("<button>");
+                    menu.append(
+                        removeButton
+                    );
+                    removeButton.button({
+                        icons:{
+                            primary:"ui-icon ui-icon-trash"
+                        },
+                        text:false
+                    });
+                    removeButton.on("click", function (event) {
+                        event.stopPropagation();
+                        var edge = edgeFromHtml(
+                            $(this)
+                        );
+                        EdgeService.remove(edge,
+                            function (edge) {
+                                var vertex = edge.childVertexInDisplay();
+                                vertex.visitChildren(function (childVertex) {
+                                    childVertex.removeConnectedEdges();
+                                    childVertex.remove();
+                                });
+                                edge.remove();
+                                vertex.remove();
+                                TreeEdge.redrawAllEdges();
+                            }
+                        );
+                    });
+                }
             }
 
-            function changeToInput(edge) {
+            function buildLabelAsInput(edge){
                 var input = RelativeTreeTemplates['edge_input'].merge({
                     label:edge.text()
                 });
@@ -261,22 +242,38 @@ define([
                     );
                     vertex.adjustWidth();
                 });
-                edge.getHtml().html(
+                edge.getHtml().prepend(
                     input
                 );
-                input.focus();
-                input.setCursorToTextEnd();
+                input.focus().setCursorToEndOfText();
                 var vertex = RelativeTreeVertex.withHtml(
                     input.closest(".vertex")
                 );
                 vertex.adjustWidth();
+                return input;
+            }
+
+            function changeToInput(edge) {
+                edge.getLabel().hide();
+                var edgeHtml = edge.getHtml();
+                var input = edgeHtml.find("input");
+                if (input.val() === TreeEdge.getWhenEmptyLabel()) {
+                    input.val("");
+                }
+                input.show().focus();
             }
 
             function changeToSpan(edge) {
-                makeSpanInnerHtml(
-                    edge.getHtml(),
-                    edge.text()
+                var edgeText = edge.text();
+                var nonInputLabel = edge.getHtml().find(
+                    ">.overlay-container span.label"
+                ).text(
+                    edgeText.trim() === "" ?
+                        TreeEdge.getWhenEmptyLabel() :
+                        edgeText
                 );
+                edge.getLabel().hide();
+                nonInputLabel.show();
                 var vertex = RelativeTreeVertex.withHtml(html.closest(".vertex"));
                 vertex.adjustWidth();
                 vertex.adjustPositionIfApplicable();
@@ -285,8 +282,41 @@ define([
                 return edge;
             }
 
-            function makeSpanInnerHtml(html, label) {
-                var innerHtml = $(
+            function buildNonInputLabel(html, label) {
+                var overlayContainer = $(
+                    "<div class='overlay-container'>"
+                ).appendTo(html).on(
+                    "dblclick",
+                    function(event){
+                        event.stopPropagation();
+                        var edge = edgeFromHtml(
+                            $(this)
+                        );
+                        edge.deselect();
+                        edge.hideMenu();
+                        changeToInput(
+                            edge
+                        );
+                    }
+                ).on(
+                    "click",
+                    function(event){
+                        event.stopPropagation();
+                        if(!KeyboardUtils.isCtrlPressed()){
+                            SelectionHandler.reset();
+                        }
+                        var edge = edgeFromHtml(
+                            $(this).closest(".relation")
+                        );
+                        edge.select();
+                        SelectionHandler.refreshSelectionMenu();
+                        edge.showMenu();
+                    }
+                );
+                var overlay = $(
+                    "<div class='overlay'>"
+                ).appendTo(overlayContainer);
+                var labelSpan = $(
                     "<span>"
                 ).addClass(
                     "label label-info"
@@ -294,14 +324,10 @@ define([
                     label.trim() === "" ?
                         TreeEdge.getWhenEmptyLabel() :
                         label
+                ).appendTo(
+                    overlayContainer
                 );
-                showRemoveButtonOnlyIfMouseOver(html);
-                innerHtml.click(function () {
-                    changeToInput(
-                        edgeFromHtml($(this))
-                    );
-                });
-                html.html(innerHtml);
+                return labelSpan;
             }
 
             function edgeFromHtml(htmlComponent) {

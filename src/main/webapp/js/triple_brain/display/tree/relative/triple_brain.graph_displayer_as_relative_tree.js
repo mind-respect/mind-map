@@ -17,8 +17,12 @@ define([
     "triple_brain.edge_html_builder_for_relative_tree",
     "triple_brain.edge_html_builder_view_only_for_relative_tree_displayer",
     "triple_brain.tree_edge",
-    "triple_brain.point"
-], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, StraightAndSquareEdgeDrawer, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly,TreeEdge, Point) {
+    "triple_brain.point",
+    "triple_brain.relative_tree_vertex_menu_handler",
+    "triple_brain.tree_edge_menu_handler",
+    "triple_brain.relative_tree_graph_menu_handler",
+    "triple_brain.graph_element_menu_handler"
+], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, StraightAndSquareEdgeDrawer, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly,TreeEdge, Point, RelativeTreeVertexMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler) {
     var api = {};
     api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
         Graph.getForCentralVertexUriAndDepth(
@@ -71,7 +75,7 @@ define([
                     );
                     if(isGoingLeft){
                         child.label().after(
-                            child.getTextContainer().find(
+                            child.getInBubbleContainer().find(
                                 "> .note-button"
                             )
                         );
@@ -171,6 +175,18 @@ define([
     };
     api.getVertexSelector = function(){
         return RelativeTreeVertex;
+    };
+    api.getVertexMenuHandler = function(){
+        return RelativeTreeVertexMenuHandler;
+    };
+    api.getRelationMenuHandler = function(){
+        return TreeEdgeMenuHandler;
+    };
+    api.getGraphElementMenuHandler = function(){
+        return GraphElementMenuHandler;
+    };
+    api.getGraphMenuHandler = function(){
+        return RelativeTreeGraphMenuHandler;
     };
     api.buildIncludedGraphElementsView = function(vertex, container){
         var serverGraph = {
@@ -439,7 +455,7 @@ define([
                 var relativeVertex = RelativeTreeVertex.withHtml(this);
                 relativeVertex.adjustPosition();
                 relativeVertex.label().after(
-                    relativeVertex.getTextContainer().find(
+                    relativeVertex.getInBubbleContainer().find(
                         "> .note-button"
                     )
                 );

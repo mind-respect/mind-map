@@ -16,9 +16,11 @@ define([
     "triple_brain.server_subscriber",
     "triple_brain.image_displayer",
     "triple_brain.ui.graph_element",
+    "triple_brain.selection_handler",
+    "triple_brain.graph_element_button",
     "jquery.center-on-screen"
 ],
-    function ($, GraphDisplayer, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, ServerSubscriber, ImageDisplayer, GraphElement) {
+    function ($, GraphDisplayer, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, ServerSubscriber, ImageDisplayer, GraphElement, SelectionHandler, GraphElementButton) {
         var api = {};
         api.getWhenEmptyLabel = function () {
             return $.t("vertex.default");
@@ -54,9 +56,9 @@ define([
             });
         };
         api.resetSelection = function () {
-            $(".vertex.selected").removeClass(
-                "selected"
-            );
+            api.visitSelected(function(vertex){
+                vertex.deselect();
+            });
         };
         api.visitSelected = function (visitor) {
             $(".vertex.selected").each(function () {
@@ -64,6 +66,9 @@ define([
                     GraphDisplayer.getVertexSelector().withHtml(this)
                 );
             });
+        };
+        api.getNbSelected = function(){
+            return $(".vertex.selected").length;
         };
         api.getVertexMouseOver = function () {
             return $("body").data("vertex_mouse_over");
@@ -175,9 +180,9 @@ define([
                 return html;
             };
             this.labelCenterPoint = function () {
-                var textContainer = self.getTextContainer();
+                var textContainer = self.getInBubbleContainer();
                 return Point.fromCoordinates(
-                    $(textContainer).offset().left + self.textContainerWidth() / 2,
+                    $(textContainer).offset().left + self.getInBubbleContentWidth() / 2,
                     $(textContainer).offset().top + $(textContainer).height() / 2
                 )
             };
@@ -208,29 +213,22 @@ define([
                 if (!self.isLabelInFocus()) {
                     self.unhighlight();
                 }
-                self.hideButtons();
             };
             this.makeItHighProfile = function () {
                 self.highlight();
-                self.showButtons();
             };
             this.hideButtons = function () {
                 self.hideMenu();
-                self.hideMoveButton();
             };
             this.showButtons = function () {
                 self.showMenu();
                 self.showMoveButton();
             };
             this.hideMenu = function () {
-                self.getMenuHtml().css(
-                    "visibility", "hidden"
-                );
+                self.getMenuHtml().hide();
             };
             this.showMenu = function () {
-                self.getMenuHtml().css(
-                    "visibility", "visible"
-                );
+                self.getMenuHtml().show();
             };
             this.hideMoveButton = function () {
                 self.moveButton().css("visibility", "hidden");
@@ -301,14 +299,14 @@ define([
             this.hasNote = function(){
                 return self.getNote().trim().length > 0;
             };
-            this.getTextContainer = function () {
+            this.getInBubbleContainer = function () {
                 return html.find(
-                    "> .textfield-container"
+                    "> .in-bubble-content"
                 );
             };
-            this.textContainerWidth = function () {
+            this.getInBubbleContentWidth = function () {
                 var width = 0;
-                $.each(self.getTextContainer().children(), function () {
+                $.each(self.getInBubbleContainer().children(), function () {
                     var child = this;
                     width += $(child).width();
                 });
@@ -340,7 +338,10 @@ define([
                 html.remove();
             };
             this.suggestions = function () {
-                return $(html).data('suggestions');
+                return html.data('suggestions');
+            };
+            this.hasSuggestions = function(){
+                return self.suggestions().length > 0;
             };
             this.addSuggestions = function (suggestions) {
                 var existingSuggestions = $(html).data('suggestions');
@@ -453,7 +454,7 @@ define([
             };
             this.adjustWidth = function () {
                 var intuitiveWidthBuffer = 70;
-                var textContainerWidth = self.textContainerWidth();
+                var textContainerWidth = self.getInBubbleContentWidth();
                 var imageWidth = self.hasImagesMenu() ?
                     self.getImageMenu().width() :
                     0;
@@ -525,8 +526,15 @@ define([
             this.isPublic = function () {
                 return html.data("isPublic");
             };
+            this.deselect = function () {
+                html.removeClass("selected");
+                self.hideButtons();
+            };
             this.select = function () {
                 html.addClass("selected");
+                if(1 === SelectionHandler.getNbSelected()){
+                    self.showButtons();
+                }
             };
             this.isSelected = function () {
                 return html.hasClass("selected");
@@ -558,6 +566,15 @@ define([
             this.getMenuHtml = function(){
                 return html.find('> .menu');
             };
+            this.visitMenuButtons = function(visitor){
+                $.each(getMenuButtonsHtml(), function(){
+                    visitor(
+                        GraphElementButton.fromHtml(
+                            $(this)
+                        )
+                    );
+                });
+            };
             function setIsPublic(isPublic) {
                 html.data(
                     "isPublic",
@@ -579,7 +596,12 @@ define([
 
             function getSegments() {
                 return VertexSegments.withHtmlVertex(
-                    self.getTextContainer()
+                    self.getInBubbleContainer()
+                );
+            }
+            function getMenuButtonsHtml(){
+                return self.getMenuHtml().find(
+                    "> button"
                 );
             }
 

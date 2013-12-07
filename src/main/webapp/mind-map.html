@@ -46,14 +46,10 @@
                 <div class="public legend" data-i18n="caption.public"></div>
             </div>
             <div id="top-center-menu" class="main-panel top-panel">
-                <button id="bubbles-selected" class="link-like-button" style="display:none">
+                <button id="graph-elements-selected" class="link-like-button" style="display:none">
                     <span class='nb'></span>
-                    <span data-i18n='selection.selected_bubbles'></span>
+                    <span data-i18n='selection.selected_graph_elements'></span>
                 </button>
-                <div class='buttons'>
-                    <button id="group-selected" style="display:none" data-i18n='selection.group'></button>
-                    <button data-i18n="top_center_menu.select" class='select'></button>
-                </div>
             </div>
             <div id="top-panel" class="main-panel top-panel">
                 <button id="create-concept" class="link-like-button"
@@ -69,6 +65,23 @@
                 <button id="disconnect-btn"
                         data-i18n="top_menu.disconnect"
                         class="link-like-button"></button>
+            </div>
+            <div id="graph-element-menu" class="main-panel">
+                <button data-action="select" data-icon="ui-icon-squaresmall-plus"></button>
+                <button data-action="group" data-icon="ui-icon-shuffle"></button>
+                <button data-action="addChild" data-icon="ui-icon-plus"></button>
+                <button data-action="reverseToRight" data-icon="ui-icon-arrowreturnthick-1-e"></button>
+                <button data-action="reverseToLeft" data-icon="ui-icon-arrowreturnthick-1-w"></button>
+                <button data-action="remove" data-icon="ui-icon-trash"></button>
+                <button data-action="identify" data-icon="ui-icon-info"></button>
+                <button data-action="suggestions" data-icon="ui-icon-lightbulb" class='suggestion'></button>
+                <button data-action="subElements" data-icon="ui-icon-folder-open"></button>
+                <button data-action="center" data-icon="ui-icon-home"></button>
+                <button data-action="note" data-icon="ui-icon-note" class='note-button'></button>
+                <button data-action="images" data-icon="ui-icon-image"></button>
+                <button data-action="connectTo" data-icon="ui-icon-arrowthick-1-e"></button>
+                <button data-action="makePrivate" data-icon="ui-icon-unlocked"></button>
+                <button data-action="makePublic" data-icon="ui-icon-locked"></button>
             </div>
         </div>
     </div>

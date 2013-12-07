@@ -9,12 +9,14 @@ define([
     "triple_brain.vertex",
     "triple_brain.graph_displayer",
     "triple_brain.ui.edge",
+    "triple_brain.event_bus",
     "jquery-ui"
-], function ($, GraphUi, ScrollOnMouseFrontier, UiUtils, VertexService, GraphDisplayer, EdgeUi) {
+], function ($, GraphUi, ScrollOnMouseFrontier, UiUtils, VertexService, GraphDisplayer, EdgeUi, EventBus) {
     var api = {};
     api.reset = function () {
-        setNbSelectedBubbles(0);
         GraphDisplayer.getVertexSelector().resetSelection();
+        GraphDisplayer.getEdgeSelector().resetSelection();
+        setNbSelectedGraphElements(0);
     };
     api.handleSelectionManagementClick = function (event) {
         event.preventDefault();
@@ -31,10 +33,7 @@ define([
         );
     };
     api.getSelectionManagementButton = function () {
-        return $("#bubbles-selected");
-    };
-    api.getGroupButton = function () {
-        return $("#group-selected");
+        return $("#graph-elements-selected");
     };
     api.handleGroupButtonClick = function () {
         var selectedGraphElements = {
@@ -67,11 +66,53 @@ define([
             GraphDisplayer.displayUsingNewCentralVertexUri
         );
     };
+    api.refreshSelectionMenu = function(){
+        setNbSelectedGraphElements(
+            api.getNbSelected()
+        );
+    };
+    api.getNbSelected = function(){
+        return api.getSelectedBubbles().length + api.getSelectedRelations().length;
+    };
+    api.getNbSelectedBubbles = function(){
+        return api.getSelectedBubbles().length;
+    };
+    api.getNbSelectedRelations = function(){
+        return api.getSelectedRelations().length;
+    };
+    api.getSelectedBubbles = function(){
+        var selected = [];
+        GraphDisplayer.getVertexSelector().visitSelected(function(vertex){
+            selected.push(
+                vertex
+            );
+        });
+        return selected;
+    };
+    api.getSelectedRelations = function(){
+        var selected = [];
+        GraphDisplayer.getEdgeSelector().visitSelected(function(edge){
+            selected.push(
+                edge
+            );
+        });
+        return selected;
+    }
+    api.getSelectedElements = function(){
+        var selectedRelations = api.getSelectedRelations();
+        var selectedBubbles = api.getSelectedBubbles();
+        var graphElements = selectedBubbles.concat(
+            selectedRelations
+        );
+        if(1 === graphElements.length){
+            return graphElements[0];
+        }
+        return graphElements;
+    };
     return api;
     function getMindMap() {
         return $("svg.main");
     }
-
     function activateSelectionOnMindMap(event) {
         $("body").removeClass("select");
         $(this).off(
@@ -103,7 +144,9 @@ define([
                         }
                     });
                     removeSelectBoxIfExists();
-                    setNbSelectedBubbles(nbSelected);
+                    setNbSelectedGraphElements(
+                        api.getNbSelected()
+                    );
                 }
             }
         );
@@ -117,22 +160,26 @@ define([
         return $(".selection-box");
     }
 
-    function setNbSelectedBubbles(nbSelectedBubbles) {
-        if (nbSelectedBubbles === 0) {
+    function setNbSelectedGraphElements(nbSelectedGraphElements) {
+        if (nbSelectedGraphElements === 0) {
             api.getSelectionManagementButton().hide();
-            api.getGroupButton().hide();
+            EventBus.publish(
+                "/event/ui/selection/changed",
+                [[]]
+            );
             return;
         }
         api.getSelectionManagementButton().show();
-        getWhereToPutNbSelectedBubbles().text(nbSelectedBubbles);
-        if (nbSelectedBubbles === 1) {
-            api.getGroupButton().hide();
-        } else {
-            api.getGroupButton().show();
-        }
+        getWhereToPutNbSelectedGraphElements().text(
+            nbSelectedGraphElements
+        );
+        EventBus.publish(
+            "/event/ui/selection/changed",
+            [api.getSelectedElements()]
+        );
     }
 
-    function getWhereToPutNbSelectedBubbles() {
+    function getWhereToPutNbSelectedGraphElements() {
         return api.getSelectionManagementButton().find(".nb");
     }
 });

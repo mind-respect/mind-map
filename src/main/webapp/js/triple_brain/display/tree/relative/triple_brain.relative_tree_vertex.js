@@ -8,14 +8,14 @@ define([
     "triple_brain.ui.edge",
     "triple_brain.object_utils"
 ],
-    function($, VertexUi, EventBus, EdgeUi, ObjectUtils){
+    function ($, VertexUi, EventBus, EdgeUi, ObjectUtils) {
         var api = {};
-        api.withHtml = function(html){
+        api.withHtml = function (html) {
             return new api.Object(
                 $(html)
             );
         };
-        api.ofVertex = function(vertex){
+        api.ofVertex = function (vertex) {
             return api.withHtml(
                 vertex.getHtml()
             );
@@ -24,7 +24,7 @@ define([
             api,
             VertexUi
         );
-        api.Object = function(html){
+        api.Object = function (html) {
             var self = this;
             var otherInstancesKey = "otherInstances";
             var _isToTheLeft;
@@ -82,34 +82,34 @@ define([
                     visitor(vertex);
                 });
             };
-            this.getParentVertex = function(){
+            this.getParentVertex = function () {
                 return api.withHtml(
                     self.getParentVertexHtml().find("> .vertex")
                 );
             };
-            this.getParentVertexHtml = function(){
+            this.getParentVertexHtml = function () {
                 return html.closest(".vertices-children-container")
                     .siblings(".vertex-container");
             };
-            this.applyToOtherInstances = function(apply){
-                $.each(self.getOtherInstances(), function(){
+            this.applyToOtherInstances = function (apply) {
+                $.each(self.getOtherInstances(), function () {
                     var vertex = this;
                     apply(vertex);
                 });
             };
-            this.hasOtherInstances = function(){
+            this.hasOtherInstances = function () {
                 return self.getOtherInstances().length > 0;
             };
-            this.getOtherInstances = function(){
+            this.getOtherInstances = function () {
                 var vertex = VertexUi.withHtml(html);
-                if(html.data(otherInstancesKey) === undefined){
+                if (html.data(otherInstancesKey) === undefined) {
                     var verticesWithSameUri = VertexUi.withUri(
                         vertex.getUri()
                     );
                     var otherInstances = [];
-                    $.each(verticesWithSameUri, function(){
+                    $.each(verticesWithSameUri, function () {
                         var vertexWithSameUri = this;
-                        if(vertexWithSameUri.getId() !== vertex.getId()){
+                        if (vertexWithSameUri.getId() !== vertex.getId()) {
                             otherInstances.push(
                                 vertexWithSameUri
                             );
@@ -122,87 +122,87 @@ define([
                 }
                 return html.data(otherInstancesKey);
             };
-            this.resetOtherInstances = function(){
+            this.resetOtherInstances = function () {
                 html.removeData(otherInstancesKey)
             };
-            this.getChildrenOrientation = function(){
+            this.getChildrenOrientation = function () {
                 return self.isToTheLeft() ?
                     "left" :
                     "right"
             };
-            this.isALeaf = function(){
+            this.isALeaf = function () {
                 return getChildren().length === 0;
             };
-            this.hasTheDuplicateButton = function(){
-                return self.getTextContainer().find(
+            this.hasTheDuplicateButton = function () {
+                return self.getInBubbleContainer().find(
                     "button.duplicate"
-                ).length > 0 ;
+                ).length > 0;
             };
             VertexUi.Object.apply(this, [html]);
-            function getChildren(){
+            function getChildren() {
                 return html.closest(".vertex-container").siblings(
                     ".vertices-children-container"
                 ).find(".vertex");
             }
-        }
+        };
         Object.prototype = new VertexUi.Object();
         EventBus.subscribe(
             '/event/ui/graph/vertex/same_as/added',
-            function(event, vertex, sameAs){
+            function (event, vertex, sameAs) {
                 var treeVertex = api.ofVertex(vertex);
-                treeVertex.applyToOtherInstances(function(vertex){
+                treeVertex.applyToOtherInstances(function (vertex) {
                     vertex.addSameAs(sameAs);
                 });
             }
         );
         EventBus.subscribe(
             '/event/ui/graph/vertex/generic_identification/added',
-            function(event, vertex, genericIdentification){
+            function (event, vertex, genericIdentification) {
                 var treeVertex = api.ofVertex(vertex);
-                treeVertex.applyToOtherInstances(function(vertex){
+                treeVertex.applyToOtherInstances(function (vertex) {
                     vertex.addGenericIdentification(genericIdentification);
                 });
             }
         );
         EventBus.subscribe(
             '/event/ui/graph/vertex/type/added',
-            function(event, vertex, type){
+            function (event, vertex, type) {
                 var treeVertex = api.ofVertex(vertex);
-                treeVertex.applyToOtherInstances(function(vertex){
+                treeVertex.applyToOtherInstances(function (vertex) {
                     vertex.addType(type);
                 });
             }
         );
         EventBus.subscribe(
             '/event/ui/graph/vertex/type/removed',
-            function(event, vertex, typeToRemove){
+            function (event, vertex, typeToRemove) {
                 var treeVertex = api.ofVertex(vertex);
-                treeVertex.applyToOtherInstances(function(vertex){
+                treeVertex.applyToOtherInstances(function (vertex) {
                     vertex.removeType(typeToRemove);
                 });
             }
         );
         EventBus.subscribe(
             '/event/ui/graph/vertex/generic_identification/removed',
-            function(event, vertex, genericIdentification){
+            function (event, vertex, genericIdentification) {
                 var treeVertex = api.ofVertex(vertex);
-                treeVertex.applyToOtherInstances(function(vertex){
+                treeVertex.applyToOtherInstances(function (vertex) {
                     vertex.removeGenericIdentification(genericIdentification);
                 });
             }
         );
         EventBus.subscribe(
             '/event/ui/graph/vertex/same_as/removed',
-            function(event, vertex, sameAs){
+            function (event, vertex, sameAs) {
                 var treeVertex = api.ofVertex(vertex);
-                treeVertex.applyToOtherInstances(function(vertex){
+                treeVertex.applyToOtherInstances(function (vertex) {
                     vertex.removeSameAs(sameAs);
                 });
             }
         );
         EventBus.subscribe(
             "/event/ui/graph/vertex/image/about_to_load",
-            function(){
+            function () {
                 api.numberImagesToLoad = api.numberImagesToLoad === undefined ?
                     1 :
                     api.numberImagesToLoad++;
@@ -210,14 +210,14 @@ define([
         );
         EventBus.subscribe(
             "/event/ui/graph/vertex/image/updated",
-            function(event, vertex){
+            function (event, vertex) {
                 api.numberImagesToLoad--;
                 var relativeVertex = api.ofVertex(vertex);
                 api.withHtml(
                     relativeVertex.getParentVertexHtml()
                 ).adjustAllChildrenPositionIfApplicable();
                 relativeVertex.adjustPositionIfApplicable();
-                if(api.numberImagesToLoad === 0){
+                if (api.numberImagesToLoad === 0) {
                     EdgeUi.redrawAllEdges();
                 }
             }

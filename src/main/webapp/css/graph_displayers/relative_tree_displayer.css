@@ -13,6 +13,7 @@
 .vertex-tree-container{
     display:table;
     margin-left:2.6em;
+    margin-bottom: 1em;
 }
 
 .vertex-container{
@@ -29,16 +30,17 @@
     vertical-align: top;
     padding:0;
     margin-top:0;
-    margin-right:1em;
+    margin-right:0;
+    margin-left:0;
+}
+.relation.selected .label {
+    box-shadow: 0px 0px 8px #3005bb, inset 0px 0px 6px #3005bb;
 }
 
-.left-oriented .relation{
-    margin-right:0;
-    margin-left:1em;
-}
-.left-oriented .vertex .textfield-container .note-button{
+.left-oriented .vertex .in-bubble-content .note-button{
     margin-right:0;
 }
+
 .relation input{
     border-radius: 3px 3px 3px 3px;
     border-width:0.2em;

@@ -58,7 +58,7 @@ define([
                     }
                 }
 
-                $("body").mouseup(function () {
+                scrollContainer.mouseup(function () {
                     $(drawnGraph).unbind("mousemove");
                     $(drawnGraph).data("mouseup", true);
                 });

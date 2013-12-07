@@ -5,7 +5,7 @@ define([
     "jquery"
 ],
     function ($) {
-        $.fn.setCursorToTextEnd = function () {
+        $.fn.setCursorToEndOfText = function () {
             var initialVal = this.val();
             this.val('');
             this.val(initialVal);

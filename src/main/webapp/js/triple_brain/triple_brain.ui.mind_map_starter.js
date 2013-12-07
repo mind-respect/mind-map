@@ -17,10 +17,12 @@ define(
         "triple_brain.top_center_menu",
         "triple_brain.ui.left_panel",
         "triple_brain.selection_handler",
+        "triple_brain.keyboard_utils",
+        "triple_brain.graph_element_main_menu",
         "triple_brain.bubble_distance_calculator",
         "jquery.triple_brain.drag_scroll"
     ],
-    function ($, UserService, EventBus, LoginHandler, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, Menu, GraphUi, LanguageManager, VertexService, TopCenterMenu, LeftPanel, SelectionHandler) {
+    function ($, UserService, EventBus, LoginHandler, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, Menu, GraphUi, LanguageManager, VertexService, TopCenterMenu, LeftPanel, SelectionHandler, KeyboardUtils, GraphElementMainMenu) {
         var api = {
             offset:function () {
                 var offset = {};
@@ -54,6 +56,7 @@ define(
                             "relative_tree"
                         )
                     );
+                    GraphElementMainMenu.reset();
                     UserService.authenticatedUser(function () {
                             LanguageManager.loadLocaleContent(function () {
                                 GraphUi.resetDrawingCanvas();
@@ -140,7 +143,15 @@ define(
                     drawnGraph
                 );
                 centralVertex.scrollTo();
-                $("svg.main").dragScroll();
+                $("svg.main").dragScroll().on(
+                    "click",
+                    function(){
+                        if(KeyboardUtils.isCtrlPressed()){
+                            return;
+                        }
+                        SelectionHandler.reset();
+                    }
+                );
                 EventBus.publish('/event/ui/graph/drawn');
                 GraphDisplayer.getVertexSelector().visitAllVertices(function(vertex){
                     EventBus.publish(

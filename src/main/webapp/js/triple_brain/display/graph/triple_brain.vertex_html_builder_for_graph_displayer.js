@@ -76,9 +76,7 @@ define([
                         serverFormat.suggestions
                     )
                 );
-                if (serverFormat.suggestions.length > 0) {
-                    vertex.showSuggestionButton();
-                }
+
                 vertex.adjustWidth();
                 vertex.hideButtons();
                 $(html).hover(
@@ -215,9 +213,6 @@ define([
                 );
                 VertexHtmlCommon.addLinkToFarVertexButton(
                     vertexMenu
-                );
-                VertexHtmlCommon.addNoteButton(
-                    vertex
                 );
                 VertexHtmlCommon.addImageButton(
                     vertexMenu
