@@ -4,20 +4,21 @@
 define([
     "jquery"
 ], function($){
+    var keyNumberForCtrl = 17;
     var api = {};
     api.isCtrlPressed = function(){
         return $("body").data(
-            "isSettingCtrl"
+            "isPressingCtrl"
         );
     };
     initIfApplicable();
-    $(document).keydown(function(event){
-        if(event.ctrlKey){
+    $(window).keydown(function(event){
+        if(keyNumberForCtrl === event.which){
             setIsPressingCtrl(true);
         }
     });
-    $(document).keyup(function(event){
-        if(event.ctrlKey){
+    $(window).keyup(function(event){
+        if(keyNumberForCtrl === event.which){
             setIsPressingCtrl(false);
         }
     });
@@ -27,9 +28,9 @@ define([
             setIsPressingCtrl(false);
         }
     }
-    function setIsPressingCtrl(isSettingCtrl){
+    function setIsPressingCtrl(isPressingCtrl){
         $("body").data(
-            "isSettingCtrl", isSettingCtrl
+            "isPressingCtrl", isPressingCtrl
         );
     }
 });
