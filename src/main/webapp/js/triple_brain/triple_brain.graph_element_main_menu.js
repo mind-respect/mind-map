@@ -32,6 +32,7 @@ define([
                 html.on(
                     "click",
                     function (event) {
+                        event.stopPropagation();
                         var button = $(this);
                         var method = button.attr("data-action");
                         getCurrentClickHandler()[
