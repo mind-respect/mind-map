@@ -71,6 +71,10 @@ define([
             api.getNbSelected()
         );
     };
+    api.isOnlyASingleBubbleSelected = function(){
+        return 1 === api.getNbSelectedBubbles() &&
+            0 === api.getNbSelectedRelations();
+    };
     api.getNbSelected = function(){
         return api.getSelectedBubbles().length + api.getSelectedRelations().length;
     };

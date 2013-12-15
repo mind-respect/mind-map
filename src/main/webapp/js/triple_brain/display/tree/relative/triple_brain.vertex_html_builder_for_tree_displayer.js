@@ -26,6 +26,7 @@ define([
     "jquery.is-fully-on-screen",
     "jquery.center-on-screen"
 ], function (require, $, EventBus, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, Point, Segment, GraphDisplayer, RelativeTreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, Image, SelectionHandler, KeyboardUtils) {
+        handleKeyboardActions();
         var api = {};
         api.withServerJson = function (serverVertex) {
             return new VertexCreator(serverVertex);
@@ -74,6 +75,65 @@ define([
             handleVisitAfterGraphDrawn
         );
         return api;
+        function handleKeyboardActions() {
+            var tabKeyNumber = 9;
+            var leftArrowKeyNumber = 37;
+            var rightArrowKeyNumber = 39;
+            var upArrowKeyNumber = 38;
+            var downArrowKeyNumber = 38;
+            var listenedKeysAndTheirAction = defineListenedKeysAndTheirActions();
+            $(window).keydown(function (event) {
+                if(isThereASpecialKeyPressed()){
+                    return;
+                }
+                if (!SelectionHandler.isOnlyASingleBubbleSelected()) {
+                    return;
+                }
+                $.each(listenedKeysAndTheirAction, function(){
+                    var key = this[0];
+                    if(event.which !== key){
+                        return;
+                    }
+                    event.preventDefault();
+                    var action = this[1];
+                    var selectedVertex = SelectionHandler.getSelectedBubbles()[0];
+                    action(selectedVertex);
+                    return false;
+                });
+                function isThereASpecialKeyPressed(){
+                    return event.altKey || event.ctrlKey || event.metaKey;
+                }
+            });
+            function defineListenedKeysAndTheirActions() {
+                return [
+                    [
+                        tabKeyNumber, function (selectedVertex) {
+                        VertexService.addRelationAndVertexToVertex(
+                            selectedVertex, EdgeUi.redrawAllEdges
+                        );
+                    }],
+                    [
+                        leftArrowKeyNumber, function (selectedVertex) {
+                        if(selectedVertex.isToTheLeft()){
+
+                        }
+                    }],
+                    [
+                        rightArrowKeyNumber, function (selectedVertex) {
+
+                    }],
+                    [
+                        upArrowKeyNumber, function (selectedVertex) {
+
+                    }],
+                    [
+                        downArrowKeyNumber, function (selectedVertex) {
+
+                    }]
+                ];
+            }
+        }
+
         function handleVisitAfterGraphDrawn(event, vertex) {
             if ("relative_tree" === GraphDisplayer.name()) {
                 api.addDuplicateVerticesButtonIfApplicable(
@@ -93,7 +153,7 @@ define([
                 serverFormat.uri
             ).on(
                 "dblclick",
-                function(event){
+                function (event) {
                     event.stopPropagation();
                     var vertex = RelativeTreeVertex.withHtml(
                         $(this)
@@ -104,17 +164,17 @@ define([
                 }
             ).on(
                 "click",
-                function(){
+                function () {
                     var vertex = RelativeTreeVertex.withHtml(
                         $(this)
                     );
-                    if(KeyboardUtils.isCtrlPressed()){
-                        if(vertex.isSelected()){
+                    if (KeyboardUtils.isCtrlPressed()) {
+                        if (vertex.isSelected()) {
                             vertex.deselect();
-                        }else{
+                        } else {
                             vertex.select();
                         }
-                    }else{
+                    } else {
                         SelectionHandler.reset();
                         vertex.select();
                     }
@@ -134,7 +194,7 @@ define([
                 html.data(
                     "isPublic",
                     serverFormat.is_public
-                )
+                );
                 vertex.setIncludedVertices(serverFormat.included_vertices);
                 vertex.setIncludedEdges(serverFormat.included_edges);
                 if (vertex.hasIncludedGraphElements()) {
@@ -182,11 +242,12 @@ define([
                 );
                 return vertex;
             };
-            function buildInsideBubbleContainer(){
+            function buildInsideBubbleContainer() {
                 return $(
                     "<div class='in-bubble-content'>"
                 ).appendTo(html);
             }
+
             function buildLabelHtml(inContentContainer) {
                 var labelContainer = $(
                     "<div class='overlay-container'>"
@@ -285,6 +346,7 @@ define([
                 );
                 return labelContainer;
             }
+
             function showItHasIncludedGraphElements() {
                 html.append(
                     $("<div class='included-graph-elements-flag'>").text(
