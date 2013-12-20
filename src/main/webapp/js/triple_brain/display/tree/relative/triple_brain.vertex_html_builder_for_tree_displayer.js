@@ -26,7 +26,6 @@ define([
     "jquery.is-fully-on-screen",
     "jquery.center-on-screen"
 ], function (require, $, EventBus, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, Point, Segment, GraphDisplayer, RelativeTreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, Image, SelectionHandler, KeyboardUtils) {
-        handleKeyboardActions();
         var api = {};
         api.withServerJson = function (serverVertex) {
             return new VertexCreator(serverVertex);
@@ -74,6 +73,10 @@ define([
             '/event/ui/vertex/visit_after_graph_drawn',
             handleVisitAfterGraphDrawn
         );
+        EventBus.subscribe(
+            "/event/ui/app/started",
+            handleKeyboardActions
+        );
         return api;
         function handleKeyboardActions() {
             var tabKeyNumber = 9;
@@ -115,6 +118,8 @@ define([
                     [
                         leftArrowKeyNumber, function (selectedVertex) {
                         if(selectedVertex.isToTheLeft()){
+                            selectedVertex.visitChildren
+                        }else{
 
                         }
                     }],

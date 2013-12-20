@@ -202,10 +202,10 @@ define([
         );
         EventBus.subscribe(
             "/event/ui/graph/vertex/image/about_to_load",
-            function () {
-                api.numberImagesToLoad = api.numberImagesToLoad === undefined ?
+            function (event, vertex) {
+                api.numberImagesToLoad = undefined === api.numberImagesToLoad ?
                     1 :
-                    api.numberImagesToLoad++;
+                    api.numberImagesToLoad + 1;
             }
         );
         EventBus.subscribe(

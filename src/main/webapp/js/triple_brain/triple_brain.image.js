@@ -53,6 +53,9 @@ define([
                     url_for_bigger : self.getUrlForBigger()
                 }
             };
+            this.isEqualTo = function(image){
+                return self.getUrlForSmall() === image.getUrlForSmall();
+            };
         }
     }
 );

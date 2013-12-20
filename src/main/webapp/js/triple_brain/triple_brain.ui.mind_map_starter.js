@@ -43,6 +43,7 @@ define(
                     );
                 });
                 function callBackWhenIsAuthenticated() {
+                    EventBus.publish("/event/ui/app/started");
                     $("html").addClass("authenticated");
                     handleIfNotAuthenticatedShowCredentialsFlow();
                     handleDisconnectButton();

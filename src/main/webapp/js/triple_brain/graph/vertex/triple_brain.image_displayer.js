@@ -19,29 +19,36 @@ define(
         function ImageMenu(vertex) {
             var imageMenu = this;
             var html;
-            var isImageLoaded = false;
+            var isLastFeaturedImageLoaded = true;
             this.create = function () {
-                html = MindMapTemplate['image_container'].merge();
+                html = $(
+                    MindMapTemplate[
+                        'image_container'
+                        ].merge()
+                );
                 addHtmlToVertex();
                 return imageMenu;
             };
             this.refreshImages = function () {
-                $(html).empty();
                 var images = vertex.getImages();
                 if (images.length <= 0) return;
+                if(isLastFeaturedImageLoaded){
+                    EventBus.publish(
+                        "/event/ui/graph/vertex/image/about_to_load",
+                        vertex
+                    );
+                }
+                isLastFeaturedImageLoaded = false;
                 images = imagesInOrderThatPrioritizeUserUploadedImages(images);
-                var image = MindMapTemplate["image_container_image"].merge({
-                        src:images[0].getUrlForSmall()
+                var newFeaturedImage = images[0];
+                var image = $(MindMapTemplate["image_container_image"].merge({
+                        src:newFeaturedImage.getUrlForSmall()
                     }
-                );
-                $(html).append(
+                ));
+                html.empty().append(
                     image
                 );
-                EventBus.publish(
-                    "/event/ui/graph/vertex/image/about_to_load",
-                    vertex
-                );
-                $(image).load(function () {
+                image.load(function () {
                     setUpBiggerImagesView();
                     /*
                         adjustWidth should be sufficient but display is better
@@ -53,7 +60,7 @@ define(
                         "/event/ui/graph/vertex/image/updated",
                         vertex
                     );
-                    isImageLoaded = true;
+                    isLastFeaturedImageLoaded = true;
                 });
 
                 function setUpBiggerImagesView() {
@@ -84,7 +91,7 @@ define(
             };
 
             this.isDoneLoadingImage = function(){
-                return isImageLoaded;
+                return isLastFeaturedImageLoaded;
             };
 
             this.width = function () {
@@ -94,7 +101,7 @@ define(
             function addHtmlToVertex() {
                 vertex.hasMoveButton() ?
                     vertex.moveButton().after(html) :
-                    $(vertex.getHtml()).prepend(html);
+                    vertex.getHtml().prepend(html);
             }
 
             function imagesInOrderThatPrioritizeUserUploadedImages(images){
