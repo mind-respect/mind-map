@@ -85,16 +85,14 @@ define([
             }
             selectedVertex.deselect();
             RelativeTreeVertex.withHtml(
-                centerVertex.getLeftChildren()[0]
+                centerVertex.getTopMostChildToLeftHtml()
             ).select();
         } else if(selectedVertex.isToTheLeft()) {
             if (!selectedVertex.hasChildren()) {
                 return;
             }
             selectedVertex.deselect();
-            RelativeTreeVertex.withHtml(
-                selectedVertex.getChildren()[0]
-            ).select();
+            selectedVertex.getTopMostChild().select();
         } else {
             selectedVertex.deselect();
             selectedVertex.getParentVertex().select();
@@ -112,7 +110,7 @@ define([
             }
             selectedVertex.deselect();
             RelativeTreeVertex.withHtml(
-                centerVertex.getChildrenToRight()[0]
+                centerVertex.getTopMostChildToRightHtml()
             ).select();
         } else if (selectedVertex.isToTheLeft()) {
             selectedVertex.deselect();
@@ -122,9 +120,7 @@ define([
                 return;
             }
             selectedVertex.deselect();
-            RelativeTreeVertex.withHtml(
-                selectedVertex.getChildren()[0]
-            ).select();
+            selectedVertex.getTopMostChild().select();
         }
         SelectionHandler.refreshSelectionMenu();
     }

@@ -139,6 +139,11 @@ define([
             this.getChildren = function(){
                 return getChildren();
             };
+            this.getTopMostChild = function(){
+                return api.withHtml(
+                    self.getChildren()[0]
+                );
+            };
             VertexUi.Object.apply(this, [html]);
             function getChildren() {
                 return html.closest(".vertex-container").siblings(
