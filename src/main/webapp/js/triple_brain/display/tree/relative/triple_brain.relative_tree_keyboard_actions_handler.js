@@ -15,7 +15,7 @@ define([
         leftArrowKeyNumber = 37,
         rightArrowKeyNumber = 39,
         upArrowKeyNumber = 38,
-        downArrowKeyNumber = 38;
+        downArrowKeyNumber = 40;
     api.init = function () {
         EventBus.subscribe(
             "/event/ui/app/started",
@@ -126,11 +126,21 @@ define([
     }
 
     function upAction(selectedVertex) {
-
+        if(selectedVertex.isCenterVertex() || !selectedVertex.hasBubbleAbove()){
+            return;
+        }
+        selectedVertex.deselect();
+        selectedVertex.getBubbleAbove().select();
+        SelectionHandler.refreshSelectionMenu();
     }
 
     function downAction(selectedVertex) {
-
+        if(selectedVertex.isCenterVertex() || !selectedVertex.hasBubbleUnder()){
+            return;
+        }
+        selectedVertex.deselect();
+        selectedVertex.getBubbleUnder().select();
+        SelectionHandler.refreshSelectionMenu();
     }
 
 });

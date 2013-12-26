@@ -42,13 +42,13 @@ define([
             };
             this.adjustAllChildrenPositionIfApplicable = function () {
                 var vertex = api.withHtml(html);
-                if(!self.isToTheLeft() && !vertex.isCenterVertex()){
+                if (!self.isToTheLeft() && !vertex.isCenterVertex()) {
                     return;
                 }
                 var visit = vertex.isCenterVertex() ?
                     RelativeTreeCenterVertex.usingVertex(
                         vertex
-                    ).visitLeftVertices:
+                    ).visitLeftVertices :
                     self.visitChildren;
                 visit(function (vertex) {
                     var relativeVertex = api.ofVertex(vertex);
@@ -77,7 +77,7 @@ define([
                     visitor(vertex);
                 });
             };
-            this.hasChildren = function(){
+            this.hasChildren = function () {
                 return getChildren().length > 0;
             };
             this.getParentVertex = function () {
@@ -136,14 +136,44 @@ define([
                     "button.duplicate"
                 ).length > 0;
             };
-            this.getChildren = function(){
+            this.getChildren = function () {
                 return getChildren();
             };
-            this.getTopMostChild = function(){
+            this.getTopMostChild = function () {
                 return api.withHtml(
                     self.getChildren()[0]
                 );
             };
+            this.hasBubbleAbove = function () {
+                return getBubbleAboveHtml().length > 0;
+            };
+            this.getBubbleAbove = function () {
+                return api.withHtml(
+                    getBubbleAboveHtml()
+                );
+            };
+            this.hasBubbleUnder = function () {
+                return getBubbleUnderHtml().length > 0;
+            };
+            this.getBubbleUnder = function () {
+                return api.withHtml(
+                    getBubbleUnderHtml()
+                );
+            };
+            function getBubbleAboveHtml(){
+                return html.closest(
+                    ".vertex-tree-container"
+                ).prev(
+                    ".vertex-tree-container"
+                ).find("> .vertex-container").find("> .vertex")
+            }
+            function getBubbleUnderHtml(){
+                return html.closest(
+                    ".vertex-tree-container"
+                ).next(
+                    ".vertex-tree-container"
+                ).find("> .vertex-container").find("> .vertex")
+            }
             VertexUi.Object.apply(this, [html]);
             function getChildren() {
                 return html.closest(".vertex-container").siblings(
