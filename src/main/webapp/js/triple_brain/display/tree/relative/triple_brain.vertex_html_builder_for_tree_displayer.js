@@ -73,72 +73,7 @@ define([
             '/event/ui/vertex/visit_after_graph_drawn',
             handleVisitAfterGraphDrawn
         );
-        EventBus.subscribe(
-            "/event/ui/app/started",
-            handleKeyboardActions
-        );
         return api;
-        function handleKeyboardActions() {
-            var tabKeyNumber = 9;
-            var leftArrowKeyNumber = 37;
-            var rightArrowKeyNumber = 39;
-            var upArrowKeyNumber = 38;
-            var downArrowKeyNumber = 38;
-            var listenedKeysAndTheirAction = defineListenedKeysAndTheirActions();
-            $(window).keydown(function (event) {
-                if(isThereASpecialKeyPressed()){
-                    return;
-                }
-                if (!SelectionHandler.isOnlyASingleBubbleSelected()) {
-                    return;
-                }
-                $.each(listenedKeysAndTheirAction, function(){
-                    var key = this[0];
-                    if(event.which !== key){
-                        return;
-                    }
-                    event.preventDefault();
-                    var action = this[1];
-                    var selectedVertex = SelectionHandler.getSelectedBubbles()[0];
-                    action(selectedVertex);
-                    return false;
-                });
-                function isThereASpecialKeyPressed(){
-                    return event.altKey || event.ctrlKey || event.metaKey;
-                }
-            });
-            function defineListenedKeysAndTheirActions() {
-                return [
-                    [
-                        tabKeyNumber, function (selectedVertex) {
-                        VertexService.addRelationAndVertexToVertex(
-                            selectedVertex, EdgeUi.redrawAllEdges
-                        );
-                    }],
-                    [
-                        leftArrowKeyNumber, function (selectedVertex) {
-                        if(selectedVertex.isToTheLeft()){
-                            selectedVertex.visitChildren
-                        }else{
-
-                        }
-                    }],
-                    [
-                        rightArrowKeyNumber, function (selectedVertex) {
-
-                    }],
-                    [
-                        upArrowKeyNumber, function (selectedVertex) {
-
-                    }],
-                    [
-                        downArrowKeyNumber, function (selectedVertex) {
-
-                    }]
-                ];
-            }
-        }
-
         function handleVisitAfterGraphDrawn(event, vertex) {
             if ("relative_tree" === GraphDisplayer.name()) {
                 api.addDuplicateVerticesButtonIfApplicable(
@@ -146,7 +81,6 @@ define([
                 );
             }
         }
-
         function VertexCreator(serverFormat) {
             var VertexService = require("triple_brain.vertex");
             var Suggestion = require("triple_brain.suggestion");

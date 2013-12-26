@@ -6,9 +6,10 @@ define([
     "triple_brain.ui.vertex",
     "triple_brain.event_bus",
     "triple_brain.ui.edge",
-    "triple_brain.object_utils"
+    "triple_brain.object_utils",
+    "triple_brain.relative_tree_center_vertex"
 ],
-    function ($, VertexUi, EventBus, EdgeUi, ObjectUtils) {
+    function ($, VertexUi, EventBus, EdgeUi, ObjectUtils, RelativeTreeCenterVertex) {
         var api = {};
         api.withHtml = function (html) {
             return new api.Object(
@@ -41,15 +42,18 @@ define([
             };
             this.adjustAllChildrenPositionIfApplicable = function () {
                 var vertex = api.withHtml(html);
-                if (self.isToTheLeft() || vertex.isCenterVertex()) {
-                    var visit = vertex.isCenterVertex() ?
-                        self.visitCenterVertexLeftVertices :
-                        self.visitChildren;
-                    visit(function (vertex) {
-                        var relativeVertex = api.ofVertex(vertex);
-                        relativeVertex.adjustPosition();
-                    });
+                if(!self.isToTheLeft() && !vertex.isCenterVertex()){
+                    return;
                 }
+                var visit = vertex.isCenterVertex() ?
+                    RelativeTreeCenterVertex.usingVertex(
+                        vertex
+                    ).visitLeftVertices:
+                    self.visitChildren;
+                visit(function (vertex) {
+                    var relativeVertex = api.ofVertex(vertex);
+                    relativeVertex.adjustPosition();
+                });
             };
             this.adjustPosition = function (parentVertexHtml) {
                 var width = html.width();
@@ -73,14 +77,8 @@ define([
                     visitor(vertex);
                 });
             };
-            this.visitCenterVertexLeftVertices = function (visitor) {
-                var children = html.closest(".vertex-container").siblings(
-                    ".vertices-children-container.left-oriented"
-                ).find(".vertex");
-                $.each(children, function () {
-                    var vertex = api.withHtml(this);
-                    visitor(vertex);
-                });
+            this.hasChildren = function(){
+                return getChildren().length > 0;
             };
             this.getParentVertex = function () {
                 return api.withHtml(
@@ -137,6 +135,9 @@ define([
                 return self.getInBubbleContainer().find(
                     "button.duplicate"
                 ).length > 0;
+            };
+            this.getChildren = function(){
+                return getChildren();
             };
             VertexUi.Object.apply(this, [html]);
             function getChildren() {
@@ -202,7 +203,7 @@ define([
         );
         EventBus.subscribe(
             "/event/ui/graph/vertex/image/about_to_load",
-            function (event, vertex) {
+            function () {
                 api.numberImagesToLoad = undefined === api.numberImagesToLoad ?
                     1 :
                     api.numberImagesToLoad + 1;
@@ -217,7 +218,7 @@ define([
                     relativeVertex.getParentVertexHtml()
                 ).adjustAllChildrenPositionIfApplicable();
                 relativeVertex.adjustPositionIfApplicable();
-                if (api.numberImagesToLoad === 0) {
+                if (0 === api.numberImagesToLoad) {
                     EdgeUi.redrawAllEdges();
                 }
             }

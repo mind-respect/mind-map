@@ -12,6 +12,16 @@ define([
         );
     };
     initIfApplicable();
+    $(window).keydown(function(event){
+        if(ctrlKeyNumber === event.which){
+            setIsPressingCtrl(true);
+        }
+    });
+    $(window).keyup(function(event){
+        if(ctrlKeyNumber === event.which){
+            setIsPressingCtrl(false);
+        }
+    });
     return api;
     function initIfApplicable(){
         if(api.isCtrlPressed() === undefined){

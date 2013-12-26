@@ -21,8 +21,10 @@ define([
     "triple_brain.relative_tree_vertex_menu_handler",
     "triple_brain.tree_edge_menu_handler",
     "triple_brain.relative_tree_graph_menu_handler",
-    "triple_brain.graph_element_menu_handler"
-], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, StraightAndSquareEdgeDrawer, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly,TreeEdge, Point, RelativeTreeVertexMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler) {
+    "triple_brain.graph_element_menu_handler",
+    "triple_brain.relative_tree_keyboard_actions_handler"
+], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, StraightAndSquareEdgeDrawer, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly,TreeEdge, Point, RelativeTreeVertexMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler, KeyboardActionsHandler) {
+    KeyboardActionsHandler.init();
     var api = {};
     api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
         Graph.getForCentralVertexUriAndDepth(
