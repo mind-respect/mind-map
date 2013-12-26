@@ -87,7 +87,15 @@ define(
 
             var elemTop = $(element).offset().top;
             var elemBottom = elemTop + $(element).height();
-            return ((docViewTop < elemTop) && (docViewBottom > elemBottom));
+            var isOnScreenVertically = (docViewTop < elemTop) &&
+                (docViewBottom > elemBottom);
+            var docViewLeft = $(window).scrollLeft();
+            var docViewRight = docViewLeft + $(window).width();
+            var elemLeft = $(element).offset().left;
+            var elemRight = elemLeft + $(element).width();
+            var isOnScreenHorizontally = (docViewLeft < elemLeft) &&
+                (docViewRight > elemRight);
+            return isOnScreenVertically && isOnScreenHorizontally;
         };
         return api;
         function isPositionVerticallyOffScreen(position) {

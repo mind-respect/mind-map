@@ -8,8 +8,9 @@ define([
     "triple_brain.selection_handler",
     "triple_brain.vertex",
     "triple_brain.relative_tree_vertex",
-    "triple_brain.ui.edge"
-], function ($, EventBus, RelativeTreeCenterVertex, SelectionHandler, VertexService, RelativeTreeVertex, EdgeUi) {
+    "triple_brain.ui.edge",
+    "triple_brain.ui.utils"
+], function ($, EventBus, RelativeTreeCenterVertex, SelectionHandler, VertexService, RelativeTreeVertex, EdgeUi, UiUtils) {
     var api = {},
         tabKeyNumber = 9,
         leftArrowKeyNumber = 37,
@@ -76,6 +77,7 @@ define([
     }
 
     function leftAction(selectedVertex) {
+        var newSelectedVertex;
         if (selectedVertex.isCenterVertex()) {
             var centerVertex = RelativeTreeCenterVertex.usingVertex(
                 selectedVertex
@@ -83,24 +85,25 @@ define([
             if (!centerVertex.hasChildToLeft()) {
                 return;
             }
-            selectedVertex.deselect();
-            RelativeTreeVertex.withHtml(
+            newSelectedVertex = RelativeTreeVertex.withHtml(
                 centerVertex.getTopMostChildToLeftHtml()
-            ).select();
+            );
         } else if(selectedVertex.isToTheLeft()) {
             if (!selectedVertex.hasChildren()) {
                 return;
             }
-            selectedVertex.deselect();
-            selectedVertex.getTopMostChild().select();
+            newSelectedVertex = selectedVertex.getTopMostChild();
         } else {
-            selectedVertex.deselect();
-            selectedVertex.getParentVertex().select();
+            newSelectedVertex = selectedVertex.getParentVertex();
         }
+        selectedVertex.deselect();
+        newSelectedVertex.select();
+        centerVertexIfApplicable(newSelectedVertex);
         SelectionHandler.refreshSelectionMenu();
     }
 
     function rightAction(selectedVertex) {
+        var newSelectedVertex;
         if (selectedVertex.isCenterVertex()) {
             var centerVertex = RelativeTreeCenterVertex.usingVertex(
                 selectedVertex
@@ -108,20 +111,20 @@ define([
             if (!centerVertex.hasChildToRight()) {
                 return;
             }
-            selectedVertex.deselect();
-            RelativeTreeVertex.withHtml(
+            newSelectedVertex = RelativeTreeVertex.withHtml(
                 centerVertex.getTopMostChildToRightHtml()
-            ).select();
+            );
         } else if (selectedVertex.isToTheLeft()) {
-            selectedVertex.deselect();
-            selectedVertex.getParentVertex().select();
+            newSelectedVertex = selectedVertex.getParentVertex();
         } else {
             if (!selectedVertex.hasChildren()) {
                 return;
             }
-            selectedVertex.deselect();
-            selectedVertex.getTopMostChild().select();
+            newSelectedVertex = selectedVertex.getTopMostChild();
         }
+        selectedVertex.deselect();
+        newSelectedVertex.select();
+        centerVertexIfApplicable(newSelectedVertex);
         SelectionHandler.refreshSelectionMenu();
     }
 
@@ -130,7 +133,9 @@ define([
             return;
         }
         selectedVertex.deselect();
-        selectedVertex.getBubbleAbove().select();
+        var bubbleAbove = selectedVertex.getBubbleAbove();
+        bubbleAbove.select();
+        centerVertexIfApplicable(bubbleAbove);
         SelectionHandler.refreshSelectionMenu();
     }
 
@@ -139,8 +144,15 @@ define([
             return;
         }
         selectedVertex.deselect();
-        selectedVertex.getBubbleUnder().select();
+        var bubbleUnder = selectedVertex.getBubbleUnder();
+        bubbleUnder.select();
+        centerVertexIfApplicable(bubbleUnder);
         SelectionHandler.refreshSelectionMenu();
     }
-
+    function centerVertexIfApplicable(vertex){
+        var html = vertex.getHtml();
+        if(!UiUtils.isElementFullyOnScreen(html)){
+            html.centerOnScreenWithAnimation();
+        }
+    }
 });
