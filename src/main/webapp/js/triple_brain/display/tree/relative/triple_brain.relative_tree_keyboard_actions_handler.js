@@ -72,7 +72,13 @@ define([
 
     function tabAction(selectedVertex) {
         VertexService.addRelationAndVertexToVertex(
-            selectedVertex, EdgeUi.redrawAllEdges
+            selectedVertex, function(triple){
+                EdgeUi.redrawAllEdges();
+                var destinationHtml = triple.destinationVertex().getHtml();
+                if (!UiUtils.isElementFullyOnScreen(destinationHtml)) {
+                    destinationHtml.centerOnScreenWithAnimation();
+                }
+            }
         );
     }
 
