@@ -150,7 +150,35 @@ define([
     api.forGroup  = function(){
         var subApi = {};
         subApi.group = function(){
-            SelectionHandler.handleGroupButtonClick();
+            var selectedGraphElements = {
+                edges : {},
+                vertices : {}
+            };
+            EdgeUi.visitAllEdges(function (edge) {
+                var sourceVertex = edge.sourceVertex();
+                var destinationVertex = edge.destinationVertex();
+                var isSourceVertexSelected = sourceVertex.isSelected();
+                var isDestinationVertexSelected = destinationVertex.isSelected();
+                if (isSourceVertexSelected) {
+                    selectedGraphElements.vertices[
+                        sourceVertex.getUri()
+                        ] = ""
+                }
+                if (isDestinationVertexSelected) {
+                    selectedGraphElements.vertices[
+                        destinationVertex.getUri()
+                        ] = ""
+                }
+                if (isSourceVertexSelected && isDestinationVertexSelected) {
+                    selectedGraphElements.edges[
+                        edge.getUri()
+                        ] = "";
+                }
+            });
+            VertexService.group(
+                selectedGraphElements,
+                GraphDisplayer.displayUsingNewCentralVertexUri
+            );
         };
         return subApi;
     };

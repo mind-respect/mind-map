@@ -23,13 +23,12 @@ define([
         function initButtons() {
             api.visitButtons(function (button) {
                 var html = button.getHtml();
-                html.button({
-                    icons:{
-                        primary:"ui-icon " + button.getIconClass()
-                    },
-                    text:false
-                });
-                html.on(
+                var icon = $("<i>").addClass(
+                    "fa " + button.getIconClass()
+                );
+                html.addClass(
+                    "graph-element-button"
+                ).append(icon).on(
                     "click",
                     function (event) {
                         event.stopPropagation();

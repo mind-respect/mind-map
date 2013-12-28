@@ -8,10 +8,9 @@ define([
     "triple_brain.ui.utils",
     "triple_brain.vertex",
     "triple_brain.graph_displayer",
-    "triple_brain.ui.edge",
     "triple_brain.event_bus",
     "jquery-ui"
-], function ($, GraphUi, ScrollOnMouseFrontier, UiUtils, VertexService, GraphDisplayer, EdgeUi, EventBus) {
+], function ($, GraphUi, ScrollOnMouseFrontier, UiUtils, VertexService, GraphDisplayer, EventBus) {
     var api = {};
     api.reset = function () {
         GraphDisplayer.getVertexSelector().resetSelection();
@@ -34,37 +33,6 @@ define([
     };
     api.getSelectionManagementButton = function () {
         return $("#graph-elements-selected");
-    };
-    api.handleGroupButtonClick = function () {
-        var selectedGraphElements = {
-            edges : {},
-            vertices : {}
-        };
-        EdgeUi.visitAllEdges(function (edge) {
-            var sourceVertex = edge.sourceVertex();
-            var destinationVertex = edge.destinationVertex();
-            var isSourceVertexSelected = sourceVertex.isSelected();
-            var isDestinationVertexSelected = destinationVertex.isSelected();
-            if (isSourceVertexSelected) {
-                selectedGraphElements.vertices[
-                    sourceVertex.getUri()
-                    ] = ""
-            }
-            if (isDestinationVertexSelected) {
-                selectedGraphElements.vertices[
-                    destinationVertex.getUri()
-                    ] = ""
-            }
-            if (isSourceVertexSelected && isDestinationVertexSelected) {
-                selectedGraphElements.edges[
-                    edge.getUri()
-                    ] = "";
-            }
-        });
-        VertexService.group(
-            selectedGraphElements,
-            GraphDisplayer.displayUsingNewCentralVertexUri
-        );
     };
     api.refreshSelectionMenu = function(){
         setNbSelectedGraphElements(

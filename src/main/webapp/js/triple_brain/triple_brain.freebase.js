@@ -6,10 +6,9 @@ define([
     "triple_brain.vertex",
     "triple_brain.suggestion",
     "triple_brain.external_resource",
-    "triple_brain.freebase_autocomplete_provider",
     "jquery.url"
 ],
-    function (require, $, EventBus, GraphDisplayer, VertexService, Suggestion, ExternalResource, FreebaseAutocompleteProvider) {
+    function (require, $, EventBus, GraphDisplayer, VertexService, Suggestion, ExternalResource) {
         var api = {};
         api.key = "AIzaSyBHOqdqbswxnNmNb4k59ARSx-RWokLZhPA";
         api.BASE_URL = "https://www.googleapis.com/freebase/v1";
@@ -65,7 +64,7 @@ define([
             }
         };
         api.listPropertiesOfFreebaseTypeId = function (vertex, freebaseId) {
-            Suggestion = require("triple_brain.suggestion")
+            Suggestion = require("triple_brain.suggestion");
             var propertiesOfTypeQuery = {
                 id:freebaseId,
                 type:"/type/type",
@@ -78,7 +77,9 @@ define([
             };
             $.ajax({
                 type:'GET',
-                url:'https://www.googleapis.com/freebase/v1/mqlread?query=' + JSON.stringify(propertiesOfTypeQuery),
+                url:'https://www.googleapis.com/freebase/v1/mqlread?query=' + JSON.stringify(
+                    propertiesOfTypeQuery
+                ),
                 dataType:'jsonp'
             }).success(function (result) {
                     var freebaseProperties = [];
@@ -95,8 +96,8 @@ define([
                                     result.result.id
                                 )
                             )
-                        )
-                    })
+                        );
+                    });
                     vertexService().addSuggestions(
                         vertex,
                         suggestions
