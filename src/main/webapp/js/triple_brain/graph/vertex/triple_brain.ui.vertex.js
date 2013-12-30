@@ -300,11 +300,20 @@ define([
             this.hasNote = function(){
                 return self.getNote().trim().length > 0;
             };
+            this.getNoteButtonInBubbleContent = function(){
+                return self.getInBubbleContainer().find(
+                    ".note-button"
+                );
+            };
+            this.getNoteButtonInMenu = function(){
+                return self.getMenuHtml().find("> .note-button");
+            };
             this.getInBubbleContainer = function () {
                 return html.find(
                     "> .in-bubble-content"
                 );
             };
+
             this.getInBubbleContentWidth = function () {
                 var width = 0;
                 $.each(self.getInBubbleContainer().children(), function () {

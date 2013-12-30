@@ -22,10 +22,11 @@ define([
     "triple_brain.image",
     "triple_brain.selection_handler",
     "triple_brain.keyboard_utils",
+    "triple_brain.relative_tree_vertex_menu_handler",
     "jquery-ui",
     "jquery.is-fully-on-screen",
     "jquery.center-on-screen"
-], function (require, $, EventBus, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, Point, Segment, GraphDisplayer, RelativeTreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, Image, SelectionHandler, KeyboardUtils) {
+], function (require, $, EventBus, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, Point, Segment, GraphDisplayer, RelativeTreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, Image, SelectionHandler, KeyboardUtils, RelativeTreeVertexMenuHandler) {
         var api = {};
         api.withServerJson = function (serverVertex) {
             return new VertexCreator(serverVertex);
@@ -79,6 +80,10 @@ define([
                 api.addDuplicateVerticesButtonIfApplicable(
                     vertex
                 );
+            }
+            if(vertex.isToTheLeft()){
+                var noteButton = vertex.getNoteButtonInBubbleContent();
+                noteButton.next(".overlay-container").after(noteButton);
             }
         }
         function VertexCreator(serverFormat) {
@@ -143,13 +148,14 @@ define([
                     serverFormat.comment
                 );
                 createMenu();
+                addNoteButtonNextToLabel();
                 vertex.addSuggestions(
                     Suggestion.fromJsonArrayOfServer(
                         serverFormat.suggestions
                     )
                 );
                 vertex.hideButtons();
-                $(html).hover(
+                html.hover(
                     onMouseOver,
                     onMouseOut
                 );
@@ -293,7 +299,28 @@ define([
                     )
                 ).addClass("includes-vertices")
             }
-
+            function addNoteButtonNextToLabel(){
+                var noteButton = vertex.getMenuHtml().find(
+                    "> .note-button"
+                ).clone().on(
+                    "click", clickHandler
+                );
+                if(!vertex.hasNote()){
+                    noteButton.hide();
+                }
+                vertex.getInBubbleContainer().find("> .overlay-container").before(
+                    noteButton
+                );
+                function clickHandler(event){
+                    var button = $(this);
+                    RelativeTreeVertexMenuHandler.forSingle().note(
+                        event,
+                        RelativeTreeVertex.withHtml(
+                            button.closest(".vertex")
+                        )
+                    );
+                }
+            }
             function createMenu() {
                 var vertexMenu = $(
                     MindMapTemplate['vertex_menu'].merge()

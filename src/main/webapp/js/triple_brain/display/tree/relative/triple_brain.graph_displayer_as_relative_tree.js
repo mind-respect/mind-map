@@ -70,18 +70,10 @@ define([
                 parentVertex.setOriginalServerObject(
                     serverGraph.vertices[parentUri]
                 );
-                var isGoingLeft = parentVertex.isToTheLeft();
                 parentVertex.visitChildren(function(child){
                     VertexHtmlBuilder.addDuplicateVerticesButtonIfApplicable(
                         child
                     );
-                    if(isGoingLeft){
-                        child.label().after(
-                            child.getInBubbleContainer().find(
-                                "> .note-button"
-                            )
-                        );
-                    }
                 });
                 callback(serverGraph);
                 function removeGrandParentFromServerGraph(){
@@ -379,7 +371,9 @@ define([
             $(container).append(
                 childTreeContainer
             );
-            var vertexContainer = RelativeTreeTemplates["vertex_container"].merge();
+            var vertexContainer = RelativeTreeTemplates[
+                "vertex_container"
+                ].merge();
             childTreeContainer.append(
                 vertexContainer
             );
@@ -456,11 +450,6 @@ define([
             $.each($(".left-oriented .vertex"), function () {
                 var relativeVertex = RelativeTreeVertex.withHtml(this);
                 relativeVertex.adjustPosition();
-                relativeVertex.label().after(
-                    relativeVertex.getInBubbleContainer().find(
-                        "> .note-button"
-                    )
-                );
             });
             function buildVerticesHtml() {
                 var serverRootVertex = vertexWithId(centralVertexUri);

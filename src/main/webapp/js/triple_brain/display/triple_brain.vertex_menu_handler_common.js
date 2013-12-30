@@ -31,23 +31,14 @@ define([
                     vertex,
                     dialog.find("textarea").val(),
                     function (vertex) {
-                        if (vertex.hasNote()) {
-                            vertex.label()[
-                                !GraphDisplayer.allowsMovingVertices() && vertex.isToTheLeft() ?
-                                    "after" :
-                                    "before"
-                                ](
-                                vertex.getMenuHtml().find(
-                                    "> .note-button"
-                                )
-                            );
-                        } else {
-                            vertex.getInBubbleContainer().find(
-                                "> .note-button"
-                            ).appendTo(
-                                vertex.getMenuHtml()
-                            );
+                        if(vertex.hasNote()){
+                            vertex.getNoteButtonInBubbleContent().show();
+                            vertex.getNoteButtonInMenu().hide();
+                        }else{
+                            vertex.getNoteButtonInBubbleContent().hide();
+                            vertex.getNoteButtonInMenu().show();
                         }
+
                         $(dialog).dialog("close");
                     }
                 );
