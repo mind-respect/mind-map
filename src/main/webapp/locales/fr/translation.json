@@ -116,7 +116,7 @@
         }
     },
     "selection" : {
-        "selected_graph_elements" : "élément(s) de graphe sélectionnée(s)",
+        "selected_graph_elements" : "élément(s) de graphe sélectionné(s)",
         "group" : "grouper"
     }
 }

@@ -63,7 +63,7 @@ define([
                 }
                 var parentWidth = $(parentVertexHtml).width();
                 html.closest(".vertex-tree-container").css(
-                    "margin-left", "-" + (parentWidth + width + 40) + "px"
+                    "margin-left", "-" + (parentWidth + width + 10) + "px"
                 );
                 EventBus.publish(
                     "/event/ui/graph/vertex/position-changed",
