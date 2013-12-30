@@ -81,11 +81,12 @@ define([
                     vertex
                 );
             }
-            if(vertex.isToTheLeft()){
+            if (vertex.isToTheLeft()) {
                 var noteButton = vertex.getNoteButtonInBubbleContent();
                 noteButton.next(".overlay-container").after(noteButton);
             }
         }
+
         function VertexCreator(serverFormat) {
             var VertexService = require("triple_brain.vertex");
             var Suggestion = require("triple_brain.suggestion");
@@ -154,7 +155,7 @@ define([
                         serverFormat.suggestions
                     )
                 );
-                vertex.hideButtons();
+                vertex.hideMenu();
                 html.hover(
                     onMouseOver,
                     onMouseOut
@@ -299,19 +300,20 @@ define([
                     )
                 ).addClass("includes-vertices")
             }
-            function addNoteButtonNextToLabel(){
-                var noteButton = vertex.getMenuHtml().find(
-                    "> .note-button"
-                ).clone().on(
+
+            function addNoteButtonNextToLabel() {
+                var noteButton = vertex.getNoteButtonInMenu().clone().on(
                     "click", clickHandler
                 );
-                if(!vertex.hasNote()){
-                    noteButton.hide();
-                }
+                noteButton[
+                    vertex.hasNote() ?
+                        "show" :
+                        "hide"
+                    ]();
                 vertex.getInBubbleContainer().find("> .overlay-container").before(
                     noteButton
                 );
-                function clickHandler(event){
+                function clickHandler(event) {
                     var button = $(this);
                     RelativeTreeVertexMenuHandler.forSingle().note(
                         event,
@@ -321,6 +323,7 @@ define([
                     );
                 }
             }
+
             function createMenu() {
                 var vertexMenu = $(
                     MindMapTemplate['vertex_menu'].merge()
