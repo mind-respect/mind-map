@@ -246,14 +246,12 @@ define([
         );
         EventBus.subscribe(
             "/event/ui/graph/vertex/image/updated",
-            function (event, vertex) {
+            function () {
                 api.numberImagesToLoad--;
-                var relativeVertex = api.ofVertex(vertex);
-                api.withHtml(
-                    relativeVertex.getParentVertexHtml()
-                ).adjustAllChildrenPositionIfApplicable();
-                relativeVertex.adjustPositionIfApplicable();
                 if (0 === api.numberImagesToLoad) {
+                    api.visitAllVertices(function(vertex){
+                        vertex.adjustPositionIfApplicable();
+                    });
                     EdgeUi.redrawAllEdges();
                 }
             }

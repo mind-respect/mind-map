@@ -465,7 +465,8 @@ define([
                 var imageWidth = self.hasImagesMenu() ?
                     self.getImageMenu().width() :
                     0;
-
+                var noteButtonWidth = self.getNoteButtonInBubbleContent().is(":visible") ?
+                    30 : 0;
                 var width =
                     Math.max(
                         menuWidth(),
@@ -473,7 +474,8 @@ define([
                     ) +
                         self.moveButton().width() +
                         imageWidth
-                        + intuitiveWidthBuffer;
+                        + intuitiveWidthBuffer +
+                        noteButtonWidth;
                 $(html).css(
                     "width",
                     width + "px"

@@ -380,7 +380,7 @@ define([
             vertexContainer.append(
                 childVertexHtmlFacade.getHtml()
             );
-            childVertexHtmlFacade.adjustWidth();
+            childVertexHtmlFacade.readjustLabelWidth();
             self.addChildrenContainerToVertex(childVertexHtmlFacade);
             return childVertexHtmlFacade;
         };
@@ -463,7 +463,7 @@ define([
                 var vertexContainer = RelativeTreeTemplates["vertex_container"].merge();
                 $(verticesContainer).append(vertexContainer);
                 $(vertexContainer).append(rootVertex.getHtml());
-                rootVertex.adjustWidth();
+                rootVertex.readjustLabelWidth();
                 var leftChildrenContainer;
                 if(canAddToLeft){
                     leftChildrenContainer = self.addChildrenContainerToVertex(

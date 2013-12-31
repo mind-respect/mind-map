@@ -210,7 +210,6 @@ define([
                         RelativeTreeVertex.getWhenEmptyLabel() :
                         serverFormat.label
                 ).appendTo(labelContainer);
-                vertex.readjustLabelWidth();
                 if (vertex.hasDefaultText()) {
                     vertex.applyStyleOfDefaultText();
                 }

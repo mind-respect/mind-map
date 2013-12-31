@@ -38,7 +38,6 @@ define([
                             vertex.getNoteButtonInBubbleContent().hide();
                             vertex.getNoteButtonInMenu().show();
                         }
-
                         $(dialog).dialog("close");
                     }
                 );

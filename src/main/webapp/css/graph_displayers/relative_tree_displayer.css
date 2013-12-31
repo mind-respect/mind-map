@@ -2,6 +2,10 @@
     position:absolute;
 }
 
+#drawn_graph > .root-vertex-super-container > .vertices-children-container:not(.left-oriented) .vertices-children-container{
+    padding-left:1em;
+}
+
 .vertices-children-container{
     display:table-cell;
     vertical-align: middle;
@@ -12,7 +16,7 @@
 
 .vertex-tree-container{
     display:table;
-    margin-left:0.5em;
+    margin-left:0;
     margin-bottom: 1em;
 }
 
