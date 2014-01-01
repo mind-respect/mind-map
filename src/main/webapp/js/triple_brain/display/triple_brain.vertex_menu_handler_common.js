@@ -39,6 +39,8 @@ define([
                             vertex.getNoteButtonInMenu().show();
                         }
                         $(dialog).dialog("close");
+                        vertex.readjustLabelWidth();
+                        vertex.adjustPositionIfApplicable();
                     }
                 );
             };
