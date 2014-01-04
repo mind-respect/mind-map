@@ -63,7 +63,7 @@ define([
                 ];
                 serverGraph.vertices[parentUri] = parentVertexServerFormat;
                 if(nbRelationsWithGrandParent >= 1){
-                    treeMaker.buildChildrenHtmlTreeRecursivelyEvenIfGrandParent(
+                    treeMaker.buildChildrenHtmlTreeRecursivelyEvenIfGrandParentAndIncludingDuplicates(
                         parentVertex,
                         serverGraph.vertices
                     );
@@ -412,13 +412,24 @@ define([
             return $(vertexHtmlFacade.getHtml()).closest(".vertex-container"
             ).siblings(".vertices-children-container");
         };
-        this.buildChildrenHtmlTreeRecursivelyEvenIfGrandParent = function(parentVertexHtmlFacade, vertices, grandParentUri) {
-            return self.buildChildrenHtmlTreeRecursively(
+        this.buildChildrenHtmlTreeRecursivelyEvenIfGrandParentAndIncludingDuplicates = function(parentVertexHtmlFacade, vertices, grandParentUri) {
+            return buildChildrenHtmlTreeRecursively(
                 parentVertexHtmlFacade,
-                vertices
+                vertices,
+                undefined,
+                true
             );
         };
         this.buildChildrenHtmlTreeRecursively = function(parentVertexHtmlFacade, vertices, grandParentUri) {
+            buildChildrenHtmlTreeRecursively(
+                parentVertexHtmlFacade,
+                vertices,
+                grandParentUri,
+                false
+            );
+        };
+
+        function buildChildrenHtmlTreeRecursively(parentVertexHtmlFacade, vertices, grandParentUri, includeDuplicates){
             var serverParentVertex = vertexWithId(
                 parentVertexHtmlFacade.getUri()
             );
@@ -426,7 +437,7 @@ define([
             $.each(serverParentVertex.neighbors, function () {
                 var neighborInfo = this;
                 var childInfo = vertexWithId(neighborInfo.vertexUri);
-                if (grandParentUri === childInfo.uri || childInfo.added === true) {
+                if (grandParentUri === childInfo.uri || (childInfo.added === true && !includeDuplicates)) {
                     return;
                 }
                 var vertexServerFormat = vertexWithId(childInfo.uri);
@@ -448,10 +459,11 @@ define([
                 );
                 childInfo.added = true;
                 $(treeContainer).append(
-                    self.buildChildrenHtmlTreeRecursively(
+                    buildChildrenHtmlTreeRecursively(
                         childVertexHtmlFacade,
                         vertices,
-                        parentVertexHtmlFacade.getUri()
+                        parentVertexHtmlFacade.getUri(),
+                        includeDuplicates
                     )
                 );
             });
@@ -459,7 +471,7 @@ define([
             function vertexWithId(vertexId) {
                 return vertices[vertexId]
             }
-        };
+        }
 
         function makeInContainerUsingServerGraphAndCentralVertexUri(serverGraph, centralVertexUri, verticesContainer, canAddToLeft) {
             var vertices = serverGraph.vertices;
