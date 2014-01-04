@@ -125,8 +125,7 @@ svg { z-index: 1; }
 .vertex.absolute { white-space: nowrap; position: absolute !important; min-width: 120px; }
 .vertex.relative { position: relative; min-width: 0; margin: 0 0 0 0; }
 .vertex.includes-vertices .in-bubble-content { padding-bottom: 2em; }
-.vertex.highlighted .in-bubble-content { z-index: 11; }
-.vertex.highlighted:not(.center-vertex) .in-bubble-content { border: 1px; -moz-border-radius: 15px; border-radius: 15px; border-color: green; border-style: solid; }
+.vertex.highlighted .in-bubble-content { z-index: 11; border: 1px; -moz-border-radius: 15px; border-radius: 15px; border-color: green; border-style: solid; }
 .vertex.selected { z-index: 12; }
 .vertex.selected .in-bubble-content { border-radius: 15px; box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb; }
 .vertex.center-vertex .in-bubble-content { border-radius: 15px; -webkit-box-shadow: 0 0 1em rgba(255, 128, 0, 0.1); -moz-box-shadow: 0 0 1em rgba(255, 128, 0, 0.1); box-shadow: 0 0 1em rgba(255, 128, 0, 0.5); }

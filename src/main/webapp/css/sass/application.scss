@@ -402,18 +402,12 @@ svg {
   }
   &.highlighted {
     .in-bubble-content {
-      //background-color: white;
-      //opacity: 0.96;
       z-index: 11;
-    }
-    &:not(.center-vertex) {
-      .in-bubble-content {
-        border: 1px;
-        -moz-border-radius: 15px;
-        border-radius: 15px;
-        border-color: green;
-        border-style: solid;
-      }
+      border: 1px;
+      -moz-border-radius: 15px;
+      border-radius: 15px;
+      border-color: green;
+      border-style: solid;
     }
   }
   &.selected {
