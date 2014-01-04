@@ -62,9 +62,8 @@ define([
             GraphElement.addIdentification(
                 edge,
                 sameAs,
-                function(){
-                    edge.adjustWidth();
-                    if(callback !== undefined){
+                function () {
+                    if (callback !== undefined) {
                         callback();
                     }
                 }
@@ -85,7 +84,7 @@ define([
                 }
             );
         };
-        api.addType = function(edge, type, callback){
+        api.addType = function (edge, type, callback) {
             type.type = "type";
             GraphElement.addIdentification(
                 edge,
@@ -93,7 +92,7 @@ define([
                 callback
             );
         };
-        api.removeType = function(edge, type, callback){
+        api.removeType = function (edge, type, callback) {
             GraphElement.removeIdentification(
                 edge,
                 type,
@@ -108,7 +107,7 @@ define([
                 }
             );
         };
-        api.inverse = function(edge, callback){
+        api.inverse = function (edge, callback) {
             $.ajax({
                 type:'PUT',
                 url:edge.getUri() + "/inverse"
@@ -129,7 +128,7 @@ define([
                     '?sourceVertexId=' + sourceVertexUriFormatted +
                     '&destinationVertexId=' + destinationVertexUriFormatted
             }).success(function () {
-                        var responseUri = response.getResponseHeader("Location");
+                    var responseUri = response.getResponseHeader("Location");
                     var edgeServerFormatted = {};
                     edgeServerFormatted.uri = responseUri;
                     edgeServerFormatted.source_vertex_id = sourceVertexUri;

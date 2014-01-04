@@ -192,16 +192,6 @@ define([
             this.removeStyleOfDefaultText = function () {
                 self.getLabel().removeClass('when-default-graph-element-text');
             };
-            this.adjustWidth = function () {
-                var intuitiveWidthBuffer = 14;
-                html.css(
-                    "width",
-                    $(getMenu()).width()
-                        + self.getLabel().width()
-                        + intuitiveWidthBuffer +
-                        "px"
-                );
-            };
             this.isMouseOver = function () {
                 var edgeThatIsMouseOver = GraphUi.getEdgeMouseOver();
                 return  edgeThatIsMouseOver !== undefined &&
