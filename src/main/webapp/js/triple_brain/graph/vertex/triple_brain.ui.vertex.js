@@ -244,7 +244,7 @@ define([
                 $(centerButton()).hide();
             };
             this.highlight = function () {
-                $(html).addClass(
+                html.addClass(
                     'highlighted'
                 );
             };

@@ -376,7 +376,6 @@ svg {
 }
 
 .vertex {
-  z-index: 3;
   cursor: default;
 /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */
   white-space: nowrap;
@@ -453,6 +452,7 @@ svg {
     font-weight: bold;
   }
   .in-bubble-content {
+    z-index: 3;
     border-radius: 20px;
     background-color: #E6E6FF;
     white-space: nowrap;

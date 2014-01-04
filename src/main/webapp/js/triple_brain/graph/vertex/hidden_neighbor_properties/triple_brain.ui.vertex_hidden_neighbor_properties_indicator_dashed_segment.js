@@ -13,7 +13,7 @@ define([
             var radianDirection = segment.radianDirection();
             var dash = segment;
             var canvas = GraphUi.canvas();
-            var blue = "#3005BB";
+            var blue = "#1919AC";
             var lineWidth = "1";
             var drawnComponents = [];
             this.draw = function(){

@@ -156,7 +156,7 @@ define([
                     )
                 );
                 vertex.hideMenu();
-                html.hover(
+                vertex.getInBubbleContainer().hover(
                     onMouseOver,
                     onMouseOut
                 );
