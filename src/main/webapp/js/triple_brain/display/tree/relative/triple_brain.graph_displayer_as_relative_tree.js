@@ -51,7 +51,7 @@ define([
             depth,
             function (serverGraph) {
                 var treeMaker = new TreeMaker(VertexHtmlBuilder);
-                var nbRelationsWithGrandParentLeft = removeRelationWithGrandParentFromServerGraph();
+                var nbRelationsWithGrandParent = removeRelationWithGrandParentFromServerGraph();
                 var parentVertexServerFormat = serverGraph.vertices[parentUri];
                 TreeDisplayerCommon.defineChildrenInVertices(
                     serverGraph,
@@ -62,11 +62,18 @@ define([
                     parentVertexId
                 ];
                 serverGraph.vertices[parentUri] = parentVertexServerFormat;
-                treeMaker.buildChildrenHtmlTreeRecursively(
-                    parentVertex,
-                    serverGraph.vertices,
-                    nbRelationsWithGrandParentLeft >= 1 ? undefined : parentVertex.getParentVertex().getUri()
-                );
+                if(nbRelationsWithGrandParent >= 1){
+                    treeMaker.buildChildrenHtmlTreeRecursivelyEvenIfGrandParent(
+                        parentVertex,
+                        serverGraph.vertices
+                    );
+                }else{
+                    treeMaker.buildChildrenHtmlTreeRecursively(
+                        parentVertex,
+                        serverGraph.vertices,
+                        parentVertex.getParentVertex().getUri()
+                    );
+                }
                 parentVertex.setOriginalServerObject(
                     serverGraph.vertices[parentUri]
                 );
@@ -404,6 +411,12 @@ define([
         this.childrenVertexContainer = function (vertexHtmlFacade) {
             return $(vertexHtmlFacade.getHtml()).closest(".vertex-container"
             ).siblings(".vertices-children-container");
+        };
+        this.buildChildrenHtmlTreeRecursivelyEvenIfGrandParent = function(parentVertexHtmlFacade, vertices, grandParentUri) {
+            return self.buildChildrenHtmlTreeRecursively(
+                parentVertexHtmlFacade,
+                vertices
+            );
         };
         this.buildChildrenHtmlTreeRecursively = function(parentVertexHtmlFacade, vertices, grandParentUri) {
             var serverParentVertex = vertexWithId(
