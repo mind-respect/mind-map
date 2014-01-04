@@ -13,7 +13,7 @@ define([
             var radianDirection = segment.radianDirection();
             var dash = segment;
             var canvas = GraphUi.canvas();
-            var red = "#FF0000";
+            var blue = "#3005BB";
             var lineWidth = "1";
             var drawnComponents = [];
             this.draw = function(){
@@ -41,7 +41,7 @@ define([
                     canvas.path(dashPath)
                     .attr({
                        "stroke-width" : lineWidth,
-                       stroke : red
+                       stroke : blue
                     })
                 );
             }
