@@ -96,8 +96,10 @@ define([
                     vertex.position().x,
                     vertex.position().y + (vertex.height() / 2)
                 );
+                var toTheRightHorizontalMargin = 21;
+                var vertexWidth = vertex.getInBubbleContentWidth();
                 if (!isLeftOriented) {
-                    startPoint.x += vertex.width();
+                    startPoint.x += vertexWidth + toTheRightHorizontalMargin;
                 }
                 var distanceBetweenEachDashedSegment =
                     numberOfHiddenConnectedRelations == 1 ?
@@ -110,7 +112,7 @@ define([
                 if (isLeftOriented) {
                     plainSegment.endPoint.x -= horizontalDistanceOfDashedSegment;
                 } else {
-                    plainSegment.endPoint.x += vertex.width() + horizontalDistanceOfDashedSegment;
+                    plainSegment.endPoint.x += vertexWidth + horizontalDistanceOfDashedSegment + toTheRightHorizontalMargin;
                 }
                 for (var i = 0; i < numberOfHiddenConnectedRelations; i++) {
                     plainSegment.endPoint.y = startPoint.y -
@@ -138,7 +140,7 @@ define([
                     .one("click",handleHiddenPropertiesContainerClick);
             };
             this.remove = function () {
-                $(hiddenNeighborPropertiesContainer).remove();
+                hiddenNeighborPropertiesContainer.remove();
                 while (dashSegments.length != 0) {
                     var dashSegment = dashSegments.pop();
                     dashSegment.remove();

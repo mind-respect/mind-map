@@ -476,7 +476,7 @@ define([
                         imageWidth
                         + intuitiveWidthBuffer +
                         noteButtonWidth;
-                $(html).css(
+                html.css(
                     "width",
                     width + "px"
                 );

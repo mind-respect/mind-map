@@ -401,9 +401,11 @@ svg {
     }
   }
   &.highlighted {
-    background-color: white;
-    opacity: 0.96;
-    z-index: 11;
+    .in-bubble-content {
+      //background-color: white;
+      //opacity: 0.96;
+      z-index: 11;
+    }
     &:not(.center-vertex) {
       .in-bubble-content {
         border: 1px;
