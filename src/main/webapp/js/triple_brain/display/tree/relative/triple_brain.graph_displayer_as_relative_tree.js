@@ -51,7 +51,7 @@ define([
             depth,
             function (serverGraph) {
                 var treeMaker = new TreeMaker(VertexHtmlBuilder);
-                removeGrandParentFromServerGraph();
+                var nbRelationsWithGrandParentLeft = removeRelationWithGrandParentFromServerGraph();
                 var parentVertexServerFormat = serverGraph.vertices[parentUri];
                 TreeDisplayerCommon.defineChildrenInVertices(
                     serverGraph,
@@ -65,7 +65,7 @@ define([
                 treeMaker.buildChildrenHtmlTreeRecursively(
                     parentVertex,
                     serverGraph.vertices,
-                    parentVertex.getParentVertex().getUri()
+                    nbRelationsWithGrandParentLeft >= 1 ? undefined : parentVertex.getParentVertex().getUri()
                 );
                 parentVertex.setOriginalServerObject(
                     serverGraph.vertices[parentUri]
@@ -76,19 +76,27 @@ define([
                     );
                 });
                 callback(serverGraph);
-                function removeGrandParentFromServerGraph(){
+                function removeRelationWithGrandParentFromServerGraph(){
+                    var relationWithGrandParentUri = parentVertex.getRelationWithParent().getUri();
                     var grandParentUri = parentVertex.getParentVertex().getUri();
-                    delete serverGraph.vertices[grandParentUri];
+                    var nbRelationsWithGrandParent = 0;
                     serverGraph.edges = serverGraph.edges.filter(function(edge){
                         var sourceAndDestinationId = [
                             edge.source_vertex_id,
                             edge.destination_vertex_id
                         ];
-                        return $.inArray(
+                        if($.inArray(
                                 grandParentUri,
                                 sourceAndDestinationId
-                            ) === -1
+                            ) !== -1){
+                            nbRelationsWithGrandParent++;
+                        }
+                        return edge.uri !== relationWithGrandParentUri;
                     });
+                    if(1 === nbRelationsWithGrandParent){
+                        delete serverGraph.vertices[grandParentUri];
+                    }
+                    return nbRelationsWithGrandParent - 1;
                 }
             }
         );

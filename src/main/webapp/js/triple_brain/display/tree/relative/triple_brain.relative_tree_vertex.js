@@ -85,6 +85,11 @@ define([
                     self.getParentVertexHtml().find("> .vertex")
                 );
             };
+            this.getRelationWithParent = function(){
+                return EdgeUi.withHtml(
+                    html.find("> .in-bubble-content > .relation")
+                );
+            };
             this.getParentVertexHtml = function () {
                 return html.closest(".vertices-children-container")
                     .siblings(".vertex-container");
