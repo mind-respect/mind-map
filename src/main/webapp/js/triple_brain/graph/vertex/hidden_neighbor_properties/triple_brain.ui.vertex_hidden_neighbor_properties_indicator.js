@@ -96,7 +96,7 @@ define([
                     vertex.position().x,
                     vertex.position().y + (vertex.height() / 2)
                 );
-                var toTheRightHorizontalMargin = 21;
+                var toTheRightHorizontalMargin = 23;
                 var vertexWidth = vertex.getInBubbleContentWidth();
                 if (!isLeftOriented) {
                     startPoint.x += vertexWidth + toTheRightHorizontalMargin;
