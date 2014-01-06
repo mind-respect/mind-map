@@ -403,8 +403,10 @@ svg {
     }
   }
   &.highlighted {
+    .in-bubble-content, img {
+      z-index: 11
+    }
     .in-bubble-content {
-      z-index: 11;
       border: 1px;
       -moz-border-radius: 15px;
       border-radius: 15px;
@@ -454,8 +456,10 @@ svg {
     left: 30%;
     font-weight: bold;
   }
-  .in-bubble-content {
+  .in-bubble-content, .image_container{
     z-index: 3;
+  }
+  .in-bubble-content {
     border-radius: 20px;
     background-color: #E6E6FF;
     white-space: nowrap;
@@ -472,6 +476,7 @@ svg {
   }
   .image_container {
     float: left;
+    position:relative;
     a {
       min-width: 60px;
     }
