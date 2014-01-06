@@ -22,7 +22,7 @@ input[type="button"], button {
 button.graph-element-button{
   width:30px;
   height: 30px;
-  margin-top: 5px;
+  margin-bottom: 5px;
   margin-right:3px;
   line-height: 20px;
   color: #333;
@@ -403,7 +403,7 @@ svg {
     }
   }
   &.highlighted {
-    .in-bubble-content, img {
+    .in-bubble-content, .image_container, .menu{
       z-index: 11
     }
     .in-bubble-content {
@@ -456,7 +456,7 @@ svg {
     left: 30%;
     font-weight: bold;
   }
-  .in-bubble-content, .image_container{
+  .in-bubble-content, .image_container, .menu{
     z-index: 3;
   }
   .in-bubble-content {
@@ -504,7 +504,7 @@ svg {
   .menu {
     float: left;
     width: 132px;
-    padding-top: 3px;
+    margin-top: 5px;
     position:absolute;
     white-space:normal;
     background-color:white;
