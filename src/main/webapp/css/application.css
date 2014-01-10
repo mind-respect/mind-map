@@ -126,7 +126,7 @@ svg { z-index: 1; }
 .vertex.absolute { white-space: nowrap; position: absolute !important; min-width: 120px; }
 .vertex.relative { position: relative; min-width: 0; margin: 0 0 0 0; }
 .vertex.includes-vertices .in-bubble-content { padding-bottom: 2em; }
-.vertex.highlighted .in-bubble-content, .vertex.highlighted .image_container, .vertex.highlighted .menu { z-index: 11; }
+.vertex.highlighted .in-bubble-content, .vertex.highlighted .image_container, .vertex.highlighted .menu, .vertex.highlighted .included-graph-elements-flag { z-index: 11; }
 .vertex.highlighted .in-bubble-content { border: 1px; -moz-border-radius: 15px; border-radius: 15px; border-color: green; border-style: solid; }
 .vertex.selected { z-index: 12; }
 .vertex.selected .in-bubble-content { border-radius: 15px; box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb; }
@@ -134,7 +134,7 @@ svg { z-index: 1; }
 .vertex.center-vertex.selected .in-bubble-content { box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb; border: solid red; }
 .vertex input[type="text"].label { border: 0; padding: 0; spacing: 0; outline: none; font-family: courier new, monospace; text-align: left; font-size: 14px; vertical-align: middle; background-color: transparent; margin-bottom: 0.4em; /*margin-top: 15px;*/ width: auto; overflow: hidden; }
 .vertex .included-graph-elements-flag { position: absolute; top: 25px; left: 30%; font-weight: bold; }
-.vertex .in-bubble-content, .vertex .image_container, .vertex .menu { z-index: 3; }
+.vertex .in-bubble-content, .vertex .image_container, .vertex .menu, .vertex .included-graph-elements-flag { z-index: 3; }
 .vertex .in-bubble-content { border-radius: 20px; background-color: #E6E6FF; white-space: nowrap; padding: 1em; padding-bottom: 0.7em; padding-top: 0.7em; margin-left: 0.3em; position: relative; display: inline-flex; }
 .vertex .in-bubble-content .note-button { margin-right: 5px; margin-top: -3px; }
 .vertex .image_container { float: left; position: relative; }

@@ -403,7 +403,7 @@ svg {
     }
   }
   &.highlighted {
-    .in-bubble-content, .image_container, .menu{
+    .in-bubble-content, .image_container, .menu, .included-graph-elements-flag{
       z-index: 11
     }
     .in-bubble-content {
@@ -456,7 +456,7 @@ svg {
     left: 30%;
     font-weight: bold;
   }
-  .in-bubble-content, .image_container, .menu{
+  .in-bubble-content, .image_container, .menu, .included-graph-elements-flag{
     z-index: 3;
   }
   .in-bubble-content {
