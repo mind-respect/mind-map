@@ -66,7 +66,9 @@ define([
         api.updateLabel = function (vertex, label, callback) {
             $.ajax({
                 type:'POST',
-                url:vertex.getUri() + '/label?label=' + label
+                url:vertex.getUri() + '/label',
+                data:$.toJSON({content: label}),
+                contentType:'application/json;charset=utf-8'
             }).success(function () {
                     EventBus.publish(
                         '/event/ui/graph/vertex/label/updated',
