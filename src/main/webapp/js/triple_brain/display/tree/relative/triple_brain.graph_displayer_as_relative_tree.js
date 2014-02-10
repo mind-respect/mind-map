@@ -22,8 +22,10 @@ define([
     "triple_brain.tree_edge_menu_handler",
     "triple_brain.relative_tree_graph_menu_handler",
     "triple_brain.graph_element_menu_handler",
-    "triple_brain.relative_tree_keyboard_actions_handler"
-], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, StraightAndSquareEdgeDrawer, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly,TreeEdge, Point, RelativeTreeVertexMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler, KeyboardActionsHandler) {
+    "triple_brain.relative_tree_keyboard_actions_handler",
+    "triple_brain.vertex_server_facade",
+    "triple_brain.edge_server_facade"
+], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, StraightAndSquareEdgeDrawer, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly,TreeEdge, Point, RelativeTreeVertexMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler, KeyboardActionsHandler, VertexServerFacade, EdgeServerFacade) {
     KeyboardActionsHandler.init();
     var api = {};
     api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
@@ -52,11 +54,11 @@ define([
             function (serverGraph) {
                 var treeMaker = new TreeMaker(VertexHtmlBuilder);
                 var nbRelationsWithGrandParent = removeRelationWithGrandParentFromServerGraph();
-                var parentVertexServerFormat = serverGraph.vertices[parentUri];
                 TreeDisplayerCommon.defineChildrenInVertices(
                     serverGraph,
                     parentUri
                 );
+                var parentVertexServerFormat = serverGraph.vertices[parentUri];
                 var parentVertexId = parentVertex.getId();
                 parentVertexServerFormat.uiIds = [
                     parentVertexId
@@ -88,9 +90,12 @@ define([
                     var grandParentUri = parentVertex.getParentVertex().getUri();
                     var nbRelationsWithGrandParent = 0;
                     serverGraph.edges = serverGraph.edges.filter(function(edge){
+                        var edgeFacade = EdgeServerFacade.fromServerFormat(
+                            edge
+                        );
                         var sourceAndDestinationId = [
-                            edge.source_vertex_id,
-                            edge.destination_vertex_id
+                            edgeFacade.getSourceVertex().getUri(),
+                            edgeFacade.getDestinationVertex().getUri()
                         ];
                         if($.inArray(
                                 grandParentUri,
@@ -98,7 +103,7 @@ define([
                             ) !== -1){
                             nbRelationsWithGrandParent++;
                         }
-                        return edge.uri !== relationWithGrandParentUri;
+                        return edgeFacade.getUri() !== relationWithGrandParentUri;
                     });
                     if(1 === nbRelationsWithGrandParent){
                         delete serverGraph.vertices[grandParentUri];
@@ -217,12 +222,12 @@ define([
                 var edgeServerFormat = this;
                 integrateIfApplicableEdgesOfVertex(
                     vertexWithUri(
-                        edgeServerFormat.source_vertex_id
+                        edgeServerFormat.getSourceVertex().getUri()
                     )
                 );
                 integrateIfApplicableEdgesOfVertex(
                     vertexWithUri(
-                        edgeServerFormat.destination_vertex_id
+                        edgeServerFormat.getDestinationVertex().getUri()
                     )
                 );
             });
@@ -377,7 +382,7 @@ define([
             }
         };
         this.buildVertexHtmlIntoContainer = function (vertex, container) {
-            var childVertexHtmlFacade = _htmlBuilder.withServerJson(
+            var childVertexHtmlFacade = _htmlBuilder.withServerFacade(
                 vertex
             ).create();
             var childTreeContainer = RelativeTreeTemplates[
@@ -437,10 +442,10 @@ define([
             $.each(serverParentVertex.neighbors, function () {
                 var neighborInfo = this;
                 var childInfo = vertexWithId(neighborInfo.vertexUri);
-                if (grandParentUri === childInfo.uri || (childInfo.added === true && !includeDuplicates)) {
+                if (grandParentUri === childInfo.getUri() || (childInfo.added === true && !includeDuplicates)) {
                     return;
                 }
-                var vertexServerFormat = vertexWithId(childInfo.uri);
+                var vertexServerFormat = childInfo;
                 var childVertexHtmlFacade = self.buildVertexHtmlIntoContainer(
                     vertexServerFormat,
                     childrenContainer
@@ -474,11 +479,11 @@ define([
         }
 
         function makeInContainerUsingServerGraphAndCentralVertexUri(serverGraph, centralVertexUri, verticesContainer, canAddToLeft) {
-            var vertices = serverGraph.vertices;
             TreeDisplayerCommon.defineChildrenInVertices(
                 serverGraph,
                 centralVertexUri
             );
+            var vertices = serverGraph.vertices;
             buildVerticesHtml();
             $.each($(".left-oriented .vertex"), function () {
                 var relativeVertex = RelativeTreeVertex.withHtml(this);
@@ -487,7 +492,7 @@ define([
             function buildVerticesHtml() {
                 var serverRootVertex = vertexWithId(centralVertexUri);
                 serverRootVertex.added = true;
-                var rootVertex = _htmlBuilder.withServerJson(
+                var rootVertex = _htmlBuilder.withServerFacade(
                     serverRootVertex
                 ).create();
                 serverRootVertex.uiIds = [

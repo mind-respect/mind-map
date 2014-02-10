@@ -4,9 +4,11 @@
 define([
     "triple_brain.id_uri",
     "triple_brain.event_bus",
-    "triple_brain.graph_displayer"
+    "triple_brain.graph_displayer",
+    "triple_brain.vertex_server_facade",
+    "triple_brain.edge_server_facade"
 ],
-    function (IdUriUtils, EventBus, GraphDisplayer) {
+    function (IdUriUtils, EventBus, GraphDisplayer, VertexServerFacade, EdgeServerFacade) {
         var api = {};
         api.createUsingServerTriple = function (sourceVertex, tripleJson) {
             var dummyPosition = {
@@ -26,11 +28,11 @@ define([
             };
 
             var destinationVertex = GraphDisplayer.addVertex(
-                tripleJson.end_vertex,
+                VertexServerFacade.fromServerFormat(tripleJson.end_vertex),
                 sourceVertex
             );
             var edge = GraphDisplayer.addEdge(
-                tripleJson.edge,
+                EdgeServerFacade.fromServerFormat(tripleJson.edge),
                 sourceVertex,
                 destinationVertex
             );

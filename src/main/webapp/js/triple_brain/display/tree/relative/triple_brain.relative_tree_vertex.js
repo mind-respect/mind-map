@@ -21,7 +21,7 @@ define([
                 vertex.getHtml()
             );
         };
-        api = ObjectUtils.extendedApiForChildUsingParent(
+        api = ObjectUtils.makeChildInheritParent(
             api,
             VertexUi
         );

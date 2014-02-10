@@ -10,12 +10,12 @@ define([
     var abcGraph;
     describe("graph_displayer_as_tree_common", function () {
         it("adds neighbors", function () {
-            initLinearAbcGraph();
-            TreeDisplayerCommon.defineChildrenInVertices(
-                abcGraph,
-                vertexA.uri
-            );
-            expect(vertexA.neighbors.length).toBe(1);
+//            initLinearAbcGraph();
+//            TreeDisplayerCommon.defineChildrenInVertices(
+//                abcGraph,
+//                vertexA.uri
+//            );
+//            expect(vertexA.neighbors.length).toBe(1);
 //            initLinearAbcGraph();
 //            addEdge(
 //                makeEdgeBetween(vertexC, vertexA)

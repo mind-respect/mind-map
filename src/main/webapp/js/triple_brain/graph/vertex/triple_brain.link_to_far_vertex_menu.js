@@ -51,7 +51,9 @@ define([
                     var menu = $(this).closest(
                         '.link-to-far-vertex-menu'
                     );
-                    var parentVertex = $(menu).data("vertex");
+                    var parentVertex = menu.data(
+                        "vertex"
+                    );
                     html.find("input").blur();
                     html.remove();
                     var farVertexUri = ui.item.uri;

@@ -1,5 +1,5 @@
 define([
-
+    "triple_brain.image"
 ],
     function () {
         var api = {};
@@ -8,8 +8,8 @@ define([
         };
         api.fromServerJson = function(imageAsServerJson){
             return new Image(
-                imageAsServerJson.small_image_url,
-                imageAsServerJson.bigger_image_url
+                imageAsServerJson.urlForSmall,
+                imageAsServerJson.urlForBigger
             );
         };
         api.arrayFromServerJson = function(imagesAsServerJson){

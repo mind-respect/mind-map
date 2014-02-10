@@ -15,11 +15,10 @@ define([
             return decodeURIComponent(
                 uri
             );
-        }
-        api.graphElementIdFromUri = function (uri) {
+        };
+        api.usernameFromUri = function(uri){
             var segments = $.url(uri).segment();
-            var graphElementId = segments[1];
-            return graphElementId;
+            return segments[2];
         };
         api.encodedUriFromGraphElementId = function (id) {
             return encodeURIComponent(

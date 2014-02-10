@@ -39,25 +39,25 @@ define([
     api.setUpIdentifications = function (serverFormat, vertex) {
         setup(
             vertex.setTypes,
-            "types",
+            serverFormat.getTypes,
             vertex.addType
         );
         setup(
             vertex.setSameAs,
-            "same_as",
+            serverFormat.getSameAs,
             vertex.addSameAs
         );
         setup(
             vertex.setGenericIdentifications,
-            "generic_identifications",
+            serverFormat.getGenericIdentifications,
             vertex.addGenericIdentification
         );
-        function setup(identificationsSetter, identificationProperty, addFctn) {
+        function setup(identificationsSetter, identificationGetter, addFctn) {
             identificationsSetter([]);
-            $.each(serverFormat[identificationProperty], function () {
+            $.each(identificationGetter(), function () {
                 var identificationFromServer = this;
                 addFctn(
-                    ExternalResource.fromServerJson(
+                    ExternalResource.fromServerFormatFacade(
                         identificationFromServer
                     )
                 );

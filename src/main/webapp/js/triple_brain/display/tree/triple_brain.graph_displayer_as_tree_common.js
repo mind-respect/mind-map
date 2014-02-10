@@ -2,25 +2,37 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "jquery"
+    "jquery",
+    "triple_brain.vertex_server_facade",
+    "triple_brain.edge_server_facade"
 ],
-    function ($) {
+    function ($, VertexServerFacade, EdgeServerFacade) {
         var api = {};
         api.defineChildrenInVertices = function (serverGraph, centralVertexUri) {
             var sourceId;
             var destinationId;
             var vertices = serverGraph.vertices;
-            var edges = serverGraph.edges;
+            var originalEdges = serverGraph.edges;
+            var edgesFacade = [];
             initChildrenOfVertex(
                 vertexWithId(centralVertexUri)
             );
-            $.each(edges, function () {
-                    updateVerticesChildrenWithEdge(this);
+            $.each(originalEdges, function () {
+                    var edgeFacade = isGraphElementFacadeBuilt(this) ? this : EdgeServerFacade.fromServerFormat(
+                        this
+                    );
+                    edgesFacade.push(
+                        edgeFacade
+                    );
+                    updateVerticesChildrenWithEdge(
+                        edgeFacade
+                    );
                 }
             );
+            serverGraph.edges = edgesFacade;
             function updateVerticesChildrenWithEdge(edge) {
-                sourceId = edge.source_vertex_id;
-                destinationId = edge.destination_vertex_id;
+                sourceId = edge.getSourceVertex().getUri();
+                destinationId = edge.getDestinationVertex().getUri();
                 applyToBoth([
                     initVertexInTreeInfoIfNecessary
                 ]);
@@ -28,7 +40,7 @@ define([
             }
 
             function initVertexInTreeInfoIfNecessary(vertexId) {
-                var vertex = vertices[vertexId];
+                var vertex = vertexWithId(vertexId);
                 if (vertex.neighbors === undefined) {
                     initChildrenOfVertex(vertex);
                 }
@@ -38,16 +50,12 @@ define([
                 vertex.neighbors = [];
             }
 
-            function isCentralVertex(vertexId) {
-                return vertexId === centralVertexUri;
-            }
-
             function setNeighbors(vertexId, childrenId, edge) {
-                vertices[vertexId].neighbors.push({
+                vertexWithId(vertexId).neighbors.push({
                     vertexUri:childrenId,
                     edge:edge
                 });
-                vertices[childrenId].neighbors.push({
+                vertexWithId(childrenId).neighbors.push({
                     vertexUri:vertexId,
                     edge:edge
                 });
@@ -60,9 +68,17 @@ define([
                     func(destinationId);
                 });
             }
-
             function vertexWithId(vertexId) {
-                return vertices[vertexId]
+                var serverFormat = vertices[vertexId];
+                if(isGraphElementFacadeBuilt(serverFormat)){
+                    return serverFormat;
+                }
+                return vertices[vertexId] = VertexServerFacade.fromServerFormat(
+                    vertices[vertexId]
+                );
+            }
+            function isGraphElementFacadeBuilt(graphElementServerFormat){
+                return graphElementServerFormat["getLabel"] !== undefined;
             }
         }
 

@@ -7,20 +7,20 @@ define([
     "triple_brain.graph_displayer"
 ], function(MindMapTemplate, RelativeTreeVertex, GraphDisplayer){
     var api = {};
-    api.withServerJson = function (serverVertex) {
+    api.withServerFacade = function (serverVertex) {
         return new VertexCreator(serverVertex);
     };
     api.addDuplicateVerticesButtonIfApplicable = function(){
 
     };
-    function VertexCreator(serverFormat){
+    function VertexCreator(serverFormatFacade){
         var html;
         this.create = function () {
             html = $(
-                MindMapTemplate['relative_vertex'].merge(serverFormat)
+                MindMapTemplate['relative_vertex'].merge()
             ).data(
                 "uri",
-                serverFormat.uri
+                serverFormatFacade.getUri()
             ).uniqueId().addClass(
                 "view-only"
             ).on(
@@ -30,14 +30,14 @@ define([
             var vertex = vertexFacade();
             createLabel();
             vertex.setOriginalServerObject(
-                serverFormat
+                serverFormatFacade
             );
             return vertex;
             function createLabel() {
                 var labelContainer = $(MindMapTemplate['vertex_label_container'].merge({
-                    label:serverFormat.label.trim() === "" ?
+                    label:serverFormatFacade.getLabel().trim() === "" ?
                         RelativeTreeVertex.getWhenEmptyLabel() :
-                        serverFormat.label
+                        serverFormatFacade.getLabel()
                 })).appendTo(html).on(
                     "click",
                     handleClickToDisplayVertexAsCentralVertex

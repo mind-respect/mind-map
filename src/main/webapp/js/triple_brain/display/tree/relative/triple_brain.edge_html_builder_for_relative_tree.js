@@ -27,14 +27,14 @@ define([
             return new EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade);
         };
         function EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
-            var uri = edgeServer.uri;
+            var uri = edgeServer.getUri();
             var html = $(
                 "<span>"
             ).addClass(
                 "relation"
             ).css("display", "inline");
             this.create = function () {
-                var isInverse = edgeServer.source_vertex_id !== parentVertexHtmlFacade.getUri();
+                var isInverse = edgeServer.getSourceVertex().getUri() !== parentVertexHtmlFacade.getUri();
                 if (isInverse) {
                     html.addClass("inverse");
                 }
@@ -54,7 +54,7 @@ define([
                 ).append(html);
                 buildNonInputLabel(
                     html,
-                    edgeServer.label
+                    edgeServer.getLabel()
                 ).show();
                 childVertexHtmlFacade.adjustWidth();
                 if (isToTheLeft) {
@@ -69,19 +69,19 @@ define([
                 edge.setTypes([]);
                 edge.setSameAs([]);
                 edge.setGenericIdentifications([]);
-                $.each(edgeServer.types, function () {
+                $.each(edgeServer.getTypes(), function () {
                     var typeFromServer = this;
                     edge.addType(
-                        ExternalResource.fromServerJson(
+                        ExternalResource.fromServerFormatFacade(
                             typeFromServer
                         )
                     );
                 });
 
-                $.each(edgeServer.same_as, function () {
+                $.each(edgeServer.getSameAs(), function () {
                     var sameAsFromServer = this;
                     edge.addSameAs(
-                        ExternalResource.fromServerJson(
+                        ExternalResource.fromServerFormatFacade(
                             sameAsFromServer
                         )
                     );

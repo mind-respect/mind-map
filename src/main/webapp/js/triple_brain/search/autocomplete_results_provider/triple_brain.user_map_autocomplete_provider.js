@@ -4,8 +4,10 @@
 define([
     "jquery",
     "triple_brain.search",
-    "triple_brain.identification_context"
-], function ($, SearchService, IdentificationContext) {
+    "triple_brain.identification_context",
+    "triple_brain.search_result_facade_factory",
+    "triple_brain.id_uri"
+], function ($, SearchService, IdentificationContext, SearchResultFacadeFactory, IdUri) {
     var api = {};
     api.toFetchOnlyCurrentUserVertices = function(){
         return new UserMapAutoCompleteProvider(
@@ -44,25 +46,30 @@ define([
             );
         };
         this.formatResults = function(searchResults){
-            var searchResults = filteredSearchResults();
-            return $.map(searchResults, function (searchResult) {
+            searchResults = $.map(searchResults, function (searchResult) {
+                var searchResultFacade = SearchResultFacadeFactory.get(
+                    searchResult
+                );
                 var format = {
-                    nonFormattedSearchResult: searchResult,
-                    comment:searchResult.comment,
-                    label:searchResult.label,
-                    value:searchResult.label,
-                    source: $.t("vertex.search.user") + " " + searchResult.owner_username,
-                    uri:searchResult.uri,
+                    nonFormattedSearchResult: searchResultFacade,
+                    comment:searchResultFacade.getComment(),
+                    label:searchResultFacade.getLabel(),
+                    value:searchResultFacade.getLabel(),
+                    source: $.t("vertex.search.user") + " " + IdUri.usernameFromUri(searchResultFacade.getUri()),
+                    uri:searchResultFacade.getUri(),
                     provider:self
                 };
-                format.somethingToDistinguish = IdentificationContext.formatRelationsName(
-                    IdentificationContext.removedEmptyAndDuplicateRelationsName(
-                        searchResult.relations_name
-                    )
-                );
-                format.distinctionType = "relations";
+                if(searchResultFacade.isVertex()){
+                    format.somethingToDistinguish = IdentificationContext.formatRelationsName(
+                        IdentificationContext.removedEmptyAndDuplicateRelationsName(
+                            searchResultFacade.getRelationsName()
+                        )
+                    );
+                    format.distinctionType = "relations";
+                }
                 return format;
             });
+            return filteredSearchResults();
             function filteredSearchResults(){
                 if(isForIdentification){
                     return keepOneResultForResultsThatMeanTheSame(
@@ -100,7 +107,8 @@ define([
             var filteredResults = [];
             $.each(searchResults, function(){
                 var searchResult = this;
-                if(searchResult.uri !== graphElementToIgnore.getUri()){
+                var searchResultFacade = this.nonFormattedSearchResult;
+                if(searchResultFacade.getUri() !== graphElementToIgnore.getUri()){
                     filteredResults.push(searchResult);
                 }
             });
@@ -111,19 +119,21 @@ define([
             var nonDuplicatedResults = [];
             $.each(searchResults, function(){
                 var searchResult = this;
-                if(searchResult.uri === graphElementToIgnore.getUri()){
+                var serverFormatFacade = searchResult.nonFormattedSearchResult;
+                if(serverFormatFacade.getUri() === graphElementToIgnore.getUri()){
                     return;
                 }
                 var toKeep = true;
-                $.each(searchResult.identifications, function(){
+                $.each(serverFormatFacade.getIdentifications(), function(){
                     var identification = this + "";
                     $.each(searchResults, function(){
                         var otherSearchResult = this;
-                        if(identification === otherSearchResult.uri){
+                        var otherResultServerFormatFacade = otherSearchResult.nonFormattedSearchResult;
+                        if(identification === otherResultServerFormatFacade.getUri()){
                             toKeep = false;
                             return breakLoop();
                         }
-                        $.each(otherSearchResult.identifications, function(){
+                        $.each(otherResultServerFormatFacade.getIdentifications(), function(){
                             var otherSearchResultIdentification = this + "";
                             if(otherSearchResultIdentification === identification){
                                 toKeep = false;

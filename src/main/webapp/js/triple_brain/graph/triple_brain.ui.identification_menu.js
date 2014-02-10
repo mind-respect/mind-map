@@ -12,16 +12,17 @@ define([
     "triple_brain.graph_element_menu",
     "triple_brain.search",
     "triple_brain.identification_context",
+    "triple_brain.search_result_facade_factory",
     "jquery-ui",
     "jquery.triple_brain.search"
 ],
-    function ($, ExternalResource, MindMapTemplate, GraphUi, IdUriUtils, FreebaseAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu, SearchService, IdentificationContext) {
+    function ($, ExternalResource, MindMapTemplate, GraphUi, IdUriUtils, FreebaseAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu, SearchService, IdentificationContext, SearchResultFacadeFactory) {
         var api = {
             ofGraphElement:function (graphElementUi) {
                 return new IdentificationMenu(graphElementUi);
             }
         };
-
+        return api;
         function IdentificationMenu(graphElement) {
             var identificationMenu = this;
             var html;
@@ -138,7 +139,9 @@ define([
                                         identification.uri(),
                                         function(searchResult){
                                             IdentificationContext.build(
-                                                searchResult,
+                                                SearchResultFacadeFactory.get(
+                                                    searchResult
+                                                ),
                                                 function(context){
                                                     descriptionDivFromTitleDiv(title).prepend(
                                                         context

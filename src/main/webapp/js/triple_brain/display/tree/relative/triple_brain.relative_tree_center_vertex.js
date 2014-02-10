@@ -2,8 +2,8 @@
  * Copyright Mozilla Public License 1.1
  */
 define(
-    [],
-    function(){
+    ["require"],
+    function(require){
         var api = {};
         api.usingVertex = function(vertex){
             return new Object(
@@ -14,9 +14,10 @@ define(
         function Object(vertex){
             var self = this;
             this.visitLeftVertices = function (visitor) {
+                var RelativeTreeVertex = require("triple_brain.relative_tree_vertex");
                 var children = self.getLeftChildren();
                 $.each(children, function () {
-                    var vertex = api.withHtml(this);
+                    var vertex = RelativeTreeVertex.withHtml(this);
                     visitor(vertex);
                 });
             };

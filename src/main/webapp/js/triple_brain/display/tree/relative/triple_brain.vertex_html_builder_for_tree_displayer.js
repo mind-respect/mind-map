@@ -28,8 +28,8 @@ define([
     "jquery.center-on-screen"
 ], function (require, $, EventBus, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, Point, Segment, GraphDisplayer, RelativeTreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, Image, SelectionHandler, KeyboardUtils, RelativeTreeVertexMenuHandler) {
         var api = {};
-        api.withServerJson = function (serverVertex) {
-            return new VertexCreator(serverVertex);
+        api.withServerFacade = function (serverFacade) {
+            return new VertexCreator(serverFacade);
         };
         api.addDuplicateVerticesButtonIfApplicable = function (vertex) {
             var otherInstances = vertex.getOtherInstances();
@@ -87,15 +87,15 @@ define([
             }
         }
 
-        function VertexCreator(serverFormat) {
+        function VertexCreator(serverFacade) {
             var VertexService = require("triple_brain.vertex");
             var Suggestion = require("triple_brain.suggestion");
             var html = $(
-                MindMapTemplate['relative_vertex'].merge(serverFormat)
+                MindMapTemplate['relative_vertex'].merge()
             );
             html.data(
                 "uri",
-                serverFormat.uri
+                serverFacade.getUri()
             ).on(
                 "dblclick",
                 function (event) {
@@ -131,28 +131,28 @@ define([
             this.create = function () {
                 vertex = vertexFacade();
                 vertex.setTotalNumberOfEdges(
-                    serverFormat.number_of_connected_edges
+                    serverFacade.getNumberOfConnectedEdges()
                 );
                 buildLabelHtml(
                     buildInsideBubbleContainer()
                 );
                 html.data(
                     "isPublic",
-                    serverFormat.is_public
+                    serverFacade.isPublic()
                 );
-                vertex.setIncludedVertices(serverFormat.included_vertices);
-                vertex.setIncludedEdges(serverFormat.included_edges);
+                vertex.setIncludedVertices(serverFacade.getIncludedVertices());
+                vertex.setIncludedEdges(serverFacade.getIncludedEdges());
                 if (vertex.hasIncludedGraphElements()) {
                     showItHasIncludedGraphElements();
                 }
                 vertex.setNote(
-                    serverFormat.comment
+                    serverFacade.getComment()
                 );
                 createMenu();
                 addNoteButtonNextToLabel();
                 vertex.addSuggestions(
                     Suggestion.fromJsonArrayOfServer(
-                        serverFormat.suggestions
+                        serverFacade.getSuggestions()
                     )
                 );
                 vertex.hideMenu();
@@ -162,11 +162,11 @@ define([
                 );
 
                 VertexHtmlCommon.setUpIdentifications(
-                    serverFormat,
+                    serverFacade,
                     vertex
                 );
                 var images = [];
-                $.each(serverFormat.images, function () {
+                $.each(serverFacade.getImages(), function () {
                     var imageServerFormat = this;
                     images.push(
                         Image.fromServerJson(
@@ -177,7 +177,7 @@ define([
                 vertex.addImages(images);
                 vertex.makeItLowProfile();
                 vertex.setOriginalServerObject(
-                    serverFormat
+                    serverFacade
                 );
                 vertex.isPublic() ?
                     vertex.makePublic() :
@@ -206,9 +206,9 @@ define([
                 var label = $(
                     "<input type='text' class='label'>"
                 ).val(
-                    serverFormat.label.trim() === "" ?
+                    serverFacade.getLabel().trim() === "" ?
                         RelativeTreeVertex.getWhenEmptyLabel() :
-                        serverFormat.label
+                        serverFacade.getLabel()
                 ).appendTo(labelContainer);
                 if (vertex.hasDefaultText()) {
                     vertex.applyStyleOfDefaultText();

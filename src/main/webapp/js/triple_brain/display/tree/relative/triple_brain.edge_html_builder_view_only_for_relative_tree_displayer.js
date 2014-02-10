@@ -10,7 +10,7 @@ define([
         return new EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade);
     };
     return api;
-    function EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade){
+    function EdgeCreator(edgeServerFormat, parentVertexHtmlFacade, childVertexHtmlFacade){
         var html;
         this.create = function(){
             html = $(
@@ -20,7 +20,7 @@ define([
             ).css("display", "inline").append(
                 buildInnerHtml()
             );
-            var isInverse = edgeServer.source_vertex_id !== parentVertexHtmlFacade.getUri();
+            var isInverse = edgeServerFormat.getSourceVertex().getUri() !== parentVertexHtmlFacade.getUri();
             if (isInverse) {
                 html.addClass("inverse");
             }
@@ -45,7 +45,7 @@ define([
             drawArrowLine();
             var edge = edgeFacade();
             edge.setUri(
-                edgeServer.uri
+                edgeServerFormat.getUri()
             );
             function drawArrowLine() {
                 var edge = edgeFacade();
@@ -58,7 +58,7 @@ define([
 //                edge.arrowLine().drawInWithDefaultStyle();
             }
             function buildInnerHtml(){
-                var label = edgeServer.label;
+                var label = edgeServerFormat.getLabel();
                 return $(
                     "<span>"
                 ).addClass(

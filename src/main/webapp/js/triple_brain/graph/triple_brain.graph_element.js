@@ -19,7 +19,7 @@ define([
             }).success(function () {
                     switch (identification.type) {
                         case "type" :
-                            graphElement.addType(identification)
+                            graphElement.addType(identification);
                             break;
                         case "same_as"  :
                             graphElement.addSameAs(identification);
@@ -27,7 +27,7 @@ define([
                         default :
                             graphElement.addGenericIdentification(
                                 identification
-                            )
+                            );
                     }
                     if (successCallback != undefined) {
                         successCallback.call(

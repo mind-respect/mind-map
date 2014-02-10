@@ -4,7 +4,7 @@
 define([
 ], function(){
     var api = {};
-    api.extendedApiForChildUsingParent = function(childApi, parentApi){
+    api.makeChildInheritParent = function(childApi, parentApi){
         return $.extend(
             {},
             parentApi,

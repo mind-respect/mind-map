@@ -8,10 +8,10 @@ define([
     "triple_brain.server_subscriber",
     "triple_brain.graph_displayer",
     "triple_brain.id_uri",
-    "triple_brain.image",
+    "triple_brain.friendly_resource_server_facade",
     "jquery.json.min"
 ],
-    function (require, $, ServerSubscriber, GraphDisplayer, IdUriUtils, Image) {
+    function (require, $, ServerSubscriber, GraphDisplayer, IdUriUtils, FriendlyResourceServerFacade) {
         var api = {};
         api.withUriAndLabel = function (uri, label) {
             return new ExternalResource(
@@ -40,15 +40,15 @@ define([
                 []
             )
         };
-        api.fromServerJson = function (serverJson) {
+        api.fromServerFormatFacade = function (serverJson) {
             return new ExternalResource(
-                serverJson.uri,
-                serverJson.label,
-                serverJson.comment,
-                Image.arrayFromServerJson(serverJson.images)
-            )
+                serverJson.getUri(),
+                serverJson.getLabel(),
+                serverJson.getComment(),
+                serverJson.getImages()
+            );
         };
-        api.fromSearchResult = function(searchResult){
+        api.fromSearchResult = function (searchResult) {
             return api.withUriLabelAndDescription(
                 searchResult.uri,
                 searchResult.label,
@@ -77,12 +77,14 @@ define([
                     listenerReadyCallBack
                 );
             };
-            this.isAGraphElement = function(){
+            this.isAGraphElement = function () {
                 return uri.indexOf("/service") === 0;
             };
             function updateWithServerJson(externalResourceAsJson) {
-                var externalResource = api.fromServerJson(
-                    externalResourceAsJson
+                var externalResource = api.fromServerFormatFacade(
+                    FriendlyResourceServerFacade.fromServerFormat(
+                        externalResourceAsJson
+                    )
                 );
                 uri = externalResource.uri();
                 label = externalResource.label();
@@ -105,10 +107,10 @@ define([
             };
             this.jsonFormat = function () {
                 return {
-                    uri:thisExternalResource.uri(),
-                    label:thisExternalResource.label(),
-                    comment:thisExternalResource.description(),
-                    images:thisExternalResource.images
+                    uri: thisExternalResource.uri(),
+                    label: thisExternalResource.label(),
+                    comment: thisExternalResource.description(),
+                    images: thisExternalResource.images
                 }
             };
             this.setType = function (type) {
