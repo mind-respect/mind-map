@@ -25,7 +25,9 @@ define([
             return serverFormat.uri;
         };
         function buildImages(){
-            return Image.arrayFromServerJson(
+            return undefined === serverFormat ?
+                [] :
+            Image.arrayFromServerJson(
                 serverFormat.images
             );
         }
