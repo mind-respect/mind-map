@@ -165,16 +165,9 @@ define([
                     serverFacade,
                     vertex
                 );
-                var images = [];
-                $.each(serverFacade.getImages(), function () {
-                    var imageServerFormat = this;
-                    images.push(
-                        Image.fromServerJson(
-                            imageServerFormat
-                        )
-                    );
-                });
-                vertex.addImages(images);
+                vertex.addImages(
+                    serverFacade.getImages()
+                );
                 vertex.makeItLowProfile();
                 vertex.setOriginalServerObject(
                     serverFacade

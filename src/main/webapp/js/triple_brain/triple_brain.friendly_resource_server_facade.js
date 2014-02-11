@@ -11,6 +11,7 @@ define([
         );
     };
     api.Object = function (serverFormat){
+        var _images = buildImages();
         this.getLabel = function(){
             return serverFormat.label;
         };
@@ -18,13 +19,16 @@ define([
             return serverFormat.comment;
         };
         this.getImages = function(){
-            return Image.arrayFromServerJson(
-                serverFormat.images
-            );
+            return _images;
         };
         this.getUri = function(){
             return serverFormat.uri;
         };
+        function buildImages(){
+            return Image.arrayFromServerJson(
+                serverFormat.images
+            );
+        }
     };
     return api;
 });

@@ -19,7 +19,7 @@ define([
                 images.push(
                     api.fromServerJson(imageAsJson)
                 );
-            })
+            });
             return images;
         };
         api.fromInternalImageBaseUri = function(imageBaseUri){
