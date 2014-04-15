@@ -10,8 +10,9 @@ define([
     "triple_brain.edge",
     "triple_brain.ui.edge",
     "triple_brain.graph_displayer",
-    "triple_brain.graph_element_menu"
-], function($, MindMapTemplate, GraphUi, UserMapAutocompleteProvider, EdgeService, Edge, GraphDisplayer, GraphElementMenu){
+    "triple_brain.graph_element_menu",
+    "triple_brain.edge_server_facade"
+], function($, MindMapTemplate, GraphUi, UserMapAutocompleteProvider, EdgeService, Edge, GraphDisplayer, GraphElementMenu, EdgeServerFacade){
     var api = {};
     api.ofVertex = function(vertex){
         return new LinkToFarVertexMenu(
@@ -66,7 +67,7 @@ define([
                                 farVertex,
                                 function(edgeServerFormatted){
                                     var edge = GraphDisplayer.addEdge(
-                                        edgeServerFormatted,
+                                        EdgeServerFacade.fromServerFormat(edgeServerFormatted),
                                         parentVertex,
                                         farVertex
                                     );

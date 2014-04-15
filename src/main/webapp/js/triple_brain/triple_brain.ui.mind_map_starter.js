@@ -21,6 +21,7 @@ define(
         "triple_brain.graph_element_main_menu",
         "triple_brain.vertex_server_facade",
         "triple_brain.bubble_distance_calculator",
+        "triple_brain.freebase",
         "jquery.triple_brain.drag_scroll"
     ],
     function ($, UserService, EventBus, LoginHandler, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, Menu, GraphUi, LanguageManager, VertexService, TopCenterMenu, LeftPanel, SelectionHandler, KeyboardUtils, GraphElementMainMenu, VertexServeFacade) {

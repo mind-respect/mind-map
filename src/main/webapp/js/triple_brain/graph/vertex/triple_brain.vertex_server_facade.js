@@ -5,13 +5,20 @@ define([
     "require",
     "triple_brain.graph_element_server_facade",
     "triple_brain.edge_server_facade",
-    "triple_brain.suggestion_server_facade"
-],function(require, GraphElementServerFacade, EdgeServerFacade, SuggestionServerFacade){
+    "triple_brain.suggestion"
+],function(require, GraphElementServerFacade, EdgeServerFacade, Suggestion){
     var api = {};
     api.fromServerFormat = function(serverFormat){
         return new Object(
             serverFormat
         );
+    };
+    api.buildObjectWithUri = function(uri){
+        return {
+            vertex: {
+                graphElement: GraphElementServerFacade.buildObjectWithUri(uri)
+            }
+        };
     };
     return api;
     function Object(serverFormat){
@@ -19,7 +26,7 @@ define([
         var _includedEdges = buildIncludedEdges();
         var _suggestions = buildSuggestions();
         GraphElementServerFacade.Object.apply(
-            this, [serverFormat.graphElement]
+            this, [serverFormat.vertex.graphElement]
         );
         this.getIncludedVertices = function(){
             return _includedVertices;
@@ -31,14 +38,17 @@ define([
             return _suggestions;
         };
         this.getNumberOfConnectedEdges = function(){
-            return serverFormat.numberOfConnectedEdges;
+            return serverFormat.vertex.numberOfConnectedEdges;
         };
         this.isPublic = function(){
-            return serverFormat.isPublic;
+            return serverFormat.vertex.isPublic;
         };
         function buildIncludedEdges(){
             var includedEdges = [];
-            $.each(serverFormat.includedEdges, function(){
+            if(serverFormat.vertex.includedEdges === undefined){
+                return includedEdges;
+            }
+            $.each(serverFormat.vertex.includedEdges, function(){
                 includedEdges.push(
                     getEdgeServerFacade().fromServerFormat(
                         this
@@ -49,7 +59,10 @@ define([
         }
         function buildIncludedVertices(){
             var includedVertices = {};
-            $.each(serverFormat.includedVertices, function(key, value){
+            if(serverFormat.vertex.includedVertices === undefined){
+                return includedVertices;
+            }
+            $.each(serverFormat.vertex.includedVertices, function(key, value){
                 includedVertices[key] = api.fromServerFormat(
                     value
                 );
@@ -58,14 +71,12 @@ define([
         }
         function buildSuggestions(){
             var suggestions = [];
-            $.each(serverFormat.suggestions, function(){
-                suggestions.push(
-                    SuggestionServerFacade.fromServerFormat(
-                        this
-                    )
-                );
-            });
-            return suggestions;
+            if(serverFormat.vertex.suggestions === undefined){
+                return suggestions;
+            }
+            return Suggestion.fromJsonArrayOfServer(
+                serverFormat.vertex.suggestions
+            );
         }
     }
     function getEdgeServerFacade(){

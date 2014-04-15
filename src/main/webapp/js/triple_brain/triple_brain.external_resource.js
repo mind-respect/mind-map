@@ -9,12 +9,19 @@ define([
     "triple_brain.graph_displayer",
     "triple_brain.id_uri",
     "triple_brain.friendly_resource_server_facade",
+    "triple_brain.freebase_uri",
     "jquery.json.min"
 ],
-    function (require, $, ServerSubscriber, GraphDisplayer, IdUriUtils, FriendlyResourceServerFacade) {
+    function (require, $, ServerSubscriber, GraphDisplayer, IdUriUtils, FriendlyResourceServerFacade, FreebaseUri) {
         var api = {};
+        api.withUri = function (uri) {
+            return api.withUriAndLabel(
+                uri,
+                ""
+            );
+        };
         api.withUriAndLabel = function (uri, label) {
-            return new ExternalResource(
+            return api.withUriLabelAndDescription(
                 uri,
                 label,
                 "",
@@ -30,9 +37,8 @@ define([
             );
         };
         api.fromFreebaseSuggestion = function (freebaseSuggestion) {
-            var Freebase = require("triple_brain.freebase");
             return new ExternalResource(
-                Freebase.freebaseIdToURI(
+                FreebaseUri.freebaseIdToURI(
                     freebaseSuggestion.id
                 ),
                 freebaseSuggestion.name,

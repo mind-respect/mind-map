@@ -3,33 +3,39 @@
  */
 define([
     "triple_brain.image"
-],function(Image){
+], function (Image) {
     var api = {};
-    api.fromServerFormat = function(serverFormat){
+    api.fromServerFormat = function (serverFormat) {
         return new api.Object(
             serverFormat
         );
     };
-    api.Object = function (serverFormat){
+    api.buildObjectWithUri = function (uri) {
+        return {
+            uri : uri,
+            label: ""
+        };
+    };
+    api.Object = function (serverFormat) {
         var _images = buildImages();
-        this.getLabel = function(){
+        this.getLabel = function () {
             return serverFormat.label;
         };
-        this.getComment = function(){
+        this.getComment = function () {
             return serverFormat.comment;
         };
-        this.getImages = function(){
+        this.getImages = function () {
             return _images;
         };
-        this.getUri = function(){
+        this.getUri = function () {
             return serverFormat.uri;
         };
-        function buildImages(){
+        function buildImages() {
             return undefined === serverFormat.images ?
                 [] :
-            Image.arrayFromServerJson(
-                serverFormat.images
-            );
+                Image.arrayFromServerJson(
+                    serverFormat.images
+                );
         }
     };
     return api;

@@ -2,11 +2,10 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "require",
     "jquery",
-    "triple_brain.freebase",
+    "triple_brain.freebase_uri",
     "triple_brain.user"
-], function (require, $, Freebase, User) {
+], function ($, FreebaseUri, User) {
     var api = {};
     api.forFetchingTypes = function () {
         return new FreebaseAutocompleteProvider({
@@ -31,10 +30,10 @@ define([
         this.getFetchMethod = function (searchTerm) {
             var options = $.extend({
                 query:searchTerm,
-                key:freebaseInstance().key,
+                key:FreebaseUri.key,
                 lang:getUserLocalesFreebaseFormatted()
             }, freebaseOptions);
-            var url = freebaseInstance().SEARCH_URL + "?" + $.param(options);
+            var url = FreebaseUri.SEARCH_URL + "?" + $.param(options);
             return $.ajax({
                 type:'GET',
                 dataType:"jsonp",
@@ -49,7 +48,7 @@ define([
                     label:searchResult.name,
                     value:searchResult.name,
                     source:"Freebase.com",
-                    uri:freebaseInstance().freebaseIdToURI(searchResult.mid),
+                    uri:FreebaseUri.freebaseIdToURI(searchResult.mid),
                     provider:self
                 };
                 var notable = searchResult.notable;
@@ -61,16 +60,16 @@ define([
             });
         };
         this.getMoreInfoForSearchResult = function (searchResult, callback) {
-            var freebaseId = freebaseInstance().idInFreebaseURI(
+            var freebaseId = FreebaseUri.idInFreebaseURI(
                 searchResult.uri
             );
             var options = {
                 filter:"(all mid:" + freebaseId + ")",
                 output:"(notable:/client/summary description type)",
-                key:freebaseInstance().key,
+                key:FreebaseUri.key,
                 lang:getUserLocalesFreebaseFormatted()
             };
-            var url = freebaseInstance().SEARCH_URL + "?" + $.param(options);
+            var url = FreebaseUri.SEARCH_URL + "?" + $.param(options);
             $.ajax({
                 type:'GET',
                 dataType:"jsonp",
@@ -91,16 +90,13 @@ define([
                             title:result.name,
                             source:descriptionKey,
                             text:descriptionText,
-                            imageUrl:freebaseInstance().thumbnailImageUrlFromFreebaseId(
+                            imageUrl:FreebaseUri.thumbnailImageUrlFromFreebaseId(
                                 result.mid
                             )
                         }
                     );
                 });
         };
-        function freebaseInstance(){
-            return require("triple_brain.freebase");
-        }
         function getUserLocalesFreebaseFormatted(){
             var formattedLocales = "";
             var preferredLocales = User.authenticatedUserInCache().preferred_locales;

@@ -3,30 +3,30 @@
  */
 
 define([
-    "require",
-    "jquery",
-    "triple_brain.event_bus",
-    "triple_brain.vertex",
-    "triple_brain.ui.edge",
-    "triple_brain.edge",
-    "triple_brain.suggestion",
-    "triple_brain.mind-map_template",
-    "triple_brain.external_resource",
-    "triple_brain.point",
-    "triple_brain.segment",
-    "triple_brain.graph_displayer",
-    "triple_brain.relative_tree_vertex",
-    "triple_brain.ui.vertex_and_edge_common",
-    "triple_brain.ui.triple",
-    "triple_brain.vertex_html_builder_common",
-    "triple_brain.image",
-    "triple_brain.selection_handler",
-    "triple_brain.keyboard_utils",
-    "triple_brain.relative_tree_vertex_menu_handler",
-    "jquery-ui",
-    "jquery.is-fully-on-screen",
-    "jquery.center-on-screen"
-], function (require, $, EventBus, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, Point, Segment, GraphDisplayer, RelativeTreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, Image, SelectionHandler, KeyboardUtils, RelativeTreeVertexMenuHandler) {
+        "require",
+        "jquery",
+        "triple_brain.event_bus",
+        "triple_brain.vertex",
+        "triple_brain.ui.edge",
+        "triple_brain.edge",
+        "triple_brain.suggestion",
+        "triple_brain.mind-map_template",
+        "triple_brain.external_resource",
+        "triple_brain.point",
+        "triple_brain.segment",
+        "triple_brain.graph_displayer",
+        "triple_brain.relative_tree_vertex",
+        "triple_brain.ui.vertex_and_edge_common",
+        "triple_brain.ui.triple",
+        "triple_brain.vertex_html_builder_common",
+        "triple_brain.image",
+        "triple_brain.selection_handler",
+        "triple_brain.keyboard_utils",
+        "triple_brain.relative_tree_vertex_menu_handler",
+        "jquery-ui",
+        "jquery.is-fully-on-screen",
+        "jquery.center-on-screen"
+    ], function (require, $, EventBus, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, Point, Segment, GraphDisplayer, RelativeTreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, Image, SelectionHandler, KeyboardUtils, RelativeTreeVertexMenuHandler) {
         var api = {};
         api.withServerFacade = function (serverFacade) {
             return new VertexCreator(serverFacade);
@@ -54,10 +54,10 @@ define([
                 return $(
                     "<button class='duplicate'>"
                 ).button({
-                        icons:{
-                            primary:"ui-icon ui-icon-link"
+                        icons: {
+                            primary: "ui-icon ui-icon-link"
                         },
-                        text:false
+                        text: false
                     }).on(
                     "click",
                     function (event) {
@@ -151,9 +151,7 @@ define([
                 createMenu();
                 addNoteButtonNextToLabel();
                 vertex.addSuggestions(
-                    Suggestion.fromJsonArrayOfServer(
-                        serverFacade.getSuggestions()
-                    )
+                    serverFacade.getSuggestions()
                 );
                 vertex.hideMenu();
                 vertex.getInBubbleContainer().hover(
@@ -199,7 +197,7 @@ define([
                 var label = $(
                     "<input type='text' class='label'>"
                 ).val(
-                    serverFacade.getLabel().trim() === "" ?
+                        serverFacade.getLabel().trim() === "" ?
                         RelativeTreeVertex.getWhenEmptyLabel() :
                         serverFacade.getLabel()
                 ).appendTo(labelContainer);
@@ -215,70 +213,70 @@ define([
                         $(vertex.label()).keyup();
                     }
                 }).blur(function () {
-                        var vertex = vertexOfSubHtmlComponent(this);
-                        if (!vertex.isMouseOver()) {
-                            vertex.unhighlight();
-                        }
-                        if ("" === $(this).val()) {
-                            $(this).val(
-                                RelativeTreeVertex.getWhenEmptyLabel()
-                            );
-                            vertex.applyStyleOfDefaultText();
-                            $(vertex.label()).keyup();
-                        } else {
-                            vertex.removeStyleOfDefaultText();
-                        }
-                    }).change(function () {
-                        var vertex = vertexOfSubHtmlComponent(this);
-                        $(vertex.label()).keyup();
-                        VertexService.updateLabel(
-                            vertexOfSubHtmlComponent(this),
-                            $(this).val(),
-                            function (vertex) {
-                                var otherInstances = RelativeTreeVertex.ofVertex(
-                                    vertex
-                                ).getOtherInstances();
-                                $.each(otherInstances, function () {
-                                    var vertex = this;
-                                    VertexAndEdgeCommon.highlightLabel(
-                                        vertex.getId()
-                                    );
-                                });
-                            }
+                    var vertex = vertexOfSubHtmlComponent(this);
+                    if (!vertex.isMouseOver()) {
+                        vertex.unhighlight();
+                    }
+                    if ("" === $(this).val()) {
+                        $(this).val(
+                            RelativeTreeVertex.getWhenEmptyLabel()
                         );
-                        var relativeVertex = RelativeTreeVertex.ofVertex(vertex);
+                        vertex.applyStyleOfDefaultText();
+                        $(vertex.label()).keyup();
+                    } else {
+                        vertex.removeStyleOfDefaultText();
+                    }
+                }).change(function () {
+                    var vertex = vertexOfSubHtmlComponent(this);
+                    $(vertex.label()).keyup();
+                    VertexService.updateLabel(
+                        vertexOfSubHtmlComponent(this),
+                        $(this).val(),
+                        function (vertex) {
+                            var otherInstances = RelativeTreeVertex.ofVertex(
+                                vertex
+                            ).getOtherInstances();
+                            $.each(otherInstances, function () {
+                                var vertex = this;
+                                VertexAndEdgeCommon.highlightLabel(
+                                    vertex.getId()
+                                );
+                            });
+                        }
+                    );
+                    var relativeVertex = RelativeTreeVertex.ofVertex(vertex);
+                    relativeVertex.adjustPositionIfApplicable();
+                    relativeVertex.adjustAllChildrenPositionIfApplicable();
+                    var otherInstances = RelativeTreeVertex.withHtml(
+                        html
+                    ).getOtherInstances();
+                    $.each(otherInstances, function () {
+                        var relativeVertex = RelativeTreeVertex.ofVertex(
+                            this
+                        );
                         relativeVertex.adjustPositionIfApplicable();
                         relativeVertex.adjustAllChildrenPositionIfApplicable();
+                    });
+                    EdgeUi.redrawAllEdges();
+                }).keyup(function () {
+                    var vertex = vertexOfSubHtmlComponent(this);
+                    var html = vertex.getHtml();
+                    updateLabelsOfVerticesWithSameUri();
+                    vertex.readjustLabelWidth();
+                    function updateLabelsOfVerticesWithSameUri() {
+                        var text = vertex.text();
                         var otherInstances = RelativeTreeVertex.withHtml(
                             html
                         ).getOtherInstances();
                         $.each(otherInstances, function () {
-                            var relativeVertex = RelativeTreeVertex.ofVertex(
-                                this
+                            var sameVertex = this;
+                            sameVertex.setText(
+                                text
                             );
-                            relativeVertex.adjustPositionIfApplicable();
-                            relativeVertex.adjustAllChildrenPositionIfApplicable();
+                            sameVertex.readjustLabelWidth();
                         });
-                        EdgeUi.redrawAllEdges();
-                    }).keyup(function () {
-                        var vertex = vertexOfSubHtmlComponent(this);
-                        var html = vertex.getHtml();
-                        updateLabelsOfVerticesWithSameUri();
-                        vertex.readjustLabelWidth();
-                        function updateLabelsOfVerticesWithSameUri() {
-                            var text = vertex.text();
-                            var otherInstances = RelativeTreeVertex.withHtml(
-                                html
-                            ).getOtherInstances();
-                            $.each(otherInstances, function () {
-                                var sameVertex = this;
-                                sameVertex.setText(
-                                    text
-                                );
-                                sameVertex.readjustLabelWidth();
-                            });
-                        }
-                    });
+                    }
+                });
                 VertexHtmlCommon.applyAutoCompleteIdentificationToLabelInput(
                     label
                 );

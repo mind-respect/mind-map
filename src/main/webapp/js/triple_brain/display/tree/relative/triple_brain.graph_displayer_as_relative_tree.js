@@ -89,26 +89,37 @@ define([
                     var relationWithGrandParentUri = parentVertex.getRelationWithParent().getUri();
                     var grandParentUri = parentVertex.getParentVertex().getUri();
                     var nbRelationsWithGrandParent = 0;
-                    serverGraph.edges = serverGraph.edges.filter(function(edge){
-                        var edgeFacade = EdgeServerFacade.fromServerFormat(
-                            edge
-                        );
-                        var sourceAndDestinationId = [
-                            edgeFacade.getSourceVertex().getUri(),
-                            edgeFacade.getDestinationVertex().getUri()
-                        ];
-                        if($.inArray(
-                                grandParentUri,
-                                sourceAndDestinationId
-                            ) !== -1){
-                            nbRelationsWithGrandParent++;
-                        }
-                        return edgeFacade.getUri() !== relationWithGrandParentUri;
-                    });
+                    serverGraph.edges = getFilteredEdges();
                     if(1 === nbRelationsWithGrandParent){
                         delete serverGraph.vertices[grandParentUri];
                     }
                     return nbRelationsWithGrandParent - 1;
+
+                    function getFilteredEdges(){
+                        var filteredEdges = {};
+                        $.each(serverGraph.edges, function(){
+                            var edge = this;
+                            var edgeFacade = EdgeServerFacade.fromServerFormat(
+                                edge
+                            );
+                            var sourceAndDestinationId = [
+                                edgeFacade.getSourceVertex().getUri(),
+                                edgeFacade.getDestinationVertex().getUri()
+                            ];
+                            if($.inArray(
+                                grandParentUri,
+                                sourceAndDestinationId
+                            ) !== -1){
+                                nbRelationsWithGrandParent++;
+                            }
+                            if(edgeFacade.getUri() !== relationWithGrandParentUri){
+                                filteredEdges[
+                                    edgeFacade.getUri()
+                                    ] = edge
+                            }
+                        });
+                        return filteredEdges;
+                    }
                 }
             }
         );

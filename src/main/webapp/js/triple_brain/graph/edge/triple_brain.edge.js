@@ -4,9 +4,10 @@ define([
     "triple_brain.event_bus",
     "triple_brain.id_uri",
     "triple_brain.user",
-    "triple_brain.graph_element"
+    "triple_brain.graph_element",
+    "triple_brain.edge_server_facade"
 ],
-    function (require, $, EventBus, IdUriUtils, UserService, GraphElement) {
+    function (require, $, EventBus, IdUriUtils, UserService, GraphElement, EdgeServerFacade) {
         var api = {};
         api.add = function (sourceVertex, destinationVertex, callback) {
             add(
@@ -129,14 +130,13 @@ define([
                     '&destinationVertexId=' + destinationVertexUriFormatted
             }).success(function () {
                     var responseUri = response.getResponseHeader("Location");
-                    var edgeServerFormatted = {};
-                    edgeServerFormatted.uri = responseUri;
-                    edgeServerFormatted.source_vertex_id = sourceVertexUri;
-                    edgeServerFormatted.destination_vertex_id = destinationVertexUri;
-                    edgeServerFormatted.label = Edge.getWhenEmptyLabel();
-                    edgeServerFormatted.types = [];
-                    edgeServerFormatted.same_as = [];
-                    callback(edgeServerFormatted);
+                    callback(
+                        EdgeServerFacade.buildObjectWithUriOfSelfSourceAndDestinationVertex(
+                            responseUri,
+                            sourceVertexUri,
+                            destinationVertexUri
+                        )
+                    );
                 }
             );
         }

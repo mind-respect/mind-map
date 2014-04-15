@@ -5,7 +5,7 @@
 define([
     "require",
     "jquery",
-    "triple_brain.freebase",
+    "triple_brain.freebase_uri",
     "triple_brain.mind-map_template",
     "triple_brain.ui.graph",
     "triple_brain.point",
@@ -16,7 +16,7 @@ define([
     "triple_brain.graph_displayer",
     "triple_brain.graph_element_menu"
 ],
-    function (require, $, Freebase, MindMapTemplate, GraphUi, Point, ExternalResource, VertexService, EdgeService, UiUtils, GraphDisplayer, GraphElementMenu) {
+    function (require, $, FreebaseUri, MindMapTemplate, GraphUi, Point, ExternalResource, VertexService, EdgeService, UiUtils, GraphDisplayer, GraphElementMenu) {
         var api = {
             ofVertex:function (vertex) {
                 return new SuggestionMenu(vertex);
@@ -26,7 +26,6 @@ define([
         function SuggestionMenu(vertex) {
             var suggestionMenu = this;
             var html;
-            var peripheralMenu;
             this.create = function () {
                 html = $(
                     MindMapTemplate[
@@ -48,9 +47,6 @@ define([
                 return suggestionMenu;
             };
 
-            this.reEvaluatePosition = function () {
-                peripheralMenu.position();
-            };
 
             function addTitle() {
                 $(html).append(
@@ -76,7 +72,7 @@ define([
                     }));
                     htmlSuggestion.data(
                         "typeId",
-                        Freebase.idInFreebaseURI(suggestion.domainUri())
+                        FreebaseUri.idInFreebaseURI(suggestion.domainUri())
                     );
                     suggestionsList.append(htmlSuggestion);
                     if(GraphDisplayer.allowsMovingVertices()){
@@ -122,7 +118,6 @@ define([
                 });
 
                 function addHtmlSuggestionAsVertexAndRelationInMap(suggestionAsHtml){
-                    Point = require("triple_brain.point");
                     var offset = suggestionAsHtml.offset();
                     var newVertexPosition = Point.fromCoordinates(
                         offset.left + suggestionAsHtml.width() / 2,
@@ -143,7 +138,7 @@ define([
                                 suggestionLabel
                             );
                             triple.edge().setText(suggestionLabel);
-                            var typeUri = Freebase.freebaseIdToURI(
+                            var typeUri = FreebaseUri.freebaseIdToURI(
                                 typeId
                             );
                             var type = ExternalResource.withUriAndLabel(

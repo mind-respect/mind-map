@@ -10,6 +10,13 @@ define([
             serverFormat
         );
     };
+    api.buildObjectWithUri = function(uri){
+        return {
+            friendlyResource : FriendlyResourceServerFacade.buildObjectWithUri(
+                uri
+            )
+        };
+    };
     api.Object = function (serverFormat) {
         var _types = buildTypes();
         var _sameAs = buildSameAs();
@@ -71,7 +78,7 @@ define([
 
         function buildGenericIdentifications() {
             var genericIdentifications = [];
-            if (undefined === genericIdentifications) {
+            if (undefined === serverFormat.genericIdentifications) {
                 return genericIdentifications;
             }
             $.each(serverFormat.genericIdentifications, function () {

@@ -1,6 +1,7 @@
 define([
     "require",
     "jquery",
+    "triple_brain.freebase_uri",
     "triple_brain.event_bus",
     "triple_brain.graph_displayer",
     "triple_brain.vertex",
@@ -8,41 +9,14 @@ define([
     "triple_brain.external_resource",
     "jquery.url"
 ],
-    function (require, $, EventBus, GraphDisplayer, VertexService, Suggestion, ExternalResource) {
+    function (require, $, FreebaseUri, EventBus, GraphDisplayer, VertexService, Suggestion, ExternalResource) {
         var api = {};
-        api.key = "AIzaSyBHOqdqbswxnNmNb4k59ARSx-RWokLZhPA";
-        api.BASE_URL = "https://www.googleapis.com/freebase/v1";
-        api.SEARCH_URL = api.BASE_URL + "/search";
-        api.IMAGE_URL = api.BASE_URL + "/image";
-        api.thumbnailImageUrlFromFreebaseId = function (freebaseId) {
-            var options = {
-                key:api.key,
-                maxwidth:55,
-                errorid:"/freebase/no_image_png"
-            };
-            return api.IMAGE_URL + freebaseId + "?" + $.param(options);
-        };
-        api.freebaseIdToURI = function (freebaseId) {
-            return "http://rdf.freebase.com/rdf" + freebaseId;
-        };
-        api.idInFreebaseURI = function (freebaseURI) {
-            return freebaseURI.replace("http://rdf.freebase.com/rdf", "");
-        };
-        api.isOfTypeTypeFromTypeId = function (typeId) {
-            return typeId == "/type/type";
-        };
-        api.isFreebaseUri = function (uri) {
-            return $.url(uri).attr()
-                .host
-                .toLowerCase()
-                .indexOf("freebase.com") != -1;
-        };
         api.handleIdentificationToServer = function (vertex, freebaseSuggestion, successCallBack) {
             var externalResource = ExternalResource.fromFreebaseSuggestion(
                 freebaseSuggestion
             );
             var typeId = getTypeId();
-            if (api.isOfTypeTypeFromTypeId(typeId)) {
+            if (FreebaseUri.isOfTypeTypeFromTypeId(typeId)) {
                 vertexService().addType(
                     vertex,
                     externalResource,
@@ -71,7 +45,10 @@ define([
                 properties:[
                     {   id:null,
                         name:null,
-                        expected_type:null
+                        expected_type: {
+                            id: null,
+                            name: null
+                        }
                     }
                 ]
             };
@@ -92,7 +69,7 @@ define([
                         suggestions.push(
                             Suggestion.fromFreebaseSuggestionAndTypeUri(
                                 freebaseProperty,
-                                api.freebaseIdToURI(
+                                FreebaseUri.freebaseIdToURI(
                                     result.result.id
                                 )
                             )
@@ -114,10 +91,10 @@ define([
                 '/event/ui/graph/vertex/generic_identification/added',
             function (event, vertex, identification) {
                 var identificationUri = identification.uri();
-                if (!api.isFreebaseUri(identificationUri)) {
+                if (!FreebaseUri.isFreebaseUri(identificationUri)) {
                     return;
                 }
-                var identificationId = api.idInFreebaseURI(identificationUri);
+                var identificationId = FreebaseUri.idInFreebaseURI(identificationUri);
                 api.listPropertiesOfFreebaseTypeId(
                     vertex,
                     identificationId
@@ -163,8 +140,8 @@ define([
             var filterValue = "(all ";
             $.each(vertexTypes, function () {
                 var identification = this;
-                if (api.isFreebaseUri(identification.uri())) {
-                    filterValue += "type:" + api.idInFreebaseURI(identification.uri());
+                if (FreebaseUri.isFreebaseUri(identification.uri())) {
+                    filterValue += "type:" + FreebaseUri.idInFreebaseURI(identification.uri());
                 }
             });
             filterValue += ")";
@@ -195,12 +172,10 @@ define([
             });
         }
 
-        ;
-
         EventBus.subscribe(
             '/event/ui/graph/vertex/type/removed',
             function (event, vertex, removedType) {
-                if (api.isFreebaseUri(removedType.uri())) {
+                if (FreebaseUri.isFreebaseUri(removedType.uri())) {
                     api.removeSuggestFeatureOnVertex(
                         vertex
                     );
