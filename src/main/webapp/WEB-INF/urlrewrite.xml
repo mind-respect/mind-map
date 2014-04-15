@@ -22,7 +22,7 @@
     <rule>
         <note></note>
         <from>/manoir*</from>
-        <to type="redirect">http://216.14.122.39/manoir</to>
+        <to type="redirect">http://107.170.73.20/manoir</to>
     </rule>
 
     <outbound-rule>
