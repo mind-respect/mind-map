@@ -1,18 +1,18 @@
 define([
-    "jquery",
-    "triple_brain.ui.edge",
-    "triple_brain.ui.vertex_hidden_neighbor_properties_indicator_dashed_segment",
-    "triple_brain.point",
-    "triple_brain.segment",
-    "triple_brain.mind-map_template",
-    "triple_brain.graph_element_menu",
-    "triple_brain.ui.graph",
-    "triple_brain.event_bus",
-    "triple_brain.graph_displayer"
-],
+        "jquery",
+        "triple_brain.ui.edge",
+        "triple_brain.ui.vertex_hidden_neighbor_properties_indicator_dashed_segment",
+        "triple_brain.point",
+        "triple_brain.segment",
+        "triple_brain.mind-map_template",
+        "triple_brain.graph_element_menu",
+        "triple_brain.ui.graph",
+        "triple_brain.event_bus",
+        "triple_brain.graph_displayer"
+    ],
     function ($, Edge, DashedSegment, Point, Segment, MindMapTemplate, GraphElementMenu, GraphUi, EventBus, GraphDisplayer) {
         var api = {
-            withVertex:function (vertex) {
+            withVertex: function (vertex) {
                 return new HiddenNeighborPropertiesIndicator(vertex);
             }
         };
@@ -21,7 +21,7 @@ define([
             '/event/ui/graph/drawing_info/about_to/update',
             function () {
                 EventBus.unsubscribe(
-                    "/event/ui/graph/vertex/width-modified " +
+                        "/event/ui/graph/vertex/width-modified " +
                         "/event/ui/graph/vertex/position-changed",
                     adjustPositionOfVertexHandler
                 );
@@ -54,7 +54,7 @@ define([
                 adjustPositionOfAllVerticesHandler
             );
             EventBus.subscribe(
-                "/event/ui/graph/vertex/width-modified " +
+                    "/event/ui/graph/vertex/width-modified " +
                     "/event/ui/graph/vertex/position-changed",
                 adjustPositionOfVertexHandler
             );
@@ -94,17 +94,19 @@ define([
                     defaultLengthOfHiddenPropertiesContainer;
                 var startPoint = Point.fromCoordinates(
                     vertex.position().x,
-                    vertex.position().y + (vertex.height() / 2)
+                        vertex.position().y + (vertex.height() / 2)
                 );
-                var toTheRightHorizontalMargin = 23;
+                var toTheRightHorizontalMargin = 23 + (vertex.hasImagesMenu() ?
+                    vertex.getImageMenu().width() :
+                    0);
                 var vertexWidth = vertex.getInBubbleContentWidth();
                 if (!isLeftOriented) {
                     startPoint.x += vertexWidth + toTheRightHorizontalMargin;
                 }
                 var distanceBetweenEachDashedSegment =
-                    numberOfHiddenConnectedRelations == 1 ?
-                        0 :
-                        lengthInPixels / (numberOfHiddenConnectedRelations - 1);
+                        numberOfHiddenConnectedRelations == 1 ?
+                    0 :
+                    lengthInPixels / (numberOfHiddenConnectedRelations - 1);
                 var plainSegment = Segment.withStartAndEndPointAtOrigin();
                 plainSegment.startPoint = startPoint;
                 var horizontalDistanceOfDashedSegment = 20;
@@ -137,7 +139,7 @@ define([
                     .css('left', isLeftOriented ? startPoint.x - defaultLengthOfHiddenPropertiesContainer : startPoint.x)
                     .css('top', startPoint.y - (defaultLengthOfHiddenPropertiesContainer / 2))
                     .data("vertex", vertex)
-                    .one("click",handleHiddenPropertiesContainerClick);
+                    .one("click", handleHiddenPropertiesContainerClick);
             };
             this.remove = function () {
                 hiddenNeighborPropertiesContainer.remove();
