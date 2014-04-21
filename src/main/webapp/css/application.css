@@ -11,8 +11,8 @@ button.graph-element-button:hover { background-image: linear-gradient(to bottom,
 
 li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-button-in-list { margin: auto; margin-right: 0.5em; float: right; color: red; font-weight: bold; font-size: 1.3em; }
 
-button .add-button-in-list { color: green; font-weight: bold; font-size: 2em; margin-left: 0.2em; margin-bottom: 0.2em; float: left; }
-button .add-button-in-list:hover { color: #00d100; }
+button.add-button-in-list { color: green; font-weight: bold; font-size: 2em; margin-left: 0.2em; margin-bottom: 0.2em; float: left; }
+button.add-button-in-list:hover { color: #00d100; }
 
 .overlay-container { position: relative; display: inline; }
 
