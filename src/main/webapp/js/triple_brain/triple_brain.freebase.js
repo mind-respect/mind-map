@@ -111,7 +111,7 @@ define([
                             searchResult.label,
                             searchResult.description
                         );
-                        vertexService().addIdentification(
+                        vertexService().addGenericIdentification(
                             vertex,
                             identificationResource
                         );
