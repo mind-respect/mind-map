@@ -45,8 +45,7 @@
         "select": "sélection"
     },
     "left_menu" : {
-        "search" : "Chercher des bulles",
-        "distance" : "Distance de la bulle centrale"
+        "search" : "Chercher des bulles"
     },
     "caption" : {
         "title" : "Légende",

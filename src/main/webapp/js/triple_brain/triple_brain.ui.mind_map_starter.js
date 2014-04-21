@@ -7,7 +7,6 @@ define(
         "triple_brain.mind-map_template",
         "triple_brain.server_subscriber",
         "triple_brain.ui.search",
-        "triple_brain.ui.depth_slider",
         "triple_brain.graph_displayer",
         "triple_brain.graph_displayer_factory",
         "triple_brain.menu",
@@ -24,7 +23,7 @@ define(
         "triple_brain.freebase",
         "jquery.triple_brain.drag_scroll"
     ],
-    function ($, UserService, EventBus, LoginHandler, MindMapTemplate, ServerSubscriber, SearchUi, DepthSlider, GraphDisplayer, GraphDisplayerFactory, Menu, GraphUi, LanguageManager, VertexService, TopCenterMenu, LeftPanel, SelectionHandler, KeyboardUtils, GraphElementMainMenu, VertexServeFacade) {
+    function ($, UserService, EventBus, LoginHandler, MindMapTemplate, ServerSubscriber, SearchUi, GraphDisplayer, GraphDisplayerFactory, Menu, GraphUi, LanguageManager, VertexService, TopCenterMenu, LeftPanel, SelectionHandler, KeyboardUtils, GraphElementMainMenu, VertexServeFacade) {
         var api = {
             offset:function () {
                 var offset = {};
@@ -52,7 +51,6 @@ define(
                     handleCreateNewConceptButton();
                     TopCenterMenu.init();
                     LeftPanel.init();
-                    DepthSlider.init();
                     SearchUi.init();
                     GraphDisplayer.setImplementation(
                         GraphDisplayerFactory.getByName(

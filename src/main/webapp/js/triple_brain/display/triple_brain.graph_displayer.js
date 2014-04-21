@@ -5,10 +5,9 @@ define([
     "triple_brain.event_bus",
     "triple_brain.mind_map_info",
     "triple_brain.id_uri",
-    "triple_brain.menu",
-    "triple_brain.ui.depth_slider"
+    "triple_brain.menu"
     ],
-    function(EventBus, MindMapInfo, IdUriUtils, Menu, DepthSlider){
+    function(EventBus, MindMapInfo, IdUriUtils, Menu){
         var _implementation;
         var api = {};
         api.setImplementation = function(implementation){
@@ -125,7 +124,7 @@ define([
         return api;
 
         function currentDepth(){
-            return DepthSlider.currentDepth();
+            return 1;
         }
 
         function publishAboutToUpdate(){

@@ -62,7 +62,6 @@ window.config = {
         "triple_brain.ui.search" : "triple_brain/search/triple_brain.ui.search",
         "triple_brain.freebase_autocomplete_provider" : "triple_brain/search/autocomplete_results_provider/triple_brain.freebase_autocomplete_provider",
         "triple_brain.user_map_autocomplete_provider" : "triple_brain/search/autocomplete_results_provider/triple_brain.user_map_autocomplete_provider",
-        "triple_brain.ui.depth_slider" : "triple_brain/triple_brain.ui.depth_slider",
         "triple_brain.mind-map_template" : "triple_brain/triple_brain.mind-map_template",
         "triple_brain.config" : "triple_brain/triple_brain.config",
         "triple_brain.id_uri" : "triple_brain/triple_brain.id_uri",

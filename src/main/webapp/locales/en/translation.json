@@ -45,8 +45,7 @@
         "select": "select"
     },
     "left_menu" : {
-        "search" : "Search bubbles",
-        "distance" : "Distance from center bubble"
+        "search" : "Search bubbles"
     },
     "caption" : {
         "title" : "Caption",
