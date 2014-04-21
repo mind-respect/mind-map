@@ -29,6 +29,7 @@ define([
         var self = this;
         this.getFetchMethod = function (searchTerm) {
             var options = $.extend({
+                scoring:'schema',
                 query:searchTerm,
                 key:FreebaseUri.key,
                 lang:getUserLocalesFreebaseFormatted()
