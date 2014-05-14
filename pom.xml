@@ -41,28 +41,28 @@
                     <jsTestSrcDir>src/test/webapp/js</jsTestSrcDir>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>com.googlecode.jslint4java</groupId>
-                <artifactId>jslint4java-maven-plugin</artifactId>
-                <version>2.0.5</version>
-                <executions>
-                    <execution>
-                        <id>lint</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>lint</goal>
-                        </goals>
-                        <configuration>
-                            <failOnError>false</failOnError>
-                            <sourceFolders>
-                                <sourceFolder>
-                                    src/main/webapp/js/triple_brain
-                                </sourceFolder>
-                            </sourceFolders>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>com.googlecode.jslint4java</groupId>-->
+                <!--<artifactId>jslint4java-maven-plugin</artifactId>-->
+                <!--<version>2.0.5</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>lint</id>-->
+                        <!--<phase>process-resources</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>lint</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<failOnError>false</failOnError>-->
+                            <!--<sourceFolders>-->
+                                <!--<sourceFolder>-->
+                                    <!--src/main/webapp/js/triple_brain-->
+                                <!--</sourceFolder>-->
+                            <!--</sourceFolders>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
             <!--<plugin>-->
                 <!--<groupId>org.apache.maven.plugins</groupId>-->
                 <!--<artifactId>maven-checkstyle-plugin</artifactId>-->
@@ -76,26 +76,68 @@
                     <!--</execution>-->
                 <!--</executions>-->
             <!--</plugin>-->
-            <!--<plugin>-->
-                <!--<groupId>org.codehaus.mojo</groupId>-->
-                <!--<artifactId>jslint-maven-plugin</artifactId>-->
-                <!--<version>1.0.1</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>execute-jslint</id>-->
-                        <!--<goals>-->
-                            <!--<goal>jslint</goal>-->
-                            <!--<goal>test-jslint</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<sourceJsFolder>-->
-                                <!--src/main/webapp/js/triple_brain-->
-                            <!--</sourceJsFolder>-->
-                            <!--<failOnIssues>false</failOnIssues>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jslint-maven-plugin</artifactId>
+                <version>1.0.1</version>
+                <executions>
+                    <execution>
+                        <id>execute-jslint</id>
+                        <goals>
+                            <goal>jslint</goal>
+                            <goal>test-jslint</goal>
+                        </goals>
+                        <configuration>
+                            <sourceJsFolder>
+                                src/main/webapp/js/triple_brain
+                            </sourceJsFolder>
+                            <failOnIssues>false</failOnIssues>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.github.bringking</groupId>
+                <artifactId>requirejs-maven-plugin</artifactId>
+                <version>2.0.4</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>optimize</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- optional path to a nodejs executable -->
+                    <nodeExecutable>
+                        /usr/bin/node
+                    </nodeExecutable>
+                    <!-- path to optimizer json config file -->
+                    <configFile>
+                        src/main/webapp/build-config.js
+                    </configFile>
+                    <!-- optional path to optimizer executable -->
+                    <optimizerFile>
+                        src/main/webapp/r.js
+                    </optimizerFile>
+                    <!-- optional parameters to optimizer executable -->
+                    <optimizerParameters>
+                        <parameter>optimize=uglify</parameter>
+                    </optimizerParameters>
+                    <!--
+                    Whether or not to process configFile with maven filters.
+                    If you use this option, some options in your configFile
+                    must resolve to absolute paths (see below)
+                    -->
+                    <filterConfig>
+                        false
+                    </filterConfig>
+                    <!-- Skip requirejs optimization if true -->
+                    <skip>
+                        false
+                    </skip>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
