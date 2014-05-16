@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body { min-width: 30000px; min-height: 30000px; cursor: all-scroll; }
 
 input[type=button].link-like-button, button.link-like-button { color: #1919ac; }
@@ -29,6 +30,8 @@ button.add-button-in-list:hover { color: #00d100; }
 #registration-page .language-list { float: left; width: 100%; margin-bottom: 1em; }
 #registration-page .language-list h5 { display: table-cell; vertical-align: bottom; padding-bottom: 0.8em; }
 #registration-page .language-list > button { margin-top: 0.7em; }
+
+#login-page a::before { content: "• "; }
 
 #login-button, #register-button { display: block; margin-bottom: 1.2em; }
 

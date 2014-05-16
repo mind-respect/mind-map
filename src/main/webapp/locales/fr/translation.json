@@ -5,6 +5,7 @@
         "password" : "Mot de passe",
         "login" : "Authentifier",
         "register": "créer un compte",
+        "about" : "démonstration et plus",
         "error" : "Courriel ou mot de passe invalide(s)"
     },
 

@@ -5,6 +5,7 @@
         "password" : "Password",
         "login" : "Login",
         "register": "create an account",
+        "about" : "demo and more",
         "error" : "Invalid credentials"
     },
 
