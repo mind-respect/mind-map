@@ -108,11 +108,14 @@ button{
   }
 }
 
-#login-page {
-  a::before {
-    content:"• ";
+.bullet{
+  float:left;
+  margin-right:7px;
+  &:before{
+    content:"• "
   }
 }
+
 
 #login-button, #register-button {
   display: block;

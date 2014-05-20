@@ -31,7 +31,8 @@ button.add-button-in-list:hover { color: #00d100; }
 #registration-page .language-list h5 { display: table-cell; vertical-align: bottom; padding-bottom: 0.8em; }
 #registration-page .language-list > button { margin-top: 0.7em; }
 
-#login-page a::before { content: "• "; }
+.bullet { float: left; margin-right: 7px; }
+.bullet:before { content: "• "; }
 
 #login-button, #register-button { display: block; margin-bottom: 1.2em; }
 
