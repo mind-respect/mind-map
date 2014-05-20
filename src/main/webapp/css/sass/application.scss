@@ -127,7 +127,7 @@ button{
   margin: 0;
   background-color: gray;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: hidden;
   width: 350px;
   max-height: 400px;
 }
@@ -135,7 +135,8 @@ button{
 #selectedLanguages li, .registration-available-languages li {
   padding-top: 0.5em;
   padding-bottom: 0.5em;
-  width: 100%;
+  /*weird number 99.4%. Otherwise right border doesn't show*/
+  width: 99.4%;
 }
 
 #selectedLanguages li .ui-icon, .registration-available-languages li .ui-icon {

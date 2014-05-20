@@ -36,9 +36,9 @@ button.add-button-in-list:hover { color: #00d100; }
 
 #login-button, #register-button { display: block; margin-bottom: 1.2em; }
 
-#selectedLanguages, .registration-available-languages { list-style-type: none; margin: 0; background-color: gray; overflow-x: hidden; overflow-y: scroll; width: 350px; max-height: 400px; }
+#selectedLanguages, .registration-available-languages { list-style-type: none; margin: 0; background-color: gray; overflow-x: hidden; overflow-y: hidden; width: 350px; max-height: 400px; }
 
-#selectedLanguages li, .registration-available-languages li { padding-top: 0.5em; padding-bottom: 0.5em; width: 100%; }
+#selectedLanguages li, .registration-available-languages li { padding-top: 0.5em; padding-bottom: 0.5em; /*weird number 99.4%. Otherwise right border doesn't show*/ width: 99.4%; }
 
 #selectedLanguages li .ui-icon, .registration-available-languages li .ui-icon { display: inline-block; }
 
