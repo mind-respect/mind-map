@@ -19,7 +19,7 @@ define([
         downArrowKeyNumber = 40;
     api.init = function () {
         EventBus.subscribe(
-            "/event/ui/app/started",
+            "/event/ui/graph/drawing_info/updated/",
             handleKeyboardActions
         );
     };

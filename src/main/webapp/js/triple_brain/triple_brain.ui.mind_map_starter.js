@@ -24,12 +24,13 @@ define(
         "jquery.triple_brain.drag_scroll"
     ],
     function ($, UserService, EventBus, LoginHandler, MindMapTemplate, ServerSubscriber, SearchUi, GraphDisplayer, GraphDisplayerFactory, Menu, GraphUi, LanguageManager, VertexService, TopCenterMenu, LeftPanel, SelectionHandler, KeyboardUtils, GraphElementMainMenu, VertexServeFacade) {
+        var leftPanelWidth = 225;
         var api = {
             offset:function () {
                 var offset = {};
                 var leftMargin = 150;
                 var topMargin = 75;
-                offset.left = $("#left-panel").width() + leftMargin;
+                offset.left = leftPanelWidth + leftMargin;
                 offset.top = topMargin;
                 return offset;
             },
@@ -44,8 +45,6 @@ define(
                     );
                 });
                 function callBackWhenIsAuthenticated() {
-                    EventBus.publish("/event/ui/app/started");
-                    $("html").addClass("authenticated");
                     handleIfNotAuthenticatedShowCredentialsFlow();
                     handleDisconnectButton();
                     handleCreateNewConceptButton();
@@ -80,8 +79,8 @@ define(
                 }
 
                 function handleIfNotAuthenticatedShowCredentialsFlow() {
-                    $("html").ajaxError(function (e, jqxhr, settings, exception) {
-                        if (jqxhr.status == 403) {
+                    $("html").ajaxError(function (e, jqxhr) {
+                        if (403 === jqxhr.status) {
                             showCredentialsFlow();
                         }
                     });
