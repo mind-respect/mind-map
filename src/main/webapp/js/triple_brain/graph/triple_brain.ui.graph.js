@@ -2,45 +2,47 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "jquery",
-    "triple_brain.point"
-],
+        "jquery",
+        "triple_brain.point"
+    ],
     function ($, Point) {
         var api = {};
+        var htmlBody =  $("body");
         api.getEdgeMouseOver = function () {
-            return $("body").data("edge_mouse_over");
+            return htmlBody.data("edge_mouse_over");
         };
         api.setEdgeMouseOver = function (edge) {
-            $("body").data("edge_mouse_over", edge);
+            htmlBody.data("edge_mouse_over", edge);
         };
-        api.unsetEdgeMouseOver = function(){
-            $("body").removeData("edge_mouse_over");
+        api.unsetEdgeMouseOver = function () {
+            htmlBody.removeData("edge_mouse_over");
         };
         api.addHtml = function (html) {
-            $("#drawn_graph").append(html);
+            api.getDrawnGraph().append(html);
         };
-        api.resetDrawingCanvas = function(){
-            var body = $("body");
-            if (body.data(("canvas"))) {
-                body.data("canvas").remove();
+        api.resetDrawingCanvas = function () {
+            if (htmlBody.data(("canvas"))) {
+                htmlBody.data("canvas").remove();
             }
-            var paper = Raphael(0, 0, body.width(), body.height());
-            paper.canvas.className.baseVal="main";
-            body.data(
+            var paper = Raphael(0, 0, htmlBody.width(), htmlBody.height());
+            paper.canvas.className.baseVal = "main";
+            htmlBody.data(
                 "canvas",
-                 paper
+                paper
             );
         };
         api.canvas = function () {
-            return $("body").data("canvas");
+            return htmlBody.data("canvas");
         };
-
         api.offset = function () {
             return Point.fromCoordinates(
-                $("body").width() / 2,
-                $("body").height() / 2
+                    htmlBody.width() / 2,
+                    htmlBody.height() / 2
             );
+        };
+        api.getDrawnGraph = function(){
+            return $("#drawn_graph");
         };
         return api;
     }
-)
+);

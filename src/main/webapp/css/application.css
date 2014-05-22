@@ -192,4 +192,4 @@ svg { z-index: 1; }
 .autocomplete-flyout .title { font-weight: bold; }
 .autocomplete-flyout .source { font-weight: lighter; font-size: 85%; }
 
-.selection-box { min-width: 75px; min-height: 50px; z-index: 100; background: rgba(0, 203, 255, 0.1); border: solid black; }
+#selection-box { min-width: 45px; min-height: 40px; z-index: 100; background: rgba(0, 203, 255, 0.1); border: solid black; position: absolute; }

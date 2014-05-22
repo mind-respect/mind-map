@@ -9,7 +9,6 @@ define([
         "triple_brain.vertex",
         "triple_brain.ui.edge",
         "triple_brain.edge",
-        "triple_brain.suggestion",
         "triple_brain.mind-map_template",
         "triple_brain.external_resource",
         "triple_brain.point",
@@ -26,7 +25,7 @@ define([
         "jquery-ui",
         "jquery.is-fully-on-screen",
         "jquery.center-on-screen"
-    ], function (require, $, EventBus, VertexService, EdgeUi, EdgeService, Suggestion, MindMapTemplate, ExternalResource, Point, Segment, GraphDisplayer, RelativeTreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, Image, SelectionHandler, KeyboardUtils, RelativeTreeVertexMenuHandler) {
+    ], function (require, $, EventBus, VertexService, EdgeUi, EdgeService, MindMapTemplate, ExternalResource, Point, Segment, GraphDisplayer, RelativeTreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, Image, SelectionHandler, KeyboardUtils, RelativeTreeVertexMenuHandler) {
         var api = {};
         api.withServerFacade = function (serverFacade) {
             return new VertexCreator(serverFacade);
@@ -88,8 +87,6 @@ define([
         }
 
         function VertexCreator(serverFacade) {
-            var VertexService = require("triple_brain.vertex");
-            var Suggestion = require("triple_brain.suggestion");
             var html = $(
                 MindMapTemplate['relative_vertex'].merge()
             );

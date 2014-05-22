@@ -34,6 +34,7 @@ define([
                 "relation"
             ).css("display", "inline");
             this.create = function () {
+                html.uniqueId();
                 var isInverse = edgeServer.getSourceVertex().getUri() !== parentVertexHtmlFacade.getUri();
                 if (isInverse) {
                     html.addClass("inverse");

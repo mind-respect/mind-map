@@ -18,10 +18,10 @@ define([
     "triple_brain.ui.graph_element",
     "triple_brain.selection_handler",
     "triple_brain.graph_element_button",
-    "triple_brain.image",
+    "triple_brain.ui.graph",
     "jquery.center-on-screen"
 ],
-    function ($, GraphDisplayer, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, ServerSubscriber, ImageDisplayer, GraphElement, SelectionHandler, GraphElementButton, Image) {
+    function ($, GraphDisplayer, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, ServerSubscriber, ImageDisplayer, GraphElement, SelectionHandler, GraphElementButton, GraphUi){
         var api = {};
         api.getWhenEmptyLabel = function () {
             return $.t("vertex.default");
@@ -50,7 +50,7 @@ define([
             );
         };
         api.visitAllVertices = function (visitor) {
-            $("#drawn_graph .vertex").each(function () {
+            GraphUi.getDrawnGraph().find(".vertex").each(function () {
                 return visitor(
                     GraphDisplayer.getVertexSelector().withHtml(this)
                 );
@@ -117,9 +117,6 @@ define([
                 }
                 return getSegments().intersectionPointWithSegment(segmentToCompare);
             };
-            this.sideClosestToEdge = function () {
-                return getSegments().sideThatIntersectsWithAnotherSegmentUsingMarginOfError(10);
-            };
             this.setAsNonCentral = function () {
                 $(html).removeClass('center-vertex');
                 this.showCenterButton();
@@ -150,15 +147,6 @@ define([
                     propertiesIndicator
                 );
                 propertiesIndicator.build();
-            };
-            this.removeHiddenPropertiesIndicator = function () {
-                var propertiesIndicator = $(html).data(
-                    "hidden_properties_indicator"
-                );
-                propertiesIndicator.remove();
-                $(html).removeData(
-                    "hidden_properties_indicator"
-                );
             };
             this.hasHiddenRelations = function () {
                 return self.isALeaf() && self.getTotalNumberOfEdges() > 1;
@@ -223,19 +211,12 @@ define([
             };
             this.showButtons = function () {
                 self.showMenu();
-                self.showMoveButton();
             };
             this.hideMenu = function () {
                 self.getMenuHtml().hide();
             };
             this.showMenu = function () {
                 self.getMenuHtml().show();
-            };
-            this.hideMoveButton = function () {
-                self.moveButton().css("visibility", "hidden");
-            };
-            this.showMoveButton = function () {
-                self.moveButton().css("visibility", "visible");
             };
             this.showCenterButton = function () {
                 $(centerButton()).hide();
@@ -257,19 +238,6 @@ define([
                 return EdgeUi.connectedToVertex(
                     self
                 );
-            };
-            this.redrawConnectedEdgesArrowLine = function () {
-                $.each(self.connectedEdges(), function () {
-                    var edge = this;
-                    edge.arrowLine().remove();
-                    edge.setArrowLine(
-                        GraphDisplayer.getEdgeDrawer().ofEdge(
-                            edge
-                        )
-                    );
-                    edge.centerOnArrowLine();
-                    edge.arrowLine().drawInWithDefaultStyle();
-                });
             };
             this.isLabelInFocus = function () {
                 return $(self.label()).is(":focus");

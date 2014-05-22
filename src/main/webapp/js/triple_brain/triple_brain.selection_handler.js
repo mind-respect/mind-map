@@ -11,7 +11,12 @@ define([
     "triple_brain.event_bus",
     "jquery-ui"
 ], function ($, GraphUi, ScrollOnMouseFrontier, UiUtils, VertexService, GraphDisplayer, EventBus) {
-    var api = {};
+    "use strict";
+    var api = {},
+        selectBox,
+        SELECT_BOX_MIN_WIDTH = 45,
+        SELECT_BOX_MIN_HEIGHT = 40;
+
     api.reset = function () {
         GraphDisplayer.getVertexSelector().resetSelection();
         GraphDisplayer.getEdgeSelector().resetSelection();
@@ -22,7 +27,6 @@ define([
     };
     api.handleButtonClick = function () {
         removeSelectBoxIfExists();
-        $("body").addClass("select");
         getMindMap().off(
             "click",
             activateSelectionOnMindMap
@@ -69,7 +73,7 @@ define([
             );
         });
         return selected;
-    }
+    };
     api.getSelectedElements = function(){
         var selectedRelations = api.getSelectedRelations();
         var selectedBubbles = api.getSelectedBubbles();
@@ -86,18 +90,17 @@ define([
         return $("svg.main");
     }
     function activateSelectionOnMindMap(event) {
-        $("body").removeClass("select");
         $(this).off(
             event
         );
-        var resizeBox = $("<div class='selection-box'>");
-        GraphUi.addHtml(resizeBox);
-        resizeBox.css(
-            "position", "absolute"
+        getSelectBox().removeClass("hidden").css(
+            "width", SELECT_BOX_MIN_WIDTH
         ).css(
-            "left", event.pageX - resizeBox.width() / 2
+            "height", SELECT_BOX_MIN_WIDTH
         ).css(
-            "top", event.pageY - resizeBox.height() / 2
+            "left", event.pageX - SELECT_BOX_MIN_WIDTH / 2
+        ).css(
+            "top", event.pageY - SELECT_BOX_MIN_HEIGHT / 2
         ).resizable({
                 handles:"ne, se, sw, nw",
                 containment:"document",
@@ -125,11 +128,14 @@ define([
     }
 
     function removeSelectBoxIfExists() {
-        getSelectBox().remove();
+        getSelectBox().addClass("hidden");
     }
 
     function getSelectBox() {
-        return $(".selection-box");
+        if(!selectBox){
+            selectBox = $("#selection-box");
+        }
+        return selectBox;
     }
 
     function setNbSelectedGraphElements(nbSelectedGraphElements) {

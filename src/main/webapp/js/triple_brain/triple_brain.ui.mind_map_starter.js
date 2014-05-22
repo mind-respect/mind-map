@@ -24,6 +24,7 @@ define(
         "jquery.triple_brain.drag_scroll"
     ],
     function ($, UserService, EventBus, LoginHandler, MindMapTemplate, ServerSubscriber, SearchUi, GraphDisplayer, GraphDisplayerFactory, Menu, GraphUi, LanguageManager, VertexService, TopCenterMenu, LeftPanel, SelectionHandler, KeyboardUtils, GraphElementMainMenu, VertexServeFacade) {
+        "use strict";
         var leftPanelWidth = 225;
         var api = {
             offset:function () {

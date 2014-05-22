@@ -13,17 +13,26 @@ define([
     "triple_brain.graph_element_button"
 ],
     function ($, GraphUi, VertexAndEdgeCommon, EventBus, GraphDisplayer, GraphElement, EdgeService, GraphElementButton) {
-        var api = {};
+        var api = {},
+            cache = {};
         api.getWhenEmptyLabel = function(){
             return $.t("edge.default");
         };
-        api.withHtml = function (Html) {
-            return new api.Object(Html);
+        api.withHtml = function (html) {
+            var id = html.prop('id');
+            var cachedObject = cache[id];
+            if(cachedObject === undefined){
+                cachedObject = new api.Object(html);;
+                cache[id] = cachedObject;
+            }
+            return cachedObject;
         };
         api.allEdges = function () {
-            var edges = new Array();
-            $("#drawn_graph .relation").each(function () {
-                edges.push(api.withHtml(this));
+            var edges = [];
+            GraphUi.getDrawnGraph().find(".relation").each(function () {
+                edges.push(api.withHtml(
+                    $(this)
+                ));
             });
             return edges;
         };
@@ -75,9 +84,7 @@ define([
         }
 
         api.Object = function (html) {
-            var Vertex;
             var self = this;
-            html = $(html);
             GraphElement.Object.apply(self, [html]);
             this.id = function () {
                 return $(html).attr('id');
@@ -146,26 +153,10 @@ define([
                 //do nothing
             };
             this.applyCommonBehaviorForAddedIdentification = function(){
-                //do nothingt
+                //do nothing
             };
             this.serverFacade = function(){
                 return EdgeService;
-            };
-            this.highlight = function () {
-                html.addClass('highlighted-edge');
-                this.addEdgeSurroundColor("#FFFF00", 4);
-            };
-            this.unhighlight = function () {
-                html.removeClass('highlighted-edge');
-                this.arrowLine().remove();
-                this.arrowLine().drawInBlackWithSmallLineWidth();
-            };
-            this.addEdgeSurroundColor = function (color, width) {
-                this.arrowLine().drawInYellowWithBigLineWidth();
-                this.arrowLine().drawInBlackWithSmallLineWidth();
-            };
-            this.isTextFieldInFocus = function () {
-                return self.getLabel().is(":focus")
             };
             this.centerOnArrowLine = function () {
                 self.positionAt(
@@ -175,10 +166,6 @@ define([
             this.positionAt = function(position){
                 html.css('left', position.x);
                 html.css('top', position.y);
-            };
-            this.isConnectedWithVertex = function (vertex) {
-                return isSourceVertex(vertex) ||
-                    isDestinationVertex(vertex);
             };
             this.equalsEdge = function (otherEdge) {
                 return self.getId() == otherEdge.getId();
@@ -227,14 +214,6 @@ define([
                 return getMenu().find(
                     ">button"
                 );
-            }
-
-            function isSourceVertex(vertex) {
-                return self.sourceVertex().getId() == vertex.getId()
-            }
-
-            function isDestinationVertex(vertex) {
-                return self.destinationVertex().getId() == vertex.getId()
             }
         };
 

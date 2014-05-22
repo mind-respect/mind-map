@@ -2,26 +2,27 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "require",
-    "jquery",
-    "triple_brain.ui.edge",
-    "triple_brain.graph_displayer",
-    "triple_brain.selection_handler"
-],
+        "require",
+        "jquery",
+        "triple_brain.ui.edge",
+        "triple_brain.graph_displayer",
+        "triple_brain.selection_handler"
+    ],
     function (require, $, EdgeUi, GraphDisplayer, SelectionHandler) {
-        var api = {};
+        var api = {},
+            cache = {};
         api.getWhenEmptyLabel = function () {
             return EdgeUi.getWhenEmptyLabel();
         };
-        api.visitAllEdges = function(visitor){
+        api.visitAllEdges = function (visitor) {
             $(".relation").each(function () {
                 visitor(
                     api.withHtml(this)
                 );
             });
         };
-        api.visitSelected = function(visitor){
-            $(".relation.selected").each(function(){
+        api.visitSelected = function (visitor) {
+            $(".relation.selected").each(function () {
                 visitor(
                     api.withHtml(
                         $(this)
@@ -29,15 +30,20 @@ define([
                 );
             });
         };
-        api.resetSelection = function(){
-            api.visitSelected(function(edge){
+        api.resetSelection = function () {
+            api.visitSelected(function (edge) {
                 edge.deselect();
             });
         };
         api.redrawAllEdges = EdgeUi.redrawAllEdges;
-
         api.withHtml = function (html) {
-            return new Object($(html));
+            var id = html.prop('id');
+            var cachedObject = cache[id];
+            if(cachedObject === undefined){
+                cachedObject = new Object(html);
+                cache[id] = cachedObject;
+            }
+            return cachedObject;
         };
         api.ofEdge = function (edge) {
             return api.withHtml(
@@ -69,9 +75,9 @@ define([
             };
             this.serverFormat = function () {
                 return {
-                    label:self.text(),
-                    source_vertex_id:self.sourceVertex().getId(),
-                    destination_vertex_id:self.destinationVertex().getId()
+                    label: self.text(),
+                    source_vertex_id: self.sourceVertex().getId(),
+                    destination_vertex_id: self.destinationVertex().getId()
                 }
             };
             this.getLabel = function () {
@@ -85,7 +91,7 @@ define([
             this.focus = function () {
                 html.centerOnScreen();
             };
-            this.inverse = function(){
+            this.inverse = function () {
                 html[
                     html.hasClass("inverse") ?
                         "removeClass" :
@@ -93,26 +99,23 @@ define([
                     ]("inverse");
                 EdgeUi.withHtml(html).inverseAbstract();
             };
-            this.isLeftOfCenterVertex = function(){
+            this.isLeftOfCenterVertex = function () {
                 return self.childVertexInDisplay().isToTheLeft();
             };
-            this.select = function(){
+            this.select = function () {
                 html.addClass("selected");
-                if(1 === SelectionHandler.getNbSelected()){
+                if (1 === SelectionHandler.getNbSelected()) {
                     self.showMenu();
                 }
             };
-            this.deselect = function(){
+            this.deselect = function () {
                 html.removeClass("selected");
                 self.hideMenu();
             };
-            this.isSelected = function(){
+            this.isSelected = function () {
                 return html.hasClass("selected");
             };
             EdgeUi.Object.apply(this, [html]);
         }
-
-        Object.prototype = new EdgeUi.Object();
-        return api;
     }
 );

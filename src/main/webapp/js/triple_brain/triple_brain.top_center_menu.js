@@ -6,7 +6,10 @@ define([
     "triple_brain.selection_handler"
 ],
     function ($, SelectionHandler) {
-        var api = {};
+        var api = {},
+            topCenterMenu,
+            buttons,
+            selectionButton;
         api.init = function () {
             getButtons().button();
             getSelectionButton().on(
@@ -20,17 +23,26 @@ define([
         };
         return api;
         function getSelectionButton() {
-            return getButtons().filter(".select");
+            if(!selectionButton){
+                selectionButton = getButtons().filter(".select");
+            }
+            return selectionButton;
         }
 
         function getButtons() {
-            return getTopCenterMenu().find(".buttons").find(
-                "button"
-            );
+            if(!buttons){
+                buttons = getTopCenterMenu().find(".buttons").find(
+                    "button"
+                );
+            }
+            return buttons;
         }
 
         function getTopCenterMenu() {
-            return $("#top-center-menu")
+            if(!topCenterMenu){
+                topCenterMenu = $("#top-center-menu");
+            }
+            return topCenterMenu;
         }
     }
 );

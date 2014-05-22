@@ -6,36 +6,77 @@ define([
     "triple_brain.point",
     "triple_brain.ui.utils"
 ], function ($, Point, UiUtils) {
-    var scrollNumber = 40;
+    var scrollNumber = 40,
+        frontiers,
+        topFrontier,
+        bottomFrontier,
+        leftFrontier,
+        rightFrontier;
     return {
         doIt : function(){
             apply(
-                $(".frontier.top"),
+                getTopFrontier(),
                 0,
                 -1 * scrollNumber
             );
             apply(
-                $(".frontier.bottom"),
+                getBottomFrontier(),
                 0,
                 scrollNumber
             );
             apply(
-                $(".frontier.left"),
+                getLeftFrontier(),
                 -1 * scrollNumber,
                 0
             );
             apply(
-                $(".frontier.right"),
+                getRightFrontier(),
                 scrollNumber,
                 0
             );
         },
         disable: function(){
-            $(".frontier").off(
+            getFrontiers().off(
                 'mouseenter mouseleave'
             ).css("z-index", 0);
         }
     };
+
+    function getTopFrontier(){
+        if(!topFrontier){
+            topFrontier = $(".frontier.top");
+        }
+        return topFrontier;
+    }
+
+    function getBottomFrontier(){
+        if(!bottomFrontier){
+            bottomFrontier = $(".frontier.bottom");
+        }
+        return bottomFrontier;
+    }
+
+    function getLeftFrontier(){
+        if(!leftFrontier){
+            leftFrontier = $(".frontier.left");
+        }
+        return leftFrontier;
+    }
+
+    function getRightFrontier(){
+        if(!rightFrontier){
+            rightFrontier = $(".frontier.right");
+        }
+        return rightFrontier;
+    }
+
+    function getFrontiers(){
+        if(!frontiers){
+            frontiers = $(".frontier");
+        }
+        return frontiers;
+    }
+
     function apply(frontier, x, y){
         frontier.hover(
             function(){
