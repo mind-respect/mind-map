@@ -78,7 +78,9 @@ define([
             this.visitChildren = function (visitor) {
                 var children = getChildren();
                 $.each(children, function () {
-                    var vertex = api.withHtml(this);
+                    var vertex = api.withHtml(
+                        $(this)
+                    );
                     visitor(vertex);
                 });
             };
@@ -188,7 +190,6 @@ define([
                 ).find(".vertex");
             }
         };
-        Object.prototype = new VertexUi.Object();
         EventBus.subscribe(
             '/event/ui/graph/vertex/same_as/added',
             function (event, vertex, sameAs) {

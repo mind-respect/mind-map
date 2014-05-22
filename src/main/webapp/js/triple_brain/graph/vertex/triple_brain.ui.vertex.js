@@ -80,7 +80,7 @@ define([
             });
         };
         api.getNbSelected = function(){
-            return $(".vertex.selected").length;
+            return GraphUi.getDrawnGraph().find(".vertex.selected").length;
         };
         api.getVertexMouseOver = function () {
             return $("body").data("vertex_mouse_over");
@@ -127,13 +127,13 @@ define([
                 return getSegments().intersectionPointWithSegment(segmentToCompare);
             };
             this.setAsNonCentral = function () {
-                $(html).removeClass('center-vertex');
+                html.removeClass('center-vertex');
                 this.showCenterButton();
             };
             this.setAsCentral = function () {
                 var centralVertex = api.centralVertex();
                 centralVertex.setAsNonCentral();
-                $(html).addClass('center-vertex');
+                html.addClass('center-vertex');
                 self.hideCenterButton();
             };
             this.setTotalNumberOfEdges = function (totalNumberOfEdges) {
@@ -151,7 +151,7 @@ define([
                 var propertiesIndicator = PropertiesIndicator.withVertex(
                     self
                 );
-                $(html).data(
+                html.data(
                     "hidden_properties_indicator",
                     propertiesIndicator
                 );
@@ -169,10 +169,10 @@ define([
                 );
             };
             this.width = function () {
-                return $(html).width();
+                return html.width();
             };
             this.height = function () {
-                return $(html).height();
+                return html.height();
             };
             this.getHtml = function () {
                 return html;
@@ -180,23 +180,23 @@ define([
             this.labelCenterPoint = function () {
                 var textContainer = self.getInBubbleContainer();
                 return Point.fromCoordinates(
-                    $(textContainer).offset().left + self.getInBubbleContentWidth() / 2,
-                    $(textContainer).offset().top + $(textContainer).height() / 2
+                    textContainer.offset().left + self.getInBubbleContentWidth() / 2,
+                    textContainer.offset().top + textContainer.height() / 2
                 )
             };
 
             this.getId = function () {
-                return $(html).attr('id');
+                return html.attr('id');
             };
 
             this.getUri = function () {
-                return $(html).data(
+                return html.data(
                     "uri"
                 );
             };
 
             this.setUri = function (uri) {
-                $(html).data(
+                html.data(
                     "uri",
                     uri
                 );
@@ -228,10 +228,10 @@ define([
                 self.getMenuHtml().show();
             };
             this.showCenterButton = function () {
-                $(centerButton()).hide();
+                centerButton().hide();
             };
             this.hideCenterButton = function () {
-                $(centerButton()).hide();
+                centerButton().hide();
             };
             this.highlight = function () {
                 html.addClass(
@@ -239,7 +239,7 @@ define([
                 );
             };
             this.unhighlight = function () {
-                $(html).removeClass(
+                html.removeClass(
                     'highlighted'
                 );
             };
@@ -249,22 +249,22 @@ define([
                 );
             };
             this.isLabelInFocus = function () {
-                return $(self.label()).is(":focus");
+                return self.getLabel().is(":focus");
             };
             this.focus = function () {
-                $(self.label()).focus();
+                self.getLabel().focus();
             };
             this.readjustLabelWidth = function () {
                 VertexAndEdgeCommon.adjustWidthToNumberOfChars(
-                    this.label()
+                    self.getLabel()
                 );
                 self.adjustWidth();
             };
             this.text = function () {
-                return $(this.label()).val();
+                return self.getLabel().val();
             };
             this.setText = function (label) {
-                return $(self.label()).val(
+                return self.getLabel().val(
                     label
                 );
             };
@@ -300,16 +300,16 @@ define([
                 return width;
             };
             this.hasDefaultText = function () {
-                return $(this.label()).val() == api.getWhenEmptyLabel();
+                return self.getLabel().val() == api.getWhenEmptyLabel();
             };
             this.applyStyleOfDefaultText = function () {
-                $(this.label()).addClass('when-default-graph-element-text');
+                self.getLabel().addClass('when-default-graph-element-text');
             };
             this.removeStyleOfDefaultText = function () {
-                $(this.label()).removeClass('when-default-graph-element-text');
+                self.getLabel().removeClass('when-default-graph-element-text');
             };
             this.isCenterVertex = function () {
-                return $(html).hasClass("center-vertex");
+                return html.hasClass("center-vertex");
             };
             this.removeConnectedEdges = function () {
                 var connectedEdges = this.connectedEdges();
@@ -331,18 +331,18 @@ define([
                 return self.suggestions().length > 0;
             };
             this.addSuggestions = function (suggestions) {
-                var existingSuggestions = $(html).data('suggestions');
+                var existingSuggestions = html.data('suggestions');
                 existingSuggestions = existingSuggestions === undefined ?
                     [] :
                     existingSuggestions;
                 var mergedSuggestions = existingSuggestions.concat(suggestions);
-                $(html).data('suggestions', mergedSuggestions);
+                html.data('suggestions', mergedSuggestions);
                 mergedSuggestions.length > 0 ?
                     self.showSuggestionButton() :
                     self.hideSuggestionButton();
             };
             this.setSuggestions = function (suggestions) {
-                $(html).data('suggestions', suggestions);
+                html.data('suggestions', suggestions);
                 suggestions.length > 0 ?
                     self.showSuggestionButton() :
                     self.hideSuggestionButton();
@@ -356,7 +356,7 @@ define([
 
             this.addImages = function (images) {
                 var existingImages = self.getImages();
-                $(html).data("images", existingImages.concat(
+                html.data("images", existingImages.concat(
                     images
                 ));
                 var imageMenu =
@@ -373,15 +373,15 @@ define([
                         images.push(image);
                     }
                 });
-                $(html).data(
+                html.data(
                     "images",
                     images
                 );
             };
             this.getImages = function () {
-                return $(html).data("images") === undefined ?
+                return html.data("images") === undefined ?
                     [] :
-                    $(html).data("images");
+                    html.data("images");
             };
 
             this.serverFacade = function () {
@@ -390,12 +390,12 @@ define([
 
             function createImageMenu() {
                 var imageMenu = ImageDisplayer.ofVertex(self).create();
-                $(html).data("images_menu", imageMenu);
+                html.data("images_menu", imageMenu);
                 return imageMenu;
             }
 
             this.hasImagesMenu = function () {
-                return $(html).data("images_menu") !== undefined;
+                return html.data("images_menu") !== undefined;
             };
             this.hasImages = function () {
                 return self.getImages().length > 0;
@@ -415,20 +415,20 @@ define([
             };
 
             this.showSuggestionButton = function () {
-                $(suggestionButton()).show();
+                suggestionButton().show();
             };
             this.hideSuggestionButton = function () {
-                $(suggestionButton()).hide();
+                suggestionButton().hide();
             };
             this.triggerChange = function () {
-                $(html).trigger("change");
+                html.trigger("change");
             };
             //@Deprecated
             this.label = function () {
                 return self.getLabel();
             };
             this.getLabel = function(){
-                return $(html).find("input.label");
+                return html.find("input.label");
             };
             this.equalsVertex = function (otherVertex) {
                 return self.getId() == otherVertex.getId();
@@ -464,13 +464,13 @@ define([
             };
 
             this.setOriginalServerObject = function (serverJson) {
-                $(html).data(
+                html.data(
                     "originalServerObject",
                     serverJson
                 );
             };
             this.getOriginalServerObject = function () {
-                return $(html).data(
+                return html.data(
                     "originalServerObject"
                 );
             };
@@ -480,7 +480,7 @@ define([
             };
 
             this.moveButton = function () {
-                return $(html).find('.move');
+                return html.find('.move');
             };
 
             this.serverFormat = function () {
@@ -569,7 +569,7 @@ define([
             }
 
             function suggestionButton() {
-                return $(html).find('.suggestion');
+                return html.find('.suggestion');
             }
 
             function menuWidth() {
@@ -577,7 +577,7 @@ define([
             }
 
             function centerButton() {
-                return $(html).find('.center');
+                return html.find('.center');
             }
 
             function getSegments() {
@@ -590,7 +590,6 @@ define([
                     "> button"
                 );
             }
-
             crow.ConnectedNode.apply(this, [self.getUri()]);
         };
         api.Object.prototype = new crow.ConnectedNode();

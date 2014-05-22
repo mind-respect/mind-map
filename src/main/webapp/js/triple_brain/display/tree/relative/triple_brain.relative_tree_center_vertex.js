@@ -17,7 +17,9 @@ define(
                 var RelativeTreeVertex = require("triple_brain.relative_tree_vertex");
                 var children = self.getLeftChildren();
                 $.each(children, function () {
-                    var vertex = RelativeTreeVertex.withHtml(this);
+                    var vertex = RelativeTreeVertex.withHtml(
+                        $(this)
+                    );
                     visitor(vertex);
                 });
             };
