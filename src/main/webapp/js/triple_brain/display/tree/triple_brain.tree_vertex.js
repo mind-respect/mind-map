@@ -7,11 +7,16 @@ define([
     "triple_brain.event_bus"
 ],
     function($, Vertex, EventBus){
-        var api = {};
+        var api = {},
+            cache = {};
         api.withHtml = function(html){
-            return new Object(
-                $(html)
-            );
+            var id = html.prop('id');
+            var cachedObject = cache[id];
+            if(cachedObject === undefined){
+                cachedObject = new Object(html);
+                cache[id] = cachedObject;
+            }
+            return cachedObject;
         };
         api.ofVertex = function(vertex){
             return api.withHtml(
@@ -26,9 +31,6 @@ define([
                     var vertex = this;
                     apply(vertex);
                 });
-            };
-            this.hasOtherInstances = function(){
-                return self.getOtherInstances().length > 0;
             };
             this.getOtherInstances = function(){
                 var vertex = Vertex.withHtml(html);

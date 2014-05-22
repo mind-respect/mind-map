@@ -22,12 +22,19 @@ define([
     "jquery.center-on-screen"
 ],
     function ($, GraphDisplayer, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, ServerSubscriber, ImageDisplayer, GraphElement, SelectionHandler, GraphElementButton, GraphUi){
-        var api = {};
+        var api = {},
+            cache = {};
         api.getWhenEmptyLabel = function () {
             return $.t("vertex.default");
         };
         api.withHtml = function (html) {
-            return new api.Object(html);
+            var id = html.prop('id');
+            var cachedObject = cache[id];
+            if(cachedObject === undefined){
+                cachedObject = new api.Object(html);
+                cache[id] = cachedObject;
+            }
+            return cachedObject;
         };
         api.withId = function (id) {
             return GraphDisplayer.getVertexSelector().withHtml($("#" + id));
@@ -52,7 +59,9 @@ define([
         api.visitAllVertices = function (visitor) {
             GraphUi.getDrawnGraph().find(".vertex").each(function () {
                 return visitor(
-                    GraphDisplayer.getVertexSelector().withHtml(this)
+                    GraphDisplayer.getVertexSelector().withHtml(
+                        $(this)
+                    )
                 );
             });
         };
@@ -64,7 +73,9 @@ define([
         api.visitSelected = function (visitor) {
             $(".vertex.selected").each(function () {
                 return visitor(
-                    GraphDisplayer.getVertexSelector().withHtml(this)
+                    GraphDisplayer.getVertexSelector().withHtml(
+                        $(this)
+                    )
                 );
             });
         };
@@ -82,11 +93,9 @@ define([
         };
         api.Object = function (html) {
             var self = this;
-            html = $(html);
             this._initialize = function () {
             };
             GraphElement.Object.apply(self, [html]);
-
             this.getGraphElementType = function () {
                 return GraphElement.types.CONCEPT;
             };

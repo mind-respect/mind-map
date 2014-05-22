@@ -497,7 +497,9 @@ define([
             var vertices = serverGraph.vertices;
             buildVerticesHtml();
             $.each($(".left-oriented .vertex"), function () {
-                var relativeVertex = RelativeTreeVertex.withHtml(this);
+                var relativeVertex = RelativeTreeVertex.withHtml(
+                    $(this)
+                );
                 relativeVertex.adjustPosition();
             });
             function buildVerticesHtml() {

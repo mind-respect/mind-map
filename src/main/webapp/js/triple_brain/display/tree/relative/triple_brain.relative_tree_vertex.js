@@ -10,11 +10,16 @@ define([
     "triple_brain.relative_tree_center_vertex"
 ],
     function ($, VertexUi, EventBus, EdgeUi, ObjectUtils, RelativeTreeCenterVertex) {
-        var api = {};
+        var api = {},
+            cache = {};
         api.withHtml = function (html) {
-            return new api.Object(
-                $(html)
-            );
+            var id = html.prop('id');
+            var cachedObject = cache[id];
+            if(cachedObject === undefined){
+                cachedObject = new api.Object(html);
+                cache[id] = cachedObject;
+            }
+            return cachedObject;
         };
         api.ofVertex = function (vertex) {
             return api.withHtml(
@@ -99,9 +104,6 @@ define([
                     var vertex = this;
                     apply(vertex);
                 });
-            };
-            this.hasOtherInstances = function () {
-                return self.getOtherInstances().length > 0;
             };
             this.getOtherInstances = function () {
                 var vertex = VertexUi.withHtml(html);
