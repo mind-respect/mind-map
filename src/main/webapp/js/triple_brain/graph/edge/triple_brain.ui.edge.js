@@ -218,13 +218,6 @@ define([
         };
 
         EventBus.subscribe(
-            '/event/ui/graph/edge/label/updated',
-            function (event, edge) {
-                VertexAndEdgeCommon.highlightLabel(edge.id());
-            }
-        );
-
-        EventBus.subscribe(
             '/event/ui/graph/reset',
             function(){
                 api.removeAllArrowLines();

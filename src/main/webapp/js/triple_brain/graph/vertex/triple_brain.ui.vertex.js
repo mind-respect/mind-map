@@ -593,14 +593,6 @@ define([
             crow.ConnectedNode.apply(this, [self.getUri()]);
         };
         api.Object.prototype = new crow.ConnectedNode();
-        EventBus.subscribe(
-            '/event/ui/graph/vertex/label/updated',
-            function (event, vertex) {
-                VertexAndEdgeCommon.highlightLabel(
-                    vertex.getId()
-                );
-            }
-        );
 
         EventBus.subscribe(
             '/event/ui/graph/reset',

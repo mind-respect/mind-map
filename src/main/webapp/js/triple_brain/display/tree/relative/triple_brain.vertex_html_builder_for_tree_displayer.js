@@ -228,18 +228,7 @@ define([
                     $(vertex.label()).keyup();
                     VertexService.updateLabel(
                         vertexOfSubHtmlComponent(this),
-                        $(this).val(),
-                        function (vertex) {
-                            var otherInstances = RelativeTreeVertex.ofVertex(
-                                vertex
-                            ).getOtherInstances();
-                            $.each(otherInstances, function () {
-                                var vertex = this;
-                                VertexAndEdgeCommon.highlightLabel(
-                                    vertex.getId()
-                                );
-                            });
-                        }
+                        $(this).val()
                     );
                     var relativeVertex = RelativeTreeVertex.ofVertex(vertex);
                     relativeVertex.adjustPositionIfApplicable();

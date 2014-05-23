@@ -30,7 +30,7 @@ define([
         );
         t.add(
             'edge_input',
-            '<input type="text" value="{label}"></span>'
+            '<input type="text" value="{label}">'
         );
         return api;
     }
