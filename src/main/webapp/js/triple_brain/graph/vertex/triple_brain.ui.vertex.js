@@ -369,7 +369,7 @@ define([
                 var images = [];
                 $.each(self.getImages(), function () {
                     var image = this;
-                    if (image.getUrlForSmall() !== imageToRemove.getUrlForSmall()) {
+                    if (image.getBase64ForSmall() !== imageToRemove.getBase64ForSmall()) {
                         images.push(image);
                     }
                 });
@@ -473,10 +473,6 @@ define([
                 return html.data(
                     "originalServerObject"
                 );
-            };
-
-            this.hasMoveButton = function () {
-                return self.moveButton().length > 0;
             };
 
             this.moveButton = function () {

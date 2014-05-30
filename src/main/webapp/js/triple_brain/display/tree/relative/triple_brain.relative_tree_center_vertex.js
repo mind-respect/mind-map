@@ -40,10 +40,10 @@ define(
                 ).filter(":not(.left-oriented)").find(".vertex");
             };
             this.getTopMostChildToRightHtml = function(){
-                return self.getChildrenToRight()[0];
+                return $(self.getChildrenToRight()[0]);
             };
             this.getTopMostChildToLeftHtml = function(){
-                return self.getLeftChildren()[0];
+                return $(self.getLeftChildren()[0]);
             };
         }
     }

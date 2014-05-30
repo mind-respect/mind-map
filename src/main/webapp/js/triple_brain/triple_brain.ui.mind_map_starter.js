@@ -137,13 +137,13 @@ define(
                         SelectionHandler.reset();
                     }
                 );
-                EventBus.publish('/event/ui/graph/drawn');
                 GraphDisplayer.getVertexSelector().visitAllVertices(function(vertex){
                     EventBus.publish(
                         '/event/ui/vertex/visit_after_graph_drawn',
                         vertex
                     );
                 });
+                EventBus.publish('/event/ui/graph/drawn');
             }
         );
         return api;

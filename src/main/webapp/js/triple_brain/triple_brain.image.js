@@ -3,12 +3,9 @@ define([
 ],
     function () {
         var api = {};
-        api.withSmallAndBiggerImagesUrl = function(urlForSmall, urlForBigger){
-            return new Image(urlForSmall, urlForBigger);
-        };
         api.fromServerJson = function(imageAsServerJson){
             return new Image(
-                imageAsServerJson.urlForSmall,
+                imageAsServerJson.base64ForSmall,
                 imageAsServerJson.urlForBigger
             );
         };
@@ -22,22 +19,16 @@ define([
             });
             return images;
         };
-        api.fromInternalImageBaseUri = function(imageBaseUri){
-            return new Image(
-                imageBaseUri + "/small",
-                imageBaseUri + "/big"
-            );
-        };
         return api;
-        function Image(urlForSmall, urlForBigger){
+        function Image(base64ForSmall, urlForBigger){
             var self = this;
             this.isUploadedByUser = function(){
-                return self.getUrlForSmall().indexOf(
+                return self.getUrlForBigger().indexOf(
                     window.location.hostname
                 ) != -1;
             };
-            this.getUrlForSmall = function(){
-                return urlForSmall;
+            this.getBase64ForSmall = function(){
+                return "data:application/octet-stream;base64," + base64ForSmall;
             };
             this.getUrlForBigger = function(){
                 return urlForBigger;
@@ -49,12 +40,12 @@ define([
             };
             this.jsonFormat = function(){
                 return {
-                    url_for_small : self.getUrlForSmall(),
+                    url_for_small : self.getBase64ForSmall(),
                     url_for_bigger : self.getUrlForBigger()
                 }
             };
             this.isEqualTo = function(image){
-                return self.getUrlForSmall() === image.getUrlForSmall();
+                return self.getUrlForBigger() === image.getUrlForBigger();
             };
         }
     }

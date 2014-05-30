@@ -18,14 +18,13 @@ define([
         "triple_brain.ui.vertex_and_edge_common",
         "triple_brain.ui.triple",
         "triple_brain.vertex_html_builder_common",
-        "triple_brain.image",
         "triple_brain.selection_handler",
         "triple_brain.keyboard_utils",
         "triple_brain.relative_tree_vertex_menu_handler",
         "jquery-ui",
         "jquery.is-fully-on-screen",
         "jquery.center-on-screen"
-    ], function (require, $, EventBus, VertexService, EdgeUi, EdgeService, MindMapTemplate, ExternalResource, Point, Segment, GraphDisplayer, RelativeTreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, Image, SelectionHandler, KeyboardUtils, RelativeTreeVertexMenuHandler) {
+    ], function (require, $, EventBus, VertexService, EdgeUi, EdgeService, MindMapTemplate, ExternalResource, Point, Segment, GraphDisplayer, RelativeTreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, SelectionHandler, KeyboardUtils, RelativeTreeVertexMenuHandler) {
         var api = {};
         api.withServerFacade = function (serverFacade) {
             return new VertexCreator(serverFacade);
@@ -73,8 +72,15 @@ define([
             '/event/ui/vertex/visit_after_graph_drawn',
             handleVisitAfterGraphDrawn
         );
+        EventBus.subscribe(
+            "/event/ui/graph/drawn",
+            EdgeUi.redrawAllEdges
+        );
         return api;
         function handleVisitAfterGraphDrawn(event, vertex) {
+            vertex.addImages(
+                vertex.getOriginalServerObject().getImages()
+            );
             if ("relative_tree" === GraphDisplayer.name()) {
                 api.addDuplicateVerticesButtonIfApplicable(
                     vertex
@@ -84,6 +90,7 @@ define([
                 var noteButton = vertex.getNoteButtonInBubbleContent();
                 noteButton.next(".overlay-container").after(noteButton);
             }
+            vertex.adjustPositionIfApplicable();
         }
 
         function VertexCreator(serverFacade) {
@@ -159,9 +166,6 @@ define([
                 VertexHtmlCommon.setUpIdentifications(
                     serverFacade,
                     vertex
-                );
-                vertex.addImages(
-                    serverFacade.getImages()
                 );
                 vertex.makeItLowProfile();
                 vertex.setOriginalServerObject(

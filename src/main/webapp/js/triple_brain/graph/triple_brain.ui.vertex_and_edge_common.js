@@ -19,6 +19,6 @@ define([
                         ((nbCharacter + 1) * fontWithCorrection) + 2
                 );
             }
-        }
+        };
     }
 );

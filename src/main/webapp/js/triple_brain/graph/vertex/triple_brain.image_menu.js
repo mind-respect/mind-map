@@ -99,12 +99,9 @@ define([
                                 data:formData,
                                 processData:false,
                                 contentType:false,
-                                success:function (data, textStatus, xhr) {
-                                    var addedImage = Image.fromInternalImageBaseUri(
-                                        xhr.getResponseHeader('Location')
-                                    );
+                                success:function (data) {
                                     vertex.addImages(
-                                        addedImage
+                                        Image.arrayFromServerJson(data)
                                     );
                                 }
                             });

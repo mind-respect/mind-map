@@ -6,20 +6,19 @@ define(
     [
         "jquery",
         "triple_brain.mind-map_template",
-        "triple_brain.event_bus",
+        "triple_brain.ui.edge",
         "jquery.colorbox"
     ],
-    function ($, MindMapTemplate, EventBus) {
-        var api = {}
+    function ($, MindMapTemplate, EdgeUi) {
+        var api = {};
         api.ofVertex = function (vertex) {
             return new ImageMenu(vertex);
         };
         return api;
 
         function ImageMenu(vertex) {
-            var imageMenu = this;
-            var html;
-            var isLastFeaturedImageLoaded = true;
+            var imageMenu = this,
+                html;
             this.create = function () {
                 html = $(
                     MindMapTemplate[
@@ -32,87 +31,64 @@ define(
             this.refreshImages = function () {
                 var images = vertex.getImages();
                 if (images.length <= 0) return;
-                if(isLastFeaturedImageLoaded){
-                    EventBus.publish(
-                        "/event/ui/graph/vertex/image/about_to_load",
-                        vertex
-                    );
-                }
-                isLastFeaturedImageLoaded = false;
                 images = imagesInOrderThatPrioritizeUserUploadedImages(images);
-                var newFeaturedImage = images[0];
-                var image = $(MindMapTemplate["image_container_image"].merge({
-                        src:newFeaturedImage.getUrlForSmall()
+                var featuredImage = images[0];
+                var featuredImageBigUri =  featuredImage.getUrlForBigger();
+                var featuredImageHtml = $(MindMapTemplate["image_container_image"].merge({
+                        src: featuredImage.getBase64ForSmall()
                     }
                 ));
-                html.empty().append(
-                    image
-                );
-                image.load(function () {
-                    setUpBiggerImagesView();
-                    /*
-                        adjustWidth should be sufficient but display is better
-                          when calling readjustLabelWidth() which adjust label width
-                          call vertex.adjustWidth() afterwards
-                     */
-                    vertex.readjustLabelWidth();
-                    EventBus.publish(
-                        "/event/ui/graph/vertex/image/updated",
-                        vertex
-                    );
-                    isLastFeaturedImageLoaded = true;
-                });
-
-                function setUpBiggerImagesView() {
-                    var vertexId = vertex.getId();
-                    var images = vertex.getImages();
-                    var visibleSmallImage = $(html).find("img:first");
-                    $(visibleSmallImage).wrap("<a rel='" +
-                        vertexId
-                        + "' href='" +
-                        images[0].getUrlForBigger() +
-                        "'/>");
-                    for (var i = 1; i < images.length; i++) {
-                        var image = images[i];
-                        var bigImageAnchor = $("<a rel='" +
-                            vertexId
-                            + "' href='"
-                            + image.getUrlForBigger() +
-                            "'/>");
-                        $(html).append(
-                            bigImageAnchor
-                        );
+                var vertexId = vertex.getId();
+                html.detach();
+                html.empty();
+                for (var i = 0; i < images.length; i++) {
+                    var image = images[i];
+                    var urlForBigger = image.getUrlForBigger();
+                    var bigImageAnchor = $("<a>").attr(
+                        'rel', vertexId
+                    ).attr(
+                        "href",
+                        urlForBigger
+                    ).colorbox({
+                            photo: true,
+                            rel: vertexId
+                        });
+                    if(urlForBigger === featuredImageBigUri){
+                        bigImageAnchor.append(
+                            featuredImageHtml
+                        )
                     }
-                    $("a[rel=" + vertexId + "]").colorbox({
-                        photo:true,
-                        rel:vertexId
-                    });
+                    html.append(
+                        bigImageAnchor
+                    );
                 }
-            };
-
-            this.isDoneLoadingImage = function(){
-                return isLastFeaturedImageLoaded;
+                addHtmlToVertex();
+                /*
+                 adjustWidth should be sufficient but display is better
+                 when calling readjustLabelWidth() which adjust label width
+                 call vertex.adjustWidth() afterwards
+                 */
+                vertex.readjustLabelWidth();
+                EdgeUi.redrawAllEdges();
             };
 
             this.width = function () {
                 return $(html).width();
-            }
+            };
 
             function addHtmlToVertex() {
-                vertex.hasMoveButton() ?
-                    vertex.moveButton().after(html) :
-                    vertex.getHtml().prepend(html);
+                vertex.getHtml().prepend(html);
             }
 
-            function imagesInOrderThatPrioritizeUserUploadedImages(images){
-                return images.sort(function(image1, image2){
+            function imagesInOrderThatPrioritizeUserUploadedImages(images) {
+                return images.sort(function (image1, image2) {
                     var isImage1UploadedByUser = image1.isUploadedByUser();
                     var isImage2UploadedByUser = image2.isUploadedByUser();
-                    if(isImage1UploadedByUser && isImage2UploadedByUser){
+                    if (isImage1UploadedByUser && isImage2UploadedByUser) {
                         return 0;
-                    }else if(isImage1UploadedByUser){
+                    } else if (isImage1UploadedByUser) {
                         return -1;
-                    }else{
+                    } else {
                         return 1;
                     }
                 });
