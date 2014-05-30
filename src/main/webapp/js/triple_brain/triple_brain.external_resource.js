@@ -10,9 +10,10 @@ define([
     "triple_brain.id_uri",
     "triple_brain.friendly_resource_server_facade",
     "triple_brain.freebase_uri",
+    "triple_brain.ui.edge",
     "jquery.json.min"
 ],
-    function (require, $, ServerSubscriber, GraphDisplayer, IdUriUtils, FriendlyResourceServerFacade, FreebaseUri) {
+    function (require, $, ServerSubscriber, GraphDisplayer, IdUriUtils, FriendlyResourceServerFacade, FreebaseUri, EdgeUi) {
         var api = {};
         api.withUri = function (uri) {
             return api.withUriAndLabel(
@@ -101,6 +102,7 @@ define([
                         var identification = this;
                         if (identification.uri() === thisExternalResource.uri()) {
                             vertex.addImages(images);
+                            vertex.refreshImages();
                         }
                     });
                 });

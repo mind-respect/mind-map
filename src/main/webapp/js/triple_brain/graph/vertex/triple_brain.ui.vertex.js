@@ -359,12 +359,16 @@ define([
                 html.data("images", existingImages.concat(
                     images
                 ));
+            };
+
+            this.refreshImages = function(){
                 var imageMenu =
                     self.hasImagesMenu() ?
                         self.getImageMenu() :
                         createImageMenu();
                 imageMenu.refreshImages();
             };
+
             this.removeImage = function (imageToRemove) {
                 var images = [];
                 $.each(self.getImages(), function () {

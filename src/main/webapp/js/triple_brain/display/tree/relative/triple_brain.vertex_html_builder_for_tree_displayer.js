@@ -72,15 +72,9 @@ define([
             '/event/ui/vertex/visit_after_graph_drawn',
             handleVisitAfterGraphDrawn
         );
-        EventBus.subscribe(
-            "/event/ui/graph/drawn",
-            EdgeUi.redrawAllEdges
-        );
         return api;
         function handleVisitAfterGraphDrawn(event, vertex) {
-            vertex.addImages(
-                vertex.getOriginalServerObject().getImages()
-            );
+            vertex.refreshImages();
             if ("relative_tree" === GraphDisplayer.name()) {
                 api.addDuplicateVerticesButtonIfApplicable(
                     vertex
@@ -90,7 +84,6 @@ define([
                 var noteButton = vertex.getNoteButtonInBubbleContent();
                 noteButton.next(".overlay-container").after(noteButton);
             }
-            vertex.adjustPositionIfApplicable();
         }
 
         function VertexCreator(serverFacade) {
@@ -166,6 +159,9 @@ define([
                 VertexHtmlCommon.setUpIdentifications(
                     serverFacade,
                     vertex
+                );
+                vertex.addImages(
+                    serverFacade.getImages()
                 );
                 vertex.makeItLowProfile();
                 vertex.setOriginalServerObject(

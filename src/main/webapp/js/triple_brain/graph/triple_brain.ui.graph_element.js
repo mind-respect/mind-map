@@ -66,13 +66,13 @@ define([
             self.applyCommonBehaviorForAddedIdentification(genericIdentification);
         };
         this.removeGenericIdentification = function (genericIdentification) {
-            var genericIdentifications = self.removeIdenficationInArray(
+            var gener1icIdentifications = self.removeIdenficationInArray(
                 genericIdentification,
                 self.getGenericIdentifications()
             );
             self.setGenericIdentifications(
                 genericIdentifications
-            )
+            );
             self.removeIdentificationCommonBehavior(genericIdentification);
         };
         this.setTypes = function (types) {

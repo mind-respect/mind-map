@@ -244,6 +244,28 @@ define([
                 });
             }
         );
+        EventBus.subscribe(
+            "/event/ui/graph/vertex/image/about_to_load",
+            function () {
+                api.numberImagesToLoad = undefined === api.numberImagesToLoad ?
+                    1 :
+                    api.numberImagesToLoad + 1;
+                console.log("increasing " + api.numberImagesToLoad);
+            }
+        );
+        EventBus.subscribe(
+            "/event/ui/graph/vertex/image/updated",
+            function () {
+                api.numberImagesToLoad--;
+                console.log("dropping " + api.numberImagesToLoad);
+                if (0 === api.numberImagesToLoad) {
+                    api.visitAllVertices(function(vertex){
+                        vertex.adjustPositionIfApplicable();
+                    });
+                    EdgeUi.redrawAllEdges();
+                }
+            }
+        );
         return api;
     }
 );

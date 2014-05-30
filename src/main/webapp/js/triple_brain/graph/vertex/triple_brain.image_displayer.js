@@ -6,10 +6,10 @@ define(
     [
         "jquery",
         "triple_brain.mind-map_template",
-        "triple_brain.ui.edge",
+        "triple_brain.event_bus",
         "jquery.colorbox"
     ],
-    function ($, MindMapTemplate, EdgeUi) {
+    function ($, MindMapTemplate, EventBus) {
         var api = {};
         api.ofVertex = function (vertex) {
             return new ImageMenu(vertex);
@@ -56,20 +56,29 @@ define(
                     if(urlForBigger === featuredImageBigUri){
                         bigImageAnchor.append(
                             featuredImageHtml
-                        )
+                        );
                     }
                     html.append(
                         bigImageAnchor
                     );
                 }
                 addHtmlToVertex();
-                /*
-                 adjustWidth should be sufficient but display is better
-                 when calling readjustLabelWidth() which adjust label width
-                 call vertex.adjustWidth() afterwards
-                 */
-                vertex.readjustLabelWidth();
-                EdgeUi.redrawAllEdges();
+                EventBus.publish(
+                    "/event/ui/graph/vertex/image/about_to_load",
+                    vertex
+                );
+                featuredImageHtml.load(function(){
+                    /*
+                     adjustWidth should be sufficient but display is better
+                     when calling readjustLabelWidth() which adjust label width
+                     call vertex.adjustWidth() afterwards
+                     */
+                    vertex.readjustLabelWidth();
+                    EventBus.publish(
+                        "/event/ui/graph/vertex/image/updated",
+                        vertex
+                    );
+                });
             };
 
             this.width = function () {

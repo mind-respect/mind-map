@@ -6,11 +6,10 @@ define([
     "triple_brain.ui.graph",
     "triple_brain.scroll_on_mouse_frontier",
     "triple_brain.ui.utils",
-    "triple_brain.vertex",
     "triple_brain.graph_displayer",
     "triple_brain.event_bus",
     "jquery-ui"
-], function ($, GraphUi, ScrollOnMouseFrontier, UiUtils, VertexService, GraphDisplayer, EventBus) {
+], function ($, GraphUi, ScrollOnMouseFrontier, UiUtils, GraphDisplayer, EventBus) {
     "use strict";
     var api = {},
         selectBox,

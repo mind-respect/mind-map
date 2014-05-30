@@ -2,23 +2,23 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "jquery",
-    "triple_brain.external_resource",
-    "triple_brain.mind-map_template",
-    "triple_brain.ui.graph",
-    "triple_brain.id_uri",
-    "triple_brain.freebase_autocomplete_provider",
-    "triple_brain.user_map_autocomplete_provider",
-    "triple_brain.graph_element_menu",
-    "triple_brain.search",
-    "triple_brain.identification_context",
-    "triple_brain.search_result_facade_factory",
-    "jquery-ui",
-    "jquery.triple_brain.search"
-],
+        "jquery",
+        "triple_brain.external_resource",
+        "triple_brain.mind-map_template",
+        "triple_brain.ui.graph",
+        "triple_brain.id_uri",
+        "triple_brain.freebase_autocomplete_provider",
+        "triple_brain.user_map_autocomplete_provider",
+        "triple_brain.graph_element_menu",
+        "triple_brain.search",
+        "triple_brain.identification_context",
+        "triple_brain.search_result_facade_factory",
+        "jquery-ui",
+        "jquery.triple_brain.search"
+    ],
     function ($, ExternalResource, MindMapTemplate, GraphUi, IdUriUtils, FreebaseAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu, SearchService, IdentificationContext, SearchResultFacadeFactory) {
         var api = {
-            ofGraphElement:function (graphElementUi) {
+            ofGraphElement: function (graphElementUi) {
                 return new IdentificationMenu(graphElementUi);
             }
         };
@@ -93,9 +93,9 @@ define([
                 var listHtml = getlistHtml();
                 listHtml.accordion().accordion("destroy");
                 listHtml.accordion({
-                    collapsible:true,
-                    active:false,
-                    heightStyle:"content"
+                    collapsible: true,
+                    active: false,
+                    heightStyle: "content"
                 });
             }
 
@@ -107,7 +107,7 @@ define([
                     description
                 );
                 return $(title, description);
-                function makeTitle(){
+                function makeTitle() {
                     return $(
                         "<h3 class='type-label identification'>"
                     ).attr(
@@ -121,28 +121,28 @@ define([
                         identification
                     ).on(
                         "click",
-                        function(){
+                        function () {
                             var title = $(this);
                             addContextIfApplicable();
-                            function addContextIfApplicable(){
+                            function addContextIfApplicable() {
                                 var identification = title.data("identification");
-                                if(!identification.isAGraphElement()){
+                                if (!identification.isAGraphElement()) {
                                     return;
                                 }
                                 var context = title.data("has_context");
-                                if(context === undefined){
+                                if (context === undefined) {
                                     title.data(
                                         "has_context",
                                         true
                                     );
                                     SearchService.getSearchResultByUri(
                                         identification.uri(),
-                                        function(searchResult){
+                                        function (searchResult) {
                                             IdentificationContext.build(
                                                 SearchResultFacadeFactory.get(
                                                     searchResult
                                                 ),
-                                                function(context){
+                                                function (context) {
                                                     descriptionDivFromTitleDiv(title).prepend(
                                                         context
                                                     );
@@ -201,7 +201,8 @@ define([
                         );
                     }
                 }
-                function makeDescription(){
+
+                function makeDescription() {
                     return $(
                         "<div class='group description'>"
                     ).append(
@@ -222,7 +223,7 @@ define([
                 );
             }
 
-            function descriptionDivFromTitleDiv(title){
+            function descriptionDivFromTitleDiv(title) {
                 return title.next(".description")
             }
 
@@ -234,7 +235,7 @@ define([
 
             function titleFromIdentification(identification) {
                 return $(html).find(
-                    "[identification-uri='" + identification.uri() + "']"
+                        "[identification-uri='" + identification.uri() + "']"
                 );
             }
 
@@ -249,7 +250,7 @@ define([
                 return identificationTextField;
                 function setUpAutocomplete() {
                     identificationTextField.tripleBrainAutocomplete({
-                        select:function (event, ui) {
+                        select: function (event, ui) {
                             var semanticMenu = $(this).closest(
                                 '.identifications'
                             );
@@ -261,7 +262,7 @@ define([
                                 getServerIdentificationFctn()
                             );
                         },
-                        resultsProviders:graphElement.isConcept() ?
+                        resultsProviders: graphElement.isConcept() ?
                             getResultsProvidersForVertex() :
                             getResultsProvidersForRelations()
                     });
@@ -280,9 +281,10 @@ define([
                     }
 
                     function getServerIdentificationFctn() {
-                        return graphElement.isConcept() ?
-                            graphElement.serverFacade().addGenericIdentification :
-                            graphElement.serverFacade().addSameAs;
+                        return graphElement.isConcept() ? function (concept,identificationResource) {
+                            graphElement.serverFacade().addGenericIdentification(concept, identificationResource);
+                            graphElement.refreshImages();
+                        } : graphElement.serverFacade().addSameAs;
                     }
                 }
             }

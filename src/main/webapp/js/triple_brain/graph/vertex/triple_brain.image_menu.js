@@ -2,12 +2,13 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "jquery",
-    "triple_brain.graph_element_menu",
-    "triple_brain.ui.graph",
-    "triple_brain.image"
-],
-    function ($, GraphElementMenu, GraphUi, Image) {
+        "jquery",
+        "triple_brain.graph_element_menu",
+        "triple_brain.ui.graph",
+        "triple_brain.image",
+        "triple_brain.ui.edge"
+    ],
+    function ($, GraphElementMenu, GraphUi, Image, EdgeUi) {
         var api = {};
         api.ofVertex = function (vertex) {
             return new ImageMenu(
@@ -37,7 +38,7 @@ define([
                     "<form>"
                 ).prop(
                     "action",
-                    vertex.getUri() + "/image"
+                        vertex.getUri() + "/image"
                 ).prop(
                     "method",
                     "post"
@@ -94,12 +95,12 @@ define([
                             }
                             var vertex = fileInput.data("vertex");
                             $.ajax({
-                                url:vertex.getUri() + "/image",
-                                type:"POST",
-                                data:formData,
-                                processData:false,
-                                contentType:false,
-                                success:function (data) {
+                                url: vertex.getUri() + "/image",
+                                type: "POST",
+                                data: formData,
+                                processData: false,
+                                contentType: false,
+                                success: function (data) {
                                     vertex.addImages(
                                         Image.arrayFromServerJson(data)
                                     );

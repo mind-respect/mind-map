@@ -490,6 +490,7 @@ svg {
   .image_container {
     float: left;
     position:relative;
+    min-width:60px;
   }
   .move {
     background-image: url('images/icons/vertex/move.png');
