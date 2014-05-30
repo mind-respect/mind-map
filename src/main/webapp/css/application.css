@@ -141,7 +141,7 @@ svg { z-index: 1; }
 .vertex .in-bubble-content, .vertex .image_container, .vertex .menu, .vertex .included-graph-elements-flag { z-index: 3; }
 .vertex .in-bubble-content { border-radius: 20px; background-color: #E6E6FF; white-space: nowrap; padding: 1em; padding-bottom: 0.7em; padding-top: 0.7em; margin-left: 0.3em; position: relative; display: inline-flex; border: 1px; border-color: transparent; border-style: solid; }
 .vertex .in-bubble-content .note-button { margin-right: 5px; margin-top: -3px; }
-.vertex .image_container { float: left; position: relative; min-width: 60px; }
+.vertex .image_container { float: left; position: relative; }
 .vertex .move { background-image: url("images/icons/vertex/move.png"); min-width: 25px; min-height: 25px; margin-right: 5px; margin-left: 8px; float: left; }
 .vertex .ui-button { width: 1.7em; height: 1.8em; margin-right: 0; font-size: 1.1em; padding: 0; }
 .vertex .ui-button.duplicate { position: absolute; left: -15px; top: -30px; }
