@@ -18,42 +18,9 @@
     <script src="js/plugins/polyk.js"></script>
     <script src="js/plugins/raphael-min.js"></script>
     <script src="js/require.js"></script>
-    <script>
-        loadDebugOrProdScripts();
-        function loadDebugOrProdScripts(){
-            callAjax("/service/server_config/", function(response){
-                var serverConfig = JSON.parse(response);
-                if(serverConfig.isTesting){
-                    addJs("js/common-boot.js");
-                    addJs("js/mind_map-boot.js");
-                }else{
-                    addJs("js/mind-map-built.js");
-                }
-            });
-            function addJs(filePath){
-                var scriptTag = document.createElement('script');
-                scriptTag.setAttribute("src", filePath);
-                document.getElementsByTagName("head")[0].appendChild(
-                        scriptTag
-                );
-            }
-            function callAjax(url, callback){
-                var xmlhttp;
-                xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function(){
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
-                        callback(xmlhttp.responseText);
-                    }
-                };
-                xmlhttp.open("GET", url, true);
-                xmlhttp.send();
-            }
-        }
-    </script>
-
 </head>
-<body class='canvas-parent'>
-    <div id="other-page-container" style="display:hidden;"></div>
+<body class='canvas-parent hidden'>
+    <div id="other-page-container" class='hidden'></div>
     <div id="mind_map" data-role="page" data-url="mind-map.html">
         <div data-role="content">
             <div id="left-panel" class="main-panel">
@@ -111,5 +78,37 @@
     <div class='frontier top'></div>
     <div class='frontier bottom'></div>
     <div id="selection-box" class='hidden'></div>
+    <script>
+        loadDebugOrProdScripts();
+        function loadDebugOrProdScripts(){
+            callAjax("/service/server_config/", function(response){
+                var serverConfig = JSON.parse(response);
+                if(serverConfig.isTesting){
+                    addJs("js/common-boot.js");
+                    addJs("js/mind_map-boot.js");
+                }else{
+                    addJs("js/mind-map-built.js");
+                }
+            });
+            function addJs(filePath){
+                var scriptTag = document.createElement('script');
+                scriptTag.setAttribute("src", filePath);
+                document.getElementsByTagName("head")[0].appendChild(
+                        scriptTag
+                );
+            }
+            function callAjax(url, callback){
+                var xmlhttp;
+                xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function(){
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+                        callback(xmlhttp.responseText);
+                    }
+                };
+                xmlhttp.open("GET", url, true);
+                xmlhttp.send();
+            }
+        }
+    </script>
 </body>
 </html>

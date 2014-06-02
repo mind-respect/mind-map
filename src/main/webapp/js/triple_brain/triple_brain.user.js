@@ -7,7 +7,7 @@ define([
         "jquery.json.min"
     ],
     function ($, EventBus) {
-        "use strict"
+        "use strict";
         var api = {};
         var usersResourceUrl = "/service/users/";
         var sessionResourceUrl = usersResourceUrl + "session/";

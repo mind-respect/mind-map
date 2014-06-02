@@ -4,7 +4,8 @@
 define([
     "jquery"
 ],
-    function () {
+    function ($) {
+        "use strict";
         var api = {};
         api.showLinearFlowWithOptions = function (configuration) {
             var options = $.extend({
@@ -17,7 +18,7 @@ define([
             if(isThereCurrentlyADialog()){
                 removeCurrentDialog();
             }
-            getOtherPageContainer().show().load(
+            getOtherPageContainer().removeClass("hidden").load(
                 configuration.href,
                 function(){
                     configuration.onComplete();
@@ -32,7 +33,7 @@ define([
         function hideCloseButton() {
             $(
                 ".ui-dialog-titlebar-close"
-            ).hide();
+            ).addClass("hidden");
         }
         function getMindMapContainer(){
             return $("#mind_map");
@@ -49,4 +50,4 @@ define([
             $("#other-page-container").dialog("destroy");
         }
     }
-)
+);

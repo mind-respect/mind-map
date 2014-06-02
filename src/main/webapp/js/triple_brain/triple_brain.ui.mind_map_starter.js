@@ -36,15 +36,13 @@ define(
                 return offset;
             },
             start:function () {
-                $(document).ready(function () {
-                    ServerSubscriber.init(function () {
-                        console.log("cometd initialized");
-                    });
-                    UserService.isAuthenticated(
-                        callBackWhenIsAuthenticated,
-                        showCredentialsFlow
-                    );
+                ServerSubscriber.init(function () {
+                    console.log("cometd initialized");
                 });
+                UserService.isAuthenticated(
+                    callBackWhenIsAuthenticated,
+                    showCredentialsFlow
+                );
                 function callBackWhenIsAuthenticated() {
                     handleIfNotAuthenticatedShowCredentialsFlow();
                     handleDisconnectButton();
@@ -61,6 +59,7 @@ define(
                     UserService.authenticatedUser(function () {
                             LanguageManager.loadLocaleContent(function () {
                                 GraphUi.resetDrawingCanvas();
+                                $("body").removeClass("hidden");
                                 GraphDisplayer.displayUsingDefaultVertex();
                                 Menu.redrawButton().on(
                                     "click",
@@ -88,6 +87,7 @@ define(
                 }
 
                 function showCredentialsFlow() {
+                    $("body").removeClass("hidden");
                     LanguageManager.loadLocaleContent(function () {
                         LoginHandler.startFlow();
                     });

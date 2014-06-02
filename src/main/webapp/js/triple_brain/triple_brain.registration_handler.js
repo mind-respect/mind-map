@@ -9,6 +9,7 @@ define([
     "triple_brain.language_manager"
 ],
     function (require, $, ExternalPageLoader, UserService, LanguageManager) {
+        "use strict";
         var api = {};
         var access = defineAccess();
         api.startFlow = function () {
@@ -26,7 +27,7 @@ define([
         function handleRegisterForm() {
             setupLanguageMenu();
             submitWhenPressingEnter();
-            access.errorMessages().hide();
+            access.errorMessages().addClass("hidden");
             access.registerForm()[0].reset();
             access.registerButton().on("click", function (event) {
                 event.preventDefault();
@@ -63,7 +64,6 @@ define([
             handleAddLanguageButton();
             setupSelectedLanguagesList();
             function setupSelectedLanguagesList() {
-                var currentLocale = LanguageManager.getBrowserLocale();
                 var selectedLanguagesList = access.getSelectedLanguagesList();
                 selectedLanguagesList.append(
                     makeListElementForSelectedLanguages(
@@ -94,13 +94,13 @@ define([
                             var list = filterInput.siblings(
                                 ".registration-available-languages"
                             );
-                            list.find("> li").hide()
+                            list.find("> li").addClass("hidden")
                                 .filter(function(){
                                     var listElement = $(this);
                                     return listElement.text().toLowerCase().indexOf(
                                         filterInput.val().toLowerCase()
                                     ) !== -1;
-                                }).show()
+                                }).removeClass("hidden");
                             return false;
                     });
                     var availableLanguagesList = $(
@@ -249,10 +249,10 @@ define([
         }
 
         function handleRegistrationError(errors) {
-            access.errorMessages().hide();
-            for (var i in errors) {
-                $('#' + errors[i].reason).show();
-            }
+            access.errorMessages().addClass("hidden");
+            $.each(errors, function(){
+                $('#' + errors[i].reason).removeClass("hidden");
+            });
         }
 
         function getSelectedLanguages(){
@@ -304,4 +304,4 @@ define([
             };
         }
     }
-)
+);
