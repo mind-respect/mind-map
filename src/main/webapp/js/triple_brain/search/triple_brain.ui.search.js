@@ -10,6 +10,7 @@ define([
     "jquery-ui"
 ],
     function ($, SearchService, GraphDisplayer, UserMapAutocompleteProvider) {
+        "use strict";
         return {
             init:function() {
                 $("#vertex-search-input").tripleBrainAutocomplete({

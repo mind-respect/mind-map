@@ -6,6 +6,7 @@ define([
     "triple_brain.selection_handler"
 ],
     function ($, SelectionHandler) {
+        "use strict";
         var api = {},
             topCenterMenu,
             buttons,

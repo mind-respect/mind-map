@@ -8,6 +8,7 @@ define([
     "triple_brain.user"
 ],
     function (require, $, EventBus, Triple, Suggestion, GraphElement, UserService) {
+        "use strict";
         var api = {};
         api.getByUri = function (uri, callback) {
             return $.ajax({
@@ -306,5 +307,4 @@ define([
             return UserService.currentUserUri() + "/graph/vertex"
         }
     }
-)
-;
+);
