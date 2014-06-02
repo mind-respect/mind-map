@@ -6,8 +6,11 @@ define([
         "triple_brain.point"
     ],
     function ($, Point) {
-        var api = {};
-        var htmlBody =  $("body");
+        "use strict";
+        var api = {},
+            htmlBody =  $("body"),
+            _drawnGraph,
+            _topLayer;
         api.getEdgeMouseOver = function () {
             return htmlBody.data("edge_mouse_over");
         };
@@ -41,7 +44,16 @@ define([
             );
         };
         api.getDrawnGraph = function(){
-            return $("#drawn_graph");
+            if(!_drawnGraph){
+                _drawnGraph = $("#drawn_graph");
+            }
+            return _drawnGraph;
+        };
+        api.getTopLayer = function(){
+            if(!_topLayer){
+                _topLayer = $("svg.main");
+            }
+            return _topLayer;
         };
         return api;
     }

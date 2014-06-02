@@ -12,7 +12,8 @@ define([
 ], function ($, GraphUi, ScrollOnMouseFrontier, UiUtils, GraphDisplayer, EventBus) {
     "use strict";
     var api = {},
-        selectBox,
+        _selectBox,
+        _selectionManagementButton,
         SELECT_BOX_MIN_WIDTH = 45,
         SELECT_BOX_MIN_HEIGHT = 40;
 
@@ -26,7 +27,7 @@ define([
     };
     api.handleButtonClick = function () {
         removeSelectBoxIfExists();
-        getMindMap().off(
+        GraphUi.getTopLayer().off(
             "click",
             activateSelectionOnMindMap
         ).on(
@@ -35,7 +36,10 @@ define([
         );
     };
     api.getSelectionManagementButton = function () {
-        return $("#graph-elements-selected");
+        if(!_selectionManagementButton){
+            _selectionManagementButton = $("#graph-elements-selected");
+        }
+        return _selectionManagementButton;
     };
     api.refreshSelectionMenu = function(){
         setNbSelectedGraphElements(
@@ -85,9 +89,7 @@ define([
         return graphElements;
     };
     return api;
-    function getMindMap() {
-        return $("svg.main");
-    }
+
     function activateSelectionOnMindMap(event) {
         $(this).off(
             event
@@ -131,22 +133,22 @@ define([
     }
 
     function getSelectBox() {
-        if(!selectBox){
-            selectBox = $("#selection-box");
+        if(!_selectBox){
+            _selectBox = $("#selection-box");
         }
-        return selectBox;
+        return _selectBox;
     }
 
     function setNbSelectedGraphElements(nbSelectedGraphElements) {
         if (nbSelectedGraphElements === 0) {
-            api.getSelectionManagementButton().hide();
+            api.getSelectionManagementButton().addClass("hidden");
             EventBus.publish(
                 "/event/ui/selection/changed",
                 [[]]
             );
             return;
         }
-        api.getSelectionManagementButton().show();
+        api.getSelectionManagementButton().removeClass("hidden");
         getWhereToPutNbSelectedGraphElements().text(
             nbSelectedGraphElements
         );

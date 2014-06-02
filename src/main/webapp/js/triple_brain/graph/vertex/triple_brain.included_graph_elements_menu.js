@@ -14,26 +14,27 @@ define([
             vertex
         );
     };
-     return api;
+    return api;
     function IncludedVerticesMenu(vertex) {
-        var self = this;
-        var html;
+        "use strict";
+        var self = this,
+            html;
         this.create = function () {
             html = $("<div class='canvas-parent included-vertices-container'>");
-            GraphUi.addHtml(html);
             addTitle();
+            GraphUi.addHtml(html);
             var paper = Raphael(html[0], 30000, 30000);
             html.data(
                 "canvas",
                 paper
             );
-            html.find("> svg").dragScroll({
-                scrollContainer : html
+            getLocalTopLayer().dragScroll({
+                scrollContainer: html
             });
             var drawnTree = addIncludedGraphElements();
             GraphElementMenu.makeForMenuContentAndGraphElement(
                 html,
-                vertex,{
+                vertex, {
                     height: 0.5914 * $(window).height(),
                     width: 0.6987 * $(window).width()
                 }
@@ -43,22 +44,26 @@ define([
             GraphDisplayer.getVertexSelector().withId(
                 vertices[vertexUri].uiIds[0]
             ).getHtml().centerOnScreen({
-                    container : html,
-                    containerVisibleSize : {
-                        x : html.innerWidth(),
-                        y : html.innerHeight()
+                    container: html,
+                    containerVisibleSize: {
+                        x: html.innerWidth(),
+                        y: html.innerHeight()
                     }
-            });
+                });
             GraphDisplayer.integrateEdgesOfServerGraphForViewOnly(
                 drawnTree
             );
             return self;
+            function getLocalTopLayer(){
+                return html.find("> svg");
+            }
         };
         function addTitle() {
             html.append(
                 "<h2 data-i18n='vertex.menu.included_graph_elements.title'></h2>"
             );
         }
+
         function addIncludedGraphElements() {
             return GraphDisplayer.buildIncludedGraphElementsView(
                 vertex,
