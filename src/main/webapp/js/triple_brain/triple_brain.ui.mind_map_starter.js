@@ -25,8 +25,8 @@ define(
     ],
     function ($, UserService, EventBus, LoginHandler, MindMapTemplate, ServerSubscriber, SearchUi, GraphDisplayer, GraphDisplayerFactory, Menu, GraphUi, LanguageManager, VertexService, TopCenterMenu, LeftPanel, SelectionHandler, KeyboardUtils, GraphElementMainMenu, VertexServeFacade) {
         "use strict";
-        var leftPanelWidth = 225;
-        var api = {
+        var leftPanelWidth = 225,
+        api = {
             offset:function () {
                 var offset = {};
                 var leftMargin = 150;
@@ -97,7 +97,7 @@ define(
                     $("#disconnect-btn").click(function () {
                         UserService.logout(function () {
                             window.location = "/";
-                        })
+                        });
                     });
                 }
 

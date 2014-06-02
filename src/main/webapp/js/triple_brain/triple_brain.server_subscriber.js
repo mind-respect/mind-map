@@ -2,15 +2,16 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "jquery",
-    "triple_brain.event_bus",
-    "jquery.cometd",
-    "jquery.cometd-ack",
-    "jquery.cometd-reload",
-    "jquery.cometd-timestamp",
-    "jquery.cometd-timesync"
-],
+        "jquery",
+        "triple_brain.event_bus",
+        "jquery.cometd",
+        "jquery.cometd-ack",
+        "jquery.cometd-reload",
+        "jquery.cometd-timestamp",
+        "jquery.cometd-timesync"
+    ],
     function ($, EventBus) {
+        "use strict";
         var api = {};
         var NUMBER_OF_SUBSCRIPTIONS_INDEX = 1;
         var cometd = $.cometd;
@@ -24,7 +25,7 @@ define([
 
         var cometURL = location.protocol + "//" + location.host + "/service/cometd";
         cometd.configure({
-            url:cometURL
+            url: cometURL
 //            logLevel: 'debug'
         });
 
@@ -41,7 +42,7 @@ define([
         api.subscribe = function (event, notificationCallBack, subscriptionDoneCallBack) {
             try {
                 EventBus.subscribe(
-                    "/subscription" + event,
+                        "/subscription" + event,
                     subscriptionDoneCallBack
                 );
                 var subscriptionInfo = cometd.subscribe(event, function (message) {
@@ -54,7 +55,7 @@ define([
                 var numberOfSubscription = subscriptionInfo[
                     NUMBER_OF_SUBSCRIPTIONS_INDEX
                     ];
-                if(numberOfSubscription > 0){
+                if (numberOfSubscription > 0) {
                     subscriptionDoneCallBack();
                 }
             } catch (e) {
@@ -86,7 +87,7 @@ define([
 
         function _metaSubscribe(subscribeInfo) {
             EventBus.publish(
-                "/subscription" + subscribeInfo.subscription,
+                    "/subscription" + subscribeInfo.subscription,
                 [subscribeInfo]
             );
         }
@@ -100,4 +101,5 @@ define([
                 console.log("failed to handshake push server")
             }
         }
-    });
+    }
+);
