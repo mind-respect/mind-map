@@ -9,14 +9,16 @@ define([
     "triple_brain.graph_element_button",
     "jquery-ui"
 ], function ($, GraphDisplayer, EventBus, SelectionHandler, GraphElementButton) {
-    var api = {};
+    "use strict";
+    var api = {},
+        _menu;
     api.reset = function () {
         initButtons();
         getMenu().draggable({
-            stop:function () {
+            stop: function () {
                 var menu = $(this);
-                var topOff = menu.offset().top - $(window).scrollTop()
-                menu.css("top", topOff)
+                var topOff = menu.offset().top - $(window).scrollTop();
+                menu.css("top", topOff);
                 menu.css("position", "fixed")
             }
         });
@@ -24,7 +26,7 @@ define([
             api.visitButtons(function (button) {
                 var html = button.getHtml();
                 var icon = $("<i>").addClass(
-                    "fa " + button.getIconClass()
+                        "fa " + button.getIconClass()
                 );
                 html.addClass(
                     "graph-element-button"
@@ -45,7 +47,7 @@ define([
             });
         }
     };
-    api.visitButtons = function(visitor){
+    api.visitButtons = function (visitor) {
         $.each(getButtonsHtml(), function () {
             visitor(
                 GraphElementButton.fromHtml(
@@ -54,7 +56,10 @@ define([
             );
         });
     };
-    EventBus.subscribe("/event/ui/selection/changed", function (event, selectedElements) {
+    EventBus.subscribe("/event/ui/selection/changed", selectionChangedHandler);
+    return api;
+
+    function selectionChangedHandler(event, selectedElements){
         var clickHandler = updateCurrentClickHandler();
         api.visitButtons(function (button) {
             button.showOnlyIfApplicable(
@@ -62,22 +67,24 @@ define([
                 selectedElements
             );
         });
-    });
-    return api;
+    }
 
     function getButtonsHtml() {
         return getMenu().find("> button");
     }
 
     function getMenu() {
-        return $("#graph-element-menu");
+        if(!_menu){
+            _menu = $("#graph-element-menu");
+        }
+        return _menu;
     }
 
     function updateCurrentClickHandler() {
-        var nbSelectedGraphElements = SelectionHandler.getNbSelected();
-        var currentClickHandler;
-        var vertexMenuHandler = GraphDisplayer.getVertexMenuHandler();
-        var relationMenuHandler = GraphDisplayer.getRelationMenuHandler();
+        var nbSelectedGraphElements = SelectionHandler.getNbSelected(),
+            currentClickHandler,
+            vertexMenuHandler = GraphDisplayer.getVertexMenuHandler(),
+            relationMenuHandler = GraphDisplayer.getRelationMenuHandler();
         if (0 === nbSelectedGraphElements) {
             currentClickHandler = GraphDisplayer.getGraphMenuHandler();
         }
@@ -88,11 +95,11 @@ define([
         } else {
             var nbSelectedBubbles = SelectionHandler.getNbSelectedBubbles();
             var nbSelectedRelations = SelectionHandler.getNbSelectedRelations();
-            if(0 === nbSelectedBubbles){
+            if (0 === nbSelectedBubbles) {
                 currentClickHandler = relationMenuHandler.forGroup();
-            }else if(0 === nbSelectedRelations){
+            } else if (0 === nbSelectedRelations) {
                 currentClickHandler = vertexMenuHandler.forGroup();
-            }else{
+            } else {
                 currentClickHandler = GraphDisplayer.getGraphElementMenuHandler();
             }
         }
@@ -101,6 +108,7 @@ define([
         );
         return currentClickHandler;
     }
+
     function setCurrentClickHandler(currentClickHandler) {
         getMenu().data(
             "currentClickHandler",

@@ -8,18 +8,19 @@ define([
     "triple_brain.menu"
     ],
     function(EventBus, MindMapInfo, IdUriUtils, Menu){
-        var _implementation;
-        var api = {};
+        "use strict";
+        var _implementation,
+            api = {};
         api.setImplementation = function(implementation){
             _implementation = implementation;
             var isGraph = _implementation.name() === "graph";
-            Menu.showAsGraphButton()[isGraph ? "hide" : "show"]();
-            Menu.showAsTreeButton()[isGraph ? "show" : "hide"]();
+            Menu.showAsGraphButton()[isGraph ? "addClass" : "removeClass"]("hidden");
+            Menu.showAsTreeButton()[isGraph ? "removeClass" : "addClass"]("hidden");
             Menu.redrawButton()[
                 _implementation.allowsMovingVertices() ?
-                    "show" :
-                    "hide"
-                ]();
+                    "removeClass" :
+                    "addClass"
+                ]("hidden");
         };
         api.name = function(){
             return _implementation.name();

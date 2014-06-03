@@ -4,6 +4,7 @@ define([
     "jquery.url"
 ],
     function ($, UserService) {
+        "use strict";
         var api = {};
         api.baseUri = "http://www.triple_brain.org/";
         api.encodeUri = function (uri) {
@@ -27,7 +28,7 @@ define([
         };
         api.uriFromGraphElementId = function (id) {
             var username = UserService.authenticatedUserInCache().user_name;
-            return "/users" + username + "/" + id
+            return "/users" + username + "/" + id;
         };
         return api;
     }

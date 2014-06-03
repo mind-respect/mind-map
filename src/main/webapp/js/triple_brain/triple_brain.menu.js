@@ -4,6 +4,7 @@
 define([
     "jquery"
 ], function($){
+    "use strict";
     var api = {};
     api.redrawButton = function(){
         return headerMenu().find(".redraw");

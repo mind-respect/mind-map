@@ -3,24 +3,24 @@
  */
 
 define([
-    "require",
-    "jquery",
-    "triple_brain.mind-map_template",
-    "triple_brain.ui.vertex_and_edge_common",
-    "triple_brain.tree_edge",
-    "triple_brain.edge",
-    "triple_brain.event_bus",
-    "triple_brain.relative_tree_vertex",
-    "triple_brain.relative_tree_displayer_templates",
-    "triple_brain.external_resource",
-    "triple_brain.user_map_autocomplete_provider",
-    "triple_brain.freebase_autocomplete_provider",
-    "triple_brain.graph_displayer",
-    "triple_brain.keyboard_utils",
-    "triple_brain.selection_handler",
-    "triple_brain.graph_element_main_menu",
-    "jquery.cursor-at-end"
-],
+        "require",
+        "jquery",
+        "triple_brain.mind-map_template",
+        "triple_brain.ui.vertex_and_edge_common",
+        "triple_brain.tree_edge",
+        "triple_brain.edge",
+        "triple_brain.event_bus",
+        "triple_brain.relative_tree_vertex",
+        "triple_brain.relative_tree_displayer_templates",
+        "triple_brain.external_resource",
+        "triple_brain.user_map_autocomplete_provider",
+        "triple_brain.freebase_autocomplete_provider",
+        "triple_brain.graph_displayer",
+        "triple_brain.keyboard_utils",
+        "triple_brain.selection_handler",
+        "triple_brain.graph_element_main_menu",
+        "jquery.cursor-at-end"
+    ],
     function (require, $, MindMapTemplate, VertexAndEdgeCommon, TreeEdge, EdgeService, EventBus, RelativeTreeVertex, RelativeTreeTemplates, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphDisplayer, KeyboardUtils, SelectionHandler, GraphElementMainMenu) {
         var api = {};
         api.get = function (edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
@@ -93,7 +93,7 @@ define([
                 );
                 return edge;
             };
-            function buildMenu(edge){
+            function buildMenu(edge) {
                 var edgeHtml = edge.getHtml();
                 var vertex = RelativeTreeVertex.withHtml(
                     edgeHtml.closest(".vertex")
@@ -101,8 +101,8 @@ define([
                 var menu = $("<span class='relation-menu'>");
                 edgeHtml.append(menu);
                 var clickHandler = GraphDisplayer.getRelationMenuHandler().forSingle();
-                GraphElementMainMenu.visitButtons(function(button){
-                    if(!button.canActionBePossiblyMade(clickHandler)){
+                GraphElementMainMenu.visitButtons(function (button) {
+                    if (!button.canActionBePossiblyMade(clickHandler)) {
                         return;
                     }
                     button.cloneInto(menu);
@@ -110,9 +110,9 @@ define([
                 menu.find("button").show();
             }
 
-            function buildLabelAsInput(edge){
+            function buildLabelAsInput(edge) {
                 var input = RelativeTreeTemplates['edge_input'].merge({
-                    label:edge.text()
+                    label: edge.text()
                 });
                 input = $(input);
                 if (input.val() === TreeEdge.getWhenEmptyLabel()) {
@@ -132,8 +132,8 @@ define([
                     EdgeService.updateLabel(edge, edge.text());
                 });
                 input.tripleBrainAutocomplete({
-                    limitNbRequests:true,
-                    select:function (event, ui) {
+                    limitNbRequests: true,
+                    select: function (event, ui) {
                         var edge = edgeFromHtml($(this));
                         changeToSpan(edge);
                         var identificationResource = ExternalResource.fromSearchResult(
@@ -150,7 +150,7 @@ define([
                             newLabel
                         );
                     },
-                    resultsProviders:[
+                    resultsProviders: [
                         UserMapAutocompleteProvider.toFetchRelationsForIdentification(
                             edge
                         ),
@@ -196,7 +196,7 @@ define([
                 var nonInputLabel = edge.getHtml().find(
                     ">.overlay-container span.label"
                 ).text(
-                    edgeText.trim() === "" ?
+                        edgeText.trim() === "" ?
                         TreeEdge.getWhenEmptyLabel() :
                         edgeText
                 );
@@ -215,7 +215,7 @@ define([
                     "<div class='overlay-container'>"
                 ).appendTo(html).on(
                     "dblclick",
-                    function(event){
+                    function (event) {
                         event.stopPropagation();
                         var edge = edgeFromHtml(
                             $(this)
@@ -228,18 +228,18 @@ define([
                     }
                 ).on(
                     "click",
-                    function(event){
+                    function (event) {
                         event.stopPropagation();
                         var edge = edgeFromHtml(
                             $(this).closest(".relation")
                         );
-                        if(KeyboardUtils.isCtrlPressed()){
-                            if(edge.isSelected()){
+                        if (KeyboardUtils.isCtrlPressed()) {
+                            if (edge.isSelected()) {
                                 edge.deselect();
-                            }else{
+                            } else {
                                 edge.select();
                             }
-                        }else{
+                        } else {
                             SelectionHandler.reset();
                             edge.select();
                         }
@@ -249,18 +249,17 @@ define([
                 var overlay = $(
                     "<div class='overlay'>"
                 ).appendTo(overlayContainer);
-                var labelSpan = $(
+                return $(
                     "<span>"
                 ).addClass(
                     "label label-info"
                 ).text(
-                    label.trim() === "" ?
+                        label.trim() === "" ?
                         TreeEdge.getWhenEmptyLabel() :
                         label
                 ).appendTo(
                     overlayContainer
                 );
-                return labelSpan;
             }
 
             function edgeFromHtml(htmlComponent) {

@@ -7,6 +7,7 @@ define([
     "triple_brain.user"
 ],
     function(IdUriUtils, UserService){
+        "use strict";
         var api={};
         api.uri = function(){
             var username = UserService.authenticatedUserInCache().user_name;

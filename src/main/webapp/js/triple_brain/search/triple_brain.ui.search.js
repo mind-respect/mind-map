@@ -4,12 +4,11 @@
 
 define([
     "jquery",
-    "triple_brain.search",
     "triple_brain.graph_displayer",
     "triple_brain.user_map_autocomplete_provider",
     "jquery-ui"
 ],
-    function ($, SearchService, GraphDisplayer, UserMapAutocompleteProvider) {
+    function ($, GraphDisplayer, UserMapAutocompleteProvider) {
         "use strict";
         return {
             init:function() {
