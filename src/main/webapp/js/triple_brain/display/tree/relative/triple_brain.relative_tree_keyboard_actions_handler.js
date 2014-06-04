@@ -33,6 +33,7 @@ define([
             if (!SelectionHandler.isOnlyASingleBubbleSelected()) {
                 return;
             }
+            var selectedVertex = SelectionHandler.getSelectedBubbles()[0];
             $.each(listenedKeysAndTheirAction, function () {
                 var key = this[0];
                 if (event.which !== key) {
@@ -40,7 +41,6 @@ define([
                 }
                 event.preventDefault();
                 var action = this[1];
-                var selectedVertex = SelectionHandler.getSelectedBubbles()[0];
                 action(selectedVertex);
                 return false;
             });
@@ -103,9 +103,8 @@ define([
             newSelectedVertex = selectedVertex.getParentVertex();
         }
         selectedVertex.deselect();
-        newSelectedVertex.select();
+        newSelectedVertex.setToSingleBubble();
         centerVertexIfApplicable(newSelectedVertex);
-        SelectionHandler.refreshSelectionMenu();
     }
 
     function rightAction(selectedVertex) {
@@ -128,32 +127,26 @@ define([
             }
             newSelectedVertex = selectedVertex.getTopMostChild();
         }
-        selectedVertex.deselect();
-        newSelectedVertex.select();
+        SelectionHandler.setToSingleBubble(newSelectedVertex);
         centerVertexIfApplicable(newSelectedVertex);
-        SelectionHandler.refreshSelectionMenu();
     }
 
     function upAction(selectedVertex) {
         if(selectedVertex.isCenterVertex() || !selectedVertex.hasBubbleAbove()){
             return;
         }
-        selectedVertex.deselect();
         var bubbleAbove = selectedVertex.getBubbleAbove();
-        bubbleAbove.select();
+        SelectionHandler.setToSingleBubble(bubbleAbove)
         centerVertexIfApplicable(bubbleAbove);
-        SelectionHandler.refreshSelectionMenu();
     }
 
     function downAction(selectedVertex) {
         if(selectedVertex.isCenterVertex() || !selectedVertex.hasBubbleUnder()){
             return;
         }
-        selectedVertex.deselect();
         var bubbleUnder = selectedVertex.getBubbleUnder();
-        bubbleUnder.select();
+        SelectionHandler.setToSingleBubble(bubbleUnder);
         centerVertexIfApplicable(bubbleUnder);
-        SelectionHandler.refreshSelectionMenu();
     }
     function centerVertexIfApplicable(vertex){
         var html = vertex.getHtml();

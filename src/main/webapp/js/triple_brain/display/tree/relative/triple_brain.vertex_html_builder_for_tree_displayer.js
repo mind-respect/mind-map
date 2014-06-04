@@ -100,8 +100,7 @@ define([
                     var vertex = RelativeTreeVertex.withHtml(
                         $(this)
                     );
-                    vertex.deselect();
-                    SelectionHandler.refreshSelectionMenu();
+                    SelectionHandler.setToNoneSelected();
                     vertex.getLabel().focus().setCursorToEndOfText();
                 }
             ).on(
@@ -112,15 +111,15 @@ define([
                     );
                     if (KeyboardUtils.isCtrlPressed()) {
                         if (vertex.isSelected()) {
-                            vertex.deselect();
+                            SelectionHandler.removeBubble(vertex);
                         } else {
-                            vertex.select();
+                            SelectionHandler.addBubble(vertex);
                         }
                     } else {
-                        SelectionHandler.reset();
-                        vertex.select();
+                        SelectionHandler.setSelectionToSingleBubble(
+                            vertex
+                        );
                     }
-                    SelectionHandler.refreshSelectionMenu();
                 }
             );
             html.uniqueId();

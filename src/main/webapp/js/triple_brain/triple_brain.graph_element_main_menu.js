@@ -24,11 +24,10 @@ define([
         });
         function initButtons() {
             api.visitButtons(function (button) {
-                var html = button.getHtml();
                 var icon = $("<i>").addClass(
                         "fa " + button.getIconClass()
                 );
-                html.addClass(
+                button.getHtml().addClass(
                     "graph-element-button"
                 ).append(icon).on(
                     "click",
@@ -36,11 +35,13 @@ define([
                         event.stopPropagation();
                         var button = $(this);
                         var method = button.attr("data-action");
+                        var selectedElements = 1 === SelectionHandler.getNbSelected() ?
+                            SelectionHandler.getSingleElement() : SelectionHandler.getSelectedElements();
                         getCurrentClickHandler()[
                             method
                             ](
                             event,
-                            SelectionHandler.getSelectedElements()
+                            selectedElements
                         );
                     }
                 );
@@ -59,8 +60,11 @@ define([
     EventBus.subscribe("/event/ui/selection/changed", selectionChangedHandler);
     return api;
 
-    function selectionChangedHandler(event, selectedElements){
-        var clickHandler = updateCurrentClickHandler();
+    function selectionChangedHandler(event, selectionInfo){
+        var clickHandler = updateCurrentClickHandler(selectionInfo);
+        var selectedElements = 1 === selectionInfo.getNbSelected() ?
+            selectionInfo.getSingleElement() :
+            selectionInfo.getSelectedElements();
         api.visitButtons(function (button) {
             button.showOnlyIfApplicable(
                 clickHandler,
@@ -80,8 +84,8 @@ define([
         return _menu;
     }
 
-    function updateCurrentClickHandler() {
-        var nbSelectedGraphElements = SelectionHandler.getNbSelected(),
+    function updateCurrentClickHandler(selectedElements) {
+        var nbSelectedGraphElements = selectedElements.getNbSelected(),
             currentClickHandler,
             vertexMenuHandler = GraphDisplayer.getVertexMenuHandler(),
             relationMenuHandler = GraphDisplayer.getRelationMenuHandler();
@@ -89,12 +93,12 @@ define([
             currentClickHandler = GraphDisplayer.getGraphMenuHandler();
         }
         else if (1 === nbSelectedGraphElements) {
-            currentClickHandler = SelectionHandler.getSelectedElements().isConcept() ?
+            currentClickHandler = selectedElements.getSingleElement().isConcept() ?
                 vertexMenuHandler.forSingle() :
                 relationMenuHandler.forSingle();
         } else {
-            var nbSelectedBubbles = SelectionHandler.getNbSelectedBubbles();
-            var nbSelectedRelations = SelectionHandler.getNbSelectedRelations();
+            var nbSelectedBubbles = selectedElements.getNbSelectedBubbles();
+            var nbSelectedRelations = selectedElements.getNbSelectedRelations();
             if (0 === nbSelectedBubbles) {
                 currentClickHandler = relationMenuHandler.forGroup();
             } else if (0 === nbSelectedRelations) {

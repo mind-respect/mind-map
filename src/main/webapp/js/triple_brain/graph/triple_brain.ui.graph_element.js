@@ -4,9 +4,8 @@
 define([
     "jquery",
     "triple_brain.event_bus",
-    "triple_brain.selection_handler",
     "triple_brain.graph_displayer"
-],function($, EventBus, SelectionHandler, GraphDisplayer){
+],function($, EventBus, GraphDisplayer){
     var api = {};
     api.types = {
         "CONCEPT" : "concept",
@@ -66,7 +65,7 @@ define([
             self.applyCommonBehaviorForAddedIdentification(genericIdentification);
         };
         this.removeGenericIdentification = function (genericIdentification) {
-            var gener1icIdentifications = self.removeIdenficationInArray(
+            var genericIdentifications = self.removeIdenficationInArray(
                 genericIdentification,
                 self.getGenericIdentifications()
             );
@@ -111,18 +110,17 @@ define([
         };
     };
     EventBus.subscribe("/event/ui/selection/changed",
-        function (event, selectedElements) {
-            var onlyOneGraphElementSelected = 1 === SelectionHandler.getNbSelected();
+        function (event, selectionInfo) {
+            var onlyOneGraphElementSelected = 1 === selectionInfo.getNbSelected();
             if(!onlyOneGraphElementSelected){
-                $.each(selectedElements, function(){
+                $.each(selectionInfo.getSelectedElements(), function(){
                     var selectedElement = this;
                     selectedElement.hideMenu();
                 });
                 return;
             }
-            selectedElements.showMenu();
             displayOnlyRelevantButtonsInGraphElementMenu(
-                selectedElements
+                selectionInfo.getSingleElement()
             );
         }
     );

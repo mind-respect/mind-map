@@ -15,13 +15,62 @@ define([
         _selectBox,
         _selectionManagementButton,
         SELECT_BOX_MIN_WIDTH = 45,
-        SELECT_BOX_MIN_HEIGHT = 40;
+        SELECT_BOX_MIN_HEIGHT = 40,
+        selectionInfo = new SelectionInfo();
 
-    api.reset = function () {
-        GraphDisplayer.getVertexSelector().resetSelection();
-        GraphDisplayer.getEdgeSelector().resetSelection();
-        setNbSelectedGraphElements(0);
+    api.setSelectionToSingleBubble = function (bubble) {
+        deselectAll();
+        selectionInfo.setToSingleBubble(bubble);
+        bubble.select();
+        bubble.makeSingleSelected();
+        reflectSelectionChange();
     };
+
+    api.setSelectionToSingleRelation = function (relation) {
+        deselectAll();
+        selectionInfo.setToSingleRelation(relation);
+        relation.select();
+        relation.makeSingleSelected();
+        reflectSelectionChange();
+    };
+
+    api.addRelation = function (relation) {
+        relation.select();
+        selectionInfo.addRelation(relation);
+        reflectSelectionChange();
+    };
+
+    api.addBubble = function (bubble) {
+        bubble.select();
+        selectionInfo.addBubble(bubble);
+        reflectSelectionChange();
+    };
+    api.removeBubble = function (bubble) {
+        bubble.deselect();
+        selectionInfo.removeBubble(bubble);
+        reflectSelectionChange();
+    };
+    api.removeRelation = function (relation) {
+        relation.deselect();
+        selectionInfo.removeRelation(relation);
+        reflectSelectionChange();
+    };
+
+    api.setToNoneSelected = function () {
+        deselectAll(
+            selectionInfo.getSelectedBubbles()
+        );
+        deselectAll(
+            selectionInfo.getSelectedRelations()
+        );
+        selectionInfo.setToNoneSelected();
+        reflectSelectionChange();
+    };
+
+    api.getSelectedBubbles = function () {
+        return selectionInfo.getSelectedBubbles();
+    };
+
     api.handleSelectionManagementClick = function (event) {
         event.preventDefault();
     };
@@ -36,59 +85,51 @@ define([
         );
     };
     api.getSelectionManagementButton = function () {
-        if(!_selectionManagementButton){
+        if (!_selectionManagementButton) {
             _selectionManagementButton = $("#graph-elements-selected");
         }
         return _selectionManagementButton;
     };
-    api.refreshSelectionMenu = function(){
-        setNbSelectedGraphElements(
-            api.getNbSelected()
-        );
-    };
-    api.isOnlyASingleBubbleSelected = function(){
+
+    api.isOnlyASingleBubbleSelected = function () {
         return 1 === api.getNbSelectedBubbles() &&
             0 === api.getNbSelectedRelations();
     };
-    api.getNbSelected = function(){
-        return api.getSelectedBubbles().length + api.getSelectedRelations().length;
+    api.getNbSelected = function () {
+        return selectionInfo.getNbSelected();
     };
-    api.getNbSelectedBubbles = function(){
-        return api.getSelectedBubbles().length;
+    api.getNbSelectedBubbles = function () {
+        return selectionInfo.getNbSelectedBubbles();
     };
-    api.getNbSelectedRelations = function(){
-        return api.getSelectedRelations().length;
+    api.getNbSelectedRelations = function () {
+        return selectionInfo.getNbSelectedRelations();
     };
-    api.getSelectedBubbles = function(){
-        var selected = [];
-        GraphDisplayer.getVertexSelector().visitSelected(function(vertex){
-            selected.push(
-                vertex
-            );
-        });
-        return selected;
+    api.getSelectedElements = function () {
+        return selectionInfo.getSelectedElements();
     };
-    api.getSelectedRelations = function(){
-        var selected = [];
-        GraphDisplayer.getEdgeSelector().visitSelected(function(edge){
-            selected.push(
-                edge
-            );
-        });
-        return selected;
-    };
-    api.getSelectedElements = function(){
-        var selectedRelations = api.getSelectedRelations();
-        var selectedBubbles = api.getSelectedBubbles();
-        var graphElements = selectedBubbles.concat(
-            selectedRelations
-        );
-        if(1 === graphElements.length){
-            return graphElements[0];
-        }
-        return graphElements;
+    api.getSingleElement = function () {
+        return selectionInfo.getSingleElement();
     };
     return api;
+    function reflectSelectionChange() {
+        var nbSelectedGraphElements = selectionInfo.getNbSelected();
+        if (0 === nbSelectedGraphElements) {
+            api.getSelectionManagementButton().addClass("hidden");
+            EventBus.publish(
+                "/event/ui/selection/changed",
+                selectionInfo
+            );
+            return;
+        }
+        api.getSelectionManagementButton().removeClass("hidden");
+        getWhereToPutNbSelectedGraphElements().text(
+            nbSelectedGraphElements
+        );
+        EventBus.publish(
+            "/event/ui/selection/changed",
+            selectionInfo
+        );
+    }
 
     function activateSelectionOnMindMap(event) {
         $(this).off(
@@ -103,29 +144,40 @@ define([
         ).css(
             "top", event.pageY - SELECT_BOX_MIN_HEIGHT / 2
         ).resizable({
-                handles:"ne, se, sw, nw",
-                containment:"document",
-                start:ScrollOnMouseFrontier.doIt,
-                stop:function () {
+                handles: "ne, se, sw, nw",
+                containment: "document",
+                start: ScrollOnMouseFrontier.doIt,
+                stop: function () {
                     ScrollOnMouseFrontier.disable();
-                    GraphDisplayer.getVertexSelector().resetSelection();
-                    var nbSelected = 0;
+                    api.setToNoneSelected();
                     GraphDisplayer.getVertexSelector().visitAllVertices(function (vertex) {
                         if (UiUtils.doComponentsCollide(
                             vertex.getHtml(),
                             getSelectBox()
                         )) {
-                            vertex.select();
-                            nbSelected++;
+                            api.addBubble(vertex);
                         }
                     });
                     removeSelectBoxIfExists();
-                    setNbSelectedGraphElements(
-                        api.getNbSelected()
-                    );
+                    reflectSelectionChange();
                 }
             }
         );
+    }
+
+    function deselectAll() {
+        deselectGraphElements(
+            selectionInfo.getSelectedBubbles()
+        );
+        deselectGraphElements(
+            selectionInfo.getSelectedRelations()
+        );
+    }
+
+    function deselectGraphElements(graphElements) {
+        $.each(graphElements, function () {
+            this.deselect();
+        });
     }
 
     function removeSelectBoxIfExists() {
@@ -133,32 +185,76 @@ define([
     }
 
     function getSelectBox() {
-        if(!_selectBox){
+        if (!_selectBox) {
             _selectBox = $("#selection-box");
         }
         return _selectBox;
     }
 
-    function setNbSelectedGraphElements(nbSelectedGraphElements) {
-        if (nbSelectedGraphElements === 0) {
-            api.getSelectionManagementButton().addClass("hidden");
-            EventBus.publish(
-                "/event/ui/selection/changed",
-                [[]]
-            );
-            return;
-        }
-        api.getSelectionManagementButton().removeClass("hidden");
-        getWhereToPutNbSelectedGraphElements().text(
-            nbSelectedGraphElements
-        );
-        EventBus.publish(
-            "/event/ui/selection/changed",
-            [api.getSelectedElements()]
-        );
-    }
-
     function getWhereToPutNbSelectedGraphElements() {
         return api.getSelectionManagementButton().find(".nb");
+    }
+
+    function SelectionInfo() {
+        var bubbles = [],
+            relations = [],
+            self = this;
+        this.setToSingleBubble = function (bubble) {
+            relations = [];
+            bubbles[0] = bubble;
+        };
+        this.setToSingleRelation = function (relation) {
+            bubbles = [];
+            relations[0] = relation;
+        };
+        this.setToNoneSelected = function () {
+            bubbles = [];
+            relations = [];
+        };
+        this.addRelation = function (relation) {
+            relations.push(relation);
+        };
+        this.addBubble = function (bubble) {
+            bubbles.push(bubble);
+        };
+        this.removeBubble = function (bubble) {
+            removeGraphElement(bubble, bubbles);
+        };
+        this.removeRelation = function (relation) {
+            removeGraphElement(relation, relations);
+        };
+        this.getNbSelected = function () {
+            return bubbles.length + relations.length;
+        };
+        this.getNbSelectedBubbles = function () {
+            return bubbles.length;
+        };
+        this.getNbSelectedRelations = function () {
+            return relations.length;
+        };
+        this.getSelectedBubbles = function () {
+            return bubbles;
+        };
+        this.getSelectedRelations = function () {
+            return relations;
+        };
+        this.getSelectedElements = function () {
+            return bubbles.concat(
+                relations
+            );
+        };
+        this.getSingleElement = function () {
+            return 1 === self.getNbSelectedBubbles() ?
+                self.getSelectedBubbles()[0] : self.getSelectedRelations()[0];
+        };
+        function removeGraphElement(toRemove, graphElements) {
+            var uriToRemove = toRemove.getUri();
+            for (var i = graphElements.length - 1; i >= 0; i--) {
+                if (uriToRemove === graphElements[i].getUri()) {
+                    graphElements.splice(i, 1);
+                    return;
+                }
+            }
+        }
     }
 });

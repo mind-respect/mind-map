@@ -5,10 +5,9 @@ define([
         "require",
         "jquery",
         "triple_brain.ui.edge",
-        "triple_brain.graph_displayer",
-        "triple_brain.selection_handler"
+        "triple_brain.graph_displayer"
     ],
-    function (require, $, EdgeUi, GraphDisplayer, SelectionHandler) {
+    function (require, $, EdgeUi, GraphDisplayer) {
         var api = {},
             cache = {};
         api.getWhenEmptyLabel = function () {
@@ -19,20 +18,6 @@ define([
                 visitor(
                     api.withHtml(this)
                 );
-            });
-        };
-        api.visitSelected = function (visitor) {
-            $(".relation.selected").each(function () {
-                visitor(
-                    api.withHtml(
-                        $(this)
-                    )
-                );
-            });
-        };
-        api.resetSelection = function () {
-            api.visitSelected(function (edge) {
-                edge.deselect();
             });
         };
         api.redrawAllEdges = EdgeUi.redrawAllEdges;
@@ -104,9 +89,9 @@ define([
             };
             this.select = function () {
                 html.addClass("selected");
-                if (1 === SelectionHandler.getNbSelected()) {
-                    self.showMenu();
-                }
+            };
+            this.makeSingleSelected = function(){
+                self.showMenu();
             };
             this.deselect = function () {
                 html.removeClass("selected");

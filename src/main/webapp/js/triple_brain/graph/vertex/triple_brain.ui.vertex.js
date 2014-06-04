@@ -65,23 +65,6 @@ define([
                 );
             });
         };
-        api.resetSelection = function () {
-            api.visitSelected(function(vertex){
-                vertex.deselect();
-            });
-        };
-        api.visitSelected = function (visitor) {
-            $(".vertex.selected").each(function () {
-                return visitor(
-                    GraphDisplayer.getVertexSelector().withHtml(
-                        $(this)
-                    )
-                );
-            });
-        };
-        api.getNbSelected = function(){
-            return GraphUi.getDrawnGraph().find(".vertex.selected").length;
-        };
         api.getVertexMouseOver = function () {
             return $("body").data("vertex_mouse_over");
         };
@@ -319,6 +302,7 @@ define([
                 EdgeUi.drawAllEdges();
             };
             this.remove = function () {
+                SelectionHandler.removeBubble(self);
                 if (self.hasHiddenRelationsContainer()) {
                     self.getHiddenRelationsContainer().remove();
                 }
@@ -518,9 +502,9 @@ define([
             };
             this.select = function () {
                 html.addClass("selected");
-                if(1 === SelectionHandler.getNbSelected()){
-                    self.showButtons();
-                }
+            };
+            this.makeSingleSelected = function(){
+                self.showButtons();
             };
             this.isSelected = function () {
                 return html.hasClass("selected");

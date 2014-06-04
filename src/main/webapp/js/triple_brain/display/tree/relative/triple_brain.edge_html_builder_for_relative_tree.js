@@ -235,15 +235,13 @@ define([
                         );
                         if (KeyboardUtils.isCtrlPressed()) {
                             if (edge.isSelected()) {
-                                edge.deselect();
+                                SelectionHandler.removeRelation(edge);
                             } else {
-                                edge.select();
+                                SelectionHandler.addRelation(edge);
                             }
                         } else {
-                            SelectionHandler.reset();
-                            edge.select();
+                            SelectionHandler.setSelectionToSingleRelation(edge);
                         }
-                        SelectionHandler.refreshSelectionMenu();
                     }
                 );
                 var overlay = $(

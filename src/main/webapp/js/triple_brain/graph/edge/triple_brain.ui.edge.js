@@ -3,26 +3,28 @@
  */
 
 define([
-    "jquery",
-    "triple_brain.ui.graph",
-    "triple_brain.ui.vertex_and_edge_common",
-    "triple_brain.event_bus",
-    "triple_brain.graph_displayer",
-    "triple_brain.ui.graph_element",
-    "triple_brain.edge",
-    "triple_brain.graph_element_button"
-],
-    function ($, GraphUi, VertexAndEdgeCommon, EventBus, GraphDisplayer, GraphElement, EdgeService, GraphElementButton) {
+        "jquery",
+        "triple_brain.ui.graph",
+        "triple_brain.ui.vertex_and_edge_common",
+        "triple_brain.event_bus",
+        "triple_brain.graph_displayer",
+        "triple_brain.ui.graph_element",
+        "triple_brain.edge",
+        "triple_brain.graph_element_button",
+        "triple_brain.selection_handler"
+    ],
+    function ($, GraphUi, VertexAndEdgeCommon, EventBus, GraphDisplayer, GraphElement, EdgeService, GraphElementButton, SelectionHandler) {
         var api = {},
             cache = {};
-        api.getWhenEmptyLabel = function(){
+        api.getWhenEmptyLabel = function () {
             return $.t("edge.default");
         };
         api.withHtml = function (html) {
             var id = html.prop('id');
             var cachedObject = cache[id];
-            if(cachedObject === undefined){
-                cachedObject = new api.Object(html);;
+            if (cachedObject === undefined) {
+                cachedObject = new api.Object(html);
+                ;
                 cache[id] = cachedObject;
             }
             return cachedObject;
@@ -37,7 +39,7 @@ define([
             return edges;
         };
         api.visitAllEdges = function (visitor) {
-            $.each(api.allEdges(), function(){
+            $.each(api.allEdges(), function () {
                 var edge = this;
                 return visitor(edge);
             });
@@ -45,23 +47,23 @@ define([
         api.drawAllEdges = function () {
             drawEdges(false);
         };
-        api.redrawAllEdges = function(){
+        api.redrawAllEdges = function () {
             drawEdges(true);
             EventBus.publish(
                 "/event/ui/graph/edges/redrawn"
             );
         };
-        api.connectedToVertex = function(vertex){
+        api.connectedToVertex = function (vertex) {
             var edgesConnectedToVertex = [];
             var vertexId = vertex.getId();
-            api.visitAllEdges(function(edge){
+            api.visitAllEdges(function (edge) {
                 var sourceVertexId = $(edge.getHtml()).data(
                     "source_vertex_id"
                 );
                 var destinationVertexId = $(edge.getHtml()).data(
                     "destination_vertex_id"
                 );
-                if(vertexId === sourceVertexId || vertexId === destinationVertexId){
+                if (vertexId === sourceVertexId || vertexId === destinationVertexId) {
                     edgesConnectedToVertex.push(
                         edge
                     );
@@ -69,12 +71,12 @@ define([
             });
             return edgesConnectedToVertex;
         };
-        api.removeAllArrowLines = function(){
-            api.visitAllEdges(function(edge){
+        api.removeAllArrowLines = function () {
+            api.visitAllEdges(function (edge) {
                 edge.arrowLine().remove();
             });
         };
-        function drawEdges(recalculate){
+        function drawEdges(recalculate) {
             var edges = api.allEdges();
             for (var i = 0; i < edges.length; i++) {
                 edges[i].redraw(
@@ -89,20 +91,20 @@ define([
             this.id = function () {
                 return $(html).attr('id');
             };
-            this.setUri = function(uri){
+            this.setUri = function (uri) {
                 html.data(
                     "uri",
                     uri
                 );
             };
-            this.getUri = function(){
+            this.getUri = function () {
                 return html.data(
                     "uri"
                 );
             };
-            this.redraw = function(recalculate){
+            this.redraw = function (recalculate) {
                 var arrowLine;
-                if(recalculate){
+                if (recalculate) {
                     self.arrowLine().remove();
                     arrowLine = GraphDisplayer.getEdgeDrawer().ofEdge(
                         GraphDisplayer.getEdgeSelector().ofEdge(
@@ -114,10 +116,10 @@ define([
                 self.arrowLine().drawInBlackWithSmallLineWidth();
                 self.centerOnArrowLine();
             };
-            this.getGraphElementType = function(){
+            this.getGraphElementType = function () {
                 return GraphElement.types.RELATION;
             };
-            this.serverFacade = function(){
+            this.serverFacade = function () {
                 return EdgeService;
             };
             this.destinationVertex = function () {
@@ -130,7 +132,7 @@ define([
                     html.data("source_vertex_id")
                 );
             };
-            this.inverseAbstract = function(){
+            this.inverseAbstract = function () {
                 var sourceVertexUri = html.data("source_vertex_id");
                 var destinationVertexUri = html.data("destination_vertex_id");
                 html.data(
@@ -149,13 +151,13 @@ define([
             this.setArrowLine = function (arrowLine) {
                 html.data("arrowLine", arrowLine);
             };
-            this.removeIdentificationCommonBehavior = function(){
+            this.removeIdentificationCommonBehavior = function () {
                 //do nothing
             };
-            this.applyCommonBehaviorForAddedIdentification = function(){
+            this.applyCommonBehaviorForAddedIdentification = function () {
                 //do nothing
             };
-            this.serverFacade = function(){
+            this.serverFacade = function () {
                 return EdgeService;
             };
             this.centerOnArrowLine = function () {
@@ -163,7 +165,7 @@ define([
                     this.arrowLine().middlePoint()
                 );
             };
-            this.positionAt = function(position){
+            this.positionAt = function (position) {
                 html.css('left', position.x);
                 html.css('top', position.y);
             };
@@ -185,20 +187,21 @@ define([
                     edgeThatIsMouseOver.equalsEdge(self);
             };
             this.remove = function () {
+                SelectionHandler.removeRelation(self);
                 self.arrowLine().remove();
                 html.remove();
             };
             this.showMenu = function () {
-                $(getMenu()).show();
+                getMenu().show();
             };
             this.hideMenu = function () {
-                $(getMenu()).hide();
+                getMenu().hide();
             };
-            this.getHtml = function(){
+            this.getHtml = function () {
                 return html;
             };
-            this.visitMenuButtons = function(visitor){
-                $.each(getMenuButtonsHtml(), function(){
+            this.visitMenuButtons = function (visitor) {
+                $.each(getMenuButtonsHtml(), function () {
                     visitor(
                         GraphElementButton.fromHtml(
                             $(this)
@@ -210,7 +213,7 @@ define([
                 return html.find('.relation-menu');
             }
 
-            function getMenuButtonsHtml(){
+            function getMenuButtonsHtml() {
                 return getMenu().find(
                     ">button"
                 );
@@ -219,7 +222,7 @@ define([
 
         EventBus.subscribe(
             '/event/ui/graph/reset',
-            function(){
+            function () {
                 api.removeAllArrowLines();
             }
         );

@@ -251,7 +251,8 @@ define([
         function handleRegistrationError(errors) {
             access.errorMessages().addClass("hidden");
             $.each(errors, function(){
-                $('#' + errors[i].reason).removeClass("hidden");
+                var error = this;
+                $('#' + error.reason).removeClass("hidden");
             });
         }
 
