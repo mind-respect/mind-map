@@ -1,33 +1,33 @@
 define([
-    "require",
-    "jquery",
-    "triple_brain.event_bus",
-    "triple_brain.ui.triple",
-    "triple_brain.suggestion",
-    "triple_brain.graph_element",
-    "triple_brain.user"
-],
+        "require",
+        "jquery",
+        "triple_brain.event_bus",
+        "triple_brain.ui.triple",
+        "triple_brain.suggestion",
+        "triple_brain.graph_element",
+        "triple_brain.user"
+    ],
     function (require, $, EventBus, Triple, Suggestion, GraphElement, UserService) {
         "use strict";
         var api = {};
         api.getByUri = function (uri, callback) {
             return $.ajax({
-                type:'GET',
-                url:uri,
-                dataType:'json'
+                type: 'GET',
+                url: uri,
+                dataType: 'json'
             }).success(callback);
         };
         api.createVertex = function (callback) {
             $.ajax({
-                type:'POST',
-                url:getVerticesUrl(),
-                dataType:'json'
+                type: 'POST',
+                url: getVerticesUrl(),
+                dataType: 'json'
             }).success(callback);
         };
         api.addRelationAndVertexToVertex = function (vertex, callback) {
             var dummyPosition = {
-                x:0,
-                y:0
+                x: 0,
+                y: 0
             };
             api.addRelationAndVertexAtPositionToVertex(
                 vertex,
@@ -37,65 +37,67 @@ define([
         };
         api.addRelationAndVertexAtPositionToVertex = function (vertex, newVertexPosition, callback) {
             $.ajax({
-                type:'POST',
-                url:vertex.getUri(),
-                dataType:'json'
+                type: 'POST',
+                url: vertex.getUri(),
+                dataType: 'json'
             }).success(function (tripleJson) {
-                    var triple = Triple.createUsingServerTripleAndNewVertexPosition(
-                        vertex,
-                        tripleJson,
-                        newVertexPosition
-                    );
-                    if (callback != undefined) {
-                        callback(triple, tripleJson);
-                    }
-                });
+                var triple = Triple.createUsingServerTripleAndNewVertexPosition(
+                    vertex,
+                    tripleJson,
+                    newVertexPosition
+                );
+                if (callback != undefined) {
+                    callback(triple, tripleJson);
+                }
+            });
         };
         api.remove = function (vertex, callback) {
             $.ajax({
-                type:'DELETE',
-                url:vertex.getUri()
+                type: 'DELETE',
+                url: vertex.getUri()
             }).success(function () {
-                    var vertexUri = vertex.getUri();
-                    callback(vertex);
-                    EventBus.publish(
-                        '/event/ui/graph/vertex/deleted/',
-                        vertexUri
-                    );
-                })
+                var uri = vertex.getUri();
+                var id = vertex.getId();
+                callback(vertex);
+                EventBus.publish(
+                    '/event/ui/graph/vertex/deleted/', [
+                        uri,
+                        id
+                    ]);
+            })
         };
         api.updateLabel = function (vertex, label, callback) {
             $.ajax({
-                type:'POST',
-                url:vertex.getUri() + '/label',
-                data:$.toJSON({content: label}),
-                contentType:'application/json;charset=utf-8'
+                type: 'POST',
+                url: vertex.getUri() + '/label',
+                data: $.toJSON({content: label}),
+                contentType: 'application/json;charset=utf-8'
             }).success(function () {
-                    EventBus.publish(
-                        '/event/ui/graph/vertex/label/updated',
-                        vertex
-                    );
-                    if (callback !== undefined) {
-                        callback(vertex);
-                    }
-                });
+                EventBus.publish(
+                    '/event/ui/graph/vertex/label/updated',
+                    vertex
+                );
+                if (callback !== undefined) {
+                    callback(vertex);
+                }
+            });
         };
         api.updateNote = function (vertex, note, callback) {
             $.ajax({
-                type:'POST',
-                url:vertex.getUri() + '/comment',
-                data:note,
-                contentType:"text/plain"
+                type: 'POST',
+                url: vertex.getUri() + '/comment',
+                data: note,
+                contentType: "text/plain"
             }).success(function () {
-                    EventBus.publish(
-                        '/event/ui/graph/vertex/note/updated',
-                        vertex
-                    );
-                    vertex.setNote(note);
-                    if (callback !== undefined) {
-                        callback(vertex);
-                    }
-                });
+                EventBus.publish(
+                    '/event/ui/graph/vertex/note/updated',
+                    vertex
+                );
+                vertex.setNote(note);
+                if (callback !== undefined) {
+                    callback(vertex);
+                }
+            });
         };
         api.addType = function (vertex, type, successCallback) {
             type.type = "type";
@@ -191,35 +193,35 @@ define([
         };
         api.getSuggestions = function (vertex) {
             $.ajax({
-                type:'GET',
-                url:vertex.getUri() + '/suggestions',
-                dataType:'json'
+                type: 'GET',
+                url: vertex.getUri() + '/suggestions',
+                dataType: 'json'
             }).success(function (jsonSuggestions) {
-                    var suggestions = getSuggestion().fromJsonArrayOfServer(
-                        jsonSuggestions
-                    );
-                    vertex.setSuggestions(
-                        suggestions
-                    );
-                    EventBus.publish(
-                        '/event/ui/graph/vertex/suggestions/updated',
-                        [vertex, suggestions]
-                    );
-                });
+                var suggestions = getSuggestion().fromJsonArrayOfServer(
+                    jsonSuggestions
+                );
+                vertex.setSuggestions(
+                    suggestions
+                );
+                EventBus.publish(
+                    '/event/ui/graph/vertex/suggestions/updated',
+                    [vertex, suggestions]
+                );
+            });
         };
         api.addSuggestions = function (vertex, suggestions) {
             $.ajax({
-                type:'POST',
-                url:vertex.getUri() + '/suggestions',
-                data:getSuggestion().formatAllForServer(suggestions),
-                contentType:'application/json;charset=utf-8'
+                type: 'POST',
+                url: vertex.getUri() + '/suggestions',
+                data: getSuggestion().formatAllForServer(suggestions),
+                contentType: 'application/json;charset=utf-8'
             }).success(function () {
-                    vertex.addSuggestions(suggestions);
-                    EventBus.publish(
-                        '/event/ui/graph/vertex/suggestions/updated',
-                        [vertex, suggestions]
-                    );
-                });
+                vertex.addSuggestions(suggestions);
+                EventBus.publish(
+                    '/event/ui/graph/vertex/suggestions/updated',
+                    [vertex, suggestions]
+                );
+            });
         };
         api.makePrivate = function (vertex, callback) {
             setPrivacy(
@@ -247,10 +249,10 @@ define([
         };
         api.group = function (graphElementsUris, callback) {
             var response = $.ajax({
-                type:'POST',
-                url:getVerticesUrl() + '/group',
-                data:$.toJSON(graphElementsUris),
-                contentType:'application/json;charset=utf-8'
+                type: 'POST',
+                url: getVerticesUrl() + '/group',
+                data: $.toJSON(graphElementsUris),
+                contentType: 'application/json;charset=utf-8'
             }).success(function () {
                     var createdVertexUri = response.getResponseHeader("Location");
                     var relativeUri = createdVertexUri.substring(
@@ -291,8 +293,8 @@ define([
 
         function setPrivacy(isPublic, vertex, callback) {
             $.ajax({
-                type:isPublic ? 'POST' : 'DELETE',
-                url:vertex.getUri() + '/public_access'
+                type: isPublic ? 'POST' : 'DELETE',
+                url: vertex.getUri() + '/public_access'
             }).success(callback);
         }
 

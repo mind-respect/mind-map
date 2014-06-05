@@ -11,9 +11,11 @@ define([
     "jquery.tinysort.min"
 ],
     function ($, VerticesListCreator, VerticesListElementCreator, VerticesListElement, EventBus, GraphDisplayer) {
-        var api = {};
-        var SORT_TYPE_LABEL = 1;
-        var SORT_TYPE_DISTANCE_FROM_CENTRAL_VERTEX = 2;
+        "use strict";
+        var api = {},
+            SORT_TYPE_LABEL = 1,
+            SORT_TYPE_DISTANCE_FROM_CENTRAL_VERTEX = 2;
+
         api.get = function () {
             return new VerticesList(
                 $("#vertices-list")
@@ -32,7 +34,6 @@ define([
             this.addHtml = function (htmlToAdd) {
                 $(html).append(htmlToAdd);
             };
-
             this.sort = function () {
                 if (sortType() == SORT_TYPE_LABEL) {
                     sortByLabel();
@@ -72,30 +73,6 @@ define([
                     GraphDisplayer.getVertexSelector().centralVertex()
                 ).create();
             };
-
-            this.containsVertex = function(vertex){
-                var vertexFound = false;
-                $.each(getVerticesListElement(), function(){
-                    var vertexListElement = this;
-                    if(vertexListElement.associatedVertex().getId() == vertex.getId()){
-                        vertexFound = true;
-                        return false;
-                    }
-                });
-                return vertexFound;
-            };
-
-            function getVerticesListElement(){
-                var verticesListElement = [];
-                $.each($(html).find(".vertices-list-element"),function(){
-                    verticesListElement.push(
-                        VerticesListElement.withHtml(
-                            this
-                        )
-                    );
-                })
-                return verticesListElement;
-            }
 
             function sortType() {
                 return $(html).data('sort_type');
@@ -144,12 +121,12 @@ define([
                     api.ifExistsRebuild
                 );
             }
-        )
+        );
 
         EventBus.subscribe(
             '/event/ui/html/vertex/created/',
             function (event, vertex) {
-                $(vertex.label()).on("keyup blur focus", function () {
+                vertex.getLabel().on("keyup blur focus", function () {
                     var vertex = GraphDisplayer.getVertexSelector().withHtml(
                         $(this).closest(".vertex")
                     );
@@ -169,7 +146,7 @@ define([
                             vertex
                         );
                         verticesListElement.setLabel(vertex.text());
-                        if (vertex.label().val() == "" || vertex.hasDefaultText()) {
+                        if (vertex.getLabel().val() == "" || vertex.hasDefaultText()) {
                             verticesListElement.applyStyleOfDefaultText();
                         } else {
                             verticesListElement.removeStyleOfDefaultText();

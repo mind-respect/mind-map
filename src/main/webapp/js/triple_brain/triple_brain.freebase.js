@@ -82,7 +82,7 @@ define([
                 })
         };
         api.removeSuggestFeatureOnVertex = function (vertex) {
-            $(vertex.label()).autocomplete("destroy");
+            vertex.getLabel().autocomplete("destroy");
         };
 
         EventBus.subscribe(
@@ -99,7 +99,7 @@ define([
                     vertex,
                     identificationId
                 );
-                vertex.label().tripleBrainAutocomplete({
+                vertex.getLabel().tripleBrainAutocomplete({
                     select:function (event, ui) {
                         var vertex = GraphDisplayer.getVertexSelector().withId(
                             $(this).closest(".vertex").attr("id")
@@ -145,7 +145,7 @@ define([
                 }
             });
             filterValue += ")";
-            vertex.label().tripleBrainAutocomplete({
+            vertex.getLabel().tripleBrainAutocomplete({
                 select:function (event, ui) {
                     var vertex = GraphDisplayer.getVertexSelector().withId(
                         $(this).closest(".vertex").attr("id")

@@ -206,7 +206,7 @@ define([
                     vertex.removeStyleOfDefaultText();
                     if (vertex.hasDefaultText()) {
                         $(this).val("");
-                        $(vertex.label()).keyup();
+                        vertex.getLabel().keyup();
                     }
                 }).blur(function () {
                     var vertex = vertexOfSubHtmlComponent(this);
@@ -218,13 +218,13 @@ define([
                             RelativeTreeVertex.getWhenEmptyLabel()
                         );
                         vertex.applyStyleOfDefaultText();
-                        $(vertex.label()).keyup();
+                        vertex.getLabel().keyup();
                     } else {
                         vertex.removeStyleOfDefaultText();
                     }
                 }).change(function () {
                     var vertex = vertexOfSubHtmlComponent(this);
-                    $(vertex.label()).keyup();
+                    vertex.getLabel().keyup();
                     VertexService.updateLabel(
                         vertexOfSubHtmlComponent(this),
                         $(this).val()

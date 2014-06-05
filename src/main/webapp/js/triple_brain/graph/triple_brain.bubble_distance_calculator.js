@@ -2,15 +2,14 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "triple_brain.ui.vertex",
     "triple_brain.event_bus"
-], function(VertexUi, EventBus){
+], function(EventBus){
     var graphForTraversal;
     var api = {};
     api.numberOfEdgesBetween = function(vertexA, vertexB){
         return graphForTraversal.findGoal({
-            start: graphForTraversal.getNode(vertexA.getUri()),
-            goal: graphForTraversal.getNode(vertexB.getUri()),
+            start: graphForTraversal.getNode(vertexA.getId()),
+            goal: graphForTraversal.getNode(vertexB.getId()),
             algorithm: "dijkstra"
         }).length;
     };
@@ -45,10 +44,10 @@ define([
 
     EventBus.subscribe(
         '/event/ui/graph/relation/deleted',
-        function(event, edge, edgeUri, sourceVertexUri, destinationVertexUri){
+        function(event, edge, edgeUri, sourceVertexUri, destinationVertexUri, sourceVertexId, destinationVertexId){
             removeEdgeInGraphForTraversal(
-                sourceVertexUri,
-                destinationVertexUri
+                sourceVertexId,
+                destinationVertexId
             );
             EventBus.publish(
                 "/event/graph_traversal/edge/removed",[
@@ -60,50 +59,50 @@ define([
         }
     );
 
-    function removeEdgeInGraphForTraversal(sourceVertexUri, destinationVertexUri){
+    function removeEdgeInGraphForTraversal(sourceVertexId, destinationVertexId){
         var sourceVertex = graphForTraversal.getNode(
-            sourceVertexUri
+            sourceVertexId
         );
         var destinationVertex = graphForTraversal.getNode(
-            destinationVertexUri
+            destinationVertexId
         );
-        removeVertexInConnections(destinationVertexUri, sourceVertex.connections);
-        removeVertexInConnections(sourceVertexUri, destinationVertex.connections);
+        removeVertexInConnections(destinationVertexId, sourceVertex.connections);
+        removeVertexInConnections(sourceVertexId, destinationVertex.connections);
     }
 
     EventBus.subscribe(
         '/event/ui/graph/vertex/deleted/',
-        function(event, vertexUri){
-            removeVertexInGraphForTraversal(vertexUri);
+        function(event, uri, id){
+            removeVertexInGraphForTraversal(id);
         }
     );
 
-    function removeVertexInGraphForTraversal(vertexUri){
+    function removeVertexInGraphForTraversal(vertexId){
         graphForTraversal.removeNode(
-            graphForTraversal.getNode(vertexUri)
+            graphForTraversal.getNode(vertexId)
         );
         var node = findVertexInGraphForTraversalNodesAfterItWasDeleted(
-            vertexUri
+            vertexId
         );
         $.each(node.connections, function(){
             var connection = this;
             var connectedNode = graphForTraversal.getNode(connection.id);
-            removeVertexInConnections(vertexUri, connectedNode.connections);
+            removeVertexInConnections(vertexId, connectedNode.connections);
         });
     }
-    function removeVertexInConnections(vertexUri, connections){
-        for(var j in connections){
+    function removeVertexInConnections(vertexId, connections){
+        for(var j = 0 ; j < connections; j++){
             var connection = connections[j];
-            if(connection.id == vertexUri){
+            if(connection.id == vertexId){
                 connections.splice(j,1);
             }
         }
     }
 
-    function findVertexInGraphForTraversalNodesAfterItWasDeleted(vertexUri){
-        for(var i in graphForTraversal.nodes){
+    function findVertexInGraphForTraversalNodesAfterItWasDeleted(vertexId){
+        for(var i = 0 ; i< graphForTraversal.nodes.length; i++){
             var node = graphForTraversal.nodes[i];
-            if(node.id == vertexUri){
+            if(node.id == vertexId){
                 return node;
             }
         }
@@ -123,16 +122,16 @@ define([
 
     function addVertexToGraphTraversal(vertex){
         graphForTraversal.addNode(
-            VertexUi.withHtml(vertex.getHtml())
+            vertex
         );
     }
 
     function connectVerticesOfEdgeForTraversal(edge){
         var sourceVertex = graphForTraversal.getNode(
-            edge.sourceVertex().getUri()
+            edge.sourceVertex().getId()
         );
         var destinationVertex = graphForTraversal.getNode(
-            edge.destinationVertex().getUri()
+            edge.destinationVertex().getId()
         );
         sourceVertex.connectTo(
             destinationVertex

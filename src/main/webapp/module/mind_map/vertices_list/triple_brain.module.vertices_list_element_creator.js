@@ -8,7 +8,8 @@ define([
     "./triple_brain.module.vertices_list_element.js"
 ],
     function(require, $, Template, VerticesListElement) {
-        var api = {
+        "use strict";
+        return {
             withVertexAndCentralVertex : function(vertex, centralVertex){
                 return new VerticesListElementCreator(vertex, centralVertex);
             }
@@ -22,6 +23,7 @@ define([
             this.create = function(){
                 VerticesList.get().addHtml(html);
                 html.data('vertexId', vertex.getId());
+                html.data("vertexUri", vertex.getUri());
                 verticesListElement.setDistanceFromCentralVertex(
                     BubbleDistanceCalculator.numberOfEdgesBetween(
                         vertex,
@@ -38,6 +40,5 @@ define([
                 return verticesListElement;
             }
         }
-        return api;
     }
-)
+);

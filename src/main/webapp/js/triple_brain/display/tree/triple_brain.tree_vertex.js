@@ -47,9 +47,9 @@ define([
             this.resetOtherInstances = function(){
                 html.removeData(otherInstancesKey)
             };
-            VertexUi.Object.apply(this, [html]);
+            VertexUi.Object.apply(self, [html]);
         };
-        Object.prototype = new VertexUi.Object();
+        api.Object.prototype = new crow.ConnectedNode();
         EventBus.subscribe(
             '/event/ui/graph/vertex/same_as/added',
             function(event, vertex, sameAs){

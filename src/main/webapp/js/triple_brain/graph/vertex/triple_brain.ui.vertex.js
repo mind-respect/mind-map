@@ -422,10 +422,6 @@ define([
             this.triggerChange = function () {
                 html.trigger("change");
             };
-            //@Deprecated
-            this.label = function () {
-                return self.getLabel();
-            };
             this.getLabel = function () {
                 return html.find("input.label");
             };
@@ -587,7 +583,7 @@ define([
                 );
             }
 
-            crow.ConnectedNode.apply(this, [self.getUri()]);
+            crow.ConnectedNode.apply(this, [self.getId()]);
         };
         api.Object.prototype = new crow.ConnectedNode();
 

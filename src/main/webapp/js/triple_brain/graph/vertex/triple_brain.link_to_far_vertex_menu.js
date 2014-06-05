@@ -74,6 +74,12 @@ define([
                                     GraphDisplayer.integrateEdgesOfServerGraph(
                                         drawnTree
                                     );
+                                    farVertex.setTotalNumberOfEdges(
+                                            farVertex.getTotalNumberOfEdges() + 1
+                                    );
+                                    if (farVertex.hasHiddenRelations()) {
+                                        farVertex.buildHiddenNeighborPropertiesIndicator();
+                                    }
                                     Edge.redrawAllEdges();
                                     edge.focus();
                                 }

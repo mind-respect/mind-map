@@ -6,6 +6,7 @@ define([
     "triple_brain.graph_displayer"
 ],
     function($, GraphDisplayer) {
+        "use strict";
         var api = {
             withHtml : function(html){
                 return new VerticesListElement(html);
@@ -50,11 +51,11 @@ define([
             }
             this.applyStyleOfDefaultText = function(){
                 $(labelInput()).addClass('when-default-graph-element-text');
-            }
+            };
 
             this.removeStyleOfDefaultText = function(){
                 $(labelInput()).removeClass('when-default-graph-element-text');
-            }
+            };
         }
         return api;
     }

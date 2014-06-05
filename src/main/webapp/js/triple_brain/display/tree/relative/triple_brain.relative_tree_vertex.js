@@ -173,13 +173,14 @@ define([
                     ".vertex-tree-container"
                 ).find("> .vertex-container").find("> .vertex")
             }
-            VertexUi.Object.apply(this, [html]);
+            VertexUi.Object.apply(self, [html]);
             function getChildren() {
                 return html.closest(".vertex-container").siblings(
                     ".vertices-children-container"
                 ).find(".vertex");
             }
         };
+        api.Object.prototype = new crow.ConnectedNode();
         EventBus.subscribe(
             '/event/ui/graph/vertex/same_as/added',
             function (event, vertex, sameAs) {

@@ -29,8 +29,12 @@ define([
                 type:'DELETE',
                 url:edgeUri
             }).success(function () {
-                    var sourceVertexUri = edge.sourceVertex().getUri();
-                    var destinationVertexUri = edge.destinationVertex().getUri();
+                    var sourceVertex = edge.sourceVertex(),
+                        destinationVertex = edge.destinationVertex(),
+                        sourceVertexUri = sourceVertex.getUri(),
+                        destinationVertexUri = destinationVertex.getUri(),
+                        sourceVertexId = sourceVertex.getId(),
+                        destinationVertexId = destinationVertex.getId();
                     callback(
                         edge,
                         edgeUri,
@@ -42,7 +46,9 @@ define([
                             edge,
                             edgeUri,
                             sourceVertexUri,
-                            destinationVertexUri
+                            destinationVertexUri,
+                            sourceVertexId,
+                            destinationVertexId
                         ]
                     );
                 });

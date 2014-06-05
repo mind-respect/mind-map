@@ -9,7 +9,8 @@ define([
     "./triple_brain.template.vertices_list.js"
 ],
     function (require, $, Template, LeftPanel, VerticesList) {
-        var api = {
+        "use strict";
+        return {
             create:function () {
                 return new VerticesListCreator().create()
             }
@@ -44,7 +45,7 @@ define([
                    }
                 );
                 return VerticesList.get();
-            }
+            };
 
             function addTitle() {
                 $(html).append(
@@ -101,7 +102,6 @@ define([
                 );
             }
         }
-        return api;
         function getActualList(){
             return $("#vertices-list");
         }

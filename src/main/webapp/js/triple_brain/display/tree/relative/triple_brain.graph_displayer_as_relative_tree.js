@@ -112,7 +112,7 @@ define([
                             ) !== -1){
                                 nbRelationsWithGrandParent++;
                             }
-                            if(edgeFacade.getUri() !== relationWithGrandParentUri){
+                            if(relationWithGrandParentUri.indexOf(edgeFacade.getUri()) === -1){
                                 filteredEdges[
                                     edgeFacade.getUri()
                                     ] = edge
