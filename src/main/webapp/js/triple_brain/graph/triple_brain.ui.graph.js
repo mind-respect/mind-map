@@ -3,9 +3,10 @@
  */
 define([
         "jquery",
-        "triple_brain.point"
+        "triple_brain.point",
+        "triple_brain.event_bus"
     ],
-    function ($, Point) {
+    function ($, Point, EventBus) {
         "use strict";
         var api = {},
             htmlBody =  $("body"),
@@ -55,6 +56,10 @@ define([
             }
             return _topLayer;
         };
+        EventBus.subscribe(
+            '/event/ui/graph/reset',
+            api.resetDrawingCanvas
+        );
         return api;
     }
 );

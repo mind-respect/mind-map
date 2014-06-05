@@ -71,11 +71,7 @@ define([
             });
             return edgesConnectedToVertex;
         };
-        api.removeAllArrowLines = function () {
-            api.visitAllEdges(function (edge) {
-                edge.arrowLine().remove();
-            });
-        };
+
         function drawEdges(recalculate) {
             var edges = api.allEdges();
             for (var i = 0; i < edges.length; i++) {
@@ -209,6 +205,19 @@ define([
                     );
                 });
             };
+            this.select = function () {
+                html.addClass("selected");
+            };
+            this.makeSingleSelected = function(){
+                self.showMenu();
+            };
+            this.deselect = function () {
+                html.removeClass("selected");
+                self.hideMenu();
+            };
+            this.isSelected = function () {
+                return html.hasClass("selected");
+            };
             function getMenu() {
                 return html.find('.relation-menu');
             }
@@ -219,14 +228,6 @@ define([
                 );
             }
         };
-
-        EventBus.subscribe(
-            '/event/ui/graph/reset',
-            function () {
-                api.removeAllArrowLines();
-            }
-        );
-
         return api;
     }
 )

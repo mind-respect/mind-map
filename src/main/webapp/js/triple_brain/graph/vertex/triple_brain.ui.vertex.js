@@ -2,54 +2,65 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "jquery",
-    "triple_brain.graph_displayer",
-    "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
-    "triple_brain.vertex",
-    "triple_brain.id_uri",
-    "triple_brain.point",
-    "triple_brain.error",
-    "triple_brain.ui.vertex_segments",
-    "triple_brain.ui.edge",
-    "triple_brain.ui.vertex_and_edge_common",
-    "triple_brain.event_bus",
-    "triple_brain.server_subscriber",
-    "triple_brain.image_displayer",
-    "triple_brain.ui.graph_element",
-    "triple_brain.selection_handler",
-    "triple_brain.graph_element_button",
-    "triple_brain.ui.graph",
-    "jquery.center-on-screen"
-],
-    function ($, GraphDisplayer, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, ServerSubscriber, ImageDisplayer, GraphElement, SelectionHandler, GraphElementButton, GraphUi){
-        var api = {},
-            cache = {};
+        "jquery",
+        "triple_brain.graph_displayer",
+        "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
+        "triple_brain.vertex",
+        "triple_brain.id_uri",
+        "triple_brain.point",
+        "triple_brain.error",
+        "triple_brain.ui.vertex_segments",
+        "triple_brain.ui.edge",
+        "triple_brain.ui.vertex_and_edge_common",
+        "triple_brain.event_bus",
+        "triple_brain.server_subscriber",
+        "triple_brain.image_displayer",
+        "triple_brain.ui.graph_element",
+        "triple_brain.selection_handler",
+        "triple_brain.graph_element_button",
+        "triple_brain.ui.graph",
+        "jquery.center-on-screen"
+    ],
+    function ($, GraphDisplayer, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, ServerSubscriber, ImageDisplayer, GraphElement, SelectionHandler, GraphElementButton, GraphUi) {
+        var api = {};
         api.getWhenEmptyLabel = function () {
             return $.t("vertex.default");
         };
-        api.withHtml = function (html) {
-            var id = html.prop('id');
-            var cachedObject = cache[id];
-            if(cachedObject === undefined){
-                cachedObject = new api.Object(html);
-                cache[id] = cachedObject;
-            }
-            return cachedObject;
-        };
-        api.withId = function (id) {
-            return GraphDisplayer.getVertexSelector().withHtml($("#" + id));
-        };
-        api.withUri = function (uri) {
-            var verticesWithUri = [];
-            //todo find a more efficient way to get vertex with uri.
-            api.visitAllVertices(function (vertex) {
-                if (vertex.getUri() === uri) {
-                    verticesWithUri.push(
-                        vertex
+        api.buildCommonConstructors = function (api) {
+            var cacheWithIdAsKey = {},
+                cacheWithUriAsKey = {};
+            api.withHtml = function (html) {
+                var id = html.prop('id');
+                var cachedObject = cacheWithIdAsKey[id];
+                if (cachedObject === undefined) {
+                    cachedObject = new api.Object(html);
+                    cacheWithIdAsKey[id] = cachedObject;
+                    updateUriCache(
+                        html.data("uri"),
+                        cachedObject
                     );
                 }
-            });
-            return verticesWithUri;
+                return cachedObject;
+            };
+
+            function updateUriCache(uri, vertex) {
+                if (undefined === cacheWithUriAsKey[uri]) {
+                    cacheWithUriAsKey[uri] = [];
+                }
+                cacheWithUriAsKey[uri].push(vertex);
+            }
+
+            api.withId = function (id) {
+                return cacheWithIdAsKey[id];
+            };
+            api.withUri = function (uri) {
+                return cacheWithUriAsKey[uri];
+            };
+            EventBus.subscribe('/event/ui/graph/reset', emptyCache);
+            function emptyCache() {
+                cacheWithIdAsKey = {};
+                cacheWithUriAsKey = {};
+            }
         };
         api.centralVertex = function () {
             return GraphDisplayer.getVertexSelector().withHtml(
@@ -163,8 +174,8 @@ define([
             this.labelCenterPoint = function () {
                 var textContainer = self.getInBubbleContainer();
                 return Point.fromCoordinates(
-                    textContainer.offset().left + self.getInBubbleContentWidth() / 2,
-                    textContainer.offset().top + textContainer.height() / 2
+                        textContainer.offset().left + self.getInBubbleContentWidth() / 2,
+                        textContainer.offset().top + textContainer.height() / 2
                 )
             };
 
@@ -257,15 +268,15 @@ define([
             this.getNote = function () {
                 return html.data("note");
             };
-            this.hasNote = function(){
+            this.hasNote = function () {
                 return self.getNote().trim().length > 0;
             };
-            this.getNoteButtonInBubbleContent = function(){
+            this.getNoteButtonInBubbleContent = function () {
                 return self.getInBubbleContainer().find(
                     ".note-button"
                 );
             };
-            this.getNoteButtonInMenu = function(){
+            this.getNoteButtonInMenu = function () {
                 return self.getMenuHtml().find("> .note-button");
             };
             this.getInBubbleContainer = function () {
@@ -311,7 +322,7 @@ define([
             this.suggestions = function () {
                 return html.data('suggestions');
             };
-            this.hasSuggestions = function(){
+            this.hasSuggestions = function () {
                 return self.suggestions().length > 0;
             };
             this.addSuggestions = function (suggestions) {
@@ -345,7 +356,7 @@ define([
                 ));
             };
 
-            this.refreshImages = function(){
+            this.refreshImages = function () {
                 var imageMenu =
                     self.hasImagesMenu() ?
                         self.getImageMenu() :
@@ -415,7 +426,7 @@ define([
             this.label = function () {
                 return self.getLabel();
             };
-            this.getLabel = function(){
+            this.getLabel = function () {
                 return html.find("input.label");
             };
             this.equalsVertex = function (otherVertex) {
@@ -437,13 +448,13 @@ define([
                         menuWidth(),
                         textContainerWidth
                     ) +
-                        self.moveButton().width() +
-                        imageWidth
-                        + intuitiveWidthBuffer +
-                        noteButtonWidth;
+                    self.moveButton().width() +
+                    imageWidth
+                    + intuitiveWidthBuffer +
+                    noteButtonWidth;
                 html.css(
                     "width",
-                    width + "px"
+                        width + "px"
                 );
                 EventBus.publish(
                     "/event/ui/graph/vertex/width-modified",
@@ -469,10 +480,10 @@ define([
 
             this.serverFormat = function () {
                 return {
-                    label:self.text(),
-                    suggestions:self.suggestions(),
-                    types:getCollectionAsServerFormat(self.getTypes()),
-                    same_as:getCollectionAsServerFormat(self.getSameAs())
+                    label: self.text(),
+                    suggestions: self.suggestions(),
+                    types: getCollectionAsServerFormat(self.getTypes()),
+                    same_as: getCollectionAsServerFormat(self.getSameAs())
                 };
                 function getCollectionAsServerFormat(collection) {
                     var serverFormat = [];
@@ -503,7 +514,7 @@ define([
             this.select = function () {
                 html.addClass("selected");
             };
-            this.makeSingleSelected = function(){
+            this.makeSingleSelected = function () {
                 self.showButtons();
             };
             this.isSelected = function () {
@@ -515,7 +526,7 @@ define([
                     includedVertices
                 );
             };
-            this.hasIncludedGraphElements = function(){
+            this.hasIncludedGraphElements = function () {
                 return Object.keys(self.getIncludedVertices()).length > 0;
             };
             this.getIncludedVertices = function () {
@@ -533,11 +544,11 @@ define([
             this.isAbsoluteDefaultVertex = function () {
                 return self.getUri().indexOf("default") !== -1;
             };
-            this.getMenuHtml = function(){
+            this.getMenuHtml = function () {
                 return html.find('> .menu');
             };
-            this.visitMenuButtons = function(visitor){
-                $.each(getMenuButtonsHtml(), function(){
+            this.visitMenuButtons = function (visitor) {
+                $.each(getMenuButtonsHtml(), function () {
                     visitor(
                         GraphElementButton.fromHtml(
                             $(this)
@@ -569,23 +580,18 @@ define([
                     self.getInBubbleContainer()
                 );
             }
-            function getMenuButtonsHtml(){
+
+            function getMenuButtonsHtml() {
                 return self.getMenuHtml().find(
                     "> button"
                 );
             }
+
             crow.ConnectedNode.apply(this, [self.getUri()]);
         };
         api.Object.prototype = new crow.ConnectedNode();
 
-        EventBus.subscribe(
-            '/event/ui/graph/reset',
-            function () {
-                api.visitAllVertices(function (vertex) {
-                    vertex.remove();
-                });
-            }
-        );
+        api.buildCommonConstructors(api);
         return api;
     }
 );

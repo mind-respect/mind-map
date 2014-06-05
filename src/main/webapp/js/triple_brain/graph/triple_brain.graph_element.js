@@ -48,5 +48,4 @@ define([
         }).success(successCallback);
     };
     return api;
-})
-;
+});

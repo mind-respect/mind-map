@@ -87,19 +87,6 @@ define([
             this.isLeftOfCenterVertex = function () {
                 return self.childVertexInDisplay().isToTheLeft();
             };
-            this.select = function () {
-                html.addClass("selected");
-            };
-            this.makeSingleSelected = function(){
-                self.showMenu();
-            };
-            this.deselect = function () {
-                html.removeClass("selected");
-                self.hideMenu();
-            };
-            this.isSelected = function () {
-                return html.hasClass("selected");
-            };
             EdgeUi.Object.apply(this, [html]);
         }
     }

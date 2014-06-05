@@ -6,24 +6,14 @@ define([
     "triple_brain.ui.vertex",
     "triple_brain.event_bus"
 ],
-    function($, Vertex, EventBus){
-        var api = {},
-            cache = {};
-        api.withHtml = function(html){
-            var id = html.prop('id');
-            var cachedObject = cache[id];
-            if(cachedObject === undefined){
-                cachedObject = new Object(html);
-                cache[id] = cachedObject;
-            }
-            return cachedObject;
-        };
+    function($, VertexUi, EventBus){
+        var api = {};
         api.ofVertex = function(vertex){
             return api.withHtml(
                 vertex.getHtml()
             );
         };
-        function Object(html){
+        api.Object = function (html){
             var self = this;
             var otherInstancesKey = "otherInstances";
             this.applyToOtherInstances = function(apply){
@@ -33,9 +23,9 @@ define([
                 });
             };
             this.getOtherInstances = function(){
-                var vertex = Vertex.withHtml(html);
+                var vertex = api.withHtml(html);
                 if(html.data(otherInstancesKey) === undefined){
-                    var verticesWithSameUri = Vertex.withUri(
+                    var verticesWithSameUri = api.withUri(
                         vertex.getUri()
                     );
                     var otherInstances = [];
@@ -57,9 +47,9 @@ define([
             this.resetOtherInstances = function(){
                 html.removeData(otherInstancesKey)
             };
-            Vertex.Object.apply(this, [html]);
-        }
-        Object.prototype = new Vertex.Object();
+            VertexUi.Object.apply(this, [html]);
+        };
+        Object.prototype = new VertexUi.Object();
         EventBus.subscribe(
             '/event/ui/graph/vertex/same_as/added',
             function(event, vertex, sameAs){
@@ -114,6 +104,7 @@ define([
                 });
             }
         );
+        VertexUi.buildCommonConstructors(api);
         return api;
     }
 );

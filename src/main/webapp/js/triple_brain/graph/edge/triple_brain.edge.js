@@ -120,7 +120,6 @@ define([
         }
 
         function add(sourceVertexUri, destinationVertexUri, callback) {
-            var Edge = require("triple_brain.ui.edge");
             var sourceVertexUriFormatted = IdUriUtils.encodeUri(sourceVertexUri);
             var destinationVertexUriFormatted = IdUriUtils.encodeUri(destinationVertexUri);
             var response = $.ajax({
@@ -131,7 +130,7 @@ define([
             }).success(function () {
                     var responseUri = response.getResponseHeader("Location");
                     callback(
-                        EdgeServerFacade.buildObjectWithUriOfSelfSourceAndDestinationVertex(
+                        getEdgeServerFacade().buildObjectWithUriOfSelfSourceAndDestinationVertex(
                             responseUri,
                             sourceVertexUri,
                             destinationVertexUri
@@ -139,6 +138,12 @@ define([
                     );
                 }
             );
+        }
+        function getEdgeServerFacade(){
+            if(undefined === EdgeServerFacade){
+                EdgeServerFacade = require("triple_brain.edge_server_facade");
+            }
+            return EdgeServerFacade;
         }
     }
 );

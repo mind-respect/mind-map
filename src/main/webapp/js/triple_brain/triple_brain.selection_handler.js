@@ -110,6 +110,7 @@ define([
     api.getSingleElement = function () {
         return selectionInfo.getSingleElement();
     };
+    EventBus.subscribe("/event/ui/graph/reset", selectionInfo.setToNoneSelected);
     return api;
     function reflectSelectionChange() {
         var nbSelectedGraphElements = selectionInfo.getNbSelected();
