@@ -9,7 +9,6 @@ define(
         "triple_brain.ui.search",
         "triple_brain.graph_displayer",
         "triple_brain.graph_displayer_factory",
-        "triple_brain.menu",
         "triple_brain.ui.graph",
         "triple_brain.language_manager",
         "triple_brain.vertex",
@@ -23,7 +22,7 @@ define(
         "triple_brain.freebase",
         "jquery.triple_brain.drag_scroll"
     ],
-    function ($, UserService, EventBus, LoginHandler, MindMapTemplate, ServerSubscriber, SearchUi, GraphDisplayer, GraphDisplayerFactory, Menu, GraphUi, LanguageManager, VertexService, TopCenterMenu, LeftPanel, SelectionHandler, KeyboardUtils, GraphElementMainMenu, VertexServeFacade) {
+    function ($, UserService, EventBus, LoginHandler, MindMapTemplate, ServerSubscriber, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, VertexService, TopCenterMenu, LeftPanel, SelectionHandler, KeyboardUtils, GraphElementMainMenu, VertexServeFacade) {
         "use strict";
         var leftPanelWidth = 225,
         api = {
@@ -61,14 +60,6 @@ define(
                                 GraphUi.resetDrawingCanvas();
                                 $("body").removeClass("hidden");
                                 GraphDisplayer.displayUsingDefaultVertex();
-                                Menu.redrawButton().on(
-                                    "click",
-                                    function () {
-                                        GraphUi.resetDrawingCanvas();
-                                        GraphDisplayer.displayUsingNewCentralVertex(
-                                            GraphDisplayer.getVertexSelector().centralVertex()
-                                        );
-                                });
                                 translateText();
                             });
                         }

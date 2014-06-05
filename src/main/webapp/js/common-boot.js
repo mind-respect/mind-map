@@ -39,7 +39,6 @@ requirejs.config({
         "triple_brain.top_center_menu": "triple_brain/triple_brain.top_center_menu",
         "triple_brain.language_manager": "triple_brain/triple_brain.language_manager",
         "triple_brain.external_page_loader": "triple_brain/triple_brain.external_page_loader",
-        "triple_brain.menu": "triple_brain/triple_brain.menu",
         "triple_brain.graph_element_button": "triple_brain/triple_brain.graph_element_button",
         "triple_brain.graph_element_main_menu": "triple_brain/triple_brain.graph_element_main_menu",
         "triple_brain.graph_element_menu": "triple_brain/triple_brain.graph_element_menu",
