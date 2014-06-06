@@ -12,7 +12,7 @@ define([
         "use strict";
         return {
             init:function() {
-                $("#vertex-search-input").tripleBrainAutocomplete({
+                $("#vertex-search-input").empty().tripleBrainAutocomplete({
                     select:function (event, ui) {
                         var vertexUri = ui.item.uri;
                         GraphDisplayer.displayUsingNewCentralVertexUri(
