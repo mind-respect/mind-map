@@ -30,6 +30,11 @@ define([
             var username = UserService.authenticatedUserInCache().user_name;
             return "/users" + username + "/" + id;
         };
+        api.removeDomainNameFromGraphElementUri = function(uri){
+            return uri.substr(
+                uri.indexOf("/service")
+            )
+        };
         return api;
     }
 );

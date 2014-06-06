@@ -240,7 +240,7 @@ define([
                                 SelectionHandler.addRelation(edge);
                             }
                         } else {
-                            SelectionHandler.setSelectionToSingleRelation(edge);
+                            SelectionHandler.setToSingleRelation(edge);
                         }
                     }
                 );

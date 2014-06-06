@@ -100,7 +100,7 @@ define([
                     var vertex = RelativeTreeVertex.withHtml(
                         $(this)
                     );
-                    SelectionHandler.setToNoneSelected();
+                    SelectionHandler.removeAll();
                     vertex.getLabel().focus().setCursorToEndOfText();
                 }
             ).on(
@@ -116,7 +116,7 @@ define([
                             SelectionHandler.addBubble(vertex);
                         }
                     } else {
-                        SelectionHandler.setSelectionToSingleBubble(
+                        SelectionHandler.setToSingleBubble(
                             vertex
                         );
                     }

@@ -16,7 +16,8 @@ define([
         leftArrowKeyNumber = 37,
         rightArrowKeyNumber = 39,
         upArrowKeyNumber = 38,
-        downArrowKeyNumber = 40;
+        downArrowKeyNumber = 40,
+        listenedKeysAndTheirAction = defineListenedKeysAndTheirActions();
     api.init = function () {
         EventBus.subscribe(
             "/event/ui/graph/drawing_info/updated/",
@@ -25,29 +26,33 @@ define([
     };
     return api;
     function handleKeyboardActions() {
-        var listenedKeysAndTheirAction = defineListenedKeysAndTheirActions();
-        $(window).keydown(function (event) {
-            if (isThereASpecialKeyPressed()) {
+        $(window).off(
+            "keydown",keyDownHanlder
+        ).on(
+            "keydown", keyDownHanlder
+        );
+    }
+    function keyDownHanlder(event){
+        if (isThereASpecialKeyPressed()) {
+            return;
+        }
+        if (!SelectionHandler.isOnlyASingleBubbleSelected()) {
+            return;
+        }
+        var selectedVertex = SelectionHandler.getSelectedBubbles()[0];
+        $.each(listenedKeysAndTheirAction, function () {
+            var key = this[0];
+            if (event.which !== key) {
                 return;
             }
-            if (!SelectionHandler.isOnlyASingleBubbleSelected()) {
-                return;
-            }
-            var selectedVertex = SelectionHandler.getSelectedBubbles()[0];
-            $.each(listenedKeysAndTheirAction, function () {
-                var key = this[0];
-                if (event.which !== key) {
-                    return;
-                }
-                event.preventDefault();
-                var action = this[1];
-                action(selectedVertex);
-                return false;
-            });
-            function isThereASpecialKeyPressed() {
-                return event.altKey || event.ctrlKey || event.metaKey;
-            }
+            event.preventDefault();
+            var action = this[1];
+            action(selectedVertex);
+            return false;
         });
+        function isThereASpecialKeyPressed() {
+            return event.altKey || event.ctrlKey || event.metaKey;
+        }
     }
 
     function defineListenedKeysAndTheirActions() {
@@ -102,8 +107,7 @@ define([
         } else {
             newSelectedVertex = selectedVertex.getParentVertex();
         }
-        selectedVertex.deselect();
-        newSelectedVertex.setToSingleBubble();
+        SelectionHandler.setToSingleBubble(newSelectedVertex);
         centerVertexIfApplicable(newSelectedVertex);
     }
 

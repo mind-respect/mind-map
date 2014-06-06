@@ -18,7 +18,7 @@ define([
         SELECT_BOX_MIN_HEIGHT = 40,
         selectionInfo = new SelectionInfo();
 
-    api.setSelectionToSingleBubble = function (bubble) {
+    api.setToSingleBubble = function (bubble) {
         deselectAll();
         selectionInfo.setToSingleBubble(bubble);
         bubble.select();
@@ -26,7 +26,7 @@ define([
         reflectSelectionChange();
     };
 
-    api.setSelectionToSingleRelation = function (relation) {
+    api.setToSingleRelation = function (relation) {
         deselectAll();
         selectionInfo.setToSingleRelation(relation);
         relation.select();
@@ -56,14 +56,14 @@ define([
         reflectSelectionChange();
     };
 
-    api.setToNoneSelected = function () {
+    api.removeAll = function () {
         deselectAll(
             selectionInfo.getSelectedBubbles()
         );
         deselectAll(
             selectionInfo.getSelectedRelations()
         );
-        selectionInfo.setToNoneSelected();
+        selectionInfo.removeAll();
         reflectSelectionChange();
     };
 
@@ -110,7 +110,7 @@ define([
     api.getSingleElement = function () {
         return selectionInfo.getSingleElement();
     };
-    EventBus.subscribe("/event/ui/graph/reset", selectionInfo.setToNoneSelected);
+    EventBus.subscribe("/event/ui/graph/reset", selectionInfo.removeAll);
     return api;
     function reflectSelectionChange() {
         var nbSelectedGraphElements = selectionInfo.getNbSelected();
@@ -150,7 +150,7 @@ define([
                 start: ScrollOnMouseFrontier.doIt,
                 stop: function () {
                     ScrollOnMouseFrontier.disable();
-                    api.setToNoneSelected();
+                    api.removeAll();
                     GraphDisplayer.getVertexSelector().visitAllVertices(function (vertex) {
                         if (UiUtils.doComponentsCollide(
                             vertex.getHtml(),
@@ -208,7 +208,7 @@ define([
             bubbles = [];
             relations[0] = relation;
         };
-        this.setToNoneSelected = function () {
+        this.removeAll = function () {
             bubbles = [];
             relations = [];
         };

@@ -134,7 +134,9 @@ define([
                     '?sourceVertexId=' + sourceVertexUriFormatted +
                     '&destinationVertexId=' + destinationVertexUriFormatted
             }).success(function () {
-                    var responseUri = response.getResponseHeader("Location");
+                    var responseUri = IdUriUtils.removeDomainNameFromGraphElementUri(
+                        response.getResponseHeader("Location")
+                    );
                     callback(
                         getEdgeServerFacade().buildObjectWithUriOfSelfSourceAndDestinationVertex(
                             responseUri,

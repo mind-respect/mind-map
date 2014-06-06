@@ -112,7 +112,7 @@ define(
         EventBus.subscribe(
             '/event/ui/graph/drawing_info/updated/',
             function (event, drawnGraph, centralVertexUri) {
-                SelectionHandler.setToNoneSelected();
+                SelectionHandler.removeAll();
                 var centralVertex = GraphDisplayer.getVertexSelector().withUri(centralVertexUri)[0];
                 centralVertex.setAsCentral();
                 GraphDisplayer.integrateEdgesOfServerGraph(
@@ -125,7 +125,7 @@ define(
                         if(KeyboardUtils.isCtrlPressed()){
                             return;
                         }
-                        SelectionHandler.setToNoneSelected();
+                        SelectionHandler.removeAll();
                     }
                 );
                 GraphDisplayer.getVertexSelector().visitAllVertices(function(vertex){
