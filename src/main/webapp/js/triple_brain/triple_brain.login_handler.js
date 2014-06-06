@@ -26,8 +26,8 @@ define([
             submitWhenPressingEnter();
             getLoginButton().click(function () {
                 var loginInfo = {
-                    email: getEmailField.val(),
-                    password: getPasswordField.val()
+                    email: getEmailField().val(),
+                    password: getPasswordField().val()
                 };
                 UserService.authenticate(
                     loginInfo,

@@ -11,6 +11,7 @@ define([
     "triple_brain.ui.edge",
     "triple_brain.ui.utils"
 ], function ($, EventBus, RelativeTreeCenterVertex, SelectionHandler, VertexService, RelativeTreeVertex, EdgeUi, UiUtils) {
+    "use strict";
     var api = {},
         tabKeyNumber = 9,
         leftArrowKeyNumber = 37,
@@ -140,7 +141,7 @@ define([
             return;
         }
         var bubbleAbove = selectedVertex.getBubbleAbove();
-        SelectionHandler.setToSingleBubble(bubbleAbove)
+        SelectionHandler.setToSingleBubble(bubbleAbove);
         centerVertexIfApplicable(bubbleAbove);
     }
 

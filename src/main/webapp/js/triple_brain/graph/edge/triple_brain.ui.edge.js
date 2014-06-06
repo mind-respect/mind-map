@@ -39,9 +39,12 @@ define([
             return edges;
         };
         api.visitAllEdges = function (visitor) {
-            $.each(api.allEdges(), function () {
-                var edge = this;
-                return visitor(edge);
+            GraphUi.getDrawnGraph().find(".relation").each(function () {
+                visitor(
+                    api.withHtml(
+                        $(this)
+                    )
+                )
             });
         };
         api.drawAllEdges = function () {
@@ -73,12 +76,11 @@ define([
         };
 
         function drawEdges(recalculate) {
-            var edges = api.allEdges();
-            for (var i = 0; i < edges.length; i++) {
-                edges[i].redraw(
+            api.visitAllEdges(function(edge){
+                edge.redraw(
                     recalculate
                 );
-            }
+            });
         }
 
         api.Object = function (html) {
