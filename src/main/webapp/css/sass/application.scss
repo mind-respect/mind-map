@@ -406,6 +406,26 @@ svg {
     position: relative;
     min-width: 0;
     margin: 0 0 0 0;
+    width:auto !important;
+    .arrow{
+      position: absolute;
+      height: 1px;
+      width: 60px;
+      top: 50%;
+      left: -42px;
+      border-top:1px solid black;
+      &:before{
+        content:url('images/icons/vertex/arrowhead_right.svg');
+        position:relative;
+        top:-10px;
+        left:20px;
+      }
+    }
+    &.inverse{
+      .arrow:before{
+        content:url('images/icons/vertex/arrowhead_left.svg');
+      }
+    }
   }
   &.includes-vertices {
     .in-bubble-content {
@@ -432,6 +452,23 @@ svg {
     }
   }
   &.center-vertex {
+    .arrow{
+      height: 0;
+      width: 0;
+      top: 0;
+      left: 0;
+      border-top:none;
+      &:before{
+        content:""
+      }
+    }
+    &:before{
+      border-left:none;
+      height: 0;
+      width: 0;
+      top: 0;
+      left: 0;
+    }
     .in-bubble-content {
       border-radius: 15px;
       -webkit-box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.1);
@@ -478,7 +515,7 @@ svg {
     padding-top:0.7em;
     margin-left: 0.3em;
     position:relative;
-    display:inline-flex;
+    display:inline-block;
     .note-button {
       margin-right: 5px;
       margin-top: -3px;
@@ -488,8 +525,12 @@ svg {
     border-style: solid;
   }
   .image_container {
-    float: left;
+    display:inline-block;
     position:relative;
+    width: 60px;
+    &:empty{
+      width:0;
+    }
   }
   .move {
     background-image: url('images/icons/vertex/move.png');

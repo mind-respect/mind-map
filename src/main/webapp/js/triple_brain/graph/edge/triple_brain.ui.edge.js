@@ -51,7 +51,7 @@ define([
             drawEdges(false);
         };
         api.redrawAllEdges = function () {
-            drawEdges(true);
+             drawEdges(true);
             EventBus.publish(
                 "/event/ui/graph/edges/redrawn"
             );

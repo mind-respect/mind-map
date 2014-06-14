@@ -77,8 +77,9 @@ define([
                 html.centerOnScreen();
             };
             this.inverse = function () {
-                html[
-                    html.hasClass("inverse") ?
+                var vertexHtml = html.closest(".vertex");
+                vertexHtml[
+                    vertexHtml.hasClass("inverse") ?
                         "removeClass" :
                         "addClass"
                     ]("inverse");

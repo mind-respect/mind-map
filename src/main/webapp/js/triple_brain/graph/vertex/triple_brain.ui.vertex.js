@@ -317,7 +317,9 @@ define([
                 if (self.hasHiddenRelationsContainer()) {
                     self.getHiddenRelationsContainer().remove();
                 }
-                html.remove();
+                var tree = html.closest(".vertex-tree-container");
+                tree.next(".vertices-vertical-space").remove();
+                tree.remove();
             };
             this.suggestions = function () {
                 return html.data('suggestions');

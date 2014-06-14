@@ -68,22 +68,23 @@ define([
                 );
             }
         };
+        api.completeBuild = function(vertex){
+            vertex.refreshImages();
+            api.addDuplicateVerticesButtonIfApplicable(
+                vertex
+            );
+            if (vertex.isToTheLeft()) {
+                var noteButton = vertex.getNoteButtonInBubbleContent();
+                noteButton.next(".overlay-container").after(noteButton);
+            }
+        };
         EventBus.subscribe(
             '/event/ui/vertex/visit_after_graph_drawn',
             handleVisitAfterGraphDrawn
         );
         return api;
         function handleVisitAfterGraphDrawn(event, vertex) {
-            vertex.refreshImages();
-            if ("relative_tree" === GraphDisplayer.name()) {
-                api.addDuplicateVerticesButtonIfApplicable(
-                    vertex
-                );
-            }
-            if (vertex.isToTheLeft()) {
-                var noteButton = vertex.getNoteButtonInBubbleContent();
-                noteButton.next(".overlay-container").after(noteButton);
-            }
+            api.completeBuild(vertex);
         }
 
         function VertexCreator(serverFacade) {
@@ -165,6 +166,9 @@ define([
                 vertex.makeItLowProfile();
                 vertex.setOriginalServerObject(
                     serverFacade
+                );
+                vertex.getHtml().append(
+                    "<span class='arrow'>"
                 );
                 vertex.isPublic() ?
                     vertex.makePublic() :

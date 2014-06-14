@@ -2,14 +2,14 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "triple_brain.template"
-],
+        "triple_brain.template"
+    ],
     function (Template) {
         var api = {};
         var t = Template.withTemplateGroup(api);
         t.add(
             'root_vertex_super_container',
-            "<div class='root-vertex-super-container' style='"+
+                "<div class='root-vertex-super-container' style='" +
                 "top:{offset.y}px;" +
                 "left:{offset.x}px;" +
                 "'></div>"
@@ -21,7 +21,20 @@ define([
 
         t.add(
             'vertex_tree_container',
-            "<div class='vertex-tree-container'></div>"
+                "<div class='vertex-tree-container'>" +
+                "</div>"
+        );
+
+        t.add(
+            "vertical_border",
+                "<div class='border-container'>" +
+                    "<div class='top-border'></div>" +
+                    "<div class='bottom-border'></div>" +
+                "</div>" +
+                    "<div class='border-container-two'>" +
+                    "<div class='top-border'></div>" +
+                    "<div class='bottom-border'></div>" +
+                    "</div>"
         );
 
         t.add(

@@ -2,11 +2,12 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
+    "require",
     "jquery",
     "triple_brain.vertex_server_facade",
     "triple_brain.edge_server_facade"
 ],
-    function ($, VertexServerFacade, EdgeServerFacade) {
+    function (require, $, VertexServerFacade, EdgeServerFacade) {
         var api = {};
         api.defineChildrenInVertices = function (serverGraph, centralVertexUri) {
             var sourceId;
@@ -73,15 +74,22 @@ define([
                 if(isGraphElementFacadeBuilt(serverFormat)){
                     return serverFormat;
                 }
-                return vertices[vertexId] = VertexServerFacade.fromServerFormat(
+                return vertices[vertexId] = getVertexServerFacade().fromServerFormat(
                     vertices[vertexId]
                 );
             }
             function isGraphElementFacadeBuilt(graphElementServerFormat){
                 return graphElementServerFormat["getLabel"] !== undefined;
             }
-        }
+        };
 
         return api;
+
+        function getVertexServerFacade(){
+            if(VertexServerFacade === undefined){
+                VertexServerFacade = require("triple_brain.vertex_server_facade")
+            }
+            return VertexServerFacade;
+        }
     }
 );

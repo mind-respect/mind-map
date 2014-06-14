@@ -9,6 +9,7 @@ define([
     "triple_brain.ui.graph"
 ],
     function(Segment, MindMapTemplate, GraphUi){
+        "use strict";
         var api = {};
         api.withSegment = function(segment){
             return new ArrowLine(segment);
@@ -47,10 +48,6 @@ define([
             };
             this.segment = function(){
                 return segment
-            };
-
-            this.drawInYellowWithBigLineWidth = function(){
-                drawWithColorAndLineWidth("yellow", "3");
             };
 
             this.remove = function(){

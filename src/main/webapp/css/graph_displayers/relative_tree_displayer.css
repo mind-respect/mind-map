@@ -2,23 +2,20 @@
     position:absolute;
 }
 
-#drawn_graph > .root-vertex-super-container > .vertices-children-container:not(.left-oriented) .vertices-children-container{
-    padding-left:1em;
-}
-
 .vertices-children-container{
     display:table-cell;
     vertical-align: middle;
 }
 .vertices-children-container.left-oriented .vertex-tree-container{
-    margin-left:-25em;
+    margin-left:0 !important;
+    float:right;
 }
-
 .vertex-tree-container{
     display:table;
     margin-left:0;
-    margin-bottom: 1em;
+    height:1em;
 }
+
 
 .vertex-container{
     display:table-cell;
@@ -38,11 +35,122 @@
     margin-left:0;
 }
 .relation.selected .label {
-    box-shadow: 0px 0px 8px #3005bb, inset 0px 0px 6px #3005bb;
+    box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb;
 }
 
 .left-oriented .vertex .in-bubble-content .note-button{
     margin-right:0;
+}
+
+.left-oriented .vertex .arrow{
+    left: auto;
+    right:-42px;
+}
+
+.left-oriented .vertex .arrow:before{
+     content:url('../images/icons/vertex/arrowhead_left.svg');
+     left:30px;
+}
+
+.left-oriented .vertex.inverse .arrow:before{
+    content:url('../images/icons/vertex/arrowhead_right.svg');
+}
+
+/*BORDER*/
+
+.vertices-children-container .vertex-tree-container:first-child > .border-container{
+    border-left:none;
+}
+
+.vertices-children-container .vertex-tree-container:last-of-type > .border-container-two{
+    border-left:none;
+}
+
+.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container > .vertex:before{
+    border-left:none;
+}
+
+.vertices-children-container .vertices-vertical-space:last-child{
+    border-left:none;
+}
+
+/*LEFT ORIENTED BORDER */
+.left-oriented .vertex-tree-container:first-child > .border-container{
+    border-right:none;
+}
+
+.left-oriented .vertex-tree-container:last-of-type > .border-container-two{
+    border-right:none;
+}
+
+.left-oriented .vertex-tree-container:last-of-type > .vertex-container > .vertex:before{
+    border-left:none;
+}
+
+.left-oriented .vertices-vertical-space:last-child{
+    border-right:none;
+}
+
+.left-oriented .vertices-vertical-space{
+    margin-right:-1px;
+    border-left:none;
+    border-right:1px solid black;
+}
+
+.border-container{
+    display:table;
+    height:50%;
+    padding-right:40px;
+    border-left:1px solid black;
+}
+
+.border-container-two{
+    display:table;
+    height:50%;
+    padding-right:40px;
+    border-left:1px solid black;
+}
+
+.left-oriented .border-container{
+    border-left:none;
+    border-right:1px solid black;
+}
+
+.left-oriented .border-container-two{
+    border-left:none;
+    border-right:1px solid black;
+}
+
+.top-border-container{
+    display:block;
+    height:50%;
+    padding-top:50%;
+    width:1px;
+}
+
+.top-border{
+    display:table;
+    height:0;
+    padding:0;
+    width:1px;
+}
+.bottom-border-container{
+    display:block;
+    height:50%;
+    padding-top:50%;
+}
+.bottom-border{
+    display:table;
+    height:0;
+    padding:0;
+    width:1px;
+}
+
+.vertices-vertical-space{
+    display:table;
+    height:15px;
+    border-left:1px solid black;
+    width:99.5%;
 }
 
 .relation input{
@@ -50,21 +158,19 @@
     border-width:0.2em;
     border-color:#3A87AD;
     padding: 0;
-    spacing: 0;
     outline: none;
     font-family: courier new, monospace;
     font-size: 14px;
     vertical-align: middle;
     background-color: transparent;
-    /*margin-top: 15px;*/
     width:auto;
     overflow: hidden;
 }
 
-.relation.inverse .label{
+.vertex.inverse .relation .label{
     background: red;
 }
 
-.relation.inverse input[type=text]{
+.vertex.inverse .relation input[type=text]{
     border-color:red;
 }

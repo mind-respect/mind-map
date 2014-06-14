@@ -37,7 +37,7 @@ define([
                 html.uniqueId();
                 var isInverse = edgeServer.getSourceVertex().getUri() !== parentVertexHtmlFacade.getUri();
                 if (isInverse) {
-                    html.addClass("inverse");
+                    childVertexHtmlFacade.getHtml().addClass("inverse");
                 }
                 html.data(
                     "source_vertex_id",

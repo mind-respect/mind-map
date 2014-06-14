@@ -63,6 +63,7 @@ define([
                 parentVertexServerFormat.uiIds = [
                     parentVertexId
                 ];
+                parentVertexServerFormat.isLeftOriented = parentVertex.isToTheLeft();
                 serverGraph.vertices[parentUri] = parentVertexServerFormat;
                 if (nbRelationsWithGrandParent >= 1) {
                     treeMaker.buildChildrenHtmlTreeRecursivelyEvenIfGrandParentAndIncludingDuplicates(
@@ -79,11 +80,7 @@ define([
                 parentVertex.setOriginalServerObject(
                     serverGraph.vertices[parentUri]
                 );
-                parentVertex.visitChildren(function (child) {
-                    VertexHtmlBuilder.addDuplicateVerticesButtonIfApplicable(
-                        child
-                    );
-                });
+                parentVertex.visitChildren(VertexHtmlBuilder.completeBuild);
                 callback(serverGraph);
                 function removeRelationWithGrandParentFromServerGraph() {
                     var relationWithGrandParentUri = parentVertex.getRelationWithParent().getUri();
@@ -152,11 +149,16 @@ define([
         );
         var container;
         if (parentVertex.isCenterVertex()) {
-            container = shouldAddLeft() ?
-                leftVerticesContainer() :
-                rightVerticesContainer();
+            if(shouldAddLeft()){
+                container = leftVerticesContainer();
+                newVertex.isLeftOriented = true;
+            }else{
+                container = rightVerticesContainer();
+                newVertex.isLeftOriented = false;
+            }
         } else {
             container = treeMaker.childrenVertexContainer(parentVertex);
+            newVertex.isLeftOriented = parentVertex.getOriginalServerObject().isLeftOriented;
         }
         newVertex.neighbors = [];
         var vertexHtmlFacade = treeMaker.buildVertexHtmlIntoContainer(
@@ -164,7 +166,7 @@ define([
             container
         );
         var relativeVertex = RelativeTreeVertex.ofVertex(vertexHtmlFacade);
-        if (relativeVertex.isToTheLeft()) {
+        if(newVertex.isLeftOriented){
             relativeVertex.adjustPosition(parentVertex.getHtml());
         }
         EdgeUi.redrawAllEdges();
@@ -399,32 +401,45 @@ define([
             var childVertexHtmlFacade = _htmlBuilder.withServerFacade(
                 vertex
             ).create();
+
             var childTreeContainer = RelativeTreeTemplates[
                 "vertex_tree_container"
                 ].merge();
+
             $(container).append(
                 childTreeContainer
-            );
+            ).append("<span class='vertices-vertical-space'>");
+
+
             var vertexContainer = RelativeTreeTemplates[
                 "vertex_container"
                 ].merge();
             childTreeContainer.append(
                 vertexContainer
             );
+            childTreeContainer[
+                vertex.isLeftOriented ? "append" : "prepend"
+                ](
+                RelativeTreeTemplates[
+                    "vertical_border"
+                    ].merge()
+            );
             vertexContainer.append(
                 childVertexHtmlFacade.getHtml()
             );
             childVertexHtmlFacade.readjustLabelWidth();
-            self.addChildrenContainerToVertex(childVertexHtmlFacade);
+            self.addChildrenContainerToVertex(childVertexHtmlFacade, vertex.isLeftOriented);
             return childVertexHtmlFacade;
         };
-        this.addChildrenContainerToVertex = function (vertexHtmlFacade) {
+        this.addChildrenContainerToVertex = function (vertexHtmlFacade, toLeft) {
             var childrenContainer = RelativeTreeTemplates[
                 "vertices_children_container"
                 ].merge();
             vertexHtmlFacade.getHtml().closest(
                 ".vertex-tree-container, .root-vertex-super-container"
-            ).append(childrenContainer);
+            )[
+                toLeft  && vertexHtmlFacade? "prepend" : "append"
+                ](childrenContainer);
             return childrenContainer;
         };
         this.childrenVertexContainer = function (vertexHtmlFacade) {
@@ -460,6 +475,7 @@ define([
                     return;
                 }
                 var vertexServerFormat = childInfo;
+                vertexServerFormat.isLeftOriented = serverParentVertex.isLeftOriented;
                 var childVertexHtmlFacade = self.buildVertexHtmlIntoContainer(
                     vertexServerFormat,
                     childrenContainer
@@ -477,7 +493,7 @@ define([
                     ".vertex-tree-container"
                 );
                 childInfo.added = true;
-                $(treeContainer).append(
+                $(treeContainer)[childInfo.isLeftOriented ? "prepend" : "append"](
                     buildChildrenHtmlTreeRecursively(
                         childVertexHtmlFacade,
                         vertices,
@@ -521,16 +537,19 @@ define([
                 var leftChildrenContainer;
                 if (canAddToLeft) {
                     leftChildrenContainer = self.addChildrenContainerToVertex(
-                        rootVertex
+                        rootVertex,
+                        true
                     );
                     $(leftChildrenContainer).addClass("left-oriented");
                 }
                 var rightChildrenContainer = self.addChildrenContainerToVertex(
-                    rootVertex
+                    rootVertex,
+                    false
                 );
                 for (var i = 0; i < serverRootVertex.neighbors.length; i++) {
                     var isLeftOriented = i % 2 != 0;
                     var childVertex = vertexWithId(serverRootVertex.neighbors[i].vertexUri);
+                    childVertex.isLeftOriented = isLeftOriented;
                     childVertex.added = true;
                     var container = canAddToLeft && isLeftOriented ?
                         leftChildrenContainer :

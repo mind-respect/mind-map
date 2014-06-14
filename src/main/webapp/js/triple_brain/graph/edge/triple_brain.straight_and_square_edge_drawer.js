@@ -19,19 +19,20 @@ define([
     function PathBetweenVertices(sourceVertex, destinationVertex, isInverse) {
         var sourceVertexAsSeenOnScreen = isInverse ?
             destinationVertex :
-            sourceVertex;
-        var destinationVertexAsSeenOnScreen = isInverse ?
+            sourceVertex,
+            destinationVertexAsSeenOnScreen = isInverse ?
             sourceVertex :
             destinationVertex;
-        var drawnComponents = [];
-        var sourceHtml = sourceVertexAsSeenOnScreen.getInBubbleContainer();
-        var destinationHtml = destinationVertexAsSeenOnScreen.getInBubbleContainer();
-        var defaultStrokeWidth = "1";
-        var defaultColor = "black";
+        var drawnComponents = [],
+            sourceHtml = sourceVertexAsSeenOnScreen.getInBubbleContainer(),
+            destinationHtml = destinationVertexAsSeenOnScreen.getInBubbleContainer(),
+            defaultStrokeWidth = "1",
+            defaultColor = "black";
         this.drawInWithDefaultStyle = function () {
             this.drawInBlackWithSmallLineWidth();
         };
         this.drawInBlackWithSmallLineWidth = function () {
+            return;
             var firstSegment = buildFirstSegment();
             var endPointOfSecondSegment = buildEndPointOfSecondSegment(
                 firstSegment.getEndPoint()
@@ -54,10 +55,6 @@ define([
             );
             addArrowHead();
             function addArrowHead() {
-                var lastSegment = Segment.withStartAndEndPoint(
-                    endPointOfSecondSegment,
-                    endPointOfThirdSegment
-                );
                 var isGoingLeft = getIsGoingLeft();
                 var isPointingLeft =
                     (isGoingLeft && !isInverse) ||
