@@ -78,7 +78,12 @@ button{
 }
 
 .canvas-parent, .included-vertices-container.canvas-parent {
-  overflow: hidden;
+  overflow: scroll;
+}
+.included-vertices-container{
+  .layout{
+    position:absolute;
+  }
 }
 
 #mind_map h2, #mind_map h3 {
@@ -406,7 +411,6 @@ svg {
     position: relative;
     min-width: 0;
     margin: 0 0 0 0;
-    width:auto !important;
     .arrow{
       position: absolute;
       height: 1px;
@@ -493,7 +497,6 @@ svg {
     vertical-align: middle;
     background-color: transparent;
     margin-bottom:0.4em;
-  /*margin-top: 15px;*/
     width: auto;
     overflow: hidden;
   }
@@ -751,8 +754,8 @@ svg {
 }
 
 .hidden-properties-container {
-  position: absolute;
-  z-index: 10;
+  display:inline-block;
+  z-index:3;
 }
 
 .link-like-button {

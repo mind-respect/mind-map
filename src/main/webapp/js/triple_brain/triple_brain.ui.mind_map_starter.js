@@ -57,7 +57,6 @@ define(
                     GraphElementMainMenu.reset();
                     UserService.authenticatedUser(function () {
                             LanguageManager.loadLocaleContent(function () {
-                                GraphUi.resetDrawingCanvas();
                                 $("body").removeClass("hidden");
                                 GraphDisplayer.displayUsingDefaultVertex();
                                 translateText();
@@ -119,7 +118,7 @@ define(
                     drawnGraph
                 );
                 centralVertex.scrollTo();
-                $("svg.main").dragScroll().on(
+                $("body, html").removeDragScroll().dragScroll().on(
                     "click",
                     function(){
                         if(KeyboardUtils.isCtrlPressed()){

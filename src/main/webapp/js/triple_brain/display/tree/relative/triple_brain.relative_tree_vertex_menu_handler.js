@@ -21,13 +21,13 @@ define([
     var api = {};
     api.forSingle = function () {
         var subApi = {};
-        subApi.addChild = function(event, vertex){
-            var sourceVertex = vertex;
+        subApi.addChild = function(event, sourceVertex){
             VertexService.addRelationAndVertexToVertex(
                 sourceVertex, function (triple, tripleServerFormat) {
                     var sourceVertex = RelativeTreeVertex.ofVertex(
                         triple.sourceVertex()
                     );
+                    sourceVertex.getHiddenRelationsContainer().remove();
                     var destinationHtml = triple.destinationVertex().getHtml();
                     if (!UiUtils.isElementFullyOnScreen(destinationHtml)) {
                         destinationHtml.centerOnScreenWithAnimation();
@@ -61,7 +61,6 @@ define([
                         removeEdges(vertex);
                     });
                     removeEdges(vertex);
-                    EdgeUi.redrawAllEdges();
                     function removeChildren(vertex) {
                         var relativeVertex = RelativeTreeVertex.ofVertex(
                             vertex

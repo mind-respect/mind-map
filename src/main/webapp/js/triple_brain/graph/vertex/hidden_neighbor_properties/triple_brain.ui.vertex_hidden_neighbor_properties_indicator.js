@@ -1,40 +1,15 @@
 define([
         "jquery",
-        "triple_brain.ui.edge",
-        "triple_brain.ui.vertex_hidden_neighbor_properties_indicator_dashed_segment",
-        "triple_brain.point",
-        "triple_brain.segment",
         "triple_brain.mind-map_template",
-        "triple_brain.graph_element_menu",
-        "triple_brain.ui.graph",
         "triple_brain.event_bus",
         "triple_brain.graph_displayer"
     ],
-    function ($, Edge, DashedSegment, Point, Segment, MindMapTemplate, GraphElementMenu, GraphUi, EventBus, GraphDisplayer) {
+    function ($, MindMapTemplate, EventBus, GraphDisplayer) {
         var api = {
             withVertex: function (vertex) {
                 return new HiddenNeighborPropertiesIndicator(vertex);
             }
         };
-
-        EventBus.subscribe(
-            '/event/ui/graph/drawing_info/about_to/update',
-            function () {
-                EventBus.unsubscribe(
-                        "/event/ui/graph/vertex/width-modified " +
-                        "/event/ui/graph/vertex/position-changed",
-                    adjustPositionOfVertexHandler
-                );
-                EventBus.unsubscribe(
-                    "/event/ui/graph/edges/redrawn",
-                    adjustPositionOfAllVerticesHandler
-                );
-                EventBus.subscribe(
-                    '/event/ui/graph/drawn',
-                    graphDrawnHandler
-                );
-            });
-
         EventBus.subscribe(
             "/event/ui/vertex/visit_after_graph_drawn",
             function (event, vertex) {
@@ -43,114 +18,45 @@ define([
                 }
             }
         );
-
-        function graphDrawnHandler(event) {
-            EventBus.unsubscribe(
-                '/event/ui/graph/drawn',
-                graphDrawnHandler
-            );
-            EventBus.subscribe(
-                "/event/ui/graph/edges/redrawn",
-                adjustPositionOfAllVerticesHandler
-            );
-            EventBus.subscribe(
-                    "/event/ui/graph/vertex/width-modified " +
-                    "/event/ui/graph/vertex/position-changed",
-                adjustPositionOfVertexHandler
-            );
-        }
-
         return api;
-        function adjustPositionOfAllVerticesHandler() {
-            visitHiddenPropertiesContainers(function () {
-                var vertex = $(this).data("vertex");
-                vertex.getHiddenRelationsContainer().adjustPosition();
-            });
-        }
-
-        function visitHiddenPropertiesContainers(visitor) {
-            $(".hidden-properties-container").each(visitor);
-        }
-
-        function adjustPositionOfVertexHandler(event, vertex) {
-            if (vertex.hasHiddenRelationsContainer()) {
-                vertex.getHiddenRelationsContainer().adjustPosition();
-            }
-        }
-
         function HiddenNeighborPropertiesIndicator(vertex) {
-            var self = this;
             var hiddenNeighborPropertiesContainer;
-            var dashSegments = [];
             this.build = function () {
                 if (!vertex.hasHiddenRelations()) {
                     return;
                 }
-                var numberOfHiddenConnectedRelations = vertex.getTotalNumberOfEdges() - 1;
+                var numberOfHiddenRelationsToFlag = vertex.getTotalNumberOfEdges() - 1;
+                if(numberOfHiddenRelationsToFlag > 10){
+                    numberOfHiddenRelationsToFlag = 10;
+                }
                 var isLeftOriented = vertex.getChildrenOrientation() === "left";
-                var defaultLengthOfHiddenPropertiesContainer = 40;
-                var lengthInPixels = numberOfHiddenConnectedRelations == 1 ?
-                    1 :
-                    defaultLengthOfHiddenPropertiesContainer;
-                var startPoint = Point.fromCoordinates(
-                    vertex.position().x,
-                        vertex.position().y + (vertex.height() / 2)
-                );
-                var toTheRightHorizontalMargin = 23 + (vertex.hasImagesMenu() ?
-                    vertex.getImageMenu().width() :
-                    0);
-                var vertexWidth = vertex.getInBubbleContentWidth();
-                if (!isLeftOriented) {
-                    startPoint.x += vertexWidth + toTheRightHorizontalMargin;
-                }
-                var distanceBetweenEachDashedSegment =
-                        numberOfHiddenConnectedRelations == 1 ?
-                    0 :
-                    lengthInPixels / (numberOfHiddenConnectedRelations - 1);
-                var plainSegment = Segment.withStartAndEndPointAtOrigin();
-                plainSegment.startPoint = startPoint;
-                var horizontalDistanceOfDashedSegment = 20;
-                plainSegment.endPoint.x = vertex.position().x;
-                if (isLeftOriented) {
-                    plainSegment.endPoint.x -= horizontalDistanceOfDashedSegment;
-                } else {
-                    plainSegment.endPoint.x += vertexWidth + horizontalDistanceOfDashedSegment + toTheRightHorizontalMargin;
-                }
-                for (var i = 0; i < numberOfHiddenConnectedRelations; i++) {
-                    plainSegment.endPoint.y = startPoint.y -
-                        (lengthInPixels / 2) +
-                        (i * distanceBetweenEachDashedSegment);
-                    var dashedSegment = DashedSegment.withSegment(plainSegment.clone());
-                    dashedSegment.draw();
-                    dashSegments.push(dashedSegment);
-                }
                 hiddenNeighborPropertiesContainer = $(
                     MindMapTemplate[
                         'hidden_property_container'
                         ].merge()
+                ).data("vertex", vertex);
+                var imageUrl = "/css/images/icons/vertex/" +
+                    numberOfHiddenRelationsToFlag +
+                    "_"
+                    + (isLeftOriented ? "left_" : "") +
+                    "hidden_properties.svg";
+                var img = $("<img>").attr(
+                    "src",
+                    imageUrl
                 );
-                GraphUi.addHtml(
+                hiddenNeighborPropertiesContainer.append(
+                    img
+                );
+                vertex.getHtml()[isLeftOriented ? "prepend" : "append"](
                     hiddenNeighborPropertiesContainer
                 );
-
-                hiddenNeighborPropertiesContainer
-                    .css('min-width', defaultLengthOfHiddenPropertiesContainer)
-                    .css('min-height', defaultLengthOfHiddenPropertiesContainer)
-                    .css('left', isLeftOriented ? startPoint.x - defaultLengthOfHiddenPropertiesContainer : startPoint.x)
-                    .css('top', startPoint.y - (defaultLengthOfHiddenPropertiesContainer / 2))
-                    .data("vertex", vertex)
-                    .one("click", handleHiddenPropertiesContainerClick);
+                hiddenNeighborPropertiesContainer.on(
+                    "click",
+                    handleHiddenPropertiesContainerClick
+                );
             };
             this.remove = function () {
                 hiddenNeighborPropertiesContainer.remove();
-                while (dashSegments.length != 0) {
-                    var dashSegment = dashSegments.pop();
-                    dashSegment.remove();
-                }
-            };
-            this.adjustPosition = function () {
-                self.remove();
-                self.build();
             };
         }
 
@@ -158,14 +64,15 @@ define([
             if (!GraphDisplayer.canAddChildTree()) {
                 return;
             }
-            var vertex = $(this).data("vertex");
+            var $this = $(this);
+            var vertex = $this.data("vertex");
+            $this.remove();
             GraphDisplayer.addChildTree(
                 vertex,
                 function (drawnTree) {
                     GraphDisplayer.integrateEdgesOfServerGraph(
                         drawnTree
                     );
-                    Edge.redrawAllEdges();
                     vertex.visitChildren(function (child) {
                         if (child.hasHiddenRelations()) {
                             child.buildHiddenNeighborPropertiesIndicator();

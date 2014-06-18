@@ -4,9 +4,8 @@
 define([
     "jquery",
     "triple_brain.ui.identification_menu",
-    "triple_brain.edge",
-    "triple_brain.tree_edge"
-], function($, IdentificationMenu, EdgeService, TreeEdge){
+    "triple_brain.edge"
+], function($, IdentificationMenu, EdgeService){
     var api = {};
     api.forSingle = function(){
         var subApi = {};
@@ -25,7 +24,6 @@ define([
                     });
                     edge.remove();
                     vertex.remove();
-                    TreeEdge.redrawAllEdges();
                 }
             );
         };
@@ -54,8 +52,7 @@ define([
         }
     };
     api.forGroup  = function(){
-        var subApi = {};
-        return subApi;
+        return {};
     };
     return api;
 });

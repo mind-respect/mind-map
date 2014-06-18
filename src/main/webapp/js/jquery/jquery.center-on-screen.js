@@ -17,7 +17,7 @@ define([
             var position = {
                 top : elementOffset.top - containerOffset.top,
                 left : elementOffset.left - containerOffset.left
-            }
+            };
             container.scrollLeft(
                 scrollLeftFromPosition(position, element, visibleSize)
             );

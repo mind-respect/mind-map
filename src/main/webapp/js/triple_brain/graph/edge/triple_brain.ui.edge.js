@@ -24,7 +24,6 @@ define([
             var cachedObject = cache[id];
             if (cachedObject === undefined) {
                 cachedObject = new api.Object(html);
-                ;
                 cache[id] = cachedObject;
             }
             return cachedObject;
@@ -47,15 +46,6 @@ define([
                 )
             });
         };
-        api.drawAllEdges = function () {
-            drawEdges(false);
-        };
-        api.redrawAllEdges = function () {
-             drawEdges(true);
-            EventBus.publish(
-                "/event/ui/graph/edges/redrawn"
-            );
-        };
         api.connectedToVertex = function (vertex) {
             var edgesConnectedToVertex = [];
             var vertexId = vertex.getId();
@@ -75,14 +65,6 @@ define([
             return edgesConnectedToVertex;
         };
 
-        function drawEdges(recalculate) {
-            api.visitAllEdges(function(edge){
-                edge.redraw(
-                    recalculate
-                );
-            });
-        }
-
         api.Object = function (html) {
             var self = this;
             GraphElement.Object.apply(self, [html]);
@@ -99,20 +81,6 @@ define([
                 return html.data(
                     "uri"
                 );
-            };
-            this.redraw = function (recalculate) {
-                var arrowLine;
-                if (recalculate) {
-                    self.arrowLine().remove();
-                    arrowLine = GraphDisplayer.getEdgeDrawer().ofEdge(
-                        GraphDisplayer.getEdgeSelector().ofEdge(
-                            self
-                        )
-                    );
-                    self.setArrowLine(arrowLine);
-                }
-                self.arrowLine().drawInBlackWithSmallLineWidth();
-                self.centerOnArrowLine();
             };
             this.getGraphElementType = function () {
                 return GraphElement.types.RELATION;
@@ -141,13 +109,6 @@ define([
                     "destination_vertex_id",
                     sourceVertexUri
                 );
-                self.redraw(true);
-            };
-            this.arrowLine = function () {
-                return html.data("arrowLine");
-            };
-            this.setArrowLine = function (arrowLine) {
-                html.data("arrowLine", arrowLine);
             };
             this.removeIdentificationCommonBehavior = function () {
                 //do nothing
@@ -157,15 +118,6 @@ define([
             };
             this.serverFacade = function () {
                 return EdgeService;
-            };
-            this.centerOnArrowLine = function () {
-                self.positionAt(
-                    this.arrowLine().middlePoint()
-                );
-            };
-            this.positionAt = function (position) {
-                html.css('left', position.x);
-                html.css('top', position.y);
             };
             this.equalsEdge = function (otherEdge) {
                 return self.getId() == otherEdge.getId();
@@ -186,7 +138,6 @@ define([
             };
             this.remove = function () {
                 SelectionHandler.removeRelation(self);
-                self.arrowLine().remove();
                 html.remove();
             };
             this.showMenu = function () {
@@ -210,7 +161,7 @@ define([
             this.select = function () {
                 html.addClass("selected");
             };
-            this.makeSingleSelected = function(){
+            this.makeSingleSelected = function () {
                 self.showMenu();
             };
             this.deselect = function () {
@@ -232,6 +183,5 @@ define([
         };
         return api;
     }
-)
-;
+);
 

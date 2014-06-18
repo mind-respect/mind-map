@@ -57,11 +57,6 @@ define([
                     html,
                     edgeServer.getLabel()
                 ).show();
-                childVertexHtmlFacade.adjustWidth();
-                if (isToTheLeft) {
-                    childVertexHtmlFacade.adjustPosition();
-                }
-                drawArrowLine();
                 var edge = edgeFacade();
                 buildLabelAsInput(edge).hide();
                 buildMenu(edge);
@@ -165,10 +160,6 @@ define([
                     VertexAndEdgeCommon.adjustWidthToNumberOfChars(
                         html
                     );
-                    var vertex = RelativeTreeVertex.withHtml(
-                        html.closest(".vertex")
-                    );
-                    vertex.adjustWidth();
                 });
                 edge.getHtml().prepend(
                     input
@@ -177,7 +168,6 @@ define([
                 var vertex = RelativeTreeVertex.withHtml(
                     input.closest(".vertex")
                 );
-                vertex.adjustWidth();
                 return input;
             }
 
@@ -202,11 +192,6 @@ define([
                 );
                 edge.getLabel().hide();
                 nonInputLabel.show();
-                var vertex = RelativeTreeVertex.withHtml(html.closest(".vertex"));
-                vertex.adjustWidth();
-                vertex.adjustPositionIfApplicable();
-                vertex.adjustAllChildrenPositionIfApplicable();
-                TreeEdge.redrawAllEdges();
                 return edge;
             }
 
@@ -267,16 +252,6 @@ define([
                 return TreeEdge.withHtml(
                     html
                 );
-            }
-
-            function drawArrowLine() {
-                var edge = edgeFacade();
-                edge.setArrowLine(
-                    GraphDisplayer.getEdgeDrawer().ofEdge(
-                        edge
-                    )
-                );
-                edge.arrowLine().drawInWithDefaultStyle();
             }
 
             function edgeFacade() {

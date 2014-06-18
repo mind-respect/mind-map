@@ -23,12 +23,15 @@ define([
             html = $("<div class='canvas-parent included-vertices-container'>");
             addTitle();
             GraphUi.addHtml(html);
-            var paper = Raphael(html[0], 30000, 30000);
-            html.data(
-                "canvas",
-                paper
+            var $body = $("body");
+            var layout = $("<div class='layout'>").css(
+                "min-width", $body.css("width")
+            ).css(
+                "min-height",
+                $body.css("height")
             );
-            getLocalTopLayer().dragScroll({
+            html.append(layout);
+            layout.dragScroll({
                 scrollContainer: html
             });
             var drawnTree = addIncludedGraphElements();
@@ -38,6 +41,9 @@ define([
                     height: 0.5914 * $(window).height(),
                     width: 0.6987 * $(window).width()
                 }
+            );
+            GraphDisplayer.integrateEdgesOfServerGraphForViewOnly(
+                drawnTree
             );
             var vertices = drawnTree.vertices;
             var vertexUri = Object.keys(vertices)[0];
@@ -50,13 +56,7 @@ define([
                         y: html.innerHeight()
                     }
                 });
-            GraphDisplayer.integrateEdgesOfServerGraphForViewOnly(
-                drawnTree
-            );
             return self;
-            function getLocalTopLayer(){
-                return html.find("> svg");
-            }
         };
         function addTitle() {
             html.append(

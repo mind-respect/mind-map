@@ -82,7 +82,7 @@ define([
         ).on(
             "click",
             activateSelectionOnMindMap
-        );
+        ).removeDragScroll();
     };
     api.getSelectionManagementButton = function () {
         if (!_selectionManagementButton) {
@@ -133,7 +133,7 @@ define([
     }
 
     function activateSelectionOnMindMap(event) {
-        $(this).off(
+        var mindMap = $(this).off(
             event
         );
         getSelectBox().removeClass("hidden").css(
@@ -147,8 +147,7 @@ define([
         ).resizable({
                 handles: "ne, se, sw, nw",
                 containment: "document",
-                start: ScrollOnMouseFrontier.doIt,
-                stop: function () {
+                stop : function () {
                     ScrollOnMouseFrontier.disable();
                     api.removeAll();
                     GraphDisplayer.getVertexSelector().visitAllVertices(function (vertex) {
@@ -161,6 +160,7 @@ define([
                     });
                     removeSelectBoxIfExists();
                     reflectSelectionChange();
+                    mindMap.dragScroll();
                 }
             }
         );

@@ -38,25 +38,10 @@ define([
             } else {
                 textContainer.prepend(html);
             }
-            childVertexHtmlFacade.adjustWidth();
-            if (isToTheLeft) {
-                childVertexHtmlFacade.adjustPosition();
-            }
-            drawArrowLine();
             var edge = edgeFacade();
             edge.setUri(
                 edgeServerFormat.getUri()
             );
-            function drawArrowLine() {
-                var edge = edgeFacade();
-                edge.setArrowLine(
-                    GraphDisplayer.getEdgeDrawer().ofEdge(
-                        edge
-                    )
-                );
-//                todo
-//                edge.arrowLine().drawInWithDefaultStyle();
-            }
             function buildInnerHtml(){
                 var label = edgeServerFormat.getLabel();
                 return $(

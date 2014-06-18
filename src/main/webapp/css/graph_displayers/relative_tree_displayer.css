@@ -7,7 +7,6 @@
     vertical-align: middle;
 }
 .vertices-children-container.left-oriented .vertex-tree-container{
-    margin-left:0 !important;
     float:right;
 }
 .vertex-tree-container{
@@ -15,7 +14,6 @@
     margin-left:0;
     height:1em;
 }
-
 
 .vertex-container{
     display:table-cell;

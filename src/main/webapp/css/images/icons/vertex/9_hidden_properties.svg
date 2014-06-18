@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg id="svg2" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="41" width="25" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+ <metadata id="metadata61">
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <path id="path3" d="M0,21,3.5355,17.464z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path5" d="M7.0711,13.929,10.607,10.393z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path7" d="M14.142,6.8579,17.678,3.3223z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path9" d="M0,21,4,18z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path11" d="m8,15,4-3z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path13" d="M16,9,20,6z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path15" d="M0,21,4.4721,18.764z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path17" d="M8.9443,16.528,13.416,14.292z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path19" d="M17.889,12.056,22.361,9.8197z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path21" d="M0,21,4.8507,19.787z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path23" d="m9.7014,18.575,4.8507-1.2127z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path25" d="m19.403,16.149,4.8507-1.2127z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path27" d="m0,21,5,0z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path29" d="m10,21,5,0z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path31" d="m20,21,5,0z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path33" d="m0,21,4.8507,1.2127z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path35" d="m9.7014,23.425,4.8507,1.2127z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path37" d="m19.403,25.851,4.8507,1.2127z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path39" d="m0,21,4.4721,2.2361z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path41" d="m8.9443,25.472,4.4721,2.2361z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path43" d="M17.889,29.944,22.361,32.18z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path45" d="m0,21,4,3z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path47" d="m8,27,4,3z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path49" d="m16,33,4,3z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path51" d="m0,21,3.5355,3.5355z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path53" d="m7.0711,28.071,3.5355,3.5355z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path55" d="M14.142,35.142,17.678,38.678z" stroke="#1919ac" stroke-width="1" fill="none"/>
+</svg>

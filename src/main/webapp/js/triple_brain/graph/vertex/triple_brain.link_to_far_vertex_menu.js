@@ -80,7 +80,6 @@ define([
                                     if (farVertex.hasHiddenRelations()) {
                                         farVertex.buildHiddenNeighborPropertiesIndicator();
                                     }
-                                    Edge.redrawAllEdges();
                                     edge.focus();
                                 }
                             );

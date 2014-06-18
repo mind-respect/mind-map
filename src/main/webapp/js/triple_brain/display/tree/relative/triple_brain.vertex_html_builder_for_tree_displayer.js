@@ -3,7 +3,6 @@
  */
 
 define([
-        "require",
         "jquery",
         "triple_brain.event_bus",
         "triple_brain.vertex",
@@ -24,7 +23,7 @@ define([
         "jquery-ui",
         "jquery.is-fully-on-screen",
         "jquery.center-on-screen"
-    ], function (require, $, EventBus, VertexService, EdgeUi, EdgeService, MindMapTemplate, ExternalResource, Point, Segment, GraphDisplayer, RelativeTreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, SelectionHandler, KeyboardUtils, RelativeTreeVertexMenuHandler) {
+    ], function ($, EventBus, VertexService, EdgeUi, EdgeService, MindMapTemplate, ExternalResource, Point, Segment, GraphDisplayer, RelativeTreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, SelectionHandler, KeyboardUtils, RelativeTreeVertexMenuHandler) {
         var api = {};
         api.withServerFacade = function (serverFacade) {
             return new VertexCreator(serverFacade);
@@ -106,7 +105,8 @@ define([
                 }
             ).on(
                 "click",
-                function () {
+                function (event) {
+                    event.stopPropagation();
                     var vertex = RelativeTreeVertex.withHtml(
                         $(this)
                     );
@@ -233,20 +233,6 @@ define([
                         vertexOfSubHtmlComponent(this),
                         $(this).val()
                     );
-                    var relativeVertex = RelativeTreeVertex.ofVertex(vertex);
-                    relativeVertex.adjustPositionIfApplicable();
-                    relativeVertex.adjustAllChildrenPositionIfApplicable();
-                    var otherInstances = RelativeTreeVertex.withHtml(
-                        html
-                    ).getOtherInstances();
-                    $.each(otherInstances, function () {
-                        var relativeVertex = RelativeTreeVertex.ofVertex(
-                            this
-                        );
-                        relativeVertex.adjustPositionIfApplicable();
-                        relativeVertex.adjustAllChildrenPositionIfApplicable();
-                    });
-                    EdgeUi.redrawAllEdges();
                 }).keyup(function () {
                     var vertex = vertexOfSubHtmlComponent(this);
                     var html = vertex.getHtml();

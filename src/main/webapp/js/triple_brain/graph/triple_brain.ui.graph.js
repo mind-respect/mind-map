@@ -3,10 +3,9 @@
  */
 define([
         "jquery",
-        "triple_brain.point",
-        "triple_brain.event_bus"
+        "triple_brain.point"
     ],
-    function ($, Point, EventBus) {
+    function ($, Point) {
         "use strict";
         var api = {},
             htmlBody =  $("body"),
@@ -23,17 +22,6 @@ define([
         };
         api.addHtml = function (html) {
             api.getDrawnGraph().append(html);
-        };
-        api.resetDrawingCanvas = function () {
-            if (htmlBody.data(("canvas"))) {
-                htmlBody.data("canvas").remove();
-            }
-            var paper = Raphael(0, 0, htmlBody.width(), htmlBody.height());
-            paper.canvas.className.baseVal = "main";
-            htmlBody.data(
-                "canvas",
-                paper
-            );
         };
         api.canvas = function () {
             return htmlBody.data("canvas");
@@ -52,14 +40,10 @@ define([
         };
         api.getTopLayer = function(){
             if(!_topLayer){
-                _topLayer = $("svg.main");
+                _topLayer = $("body, html");
             }
             return _topLayer;
         };
-        EventBus.subscribe(
-            '/event/ui/graph/reset',
-            api.resetDrawingCanvas
-        );
         return api;
     }
 );

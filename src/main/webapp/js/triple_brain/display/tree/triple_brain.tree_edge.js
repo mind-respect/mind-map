@@ -20,7 +20,6 @@ define([
                 );
             });
         };
-        api.redrawAllEdges = EdgeUi.redrawAllEdges;
         api.withHtml = function (html) {
             var id = html.prop('id');
             var cachedObject = cache[id];

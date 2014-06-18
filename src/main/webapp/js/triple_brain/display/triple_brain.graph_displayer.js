@@ -3,10 +3,9 @@
  */
 define([
     "triple_brain.event_bus",
-    "triple_brain.mind_map_info",
-    "triple_brain.id_uri"
+    "triple_brain.mind_map_info"
     ],
-    function(EventBus, MindMapInfo, IdUriUtils){
+    function(EventBus, MindMapInfo){
         "use strict";
         var _implementation,
             api = {};
@@ -65,9 +64,6 @@ define([
         };
         api.couldHaveDuplicates = function(){
             return !api.allowsMovingVertices();
-        };
-        api.getEdgeDrawer = function(){
-            return _implementation.getEdgeDrawer();
         };
         api.couldDestinationBubbleAppearAsSourceBubble = function(){
             return !api.allowsMovingVertices();

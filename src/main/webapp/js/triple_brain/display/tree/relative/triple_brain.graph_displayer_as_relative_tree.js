@@ -11,7 +11,6 @@ define([
     "triple_brain.relative_tree_displayer_templates",
     "triple_brain.ui.edge",
     "triple_brain.event_bus",
-    "triple_brain.straight_and_square_edge_drawer",
     "triple_brain.id_uri",
     "triple_brain.relative_tree_vertex",
     "triple_brain.edge_html_builder_for_relative_tree",
@@ -25,7 +24,7 @@ define([
     "triple_brain.relative_tree_keyboard_actions_handler",
     "triple_brain.vertex_server_facade",
     "triple_brain.edge_server_facade"
-], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, StraightAndSquareEdgeDrawer, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, RelativeTreeVertexMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler, KeyboardActionsHandler, VertexServerFacade, EdgeServerFacade) {
+], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, RelativeTreeVertexMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler, KeyboardActionsHandler, VertexServerFacade, EdgeServerFacade) {
     KeyboardActionsHandler.init();
     var api = {};
     api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
@@ -165,11 +164,6 @@ define([
             newVertex,
             container
         );
-        var relativeVertex = RelativeTreeVertex.ofVertex(vertexHtmlFacade);
-        if(newVertex.isLeftOriented){
-            relativeVertex.adjustPosition(parentVertex.getHtml());
-        }
-        EdgeUi.redrawAllEdges();
         return vertexHtmlFacade;
     };
     api.allowsMovingVertices = function () {
@@ -193,9 +187,6 @@ define([
             sourceVertex,
             destinationVertex
         ).create();
-    };
-    api.getEdgeDrawer = function () {
-        return StraightAndSquareEdgeDrawer;
     };
     api.getEdgeSelector = function () {
         return TreeEdge;
@@ -515,12 +506,6 @@ define([
             );
             var vertices = serverGraph.vertices;
             buildVerticesHtml();
-            $.each($(".left-oriented .vertex"), function () {
-                var relativeVertex = RelativeTreeVertex.withHtml(
-                    $(this)
-                );
-                relativeVertex.adjustPosition();
-            });
             function buildVerticesHtml() {
                 var serverRootVertex = vertexWithId(centralVertexUri);
                 serverRootVertex.added = true;

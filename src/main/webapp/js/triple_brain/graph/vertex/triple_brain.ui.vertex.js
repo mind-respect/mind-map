@@ -171,14 +171,6 @@ define([
             this.getHtml = function () {
                 return html;
             };
-            this.labelCenterPoint = function () {
-                var textContainer = self.getInBubbleContainer();
-                return Point.fromCoordinates(
-                        textContainer.offset().left + self.getInBubbleContentWidth() / 2,
-                        textContainer.offset().top + textContainer.height() / 2
-                )
-            };
-
             this.getId = function () {
                 return html.attr('id');
             };
@@ -252,7 +244,6 @@ define([
                 VertexAndEdgeCommon.adjustWidthToNumberOfChars(
                     self.getLabel()
                 );
-                self.adjustWidth();
             };
             this.text = function () {
                 return self.getLabel().val();
@@ -310,7 +301,6 @@ define([
                 for (var i = 0; i < connectedEdges.length; i++) {
                     connectedEdges[i].remove();
                 }
-                EdgeUi.drawAllEdges();
             };
             this.remove = function () {
                 SelectionHandler.removeBubble(self);
@@ -394,12 +384,8 @@ define([
                 html.data("images_menu", imageMenu);
                 return imageMenu;
             }
-
             this.hasImagesMenu = function () {
                 return html.data("images_menu") !== undefined;
-            };
-            this.hasImages = function () {
-                return self.getImages().length > 0;
             };
             this.getImageMenu = function () {
                 return html.data("images_menu");
@@ -433,32 +419,6 @@ define([
             this.scrollTo = function () {
                 html.centerOnScreen();
             };
-            this.adjustWidth = function () {
-                var intuitiveWidthBuffer = 70;
-                var textContainerWidth = self.getInBubbleContentWidth();
-                var imageWidth = self.hasImagesMenu() ?
-                    self.getImageMenu().width() :
-                    0;
-                var noteButtonWidth = self.getNoteButtonInBubbleContent().is(":visible") ?
-                    30 : 0;
-                var width =
-                    Math.max(
-                        menuWidth(),
-                        textContainerWidth
-                    ) +
-                    self.moveButton().width() +
-                    imageWidth
-                    + intuitiveWidthBuffer +
-                    noteButtonWidth;
-                html.css(
-                    "width",
-                        width + "px"
-                );
-                EventBus.publish(
-                    "/event/ui/graph/vertex/width-modified",
-                    self
-                );
-            };
 
             this.setOriginalServerObject = function (serverJson) {
                 html.data(
@@ -470,10 +430,6 @@ define([
                 return html.data(
                     "originalServerObject"
                 );
-            };
-
-            this.moveButton = function () {
-                return html.find('.move');
             };
 
             this.serverFormat = function () {
@@ -563,10 +519,6 @@ define([
 
             function suggestionButton() {
                 return html.find('.suggestion');
-            }
-
-            function menuWidth() {
-                return self.getMenuHtml().find("ul").width() * 4;
             }
 
             function centerButton() {

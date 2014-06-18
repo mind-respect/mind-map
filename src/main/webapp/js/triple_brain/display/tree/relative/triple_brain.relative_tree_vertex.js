@@ -6,10 +6,9 @@ define([
     "triple_brain.ui.vertex",
     "triple_brain.event_bus",
     "triple_brain.ui.edge",
-    "triple_brain.object_utils",
-    "triple_brain.relative_tree_center_vertex"
+    "triple_brain.object_utils"
 ],
-    function ($, VertexUi, EventBus, EdgeUi, ObjectUtils, RelativeTreeCenterVertex) {
+    function ($, VertexUi, EventBus, EdgeUi, ObjectUtils) {
         var api = {};
         api.ofVertex = function (vertex) {
             return api.withHtml(
@@ -30,41 +29,7 @@ define([
                 }
                 return _isToTheLeft;
             };
-            this.adjustPositionIfApplicable = function () {
-                if (self.isToTheLeft()) {
-                    self.adjustPosition();
-                }
-            };
-            this.adjustAllChildrenPositionIfApplicable = function () {
-                var vertex = api.withHtml(html);
-                if (!self.isToTheLeft() && !vertex.isCenterVertex()) {
-                    return;
-                }
-                var visit = vertex.isCenterVertex() ?
-                    RelativeTreeCenterVertex.usingVertex(
-                        vertex
-                    ).visitLeftVertices :
-                    self.visitChildren;
-                visit(function (vertex) {
-                    var relativeVertex = api.ofVertex(vertex);
-                    relativeVertex.adjustPosition();
-                });
-            };
-            this.adjustPosition = function (parentVertexHtml) {
-                var width = html.width();
-                var vertex = api.withHtml(html);
-                if (parentVertexHtml === undefined) {
-                    parentVertexHtml = self.getParentVertexHtml();
-                }
-                var parentWidth = $(parentVertexHtml).width();
-                html.closest(".vertex-tree-container").css(
-                    "margin-left", "-" + (parentWidth + width + 10) + "px"
-                );
-                EventBus.publish(
-                    "/event/ui/graph/vertex/position-changed",
-                    vertex
-                );
-            };
+
             this.visitChildren = function (visitor) {
                 var children = getChildren();
                 $.each(children, function () {
@@ -233,26 +198,6 @@ define([
                 treeVertex.applyToOtherInstances(function (vertex) {
                     vertex.removeSameAs(sameAs);
                 });
-            }
-        );
-        EventBus.subscribe(
-            "/event/ui/graph/vertex/image/about_to_load",
-            function () {
-                api.numberImagesToLoad = undefined === api.numberImagesToLoad ?
-                    1 :
-                    api.numberImagesToLoad + 1;
-            }
-        );
-        EventBus.subscribe(
-            "/event/ui/graph/vertex/image/updated",
-            function () {
-                api.numberImagesToLoad--;
-                if (0 === api.numberImagesToLoad) {
-                    api.visitAllVertices(function(vertex){
-                        vertex.adjustPositionIfApplicable();
-                    });
-                    EdgeUi.redrawAllEdges();
-                }
             }
         );
         VertexUi.buildCommonConstructors(api);

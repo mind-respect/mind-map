@@ -40,7 +40,6 @@ define([
                         }
                         $(dialog).dialog("close");
                         vertex.readjustLabelWidth();
-                        vertex.adjustPositionIfApplicable();
                     }
                 );
             };
