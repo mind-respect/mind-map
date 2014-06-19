@@ -191,7 +191,7 @@ svg { z-index: 1; }
 .suggestion li { font-size: 0.9em; font-weight: normal; margin-left: 0; padding: 0; background: -moz-linear-gradient(left, #cdffcd, white); background: -webkit-gradient(linear, left right, left right, from(#cdffcd), to(white)); width: 100%; text-align: left; padding-bottom: 3px; padding-top: 3px; border: 1px solid green; line-height: 2.5em; }
 .suggestion li .text { margin-left: 0.5em; }
 
-.hidden-properties-container { display: inline-block; z-index: 3; }
+.hidden-properties-container { display: inline-block; z-index: 3; width: 25px; }
 
 .link-like-button { border-size: 0px; border-style: none; font-size: 0.7em; padding: 0 0 0 0; background-color: transparent; font-weight: normal; }
 

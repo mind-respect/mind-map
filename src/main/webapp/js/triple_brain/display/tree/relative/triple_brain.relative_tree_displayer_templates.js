@@ -27,13 +27,14 @@ define([
 
         t.add(
             "vertical_border",
-                "<div class='border-container'>" +
-                    "<div class='top-border'></div>" +
-                    "<div class='bottom-border'></div>" +
+                "<div class='vertical-border vertical-border-first'>" +
+                    "<div class='vertical-border-filling'></div>" +
                 "</div>" +
-                    "<div class='border-container-two'>" +
-                    "<div class='top-border'></div>" +
-                    "<div class='bottom-border'></div>" +
+                    "<div class='vertical-border vertical-border-second'>" +
+                    "<div class='vertical-border-filling'></div>" +
+                    "</div>" +
+                    "<div class='vertical-border vertical-border-third'>" +
+                    "<div class='vertical-border-filling'></div>" +
                     "</div>"
         );
 

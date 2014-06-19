@@ -27,7 +27,9 @@ define([
                     var sourceVertex = RelativeTreeVertex.ofVertex(
                         triple.sourceVertex()
                     );
-                    sourceVertex.getHiddenRelationsContainer().remove();
+                    if(sourceVertex.hasHiddenRelationsContainer()){
+                        sourceVertex.getHiddenRelationsContainer().remove();
+                    }
                     var destinationHtml = triple.destinationVertex().getHtml();
                     if (!UiUtils.isElementFullyOnScreen(destinationHtml)) {
                         destinationHtml.centerOnScreenWithAnimation();

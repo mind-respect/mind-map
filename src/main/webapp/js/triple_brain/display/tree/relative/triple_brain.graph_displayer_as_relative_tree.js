@@ -399,8 +399,7 @@ define([
 
             $(container).append(
                 childTreeContainer
-            ).append("<span class='vertices-vertical-space'>");
-
+            );
 
             var vertexContainer = RelativeTreeTemplates[
                 "vertex_container"

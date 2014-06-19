@@ -79,7 +79,9 @@ define([
     function tabAction(selectedVertex) {
         VertexService.addRelationAndVertexToVertex(
             selectedVertex, function(triple){
-                selectedVertex.getHiddenRelationsContainer().remove();
+                if(selectedVertex.hasHiddenRelationsContainer()){
+                    selectedVertex.getHiddenRelationsContainer().remove();
+                }
                 var destinationHtml = triple.destinationVertex().getHtml();
                 if (!UiUtils.isElementFullyOnScreen(destinationHtml)) {
                     destinationHtml.centerOnScreenWithAnimation();
