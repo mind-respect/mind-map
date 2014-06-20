@@ -348,14 +348,15 @@ define([
             );
             removeAlreadyInGraphVerticesInEdgesArray();
             _htmlBuilder = VertexHtmlBuilder;
+            var childContainer = self.childrenVertexContainer(
+                parentVertex
+            );
+            childContainer.append(treeContainer)
+            childContainer.append("<span class='clear-fix'>");
             return makeInContainerUsingServerGraphAndCentralVertexUri(
                 serverGraph,
                 centralVertexUri,
-                treeContainer.appendTo(
-                    self.childrenVertexContainer(
-                        parentVertex
-                    )
-                ),
+                treeContainer,
                 false
             );
             function removeAlreadyInGraphVerticesInEdgesArray() {
@@ -399,7 +400,7 @@ define([
 
             $(container).append(
                 childTreeContainer
-            );
+            ).append("<span class='clear-fix'>");
 
             var vertexContainer = RelativeTreeTemplates[
                 "vertex_container"
