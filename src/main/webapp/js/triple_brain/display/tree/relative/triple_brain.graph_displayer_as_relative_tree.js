@@ -160,11 +160,10 @@ define([
             newVertex.isLeftOriented = parentVertex.getOriginalServerObject().isLeftOriented;
         }
         newVertex.neighbors = [];
-        var vertexHtmlFacade = treeMaker.buildVertexHtmlIntoContainer(
+        return treeMaker.buildVertexHtmlIntoContainer(
             newVertex,
             container
         );
-        return vertexHtmlFacade;
     };
     api.allowsMovingVertices = function () {
         return false;
@@ -351,8 +350,9 @@ define([
             var childContainer = self.childrenVertexContainer(
                 parentVertex
             );
-            childContainer.append(treeContainer)
-            childContainer.append("<span class='clear-fix'>");
+            childContainer.append(
+                treeContainer
+            ).append("<span class='clear-fix'>");
             return makeInContainerUsingServerGraphAndCentralVertexUri(
                 serverGraph,
                 centralVertexUri,
@@ -437,7 +437,7 @@ define([
             return $(vertexHtmlFacade.getHtml()).closest(".vertex-container"
             ).siblings(".vertices-children-container");
         };
-        this.buildChildrenHtmlTreeRecursivelyEvenIfGrandParentAndIncludingDuplicates = function (parentVertexHtmlFacade, vertices, grandParentUri) {
+        this.buildChildrenHtmlTreeRecursivelyEvenIfGrandParentAndIncludingDuplicates = function (parentVertexHtmlFacade, vertices) {
             return buildChildrenHtmlTreeRecursively(
                 parentVertexHtmlFacade,
                 vertices,
