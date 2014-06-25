@@ -347,10 +347,9 @@ define([
             );
             removeAlreadyInGraphVerticesInEdgesArray();
             _htmlBuilder = VertexHtmlBuilder;
-            var childContainer = self.childrenVertexContainer(
+            self.childrenVertexContainer(
                 parentVertex
-            );
-            childContainer.append(
+            ).append(
                 treeContainer
             ).append("<span class='clear-fix'>");
             return makeInContainerUsingServerGraphAndCentralVertexUri(
