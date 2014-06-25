@@ -24,16 +24,7 @@ define(
     ],
     function ($, UserService, EventBus, LoginHandler, MindMapTemplate, ServerSubscriber, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, VertexService, TopCenterMenu, LeftPanel, SelectionHandler, KeyboardUtils, GraphElementMainMenu, VertexServeFacade) {
         "use strict";
-        var leftPanelWidth = 225,
-        api = {
-            offset:function () {
-                var offset = {};
-                var leftMargin = 150;
-                var topMargin = 75;
-                offset.left = leftPanelWidth + leftMargin;
-                offset.top = topMargin;
-                return offset;
-            },
+        var api = {
             start:function () {
                 ServerSubscriber.init(function () {
                     console.log("cometd initialized");
@@ -57,7 +48,6 @@ define(
                     GraphElementMainMenu.reset();
                     UserService.authenticatedUser(function () {
                             LanguageManager.loadLocaleContent(function () {
-                                $("body").removeClass("hidden");
                                 GraphDisplayer.displayUsingDefaultVertex();
                                 translateText();
                             });
@@ -117,7 +107,6 @@ define(
                 GraphDisplayer.integrateEdgesOfServerGraph(
                     drawnGraph
                 );
-                centralVertex.scrollTo();
                 $("body, html").removeDragScroll().dragScroll().on(
                     "click",
                     function(){
@@ -133,6 +122,8 @@ define(
                         vertex
                     );
                 });
+                $("body").removeClass("hidden");
+                centralVertex.scrollTo();
                 EventBus.publish('/event/ui/graph/drawn');
             }
         );
