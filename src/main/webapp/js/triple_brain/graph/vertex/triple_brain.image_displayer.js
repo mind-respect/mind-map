@@ -45,12 +45,17 @@ define(
                     var urlForBigger = image.getUrlForBigger();
                     var bigImageAnchor = $("<a>").attr(
                         'rel', vertexId
-                    ).attr(
+                    ).prop(
                         "href",
                         urlForBigger
-                    ).colorbox({
-                            photo: true,
-                            rel: vertexId
+                    ).click(function(e){
+                            e.preventDefault();
+                            var anchor = $(this);
+                            $.colorbox({
+                                rel:anchor.attr("rel"),
+                                href:anchor.prop("href"),
+                                photo:true
+                            })
                         });
                     if(urlForBigger === featuredImageBigUri){
                         bigImageAnchor.append(
