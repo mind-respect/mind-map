@@ -9,14 +9,6 @@ define([
     function(IdUriUtils, UserService){
         "use strict";
         var api={};
-        api.uri = function(){
-            var username = UserService.authenticatedUserInCache().user_name;
-            return encodeURIComponent(
-                IdUriUtils.baseUri +
-                    username +
-                    "/mind_map"
-            );
-        };
         api.defaultVertexUri = function(){
             return UserService.currentUserUri() + '/graph/vertex/default'
         };

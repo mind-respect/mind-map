@@ -333,9 +333,9 @@ define([
                     self.hideSuggestionButton();
             };
 
-            this.applyCommonBehaviorForAddedIdentification = function (externalResource) {
+            this.applyCommonBehaviorForAddedIdentification = function (identification) {
                 self.addImages(
-                    externalResource.images()
+                    identification.getImages()
                 );
             };
 
@@ -388,8 +388,8 @@ define([
             this.getImageMenu = function () {
                 return html.data("images_menu");
             };
-            this.removeIdentificationCommonBehavior = function (externalResource) {
-                $.each(externalResource.images(), function () {
+            this.removeIdentificationCommonBehavior = function (identification) {
+                $.each(identification.getImages(), function () {
                     var image = this;
                     self.removeImage(image);
                 });

@@ -3,21 +3,22 @@
  */
 
 define([
-    "jquery"
-], function ($) {
+    "jquery",
+    "triple_brain.identification_server_update_handler"
+], function ($, IdentificationUpdateHandler) {
     var api = {};
     api.addIdentification = function (graphElement, identification, successCallback) {
-        identification.listenForUpdates(addIdentificationWhenListenerReady);
+        IdentificationUpdateHandler.forFriendlyResource(identification).listenForUpdates(
+            addIdentificationWhenListenerReady
+        );
         function addIdentificationWhenListenerReady() {
-            var identificationJson = identification.jsonFormat();
-            identificationJson.type = identification.type;
             $.ajax({
                 type:'POST',
                 url:graphElement.getUri() + '/identification',
-                data:$.toJSON(identificationJson),
+                data:identification.getJsonFormat(),
                 contentType:'application/json;charset=utf-8'
             }).success(function () {
-                    switch (identification.type) {
+                    switch (identification.getType()) {
                         case "type" :
                             graphElement.addType(identification);
                             break;

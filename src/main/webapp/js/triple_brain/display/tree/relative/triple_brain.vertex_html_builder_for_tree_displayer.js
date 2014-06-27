@@ -9,7 +9,6 @@ define([
         "triple_brain.ui.edge",
         "triple_brain.edge",
         "triple_brain.mind-map_template",
-        "triple_brain.external_resource",
         "triple_brain.point",
         "triple_brain.segment",
         "triple_brain.graph_displayer",
@@ -23,7 +22,7 @@ define([
         "jquery-ui",
         "jquery.is-fully-on-screen",
         "jquery.center-on-screen"
-    ], function ($, EventBus, VertexService, EdgeUi, EdgeService, MindMapTemplate, ExternalResource, Point, Segment, GraphDisplayer, RelativeTreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, SelectionHandler, KeyboardUtils, RelativeTreeVertexMenuHandler) {
+    ], function ($, EventBus, VertexService, EdgeUi, EdgeService, MindMapTemplate, Point, Segment, GraphDisplayer, RelativeTreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, SelectionHandler, KeyboardUtils, RelativeTreeVertexMenuHandler) {
         var api = {};
         api.withServerFacade = function (serverFacade) {
             return new VertexCreator(serverFacade);
@@ -156,6 +155,9 @@ define([
                     onMouseOut
                 );
 
+                VertexHtmlCommon.listenForUpdates(
+                    serverFacade
+                );
                 VertexHtmlCommon.setUpIdentifications(
                     serverFacade,
                     vertex

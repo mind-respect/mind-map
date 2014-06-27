@@ -3,7 +3,7 @@
  */
 define([
     "triple_brain.friendly_resource_server_facade"
-], function (FriendlyResourceServerFacade) {
+], function (FriendlyResourceFacade) {
     var api = {};
     api.fromServerFormat = function (serverFormat) {
         return new api.Object(
@@ -12,7 +12,7 @@ define([
     };
     api.buildObjectWithUri = function(uri){
         return {
-            friendlyResource : FriendlyResourceServerFacade.buildObjectWithUri(
+            friendlyResource : FriendlyResourceFacade.buildObjectWithUri(
                 uri
             )
         };
@@ -22,7 +22,7 @@ define([
         var _sameAs = buildSameAs();
         var _genericIdentifications = buildGenericIdentifications();
         var _identifications;
-        FriendlyResourceServerFacade.Object.apply(
+        FriendlyResourceFacade.Object.apply(
             this, [serverFormat.friendlyResource]
         );
         this.getTypes = function () {
@@ -53,7 +53,7 @@ define([
             }
             $.each(serverFormat.additionalTypes, function () {
                 types.push(
-                    FriendlyResourceServerFacade.fromServerFormat(
+                    FriendlyResourceFacade.fromServerFormat(
                         this
                     )
                 );
@@ -68,7 +68,7 @@ define([
             }
             $.each(serverFormat.sameAs, function () {
                 sameAs.push(
-                    FriendlyResourceServerFacade.fromServerFormat(
+                    FriendlyResourceFacade.fromServerFormat(
                         this
                     )
                 );
@@ -83,7 +83,7 @@ define([
             }
             $.each(serverFormat.genericIdentifications, function () {
                 genericIdentifications.push(
-                    FriendlyResourceServerFacade.fromServerFormat(
+                    FriendlyResourceFacade.fromServerFormat(
                         this
                     )
                 );

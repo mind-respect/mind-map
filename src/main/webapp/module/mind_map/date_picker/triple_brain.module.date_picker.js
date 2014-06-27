@@ -38,7 +38,7 @@ define([
         }
 
         function isIdentificationADate(identification) {
-            return identification.uri() == "http://rdf.freebase.com/rdf/type/datetime"
+            return identification.getUri() === "http://rdf.freebase.com/rdf/type/datetime";
         }
     }
 );

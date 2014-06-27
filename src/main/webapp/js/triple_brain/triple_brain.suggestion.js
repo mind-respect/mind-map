@@ -1,26 +1,41 @@
 define([
         "jquery",
         "triple_brain.freebase_uri",
-        "triple_brain.external_resource",
         "triple_brain.friendly_resource_server_facade",
+        "triple_brain.id_uri",
+        "triple_brain.user",
         "jquery.json.min"
     ],
-    function ($, FreebaseUri, ExternalResource, FriendlyResourceServerFacade) {
+    function ($, FreebaseUri, FriendlyResourceFacade, IdUri, UserService) {
         var api = {};
         api.IDENTIFICATION_PREFIX = "identification_";
         api.fromFreebaseSuggestionAndTypeUri = function (freebaseSuggestion, typeUri) {
+            var suggestionUri = api.generateUri();
             return new Suggestion(
-                ExternalResource.fromFreebaseSuggestion(
+                FriendlyResourceFacade.withUri(
+                    suggestionUri
+                ),
+                FriendlyResourceFacade.fromFreebaseSuggestion(
                     freebaseSuggestion
                 ),
-                ExternalResource.withUriAndLabel(
+                FriendlyResourceFacade.withUriAndLabel(
                     FreebaseUri.freebaseIdToURI(
                         freebaseSuggestion.expected_type.id
                     ),
                     freebaseSuggestion.expected_type.name
-                ),
-                    api.IDENTIFICATION_PREFIX + typeUri
+                ),[{
+                    friendlyResource: FriendlyResourceFacade.withUri(
+                    api.generateOriginUriFromSuggestionUri(suggestionUri)
+                    ).jsonFormat(),
+                    origin: api.IDENTIFICATION_PREFIX + typeUri
+                }]
             );
+        };
+        api.generateOriginUriFromSuggestionUri = function(suggestionUri){
+            return suggestionUri + "/origin/" + IdUri.generateUuid();
+        };
+        api.generateUri = function () {
+            return UserService.currentUserUri() + "/suggestion/" + IdUri.generateUuid();
         };
         api.formatAllForServer = function (suggestions) {
             var suggestionsFormatedForServer = [];
@@ -34,22 +49,20 @@ define([
         };
 
         api.fromJsonOfServer = function (suggestion) {
-            var sameAs = FriendlyResourceServerFacade.fromServerFormat(
+            var sameAs = FriendlyResourceFacade.fromServerFormat(
                 suggestion.sameAs
             );
-            var domain = FriendlyResourceServerFacade.fromServerFormat(
+            var domain = FriendlyResourceFacade.fromServerFormat(
                 suggestion.domain
             );
+            var friendlyResource = FriendlyResourceFacade.fromServerFormat(
+                suggestion.friendlyResource
+            );
             return new Suggestion(
-                ExternalResource.withUriAndLabel(
-                    sameAs.getUri(),
-                    sameAs.getLabel()
-                ),
-                ExternalResource.withUriAndLabel(
-                    domain.getUri(),
-                    domain.getLabel()
-                ),
-                suggestion.origins[0]
+                friendlyResource,
+                sameAs,
+                domain,
+                suggestion.origins
             );
         };
         api.fromJsonArrayOfServer = function (jsonSuggestions) {
@@ -64,12 +77,15 @@ define([
             });
             return suggestions;
         };
+        api.fromSearchResult = function (searchResult) {
+            return api.withUriLabelAndDescription(
+                searchResult.uri,
+                searchResult.label,
+                searchResult.comment
+            );
+        };
         return api;
-        function Suggestion(sameAs, domain, origin) {
-            var thisSuggestion = this;
-            this.typeUri = function () {
-                return sameAs.uri();
-            };
+        function Suggestion(friendlyResource, sameAs, domain, origins) {
             this.domainUri = function () {
                 return domain.uri();
             };
@@ -77,17 +93,14 @@ define([
                 return sameAs.label();
             };
             this.origin = function () {
-                return origin;
+                return origins[0];
             };
             this.serverFormat = function () {
                 return {
+                    friendlyResource: friendlyResource.jsonFormat(),
                     sameAs: sameAs.jsonFormat(),
                     domain: domain.jsonFormat(),
-                    origins: [
-                        {
-                            origin: thisSuggestion.origin()
-                        }
-                    ]
+                    origins : origins
                 }
             }
         }

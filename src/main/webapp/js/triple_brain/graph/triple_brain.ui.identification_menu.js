@@ -3,7 +3,7 @@
  */
 define([
         "jquery",
-        "triple_brain.external_resource",
+        "triple_brain.friendly_resource_server_facade",
         "triple_brain.mind-map_template",
         "triple_brain.ui.graph",
         "triple_brain.id_uri",
@@ -16,13 +16,12 @@ define([
         "jquery-ui",
         "jquery.triple_brain.search"
     ],
-    function ($, ExternalResource, MindMapTemplate, GraphUi, IdUriUtils, FreebaseAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu, SearchService, IdentificationContext, SearchResultFacadeFactory) {
-        var api = {
+    function ($, FriendlyResourceFacade, MindMapTemplate, GraphUi, IdUriUtils, FreebaseAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu, SearchService, IdentificationContext, SearchResultFacadeFactory) {
+        return {
             ofGraphElement: function (graphElementUi) {
                 return new IdentificationMenu(graphElementUi);
             }
         };
-        return api;
         function IdentificationMenu(graphElement) {
             var identificationMenu = this;
             var html;
@@ -40,12 +39,12 @@ define([
                 return identificationMenu;
             };
 
-            function getlistHtml() {
+            function getListHtml() {
                 return $(html).find(".list")
             }
 
             function listElements() {
-                return $(getlistHtml()).find(".identification");
+                return getListHtml().find(".identification");
             }
 
             function buildMenu() {
@@ -90,7 +89,7 @@ define([
             }
 
             function makeListElementsCollapsible() {
-                var listHtml = getlistHtml();
+                var listHtml = getListHtml();
                 listHtml.accordion().accordion("destroy");
                 listHtml.accordion({
                     collapsible: true,
@@ -102,7 +101,7 @@ define([
             function addIdentificationAsListElement(identification) {
                 var title = makeTitle();
                 var description = makeDescription();
-                $(getlistHtml()).append(
+                getListHtml().append(
                     title,
                     description
                 );
@@ -111,9 +110,9 @@ define([
                     return $(
                         "<h3 class='type-label identification'>"
                     ).attr(
-                        "identification-uri", identification.uri()
+                        "identification-uri", identification.getUri()
                     ).append(
-                        identification.label()
+                        identification.getLabel()
                     ).append(
                         makeRemoveButton()
                     ).data(
@@ -136,7 +135,7 @@ define([
                                         true
                                     );
                                     SearchService.getSearchResultByUri(
-                                        identification.uri(),
+                                        identification.getUri(),
                                         function (searchResult) {
                                             IdentificationContext.build(
                                                 SearchResultFacadeFactory.get(
@@ -146,7 +145,7 @@ define([
                                                     descriptionDivFromTitleDiv(title).prepend(
                                                         context
                                                     );
-                                                    getlistHtml().accordion("refresh");
+                                                    getListHtml().accordion("refresh");
                                                 }
                                             );
                                         }
@@ -179,7 +178,7 @@ define([
                                         $.each(listElements(), function () {
                                             var listElement = this;
                                             var listElementIdentification = $(listElement).data("identification");
-                                            if (identification.uri() == listElementIdentification.uri()) {
+                                            if (identification.getUri() === listElementIdentification.getUri()) {
                                                 $(listElement).next(".description").remove();
                                                 $(listElement).remove();
                                                 return false;
@@ -206,7 +205,7 @@ define([
                     return $(
                         "<div class='group description'>"
                     ).append(
-                        identification.description()
+                        identification.getComment()
                             .replace("\n", "<br/><br/>")
                     );
                 }
@@ -219,7 +218,7 @@ define([
                         identification
                     )
                 ).text(
-                    identification.description()
+                    identification.getComment()
                 );
             }
 
@@ -235,7 +234,7 @@ define([
 
             function titleFromIdentification(identification) {
                 return $(html).find(
-                        "[identification-uri='" + identification.uri() + "']"
+                        "[identification-uri='" + identification.getUri() + "']"
                 );
             }
 
@@ -290,7 +289,7 @@ define([
             }
 
             function identifyUsingServerIdentificationFctn(graphElement, searchResult, serverIdentificationFctn) {
-                var identificationResource = ExternalResource.fromSearchResult(
+                var identificationResource = FriendlyResourceFacade.fromSearchResult(
                     searchResult
                 );
                 serverIdentificationFctn(
@@ -302,7 +301,5 @@ define([
                 setTemporaryDescription(identificationResource);
             }
         }
-
-        return api;
     }
 );

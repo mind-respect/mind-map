@@ -12,7 +12,7 @@ define([
         "triple_brain.event_bus",
         "triple_brain.relative_tree_vertex",
         "triple_brain.relative_tree_displayer_templates",
-        "triple_brain.external_resource",
+        "triple_brain.friendly_resource_server_facade",
         "triple_brain.user_map_autocomplete_provider",
         "triple_brain.freebase_autocomplete_provider",
         "triple_brain.graph_displayer",
@@ -21,7 +21,7 @@ define([
         "triple_brain.graph_element_main_menu",
         "jquery.cursor-at-end"
     ],
-    function (require, $, MindMapTemplate, VertexAndEdgeCommon, TreeEdge, EdgeService, EventBus, RelativeTreeVertex, RelativeTreeTemplates, ExternalResource, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphDisplayer, KeyboardUtils, SelectionHandler, GraphElementMainMenu) {
+    function (require, $, MindMapTemplate, VertexAndEdgeCommon, TreeEdge, EdgeService, EventBus, RelativeTreeVertex, RelativeTreeTemplates, FriendlyResourceFacade, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphDisplayer, KeyboardUtils, SelectionHandler, GraphElementMainMenu) {
         var api = {};
         api.get = function (edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
             return new EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade);
@@ -68,18 +68,14 @@ define([
                 $.each(edgeServer.getTypes(), function () {
                     var typeFromServer = this;
                     edge.addType(
-                        ExternalResource.fromServerFormatFacade(
-                            typeFromServer
-                        )
+                        typeFromServer
                     );
                 });
 
                 $.each(edgeServer.getSameAs(), function () {
                     var sameAsFromServer = this;
                     edge.addSameAs(
-                        ExternalResource.fromServerFormatFacade(
-                            sameAsFromServer
-                        )
+                        sameAsFromServer
                     );
                 });
                 EventBus.publish(
@@ -131,7 +127,7 @@ define([
                     select: function (event, ui) {
                         var edge = edgeFromHtml($(this));
                         changeToSpan(edge);
-                        var identificationResource = ExternalResource.fromSearchResult(
+                        var identificationResource = FriendlyResourceFacade.fromSearchResult(
                             ui.item
                         );
                         EdgeService.addSameAs(

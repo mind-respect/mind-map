@@ -100,7 +100,7 @@ define([
             });
         };
         api.addType = function (vertex, type, successCallback) {
-            type.type = "type";
+            type.setType("type");
             addIdentification(
                 vertex,
                 type,
@@ -134,7 +134,7 @@ define([
             );
         };
         api.addSameAs = function (vertex, sameAs, successCallback) {
-            sameAs.type = "same_as";
+            sameAs.setType("same_as");
             addIdentification(
                 vertex,
                 sameAs,
@@ -180,7 +180,7 @@ define([
             );
         };
         api.addGenericIdentification = function (vertex, identification, callback) {
-            identification.type = "generic";
+            identification.setType("generic");
             addIdentification(
                 vertex,
                 identification,
@@ -280,7 +280,7 @@ define([
                 }
             );
             function getEventBusKey() {
-                switch (identification.type) {
+                switch (identification.getType()) {
                     case "type" :
                         return '/event/ui/graph/vertex/type/added';
                     case "same_as" :

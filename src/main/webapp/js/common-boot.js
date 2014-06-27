@@ -72,7 +72,7 @@ requirejs.config({
         "triple_brain.ui.edge": "triple_brain/graph/edge/triple_brain.ui.edge",
         "triple_brain.edge": "triple_brain/graph/edge/triple_brain.edge",
         "triple_brain.suggestion": "triple_brain/triple_brain.suggestion",
-        "triple_brain.external_resource": "triple_brain/triple_brain.external_resource",
+        "triple_brain.identification_server_update_handler": "triple_brain/triple_brain.identification_server_update_handler",
         "triple_brain.identification_context": "triple_brain/triple_brain.identification_context",
         "triple_brain.ui.identification_menu": "triple_brain/graph/triple_brain.ui.identification_menu",
         "triple_brain.link_to_far_vertex_menu": "triple_brain/graph/vertex/triple_brain.link_to_far_vertex_menu",

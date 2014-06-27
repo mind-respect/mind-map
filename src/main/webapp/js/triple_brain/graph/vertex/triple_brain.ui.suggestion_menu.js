@@ -3,26 +3,24 @@
  */
 
 define([
-    "require",
     "jquery",
     "triple_brain.freebase_uri",
     "triple_brain.mind-map_template",
     "triple_brain.ui.graph",
     "triple_brain.point",
-    "triple_brain.external_resource",
+    "triple_brain.friendly_resource_server_facade",
     "triple_brain.vertex",
     "triple_brain.edge",
     "triple_brain.ui.utils",
     "triple_brain.graph_displayer",
     "triple_brain.graph_element_menu"
 ],
-    function (require, $, FreebaseUri, MindMapTemplate, GraphUi, Point, ExternalResource, VertexService, EdgeService, UiUtils, GraphDisplayer, GraphElementMenu) {
-        var api = {
+    function ($, FreebaseUri, MindMapTemplate, GraphUi, Point, FriendlyResourceFacade, VertexService, EdgeService, UiUtils, GraphDisplayer, GraphElementMenu) {
+        return {
             ofVertex:function (vertex) {
                 return new SuggestionMenu(vertex);
             }
         };
-
         function SuggestionMenu(vertex) {
             var suggestionMenu = this;
             var html;
@@ -141,7 +139,7 @@ define([
                             var typeUri = FreebaseUri.freebaseIdToURI(
                                 typeId
                             );
-                            var type = ExternalResource.withUriAndLabel(
+                            var type = FriendlyResourceFacade.withUriAndLabel(
                                 typeUri,
                                 suggestionLabel
                             );
@@ -156,15 +154,6 @@ define([
                     $(suggestionAsHtml).remove();
                 }
             }
-
-            function position() {
-                UiUtils.positionRight(
-                    html,
-                    vertex.getHtml()
-                )
-            }
         }
-
-        return api;
     }
 );

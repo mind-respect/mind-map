@@ -6,13 +6,13 @@ define([
     "triple_brain.graph_displayer",
     "triple_brain.vertex",
     "triple_brain.suggestion",
-    "triple_brain.external_resource",
+    "triple_brain.friendly_resource_server_facade",
     "jquery.url"
 ],
-    function (require, $, FreebaseUri, EventBus, GraphDisplayer, VertexService, Suggestion, ExternalResource) {
+    function (require, $, FreebaseUri, EventBus, GraphDisplayer, VertexService, Suggestion, FriendlyResourceFacade) {
         var api = {};
         api.handleIdentificationToServer = function (vertex, freebaseSuggestion, successCallBack) {
-            var externalResource = ExternalResource.fromFreebaseSuggestion(
+            var externalResource = FriendlyResourceFacade.fromFreebaseSuggestion(
                 freebaseSuggestion
             );
             var typeId = getTypeId();
@@ -75,10 +75,12 @@ define([
                             )
                         );
                     });
-                    vertexService().addSuggestions(
-                        vertex,
-                        suggestions
-                    );
+                    if(suggestions.length > 0){
+                        vertexService().addSuggestions(
+                            vertex,
+                            suggestions
+                        );
+                    }
                 })
         };
         api.removeSuggestFeatureOnVertex = function (vertex) {
@@ -90,7 +92,7 @@ define([
                 '/event/ui/graph/vertex/same_as/added ' +
                 '/event/ui/graph/vertex/generic_identification/added',
             function (event, vertex, identification) {
-                var identificationUri = identification.uri();
+                var identificationUri = identification.getUri();
                 if (!FreebaseUri.isFreebaseUri(identificationUri)) {
                     return;
                 }
@@ -106,7 +108,7 @@ define([
                         );
                         vertex.triggerChange();
                         var searchResult = ui.item;
-                        var identificationResource = ExternalResource.withUriLabelAndDescription(
+                        var identificationResource = FriendlyResourceFacade.withUriLabelAndDescription(
                             searchResult.uri,
                             searchResult.label,
                             searchResult.description
@@ -152,7 +154,7 @@ define([
                     );
                     vertex.triggerChange();
                     var searchResult = ui.item;
-                    var identificationResource = ExternalResource.withUriLabelAndDescription(
+                    var identificationResource = FriendlyResourceFacade.withUriLabelAndDescription(
                         searchResult.uri,
                         searchResult.label,
                         searchResult.description
