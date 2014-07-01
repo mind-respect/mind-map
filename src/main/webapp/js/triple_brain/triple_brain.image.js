@@ -42,7 +42,7 @@ define([
                 return {
                     url_for_small : self.getBase64ForSmall(),
                     url_for_bigger : self.getUrlForBigger()
-                }
+                };
             };
             this.isEqualTo = function(image){
                 return self.getUrlForBigger() === image.getUrlForBigger();

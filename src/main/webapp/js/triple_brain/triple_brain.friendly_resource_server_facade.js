@@ -57,6 +57,9 @@ define([
     api.Object = function (serverFormat) {
         var _images = buildImages(),
             self = this;
+        if(serverFormat.comment === undefined){
+            serverFormat.comment = "";
+        }
         this.getLabel = function () {
             return serverFormat.label;
         };
@@ -68,16 +71,6 @@ define([
         };
         this.getUri = function () {
             return serverFormat.uri;
-        };
-        this.getCreationDate = function(){
-            return new Date(
-                serverFormat.creationDate
-            );
-        };
-        this.getLastModificationDate = function(){
-            return new Date(
-                serverFormat.lastModificationDate
-            );
         };
         this.getJsonFormat = function () {
             return $.toJSON(

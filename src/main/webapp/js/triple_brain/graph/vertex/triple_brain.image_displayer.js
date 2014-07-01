@@ -55,7 +55,7 @@ define(
                                 rel:anchor.attr("rel"),
                                 href:anchor.prop("href"),
                                 photo:true
-                            })
+                            });
                         });
                     if(urlForBigger === featuredImageBigUri){
                         bigImageAnchor.append(

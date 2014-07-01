@@ -45,7 +45,7 @@ define([
         $.ajax({
             type:'DELETE',
             url:graphElement.getUri()
-                + '/identification?uri=' + identification.uri()
+                + '/identification?uri=' + identification.getUri()
         }).success(successCallback);
     };
     return api;

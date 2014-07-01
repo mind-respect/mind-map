@@ -26,7 +26,7 @@ define([
             var i = 0;
             $.each(array, function () {
                 var identification = this;
-                if (identification.uri() === identificationToRemove.uri()) {
+                if (identification.getUri() === identificationToRemove.getUri()) {
                     array.splice(i, 1);
                     return false;
                 }

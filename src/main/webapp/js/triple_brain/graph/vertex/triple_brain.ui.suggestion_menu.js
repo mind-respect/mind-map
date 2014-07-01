@@ -47,20 +47,20 @@ define([
 
 
             function addTitle() {
-                $(html).append(
+                html.append(
                     MindMapTemplate['suggestions_menu_title'].merge()
                 );
             }
 
             function addInstructions() {
-                $(html).append(
+                html.append(
                     MindMapTemplate['suggestions_instructions'].merge()
                 );
             }
 
             function addSuggestionList() {
                 var suggestionsList = MindMapTemplate['suggestions_list'].merge();
-                $(html).append(
+                html.append(
                     suggestionsList
                 );
                 $.each(vertex.suggestions(), function () {
@@ -151,7 +151,7 @@ define([
                             );
                         }
                     );
-                    $(suggestionAsHtml).remove();
+                    suggestionAsHtml.remove();
                 }
             }
         }

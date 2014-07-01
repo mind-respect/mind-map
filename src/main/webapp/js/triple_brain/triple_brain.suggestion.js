@@ -26,7 +26,7 @@ define([
                 ),[{
                     friendlyResource: FriendlyResourceFacade.withUri(
                     api.generateOriginUriFromSuggestionUri(suggestionUri)
-                    ).jsonFormat(),
+                    ).getServerFormat(),
                     origin: api.IDENTIFICATION_PREFIX + typeUri
                 }]
             );
@@ -87,19 +87,19 @@ define([
         return api;
         function Suggestion(friendlyResource, sameAs, domain, origins) {
             this.domainUri = function () {
-                return domain.uri();
+                return domain.getUri();
             };
             this.label = function () {
-                return sameAs.label();
+                return sameAs.getLabel();
             };
             this.origin = function () {
                 return origins[0];
             };
             this.serverFormat = function () {
                 return {
-                    friendlyResource: friendlyResource.jsonFormat(),
-                    sameAs: sameAs.jsonFormat(),
-                    domain: domain.jsonFormat(),
+                    friendlyResource: friendlyResource.getServerFormat(),
+                    sameAs: sameAs.getServerFormat(),
+                    domain: domain.getServerFormat(),
                     origins : origins
                 }
             }

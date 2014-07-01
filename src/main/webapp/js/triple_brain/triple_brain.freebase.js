@@ -142,8 +142,8 @@ define([
             var filterValue = "(all ";
             $.each(vertexTypes, function () {
                 var identification = this;
-                if (FreebaseUri.isFreebaseUri(identification.uri())) {
-                    filterValue += "type:" + FreebaseUri.idInFreebaseURI(identification.uri());
+                if (FreebaseUri.isFreebaseUri(identification.getUri())) {
+                    filterValue += "type:" + FreebaseUri.idInFreebaseURI(identification.getUri());
                 }
             });
             filterValue += ")";

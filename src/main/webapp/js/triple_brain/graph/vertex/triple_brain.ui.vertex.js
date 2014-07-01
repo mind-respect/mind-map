@@ -442,7 +442,7 @@ define([
                     $.each(collection, function () {
                         var item = this;
                         serverFormat.push(
-                            item.jsonFormat()
+                            item.getJsonFormat()
                         );
                     });
                     return serverFormat;
