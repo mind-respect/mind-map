@@ -54,8 +54,15 @@ define(
                             $.colorbox({
                                 rel:anchor.attr("rel"),
                                 href:anchor.prop("href"),
-                                photo:true
+                                photo:true,
+                                onOpen:function(){
+                                    $.colorbox.next();
+                                }
                             });
+                        }).colorbox({
+                            rel: vertexId,
+                            href: urlForBigger,
+                            photo:true
                         });
                     if(urlForBigger === featuredImageBigUri){
                         bigImageAnchor.append(
