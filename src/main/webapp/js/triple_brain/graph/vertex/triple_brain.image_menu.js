@@ -5,10 +5,9 @@ define([
         "jquery",
         "triple_brain.graph_element_menu",
         "triple_brain.ui.graph",
-        "triple_brain.image",
-        "triple_brain.ui.edge"
+        "triple_brain.image"
     ],
-    function ($, GraphElementMenu, GraphUi, Image, EdgeUi) {
+    function ($, GraphElementMenu, GraphUi, Image) {
         var api = {};
         api.ofVertex = function (vertex) {
             return new ImageMenu(
@@ -83,12 +82,6 @@ define([
                                 var file = this.files[i];
                                 if (!!file.type.match(/image.*/)) {
                                     var reader = new FileReader();
-                                    reader.onloadend = function (event) {
-                                        showUploadedItem(
-                                            event.target.result,
-                                            file.fileName
-                                        );
-                                    };
                                     reader.readAsDataURL(file);
                                     formData.append("images[]", file);
                                 }
@@ -104,13 +97,11 @@ define([
                                     vertex.addImages(
                                         Image.arrayFromServerJson(data)
                                     );
+                                    vertex.refreshImages();
                                 }
                             });
                         }
                     );
-                    function showUploadedItem() {
-
-                    }
                 }
             }
         }
