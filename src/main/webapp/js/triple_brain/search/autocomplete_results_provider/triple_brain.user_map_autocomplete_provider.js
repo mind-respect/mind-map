@@ -125,17 +125,20 @@ define([
                 }
                 var toKeep = true;
                 $.each(serverFormatFacade.getIdentifications(), function(){
-                    var identification = this + "";
+                    var identification = this;
                     $.each(searchResults, function(){
                         var otherSearchResult = this;
                         var otherResultServerFormatFacade = otherSearchResult.nonFormattedSearchResult;
-                        if(identification === otherResultServerFormatFacade.getUri()){
+                        if(otherResultServerFormatFacade.getUri() === otherResultServerFormatFacade.getUri()){
+                            return;
+                        }
+                        if(identification.getUri() === otherResultServerFormatFacade.getUri()){
                             toKeep = false;
                             return breakLoop();
                         }
                         $.each(otherResultServerFormatFacade.getIdentifications(), function(){
-                            var otherSearchResultIdentification = this + "";
-                            if(otherSearchResultIdentification === identification){
+                            var otherSearchResultIdentification = this;
+                            if(otherSearchResultIdentification.getUri() === identification.getUri()){
                                 toKeep = false;
                                 return breakLoop();
                             }
