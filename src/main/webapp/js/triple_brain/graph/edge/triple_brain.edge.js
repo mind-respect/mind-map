@@ -65,7 +65,7 @@ define([
                 });
         };
         api.addSameAs = function (edge, sameAs, callback) {
-            sameAs.type = "same_as";
+            sameAs.setType("same_as");
             GraphElement.addIdentification(
                 edge,
                 sameAs,
@@ -92,7 +92,7 @@ define([
             );
         };
         api.addType = function (edge, type, callback) {
-            type.type = "type";
+            type.setType("type");
             GraphElement.addIdentification(
                 edge,
                 type,
