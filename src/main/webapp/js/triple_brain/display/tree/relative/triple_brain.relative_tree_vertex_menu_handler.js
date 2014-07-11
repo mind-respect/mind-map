@@ -16,8 +16,9 @@ define([
     "triple_brain.image_menu",
     "triple_brain.link_to_far_vertex_menu",
     "triple_brain.ui.suggestion_menu",
-    "triple_brain.included_graph_elements_menu"
-], function($, VertexService, SelectionHandler, RelativeTreeVertex, UiUtils, Triple, IdentificationMenu, GraphDisplayer, VertexMenuHandlerCommon, DeleteMenu, EdgeUi, ImageMenu, LinkToFarVertexMenu, SuggestionMenu, IncludedGraphElementsMenu){
+    "triple_brain.included_graph_elements_menu",
+    "triple_brain.ui.vertex"
+], function($, VertexService, SelectionHandler, RelativeTreeVertex, UiUtils, Triple, IdentificationMenu, GraphDisplayer, VertexMenuHandlerCommon, DeleteMenu, EdgeUi, ImageMenu, LinkToFarVertexMenu, SuggestionMenu, IncludedGraphElementsMenu, Vertex){
     var api = {};
     api.forSingle = function () {
         var subApi = {};
@@ -62,6 +63,14 @@ define([
                         removeChildren(vertex);
                         removeEdges(vertex);
                     });
+                    RelativeTreeVertex.removeVertexFromCache(
+                        vertex.getUri(),
+                        vertex.getId()
+                    );
+                    Vertex.removeVertexFromCache(
+                        vertex.getUri(),
+                        vertex.getId()
+                    );
                     removeEdges(vertex);
                     function removeChildren(vertex) {
                         var relativeVertex = RelativeTreeVertex.ofVertex(

@@ -3,9 +3,8 @@
  */
 define([
     "triple_brain.image",
-    "triple_brain.freebase_uri",
     "jquery.json.min"
-], function (Image, FreebaseUri) {
+], function (Image) {
     var api = {};
     api.fromServerFormat = function (serverFormat) {
         return new api.Object(
@@ -31,27 +30,23 @@ define([
             }
         );
     };
+    api.withLabel = function(label){
+        return new api.Object({
+            label : label
+        });
+    };
+    api.withLabelAndDescription = function(label, description){
+        return new api.Object({
+            label : label,
+            description: description
+        });
+    };
     api.withUriLabelAndDescription = function (uri, label, description) {
         return new api.Object({
                 uri : uri,
                 label: label,
                 comment: description
             }
-        );
-    };
-    api.fromFreebaseSuggestion = function (freebaseSuggestion) {
-        return api.withUriAndLabel(
-            FreebaseUri.freebaseIdToURI(
-                freebaseSuggestion.id
-            ),
-            freebaseSuggestion.name
-        )
-    };
-    api.fromSearchResult = function (searchResult) {
-        return api.withUriLabelAndDescription(
-            searchResult.uri,
-            searchResult.label,
-            searchResult.comment
         );
     };
     api.Object = function (serverFormat) {
@@ -79,15 +74,6 @@ define([
         };
         this.getServerFormat = function () {
             return serverFormat
-        };
-        this.setType = function (type) {
-            serverFormat.type = type;
-        };
-        this.getType = function () {
-            return serverFormat.type;
-        };
-        this.isAGraphElement = function () {
-            return serverFormat.uri.indexOf("/service") === 0;
         };
         function buildImages() {
             return undefined === serverFormat.images ?

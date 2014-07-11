@@ -12,17 +12,15 @@ define([
         api.fromFreebaseSuggestionAndTypeUri = function (freebaseSuggestion, typeUri) {
             var suggestionUri = api.generateUri();
             return new Suggestion(
-                FriendlyResourceFacade.withUri(
-                    suggestionUri
-                ),
-                FriendlyResourceFacade.fromFreebaseSuggestion(
-                    freebaseSuggestion
-                ),
                 FriendlyResourceFacade.withUriAndLabel(
-                    FreebaseUri.freebaseIdToURI(
-                        freebaseSuggestion.expected_type.id
-                    ),
-                    freebaseSuggestion.expected_type.name
+                    suggestionUri,
+                    freebaseSuggestion.name
+                ),
+                FreebaseUri.freebaseIdToURI(
+                    freebaseSuggestion.id
+                ),
+                FreebaseUri.freebaseIdToURI(
+                    freebaseSuggestion.expected_type.id
                 ),[{
                     friendlyResource: FriendlyResourceFacade.withUri(
                     api.generateOriginUriFromSuggestionUri(suggestionUri)
@@ -49,19 +47,13 @@ define([
         };
 
         api.fromJsonOfServer = function (suggestion) {
-            var sameAs = FriendlyResourceFacade.fromServerFormat(
-                suggestion.sameAs
-            );
-            var domain = FriendlyResourceFacade.fromServerFormat(
-                suggestion.domain
-            );
             var friendlyResource = FriendlyResourceFacade.fromServerFormat(
                 suggestion.friendlyResource
             );
             return new Suggestion(
                 friendlyResource,
-                sameAs,
-                domain,
+                suggestion.sameAsUri,
+                suggestion.domainUri,
                 suggestion.origins
             );
         };
@@ -77,20 +69,13 @@ define([
             });
             return suggestions;
         };
-        api.fromSearchResult = function (searchResult) {
-            return api.withUriLabelAndDescription(
-                searchResult.uri,
-                searchResult.label,
-                searchResult.comment
-            );
-        };
         return api;
-        function Suggestion(friendlyResource, sameAs, domain, origins) {
+        function Suggestion(friendlyResource, sameAsUri, domainUri, origins) {
             this.domainUri = function () {
-                return domain.getUri();
+                return domainUri;
             };
             this.label = function () {
-                return sameAs.getLabel();
+                return friendlyResource.getLabel();
             };
             this.origin = function () {
                 return origins[0];
@@ -98,8 +83,8 @@ define([
             this.serverFormat = function () {
                 return {
                     friendlyResource: friendlyResource.getServerFormat(),
-                    sameAs: sameAs.getServerFormat(),
-                    domain: domain.getServerFormat(),
+                    sameAsUri: sameAsUri,
+                    domainUri: domainUri,
                     origins : origins
                 }
             }

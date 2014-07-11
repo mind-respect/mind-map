@@ -3,7 +3,7 @@
  */
 define([
         "jquery",
-        "triple_brain.friendly_resource_server_facade",
+        "triple_brain.identification_server_facade",
         "triple_brain.mind-map_template",
         "triple_brain.ui.graph",
         "triple_brain.id_uri",
@@ -16,7 +16,7 @@ define([
         "jquery-ui",
         "jquery.triple_brain.search"
     ],
-    function ($, FriendlyResourceFacade, MindMapTemplate, GraphUi, IdUriUtils, FreebaseAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu, SearchService, IdentificationContext, SearchResultFacadeFactory) {
+    function ($, IdentificationFacade, MindMapTemplate, GraphUi, IdUriUtils, FreebaseAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu, SearchService, IdentificationContext, SearchResultFacadeFactory) {
         return {
             ofGraphElement: function (graphElementUi) {
                 return new IdentificationMenu(graphElementUi);
@@ -135,7 +135,7 @@ define([
                                         true
                                     );
                                     SearchService.getSearchResultByUri(
-                                        identification.getUri(),
+                                        identification.getExternalResourceUri(),
                                         function (searchResult) {
                                             IdentificationContext.build(
                                                 SearchResultFacadeFactory.get(
@@ -289,7 +289,7 @@ define([
             }
 
             function identifyUsingServerIdentificationFctn(graphElement, searchResult, serverIdentificationFctn) {
-                var identificationResource = FriendlyResourceFacade.fromSearchResult(
+                var identificationResource = IdentificationFacade.fromSearchResult(
                     searchResult
                 );
                 serverIdentificationFctn(

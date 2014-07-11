@@ -29,18 +29,44 @@ define([
         api.buildCommonConstructors = function (api) {
             var cacheWithIdAsKey = {},
                 cacheWithUriAsKey = {};
+            api.initCache = function (vertex) {
+                cacheWithIdAsKey[vertex.getId()] = vertex;
+                updateUriCache(vertex.getUri(), vertex);
+            };
             api.withHtml = function (html) {
-                var id = html.prop('id');
-                var cachedObject = cacheWithIdAsKey[id];
-                if (cachedObject === undefined) {
-                    cachedObject = new api.Object(html);
-                    cacheWithIdAsKey[id] = cachedObject;
-                    updateUriCache(
-                        html.data("uri"),
-                        cachedObject
+                return cacheWithIdAsKey[
+                    html.prop('id')
+                    ];
+            };
+            api.withId = function (id) {
+                return cacheWithIdAsKey[id];
+            };
+            api.withUri = function (uri) {
+                return cacheWithUriAsKey[uri];
+            };
+            api.visitAllVertices = function (visitor) {
+                $.each(cacheWithIdAsKey, function () {
+                    return visitor(
+                        this
                     );
+                });
+            };
+
+            EventBus.subscribe('/event/ui/graph/reset', emptyCache);
+            function emptyCache() {
+                cacheWithIdAsKey = {};
+                cacheWithUriAsKey = {};
+            }
+
+            api.removeVertexFromCache = function(uri, id){
+                var len = cacheWithUriAsKey[uri].length
+                while (len--) {
+                    var vertex = cacheWithUriAsKey[uri][len];
+                    if(vertex.getId() === uri){
+                        cacheWithUriAsKey.splice(len, 1);
+                    }
                 }
-                return cachedObject;
+                delete cacheWithIdAsKey[id];
             };
 
             function updateUriCache(uri, vertex) {
@@ -49,32 +75,11 @@ define([
                 }
                 cacheWithUriAsKey[uri].push(vertex);
             }
-
-            api.withId = function (id) {
-                return cacheWithIdAsKey[id];
-            };
-            api.withUri = function (uri) {
-                return cacheWithUriAsKey[uri];
-            };
-            EventBus.subscribe('/event/ui/graph/reset', emptyCache);
-            function emptyCache() {
-                cacheWithIdAsKey = {};
-                cacheWithUriAsKey = {};
-            }
         };
         api.centralVertex = function () {
             return GraphDisplayer.getVertexSelector().withHtml(
                 $('.center-vertex')
             );
-        };
-        api.visitAllVertices = function (visitor) {
-            GraphUi.getDrawnGraph().find(".vertex").each(function () {
-                return visitor(
-                    GraphDisplayer.getVertexSelector().withHtml(
-                        $(this)
-                    )
-                );
-            });
         };
         api.getVertexMouseOver = function () {
             return $("body").data("vertex_mouse_over");
@@ -125,8 +130,10 @@ define([
                 this.showCenterButton();
             };
             this.setAsCentral = function () {
-                var centralVertex = api.centralVertex();
-                centralVertex.setAsNonCentral();
+                var previousCentralVertex = api.centralVertex();
+                if (previousCentralVertex !== undefined) {
+                    previousCentralVertex.setAsNonCentral();
+                }
                 html.addClass('center-vertex');
                 self.hideCenterButton();
             };
@@ -275,15 +282,6 @@ define([
                     "> .in-bubble-content"
                 );
             };
-
-            this.getInBubbleContentWidth = function () {
-                var width = 0;
-                $.each(self.getInBubbleContainer().children(), function () {
-                    var child = this;
-                    width += $(child).width();
-                });
-                return width;
-            };
             this.hasDefaultText = function () {
                 return self.getLabel().val() == api.getWhenEmptyLabel();
             };
@@ -307,7 +305,12 @@ define([
                 if (self.hasHiddenRelationsContainer()) {
                     self.getHiddenRelationsContainer().remove();
                 }
-                html.closest(".vertex-tree-container").remove();
+                if(self.isCenterVertex()){
+                    html.closest(".vertex-container").remove();
+                }else{
+                    html.closest(".vertex-tree-container").remove();
+                }
+
             };
             this.suggestions = function () {
                 return html.data('suggestions');
@@ -382,6 +385,7 @@ define([
                 html.data("images_menu", imageMenu);
                 return imageMenu;
             }
+
             this.hasImagesMenu = function () {
                 return html.data("images_menu") !== undefined;
             };

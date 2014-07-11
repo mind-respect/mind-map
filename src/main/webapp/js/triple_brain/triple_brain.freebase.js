@@ -6,13 +6,13 @@ define([
     "triple_brain.graph_displayer",
     "triple_brain.vertex",
     "triple_brain.suggestion",
-    "triple_brain.friendly_resource_server_facade",
+    "triple_brain.identification_server_facade",
     "jquery.url"
 ],
-    function (require, $, FreebaseUri, EventBus, GraphDisplayer, VertexService, Suggestion, FriendlyResourceFacade) {
+    function (require, $, FreebaseUri, EventBus, GraphDisplayer, VertexService, Suggestion, IdentificationFacade) {
         var api = {};
         api.handleIdentificationToServer = function (vertex, freebaseSuggestion, successCallBack) {
-            var externalResource = FriendlyResourceFacade.fromFreebaseSuggestion(
+            var externalResource = IdentificationFacade.fromFreebaseSuggestion(
                 freebaseSuggestion
             );
             var typeId = getTypeId();
@@ -92,7 +92,7 @@ define([
                 '/event/ui/graph/vertex/same_as/added ' +
                 '/event/ui/graph/vertex/generic_identification/added',
             function (event, vertex, identification) {
-                var identificationUri = identification.getUri();
+                var identificationUri = identification.getExternalResourceUri();
                 if (!FreebaseUri.isFreebaseUri(identificationUri)) {
                     return;
                 }
@@ -108,7 +108,7 @@ define([
                         );
                         vertex.triggerChange();
                         var searchResult = ui.item;
-                        var identificationResource = FriendlyResourceFacade.withUriLabelAndDescription(
+                        var identificationResource = IdentificationFacade.withUriLabelAndDescription(
                             searchResult.uri,
                             searchResult.label,
                             searchResult.description
@@ -142,8 +142,8 @@ define([
             var filterValue = "(all ";
             $.each(vertexTypes, function () {
                 var identification = this;
-                if (FreebaseUri.isFreebaseUri(identification.getUri())) {
-                    filterValue += "type:" + FreebaseUri.idInFreebaseURI(identification.getUri());
+                if (FreebaseUri.isFreebaseUri(identification.getExternalResourceUri())) {
+                    filterValue += "type:" + FreebaseUri.idInFreebaseURI(identification.getExternalResourceUri());
                 }
             });
             filterValue += ")";
@@ -154,7 +154,7 @@ define([
                     );
                     vertex.triggerChange();
                     var searchResult = ui.item;
-                    var identificationResource = FriendlyResourceFacade.withUriLabelAndDescription(
+                    var identificationResource = IdentificationFacade.withUriLabelAndDescription(
                         searchResult.uri,
                         searchResult.label,
                         searchResult.description

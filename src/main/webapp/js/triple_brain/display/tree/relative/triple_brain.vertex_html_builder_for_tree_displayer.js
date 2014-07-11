@@ -125,7 +125,11 @@ define([
             html.uniqueId();
             var vertex;
             this.create = function () {
-                vertex = vertexFacade();
+                vertex = new RelativeTreeVertex.Object(html);
+                RelativeTreeVertex.initCache(
+                    vertex
+                );
+                VertexHtmlCommon.initCache(vertex);
                 vertex.setTotalNumberOfEdges(
                     serverFacade.getNumberOfConnectedEdges()
                 );
@@ -313,7 +317,6 @@ define([
                 RelativeTreeVertex.unsetVertexMouseOver();
                 vertex.makeItLowProfile();
             }
-
             function vertexFacade() {
                 return RelativeTreeVertex.withHtml(html);
             }

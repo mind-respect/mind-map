@@ -8,14 +8,14 @@ define([
     "triple_brain.mind-map_template",
     "triple_brain.ui.graph",
     "triple_brain.point",
-    "triple_brain.friendly_resource_server_facade",
+    "triple_brain.identification_server_facade",
     "triple_brain.vertex",
     "triple_brain.edge",
     "triple_brain.ui.utils",
     "triple_brain.graph_displayer",
     "triple_brain.graph_element_menu"
 ],
-    function ($, FreebaseUri, MindMapTemplate, GraphUi, Point, FriendlyResourceFacade, VertexService, EdgeService, UiUtils, GraphDisplayer, GraphElementMenu) {
+    function ($, FreebaseUri, MindMapTemplate, GraphUi, Point, IdentificationFacade, VertexService, EdgeService, UiUtils, GraphDisplayer, GraphElementMenu) {
         return {
             ofVertex:function (vertex) {
                 return new SuggestionMenu(vertex);
@@ -139,7 +139,7 @@ define([
                             var typeUri = FreebaseUri.freebaseIdToURI(
                                 typeId
                             );
-                            var type = FriendlyResourceFacade.withUriAndLabel(
+                            var type = IdentificationFacade.withUriAndLabel(
                                 typeUri,
                                 suggestionLabel
                             );

@@ -2,8 +2,9 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "triple_brain.friendly_resource_server_facade"
-], function (FriendlyResourceFacade) {
+    "triple_brain.friendly_resource_server_facade",
+    "triple_brain.identification_server_facade"
+], function (FriendlyResourceFacade, IdentificationServerFacade) {
     var api = {};
     api.fromServerFormat = function (serverFormat) {
         return new api.Object(
@@ -53,7 +54,7 @@ define([
             }
             $.each(serverFormat.additionalTypes, function () {
                 types.push(
-                    FriendlyResourceFacade.fromServerFormat(
+                    IdentificationServerFacade.fromServerFormat(
                         this
                     )
                 );
@@ -68,7 +69,7 @@ define([
             }
             $.each(serverFormat.sameAs, function () {
                 sameAs.push(
-                    FriendlyResourceFacade.fromServerFormat(
+                    IdentificationServerFacade.fromServerFormat(
                         this
                     )
                 );
@@ -83,7 +84,7 @@ define([
             }
             $.each(serverFormat.genericIdentifications, function () {
                 genericIdentifications.push(
-                    FriendlyResourceFacade.fromServerFormat(
+                    IdentificationServerFacade.fromServerFormat(
                         this
                     )
                 );
