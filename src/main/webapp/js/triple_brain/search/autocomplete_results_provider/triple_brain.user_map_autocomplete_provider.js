@@ -71,11 +71,7 @@ define([
             });
             return filteredSearchResults();
             function filteredSearchResults(){
-                if(isForIdentification){
-                    return keepOneResultForResultsThatMeanTheSame(
-                        searchResults
-                    );
-                }else if(graphElementToIgnore !== undefined){
+                if(graphElementToIgnore !== undefined){
                     return removeGraphElementToIgnoreFromResults(
                         searchResults
                     );
@@ -113,54 +109,6 @@ define([
                 }
             });
             return filteredResults;
-        }
-
-        function keepOneResultForResultsThatMeanTheSame(searchResults){
-            var nonDuplicatedResults = [];
-            $.each(searchResults, function(){
-                var searchResult = this;
-                var serverFormatFacade = searchResult.nonFormattedSearchResult;
-                if(serverFormatFacade.getUri() === graphElementToIgnore.getUri()){
-                    return;
-                }
-                var toKeep = true;
-                $.each(serverFormatFacade.getIdentifications(), function(){
-                    var identification = this;
-                    $.each(searchResults, function(){
-                        var otherSearchResult = this;
-                        var otherResultServerFormatFacade = otherSearchResult.nonFormattedSearchResult;
-                        if(otherResultServerFormatFacade.getUri() === otherResultServerFormatFacade.getUri()){
-                            return;
-                        }
-                        if(identification.getUri() === otherResultServerFormatFacade.getUri()){
-                            toKeep = false;
-                            return breakLoop();
-                        }
-                        $.each(otherResultServerFormatFacade.getIdentifications(), function(){
-                            var otherSearchResultIdentification = this;
-                            if(otherSearchResultIdentification.getUri() === identification.getUri()){
-                                toKeep = false;
-                                return breakLoop();
-                            }
-                        });
-                        if(!toKeep){
-                            return breakLoop();
-                        }
-                    });
-                    if(!toKeep){
-                        return breakLoop();
-                    }
-                });
-                if(toKeep){
-                    nonDuplicatedResults.push(
-                        searchResult
-                    );
-                }
-            });
-            return nonDuplicatedResults;
-            function breakLoop(){
-                return false;
-            }
         }
     }
 });
