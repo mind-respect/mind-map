@@ -12,10 +12,10 @@ define([
     "triple_brain.user_map_autocomplete_provider",
     "triple_brain.freebase_autocomplete_provider",
     "triple_brain.graph_element_main_menu",
-    "triple_brain.identification_server_update_handler",
     "jquery-ui",
     "jquery.triple_brain.search"
-], function ($, GraphDisplayer, Vertex, VertexService, MindMapTemplate, GraphElementMenu, IdentificationFacade, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementMainMenu, IdentificationUpdateHandler) {    var api = {};
+], function ($, GraphDisplayer, Vertex, VertexService, MindMapTemplate, GraphElementMenu, IdentificationFacade, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementMainMenu) {
+    var api = {};
     api.applyAutoCompleteIdentificationToLabelInput = function (input) {
         input.tripleBrainAutocomplete({
             limitNbRequests:true,
@@ -37,11 +37,7 @@ define([
             ]
         });
     };
-    api.listenForUpdates = function(serverFormat){
-        IdentificationUpdateHandler.forFriendlyResource(
-            serverFormat
-        );
-    };
+
     api.setUpIdentifications = function (serverFormat, vertex) {
         setup(
             vertex.setTypes,

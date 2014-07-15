@@ -159,9 +159,6 @@ define([
                     onMouseOut
                 );
 
-                VertexHtmlCommon.listenForUpdates(
-                    serverFacade
-                );
                 VertexHtmlCommon.setUpIdentifications(
                     serverFacade,
                     vertex

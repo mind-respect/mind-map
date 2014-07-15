@@ -9,7 +9,7 @@ define([
     var api = {};
     api.forFetchingTypes = function () {
         return new FreebaseAutocompleteProvider({
-            filter:'(all type:/type/type)'
+            filter: '(all type:/type/type)'
         });
     };
     api.forFetchingAnything = function () {
@@ -17,7 +17,7 @@ define([
     };
     api.toFetchForTypeId = function (typeId) {
         return new FreebaseAutocompleteProvider({
-            filter:'(all type:' + typeId +')'
+            filter: '(all type:' + typeId + ')'
         });
     };
     api.fetchUsingOptions = function (options) {
@@ -29,28 +29,28 @@ define([
         var self = this;
         this.getFetchMethod = function (searchTerm) {
             var options = $.extend({
-                scoring:'schema',
-                query:searchTerm,
-                key:FreebaseUri.key,
-                lang:getUserLocalesFreebaseFormatted()
+                scoring: 'schema',
+                query: searchTerm,
+                key: FreebaseUri.key,
+                lang: FreebaseUri.getFreebaseFormattedUserLocales()
             }, freebaseOptions);
             var url = FreebaseUri.SEARCH_URL + "?" + $.param(options);
             return $.ajax({
-                type:'GET',
-                dataType:"jsonp",
-                url:url
+                type: 'GET',
+                dataType: "jsonp",
+                url: url
             });
         };
         this.formatResults = function (searchResults) {
             return $.map(searchResults.result, function (searchResult) {
                 var format = {
                     nonFormattedSearchResult: searchResult,
-                    comment : "",
-                    label:searchResult.name,
-                    value:searchResult.name,
-                    source:"Freebase.com",
-                    uri:FreebaseUri.freebaseIdToURI(searchResult.mid),
-                    provider:self
+                    comment: "",
+                    label: searchResult.name,
+                    value: searchResult.name,
+                    source: "Freebase.com",
+                    uri: FreebaseUri.freebaseIdToURI(searchResult.mid),
+                    provider: self
                 };
                 var notable = searchResult.notable;
                 if (notable !== undefined) {
@@ -65,77 +65,39 @@ define([
                 searchResult.uri
             );
             var options = {
-                filter:"(all mid:" + freebaseId + ")",
-                output:"(notable:/client/summary description type)",
-                key:FreebaseUri.key,
-                lang:getUserLocalesFreebaseFormatted()
+                filter: "(all mid:" + freebaseId + ")",
+                output: "(notable:/client/summary description type)",
+                key: FreebaseUri.key,
+                lang: FreebaseUri.getFreebaseFormattedUserLocales()
             };
             var url = FreebaseUri.SEARCH_URL + "?" + $.param(options);
             $.ajax({
-                type:'GET',
-                dataType:"jsonp",
-                url:url
+                type: 'GET',
+                dataType: "jsonp",
+                url: url
             }).success(function (result) {
-                    result = result.result[0];
-                    var descriptions = result.output.description;
-                    var descriptionKey = Object.keys(descriptions)[0];
-                    var descriptionText = "";
-                    if(descriptionKey !== undefined){
-                        descriptionText = descriptions[descriptionKey][0];
-                        if(descriptionText instanceof Object){
-                            descriptionText = descriptionText.value;
-                        }
+                result = result.result[0];
+                var descriptions = result.output.description;
+                var descriptionKey = Object.keys(descriptions)[0];
+                var descriptionText = "";
+                if (descriptionKey !== undefined) {
+                    descriptionText = descriptions[descriptionKey][0];
+                    if (descriptionText instanceof Object) {
+                        descriptionText = descriptionText.value;
                     }
-                    callback({
-                            conciseSearchResult:searchResult,
-                            title:result.name,
-                            source:descriptionKey,
-                            text:descriptionText,
-                            imageUrl:FreebaseUri.thumbnailImageUrlFromFreebaseId(
-                                result.mid
-                            )
-                        }
-                    );
-                });
-        };
-        function getUserLocalesFreebaseFormatted(){
-            var formattedLocales = "";
-            var preferredLocales = User.authenticatedUserInCache().preferred_locales;
-            var freebaseAllowedLocales = [
-                "en",
-                "es",
-                "fr",
-                "de",
-                "it",
-                "pt",
-                "zh",
-                "ja",
-                "ko",
-                "ru",
-                "sv",
-                "fi",
-                "da",
-                "nl",
-                "el",
-                "ro",
-                "tr",
-                "hu"
-            ];
-            $.each(preferredLocales, function(){
-                var preferredLocale = this;
-                $.each(freebaseAllowedLocales, function(){
-                    var freebaseAllowedLocale = this;
-                    if(preferredLocale.indexOf(freebaseAllowedLocale) !== -1){
-                        formattedLocales += freebaseAllowedLocale + ",";
-                        return -1;
+                }
+                callback({
+                        conciseSearchResult: searchResult,
+                        title: result.name,
+                        source: descriptionKey,
+                        text: descriptionText,
+                        imageUrl: FreebaseUri.thumbnailImageUrlFromFreebaseId(
+                            result.mid
+                        )
                     }
-                });
+                );
             });
-            return removeLastCommaOfFormattedLocales();
-            function removeLastCommaOfFormattedLocales(){
-                return formattedLocales.substring(0, formattedLocales.length -1);
-            }
-        }
+        };
     }
 
     return api;

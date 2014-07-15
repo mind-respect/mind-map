@@ -5,7 +5,6 @@ define(
         "triple_brain.event_bus",
         "triple_brain.login_handler",
         "triple_brain.mind-map_template",
-        "triple_brain.server_subscriber",
         "triple_brain.ui.search",
         "triple_brain.graph_displayer",
         "triple_brain.graph_displayer_factory",
@@ -22,13 +21,10 @@ define(
         "triple_brain.freebase",
         "jquery.triple_brain.drag_scroll"
     ],
-    function ($, UserService, EventBus, LoginHandler, MindMapTemplate, ServerSubscriber, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, VertexService, TopCenterMenu, LeftPanel, SelectionHandler, KeyboardUtils, GraphElementMainMenu, VertexServeFacade) {
+    function ($, UserService, EventBus, LoginHandler, MindMapTemplate, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, VertexService, TopCenterMenu, LeftPanel, SelectionHandler, KeyboardUtils, GraphElementMainMenu, VertexServeFacade) {
         "use strict";
         var api = {
             start:function () {
-                ServerSubscriber.init(function () {
-                    console.log("cometd initialized");
-                });
                 UserService.isAuthenticated(
                     callBackWhenIsAuthenticated,
                     showCredentialsFlow

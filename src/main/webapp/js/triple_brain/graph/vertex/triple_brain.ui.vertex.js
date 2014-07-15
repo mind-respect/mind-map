@@ -13,7 +13,6 @@ define([
         "triple_brain.ui.edge",
         "triple_brain.ui.vertex_and_edge_common",
         "triple_brain.event_bus",
-        "triple_brain.server_subscriber",
         "triple_brain.image_displayer",
         "triple_brain.ui.graph_element",
         "triple_brain.selection_handler",
@@ -21,7 +20,7 @@ define([
         "triple_brain.ui.graph",
         "jquery.center-on-screen"
     ],
-    function ($, GraphDisplayer, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, ServerSubscriber, ImageDisplayer, GraphElement, SelectionHandler, GraphElementButton, GraphUi) {
+    function ($, GraphDisplayer, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, ImageDisplayer, GraphElement, SelectionHandler, GraphElementButton, GraphUi) {
         var api = {};
         api.getWhenEmptyLabel = function () {
             return $.t("vertex.default");
@@ -344,9 +343,12 @@ define([
 
             this.addImages = function (images) {
                 var existingImages = self.getImages();
-                html.data("images", existingImages.concat(
-                    images
-                ));
+                html.data(
+                    "images",
+                    existingImages.concat(
+                        images
+                    )
+                );
             };
 
             this.refreshImages = function () {

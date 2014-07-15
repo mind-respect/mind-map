@@ -61,8 +61,20 @@ define([
         this.getComment = function () {
             return serverFormat.comment;
         };
+        this.setComment = function(comment){
+            return serverFormat.comment = comment;
+        };
+        this.hasComment = function(){
+            return serverFormat.comment.length > 0;
+        };
         this.getImages = function () {
             return _images;
+        };
+        this.hasImages = function(){
+            return _images.length > 0;
+        };
+        this.setUri = function(uri){
+            serverFormat.uri = uri;
         };
         this.getUri = function () {
             return serverFormat.uri;

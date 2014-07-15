@@ -34,6 +34,11 @@ define([
                 uri.indexOf("/service")
             );
         };
+        api.elementIdFromUri = function(uri){
+            return uri.substr(
+                uri.lastIndexOf("/") + 1
+            );
+        };
         api.generateUuid = function(){
             // http://stackoverflow.com/questions/6906916/collisions-when-generating-uuids-in-javascript
             var buf = new Uint16Array(8);

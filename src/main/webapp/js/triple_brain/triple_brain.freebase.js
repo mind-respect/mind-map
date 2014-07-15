@@ -1,15 +1,17 @@
 define([
-    "require",
-    "jquery",
-    "triple_brain.freebase_uri",
-    "triple_brain.event_bus",
-    "triple_brain.graph_displayer",
-    "triple_brain.vertex",
-    "triple_brain.suggestion",
-    "triple_brain.identification_server_facade",
-    "jquery.url"
-],
-    function (require, $, FreebaseUri, EventBus, GraphDisplayer, VertexService, Suggestion, IdentificationFacade) {
+        "require",
+        "jquery",
+        "triple_brain.freebase_uri",
+        "triple_brain.event_bus",
+        "triple_brain.graph_displayer",
+        "triple_brain.vertex",
+        "triple_brain.suggestion",
+        "triple_brain.identification_server_facade",
+        "triple_brain.image",
+        "triple_brain.user",
+        "jquery.url"
+    ],
+    function (require, $, FreebaseUri, EventBus, GraphDisplayer, VertexService, Suggestion, IdentificationFacade, Image, UserService) {
         var api = {};
         api.handleIdentificationToServer = function (vertex, freebaseSuggestion, successCallBack) {
             var externalResource = IdentificationFacade.fromFreebaseSuggestion(
@@ -40,11 +42,11 @@ define([
         api.listPropertiesOfFreebaseTypeId = function (vertex, freebaseId) {
             Suggestion = require("triple_brain.suggestion");
             var propertiesOfTypeQuery = {
-                id:freebaseId,
-                type:"/type/type",
-                properties:[
-                    {   id:null,
-                        name:null,
+                id: freebaseId,
+                type: "/type/type",
+                properties: [
+                    {   id: null,
+                        name: null,
                         expected_type: {
                             id: null,
                             name: null
@@ -53,42 +55,111 @@ define([
                 ]
             };
             $.ajax({
-                type:'GET',
-                url:'https://www.googleapis.com/freebase/v1/mqlread?query=' + JSON.stringify(
+                type: 'GET',
+                url: 'https://www.googleapis.com/freebase/v1/mqlread?query=' + JSON.stringify(
                     propertiesOfTypeQuery
                 ),
-                dataType:'jsonp'
+                dataType: 'jsonp'
             }).success(function (result) {
-                    var freebaseProperties = [];
-                    if (result.result) {
-                        freebaseProperties = result.result.properties;
-                    }
-                    var suggestions = [];
-                    $.each(freebaseProperties, function () {
-                        var freebaseProperty = this;
-                        suggestions.push(
-                            Suggestion.fromFreebaseSuggestionAndTypeUri(
-                                freebaseProperty,
-                                FreebaseUri.freebaseIdToURI(
-                                    result.result.id
-                                )
+                var freebaseProperties = [];
+                if (result.result) {
+                    freebaseProperties = result.result.properties;
+                }
+                var suggestions = [];
+                $.each(freebaseProperties, function () {
+                    var freebaseProperty = this;
+                    suggestions.push(
+                        Suggestion.fromFreebaseSuggestionAndTypeUri(
+                            freebaseProperty,
+                            FreebaseUri.freebaseIdToURI(
+                                result.result.id
                             )
-                        );
-                    });
-                    if(suggestions.length > 0){
-                        vertexService().addSuggestions(
-                            vertex,
-                            suggestions
-                        );
-                    }
-                })
+                        )
+                    );
+                });
+                if (suggestions.length > 0) {
+                    vertexService().addSuggestions(
+                        vertex,
+                        suggestions
+                    );
+                }
+            });
         };
         api.removeSuggestFeatureOnVertex = function (vertex) {
             vertex.getLabel().autocomplete("destroy");
         };
 
+        function defineDescription(vertex, freebaseId, identification) {
+            $.ajax({
+                type: 'GET',
+                url: FreebaseUri.SEARCH_URL +
+                    "?query=" + freebaseId +
+                    "&key=" + FreebaseUri.key +
+                    "&output=(description)&lang=" + FreebaseUri.getFreebaseFormattedUserLocales(),
+                dataType: 'jsonp'
+            }).success(function (xhr) {
+                var hasDescription = xhr.result[0].output.description["/common/topic/description"] !== undefined;
+                if(!hasDescription){
+                    return;
+                }
+                var description = xhr.result[0].output.description["/common/topic/description"][0];
+                vertexService().setDescriptionToIdentification(
+                    vertex,
+                    identification,
+                    description
+                );
+            });
+        }
+
+        function defineImages(vertex, freebaseId, identification) {
+            var imageQuery = {
+                id: freebaseId,
+                "/common/topic/image": [
+                    {
+                        id: [],
+                        limit: 1
+                    }
+                ]
+            };
+            $.ajax({
+                type: 'GET',
+                url: 'https://www.googleapis.com/freebase/v1/mqlread?query=' + JSON.stringify(
+                    imageQuery
+                ) + "&raw=true&key=" + FreebaseUri.key,
+                dataType: 'jsonp'
+            }).success(function (result) {
+                var freebaseImages = [];
+                if (result.result) {
+                    freebaseImages = result.result["/common/topic/image"];
+                }
+                if (freebaseImages.length === 0) {
+                    return;
+                }
+                var freebaseImage = freebaseImages[0],
+                    imageId = freebaseImage.id[0],
+                    url = FreebaseUri.IMAGE_URL +
+                        imageId +
+                        "?maxwidth=55&key=" +
+                        FreebaseUri.key;
+                Image.getBase64OfExternalUrl(url, function (base64) {
+                    vertexService().addImageToIdentification(
+                        vertex,
+                        identification,
+                        Image.withBase64ForSmallAndUrlForBigger(
+                            base64,
+                                FreebaseUri.IMAGE_URL +
+                                imageId +
+                                "?maxwidth=600&key=" +
+                                FreebaseUri.key
+                        )
+                    );
+                });
+
+            });
+        }
+
         EventBus.subscribe(
-            '/event/ui/graph/vertex/type/added ' +
+                '/event/ui/graph/vertex/type/added ' +
                 '/event/ui/graph/vertex/same_as/added ' +
                 '/event/ui/graph/vertex/generic_identification/added',
             function (event, vertex, identification) {
@@ -101,8 +172,24 @@ define([
                     vertex,
                     identificationId
                 );
+                if(identification.hasImages()) {
+                    vertex.refreshImages();
+                }else{
+                    defineImages(
+                        vertex,
+                        identificationId,
+                        identification
+                    );
+                }
+                if(!identification.hasComment()){
+                    defineDescription(
+                        vertex,
+                        identificationId,
+                        identification
+                    );
+                }
                 vertex.getLabel().tripleBrainAutocomplete({
-                    select:function (event, ui) {
+                    select: function (event, ui) {
                         var vertex = GraphDisplayer.getVertexSelector().withId(
                             $(this).closest(".vertex").attr("id")
                         );
@@ -118,7 +205,7 @@ define([
                             identificationResource
                         );
                     },
-                    resultsProviders:[
+                    resultsProviders: [
                         require(
                             "triple_brain.freebase_autocomplete_provider"
                         ).toFetchForTypeId(identificationId)
@@ -148,7 +235,7 @@ define([
             });
             filterValue += ")";
             vertex.getLabel().tripleBrainAutocomplete({
-                select:function (event, ui) {
+                select: function (event, ui) {
                     var vertex = GraphDisplayer.getVertexSelector().withId(
                         $(this).closest(".vertex").attr("id")
                     );
@@ -164,11 +251,11 @@ define([
                         identificationResource
                     );
                 },
-                resultsProviders:[
+                resultsProviders: [
                     require(
                         "triple_brain.freebase_autocomplete_provider"
                     ).fetchUsingOptions({
-                            filter:filterValue
+                            filter: filterValue
                         })
                 ]
             });

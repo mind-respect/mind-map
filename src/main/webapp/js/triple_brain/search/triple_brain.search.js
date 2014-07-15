@@ -52,7 +52,7 @@ define([
                 type:'GET',
                 url: UserService.currentUserUri() +
                     "/search/uri?uri=" + uri
-            })
+            });
         };
         return api;
     }
