@@ -69,10 +69,14 @@ define([
             GraphElement.addIdentification(
                 edge,
                 sameAs,
-                function () {
+                function (edge, updatedIdentification) {
                     if (callback !== undefined) {
                         callback();
                     }
+                    publishIdentificationAdded(
+                        edge,
+                        updatedIdentification
+                    );
                 }
             );
         };
@@ -96,7 +100,15 @@ define([
             GraphElement.addIdentification(
                 edge,
                 type,
-                callback
+                function(edge, updatedIdentification){
+                    if(callback !== undefined){
+                        callback();
+                    }
+                    publishIdentificationAdded(
+                        edge,
+                        updatedIdentification
+                    );
+                }
             );
         };
         api.removeType = function (edge, type, callback) {
@@ -147,6 +159,14 @@ define([
                 }
             );
         }
+
+        function publishIdentificationAdded(edge, identification){
+            EventBus.publish(
+                '/event/ui/graph/edge/identification/added',
+                [edge, identification]
+            );
+        }
+
         function getEdgeServerFacade(){
             if(undefined === EdgeServerFacade){
                 EdgeServerFacade = require("triple_brain.edge_server_facade");

@@ -5,13 +5,13 @@ define([
     "jquery",
     "triple_brain.event_bus",
     "triple_brain.graph_displayer"
-],function($, EventBus, GraphDisplayer){
+], function ($, EventBus, GraphDisplayer) {
     var api = {};
     api.types = {
-        "CONCEPT" : "concept",
-        "RELATION" : "relation"
+        "CONCEPT": "concept",
+        "RELATION": "relation"
     };
-    api.Object = function(html){
+    api.Object = function (html) {
         var self = this;
         this.removeType = function (type) {
             var types = self.removeIdenficationInArray(
@@ -44,13 +44,13 @@ define([
                 self.getGenericIdentifications()
             );
         };
-        this.setGenericIdentifications = function (genericIdentifications){
+        this.setGenericIdentifications = function (genericIdentifications) {
             html.data(
                 'genericIdentifications',
                 genericIdentifications
             );
         };
-        this.getGenericIdentifications = function(){
+        this.getGenericIdentifications = function () {
             return html.data(
                 'genericIdentifications'
             );
@@ -105,15 +105,15 @@ define([
             html.data("sameAs", sameAs);
             self.removeIdentificationCommonBehavior(sameAsToRemove);
         };
-        this.isConcept = function(){
+        this.isConcept = function () {
             return self.getGraphElementType() === api.types.CONCEPT;
         };
     };
     EventBus.subscribe("/event/ui/selection/changed",
         function (event, selectionInfo) {
             var onlyOneGraphElementSelected = 1 === selectionInfo.getNbSelected();
-            if(!onlyOneGraphElementSelected){
-                $.each(selectionInfo.getSelectedElements(), function(){
+            if (!onlyOneGraphElementSelected) {
+                $.each(selectionInfo.getSelectedElements(), function () {
                     var selectedElement = this;
                     selectedElement.hideMenu();
                 });
@@ -125,11 +125,11 @@ define([
         }
     );
     return api;
-    function displayOnlyRelevantButtonsInGraphElementMenu(graphElement){
+    function displayOnlyRelevantButtonsInGraphElementMenu(graphElement) {
         var clickHandler = graphElement.isConcept() ?
             GraphDisplayer.getVertexMenuHandler().forSingle() :
             GraphDisplayer.getRelationMenuHandler().forSingle();
-        graphElement.visitMenuButtons(function(button){
+        graphElement.visitMenuButtons(function (button) {
             button.showOnlyIfApplicable(
                 clickHandler,
                 graphElement

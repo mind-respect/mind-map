@@ -50,5 +50,26 @@ define([
                 + '/identification?uri=' + identification.getUri()
         }).success(successCallback);
     };
+    api.addImageToIdentification = function(vertex, identification, image){
+        $.ajax({
+            type:'POST',
+            url:vertex.getUri() + '/identification/image?uri=' + identification.getUri(),
+            data:$.toJSON([image.jsonFormat()]),
+            contentType: 'application/json;charset=utf-8'
+        }).success(function(){
+            vertex.addImages([image]);
+            vertex.refreshImages();
+        });
+    };
+    api.setDescriptionToIdentification = function(vertex, identification, description){
+        $.ajax({
+            type:'PUT',
+            url:vertex.getUri() + '/identification/description?uri=' + identification.getUri(),
+            data:description,
+            contentType: "text/plain"
+        }).success(function(){
+            identification.setComment(description);
+        });
+    };
     return api;
 });

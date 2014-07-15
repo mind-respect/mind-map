@@ -8,10 +8,10 @@ define([
         "triple_brain.suggestion",
         "triple_brain.identification_server_facade",
         "triple_brain.image",
-        "triple_brain.user",
+        "triple_brain.graph_element",
         "jquery.url"
     ],
-    function (require, $, FreebaseUri, EventBus, GraphDisplayer, VertexService, Suggestion, IdentificationFacade, Image, UserService) {
+    function (require, $, FreebaseUri, EventBus, GraphDisplayer, VertexService, Suggestion, IdentificationFacade, Image, GraphElementService) {
         var api = {};
         api.handleIdentificationToServer = function (vertex, freebaseSuggestion, successCallBack) {
             var externalResource = IdentificationFacade.fromFreebaseSuggestion(
@@ -89,7 +89,7 @@ define([
             vertex.getLabel().autocomplete("destroy");
         };
 
-        function defineDescription(vertex, freebaseId, identification) {
+        function defineDescription(graphElement, freebaseId, identification) {
             $.ajax({
                 type: 'GET',
                 url: FreebaseUri.SEARCH_URL +
@@ -103,15 +103,15 @@ define([
                     return;
                 }
                 var description = xhr.result[0].output.description["/common/topic/description"][0];
-                vertexService().setDescriptionToIdentification(
-                    vertex,
+                GraphElementService.setDescriptionToIdentification(
+                    graphElement,
                     identification,
                     description
                 );
             });
         }
 
-        function defineImages(vertex, freebaseId, identification) {
+        function defineImages(graphElement, freebaseId, identification) {
             var imageQuery = {
                 id: freebaseId,
                 "/common/topic/image": [
@@ -142,8 +142,8 @@ define([
                         "?maxwidth=55&key=" +
                         FreebaseUri.key;
                 Image.getBase64OfExternalUrl(url, function (base64) {
-                    vertexService().addImageToIdentification(
-                        vertex,
+                    GraphElementService.addImageToIdentification(
+                        graphElement,
                         identification,
                         Image.withBase64ForSmallAndUrlForBigger(
                             base64,
@@ -211,6 +211,24 @@ define([
                         ).toFetchForTypeId(identificationId)
                     ]
                 });
+            }
+        );
+
+        EventBus.subscribe(
+            '/event/ui/graph/edge/identification/added',
+            function(event, edge, identification){
+                var identificationUri = identification.getExternalResourceUri();
+                if (!FreebaseUri.isFreebaseUri(identificationUri)) {
+                    return;
+                }
+                var identificationId = FreebaseUri.idInFreebaseURI(identificationUri);
+                if(!identification.hasComment()){
+                    defineDescription(
+                        edge,
+                        identificationId,
+                        identification
+                    );
+                }
             }
         );
 
