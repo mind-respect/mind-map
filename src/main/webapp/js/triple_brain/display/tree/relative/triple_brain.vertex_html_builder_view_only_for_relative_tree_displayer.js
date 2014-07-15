@@ -14,7 +14,8 @@ define([
 
     };
     function VertexCreator(serverFormatFacade){
-        var html;
+        var html,
+            vertex;
         this.create = function () {
             html = $(
                 MindMapTemplate['relative_vertex'].merge()
@@ -27,7 +28,8 @@ define([
                 "click",
                 handleClickToDisplayVertexAsCentralVertex
             );
-            var vertex = vertexFacade();
+            vertex = new RelativeTreeVertex.Object(html);
+            RelativeTreeVertex.initCache(vertex);
             createLabel();
             vertex.setOriginalServerObject(
                 serverFormatFacade
@@ -53,13 +55,10 @@ define([
                 );
                 return labelContainer;
             }
-            function vertexFacade() {
-                return RelativeTreeVertex.withHtml(html);
-            }
         };
         function vertexOfSubHtmlComponent(htmlOfSubComponent) {
             return RelativeTreeVertex.withHtml(
-                $(htmlOfSubComponent).closest('.vertex')
+                htmlOfSubComponent.closest('.vertex')
             );
         }
         function handleClickToDisplayVertexAsCentralVertex(){

@@ -2,9 +2,8 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "triple_brain.tree_edge",
-    "triple_brain.graph_displayer"
-], function(TreeEdge, GraphDisplayer){
+    "triple_brain.tree_edge"
+], function(TreeEdge){
     var api = {};
     api.get = function (edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
         return new EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade);
