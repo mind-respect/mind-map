@@ -36,7 +36,7 @@ define([
         function TreeMakerFromServerGraph(centralVertexUri, serverGraph) {
             var vertices = serverGraph.vertices;
             this.make = function () {
-                TreeDisplayerCommon.defineChildrenInVertices(
+                TreeDisplayerCommon.enhancedVerticesInfo(
                     serverGraph,
                     centralVertexUri
                 );

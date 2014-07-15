@@ -9,12 +9,12 @@ define([
 ],
     function (require, $, VertexServerFacade, EdgeServerFacade) {
         var api = {};
-        api.defineChildrenInVertices = function (serverGraph, centralVertexUri) {
-            var sourceId;
-            var destinationId;
-            var vertices = serverGraph.vertices;
-            var originalEdges = serverGraph.edges;
-            var edgesFacade = [];
+        api.enhancedVerticesInfo = function (serverGraph, centralVertexUri) {
+            var sourceId,
+                destinationId,
+                vertices = serverGraph.vertices,
+                originalEdges = serverGraph.edges,
+                edgesFacade = [];
             initChildrenOfVertex(
                 vertexWithId(centralVertexUri)
             );

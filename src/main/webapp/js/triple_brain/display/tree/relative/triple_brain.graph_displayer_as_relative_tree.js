@@ -53,7 +53,7 @@ define([
             function (serverGraph) {
                 var treeMaker = new TreeMaker(VertexHtmlBuilder);
                 var nbRelationsWithGrandParent = removeRelationWithGrandParentFromServerGraph();
-                TreeDisplayerCommon.defineChildrenInVertices(
+                TreeDisplayerCommon.enhancedVerticesInfo(
                     serverGraph,
                     parentUri
                 );
@@ -148,10 +148,10 @@ define([
         );
         var container;
         if (parentVertex.isCenterVertex()) {
-            if(shouldAddLeft()){
+            if (shouldAddLeft()) {
                 container = leftVerticesContainer();
                 newVertex.isLeftOriented = true;
-            }else{
+            } else {
                 container = rightVerticesContainer();
                 newVertex.isLeftOriented = false;
             }
@@ -428,7 +428,7 @@ define([
             vertexHtmlFacade.getHtml().closest(
                 ".vertex-tree-container, .root-vertex-super-container"
             )[
-                toLeft  && vertexHtmlFacade? "prepend" : "append"
+                    toLeft && vertexHtmlFacade ? "prepend" : "append"
                 ](childrenContainer);
             return childrenContainer;
         };
@@ -499,7 +499,7 @@ define([
         }
 
         function makeInContainerUsingServerGraphAndCentralVertexUri(serverGraph, centralVertexUri, verticesContainer, canAddToLeft) {
-            TreeDisplayerCommon.defineChildrenInVertices(
+            TreeDisplayerCommon.enhancedVerticesInfo(
                 serverGraph,
                 centralVertexUri
             );
