@@ -22,9 +22,6 @@ define([
         function HiddenNeighborPropertiesIndicator(vertex) {
             var hiddenNeighborPropertiesContainer;
             this.build = function () {
-                if (!vertex.hasHiddenRelations()) {
-                    return;
-                }
                 var numberOfHiddenRelationsToFlag = vertex.getTotalNumberOfEdges() - 1;
                 if(numberOfHiddenRelationsToFlag > 10){
                     numberOfHiddenRelationsToFlag = 10;

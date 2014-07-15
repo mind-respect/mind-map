@@ -17,10 +17,9 @@ define([
         "triple_brain.ui.graph_element",
         "triple_brain.selection_handler",
         "triple_brain.graph_element_button",
-        "triple_brain.ui.graph",
         "jquery.center-on-screen"
     ],
-    function ($, GraphDisplayer, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, ImageDisplayer, GraphElement, SelectionHandler, GraphElementButton, GraphUi) {
+    function ($, GraphDisplayer, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, ImageDisplayer, GraphElement, SelectionHandler, GraphElementButton) {
         var api = {};
         api.getWhenEmptyLabel = function () {
             return $.t("vertex.default");

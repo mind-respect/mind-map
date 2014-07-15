@@ -81,7 +81,9 @@ define(
             };
 
             function addHtmlToVertex() {
-                vertex.getHtml().prepend(html);
+                vertex.getHtml().children(
+                    ".in-bubble-content"
+                ).before(html);
             }
 
             function imagesInOrderThatPrioritizeUserUploadedImages(images) {
