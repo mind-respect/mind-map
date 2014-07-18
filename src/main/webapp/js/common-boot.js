@@ -39,6 +39,7 @@ requirejs.config({
         "triple_brain.event_bus": "triple_brain/triple_brain.event_bus",
         "jquery.triple_brain.drag_scroll": "triple_brain/jquery.triple_brain.drag_scroll",
         "triple_brain.bubble_distance_calculator": "triple_brain/graph/triple_brain.bubble_distance_calculator",
+        "triple_brain.grouped_relation": "triple_brain/graph/triple_brain.grouped_relation",
         "triple_brain.identification_server_facade": "triple_brain/triple_brain.identification_server_facade",
         "triple_brain.friendly_resource_server_facade": "triple_brain/triple_brain.friendly_resource_server_facade",
         "triple_brain.graph_element_server_facade": "triple_brain/graph/triple_brain.graph_element_server_facade",

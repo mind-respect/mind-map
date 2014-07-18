@@ -100,9 +100,6 @@ define(
                 SelectionHandler.removeAll();
                 var centralVertex = GraphDisplayer.getVertexSelector().withUri(centralVertexUri)[0];
                 centralVertex.setAsCentral();
-                GraphDisplayer.integrateEdgesOfServerGraph(
-                    drawnGraph
-                );
                 $("body, html").removeDragScroll().dragScroll().on(
                     "click",
                     function(){

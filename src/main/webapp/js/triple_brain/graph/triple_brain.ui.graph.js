@@ -10,7 +10,8 @@ define([
         var api = {},
             htmlBody =  $("body"),
             _drawnGraph,
-            _topLayer;
+            _topLayer,
+            _vertexIdCounter = 0;
         api.getEdgeMouseOver = function () {
             return htmlBody.data("edge_mouse_over");
         };
@@ -43,6 +44,10 @@ define([
                 _topLayer = $("body, html");
             }
             return _topLayer;
+        };
+        api.generateVertexHtmlId = function(){
+            _vertexIdCounter++;
+            return "vertex-ui-id-" + _vertexIdCounter;
         };
         return api;
     }

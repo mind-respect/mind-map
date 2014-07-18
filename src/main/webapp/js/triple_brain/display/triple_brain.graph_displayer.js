@@ -57,11 +57,6 @@ define([
         api.positionOfNewVertex = function(sourceVertex){
             return _implementation.positionOfNewVertex(sourceVertex);
         };
-        api.integrateEdgesOfServerGraph = function(drawnGraph){
-            return _implementation.integrateEdgesOfServerGraph(
-                drawnGraph
-            );
-        };
         api.couldHaveDuplicates = function(){
             return !api.allowsMovingVertices();
         };
@@ -100,11 +95,6 @@ define([
         };
         api.getGraphMenuHandler = function(){
             return _implementation.getGraphMenuHandler();
-        };
-        api.integrateEdgesOfServerGraphForViewOnly = function(drawnGraph){
-            return _implementation.integrateEdgesOfServerGraphForViewOnly(
-                drawnGraph
-            );
         };
         api.canGetIsToTheLeft = function(){
             return !api.allowsMovingVertices();

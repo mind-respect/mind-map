@@ -42,14 +42,9 @@ define([
                     width: 0.6987 * $(window).width()
                 }
             );
-            GraphDisplayer.integrateEdgesOfServerGraphForViewOnly(
-                drawnTree
-            );
             var vertices = drawnTree.vertices;
             var vertexUri = Object.keys(vertices)[0];
-            GraphDisplayer.getVertexSelector().withId(
-                vertices[vertexUri].uiIds[0]
-            ).getHtml().centerOnScreen({
+            GraphDisplayer.getVertexSelector().lastAddedWithUri(vertexUri).getHtml().centerOnScreen({
                     container: html,
                     containerVisibleSize: {
                         x: html.innerWidth(),

@@ -42,6 +42,11 @@ define([
             api.withUri = function (uri) {
                 return cacheWithUriAsKey[uri];
             };
+            api.lastAddedWithUri = function (uri) {
+                return cacheWithUriAsKey[uri][
+                    cacheWithUriAsKey[uri].length - 1
+                    ];
+            };
             api.visitAllVertices = function (visitor) {
                 $.each(cacheWithIdAsKey, function () {
                     return visitor(
@@ -56,11 +61,11 @@ define([
                 cacheWithUriAsKey = {};
             }
 
-            api.removeVertexFromCache = function(uri, id){
+            api.removeVertexFromCache = function (uri, id) {
                 var len = cacheWithUriAsKey[uri].length
                 while (len--) {
                     var vertex = cacheWithUriAsKey[uri][len];
-                    if(vertex.getId() === uri){
+                    if (vertex.getId() === uri) {
                         cacheWithUriAsKey.splice(len, 1);
                     }
                 }
@@ -303,9 +308,9 @@ define([
                 if (self.hasHiddenRelationsContainer()) {
                     self.getHiddenRelationsContainer().remove();
                 }
-                if(self.isCenterVertex()){
+                if (self.isCenterVertex()) {
                     html.closest(".vertex-container").remove();
-                }else{
+                } else {
                     html.closest(".vertex-tree-container").remove();
                 }
 

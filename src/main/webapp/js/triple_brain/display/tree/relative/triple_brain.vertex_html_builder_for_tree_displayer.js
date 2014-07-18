@@ -122,9 +122,9 @@ define([
                     }
                 }
             );
-            html.uniqueId();
             var vertex;
-            this.create = function () {
+            this.create = function (htmlId) {
+                html.attr('id', htmlId);
                 vertex = new RelativeTreeVertex.Object(html);
                 RelativeTreeVertex.initCache(
                     vertex
@@ -313,9 +313,6 @@ define([
                 var vertex = vertexOfSubHtmlComponent(this);
                 RelativeTreeVertex.unsetVertexMouseOver();
                 vertex.makeItLowProfile();
-            }
-            function vertexFacade() {
-                return RelativeTreeVertex.withHtml(html);
             }
         }
 

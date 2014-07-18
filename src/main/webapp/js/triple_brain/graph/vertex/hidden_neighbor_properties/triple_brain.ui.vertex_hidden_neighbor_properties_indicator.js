@@ -66,10 +66,7 @@ define([
             $this.remove();
             GraphDisplayer.addChildTree(
                 vertex,
-                function (drawnTree) {
-                    GraphDisplayer.integrateEdgesOfServerGraph(
-                        drawnTree
-                    );
+                function () {
                     vertex.visitChildren(function (child) {
                         if (child.hasHiddenRelations()) {
                             child.buildHiddenNeighborPropertiesIndicator();

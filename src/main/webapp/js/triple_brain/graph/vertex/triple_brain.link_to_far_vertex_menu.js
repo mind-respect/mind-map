@@ -58,34 +58,33 @@ define([
                     html.find("input").blur();
                     html.remove();
                     var farVertexUri = ui.item.uri;
-                    GraphDisplayer.connectVertexToVertexWithUri(
-                        parentVertex,
-                        farVertexUri,
-                        function(drawnTree, farVertex){
-                            EdgeService.add(
+                    EdgeService.addToFarVertex(parentVertex, farVertexUri, function(){
+                            GraphDisplayer.connectVertexToVertexWithUri(
                                 parentVertex,
-                                farVertex,
-                                function(edgeServerFormatted){
-                                    var edge = GraphDisplayer.addEdge(
-                                        EdgeServerFacade.fromServerFormat(edgeServerFormatted),
-                                        parentVertex,
-                                        farVertex
-                                    );
-                                    GraphDisplayer.integrateEdgesOfServerGraph(
-                                        drawnTree
-                                    );
-                                    farVertex.setTotalNumberOfEdges(
-                                            farVertex.getTotalNumberOfEdges() + 1
-                                    );
-                                    if (farVertex.hasHiddenRelations()) {
-                                        farVertex.buildHiddenNeighborPropertiesIndicator();
-                                    }
-                                    edge.focus();
+                                farVertexUri,
+                                function(drawnTree, farVertex) {
                                 }
                             );
-                        }
-                    );
+                    });
 
+//                            EdgeService.add(
+//                                parentVertex,
+//                                farVertex,
+//                                function(edgeServerFormatted){
+//                                    var edge = GraphDisplayer.addEdge(
+//                                        EdgeServerFacade.fromServerFormat(edgeServerFormatted),
+//                                        parentVertex,
+//                                        farVertex
+//                                    );
+//                                    farVertex.setTotalNumberOfEdges(
+//                                            farVertex.getTotalNumberOfEdges() + 1
+//                                    );
+//                                    if (farVertex.hasHiddenRelations()) {
+//                                        farVertex.buildHiddenNeighborPropertiesIndicator();
+//                                    }
+//                                    edge.focus();
+//                                }
+//                            );
                 },
                 resultsProviders : [
                     UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesExcept(

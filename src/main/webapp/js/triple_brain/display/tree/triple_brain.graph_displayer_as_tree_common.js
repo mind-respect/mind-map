@@ -2,22 +2,24 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "require",
-    "jquery",
-    "triple_brain.vertex_server_facade",
-    "triple_brain.edge_server_facade"
-],
-    function (require, $, VertexServerFacade, EdgeServerFacade) {
+        "require",
+        "jquery",
+        "triple_brain.vertex_server_facade",
+        "triple_brain.edge_server_facade",
+        "triple_brain.grouped_relation"
+    ],
+    function (require, $, VertexServerFacade, EdgeServerFacade, GroupedRelation) {
         var api = {};
         api.enhancedVerticesInfo = function (serverGraph, centralVertexUri) {
-            var sourceId,
-                destinationId,
-                vertices = serverGraph.vertices,
+            var vertices = serverGraph.vertices,
                 originalEdges = serverGraph.edges,
-                edgesFacade = [];
-            initChildrenOfVertex(
-                vertexWithId(centralVertexUri)
+                edgesFacade = [],
+                centralVertex = vertexWithId(centralVertexUri);
+            centralVertex.isInvolved = true;
+            initRelationsOfVertex(
+                centralVertex
             );
+
             $.each(originalEdges, function () {
                     var edgeFacade = isGraphElementFacadeBuilt(this) ? this : EdgeServerFacade.fromServerFormat(
                         this
@@ -32,61 +34,68 @@ define([
             );
             serverGraph.edges = edgesFacade;
             function updateVerticesChildrenWithEdge(edge) {
-                sourceId = edge.getSourceVertex().getUri();
-                destinationId = edge.getDestinationVertex().getUri();
-                applyToBoth([
-                    initVertexInTreeInfoIfNecessary
-                ]);
-                setNeighbors(sourceId, destinationId, edge);
+                initRelationsOfVertex(vertexWithId(edge.getSourceVertex().getUri()));
+                initRelationsOfVertex(vertexWithId(edge.getDestinationVertex().getUri()));
+                updateRelationsIdentification(edge);
             }
 
-            function initVertexInTreeInfoIfNecessary(vertexId) {
-                var vertex = vertexWithId(vertexId);
-                if (vertex.neighbors === undefined) {
-                    initChildrenOfVertex(vertex);
+            function initRelationsOfVertex(vertex) {
+                if(vertex.similarRelations === undefined){
+                    vertex.similarRelations = {};
                 }
             }
 
-            function initChildrenOfVertex(vertex) {
-                vertex.neighbors = [];
+            function updateRelationsIdentification(edge) {
+                var sourceVertex = vertexWithId(edge.getSourceVertex().getUri()),
+                    destinationVertex = vertexWithId(edge.getDestinationVertex().getUri()),
+                    edgeIdentifications = edge.getIdentifications();
+                if(destinationVertex.isInvolved && !sourceVertex.isInvolved){
+                    sourceVertex = vertexWithId(edge.getDestinationVertex().getUri());
+                    destinationVertex = vertexWithId(edge.getSourceVertex().getUri());
+                }
+                sourceVertex.isInvolved = true;
+                destinationVertex.isInvolved = true;
+                $.each(edgeIdentifications, function () {
+                    var identification = this;
+                    if (sourceVertex.similarRelations[identification.getUri()] === undefined) {
+                        sourceVertex.similarRelations[identification.getUri()] = GroupedRelation.usingIdentification(
+                            identification
+                        );
+                    }
+                    sourceVertex.similarRelations[identification.getUri()].addVertex(
+                        destinationVertex,
+                        edge
+                    );
+                });
+                if (edgeIdentifications.length === 0) {
+                    var groupedIdentification = GroupedRelation.withoutAnIdentification();
+                    groupedIdentification.addVertex(
+                        destinationVertex,
+                        edge
+                    );
+                    sourceVertex.similarRelations[edge.getUri()] = groupedIdentification;
+                }
             }
 
-            function setNeighbors(vertexId, childrenId, edge) {
-                vertexWithId(vertexId).neighbors.push({
-                    vertexUri:childrenId,
-                    edge:edge
-                });
-                vertexWithId(childrenId).neighbors.push({
-                    vertexUri:vertexId,
-                    edge:edge
-                });
-            }
-
-            function applyToBoth(functions) {
-                $.each(functions, function () {
-                    var func = this;
-                    func(sourceId);
-                    func(destinationId);
-                });
-            }
             function vertexWithId(vertexId) {
                 var serverFormat = vertices[vertexId];
-                if(isGraphElementFacadeBuilt(serverFormat)){
+                if (isGraphElementFacadeBuilt(serverFormat)) {
                     return serverFormat;
                 }
                 return vertices[vertexId] = getVertexServerFacade().fromServerFormat(
                     vertices[vertexId]
                 );
             }
-            function isGraphElementFacadeBuilt(graphElementServerFormat){
+
+            function isGraphElementFacadeBuilt(graphElementServerFormat) {
                 return graphElementServerFormat["getLabel"] !== undefined;
             }
         };
 
         return api;
 
-        function getVertexServerFacade(){
-            if(VertexServerFacade === undefined){
+        function getVertexServerFacade() {
+            if (VertexServerFacade === undefined) {
                 VertexServerFacade = require("triple_brain.vertex_server_facade")
             }
             return VertexServerFacade;
