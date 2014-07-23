@@ -62,7 +62,7 @@ define([
             }
 
             api.removeVertexFromCache = function (uri, id) {
-                var len = cacheWithUriAsKey[uri].length
+                var len = cacheWithUriAsKey[uri].length;
                 while (len--) {
                     var vertex = cacheWithUriAsKey[uri][len];
                     if (vertex.getId() === uri) {
@@ -94,461 +94,454 @@ define([
             $("body").removeData("vertex_mouse_over");
         };
         api.Object = function (html) {
-            var self = this;
-            this._initialize = function () {
-            };
-            GraphElement.Object.apply(self, [html]);
-            this.getGraphElementType = function () {
-                return GraphElement.types.CONCEPT;
-            };
-
-            this.position = function () {
-                return Point.fromCoordinates(
-                    html.offset().left,
-                    html.offset().top
-                );
-            };
-            this.intersectsWithSegment = function (segment) {
-                return getSegments().intersectsWithSegment(
-                    segment
-                );
-            };
-            this.closestPointToSegment = function (segment) {
-                return getSegments().closestPointToSegment(
-                    segment
-                );
-            };
-            this.intersectionPointWithSegment = function (segmentToCompare) {
-                if (!self.intersectsWithSegment(segmentToCompare)) {
-                    throw(
-                        Error.withName(
-                            "no_intersection"
-                        )
-                        );
-                }
-                return getSegments().intersectionPointWithSegment(segmentToCompare);
-            };
-            this.setAsNonCentral = function () {
-                html.removeClass('center-vertex');
-                this.showCenterButton();
-            };
-            this.setAsCentral = function () {
-                var previousCentralVertex = api.centralVertex();
-                if (previousCentralVertex !== undefined) {
-                    previousCentralVertex.setAsNonCentral();
-                }
-                html.addClass('center-vertex');
-                self.hideCenterButton();
-            };
-            this.setTotalNumberOfEdges = function (totalNumberOfEdges) {
-                html.data(
-                    "totalNumberOfEdges",
-                    totalNumberOfEdges
-                );
-            };
-            this.getTotalNumberOfEdges = function () {
-                return html.data(
-                    "totalNumberOfEdges"
-                );
-            };
-            this.buildHiddenNeighborPropertiesIndicator = function () {
-                var propertiesIndicator = PropertiesIndicator.withVertex(
-                    self
-                );
-                html.data(
-                    "hidden_properties_indicator",
-                    propertiesIndicator
-                );
-                propertiesIndicator.build();
-            };
-            this.hasHiddenRelations = function () {
-                return self.isALeaf() && self.getTotalNumberOfEdges() > 1;
-            };
-            this.hasHiddenRelationsContainer = function () {
-                return undefined !== self.getHiddenRelationsContainer();
-            };
-            this.getHiddenRelationsContainer = function () {
-                return html.data(
-                    "hidden_properties_indicator"
-                );
-            };
-            this.width = function () {
-                return html.width();
-            };
-            this.height = function () {
-                return html.height();
-            };
-            this.getHtml = function () {
-                return html;
-            };
-            this.getId = function () {
-                return html.attr('id');
-            };
-
-            this.getUri = function () {
-                return html.data(
-                    "uri"
-                );
-            };
-
-            this.setUri = function (uri) {
-                html.data(
-                    "uri",
-                    uri
-                );
-            };
-
-            this.isMouseOver = function () {
-                var vertexThatIsMouseOver = api.getVertexMouseOver();
-                return vertexThatIsMouseOver !== undefined &&
-                    vertexThatIsMouseOver.equalsVertex(self);
-            };
-            this.makeItLowProfile = function () {
-                if (!self.isLabelInFocus()) {
-                    self.unhighlight();
-                }
-            };
-            this.makeItHighProfile = function () {
-                self.highlight();
-            };
-            this.hideButtons = function () {
-                self.hideMenu();
-            };
-            this.showButtons = function () {
-                self.showMenu();
-            };
-            this.hideMenu = function () {
-                self.getMenuHtml().hide();
-            };
-            this.showMenu = function () {
-                self.getMenuHtml().show();
-            };
-            this.showCenterButton = function () {
-                centerButton().hide();
-            };
-            this.hideCenterButton = function () {
-                centerButton().hide();
-            };
-            this.highlight = function () {
-                html.addClass(
-                    'highlighted'
-                );
-            };
-            this.unhighlight = function () {
-                html.removeClass(
-                    'highlighted'
-                );
-            };
-            this.connectedEdges = function () {
-                return EdgeUi.connectedToVertex(
-                    self
-                );
-            };
-            this.isLabelInFocus = function () {
-                return self.getLabel().is(":focus");
-            };
-            this.focus = function () {
-                self.getLabel().focus();
-            };
-            this.readjustLabelWidth = function () {
-                VertexAndEdgeCommon.adjustWidthToNumberOfChars(
-                    self.getLabel()
-                );
-            };
-            this.text = function () {
-                return self.getLabel().val();
-            };
-            this.setText = function (label) {
-                return self.getLabel().val(
-                    label
-                );
-            };
-            this.setNote = function (note) {
-                html.data("note", note);
-            };
-            this.getNote = function () {
-                return html.data("note");
-            };
-            this.hasNote = function () {
-                return self.getNote().trim().length > 0;
-            };
-            this.getNoteButtonInBubbleContent = function () {
-                return self.getInBubbleContainer().find(
-                    ".note-button"
-                );
-            };
-            this.getNoteButtonInMenu = function () {
-                return self.getMenuHtml().find("> .note-button");
-            };
-            this.getInBubbleContainer = function () {
-                return html.find(
-                    "> .in-bubble-content"
-                );
-            };
-            this.hasDefaultText = function () {
-                return self.getLabel().val() == api.getWhenEmptyLabel();
-            };
-            this.applyStyleOfDefaultText = function () {
-                self.getLabel().addClass('when-default-graph-element-text');
-            };
-            this.removeStyleOfDefaultText = function () {
-                self.getLabel().removeClass('when-default-graph-element-text');
-            };
-            this.isCenterVertex = function () {
-                return html.hasClass("center-vertex");
-            };
-            this.removeConnectedEdges = function () {
-                var connectedEdges = this.connectedEdges();
-                for (var i = 0; i < connectedEdges.length; i++) {
-                    connectedEdges[i].remove();
-                }
-            };
-            this.remove = function () {
-                SelectionHandler.removeBubble(self);
-                if (self.hasHiddenRelationsContainer()) {
-                    self.getHiddenRelationsContainer().remove();
-                }
-                if (self.isCenterVertex()) {
-                    html.closest(".vertex-container").remove();
-                } else {
-                    html.closest(".vertex-tree-container").remove();
-                }
-
-            };
-            this.suggestions = function () {
-                return html.data('suggestions');
-            };
-            this.hasSuggestions = function () {
-                return self.suggestions().length > 0;
-            };
-            this.addSuggestions = function (suggestions) {
-                var existingSuggestions = html.data('suggestions');
-                existingSuggestions = existingSuggestions === undefined ?
-                    [] :
-                    existingSuggestions;
-                var mergedSuggestions = existingSuggestions.concat(suggestions);
-                html.data('suggestions', mergedSuggestions);
-                mergedSuggestions.length > 0 ?
-                    self.showSuggestionButton() :
-                    self.hideSuggestionButton();
-            };
-            this.setSuggestions = function (suggestions) {
-                html.data('suggestions', suggestions);
-                suggestions.length > 0 ?
-                    self.showSuggestionButton() :
-                    self.hideSuggestionButton();
-            };
-
-            this.applyCommonBehaviorForAddedIdentification = function (identification) {
-                self.addImages(
-                    identification.getImages()
-                );
-            };
-
-            this.addImages = function (images) {
-                var existingImages = self.getImages();
-                html.data(
-                    "images",
-                    existingImages.concat(
-                        images
-                    )
-                );
-            };
-
-            this.refreshImages = function () {
-                var imageMenu =
-                    self.hasImagesMenu() ?
-                        self.getImageMenu() :
-                        createImageMenu();
-                imageMenu.refreshImages();
-            };
-
-            this.removeImage = function (imageToRemove) {
-                var images = [];
-                $.each(self.getImages(), function () {
-                    var image = this;
-                    if (image.getBase64ForSmall() !== imageToRemove.getBase64ForSmall()) {
-                        images.push(image);
-                    }
-                });
-                html.data(
-                    "images",
-                    images
-                );
-            };
-            this.getImages = function () {
-                return html.data("images") === undefined ?
-                    [] :
-                    html.data("images");
-            };
-
-            this.serverFacade = function () {
-                return VertexService;
-            };
-
-            function createImageMenu() {
-                var imageMenu = ImageDisplayer.ofVertex(self).create();
-                html.data("images_menu", imageMenu);
-                return imageMenu;
-            }
-
-            this.hasImagesMenu = function () {
-                return html.data("images_menu") !== undefined;
-            };
-            this.getImageMenu = function () {
-                return html.data("images_menu");
-            };
-            this.removeIdentificationCommonBehavior = function (identification) {
-                $.each(identification.getImages(), function () {
-                    var image = this;
-                    self.removeImage(image);
-                });
-                self.getImageMenu().refreshImages();
-                VertexService.getSuggestions(
-                    self
-                );
-            };
-
-            this.showSuggestionButton = function () {
-                suggestionButton().show();
-            };
-            this.hideSuggestionButton = function () {
-                suggestionButton().hide();
-            };
-            this.triggerChange = function () {
-                html.trigger("change");
-            };
-            this.getLabel = function () {
-                return html.find("input.label");
-            };
-            this.equalsVertex = function (otherVertex) {
-                return self.getId() == otherVertex.getId();
-            };
-            this.scrollTo = function () {
-                html.centerOnScreen();
-            };
-
-            this.setOriginalServerObject = function (serverJson) {
-                html.data(
-                    "originalServerObject",
-                    serverJson
-                );
-            };
-            this.getOriginalServerObject = function () {
-                return html.data(
-                    "originalServerObject"
-                );
-            };
-
-            this.serverFormat = function () {
-                return {
-                    label: self.text(),
-                    suggestions: self.suggestions(),
-                    types: getCollectionAsServerFormat(self.getTypes()),
-                    same_as: getCollectionAsServerFormat(self.getSameAs())
-                };
-                function getCollectionAsServerFormat(collection) {
-                    var serverFormat = [];
-                    $.each(collection, function () {
-                        var item = this;
-                        serverFormat.push(
-                            item.getJsonFormat()
-                        );
-                    });
-                    return serverFormat;
-                }
-            };
-            this.makePrivate = function () {
-                html.removeClass("public");
-                setIsPublic(false);
-            };
-            this.makePublic = function () {
-                html.addClass("public");
-                setIsPublic(true);
-            };
-            this.isPublic = function () {
-                return html.data("isPublic");
-            };
-            this.deselect = function () {
-                html.removeClass("selected");
-                self.hideButtons();
-            };
-            this.select = function () {
-                html.addClass("selected");
-            };
-            this.makeSingleSelected = function () {
-                self.showButtons();
-            };
-            this.isSelected = function () {
-                return html.hasClass("selected");
-            };
-            this.setIncludedVertices = function (includedVertices) {
-                html.data(
-                    "includedVertices",
-                    includedVertices
-                );
-            };
-            this.hasIncludedGraphElements = function () {
-                return Object.keys(self.getIncludedVertices()).length > 0;
-            };
-            this.getIncludedVertices = function () {
-                return html.data("includedVertices");
-            };
-            this.setIncludedEdges = function (includedEdges) {
-                html.data(
-                    "includedEdges",
-                    includedEdges
-                );
-            };
-            this.getIncludedEdges = function () {
-                return html.data("includedEdges");
-            };
-            this.isAbsoluteDefaultVertex = function () {
-                return self.getUri().indexOf("default") !== -1;
-            };
-            this.getMenuHtml = function () {
-                return html.find('> .menu');
-            };
-            this.visitMenuButtons = function (visitor) {
-                $.each(getMenuButtonsHtml(), function () {
-                    visitor(
-                        GraphElementButton.fromHtml(
-                            $(this)
-                        )
-                    );
-                });
-            };
-            function setIsPublic(isPublic) {
+            this.html = html;
+            this._initialize = function(){};
+            GraphElement.Object.apply(this, [html]);
+            this.setIsPublic = function (isPublic){
                 html.data(
                     "isPublic",
                     isPublic
                 );
-            }
-
-            function suggestionButton() {
+            };
+            this.suggestionButton = function() {
                 return html.find('.suggestion');
-            }
+            };
 
-            function centerButton() {
+            this.centerButton = function() {
                 return html.find('.center');
-            }
+            };
 
-            function getSegments() {
+            this.getSegments = function(){
                 return VertexSegments.withHtmlVertex(
-                    self.getInBubbleContainer()
+                    this.getInBubbleContainer()
                 );
-            }
-
-            function getMenuButtonsHtml() {
-                return self.getMenuHtml().find(
+            };
+            this.getMenuButtonsHtml = function(){
+                return this.getMenuHtml().find(
                     "> button"
                 );
+            };
+            this.createImageMenu = function() {
+                var imageMenu = ImageDisplayer.ofVertex(this).create();
+                html.data("images_menu", imageMenu);
+                return imageMenu;
+            };
+        };
+        api.Object.prototype = new crow.ConnectedNode;
+        api.Object.prototype.initCrow = function(){
+            crow.ConnectedNode.apply(this, [this.html.attr("id")]);
+        };
+        api.Object.prototype.getGraphElementType = function () {
+            return GraphElement.types.CONCEPT;
+        };
+        api.Object.prototype.position = function () {
+            return Point.fromCoordinates(
+                this.html.offset().left,
+                this.html.offset().top
+            );
+        };
+        api.Object.prototype.intersectsWithSegment = function (segment) {
+            return this.getSegments().intersectsWithSegment(
+                segment
+            );
+        };
+        api.Object.prototype.closestPointToSegment = function (segment) {
+            return this.getSegments().closestPointToSegment(
+                segment
+            );
+        };
+        api.Object.prototype.intersectionPointWithSegment = function (segmentToCompare) {
+            if (!this.intersectsWithSegment(segmentToCompare)) {
+                throw(
+                    Error.withName(
+                        "no_intersection"
+                    )
+                    );
+            }
+            return this.getSegments().intersectionPointWithSegment(segmentToCompare);
+        };
+        api.Object.prototype.setAsNonCentral = function () {
+            this.html.removeClass('center-vertex');
+            this.showCenterButton();
+        };
+        api.Object.prototype.setAsCentral = function () {
+            var previousCentralVertex = api.centralVertex();
+            if (previousCentralVertex !== undefined) {
+                previousCentralVertex.setAsNonCentral();
+            }
+            this.html.addClass('center-vertex');
+            this.hideCenterButton();
+        };
+        api.Object.prototype.setTotalNumberOfEdges = function (totalNumberOfEdges) {
+            this.html.data(
+                "totalNumberOfEdges",
+                totalNumberOfEdges
+            );
+        };
+        api.Object.prototype.getTotalNumberOfEdges = function () {
+            return this.html.data(
+                "totalNumberOfEdges"
+            );
+        };
+        api.Object.prototype.buildHiddenNeighborPropertiesIndicator = function () {
+            var propertiesIndicator = PropertiesIndicator.withVertex(
+                this
+            );
+            this.html.data(
+                "hidden_properties_indicator",
+                propertiesIndicator
+            );
+            propertiesIndicator.build();
+        };
+        api.Object.prototype.hasHiddenRelations = function () {
+            return this.isALeaf() && this.getTotalNumberOfEdges() > 1;
+        };
+        api.Object.prototype.hasHiddenRelationsContainer = function () {
+            return undefined !== this.getHiddenRelationsContainer();
+        };
+        api.Object.prototype.getHiddenRelationsContainer = function () {
+            return this.html.data(
+                "hidden_properties_indicator"
+            );
+        };
+        api.Object.prototype.width = function () {
+            return this.html.width();
+        };
+        api.Object.prototype.height = function () {
+            return this.html.height();
+        };
+        api.Object.prototype.getHtml = function () {
+            return this.html;
+        };
+        api.Object.prototype.getId = function () {
+            return this.html.attr('id');
+        };
+        api.Object.prototype.getUri = function () {
+            return this.html.data(
+                "uri"
+            );
+        };
+        api.Object.prototype.setUri = function (uri) {
+            this.html.data(
+                "uri",
+                uri
+            );
+        };
+        api.Object.prototype.isMouseOver = function () {
+            var vertexThatIsMouseOver = api.getVertexMouseOver();
+            return vertexThatIsMouseOver !== undefined &&
+                vertexThatIsMouseOver.equalsVertex(this);
+        };
+        api.Object.prototype.makeItLowProfile = function () {
+            if (!this.isLabelInFocus()) {
+                this.unhighlight();
+            }
+        };
+        api.Object.prototype.makeItHighProfile = function () {
+            this.highlight();
+        };
+        api.Object.prototype.hideButtons = function () {
+            this.hideMenu();
+        };
+        api.Object.prototype.showButtons = function () {
+            this.showMenu();
+        };
+        api.Object.prototype.hideMenu = function () {
+            this.getMenuHtml().hide();
+        };
+        api.Object.prototype.showMenu = function () {
+            this.getMenuHtml().show();
+        };
+        api.Object.prototype.showCenterButton = function () {
+            this.centerButton().hide();
+        };
+        api.Object.prototype.hideCenterButton = function () {
+            this.centerButton().hide();
+        };
+        api.Object.prototype.highlight = function () {
+            this.html.addClass(
+                'highlighted'
+            );
+        };
+        api.Object.prototype.unhighlight = function () {
+            this.html.removeClass(
+                'highlighted'
+            );
+        };
+        api.Object.prototype.connectedEdges = function () {
+            return EdgeUi.connectedToVertex(
+                this
+            );
+        };
+        api.Object.prototype.isLabelInFocus = function () {
+            return this.getLabel().is(":focus");
+        };
+        api.Object.prototype.focus = function () {
+            this.getLabel().focus();
+        };
+        api.Object.prototype.readjustLabelWidth = function () {
+            VertexAndEdgeCommon.adjustWidthToNumberOfChars(
+                this.getLabel()
+            );
+        };
+        api.Object.prototype.text = function () {
+            return this.getLabel().val();
+        };
+        api.Object.prototype.setText = function (label) {
+            return this.getLabel().val(
+                label
+            );
+        };
+        api.Object.prototype.setNote = function (note) {
+            this.html.data("note", note);
+        };
+        api.Object.prototype.getNote = function () {
+            return this.html.data("note");
+        };
+        api.Object.prototype.hasNote = function () {
+            return this.getNote().trim().length > 0;
+        };
+        api.Object.prototype.getNoteButtonInBubbleContent = function () {
+            return this.getInBubbleContainer().find(
+                ".note-button"
+            );
+        };
+        api.Object.prototype.getNoteButtonInMenu = function () {
+            return this.getMenuHtml().find("> .note-button");
+        };
+        api.Object.prototype.getInBubbleContainer = function () {
+            return this.html.find(
+                "> .in-bubble-content"
+            );
+        };
+        api.Object.prototype.hasDefaultText = function () {
+            return this.getLabel().val() == api.getWhenEmptyLabel();
+        };
+        api.Object.prototype.applyStyleOfDefaultText = function () {
+            this.getLabel().addClass('when-default-graph-element-text');
+        };
+        api.Object.prototype.removeStyleOfDefaultText = function () {
+            this.getLabel().removeClass('when-default-graph-element-text');
+        };
+        api.Object.prototype.isCenterVertex = function () {
+            return this.html.hasClass("center-vertex");
+        };
+        api.Object.prototype.removeConnectedEdges = function () {
+            var connectedEdges = this.connectedEdges();
+            for (var i = 0; i < connectedEdges.length; i++) {
+                connectedEdges[i].remove();
+            }
+        };
+        api.Object.prototype.remove = function () {
+            SelectionHandler.removeBubble(this);
+            if (this.hasHiddenRelationsContainer()) {
+                this.getHiddenRelationsContainer().remove();
+            }
+            if (this.isCenterVertex()) {
+                this.html.closest(".vertex-container").remove();
+            } else {
+                this.html.closest(".vertex-tree-container").remove();
             }
 
-            crow.ConnectedNode.apply(this, [self.getId()]);
         };
-        api.Object.prototype = new crow.ConnectedNode();
+        api.Object.prototype.suggestions = function () {
+            return this.html.data('suggestions');
+        };
+        api.Object.prototype.hasSuggestions = function () {
+            return this.suggestions().length > 0;
+        };
+        api.Object.prototype.addSuggestions = function (suggestions) {
+            var existingSuggestions = this.html.data('suggestions');
+            existingSuggestions = existingSuggestions === undefined ?
+                [] :
+                existingSuggestions;
+            var mergedSuggestions = existingSuggestions.concat(suggestions);
+            this.html.data('suggestions', mergedSuggestions);
+            mergedSuggestions.length > 0 ?
+                this.showSuggestionButton() :
+                this.hideSuggestionButton();
+        };
+        api.Object.prototype.setSuggestions = function (suggestions) {
+            this.html.data('suggestions', suggestions);
+            suggestions.length > 0 ?
+                this.showSuggestionButton() :
+                this.hideSuggestionButton();
+        };
 
+        api.Object.prototype.applyCommonBehaviorForAddedIdentification = function (identification) {
+            this.addImages(
+                identification.getImages()
+            );
+        };
+
+        api.Object.prototype.addImages = function (images) {
+            var existingImages = this.getImages();
+            this.html.data(
+                "images",
+                existingImages.concat(
+                    images
+                )
+            );
+        };
+
+        api.Object.prototype.refreshImages = function () {
+            var imageMenu =
+                this.hasImagesMenu() ?
+                    this.getImageMenu() :
+                    this.createImageMenu();
+            imageMenu.refreshImages();
+        };
+
+        api.Object.prototype.removeImage = function (imageToRemove) {
+            var images = [];
+            $.each(this.getImages(), function () {
+                var image = this;
+                if (image.getBase64ForSmall() !== imageToRemove.getBase64ForSmall()) {
+                    images.push(image);
+                }
+            });
+            this.html.data(
+                "images",
+                images
+            );
+        };
+        api.Object.prototype.getImages = function () {
+            return this.html.data("images") === undefined ?
+                [] :
+                this.html.data("images");
+        };
+
+        api.Object.prototype.serverFacade = function () {
+            return VertexService;
+        };
+
+        api.Object.prototype.hasImagesMenu = function () {
+            return this.html.data("images_menu") !== undefined;
+        };
+        api.Object.prototype.getImageMenu = function () {
+            return this.html.data("images_menu");
+        };
+        api.Object.prototype.removeIdentificationCommonBehavior = function (identification) {
+            var self = this;
+            $.each(identification.getImages(), function () {
+                var image = this;
+                self.removeImage(image);
+            });
+            self.getImageMenu().refreshImages();
+            VertexService.getSuggestions(
+                self
+            );
+        };
+
+        api.Object.prototype.showSuggestionButton = function () {
+            this.suggestionButton().show();
+        };
+        api.Object.prototype.hideSuggestionButton = function () {
+            this.suggestionButton().hide();
+        };
+        api.Object.prototype.triggerChange = function () {
+            this.html.trigger("change");
+        };
+        api.Object.prototype.getLabel = function () {
+            return this.html.find("input.label");
+        };
+        api.Object.prototype.equalsVertex = function (otherVertex) {
+            return this.getId() == otherVertex.getId();
+        };
+        api.Object.prototype.scrollTo = function () {
+            this.html.centerOnScreen();
+        };
+
+        api.Object.prototype.setOriginalServerObject = function (serverJson) {
+            this.html.data(
+                "originalServerObject",
+                serverJson
+            );
+        };
+        api.Object.prototype.getOriginalServerObject = function () {
+            return this.html.data(
+                "originalServerObject"
+            );
+        };
+
+        api.Object.prototype.serverFormat = function () {
+            return {
+                label: this.text(),
+                suggestions: this.suggestions(),
+                types: getCollectionAsServerFormat(this.getTypes()),
+                same_as: getCollectionAsServerFormat(this.getSameAs())
+            };
+            function getCollectionAsServerFormat(collection) {
+                var serverFormat = [];
+                $.each(collection, function () {
+                    var item = this;
+                    serverFormat.push(
+                        item.getJsonFormat()
+                    );
+                });
+                return serverFormat;
+            }
+        };
+        api.Object.prototype.makePrivate = function () {
+            this.html.removeClass("public");
+            this.setIsPublic(false);
+        };
+        api.Object.prototype.makePublic = function () {
+            this.html.addClass("public");
+            this.setIsPublic(true);
+        };
+        api.Object.prototype.isPublic = function () {
+            return this.html.data("isPublic");
+        };
+        api.Object.prototype.deselect = function () {
+            this.html.removeClass("selected");
+            this.hideButtons();
+        };
+        api.Object.prototype.select = function () {
+            this.html.addClass("selected");
+        };
+        api.Object.prototype.makeSingleSelected = function () {
+            this.showButtons();
+        };
+        api.Object.prototype.isSelected = function () {
+            return this.html.hasClass("selected");
+        };
+        api.Object.prototype.setIncludedVertices = function (includedVertices) {
+            this.html.data(
+                "includedVertices",
+                includedVertices
+            );
+        };
+        api.Object.prototype.hasIncludedGraphElements = function () {
+            return Object.keys(this.getIncludedVertices()).length > 0;
+        };
+        api.Object.prototype.getIncludedVertices = function () {
+            return this.html.data("includedVertices");
+        };
+        api.Object.prototype.setIncludedEdges = function (includedEdges) {
+            this.html.data(
+                "includedEdges",
+                includedEdges
+            );
+        };
+        api.Object.prototype.getIncludedEdges = function () {
+            return this.html.data("includedEdges");
+        };
+        api.Object.prototype.isAbsoluteDefaultVertex = function () {
+            return this.getUri().indexOf("default") !== -1;
+        };
+        api.Object.prototype.getMenuHtml = function () {
+            return this.html.find('> .menu');
+        };
+        api.Object.prototype.visitMenuButtons = function (visitor) {
+            $.each(this.getMenuButtonsHtml(), function () {
+                visitor(
+                    GraphElementButton.fromHtml(
+                        $(this)
+                    )
+                );
+            });
+        };
         api.buildCommonConstructors(api);
         return api;
     }

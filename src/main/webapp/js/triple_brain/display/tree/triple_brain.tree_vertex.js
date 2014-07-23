@@ -48,8 +48,10 @@ define([
                 html.removeData(otherInstancesKey)
             };
             VertexUi.Object.apply(self, [html]);
+            this.initCrow();
         };
-        api.Object.prototype = new crow.ConnectedNode();
+        api.Object.prototype = new crow.ConnectedNode;
+        api.Object.prototype = new VertexUi.Object;
         EventBus.subscribe(
             '/event/ui/graph/vertex/same_as/added',
             function(event, vertex, sameAs){
