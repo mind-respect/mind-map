@@ -129,7 +129,7 @@ define([
         };
         api.Object.prototype = new crow.ConnectedNode;
         api.Object.prototype.initCrow = function(){
-            crow.ConnectedNode.apply(this, [this.html.attr("id")]);
+            crow.ConnectedNode.apply(this, [this.getId()]);
         };
         api.Object.prototype.getGraphElementType = function () {
             return GraphElement.types.CONCEPT;
