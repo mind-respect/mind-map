@@ -9,7 +9,8 @@ define([
     "triple_brain.object_utils"
 ],
     function ($, VertexUi, EventBus, EdgeUi, ObjectUtils) {
-        var api = {};
+        var api = {},
+            otherInstancesKey = "otherInstances";
         api.ofVertex = function (vertex) {
             return api.withHtml(
                 vertex.getHtml()
@@ -20,135 +21,133 @@ define([
             VertexUi
         );
         api.Object = function (html) {
-            var self = this;
-            var otherInstancesKey = "otherInstances";
-            var _isToTheLeft;
-            this.isToTheLeft = function () {
-                if (_isToTheLeft === undefined) {
-                    _isToTheLeft = html.parents(".left-oriented").length > 0;
-                }
-                return _isToTheLeft;
-            };
-
-            this.visitChildren = function (visitor) {
-                var children = getChildren();
-                $.each(children, function () {
-                    var vertex = api.withHtml(
-                        $(this)
-                    );
-                    visitor(vertex);
-                });
-            };
-            this.hasChildren = function () {
-                return getChildren().length > 0;
-            };
-            this.getParentVertex = function () {
-                return api.withHtml(
-                    self.getParentVertexHtml().find("> .vertex")
-                );
-            };
-            this.getRelationWithParent = function(){
-                return EdgeUi.withHtml(
-                    html.find("> .in-bubble-content > .relation")
-                );
-            };
-            this.getParentVertexHtml = function () {
-                return html.closest(".vertices-children-container")
-                    .siblings(".vertex-container");
-            };
-            this.applyToOtherInstances = function (apply) {
-                $.each(self.getOtherInstances(), function () {
-                    var vertex = this;
-                    apply(vertex);
-                });
-            };
-            this.getOtherInstances = function () {
-                var vertex = api.withHtml(html);
-                if (html.data(otherInstancesKey) === undefined) {
-                    var verticesWithSameUri = api.withUri(
-                        vertex.getUri()
-                    );
-                    var otherInstances = [];
-                    $.each(verticesWithSameUri, function () {
-                        var vertexWithSameUri = this;
-                        if (vertexWithSameUri.getId() !== vertex.getId()) {
-                            otherInstances.push(
-                                vertexWithSameUri
-                            );
-                        }
-                    });
-                    html.data(
-                        otherInstancesKey,
-                        otherInstances
-                    );
-                }
-                return html.data(otherInstancesKey);
-            };
-            this.resetOtherInstances = function () {
-                html.removeData(otherInstancesKey)
-            };
-            this.getChildrenOrientation = function () {
-                return self.isToTheLeft() ?
-                    "left" :
-                    "right"
-            };
-            this.isALeaf = function () {
-                return getChildren().length === 0;
-            };
-            this.hasTheDuplicateButton = function () {
-                return self.getInBubbleContainer().find(
-                    "button.duplicate"
-                ).length > 0;
-            };
-            this.getChildren = function () {
-                return getChildren();
-            };
-            this.getTopMostChild = function () {
-                return api.withHtml(
-                    $(self.getChildren()[0])
-                );
-            };
-            this.hasBubbleAbove = function () {
-                return getBubbleAboveHtml().length > 0;
-            };
-            this.getBubbleAbove = function () {
-                return api.withHtml(
-                    getBubbleAboveHtml()
-                );
-            };
-            this.hasBubbleUnder = function () {
-                return getBubbleUnderHtml().length > 0;
-            };
-            this.getBubbleUnder = function () {
-                return api.withHtml(
-                    getBubbleUnderHtml()
-                );
-            };
-            function getBubbleAboveHtml(){
+            this.html = html;
+            this.getBubbleAboveHtml = function(){
                 return html.closest(
                     ".vertex-tree-container"
                 ).prev(
                     ".vertex-tree-container"
                 ).find("> .vertex-container").find("> .vertex")
-            }
-            function getBubbleUnderHtml(){
+            };
+            this.getBubbleUnderHtml = function(){
                 return html.closest(
                     ".vertex-tree-container"
                 ).next(
                     ".vertex-tree-container"
                 ).find("> .vertex-container").find("> .vertex")
-            }
-            VertexUi.Object.apply(self, [html]);
-            this.initCrow();
-            function getChildren() {
+            };
+            this.getChildren = function() {
                 return html.closest(".vertex-container").siblings(
                     ".vertices-children-container"
                 ).find(".vertex");
-            }
+            };
+            VertexUi.Object.apply(this, [html]);
+            this.initCrow();
         };
         api.Object.prototype = new crow.ConnectedNode;
         api.Object.prototype = new VertexUi.Object;
+        api.Object.prototype.isToTheLeft = function () {
+            if (this._isToTheLeft === undefined) {
+                this._isToTheLeft = this.html.parents(".left-oriented").length > 0;
+            }
+            return this._isToTheLeft;
+        };
 
+        api.Object.prototype.visitChildren = function (visitor) {
+            var children = this.getChildren();
+            $.each(children, function () {
+                var vertex = api.withHtml(
+                    $(this)
+                );
+                visitor(vertex);
+            });
+        };
+        api.Object.prototype.hasChildren = function () {
+            return this.getChildren().length > 0;
+        };
+        api.Object.prototype.getParentVertex = function () {
+            return api.withHtml(
+                this.getParentVertexHtml().find("> .vertex")
+            );
+        };
+        api.Object.prototype.getRelationWithParent = function(){
+            return EdgeUi.withHtml(
+                this.html.find("> .in-bubble-content > .relation")
+            );
+        };
+        api.Object.prototype.getParentVertexHtml = function () {
+            return this.html.closest(".vertices-children-container")
+                .siblings(".vertex-container");
+        };
+        api.Object.prototype.applyToOtherInstances = function (apply) {
+            $.each(this.getOtherInstances(), function () {
+                var vertex = this;
+                apply(vertex);
+            });
+        };
+        api.Object.prototype.getOtherInstances = function () {
+            var vertex = api.withHtml(this.html);
+            if (this.html.data(otherInstancesKey) === undefined) {
+                var verticesWithSameUri = api.withUri(
+                    vertex.getUri()
+                );
+                var otherInstances = [];
+                $.each(verticesWithSameUri, function () {
+                    var vertexWithSameUri = this;
+                    if (vertexWithSameUri.getId() !== vertex.getId()) {
+                        otherInstances.push(
+                            vertexWithSameUri
+                        );
+                    }
+                });
+                this.html.data(
+                    otherInstancesKey,
+                    otherInstances
+                );
+            }
+            return this.html.data(otherInstancesKey);
+        };
+        api.Object.prototype.resetOtherInstances = function () {
+            this.html.removeData(otherInstancesKey);
+        };
+        api.Object.prototype.getChildrenOrientation = function () {
+            return this.isToTheLeft() ?
+                "left" :
+                "right"
+        };
+        api.Object.prototype.isALeaf = function () {
+            return this.getChildren().length === 0;
+        };
+        api.Object.prototype.hasTheDuplicateButton = function () {
+            return this.getInBubbleContainer().find(
+                "button.duplicate"
+            ).length > 0;
+        };
+        api.Object.prototype.getChildren = function () {
+            return this.getChildren();
+        };
+        api.Object.prototype.getTopMostChild = function () {
+            return api.withHtml(
+                $(this.getChildren()[0])
+            );
+        };
+        api.Object.prototype.hasBubbleAbove = function () {
+            return this.getBubbleAboveHtml().length > 0;
+        };
+        api.Object.prototype.getBubbleAbove = function () {
+            return api.withHtml(
+                this.getBubbleAboveHtml()
+            );
+        };
+        api.Object.prototype.hasBubbleUnder = function () {
+            return this.getBubbleUnderHtml().length > 0;
+        };
+        api.Object.prototype.getBubbleUnder = function () {
+            return api.withHtml(
+                this.getBubbleUnderHtml()
+            );
+        };
+        VertexUi.buildCommonConstructors(api);
         EventBus.subscribe(
             '/event/ui/graph/vertex/same_as/added',
             function (event, vertex, sameAs) {
@@ -203,7 +202,6 @@ define([
                 });
             }
         );
-        VertexUi.buildCommonConstructors(api);
         return api;
     }
 );
