@@ -25,15 +25,15 @@ define([
             this.getBubbleAboveHtml = function(){
                 return html.closest(
                     ".vertex-tree-container"
-                ).prev(
-                    ".vertex-tree-container"
+                ).prevAll(
+                    ".vertex-tree-container:first"
                 ).find("> .vertex-container").find("> .vertex")
             };
             this.getBubbleUnderHtml = function(){
                 return html.closest(
                     ".vertex-tree-container"
-                ).next(
-                    ".vertex-tree-container"
+                ).nextAll(
+                    ".vertex-tree-container:first"
                 ).find("> .vertex-container").find("> .vertex")
             };
             this.getChildren = function() {
