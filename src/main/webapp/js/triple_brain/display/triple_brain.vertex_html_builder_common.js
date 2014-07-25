@@ -58,7 +58,8 @@ define([
                 identificationsSetter.call(vertex, []);
             $.each(identificationGetter(), function () {
                 var identificationFromServer = this;
-                addFctn(
+                addFctn.call(
+                    vertex,
                     identificationFromServer
                 );
             });
