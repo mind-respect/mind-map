@@ -19,7 +19,8 @@ define([
         "triple_brain.graph_element_button",
         "jquery.center-on-screen"
     ],
-    function ($, GraphDisplayer, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, ImageDisplayer, GraphElement, SelectionHandler, GraphElementButton) {
+    function ($, GraphDisplayer, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, ImageDisplayer, GraphElementUi, SelectionHandler, GraphElementButton) {
+        "use strict";
         var api = {};
         api.getWhenEmptyLabel = function () {
             return $.t("vertex.default");
@@ -95,8 +96,6 @@ define([
         };
         api.Object = function (html) {
             this.html = html;
-            this._initialize = function(){};
-            GraphElement.Object.apply(this, [html]);
             this.setIsPublic = function (isPublic){
                 html.data(
                     "isPublic",
@@ -127,12 +126,13 @@ define([
                 return imageMenu;
             };
         };
-        api.Object.prototype = new crow.ConnectedNode;
-        api.Object.prototype.initCrow = function(){
-            crow.ConnectedNode.apply(this, [this.getId()]);
+        api.Object.prototype = new GraphElementUi.Object;
+        api.Object.prototype.init = function(){
+            GraphElementUi.Object.apply(this, [this.html]);
+
         };
         api.Object.prototype.getGraphElementType = function () {
-            return GraphElement.types.CONCEPT;
+            return GraphElementUi.types.CONCEPT;
         };
         api.Object.prototype.position = function () {
             return Point.fromCoordinates(
@@ -451,7 +451,6 @@ define([
         api.Object.prototype.scrollTo = function () {
             this.html.centerOnScreen();
         };
-
         api.Object.prototype.setOriginalServerObject = function (serverJson) {
             this.html.data(
                 "originalServerObject",
@@ -463,7 +462,6 @@ define([
                 "originalServerObject"
             );
         };
-
         api.Object.prototype.serverFormat = function () {
             return {
                 label: this.text(),

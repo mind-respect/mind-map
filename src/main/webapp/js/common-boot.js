@@ -8,6 +8,8 @@ requirejs.config({
     urlArgs: "bust=" + 10,
     paths: {
         "module": '../module',
+        "crow" : "vendor/crow.micro",
+        "polyk" : "vendor/polyk",
         "jquery": "jquery/jquery-2.1.1",
         "jquery-ui": "jquery/jquery-ui-10-2/jquery-ui.min",
         "jquery.url": "jquery/jquery.url",
@@ -109,6 +111,8 @@ requirejs.config({
         "triple_brain.mind_map_info": "triple_brain/triple_brain.mind_map_info"
     },
     shim: {
+        "crow": [],
+        "polyk": [],
         "jquery-ui": ["jquery"],
         "jquery.url": ["jquery"],
         "jquery.nano": ["jquery"],

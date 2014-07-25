@@ -6,9 +6,10 @@ define([
     "triple_brain.ui.vertex",
     "triple_brain.event_bus",
     "triple_brain.ui.edge",
-    "triple_brain.object_utils"
+    "triple_brain.object_utils",
+    "triple_brain.ui.graph_element"
 ],
-    function ($, VertexUi, EventBus, EdgeUi, ObjectUtils) {
+    function ($, VertexUi, EventBus, EdgeUi, ObjectUtils, GraphElementUi) {
         var api = {},
             otherInstancesKey = "otherInstances";
         api.ofVertex = function (vertex) {
@@ -42,9 +43,8 @@ define([
                 ).find(".vertex");
             };
             VertexUi.Object.apply(this, [html]);
-            this.initCrow();
+            this.init();
         };
-        api.Object.prototype = new crow.ConnectedNode;
         api.Object.prototype = new VertexUi.Object;
         api.Object.prototype.isToTheLeft = function () {
             if (this._isToTheLeft === undefined) {

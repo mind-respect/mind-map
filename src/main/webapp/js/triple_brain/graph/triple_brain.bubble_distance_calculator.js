@@ -2,7 +2,8 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "triple_brain.event_bus"
+    "triple_brain.event_bus",
+    "crow"
 ], function(EventBus){
     var graphForTraversal;
     var api = {};
@@ -16,7 +17,7 @@ define([
     EventBus.subscribe(
         '/event/ui/graph/reset',
         function(){
-            if(graphForTraversal != undefined){
+            if(graphForTraversal !== undefined){
                 graphForTraversal.invalidate();
             }
             graphForTraversal = new crow.Graph();
@@ -122,7 +123,7 @@ define([
 
     function addVertexToGraphTraversal(vertex){
         graphForTraversal.addNode(
-            vertex
+            new VertexAsCrowNode(vertex)
         );
     }
 
@@ -137,5 +138,10 @@ define([
             destinationVertex
         );
     }
+    function VertexAsCrowNode(vertex){
+        this._initialize = function(){};
+        crow.ConnectedNode.apply(this, [vertex.getId()]);
+    }
+    VertexAsCrowNode.prototype = new crow.ConnectedNode;
     return api;
 });

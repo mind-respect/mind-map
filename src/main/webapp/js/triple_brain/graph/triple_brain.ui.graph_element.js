@@ -12,102 +12,102 @@ define([
         "RELATION": "relation"
     };
     api.Object = function (html) {
-        var self = this;
-        this.removeType = function (type) {
-            var types = self.removeIdenficationInArray(
-                type,
-                self.getTypes()
-            );
-            html.data("types", types);
-            self.removeIdentificationCommonBehavior(type);
-        };
+        this.html = html;
+    };
+    api.Object.prototype.removeType = function (type) {
+        var types = this.removeIdentificationInArray(
+            type,
+            this.getTypes()
+        );
+        this.html.data("types", types);
+        this.removeIdentificationCommonBehavior(type);
+    };
 
-        this.removeIdenficationInArray = function (identificationToRemove, array) {
-            var i = 0;
-            $.each(array, function () {
-                var identification = this;
-                if (identification.getUri() === identificationToRemove.getUri()) {
-                    array.splice(i, 1);
-                    return false;
-                }
-                i++;
-            });
-            return array;
-        };
+    api.Object.prototype.removeIdentificationInArray = function (identificationToRemove, array) {
+        var i = 0;
+        $.each(array, function () {
+            var identification = this;
+            if (identification.getUri() === identificationToRemove.getUri()) {
+                array.splice(i, 1);
+                return false;
+            }
+            i++;
+        });
+        return array;
+    };
 
-        this.getTypes = function () {
-            return html.data('types');
-        };
-        this.getIdentifications = function () {
-            return self.getTypes().concat(
-                self.getSameAs(),
-                self.getGenericIdentifications()
-            );
-        };
-        this.setGenericIdentifications = function (genericIdentifications) {
-            html.data(
-                'genericIdentifications',
-                genericIdentifications
-            );
-        };
-        this.getGenericIdentifications = function () {
-            return html.data(
-                'genericIdentifications'
-            );
-        };
-        this.addGenericIdentification = function (genericIdentification) {
-            genericIdentification.setType("generic");
-            var genericIdentifications = self.getGenericIdentifications();
-            genericIdentifications.push(genericIdentification);
-            self.setGenericIdentifications(
-                genericIdentifications
-            );
-            self.applyCommonBehaviorForAddedIdentification(genericIdentification);
-        };
-        this.removeGenericIdentification = function (genericIdentification) {
-            var genericIdentifications = self.removeIdenficationInArray(
-                genericIdentification,
-                self.getGenericIdentifications()
-            );
-            self.setGenericIdentifications(
-                genericIdentifications
-            );
-            self.removeIdentificationCommonBehavior(genericIdentification);
-        };
-        this.setTypes = function (types) {
-            return html.data('types', types);
-        };
-        this.addType = function (type) {
-            type.setType("type");
-            var types = self.getTypes();
-            types.push(type);
-            self.setTypes(types);
-            self.applyCommonBehaviorForAddedIdentification(type);
-        };
-        this.addSameAs = function (sameAs) {
-            sameAs.setType("same_as");
-            var sameAsCollection = self.getSameAs();
-            sameAsCollection.push(sameAs);
-            self.setSameAs(sameAsCollection);
-            self.applyCommonBehaviorForAddedIdentification(sameAs);
-        };
-        this.setSameAs = function (sameAsCollection) {
-            html.data('sameAs', sameAsCollection);
-        };
-        this.getSameAs = function () {
-            return $(html).data('sameAs');
-        };
-        this.removeSameAs = function (sameAsToRemove) {
-            var sameAs = self.removeIdenficationInArray(
-                sameAsToRemove,
-                self.getSameAs()
-            );
-            html.data("sameAs", sameAs);
-            self.removeIdentificationCommonBehavior(sameAsToRemove);
-        };
-        this.isConcept = function () {
-            return self.getGraphElementType() === api.types.CONCEPT;
-        };
+    api.Object.prototype.getTypes = function () {
+        return this.html.data('types');
+    };
+    api.Object.prototype.getIdentifications = function () {
+        return this.getTypes().concat(
+            this.getSameAs(),
+            this.getGenericIdentifications()
+        );
+    };
+    api.Object.prototype.setGenericIdentifications = function (genericIdentifications) {
+        this.html.data(
+            'genericIdentifications',
+            genericIdentifications
+        );
+    };
+    api.Object.prototype.getGenericIdentifications = function () {
+        return this.html.data(
+            'genericIdentifications'
+        );
+    };
+    api.Object.prototype.addGenericIdentification = function (genericIdentification) {
+        genericIdentification.setType("generic");
+        var genericIdentifications = this.getGenericIdentifications();
+        genericIdentifications.push(genericIdentification);
+        this.setGenericIdentifications(
+            genericIdentifications
+        );
+        this.applyCommonBehaviorForAddedIdentification(genericIdentification);
+    };
+    api.Object.prototype.removeGenericIdentification = function (genericIdentification) {
+        var genericIdentifications = this.removeIdentificationInArray(
+            genericIdentification,
+            this.getGenericIdentifications()
+        );
+        this.setGenericIdentifications(
+            genericIdentifications
+        );
+        this.removeIdentificationCommonBehavior(genericIdentification);
+    };
+    api.Object.prototype.setTypes = function (types) {
+        return this.html.data('types', types);
+    };
+    api.Object.prototype.addType = function (type) {
+        type.setType("type");
+        var types = this.getTypes();
+        types.push(type);
+        this.setTypes(types);
+        this.applyCommonBehaviorForAddedIdentification(type);
+    };
+    api.Object.prototype.addSameAs = function (sameAs) {
+        sameAs.setType("same_as");
+        var sameAsCollection = this.getSameAs();
+        sameAsCollection.push(sameAs);
+        this.setSameAs(sameAsCollection);
+        this.applyCommonBehaviorForAddedIdentification(sameAs);
+    };
+    api.Object.prototype.setSameAs = function (sameAsCollection) {
+        this.html.data('sameAs', sameAsCollection);
+    };
+    api.Object.prototype.getSameAs = function () {
+        return this.html.data('sameAs');
+    };
+    api.Object.prototype.removeSameAs = function (sameAsToRemove) {
+        var sameAs = this.removeIdentificationInArray(
+            sameAsToRemove,
+            this.getSameAs()
+        );
+        this.html.data("sameAs", sameAs);
+        this.removeIdentificationCommonBehavior(sameAsToRemove);
+    };
+    api.Object.prototype.isConcept = function () {
+        return this.getGraphElementType() === api.types.CONCEPT;
     };
     EventBus.subscribe("/event/ui/selection/changed",
         function (event, selectionInfo) {

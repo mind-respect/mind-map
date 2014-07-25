@@ -55,7 +55,7 @@ define([
             vertex.addGenericIdentification
         );
         function setup(identificationsSetter, identificationGetter, addFctn) {
-            identificationsSetter([]);
+                identificationsSetter.call(vertex, []);
             $.each(identificationGetter(), function () {
                 var identificationFromServer = this;
                 addFctn(
