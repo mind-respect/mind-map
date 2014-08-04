@@ -142,10 +142,10 @@ define([
         api.Object.prototype.isMouseOver = function () {
             var edgeThatIsMouseOver = GraphUi.getEdgeMouseOver();
             return  edgeThatIsMouseOver !== undefined &&
-                edgeThatIsMouseOver.equalsEdge(self);
+                edgeThatIsMouseOver.equalsEdge(this);
         };
         api.Object.prototype.remove = function () {
-            SelectionHandler.removeRelation(self);
+            SelectionHandler.removeRelation(this);
             this.html.remove();
         };
         api.Object.prototype.showMenu = function () {
