@@ -47,7 +47,9 @@ define([
         function reverse(edge){
             EdgeService.inverse(
                 edge,
-                edge.inverse
+                function(){
+                    edge.inverse();
+                }
             );
         }
     };
