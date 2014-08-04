@@ -11,6 +11,10 @@ define([
         api.usingIdentification = function (identification) {
             return new Object(identification);
         };
+        function Object(identification) {
+            this.identification = identification;
+            this.vertices = {};
+        }
         Object.prototype.getIdentification = function () {
             return this.identification;
         };
@@ -31,9 +35,5 @@ define([
             };
         };
         return api;
-        function Object(identification) {
-            this.identification = identification;
-            this.vertices = {};
-        }
     }
 );

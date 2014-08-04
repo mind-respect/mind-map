@@ -241,11 +241,6 @@ define([
                 centralVertexUri,
                 verticesContainer
             );
-            function resetSimilarRelations(){
-                $.each(serverGraph.vertices, function(uri, vertex){
-                  vertex.similarRelations = undefined;
-                })
-            }
         };
         this.makeForCenterVertex = function (serverGraph, centralVertexUri) {
             var graphOffset = GraphUi.offset();

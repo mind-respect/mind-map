@@ -66,7 +66,7 @@ define([
                 );
             }
         };
-        api.completeBuild = function(vertex){
+        api.completeBuild = function (vertex) {
             vertex.refreshImages();
             api.addDuplicateVerticesButtonIfApplicable(
                 vertex
@@ -80,16 +80,14 @@ define([
             '/event/ui/vertex/visit_after_graph_drawn',
             handleVisitAfterGraphDrawn
         );
-        return api;
         function handleVisitAfterGraphDrawn(event, vertex) {
             api.completeBuild(vertex);
         }
-
         function VertexCreator(serverFacade) {
-            var html = $(
+            this.serverFacade = serverFacade;
+            this.html = $(
                 MindMapTemplate['relative_vertex'].merge()
-            );
-            html.data(
+            ).data(
                 "uri",
                 serverFacade.getUri()
             ).on(
@@ -122,205 +120,212 @@ define([
                     }
                 }
             );
-            var vertex;
-            this.create = function (htmlId) {
-                html.attr('id', htmlId);
-                vertex = new RelativeTreeVertex.Object(html);
-                RelativeTreeVertex.initCache(
-                    vertex
-                );
-                VertexHtmlCommon.initCache(vertex);
-                vertex.setTotalNumberOfEdges(
-                    serverFacade.getNumberOfConnectedEdges()
-                );
-                buildLabelHtml(
-                    buildInsideBubbleContainer()
-                );
-                html.data(
-                    "isPublic",
-                    serverFacade.isPublic()
-                );
-                vertex.setIncludedVertices(serverFacade.getIncludedVertices());
-                vertex.setIncludedEdges(serverFacade.getIncludedEdges());
-                if (vertex.hasIncludedGraphElements()) {
-                    showItHasIncludedGraphElements();
-                }
-                vertex.setNote(
-                    serverFacade.getComment()
-                );
-                createMenu();
-                addNoteButtonNextToLabel();
-                vertex.addSuggestions(
-                    serverFacade.getSuggestions()
-                );
-                vertex.hideMenu();
-                vertex.getInBubbleContainer().hover(
-                    onMouseOver,
-                    onMouseOut
-                );
+        }
 
-                VertexHtmlCommon.setUpIdentifications(
-                    serverFacade,
-                    vertex
-                );
-                vertex.addImages(
-                    serverFacade.getImages()
-                );
-                vertex.makeItLowProfile();
-                vertex.setOriginalServerObject(
-                    serverFacade
-                );
-                vertex.getHtml().append(
-                    "<span class='arrow'>"
-                );
-                vertex.isPublic() ?
-                    vertex.makePublic() :
-                    vertex.makePrivate();
-                EventBus.publish(
-                    '/event/ui/html/vertex/created/',
-                    vertex
-                );
-                return vertex;
-            };
-            function buildInsideBubbleContainer() {
-                return $(
-                    "<div class='in-bubble-content'>"
-                ).appendTo(html);
+        VertexCreator.prototype.create = function (htmlId) {
+            this.html.attr('id', htmlId);
+            this.vertex = new RelativeTreeVertex.Object(
+                this.html
+            );
+            RelativeTreeVertex.initCache(
+                this.vertex
+            );
+            VertexHtmlCommon.initCache(
+                this.vertex
+            );
+            this.vertex.setTotalNumberOfEdges(
+                this.serverFacade.getNumberOfConnectedEdges()
+            );
+            this._buildLabelHtml(
+                this._buildInsideBubbleContainer()
+            );
+            this.html.data(
+                "isPublic",
+                this.serverFacade.isPublic()
+            );
+            this.vertex.setIncludedVertices(
+                this.serverFacade.getIncludedVertices()
+            );
+            this.vertex.setIncludedEdges(
+                this.serverFacade.getIncludedEdges()
+            );
+            if (this.vertex.hasIncludedGraphElements()) {
+                this._showItHasIncludedGraphElements();
             }
+            this.vertex.setNote(
+                this.serverFacade.getComment()
+            );
+            this._createMenu();
+            this._addNoteButtonNextToLabel();
+            this.vertex.addSuggestions(
+                this.serverFacade.getSuggestions()
+            );
+            this.vertex.hideMenu();
+            this.vertex.getInBubbleContainer().hover(
+                onMouseOver,
+                onMouseOut
+            );
+            VertexHtmlCommon.setUpIdentifications(
+                this.serverFacade,
+                this.vertex
+            );
+            this.vertex.addImages(
+                this.serverFacade.getImages()
+            );
+            this.vertex.makeItLowProfile();
+            this.vertex.setOriginalServerObject(
+                this.serverFacade
+            );
+            this.vertex.getHtml().append(
+                "<span class='arrow'>"
+            );
+            this.vertex.isPublic() ?
+                this.vertex.makePublic() :
+                this.vertex.makePrivate();
+            EventBus.publish(
+                '/event/ui/html/vertex/created/',
+                this.vertex
+            );
+            return this.vertex;
+        };
 
-            function buildLabelHtml(inContentContainer) {
-                var labelContainer = $(
+        VertexCreator.prototype._buildInsideBubbleContainer = function () {
+            return $(
+                "<div class='in-bubble-content'>"
+            ).appendTo(this.html);
+        };
+
+        VertexCreator.prototype._buildLabelHtml = function (inContentContainer) {
+            var labelContainer = $(
                     "<div class='overlay-container'>"
                 ).appendTo(
                     inContentContainer
-                );
-                var overlay = $("<div class='overlay'>").appendTo(
+                ),
+                overlay = $("<div class='overlay'>").appendTo(
                     labelContainer
-                );
-                var label = $(
+                ),
+                label = $(
                     "<input type='text' class='label'>"
                 ).val(
-                        serverFacade.getLabel().trim() === "" ?
+                        this.serverFacade.getLabel().trim() === "" ?
                         RelativeTreeVertex.getWhenEmptyLabel() :
-                        serverFacade.getLabel()
+                        this.serverFacade.getLabel()
                 ).appendTo(labelContainer);
+            if (this.vertex.hasDefaultText()) {
+                this.vertex.applyStyleOfDefaultText();
+            }
+            label.focus(function () {
+                var vertex = vertexOfSubHtmlComponent(this);
+                vertex.highlight();
+                vertex.removeStyleOfDefaultText();
                 if (vertex.hasDefaultText()) {
-                    vertex.applyStyleOfDefaultText();
-                }
-                label.focus(function () {
-                    var vertex = vertexOfSubHtmlComponent(this);
-                    vertex.highlight();
-                    vertex.removeStyleOfDefaultText();
-                    if (vertex.hasDefaultText()) {
-                        $(this).val("");
-                        vertex.getLabel().keyup();
-                    }
-                }).blur(function () {
-                    var vertex = vertexOfSubHtmlComponent(this);
-                    if (!vertex.isMouseOver()) {
-                        vertex.unhighlight();
-                    }
-                    if ("" === $(this).val()) {
-                        $(this).val(
-                            RelativeTreeVertex.getWhenEmptyLabel()
-                        );
-                        vertex.applyStyleOfDefaultText();
-                        vertex.getLabel().keyup();
-                    } else {
-                        vertex.removeStyleOfDefaultText();
-                    }
-                }).change(function () {
-                    var vertex = vertexOfSubHtmlComponent(this);
+                    $(this).val("");
                     vertex.getLabel().keyup();
-                    VertexService.updateLabel(
-                        vertexOfSubHtmlComponent(this),
-                        $(this).val()
-                    );
-                }).keyup(function () {
-                    var vertex = vertexOfSubHtmlComponent(this);
-                    var html = vertex.getHtml();
-                    updateLabelsOfVerticesWithSameUri();
-                    vertex.readjustLabelWidth();
-                    function updateLabelsOfVerticesWithSameUri() {
-                        var text = vertex.text();
-                        var otherInstances = RelativeTreeVertex.withHtml(
-                            html
-                        ).getOtherInstances();
-                        $.each(otherInstances, function () {
-                            var sameVertex = this;
-                            sameVertex.setText(
-                                text
-                            );
-                            sameVertex.readjustLabelWidth();
-                        });
-                    }
-                });
-                VertexHtmlCommon.applyAutoCompleteIdentificationToLabelInput(
-                    label
-                );
-                return labelContainer;
-            }
-
-            function showItHasIncludedGraphElements() {
-                html.append(
-                    $("<div class='included-graph-elements-flag'>").text(
-                        ". . ."
-                    )
-                ).addClass("includes-vertices")
-            }
-
-            function addNoteButtonNextToLabel() {
-                var noteButton = vertex.getNoteButtonInMenu().clone().on(
-                    "click", clickHandler
-                );
-                noteButton[
-                    vertex.hasNote() ?
-                        "show" :
-                        "hide"
-                    ]();
-                vertex.getInBubbleContainer().find("> .overlay-container").before(
-                    noteButton
-                );
-                function clickHandler(event) {
-                    var button = $(this);
-                    RelativeTreeVertexMenuHandler.forSingle().note(
-                        event,
-                        RelativeTreeVertex.withHtml(
-                            button.closest(".vertex")
-                        )
-                    );
                 }
-            }
-
-            function createMenu() {
-                var vertexMenu = $(
-                    MindMapTemplate['vertex_menu'].merge()
-                );
-                html.append(vertexMenu);
-                VertexHtmlCommon.addRelevantButtonsInMenu(
-                    vertexMenu
-                );
-                return vertexMenu;
-            }
-
-            function onMouseOver() {
+            }).blur(function () {
                 var vertex = vertexOfSubHtmlComponent(this);
-                RelativeTreeVertex.setVertexMouseOver(vertex);
-                vertex.makeItHighProfile();
-            }
-
-            function onMouseOut() {
+                if (!vertex.isMouseOver()) {
+                    vertex.unhighlight();
+                }
+                if ("" === $(this).val()) {
+                    $(this).val(
+                        RelativeTreeVertex.getWhenEmptyLabel()
+                    );
+                    vertex.applyStyleOfDefaultText();
+                    vertex.getLabel().keyup();
+                } else {
+                    vertex.removeStyleOfDefaultText();
+                }
+            }).change(function () {
                 var vertex = vertexOfSubHtmlComponent(this);
-                RelativeTreeVertex.unsetVertexMouseOver();
-                vertex.makeItLowProfile();
+                vertex.getLabel().keyup();
+                VertexService.updateLabel(
+                    vertexOfSubHtmlComponent(this),
+                    $(this).val()
+                );
+            }).keyup(function () {
+                var vertex = vertexOfSubHtmlComponent(this);
+                var html = vertex.getHtml();
+                updateLabelsOfVerticesWithSameUri();
+                vertex.readjustLabelWidth();
+                function updateLabelsOfVerticesWithSameUri() {
+                    var text = vertex.text();
+                    var otherInstances = RelativeTreeVertex.withHtml(
+                        html
+                    ).getOtherInstances();
+                    $.each(otherInstances, function () {
+                        var sameVertex = this;
+                        sameVertex.setText(
+                            text
+                        );
+                        sameVertex.readjustLabelWidth();
+                    });
+                }
+            });
+            VertexHtmlCommon.applyAutoCompleteIdentificationToLabelInput(
+                label
+            );
+            return labelContainer;
+        };
+
+        VertexCreator.prototype._showItHasIncludedGraphElements = function() {
+            this.html.append(
+                $("<div class='included-graph-elements-flag'>").text(
+                    ". . ."
+                )
+            ).addClass("includes-vertices");
+        };
+
+        VertexCreator.prototype._addNoteButtonNextToLabel = function() {
+            var noteButton = this.vertex.getNoteButtonInMenu().clone().on(
+                "click", clickHandler
+            );
+            noteButton[
+                this.vertex.hasNote() ?
+                    "show" :
+                    "hide"
+                ]();
+            this.vertex.getInBubbleContainer().find("> .overlay-container").before(
+                noteButton
+            );
+            function clickHandler(event) {
+                var button = $(this);
+                RelativeTreeVertexMenuHandler.forSingle().note(
+                    event,
+                    RelativeTreeVertex.withHtml(
+                        button.closest(".vertex")
+                    )
+                );
             }
+        };
+
+        VertexCreator.prototype._createMenu = function() {
+            var vertexMenu = $(
+                MindMapTemplate['vertex_menu'].merge()
+            );
+            this.html.append(vertexMenu);
+            VertexHtmlCommon.addRelevantButtonsInMenu(
+                vertexMenu
+            );
+            return vertexMenu;
+        };
+
+        function onMouseOver() {
+            var vertex = vertexOfSubHtmlComponent(this);
+            RelativeTreeVertex.setVertexMouseOver(vertex);
+            vertex.makeItHighProfile();
         }
-
+        function onMouseOut() {
+            var vertex = vertexOfSubHtmlComponent(this);
+            RelativeTreeVertex.unsetVertexMouseOver();
+            vertex.makeItLowProfile();
+        }
         function vertexOfSubHtmlComponent(htmlOfSubComponent) {
             return RelativeTreeVertex.withHtml(
                 $(htmlOfSubComponent).closest('.vertex')
             );
         }
+        return api;
     }
 );
 
