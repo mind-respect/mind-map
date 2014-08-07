@@ -6,9 +6,9 @@ define([
         "jquery",
         "triple_brain.vertex_server_facade",
         "triple_brain.edge_server_facade",
-        "triple_brain.grouped_relation"
+        "triple_brain.group_relation"
     ],
-    function (require, $, VertexServerFacade, EdgeServerFacade, GroupedRelation) {
+    function (require, $, VertexServerFacade, EdgeServerFacade, GroupRelation) {
         var api = {};
         api.enhancedVerticesInfo = function (serverGraph, centralVertexUri) {
             var vertices = serverGraph.vertices,
@@ -58,7 +58,7 @@ define([
                 $.each(edgeIdentifications, function () {
                     var identification = this;
                     if (sourceVertex.similarRelations[identification.getUri()] === undefined) {
-                        sourceVertex.similarRelations[identification.getUri()] = GroupedRelation.usingIdentification(
+                        sourceVertex.similarRelations[identification.getUri()] = GroupRelation.usingIdentification(
                             identification
                         );
                     }
@@ -68,7 +68,7 @@ define([
                     );
                 });
                 if (edgeIdentifications.length === 0) {
-                    var groupedIdentification = GroupedRelation.withoutAnIdentification();
+                    var groupedIdentification = GroupRelation.withoutAnIdentification();
                     groupedIdentification.addVertex(
                         destinationVertex,
                         edge

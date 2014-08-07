@@ -28,14 +28,14 @@ define([
         t.add(
             "vertical_border",
                 "<div class='vertical-border vertical-border-first'>" +
-                    "<div class='vertical-border-filling'></div>" +
+                "<div class='vertical-border-filling'></div>" +
                 "</div>" +
-                    "<div class='vertical-border vertical-border-second'>" +
-                    "<div class='vertical-border-filling'></div>" +
-                    "</div>" +
-                    "<div class='vertical-border vertical-border-third'>" +
-                    "<div class='vertical-border-filling'></div>" +
-                    "</div>"
+                "<div class='vertical-border vertical-border-second'>" +
+                "<div class='vertical-border-filling'></div>" +
+                "</div>" +
+                "<div class='vertical-border vertical-border-third'>" +
+                "<div class='vertical-border-filling'></div>" +
+                "</div>"
         );
 
         t.add(
@@ -45,6 +45,14 @@ define([
         t.add(
             'edge_input',
             '<input type="text" value="{label}">'
+        );
+        t.add(
+            "group_relation",
+            "<div class='group-relation'></div>"
+        );
+        t.add(
+            'group_relation_label_container',
+                '<div class="label label-info">{label}</span>'
         );
         return api;
     }

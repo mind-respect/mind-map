@@ -22,8 +22,10 @@ define([
     "triple_brain.relative_tree_graph_menu_handler",
     "triple_brain.graph_element_menu_handler",
     "triple_brain.relative_tree_keyboard_actions_handler",
-    "triple_brain.edge_server_facade"
-], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, RelativeTreeVertexMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler, KeyboardActionsHandler, EdgeServerFacade) {
+    "triple_brain.edge_server_facade",
+    "triple_brain.group_relation_html_builder_for_tree_displayer",
+    "triple_brain.ui.group_relation"
+], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, RelativeTreeVertexMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler, KeyboardActionsHandler, EdgeServerFacade, GroupRelationHtmlBuilder, GroupRelationUi) {
     KeyboardActionsHandler.init();
     var api = {};
     api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
@@ -43,7 +45,7 @@ define([
     api.canAddChildTree = function () {
         return true;
     };
-    api.addChildTree = function (parentVertex, callback) {
+    api.addChildTree = function (parentVertex) {
         var depth = 1;
         var parentUri = parentVertex.getUri();
         Graph.getForCentralVertexUriAndDepth(
@@ -70,8 +72,7 @@ define([
                         serverGraph.vertices
                     );
                 }
-                parentVertex.visitChildren(VertexHtmlBuilder.completeBuild);
-                callback(serverGraph);
+                parentVertex.visitVerticesChildren(VertexHtmlBuilder.completeBuild);
                 function removeRelationWithGrandParentFromServerGraph() {
                     var relationWithGrandParentUri = parentVertex.getRelationWithParent().getUri();
                     var grandParentUri = parentVertex.getParentVertex().getUri();
@@ -154,6 +155,7 @@ define([
         return treeMaker.buildVertexHtmlIntoContainer(
             newVertex,
             container,
+            treeMaker.getVertexHtmlBuilder(),
             GraphUi.generateVertexHtmlId()
         );
     };
@@ -172,6 +174,9 @@ define([
     };
     api.getVertexSelector = function () {
         return RelativeTreeVertex;
+    };
+    api.getGroupRelationSelector = function () {
+        return GroupRelationUi;
     };
     api.getVertexMenuHandler = function () {
         return RelativeTreeVertexMenuHandler;
@@ -195,8 +200,24 @@ define([
             container
         );
     };
+    api.expandGroupRelation = function (groupRelationUi) {
+        var treeMaker = new TreeMaker(VertexHtmlBuilder);
+        var groupRelation = groupRelationUi.getGroupRelation();
+        treeMaker.buildGroupRelation(
+            groupRelation,
+            groupRelationUi.getParentVertex(),
+            treeMaker.childrenVertexContainer(groupRelationUi),
+            groupRelationUi.isToTheLeft()
+        );
+        $.each(groupRelation.getVertices(), function (key, verticesWithSameUri) {
+            $.each(verticesWithSameUri, function (vertexHtmlId) {
+                VertexHtmlBuilder.completeBuild(
+                    RelativeTreeVertex.withId(vertexHtmlId)
+                );
+            });
+        });
+    };
     return api;
-
     function shouldAddLeft() {
         var numberOfDirectChildrenLeft = $(leftVerticesContainer()).children().length;
         var numberOfDirectChildrenRight = $(rightVerticesContainer()).children().length;
@@ -266,14 +287,13 @@ define([
             serverVertex.isLeftOriented = parentVertex.isToTheLeft();
             parentVertex.setOriginalServerObject(serverVertex);
             self.buildChildrenHtmlTreeRecursively(parentVertex, serverGraph.vertices);
-            parentVertex.visitChildren(VertexHtmlBuilder.completeBuild);
+            parentVertex.visitVerticesChildren(VertexHtmlBuilder.completeBuild);
             return serverGraph;
         };
-        this.buildVertexHtmlIntoContainer = function (vertex, container, htmlId) {
-            var childVertexHtmlFacade = _htmlBuilder.withServerFacade(
+        this.buildVertexHtmlIntoContainer = function (vertex, container, builder, htmlId) {
+            var childVertexHtmlFacade = builder.withServerFacade(
                 vertex
             ).create(htmlId);
-
             var childTreeContainer = RelativeTreeTemplates[
                 "vertex_tree_container"
                 ].merge();
@@ -329,37 +349,47 @@ define([
                 vertices
             );
         };
-
-        function buildChildrenHtmlTreeRecursively(parentVertexHtmlFacade, vertices) {
+        this.getVertexHtmlBuilder = function () {
+            return _htmlBuilder;
+        };
+        this.buildGroupRelation = function (groupRelation, parentVertexHtmlFacade, childrenContainer, isToTheLeft) {
+            $.each(groupRelation.getVertices(), function (key, verticesWithSameUri) {
+                $.each(verticesWithSameUri, function (vertexHtmlId, vertexAndEdge) {
+                    var vertex = vertexAndEdge.vertex,
+                        edge = vertexAndEdge.edge;
+                    vertex.isLeftOriented = isToTheLeft;
+                    var childVertexHtmlFacade = self.buildVertexHtmlIntoContainer(
+                        vertex,
+                        childrenContainer,
+                        _htmlBuilder,
+                        vertexHtmlId
+                    );
+                    self.edgeBuilder.get(
+                        edge,
+                        parentVertexHtmlFacade,
+                        childVertexHtmlFacade
+                    ).create();
+                    var treeContainer = childVertexHtmlFacade.getHtml().closest(
+                        ".vertex-tree-container"
+                    );
+                    $(treeContainer)[vertex.isLeftOriented ? "prepend" : "append"](
+                        buildChildrenHtmlTreeRecursively(
+                            childVertexHtmlFacade
+                        )
+                    );
+                });
+            });
+        };
+        function buildChildrenHtmlTreeRecursively(parentVertexHtmlFacade) {
             var serverParentVertex = parentVertexHtmlFacade.getOriginalServerObject();
             var childrenContainer = self.childrenVertexContainer(parentVertexHtmlFacade);
-            $.each(serverParentVertex.similarRelations, function (key, groupedRelation) {
-                $.each(groupedRelation.getVertices(), function (key, verticesWithSameUri) {
-                    $.each(verticesWithSameUri, function (vertexHtmlId, vertexAndEdge) {
-                        var vertex = vertexAndEdge.vertex,
-                            edge = vertexAndEdge.edge;
-                        vertex.isLeftOriented = serverParentVertex.isLeftOriented;
-                        var childVertexHtmlFacade = self.buildVertexHtmlIntoContainer(
-                            vertex,
-                            childrenContainer,
-                            vertexHtmlId
-                        );
-                        self.edgeBuilder.get(
-                            edge,
-                            parentVertexHtmlFacade,
-                            childVertexHtmlFacade
-                        ).create();
-                        var treeContainer = childVertexHtmlFacade.getHtml().closest(
-                            ".vertex-tree-container"
-                        );
-                        $(treeContainer)[vertex.isLeftOriented ? "prepend" : "append"](
-                            buildChildrenHtmlTreeRecursively(
-                                childVertexHtmlFacade,
-                                vertices
-                            )
-                        );
-                    });
-                });
+            $.each(serverParentVertex.similarRelations, function (key, groupRelation) {
+                self.buildGroupRelation(
+                    groupRelation,
+                    parentVertexHtmlFacade,
+                    childrenContainer,
+                    serverParentVertex.isLeftOriented
+                );
             });
             return childrenContainer;
         }
@@ -385,11 +415,24 @@ define([
                         true
                     ).addClass("left-oriented"),
                     rightChildrenContainer = self.addChildrenContainerToVertex(
-                    rootVertex,
-                    false
-                );
+                        rootVertex,
+                        false
+                    );
                 var index = 0;
                 $.each(serverRootVertex.similarRelations, function (key, groupedRelation) {
+                    if (groupedRelation.hasMultipleVertices()) {
+                        groupedRelation.isLeftOriented = index % 2 != 0;
+                        var container = groupedRelation.isLeftOriented ?
+                            leftChildrenContainer :
+                            rightChildrenContainer;
+                        index++;
+                        self.buildVertexHtmlIntoContainer(
+                            groupedRelation,
+                            container,
+                            GroupRelationHtmlBuilder
+                        );
+                        return;
+                    }
                     $.each(groupedRelation.getVertices(), function (key, verticesWithSameUri) {
                         $.each(verticesWithSameUri, function (vertexHtmlId, vertexAndEdge) {
                             var vertex = vertexAndEdge.vertex;
@@ -401,6 +444,7 @@ define([
                             var childHtmlFacade = self.buildVertexHtmlIntoContainer(
                                 vertex,
                                 container,
+                                _htmlBuilder,
                                 vertexHtmlId
                             );
                             self.edgeBuilder.get(

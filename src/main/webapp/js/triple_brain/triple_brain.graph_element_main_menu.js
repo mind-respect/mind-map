@@ -60,8 +60,11 @@ define([
     EventBus.subscribe("/event/ui/selection/changed", selectionChangedHandler);
     return api;
 
-    function selectionChangedHandler(event, selectionInfo){
+    function selectionChangedHandler(event, selectionInfo) {
         var clickHandler = updateCurrentClickHandler(selectionInfo);
+        if(undefined === clickHandler){
+            return;
+        }
         var selectedElements = 1 === selectionInfo.getNbSelected() ?
             selectionInfo.getSingleElement() :
             selectionInfo.getSelectedElements();
@@ -78,7 +81,7 @@ define([
     }
 
     function getMenu() {
-        if(!_menu){
+        if (!_menu) {
             _menu = $("#graph-element-menu");
         }
         return _menu;
@@ -93,15 +96,21 @@ define([
             currentClickHandler = GraphDisplayer.getGraphMenuHandler();
         }
         else if (1 === nbSelectedGraphElements) {
-            currentClickHandler = selectedElements.getSingleElement().isConcept() ?
-                vertexMenuHandler.forSingle() :
-                relationMenuHandler.forSingle();
+            var selected = selectedElements.getSingleElement();
+            if (selected.isGroupRelation()) {
+                currentClickHandler = undefined;
+            } else {
+                currentClickHandler = selected.isConcept() ?
+                    vertexMenuHandler.forSingle() :
+                    relationMenuHandler.forSingle();
+            }
         } else {
-            var nbSelectedBubbles = selectedElements.getNbSelectedBubbles();
-            var nbSelectedRelations = selectedElements.getNbSelectedRelations();
-            if (0 === nbSelectedBubbles) {
+            var nbSelectedVertices = selectedElements.getNbSelectedVertices(),
+                nbSelectedRelations = selectedElements.getNbSelectedRelations(),
+                nbSelectedGroupRelations = selectedElements.getNbSelectedGroupRelations();
+            if (0 === nbSelectedVertices && 0 === nbSelectedGroupRelations) {
                 currentClickHandler = relationMenuHandler.forGroup();
-            } else if (0 === nbSelectedRelations) {
+            } else if (0 === nbSelectedRelations && 0 === nbSelectedGroupRelations) {
                 currentClickHandler = vertexMenuHandler.forGroup();
             } else {
                 currentClickHandler = GraphDisplayer.getGraphElementMenuHandler();

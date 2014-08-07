@@ -50,17 +50,22 @@
     margin-right:0;
 }
 
-.left-oriented .vertex .arrow{
+.left-oriented .group-relation .label{
+    margin-right:0;
+    margin-left:0.3em;
+}
+
+.left-oriented .vertex .arrow, .left-oriented .group-relation .arrow{
     left: auto;
     right:-42px;
 }
 
-.left-oriented .vertex .arrow:before{
+.left-oriented .vertex .arrow:before, .left-oriented .group-relation .arrow:before{
      content:url('../images/icons/vertex/arrowhead_left.svg');
      left:30px;
 }
 
-.left-oriented .vertex.inverse .arrow:before{
+.left-oriented .vertex.inverse .arrow:before, .left-oriented .group-relation.inverse .arrow:before{
     content:url('../images/icons/vertex/arrowhead_right.svg');
 }
 

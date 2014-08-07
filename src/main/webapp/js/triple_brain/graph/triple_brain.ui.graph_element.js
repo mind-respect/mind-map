@@ -109,11 +109,14 @@ define([
     api.Object.prototype.isConcept = function () {
         return this.getGraphElementType() === api.types.CONCEPT;
     };
+    api.Object.prototype.isGroupRelation = function () {
+        return false;
+    };
     EventBus.subscribe("/event/ui/selection/changed",
         function (event, selectionInfo) {
-            var onlyOneGraphElementSelected = 1 === selectionInfo.getNbSelected();
+            var onlyOneGraphElementSelected = 1 === selectionInfo.getNbSelectedGraphElements();
             if (!onlyOneGraphElementSelected) {
-                $.each(selectionInfo.getSelectedElements(), function () {
+                $.each(selectionInfo.getSelectedGraphElements(), function () {
                     var selectedElement = this;
                     selectedElement.hideMenu();
                 });

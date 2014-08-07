@@ -41,7 +41,9 @@ requirejs.config({
         "triple_brain.event_bus": "triple_brain/triple_brain.event_bus",
         "jquery.triple_brain.drag_scroll": "triple_brain/jquery.triple_brain.drag_scroll",
         "triple_brain.bubble_distance_calculator": "triple_brain/graph/triple_brain.bubble_distance_calculator",
-        "triple_brain.grouped_relation": "triple_brain/graph/triple_brain.grouped_relation",
+        "triple_brain.group_relation": "triple_brain/graph/triple_brain.group_relation",
+        "triple_brain.ui.group_relation": "triple_brain/graph/triple_brain.ui.group_relation",
+        "triple_brain.group_relation_html_builder_for_tree_displayer":"triple_brain/display/tree/relative/triple_brain.group_relation_html_builder_for_tree_displayer",
         "triple_brain.identification_server_facade": "triple_brain/triple_brain.identification_server_facade",
         "triple_brain.friendly_resource_server_facade": "triple_brain/triple_brain.friendly_resource_server_facade",
         "triple_brain.graph_element_server_facade": "triple_brain/graph/triple_brain.graph_element_server_facade",
@@ -107,6 +109,7 @@ requirejs.config({
         "triple_brain.relative_tree_displayer_templates": "triple_brain/display/tree/relative/triple_brain.relative_tree_displayer_templates",
         "triple_brain.tree_edge": "triple_brain/display/tree/triple_brain.tree_edge",
         "triple_brain.tree_edge_menu_handler": "triple_brain/display/tree/triple_brain.tree_edge_menu_handler",
+        "triple_brain.bubble": "triple_brain/display/tree/triple_brain.bubble",
         "triple_brain.graph_displayer_as_tree_common": "triple_brain/display/tree/triple_brain.graph_displayer_as_tree_common",
         "triple_brain.mind_map_info": "triple_brain/triple_brain.mind_map_info"
     },

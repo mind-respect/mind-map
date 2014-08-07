@@ -18,11 +18,18 @@ define([
         SELECT_BOX_MIN_HEIGHT = 40,
         selectionInfo = new SelectionInfo();
 
-    api.setToSingleBubble = function (bubble) {
+    api.setToSingleGroupRelation = function (groupRelation) {
         deselectAll();
-        selectionInfo.setToSingleBubble(bubble);
-        bubble.select();
-        bubble.makeSingleSelected();
+        selectionInfo.setToSingleGroupRelation(groupRelation);
+        groupRelation.select();
+        reflectSelectionChange();
+    };
+
+    api.setToSingleVertex = function (vertex) {
+        deselectAll();
+        selectionInfo.setToSingleVertex(vertex);
+        vertex.select();
+        vertex.makeSingleSelected();
         reflectSelectionChange();
     };
 
@@ -34,20 +41,26 @@ define([
         reflectSelectionChange();
     };
 
+    api.addGroupRelation = function (groupRelation) {
+        groupRelation.select();
+        selectionInfo.addGroupRelation(groupRelation);
+        reflectSelectionChange();
+    };
+
     api.addRelation = function (relation) {
         relation.select();
         selectionInfo.addRelation(relation);
         reflectSelectionChange();
     };
 
-    api.addBubble = function (bubble) {
-        bubble.select();
-        selectionInfo.addBubble(bubble);
+    api.addVertex = function (vertex) {
+        vertex.select();
+        selectionInfo.addVertex(vertex);
         reflectSelectionChange();
     };
-    api.removeBubble = function (bubble) {
-        bubble.deselect();
-        selectionInfo.removeBubble(bubble);
+    api.removeVertex = function (vertex) {
+        vertex.deselect();
+        selectionInfo.removeVertex(vertex);
         reflectSelectionChange();
     };
     api.removeRelation = function (relation) {
@@ -58,17 +71,20 @@ define([
 
     api.removeAll = function () {
         deselectAll(
-            selectionInfo.getSelectedBubbles()
+            selectionInfo.getSelectedVertices()
         );
         deselectAll(
             selectionInfo.getSelectedRelations()
+        );
+        deselectAll(
+            selectionInfo.getSelectedGroupRelations()
         );
         selectionInfo.removeAll();
         reflectSelectionChange();
     };
 
-    api.getSelectedBubbles = function () {
-        return selectionInfo.getSelectedBubbles();
+    api.getSelectedVertices = function () {
+        return selectionInfo.getSelectedVertices();
     };
 
     api.handleSelectionManagementClick = function (event) {
@@ -92,14 +108,15 @@ define([
     };
 
     api.isOnlyASingleBubbleSelected = function () {
-        return 1 === api.getNbSelectedBubbles() &&
+        return (1 === selectionInfo.getNbSelectedBubbles()) &&
             0 === api.getNbSelectedRelations();
     };
     api.getNbSelected = function () {
         return selectionInfo.getNbSelected();
     };
-    api.getNbSelectedBubbles = function () {
-        return selectionInfo.getNbSelectedBubbles();
+
+    api.getNbSelectedVertices = function () {
+        return selectionInfo.getNbSelectedVertices();
     };
     api.getNbSelectedRelations = function () {
         return selectionInfo.getNbSelectedRelations();
@@ -109,6 +126,9 @@ define([
     };
     api.getSingleElement = function () {
         return selectionInfo.getSingleElement();
+    };
+    api.getSelectedBubbles = function(){
+        return selectionInfo.getSelectedBubbles();
     };
     EventBus.subscribe("/event/ui/graph/reset", selectionInfo.removeAll);
     return api;
@@ -155,7 +175,7 @@ define([
                             vertex.getHtml(),
                             getSelectBox()
                         )) {
-                            api.addBubble(vertex);
+                            api.addVertex(vertex);
                         }
                     });
                     removeSelectBoxIfExists();
@@ -168,10 +188,13 @@ define([
 
     function deselectAll() {
         deselectGraphElements(
-            selectionInfo.getSelectedBubbles()
+            selectionInfo.getSelectedVertices()
         );
         deselectGraphElements(
             selectionInfo.getSelectedRelations()
+        );
+        deselectGraphElements(
+            selectionInfo.getSelectedGroupRelations()
         );
     }
 
@@ -197,56 +220,97 @@ define([
     }
 
     function SelectionInfo() {
-        var bubbles = [],
+        var vertices = [],
             relations = [],
+            groupRelations = [],
             self = this;
-        this.setToSingleBubble = function (bubble) {
+        this.setToSingleGroupRelation = function (groupRelation) {
             relations = [];
-            bubbles[0] = bubble;
+            vertices = [];
+            groupRelations = [groupRelation];
+        };
+        this.setToSingleVertex = function (vertex) {
+            relations = [];
+            groupRelations = [];
+            vertices = [vertex];
         };
         this.setToSingleRelation = function (relation) {
-            bubbles = [];
-            relations[0] = relation;
+            vertices = [];
+            groupRelations = [];
+            relations = [relation];
         };
         this.removeAll = function () {
-            bubbles = [];
+            vertices = [];
             relations = [];
+            groupRelations = [];
         };
         this.addRelation = function (relation) {
             relations.push(relation);
         };
-        this.addBubble = function (bubble) {
-            bubbles.push(bubble);
+        this.addGroupRelation = function(groupRelation){
+            groupRelations.push(groupRelation);
         };
-        this.removeBubble = function (bubble) {
-            removeGraphElement(bubble, bubbles);
+        this.addVertex = function (vertex) {
+            vertices.push(vertex);
+        };
+        this.removeVertex = function (vertex) {
+            removeGraphElement(vertex, vertices);
         };
         this.removeRelation = function (relation) {
             removeGraphElement(relation, relations);
         };
         this.getNbSelected = function () {
-            return bubbles.length + relations.length;
+            return vertices.length + relations.length + groupRelations.length;
         };
         this.getNbSelectedBubbles = function () {
-            return bubbles.length;
+            return self.getNbSelectedVertices() +
+                self.getNbSelectedGroupRelations();
+        };
+        this.getSelectedBubbles = function(){
+            return self.getSelectedVertices().concat(
+                self.getSelectedGroupRelations()
+            );
+        };
+        this.getNbSelectedVertices = function () {
+            return vertices.length;
         };
         this.getNbSelectedRelations = function () {
             return relations.length;
         };
-        this.getSelectedBubbles = function () {
-            return bubbles;
+        this.getNbSelectedGroupRelations = function(){
+            return groupRelations.length;
+        };
+        this.getSelectedVertices = function () {
+            return vertices;
         };
         this.getSelectedRelations = function () {
             return relations;
         };
         this.getSelectedElements = function () {
-            return bubbles.concat(
+            return vertices.concat(
                 relations
             );
         };
         this.getSingleElement = function () {
-            return 1 === self.getNbSelectedBubbles() ?
-                self.getSelectedBubbles()[0] : self.getSelectedRelations()[0];
+            if(1 === self.getNbSelectedVertices()){
+                return self.getSelectedVertices()[0];
+            }else if(1 === self.getNbSelectedRelations()){
+                return self.getSelectedRelations()[0];
+            }else{
+                return self.getSelectedGroupRelations()[0];
+            }
+        };
+        this.getSelectedGroupRelations = function(){
+            return groupRelations;
+        };
+        this.getSelectedGraphElements = function(){
+            return self.getSelectedRelations().concat(
+              self.getSelectedVertices()
+            );
+        };
+        this.getNbSelectedGraphElements = function(){
+            return self.getNbSelectedRelations() +
+                self.getNbSelectedVertices();
         };
         function removeGraphElement(toRemove, graphElements) {
             var uriToRemove = toRemove.getUri();

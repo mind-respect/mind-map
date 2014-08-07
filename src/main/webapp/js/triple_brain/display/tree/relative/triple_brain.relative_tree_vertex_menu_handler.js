@@ -76,7 +76,7 @@ define([
                         var relativeVertex = RelativeTreeVertex.ofVertex(
                             vertex
                         );
-                        relativeVertex.visitChildren(function (childVertex) {
+                        relativeVertex.visitVerticesChildren(function (childVertex) {
                             vertex.removeConnectedEdges();
                             childVertex.remove();
                         });

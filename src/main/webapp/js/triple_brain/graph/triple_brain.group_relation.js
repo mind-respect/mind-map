@@ -6,22 +6,22 @@ define([
     ], function (GraphUi) {
         var api = {};
         api.withoutAnIdentification = function () {
-            return new Object(undefined);
+            return new Self(undefined);
         };
         api.usingIdentification = function (identification) {
-            return new Object(identification);
+            return new Self(identification);
         };
-        function Object(identification) {
+        function Self(identification) {
             this.identification = identification;
             this.vertices = {};
         }
-        Object.prototype.getIdentification = function () {
+        Self.prototype.getIdentification = function () {
             return this.identification;
         };
-        Object.prototype.getVertices = function () {
+        Self.prototype.getVertices = function () {
             return this.vertices;
         };
-        Object.prototype.addVertex = function (vertex, edge) {
+        Self.prototype.addVertex = function (vertex, edge) {
             if (this.vertices[vertex.getUri()] === undefined) {
                 this.vertices[vertex.getUri()] = {};
             }
@@ -33,6 +33,12 @@ define([
                 vertex: vertex,
                 edge: edge
             };
+        };
+        Self.prototype.hasMultipleVertices = function(){
+             return this.getNumberOfVertices() > 1;
+        };
+        Self.prototype.getNumberOfVertices = function(){
+            return Object.keys(this.vertices).length;
         };
         return api;
     }

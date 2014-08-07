@@ -14,9 +14,6 @@ define([
             },
             publish:function (events, args) {
                 $(this).trigger(events, args);
-            },
-            subscribeOnce:function (events, fn) {
-                $(this).one(events, fn);
             }
         };
     });

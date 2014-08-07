@@ -75,6 +75,9 @@ define([
                 var noteButton = vertex.getNoteButtonInBubbleContent();
                 noteButton.next(".overlay-container").after(noteButton);
             }
+            if (vertex.hasHiddenRelations()) {
+                vertex.buildHiddenNeighborPropertiesIndicator();
+            }
         };
         EventBus.subscribe(
             '/event/ui/vertex/visit_after_graph_drawn',
@@ -109,12 +112,12 @@ define([
                     );
                     if (KeyboardUtils.isCtrlPressed()) {
                         if (vertex.isSelected()) {
-                            SelectionHandler.removeBubble(vertex);
+                            SelectionHandler.removeVertex(vertex);
                         } else {
-                            SelectionHandler.addBubble(vertex);
+                            SelectionHandler.addVertex(vertex);
                         }
                     } else {
-                        SelectionHandler.setToSingleBubble(
+                        SelectionHandler.setToSingleVertex(
                             vertex
                         );
                     }

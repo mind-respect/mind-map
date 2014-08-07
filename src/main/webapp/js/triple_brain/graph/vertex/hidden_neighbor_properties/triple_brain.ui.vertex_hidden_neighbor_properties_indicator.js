@@ -5,28 +5,20 @@ define([
         "triple_brain.graph_displayer"
     ],
     function ($, MindMapTemplate, EventBus, GraphDisplayer) {
-        var api = {
+        "use strict";
+        return {
             withVertex: function (vertex) {
                 return new HiddenNeighborPropertiesIndicator(vertex);
             }
         };
-        EventBus.subscribe(
-            "/event/ui/vertex/visit_after_graph_drawn",
-            function (event, vertex) {
-                if (vertex.hasHiddenRelations()) {
-                    vertex.buildHiddenNeighborPropertiesIndicator();
-                }
-            }
-        );
-        return api;
         function HiddenNeighborPropertiesIndicator(vertex) {
             var hiddenNeighborPropertiesContainer;
             this.build = function () {
-                var numberOfHiddenRelationsToFlag = vertex.getTotalNumberOfEdges() - 1;
+                var numberOfHiddenRelationsToFlag = vertex.getNumberOfRelationsToFlag();
                 if(numberOfHiddenRelationsToFlag > 10){
                     numberOfHiddenRelationsToFlag = 10;
                 }
-                var isLeftOriented = vertex.getChildrenOrientation() === "left";
+                var isLeftOriented = vertex.isToTheLeft();
                 hiddenNeighborPropertiesContainer = $(
                     MindMapTemplate[
                         'hidden_property_container'
@@ -63,17 +55,8 @@ define([
             }
             var $this = $(this);
             var vertex = $this.data("vertex");
+            vertex.addChildTree();
             $this.remove();
-            GraphDisplayer.addChildTree(
-                vertex,
-                function () {
-                    vertex.visitChildren(function (child) {
-                        if (child.hasHiddenRelations()) {
-                            child.buildHiddenNeighborPropertiesIndicator();
-                        }
-                    });
-                }
-            );
         }
     }
 );

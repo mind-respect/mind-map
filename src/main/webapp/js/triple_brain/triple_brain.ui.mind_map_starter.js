@@ -115,6 +115,12 @@ define(
                         vertex
                     );
                 });
+                GraphDisplayer.getGroupRelationSelector().visitAll(function(groupRelationUi){
+                    EventBus.publish(
+                        '/event/ui/group_relation/visit_after_graph_drawn',
+                        groupRelationUi
+                    );
+                });
                 $("body").removeClass("hidden");
                 centralVertex.scrollTo();
                 EventBus.publish('/event/ui/graph/drawn');

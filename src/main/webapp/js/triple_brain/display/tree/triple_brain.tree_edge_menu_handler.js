@@ -18,7 +18,7 @@ define([
             EdgeService.remove(edge,
                 function (edge) {
                     var vertex = edge.childVertexInDisplay();
-                    vertex.visitChildren(function (childVertex) {
+                    vertex.visitVerticesChildren(function (childVertex) {
                         childVertex.removeConnectedEdges();
                         childVertex.remove();
                     });

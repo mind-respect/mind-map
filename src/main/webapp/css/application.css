@@ -127,6 +127,13 @@ svg { z-index: 1; }
 
 .graph-element input[type='text'] { text-shadow: none; box-shadow: none; color: black; font-weight: normal; }
 
+.group-relation { position: relative; min-width: 0; margin: 0 0 0 0; white-space: nowrap; }
+.group-relation.selected .label { border-radius: 5px; box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb; }
+.group-relation .label { position: relative; display: inline-block; margin-right: 0.3em; z-index: 1; }
+.group-relation .arrow { position: absolute; height: 1px; width: 60px; top: 50%; left: -42px; border-top: 1px solid black; }
+.group-relation .arrow:before { content: url("images/icons/vertex/arrowhead_right.svg"); position: relative; top: -10px; left: 20px; }
+.group-relation.inverse .arrow:before { content: url("images/icons/vertex/arrowhead_left.svg"); }
+
 .vertex { cursor: default; /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */ white-space: nowrap; }
 .vertex.public .in-bubble-content { background-color: #FFE8E8; }
 .vertex.absolute { white-space: nowrap; position: absolute !important; min-width: 120px; }

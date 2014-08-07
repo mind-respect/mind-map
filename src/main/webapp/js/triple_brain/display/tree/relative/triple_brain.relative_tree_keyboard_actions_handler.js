@@ -40,7 +40,7 @@ define([
         if (!SelectionHandler.isOnlyASingleBubbleSelected()) {
             return;
         }
-        var selectedVertex = SelectionHandler.getSelectedBubbles()[0];
+        var selectedBubble = SelectionHandler.getSelectedBubbles()[0];
         $.each(listenedKeysAndTheirAction, function () {
             var key = this[0];
             if (event.which !== key) {
@@ -48,7 +48,7 @@ define([
             }
             event.preventDefault();
             var action = this[1];
-            action(selectedVertex);
+            action(selectedBubble);
             return false;
         });
         function isThereASpecialKeyPressed() {
@@ -90,70 +90,88 @@ define([
         );
     }
 
-    function leftAction(selectedVertex) {
-        var newSelectedVertex;
-        if (selectedVertex.isCenterVertex()) {
+    function leftAction(selectedBubble) {
+        var newSelectedBubble,
+            isCenterVertex = selectedBubble.isConcept() && selectedBubble.isCenterVertex();
+        if (isCenterVertex) {
             var centerVertex = RelativeTreeCenterVertex.usingVertex(
-                selectedVertex
+                selectedBubble
             );
             if (!centerVertex.hasChildToLeft()) {
                 return;
             }
-            newSelectedVertex = RelativeTreeVertex.withHtml(
-                centerVertex.getTopMostChildToLeftHtml()
-            );
-        } else if(selectedVertex.isToTheLeft()) {
-            if (!selectedVertex.hasChildren()) {
+            newSelectedBubble = centerVertex.getToTheLeftTopMostChild();
+        } else if(selectedBubble.isToTheLeft()) {
+            if (!selectedBubble.hasChildren()) {
                 return;
             }
-            newSelectedVertex = selectedVertex.getTopMostChild();
+            newSelectedBubble = selectedBubble.getTopMostChild();
         } else {
-            newSelectedVertex = selectedVertex.getParentVertex();
+            newSelectedBubble = selectedBubble.getParentBubble();
         }
-        SelectionHandler.setToSingleBubble(newSelectedVertex);
-        centerVertexIfApplicable(newSelectedVertex);
+        if(newSelectedBubble.isConcept()){
+            SelectionHandler.setToSingleVertex(newSelectedBubble);
+            centerVertexIfApplicable(newSelectedBubble);
+        }else{
+            SelectionHandler.setToSingleGroupRelation(newSelectedBubble);
+        }
+
     }
 
-    function rightAction(selectedVertex) {
-        var newSelectedVertex;
-        if (selectedVertex.isCenterVertex()) {
+    function rightAction(selectedBubble) {
+        var newSelectedBubble,
+            isCenterVertex = selectedBubble.isConcept() && selectedBubble.isCenterVertex();
+        if (isCenterVertex) {
             var centerVertex = RelativeTreeCenterVertex.usingVertex(
-                selectedVertex
+                selectedBubble
             );
             if (!centerVertex.hasChildToRight()) {
                 return;
             }
-            newSelectedVertex = RelativeTreeVertex.withHtml(
-                centerVertex.getTopMostChildToRightHtml()
-            );
-        } else if (selectedVertex.isToTheLeft()) {
-            newSelectedVertex = selectedVertex.getParentVertex();
+            newSelectedBubble = centerVertex.getToTheRightTopMostChild();
+        } else if (selectedBubble.isToTheLeft()) {
+            newSelectedBubble = selectedBubble.getParentBubble();
         } else {
-            if (!selectedVertex.hasChildren()) {
+            if (!selectedBubble.hasChildren()) {
                 return;
             }
-            newSelectedVertex = selectedVertex.getTopMostChild();
+            newSelectedBubble = selectedBubble.getTopMostChild();
         }
-        SelectionHandler.setToSingleBubble(newSelectedVertex);
-        centerVertexIfApplicable(newSelectedVertex);
+        if(newSelectedBubble.isConcept()){
+            SelectionHandler.setToSingleVertex(newSelectedBubble);
+            centerVertexIfApplicable(newSelectedBubble);
+        }else{
+            SelectionHandler.setToSingleGroupRelation(newSelectedBubble);
+        }
     }
 
-    function upAction(selectedVertex) {
-        if(selectedVertex.isCenterVertex() || !selectedVertex.hasBubbleAbove()){
+    function upAction(selectedBubble) {
+        var isCenterVertex = selectedBubble.isConcept() && selectedBubble.isCenterVertex();
+        if(isCenterVertex || !selectedBubble.hasBubbleAbove()){
             return;
         }
-        var bubbleAbove = selectedVertex.getBubbleAbove();
-        SelectionHandler.setToSingleBubble(bubbleAbove);
-        centerVertexIfApplicable(bubbleAbove);
+        var bubbleAbove = selectedBubble.getBubbleAbove();
+        if(bubbleAbove.isConcept()){
+            SelectionHandler.setToSingleVertex(bubbleAbove);
+            centerVertexIfApplicable(bubbleAbove);
+        }else{
+            SelectionHandler.setToSingleGroupRelation(bubbleAbove);
+        }
+
     }
 
-    function downAction(selectedVertex) {
-        if(selectedVertex.isCenterVertex() || !selectedVertex.hasBubbleUnder()){
+    function downAction(selectedBubble) {
+        var isCenterVertex = selectedBubble.isConcept() && selectedBubble.isCenterVertex();
+        if(isCenterVertex || !selectedBubble.hasBubbleUnder()){
             return;
         }
-        var bubbleUnder = selectedVertex.getBubbleUnder();
-        SelectionHandler.setToSingleBubble(bubbleUnder);
-        centerVertexIfApplicable(bubbleUnder);
+        var bubbleUnder = selectedBubble.getBubbleUnder();
+        if(bubbleUnder.isConcept()){
+            SelectionHandler.setToSingleVertex(bubbleUnder);
+            centerVertexIfApplicable(bubbleUnder);
+        }else{
+            SelectionHandler.setToSingleGroupRelation(bubbleUnder);
+        }
     }
     function centerVertexIfApplicable(vertex){
         var html = vertex.getHtml();

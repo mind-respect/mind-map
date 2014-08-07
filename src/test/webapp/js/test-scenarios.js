@@ -41,6 +41,12 @@ define([
                         ]
                 );
             };
+            this.getBook2 = function () {
+                return VertexFacade.fromServerFormat(graph.vertices[
+                        uriOfVertexWithLabel(graph, "book 2")
+                        ]
+                );
+            };
             this.getOtherRelation = function () {
                 return relationWithLabel(graph, "other relation");
             };

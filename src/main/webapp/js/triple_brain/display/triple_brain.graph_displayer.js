@@ -69,6 +69,9 @@ define([
         api.getVertexSelector = function(){
             return _implementation.getVertexSelector();
         };
+        api.getGroupRelationSelector = function(){
+            return _implementation.getGroupRelationSelector();
+        };
         api.canAddChildTree = function(){
             return _implementation.canAddChildTree();
         };
@@ -99,8 +102,10 @@ define([
         api.canGetIsToTheLeft = function(){
             return !api.allowsMovingVertices();
         };
+        api.expandGroupRelation = function(groupRelation){
+            return _implementation.expandGroupRelation(groupRelation);
+        };
         return api;
-
         function currentDepth(){
             return 1;
         }

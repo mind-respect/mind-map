@@ -1,38 +1,44 @@
 /*
  * Copyright Mozilla Public License 1.1
  */
-define([],
-    function(){
+define([
+        "triple_brain.graph_displayer"
+    ],
+    function (GraphDisplayer) {
         var api = {};
-        api.usingVertex = function(vertex){
+        api.usingVertex = function (vertex) {
             return new Object(
                 vertex
             );
         };
         return api;
-        function Object(vertex){
+        function Object(vertex) {
             var self = this;
-            this.hasChildToLeft = function(){
-                return self.getLeftChildren().length > 0;
+            this.hasChildToLeft = function () {
+                return self._getTopMostChildToLeftContainer().length > 0;
             };
-            this.hasChildToRight = function(){
-                return self.getChildrenToRight().length > 0;
+            this.hasChildToRight = function () {
+                return self._getTopMostChildToRightContainer().length > 0;
             };
-            this.getLeftChildren = function(){
-                return vertex.getHtml().closest(".vertex-container").siblings(
-                    ".vertices-children-container.left-oriented"
-                ).find(".vertex");
+            this.getToTheLeftTopMostChild = function () {
+                return vertex.getBubble().getGroupRelationOrVertexFromContainer(
+                    self._getTopMostChildToLeftContainer()
+                );
             };
-            this.getChildrenToRight = function(){
+            this.getToTheRightTopMostChild = function () {
+                return vertex.getBubble().getGroupRelationOrVertexFromContainer(
+                    self._getTopMostChildToRightContainer()
+                );
+            };
+            this._getTopMostChildToRightContainer = function () {
                 return vertex.getHtml().closest(".vertex-container").siblings(
                     ".vertices-children-container"
-                ).filter(":not(.left-oriented)").find(".vertex");
+                ).filter(":not(.left-oriented)").find(">.vertex-tree-container:first >.vertex-container");
             };
-            this.getTopMostChildToRightHtml = function(){
-                return $(self.getChildrenToRight()[0]);
-            };
-            this.getTopMostChildToLeftHtml = function(){
-                return $(self.getLeftChildren()[0]);
+            this._getTopMostChildToLeftContainer = function () {
+                return vertex.getHtml().closest(".vertex-container").siblings(
+                    ".vertices-children-container.left-oriented")
+                    .find(">.vertex-tree-container:first >.vertex-container");
             };
         }
     }
