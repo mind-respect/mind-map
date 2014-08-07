@@ -36,7 +36,7 @@ define([
         };
 
         api.Object.prototype.visitVerticesChildren = function (visitor) {
-            var children = this.getChildrenBubblesHtml();
+            var children = this.bubble.getChildrenBubblesHtml();
             $.each(children, function () {
                 var html = $(this);
                 if(html.hasClass("vertex")){
