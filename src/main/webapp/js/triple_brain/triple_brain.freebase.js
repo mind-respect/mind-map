@@ -103,6 +103,9 @@ define([
                     return;
                 }
                 var description = xhr.result[0].output.description["/common/topic/description"][0];
+                if('object' === typeof description){
+                    description = description.value;
+                }
                 GraphElementService.setDescriptionToIdentification(
                     graphElement,
                     identification,
