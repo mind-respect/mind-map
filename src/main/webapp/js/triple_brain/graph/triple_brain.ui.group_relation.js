@@ -5,7 +5,8 @@ define([
     "triple_brain.graph_displayer",
     "triple_brain.event_bus",
     "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
-    "triple_brain.bubble"
+    "triple_brain.bubble",
+    "twitter_bootstrap"
 ], function (GraphDisplayer, EventBus, HiddenPropertiesIndicator, Bubble) {
     "use strict";
     var api = {};
@@ -93,6 +94,7 @@ define([
     Self.prototype.isGroupRelation = function () {
         return true;
     };
+
     Self.prototype.getOriginalServerObject = Self.prototype.getGroupRelation;
 
     EventBus.subscribe(

@@ -40,12 +40,27 @@ define([
         };
 
         Self.prototype._addLabel = function(){
-            $(
+            var labelHtml = $(
                 RelativeTreeTemplates['group_relation_label_container'].merge({
                     label: this.serverFacade.getIdentification().getLabel()
                 })
             ).appendTo(this.html);
+            this._showDescriptionOnLabelClick(labelHtml);
         };
+
+        Self.prototype._showDescriptionOnLabelClick = function(labelHtml){
+            var identification = this.serverFacade.getIdentification();
+            labelHtml.attr(
+                "data-toggle", "popover"
+            ).attr(
+                "title", identification.getLabel()
+            ).attr(
+                "data-content", identification.getComment()
+            ).popover({
+                    container:"body"
+                });
+        };
+
         Self.prototype._addArrow = function(){
             this.html.append("<span class='arrow'>");
         };

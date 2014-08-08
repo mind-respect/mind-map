@@ -37,7 +37,9 @@ define([
             "html-content"
         ).i18n().dialog(
             options
-        ).centerOnScreen();
+        ).centerOnScreen().prev(
+            ".ui-dialog-titlebar"
+        ).find("button").append("<i class='fa fa-times'></i>");
         function getHorizontalPosition(){
             var positionDialogToRight = {
                 "my" : "left",
