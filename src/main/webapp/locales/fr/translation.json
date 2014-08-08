@@ -118,5 +118,21 @@
     "selection" : {
         "selected_graph_elements" : "élément(s) de graphe sélectionné(s)",
         "group" : "grouper"
+    },
+    "menu-button" : {
+        "select" : "Sélection à la main",
+        "group" : "Créer une bulle à partir de celles sélectionnés",
+        "addChild" : "Ajouter un enfant (tab)",
+        "identify" : "Identifications (i)",
+        "reverseToRight" : "Inverser la relation",
+        "reverseToLeft" : "Inverser la relation",
+        "suggestions" : "Suggestions",
+        "subElements" : "De quoi est composé la bulle",
+        "center" : "Centrer la bulle",
+        "note" : "Description",
+        "connectTo" : "Relier à une bulle existante",
+        "makePrivate" : "Rendre privé",
+        "makePublic" : "Rendre public",
+        "remove" : "Effacer"
     }
 }

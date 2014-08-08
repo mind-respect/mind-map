@@ -41,11 +41,11 @@ define(
                             "relative_tree"
                         )
                     );
-                    GraphElementMainMenu.reset();
                     UserService.authenticatedUser(function () {
                             LanguageManager.loadLocaleContent(function () {
                                 GraphDisplayer.displayUsingDefaultVertex();
                                 translateText();
+                                GraphElementMainMenu.reset();
                             });
                         }
                     );
