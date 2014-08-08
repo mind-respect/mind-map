@@ -400,8 +400,7 @@ svg {
   white-space:nowrap;
   &.selected {
     .label{
-      border-radius: 5px;
-      box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb;
+      box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb;
     }
   }
   .label{
