@@ -130,6 +130,7 @@
         "subElements" : "De quoi est composé la bulle",
         "center" : "Centrer la bulle",
         "note" : "Description",
+        "images" : "Ajouter des images",
         "connectTo" : "Relier à une bulle existante",
         "makePrivate" : "Rendre privé",
         "makePublic" : "Rendre public",

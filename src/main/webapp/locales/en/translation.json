@@ -130,6 +130,7 @@
         "subElements" : "Made of graph elements",
         "center" : "Center bubble",
         "note" : "Description",
+        "images" : "Add images",
         "connectTo" : "Connect to existing bubble",
         "makePrivate" : "Make private",
         "makePublic" : "Make public",
