@@ -140,7 +140,9 @@ define([
                 centralVertexUri,
                 currentDepth(),
                 function (drawingInfo) {
-                    if (MindMapInfo.getCenterVertexUriFromUrl() !== centralVertexUri) {
+                    var shouldPushState = !MindMapInfo.isCenterVertexUriDefinedInUrl() ||
+                        MindMapInfo.getCenterVertexUriFromUrl() !== centralVertexUri;
+                    if (shouldPushState) {
                         history.pushState(
                             {},
                             '',

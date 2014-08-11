@@ -43,9 +43,6 @@ define(
                         )
                     );
                     UserService.authenticatedUser(function () {
-                            if(!MindMapInfo.isCenterVertexUriDefinedInUrl()){
-                                window.location = "?bubble=" + MindMapInfo.defaultVertexUri();
-                            }
                             handleHistoryBrowse();
                             LanguageManager.loadLocaleContent(function () {
                                 GraphDisplayer.displayUsingCentralVertexUri(
