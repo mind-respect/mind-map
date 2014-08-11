@@ -117,7 +117,7 @@ define([
                 if (selected.isGroupRelation()) {
                     currentClickHandler = undefined;
                 } else {
-                    currentClickHandler = selected.isConcept() ?
+                    currentClickHandler = selected.isVertex() ?
                         vertexMenuHandler.forSingle() :
                         relationMenuHandler.forSingle();
                 }

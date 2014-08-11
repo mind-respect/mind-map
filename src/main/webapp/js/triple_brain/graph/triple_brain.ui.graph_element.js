@@ -8,7 +8,7 @@ define([
 ], function ($, EventBus, GraphDisplayer) {
     var api = {};
     api.types = {
-        "CONCEPT": "concept",
+        "VERTEX": "vertex",
         "RELATION": "relation"
     };
     api.Object = function (html) {
@@ -106,8 +106,11 @@ define([
         this.html.data("sameAs", sameAs);
         this.removeIdentificationCommonBehavior(sameAsToRemove);
     };
-    api.Object.prototype.isConcept = function () {
-        return this.getGraphElementType() === api.types.CONCEPT;
+    api.Object.prototype.isVertex = function () {
+        return this.getGraphElementType() === api.types.VERTEX;
+    };
+    api.Object.prototype.isRelation = function () {
+        return this.getGraphElementType() === api.types.RELATION;
     };
     api.Object.prototype.isGroupRelation = function () {
         return false;
@@ -129,7 +132,7 @@ define([
     );
     return api;
     function displayOnlyRelevantButtonsInGraphElementMenu(graphElement) {
-        var clickHandler = graphElement.isConcept() ?
+        var clickHandler = graphElement.isVertex() ?
             GraphDisplayer.getVertexMenuHandler().forSingle() :
             GraphDisplayer.getRelationMenuHandler().forSingle();
         graphElement.visitMenuButtons(function (button) {

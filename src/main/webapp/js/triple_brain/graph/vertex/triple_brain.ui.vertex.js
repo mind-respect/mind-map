@@ -132,7 +132,7 @@ define([
 
         };
         api.Object.prototype.getGraphElementType = function () {
-            return GraphElementUi.types.CONCEPT;
+            return GraphElementUi.types.VERTEX;
         };
         api.Object.prototype.position = function () {
             return Point.fromCoordinates(

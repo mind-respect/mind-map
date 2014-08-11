@@ -130,6 +130,12 @@ define([
     api.getSelectedBubbles = function(){
         return selectionInfo.getSelectedBubbles();
     };
+    api.getNbSelectedElements = function(){
+        return selectionInfo.getNbSelectedElements();
+    };
+    api.isOnlyASingleElementSelected = function(){
+        return selectionInfo.getNbSelectedElements() === 1;
+    };
     EventBus.subscribe("/event/ui/graph/reset", selectionInfo.removeAll);
     return api;
     function reflectSelectionChange() {
@@ -311,6 +317,9 @@ define([
         this.getNbSelectedGraphElements = function(){
             return self.getNbSelectedRelations() +
                 self.getNbSelectedVertices();
+        };
+        this.getNbSelectedElements = function(){
+            return self.getNbSelectedBubbles() + self.getNbSelectedRelations();
         };
         function removeGraphElement(toRemove, graphElements) {
             var uriToRemove = toRemove.getUri();

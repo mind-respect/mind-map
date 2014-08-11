@@ -88,7 +88,10 @@ define([
     Self.prototype.deselect = function () {
         this.html.removeClass("selected");
     };
-    Self.prototype.isConcept = function () {
+    Self.prototype.isVertex = function () {
+        return false;
+    };
+    Self.prototype.isRelation = function () {
         return false;
     };
     Self.prototype.isGroupRelation = function () {

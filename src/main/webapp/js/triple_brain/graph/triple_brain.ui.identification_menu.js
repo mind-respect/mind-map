@@ -67,7 +67,7 @@ define([
                     ).attr(
                         "data-i18n",
                         (
-                            graphElement.isConcept() ?
+                            graphElement.isVertex() ?
                                 "graph_element.menu.identification.instruction.concept" :
                                 "graph_element.menu.identification.instruction.relation"
                             )
@@ -261,7 +261,7 @@ define([
                                 getServerIdentificationFctn()
                             );
                         },
-                        resultsProviders: graphElement.isConcept() ?
+                        resultsProviders: graphElement.isVertex() ?
                             getResultsProvidersForVertex() :
                             getResultsProvidersForRelations()
                     });
@@ -280,7 +280,7 @@ define([
                     }
 
                     function getServerIdentificationFctn() {
-                        return graphElement.isConcept() ? function (concept,identificationResource) {
+                        return graphElement.isVertex() ? function (concept,identificationResource) {
                             graphElement.serverFacade().addGenericIdentification(concept, identificationResource);
                             graphElement.refreshImages();
                         } : graphElement.serverFacade().addSameAs;

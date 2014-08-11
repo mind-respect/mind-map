@@ -52,7 +52,7 @@ define([
             if(!GraphDisplayer.canGetIsToTheLeft()){
                 return positionDialogToRight;
             }
-            var isConcept = graphElement.isConcept();
+            var isConcept = graphElement.isVertex();
             if(isConcept){
                 return graphElement.isToTheLeft() ?
                     positionDialogToLeft : positionDialogToRight;
