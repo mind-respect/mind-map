@@ -25,6 +25,12 @@ define([
             handleKeyboardActions
         );
     };
+    api.disable = function(){
+
+    };
+    api.enable = function(){
+
+    };
     return api;
     function handleKeyboardActions() {
         $(window).off(
@@ -39,6 +45,9 @@ define([
             return;
         }
         if (!SelectionHandler.isOnlyASingleElementSelected()) {
+            return;
+        }
+        if($('input:focus').length){
             return;
         }
         var selectedElement = SelectionHandler.getSingleElement();
