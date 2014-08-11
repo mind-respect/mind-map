@@ -13,6 +13,9 @@ define([
         api.defaultVertexUri = function () {
             return UserService.currentUserUri() + '/graph/vertex/default'
         };
+        api.isCenterVertexUriDefinedInUrl = function(){
+            return $.url().param("bubble") !== undefined;
+        };
         api.getCenterVertexUriFromUrl = function () {
             var uriInUrl = $.url().param("bubble");
             return uriInUrl === undefined ?

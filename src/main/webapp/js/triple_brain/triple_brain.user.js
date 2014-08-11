@@ -8,10 +8,15 @@ define([
     ],
     function ($, EventBus) {
         "use strict";
-        var api = {};
-        var usersResourceUrl = "/service/users/";
-        var sessionResourceUrl = usersResourceUrl + "session/";
-        var authenticatedUserInCache = undefined;
+        var api = {},
+            usersResourceUrl = "/service/users/",
+            sessionResourceUrl = usersResourceUrl + "session/",
+            authenticatedUserInCache = undefined;
+
+        api.getUsersResourceUrl = function(){
+            return usersResourceUrl;
+        };
+
         api.authenticatedUserInCache = function () {
             return authenticatedUserInCache;
         };

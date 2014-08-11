@@ -43,6 +43,10 @@ define(
                         )
                     );
                     UserService.authenticatedUser(function () {
+                            if(!MindMapInfo.isCenterVertexUriDefinedInUrl()){
+                                window.location = "?bubble=" + MindMapInfo.defaultVertexUri();
+                            }
+                            handleHistoryBrowse();
                             LanguageManager.loadLocaleContent(function () {
                                 GraphDisplayer.displayUsingCentralVertexUri(
                                     MindMapInfo.getCenterVertexUriFromUrl()
@@ -53,6 +57,16 @@ define(
                         }
                     );
                 }
+
+                function handleHistoryBrowse(){
+                    console.log("changing");
+                    $(window).on("popstate", function(event) {
+                        GraphDisplayer.displayUsingCentralVertexUri(
+                            MindMapInfo.getCenterVertexUriFromUrl()
+                        );
+                    });
+                }
+
                 function translateText() {
                     $("html").i18n();
                 }
