@@ -100,7 +100,7 @@ define([
                     event.preventDefault();
                     event.stopPropagation();
                     var identificationUri = $(this).data("identificationUri");
-                    GraphDisplayer.displayUsingNewCentralVertexUri(
+                    GraphDisplayer.displayUsingCentralVertexUri(
                         identificationUri
                     );
                 }

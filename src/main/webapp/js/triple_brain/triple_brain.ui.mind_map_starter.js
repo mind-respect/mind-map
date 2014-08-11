@@ -17,11 +17,12 @@ define(
         "triple_brain.keyboard_utils",
         "triple_brain.graph_element_main_menu",
         "triple_brain.vertex_server_facade",
+        "triple_brain.mind_map_info",
         "triple_brain.bubble_distance_calculator",
         "triple_brain.freebase",
         "jquery.triple_brain.drag_scroll"
     ],
-    function ($, UserService, EventBus, LoginHandler, MindMapTemplate, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, VertexService, TopCenterMenu, LeftPanel, SelectionHandler, KeyboardUtils, GraphElementMainMenu, VertexServeFacade) {
+    function ($, UserService, EventBus, LoginHandler, MindMapTemplate, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, VertexService, TopCenterMenu, LeftPanel, SelectionHandler, KeyboardUtils, GraphElementMainMenu, VertexServeFacade, MindMapInfo) {
         "use strict";
         var api = {
             start:function () {
@@ -43,7 +44,9 @@ define(
                     );
                     UserService.authenticatedUser(function () {
                             LanguageManager.loadLocaleContent(function () {
-                                GraphDisplayer.displayUsingDefaultVertex();
+                                GraphDisplayer.displayUsingCentralVertexUri(
+                                    MindMapInfo.getCenterVertexUriFromUrl()
+                                );
                                 translateText();
                                 GraphElementMainMenu.reset();
                             });
@@ -85,7 +88,7 @@ define(
                                 var serverFormatFacade = VertexServeFacade.fromServerFormat(
                                     newVertex
                                 );
-                                GraphDisplayer.displayUsingNewCentralVertexUri(
+                                GraphDisplayer.displayUsingCentralVertexUri(
                                     serverFormatFacade.getUri()
                                 );
                             });

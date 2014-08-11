@@ -2,8 +2,7 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "triple_brain.event_bus",
-    "triple_brain.mind_map_info"
+    "triple_brain.event_bus"
     ],
     function(EventBus, MindMapInfo){
         "use strict";
@@ -20,14 +19,14 @@ define([
                 MindMapInfo.defaultVertexUri()
             );
         };
-        api.displayUsingNewCentralVertex = function(centralVertex){
+        api.displayUsingCentralVertex = function(centralVertex){
             displayUsingCentralVertexUri(
                 centralVertex.getUri()
             );
         };
-        api.displayUsingNewCentralVertexUri = function(newCentralVertexUri){
+        api.displayUsingCentralVertexUri = function(centralVertexUri){
             displayUsingCentralVertexUri(
-                newCentralVertexUri
+                centralVertexUri
             );
         };
         api.connectVertexToVertexWithUri = function(parentVertex, destinationVertexUri, callback){

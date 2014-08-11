@@ -96,7 +96,7 @@ define([
             ).create();
         };
         subApi.center = function(event, vertex){
-            GraphDisplayer.displayUsingNewCentralVertex(
+            GraphDisplayer.displayUsingCentralVertex(
                 vertex
             );
         };
@@ -187,7 +187,7 @@ define([
             });
             VertexService.group(
                 selectedGraphElements,
-                GraphDisplayer.displayUsingNewCentralVertexUri
+                GraphDisplayer.displayUsingCentralVertexUri
             );
         };
         return subApi;

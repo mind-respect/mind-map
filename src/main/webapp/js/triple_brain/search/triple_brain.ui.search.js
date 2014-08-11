@@ -15,7 +15,7 @@ define([
                 $("#vertex-search-input").empty().tripleBrainAutocomplete({
                     select:function (event, ui) {
                         var vertexUri = ui.item.uri;
-                        GraphDisplayer.displayUsingNewCentralVertexUri(
+                        GraphDisplayer.displayUsingCentralVertexUri(
                             vertexUri
                         );
                     },
