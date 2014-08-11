@@ -132,7 +132,6 @@ define([
         }
 
         function displayUsingCentralVertexUri(centralVertexUri) {
-            console.log("displaying");
             publishAboutToUpdate();
             publishResetGraph();
             $("#drawn_graph").empty();

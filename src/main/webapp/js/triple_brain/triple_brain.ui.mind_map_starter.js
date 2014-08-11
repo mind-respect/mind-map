@@ -56,8 +56,7 @@ define(
                 }
 
                 function handleHistoryBrowse(){
-                    console.log("changing");
-                    $(window).on("popstate", function(event) {
+                    $(window).on("popstate", function() {
                         GraphDisplayer.displayUsingCentralVertexUri(
                             MindMapInfo.getCenterVertexUriFromUrl()
                         );
