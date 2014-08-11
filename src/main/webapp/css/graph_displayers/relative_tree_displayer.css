@@ -46,6 +46,10 @@
     box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb;
 }
 
+.left-oriented .relation-menu{
+    left:auto;
+    right:0;
+}
 .left-oriented .vertex .in-bubble-content .note-button{
     margin-right:0;
 }

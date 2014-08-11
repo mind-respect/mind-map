@@ -744,8 +744,9 @@ svg {
 
 .relation {
   .relation-menu {
-    margin-left: 0.3em;
     z-index:11;
+    position:absolute;
+    left:0;
   }
   .ui-button {
     width: 1.7em;

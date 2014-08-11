@@ -106,7 +106,7 @@ define([
             menu.find("button").show();
         }
 
-        function buildLabelAsInput(edge){
+        function buildLabelAsInput(edge) {
             var input = $(RelativeTreeTemplates['edge_input'].merge({
                 label: edge.text()
             }));
@@ -244,6 +244,7 @@ define([
                 overlayContainer
             );
         }
+
         function edgeFromHtml(htmlComponent) {
             htmlComponent = $(htmlComponent);
             var html = htmlComponent.hasClass("relation") ?
@@ -252,7 +253,8 @@ define([
                 html
             );
         }
-        EdgeCreator.prototype._edgeFacade = function() {
+
+        EdgeCreator.prototype._edgeFacade = function () {
             return TreeEdge.withHtml(this.html);
         };
         return api;
