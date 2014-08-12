@@ -14,6 +14,14 @@ define([
         "use strict";
         var api = {},
             _menu;
+        api.addRelevantButtonsInMenu = function(menuContainer, clickHandler){
+            api.visitButtons(function(button){
+                if(!button.canActionBePossiblyMade(clickHandler)){
+                    return;
+                }
+                button.cloneInto(menuContainer);
+            });
+        };
         api.reset = function () {
             initButtons();
             getMenu().draggable({

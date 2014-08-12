@@ -31,9 +31,7 @@ define([
                 };
                 UserService.authenticate(
                     loginInfo,
-                    function () {
-                        window.location.reload();
-                    },
+                    window.location.reload,
                     function () {
                         getErrorMessage().removeClass("hidden");
                     }

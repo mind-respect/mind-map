@@ -23,8 +23,15 @@ define([
             this._addLabel();
             this._addArrow();
             this._handleClick();
+            this._createMenu();
             return GroupRelationUi.withHtml(
                 this.html
+            );
+        };
+
+        Self.prototype._createMenu = function() {
+            this.html.append(
+                $("<div class='menu'>")
             );
         };
 

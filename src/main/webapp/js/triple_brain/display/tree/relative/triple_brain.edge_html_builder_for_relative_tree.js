@@ -96,14 +96,10 @@ define([
             );
             var menu = $("<span class='relation-menu'>");
             edgeHtml.append(menu);
-            var clickHandler = GraphDisplayer.getRelationMenuHandler().forSingle();
-            GraphElementMainMenu.visitButtons(function (button) {
-                if (!button.canActionBePossiblyMade(clickHandler)) {
-                    return;
-                }
-                button.cloneInto(menu);
-            });
-            menu.find("button").show();
+            GraphElementMainMenu.addRelevantButtonsInMenu(
+                menu,
+                GraphDisplayer.getRelationMenuHandler().forSingle()
+            );
         }
 
         function buildLabelAsInput(edge) {

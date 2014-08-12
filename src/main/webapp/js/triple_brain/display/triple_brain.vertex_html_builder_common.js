@@ -66,13 +66,10 @@ define([
         }
     };
     api.addRelevantButtonsInMenu = function(menuContainer){
-        var clickHandler = GraphDisplayer.getVertexMenuHandler().forSingle();
-        GraphElementMainMenu.visitButtons(function(button){
-            if(!button.canActionBePossiblyMade(clickHandler)){
-                return;
-            }
-            button.cloneInto(menuContainer);
-        });
+        GraphElementMainMenu.addRelevantButtonsInMenu(
+            menuContainer,
+            GraphDisplayer.getVertexMenuHandler().forSingle()
+        );
     };
     api.initCache = function(vertex){
         Vertex.initCache(

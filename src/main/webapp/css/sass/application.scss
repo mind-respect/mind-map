@@ -398,6 +398,9 @@ svg {
   min-width: 0;
   margin: 0 0 0 0;
   white-space:nowrap;
+  .menu{
+    display:inline;
+  }
   &.selected {
     .label{
       box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb;
