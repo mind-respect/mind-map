@@ -18,6 +18,7 @@ define([
     "triple_brain.tree_edge",
     "triple_brain.point",
     "triple_brain.relative_tree_vertex_menu_handler",
+    "triple_brain.group_relation_menu_handler",
     "triple_brain.tree_edge_menu_handler",
     "triple_brain.relative_tree_graph_menu_handler",
     "triple_brain.graph_element_menu_handler",
@@ -25,7 +26,7 @@ define([
     "triple_brain.edge_server_facade",
     "triple_brain.group_relation_html_builder_for_tree_displayer",
     "triple_brain.ui.group_relation"
-], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, RelativeTreeVertexMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler, KeyboardActionsHandler, EdgeServerFacade, GroupRelationHtmlBuilder, GroupRelationUi) {
+], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, RelativeTreeVertexMenuHandler, GroupRelationMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler, KeyboardActionsHandler, EdgeServerFacade, GroupRelationHtmlBuilder, GroupRelationUi) {
     KeyboardActionsHandler.init();
     var api = {};
     api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
@@ -139,7 +140,8 @@ define([
             VertexHtmlBuilder
         );
         var container;
-        if (parentVertex.isCenterVertex()) {
+        var isCenterVertex = parentVertex.isVertex() && parentVertex.isCenterVertex();
+        if(isCenterVertex) {
             if (shouldAddLeft()) {
                 container = leftVerticesContainer();
                 newVertex.isLeftOriented = true;
@@ -183,6 +185,9 @@ define([
     };
     api.getRelationMenuHandler = function () {
         return TreeEdgeMenuHandler;
+    };
+    api.getGroupRelationMenuHandler = function(){
+        return GroupRelationMenuHandler;
     };
     api.getGraphElementMenuHandler = function () {
         return GraphElementMenuHandler;
@@ -419,21 +424,21 @@ define([
                         false
                     );
                 var index = 0;
-                $.each(serverRootVertex.similarRelations, function (key, groupedRelation) {
-                    if (groupedRelation.hasMultipleVertices()) {
-                        groupedRelation.isLeftOriented = index % 2 != 0;
-                        var container = groupedRelation.isLeftOriented ?
+                $.each(serverRootVertex.similarRelations, function (key, groupRelation) {
+                    if (groupRelation.hasMultipleVertices()) {
+                        groupRelation.isLeftOriented = index % 2 != 0;
+                        var container = groupRelation.isLeftOriented ?
                             leftChildrenContainer :
                             rightChildrenContainer;
                         index++;
                         self.buildVertexHtmlIntoContainer(
-                            groupedRelation,
+                            groupRelation,
                             container,
                             GroupRelationHtmlBuilder
                         );
                         return;
                     }
-                    $.each(groupedRelation.getVertices(), function (key, verticesWithSameUri) {
+                    $.each(groupRelation.getVertices(), function (key, verticesWithSameUri) {
                         $.each(verticesWithSameUri, function (vertexHtmlId, vertexAndEdge) {
                             var vertex = vertexAndEdge.vertex;
                             vertex.isLeftOriented = index % 2 != 0;

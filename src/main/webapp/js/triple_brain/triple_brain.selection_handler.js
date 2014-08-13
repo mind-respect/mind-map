@@ -22,6 +22,7 @@ define([
         deselectAll();
         selectionInfo.setToSingleGroupRelation(groupRelation);
         groupRelation.select();
+        groupRelation.makeSingleSelected();
         reflectSelectionChange();
     };
 

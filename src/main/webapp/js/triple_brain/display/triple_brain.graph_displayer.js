@@ -93,6 +93,9 @@ define([
         api.getRelationMenuHandler = function () {
             return _implementation.getRelationMenuHandler();
         };
+        api.getGroupRelationMenuHandler = function () {
+            return _implementation.getGroupRelationMenuHandler();
+        };
         api.getGraphElementMenuHandler = function () {
             return _implementation.getGraphElementMenuHandler();
         };

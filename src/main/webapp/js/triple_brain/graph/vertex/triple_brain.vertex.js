@@ -24,31 +24,24 @@ define([
                 dataType: 'json'
             }).success(callback);
         };
-        api.addRelationAndVertexToVertex = function (vertex, callback) {
-            var dummyPosition = {
-                x: 0,
-                y: 0
-            };
-            api.addRelationAndVertexAtPositionToVertex(
-                vertex,
-                dummyPosition,
-                callback
-            );
-        };
-        api.addRelationAndVertexAtPositionToVertex = function (vertex, newVertexPosition, callback) {
+        api.addRelationAndVertexToVertex = function (vertex, sourceBubble, callback) {
             $.ajax({
                 type: 'POST',
                 url: vertex.getUri(),
                 dataType: 'json'
             }).success(function (tripleJson) {
-                var triple = Triple.createUsingServerTripleAndNewVertexPosition(
-                    vertex,
-                    tripleJson,
-                    newVertexPosition
+                var triple = Triple.createIntoSourceBubble(
+                    sourceBubble,
+                    tripleJson
                 );
-                if (callback != undefined) {
+                if(callback !== undefined){
                     callback(triple, tripleJson);
                 }
+                EventBus.publish(
+                    '/event/ui/graph/vertex_and_relation/added/',
+                    [triple, sourceBubble]
+                );
+
             });
         };
         api.remove = function (vertex, callback) {

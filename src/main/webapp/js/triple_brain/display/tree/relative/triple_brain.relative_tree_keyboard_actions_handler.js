@@ -8,8 +8,9 @@ define([
     "triple_brain.selection_handler",
     "triple_brain.vertex",
     "triple_brain.ui.utils",
-    "triple_brain.ui.identification_menu"
-], function ($, EventBus, RelativeTreeCenterVertex, SelectionHandler, VertexService, UiUtils, IdentificationMenu) {
+    "triple_brain.ui.identification_menu",
+    "triple_brain.graph_displayer"
+], function ($, EventBus, RelativeTreeCenterVertex, SelectionHandler, VertexService, UiUtils, IdentificationMenu, GraphDisplayer) {
     "use strict";
     var api = {},
         tabKeyNumber = 9,
@@ -100,20 +101,13 @@ define([
 
 
     function tabAction(selectedElement) {
-        if (!selectedElement.isVertex()) {
+        if (selectedElement.isRelation()) {
             return;
         }
-        VertexService.addRelationAndVertexToVertex(
-            selectedElement, function (triple) {
-                if (selectedElement.hasHiddenRelationsContainer()) {
-                    selectedElement.getHiddenRelationsContainer().remove();
-                }
-                var destinationHtml = triple.destinationVertex().getHtml();
-                if (!UiUtils.isElementFullyOnScreen(destinationHtml)) {
-                    destinationHtml.centerOnScreenWithAnimation();
-                }
-            }
-        );
+        var menuHandler = selectedElement.isVertex() ?
+            GraphDisplayer.getVertexMenuHandler() :
+            GraphDisplayer.getGroupRelationMenuHandler();
+        menuHandler.forSingle().addChildAction(selectedElement);
     }
 
     function leftAction(selectedElement) {

@@ -2,8 +2,11 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-        "triple_brain.graph_displayer"
-    ], function (GraphDisplayer) {
+        "triple_brain.graph_displayer",
+        "triple_brain.event_bus",
+        "triple_brain.ui.utils",
+        "triple_brain.ui.vertex_hidden_neighbor_properties_indicator"
+    ], function (GraphDisplayer, EventBus, UiUtils) {
         "use strict";
         var api = {};
         api.withHtml = function (html) {
@@ -95,6 +98,43 @@ define([
                     container.find("> .group-relation")
                 );
         };
+
+        Self.prototype.hasHiddenRelationsContainer = function(){
+            return undefined !== this.getHiddenRelationsContainer();
+        };
+
+        Self.prototype.setHiddenRelationsContainer = function(hiddenRelationsContainer){
+            this.html.data(
+                "hidden_properties_indicator",
+                hiddenRelationsContainer
+            );
+        };
+
+        Self.prototype.getHiddenRelationsContainer = function(){
+            return this.html.data(
+                "hidden_properties_indicator"
+            );
+        };
+
+        Self.prototype.removeHiddenRelationsContainer = function(){
+            if (this.hasHiddenRelationsContainer()) {
+                this.getHiddenRelationsContainer().remove();
+            }
+            this.html.removeData(
+                "hidden_properties_indicator"
+            );
+        };
+
+        EventBus.subscribe(
+            '/event/ui/graph/vertex_and_relation/added/',
+            function(event, triple, sourceBubble){
+                sourceBubble.removeHiddenRelationsContainer();
+                var destinationHtml = triple.destinationVertex().getHtml();
+                if (!UiUtils.isElementFullyOnScreen(destinationHtml)) {
+                    destinationHtml.centerOnScreenWithAnimation();
+                }
+            }
+        );
         return api;
     }
 );

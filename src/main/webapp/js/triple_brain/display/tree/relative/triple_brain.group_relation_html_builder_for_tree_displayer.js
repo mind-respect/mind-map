@@ -5,18 +5,22 @@ define([
         "triple_brain.relative_tree_displayer_templates",
         "triple_brain.ui.group_relation",
         "triple_brain.selection_handler",
+        "triple_brain.graph_element_main_menu",
+        "triple_brain.graph_displayer",
         "jquery-ui"
     ],
-    function(RelativeTreeTemplates, GroupRelationUi, SelectionHandler){
+    function (RelativeTreeTemplates, GroupRelationUi, SelectionHandler, GraphElementMainMenu, GraphDisplayer) {
         var api = {
-            withServerFacade : function (serverFacade) {
+            withServerFacade: function (serverFacade) {
                 return new Self(serverFacade);
             }
         };
-        function Self(serverFacade){
+
+        function Self(serverFacade) {
             this.serverFacade = serverFacade;
         }
-        Self.prototype.create = function(){
+
+        Self.prototype.create = function () {
             this.html = $(
                 RelativeTreeTemplates['group_relation'].merge()
             ).data("group_relation", this.serverFacade);
@@ -24,19 +28,30 @@ define([
             this._addArrow();
             this._handleClick();
             this._createMenu();
-            return GroupRelationUi.withHtml(
+            var groupRelation = GroupRelationUi.withHtml(
                 this.html
             );
+            groupRelation.hideButtons();
+            return groupRelation;
         };
 
-        Self.prototype._createMenu = function() {
-            this.html.append(
-                $("<div class='menu'>")
+        Self.prototype._createMenu = function () {
+            var menu = $("<div class='menu'>");
+            GraphElementMainMenu.addRelevantButtonsInMenu(
+                menu,
+                GraphDisplayer.getGroupRelationMenuHandler().forSingle()
+            );
+            this.html[
+                this.serverFacade.isLeftOriented ?
+                    "prepend" :
+                    "append"
+                ](
+                menu
             );
         };
 
-        Self.prototype._handleClick = function(){
-            this.html.click(function(event){
+        Self.prototype._handleClick = function () {
+            this.html.click(function (event) {
                 event.stopPropagation();
                 SelectionHandler.setToSingleGroupRelation(
                     GroupRelationUi.withHtml(
@@ -46,16 +61,16 @@ define([
             });
         };
 
-        Self.prototype._addLabel = function(){
+        Self.prototype._addLabel = function () {
             var labelHtml = $(
                 RelativeTreeTemplates['group_relation_label_container'].merge({
                     label: this.serverFacade.getIdentification().getLabel()
                 })
             ).appendTo(this.html);
-            this._showDescriptionOnLabelClick(labelHtml);
+            this._setupDescriptionOnLabel(labelHtml);
         };
 
-        Self.prototype._showDescriptionOnLabelClick = function(labelHtml){
+        Self.prototype._setupDescriptionOnLabel = function (labelHtml) {
             var identification = this.serverFacade.getIdentification();
             labelHtml.attr(
                 "data-toggle", "popover"
@@ -64,11 +79,14 @@ define([
             ).attr(
                 "data-content", identification.getComment()
             ).popover({
-                    container:"body"
-                });
+                    container: "body",
+                    placement: this.serverFacade.isLeftOriented ? "right" : "left",
+                    trigger: "manual"
+                }
+            );
         };
 
-        Self.prototype._addArrow = function(){
+        Self.prototype._addArrow = function () {
             this.html.append("<span class='arrow'>");
         };
         return api;

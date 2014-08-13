@@ -11,41 +11,29 @@ define([
     function (IdUriUtils, EventBus, GraphDisplayer, VertexServerFacade, EdgeServerFacade) {
         var api = {};
         api.createUsingServerTriple = function (sourceVertex, tripleJson) {
-            var dummyPosition = {
-                x: 0,
-                y: 0
-            };
-            api.createUsingServerTripleAndNewVertexPosition(
+            api.createIntoSourceBubble(
                 sourceVertex,
-                tripleJson,
-                dummyPosition
+                tripleJson
             );
         };
-        api.createUsingServerTripleAndNewVertexPosition = function (sourceVertex, tripleJson, newVertexPosition) {
-            tripleJson.end_vertex.position = {
-                x : newVertexPosition.x,
-                y : newVertexPosition.y
-            };
-
+        api.createIntoSourceBubble = function (sourceBubble, tripleJson) {
             var destinationVertex = GraphDisplayer.addVertex(
                 VertexServerFacade.fromServerFormat(tripleJson.end_vertex),
-                sourceVertex
+                sourceBubble
             );
+            var parentVertex = sourceBubble.isGroupRelation() ?
+                sourceBubble.getParentVertex() : sourceBubble;
+
             var edge = GraphDisplayer.addEdge(
                 EdgeServerFacade.fromServerFormat(tripleJson.edge),
-                sourceVertex,
+                parentVertex,
                 destinationVertex
             );
-            var newTriple  = new Triple(
-                sourceVertex,
+            return new Triple(
+                parentVertex,
                 edge,
                 destinationVertex
             );
-            EventBus.publish(
-                '/event/ui/graph/vertex_and_relation/added/',
-                [newTriple]
-            );
-            return newTriple;
         };
 
         function Triple(sourceVertex, edge, destinationVertex) {

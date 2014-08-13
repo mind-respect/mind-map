@@ -7,7 +7,7 @@ define([
     "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
     "triple_brain.bubble",
     "twitter_bootstrap"
-], function (GraphDisplayer, EventBus, HiddenPropertiesIndicator, Bubble) {
+], function (GraphDisplayer, EventBus, PropertiesIndicator, Bubble) {
     "use strict";
     var api = {};
     api.withHtml = function (html) {
@@ -36,9 +36,7 @@ define([
     Self.prototype.getNumberOfRelationsToFlag = function () {
         return this.getGroupRelation().getNumberOfVertices();
     };
-    Self.prototype.expand = function () {
-        this.getGroupRelation().getVertices();
-    };
+
     Self.prototype.getGroupRelation = function () {
         return this.html.data(
             "group_relation"
@@ -87,6 +85,8 @@ define([
     };
     Self.prototype.deselect = function () {
         this.html.removeClass("selected");
+        this.hideButtons();
+        this._hideDescription();
     };
     Self.prototype.isVertex = function () {
         return false;
@@ -98,14 +98,65 @@ define([
         return true;
     };
 
+    Self.prototype.makeSingleSelected = function () {
+        this.showButtons();
+        this._showDescription();
+    };
+
+    Self.prototype.showButtons = function(){
+        this._getMenuHtml().show();
+    };
+
+    Self.prototype.hideButtons = function(){
+        this._getMenuHtml().hide();
+    };
+
+    Self.prototype._getMenuHtml = function () {
+        return this.html.find('> .menu');
+    };
+
+    Self.prototype._showDescription = function () {
+        this._getLabelHtml().popover('show');
+    };
+
+    Self.prototype._hideDescription = function () {
+        this._getLabelHtml().popover('hide');
+    };
+
+    Self.prototype._getLabelHtml = function () {
+        return this.html.find('> .label');
+    };
+
+    Self.prototype.hasHiddenRelationsContainer = function(){
+        return this.bubble.hasHiddenRelationsContainer();
+    };
+
+    Self.prototype.setHiddenRelationsContainer = function(hiddenRelationsContainer){
+        this.bubble.setHiddenRelationsContainer(
+            hiddenRelationsContainer
+        );
+    };
+
+    Self.prototype.getHiddenRelationsContainer = function(){
+        return this.bubble.getHiddenRelationsContainer();
+    };
+
+    Self.prototype.removeHiddenRelationsContainer = function(){
+        this.bubble.removeHiddenRelationsContainer();
+    };
+
     Self.prototype.getOriginalServerObject = Self.prototype.getGroupRelation;
 
     EventBus.subscribe(
         "/event/ui/group_relation/visit_after_graph_drawn",
         function (event, groupRelationUi) {
-            HiddenPropertiesIndicator.withVertex(
+            var indicator = PropertiesIndicator.withVertex(
                 groupRelationUi
-            ).build();
+            );
+            groupRelationUi.setHiddenRelationsContainer(
+                indicator
+            );
+            indicator.build();
         }
     );
     return api;

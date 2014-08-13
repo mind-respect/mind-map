@@ -4,7 +4,6 @@
 define([
         "jquery",
         "triple_brain.graph_displayer",
-        "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
         "triple_brain.vertex",
         "triple_brain.id_uri",
         "triple_brain.point",
@@ -15,11 +14,10 @@ define([
         "triple_brain.event_bus",
         "triple_brain.image_displayer",
         "triple_brain.ui.graph_element",
-        "triple_brain.selection_handler",
         "triple_brain.graph_element_button",
         "jquery.center-on-screen"
     ],
-    function ($, GraphDisplayer, PropertiesIndicator, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, ImageDisplayer, GraphElementUi, SelectionHandler, GraphElementButton) {
+    function ($, GraphDisplayer, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, ImageDisplayer, GraphElementUi, GraphElementButton) {
         "use strict";
         var api = {};
         api.getWhenEmptyLabel = function () {
@@ -186,27 +184,7 @@ define([
                 "totalNumberOfEdges"
             );
         };
-        api.Object.prototype.buildHiddenNeighborPropertiesIndicator = function () {
-            var propertiesIndicator = PropertiesIndicator.withVertex(
-                this
-            );
-            this.html.data(
-                "hidden_properties_indicator",
-                propertiesIndicator
-            );
-            propertiesIndicator.build();
-        };
-        api.Object.prototype.hasHiddenRelations = function () {
-            return this.isALeaf() && this.getTotalNumberOfEdges() > 1;
-        };
-        api.Object.prototype.hasHiddenRelationsContainer = function () {
-            return undefined !== this.getHiddenRelationsContainer();
-        };
-        api.Object.prototype.getHiddenRelationsContainer = function () {
-            return this.html.data(
-                "hidden_properties_indicator"
-            );
-        };
+
         api.Object.prototype.width = function () {
             return this.html.width();
         };
@@ -335,18 +313,7 @@ define([
                 connectedEdges[i].remove();
             }
         };
-        api.Object.prototype.remove = function () {
-            SelectionHandler.removeVertex(this);
-            if (this.hasHiddenRelationsContainer()) {
-                this.getHiddenRelationsContainer().remove();
-            }
-            if (this.isCenterVertex()) {
-                this.html.closest(".vertex-container").remove();
-            } else {
-                this.html.closest(".vertex-tree-container").remove();
-            }
 
-        };
         api.Object.prototype.suggestions = function () {
             return this.html.data('suggestions');
         };

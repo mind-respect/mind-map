@@ -23,28 +23,12 @@ define([
     api.forSingle = function () {
         var subApi = {};
         subApi.addChild = function(event, sourceVertex){
+            subApi.addChildAction(sourceVertex);
+        };
+        subApi.addChildAction = function(sourceVertex){
             VertexService.addRelationAndVertexToVertex(
-                sourceVertex, function (triple, tripleServerFormat) {
-                    var sourceVertex = RelativeTreeVertex.ofVertex(
-                        triple.sourceVertex()
-                    );
-                    if(sourceVertex.hasHiddenRelationsContainer()){
-                        sourceVertex.getHiddenRelationsContainer().remove();
-                    }
-                    var destinationHtml = triple.destinationVertex().getHtml();
-                    if (!UiUtils.isElementFullyOnScreen(destinationHtml)) {
-                        destinationHtml.centerOnScreenWithAnimation();
-                    }
-                    RelativeTreeVertex.ofVertex(
-                        triple.destinationVertex()
-                    ).resetOtherInstances();
-                    sourceVertex.applyToOtherInstances(function (vertex) {
-                        Triple.createUsingServerTriple(
-                            vertex,
-                            tripleServerFormat
-                        );
-                    });
-                }
+                sourceVertex,
+                sourceVertex
             );
         };
         subApi.remove = function(event, vertex){

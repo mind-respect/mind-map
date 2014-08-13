@@ -1,12 +1,12 @@
 define([
-    "require",
-    "jquery",
-    "triple_brain.event_bus",
-    "triple_brain.id_uri",
-    "triple_brain.user",
-    "triple_brain.graph_element",
-    "triple_brain.edge_server_facade"
-],
+        "require",
+        "jquery",
+        "triple_brain.event_bus",
+        "triple_brain.id_uri",
+        "triple_brain.user",
+        "triple_brain.graph_element",
+        "triple_brain.edge_server_facade"
+    ],
     function (require, $, EventBus, IdUriUtils, UserService, GraphElement, EdgeServerFacade) {
         var api = {};
         api.add = function (sourceVertex, destinationVertex, callback) {
@@ -26,43 +26,44 @@ define([
         api.remove = function (edge, callback) {
             var edgeUri = edge.getUri();
             $.ajax({
-                type:'DELETE',
-                url:edgeUri
+                type: 'DELETE',
+                url: edgeUri
             }).success(function () {
-                    var sourceVertex = edge.sourceVertex(),
-                        destinationVertex = edge.destinationVertex(),
-                        sourceVertexUri = sourceVertex.getUri(),
-                        destinationVertexUri = destinationVertex.getUri(),
-                        sourceVertexId = sourceVertex.getId(),
-                        destinationVertexId = destinationVertex.getId();
-                    callback(
+                var sourceVertex = edge.sourceVertex(),
+                    destinationVertex = edge.destinationVertex(),
+                    sourceVertexUri = sourceVertex.getUri(),
+                    destinationVertexUri = destinationVertex.getUri(),
+                    sourceVertexId = sourceVertex.getId(),
+                    destinationVertexId = destinationVertex.getId();
+                callback(
+                    edge,
+                    edgeUri,
+                    sourceVertexUri,
+                    destinationVertexUri
+                );
+                EventBus.publish(
+                    '/event/ui/graph/relation/deleted', [
                         edge,
                         edgeUri,
                         sourceVertexUri,
-                        destinationVertexUri
-                    );
-                    EventBus.publish(
-                        '/event/ui/graph/relation/deleted', [
-                            edge,
-                            edgeUri,
-                            sourceVertexUri,
-                            destinationVertexUri,
-                            sourceVertexId,
-                            destinationVertexId
-                        ]
-                    );
-                });
+                        destinationVertexUri,
+                        sourceVertexId,
+                        destinationVertexId
+                    ]
+                );
+            });
         };
-        api.updateLabel = function (edge, label) {
+        api.updateLabel = function (edge, label, callback) {
             $.ajax({
-                type:'POST',
-                url:edge.getUri() + "/label" + '?label=' + label
+                type: 'POST',
+                url: edge.getUri() + "/label" + '?label=' + label
             }).success(function () {
-                    EventBus.publish(
-                        '/event/ui/graph/edge/label/updated',
-                        edge
-                    );
-                });
+                callback(edge);
+                EventBus.publish(
+                    '/event/ui/graph/edge/label/updated',
+                    edge
+                );
+            });
         };
         api.addSameAs = function (edge, sameAs, callback) {
             sameAs.setType("same_as");
@@ -100,8 +101,8 @@ define([
             GraphElement.addIdentification(
                 edge,
                 type,
-                function(edge, updatedIdentification){
-                    if(callback !== undefined){
+                function (edge, updatedIdentification) {
+                    if (callback !== undefined) {
                         callback();
                     }
                     publishIdentificationAdded(
@@ -128,8 +129,8 @@ define([
         };
         api.inverse = function (edge, callback) {
             $.ajax({
-                type:'PUT',
-                url:edge.getUri() + "/inverse"
+                type: 'PUT',
+                url: edge.getUri() + "/inverse"
             }).success(callback);
         };
         return api;
@@ -141,8 +142,8 @@ define([
             var sourceVertexUriFormatted = IdUriUtils.encodeUri(sourceVertexUri);
             var destinationVertexUriFormatted = IdUriUtils.encodeUri(destinationVertexUri);
             var response = $.ajax({
-                type:'POST',
-                url:edgesUrl() +
+                type: 'POST',
+                url: edgesUrl() +
                     '?sourceVertexId=' + sourceVertexUriFormatted +
                     '&destinationVertexId=' + destinationVertexUriFormatted
             }).success(function () {
@@ -160,15 +161,15 @@ define([
             );
         }
 
-        function publishIdentificationAdded(edge, identification){
+        function publishIdentificationAdded(edge, identification) {
             EventBus.publish(
                 '/event/ui/graph/edge/identification/added',
                 [edge, identification]
             );
         }
 
-        function getEdgeServerFacade(){
-            if(undefined === EdgeServerFacade){
+        function getEdgeServerFacade() {
+            if (undefined === EdgeServerFacade) {
                 EdgeServerFacade = require("triple_brain.edge_server_facade");
             }
             return EdgeServerFacade;

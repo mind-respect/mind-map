@@ -7,9 +7,12 @@ define([
         "triple_brain.event_bus",
         "triple_brain.ui.edge",
         "triple_brain.object_utils",
-        "triple_brain.bubble"
+        "triple_brain.bubble",
+        "triple_brain.ui.triple",
+        "triple_brain.selection_handler",
+        "triple_brain.ui.vertex_hidden_neighbor_properties_indicator"
     ],
-    function ($, VertexUi, EventBus, EdgeUi, ObjectUtils, Bubble) {
+    function ($, VertexUi, EventBus, EdgeUi, ObjectUtils, Bubble, Triple, SelectionHandler, PropertiesIndicator) {
         var api = {},
             otherInstancesKey = "otherInstances";
         api.ofVertex = function (vertex) {
@@ -120,6 +123,49 @@ define([
         api.Object.prototype.getBubble = function () {
             return this.bubble;
         };
+
+        api.Object.prototype.buildHiddenNeighborPropertiesIndicator = function () {
+            var propertiesIndicator = PropertiesIndicator.withVertex(
+                this
+            );
+            this.html.data(
+                "hidden_properties_indicator",
+                propertiesIndicator
+            );
+            propertiesIndicator.build();
+        };
+
+        api.Object.prototype.hasHiddenRelations = function () {
+            return this.isALeaf() && this.getTotalNumberOfEdges() > 1;
+        };
+        api.Object.prototype.hasHiddenRelationsContainer = function(){
+            return this.bubble.hasHiddenRelationsContainer();
+        };
+
+        api.Object.prototype.setHiddenRelationsContainer = function(hiddenRelationsContainer){
+            this.bubble.setHiddenRelationsContainer(
+                hiddenRelationsContainer
+            );
+        };
+
+        api.Object.prototype.getHiddenRelationsContainer = function(){
+            return this.bubble.getHiddenRelationsContainer();
+        };
+
+        api.Object.prototype.removeHiddenRelationsContainer = function(){
+            this.bubble.removeHiddenRelationsContainer();
+        };
+
+        api.Object.prototype.remove = function () {
+            SelectionHandler.removeVertex(this);
+            this.bubble.removeHiddenRelationsContainer();
+            if (this.isCenterVertex()) {
+                this.html.closest(".vertex-container").remove();
+            } else {
+                this.html.closest(".vertex-tree-container").remove();
+            }
+        };
+
         VertexUi.buildCommonConstructors(api);
         EventBus.subscribe(
             '/event/ui/graph/vertex/same_as/added',
@@ -172,6 +218,22 @@ define([
                 var treeVertex = api.ofVertex(vertex);
                 treeVertex.applyToOtherInstances(function (vertex) {
                     vertex.removeSameAs(sameAs);
+                });
+            }
+        );
+        EventBus.subscribe(
+            '/event/ui/graph/vertex_and_relation/added/',
+            function(event, triple, tripleServerFormat){
+                var sourceBubble = triple.sourceVertex();
+                if(!sourceBubble.isVertex()){
+                    return;
+                }
+                triple.destinationVertex().resetOtherInstances();
+                sourceBubble.applyToOtherInstances(function (vertex) {
+                    Triple.createUsingServerTriple(
+                        vertex,
+                        tripleServerFormat
+                    );
                 });
             }
         );

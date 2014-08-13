@@ -3,21 +3,21 @@
  */
 
 define([
-    "jquery",
-    "triple_brain.freebase_uri",
-    "triple_brain.mind-map_template",
-    "triple_brain.ui.graph",
-    "triple_brain.point",
-    "triple_brain.identification_server_facade",
-    "triple_brain.vertex",
-    "triple_brain.edge",
-    "triple_brain.ui.utils",
-    "triple_brain.graph_displayer",
-    "triple_brain.graph_element_menu"
-],
+        "jquery",
+        "triple_brain.freebase_uri",
+        "triple_brain.mind-map_template",
+        "triple_brain.ui.graph",
+        "triple_brain.point",
+        "triple_brain.identification_server_facade",
+        "triple_brain.vertex",
+        "triple_brain.edge",
+        "triple_brain.ui.utils",
+        "triple_brain.graph_displayer",
+        "triple_brain.graph_element_menu"
+    ],
     function ($, FreebaseUri, MindMapTemplate, GraphUi, Point, IdentificationFacade, VertexService, EdgeService, UiUtils, GraphDisplayer, GraphElementMenu) {
         return {
-            ofVertex:function (vertex) {
+            ofVertex: function (vertex) {
                 return new SuggestionMenu(vertex);
             }
         };
@@ -34,7 +34,7 @@ define([
                     html
                 );
                 addTitle();
-                if(GraphDisplayer.allowsMovingVertices()){
+                if (GraphDisplayer.allowsMovingVertices()) {
                     addInstructions();
                 }
                 addSuggestionList();
@@ -66,67 +66,38 @@ define([
                 $.each(vertex.suggestions(), function () {
                     var suggestion = this;
                     var htmlSuggestion = $(MindMapTemplate['suggestion'].merge({
-                        label:suggestion.label()
+                        label: suggestion.label()
                     }));
                     htmlSuggestion.data(
                         "typeId",
                         FreebaseUri.idInFreebaseURI(suggestion.domainUri())
                     );
                     suggestionsList.append(htmlSuggestion);
-                    if(GraphDisplayer.allowsMovingVertices()){
-                        htmlSuggestion.draggable({
-                            appendTo : $("body"),
-                            zIndex:101,
-                            helper:"clone",
-                            start:function(event, ui){
-                                var htmlSuggestion = $(
-                                    ui.helper
-                                );
-                                htmlSuggestion.addClass(
-                                    "suggestion"
-                                );
-                            }
-                        });
-                        htmlSuggestion.bind('dragstop', function(event, ui){
-                            var htmlSuggestion = $(ui.helper);
-                            htmlSuggestion.data(
-                                "typeId",
-                                $(this).data("typeId")
-                            );
-                            addHtmlSuggestionAsVertexAndRelationInMap(
-                                htmlSuggestion
-                            );
-                        });
-                    }else{
-                        var addSuggestionButton = $(
-                            "<button class='add-button-in-list'>"
+
+                    var addSuggestionButton = $(
+                        "<button class='add-button-in-list'>"
+                    );
+                    addSuggestionButton.append(
+                        "+"
+                    );
+                    addSuggestionButton.on("click", function () {
+                        addHtmlSuggestionAsVertexAndRelationInMap(
+                            $(this).closest("li")
                         );
-                        addSuggestionButton.append(
-                            "+"
-                        );
-                        addSuggestionButton.on("click", function(){
-                            addHtmlSuggestionAsVertexAndRelationInMap(
-                                $(this).closest("li")
-                            );
-                        });
-                        htmlSuggestion.prepend(
-                            addSuggestionButton
-                        );
-                    }
+                    });
+                    htmlSuggestion.prepend(
+                        addSuggestionButton
+                    );
+
                 });
 
-                function addHtmlSuggestionAsVertexAndRelationInMap(suggestionAsHtml){
-                    var offset = suggestionAsHtml.offset();
-                    var newVertexPosition = Point.fromCoordinates(
-                        offset.left + suggestionAsHtml.width() / 2,
-                        offset.top
-                    );
+                function addHtmlSuggestionAsVertexAndRelationInMap(suggestionAsHtml) {
                     var typeId = suggestionAsHtml.data(
                         'typeId'
                     );
-                    VertexService.addRelationAndVertexAtPositionToVertex(
+                    VertexService.addRelationAndVertexToVertex(
                         vertex,
-                        newVertexPosition,
+                        vertex,
                         function (triple) {
                             var suggestionLabel = suggestionAsHtml.find(
                                 "> .text"

@@ -7,23 +7,23 @@ define([
     function ($, MindMapTemplate, EventBus, GraphDisplayer) {
         "use strict";
         return {
-            withVertex: function (vertex) {
-                return new HiddenNeighborPropertiesIndicator(vertex);
+            withVertex: function (bubble) {
+                return new HiddenNeighborPropertiesIndicator(bubble);
             }
         };
-        function HiddenNeighborPropertiesIndicator(vertex) {
+        function HiddenNeighborPropertiesIndicator(bubble) {
             var hiddenNeighborPropertiesContainer;
             this.build = function () {
-                var numberOfHiddenRelationsToFlag = vertex.getNumberOfRelationsToFlag();
+                var numberOfHiddenRelationsToFlag = bubble.getNumberOfRelationsToFlag();
                 if(numberOfHiddenRelationsToFlag > 10){
                     numberOfHiddenRelationsToFlag = 10;
                 }
-                var isLeftOriented = vertex.isToTheLeft();
+                var isLeftOriented = bubble.isToTheLeft();
                 hiddenNeighborPropertiesContainer = $(
                     MindMapTemplate[
                         'hidden_property_container'
                         ].merge()
-                ).data("vertex", vertex);
+                ).data("vertex", bubble);
                 var imageUrl = "/css/images/icons/vertex/" +
                     numberOfHiddenRelationsToFlag +
                     "_"
@@ -36,7 +36,7 @@ define([
                 hiddenNeighborPropertiesContainer.append(
                     img
                 );
-                vertex.getHtml()[isLeftOriented ? "prepend" : "append"](
+                bubble.getHtml()[isLeftOriented ? "prepend" : "append"](
                     hiddenNeighborPropertiesContainer
                 );
                 hiddenNeighborPropertiesContainer.on(
@@ -56,7 +56,7 @@ define([
             var $this = $(this);
             var vertex = $this.data("vertex");
             vertex.addChildTree();
-            $this.remove();
+            vertex.removeHiddenRelationsContainer();
         }
     }
 );
