@@ -126,7 +126,7 @@ define([
                     currentClickHandler = GraphDisplayer.getGroupRelationMenuHandler().forSingle();
                 } else {
                     currentClickHandler = selected.isVertex() ?
-                        vertexMenuHandler.forSingle() :
+                        vertexMenuHandler.forSingle :
                         relationMenuHandler.forSingle();
                 }
             } else {
