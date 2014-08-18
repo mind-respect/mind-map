@@ -3,15 +3,22 @@
  */
 define([
         "triple_brain.vertex",
-        "triple_brain.edge"
+        "triple_brain.edge",
+        "triple_brain.mind_map_info"
     ],
-    function (VertexService, EdgeService) {
-        var api = {};
-        api.forSingle = {};
-        api.forSingle.addChild = function (event, groupRelation) {
-            api.forSingle.addChildAction(groupRelation);
+    function (VertexService, EdgeService, MindMapInfo) {
+        var api = {},
+            forSingle = {},
+            forSingleNotOwned = {};
+        api.forSingle = function(){
+            return MindMapInfo.isViewOnly() ?
+                forSingleNotOwned:
+                forSingle;
         };
-        api.forSingle.addChildAction = function (groupRelation) {
+        forSingle.addChild = function (event, groupRelation) {
+            forSingle.addChildAction(groupRelation);
+        };
+        forSingle.addChildAction = function (groupRelation) {
             VertexService.addRelationAndVertexToVertex(
                 groupRelation.getParentVertex(),
                 groupRelation,

@@ -6,57 +6,57 @@ define([
     "triple_brain.vertex",
     "triple_brain.graph_displayer",
     "triple_brain.graph_element_menu"
-], function($, VertexService, GraphDisplayer, GraphElementMenu){
-    var api = {};
+], function ($, VertexService, GraphDisplayer, GraphElementMenu) {
+    var api = {},
+        forSingle = {};
     api.forSingle = function(){
-        var subApi = {};
-        subApi.note = function(event, vertex){
-            var noteDialog = $(
-                "<div>"
-            ).attr(
-                "title", vertex.text()
-            ).append(
-                $("<textarea rows='' cols=''>").append(
-                    vertex.getNote()
-                )
-            );
-            var buttonsOptions = {};
-            buttonsOptions[$.t("vertex.menu.note.update")] = function (event) {
-                var dialog = $(this);
-                var textContainer = $(event.currentTarget).find(".ui-button-text");
-                textContainer.text(
+        return forSingle;
+    };
+    forSingle.note = function (event, vertex) {
+        var noteDialog = $(
+            "<div>"
+        ).attr(
+            "title", vertex.text()
+        ).append(
+            $("<textarea rows='' cols=''>").append(
+                vertex.getNote()
+            )
+        );
+        var buttonsOptions = {};
+        buttonsOptions[$.t("vertex.menu.note.update")] = function (event) {
+            var dialog = $(this);
+            var textContainer = $(event.currentTarget).find(".ui-button-text");
+            textContainer.text(
                     $.t("vertex.menu.note.saving") + " ..."
-                );
-                VertexService.updateNote(
-                    vertex,
-                    dialog.find("textarea").val(),
-                    function (vertex) {
-                        if(vertex.hasNote()){
-                            vertex.getNoteButtonInBubbleContent().show();
-                            vertex.getNoteButtonInMenu().hide();
-                        }else{
-                            vertex.getNoteButtonInBubbleContent().hide();
-                            vertex.getNoteButtonInMenu().show();
-                        }
-                        $(dialog).dialog("close");
-                        vertex.readjustLabelWidth();
-                    }
-                );
-            };
-            var menuExtraOptions = {
-                height:350,
-                width:500,
-                dialogClass:"vertex-note",
-                modal:true,
-                buttons:buttonsOptions
-            };
-            GraphElementMenu.makeForMenuContentAndGraphElement(
-                noteDialog,
+            );
+            VertexService.updateNote(
                 vertex,
-                menuExtraOptions
+                dialog.find("textarea").val(),
+                function (vertex) {
+                    if (vertex.hasNote()) {
+                        vertex.getNoteButtonInBubbleContent().show();
+                        vertex.getNoteButtonInMenu().hide();
+                    } else {
+                        vertex.getNoteButtonInBubbleContent().hide();
+                        vertex.getNoteButtonInMenu().show();
+                    }
+                    $(dialog).dialog("close");
+                    vertex.readjustLabelWidth();
+                }
             );
         };
-        return subApi;
+        var menuExtraOptions = {
+            height: 350,
+            width: 500,
+            dialogClass: "vertex-note",
+            modal: true,
+            buttons: buttonsOptions
+        };
+        GraphElementMenu.makeForMenuContentAndGraphElement(
+            noteDialog,
+            vertex,
+            menuExtraOptions
+        );
     };
     return api;
 });

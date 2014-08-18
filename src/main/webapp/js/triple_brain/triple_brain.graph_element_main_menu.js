@@ -123,20 +123,20 @@ define([
             else if (1 === nbSelectedGraphElements) {
                 var selected = selectedElements.getSingleElement();
                 if (selected.isGroupRelation()) {
-                    currentClickHandler = GraphDisplayer.getGroupRelationMenuHandler().forSingle;
+                    currentClickHandler = GraphDisplayer.getGroupRelationMenuHandler().forSingle();
                 } else {
                     currentClickHandler = selected.isVertex() ?
-                        vertexMenuHandler.forSingle :
-                        relationMenuHandler.forSingle;
+                        vertexMenuHandler.forSingle() :
+                        relationMenuHandler.forSingle();
                 }
             } else {
                 var nbSelectedVertices = selectedElements.getNbSelectedVertices(),
                     nbSelectedRelations = selectedElements.getNbSelectedRelations(),
                     nbSelectedGroupRelations = selectedElements.getNbSelectedGroupRelations();
                 if (0 === nbSelectedVertices && 0 === nbSelectedGroupRelations) {
-                    currentClickHandler = relationMenuHandler.forGroup;
+                    currentClickHandler = relationMenuHandler.forGroup();
                 } else if (0 === nbSelectedRelations && 0 === nbSelectedGroupRelations) {
-                    currentClickHandler = vertexMenuHandler.forGroup;
+                    currentClickHandler = vertexMenuHandler.forGroup();
                 } else {
                     currentClickHandler = GraphDisplayer.getGraphElementMenuHandler();
                 }

@@ -3,9 +3,10 @@
  */
 define([
         "jquery",
-        "triple_brain.user"
+        "triple_brain.id_uri"
     ],
-    function ($, UserService) {"use strict";
+    function ($, IdUriUtils) {
+        "use strict";
         var api = {};
         api.getForCentralVertexUriAndDepth = function (centralVertexUri, depth, callback) {
             $.ajax({
@@ -14,35 +15,12 @@ define([
             }).success(callback);
         };
         api.graphUriForCentralVertexUriAndDepth = function (centerVertexUri, depth) {
-            if (isVertexUriOwnedByCurrentUser(centerVertexUri)) {
+            if (IdUriUtils.isVertexUriOwnedByCurrentUser(centerVertexUri)) {
                 return centerVertexUri + '/surround_graph/' + depth;
             } else {
-                return convertVertexUriToNonOwnedUri(centerVertexUri);
+                return IdUriUtils.convertVertexUriToNonOwnedUri(centerVertexUri);
             }
         };
         return api;
-        function isVertexUriOwnedByCurrentUser(uri) {
-            return UserService.authenticatedUserInCache().user_name ===
-                getOwnerFromUri(uri);
-        }
-
-        function getOwnerFromUri(uri) {
-            return uri.substring(
-                uri.indexOf("/users") + 7,
-                uri.indexOf("/graph")
-            );
-        }
-
-        function convertVertexUriToNonOwnedUri(uri) {
-            return "/service/users/" + getOwnerFromUri(uri) +
-                "/non_owned/vertex/" + getVertexShortId(uri) +
-                "/surround_graph"
-        }
-
-        function getVertexShortId(uri){
-            return uri.substring(
-                uri.indexOf("vertex/") + 7
-            );
-        }
     }
 );

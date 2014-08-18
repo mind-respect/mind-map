@@ -138,19 +138,19 @@ define([
             publishAboutToUpdate();
             publishResetGraph();
             $("#drawn_graph").empty();
+            var shouldPushState = !MindMapInfo.isCenterVertexUriDefinedInUrl() ||
+                MindMapInfo.getCenterVertexUri() !== centralVertexUri;
+            if (shouldPushState) {
+                history.pushState(
+                    {},
+                    '',
+                        "?bubble=" + centralVertexUri
+                );
+            }
             _implementation.displayUsingDepthAndCentralVertexUri(
                 centralVertexUri,
                 currentDepth(),
                 function (drawingInfo) {
-                    var shouldPushState = !MindMapInfo.isCenterVertexUriDefinedInUrl() ||
-                        MindMapInfo.getCenterVertexUriFromUrl() !== centralVertexUri;
-                    if (shouldPushState) {
-                        history.pushState(
-                            {},
-                            '',
-                                "?bubble=" + centralVertexUri
-                        );
-                    }
                     publishDrawingInfoUpdated(
                         drawingInfo,
                         centralVertexUri

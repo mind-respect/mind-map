@@ -17,20 +17,30 @@ define([
     "triple_brain.link_to_far_vertex_menu",
     "triple_brain.ui.suggestion_menu",
     "triple_brain.included_graph_elements_menu",
-    "triple_brain.ui.vertex"
-], function ($, VertexService, SelectionHandler, RelativeTreeVertex, UiUtils, Triple, IdentificationMenu, GraphDisplayer, VertexMenuHandlerCommon, DeleteMenu, EdgeUi, ImageMenu, LinkToFarVertexMenu, SuggestionMenu, IncludedGraphElementsMenu, Vertex) {
-    var api = {};
-    api.forSingle = {};
-    api.forSingle.addChild = function (event, sourceVertex) {
-        api.forSingle.addChildAction(sourceVertex);
+    "triple_brain.ui.vertex",
+    "triple_brain.mind_map_info"
+], function ($, VertexService, SelectionHandler, RelativeTreeVertex, UiUtils, Triple, IdentificationMenu, GraphDisplayer, VertexMenuHandlerCommon, DeleteMenu, EdgeUi, ImageMenu, LinkToFarVertexMenu, SuggestionMenu, IncludedGraphElementsMenu, Vertex, MindMapInfo) {
+    "use strict";
+    var api = {},
+        forSingle = {},
+        forSingleNotOwned = {},
+        forGroup = {},
+        forGroupNotOwned = {};
+    api.forSingle = function(){
+        return MindMapInfo.isViewOnly() ?
+            forSingleNotOwned :
+            forSingle;
     };
-    api.forSingle.addChildAction = function (sourceVertex) {
+    forSingle.addChild = function (event, sourceVertex) {
+        forSingle.addChildAction(sourceVertex);
+    };
+    forSingle.addChildAction = function (sourceVertex) {
         VertexService.addRelationAndVertexToVertex(
             sourceVertex,
             sourceVertex
         );
     };
-    api.forSingle.remove = function (event, vertex) {
+    forSingle.remove = function (event, vertex) {
         if (vertex.isAbsoluteDefaultVertex()) {
             return;
         }
@@ -72,64 +82,64 @@ define([
             });
         }
     };
-    api.forSingle.identify = function (event, vertex) {
+    forSingle.identify = function (event, vertex) {
         event.stopPropagation();
         IdentificationMenu.ofGraphElement(
             vertex
         ).create();
     };
-    api.forSingle.center = function (event, vertex) {
+    forSingle.center = function (event, vertex) {
         GraphDisplayer.displayUsingCentralVertex(
             vertex
         );
     };
-    api.forSingle.note = function (event, vertex) {
+    forSingle.note = function (event, vertex) {
         VertexMenuHandlerCommon.forSingle().note(
             event, vertex
         );
     };
-    api.forSingle.images = function (event, vertex) {
+    forSingle.images = function (event, vertex) {
         ImageMenu.ofVertex(
             vertex
         ).build();
     };
-    api.forSingle.connectTo = function (event, vertex) {
+    forSingle.connectTo = function (event, vertex) {
         LinkToFarVertexMenu.ofVertex(
             vertex
         ).create();
     };
-    api.forSingle.makePrivate = function (event, vertex) {
+    forSingle.makePrivate = function (event, vertex) {
         VertexService.makePrivate(vertex, function () {
             getMakePrivateButtons().hide();
             getMakePublicButtons().show();
         });
     };
-    api.forSingle.makePrivateCanDo = function (vertex) {
+    forSingle.makePrivateCanDo = function (vertex) {
         return vertex.isPublic();
     };
-    api.forSingle.makePublic = function (event, vertex) {
+    forSingle.makePublic = function (event, vertex) {
         VertexService.makePublic(vertex, function () {
             getMakePrivateButtons().show();
             getMakePublicButtons().hide();
         });
     };
-    api.forSingle.makePublicCanDo = function (vertex) {
+    forSingle.makePublicCanDo = function (vertex) {
         return !vertex.isPublic();
     };
-    api.forSingle.subElements = function (event, vertex) {
+    forSingle.subElements = function (event, vertex) {
         IncludedGraphElementsMenu.ofVertex(
             vertex
         ).create();
     };
-    api.forSingle.subElementsCanDo = function (vertex) {
+    forSingle.subElementsCanDo = function (vertex) {
         return vertex.hasIncludedGraphElements();
     };
-    api.forSingle.suggestions = function (event, vertex) {
+    forSingle.suggestions = function (event, vertex) {
         SuggestionMenu.ofVertex(
             vertex
         ).create();
     };
-    api.forSingle.suggestionsCanDo = function (vertex) {
+    forSingle.suggestionsCanDo = function (vertex) {
         return vertex.hasSuggestions();
     };
     function getMakePrivateButtons() {
@@ -139,8 +149,12 @@ define([
     function getMakePublicButtons() {
         return $("button[data-action=makePublic]");
     }
-    api.forGroup = {};
-    api.forGroup.group = function () {
+    api.forGroup = function(){
+        return MindMapInfo.isViewOnly() ?
+            forGroupNotOwned :
+            forGroup;
+    };
+    forGroup.group = function () {
         var selectedGraphElements = {
             edges: {},
             vertices: {}

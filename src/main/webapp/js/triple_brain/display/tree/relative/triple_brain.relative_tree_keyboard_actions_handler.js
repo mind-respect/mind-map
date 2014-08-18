@@ -9,8 +9,9 @@ define([
     "triple_brain.vertex",
     "triple_brain.ui.utils",
     "triple_brain.ui.identification_menu",
-    "triple_brain.graph_displayer"
-], function ($, EventBus, RelativeTreeCenterVertex, SelectionHandler, VertexService, UiUtils, IdentificationMenu, GraphDisplayer) {
+    "triple_brain.graph_displayer",
+    "triple_brain.mind_map_info"
+], function ($, EventBus, RelativeTreeCenterVertex, SelectionHandler, VertexService, UiUtils, IdentificationMenu, GraphDisplayer, MindMapInfo) {
     "use strict";
     var api = {},
         tabKeyNumber = 9,
@@ -91,7 +92,7 @@ define([
     }
 
     function iAction(selectedElement) {
-        if (selectedElement.isGroupRelation()) {
+        if (MindMapInfo.isViewOnly() || selectedElement.isGroupRelation()) {
             return;
         }
         IdentificationMenu.ofGraphElement(
@@ -101,13 +102,13 @@ define([
 
 
     function tabAction(selectedElement) {
-        if (selectedElement.isRelation()) {
+        if (MindMapInfo.isViewOnly() || selectedElement.isRelation()) {
             return;
         }
         var menuHandler = selectedElement.isVertex() ?
             GraphDisplayer.getVertexMenuHandler() :
             GraphDisplayer.getGroupRelationMenuHandler();
-        menuHandler.forSingle.addChildAction(selectedElement);
+        menuHandler.forSingle().addChildAction(selectedElement);
     }
 
     function leftAction(selectedElement) {

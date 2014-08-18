@@ -46,7 +46,7 @@ define(
                             handleHistoryBrowse();
                             LanguageManager.loadLocaleContent(function () {
                                 GraphDisplayer.displayUsingCentralVertexUri(
-                                    MindMapInfo.getCenterVertexUriFromUrl()
+                                    MindMapInfo.getCenterVertexUri()
                                 );
                                 translateText();
                                 GraphElementMainMenu.reset();
@@ -58,7 +58,7 @@ define(
                 function handleHistoryBrowse(){
                     $(window).on("popstate", function() {
                         GraphDisplayer.displayUsingCentralVertexUri(
-                            MindMapInfo.getCenterVertexUriFromUrl()
+                            MindMapInfo.getCenterVertexUri()
                         );
                     });
                 }

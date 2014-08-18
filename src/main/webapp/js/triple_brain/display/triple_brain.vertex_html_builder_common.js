@@ -68,7 +68,7 @@ define([
     api.addRelevantButtonsInMenu = function(menuContainer){
         GraphElementMainMenu.addRelevantButtonsInMenu(
             menuContainer,
-            GraphDisplayer.getVertexMenuHandler().forSingle
+            GraphDisplayer.getVertexMenuHandler().forSingle()
         );
     };
     api.initCache = function(vertex){

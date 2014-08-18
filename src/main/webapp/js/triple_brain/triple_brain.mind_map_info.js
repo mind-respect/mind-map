@@ -9,19 +9,31 @@ define([
     ],
     function (IdUriUtils, UserService) {
         "use strict";
-        var api = {};
+        var api = {},
+            isViewOnly;
         api.defaultVertexUri = function () {
             return UserService.currentUserUri() + '/graph/vertex/default'
         };
         api.isCenterVertexUriDefinedInUrl = function () {
-            return $.url().param("bubble") !== undefined;
+            return getCenterVertexUriInUrl() !== undefined;
         };
-        api.getCenterVertexUriFromUrl = function () {
-            var uriInUrl = $.url().param("bubble");
+        api.getCenterVertexUri = function () {
+            var uriInUrl = getCenterVertexUriInUrl();
             return uriInUrl === undefined ?
                 api.defaultVertexUri() :
                 uriInUrl;
         };
+        api.isViewOnly = function(){
+            if(isViewOnly === undefined){
+                isViewOnly = !IdUriUtils.isVertexUriOwnedByCurrentUser(
+                    getCenterVertexUriInUrl()
+                );
+            }
+            return isViewOnly;
+        };
         return api;
+        function getCenterVertexUriInUrl(){
+            return $.url().param("bubble");
+        }
     }
 );
