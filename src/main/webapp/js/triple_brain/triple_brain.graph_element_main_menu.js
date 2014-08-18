@@ -123,11 +123,11 @@ define([
             else if (1 === nbSelectedGraphElements) {
                 var selected = selectedElements.getSingleElement();
                 if (selected.isGroupRelation()) {
-                    currentClickHandler = GraphDisplayer.getGroupRelationMenuHandler().forSingle();
+                    currentClickHandler = GraphDisplayer.getGroupRelationMenuHandler().forSingle;
                 } else {
                     currentClickHandler = selected.isVertex() ?
                         vertexMenuHandler.forSingle :
-                        relationMenuHandler.forSingle();
+                        relationMenuHandler.forSingle;
                 }
             } else {
                 var nbSelectedVertices = selectedElements.getNbSelectedVertices(),

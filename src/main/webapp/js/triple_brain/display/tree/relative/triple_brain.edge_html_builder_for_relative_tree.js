@@ -98,7 +98,7 @@ define([
             edgeHtml.append(menu);
             GraphElementMainMenu.addRelevantButtonsInMenu(
                 menu,
-                GraphDisplayer.getRelationMenuHandler().forSingle()
+                GraphDisplayer.getRelationMenuHandler().forSingle
             );
         }
 

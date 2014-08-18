@@ -134,7 +134,7 @@ define([
     function displayOnlyRelevantButtonsInGraphElementMenu(graphElement) {
         var clickHandler = graphElement.isVertex() ?
             GraphDisplayer.getVertexMenuHandler().forSingle :
-            GraphDisplayer.getRelationMenuHandler().forSingle();
+            GraphDisplayer.getRelationMenuHandler().forSingle;
         graphElement.visitMenuButtons(function (button) {
             button.showOnlyIfApplicable(
                 clickHandler,

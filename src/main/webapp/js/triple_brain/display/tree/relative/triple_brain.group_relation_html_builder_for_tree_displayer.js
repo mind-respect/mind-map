@@ -39,7 +39,7 @@ define([
             var menu = $("<div class='menu'>");
             GraphElementMainMenu.addRelevantButtonsInMenu(
                 menu,
-                GraphDisplayer.getGroupRelationMenuHandler().forSingle()
+                GraphDisplayer.getGroupRelationMenuHandler().forSingle
             );
             this.html[
                 this.serverFacade.isLeftOriented ?

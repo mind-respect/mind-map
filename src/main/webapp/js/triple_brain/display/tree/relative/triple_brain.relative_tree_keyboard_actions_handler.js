@@ -107,7 +107,7 @@ define([
         var menuHandler = selectedElement.isVertex() ?
             GraphDisplayer.getVertexMenuHandler() :
             GraphDisplayer.getGroupRelationMenuHandler();
-        menuHandler.forSingle().addChildAction(selectedElement);
+        menuHandler.forSingle.addChildAction(selectedElement);
     }
 
     function leftAction(selectedElement) {
