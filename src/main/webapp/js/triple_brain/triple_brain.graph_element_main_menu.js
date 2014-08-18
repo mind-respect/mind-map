@@ -134,9 +134,9 @@ define([
                     nbSelectedRelations = selectedElements.getNbSelectedRelations(),
                     nbSelectedGroupRelations = selectedElements.getNbSelectedGroupRelations();
                 if (0 === nbSelectedVertices && 0 === nbSelectedGroupRelations) {
-                    currentClickHandler = relationMenuHandler.forGroup();
+                    currentClickHandler = relationMenuHandler.forGroup;
                 } else if (0 === nbSelectedRelations && 0 === nbSelectedGroupRelations) {
-                    currentClickHandler = vertexMenuHandler.forGroup();
+                    currentClickHandler = vertexMenuHandler.forGroup;
                 } else {
                     currentClickHandler = GraphDisplayer.getGraphElementMenuHandler();
                 }
