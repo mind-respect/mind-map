@@ -56,6 +56,7 @@ define([
         this.cloneInto = function (container) {
             var copyBehavior = true;
             html.clone(copyBehavior).appendTo(container);
+            container.find("> button").show();
         };
     }
 });
