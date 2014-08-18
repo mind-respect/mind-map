@@ -13,7 +13,7 @@ define([
         api.defaultVertexUri = function () {
             return UserService.currentUserUri() + '/graph/vertex/default'
         };
-        api.isCenterVertexUriDefinedInUrl = function(){
+        api.isCenterVertexUriDefinedInUrl = function () {
             return $.url().param("bubble") !== undefined;
         };
         api.getCenterVertexUriFromUrl = function () {
