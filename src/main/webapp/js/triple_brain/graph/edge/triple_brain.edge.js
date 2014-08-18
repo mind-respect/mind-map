@@ -58,7 +58,9 @@ define([
                 type: 'POST',
                 url: edge.getUri() + "/label" + '?label=' + label
             }).success(function () {
-                callback(edge);
+                if(callback !== undefined){
+                    callback(edge);
+                }
                 EventBus.publish(
                     '/event/ui/graph/edge/label/updated',
                     edge
