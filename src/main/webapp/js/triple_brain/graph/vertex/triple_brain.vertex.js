@@ -34,7 +34,7 @@ define([
                     sourceBubble,
                     tripleJson
                 );
-                if(callback !== undefined){
+                if (callback !== undefined) {
                     callback(triple, tripleJson);
                 }
                 EventBus.publish(
@@ -240,6 +240,28 @@ define([
                 }
             );
         };
+        api.makeCollectionPrivate = function (vertices, callback) {
+            setCollectionPrivacy(false, vertices, function () {
+                $.each(vertices, function () {
+                    var vertex = this;
+                    vertex.makePrivate();
+                });
+                if (callback !== undefined) {
+                    callback();
+                }
+            });
+        };
+        api.makeCollectionPublic = function (vertices, callback) {
+            setCollectionPrivacy(true, vertices, function () {
+                $.each(vertices, function () {
+                    var vertex = this;
+                    vertex.makePublic();
+                });
+                if (callback !== undefined) {
+                    callback();
+                }
+            });
+        };
         api.group = function (graphElementsUris, callback) {
             var response = $.ajax({
                 type: 'POST',
@@ -282,6 +304,21 @@ define([
                         return '/event/ui/graph/vertex/generic_identification/added'
                 }
             }
+        }
+
+        function setCollectionPrivacy(isPublic, vertices, callback) {
+            var typeQueryParam = isPublic ? "public" : "private";
+            var verticesUri = [];
+            $.each(vertices, function () {
+                var vertex = this;
+                verticesUri.push(vertex.getUri())
+            });
+            $.ajax({
+                type: 'POST',
+                data: $.toJSON(verticesUri),
+                contentType: 'application/json;charset=utf-8',
+                url: getVerticesUrl() + '/collection/public_access?type=' + typeQueryParam
+            }).success(callback);
         }
 
         function setPrivacy(isPublic, vertex, callback) {

@@ -154,6 +154,12 @@ define([
             forGroupNotOwned :
             forGroup;
     };
+    forGroup.makePrivate = function(event, vertices){
+        VertexService.makeCollectionPrivate(vertices);
+    };
+    forGroup.makePublic = function(event, vertices){
+        VertexService.makeCollectionPublic(vertices);
+    };
     forGroup.group = function () {
         var selectedGraphElements = {
             edges: {},
