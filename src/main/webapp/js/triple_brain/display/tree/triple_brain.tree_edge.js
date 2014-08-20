@@ -16,7 +16,7 @@ define([
         api.visitAllEdges = function (visitor) {
             $(".relation").each(function () {
                 visitor(
-                    api.withHtml(this)
+                    api.withHtml($(this))
                 );
             });
         };

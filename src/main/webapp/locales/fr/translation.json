@@ -40,7 +40,12 @@
     "top_menu" : {
         "create_concept" : "nouvelle bulle",
         "disconnect" : "déconnecter",
-        "redraw" : "redessiner"
+        "redraw" : "redessiner",
+        "selection" : {
+            "title" : "sélectionne",
+            "bubbles" : "toutes les bulles",
+            "relations" : "toutes les relations"
+        }
     },
     "top_center_menu" : {
         "select": "sélection"

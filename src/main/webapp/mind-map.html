@@ -18,93 +18,109 @@
     <script src="js/require.js"></script>
 </head>
 <body class='canvas-parent hidden'>
-    <div id="other-page-container" class='hidden'></div>
-    <div id="mind_map" data-role="page" data-url="mind-map.html">
-        <div data-role="content">
-            <div id="left-panel" class="main-panel">
-                <h2 data-i18n="left_menu.search"></h2>
-                <div class="ui-widget">
-                    <label for="vertex-search-input"></label>
-                    <input id="vertex-search-input"/>
-                </div>
-            </div>
-            <button id="toggle-left-panel-collapse" class="link-like-button">
-                <<
-            </button>
-            <div id="drawn_graph"></div>
-            <div id="bottom-center-panel" class="main-panel">
-                <span data-i18n="caption.title"></span>:
-                <div class="private legend" data-i18n="caption.private"></div>
-                <div class="public legend" data-i18n="caption.public"></div>
-            </div>
-            <div id="top-center-menu" class="main-panel top-panel">
-                <div id="graph-elements-selected" class="hidden">
-                    <span class='nb'></span>
-                    <span data-i18n='selection.selected_graph_elements'></span>
-                </div>
-            </div>
-            <div id="top-panel" class="main-panel top-panel">
-                <button id="create-concept" class="link-like-button"
-                        data-i18n="top_menu.create_concept"></button>
-                <button id="disconnect-btn"
-                        data-i18n="top_menu.disconnect"
-                        class="link-like-button"></button>
-            </div>
-            <div id="graph-element-menu" class="main-panel">
-                <button data-action="select" data-icon="fa-square-o" class="graph-element-button"></button>
-                <button data-action="group" data-icon="fa-compress" class="graph-element-button"></button>
-                <button data-action="addChild" data-icon="fa-plus" class="graph-element-button"></button>
-                <button data-action="identify" data-icon="fa-info-circle" class="graph-element-button"></button>
-                <button data-action="reverseToRight" data-icon="fa-share" class="graph-element-button"></button>
-                <button data-action="reverseToLeft" data-icon="fa-reply" class="graph-element-button"></button>
-                <button data-action="suggestions" data-icon="fa-lightbulb-o" class="suggestion graph-element-button"></button>
-                <button data-action="subElements" data-icon="fa-expand" class="graph-element-button"></button>
-                <button data-action="center" data-icon="fa-bullseye" class="graph-element-button"></button>
-                <button data-action="note" data-icon="fa-book" class="note-button graph-element-button"></button>
-                <button data-action="images" data-icon="fa-picture-o" class="graph-element-button"></button>
-                <button data-action="connectTo" data-icon="fa-long-arrow-right" class="graph-element-button"></button>
-                <button data-action="makePrivate" data-icon="fa-unlock" class="graph-element-button"></button>
-                <button data-action="makePublic" data-icon="fa-lock" class="graph-element-button"></button>
-                <button data-action="remove" data-icon="fa-trash-o" class="graph-element-button"></button>
+<div id="other-page-container" class='hidden'></div>
+<div id="mind_map" data-role="page" data-url="mind-map.html">
+    <div data-role="content">
+        <div id="left-panel" class="main-panel">
+            <h2 data-i18n="left_menu.search"></h2>
+
+            <div class="ui-widget">
+                <label for="vertex-search-input"></label>
+                <input id="vertex-search-input"/>
             </div>
         </div>
+        <button id="toggle-left-panel-collapse" class="link-like-button">
+            <<
+        </button>
+        <div id="drawn_graph"></div>
+        <div id="bottom-center-panel" class="main-panel">
+            <span data-i18n="caption.title"></span>:
+            <div class="private legend" data-i18n="caption.private"></div>
+            <div class="public legend" data-i18n="caption.public"></div>
+        </div>
+        <div id="top-center-menu" class="main-panel top-panel">
+            <div id="graph-elements-selected" class="hidden">
+                <span class='nb'></span>
+                <span data-i18n='selection.selected_graph_elements'></span>
+            </div>
+        </div>
+        <div id="top-panel" class="main-panel top-panel">
+            <div class="link-like-button">
+                <div class="dropdown">
+                    <a data-toggle="dropdown" data-i18n='top_menu.selection.title'></a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <li>
+                            <a href="" id="select-all-bubbles" role="menuitem" data-i18n='top_menu.selection.bubbles'></a>
+                        </li>
+                        <li>
+                            <a href="" id="select-all-relations" role="menuitem" data-i18n='top_menu.selection.relations'></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <button id="create-concept" class="link-like-button"
+                    data-i18n="top_menu.create_concept"></button>
+            <button id="disconnect-btn"
+                    data-i18n="top_menu.disconnect"
+                    class="link-like-button"></button>
+        </div>
+        <div id="graph-element-menu" class="main-panel">
+            <button data-action="select" data-icon="fa-square-o" class="graph-element-button"></button>
+            <button data-action="group" data-icon="fa-compress" class="graph-element-button"></button>
+            <button data-action="addChild" data-icon="fa-plus" class="graph-element-button"></button>
+            <button data-action="identify" data-icon="fa-info-circle" class="graph-element-button"></button>
+            <button data-action="reverseToRight" data-icon="fa-share" class="graph-element-button"></button>
+            <button data-action="reverseToLeft" data-icon="fa-reply" class="graph-element-button"></button>
+            <button data-action="suggestions" data-icon="fa-lightbulb-o"
+                    class="suggestion graph-element-button"></button>
+            <button data-action="subElements" data-icon="fa-expand" class="graph-element-button"></button>
+            <button data-action="center" data-icon="fa-bullseye" class="graph-element-button"></button>
+            <button data-action="note" data-icon="fa-book" class="note-button graph-element-button"></button>
+            <button data-action="images" data-icon="fa-picture-o" class="graph-element-button"></button>
+            <button data-action="connectTo" data-icon="fa-long-arrow-right" class="graph-element-button"></button>
+            <button data-action="makePrivate" data-icon="fa-unlock" class="graph-element-button"></button>
+            <button data-action="makePublic" data-icon="fa-lock" class="graph-element-button"></button>
+            <button data-action="remove" data-icon="fa-trash-o" class="graph-element-button"></button>
+        </div>
     </div>
-    <div class='frontier left-frontier'></div>
-    <div class='frontier right-frontier'></div>
-    <div class='frontier top-frontier'></div>
-    <div class='frontier bottom-frontier'></div>
-    <div id="selection-box" class='hidden'></div>
-    <script>
-        loadDebugOrProdScripts();
-        function loadDebugOrProdScripts(){
-            callAjax("/service/server_config/", function(response){
-                var serverConfig = JSON.parse(response);
-                if(serverConfig.isTesting){
-                    addJs("js/common-boot.js");
-                    addJs("js/mind_map-boot.js");
-                }else{
-                    addJs("js/mind-map-built.js");
-                }
-            });
-            function addJs(filePath){
-                var scriptTag = document.createElement('script');
-                scriptTag.setAttribute("src", filePath);
-                document.getElementsByTagName("head")[0].appendChild(
-                        scriptTag
-                );
+</div>
+<div class='frontier left-frontier'></div>
+<div class='frontier right-frontier'></div>
+<div class='frontier top-frontier'></div>
+<div class='frontier bottom-frontier'></div>
+<div id="selection-box" class='hidden'></div>
+<script>
+    loadDebugOrProdScripts();
+    function loadDebugOrProdScripts() {
+        callAjax("/service/server_config/", function (response) {
+            var serverConfig = JSON.parse(response);
+            if (serverConfig.isTesting) {
+                addJs("js/common-boot.js");
+                addJs("js/mind_map-boot.js");
+            } else {
+                addJs("js/mind-map-built.js");
             }
-            function callAjax(url, callback){
-                var xmlhttp;
-                xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function(){
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
-                        callback(xmlhttp.responseText);
-                    }
-                };
-                xmlhttp.open("GET", url, true);
-                xmlhttp.send();
-            }
+        });
+        function addJs(filePath) {
+            var scriptTag = document.createElement('script');
+            scriptTag.setAttribute("src", filePath);
+            document.getElementsByTagName("head")[0].appendChild(
+                    scriptTag
+            );
         }
-    </script>
+
+        function callAjax(url, callback) {
+            var xmlhttp;
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    callback(xmlhttp.responseText);
+                }
+            };
+            xmlhttp.open("GET", url, true);
+            xmlhttp.send();
+        }
+    }
+</script>
 </body>
 </html>

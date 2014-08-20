@@ -40,7 +40,12 @@
     "top_menu" : {
         "create_concept" : "new bubble",
         "disconnect" : "disconnect",
-        "redraw" : "redraw"
+        "redraw" : "redraw",
+        "selection" : {
+            "title" : "select",
+            "bubbles" : "all bubbles",
+            "relations" : "all relations"
+        }
     },
     "top_center_menu" : {
         "select": "select"

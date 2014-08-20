@@ -32,6 +32,7 @@ define(
                 );
                 function callBackWhenIsAuthenticated() {
                     handleIfNotAuthenticatedShowCredentialsFlow();
+                    handleTopMenuSelectButtons();
                     handleDisconnectButton();
                     handleCreateNewConceptButton();
                     TopCenterMenu.init();
@@ -79,6 +80,19 @@ define(
                     $("body").removeClass("hidden");
                     LanguageManager.loadLocaleContent(function () {
                         LoginHandler.startFlow();
+                    });
+                }
+
+                function handleTopMenuSelectButtons(){
+                    $("#select-all-bubbles").click(function(event){
+                        event.preventDefault();
+                        event.stopPropagation();
+                        SelectionHandler.selectAllBubblesOnly();
+                    });
+                    $("#select-all-relations").click(function(event){
+                        event.preventDefault();
+                        event.stopPropagation();
+                        SelectionHandler.selectAllRelationsOnly();
                     });
                 }
 

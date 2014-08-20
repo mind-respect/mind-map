@@ -90,7 +90,6 @@ define([
             ]
         ];
     }
-
     function iAction(selectedElement) {
         if (MindMapInfo.isViewOnly() || selectedElement.isGroupRelation()) {
             return;
@@ -99,7 +98,6 @@ define([
             selectedElement
         ).create();
     }
-
 
     function tabAction(selectedElement) {
         if (MindMapInfo.isViewOnly() || selectedElement.isRelation()) {

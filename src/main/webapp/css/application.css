@@ -1,11 +1,11 @@
 @charset "UTF-8";
 body { min-width: 30000px; min-height: 30000px; cursor: all-scroll; }
 
-input[type=button].link-like-button, button.link-like-button { color: #1919ac; }
+a, input[type=button].link-like-button, button.link-like-button { color: #1919ac; }
 
-input[type=button].link-like-button:hover, button.link-like-button:hover { color: #47A3FF; }
+a:hover, input[type=button].link-like-button:hover, button.link-like-button:hover { color: #47A3FF; }
 
-input[type="button"], button { border-size: 0px; border-style: none; font: inherit; padding: 0 0 0 0; background: none; }
+input[type="button"], button, .link-like-button { border-size: 0px; border-style: none; font: inherit; padding: 0 0 0 0; background: none; }
 
 button.graph-element-button { width: 30px; height: 30px; margin-bottom: 5px; margin-right: 3px; line-height: 20px; color: #333; text-align: center; text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); vertical-align: middle; background-image: linear-gradient(to bottom, #ffffff, #e6e6e6); background-repeat: repeat-x; border-bottom-color: #b3b3b3; border: 1px solid #ccc; border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25); -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); }
 button.graph-element-button:hover { background-image: linear-gradient(to bottom, #ffffff, #cdcdcd); }
@@ -100,10 +100,8 @@ svg { z-index: 1; }
 .public.legend { background-color: #FFE8E8; }
 
 #top-panel { margin-right: 5px; position: fixed; right: 0.1em; top: 0.5em; }
-
-#top-panel input[type=button], #top-panel button { float: left; margin-left: 15px; }
-
-.top-panel.main-panel input[type=button].link-like-button, .top-panel.main-panel button.link-like-button { font-size: 0.9em; margin-top: 4px; }
+#top-panel > input[type=button], #top-panel > button, #top-panel > .link-like-button { float: left; margin-left: 15px; font-size: 0.9em; margin-top: 4px; }
+#top-panel .dropdown a { text-align: left; }
 
 #left-panel { margin-left: 5px; position: fixed; left: 0.1em; top: 0.5em; overflow: hidden; width: 225px; }
 

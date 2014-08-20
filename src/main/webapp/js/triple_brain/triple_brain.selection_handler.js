@@ -18,6 +18,24 @@ define([
         SELECT_BOX_MIN_HEIGHT = 40,
         selectionInfo = new SelectionInfo();
 
+    api.selectAllBubblesOnly = function(){
+        deselectAll();
+        selectionInfo.removeAll();
+        GraphDisplayer.getVertexSelector().visitAllVertices(function(vertex){
+            api.addVertex(vertex);
+        });
+        reflectSelectionChange();
+    };
+
+    api.selectAllRelationsOnly = function(){
+        deselectAll();
+        selectionInfo.removeAll();
+        GraphDisplayer.getEdgeSelector().visitAllEdges(function(edge){
+            api.addRelation(edge);
+        });
+        reflectSelectionChange();
+    };
+
     api.setToSingleGroupRelation = function (groupRelation) {
         deselectAll();
         selectionInfo.setToSingleGroupRelation(groupRelation);
@@ -71,15 +89,7 @@ define([
     };
 
     api.removeAll = function () {
-        deselectAll(
-            selectionInfo.getSelectedVertices()
-        );
-        deselectAll(
-            selectionInfo.getSelectedRelations()
-        );
-        deselectAll(
-            selectionInfo.getSelectedGroupRelations()
-        );
+        deselectAll();
         selectionInfo.removeAll();
         reflectSelectionChange();
     };
