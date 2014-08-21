@@ -5,9 +5,10 @@
 define([
         "triple_brain.id_uri",
         "triple_brain.user",
+        "triple_brain.event_bus",
         "jquery.url"
     ],
-    function (IdUriUtils, UserService) {
+    function (IdUriUtils, UserService, EventBus) {
         "use strict";
         var api = {},
             isViewOnly;
@@ -27,6 +28,10 @@ define([
             if(isViewOnly === undefined){
                 isViewOnly = !IdUriUtils.isVertexUriOwnedByCurrentUser(
                     getCenterVertexUriInUrl()
+                );
+                EventBus.publish(
+                    '/event/ui/mind_map_info/is_view_only',
+                    [isViewOnly]
                 );
             }
             return isViewOnly;
