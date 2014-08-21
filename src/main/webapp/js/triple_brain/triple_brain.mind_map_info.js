@@ -11,7 +11,8 @@ define([
     function (IdUriUtils, UserService, EventBus) {
         "use strict";
         var api = {},
-            isViewOnly;
+            isViewOnly,
+            _isAnonymous;
         api.defaultVertexUri = function () {
             return UserService.currentUserUri() + '/graph/vertex/default'
         };
@@ -26,7 +27,7 @@ define([
         };
         api.isViewOnly = function(){
             if(isViewOnly === undefined){
-                isViewOnly = !IdUriUtils.isVertexUriOwnedByCurrentUser(
+                isViewOnly = _isAnonymous || !IdUriUtils.isVertexUriOwnedByCurrentUser(
                     getCenterVertexUriInUrl()
                 );
                 EventBus.publish(
@@ -35,6 +36,12 @@ define([
                 );
             }
             return isViewOnly;
+        };
+        api.setIsAnonymous = function(isAnonymous){
+            _isAnonymous = isAnonymous;
+        };
+        api.isAnonymous = function(){
+            return _isAnonymous;
         };
         return api;
         function getCenterVertexUriInUrl(){

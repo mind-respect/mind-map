@@ -22,11 +22,13 @@
 <div id="mind_map" data-role="page" data-url="mind-map.html">
     <div data-role="content">
         <div id="left-panel" class="main-panel">
-            <h2 data-i18n="left_menu.search"></h2>
+            <div id="search-component">
+                <h2 data-i18n="left_menu.search"></h2>
 
-            <div class="ui-widget">
-                <label for="vertex-search-input"></label>
-                <input id="vertex-search-input"/>
+                <div class="ui-widget">
+                    <label for="vertex-search-input"></label>
+                    <input id="vertex-search-input"/>
+                </div>
             </div>
         </div>
         <button id="toggle-left-panel-collapse" class="link-like-button">
@@ -50,10 +52,12 @@
                     <a data-toggle="dropdown" data-i18n='top_menu.selection.title'></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                         <li>
-                            <a href="" id="select-all-bubbles" role="menuitem" data-i18n='top_menu.selection.bubbles'></a>
+                            <a href="" id="select-all-bubbles" role="menuitem"
+                               data-i18n='top_menu.selection.bubbles'></a>
                         </li>
                         <li>
-                            <a href="" id="select-all-relations" role="menuitem" data-i18n='top_menu.selection.relations'></a>
+                            <a href="" id="select-all-relations" role="menuitem"
+                               data-i18n='top_menu.selection.relations'></a>
                         </li>
                     </ul>
                 </div>

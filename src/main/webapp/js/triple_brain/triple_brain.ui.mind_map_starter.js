@@ -27,30 +27,10 @@ define(
             start: function () {
                 UserService.isAuthenticated(
                     callBackWhenIsAuthenticated,
-                    showCredentialsFlow
+                    callBackWhenNotAuthenticated
                 );
                 function callBackWhenIsAuthenticated() {
-                    handleIfNotAuthenticatedShowCredentialsFlow();
-                    TopRightMenu.earlyInit();
-                    TopCenterMenu.init();
-                    LeftPanel.init();
-                    SearchUi.init();
-                    GraphDisplayer.setImplementation(
-                        GraphDisplayerFactory.getByName(
-                            "relative_tree"
-                        )
-                    );
-                    UserService.authenticatedUser(function () {
-                            handleHistoryBrowse();
-                            LanguageManager.loadLocaleContent(function () {
-                                GraphDisplayer.displayUsingCentralVertexUri(
-                                    MindMapInfo.getCenterVertexUri()
-                                );
-                                translateText();
-                                GraphElementMainMenu.reset();
-                            });
-                        }
-                    );
+                    setupMindMapForAuthenticatedUser();
                 }
 
                 function handleHistoryBrowse() {
@@ -65,15 +45,60 @@ define(
                     $("html").i18n();
                 }
 
-                function handleIfNotAuthenticatedShowCredentialsFlow() {
+                function startLoginFlowWhenForbiddenActionIsPerformed() {
                     $("html").ajaxError(function (e, jqxhr) {
                         if (403 === jqxhr.status) {
-                            showCredentialsFlow();
+                            showLoginPage();
                         }
                     });
                 }
 
-                function showCredentialsFlow() {
+                function setupMindMapForAuthenticatedUser() {
+                    MindMapInfo.setIsAnonymous(false);
+                    setupMindMap(false);
+                }
+
+                function setupMindMapForAnonymousUser() {
+                    MindMapInfo.setIsAnonymous(true);
+                    setupMindMap(true)
+                }
+
+                function setupMindMap(isAnonymous) {
+                    startLoginFlowWhenForbiddenActionIsPerformed();
+                    TopRightMenu.earlyInit();
+                    TopCenterMenu.init();
+                    LeftPanel.init();
+                    handleHistoryBrowse();
+                    GraphDisplayer.setImplementation(
+                        GraphDisplayerFactory.getByName(
+                            "relative_tree"
+                        )
+                    );
+                    if (isAnonymous) {
+                        loadLocaleAndGraph();
+                    }else{
+                        UserService.authenticatedUser(loadLocaleAndGraph);
+                    }
+                    function loadLocaleAndGraph() {
+                        LanguageManager.loadLocaleContent(function () {
+                            GraphDisplayer.displayUsingCentralVertexUri(
+                                MindMapInfo.getCenterVertexUri()
+                            );
+                            translateText();
+                            GraphElementMainMenu.reset();
+                        });
+                    }
+                }
+
+                function callBackWhenNotAuthenticated() {
+                    if (MindMapInfo.isCenterVertexUriDefinedInUrl()) {
+                        setupMindMapForAnonymousUser();
+                    } else {
+                        showLoginPage();
+                    }
+                }
+
+                function showLoginPage() {
                     $("body").removeClass("hidden");
                     LanguageManager.loadLocaleContent(function () {
                         LoginHandler.startFlow();

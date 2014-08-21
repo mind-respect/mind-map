@@ -19,10 +19,11 @@ define([
         "triple_brain.selection_handler",
         "triple_brain.keyboard_utils",
         "triple_brain.relative_tree_vertex_menu_handler",
+        "triple_brain.mind_map_info",
         "jquery-ui",
         "jquery.is-fully-on-screen",
         "jquery.center-on-screen"
-    ], function ($, EventBus, VertexService, EdgeUi, EdgeService, MindMapTemplate, Point, Segment, GraphDisplayer, RelativeTreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, SelectionHandler, KeyboardUtils, RelativeTreeVertexMenuHandler) {
+    ], function ($, EventBus, VertexService, EdgeUi, EdgeService, MindMapTemplate, Point, Segment, GraphDisplayer, RelativeTreeVertex, VertexAndEdgeCommon, Triple, VertexHtmlCommon, SelectionHandler, KeyboardUtils, RelativeTreeVertexMenuHandler, MindMapInfo) {
         var api = {};
         api.withServerFacade = function (serverFacade) {
             return new VertexCreator(serverFacade);
@@ -86,6 +87,7 @@ define([
         function handleVisitAfterGraphDrawn(event, vertex) {
             api.completeBuild(vertex);
         }
+
         function VertexCreator(serverFacade) {
             this.serverFacade = serverFacade;
             this.html = $(
@@ -93,16 +95,6 @@ define([
             ).data(
                 "uri",
                 serverFacade.getUri()
-            ).on(
-                "dblclick",
-                function (event) {
-                    event.stopPropagation();
-                    var vertex = RelativeTreeVertex.withHtml(
-                        $(this)
-                    );
-                    SelectionHandler.removeAll();
-                    vertex.getLabel().focus().setCursorToEndOfText();
-                }
             ).on(
                 "click",
                 function (event) {
@@ -123,6 +115,19 @@ define([
                     }
                 }
             );
+            if (!MindMapInfo.isViewOnly()) {
+                this.html.on(
+                    "dblclick",
+                    function (event) {
+                        event.stopPropagation();
+                        var vertex = RelativeTreeVertex.withHtml(
+                            $(this)
+                        );
+                        SelectionHandler.removeAll();
+                        vertex.getLabel().focus().setCursorToEndOfText();
+                    }
+                )
+            }
         }
 
         VertexCreator.prototype.create = function (htmlId) {
@@ -271,7 +276,7 @@ define([
             return labelContainer;
         };
 
-        VertexCreator.prototype._showItHasIncludedGraphElements = function() {
+        VertexCreator.prototype._showItHasIncludedGraphElements = function () {
             this.html.append(
                 $("<div class='included-graph-elements-flag'>").text(
                     ". . ."
@@ -279,7 +284,7 @@ define([
             ).addClass("includes-vertices");
         };
 
-        VertexCreator.prototype._addNoteButtonNextToLabel = function() {
+        VertexCreator.prototype._addNoteButtonNextToLabel = function () {
             var noteButton = this.vertex.getNoteButtonInMenu().clone().on(
                 "click", clickHandler
             );
@@ -302,7 +307,7 @@ define([
             }
         };
 
-        VertexCreator.prototype._createMenu = function() {
+        VertexCreator.prototype._createMenu = function () {
             var vertexMenu = $(
                 MindMapTemplate['vertex_menu'].merge()
             );
@@ -318,16 +323,19 @@ define([
             RelativeTreeVertex.setVertexMouseOver(vertex);
             vertex.makeItHighProfile();
         }
+
         function onMouseOut() {
             var vertex = vertexOfSubHtmlComponent(this);
             RelativeTreeVertex.unsetVertexMouseOver();
             vertex.makeItLowProfile();
         }
+
         function vertexOfSubHtmlComponent(htmlOfSubComponent) {
             return RelativeTreeVertex.withHtml(
                 $(htmlOfSubComponent).closest('.vertex')
             );
         }
+
         return api;
     }
 );

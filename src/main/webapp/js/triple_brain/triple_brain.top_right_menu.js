@@ -16,15 +16,17 @@ define([
         var api = {};
         api.earlyInit = function () {
             handleTopMenuSelectButtons();
-            handleDisconnectButton();
         };
         EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function(event, isViewOnly){
             if(isViewOnly){
                 getCreateBubbleButton().css("visibility", "hidden");
+                if(MindMapInfo.isAnonymous()){
+                    getDisconnectButton().css("visibility", "hidden");
+                }
             }else{
                 handleCreateNewConceptButton();
+                handleDisconnectButton();
             }
-
         });
         return api;
         function handleTopMenuSelectButtons() {

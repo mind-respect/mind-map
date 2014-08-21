@@ -3,9 +3,10 @@
  */
 define([
         "jquery",
-        "triple_brain.id_uri"
+        "triple_brain.id_uri",
+        "triple_brain.mind_map_info"
     ],
-    function ($, IdUriUtils) {
+    function ($, IdUriUtils, MindMapInfo) {
         "use strict";
         var api = {};
         api.getForCentralVertexUriAndDepth = function (centralVertexUri, depth, callback) {
@@ -15,7 +16,7 @@ define([
             }).success(callback);
         };
         api.graphUriForCentralVertexUriAndDepth = function (centerVertexUri, depth) {
-            if (IdUriUtils.isVertexUriOwnedByCurrentUser(centerVertexUri)) {
+            if (!MindMapInfo.isAnonymous() && IdUriUtils.isVertexUriOwnedByCurrentUser(centerVertexUri)) {
                 return centerVertexUri + '/surround_graph/' + depth;
             } else {
                 return IdUriUtils.convertVertexUriToNonOwnedUri(centerVertexUri);

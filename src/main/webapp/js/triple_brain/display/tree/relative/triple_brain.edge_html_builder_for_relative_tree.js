@@ -19,9 +19,10 @@ define([
         "triple_brain.keyboard_utils",
         "triple_brain.selection_handler",
         "triple_brain.graph_element_main_menu",
+        "triple_brain.mind_map_info",
         "jquery.cursor-at-end"
     ],
-    function (require, $, MindMapTemplate, VertexAndEdgeCommon, TreeEdge, EdgeService, EventBus, RelativeTreeVertex, RelativeTreeTemplates, IdentificationFacade, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphDisplayer, KeyboardUtils, SelectionHandler, GraphElementMainMenu) {
+    function (require, $, MindMapTemplate, VertexAndEdgeCommon, TreeEdge, EdgeService, EventBus, RelativeTreeVertex, RelativeTreeTemplates, IdentificationFacade, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphDisplayer, KeyboardUtils, SelectionHandler, GraphElementMainMenu, MindMapInfo) {
         var api = {};
         api.get = function (edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
             return new EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade);
@@ -195,19 +196,6 @@ define([
             var overlayContainer = $(
                 "<div class='overlay-container'>"
             ).appendTo(html).on(
-                "dblclick",
-                function (event) {
-                    event.stopPropagation();
-                    var edge = edgeFromHtml(
-                        $(this)
-                    );
-                    edge.deselect();
-                    edge.hideMenu();
-                    changeToInput(
-                        edge
-                    );
-                }
-            ).on(
                 "click",
                 function (event) {
                     event.stopPropagation();
@@ -225,6 +213,22 @@ define([
                     }
                 }
             );
+            if(!MindMapInfo.isViewOnly()){
+                overlayContainer.on(
+                    "dblclick",
+                    function (event) {
+                        event.stopPropagation();
+                        var edge = edgeFromHtml(
+                            $(this)
+                        );
+                        edge.deselect();
+                        edge.hideMenu();
+                        changeToInput(
+                            edge
+                        );
+                    }
+                )
+            }
             var overlay = $(
                 "<div class='overlay'>"
             ).appendTo(overlayContainer);
