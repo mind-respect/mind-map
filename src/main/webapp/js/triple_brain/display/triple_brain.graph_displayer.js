@@ -25,9 +25,10 @@ define([
                 centralVertex.getUri()
             );
         };
-        api.displayUsingCentralVertexUri = function (centralVertexUri) {
+        api.displayUsingCentralVertexUri = function (centralVertexUri, errorCallback) {
             displayUsingCentralVertexUri(
-                centralVertexUri
+                centralVertexUri,
+                errorCallback
             );
         };
         api.connectVertexToVertexWithUri = function (parentVertex, destinationVertexUri, callback) {
@@ -134,7 +135,7 @@ define([
             );
         }
 
-        function displayUsingCentralVertexUri(centralVertexUri) {
+        function displayUsingCentralVertexUri(centralVertexUri, errorCallback) {
             publishAboutToUpdate();
             publishResetGraph();
             $("#drawn_graph").empty();
@@ -155,7 +156,8 @@ define([
                         drawingInfo,
                         centralVertexUri
                     );
-                }
+                },
+                errorCallback
             );
         }
     }

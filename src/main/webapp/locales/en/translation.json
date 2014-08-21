@@ -37,6 +37,11 @@
             "locales_mandatory" : "At least one preferred language must be choose"
         }
     },
+    "not_allowed" : {
+        "title" : "Access denied",
+        "about" : "You don't have the rights to read this bubble",
+        "go_home" : "Continue"
+    },
     "top_menu" : {
         "create_concept" : "new bubble",
         "disconnect" : "disconnect",
@@ -66,7 +71,7 @@
             "identification" :{
                 "title" : "Identifications",
                 "instruction" : {
-                    "concept" : "Find as many resources that identify or are a generalization of this one.",
+                    "concept" : "Find as many resources that identify or are a generalization of this bubble.",
                     "relation" : "Identify this relation to another that means the same"
                 },
                 "placeholder" : "Identify"

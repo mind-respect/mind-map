@@ -22,7 +22,7 @@ define([
                 configuration.href,
                 function(){
                     configuration.onComplete();
-                    getOtherPageContainer().dialog(options);
+                    getOtherPageContainer().dialog(options).i18n();
                     hideCloseButton();
                 }
             );

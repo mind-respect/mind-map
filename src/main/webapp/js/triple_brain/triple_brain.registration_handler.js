@@ -37,7 +37,6 @@ define([
                     handleRegistrationError
                 );
             });
-            access.registerPage().i18n();
         }
 
         function submitWhenPressingEnter(){

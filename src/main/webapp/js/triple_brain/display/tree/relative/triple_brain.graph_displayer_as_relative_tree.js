@@ -29,7 +29,7 @@ define([
 ], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, RelativeTreeVertexMenuHandler, GroupRelationMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler, KeyboardActionsHandler, EdgeServerFacade, GroupRelationHtmlBuilder, GroupRelationUi) {
     KeyboardActionsHandler.init();
     var api = {};
-    api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback) {
+    api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback, errorCallback) {
         Graph.getForCentralVertexUriAndDepth(
             centralVertexUri,
             depth,
@@ -40,7 +40,8 @@ define([
                     centralVertexUri
                 );
                 callback(drawnTree);
-            }
+            },
+            errorCallback
         );
     };
     api.canAddChildTree = function () {

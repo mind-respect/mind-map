@@ -37,6 +37,11 @@
             "locales_mandatory" : "Au moins une langue préféré doit être choisie"
         }
     },
+    "not_allowed" : {
+        "title" : "Accès refusé",
+        "about" : "Vous n'avez pas les droits nécessaire pour consulter cette bulle.",
+        "go_home" : "Continuer"
+    },
     "top_menu" : {
         "create_concept" : "nouvelle bulle",
         "disconnect" : "déconnecter",
@@ -66,7 +71,7 @@
             "identification" :{
                 "title" : "Identifications",
                 "instruction" : {
-                    "concept" : "Trouvez autant de resources qui identifient ou sont une généralisation de celle-ci.",
+                    "concept" : "Trouvez autant de resources qui identifient ou sont une généralisation de cette bulle.",
                     "relation" : "Identifiez cette relation à une autre qui signifie la même chose."
                 },
                 "placeholder" : "Identifier"

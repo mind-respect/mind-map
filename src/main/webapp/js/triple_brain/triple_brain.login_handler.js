@@ -41,7 +41,6 @@ define([
             });
             getErrorMessage().addClass("hidden");
             getLoginForm()[0].reset();
-            getLoginPage().i18n();
         }
 
         function handleRegisterLink() {

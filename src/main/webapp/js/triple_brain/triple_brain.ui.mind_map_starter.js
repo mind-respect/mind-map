@@ -17,11 +17,12 @@ define(
         "triple_brain.graph_element_main_menu",
         "triple_brain.mind_map_info",
         "triple_brain.top_right_menu",
+        "triple_brain.external_page_loader",
         "triple_brain.bubble_distance_calculator",
         "triple_brain.freebase",
         "jquery.triple_brain.drag_scroll"
     ],
-    function ($, UserService, EventBus, LoginHandler, MindMapTemplate, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, LeftPanel, SelectionHandler, KeyboardUtils, GraphElementMainMenu, MindMapInfo, TopRightMenu) {
+    function ($, UserService, EventBus, LoginHandler, MindMapTemplate, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, LeftPanel, SelectionHandler, KeyboardUtils, GraphElementMainMenu, MindMapInfo, TopRightMenu, ExternalPageLoader) {
         "use strict";
         var api = {
             start: function () {
@@ -60,7 +61,7 @@ define(
 
                 function setupMindMapForAnonymousUser() {
                     MindMapInfo.setIsAnonymous(true);
-                    setupMindMap(true)
+                    setupMindMap(true);
                 }
 
                 function setupMindMap(isAnonymous) {
@@ -82,10 +83,25 @@ define(
                     function loadLocaleAndGraph() {
                         LanguageManager.loadLocaleContent(function () {
                             GraphDisplayer.displayUsingCentralVertexUri(
-                                MindMapInfo.getCenterVertexUri()
+                                MindMapInfo.getCenterVertexUri(),
+                                handleGettingGraphError
                             );
                             translateText();
                             GraphElementMainMenu.reset();
+                        });
+                    }
+                }
+
+                function handleGettingGraphError(xhr){
+                    $("body").removeClass("hidden");
+                    if(xhr.status === 403){
+                        ExternalPageLoader.showLinearFlowWithOptions({
+                            href:"not-allowed.html",
+                            onComplete :function(){
+
+                            },
+                            width:450,
+                            title:$.t("not_allowed.title")
                         });
                     }
                 }

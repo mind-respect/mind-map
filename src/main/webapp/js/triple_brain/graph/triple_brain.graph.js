@@ -9,11 +9,11 @@ define([
     function ($, IdUriUtils, MindMapInfo) {
         "use strict";
         var api = {};
-        api.getForCentralVertexUriAndDepth = function (centralVertexUri, depth, callback) {
+        api.getForCentralVertexUriAndDepth = function (centralVertexUri, depth, callback, errorCallback) {
             $.ajax({
                 type: 'GET',
                 url: api.graphUriForCentralVertexUriAndDepth(centralVertexUri, depth)
-            }).success(callback);
+            }).success(callback).error(errorCallback);
         };
         api.graphUriForCentralVertexUriAndDepth = function (centerVertexUri, depth) {
             if (!MindMapInfo.isAnonymous() && IdUriUtils.isVertexUriOwnedByCurrentUser(centerVertexUri)) {
