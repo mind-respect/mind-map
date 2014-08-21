@@ -13,10 +13,11 @@ define([
         "triple_brain.search",
         "triple_brain.identification_context",
         "triple_brain.search_result_facade_factory",
+        "triple_brain.mind_map_info",
         "jquery-ui",
         "jquery.triple_brain.search"
     ],
-    function ($, IdentificationFacade, MindMapTemplate, GraphUi, IdUriUtils, FreebaseAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu, SearchService, IdentificationContext, SearchResultFacadeFactory) {
+    function ($, IdentificationFacade, MindMapTemplate, GraphUi, IdUriUtils, FreebaseAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu, SearchService, IdentificationContext, SearchResultFacadeFactory, MindMapInfo) {
         return {
             ofGraphElement: function (graphElementUi) {
                 return new IdentificationMenu(graphElementUi);
@@ -50,6 +51,9 @@ define([
             function buildMenu() {
                 addTitle();
                 addIdentifications();
+                if (MindMapInfo.isViewOnly()) {
+                    return;
+                }
                 addInstructions();
                 addIdentificationTextField().focus();
             }
@@ -280,7 +284,7 @@ define([
                     }
 
                     function getServerIdentificationFctn() {
-                        return graphElement.isVertex() ? function (concept,identificationResource) {
+                        return graphElement.isVertex() ? function (concept, identificationResource) {
                             graphElement.serverFacade().addGenericIdentification(concept, identificationResource);
                             graphElement.refreshImages();
                         } : graphElement.serverFacade().addSameAs;

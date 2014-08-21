@@ -82,21 +82,27 @@ define([
             });
         }
     };
-    forSingle.identify = function (event, vertex) {
+    forSingleNotOwned.identify = forSingle.identify = function (event, vertex) {
         event.stopPropagation();
         IdentificationMenu.ofGraphElement(
             vertex
         ).create();
+    };
+    forSingleNotOwned.identifyCanDo = function(vertex){
+        return vertex.hasIdentifications();
     };
     forSingle.center = function (event, vertex) {
         GraphDisplayer.displayUsingCentralVertex(
             vertex
         );
     };
-    forSingle.note = function (event, vertex) {
+    forSingleNotOwned.note = forSingle.note = function (event, vertex) {
         VertexMenuHandlerCommon.forSingle().note(
             event, vertex
         );
+    };
+    forSingleNotOwned.noteCanDo = function(vertex){
+        return vertex.hasNote();
     };
     forSingle.images = function (event, vertex) {
         ImageMenu.ofVertex(

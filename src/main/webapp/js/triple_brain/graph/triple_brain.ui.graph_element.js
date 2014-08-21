@@ -106,6 +106,9 @@ define([
         this.html.data("sameAs", sameAs);
         this.removeIdentificationCommonBehavior(sameAsToRemove);
     };
+    api.Object.prototype.hasIdentifications = function(){
+        return this.getIdentifications().length > 0;
+    };
     api.Object.prototype.isVertex = function () {
         return this.getGraphElementType() === api.types.VERTEX;
     };

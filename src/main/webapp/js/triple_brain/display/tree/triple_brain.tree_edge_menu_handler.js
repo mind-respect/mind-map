@@ -17,10 +17,13 @@ define([
             forSingleNotOwned:
             forSingle;
     };
-    forSingle.identify = function (event, edge) {
+    forSingleNotOwned.identify = forSingle.identify = function (event, edge) {
         IdentificationMenu.ofGraphElement(
             edge
         ).create();
+    };
+    forSingleNotOwned.identifyCanDo = function(edge){
+        return edge.hasIdentifications();
     };
     forSingle.remove = function (event, edge) {
         EdgeService.remove(edge,

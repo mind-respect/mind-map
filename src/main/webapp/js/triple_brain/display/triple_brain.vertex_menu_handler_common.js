@@ -5,8 +5,9 @@ define([
     "jquery",
     "triple_brain.vertex",
     "triple_brain.graph_displayer",
-    "triple_brain.graph_element_menu"
-], function ($, VertexService, GraphDisplayer, GraphElementMenu) {
+    "triple_brain.graph_element_menu",
+    "triple_brain.mind_map_info"
+], function ($, VertexService, GraphDisplayer, GraphElementMenu, MindMapInfo) {
     var api = {},
         forSingle = {};
     api.forSingle = function(){
@@ -22,6 +23,24 @@ define([
                 vertex.getNote()
             )
         );
+        var menuExtraOptions = {
+            height: 350,
+            width: 500,
+            dialogClass: "vertex-note",
+            modal: true
+        };
+        if(!MindMapInfo.isViewOnly()){
+            menuExtraOptions.buttons = defineUpdateNoteButtonOptions(
+                vertex
+            );
+        }
+        GraphElementMenu.makeForMenuContentAndGraphElement(
+            noteDialog,
+            vertex,
+            menuExtraOptions
+        );
+    };
+    function defineUpdateNoteButtonOptions(vertex){
         var buttonsOptions = {};
         buttonsOptions[$.t("vertex.menu.note.update")] = function (event) {
             var dialog = $(this);
@@ -45,18 +64,7 @@ define([
                 }
             );
         };
-        var menuExtraOptions = {
-            height: 350,
-            width: 500,
-            dialogClass: "vertex-note",
-            modal: true,
-            buttons: buttonsOptions
-        };
-        GraphElementMenu.makeForMenuContentAndGraphElement(
-            noteDialog,
-            vertex,
-            menuExtraOptions
-        );
-    };
+        return buttonsOptions;
+    }
     return api;
 });
