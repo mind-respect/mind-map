@@ -21,7 +21,9 @@ define([
             getOtherPageContainer().removeClass("hidden").load(
                 configuration.href,
                 function(){
-                    configuration.onComplete();
+                    if(configuration.onComplete !== undefined){
+                        configuration.onComplete();
+                    }
                     getOtherPageContainer().dialog(options).i18n();
                     hideCloseButton();
                 }

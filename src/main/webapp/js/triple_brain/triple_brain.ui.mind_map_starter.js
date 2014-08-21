@@ -97,11 +97,12 @@ define(
                     if(xhr.status === 403){
                         ExternalPageLoader.showLinearFlowWithOptions({
                             href:"not-allowed.html",
-                            onComplete :function(){
-
-                            },
-                            width:450,
                             title:$.t("not_allowed.title")
+                        });
+                    }else if (404 === xhr.status) {
+                        ExternalPageLoader.showLinearFlowWithOptions({
+                            href:"non-existent.html",
+                            title:$.t("non_existent.title")
                         });
                     }
                 }

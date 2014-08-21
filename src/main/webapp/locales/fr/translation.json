@@ -42,6 +42,11 @@
         "about" : "Vous n'avez pas les droits nécessaire pour consulter cette bulle.",
         "go_home" : "Continuer"
     },
+    "non_existent" : {
+        "title" : "N'existe pas",
+        "about" : "La bulle avec l'URL donné n'existe pas.",
+        "go_home" : "Continuer"
+    },
     "top_menu" : {
         "create_concept" : "nouvelle bulle",
         "disconnect" : "déconnecter",

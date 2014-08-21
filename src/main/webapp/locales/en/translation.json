@@ -42,6 +42,11 @@
         "about" : "You don't have the rights to read this bubble",
         "go_home" : "Continue"
     },
+    "non_existent" : {
+        "title" : "Does not exists",
+        "about" : "The bubble with given URL does not exist",
+        "go_home" : "Continue"
+    },
     "top_menu" : {
         "create_concept" : "new bubble",
         "disconnect" : "disconnect",
