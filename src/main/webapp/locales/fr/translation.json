@@ -44,7 +44,7 @@
     },
     "non_existent" : {
         "title" : "N'existe pas",
-        "about" : "La bulle avec l'URL donné n'existe pas.",
+        "about" : "La bulle avec l'URL donné n'existe pas. Elle a soit été supprimée, déplacée ou n'a jamais existé",
         "go_home" : "Continuer"
     },
     "top_menu" : {

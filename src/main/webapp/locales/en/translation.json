@@ -44,7 +44,7 @@
     },
     "non_existent" : {
         "title" : "Does not exists",
-        "about" : "The bubble with given URL does not exist",
+        "about" : "The bubble with given URL does not exist. It was either deleted, moved or has never existed.",
         "go_home" : "Continue"
     },
     "top_menu" : {
