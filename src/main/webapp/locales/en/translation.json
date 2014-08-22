@@ -61,7 +61,7 @@
         "select": "select"
     },
     "left_menu" : {
-        "search" : "Search bubbles"
+        "search" : "Search my bubbles"
     },
     "caption" : {
         "title" : "Caption",
