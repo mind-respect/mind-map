@@ -20,12 +20,15 @@ define([
         EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function(event, isViewOnly){
             if(isViewOnly){
                 getCreateBubbleButton().css("visibility", "hidden");
-                if(MindMapInfo.isAnonymous()){
-                    getDisconnectButton().css("visibility", "hidden");
-                }
             }else{
                 handleCreateNewConceptButton();
                 handleDisconnectButton();
+            }
+            if(MindMapInfo.isAnonymous()){
+                getDisconnectButton().css("visibility", "hidden");
+                handleLoginRegisterButton();
+            }else{
+                getLoginRegisterButton().hide();
             }
         });
         return api;
@@ -68,6 +71,12 @@ define([
             );
         }
 
+        function handleLoginRegisterButton(){
+            return getLoginRegisterButton().click(function(){
+                window.location = "/";
+            });
+        }
+
         function createNewConcept(){
             VertexService.createVertex(function (newVertex) {
                 var serverFormatFacade = VertexServerFacade.fromServerFormat(
@@ -85,6 +94,10 @@ define([
 
         function getDisconnectButton(){
             return $("#disconnect-btn");
+        }
+
+        function getLoginRegisterButton(){
+            return $("#login-register");
         }
     }
 );

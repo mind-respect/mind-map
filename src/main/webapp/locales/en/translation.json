@@ -55,7 +55,8 @@
             "title" : "select",
             "bubbles" : "all bubbles",
             "relations" : "all relations"
-        }
+        },
+        "login_register" : "login/register"
     },
     "top_center_menu" : {
         "select": "select"
