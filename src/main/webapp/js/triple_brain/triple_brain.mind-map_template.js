@@ -91,7 +91,7 @@ define([
                 "<p class='filereader'>File API & FileReader API not supported</p>" +
                 "<p class='formdata'>XHR2's FormData is not supported</p>" +
                 "<p class='progress'>XHR2's upload progress isn't supported</p>" +
-                "<p><span data-i18n='vertex.menu.image.progress'></span>:<progress id='uploadprogress' min='0' max='100' value='0'>0</progress></p>" +
+                "<p><span data-i18n='vertex.menu.image.progress'></span>:<progress class='uploadprogress' min='0' max='100' value='0'>0</progress></p>" +
                 "</article>" +
                 "</section>"
         );

@@ -50,7 +50,7 @@ define([
                         'image/jpeg': true,
                         'image/gif': true
                     },
-                    progress = content.find('.uploadprogress'),
+                    uploadProgress = content.find('.uploadprogress'),
                     fileUploadWithInputContainer = content.find('.upload'),
                     fileUploadInput = fileUploadWithInputContainer.find("input");
                 fileUploadInput.data("vertex", vertex);
@@ -137,16 +137,16 @@ define([
                                 )
                             );
                             vertex.refreshImages();
-                            progress.val(100);
-                            progress.html(100);
+                            uploadProgress.val(100);
+                            uploadProgress.html(100);
                         };
 
                         if (tests.progress) {
                             xhr.upload.onprogress = function (event) {
                                 if (event.lengthComputable) {
                                     var complete = (event.loaded / event.total * 100 | 0);
-                                    progress.val(complete);
-                                    progress.html(complete);
+                                    uploadProgress.val(complete);
+                                    uploadProgress.html(complete);
                                 }
                             }
                         }
