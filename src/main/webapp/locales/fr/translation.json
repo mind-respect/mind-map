@@ -94,7 +94,7 @@
         },
         "menu" : {
             "image":{
-                "title" : "Cliquer sur l'aire pointillée pour sélectionner une image, ou glisser simplement le fichier dans l'aire pointillée",
+                "title" : "Cliquer sur l'aire pointillée pour sélectionner une image, ou glisser simplement le fichier dans cette aire",
                 "progress" : "Progression du téléversement"
             },
             "note":{
