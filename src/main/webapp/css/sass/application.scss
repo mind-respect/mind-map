@@ -860,8 +860,10 @@ svg {
       font-size: 14px;
     }
   }
-  progress {
-    width: 100%;
+  .progress-label{
+    position: relative;
+    left: -100px;
+    font-size: small;
     &:after {
       content: '%';
     }

@@ -51,6 +51,7 @@ define([
                         'image/gif': true
                     },
                     uploadProgress = content.find('.uploadprogress'),
+                    progressLabel = content.find('.progress-label'),
                     fileUploadWithInputContainer = content.find('.upload'),
                     fileUploadInput = fileUploadWithInputContainer.find("input");
                 fileUploadInput.data("vertex", vertex);
@@ -138,7 +139,7 @@ define([
                             );
                             vertex.refreshImages();
                             uploadProgress.val(100);
-                            uploadProgress.html(100);
+                            progressLabel.text(100);
                         };
 
                         if (tests.progress) {
@@ -146,7 +147,7 @@ define([
                                 if (event.lengthComputable) {
                                     var complete = (event.loaded / event.total * 100 | 0);
                                     uploadProgress.val(complete);
-                                    uploadProgress.html(complete);
+                                    progressLabel.text(complete);
                                 }
                             }
                         }

@@ -212,7 +212,7 @@ svg { z-index: 1; }
 .image-upload-wrapper .holder.hover { border: 10px dashed #0c0; }
 .image-upload-wrapper .holder img { display: block; margin: 10px auto; }
 .image-upload-wrapper .holder p { margin: 10px; font-size: 14px; }
-.image-upload-wrapper progress { width: 100%; }
-.image-upload-wrapper progress:after { content: '%'; }
+.image-upload-wrapper .progress-label { position: relative; left: -100px; font-size: small; }
+.image-upload-wrapper .progress-label:after { content: '%'; }
 .image-upload-wrapper .fail { background: #c00; padding: 2px; color: #fff; }
 .image-upload-wrapper .hidden { display: none !important; }
