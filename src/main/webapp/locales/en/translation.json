@@ -94,7 +94,8 @@
         },
         "menu" : {
             "image" : {
-                "select" : "Select a file"
+                "title" : "Click on the dashed area to select an image, or just drag and drop the file into the dashed area",
+                "progress" : "Upload progress"
             },
             "note":{
                 "update" : "Update",

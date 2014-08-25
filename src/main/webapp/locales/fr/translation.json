@@ -93,8 +93,9 @@
             "destination_bubble" : "Bulle destination"
         },
         "menu" : {
-            "image" : {
-                "select" : "Choisissez un fichier"
+            "image":{
+                "title" : "Cliquer sur l'aire pointillée pour sélectionner une image, ou glisser simplement le fichier dans l'aire pointillée",
+                "progress" : "Progression du téléversement"
             },
             "note":{
                 "update" : "Mettre à jour",

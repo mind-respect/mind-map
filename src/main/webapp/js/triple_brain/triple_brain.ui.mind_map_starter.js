@@ -4,7 +4,6 @@ define(
         "triple_brain.user",
         "triple_brain.event_bus",
         "triple_brain.login_handler",
-        "triple_brain.mind-map_template",
         "triple_brain.ui.search",
         "triple_brain.graph_displayer",
         "triple_brain.graph_displayer_factory",
@@ -22,7 +21,7 @@ define(
         "triple_brain.freebase",
         "jquery.triple_brain.drag_scroll"
     ],
-    function ($, UserService, EventBus, LoginHandler, MindMapTemplate, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, LeftPanel, SelectionHandler, KeyboardUtils, GraphElementMainMenu, MindMapInfo, TopRightMenu, ExternalPageLoader) {
+    function ($, UserService, EventBus, LoginHandler, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, LeftPanel, SelectionHandler, KeyboardUtils, GraphElementMainMenu, MindMapInfo, TopRightMenu, ExternalPageLoader) {
         "use strict";
         var api = {
             start: function () {

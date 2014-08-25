@@ -63,9 +63,6 @@ define([
                 }
             );
         }
-        function getLoginPage(){
-            return $('#login-page');
-        }
         function getErrorMessage(){
             return $('#login-error');
         }

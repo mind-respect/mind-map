@@ -6,7 +6,6 @@ define([
     "triple_brain.graph_displayer",
     "triple_brain.ui.vertex",
     "triple_brain.vertex",
-    "triple_brain.mind-map_template",
     "triple_brain.graph_element_menu",
     "triple_brain.identification_server_facade",
     "triple_brain.user_map_autocomplete_provider",
@@ -14,7 +13,7 @@ define([
     "triple_brain.graph_element_main_menu",
     "jquery-ui",
     "jquery.triple_brain.search"
-], function ($, GraphDisplayer, Vertex, VertexService, MindMapTemplate, GraphElementMenu, IdentificationFacade, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementMainMenu) {
+], function ($, GraphDisplayer, Vertex, VertexService, GraphElementMenu, IdentificationFacade, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementMainMenu) {
     var api = {};
     api.applyAutoCompleteIdentificationToLabelInput = function (input) {
         input.tripleBrainAutocomplete({

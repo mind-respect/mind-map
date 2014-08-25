@@ -2,9 +2,9 @@
  * Copyright Mozilla Public License 1.1
  */
 define([
-    "jquery",
-    "triple_brain.template"
-],
+        "jquery",
+        "triple_brain.template"
+    ],
     function ($, Template) {
         var api = {};
         var t = Template.withTemplateGroup(api);
@@ -20,7 +20,7 @@ define([
         );
         t.add(
             'vertex_label_container',
-            '<div class="in-bubble-content">' +
+                '<div class="in-bubble-content">' +
                 '<input type="text" class="label" value="{label}">' +
                 '</div>'
         );
@@ -31,10 +31,10 @@ define([
         t.add('identification_existing_identities', '<div class="list"></div>');
         t.add(
             'identification_existing_identity',
-            '<h3 class="type-label identification" identification-uri="{identification_uri}">{type_label}' +
-            '<button class="remove-button-in-list">x</button>'+
-            '</h3>'+
-            '<div class="group description">{description}</div>'
+                '<h3 class="type-label identification" identification-uri="{identification_uri}">{type_label}' +
+                '<button class="remove-button-in-list">x</button>' +
+                '</h3>' +
+                '<div class="group description">{description}</div>'
         );
         t.add(
             'identification_textfield',
@@ -79,6 +79,22 @@ define([
 
         t.add('auto_complete_suggestion_list', '<ul class="auto-complete-suggestion"></ul>');
         t.add('auto_complete_suggestion_list_element', '<li>{name}</li>');
+        t.add(
+            'image_upload',
+                "<section class='image-upload-wrapper'>" +
+                "<header>" +
+                "<h2 data-i18n='vertex.menu.image.title'></h2>" +
+                "</header>" +
+                "<article>" +
+                "<div class='holder'></div>" +
+                "<p class='hidden upload'><label><input type='file'></label></p>" +
+                "<p class='filereader'>File API & FileReader API not supported</p>" +
+                "<p class='formdata'>XHR2's FormData is not supported</p>" +
+                "<p class='progress'>XHR2's upload progress isn't supported</p>" +
+                "<p><span data-i18n='vertex.menu.image.progress'></span>:<progress id='uploadprogress' min='0' max='100' value='0'>0</progress></p>" +
+                "</article>" +
+                "</section>"
+        );
         return api;
     }
 );

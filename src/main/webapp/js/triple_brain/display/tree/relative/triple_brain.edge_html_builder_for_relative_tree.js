@@ -5,7 +5,6 @@
 define([
         "require",
         "jquery",
-        "triple_brain.mind-map_template",
         "triple_brain.ui.vertex_and_edge_common",
         "triple_brain.tree_edge",
         "triple_brain.edge",
@@ -22,7 +21,7 @@ define([
         "triple_brain.mind_map_info",
         "jquery.cursor-at-end"
     ],
-    function (require, $, MindMapTemplate, VertexAndEdgeCommon, TreeEdge, EdgeService, EventBus, RelativeTreeVertex, RelativeTreeTemplates, IdentificationFacade, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphDisplayer, KeyboardUtils, SelectionHandler, GraphElementMainMenu, MindMapInfo) {
+    function (require, $, VertexAndEdgeCommon, TreeEdge, EdgeService, EventBus, RelativeTreeVertex, RelativeTreeTemplates, IdentificationFacade, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphDisplayer, KeyboardUtils, SelectionHandler, GraphElementMainMenu, MindMapInfo) {
         var api = {};
         api.get = function (edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
             return new EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade);

@@ -841,3 +841,37 @@ svg {
   border: solid black;
   position: absolute;
 }
+
+.image-upload-wrapper {
+  .holder {
+    border: 10px dashed #ccc;
+    width: 150px;
+    min-height: 150px;
+    margin: 20px auto;
+    &.hover{
+      border: 10px dashed #0c0;
+    }
+    img {
+      display: block;
+      margin: 10px auto;
+    }
+    p {
+      margin: 10px;
+      font-size: 14px;
+    }
+  }
+  progress {
+    width: 100%;
+    &:after {
+      content: '%';
+    }
+  }
+  .fail {
+    background: #c00;
+    padding: 2px;
+    color: #fff;
+  }
+  .hidden {
+    display: none !important;
+  }
+}
