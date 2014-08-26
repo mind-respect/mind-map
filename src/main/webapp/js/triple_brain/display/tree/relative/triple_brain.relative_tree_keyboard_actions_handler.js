@@ -111,6 +111,7 @@ define([
 
     function leftAction(selectedElement) {
         if (selectedElement.isRelation()) {
+            applyPressedArrowActionOnRelation(selectedElement);
             return;
         }
         var newSelectedBubble,
@@ -142,6 +143,7 @@ define([
 
     function rightAction(selectedElement) {
         if (selectedElement.isRelation()) {
+            applyPressedArrowActionOnRelation(selectedElement);
             return;
         }
         var newSelectedBubble,
@@ -172,6 +174,7 @@ define([
 
     function upAction(selectedElement) {
         if (selectedElement.isRelation()) {
+            applyPressedArrowActionOnRelation(selectedElement);
             return;
         }
         var isCenterVertex = selectedElement.isVertex() && selectedElement.isCenterVertex();
@@ -190,6 +193,7 @@ define([
 
     function downAction(selectedElement) {
         if (selectedElement.isRelation()) {
+            applyPressedArrowActionOnRelation(selectedElement);
             return;
         }
         var isCenterVertex = selectedElement.isVertex() && selectedElement.isCenterVertex();
@@ -203,6 +207,12 @@ define([
         } else {
             SelectionHandler.setToSingleGroupRelation(bubbleUnder);
         }
+    }
+
+    function applyPressedArrowActionOnRelation(relation){
+        SelectionHandler.setToSingleVertex(
+            relation.childVertexInDisplay()
+        );
     }
 
     function centerVertexIfApplicable(vertex) {
