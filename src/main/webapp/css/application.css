@@ -5,7 +5,7 @@ a, input[type=button].link-like-button, button.link-like-button { color: #1919ac
 
 a:hover, input[type=button].link-like-button:hover, button.link-like-button:hover { color: #47A3FF; }
 
-input[type="button"], button, .link-like-button { border-size: 0px; border-style: none; font: inherit; padding: 0 0 0 0; background: none; }
+input[type="button"], .link-like-button { border-size: 0px; border-style: none; font: inherit; padding: 0 0 0 0; background: none; }
 
 button.graph-element-button { width: 30px; height: 30px; margin-bottom: 5px; margin-right: 3px; line-height: 20px; color: #333; text-align: center; text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); vertical-align: middle; background-image: linear-gradient(to bottom, #ffffff, #e6e6e6); background-repeat: repeat-x; border-bottom-color: #b3b3b3; border: 1px solid #ccc; border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25); -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); }
 button.graph-element-button:hover { background-image: linear-gradient(to bottom, #ffffff, #cdcdcd); }
@@ -155,11 +155,11 @@ svg { z-index: 1; }
 .vertex .in-bubble-content, .vertex .image_container, .vertex .menu, .vertex .included-graph-elements-flag { z-index: 3; }
 .vertex .in-bubble-content { border-radius: 20px; background-color: #E6E6FF; white-space: nowrap; padding: 1em; padding-bottom: 0.7em; padding-top: 0.7em; margin-left: 0.3em; position: relative; display: inline-block; border: 1px; border-color: transparent; border-style: solid; }
 .vertex .in-bubble-content .note-button { margin-right: 5px; margin-top: -3px; }
+.vertex .in-bubble-content button.duplicate { position: absolute; left: -15px; top: -30px; }
 .vertex .image_container { display: inline-block; position: relative; width: 60px; }
 .vertex .image_container:empty { width: 0; }
 .vertex .move { background-image: url("images/icons/vertex/move.png"); min-width: 25px; min-height: 25px; margin-right: 5px; margin-left: 8px; float: left; }
 .vertex .ui-button { width: 1.7em; height: 1.8em; margin-right: 0; font-size: 1.1em; padding: 0; }
-.vertex .ui-button.duplicate { position: absolute; left: -15px; top: -30px; }
 .vertex .menu { float: left; width: 132px; margin-top: 5px; position: absolute; white-space: normal; background-color: white; opacity: 0.95; }
 .vertex .menu ul:first-of-type { padding-left: 5px; }
 .vertex .menu ul { list-style: none; font-family: courier new, monospace; font-size: 18px; padding: 0 5px 0 0; margin: 0 0 0 0; display: inline; float: left; min-width: 12px; }

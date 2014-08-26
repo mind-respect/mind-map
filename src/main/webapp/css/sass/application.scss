@@ -12,7 +12,7 @@ a:hover, input[type=button].link-like-button:hover, button.link-like-button:hove
   color: #47A3FF;
 }
 
-input[type="button"], button, .link-like-button {
+input[type="button"], .link-like-button {
   border-size: 0px;
   border-style: none;
   font: inherit;
@@ -568,6 +568,11 @@ svg {
       margin-right: 5px;
       margin-top: -3px;
     }
+    button.duplicate {
+      position: absolute;
+      left: -15px;
+      top: -30px;
+    }
     border: 1px;
     border-color: transparent;
     border-style: solid;
@@ -594,11 +599,6 @@ svg {
     margin-right: 0;
     font-size: 1.1em;
     padding: 0;
-    &.duplicate {
-      position: absolute;
-      left: -15px;
-      top: -30px;
-    }
   }
   .menu {
     float: left;

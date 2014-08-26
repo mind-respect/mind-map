@@ -49,13 +49,10 @@ define([
 
             function buildDuplicateButton() {
                 return $(
-                    "<button class='duplicate'>"
-                ).button({
-                        icons: {
-                            primary: "ui-icon ui-icon-link"
-                        },
-                        text: false
-                    }).on(
+                    "<button class='duplicate graph-element-button'>"
+                ).append(
+                    $("<i class='fa fa-link'>")
+                ).on(
                     "click",
                     function (event) {
                         event.stopPropagation();
