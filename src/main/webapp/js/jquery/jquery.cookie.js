@@ -1,6 +1,3 @@
-/*
- * Copyright Vincent Blouin under the Mozilla Public License 1.1
- */
 (function ($, document, undefined) {
 
 	var pluses = /\+/g;

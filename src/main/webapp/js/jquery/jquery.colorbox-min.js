@@ -1,7 +1,3 @@
-/*
- * Copyright Vincent Blouin under the Mozilla Public License 1.1
- */
-
 /*!
  Colorbox v1.5.10 - 2014-06-26
  jQuery lightbox and modal window plugin

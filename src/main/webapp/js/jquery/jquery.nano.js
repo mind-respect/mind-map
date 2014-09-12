@@ -1,7 +1,3 @@
-/*
- * Copyright Vincent Blouin under the Mozilla Public License 1.1
- */
-
 (function($) {
     $.nano = function(template, data) {
         return template.replace(/\{([\w\.]*)\}/g, function (str, key) {

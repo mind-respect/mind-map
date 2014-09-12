@@ -1,8 +1,4 @@
 /*
- * Copyright Vincent Blouin under the Mozilla Public License 1.1
- */
-
-/*
  * JQuery URL Parser plugin
  * Developed and maintanined by Mark Perkins, mark@allmarkedup.com
  * Source repository: https://github.com/allmarkedup/jQuery-URL-Parser

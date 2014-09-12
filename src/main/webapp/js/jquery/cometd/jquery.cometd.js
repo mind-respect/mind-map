@@ -1,7 +1,3 @@
-/*
- * Copyright Vincent Blouin under the Mozilla Public License 1.1
- */
-
 (function($)
 {
     function bind($, org_cometd)

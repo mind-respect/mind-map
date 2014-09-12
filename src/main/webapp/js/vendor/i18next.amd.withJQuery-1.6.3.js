@@ -1,6 +1,3 @@
-/*
- * Copyright Vincent Blouin under the Mozilla Public License 1.1
- */
 (function (root, factory) {
     if (typeof exports === 'object') {
 
