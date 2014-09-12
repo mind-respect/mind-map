@@ -186,7 +186,9 @@ define([
                 var image = this;
                 self.removeImage(image);
             });
-            self.getImageMenu().refreshImages();
+            if(this.hasImagesMenu()){
+                this.getImageMenu().refreshImages();
+            }
         };
 
         Self.prototype.integrateIdentification = function (identification) {

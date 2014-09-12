@@ -48,6 +48,14 @@ define([
         setter(graphElement);
     };
 
+    api.setToSingleGroupRelation = function (groupRelation) {
+        deselectAll();
+        selectionInfo.setToSingleGroupRelation(groupRelation);
+        groupRelation.select();
+        groupRelation.makeSingleSelected();
+        reflectSelectionChange();
+    };
+
     api.setToSingleVertex = function (vertex) {
         deselectAll();
         selectionInfo.setToSingleVertex(vertex);
