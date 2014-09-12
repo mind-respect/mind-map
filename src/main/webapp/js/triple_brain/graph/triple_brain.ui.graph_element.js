@@ -1,148 +1,93 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
-    "jquery",
-    "triple_brain.event_bus",
     "triple_brain.graph_displayer"
-], function ($, EventBus, GraphDisplayer) {
+], function (GraphDisplayer) {
     var api = {};
-    api.types = {
-        "VERTEX": "vertex",
-        "RELATION": "relation"
+    api.Types = {
+        Vertex: "vertex",
+        Relation: "relation",
+        GroupRelation: "group_relation",
+        Schema: "schema",
+        Property: "property"
     };
-    api.Object = function (html) {
-        this.html = html;
+    var menuHandlerGetters = {};
+    initMenuHandlerGetters();
+    api.Self = function () {
     };
-    api.Object.prototype.removeType = function (type) {
-        var types = this.removeIdentificationInArray(
-            type,
-            this.getTypes()
-        );
-        this.html.data("types", types);
-        this.removeIdentificationCommonBehavior(type);
+    api.Self.prototype.getId = function(){
+        return this.getHtml().attr("id");
     };
-
-    api.Object.prototype.removeIdentificationInArray = function (identificationToRemove, array) {
-        var i = 0;
-        $.each(array, function () {
-            var identification = this;
-            if (identification.getUri() === identificationToRemove.getUri()) {
-                array.splice(i, 1);
-                return false;
-            }
-            i++;
-        });
-        return array;
+    api.Self.prototype.isVertex = function () {
+        return this.getGraphElementType() === api.Types.Vertex;
     };
-
-    api.Object.prototype.getTypes = function () {
-        return this.html.data('types');
+    api.Self.prototype.isSchema = function () {
+        return this.getGraphElementType() === api.Types.Schema;
     };
-    api.Object.prototype.getIdentifications = function () {
-        return this.getTypes().concat(
-            this.getSameAs(),
-            this.getGenericIdentifications()
-        );
+    api.Self.prototype.isRelation = function () {
+        return this.getGraphElementType() === api.Types.Relation;
     };
-    api.Object.prototype.setGenericIdentifications = function (genericIdentifications) {
-        this.html.data(
-            'genericIdentifications',
-            genericIdentifications
+    api.Self.prototype.isGroupRelation = function () {
+        return this.getGraphElementType() === api.Types.GroupRelation;
+    };
+    api.Self.prototype.isProperty = function () {
+        return this.getGraphElementType() === api.Types.Property;
+    };
+    api.Self.prototype.isBubble = function () {
+        return !this.isRelation();
+    };
+    api.Self.prototype.getSimilarButtonHtml = function (button) {
+        return this.getMenuHtml().find(
+                "[data-action=" + button.getAction() + "]"
         );
     };
-    api.Object.prototype.getGenericIdentifications = function () {
-        return this.html.data(
-            'genericIdentifications'
-        );
+    api.Self.prototype.getMenuHandler = function () {
+        return menuHandlerGetters[
+            this.getGraphElementType()
+            ]();
     };
-    api.Object.prototype.addGenericIdentification = function (genericIdentification) {
-        genericIdentification.setType("generic");
-        var genericIdentifications = this.getGenericIdentifications();
-        genericIdentifications.push(genericIdentification);
-        this.setGenericIdentifications(
-            genericIdentifications
-        );
-        this.applyCommonBehaviorForAddedIdentification(genericIdentification);
-    };
-    api.Object.prototype.removeGenericIdentification = function (genericIdentification) {
-        var genericIdentifications = this.removeIdentificationInArray(
-            genericIdentification,
-            this.getGenericIdentifications()
-        );
-        this.setGenericIdentifications(
-            genericIdentifications
-        );
-        this.removeIdentificationCommonBehavior(genericIdentification);
-    };
-    api.Object.prototype.setTypes = function (types) {
-        return this.html.data('types', types);
-    };
-    api.Object.prototype.addType = function (type) {
-        type.setType("type");
-        var types = this.getTypes();
-        types.push(type);
-        this.setTypes(types);
-        this.applyCommonBehaviorForAddedIdentification(type);
-    };
-    api.Object.prototype.addSameAs = function (sameAs) {
-        sameAs.setType("same_as");
-        var sameAsCollection = this.getSameAs();
-        sameAsCollection.push(sameAs);
-        this.setSameAs(sameAsCollection);
-        this.applyCommonBehaviorForAddedIdentification(sameAs);
-    };
-    api.Object.prototype.setSameAs = function (sameAsCollection) {
-        this.html.data('sameAs', sameAsCollection);
-    };
-    api.Object.prototype.getSameAs = function () {
-        return this.html.data('sameAs');
-    };
-    api.Object.prototype.removeSameAs = function (sameAsToRemove) {
-        var sameAs = this.removeIdentificationInArray(
-            sameAsToRemove,
-            this.getSameAs()
-        );
-        this.html.data("sameAs", sameAs);
-        this.removeIdentificationCommonBehavior(sameAsToRemove);
-    };
-    api.Object.prototype.hasIdentifications = function(){
-        return this.getIdentifications().length > 0;
-    };
-    api.Object.prototype.isVertex = function () {
-        return this.getGraphElementType() === api.types.VERTEX;
-    };
-    api.Object.prototype.isRelation = function () {
-        return this.getGraphElementType() === api.types.RELATION;
-    };
-    api.Object.prototype.isGroupRelation = function () {
-        return false;
-    };
-    EventBus.subscribe("/event/ui/selection/changed",
-        function (event, selectionInfo) {
-            var onlyOneGraphElementSelected = 1 === selectionInfo.getNbSelectedGraphElements();
-            if (!onlyOneGraphElementSelected) {
-                $.each(selectionInfo.getSelectedGraphElements(), function () {
-                    var selectedElement = this;
-                    selectedElement.hideMenu();
-                });
-                return;
-            }
-            displayOnlyRelevantButtonsInGraphElementMenu(
-                selectionInfo.getSingleElement()
-            );
+    api.Self.prototype.adjustWidthToNumberOfChars = function(){
+        var text = this.text().trim(),
+            label = this.getLabel();
+        if(!label.is("input")){
+            return;
         }
-    );
+        if(text.length === 0){
+            text = label.attr("placeholder");
+        }
+        var nbCharacter = text.length;
+        /*
+         * I haven't found a trick to calculate de good number.
+         * The first one represents the font size and the second the font to write
+         * 20=12  19=11  18=11  17=10  16=10  15=9  14=8  13=8  12=7  11=7  10=6
+         */
+        var fontWithCorrection = 8;
+        label.css(
+            'width',
+                ((nbCharacter + 1) * fontWithCorrection) + 2
+        );
+    };
+    api.Self.prototype.rightActionForType = function(vertexAction, edgeAction, groupRelationAction, schemaAction, propertyAction){
+        switch(this.getGraphElementType()){
+            case api.Types.Vertex :
+                return vertexAction;
+            case api.Types.Relation :
+                return edgeAction;
+            case api.Types.GroupRelation :
+                return groupRelationAction;
+            case api.Types.Schema :
+                return schemaAction;
+            case api.Types.Property :
+                return propertyAction;
+        }
+    };
     return api;
-    function displayOnlyRelevantButtonsInGraphElementMenu(graphElement) {
-        var clickHandler = graphElement.isVertex() ?
-            GraphDisplayer.getVertexMenuHandler().forSingle() :
-            GraphDisplayer.getRelationMenuHandler().forSingle();
-        graphElement.visitMenuButtons(function (button) {
-            button.showOnlyIfApplicable(
-                clickHandler,
-                graphElement
-            );
-        });
+    function initMenuHandlerGetters() {
+        menuHandlerGetters[api.Types.Vertex] = GraphDisplayer.getVertexMenuHandler;
+        menuHandlerGetters[api.Types.Relation] = GraphDisplayer.getRelationMenuHandler;
+        menuHandlerGetters[api.Types.GroupRelation] = GraphDisplayer.getGroupRelationMenuHandler;
+        menuHandlerGetters[api.Types.Schema] = GraphDisplayer.getSchemaMenuHandler;
+        menuHandlerGetters[api.Types.Property] = GraphDisplayer.getPropertyMenuHandler;
     }
 });

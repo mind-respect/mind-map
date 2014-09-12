@@ -1,13 +1,18 @@
+/*
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
+ */
+
 define([
         "require",
         "jquery",
         "triple_brain.event_bus",
         "triple_brain.id_uri",
         "triple_brain.user",
-        "triple_brain.graph_element",
-        "triple_brain.edge_server_facade"
+        "triple_brain.graph_element_service",
+        "triple_brain.edge_server_facade",
+        "triple_brain.friendly_resource_service"
     ],
-    function (require, $, EventBus, IdUriUtils, UserService, GraphElement, EdgeServerFacade) {
+    function (require, $, EventBus, IdUri, UserService, GraphElementService, EdgeServerFacade, FriendlyResourceService) {
         var api = {};
         api.add = function (sourceVertex, destinationVertex, callback) {
             add(
@@ -54,79 +59,38 @@ define([
             });
         };
         api.updateLabel = function (edge, label, callback) {
-            $.ajax({
-                type: 'POST',
-                url: edge.getUri() + "/label" + '?label=' + label
-            }).success(function () {
-                if(callback !== undefined){
-                    callback(edge);
-                }
-                EventBus.publish(
-                    '/event/ui/graph/edge/label/updated',
-                    edge
-                );
-            });
+            FriendlyResourceService.updateLabel(
+                edge,
+                label,
+                callback
+            );
         };
         api.addSameAs = function (edge, sameAs, callback) {
-            sameAs.setType("same_as");
-            GraphElement.addIdentification(
+            GraphElementService.addSameAs(
                 edge,
                 sameAs,
-                function (edge, updatedIdentification) {
-                    if (callback !== undefined) {
-                        callback();
-                    }
-                    publishIdentificationAdded(
-                        edge,
-                        updatedIdentification
-                    );
-                }
+                callback
             );
         };
         api.removeSameAs = function (edge, sameAs, callback) {
-            GraphElement.removeIdentification(
+            GraphElementService.removeIdentification(
                 edge,
                 sameAs,
-                function () {
-                    edge.removeSameAs(sameAs);
-                    if (callback != undefined) {
-                        callback(
-                            edge,
-                            sameAs
-                        );
-                    }
-                }
+                callback
             );
         };
         api.addType = function (edge, type, callback) {
-            type.setType("type");
-            GraphElement.addIdentification(
+            GraphElementService.addType(
                 edge,
                 type,
-                function (edge, updatedIdentification) {
-                    if (callback !== undefined) {
-                        callback();
-                    }
-                    publishIdentificationAdded(
-                        edge,
-                        updatedIdentification
-                    );
-                }
+                callback
             );
         };
         api.removeType = function (edge, type, callback) {
-            GraphElement.removeIdentification(
+            GraphElementService.removeType(
                 edge,
                 type,
-                function () {
-                    edge.removeType(type);
-                    if (callback != undefined) {
-                        callback(
-                            edge,
-                            type
-                        );
-                    }
-                }
+                callback
             );
         };
         api.inverse = function (edge, callback) {
@@ -141,16 +105,16 @@ define([
         }
 
         function add(sourceVertexUri, destinationVertexUri, callback) {
-            var sourceVertexUriFormatted = IdUriUtils.encodeUri(sourceVertexUri);
-            var destinationVertexUriFormatted = IdUriUtils.encodeUri(destinationVertexUri);
+            var sourceVertexUriFormatted = IdUri.encodeUri(sourceVertexUri);
+            var destinationVertexUriFormatted = IdUri.encodeUri(destinationVertexUri);
             var response = $.ajax({
                 type: 'POST',
                 url: edgesUrl() +
                     '?sourceVertexId=' + sourceVertexUriFormatted +
                     '&destinationVertexId=' + destinationVertexUriFormatted
             }).success(function () {
-                    var responseUri = IdUriUtils.removeDomainNameFromGraphElementUri(
-                        response.getResponseHeader("Location")
+                    var responseUri = IdUri.resourceUriFromAjaxResponse(
+                        response
                     );
                     callback(
                         getEdgeServerFacade().buildObjectWithUriOfSelfSourceAndDestinationVertex(
@@ -160,13 +124,6 @@ define([
                         )
                     );
                 }
-            );
-        }
-
-        function publishIdentificationAdded(edge, identification) {
-            EventBus.publish(
-                '/event/ui/graph/edge/identification/added',
-                [edge, identification]
             );
         }
 

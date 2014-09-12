@@ -1,3 +1,7 @@
+/*
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
+ */
+
 define([
         "jquery",
         "triple_brain.user",
@@ -25,9 +29,17 @@ define([
                 api.uriFromGraphElementId(id)
             );
         };
+        api.isSchemaUri = function(uri){
+            return uri.indexOf("/schema") !== -1;
+        };
         api.uriFromGraphElementId = function (id) {
             var username = UserService.authenticatedUserInCache().user_name;
             return "/users" + username + "/" + id;
+        };
+        api.resourceUriFromAjaxResponse = function(response){
+            return api.removeDomainNameFromGraphElementUri(
+                response.getResponseHeader("Location")
+            );
         };
         api.removeDomainNameFromGraphElementUri = function (uri) {
             return uri.substr(
@@ -52,7 +64,7 @@ define([
             };
             return (S4(buf[0]) + S4(buf[1]) + "-" + S4(buf[2]) + "-" + S4(buf[3]) + "-" + S4(buf[4]) + "-" + S4(buf[5]) + S4(buf[6]) + S4(buf[7]));
         };
-        api.isVertexUriOwnedByCurrentUser = function (uri) {
+        api.isGraphElementUriOwnedByCurrentUser = function (uri) {
             return UserService.authenticatedUserInCache().user_name ===
                 api.getOwnerFromUri(uri);
         };
@@ -71,6 +83,15 @@ define([
             return uri.substring(
                     uri.indexOf("vertex/") + 7
             );
+        };
+        api.getSchemaShortId = function (uri) {
+            return uri.substring(
+                    uri.indexOf("schema/") + 7
+            );
+        };
+        api.convertSchemaUriToNonOwnedUri= function (uri) {
+            return UserService.currentUserUri() + "/non_owned/schema/" +
+                api.getSchemaShortId(uri)
         };
         return api;
     }

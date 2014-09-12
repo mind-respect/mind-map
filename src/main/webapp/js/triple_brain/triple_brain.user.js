@@ -1,5 +1,5 @@
-/**
- * Copyright Mozilla Public License 1.1
+/*
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
         "jquery",
@@ -21,7 +21,7 @@ define([
             return authenticatedUserInCache;
         };
         api.currentUserUri = function () {
-            return usersResourceUrl + authenticatedUserInCache.user_name;
+            return usersResourceUrl + api.authenticatedUserInCache().user_name;
         };
         api.authenticate = function (loginInfo, callback, errorCallback) {
             $.ajax({

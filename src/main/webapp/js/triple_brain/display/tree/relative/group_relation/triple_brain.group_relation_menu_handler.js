@@ -1,9 +1,9 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
-        "triple_brain.vertex",
-        "triple_brain.edge",
+        "triple_brain.vertex_service",
+        "triple_brain.edge_service",
         "triple_brain.mind_map_info"
     ],
     function (VertexService, EdgeService, MindMapInfo) {

@@ -1,5 +1,5 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
         "jquery",
@@ -24,13 +24,17 @@ define([
             api,
             VertexUi
         );
-        api.Object = function (html) {
-            this.html = html;
-            this.bubble = Bubble.withHtml(html);
-            VertexUi.Object.apply(this, [html]);
-            this.init();
-        };
+        api.Object = function () {};
         api.Object.prototype = new VertexUi.Object;
+        api.Object.prototype.init = function(html){
+            this.html = html;
+            this.bubble = Bubble.withHtmlFacade(this);
+            VertexUi.Object.apply(this, [html]);
+            VertexUi.Object.prototype.init.call(
+                this
+            );
+            return this;
+        };
         api.Object.prototype.isToTheLeft = function () {
             if (this._isToTheLeft === undefined) {
                 this._isToTheLeft = this.html.parents(".left-oriented").length > 0;
@@ -168,75 +172,64 @@ define([
 
         VertexUi.buildCommonConstructors(api);
         EventBus.subscribe(
-            '/event/ui/graph/vertex/same_as/added',
-            function (event, vertex, sameAs) {
-                var treeVertex = api.ofVertex(vertex);
-                treeVertex.applyToOtherInstances(function (vertex) {
-                    vertex.addSameAs(sameAs);
-                });
-            }
+            '/event/ui/graph/identification/added',
+            identificationAddedHandler
         );
+        function identificationAddedHandler(event, graphElement, identification){
+            if(!graphElement.isVertex()){
+                return;
+            }
+            var treeVertex = api.ofVertex(graphElement);
+            treeVertex.applyToOtherInstances(function (vertex) {
+                var addAction = identification.rightActionForType(
+                    graphElement.addType,
+                    graphElement.addSameAs,
+                    graphElement.addGenericIdentification
+                );
+                addAction.call(
+                    vertex,
+                    identification
+                );
+            });
+        }
         EventBus.subscribe(
-            '/event/ui/graph/vertex/generic_identification/added',
-            function (event, vertex, genericIdentification) {
-                var treeVertex = api.ofVertex(vertex);
-                treeVertex.applyToOtherInstances(function (vertex) {
-                    vertex.addGenericIdentification(genericIdentification);
-                });
-            }
+            '/event/ui/graph/identification/removed',
+            identificationRemovedHandler
         );
-        EventBus.subscribe(
-            '/event/ui/graph/vertex/type/added',
-            function (event, vertex, type) {
-                var treeVertex = api.ofVertex(vertex);
-                treeVertex.applyToOtherInstances(function (vertex) {
-                    vertex.addType(type);
-                });
+        function identificationRemovedHandler(event, graphElement, identification){
+            if(!graphElement.isVertex()){
+                return;
             }
-        );
-        EventBus.subscribe(
-            '/event/ui/graph/vertex/type/removed',
-            function (event, vertex, typeToRemove) {
-                var treeVertex = api.ofVertex(vertex);
-                treeVertex.applyToOtherInstances(function (vertex) {
-                    vertex.removeType(typeToRemove);
-                });
-            }
-        );
-        EventBus.subscribe(
-            '/event/ui/graph/vertex/generic_identification/removed',
-            function (event, vertex, genericIdentification) {
-                var treeVertex = api.ofVertex(vertex);
-                treeVertex.applyToOtherInstances(function (vertex) {
-                    vertex.removeGenericIdentification(genericIdentification);
-                });
-            }
-        );
-        EventBus.subscribe(
-            '/event/ui/graph/vertex/same_as/removed',
-            function (event, vertex, sameAs) {
-                var treeVertex = api.ofVertex(vertex);
-                treeVertex.applyToOtherInstances(function (vertex) {
-                    vertex.removeSameAs(sameAs);
-                });
-            }
-        );
+            var treeVertex = api.ofVertex(graphElement);
+            treeVertex.applyToOtherInstances(function (vertex) {
+                var removeAction = identification.rightActionForType(
+                    graphElement.removeType,
+                    graphElement.removeSameAs,
+                    graphElement.removeGenericIdentification
+                );
+                removeAction.call(
+                    vertex,
+                    identification
+                );
+            });
+        }
         EventBus.subscribe(
             '/event/ui/graph/vertex_and_relation/added/',
-            function(event, triple, tripleServerFormat){
-                var sourceBubble = triple.sourceVertex();
-                if(!sourceBubble.isVertex()){
-                    return;
-                }
-                triple.destinationVertex().resetOtherInstances();
-                sourceBubble.applyToOtherInstances(function (vertex) {
-                    Triple.createUsingServerTriple(
-                        vertex,
-                        tripleServerFormat
-                    );
-                });
-            }
+            vertexAndRelationAddedHandler
         );
+        function vertexAndRelationAddedHandler(event, triple, tripleServerFormat){
+            var sourceBubble = triple.sourceVertex();
+            if(!sourceBubble.isVertex()){
+                return;
+            }
+            triple.destinationVertex().resetOtherInstances();
+            sourceBubble.applyToOtherInstances(function (vertex) {
+                Triple.createUsingServerTriple(
+                    vertex,
+                    tripleServerFormat
+                );
+            });
+        }
         return api;
     }
 );

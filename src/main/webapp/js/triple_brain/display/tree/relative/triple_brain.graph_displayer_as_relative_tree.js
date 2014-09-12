@@ -1,20 +1,20 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
     "jquery",
-    "triple_brain.graph",
+    "triple_brain.graph_service",
     "triple_brain.graph_displayer_as_tree_common",
-    "triple_brain.vertex_html_builder_for_tree_displayer",
-    "triple_brain.vertex_html_builder_view_only_for_relative_tree_displayer",
+    "triple_brain.vertex_html_builder",
+    "triple_brain.vertex_html_builder_view_only",
     "triple_brain.ui.graph",
     "triple_brain.relative_tree_displayer_templates",
     "triple_brain.ui.edge",
     "triple_brain.event_bus",
     "triple_brain.id_uri",
     "triple_brain.relative_tree_vertex",
-    "triple_brain.edge_html_builder_for_relative_tree",
-    "triple_brain.edge_html_builder_view_only_for_relative_tree_displayer",
+    "triple_brain.edge_html_builder",
+    "triple_brain.edge_html_builder_view_only",
     "triple_brain.tree_edge",
     "triple_brain.point",
     "triple_brain.relative_tree_vertex_menu_handler",
@@ -24,35 +24,50 @@ define([
     "triple_brain.graph_element_menu_handler",
     "triple_brain.relative_tree_keyboard_actions_handler",
     "triple_brain.edge_server_facade",
-    "triple_brain.group_relation_html_builder_for_tree_displayer",
-    "triple_brain.ui.group_relation"
-], function ($, Graph, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, RelativeTreeVertexMenuHandler, GroupRelationMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler, KeyboardActionsHandler, EdgeServerFacade, GroupRelationHtmlBuilder, GroupRelationUi) {
+    "triple_brain.group_relation_html_builder",
+    "triple_brain.ui.group_relation",
+    "triple_brain.schema_service",
+    "triple_brain.schema_server_facade",
+    "triple_brain.schema_html_builder",
+    "triple_brain.ui.schema",
+    "triple_brain.schema_menu_handler",
+    "triple_brain.property_html_builder",
+    "triple_brain.property_menu_handler",
+    "triple_brain.ui.property"
+], function ($, GraphService, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, RelativeTreeVertexMenuHandler, GroupRelationMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler, KeyboardActionsHandler, EdgeServerFacade, GroupRelationHtmlBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaHtmlBuilder, SchemaUi, SchemaMenuHandler, PropertyHtmlBuilder, PropertyMenuHandler, PropertyUi) {
     KeyboardActionsHandler.init();
     var api = {};
-    api.displayUsingDepthAndCentralVertexUri = function (centralVertexUri, depth, callback, errorCallback) {
-        Graph.getForCentralVertexUriAndDepth(
+    api.displayForVertexWithUri = function (centralVertexUri, callback, errorCallback) {
+        GraphService.getForCentralVertexUri(
             centralVertexUri,
-            depth,
             function (graph) {
-                var drawnTree = new TreeMaker()
+                new TreeMaker()
                     .makeForCenterVertex(
                     graph,
                     centralVertexUri
                 );
-                callback(drawnTree);
+                callback();
             },
             errorCallback
         );
+    };
+    api.displayForSchemaWithUri = function (uri, callback) {
+        SchemaService.get(uri, function (schemaFromServer) {
+            new TreeMaker().makeForSchema(
+                SchemaServerFacade.fromServerFormat(schemaFromServer)
+            );
+            if(callback !== undefined){
+                callback();
+            }
+        });
     };
     api.canAddChildTree = function () {
         return true;
     };
     api.addChildTree = function (parentVertex) {
-        var depth = 1;
         var parentUri = parentVertex.getUri();
-        Graph.getForCentralVertexUriAndDepth(
+        GraphService.getForCentralVertexUri(
             parentUri,
-            depth,
             function (serverGraph) {
                 var treeMaker = new TreeMaker(VertexHtmlBuilder);
                 var nbRelationsWithGrandParent = removeRelationWithGrandParentFromServerGraph();
@@ -115,10 +130,8 @@ define([
         );
     };
     api.connectVertexToVertexWithUri = function (parentVertex, destinationVertexUri, callback) {
-        var depth = 1;
-        Graph.getForCentralVertexUriAndDepth(
+        GraphService.getForCentralVertexUri(
             destinationVertexUri,
-            depth,
             function (serverGraph) {
                 var treeMaker = new TreeMaker(),
                     drawnTree = treeMaker.makeForNonCenterVertex(
@@ -140,9 +153,9 @@ define([
         var treeMaker = new TreeMaker(
             VertexHtmlBuilder
         );
-        var container;
-        var isCenterVertex = parentVertex.isVertex() && parentVertex.isCenterVertex();
-        if(isCenterVertex) {
+        var container,
+            isCenterVertex = parentVertex.isVertex() && parentVertex.isCenterVertex();
+        if (isCenterVertex) {
             if (shouldAddLeft()) {
                 container = leftVerticesContainer();
                 newVertex.isLeftOriented = true;
@@ -155,11 +168,23 @@ define([
             newVertex.isLeftOriented = parentVertex.getOriginalServerObject().isLeftOriented;
         }
         newVertex.similarRelations = {};
-        return treeMaker.buildVertexHtmlIntoContainer(
+        return treeMaker.buildBubbleHtmlIntoContainer(
             newVertex,
             container,
             treeMaker.getVertexHtmlBuilder(),
-            GraphUi.generateVertexHtmlId()
+            GraphUi.generateBubbleHtmlId()
+        );
+    };
+    api.addProperty = function(property){
+        var shouldAddToLeft = shouldAddLeft();
+        property.isLeftOriented = shouldAddToLeft;
+        var container = shouldAddToLeft ?
+            leftVerticesContainer() :
+            rightVerticesContainer();
+        new TreeMaker().buildBubbleHtmlIntoContainer(
+            property,
+            container,
+            PropertyHtmlBuilder
         );
     };
     api.allowsMovingVertices = function () {
@@ -178,6 +203,12 @@ define([
     api.getVertexSelector = function () {
         return RelativeTreeVertex;
     };
+    api.getSchemaSelector = function () {
+        return SchemaUi;
+    };
+    api.getPropertySelector = function () {
+        return PropertyUi;
+    };
     api.getGroupRelationSelector = function () {
         return GroupRelationUi;
     };
@@ -187,8 +218,14 @@ define([
     api.getRelationMenuHandler = function () {
         return TreeEdgeMenuHandler;
     };
-    api.getGroupRelationMenuHandler = function(){
+    api.getGroupRelationMenuHandler = function () {
         return GroupRelationMenuHandler;
+    };
+    api.getSchemaMenuHandler = function () {
+        return SchemaMenuHandler;
+    };
+    api.getPropertyMenuHandler = function(){
+        return PropertyMenuHandler;
     };
     api.getGraphElementMenuHandler = function () {
         return GraphElementMenuHandler;
@@ -245,6 +282,27 @@ define([
     function TreeMaker(_htmlBuilder) {
         var self = this;
         this.edgeBuilder = EdgeBuilder;
+        this.makeForSchema = function (schema) {
+            _htmlBuilder = SchemaHtmlBuilder;
+            buildRootBubble(
+                schema,
+                buildRootBubbleContainer()
+            );
+            var index = 0;
+            $.each(schema.getProperties(), function () {
+                var propertyServerFacade = this;
+                propertyServerFacade.isLeftOriented = index % 2 !== 0;
+                index++;
+                var container = propertyServerFacade.isLeftOriented ?
+                    self.leftChildrenContainer :
+                    self.rightChildrenContainer;
+                self.buildBubbleHtmlIntoContainer(
+                    propertyServerFacade,
+                    container,
+                    PropertyHtmlBuilder
+                );
+            });
+        };
         this.makeForIncludedVerticesView = function (serverGraph, container) {
             var graphOffset = Point.fromCoordinates(
                     container.width() / 2,
@@ -270,20 +328,11 @@ define([
             );
         };
         this.makeForCenterVertex = function (serverGraph, centralVertexUri) {
-            var graphOffset = GraphUi.offset();
-            var verticesContainer = RelativeTreeTemplates[
-                "root_vertex_super_container"
-                ].merge({
-                    offset: graphOffset
-                });
-            GraphUi.addHtml(
-                verticesContainer
-            );
             _htmlBuilder = VertexHtmlBuilder;
             return makeInContainerUsingServerGraphAndCentralVertexUri(
                 serverGraph,
                 centralVertexUri,
-                verticesContainer
+                buildRootBubbleContainer()
             );
         };
         this.makeForNonCenterVertex = function (serverGraph, destinationVertexUri, parentVertex) {
@@ -296,7 +345,7 @@ define([
             parentVertex.visitVerticesChildren(VertexHtmlBuilder.completeBuild);
             return serverGraph;
         };
-        this.buildVertexHtmlIntoContainer = function (vertex, container, builder, htmlId) {
+        this.buildBubbleHtmlIntoContainer = function (vertex, container, builder, htmlId) {
             var childVertexHtmlFacade = builder.withServerFacade(
                 vertex
             ).create(htmlId);
@@ -325,10 +374,10 @@ define([
                 childVertexHtmlFacade.getHtml()
             );
             childVertexHtmlFacade.readjustLabelWidth();
-            self.addChildrenContainerToVertex(childVertexHtmlFacade, vertex.isLeftOriented);
+            self.addChildrenContainerToBubble(childVertexHtmlFacade, vertex.isLeftOriented);
             return childVertexHtmlFacade;
         };
-        this.addChildrenContainerToVertex = function (vertexHtmlFacade, toLeft) {
+        this.addChildrenContainerToBubble = function (vertexHtmlFacade, toLeft) {
             var childrenContainer = $(RelativeTreeTemplates[
                 "vertices_children_container"
                 ].merge());
@@ -364,7 +413,7 @@ define([
                     var vertex = vertexAndEdge.vertex,
                         edge = vertexAndEdge.edge;
                     vertex.isLeftOriented = isToTheLeft;
-                    var childVertexHtmlFacade = self.buildVertexHtmlIntoContainer(
+                    var childVertexHtmlFacade = self.buildBubbleHtmlIntoContainer(
                         vertex,
                         childrenContainer,
                         _htmlBuilder,
@@ -386,6 +435,19 @@ define([
                 });
             });
         };
+        function buildRootBubbleContainer() {
+            var graphOffset = GraphUi.offset();
+            var verticesContainer = RelativeTreeTemplates[
+                "root_vertex_super_container"
+                ].merge({
+                    offset: graphOffset
+                });
+            GraphUi.addHtml(
+                verticesContainer
+            );
+            return verticesContainer;
+        }
+
         function buildChildrenHtmlTreeRecursively(parentVertexHtmlFacade) {
             var serverParentVertex = parentVertexHtmlFacade.getOriginalServerObject();
             var childrenContainer = self.childrenVertexContainer(parentVertexHtmlFacade);
@@ -400,6 +462,26 @@ define([
             return childrenContainer;
         }
 
+        function buildRootBubble(serverFacade, bubblesContainer) {
+            self.rootBubble = _htmlBuilder.withServerFacade(
+                serverFacade
+            ).create(GraphUi.generateBubbleHtmlId());
+            var bubbleContainer = $(
+                RelativeTreeTemplates["vertex_container"].merge()
+            );
+            bubblesContainer.append(bubbleContainer);
+            bubbleContainer.append(self.rootBubble.getHtml());
+            self.rootBubble.readjustLabelWidth();
+            self.leftChildrenContainer = self.addChildrenContainerToBubble(
+                self.rootBubble,
+                true
+            ).addClass("left-oriented");
+            self.rightChildrenContainer = self.addChildrenContainerToBubble(
+                self.rootBubble,
+                false
+            );
+        }
+
         function makeInContainerUsingServerGraphAndCentralVertexUri(serverGraph, rootVertexUri, verticesContainer) {
             TreeDisplayerCommon.enhancedVerticesInfo(
                 serverGraph,
@@ -408,31 +490,20 @@ define([
             var vertices = serverGraph.vertices;
             buildVerticesHtml();
             function buildVerticesHtml() {
-                var serverRootVertex = vertexWithId(rootVertexUri),
-                    rootVertex = _htmlBuilder.withServerFacade(
-                        serverRootVertex
-                    ).create(GraphUi.generateVertexHtmlId()),
-                    vertexContainer = $(RelativeTreeTemplates["vertex_container"].merge());
-                $(verticesContainer).append(vertexContainer);
-                vertexContainer.append(rootVertex.getHtml());
-                rootVertex.readjustLabelWidth();
-                var leftChildrenContainer = self.addChildrenContainerToVertex(
-                        rootVertex,
-                        true
-                    ).addClass("left-oriented"),
-                    rightChildrenContainer = self.addChildrenContainerToVertex(
-                        rootVertex,
-                        false
-                    );
+                var serverRootVertex = vertexWithId(rootVertexUri);
+                buildRootBubble(
+                    serverRootVertex,
+                    verticesContainer
+                );
                 var index = 0;
                 $.each(serverRootVertex.similarRelations, function (key, groupRelation) {
                     if (groupRelation.hasMultipleVertices()) {
                         groupRelation.isLeftOriented = index % 2 != 0;
                         var container = groupRelation.isLeftOriented ?
-                            leftChildrenContainer :
-                            rightChildrenContainer;
+                            self.leftChildrenContainer :
+                            self.rightChildrenContainer;
                         index++;
-                        self.buildVertexHtmlIntoContainer(
+                        self.buildBubbleHtmlIntoContainer(
                             groupRelation,
                             container,
                             GroupRelationHtmlBuilder
@@ -445,9 +516,9 @@ define([
                             vertex.isLeftOriented = index % 2 != 0;
                             index++;
                             var container = vertex.isLeftOriented ?
-                                leftChildrenContainer :
-                                rightChildrenContainer;
-                            var childHtmlFacade = self.buildVertexHtmlIntoContainer(
+                                self.leftChildrenContainer :
+                                self.rightChildrenContainer;
+                            var childHtmlFacade = self.buildBubbleHtmlIntoContainer(
                                 vertex,
                                 container,
                                 _htmlBuilder,
@@ -455,7 +526,7 @@ define([
                             );
                             self.edgeBuilder.get(
                                 vertexAndEdge.edge,
-                                rootVertex,
+                                self.rootBubble,
                                 childHtmlFacade
                             ).create();
                             self.buildChildrenHtmlTreeRecursively(

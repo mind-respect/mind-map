@@ -1,5 +1,5 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
     "triple_brain.edge_server_facade"
@@ -11,12 +11,14 @@ define([
         );
     };
     function Object(serverFormat){
-        EdgeServerFacade.Object.apply(
-            this, [serverFormat.edge]
+        EdgeServerFacade.Self.apply(
+            this
         );
-        this.isVertex = function(){
-            return false;
-        };
+        this.init(serverFormat.edge);
     }
+    Object.prototype = new EdgeServerFacade.Self;
+    Object.prototype.isVertex = function(){
+        return false;
+    };
     return api;
 });

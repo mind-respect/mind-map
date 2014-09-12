@@ -1,16 +1,17 @@
-/**
- * Copyright Mozilla Public License 1.1
+/*
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
-    "jquery",
-    "./triple_brain.module.vertices_list_creator.js",
-    "./triple_brain.module.vertices_list_element_creator.js",
-    "./triple_brain.module.vertices_list_element.js",
-    "triple_brain.event_bus",
-    "triple_brain.graph_displayer",
-    "jquery.tinysort.min"
-],
-    function ($, VerticesListCreator, VerticesListElementCreator, VerticesListElement, EventBus, GraphDisplayer) {
+        "jquery",
+        "./triple_brain.module.vertices_list_creator.js",
+        "./triple_brain.module.vertices_list_element_creator.js",
+        "./triple_brain.module.vertices_list_element.js",
+        "triple_brain.event_bus",
+        "triple_brain.graph_displayer",
+        "triple_brain.mind_map_info",
+        "jquery.tinysort.min"
+    ],
+    function ($, VerticesListCreator, VerticesListElementCreator, VerticesListElement, EventBus, GraphDisplayer, MindMapInfo) {
         "use strict";
         var api = {},
             SORT_TYPE_LABEL = 1,
@@ -21,8 +22,8 @@ define([
                 $("#vertices-list")
             );
         };
-        api.ifExistsRebuild = function(){
-            if(api.exists()){
+        api.ifExistsRebuild = function () {
+            if (api.exists()) {
                 api.get().rebuild();
             }
         };
@@ -58,7 +59,7 @@ define([
 
             this.rebuild = function () {
                 this.empty();
-                GraphDisplayer.getVertexSelector().visitAllVertices(function(vertex){
+                GraphDisplayer.getVertexSelector().visitAllVertices(function (vertex) {
                     thisVerticesList.buildForAVertex(
                         vertex
                     );
@@ -89,7 +90,7 @@ define([
             function sortByLabel() {
                 $(verticesList()).find('li').tsort(
                     labelSortCriteria(),
-                    {useVal : true}
+                    {useVal: true}
                 );
             }
 
@@ -112,8 +113,8 @@ define([
 
         EventBus.subscribe(
             '/event/ui/graph/drawing_info/about_to/update',
-            function(){
-                if(api.exists()){
+            function () {
+                if (api.exists()) {
                     api.get().empty();
                 }
                 EventBus.unsubscribe(
@@ -133,32 +134,37 @@ define([
                     updateLabelInListForVertex(
                         vertex
                     );
-                    if(GraphDisplayer.couldHaveDuplicates()){
+                    if (GraphDisplayer.couldHaveDuplicates()) {
                         var otherInstances = vertex.getOtherInstances();
-                        $.each(otherInstances, function(){
+                        $.each(otherInstances, function () {
                             updateLabelInListForVertex(
                                 this
                             );
                         });
                     }
-                    function updateLabelInListForVertex(vertex){
-                        var verticesListElement = VerticesListElement.withVertex(
-                            vertex
-                        );
-                        verticesListElement.setLabel(vertex.text());
-                        if (vertex.getLabel().val() == "" || vertex.hasDefaultText()) {
-                            verticesListElement.applyStyleOfDefaultText();
-                        } else {
-                            verticesListElement.removeStyleOfDefaultText();
-                        }
-                    }
                 });
+                function updateLabelInListForVertex(vertex) {
+                    var verticesListElement = VerticesListElement.withVertex(
+                            vertex
+                        ),
+                        text = vertex.text();
+                    if ("" === text) {
+                        text = GraphDisplayer.getVertexSelector().getWhenEmptyLabel();
+                        verticesListElement.applyStyleOfDefaultText();
+                    } else {
+                        verticesListElement.removeStyleOfDefaultText();
+                    }
+                    verticesListElement.setLabel(text);
+                }
             }
         );
 
         EventBus.subscribe(
             '/event/ui/graph/drawn',
             function () {
+                if (MindMapInfo.isSchemaMode()) {
+                    return;
+                }
                 var verticesList = api.exists() ?
                     api.get() :
                     VerticesListCreator.create();
@@ -183,7 +189,7 @@ define([
         );
         EventBus.subscribe(
             "/event/graph_traversal/edge/removed",
-            function(){
+            function () {
                 api.get().rebuild();
             }
         );

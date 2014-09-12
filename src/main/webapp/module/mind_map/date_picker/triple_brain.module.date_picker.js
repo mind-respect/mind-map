@@ -1,5 +1,5 @@
-/**
- * Copyright Mozilla Public License 1.1
+/*
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
         "jquery",
@@ -9,9 +9,7 @@ define([
     function ($, EventBus) {
         "use strict";
         EventBus.subscribe(
-                '/event/ui/graph/vertex/type/added ' +
-                '/event/ui/graph/vertex/same_as/added ' +
-                '/event/ui/graph/vertex/generic_identification/added',
+                "/event/ui/graph/identification/added",
                 handleIdentificationAdded
         );
         EventBus.subscribe(
@@ -19,9 +17,9 @@ define([
             handleVertexCreated
         );
         return {};
-        function handleIdentificationAdded(event, vertex, identification) {
+        function handleIdentificationAdded(event, graphlement, identification) {
             if (isIdentificationADate(identification)) {
-                applyDatePickerToVertex(vertex);
+                applyDatePickerToVertex(graphlement);
             }
         }
         function handleVertexCreated(event, vertex) {
@@ -33,8 +31,8 @@ define([
                 }
             });
         }
-        function applyDatePickerToVertex(vertex) {
-            vertex.getLabel().datepicker()
+        function applyDatePickerToVertex(graphlement) {
+            graphlement.getLabel().datepicker()
         }
 
         function isIdentificationADate(identification) {

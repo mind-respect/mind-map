@@ -1,5 +1,5 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
     "triple_brain.mind-map_template",
@@ -11,7 +11,7 @@ define([
         return new VertexCreator(serverVertex);
     };
     api.addDuplicateVerticesButtonIfApplicable = function(){
-
+        //not applicable
     };
     function VertexCreator(serverFormatFacade){
         var html,
@@ -28,7 +28,9 @@ define([
                 "click",
                 handleClickToDisplayVertexAsCentralVertex
             );
-            vertex = new RelativeTreeVertex.Object(html);
+            vertex = new RelativeTreeVertex.Object().init(
+                html
+            );
             RelativeTreeVertex.initCache(vertex);
             createLabel();
             vertex.setOriginalServerObject(
@@ -45,9 +47,6 @@ define([
                     handleClickToDisplayVertexAsCentralVertex
                 );
                 vertex.readjustLabelWidth();
-                if (vertex.hasDefaultText()) {
-                    vertex.applyStyleOfDefaultText();
-                }
                 var label = labelContainer.find("input[type='text']:first");
                 label.prop('disabled', true).on(
                     "click",

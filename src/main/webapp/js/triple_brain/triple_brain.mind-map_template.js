@@ -1,5 +1,5 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
         "jquery",
@@ -16,7 +16,7 @@ define([
         );
         t.add(
             'relative_vertex',
-            '<div class="vertex graph-element relative"></div>'
+            '<div class="vertex graph-element relative bubble"></div>'
         );
         t.add(
             'vertex_label_container',

@@ -1,3 +1,7 @@
+/*
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
+ */
+
 body {
   min-width: 30000px;
   min-height: 30000px;
@@ -46,10 +50,13 @@ button.graph-element-button {
 li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-button-in-list {
   margin: auto;
   margin-right: 0.5em;
-  float: right;
   color: red;
   font-weight: bold;
   font-size: 1.3em;
+  background: transparent;
+  border: none;
+  position: absolute;
+  right: 0;
 }
 
 button {
@@ -57,12 +64,13 @@ button {
     color: green;
     font-weight: bold;
     font-size: 2em;
-    margin-left: 0.2em;
     margin-bottom: 0.2em;
     float: left;
     &:hover {
       color: #00d100;
     }
+    border: none;
+    background-color: transparent;
   }
 }
 
@@ -142,6 +150,7 @@ button {
 #selectedLanguages li, .registration-available-languages li {
   padding-top: 0.5em;
   padding-bottom: 0.5em;
+  position: relative;
   /*weird number 99.4%. Otherwise right border doesn't show*/
   width: 99.4%;
 }
@@ -319,7 +328,7 @@ svg {
 }
 
 #top-panel {
-  margin-right: 5px;
+  margin-right: 75px;
   position: fixed;
   right: 0.1em;
   top: 0.5em;
@@ -391,17 +400,19 @@ svg {
   font-style: italic;
 }
 
-.graph-element input[type='text'] {
-  text-shadow: none;
-  box-shadow: none;
-  color: black;
-  font-weight: normal;
+.graph-element {
+  input[type='text'] {
+    text-shadow: none;
+    box-shadow: none;
+    color: black;
+    font-weight: normal;
+  }
+  .label {
+    font-size: 13px;
+  }
 }
 
 .group-relation {
-  position: relative;
-  min-width: 0;
-  margin: 0 0 0 0;
   white-space: nowrap;
   .menu {
     display: inline;
@@ -417,6 +428,30 @@ svg {
     margin-right: 0.3em;
     z-index: 1;
   }
+}
+
+.bubble {
+  position: relative;
+  min-width: 0;
+  margin: 0 0 0 0;
+  white-space: nowrap;
+  &.selected{
+    .in-bubble-content{
+      z-index:4;
+    }
+  }
+  .image_container {
+    z-index: 3;
+    display: inline-block;
+    position: relative;
+    width: 60px;
+    &:empty {
+      width: 0;
+    }
+  }
+  .edge-label {
+    display: inline;
+  }
   .arrow {
     position: absolute;
     height: 1px;
@@ -431,10 +466,57 @@ svg {
       left: 20px;
     }
   }
+  .menu {
+    float: left;
+    width: 132px;
+    margin-top: 5px;
+    position: absolute;
+    white-space: normal;
+    background-color: white;
+    opacity: 0.95;
+    ul:first-of-type {
+      padding-left: 5px;
+    }
+    ul {
+      list-style: none;
+      font-family: courier new, monospace;
+      font-size: 18px;
+      padding: 0 5px 0 0;
+      margin: 0 0 0 0;
+      display: inline;
+      float: left;
+      min-width: 12px;
+    }
+    input {
+      display: block;
+      float: left;
+      background-color: transparent;
+      background-position: center;
+      padding-left: 2px;
+      padding-right: 2px;
+      margin: 0;
+      display: table;
+      border: 1px solid #e30613;
+      font-weight: bold;
+      font-size: 19px;
+      min-width: 25px;
+      min-height: 14px;
+      margin-top: 0px;
+    }
+    .ui-button {
+      float: left;
+      background-color: white;
+    }
+  }
   &.inverse {
     .arrow:before {
       content: url('images/icons/vertex/arrowhead_left.svg');
     }
+  }
+  .in-bubble-content, .overlay-container {
+    position: relative;
+    display: inline-block;
+    z-index: 3;
   }
 }
 
@@ -451,30 +533,6 @@ svg {
     white-space: nowrap;
     position: absolute !important;
     min-width: 120px;
-  }
-  &.relative {
-    position: relative;
-    min-width: 0;
-    margin: 0 0 0 0;
-    .arrow {
-      position: absolute;
-      height: 1px;
-      width: 60px;
-      top: 50%;
-      left: -42px;
-      border-top: 1px solid black;
-      &:before {
-        content: url('images/icons/vertex/arrowhead_right.svg');
-        position: relative;
-        top: -10px;
-        left: 20px;
-      }
-    }
-    &.inverse {
-      .arrow:before {
-        content: url('images/icons/vertex/arrowhead_left.svg');
-      }
-    }
   }
   &.includes-vertices {
     .in-bubble-content {
@@ -551,7 +609,7 @@ svg {
     left: 30%;
     font-weight: bold;
   }
-  .in-bubble-content, .image_container, .menu, .included-graph-elements-flag {
+  .menu, .included-graph-elements-flag {
     z-index: 3;
   }
   .in-bubble-content {
@@ -577,14 +635,6 @@ svg {
     border-color: transparent;
     border-style: solid;
   }
-  .image_container {
-    display: inline-block;
-    position: relative;
-    width: 60px;
-    &:empty {
-      width: 0;
-    }
-  }
   .move {
     background-image: url('images/icons/vertex/move.png');
     min-width: 25px;
@@ -599,48 +649,6 @@ svg {
     margin-right: 0;
     font-size: 1.1em;
     padding: 0;
-  }
-  .menu {
-    float: left;
-    width: 132px;
-    margin-top: 5px;
-    position: absolute;
-    white-space: normal;
-    background-color: white;
-    opacity: 0.95;
-    ul:first-of-type {
-      padding-left: 5px;
-    }
-    ul {
-      list-style: none;
-      font-family: courier new, monospace;
-      font-size: 18px;
-      padding: 0 5px 0 0;
-      margin: 0 0 0 0;
-      display: inline;
-      float: left;
-      min-width: 12px;
-    }
-    input {
-      display: block;
-      float: left;
-      background-color: transparent;
-      background-position: center;
-      padding-left: 2px;
-      padding-right: 2px;
-      margin: 0;
-      display: table;
-      border: 1px solid #e30613;
-      font-weight: bold;
-      font-size: 19px;
-      min-width: 25px;
-      min-height: 14px;
-      margin-top: 0px;
-    }
-    .ui-button {
-      float: left;
-      background-color: white;
-    }
   }
 }
 
@@ -748,6 +756,20 @@ svg {
       color: black;
     }
   }
+  .ui-dialog-titlebar-close {
+    background: transparent;
+    border: none;
+  }
+}
+
+.property {
+  input.edge-label {
+    background-color: #f5f5f5;
+    font-size: 13px;
+  }
+  .relation-menu {
+    left:0;
+  }
 }
 
 .relation {
@@ -848,7 +870,7 @@ svg {
     width: 150px;
     min-height: 150px;
     margin: 20px auto;
-    &.hover{
+    &.hover {
       border: 10px dashed #0c0;
     }
     img {
@@ -860,7 +882,7 @@ svg {
       font-size: 14px;
     }
   }
-  .progress-label{
+  .progress-label {
     position: relative;
     left: -100px;
     font-size: small;

@@ -1,5 +1,5 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
     "jquery",
@@ -62,7 +62,7 @@ define([
                 if(searchResultFacade.isVertex()){
                     format.somethingToDistinguish = IdentificationContext.formatRelationsName(
                         IdentificationContext.removedEmptyAndDuplicateRelationsName(
-                            searchResultFacade.getRelationsName()
+                            searchResultFacade.getPropertiesName()
                         )
                     );
                     format.distinctionType = "relations";
@@ -87,7 +87,7 @@ define([
                 function(context){
                     var moreInfo = context.append(
                         originalSearchResult.context,
-                        $("<div>").append(originalSearchResult.comment)
+                        $("<div>").append(originalSearchResult.getComment())
                     );
                     callback({
                             conciseSearchResult:searchResult,

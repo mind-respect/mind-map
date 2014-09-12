@@ -1,3 +1,7 @@
+/*
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
+ */
+
 .root-vertex-super-container{
     position:absolute;
 }
@@ -46,6 +50,10 @@
     box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb;
 }
 
+.left-oriented .property .relation-menu{
+    left:0;
+}
+
 .left-oriented .relation-menu{
     left:auto;
     right:0;
@@ -59,17 +67,17 @@
     margin-left:0.3em;
 }
 
-.left-oriented .vertex .arrow, .left-oriented .group-relation .arrow{
+.left-oriented .bubble .arrow{
     left: auto;
     right:-42px;
 }
 
-.left-oriented .vertex .arrow:before, .left-oriented .group-relation .arrow:before{
+.left-oriented .bubble .arrow:before{
      content:url('../images/icons/vertex/arrowhead_left.svg');
      left:30px;
 }
 
-.left-oriented .vertex.inverse .arrow:before, .left-oriented .group-relation.inverse .arrow:before{
+.left-oriented .bubble.inverse .arrow:before{
     content:url('../images/icons/vertex/arrowhead_right.svg');
 }
 

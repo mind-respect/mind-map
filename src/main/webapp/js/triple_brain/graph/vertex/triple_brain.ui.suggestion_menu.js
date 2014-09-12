@@ -1,5 +1,5 @@
-/**
- * Copyright Mozilla Public License 1.1
+/*
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 
 define([
@@ -9,8 +9,8 @@ define([
         "triple_brain.ui.graph",
         "triple_brain.point",
         "triple_brain.identification_server_facade",
-        "triple_brain.vertex",
-        "triple_brain.edge",
+        "triple_brain.vertex_service",
+        "triple_brain.edge_service",
         "triple_brain.ui.utils",
         "triple_brain.graph_displayer",
         "triple_brain.graph_element_menu"

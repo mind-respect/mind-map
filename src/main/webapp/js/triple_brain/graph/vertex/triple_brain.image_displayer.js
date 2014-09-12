@@ -1,5 +1,5 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 
 define(
@@ -10,12 +10,12 @@ define(
     ],
     function ($, MindMapTemplate) {
         var api = {};
-        api.ofVertex = function (vertex) {
-            return new ImageMenu(vertex);
+        api.ofBubble = function (bubble) {
+            return new ImageMenu(bubble);
         };
         return api;
 
-        function ImageMenu(vertex) {
+        function ImageMenu(bubble) {
             var imageMenu = this,
                 html;
             this.create = function () {
@@ -24,12 +24,15 @@ define(
                         'image_container'
                         ].merge()
                 );
-                addHtmlToVertex();
+                addHtmlToBubble();
                 return imageMenu;
             };
             this.refreshImages = function () {
-                var images = vertex.getImages();
-                if (images.length <= 0) return;
+                var images = bubble.getImages();
+                if (images.length <= 0){
+                    html.empty();
+                    return;
+                }
                 images = imagesInOrderThatPrioritizeUserUploadedImages(images);
                 var featuredImage = images[0];
                 var featuredImageBigUri =  featuredImage.getUrlForBigger();
@@ -37,14 +40,14 @@ define(
                         src: featuredImage.getBase64ForSmall()
                     }
                 ));
-                var vertexId = vertex.getId();
+                var bubbleId = bubble.getId();
                 html.detach();
                 html.empty();
                 for (var i = 0; i < images.length; i++) {
                     var image = images[i];
                     var urlForBigger = image.getUrlForBigger();
                     var bigImageAnchor = $("<a>").attr(
-                        'rel', vertexId
+                        'rel', bubbleId
                     ).prop(
                         "href",
                         urlForBigger
@@ -60,7 +63,7 @@ define(
                                 }
                             });
                         }).colorbox({
-                            rel: vertexId,
+                            rel: bubbleId,
                             href: urlForBigger,
                             photo:true
                         });
@@ -73,15 +76,15 @@ define(
                         bigImageAnchor
                     );
                 }
-                addHtmlToVertex();
+                addHtmlToBubble();
             };
 
             this.width = function () {
                 return $(html).width();
             };
 
-            function addHtmlToVertex() {
-                vertex.getHtml().children(
+            function addHtmlToBubble() {
+                bubble.getHtml().children(
                     ".in-bubble-content"
                 ).before(html);
             }

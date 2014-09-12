@@ -1,29 +1,29 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
     "triple_brain.friendly_resource_server_facade",
     "triple_brain.freebase_uri"
-],function(FriendlyResourceServerFacade, FreebaseUri){
+], function (FriendlyResourceServerFacade, FreebaseUri) {
     var api = {};
-    api.fromServerFormat = function(serverFormat){
-        return new Object(
+    api.fromServerFormat = function (serverFormat) {
+        return new api.Self(
             serverFormat
         );
     };
     api.withUriLabelAndDescription = function (uri, label, description) {
-        return new Object({
+        return new api.Self({
             externalResourceUri: uri,
-            friendlyResource : FriendlyResourceServerFacade.withLabelAndDescription(
+            friendlyResource: FriendlyResourceServerFacade.withLabelAndDescription(
                 label,
                 description
             ).getServerFormat()
         });
     };
-    api.withUriAndLabel = function(uri, label){
-        return new Object({
+    api.withUriAndLabel = function (uri, label) {
+        return new api.Self({
             externalResourceUri: uri,
-            friendlyResource : FriendlyResourceServerFacade.withLabel(
+            friendlyResource: FriendlyResourceServerFacade.withLabel(
                 label
             ).getServerFormat()
         });
@@ -43,31 +43,45 @@ define([
             searchResult.comment
         );
     };
-    return api;
-    function Object(serverFormat){
-        var self = this;
-        FriendlyResourceServerFacade.Object.apply(
-            this, [serverFormat.friendlyResource]
+    api.Self = function (serverFormat) {
+        this.serverFormat = serverFormat;
+        FriendlyResourceServerFacade.Self.apply(
+            this
         );
-        this.getExternalResourceUri = function(){
-            return serverFormat.externalResourceUri;
-        };
-        this.getServerFormat = function(){
-            return serverFormat;
-        };
-        this.setType = function (type) {
-            serverFormat.type = type;
-        };
-        this.getType = function () {
-            return serverFormat.type;
-        };
-        this.getJsonFormat = function(){
-            return $.toJSON(
-                serverFormat
-            );
-        };
-        this.isAGraphElement = function () {
-            return self.getExternalResourceUri().indexOf("/service") === 0;
-        };
-    }
+        this.init(
+            serverFormat.friendlyResource
+        );
+    };
+    api.Self.prototype = new FriendlyResourceServerFacade.Self;
+    api.Self.prototype.getExternalResourceUri = function () {
+        return this.serverFormat.externalResourceUri;
+    };
+    api.Self.prototype.getServerFormat = function () {
+        return this.serverFormat;
+    };
+    api.Self.prototype.setType = function (type) {
+        this.serverFormat.type = type;
+    };
+    api.Self.prototype.getType = function () {
+        return this.serverFormat.type;
+    };
+    api.Self.prototype.getJsonFormat = function () {
+        return $.toJSON(
+            this.serverFormat
+        );
+    };
+    api.Self.prototype.isAGraphElement = function () {
+        return this.getExternalResourceUri().indexOf("/service") === 0;
+    };
+    api.Self.prototype.rightActionForType = function(typeAction, sameAsAction, genericIdentificationAction){
+        switch (this.getType()) {
+            case "type" :
+                return typeAction;
+            case "same_as"  :
+                return sameAsAction;
+            default :
+                return genericIdentificationAction;
+        }
+    };
+    return api;
 });

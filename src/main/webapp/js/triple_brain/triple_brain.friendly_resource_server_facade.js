@@ -1,15 +1,14 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
     "triple_brain.image",
     "jquery.json.min"
 ], function (Image) {
+    "use strict";
     var api = {};
     api.fromServerFormat = function (serverFormat) {
-        return new api.Object(
-            serverFormat
-        );
+        return new api.Self().init(serverFormat);
     };
     api.buildObjectWithUri = function (uri) {
         return {
@@ -24,76 +23,84 @@ define([
         );
     };
     api.withUriAndLabel = function (uri, label) {
-        return new api.Object({
+        return api.fromServerFormat({
                 uri : uri,
                 label: label
             }
         );
     };
     api.withLabel = function(label){
-        return new api.Object({
+        return api.fromServerFormat({
             label : label
         });
     };
     api.withLabelAndDescription = function(label, description){
-        return new api.Object({
+        return api.fromServerFormat({
             label : label,
             description: description
         });
     };
     api.withUriLabelAndDescription = function (uri, label, description) {
-        return new api.Object({
+        return api.fromServerFormat({
                 uri : uri,
                 label: label,
                 comment: description
             }
         );
     };
-    api.Object = function (serverFormat) {
-        var _images = buildImages(),
-            self = this;
-        if(serverFormat.comment === undefined){
-            serverFormat.comment = "";
+    api.Self = function () {};
+
+    api.Self.prototype.init = function(friendlyResourceServerFormat){
+        this.friendlyResourceServerFormat = friendlyResourceServerFormat;
+        this._images = this._buildImages();
+        if(friendlyResourceServerFormat.comment === undefined){
+            friendlyResourceServerFormat.comment = "";
         }
-        this.getLabel = function () {
-            return serverFormat.label;
-        };
-        this.getComment = function () {
-            return serverFormat.comment;
-        };
-        this.setComment = function(comment){
-            return serverFormat.comment = comment;
-        };
-        this.hasComment = function(){
-            return serverFormat.comment.length > 0;
-        };
-        this.getImages = function () {
-            return _images;
-        };
-        this.hasImages = function(){
-            return _images.length > 0;
-        };
-        this.setUri = function(uri){
-            serverFormat.uri = uri;
-        };
-        this.getUri = function () {
-            return serverFormat.uri;
-        };
-        this.getJsonFormat = function () {
-            return $.toJSON(
-                self.getServerFormat()
+        return this;
+    };
+
+    api.Self.prototype.getLabel = function () {
+        return this.friendlyResourceServerFormat.label;
+    };
+    api.Self.prototype.getComment = function () {
+        return this.friendlyResourceServerFormat.comment;
+    };
+    api.Self.prototype.setComment = function(comment){
+        return this.friendlyResourceServerFormat.comment = comment;
+    };
+    api.Self.prototype.hasComment = function(){
+        return this.friendlyResourceServerFormat.comment.length > 0;
+    };
+    api.Self.prototype.addImage = function(image){
+        this._images.push(image);
+    };
+    api.Self.prototype.getImages = function () {
+        return this._images;
+    };
+    api.Self.prototype.hasImages = function(){
+        return this._images.length > 0;
+    };
+    api.Self.prototype.setUri = function(uri){
+        this.friendlyResourceServerFormat.uri = uri;
+    };
+    api.Self.prototype.getUri = function () {
+        return this.friendlyResourceServerFormat.uri;
+    };
+    api.Self.prototype.getJsonFormat = function () {
+        var self = this;
+        return $.toJSON(
+            self.getServerFormat()
+        );
+    };
+    api.Self.prototype.getServerFormat = function () {
+        return this.friendlyResourceServerFormat
+    };
+    api.Self.prototype._buildImages = function(){
+        return undefined === this.friendlyResourceServerFormat.images ?
+            [] :
+            Image.arrayFromServerJson(
+                this.friendlyResourceServerFormat.images
             );
-        };
-        this.getServerFormat = function () {
-            return serverFormat
-        };
-        function buildImages() {
-            return undefined === serverFormat.images ?
-                [] :
-                Image.arrayFromServerJson(
-                    serverFormat.images
-                );
-        }
     };
     return api;
 });

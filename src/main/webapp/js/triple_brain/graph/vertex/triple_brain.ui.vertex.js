@@ -1,23 +1,24 @@
-/**
- * Copyright Mozilla Public License 1.1
+/*
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
         "jquery",
         "triple_brain.graph_displayer",
-        "triple_brain.vertex",
+        "triple_brain.vertex_service",
         "triple_brain.id_uri",
         "triple_brain.point",
         "triple_brain.error",
         "triple_brain.ui.vertex_segments",
         "triple_brain.ui.edge",
-        "triple_brain.ui.vertex_and_edge_common",
         "triple_brain.event_bus",
         "triple_brain.image_displayer",
+        "triple_brain.ui.identified_graph_element",
         "triple_brain.ui.graph_element",
         "triple_brain.graph_element_button",
+        "triple_brain.bubble",
         "jquery.center-on-screen"
     ],
-    function ($, GraphDisplayer, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, VertexAndEdgeCommon, EventBus, ImageDisplayer, GraphElementUi, GraphElementButton) {
+    function ($, GraphDisplayer, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, EventBus, ImageDisplayer, IdentifiedGraphElementUi, GraphElementUi, GraphElementButton, Bubble) {
         "use strict";
         var api = {};
         api.getWhenEmptyLabel = function () {
@@ -94,43 +95,42 @@ define([
         };
         api.Object = function (html) {
             this.html = html;
-            this.setIsPublic = function (isPublic){
-                html.data(
-                    "isPublic",
-                    isPublic
-                );
-            };
-            this.suggestionButton = function() {
-                return html.find('.suggestion');
-            };
-
-            this.centerButton = function() {
-                return html.find('.center');
-            };
-
-            this.getSegments = function(){
-                return VertexSegments.withHtmlVertex(
-                    this.getInBubbleContainer()
-                );
-            };
-            this.getMenuButtonsHtml = function(){
-                return this.getMenuHtml().find(
-                    "> button"
-                );
-            };
-            this.createImageMenu = function() {
-                var imageMenu = ImageDisplayer.ofVertex(this).create();
-                html.data("images_menu", imageMenu);
-                return imageMenu;
-            };
+            this.bubble = Bubble.withHtmlFacade(this);
         };
-        api.Object.prototype = new GraphElementUi.Object;
-        api.Object.prototype.init = function(){
-            GraphElementUi.Object.apply(this, [this.html]);
+        api.Object.prototype = new IdentifiedGraphElementUi.Object;
+        api.Object.prototype.init = function () {
+            IdentifiedGraphElementUi.Object.apply(this, [this.html]);
+            return this;
+        };
+        api.Object.prototype.setIsPublic = function (isPublic) {
+            this.html.data(
+                "isPublic",
+                isPublic
+            );
+        };
+        api.Object.prototype.suggestionButton = function () {
+            return this.html.find('.suggestion');
+        };
 
+        api.Object.prototype.centerButton = function () {
+            return this.html.find('.center');
+        };
+
+        api.Object.prototype.getSegments = function () {
+            return VertexSegments.withHtmlVertex(
+                this.getInBubbleContainer()
+            );
+        };
+        api.Object.prototype.getMenuButtonsHtml = function () {
+            return this.getMenuHtml().find(
+                "> button"
+            );
+        };
+        api.Object.prototype.createImageMenu = function () {
+            return this.bubble.createImageMenu();
         };
         api.Object.prototype.getGraphElementType = function () {
-            return GraphElementUi.types.VERTEX;
+            return GraphElementUi.Types.Vertex;
         };
         api.Object.prototype.position = function () {
             return Point.fromCoordinates(
@@ -176,7 +176,7 @@ define([
                 totalNumberOfEdges
             );
         };
-        api.Object.prototype.getNumberOfRelationsToFlag = function(){
+        api.Object.prototype.getNumberOfRelationsToFlag = function () {
             return this.getTotalNumberOfEdges() - 1;
         };
         api.Object.prototype.getTotalNumberOfEdges = function () {
@@ -193,9 +193,6 @@ define([
         };
         api.Object.prototype.getHtml = function () {
             return this.html;
-        };
-        api.Object.prototype.getId = function () {
-            return this.html.attr('id');
         };
         api.Object.prototype.getUri = function () {
             return this.html.data(
@@ -261,9 +258,7 @@ define([
             this.getLabel().focus();
         };
         api.Object.prototype.readjustLabelWidth = function () {
-            VertexAndEdgeCommon.adjustWidthToNumberOfChars(
-                this.getLabel()
-            );
+            this.adjustWidthToNumberOfChars();
         };
         api.Object.prototype.text = function () {
             return this.getLabel().val();
@@ -338,47 +333,23 @@ define([
                 this.hideSuggestionButton();
         };
 
-        api.Object.prototype.applyCommonBehaviorForAddedIdentification = function (identification) {
-            this.addImages(
-                identification.getImages()
-            );
+        api.Object.prototype.integrateIdentification = function (identification) {
+            this.bubble.integrateIdentification(identification);
         };
 
         api.Object.prototype.addImages = function (images) {
-            var existingImages = this.getImages();
-            this.html.data(
-                "images",
-                existingImages.concat(
-                    images
-                )
-            );
+            this.bubble.addImages(images);
         };
 
         api.Object.prototype.refreshImages = function () {
-            var imageMenu =
-                this.hasImagesMenu() ?
-                    this.getImageMenu() :
-                    this.createImageMenu();
-            imageMenu.refreshImages();
+            this.bubble.refreshImages();
         };
 
         api.Object.prototype.removeImage = function (imageToRemove) {
-            var images = [];
-            $.each(this.getImages(), function () {
-                var image = this;
-                if (image.getBase64ForSmall() !== imageToRemove.getBase64ForSmall()) {
-                    images.push(image);
-                }
-            });
-            this.html.data(
-                "images",
-                images
-            );
+            this.bubble.removeImage(imageToRemove);
         };
         api.Object.prototype.getImages = function () {
-            return this.html.data("images") === undefined ?
-                [] :
-                this.html.data("images");
+            return this.bubble.getImages();
         };
 
         api.Object.prototype.serverFacade = function () {
@@ -386,20 +357,15 @@ define([
         };
 
         api.Object.prototype.hasImagesMenu = function () {
-            return this.html.data("images_menu") !== undefined;
+            return this.bubble.hasImagesMenu();
         };
         api.Object.prototype.getImageMenu = function () {
-            return this.html.data("images_menu");
+            return this.bubble.getImageMenu();
         };
-        api.Object.prototype.removeIdentificationCommonBehavior = function (identification) {
-            var self = this;
-            $.each(identification.getImages(), function () {
-                var image = this;
-                self.removeImage(image);
-            });
-            self.getImageMenu().refreshImages();
+        api.Object.prototype.impactOnRemovedIdentification = function (identification) {
+            this.bubble.impactOnRemovedIdentification(identification);
             VertexService.getSuggestions(
-                self
+                this
             );
         };
 
@@ -510,7 +476,7 @@ define([
                 );
             });
         };
-        api.Object.prototype.addChildTree = function(){
+        api.Object.prototype.addChildTree = function () {
             var self = this;
             GraphDisplayer.addChildTree(
                 self

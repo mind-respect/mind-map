@@ -48,13 +48,17 @@
         "go_home" : "Continue"
     },
     "top_menu" : {
-        "create_concept" : "new bubble",
+        "create" :  {
+            "title" : "create",
+            "bubble" : "bubble",
+            "schema" : "schema"
+        },
         "disconnect" : "disconnect",
         "redraw" : "redraw",
         "selection" : {
             "title" : "select",
-            "bubbles" : "all bubbles",
-            "relations" : "all relations"
+            "bubbles" : "bubbles",
+            "relations" : "relations"
         },
         "login_register" : "login/register"
     },
@@ -126,7 +130,7 @@
     "identification" : {
         "context" : {
             "bubble" : "Bubble",
-            "with_relations" : "with relations",
+            "with_properties" : "with properties",
             "relation" : "Relation",
             "source_bubble" : "Source bubble",
             "destination_bubble" : "Destination bubble"

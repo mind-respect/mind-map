@@ -1,14 +1,18 @@
+/*
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
+ */
+
 define([
         "require",
         "jquery",
         "triple_brain.freebase_uri",
         "triple_brain.event_bus",
         "triple_brain.graph_displayer",
-        "triple_brain.vertex",
+        "triple_brain.vertex_service",
         "triple_brain.suggestion",
         "triple_brain.identification_server_facade",
         "triple_brain.image",
-        "triple_brain.graph_element",
+        "triple_brain.graph_element_service",
         "jquery.url"
     ],
     function (require, $, FreebaseUri, EventBus, GraphDisplayer, VertexService, Suggestion, IdentificationFacade, Image, GraphElementService) {
@@ -99,11 +103,11 @@ define([
                 dataType: 'jsonp'
             }).success(function (xhr) {
                 var hasDescription = xhr.result[0].output.description["/common/topic/description"] !== undefined;
-                if(!hasDescription){
+                if (!hasDescription) {
                     return;
                 }
                 var description = xhr.result[0].output.description["/common/topic/description"][0];
-                if('object' === typeof description){
+                if ('object' === typeof description) {
                     description = description.value;
                 }
                 GraphElementService.setDescriptionToIdentification(
@@ -162,78 +166,70 @@ define([
         }
 
         EventBus.subscribe(
-                '/event/ui/graph/vertex/type/added ' +
-                '/event/ui/graph/vertex/same_as/added ' +
-                '/event/ui/graph/vertex/generic_identification/added',
-            function (event, vertex, identification) {
-                var identificationUri = identification.getExternalResourceUri();
-                if (!FreebaseUri.isFreebaseUri(identificationUri)) {
-                    return;
-                }
-                var identificationId = FreebaseUri.idInFreebaseURI(identificationUri);
-                api.listPropertiesOfFreebaseTypeId(
-                    vertex,
-                    identificationId
-                );
-                if(identification.hasImages()) {
-                    vertex.refreshImages();
-                }else{
-                    defineImages(
-                        vertex,
-                        identificationId,
-                        identification
-                    );
-                }
-                if(!identification.hasComment()){
-                    defineDescription(
-                        vertex,
-                        identificationId,
-                        identification
-                    );
-                }
-                vertex.getLabel().tripleBrainAutocomplete({
-                    select: function (event, ui) {
-                        var vertex = GraphDisplayer.getVertexSelector().withId(
-                            $(this).closest(".vertex").attr("id")
-                        );
-                        vertex.triggerChange();
-                        var searchResult = ui.item;
-                        var identificationResource = IdentificationFacade.withUriLabelAndDescription(
-                            searchResult.uri,
-                            searchResult.label,
-                            searchResult.description
-                        );
-                        vertexService().addGenericIdentification(
-                            vertex,
-                            identificationResource
-                        );
-                    },
-                    resultsProviders: [
-                        require(
-                            "triple_brain.freebase_autocomplete_provider"
-                        ).toFetchForTypeId(identificationId)
-                    ]
-                });
-            }
+            '/event/ui/graph/identification/added',
+            identificationAddedHandler
         );
 
-        EventBus.subscribe(
-            '/event/ui/graph/edge/identification/added',
-            function(event, edge, identification){
-                var identificationUri = identification.getExternalResourceUri();
-                if (!FreebaseUri.isFreebaseUri(identificationUri)) {
-                    return;
-                }
-                var identificationId = FreebaseUri.idInFreebaseURI(identificationUri);
-                if(!identification.hasComment()){
-                    defineDescription(
-                        edge,
-                        identificationId,
-                        identification
-                    );
-                }
+        function identificationAddedHandler(event, graphElement, identification) {
+            var identificationUri = identification.getExternalResourceUri();
+            if (!FreebaseUri.isFreebaseUri(identificationUri)) {
+                return;
             }
-        );
+            var identificationId = FreebaseUri.idInFreebaseURI(identificationUri);
+            api.listPropertiesOfFreebaseTypeId(
+                graphElement,
+                identificationId
+            );
+            if (graphElement.isBubble()) {
+                updateIdentificationImages(
+                    identification,
+                    graphElement,
+                    identificationId
+                )
+            }
+            if (!identification.hasComment()) {
+                defineDescription(
+                    graphElement,
+                    identificationId,
+                    identification
+                );
+            }
+            graphElement.getLabel().tripleBrainAutocomplete({
+                select: function (event, ui) {
+                    var vertex = GraphDisplayer.getVertexSelector().withId(
+                        $(this).closest(".vertex").attr("id")
+                    );
+                    vertex.triggerChange();
+                    var searchResult = ui.item;
+                    var identificationResource = IdentificationFacade.withUriLabelAndDescription(
+                        searchResult.uri,
+                        searchResult.label,
+                        searchResult.description
+                    );
+                    vertexService().addGenericIdentification(
+                        vertex,
+                        identificationResource
+                    );
+                },
+                resultsProviders: [
+                    require(
+                        "triple_brain.freebase_autocomplete_provider"
+                    ).toFetchForTypeId(identificationId)
+                ]
+            });
+        }
+
+        function updateIdentificationImages(identification, graphElement, identificationId) {
+            if (identification.hasImages()) {
+                graphElement.refreshImages();
+            } else {
+                defineImages(
+                    graphElement,
+                    identificationId,
+                    identification
+                );
+            }
+        }
 
         EventBus.subscribe(
             '/event/ui/html/vertex/created/',
@@ -283,9 +279,9 @@ define([
         }
 
         EventBus.subscribe(
-            '/event/ui/graph/vertex/type/removed',
+            '/event/ui/graph/identification/removed',
             function (event, vertex, removedType) {
-                if (FreebaseUri.isFreebaseUri(removedType.uri())) {
+                if (FreebaseUri.isFreebaseUri(removedType.getUri())) {
                     api.removeSuggestFeatureOnVertex(
                         vertex
                     );
@@ -294,7 +290,7 @@ define([
         );
         function vertexService() {
             return VertexService === undefined ?
-                require("triple_brain.vertex") :
+                require("triple_brain.vertex_service") :
                 VertexService;
         }
 

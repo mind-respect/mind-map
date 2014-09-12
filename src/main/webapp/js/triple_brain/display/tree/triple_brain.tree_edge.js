@@ -1,5 +1,5 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
         "jquery",
@@ -24,7 +24,7 @@ define([
             var id = html.prop('id');
             var cachedObject = cache[id];
             if(cachedObject === undefined){
-                cachedObject = new Object(html);
+                cachedObject = new api.Self().init(html);
                 cache[id] = cachedObject;
             }
             return cachedObject;
@@ -34,50 +34,52 @@ define([
                 edge.getHtml()
             );
         };
-        function Object(html) {
+        api.Self = function() {};
+        api.Self.prototype = new EdgeUi.Object;
+        api.Self.prototype.init = function(html){
             this.html = html;
             EdgeUi.Object.apply(this, [html]);
-        }
-        Object.prototype = new EdgeUi.Object;
-        Object.prototype.setText = function (text) {
+            return this;
+        };
+        api.Self.prototype.setText = function (text) {
             var label = this.getLabel();
             label.is(":input") ?
                 label.val(text) :
                 label.text(text);
         };
-        Object.prototype.text = function () {
+        api.Self.prototype.text = function () {
             var label = this.getLabel();
             return label.is(":input") ?
                 label.val() :
                 label.text();
         };
-        Object.prototype.childVertexInDisplay = function () {
+        api.Self.prototype.childVertexInDisplay = function () {
             return GraphDisplayer.getVertexSelector().withHtml(
                 this.html.closest(".vertex")
             );
         };
-        Object.prototype.isInverse = function () {
+        api.Self.prototype.isInverse = function () {
             return this.html.hasClass("inverse");
         };
-        Object.prototype.serverFormat = function () {
+        api.Self.prototype.serverFormat = function () {
             return {
                 label: this.text(),
                 source_vertex_id: this.sourceVertex().getId(),
                 destination_vertex_id: this.destinationVertex().getId()
             }
         };
-        Object.prototype.getLabel = function () {
+        api.Self.prototype.getLabel = function () {
             return this.html.find("> input").is(":visible") ?
                 this.html.find("> input") :
                 this.html.find("span.label");
         };
-        Object.prototype.readjustLabelWidth = function () {
+        api.Self.prototype.readjustLabelWidth = function () {
             //do nothing;
         };
-        Object.prototype.focus = function () {
+        api.Self.prototype.focus = function () {
             this.html.centerOnScreen();
         };
-        Object.prototype.inverse = function () {
+        api.Self.prototype.inverse = function () {
             var vertexHtml = this.html.closest(".vertex");
             vertexHtml[
                 vertexHtml.hasClass("inverse") ?
@@ -86,7 +88,7 @@ define([
                 ]("inverse");
             EdgeUi.withHtml(this.html).inverseAbstract();
         };
-        Object.prototype.isLeftOfCenterVertex = function () {
+        api.Self.prototype.isLeftOfCenterVertex = function () {
             return this.childVertexInDisplay().isToTheLeft();
         };
         return api;

@@ -1,62 +1,81 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
-define([
-    "jquery"
-], function ($) {
+define([], function () {
     var api = {};
     api.fromHtml = function (html) {
-        return new Object(
+        return new Self(
             html
         );
     };
-    return api;
-    function Object(html) {
-        var self = this;
-        this.showOnlyIfApplicable = function (clickHandler, selectedElements) {
-            html[
-                self.canActionBePerformedOnSelectedElements(
-                    selectedElements, clickHandler
-                ) ?
+    function Self(html) {
+        this.html = html;
+    }
+
+    Self.prototype.showOnlyIfApplicable = function (clickHandler, selected) {
+        var canActionBePerformed = this.canActionBePerformedOnSelected(
+            selected, clickHandler
+        );
+        this.html[
+            canActionBePerformed ?
+                "show" : "hide"
+            ]();
+        var onlyOneSelected = !Array.isArray(selected);
+        if (onlyOneSelected) {
+            selected.getSimilarButtonHtml(this)[
+                canActionBePerformed ?
                     "show" : "hide"
                 ]();
-        };
-        this.canActionBePossiblyMade = function (clickHandler) {
-            return clickHandler[
-                self.getAction()
-                ] !== undefined;
-        };
-        this.canActionBePerformedOnSelectedElements = function (selectedElements, clickHandler) {
-            if (!self.canActionBePossiblyMade(clickHandler)) {
-                return false;
-            }
-            var methodToCheckIfActionCanBePerformedForElements = clickHandler[
-                self.getAction() + "CanDo"
-                ];
-            if (undefined === methodToCheckIfActionCanBePerformedForElements) {
-                return true;
-            }
-            return methodToCheckIfActionCanBePerformedForElements(
-                selectedElements
-            );
-        };
-        this.getHtml = function () {
-            return html;
-        };
-        this.getAction = function () {
-            return html.attr(
-                "data-action"
-            );
-        };
-        this.getIconClass = function () {
-            return html.attr(
-                "data-icon"
-            );
-        };
-        this.cloneInto = function (container) {
-            var copyBehavior = true;
-            html.clone(copyBehavior).appendTo(container);
-            container.find("> button").show();
-        };
-    }
+        }
+        else {
+            this._hideMenuOfElements(selected);
+        }
+    };
+    Self.prototype.canActionBePossiblyMade = function (clickHandler) {
+        return clickHandler[
+            this.getAction()
+            ] !== undefined;
+    };
+    Self.prototype.canActionBePerformedOnSelected = function (selected, clickHandler) {
+        if (!this.canActionBePossiblyMade(clickHandler)) {
+            return false;
+        }
+        var methodToCheckIfActionCanBePerformedForElements = clickHandler[
+            this.getAction() + "CanDo"
+            ];
+        if (undefined === methodToCheckIfActionCanBePerformedForElements) {
+            return true;
+        }
+        return methodToCheckIfActionCanBePerformedForElements(
+            selected
+        );
+    };
+    Self.prototype.getHtml = function () {
+        return this.html;
+    };
+    Self.prototype.getAction = function () {
+        return this.html.attr(
+            "data-action"
+        );
+    };
+    Self.prototype.getIconClass = function () {
+        return this.html.attr(
+            "data-icon"
+        );
+    };
+    Self.prototype.cloneInto = function (container) {
+        var copyBehavior = true;
+        this.html.clone(
+            copyBehavior
+        ).appendTo(
+            container
+        ).show();
+    };
+    Self.prototype._hideMenuOfElements = function (elements) {
+        $.each(elements, function () {
+            var element = this;
+            element.hideMenu();
+        });
+    };
+    return api;
 });

@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<!--
+  ~ Copyright Vincent Blouin under the Mozilla Public License 1.1
+  -->
+
 <html lang="en-au">
 <head>
     <meta charset="UTF-8">
@@ -64,8 +68,21 @@
             </div>
             <button id="login-register" class="link-like-button"
                     data-i18n="top_menu.login_register"></button>
-            <button id="create-concept" class="link-like-button"
-                    data-i18n="top_menu.create_concept"></button>
+            <div class="link-like-button" id="create-menu">
+                <div class="dropdown">
+                    <a data-toggle="dropdown" data-i18n='top_menu.create.title'></a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <li>
+                            <a href="" id="create-concept" role="menuitem"
+                               data-i18n='top_menu.create.bubble'></a>
+                        </li>
+                        <li>
+                            <a href="" id="create-schema" role="menuitem"
+                               data-i18n='top_menu.create.schema'></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
            <button id="disconnect-btn"
                     data-i18n="top_menu.disconnect"
                     class="link-like-button"></button>

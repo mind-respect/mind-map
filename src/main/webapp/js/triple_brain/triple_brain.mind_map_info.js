@@ -1,5 +1,5 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 
 define([
@@ -16,10 +16,10 @@ define([
         api.defaultVertexUri = function () {
             return UserService.currentUserUri() + '/graph/vertex/default'
         };
-        api.isCenterVertexUriDefinedInUrl = function () {
+        api.isCenterBubbleUriDefinedInUrl = function () {
             return getCenterVertexUriInUrl() !== undefined;
         };
-        api.getCenterVertexUri = function () {
+        api.getCenterBubbleUri = function () {
             var uriInUrl = getCenterVertexUriInUrl();
             return uriInUrl === undefined ?
                 api.defaultVertexUri() :
@@ -27,7 +27,7 @@ define([
         };
         api.isViewOnly = function(){
             if(isViewOnly === undefined){
-                isViewOnly = _isAnonymous || !IdUriUtils.isVertexUriOwnedByCurrentUser(
+                isViewOnly = _isAnonymous || !IdUriUtils.isGraphElementUriOwnedByCurrentUser(
                     getCenterVertexUriInUrl()
                 );
                 EventBus.publish(
@@ -42,6 +42,11 @@ define([
         };
         api.isAnonymous = function(){
             return _isAnonymous;
+        };
+        api.isSchemaMode = function(){
+            return IdUriUtils.isSchemaUri(
+                getCenterVertexUriInUrl()
+            );
         };
         return api;
         function getCenterVertexUriInUrl(){

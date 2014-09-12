@@ -1,12 +1,12 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
         "jquery",
         "triple_brain.graph_displayer",
         "triple_brain.event_bus",
         "triple_brain.selection_handler",
-        "triple_brain.graph_element_button",
+        "triple_brain.graph_element_button",        
         "jquery-ui",
         "jquery.i18next",
         "twitter_bootstrap"
@@ -90,13 +90,13 @@ define([
             if (undefined === clickHandler) {
                 return;
             }
-            var selectedElements = 1 === selectionInfo.getNbSelected() ?
+            var selected = 1 === selectionInfo.getNbSelected() ?
                 selectionInfo.getSingleElement() :
                 selectionInfo.getSelectedElements();
             api.visitButtons(function (button) {
                 button.showOnlyIfApplicable(
                     clickHandler,
-                    selectedElements
+                    selected
                 );
             });
         }
@@ -121,14 +121,7 @@ define([
                 currentClickHandler = GraphDisplayer.getGraphMenuHandler();
             }
             else if (1 === nbSelectedGraphElements) {
-                var selected = selectedElements.getSingleElement();
-                if (selected.isGroupRelation()) {
-                    currentClickHandler = GraphDisplayer.getGroupRelationMenuHandler().forSingle();
-                } else {
-                    currentClickHandler = selected.isVertex() ?
-                        vertexMenuHandler.forSingle() :
-                        relationMenuHandler.forSingle();
-                }
+                currentClickHandler = selectedElements.getSingleElement().getMenuHandler().forSingle();
             } else {
                 var nbSelectedVertices = selectedElements.getNbSelectedVertices(),
                     nbSelectedRelations = selectedElements.getNbSelectedRelations(),

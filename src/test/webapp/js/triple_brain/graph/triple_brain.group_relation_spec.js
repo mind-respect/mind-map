@@ -1,5 +1,5 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
     'test/webapp/js/test-scenarios',
@@ -24,7 +24,7 @@ define([
             groupRelation.addVertex(book1);
             var objectKeys = Object.keys(groupRelation.getVertices()[book1.getUri()]);
             expect(
-                    objectKeys[0].indexOf("vertex-ui-id-") !== -1
+                    objectKeys[0].indexOf("bubble-ui-id-") !== -1
             ).toBeTruthy();
         });
         it("can tell if it has multiple vertices", function(){

@@ -1,13 +1,18 @@
+/*
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
+ */
+
 define([
         "require",
         "jquery",
         "triple_brain.event_bus",
         "triple_brain.ui.triple",
         "triple_brain.suggestion",
-        "triple_brain.graph_element",
-        "triple_brain.user"
+        "triple_brain.graph_element_service",
+        "triple_brain.user",
+        "triple_brain.friendly_resource_service"
     ],
-    function (require, $, EventBus, Triple, Suggestion, GraphElement, UserService) {
+    function (require, $, EventBus, Triple, Suggestion, GraphElementService, UserService, FriendlyResourceService) {
         "use strict";
         var api = {};
         api.getByUri = function (uri, callback) {
@@ -60,20 +65,11 @@ define([
             })
         };
         api.updateLabel = function (vertex, label, callback) {
-            $.ajax({
-                type: 'POST',
-                url: vertex.getUri() + '/label',
-                data: $.toJSON({content: label}),
-                contentType: 'application/json;charset=utf-8'
-            }).success(function () {
-                EventBus.publish(
-                    '/event/ui/graph/vertex/label/updated',
-                    vertex
-                );
-                if (callback !== undefined) {
-                    callback(vertex);
-                }
-            });
+            FriendlyResourceService.updateLabel(
+                vertex,
+                label,
+                callback
+            );
         };
         api.updateNote = function (vertex, note, callback) {
             $.ajax({
@@ -92,96 +88,53 @@ define([
                 }
             });
         };
-        api.addType = function (vertex, type, successCallback) {
-            type.setType("type");
-            addIdentification(
+        api.addType = function (vertex, type, callback) {
+            GraphElementService.addType(
                 vertex,
                 type,
-                successCallback
+                callback
             );
         };
-        api.removeIdentification = function (vertex, identification, successCallback) {
-            GraphElement.removeIdentification(
+        api.removeIdentification = function (vertex, identification, callback) {
+            GraphElementService.removeIdentification(
                 vertex,
                 identification,
-                successCallback
+                callback
             );
         };
-        api.removeType = function (vertex, typeToRemove, successCallback) {
-            api.removeIdentification(
+        api.removeType = function (vertex, typeToRemove, callback) {
+            GraphElementService.removeIdentification(
                 vertex,
                 typeToRemove,
-                function () {
-                    vertex.removeType(typeToRemove);
-                    if (successCallback != undefined) {
-                        successCallback(
-                            vertex,
-                            typeToRemove
-                        );
-                    }
-                    EventBus.publish(
-                        '/event/ui/graph/vertex/type/removed',
-                        [vertex, typeToRemove]
-                    );
-                }
-            );
+                callback
+            )
         };
-        api.addSameAs = function (vertex, sameAs, successCallback) {
-            sameAs.setType("same_as");
-            addIdentification(
+        api.addSameAs = function (vertex, sameAs, callback) {
+            GraphElementService.addSameAs(
                 vertex,
                 sameAs,
-                successCallback
+                callback
             );
         };
-        api.removeSameAs = function (vertex, sameAs, successCallback) {
-            api.removeIdentification(
+        api.removeSameAs = function (vertex, sameAs, callback) {
+            GraphElementService.removeIdentification(
                 vertex,
                 sameAs,
-                function () {
-                    vertex.removeSameAs(sameAs);
-                    if (successCallback != undefined) {
-                        successCallback(
-                            vertex,
-                            sameAs
-                        );
-                    }
-                    EventBus.publish(
-                        '/event/ui/graph/vertex/same_as/removed',
-                        [vertex, sameAs]
-                    );
-                }
+                callback
             );
         };
         api.removeGenericIdentification = function (vertex, genericIdentification, callback) {
-            api.removeIdentification(
+            GraphElementService.removeIdentification(
                 vertex,
                 genericIdentification,
-                function () {
-                    vertex.removeGenericIdentification(genericIdentification);
-                    if (callback != undefined) {
-                        callback(
-                            vertex,
-                            genericIdentification
-                        );
-                    }
-                    EventBus.publish(
-                        '/event/ui/graph/vertex/generic_identification/removed',
-                        [vertex, genericIdentification]
-                    );
-                }
+                callback
             );
         };
         api.addGenericIdentification = function (vertex, identification, callback) {
-            identification.setType("generic");
-            addIdentification(
+            GraphElementService.addGenericIdentification(
                 vertex,
                 identification,
-                function () {
-                    if (callback !== undefined) {
-                        callback();
-                    }
-                }
+                callback
             );
         };
         api.getSuggestions = function (vertex) {
@@ -280,31 +233,6 @@ define([
             );
         };
         return api;
-        function addIdentification(vertex, identification, callback) {
-            GraphElement.addIdentification(
-                vertex,
-                identification,
-                function (vertex, updatedIdentification) {
-                    if (callback != undefined) {
-                        callback();
-                    }
-                    EventBus.publish(
-                        getEventBusKey(),
-                        [vertex, updatedIdentification]
-                    );
-                }
-            );
-            function getEventBusKey() {
-                switch (identification.getType()) {
-                    case "type" :
-                        return '/event/ui/graph/vertex/type/added';
-                    case "same_as" :
-                        return '/event/ui/graph/vertex/same_as/added';
-                    default :
-                        return '/event/ui/graph/vertex/generic_identification/added'
-                }
-            }
-        }
 
         function setCollectionPrivacy(isPublic, vertices, callback) {
             var typeQueryParam = isPublic ? "public" : "private";

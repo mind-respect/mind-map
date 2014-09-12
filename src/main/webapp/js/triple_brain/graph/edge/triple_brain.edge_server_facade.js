@@ -1,15 +1,14 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
     "triple_brain.graph_element_server_facade",
     "triple_brain.vertex_server_facade"
 ], function (GraphElementServerFacade, VertexServerFacade) {
+    "use strict";
     var api = {};
     api.fromServerFormat = function (serverFormat) {
-        return new api.Object(
-            serverFormat
-        );
+        return new api.Self().init(serverFormat);
     };
     api.buildObjectWithUriOfSelfSourceAndDestinationVertex = function (uri, sourceVertexUri, destinationVertexUri) {
         return {
@@ -24,28 +23,36 @@ define([
             )
         };
     };
-    api.Object = function (serverFormat) {
-        var sourceVertex,
-            destinationVertex;
-        if (serverFormat.sourceVertex !== undefined) {
-            sourceVertex = getVertexServerFacade().fromServerFormat(
-                serverFormat.sourceVertex
+    api.Self = function () {};
+
+    api.Self.prototype = new GraphElementServerFacade.Self;
+
+    api.Self.prototype.init = function(edgeServerFormat){
+        if (edgeServerFormat.sourceVertex !== undefined) {
+            this.sourceVertex = getVertexServerFacade().fromServerFormat(
+                edgeServerFormat.sourceVertex
             );
         }
-        if (serverFormat.destinationVertex !== undefined) {
-            destinationVertex = getVertexServerFacade().fromServerFormat(
-                serverFormat.destinationVertex
+        if (edgeServerFormat.destinationVertex !== undefined) {
+            this.destinationVertex = getVertexServerFacade().fromServerFormat(
+                edgeServerFormat.destinationVertex
             );
         }
-        GraphElementServerFacade.Object.apply(
-            this, [serverFormat.graphElement]
+        GraphElementServerFacade.Self.apply(
+            this
         );
-        this.getSourceVertex = function () {
-            return sourceVertex;
-        };
-        this.getDestinationVertex = function () {
-            return destinationVertex;
-        };
+        GraphElementServerFacade.Self.prototype.init.call(
+            this,
+            edgeServerFormat.graphElement
+        );
+        return this;
+    };
+
+    api.Self.prototype.getSourceVertex = function () {
+        return this.sourceVertex;
+    };
+    api.Self.prototype.getDestinationVertex = function () {
+        return this.destinationVertex;
     };
 
     function getVertexServerFacade() {

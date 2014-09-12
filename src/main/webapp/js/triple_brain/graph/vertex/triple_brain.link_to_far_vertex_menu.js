@@ -1,5 +1,5 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 
 define([
@@ -7,12 +7,11 @@ define([
     "triple_brain.mind-map_template",
     "triple_brain.ui.graph",
     "triple_brain.user_map_autocomplete_provider",
-    "triple_brain.edge",
+    "triple_brain.edge_service",
     "triple_brain.ui.edge",
     "triple_brain.graph_displayer",
-    "triple_brain.graph_element_menu",
-    "triple_brain.edge_server_facade"
-], function($, MindMapTemplate, GraphUi, UserMapAutocompleteProvider, EdgeService, Edge, GraphDisplayer, GraphElementMenu, EdgeServerFacade){
+    "triple_brain.graph_element_menu"
+], function($, MindMapTemplate, GraphUi, UserMapAutocompleteProvider, EdgeService, Edge, GraphDisplayer, GraphElementMenu){
     var api = {};
     api.ofVertex = function(vertex){
         return new LinkToFarVertexMenu(
@@ -66,25 +65,6 @@ define([
                                 }
                             );
                     });
-
-//                            EdgeService.add(
-//                                parentVertex,
-//                                farVertex,
-//                                function(edgeServerFormatted){
-//                                    var edge = GraphDisplayer.addEdge(
-//                                        EdgeServerFacade.fromServerFormat(edgeServerFormatted),
-//                                        parentVertex,
-//                                        farVertex
-//                                    );
-//                                    farVertex.setTotalNumberOfEdges(
-//                                            farVertex.getTotalNumberOfEdges() + 1
-//                                    );
-//                                    if (farVertex.hasHiddenRelations()) {
-//                                        farVertex.buildHiddenNeighborPropertiesIndicator();
-//                                    }
-//                                    edge.focus();
-//                                }
-//                            );
                 },
                 resultsProviders : [
                     UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesExcept(

@@ -1,10 +1,10 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
     "jquery",
     "triple_brain.ui.identification_menu",
-    "triple_brain.edge",
+    "triple_brain.edge_service",
     "triple_brain.mind_map_info"
 ], function ($, IdentificationMenu, EdgeService, MindMapInfo) {
     var api = {},

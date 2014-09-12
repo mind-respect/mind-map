@@ -1,11 +1,12 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
         "triple_brain.event_bus",
-        "triple_brain.mind_map_info"
+        "triple_brain.mind_map_info",
+        "triple_brain.id_uri"
     ],
-    function (EventBus, MindMapInfo) {
+    function (EventBus, MindMapInfo, IdUriUtils) {
         "use strict";
         var _implementation,
             api = {};
@@ -15,21 +16,29 @@ define([
         api.name = function () {
             return _implementation.name();
         };
-        api.displayUsingDefaultVertex = function () {
-            displayUsingCentralVertexUri(
-                MindMapInfo.defaultVertexUri()
-            );
-        };
         api.displayUsingCentralVertex = function (centralVertex) {
-            displayUsingCentralVertexUri(
+            api.displayUsingCentralVertexUri(
                 centralVertex.getUri()
             );
         };
         api.displayUsingCentralVertexUri = function (centralVertexUri, errorCallback) {
-            displayUsingCentralVertexUri(
+            displayUsingBubbleUri(
                 centralVertexUri,
+                _implementation.displayForVertexWithUri,
                 errorCallback
             );
+        };
+        api.displayForSchemaWithUri = function(schemaUri, errorCallback){
+            displayUsingBubbleUri(
+                schemaUri,
+                _implementation.displayForSchemaWithUri,
+                errorCallback
+            );
+        };
+        api.displayForBubbleWithUri = function(bubbleUri, errorCallback){
+            return IdUriUtils.isSchemaUri(bubbleUri) ?
+                api.displayForSchemaWithUri(bubbleUri, errorCallback) :
+                api.displayUsingCentralVertexUri(bubbleUri, errorCallback);
         };
         api.connectVertexToVertexWithUri = function (parentVertex, destinationVertexUri, callback) {
             _implementation.connectVertexToVertexWithUri(
@@ -41,6 +50,11 @@ define([
 
         api.addVertex = function (newVertex, parentVertex) {
             return _implementation.addVertex(newVertex, parentVertex);
+        };
+        api.addProperty = function(property){
+            return _implementation.addProperty(
+                property
+            );
         };
         api.addEdge = function (newEdge, sourceVertex, destinationVertex) {
             return _implementation.addEdge(
@@ -70,6 +84,12 @@ define([
         api.getVertexSelector = function () {
             return _implementation.getVertexSelector();
         };
+        api.getSchemaSelector = function () {
+            return _implementation.getSchemaSelector();
+        };
+        api.getPropertySelector = function () {
+            return _implementation.getPropertySelector();
+        };
         api.getGroupRelationSelector = function () {
             return _implementation.getGroupRelationSelector();
         };
@@ -97,6 +117,12 @@ define([
         api.getGroupRelationMenuHandler = function () {
             return _implementation.getGroupRelationMenuHandler();
         };
+        api.getSchemaMenuHandler = function () {
+            return _implementation.getSchemaMenuHandler();
+        };
+        api.getPropertyMenuHandler = function () {
+            return _implementation.getPropertyMenuHandler();
+        };
         api.getGraphElementMenuHandler = function () {
             return _implementation.getGraphElementMenuHandler();
         };
@@ -110,9 +136,6 @@ define([
             return _implementation.expandGroupRelation(groupRelation);
         };
         return api;
-        function currentDepth() {
-            return 1;
-        }
 
         function publishAboutToUpdate() {
             EventBus.publish(
@@ -128,33 +151,31 @@ define([
             );
         }
 
-        function publishDrawingInfoUpdated(drawingInfo, centralVertexUri) {
+        function publishDrawingInfoUpdated(centralVertexUri) {
             EventBus.publish(
                 '/event/ui/graph/drawing_info/updated/',
-                [drawingInfo, centralVertexUri]
+                [centralVertexUri]
             );
         }
 
-        function displayUsingCentralVertexUri(centralVertexUri, errorCallback) {
+        function displayUsingBubbleUri(centralBubbleUri, displayer, errorCallback) {
             publishAboutToUpdate();
             publishResetGraph();
             $("#drawn_graph").empty();
-            var shouldPushState = !MindMapInfo.isCenterVertexUriDefinedInUrl() ||
-                MindMapInfo.getCenterVertexUri() !== centralVertexUri;
+            var shouldPushState = !MindMapInfo.isCenterBubbleUriDefinedInUrl() ||
+                MindMapInfo.getCenterBubbleUri() !== centralBubbleUri;
             if (shouldPushState) {
                 history.pushState(
                     {},
                     '',
-                        "?bubble=" + centralVertexUri
+                        "?bubble=" + centralBubbleUri
                 );
             }
-            _implementation.displayUsingDepthAndCentralVertexUri(
-                centralVertexUri,
-                currentDepth(),
-                function (drawingInfo) {
+            displayer(
+                centralBubbleUri,
+                function () {
                     publishDrawingInfoUpdated(
-                        drawingInfo,
-                        centralVertexUri
+                        centralBubbleUri
                     );
                 },
                 errorCallback

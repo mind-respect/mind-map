@@ -1,5 +1,5 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
         "jquery",
@@ -7,11 +7,12 @@ define([
         "triple_brain.user",
         "triple_brain.graph_displayer",
         "triple_brain.vertex_server_facade",
-        "triple_brain.vertex",
+        "triple_brain.vertex_service",
         "triple_brain.mind_map_info",
-        "triple_brain.event_bus"
+        "triple_brain.event_bus",
+        "triple_brain.schema_service"
     ],
-    function ($, SelectionHandler, UserService, GraphDisplayer, VertexServerFacade, VertexService, MindMapInfo, EventBus) {
+    function ($, SelectionHandler, UserService, GraphDisplayer, VertexServerFacade, VertexService, MindMapInfo, EventBus, SchemaService) {
         "use strict";
         var api = {};
         api.earlyInit = function () {
@@ -19,13 +20,14 @@ define([
         };
         EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function(event, isViewOnly){
             if(isViewOnly){
-                getCreateBubbleButton().css("visibility", "hidden");
+                getCreateMenu().hide();
             }else{
                 handleCreateNewConceptButton();
+                handleCreateNewSchemaButton();
                 handleDisconnectButton();
             }
             if(MindMapInfo.isAnonymous()){
-                getDisconnectButton().css("visibility", "hidden");
+                getDisconnectButton().hide();
                 handleLoginRegisterButton();
             }else{
                 getLoginRegisterButton().hide();
@@ -43,6 +45,10 @@ define([
                 event.stopPropagation();
                 SelectionHandler.selectAllRelationsOnly();
             });
+        }
+
+        function getCreateMenu(){
+            return $("#create-menu");
         }
 
         function handleDisconnectButton() {
@@ -71,13 +77,31 @@ define([
             );
         }
 
+        function handleCreateNewSchemaButton() {
+            getCreateSchemaButton().off(
+                "click",
+                createNewSchema
+            ).on(
+                "click",
+                createNewSchema
+            );
+        }
+
+
         function handleLoginRegisterButton(){
             return getLoginRegisterButton().click(function(){
                 window.location = "/";
             });
         }
 
-        function createNewConcept(){
+        function createNewSchema(event){
+            event.preventDefault();
+            SchemaService.create(
+                GraphDisplayer.displayForSchemaWithUri
+            );
+        }
+        function createNewConcept(event){
+            event.preventDefault();
             VertexService.createVertex(function (newVertex) {
                 var serverFormatFacade = VertexServerFacade.fromServerFormat(
                     newVertex
@@ -90,6 +114,10 @@ define([
 
         function getCreateBubbleButton(){
             return $("#create-concept");
+        }
+
+        function getCreateSchemaButton(){
+            return $("#create-schema");
         }
 
         function getDisconnectButton(){

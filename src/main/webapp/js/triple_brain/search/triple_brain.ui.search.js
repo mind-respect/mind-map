@@ -1,5 +1,5 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 
 define([
@@ -23,7 +23,7 @@ define([
             getInput().empty().tripleBrainAutocomplete({
                 select: function (event, ui) {
                     var vertexUri = ui.item.uri;
-                    GraphDisplayer.displayUsingCentralVertexUri(
+                    GraphDisplayer.displayForBubbleWithUri(
                         vertexUri
                     );
                 },

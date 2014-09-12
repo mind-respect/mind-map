@@ -1,19 +1,20 @@
-/**
- * Copyright Mozilla Public License 1.1
+/*
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 
 define([
         "jquery",
         "triple_brain.ui.graph",
-        "triple_brain.ui.vertex_and_edge_common",
         "triple_brain.event_bus",
         "triple_brain.graph_displayer",
-        "triple_brain.ui.graph_element",
-        "triple_brain.edge",
+        "triple_brain.ui.identified_graph_element",
+        "triple_brain.edge_service",
         "triple_brain.graph_element_button",
-        "triple_brain.selection_handler"
+        "triple_brain.selection_handler",
+        "triple_brain.ui.graph_element"
+
     ],
-    function ($, GraphUi, VertexAndEdgeCommon, EventBus, GraphDisplayer, GraphElementUi, EdgeService, GraphElementButton, SelectionHandler) {
+    function ($, GraphUi, EventBus, GraphDisplayer, IdentifiedGraphElementUi, EdgeService, GraphElementButton, SelectionHandler, GraphElementUi) {
         "use strict";
         var api = {},
             cache = {};
@@ -68,17 +69,18 @@ define([
 
         api.Object = function (html) {
             this.html = html;
-            GraphElementUi.Object.apply(this, [html]);
-            this.getMenu = function () {
-                return html.find('.relation-menu');
-            };
-            this.getMenuButtonsHtml = function () {
-                return this.getMenu().find(
-                    ">button"
-                );
-            };
+            IdentifiedGraphElementUi.Object.apply(this, [html]);
         };
-        api.Object.prototype = new GraphElementUi.Object;
+        api.Object.prototype = new IdentifiedGraphElementUi.Object;
+
+        api.Object.prototype.getMenuHtml = function () {
+            return this.html.find('.relation-menu');
+        };
+        api.Object.getMenuButtonsHtml = function () {
+            return this.getMenuHtml().find(
+                ">button"
+            );
+        };
         api.Object.prototype.setUri = function (uri) {
             this.html.data(
                 "uri",
@@ -91,7 +93,7 @@ define([
             );
         };
         api.Object.prototype.getGraphElementType = function () {
-            return GraphElementUi.types.RELATION;
+            return GraphElementUi.Types.Relation;
         };
         api.Object.prototype.serverFacade = function () {
             return EdgeService;
@@ -118,12 +120,8 @@ define([
                 sourceVertexUri
             );
         };
-        api.Object.prototype.removeIdentificationCommonBehavior = function () {
-            //do nothing
-        };
-        api.Object.prototype.applyCommonBehaviorForAddedIdentification = function () {
-            //do nothing
-        };
+        api.Object.prototype.impactOnRemovedIdentification = function () {};
+        api.Object.prototype.integrateIdentification = function () {};
         api.Object.prototype.serverFacade = function () {
             return EdgeService;
         };
@@ -149,10 +147,10 @@ define([
             this.html.remove();
         };
         api.Object.prototype.showMenu = function () {
-            this.getMenu().show();
+            this.getMenuHtml().show();
         };
         api.Object.prototype.hideMenu = function () {
-            this.getMenu().hide();
+            this.getMenuHtml().hide();
         };
         api.Object.prototype.getHtml = function () {
             return this.html;
@@ -182,4 +180,3 @@ define([
         return api;
     }
 );
-

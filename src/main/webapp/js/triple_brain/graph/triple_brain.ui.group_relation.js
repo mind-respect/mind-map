@@ -1,13 +1,14 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
     "triple_brain.graph_displayer",
     "triple_brain.event_bus",
     "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
     "triple_brain.bubble",
+    "triple_brain.ui.graph_element",
     "twitter_bootstrap"
-], function (GraphDisplayer, EventBus, PropertiesIndicator, Bubble) {
+], function (GraphDisplayer, EventBus, PropertiesIndicator, Bubble, GraphElementUi) {
     "use strict";
     var api = {};
     api.withHtml = function (html) {
@@ -24,11 +25,14 @@ define([
     };
     function Self(html) {
         this.html = html;
-        this.bubble = Bubble.withHtml(html);
+        this.bubble = Bubble.withHtmlFacade(this);
     }
-
+    Self.prototype = new GraphElementUi.Self;
     Self.prototype.getHtml = function () {
         return this.html;
+    };
+    Self.prototype.getGraphElementType = function () {
+        return GraphElementUi.Types.GroupRelation;
     };
     Self.prototype.readjustLabelWidth = function () {
         //do nothing
@@ -88,15 +92,6 @@ define([
         this.hideButtons();
         this._hideDescription();
     };
-    Self.prototype.isVertex = function () {
-        return false;
-    };
-    Self.prototype.isRelation = function () {
-        return false;
-    };
-    Self.prototype.isGroupRelation = function () {
-        return true;
-    };
 
     Self.prototype.makeSingleSelected = function () {
         this.showButtons();
@@ -104,14 +99,14 @@ define([
     };
 
     Self.prototype.showButtons = function(){
-        this._getMenuHtml().show();
+        this.getMenuHtml().show();
     };
 
     Self.prototype.hideButtons = function(){
-        this._getMenuHtml().hide();
+        this.getMenuHtml().hide();
     };
 
-    Self.prototype._getMenuHtml = function () {
+    Self.prototype.getMenuHtml = function () {
         return this.html.find('> .menu');
     };
 

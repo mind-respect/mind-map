@@ -1,5 +1,5 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
     "triple_brain.search",
@@ -44,16 +44,19 @@ define([
                     searchResult.getLabel(),
                 " "
             );
-            if (searchResult.getRelationsName().length > 0) {
+            if (searchResult.getPropertiesName().length > 0) {
                 context.append(
-                    $.t(tPreString + ".with_relations") + ": ",
+                    $.t(tPreString + ".with_properties") + ": ",
                     api.formatRelationsName(
                         api.removedEmptyAndDuplicateRelationsName(
-                            searchResult.getRelationsName()
+                            searchResult.getPropertiesName()
                         )
                     )
                 );
             }
+            context.append(
+                $("<div>").append(searchResult.getComment())
+            );
             callback(context);
         }
 
@@ -100,7 +103,7 @@ define([
                     event.preventDefault();
                     event.stopPropagation();
                     var identificationUri = $(this).data("identificationUri");
-                    GraphDisplayer.displayUsingCentralVertexUri(
+                    GraphDisplayer.displayForBubbleWithUri(
                         identificationUri
                     );
                 }

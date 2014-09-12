@@ -1,5 +1,5 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
         "triple_brain.template"
@@ -44,15 +44,15 @@ define([
         );
         t.add(
             'edge_input',
-            '<input type="text" value="{label}">'
+            '<input type="text" class="edge-label" value="{label}">'
         );
         t.add(
             "group_relation",
-            "<div class='group-relation'></div>"
+            "<div class='group-relation graph-element'></div>"
         );
         t.add(
             'group_relation_label_container',
-                '<div class="label label-info">{label}</span>'
+                '<div class="label label-info">{label}</div>'
         );
         return api;
     }

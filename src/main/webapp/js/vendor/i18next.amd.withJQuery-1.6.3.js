@@ -1,7 +1,6 @@
-// i18next, v1.6.3
-// Copyright (c)2013 Jan Mühlemann (jamuhl).
-// Distributed under MIT license
-// http://i18next.com
+/*
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
+ */
 (function (root, factory) {
     if (typeof exports === 'object') {
 

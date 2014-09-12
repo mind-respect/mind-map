@@ -1,9 +1,9 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
     "jquery",
-    "triple_brain.vertex",
+    "triple_brain.vertex_service",
     "triple_brain.graph_displayer",
     "triple_brain.graph_element_menu",
     "triple_brain.mind_map_info"

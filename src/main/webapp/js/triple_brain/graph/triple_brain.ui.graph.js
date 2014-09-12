@@ -1,5 +1,5 @@
-/**
- * Copyright Mozilla Public License 1.1
+/*
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
         "jquery",
@@ -11,7 +11,7 @@ define([
             htmlBody =  $("body"),
             _drawnGraph,
             _topLayer,
-            _vertexIdCounter = 0;
+            _bubbleIdCounter = 0;
         api.getEdgeMouseOver = function () {
             return htmlBody.data("edge_mouse_over");
         };
@@ -45,9 +45,9 @@ define([
             }
             return _topLayer;
         };
-        api.generateVertexHtmlId = function(){
-            _vertexIdCounter++;
-            return "vertex-ui-id-" + _vertexIdCounter;
+        api.generateBubbleHtmlId = function(){
+            _bubbleIdCounter++;
+            return "bubble-ui-id-" + _bubbleIdCounter;
         };
         return api;
     }

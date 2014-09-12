@@ -1,5 +1,5 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
     "jquery",
@@ -8,8 +8,9 @@ define([
     "triple_brain.ui.utils",
     "triple_brain.graph_displayer",
     "triple_brain.event_bus",
+    "triple_brain.ui.graph_element",
     "jquery-ui"
-], function ($, GraphUi, ScrollOnMouseFrontier, UiUtils, GraphDisplayer, EventBus) {
+], function ($, GraphUi, ScrollOnMouseFrontier, UiUtils, GraphDisplayer, EventBus, GraphElementUi) {
     "use strict";
     var api = {},
         _selectBox,
@@ -36,12 +37,15 @@ define([
         reflectSelectionChange();
     };
 
-    api.setToSingleGroupRelation = function (groupRelation) {
-        deselectAll();
-        selectionInfo.setToSingleGroupRelation(groupRelation);
-        groupRelation.select();
-        groupRelation.makeSingleSelected();
-        reflectSelectionChange();
+    api.setToSingleGraphElement = function (graphElement) {
+        var setter = graphElement.rightActionForType(
+            api.setToSingleVertex,
+            api.setToSingleRelation,
+            api.setToSingleGroupRelation,
+            api.setToSingleVertex,
+            api.setToSingleRelation
+        );
+        setter(graphElement);
     };
 
     api.setToSingleVertex = function (vertex) {

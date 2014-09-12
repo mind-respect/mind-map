@@ -1,36 +1,38 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
         "triple_brain.graph_displayer",
         "triple_brain.event_bus",
         "triple_brain.ui.utils",
-        "triple_brain.ui.vertex_hidden_neighbor_properties_indicator"
-    ], function (GraphDisplayer, EventBus, UiUtils) {
+        "triple_brain.mind_map_info",
+        "triple_brain.image_displayer"
+    ], function (GraphDisplayer, EventBus, UiUtils, MindMapInfo, ImageDisplayer) {
         "use strict";
         var api = {};
-        api.withHtml = function (html) {
-            return new Self(html);
+        api.withHtmlFacade = function (htmlFacade) {
+            return new Self(htmlFacade);
         };
-        function Self(html) {
-            this.html = html;
+        function Self(htmlFacade) {
+            this.html = htmlFacade.getHtml();
+            this.htmlFacade = htmlFacade;
         }
 
         Self.prototype.getParentBubble = function () {
-            return this.getGroupRelationOrVertexFromContainer(
-                this._getParentVertexContainer()
+            return this.getSelectorFromContainer(
+                this._getParentBubbleContainer()
             );
         };
         Self.prototype.getParentVertex = function () {
-            var parentContainer = this._getParentVertexContainer(),
+            var parentContainer = this._getParentBubbleContainer(),
                 parentVertexHtml = parentContainer.find(
                     "> .vertex"
                 );
             return parentVertexHtml.length === 0 ?
-                GraphDisplayer.getGroupRelationSelector().withHtml(
-                    parentContainer.find("> .group-relation")
+                getRelationFromParentContainer(
+                    parentContainer
                 ).getParentVertex() :
-                GraphDisplayer.getVertexSelector().withHtml(
+                getVertexSelector().withHtml(
                     parentVertexHtml
                 );
         };
@@ -42,19 +44,27 @@ define([
 
         Self.prototype.getTopMostChild = function () {
             var topMostChildHtml = $(this.getChildrenBubblesHtml()[0]);
-            return topMostChildHtml.hasClass("group-relation") ?
-                GraphDisplayer.getGroupRelationSelector().withHtml(topMostChildHtml) :
-                GraphDisplayer.getVertexSelector().withHtml(topMostChildHtml);
+            if(topMostChildHtml.hasClass("group-relation")){
+                return GraphDisplayer.getGroupRelationSelector().withHtml(
+                    topMostChildHtml
+                );
+            }else if(topMostChildHtml.hasClass("property")){
+                return GraphDisplayer.getPropertySelector().withHtml(
+                    topMostChildHtml
+                );
+            }else{
+                return getVertexSelector().withHtml(topMostChildHtml);
+            }
         };
 
         Self.prototype.getChildrenBubblesHtml = function () {
             return this.getChildrenContainer().find(
-                ".group-relation, .vertex"
+                ".group-relation, .vertex, .property"
             );
         };
 
         Self.prototype.getBubbleAbove = function () {
-            return this.getGroupRelationOrVertexFromContainer(
+            return this.getSelectorFromContainer(
                 this._getBubbleAboveContainer()
             );
         };
@@ -65,7 +75,7 @@ define([
             return this._getBubbleUnderContainer().length > 0;
         };
         Self.prototype.getBubbleUnder = function () {
-            return this.getGroupRelationOrVertexFromContainer(
+            return this.getSelectorFromContainer(
                 this._getBubbleUnderContainer()
             );
         };
@@ -83,20 +93,18 @@ define([
                 ".vertex-tree-container:first"
             ).find("> .vertex-container");
         };
-        Self.prototype._getParentVertexContainer = function () {
+        Self.prototype._getParentBubbleContainer = function () {
             return this.html.closest(".vertices-children-container")
                 .siblings(".vertex-container");
         };
         Self.prototype.hasChildren = function () {
             return this.getChildrenBubblesHtml().length > 0;
         };
-        Self.prototype.getGroupRelationOrVertexFromContainer = function(container){
+        Self.prototype.getSelectorFromContainer = function(container){
             var vertexHtml = container.find("> .vertex");
             return vertexHtml.length > 0 ?
-                GraphDisplayer.getVertexSelector().withHtml(vertexHtml) :
-                GraphDisplayer.getGroupRelationSelector().withHtml(
-                    container.find("> .group-relation")
-                );
+                getVertexSelector().withHtml(vertexHtml) :
+                getRelationFromParentContainer(container);
         };
 
         Self.prototype.hasHiddenRelationsContainer = function(){
@@ -125,6 +133,68 @@ define([
             );
         };
 
+        Self.prototype.refreshImages = function () {
+            var imageMenu =
+                this.hasImagesMenu() ?
+                    this.getImageMenu() :
+                    this.createImageMenu();
+            imageMenu.refreshImages();
+        };
+        Self.prototype.addImages = function (images) {
+            var existingImages = this.getImages();
+            this.html.data(
+                "images",
+                existingImages.concat(
+                    images
+                )
+            );
+        };
+        Self.prototype.removeImage = function (imageToRemove) {
+            var images = [];
+            $.each(this.getImages(), function () {
+                var image = this;
+                if (image.getBase64ForSmall() !== imageToRemove.getBase64ForSmall()) {
+                    images.push(image);
+                }
+            });
+            this.html.data(
+                "images",
+                images
+            );
+        };
+        Self.prototype.getImages = function () {
+            return this.html.data("images") === undefined ?
+                [] :
+                this.html.data("images");
+        };
+        Self.prototype.hasImagesMenu = function () {
+            return this.html.data("images_menu") !== undefined;
+        };
+        Self.prototype.createImageMenu = function () {
+            var imageMenu = ImageDisplayer.ofBubble(
+                this.htmlFacade
+            ).create();
+            this.html.data("images_menu", imageMenu);
+            return imageMenu;
+        };
+        Self.prototype.getImageMenu = function () {
+            return this.html.data("images_menu");
+        };
+        Self.prototype.impactOnRemovedIdentification = function (identification) {
+            var self = this;
+            $.each(identification.getImages(), function () {
+                var image = this;
+                self.removeImage(image);
+            });
+            self.getImageMenu().refreshImages();
+        };
+
+        Self.prototype.integrateIdentification = function (identification) {
+            this.addImages(
+                identification.getImages()
+            );
+        };
+
         EventBus.subscribe(
             '/event/ui/graph/vertex_and_relation/added/',
             function(event, triple, sourceBubble){
@@ -136,5 +206,21 @@ define([
             }
         );
         return api;
+        function getVertexSelector(){
+            return MindMapInfo.isSchemaMode() ?
+                GraphDisplayer.getSchemaSelector() :
+                GraphDisplayer.getVertexSelector();
+        }
+        function getRelationFromParentContainer(parentContainer){
+            var isSchemaMode = MindMapInfo.isSchemaMode(),
+                html = parentContainer.find(
+                    isSchemaMode ?
+                        "> .property" :
+                        "> .group-relation"
+                );
+                return isSchemaMode ?
+                    GraphDisplayer.getPropertySelector().withHtml(html) :
+                    GraphDisplayer.getGroupRelationSelector().withHtml(html);
+        }
     }
 );

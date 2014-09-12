@@ -1,5 +1,5 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
         "triple_brain.ui.graph"
@@ -28,7 +28,7 @@ define([
             this.vertices[
                 vertex.getUri()
                 ][
-                GraphUi.generateVertexHtmlId()
+                GraphUi.generateBubbleHtmlId()
                 ] = {
                 vertex: vertex,
                 edge: edge

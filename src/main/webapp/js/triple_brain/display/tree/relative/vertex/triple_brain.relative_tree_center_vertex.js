@@ -1,5 +1,5 @@
 /*
- * Copyright Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
         "triple_brain.graph_displayer"
@@ -21,12 +21,12 @@ define([
                 return self._getTopMostChildToRightContainer().length > 0;
             };
             this.getToTheLeftTopMostChild = function () {
-                return vertex.getBubble().getGroupRelationOrVertexFromContainer(
+                return vertex.getBubble().getSelectorFromContainer(
                     self._getTopMostChildToLeftContainer()
                 );
             };
             this.getToTheRightTopMostChild = function () {
-                return vertex.getBubble().getGroupRelationOrVertexFromContainer(
+                return vertex.getBubble().getSelectorFromContainer(
                     self._getTopMostChildToRightContainer()
                 );
             };

@@ -1,3 +1,7 @@
+/*
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
+ */
+
 define([
     "triple_brain.point",
     "triple_brain.transform_matrix_2d",

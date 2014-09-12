@@ -48,13 +48,17 @@
         "go_home" : "Continuer"
     },
     "top_menu" : {
-        "create_concept" : "nouvelle bulle",
+        "create" :  {
+            "title" : "créer",
+            "bubble" : "bulle",
+            "schema" : "schéma"
+        },
         "disconnect" : "déconnecter",
         "redraw" : "redessiner",
         "selection" : {
-            "title" : "sélectionne",
-            "bubbles" : "toutes les bulles",
-            "relations" : "toutes les relations"
+            "title" : "sélectionner",
+            "bubbles" : "les bulles",
+            "relations" : "les relations"
         },
         "login_register" : "s'authentifier/s'enregistrer"
     },
@@ -126,7 +130,7 @@
     "identification" : {
         "context" : {
             "bubble" : "Bulle",
-            "with_relations" : "avec relations",
+            "with_properties" : "avec les propriétés",
             "relation" : "Relation",
             "source_bubble" : "Bulle source",
             "destination_bubble" : "Bulle destination"

@@ -1,13 +1,14 @@
-/**
- * Copyright Mozilla Public License 1.1
+/*
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
     "require",
     "jquery",
+    "triple_brain.graph_displayer",
     "./triple_brain.template.vertices_list.js",
     "./triple_brain.module.vertices_list_element.js"
 ],
-    function(require, $, Template, VerticesListElement) {
+    function(require, $, GraphDisplayer, Template, VerticesListElement) {
         "use strict";
         return {
             withVertexAndCentralVertex : function(vertex, centralVertex){
@@ -30,7 +31,11 @@ define([
                         centralVertex
                     )
                 );
-                verticesListElement.setLabel(vertex.text());
+                var text = vertex.text();
+                if("" === text){
+                    text = GraphDisplayer.getVertexSelector().getWhenEmptyLabel();
+                }
+                verticesListElement.setLabel(text);
                 html.click(function(){
                     var verticesListElement = VerticesListElement.withHtml(this);
                     var vertex = verticesListElement.associatedVertex();

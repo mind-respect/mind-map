@@ -1,3 +1,7 @@
+/*
+ * Copyright Vincent Blouin under the Mozilla Public License 1.1
+ */
+
 define(
     [
         "jquery",
@@ -17,11 +21,12 @@ define(
         "triple_brain.mind_map_info",
         "triple_brain.top_right_menu",
         "triple_brain.external_page_loader",
+        "triple_brain.id_uri",
         "triple_brain.bubble_distance_calculator",
         "triple_brain.freebase",
         "jquery.triple_brain.drag_scroll"
     ],
-    function ($, UserService, EventBus, LoginHandler, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, LeftPanel, SelectionHandler, KeyboardUtils, GraphElementMainMenu, MindMapInfo, TopRightMenu, ExternalPageLoader) {
+    function ($, UserService, EventBus, LoginHandler, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, LeftPanel, SelectionHandler, KeyboardUtils, GraphElementMainMenu, MindMapInfo, TopRightMenu, ExternalPageLoader, IdUriUtils) {
         "use strict";
         var api = {
             start: function () {
@@ -35,8 +40,8 @@ define(
 
                 function handleHistoryBrowse() {
                     $(window).on("popstate", function () {
-                        GraphDisplayer.displayUsingCentralVertexUri(
-                            MindMapInfo.getCenterVertexUri()
+                        GraphDisplayer.displayForBubbleWithUri(
+                            MindMapInfo.getCenterBubbleUri()
                         );
                     });
                 }
@@ -81,8 +86,8 @@ define(
                     }
                     function loadLocaleAndGraph() {
                         LanguageManager.loadLocaleContent(function () {
-                            GraphDisplayer.displayUsingCentralVertexUri(
-                                MindMapInfo.getCenterVertexUri(),
+                            GraphDisplayer.displayForBubbleWithUri(
+                                MindMapInfo.getCenterBubbleUri(),
                                 handleGettingGraphError
                             );
                             translateText();
@@ -93,7 +98,7 @@ define(
 
                 function handleGettingGraphError(xhr){
                     $("body").removeClass("hidden");
-                    if(xhr.status === 403){
+                    if(403 === xhr.status){
                         ExternalPageLoader.showLinearFlowWithOptions({
                             href:"not-allowed.html",
                             title:$.t("not_allowed.title")
@@ -107,7 +112,7 @@ define(
                 }
 
                 function callBackWhenNotAuthenticated() {
-                    if (MindMapInfo.isCenterVertexUriDefinedInUrl()) {
+                    if (MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
                         setupMindMapForAnonymousUser();
                     } else {
                         showLoginPage();
@@ -124,9 +129,11 @@ define(
         };
         EventBus.subscribe(
             '/event/ui/graph/drawing_info/updated/',
-            function (event, drawnGraph, centralVertexUri) {
+            function (event, centralVertexUri) {
                 SelectionHandler.removeAll();
-                var centralVertex = GraphDisplayer.getVertexSelector().withUri(centralVertexUri)[0];
+                var centralVertex = IdUriUtils.isSchemaUri(centralVertexUri) ?
+                    GraphDisplayer.getSchemaSelector().get():
+                    GraphDisplayer.getVertexSelector().withUri(centralVertexUri)[0];
                 centralVertex.setAsCentral();
                 $("body, html").removeDragScroll().dragScroll().on(
                     "click",
