@@ -8,9 +8,9 @@ define([
 ], function($, GraphDisplayer){
     var api = {};
     api.makeForMenuContentAndGraphElement = function(menuContent, graphElement, extraOptions){
-        var dialogClass = "graph-element-menu";
-        var horizontalPosition = getHorizontalPosition();
-        var options = {
+        var dialogClass = "graph-element-menu",
+        horizontalPosition = getHorizontalPosition(),
+        options = {
             position : {
                 of:graphElement.getLabel(),
                 my: horizontalPosition.my + " center",
@@ -18,7 +18,7 @@ define([
                 collision: 'none'
             },
             dialogClass:dialogClass,
-            title : graphElement.text(),
+            title : graphElement.getTextOrDefault(),
             close: function(){
                 $(this).dialog("destroy").remove();
             }

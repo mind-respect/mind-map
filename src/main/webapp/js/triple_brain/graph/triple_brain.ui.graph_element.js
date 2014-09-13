@@ -12,8 +12,10 @@ define([
         Schema: "schema",
         Property: "property"
     };
-    var menuHandlerGetters = {};
+    var menuHandlerGetters = {},
+        selectors = {};
     initMenuHandlerGetters();
+    initSelectors();
     api.Self = function () {
     };
     api.Self.prototype.getId = function(){
@@ -44,6 +46,17 @@ define([
     };
     api.Self.prototype.getMenuHandler = function () {
         return menuHandlerGetters[
+            this.getGraphElementType()
+            ]();
+    };
+    api.Self.prototype.getTextOrDefault = function () {
+        var text = this.text();
+        return "" === text.trim() ?
+            this.getSelector().getWhenEmptyLabel() :
+            text;
+    };
+    api.Self.prototype.getSelector = function () {
+        return selectors[
             this.getGraphElementType()
             ]();
     };
@@ -89,5 +102,12 @@ define([
         menuHandlerGetters[api.Types.GroupRelation] = GraphDisplayer.getGroupRelationMenuHandler;
         menuHandlerGetters[api.Types.Schema] = GraphDisplayer.getSchemaMenuHandler;
         menuHandlerGetters[api.Types.Property] = GraphDisplayer.getPropertyMenuHandler;
+    }
+    function initSelectors() {
+        selectors[api.Types.Vertex] = GraphDisplayer.getVertexSelector;
+        selectors[api.Types.Relation] = GraphDisplayer.getGroupRelationSelector;
+        selectors[api.Types.GroupRelation] = GraphDisplayer.getGroupRelationSelector;
+        selectors[api.Types.Schema] = GraphDisplayer.getSchemaSelector;
+        selectors[api.Types.Property] = GraphDisplayer.getPropertySelector;
     }
 });
