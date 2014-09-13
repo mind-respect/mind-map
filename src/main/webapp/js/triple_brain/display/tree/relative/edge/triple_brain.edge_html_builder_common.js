@@ -17,7 +17,7 @@ define([
 ], function (PropertyUi, TreeEdge, MindMapInfo, FriendlyResourceService, KeyboardUtils, SelectionHandler, RelativeTreeTemplates, IdentificationFacade, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementService) {
     "use strict";
     var api = {};
-    api.buildOverlay = function(){
+    api.buildOverlay = function () {
         return $(
             "<div class='overlay-container'>"
         ).append();
@@ -82,11 +82,13 @@ define([
         input.blur(function () {
             var edge = edgeFromHtml($(this));
             edge._changeToSpan();
+            SelectionHandler.setToSingleRelation(edge);
         });
         input.change(function () {
-            var html = $(this);
-            var edge = edgeFromHtml(html);
+            var input = $(this);
+            var edge = edgeFromHtml(input);
             FriendlyResourceService.updateLabel(edge, edge.text());
+            input.blur();
         });
         input.tripleBrainAutocomplete({
             limitNbRequests: true,
@@ -127,7 +129,6 @@ define([
             input
         );
         edge.adjustWidthToNumberOfChars();
-        edge.centerOnScreen();
         return input;
     };
     return api;

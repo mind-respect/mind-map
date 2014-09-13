@@ -110,6 +110,7 @@ define([
             if (!vertex.isMouseOver()) {
                 vertex.unhighlight();
             }
+            SelectionHandler.setToSingleVertex(vertex);
         }).change(function () {
             var $input = $(this),
                 vertex = vertexOfSubHtmlComponent($input);
@@ -118,6 +119,7 @@ define([
                 vertexOfSubHtmlComponent($input),
                 $input.val()
             );
+            $input.blur();
         }).keyup(function () {
             var $input = $(this),
                 vertex = vertexOfSubHtmlComponent($input),
@@ -179,7 +181,6 @@ define([
                     var vertex = uiSelector.withHtml(
                         $(this)
                     );
-                    SelectionHandler.removeAll();
                     vertex.focus();
                 }
             )

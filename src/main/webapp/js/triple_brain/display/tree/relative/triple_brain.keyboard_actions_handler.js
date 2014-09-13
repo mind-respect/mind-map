@@ -20,6 +20,7 @@ define([
         downArrowKeyNumber = 40,
         iArrowKeyNumber = 73,
         enterKeyNumber = 13,
+        escapeKeyNumber = 27,
         listenedKeysAndTheirAction = defineListenedKeysAndTheirActions();
     api.init = function () {
         EventBus.subscribe(
@@ -37,8 +38,12 @@ define([
     }
 
     function keyDownHanlder(event) {
-        var shouldHandle = $(event.target).is("body");
-        if(!shouldHandle){
+        var target = $(event.target);
+        var isWorkingOnSomething = !target.is("body");
+        if(isWorkingOnSomething){
+            if(event.keyCode === escapeKeyNumber){
+                target.blur();
+            }
             return;
         }
         if (isThereASpecialKeyPressed()) {
