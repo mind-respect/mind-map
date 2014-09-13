@@ -19,6 +19,7 @@ define([
         upArrowKeyNumber = 38,
         downArrowKeyNumber = 40,
         iArrowKeyNumber = 73,
+        enterKeyNumber = 13,
         listenedKeysAndTheirAction = defineListenedKeysAndTheirActions();
     api.init = function () {
         EventBus.subscribe(
@@ -81,16 +82,25 @@ define([
             ],
             [
                 iArrowKeyNumber, iAction
+            ],
+            [
+                enterKeyNumber, enterKeyAction
             ]
         ];
     }
     function iAction(selectedElement) {
-        if (MindMapInfo.isViewOnly() || selectedElement.isGroupRelation()) {
+        if (MindMapInfo.isViewOnly() || selectedElement.isGroupRelation() || selectedElement.isSchema()) {
             return;
         }
         IdentificationMenu.ofGraphElement(
             selectedElement
         ).create();
+    }
+
+    function enterKeyAction(selectedElement){
+        if (MindMapInfo.isViewOnly() || selectedElement.isGroupRelation()) {
+            return;
+        }
     }
 
     function tabAction(selectedElement) {
