@@ -53,9 +53,7 @@ define([
                     );
                     edge.deselect();
                     edge.hideMenu();
-                    changeToInput(
-                        edge
-                    );
+                    edge._changeToInput();
                 }
             )
         }
@@ -82,9 +80,8 @@ define([
             whenEmptyLabel
         );
         input.blur(function () {
-            changeToSpan(
-                edgeFromHtml($(this))
-            );
+            var edge = edgeFromHtml($(this));
+            edge._changeToSpan();
         });
         input.change(function () {
             var html = $(this);
@@ -95,7 +92,7 @@ define([
             limitNbRequests: true,
             select: function (event, ui) {
                 var edge = edgeFromHtml($(this));
-                changeToSpan(edge);
+                edge._changeToSpan();
                 var identificationResource = IdentificationFacade.fromSearchResult(
                     ui.item
                 );
@@ -130,40 +127,10 @@ define([
             input
         );
         edge.adjustWidthToNumberOfChars();
-        input.focus().setCursorToEndOfText();
+        edge.centerOnScreen();
         return input;
     };
     return api;
-    function changeToInput(edge) {
-        edge.getLabel().hide();
-        var edgeHtml = edge.getHtml(),
-            input = edgeHtml.find("input"),
-            whenEmptyLabel = edge.isProperty() ?
-                PropertyUi.getWhenEmptyLabel() :
-                TreeEdge.getWhenEmptyLabel();
-        if (input.val() === whenEmptyLabel) {
-            input.val("");
-        }
-        input.show().focus();
-        edge.adjustWidthToNumberOfChars();
-    }
-
-    function changeToSpan(edge) {
-        var edgeText = edge.text();
-        var whenEmptyLabel = edge.isProperty() ?
-            PropertyUi.getWhenEmptyLabel() :
-            TreeEdge.getWhenEmptyLabel();
-        var nonInputLabel = edge.getHtml().find(
-            "span.label"
-        ).text(
-                edgeText.trim() === "" ?
-                whenEmptyLabel :
-                edgeText
-        );
-        edge.getLabel().hide();
-        nonInputLabel.show();
-        return edge;
-    }
 
     function edgeFromHtml(htmlComponent) {
         htmlComponent = $(htmlComponent);

@@ -76,9 +76,6 @@ define([
         api.Self.prototype.readjustLabelWidth = function () {
             //do nothing;
         };
-        api.Self.prototype.focus = function () {
-            this.html.centerOnScreen();
-        };
         api.Self.prototype.inverse = function () {
             var vertexHtml = this.html.closest(".vertex");
             vertexHtml[
@@ -90,6 +87,31 @@ define([
         };
         api.Self.prototype.isLeftOfCenterVertex = function () {
             return this.childVertexInDisplay().isToTheLeft();
+        };
+        api.Self.prototype.focus = function () {
+            this._changeToInput().focus().setCursorToEndOfText();
+        };
+        api.Self.prototype._changeToInput = function() {
+            this.getLabel().hide();
+            var edgeHtml = this.getHtml(),
+                input = edgeHtml.find("input");
+            if (input.val() === this.getSelector().getWhenEmptyLabel()) {
+                input.val("");
+            }
+            input.show().focus();
+            this.adjustWidthToNumberOfChars();
+            return input;
+        };
+
+        api.Self.prototype._changeToSpan = function() {
+            var nonInputLabel = this.getHtml().find(
+                "span.label"
+            ).text(
+                    this.getTextOrDefault()
+            );
+            this.getLabel().hide();
+            nonInputLabel.show();
+            return nonInputLabel;
         };
         return api;
     }

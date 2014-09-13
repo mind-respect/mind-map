@@ -8,9 +8,8 @@ define([
     "triple_brain.ui.utils",
     "triple_brain.graph_displayer",
     "triple_brain.event_bus",
-    "triple_brain.ui.graph_element",
     "jquery-ui"
-], function ($, GraphUi, ScrollOnMouseFrontier, UiUtils, GraphDisplayer, EventBus, GraphElementUi) {
+], function ($, GraphUi, ScrollOnMouseFrontier, UiUtils, GraphDisplayer, EventBus) {
     "use strict";
     var api = {},
         _selectBox,

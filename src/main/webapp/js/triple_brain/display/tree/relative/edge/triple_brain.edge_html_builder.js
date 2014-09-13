@@ -10,8 +10,7 @@ define([
         "triple_brain.relative_tree_vertex",
         "triple_brain.graph_displayer",
         "triple_brain.graph_element_main_menu",
-        "triple_brain.edge_html_builder_common",
-        "jquery.cursor-at-end"
+        "triple_brain.edge_html_builder_common"
     ],
     function (require, $, TreeEdge, EventBus, RelativeTreeVertex, GraphDisplayer, GraphElementMainMenu, EdgeHtmlBuilderCommon) {
         "use strict";

@@ -254,9 +254,6 @@ define([
         api.Object.prototype.isLabelInFocus = function () {
             return this.getLabel().is(":focus");
         };
-        api.Object.prototype.focus = function () {
-            this.getLabel().focus();
-        };
         api.Object.prototype.readjustLabelWidth = function () {
             this.adjustWidthToNumberOfChars();
         };

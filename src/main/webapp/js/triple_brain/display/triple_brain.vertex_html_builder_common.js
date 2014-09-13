@@ -180,7 +180,7 @@ define([
                         $(this)
                     );
                     SelectionHandler.removeAll();
-                    vertex.getLabel().focus().setCursorToEndOfText();
+                    vertex.focus();
                 }
             )
         }

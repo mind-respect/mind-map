@@ -2,7 +2,8 @@
  * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
-    "triple_brain.graph_displayer"
+    "triple_brain.graph_displayer",
+    "jquery.cursor-at-end"
 ], function (GraphDisplayer) {
     var api = {};
     api.Types = {
@@ -95,6 +96,12 @@ define([
                 return propertyAction;
         }
     };
+    api.Self.prototype.focus = function () {
+        this.getLabel().focus().setCursorToEndOfText();
+    };
+    api.Self.prototype.centerOnScreen = function () {
+        this.getHtml().centerOnScreen();
+    };
     return api;
     function initMenuHandlerGetters() {
         menuHandlerGetters[api.Types.Vertex] = GraphDisplayer.getVertexMenuHandler;
@@ -105,7 +112,7 @@ define([
     }
     function initSelectors() {
         selectors[api.Types.Vertex] = GraphDisplayer.getVertexSelector;
-        selectors[api.Types.Relation] = GraphDisplayer.getGroupRelationSelector;
+        selectors[api.Types.Relation] = GraphDisplayer.getEdgeSelector;
         selectors[api.Types.GroupRelation] = GraphDisplayer.getGroupRelationSelector;
         selectors[api.Types.Schema] = GraphDisplayer.getSchemaSelector;
         selectors[api.Types.Property] = GraphDisplayer.getPropertySelector;

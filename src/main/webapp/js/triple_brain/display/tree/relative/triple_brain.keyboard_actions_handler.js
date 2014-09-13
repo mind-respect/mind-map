@@ -5,12 +5,12 @@ define([
     "jquery",
     "triple_brain.event_bus",
     "triple_brain.selection_handler",
+    "triple_brain.relative_tree_center_vertex",
     "triple_brain.vertex_service",
     "triple_brain.ui.utils",
     "triple_brain.ui.identification_menu",
-    "triple_brain.graph_displayer",
     "triple_brain.mind_map_info"
-], function ($, EventBus, SelectionHandler, VertexService, UiUtils, IdentificationMenu, GraphDisplayer, MindMapInfo) {
+], function ($, EventBus, SelectionHandler, RelativeTreeCenterVertex, VertexService, UiUtils, IdentificationMenu, MindMapInfo) {
     "use strict";
     var api = {},
         tabKeyNumber = 9,
@@ -101,6 +101,7 @@ define([
         if (MindMapInfo.isViewOnly() || selectedElement.isGroupRelation()) {
             return;
         }
+        selectedElement.focus();
     }
 
     function tabAction(selectedElement) {
@@ -117,7 +118,7 @@ define([
         }
         var newSelectedBubble;
         if (isCenterVertex(selectedElement)) {
-            var centerVertex = GraphDisplayer.getVertexSelector().usingVertex(
+            var centerVertex = RelativeTreeCenterVertex.usingVertex(
                 selectedElement
             );
             if (!centerVertex.hasChildToLeft()) {
@@ -143,7 +144,7 @@ define([
         }
         var newSelectedBubble;
         if (isCenterVertex(selectedElement)) {
-            var centerVertex = GraphDisplayer.getVertexSelector().usingVertex(
+            var centerVertex = RelativeTreeCenterVertex.usingVertex(
                 selectedElement
             );
             if (!centerVertex.hasChildToRight()) {
