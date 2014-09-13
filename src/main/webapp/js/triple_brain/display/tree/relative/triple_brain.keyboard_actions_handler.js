@@ -4,14 +4,13 @@
 define([
     "jquery",
     "triple_brain.event_bus",
-    "triple_brain.relative_tree_center_vertex",
     "triple_brain.selection_handler",
     "triple_brain.vertex_service",
     "triple_brain.ui.utils",
     "triple_brain.ui.identification_menu",
     "triple_brain.graph_displayer",
     "triple_brain.mind_map_info"
-], function ($, EventBus, RelativeTreeCenterVertex, SelectionHandler, VertexService, UiUtils, IdentificationMenu, GraphDisplayer, MindMapInfo) {
+], function ($, EventBus, SelectionHandler, VertexService, UiUtils, IdentificationMenu, GraphDisplayer, MindMapInfo) {
     "use strict";
     var api = {},
         tabKeyNumber = 9,
@@ -27,12 +26,6 @@ define([
             handleKeyboardActions
         );
     };
-    api.disable = function(){
-
-    };
-    api.enable = function(){
-
-    };
     return api;
     function handleKeyboardActions() {
         $(window).off(
@@ -43,13 +36,14 @@ define([
     }
 
     function keyDownHanlder(event) {
+        var shouldHandle = $(event.target).is("body");
+        if(!shouldHandle){
+            return;
+        }
         if (isThereASpecialKeyPressed()) {
             return;
         }
         if (!SelectionHandler.isOnlyASingleElementSelected()) {
-            return;
-        }
-        if($('input:focus').length){
             return;
         }
         var selectedElement = SelectionHandler.getSingleElement();
@@ -113,7 +107,7 @@ define([
         }
         var newSelectedBubble;
         if (isCenterVertex(selectedElement)) {
-            var centerVertex = RelativeTreeCenterVertex.usingVertex(
+            var centerVertex = GraphDisplayer.getVertexSelector().usingVertex(
                 selectedElement
             );
             if (!centerVertex.hasChildToLeft()) {
@@ -139,7 +133,7 @@ define([
         }
         var newSelectedBubble;
         if (isCenterVertex(selectedElement)) {
-            var centerVertex = RelativeTreeCenterVertex.usingVertex(
+            var centerVertex = GraphDisplayer.getVertexSelector().usingVertex(
                 selectedElement
             );
             if (!centerVertex.hasChildToRight()) {

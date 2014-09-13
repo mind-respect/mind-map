@@ -22,7 +22,7 @@ define([
     "triple_brain.tree_edge_menu_handler",
     "triple_brain.relative_tree_graph_menu_handler",
     "triple_brain.graph_element_menu_handler",
-    "triple_brain.relative_tree_keyboard_actions_handler",
+    "triple_brain.keyboard_actions_handler",
     "triple_brain.edge_server_facade",
     "triple_brain.group_relation_html_builder",
     "triple_brain.ui.group_relation",
