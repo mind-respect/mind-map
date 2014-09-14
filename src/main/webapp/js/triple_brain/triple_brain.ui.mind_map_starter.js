@@ -16,7 +16,6 @@ define(
         "triple_brain.top_center_menu",
         "triple_brain.ui.left_panel",
         "triple_brain.selection_handler",
-        "triple_brain.keyboard_utils",
         "triple_brain.graph_element_main_menu",
         "triple_brain.mind_map_info",
         "triple_brain.top_right_menu",
@@ -26,7 +25,7 @@ define(
         "triple_brain.freebase",
         "jquery.triple_brain.drag_scroll"
     ],
-    function ($, UserService, EventBus, LoginHandler, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, LeftPanel, SelectionHandler, KeyboardUtils, GraphElementMainMenu, MindMapInfo, TopRightMenu, ExternalPageLoader, IdUriUtils) {
+    function ($, UserService, EventBus, LoginHandler, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, LeftPanel, SelectionHandler, GraphElementMainMenu, MindMapInfo, TopRightMenu, ExternalPageLoader, IdUriUtils) {
         "use strict";
         var api = {
             start: function () {
@@ -137,8 +136,8 @@ define(
                 centralVertex.setAsCentral();
                 $("body, html").removeDragScroll().dragScroll().on(
                     "click",
-                    function () {
-                        if (KeyboardUtils.isCtrlPressed()) {
+                    function (event) {
+                        if (event.ctrlKey){
                             return;
                         }
                         SelectionHandler.removeAll();

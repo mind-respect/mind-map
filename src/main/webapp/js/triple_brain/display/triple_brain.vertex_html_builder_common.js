@@ -13,10 +13,9 @@ define([
     "triple_brain.graph_element_main_menu",
     "triple_brain.mind_map_info",
     "triple_brain.selection_handler",
-    "triple_brain.keyboard_utils",
     "jquery-ui",
     "jquery.triple_brain.search"
-], function ($, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, IdentificationFacade, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, KeyboardUtils) {
+], function ($, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, IdentificationFacade, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler) {
     var api = {};
     api.applyAutoCompleteIdentificationToLabelInput = function (input) {
         input.tripleBrainAutocomplete({
@@ -160,7 +159,7 @@ define([
                 var vertex = uiSelector.withHtml(
                     $(this)
                 );
-                if (KeyboardUtils.isCtrlPressed()) {
+                if (event.ctrlKey) {
                     if (vertex.isSelected()) {
                         SelectionHandler.removeVertex(vertex);
                     } else {

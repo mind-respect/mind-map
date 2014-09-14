@@ -47,6 +47,9 @@ define([
         );
         schema.hideMenu();
         schema.makePublic();
+        schema.setNote(
+            this.serverFacade.getComment()
+        );
         RelativeTreeVertex.initCache(
             schema
         );

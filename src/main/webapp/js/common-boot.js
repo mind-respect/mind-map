@@ -26,7 +26,6 @@ requirejs.config({
         "twitter_bootstrap": "vendor/twitter_bootstrap/3.2/bootstrap.min",
         "jquery.triple_brain.search": "triple_brain/search/jquery.triple_brain.search",
         "triple_brain.object_utils": "triple_brain/triple_brain.object_utils",
-        "triple_brain.keyboard_utils": "triple_brain/triple_brain.keyboard_utils",
         "triple_brain.selection_handler": "triple_brain/triple_brain.selection_handler",
         "triple_brain.scroll_on_mouse_frontier": "triple_brain/triple_brain.scroll_on_mouse_frontier",
         "triple_brain.top_center_menu": "triple_brain/triple_brain.top_center_menu",

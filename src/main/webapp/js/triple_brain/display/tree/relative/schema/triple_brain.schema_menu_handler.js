@@ -5,9 +5,10 @@ define([
         "triple_brain.schema_service",
         "triple_brain.graph_displayer",
         "triple_brain.graph_element_server_facade",
+        "triple_brain.vertex_menu_handler_common",
         "triple_brain.mind_map_info"
     ],
-    function (SchemaService, GraphDisplayer, GraphElementServerFacade, MindMapInfo) {
+    function (SchemaService, GraphDisplayer, GraphElementServerFacade, VertexMenuHandlerCommon, MindMapInfo) {
         "use strict";
         var api = {},
             forSingle = {},
@@ -35,6 +36,14 @@ define([
                     );
                 }
             );
+        };
+        forSingleNotOwned.note = forSingle.note = function (event, vertex) {
+            VertexMenuHandlerCommon.forSingle().note(
+                event, vertex
+            );
+        };
+        forSingleNotOwned.noteCanDo = function(vertex){
+            return vertex.hasNote();
         };
         return api;
     }

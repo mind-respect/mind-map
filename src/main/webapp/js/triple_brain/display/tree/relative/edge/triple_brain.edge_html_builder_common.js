@@ -7,14 +7,13 @@ define([
     "triple_brain.tree_edge",
     "triple_brain.mind_map_info",
     "triple_brain.friendly_resource_service",
-    "triple_brain.keyboard_utils",
     "triple_brain.selection_handler",
     "triple_brain.relative_tree_displayer_templates",
     "triple_brain.identification_server_facade",
     "triple_brain.user_map_autocomplete_provider",
     "triple_brain.freebase_autocomplete_provider",
     "triple_brain.graph_element_service"
-], function (PropertyUi, TreeEdge, MindMapInfo, FriendlyResourceService, KeyboardUtils, SelectionHandler, RelativeTreeTemplates, IdentificationFacade, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementService) {
+], function (PropertyUi, TreeEdge, MindMapInfo, FriendlyResourceService, SelectionHandler, RelativeTreeTemplates, IdentificationFacade, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementService) {
     "use strict";
     var api = {};
     api.buildOverlay = function () {
@@ -32,7 +31,7 @@ define([
                 var edge = edgeFromHtml(
                     $(this).closest(".relation")
                 );
-                if (KeyboardUtils.isCtrlPressed()) {
+                if (event.ctrlKey) {
                     if (edge.isSelected()) {
                         SelectionHandler.removeRelation(edge);
                     } else {
