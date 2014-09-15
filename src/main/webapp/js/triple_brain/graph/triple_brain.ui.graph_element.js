@@ -71,15 +71,9 @@ define([
             text = label.attr("placeholder");
         }
         var nbCharacter = text.length;
-        /*
-         * I haven't found a trick to calculate de good number.
-         * The first one represents the font size and the second the font to write
-         * 20=12  19=11  18=11  17=10  16=10  15=9  14=8  13=8  12=7  11=7  10=6
-         */
-        var fontWithCorrection = 8;
         label.css(
             'width',
-                ((nbCharacter + 1) * fontWithCorrection) + 2
+                (nbCharacter / 1.62) + 1 + "em"
         );
     };
     api.Self.prototype.rightActionForType = function(vertexAction, edgeAction, groupRelationAction, schemaAction, propertyAction){
