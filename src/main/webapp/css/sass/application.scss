@@ -521,7 +521,6 @@ svg {
 
 .input-size{
   visibility: hidden;
-  padding-right: 10px;
   padding-top: 1px;
   padding-bottom: 1px;
 }
@@ -607,6 +606,7 @@ svg {
   }
   input[type="text"].label {
     border:none;
+    padding:0;
     font-family: courier new, monospace;
     text-align: left;
     font-size: 14px;
