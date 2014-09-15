@@ -69,7 +69,7 @@ define([
             return includedVertices;
         }
         $.each(this.vertexServerFormat.vertex.includedVertices, function (key, value) {
-            includedVertices[key] = api.fromvertexServerFormat(
+            includedVertices[key] = api.fromServerFormat(
                 value
             );
         });
