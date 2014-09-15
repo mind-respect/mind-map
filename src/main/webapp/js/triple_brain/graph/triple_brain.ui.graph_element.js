@@ -61,6 +61,9 @@ define([
             this.getGraphElementType()
             ]();
     };
+    api.Self.prototype.getInputSizer = function(){
+        return this.html.find(".input-size");
+    };
     api.Self.prototype.adjustWidthToNumberOfChars = function(){
         var text = this.text().trim(),
             label = this.getLabel();
@@ -70,11 +73,8 @@ define([
         if(text.length === 0){
             text = label.attr("placeholder");
         }
-        var nbCharacter = text.length;
-        label.css(
-            'width',
-                (nbCharacter / 1.62) + 1 + "em"
-        );
+        //using 'text.replace(" ", "a")' because somehow spaces don't apply as much width
+        this.getInputSizer().text(text.replace(/./g, "M"));
     };
     api.Self.prototype.rightActionForType = function(vertexAction, edgeAction, groupRelationAction, schemaAction, propertyAction){
         switch(this.getGraphElementType()){

@@ -127,7 +127,6 @@ define([
         container.prepend(
             input
         );
-        edge.adjustWidthToNumberOfChars();
         return input;
     };
     return api;

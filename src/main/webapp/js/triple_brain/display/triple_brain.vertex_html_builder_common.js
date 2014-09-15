@@ -94,6 +94,9 @@ define([
                 "placeholder",
                 uiSelector.getWhenEmptyLabel()
             ).appendTo(labelContainer);
+            $("<div class='input-size'>").appendTo(
+                labelContainer
+            );
         label.focus(function () {
             var $input = $(this),
                 vertex = vertexOfSubHtmlComponent($input);

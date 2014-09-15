@@ -52,7 +52,7 @@ define([
                 this.html,
                 this.edgeServer.getLabel(),
                 TreeEdge.getWhenEmptyLabel()
-            ).show();
+            ).css("visibility", "visible");
             var edge = this._edgeFacade();
             EdgeHtmlBuilderCommon.buildLabelAsInput(
                 edge,

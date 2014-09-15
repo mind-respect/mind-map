@@ -136,8 +136,13 @@
     font-size: 14px;
     vertical-align: middle;
     background-color: transparent;
-    width:auto;
     overflow: hidden;
+    position:absolute;
+    width:100%;
+    top:0;
+    left:0;
+    right:0;
+    z-index:5;
 }
 
 .vertex.inverse .relation .label{

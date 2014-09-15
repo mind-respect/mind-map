@@ -92,26 +92,34 @@ define([
             this._changeToInput().focus().setCursorToEndOfText();
         };
         api.Self.prototype._changeToInput = function() {
-            this.getLabel().hide();
+            this.getLabelAsSpan().css("visibility", "hidden").addClass(
+                "input-size"
+            );
             var edgeHtml = this.getHtml(),
                 input = edgeHtml.find("input");
             if (input.val() === this.getSelector().getWhenEmptyLabel()) {
                 input.val("");
             }
-            input.show().focus();
+            input.show().focus().setCursorToEndOfText();
             this.adjustWidthToNumberOfChars();
             return input;
         };
 
         api.Self.prototype._changeToSpan = function() {
-            var nonInputLabel = this.getHtml().find(
-                "span.label"
-            ).text(
-                    this.getTextOrDefault()
+            var input = this.getInputLabel().hide();
+            return this.getLabelAsSpan().text(input.val()).css("visibility", "visible").removeClass(
+                "input-size"
             );
-            this.getLabel().hide();
-            nonInputLabel.show();
-            return nonInputLabel;
+        };
+        api.Self.prototype.getLabelAsSpan = api.Self.prototype.getInputSizer = function(){
+            return this.getHtml().find(
+                "span.label"
+            );
+        };
+        api.Self.prototype.getInputLabel = function(){
+            return this.getHtml().find(
+                "input.edge-label"
+            );
         };
         return api;
     }
