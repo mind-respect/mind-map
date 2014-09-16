@@ -20,9 +20,7 @@ define([
         );
         t.add(
             'vertex_label_container',
-                '<div class="in-bubble-content">' +
-                '<input type="text" class="label" value="{label}">' +
-                '</div>'
+                '<input type="text" class="label" value="{label}">'
         );
         t.add('vertex_menu', '<div class="menu"></div>');
         t.add('vertex_move_button', '<div class="move"></div>');

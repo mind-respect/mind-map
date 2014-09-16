@@ -495,6 +495,7 @@ define([
                     serverRootVertex,
                     verticesContainer
                 );
+                self.rootBubble.getHtml().addClass("center-vertex");
                 var index = 0;
                 $.each(serverRootVertex.similarRelations, function (key, groupRelation) {
                     if (groupRelation.hasMultipleVertices()) {

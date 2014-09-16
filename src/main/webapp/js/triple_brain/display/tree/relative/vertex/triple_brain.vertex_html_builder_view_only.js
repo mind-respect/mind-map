@@ -32,26 +32,35 @@ define([
                 html
             );
             RelativeTreeVertex.initCache(vertex);
-            createLabel();
+            var bubbleContent = $("<div class='in-bubble-content'>").appendTo(html);
+            createLabel(bubbleContent);
+            html.append("<span class='arrow'>");
             vertex.setOriginalServerObject(
                 serverFormatFacade
             );
             return vertex;
-            function createLabel() {
-                var labelContainer = $(MindMapTemplate['vertex_label_container'].merge({
-                    label:serverFormatFacade.getLabel().trim() === "" ?
-                        RelativeTreeVertex.getWhenEmptyLabel() :
-                        serverFormatFacade.getLabel()
-                })).appendTo(html).on(
+            function createLabel(container) {
+                var labelContainer = $(
+                    "<div class='overlay-container'>"
+                ).appendTo(
+                    container
+                ).on(
                     "click",
                     handleClickToDisplayVertexAsCentralVertex
                 );
+                $("<div class='overlay'>").appendTo(
+                    labelContainer
+                );
+                var label = $(
+                    "<input type='text' class='label'>"
+                ).val(
+                    serverFormatFacade.getLabel().trim()
+                ).attr(
+                    "placeholder",
+                    RelativeTreeVertex.getWhenEmptyLabel()
+                ).prop('disabled', true).appendTo(labelContainer);
+                labelContainer.append("<div class='input-size'>");
                 vertex.readjustLabelWidth();
-                var label = labelContainer.find("input[type='text']:first");
-                label.prop('disabled', true).on(
-                    "click",
-                    handleClickToDisplayVertexAsCentralVertex
-                );
                 return labelContainer;
             }
         };
