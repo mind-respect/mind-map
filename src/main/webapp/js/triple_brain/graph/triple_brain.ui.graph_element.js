@@ -97,6 +97,12 @@ define([
     api.Self.prototype.centerOnScreen = function () {
         this.getHtml().centerOnScreen();
     };
+    api.Self.prototype.isInTypes = function(types){
+        return $.inArray(
+            this.getGraphElementType(),
+            types
+        ) !== -1;
+    };
     return api;
     function initMenuHandlerGetters() {
         menuHandlerGetters[api.Types.Vertex] = GraphDisplayer.getVertexMenuHandler;

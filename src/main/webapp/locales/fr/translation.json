@@ -156,5 +156,6 @@
         "makePrivate" : "Rendre privé",
         "makePublic" : "Rendre public",
         "remove" : "Effacer"
-    }
+    },
+    "hidden_properties_tooltip" : "Expandre (e)"
 }

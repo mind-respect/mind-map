@@ -9,8 +9,9 @@ define([
     "triple_brain.vertex_service",
     "triple_brain.ui.utils",
     "triple_brain.ui.identification_menu",
-    "triple_brain.mind_map_info"
-], function ($, EventBus, SelectionHandler, RelativeTreeCenterVertex, VertexService, UiUtils, IdentificationMenu, MindMapInfo) {
+    "triple_brain.mind_map_info",
+    "triple_brain.ui.graph_element"
+], function ($, EventBus, SelectionHandler, RelativeTreeCenterVertex, VertexService, UiUtils, IdentificationMenu, MindMapInfo, GraphElementUi) {
     "use strict";
     var api = {},
         tabKeyNumber = 9,
@@ -21,6 +22,7 @@ define([
         iArrowKeyNumber = 73,
         enterKeyNumber = 13,
         escapeKeyNumber = 27,
+        eKeyNumber = 69,
         listenedKeysAndTheirAction = defineListenedKeysAndTheirActions();
     api.init = function () {
         EventBus.subscribe(
@@ -40,8 +42,8 @@ define([
     function keyDownHanlder(event) {
         var target = $(event.target);
         var isWorkingOnSomething = !target.is("body");
-        if(isWorkingOnSomething){
-            if(event.keyCode === escapeKeyNumber){
+        if (isWorkingOnSomething) {
+            if (event.keyCode === escapeKeyNumber) {
                 target.blur();
             }
             return;
@@ -90,9 +92,13 @@ define([
             ],
             [
                 enterKeyNumber, enterKeyAction
+            ],
+            [
+                eKeyNumber, eKeyAction
             ]
         ];
     }
+
     function iAction(selectedElement) {
         if (MindMapInfo.isViewOnly() || selectedElement.isGroupRelation() || selectedElement.isSchema()) {
             return;
@@ -102,12 +108,26 @@ define([
         ).create();
     }
 
-    function enterKeyAction(selectedElement){
+    function enterKeyAction(selectedElement) {
         if (MindMapInfo.isViewOnly() || selectedElement.isGroupRelation()) {
             return;
         }
         selectedElement.focus();
     }
+
+    function eKeyAction(selectedElement) {
+        if (!selectedElement.isInTypes([
+            GraphElementUi.Types.GroupRelation,
+            GraphElementUi.Types.Vertex
+        ])) {
+            return;
+        }
+        if(selectedElement.hasHiddenRelationsContainer()){
+            selectedElement.addChildTree();
+            selectedElement.removeHiddenRelationsContainer();
+        }
+    }
+
 
     function tabAction(selectedElement) {
         if (MindMapInfo.isViewOnly() || selectedElement.isRelation() || selectedElement.isProperty()) {
@@ -194,7 +214,7 @@ define([
         centerBubbleIfApplicable(bubbleUnder);
     }
 
-    function applyPressedArrowActionOnRelation(relation){
+    function applyPressedArrowActionOnRelation(relation) {
         SelectionHandler.setToSingleVertex(
             relation.childVertexInDisplay()
         );
@@ -207,7 +227,7 @@ define([
         }
     }
 
-    function isCenterVertex(selectedElement){
+    function isCenterVertex(selectedElement) {
         return selectedElement.isSchema() || (
             selectedElement.isVertex() && selectedElement.isCenterVertex()
             );

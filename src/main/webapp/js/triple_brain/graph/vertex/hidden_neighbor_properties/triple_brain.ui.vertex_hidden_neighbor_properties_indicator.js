@@ -36,6 +36,11 @@ define([
                 var img = $("<img>").attr(
                     "src",
                     imageUrl
+                ).attr(
+                    "data-toggle", "tooltip"
+                ).attr(
+                    "title",
+                    $.i18n.translate("hidden_properties_tooltip")
                 );
                 hiddenNeighborPropertiesContainer.append(
                     img
@@ -43,7 +48,7 @@ define([
                 bubble.getHtml()[isLeftOriented ? "prepend" : "append"](
                     hiddenNeighborPropertiesContainer
                 );
-                hiddenNeighborPropertiesContainer.on(
+                hiddenNeighborPropertiesContainer.tooltip().on(
                     "click",
                     handleHiddenPropertiesContainerClick
                 );
