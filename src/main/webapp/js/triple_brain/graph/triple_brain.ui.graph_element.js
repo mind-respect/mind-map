@@ -73,8 +73,9 @@ define([
         if(text.length === 0){
             text = label.attr("placeholder");
         }
-        //using 'text.replace(" ", "a")' because somehow spaces don't apply as much width
-        this.getInputSizer().text(text.replace(/./g, "M"));
+        var biggestLetter = "M";
+        //using 'text.replace(/./g, biggestLetter)' because somehow spaces and some letters don't apply as much width
+        this.getInputSizer().text(text.replace(/./g, biggestLetter));
     };
     api.Self.prototype.rightActionForType = function(vertexAction, edgeAction, groupRelationAction, schemaAction, propertyAction){
         switch(this.getGraphElementType()){
