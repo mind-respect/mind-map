@@ -157,6 +157,7 @@ define(
                 });
                 $("body").removeClass("hidden");
                 centralVertex.scrollTo();
+                SelectionHandler.setToSingleVertex(centralVertex);
                 EventBus.publish('/event/ui/graph/drawn');
             }
         );
