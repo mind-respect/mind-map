@@ -106,8 +106,11 @@ define([
         };
 
         api.Self.prototype._changeToSpan = function() {
-            var input = this.getInputLabel().hide();
-            return this.getLabelAsSpan().text(input.val()).css("visibility", "visible").removeClass(
+            var text = this.getTextOrDefault();
+            this.getInputLabel().hide();
+            return this.getLabelAsSpan().text(
+                text
+            ).css("visibility", "visible").removeClass(
                 "input-size"
             );
         };
