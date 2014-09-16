@@ -166,7 +166,10 @@ define([
             if (this.isCenterVertex()) {
                 this.html.closest(".vertex-container").remove();
             } else {
-                this.html.closest(".vertex-tree-container").remove();
+                var treeContainer = this.html.closest(".vertex-tree-container"),
+                    clearFix = treeContainer.prev(".clear-fix");
+                clearFix.remove();
+                treeContainer.remove();
             }
         };
 
