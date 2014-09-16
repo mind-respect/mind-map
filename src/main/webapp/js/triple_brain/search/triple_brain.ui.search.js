@@ -22,10 +22,13 @@ define([
         function init(){
             getInput().empty().tripleBrainAutocomplete({
                 select: function (event, ui) {
-                    var vertexUri = ui.item.uri;
+                    var vertexUri = ui.item.uri,
+                        input = $(this);
                     GraphDisplayer.displayForBubbleWithUri(
                         vertexUri
                     );
+                    input.val("").blur();
+                    event.preventDefault();
                 },
                 resultsProviders: [
                     UserMapAutocompleteProvider.toFetchOnlyCurrentUserVertices()
