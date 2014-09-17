@@ -167,7 +167,7 @@ define([
                 this.html.closest(".vertex-container").remove();
             } else {
                 var treeContainer = this.html.closest(".vertex-tree-container"),
-                    clearFix = treeContainer.prev(".clear-fix");
+                    clearFix = treeContainer.next(".clear-fix");
                 clearFix.remove();
                 treeContainer.remove();
             }
