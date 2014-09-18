@@ -464,15 +464,6 @@ define([
         api.Object.prototype.getMenuHtml = function () {
             return this.html.find('> .menu');
         };
-        api.Object.prototype.visitMenuButtons = function (visitor) {
-            $.each(this.getMenuButtonsHtml(), function () {
-                visitor(
-                    GraphElementButton.fromHtml(
-                        $(this)
-                    )
-                );
-            });
-        };
         api.Object.prototype.addChildTree = function () {
             var self = this;
             GraphDisplayer.addChildTree(

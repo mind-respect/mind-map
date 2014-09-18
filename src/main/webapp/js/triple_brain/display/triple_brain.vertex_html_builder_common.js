@@ -13,9 +13,10 @@ define([
     "triple_brain.graph_element_main_menu",
     "triple_brain.mind_map_info",
     "triple_brain.selection_handler",
+    "triple_brain.schema_suggestion",
     "jquery-ui",
     "jquery.triple_brain.search"
-], function ($, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, IdentificationFacade, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler) {
+], function ($, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, IdentificationFacade, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion) {
     var api = {};
     api.applyAutoCompleteIdentificationToLabelInput = function (input) {
         input.tripleBrainAutocomplete({
@@ -25,6 +26,10 @@ define([
                     identificationResource = IdentificationFacade.fromSearchResult(
                         ui.item
                     );
+                SchemaSuggestion.addSchemaSuggestionsIfApplicable(
+                    vertex,
+                    ui.item
+                );
                 VertexService.addGenericIdentification(
                     vertex,
                     identificationResource
@@ -186,6 +191,28 @@ define([
                     vertex.focus();
                 }
             )
+        }
+    };
+    api.addNoteButtonNextToLabel = function (vertex) {
+        var noteButton = vertex.getNoteButtonInMenu().clone().on(
+            "click", clickHandler
+        );
+        noteButton[
+            vertex.hasNote() ?
+                "show" :
+                "hide"
+            ]();
+        vertex.getInBubbleContainer().find("> .overlay-container").before(
+            noteButton
+        );
+        function clickHandler(event) {
+            var vertex = vertexOfSubHtmlComponent(
+                $(this)
+            );
+            vertex.getMenuHandler().forSingle().note(
+                event,
+                vertex
+            );
         }
     };
     return api;

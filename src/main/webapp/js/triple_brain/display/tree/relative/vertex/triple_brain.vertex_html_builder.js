@@ -8,11 +8,10 @@ define([
         "triple_brain.mind-map_template",
         "triple_brain.relative_tree_vertex",
         "triple_brain.vertex_html_builder_common",
-        "triple_brain.relative_tree_vertex_menu_handler",
         "jquery-ui",
         "jquery.is-fully-on-screen",
         "jquery.center-on-screen"
-    ], function ($, EventBus, MindMapTemplate, RelativeTreeVertex, VertexHtmlCommon, RelativeTreeVertexMenuHandler) {
+    ], function ($, EventBus, MindMapTemplate, RelativeTreeVertex, VertexHtmlCommon) {
         var api = {};
         api.withServerFacade = function (serverFacade) {
             return new VertexCreator(serverFacade);
@@ -127,7 +126,9 @@ define([
                 this.serverFacade.getComment()
             );
             this._createMenu();
-            this._addNoteButtonNextToLabel();
+            VertexHtmlCommon.addNoteButtonNextToLabel(
+                this.vertex
+            );
             this.vertex.addSuggestions(
                 this.serverFacade.getSuggestions()
             );
@@ -166,29 +167,6 @@ define([
                     ". . ."
                 )
             ).addClass("includes-vertices");
-        };
-
-        VertexCreator.prototype._addNoteButtonNextToLabel = function () {
-            var noteButton = this.vertex.getNoteButtonInMenu().clone().on(
-                "click", clickHandler
-            );
-            noteButton[
-                this.vertex.hasNote() ?
-                    "show" :
-                    "hide"
-                ]();
-            this.vertex.getInBubbleContainer().find("> .overlay-container").before(
-                noteButton
-            );
-            function clickHandler(event) {
-                var button = $(this);
-                RelativeTreeVertexMenuHandler.forSingle().note(
-                    event,
-                    RelativeTreeVertex.withHtml(
-                        button.closest(".vertex")
-                    )
-                );
-            }
         };
 
         VertexCreator.prototype._createMenu = function () {

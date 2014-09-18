@@ -56,6 +56,9 @@ define([
         VertexHtmlCommon.initCache(
             schema
         );
+        VertexHtmlCommon.addNoteButtonNextToLabel(
+            schema
+        );
         return schema;
     };
     Self.prototype._addMenu = function(){
@@ -63,5 +66,6 @@ define([
             this.html
         );
     };
+
     return api;
 });

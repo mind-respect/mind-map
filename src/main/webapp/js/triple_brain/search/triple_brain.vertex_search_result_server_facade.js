@@ -18,10 +18,24 @@ define([
         this.init(serverFormat.graphElement);
     }
     Object.prototype = new GraphElementServerFacade.Self;
+    Object.prototype.getProperties = function () {
+        var properties = [];
+        if(undefined === this.serverFormat.properties){
+            return properties
+        }
+        $.each(this.serverFormat.properties, function(){
+            properties.push(
+                GraphElementServerFacade.fromServerFormat(this)
+            );
+        });
+        return properties;
+    };
     Object.prototype.getPropertiesName = function () {
-        return undefined === this.serverFormat.propertiesName ?
-            [] :
-            this.serverFormat.propertiesName;
+        var propertiesName = [];
+        $.each(this.getProperties(), function(){
+            propertiesName.push(this.getLabel());
+        });
+        return propertiesName;
     };
     Object.prototype.isVertex = function () {
         return true;

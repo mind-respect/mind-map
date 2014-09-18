@@ -122,7 +122,8 @@ requirejs.config({
         "triple_brain.ui.property" : "triple_brain/graph/schema/triple_brain.ui.property",
         "triple_brain.property_html_builder": "triple_brain/display/tree/relative/schema/triple_brain.property_html_builder",
         "triple_brain.property_menu_handler": "triple_brain/display/tree/relative/schema/triple_brain.property_menu_handler",
-        "triple_brain.friendly_resource_service": "triple_brain/triple_brain.friendly_resource_service"
+        "triple_brain.friendly_resource_service": "triple_brain/triple_brain.friendly_resource_service",
+        "triple_brain.schema_suggestion" : "triple_brain/triple_brain.schema_suggestion"
     },
     shim: {
         "crow": [],

@@ -44,7 +44,6 @@ define([
             }
         };
         api.listPropertiesOfFreebaseTypeId = function (vertex, freebaseId) {
-            Suggestion = require("triple_brain.suggestion");
             var propertiesOfTypeQuery = {
                 id: freebaseId,
                 type: "/type/type",
@@ -176,10 +175,12 @@ define([
                 return;
             }
             var identificationId = FreebaseUri.idInFreebaseURI(identificationUri);
-            api.listPropertiesOfFreebaseTypeId(
-                graphElement,
-                identificationId
-            );
+            if(graphElement.isVertex()){
+                api.listPropertiesOfFreebaseTypeId(
+                    graphElement,
+                    identificationId
+                );
+            }
             if (graphElement.isBubble()) {
                 updateIdentificationImages(
                     identification,

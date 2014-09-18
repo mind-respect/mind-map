@@ -70,8 +70,9 @@ define([
             this.serverFormat
         );
     };
-    api.Self.prototype.isAGraphElement = function () {
-        return this.getExternalResourceUri().indexOf("/service") === 0;
+    api.Self.prototype.isARelationOrVertex = function () {
+        return this.getExternalResourceUri().indexOf("/service") === 0 &&
+            this.getExternalResourceUri().indexOf("/identification") === -1;
     };
     api.Self.prototype.rightActionForType = function(typeAction, sameAsAction, genericIdentificationAction){
         switch (this.getType()) {

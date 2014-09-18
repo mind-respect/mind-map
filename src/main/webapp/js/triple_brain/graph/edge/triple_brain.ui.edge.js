@@ -155,15 +155,7 @@ define([
         api.Object.prototype.getHtml = function () {
             return this.html;
         };
-        api.Object.prototype.visitMenuButtons = function (visitor) {
-            $.each(this.getMenuButtonsHtml(), function () {
-                visitor(
-                    GraphElementButton.fromHtml(
-                        $(this)
-                    )
-                );
-            });
-        };
+
         api.Object.prototype.select = function () {
             this.html.addClass("selected");
         };

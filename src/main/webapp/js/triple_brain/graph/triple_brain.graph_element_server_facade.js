@@ -54,6 +54,9 @@ define([
     api.Self.prototype.getGenericIdentifications = function () {
         return this._genericIdentifications;
     };
+    api.Self.prototype.hasIdentifications = function () {
+        return this.getIdentifications().length > 0;
+    };
     api.Self.prototype.getIdentifications = function () {
         if (undefined === this._identifications) {
             this._identifications = [].concat(

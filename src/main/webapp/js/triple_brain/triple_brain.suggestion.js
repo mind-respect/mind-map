@@ -33,6 +33,26 @@ define([
                 }]
             );
         };
+        api.fromSchemaProperty = function (schemaProperty) {
+            var suggestionUri = api.generateUri(),
+                typeUri = schemaProperty.hasIdentifications() ?
+                    schemaProperty.getIdentifications()[0].getExternalResourceUri() :
+                    schemaProperty.getUri();
+            return new Suggestion(
+                FriendlyResourceFacade.withUriAndLabel(
+                    suggestionUri,
+                    schemaProperty.getLabel()
+                ),
+                schemaProperty.getUri(),
+                typeUri,
+                [{
+                    friendlyResource: FriendlyResourceFacade.withUri(
+                        api.generateOriginUriFromSuggestionUri(suggestionUri)
+                    ).getServerFormat(),
+                    origin: api.IDENTIFICATION_PREFIX + schemaProperty.getUri()
+                }]
+            );
+        };
         api.generateOriginUriFromSuggestionUri = function(suggestionUri){
             return suggestionUri + "/origin/" + IdUri.generateUuid();
         };

@@ -129,7 +129,7 @@ define([
                             addContextIfApplicable();
                             function addContextIfApplicable() {
                                 var identification = title.data("identification");
-                                if (!identification.isAGraphElement()) {
+                                if (!identification.isARelationOrVertex()) {
                                     return;
                                 }
                                 var context = title.data("has_context");
