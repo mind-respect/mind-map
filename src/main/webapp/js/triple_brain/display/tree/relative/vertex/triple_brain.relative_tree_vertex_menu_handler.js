@@ -141,6 +141,11 @@ define([
         return vertex.hasIncludedGraphElements();
     };
     forSingle.suggestions = function (event, vertex) {
+        forSingle.suggestionsAction(
+            vertex
+        );
+    };
+    forSingle.suggestionsAction = function (vertex) {
         SuggestionMenu.ofVertex(
             vertex
         ).create();

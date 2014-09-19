@@ -23,6 +23,7 @@ define([
         enterKeyNumber = 13,
         escapeKeyNumber = 27,
         eKeyNumber = 69,
+        sKeyNumber = 83,
         listenedKeysAndTheirAction = defineListenedKeysAndTheirActions();
     api.init = function () {
         EventBus.subscribe(
@@ -40,8 +41,8 @@ define([
     }
 
     function keyDownHanlder(event) {
-        var target = $(event.target);
-        var isWorkingOnSomething = !target.is("body");
+        var target = $(event.target),
+            isWorkingOnSomething = !target.is("body");
         if (isWorkingOnSomething) {
             if (event.keyCode === escapeKeyNumber) {
                 target.blur();
@@ -95,6 +96,9 @@ define([
             ],
             [
                 eKeyNumber, eKeyAction
+            ],
+            [
+                sKeyNumber, sKeyAction
             ]
         ];
     }
@@ -122,12 +126,23 @@ define([
         ])) {
             return;
         }
-        if(selectedElement.hasHiddenRelationsContainer()){
+        if (selectedElement.hasHiddenRelationsContainer()) {
             selectedElement.addChildTree();
             selectedElement.removeHiddenRelationsContainer();
         }
     }
 
+    function sKeyAction(selectedElement) {
+        if (!selectedElement.isVertex()) {
+            return;
+        }
+        var handler = selectedElement.getMenuHandler().forSingle();
+        if (handler.suggestionsCanDo(selectedElement)) {
+            handler.suggestionsAction(
+                selectedElement
+            );
+        }
+    }
 
     function tabAction(selectedElement) {
         if (MindMapInfo.isViewOnly() || selectedElement.isRelation() || selectedElement.isProperty()) {
