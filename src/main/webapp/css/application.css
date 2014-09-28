@@ -148,7 +148,7 @@ svg { z-index: 1; }
 .bubble.inverse .arrow:before { content: url("images/icons/vertex/arrowhead_left.svg"); }
 .bubble .in-bubble-content, .bubble .overlay-container { display: inline-block; z-index: 3; }
 
-.input-size { visibility: hidden; padding-top: 1px; padding-bottom: 1px; }
+.input-size { visibility: hidden; padding-top: 1px; padding-bottom: 1px; margin-left: 5px; margin-right: 5px; }
 
 .relation span.label { font-family: helvetica; }
 

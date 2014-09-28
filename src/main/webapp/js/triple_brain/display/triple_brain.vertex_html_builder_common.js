@@ -95,14 +95,14 @@ define([
             label = $(
                 "<input type='text' class='label'>"
             ).val(
-                    serverFacade.getLabel().trim()
+                serverFacade.getLabel().trim()
             ).attr(
                 "placeholder",
                 uiSelector.getWhenEmptyLabel()
             ).appendTo(labelContainer);
-            $("<div class='input-size'>").appendTo(
-                labelContainer
-            );
+        $("<div class='input-size'>").appendTo(
+            labelContainer
+        );
         label.focus(function () {
             var $input = $(this),
                 vertex = vertexOfSubHtmlComponent($input);
@@ -120,30 +120,33 @@ define([
             }
             SelectionHandler.setToSingleVertex(vertex);
         }).change(function () {
-            var $input = $(this),
+            var $input = $(this).keyup(),
                 vertex = vertexOfSubHtmlComponent($input);
-            vertex.getLabel().keyup();
-            if(vertex.isVertexSuggestion()){
+            if (vertex.isVertexSuggestion()) {
                 SuggestionService.accept(
                     vertex,
                     updateLabel
                 );
-            }else{
+            } else {
                 updateLabel();
             }
             $input.blur();
-            function updateLabel(){
+            function updateLabel() {
                 VertexService.updateLabel(
                     vertexOfSubHtmlComponent($input),
                     $input.val()
                 );
             }
+        }).keydown(function () {
+            vertexOfSubHtmlComponent(
+                $(this)
+            ).readjustLabelWidth();
         }).keyup(function () {
             var $input = $(this),
                 vertex = vertexOfSubHtmlComponent($input),
                 html = vertex.getHtml();
-            updateLabelsOfVerticesWithSameUri();
             vertex.readjustLabelWidth();
+            updateLabelsOfVerticesWithSameUri();
             function updateLabelsOfVerticesWithSameUri() {
                 var text = vertex.text();
                 var otherInstances = uiSelector.withHtml(
@@ -158,7 +161,7 @@ define([
                 });
             }
         });
-        if(vertex.isVertex()){
+        if (vertex.isVertex()) {
             api.applyAutoCompleteIdentificationToLabelInput(
                 label
             );
@@ -170,7 +173,7 @@ define([
             "<div class='in-bubble-content'>"
         ).appendTo(html);
     };
-    api.setUpClickBehavior = function(html){
+    api.setUpClickBehavior = function (html) {
         html.on(
             "click",
             clickHandler
@@ -207,21 +210,22 @@ define([
     return api;
     function vertexOfSubHtmlComponent(htmlOfSubComponent) {
         var vertexHtml = htmlOfSubComponent.closest('.vertex')
-        if(vertexHtml.hasClass("suggestion")){
+        if (vertexHtml.hasClass("suggestion")) {
             return GraphDisplayer.getVertexSuggestionSelector().withHtml(
                 vertexHtml
             );
-        } else if(vertexHtml.hasClass("schema")){
+        } else if (vertexHtml.hasClass("schema")) {
             return GraphDisplayer.getSchemaSelector().withHtml(
                 vertexHtml
             );
-        } else{
+        } else {
             return GraphDisplayer.getVertexSelector().withHtml(
                 vertexHtml
             );
         }
     }
-    function clickHandler(event){
+
+    function clickHandler(event) {
         event.stopPropagation();
         var vertex = vertexOfSubHtmlComponent(
             $(this)
@@ -238,7 +242,8 @@ define([
             );
         }
     }
-    function dblClickHandler(){
+
+    function dblClickHandler() {
         event.stopPropagation();
         vertexOfSubHtmlComponent(
             $(this)

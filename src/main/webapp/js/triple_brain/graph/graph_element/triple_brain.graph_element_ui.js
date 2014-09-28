@@ -77,12 +77,12 @@ define([
         return this.html.find(".input-size");
     };
     api.Self.prototype.adjustWidthToNumberOfChars = function () {
-        var text = this.text().trim(),
+        var text = this.text(),
             label = this.getLabel();
         if (!label.is("input")) {
             return;
         }
-        if (text.length === 0) {
+        if (text.trim().length === 0) {
             text = label.attr("placeholder");
         }
         var biggestLetter = "M";
