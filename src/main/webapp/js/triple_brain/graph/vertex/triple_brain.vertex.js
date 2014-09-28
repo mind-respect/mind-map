@@ -3,10 +3,10 @@
  */
 define([
     "require",
-    "triple_brain.graph_element_server_facade",
-    "triple_brain.edge_server_facade",
+    "triple_brain.graph_element",
+    "triple_brain.edge",
     "triple_brain.suggestion"
-], function (require, GraphElementServerFacade, EdgeServerFacade, Suggestion) {
+], function (require, GraphElement, Edge, Suggestion) {
     "use strict";
     var api = {};
     api.fromServerFormat = function (serverFormat) {
@@ -17,7 +17,7 @@ define([
     api.buildObjectWithUri = function (uri) {
         return {
             vertex: {
-                graphElement: GraphElementServerFacade.buildObjectWithUri(uri)
+                graphElement: GraphElement.buildObjectWithUri(uri)
             }
         };
     };
@@ -26,13 +26,13 @@ define([
         this._includedVertices = this._buildIncludedVertices();
         this._includedEdges = this._buildIncludedEdges();
         this._suggestions = this._buildSuggestions();
-        GraphElementServerFacade.Self.apply(
+        GraphElement.Self.apply(
             this
         );
         this.init(vertexServerFormat.vertex.graphElement);
     }
 
-    Self.prototype = new GraphElementServerFacade.Self;
+    Self.prototype = new GraphElement.Self;
 
     Self.prototype.getIncludedVertices = function () {
         return this._includedVertices;
@@ -81,16 +81,16 @@ define([
         if (this.vertexServerFormat.vertex.suggestions === undefined) {
             return suggestions;
         }
-        return Suggestion.fromJsonArrayOfServer(
+        return Suggestion.fromServerArray(
             this.vertexServerFormat.vertex.suggestions
         );
     };
     return api;
 
     function getEdgeServerFacade() {
-        if (undefined === EdgeServerFacade) {
-            EdgeServerFacade = require("triple_brain.edge_server_facade");
+        if (undefined === Edge) {
+            Edge = require("triple_brain.edge");
         }
-        return EdgeServerFacade;
+        return Edge;
     }
 });

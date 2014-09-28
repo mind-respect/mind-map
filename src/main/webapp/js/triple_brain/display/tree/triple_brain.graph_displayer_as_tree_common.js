@@ -4,11 +4,11 @@
 define([
         "require",
         "jquery",
-        "triple_brain.vertex_server_facade",
-        "triple_brain.edge_server_facade",
+        "triple_brain.vertex",
+        "triple_brain.edge",
         "triple_brain.group_relation"
     ],
-    function (require, $, VertexServerFacade, EdgeServerFacade, GroupRelation) {
+    function (require, $, Vertex, Edge, GroupRelation) {
         var api = {};
         api.enhancedVerticesInfo = function (serverGraph, centralVertexUri) {
             var vertices = serverGraph.vertices,
@@ -21,7 +21,7 @@ define([
             );
 
             $.each(originalEdges, function () {
-                    var edgeFacade = isGraphElementFacadeBuilt(this) ? this : EdgeServerFacade.fromServerFormat(
+                    var edgeFacade = isGraphElementFacadeBuilt(this) ? this : Edge.fromServerFormat(
                         this
                     );
                     edgesFacade.push(
@@ -95,10 +95,10 @@ define([
         return api;
 
         function getVertexServerFacade() {
-            if (VertexServerFacade === undefined) {
-                VertexServerFacade = require("triple_brain.vertex_server_facade")
+            if (Vertex === undefined) {
+                Vertex = require("triple_brain.vertex")
             }
-            return VertexServerFacade;
+            return Vertex;
         }
     }
 );

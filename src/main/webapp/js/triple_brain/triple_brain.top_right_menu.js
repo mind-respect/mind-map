@@ -6,13 +6,13 @@ define([
         "triple_brain.selection_handler",
         "triple_brain.user",
         "triple_brain.graph_displayer",
-        "triple_brain.vertex_server_facade",
+        "triple_brain.vertex",
         "triple_brain.vertex_service",
         "triple_brain.mind_map_info",
         "triple_brain.event_bus",
         "triple_brain.schema_service"
     ],
-    function ($, SelectionHandler, UserService, GraphDisplayer, VertexServerFacade, VertexService, MindMapInfo, EventBus, SchemaService) {
+    function ($, SelectionHandler, UserService, GraphDisplayer, Vertex, VertexService, MindMapInfo, EventBus, SchemaService) {
         "use strict";
         var api = {};
         api.earlyInit = function () {
@@ -103,7 +103,7 @@ define([
         function createNewConcept(event){
             event.preventDefault();
             VertexService.createVertex(function (newVertex) {
-                var serverFormatFacade = VertexServerFacade.fromServerFormat(
+                var serverFormatFacade = Vertex.fromServerFormat(
                     newVertex
                 );
                 GraphDisplayer.displayUsingCentralVertexUri(

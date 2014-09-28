@@ -4,26 +4,27 @@
 define([
     "jquery",
     "triple_brain.graph_displayer",
-    "triple_brain.ui.vertex",
+    "triple_brain.vertex_ui",
     "triple_brain.vertex_service",
     "triple_brain.graph_element_menu",
-    "triple_brain.identification_server_facade",
+    "triple_brain.identification",
     "triple_brain.user_map_autocomplete_provider",
     "triple_brain.freebase_autocomplete_provider",
     "triple_brain.graph_element_main_menu",
     "triple_brain.mind_map_info",
     "triple_brain.selection_handler",
     "triple_brain.schema_suggestion",
+    "triple_brain.suggestion_service",
     "jquery-ui",
     "jquery.triple_brain.search"
-], function ($, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, IdentificationFacade, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion) {
+], function ($, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, SuggestionService) {
     var api = {};
     api.applyAutoCompleteIdentificationToLabelInput = function (input) {
         input.tripleBrainAutocomplete({
             limitNbRequests: true,
             select: function (event, ui) {
                 var vertex = vertexOfSubHtmlComponent($(this)),
-                    identificationResource = IdentificationFacade.fromSearchResult(
+                    identificationResource = Identification.fromSearchResult(
                         ui.item
                     );
                 SchemaSuggestion.addSchemaSuggestionsIfApplicable(
@@ -122,11 +123,21 @@ define([
             var $input = $(this),
                 vertex = vertexOfSubHtmlComponent($input);
             vertex.getLabel().keyup();
-            VertexService.updateLabel(
-                vertexOfSubHtmlComponent($input),
-                $input.val()
-            );
+            if(vertex.isVertexSuggestion()){
+                SuggestionService.accept(
+                    vertex,
+                    updateLabel
+                );
+            }else{
+                updateLabel();
+            }
             $input.blur();
+            function updateLabel(){
+                VertexService.updateLabel(
+                    vertexOfSubHtmlComponent($input),
+                    $input.val()
+                );
+            }
         }).keyup(function () {
             var $input = $(this),
                 vertex = vertexOfSubHtmlComponent($input),
@@ -159,38 +170,16 @@ define([
             "<div class='in-bubble-content'>"
         ).appendTo(html);
     };
-    api.setUpClickBehavior = function(html, uiSelector){
+    api.setUpClickBehavior = function(html){
         html.on(
             "click",
-            function (event) {
-                event.stopPropagation();
-                var vertex = uiSelector.withHtml(
-                    $(this)
-                );
-                if (event.ctrlKey) {
-                    if (vertex.isSelected()) {
-                        SelectionHandler.removeVertex(vertex);
-                    } else {
-                        SelectionHandler.addVertex(vertex);
-                    }
-                } else {
-                    SelectionHandler.setToSingleVertex(
-                        vertex
-                    );
-                }
-            }
+            clickHandler
         );
         if (!MindMapInfo.isViewOnly()) {
             html.on(
                 "dblclick",
-                function (event) {
-                    event.stopPropagation();
-                    var vertex = uiSelector.withHtml(
-                        $(this)
-                    );
-                    vertex.focus();
-                }
-            )
+                dblClickHandler
+            );
         }
     };
     api.addNoteButtonNextToLabel = function (vertex) {
@@ -218,12 +207,41 @@ define([
     return api;
     function vertexOfSubHtmlComponent(htmlOfSubComponent) {
         var vertexHtml = htmlOfSubComponent.closest('.vertex')
-        return vertexHtml.hasClass("schema") ?
-            GraphDisplayer.getSchemaSelector().withHtml(
-                vertexHtml
-            ) :
-            GraphDisplayer.getVertexSelector().withHtml(
+        if(vertexHtml.hasClass("suggestion")){
+            return GraphDisplayer.getVertexSuggestionSelector().withHtml(
                 vertexHtml
             );
+        } else if(vertexHtml.hasClass("schema")){
+            return GraphDisplayer.getSchemaSelector().withHtml(
+                vertexHtml
+            );
+        } else{
+            return GraphDisplayer.getVertexSelector().withHtml(
+                vertexHtml
+            );
+        }
+    }
+    function clickHandler(event){
+        event.stopPropagation();
+        var vertex = vertexOfSubHtmlComponent(
+            $(this)
+        );
+        if (event.ctrlKey) {
+            if (vertex.isSelected()) {
+                SelectionHandler.removeVertex(vertex);
+            } else {
+                SelectionHandler.addVertex(vertex);
+            }
+        } else {
+            SelectionHandler.setToSingleVertex(
+                vertex
+            );
+        }
+    }
+    function dblClickHandler(){
+        event.stopPropagation();
+        vertexOfSubHtmlComponent(
+            $(this)
+        ).focus();
     }
 });

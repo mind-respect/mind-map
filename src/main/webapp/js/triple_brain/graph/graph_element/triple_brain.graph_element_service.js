@@ -4,9 +4,9 @@
 
 define([
     "jquery",
-    "triple_brain.identification_server_facade",
+    "triple_brain.identification",
     "triple_brain.event_bus"
-], function ($, IdentificationServerFacade, EventBus) {
+], function ($, Identification, EventBus) {
     var api = {},
         identificationBaseEventBusKey = "/event/ui/graph/identification/";
     api.addSameAs = function (graphElement, sameAs, callback) {
@@ -32,7 +32,7 @@ define([
             }
         });
         function ajaxCallBack(identificationServerFormat) {
-            var updatedIdentification = IdentificationServerFacade.fromServerFormat(
+            var updatedIdentification = Identification.fromServerFormat(
                 identificationServerFormat
             );
             updatedIdentification.setType(identification.getType());

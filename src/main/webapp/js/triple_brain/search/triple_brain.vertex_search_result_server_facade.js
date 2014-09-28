@@ -2,8 +2,8 @@
  * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
-    "triple_brain.graph_element_server_facade"
-], function (GraphElementServerFacade) {
+    "triple_brain.graph_element"
+], function (GraphElement) {
     var api = {};
     api.fromServerFormat = function (serverFormat) {
         return new Object(
@@ -12,12 +12,12 @@ define([
     };
     function Object(serverFormat) {
         this.serverFormat = serverFormat;
-        GraphElementServerFacade.Self.apply(
+        GraphElement.Self.apply(
             this
         );
         this.init(serverFormat.graphElement);
     }
-    Object.prototype = new GraphElementServerFacade.Self;
+    Object.prototype = new GraphElement.Self;
     Object.prototype.getProperties = function () {
         var properties = [];
         if(undefined === this.serverFormat.properties){
@@ -25,7 +25,7 @@ define([
         }
         $.each(this.serverFormat.properties, function(){
             properties.push(
-                GraphElementServerFacade.fromServerFormat(this)
+                GraphElement.fromServerFormat(this)
             );
         });
         return properties;

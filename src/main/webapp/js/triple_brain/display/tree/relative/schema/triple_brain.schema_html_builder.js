@@ -24,8 +24,7 @@ define([
             serverFacade.getUri()
         );
         VertexHtmlCommon.setUpClickBehavior(
-            this.html,
-            SchemaUi
+            this.html
         );
     }
     Self.prototype.create = function(htmlId){

@@ -2,8 +2,8 @@
  * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
-    "triple_brain.edge_server_facade"
-], function(EdgeServerFacade){
+    "triple_brain.edge"
+], function(Edge){
     var api = {};
     api.fromServerFormat = function(serverFormat){
         return new Object(
@@ -11,12 +11,12 @@ define([
         );
     };
     function Object(serverFormat){
-        EdgeServerFacade.Self.apply(
+        Edge.Self.apply(
             this
         );
         this.init(serverFormat.edge);
     }
-    Object.prototype = new EdgeServerFacade.Self;
+    Object.prototype = new Edge.Self;
     Object.prototype.isVertex = function(){
         return false;
     };

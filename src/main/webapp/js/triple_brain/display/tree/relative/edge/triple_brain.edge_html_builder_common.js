@@ -9,11 +9,13 @@ define([
     "triple_brain.friendly_resource_service",
     "triple_brain.selection_handler",
     "triple_brain.relative_tree_displayer_templates",
-    "triple_brain.identification_server_facade",
+    "triple_brain.identification",
     "triple_brain.user_map_autocomplete_provider",
     "triple_brain.freebase_autocomplete_provider",
-    "triple_brain.graph_element_service"
-], function (PropertyUi, TreeEdge, MindMapInfo, FriendlyResourceService, SelectionHandler, RelativeTreeTemplates, IdentificationFacade, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementService) {
+    "triple_brain.graph_element_service",
+    "triple_brain.suggestion_relation_ui",
+    "triple_brain.suggestion_service"
+], function (PropertyUi, TreeEdge, MindMapInfo, FriendlyResourceService, SelectionHandler, RelativeTreeTemplates, Identification, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementService, SuggestionRelationUi, SuggestionService) {
     "use strict";
     var api = {};
     api.buildOverlay = function () {
@@ -86,7 +88,17 @@ define([
         input.change(function () {
             var input = $(this);
             var edge = edgeFromHtml(input);
-            FriendlyResourceService.updateLabel(edge, edge.text());
+            if(edge.isRelationSuggestion()){
+                SuggestionService.accept(
+                    edge.childVertexInDisplay(),
+                    updateLabel
+                );
+            }else{
+                updateLabel();
+            }
+            function updateLabel(){
+                FriendlyResourceService.updateLabel(edge, edge.text());
+            }
             input.blur();
         });
         input.tripleBrainAutocomplete({
@@ -94,7 +106,7 @@ define([
             select: function (event, ui) {
                 var edge = edgeFromHtml($(this));
                 edge._changeToSpan();
-                var identificationResource = IdentificationFacade.fromSearchResult(
+                var identificationResource = Identification.fromSearchResult(
                     ui.item
                 );
                 GraphElementService.addSameAs(
@@ -132,15 +144,18 @@ define([
     return api;
 
     function edgeFromHtml(htmlComponent) {
-        htmlComponent = $(htmlComponent);
         var html = htmlComponent.hasClass("relation") ?
             htmlComponent : htmlComponent.closest(".relation");
-        return html.hasClass("property") ?
-            PropertyUi.withHtml(
-                html
-            ) :
-            TreeEdge.withHtml(
-                html
-            );
+        var uiFacade;
+        if (html.hasClass("suggestion")) {
+            uiFacade = SuggestionRelationUi;
+        } else if (html.hasClass("property")) {
+            uiFacade = PropertyUi;
+        } else {
+            uiFacade = TreeEdge;
+        }
+        return uiFacade.withHtml(
+            html
+        );
     }
 });

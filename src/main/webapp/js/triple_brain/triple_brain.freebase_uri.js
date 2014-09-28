@@ -1,23 +1,28 @@
 /*
  * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
-define(["triple_brain.user"], function(UserService){
-    var api = {},
-        _freebaseFormattedUserLocales;
-    api.key = "AIzaSyBHOqdqbswxnNmNb4k59ARSx-RWokLZhPA";
-    api.BASE_URL = "https://www.googleapis.com/freebase/v1";
-    api.SEARCH_URL = api.BASE_URL + "/search";
-    api.IMAGE_URL = api.BASE_URL + "/image";
-    api.DESCRIPTION_URL = api.BASE_URL + "/text";
+define(["triple_brain.user"], function (UserService) {
+    var baseUrl = "https://www.googleapis.com/freebase/v1",
+        api = {
+            key: "AIzaSyBHOqdqbswxnNmNb4k59ARSx-RWokLZhPA",
+            BASE_URL: baseUrl,
+            MQL_READ_URL: baseUrl + "/mqlread",
+            SEARCH_URL: baseUrl + "/search",
+            IMAGE_URL: baseUrl + "/image",
+            DESCRIPTION_URL: baseUrl + "/text",
+            DESCRIPTION_KEY : "/common/topic/description"
+        },
+        _freebaseFormattedUserLocales,
+        _freebaseUserLocalesArray;
     api.thumbnailImageUrlFromFreebaseId = function (freebaseId) {
         var options = {
-            key:api.key,
-            maxwidth:55,
-            errorid:"/freebase/no_image_png"
+            key: api.key,
+            maxwidth: 55,
+            errorid: "/freebase/no_image_png"
         };
         return api.IMAGE_URL + freebaseId + "?" + $.param(options);
     };
-    api.freebaseIdToURI = function (freebaseId) {
+    api.freebaseIdToUri = function (freebaseId) {
         return "http://rdf.freebase.com/rdf" + freebaseId;
     };
     api.idInFreebaseURI = function (freebaseURI) {
@@ -32,43 +37,56 @@ define(["triple_brain.user"], function(UserService){
             .toLowerCase()
             .indexOf("freebase.com") != -1;
     };
-    api.getFreebaseFormattedUserLocales = function(){
-        if(_freebaseFormattedUserLocales === undefined){
-            var formattedLocales = [];
-            var preferredLocales = UserService.authenticatedUserInCache().preferred_locales;
+    api.getFreebaseFormattedUserLocales = function () {
+        if (_freebaseFormattedUserLocales === undefined) {
+            _freebaseFormattedUserLocales = getUserFreebaseLocalesArray().join(",");
+        }
+        return _freebaseFormattedUserLocales;
+    };
+    api.getMqlReadLocale = function () {
+        return "/lang/" + getUserFreebaseLocalesArray()[0];
+    };
+    api.descriptionInFreebaseResult = function(object){
+        return object[api.DESCRIPTION_KEY] === undefined ?
+            "" : object[api.DESCRIPTION_KEY][0];
+    };
+    return api;
+    function getUserFreebaseLocalesArray() {
+        if (_freebaseUserLocalesArray === undefined) {
+            _freebaseUserLocalesArray = [];
             var freebaseAllowedLocales = [
-                "en",
-                "es",
-                "fr",
-                "de",
-                "it",
-                "pt",
-                "zh",
-                "ja",
-                "ko",
-                "ru",
-                "sv",
-                "fi",
-                "da",
-                "nl",
-                "el",
-                "ro",
-                "tr",
-                "hu"
-            ];
-            $.each(preferredLocales, function(){
+                    "en",
+                    "es",
+                    "fr",
+                    "de",
+                    "it",
+                    "pt",
+                    "zh",
+                    "ja",
+                    "ko",
+                    "ru",
+                    "sv",
+                    "fi",
+                    "da",
+                    "nl",
+                    "el",
+                    "ro",
+                    "tr",
+                    "hu"
+                ],
+                preferredLocales = UserService.authenticatedUserInCache().preferred_locales;
+            $.each(preferredLocales, function () {
                 var preferredLocale = this;
-                $.each(freebaseAllowedLocales, function(){
+                $.each(freebaseAllowedLocales, function () {
                     var freebaseAllowedLocale = this;
-                    if(preferredLocale.indexOf(freebaseAllowedLocale) !== -1){
-                        formattedLocales.push(freebaseAllowedLocale);
+                    if (preferredLocale.indexOf(freebaseAllowedLocale) !== -1) {
+                        _freebaseUserLocalesArray.push(freebaseAllowedLocale);
                         return -1;
                     }
                 });
             });
-            _freebaseFormattedUserLocales = formattedLocales.join(",");
         }
-        return _freebaseFormattedUserLocales;
-    };
-    return api;
-});
+        return _freebaseUserLocalesArray;
+    }
+})
+;

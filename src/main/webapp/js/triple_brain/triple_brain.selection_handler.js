@@ -42,6 +42,8 @@ define([
             api.setToSingleRelation,
             api.setToSingleGroupRelation,
             api.setToSingleVertex,
+            api.setToSingleRelation,
+            api.setToSingleVertex,
             api.setToSingleRelation
         );
         setter(graphElement);

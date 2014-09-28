@@ -14,8 +14,9 @@ define([
             var suggestions = [];
             $.each(searchResult.nonFormattedSearchResult.getProperties(), function(){
                 suggestions.push(
-                    Suggestion.fromSchemaProperty(
-                        this
+                    Suggestion.fromSchemaPropertyAndOriginUri(
+                        this,
+                        searchResult.uri
                     )
                 );
             });

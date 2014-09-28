@@ -9,7 +9,7 @@ define([
     "triple_brain.vertex_html_builder_view_only",
     "triple_brain.ui.graph",
     "triple_brain.relative_tree_displayer_templates",
-    "triple_brain.ui.edge",
+    "triple_brain.edge_ui",
     "triple_brain.event_bus",
     "triple_brain.id_uri",
     "triple_brain.relative_tree_vertex",
@@ -23,7 +23,7 @@ define([
     "triple_brain.relative_tree_graph_menu_handler",
     "triple_brain.graph_element_menu_handler",
     "triple_brain.keyboard_actions_handler",
-    "triple_brain.edge_server_facade",
+    "triple_brain.edge",
     "triple_brain.group_relation_html_builder",
     "triple_brain.ui.group_relation",
     "triple_brain.schema_service",
@@ -33,8 +33,14 @@ define([
     "triple_brain.schema_menu_handler",
     "triple_brain.property_html_builder",
     "triple_brain.property_menu_handler",
-    "triple_brain.ui.property"
-], function ($, GraphService, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, RelativeTreeVertexMenuHandler, GroupRelationMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler, KeyboardActionsHandler, EdgeServerFacade, GroupRelationHtmlBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaHtmlBuilder, SchemaUi, SchemaMenuHandler, PropertyHtmlBuilder, PropertyMenuHandler, PropertyUi) {
+    "triple_brain.ui.property",
+    "triple_brain.suggestion_bubble_html_builder",
+    "triple_brain.suggestion_relation_builder",
+    "triple_brain.suggestion_bubble_ui",
+    "triple_brain.suggestion_relation_ui",
+    "triple_brain.suggestion_bubble_menu_handler",
+    "triple_brain.suggestion_relation_menu_handler"
+], function ($, GraphService, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, RelativeTreeVertexMenuHandler, GroupRelationMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler, KeyboardActionsHandler, Edge, GroupRelationHtmlBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaHtmlBuilder, SchemaUi, SchemaMenuHandler, PropertyHtmlBuilder, PropertyMenuHandler, PropertyUi, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SuggestionBubbleUi, SuggestionRelationUi, SuggestionBubbleMenuHandler, SuggestionRelationMenuHandler) {
     KeyboardActionsHandler.init();
     var api = {};
     api.displayForVertexWithUri = function (centralVertexUri, callback, errorCallback) {
@@ -56,7 +62,7 @@ define([
             new TreeMaker().makeForSchema(
                 SchemaServerFacade.fromServerFormat(schemaFromServer)
             );
-            if(callback !== undefined){
+            if (callback !== undefined) {
                 callback();
             }
         });
@@ -104,7 +110,7 @@ define([
                         var filteredEdges = {};
                         $.each(serverGraph.edges, function () {
                             var edge = this;
-                            var edgeFacade = EdgeServerFacade.fromServerFormat(
+                            var edgeFacade = Edge.fromServerFormat(
                                 edge
                             );
                             var sourceAndDestinationId = [
@@ -149,9 +155,12 @@ define([
     api.name = function () {
         return "relative_tree";
     };
-    api.addVertex = function (newVertex, parentVertex) {
+    api.addVertex = function (newVertex, parentVertex, vertexHtmlBuilder) {
+        if (vertexHtmlBuilder === undefined) {
+            vertexHtmlBuilder = VertexHtmlBuilder
+        }
         var treeMaker = new TreeMaker(
-            VertexHtmlBuilder
+            vertexHtmlBuilder
         );
         var container,
             isCenterVertex = parentVertex.isVertex() && parentVertex.isCenterVertex();
@@ -175,7 +184,22 @@ define([
             GraphUi.generateBubbleHtmlId()
         );
     };
-    api.addProperty = function(property){
+    api.showSuggestions = function (vertex) {
+        $.each(vertex.suggestions(), function () {
+            var serverFormat = this,
+                suggestionBubble = api.addVertex(
+                    serverFormat,
+                    vertex,
+                    SuggestionBubbleHtmlBuilder
+                );
+            SuggestionRelationBuilder.get(
+                serverFormat,
+                vertex,
+                suggestionBubble
+            ).create();
+        });
+    };
+    api.addProperty = function (property) {
         var shouldAddToLeft = shouldAddLeft();
         property.isLeftOriented = shouldAddToLeft;
         var container = shouldAddToLeft ?
@@ -224,7 +248,7 @@ define([
     api.getSchemaMenuHandler = function () {
         return SchemaMenuHandler;
     };
-    api.getPropertyMenuHandler = function(){
+    api.getPropertyMenuHandler = function () {
         return PropertyMenuHandler;
     };
     api.getGraphElementMenuHandler = function () {
@@ -232,6 +256,18 @@ define([
     };
     api.getGraphMenuHandler = function () {
         return RelativeTreeGraphMenuHandler;
+    };
+    api.getVertexSuggestionMenuHandler = function(){
+        return SuggestionBubbleMenuHandler;
+    };
+    api.getRelationSuggestionMenuHandler = function(){
+        return SuggestionRelationMenuHandler;
+    };
+    api.getVertexSuggestionSelector = function () {
+        return SuggestionBubbleUi;
+    };
+    api.getRelationSuggestionSelector = function () {
+        return SuggestionRelationUi;
     };
     api.buildIncludedGraphElementsView = function (vertex, container) {
         var serverGraph = {

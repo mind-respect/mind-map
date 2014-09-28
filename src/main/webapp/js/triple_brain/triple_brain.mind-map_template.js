@@ -36,7 +36,7 @@ define([
         );
         t.add(
             'identification_textfield',
-            '<input type="text" data-i18n="[placeholder]graph_element.menu.identification.placeholder">'
+            '<input type="text" data-i18n="[placeholder]graph_element.menu.identification.placeholder" class="add-identification">'
         );
 
         t.add(

@@ -82,6 +82,14 @@ define([
                 );
             });
         };
+        api.onlyShowButtonsIfApplicable = function(clickHandler, graphElement){
+            api.visitButtons(function (button) {
+                button.showOnlyIfApplicable(
+                    clickHandler,
+                    graphElement
+                );
+            });
+        };
         EventBus.subscribe("/event/ui/selection/changed", selectionChangedHandler);
         return api;
 
@@ -93,12 +101,10 @@ define([
             var selected = 1 === selectionInfo.getNbSelected() ?
                 selectionInfo.getSingleElement() :
                 selectionInfo.getSelectedElements();
-            api.visitButtons(function (button) {
-                button.showOnlyIfApplicable(
-                    clickHandler,
-                    selected
-                );
-            });
+            api.onlyShowButtonsIfApplicable(
+                clickHandler,
+                selected
+            );
         }
 
         function getButtonsHtml() {

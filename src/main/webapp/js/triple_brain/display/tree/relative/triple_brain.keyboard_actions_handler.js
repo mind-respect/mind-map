@@ -8,9 +8,9 @@ define([
     "triple_brain.relative_tree_center_vertex",
     "triple_brain.vertex_service",
     "triple_brain.ui.utils",
-    "triple_brain.ui.identification_menu",
+    "triple_brain.identification_menu",
     "triple_brain.mind_map_info",
-    "triple_brain.ui.graph_element"
+    "triple_brain.graph_element_ui"
 ], function ($, EventBus, SelectionHandler, RelativeTreeCenterVertex, VertexService, UiUtils, IdentificationMenu, MindMapInfo, GraphElementUi) {
     "use strict";
     var api = {},
@@ -152,7 +152,7 @@ define([
     }
 
     function leftAction(selectedElement) {
-        if (selectedElement.isRelation()) {
+        if (selectedElement.isRelationOrSuggestion()) {
             applyPressedArrowActionOnRelation(selectedElement);
             return;
         }
@@ -178,7 +178,7 @@ define([
     }
 
     function rightAction(selectedElement) {
-        if (selectedElement.isRelation()) {
+        if (selectedElement.isRelationOrSuggestion()) {
             applyPressedArrowActionOnRelation(selectedElement);
             return;
         }
@@ -204,7 +204,7 @@ define([
     }
 
     function upAction(selectedElement) {
-        if (selectedElement.isRelation()) {
+        if (selectedElement.isRelationOrSuggestion()) {
             applyPressedArrowActionOnRelation(selectedElement);
             return;
         }
@@ -217,7 +217,7 @@ define([
     }
 
     function downAction(selectedElement) {
-        if (selectedElement.isRelation()) {
+        if (selectedElement.isRelationOrSuggestion()) {
             applyPressedArrowActionOnRelation(selectedElement);
             return;
         }

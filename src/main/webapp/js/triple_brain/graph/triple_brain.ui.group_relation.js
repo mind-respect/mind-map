@@ -6,7 +6,7 @@ define([
     "triple_brain.event_bus",
     "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
     "triple_brain.bubble",
-    "triple_brain.ui.graph_element",
+    "triple_brain.graph_element_ui",
     "twitter_bootstrap"
 ], function (GraphDisplayer, EventBus, PropertiesIndicator, Bubble, GraphElementUi) {
     "use strict";
@@ -28,9 +28,6 @@ define([
         this.bubble = Bubble.withHtmlFacade(this);
     }
     Self.prototype = new GraphElementUi.Self;
-    Self.prototype.getHtml = function () {
-        return this.html;
-    };
     Self.prototype.getGraphElementType = function () {
         return GraphElementUi.Types.GroupRelation;
     };

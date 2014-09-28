@@ -155,7 +155,8 @@
         "connectTo" : "Relier à une bulle existante",
         "makePrivate" : "Rendre privé",
         "makePublic" : "Rendre public",
-        "remove" : "Effacer"
+        "remove" : "Effacer",
+        "accept": "Accepter"
     },
     "hidden_properties_tooltip" : "Expandre (e)"
 }

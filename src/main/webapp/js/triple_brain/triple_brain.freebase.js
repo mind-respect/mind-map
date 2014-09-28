@@ -10,15 +10,15 @@ define([
         "triple_brain.graph_displayer",
         "triple_brain.vertex_service",
         "triple_brain.suggestion",
-        "triple_brain.identification_server_facade",
+        "triple_brain.identification",
         "triple_brain.image",
         "triple_brain.graph_element_service",
         "jquery.url"
     ],
-    function (require, $, FreebaseUri, EventBus, GraphDisplayer, VertexService, Suggestion, IdentificationFacade, Image, GraphElementService) {
+    function (require, $, FreebaseUri, EventBus, GraphDisplayer, VertexService, Suggestion, Identification, Image, GraphElementService) {
         var api = {};
         api.handleIdentificationToServer = function (vertex, freebaseSuggestion, successCallBack) {
-            var externalResource = IdentificationFacade.fromFreebaseSuggestion(
+            var externalResource = Identification.fromFreebaseSuggestion(
                 freebaseSuggestion
             );
             var typeId = getTypeId();
@@ -50,18 +50,22 @@ define([
                 properties: [
                     {   id: null,
                         name: null,
+                        "/common/topic/description": [],
                         expected_type: {
                             id: null,
-                            name: null
+                            name: null,
+                            "/common/topic/description": []
                         }
                     }
                 ]
             };
             $.ajax({
                 type: 'GET',
-                url: 'https://www.googleapis.com/freebase/v1/mqlread?query=' + JSON.stringify(
+                url: FreebaseUri.MQL_READ_URL + "?query=" + JSON.stringify(
                     propertiesOfTypeQuery
-                ),
+                ) +
+                    "&lang=" + FreebaseUri.getMqlReadLocale() +
+                    "&key=" + FreebaseUri.key,
                 dataType: 'jsonp'
             }).success(function (result) {
                 var freebaseProperties = [];
@@ -72,9 +76,9 @@ define([
                 $.each(freebaseProperties, function () {
                     var freebaseProperty = this;
                     suggestions.push(
-                        Suggestion.fromFreebaseSuggestionAndTypeUri(
+                        Suggestion.fromFreebaseSuggestionAndOriginUri(
                             freebaseProperty,
-                            FreebaseUri.freebaseIdToURI(
+                            FreebaseUri.freebaseIdToUri(
                                 result.result.id
                             )
                         )
@@ -175,7 +179,7 @@ define([
                 return;
             }
             var identificationId = FreebaseUri.idInFreebaseURI(identificationUri);
-            if(graphElement.isVertex()){
+            if (graphElement.isVertex()) {
                 api.listPropertiesOfFreebaseTypeId(
                     graphElement,
                     identificationId
@@ -202,7 +206,7 @@ define([
                     );
                     vertex.triggerChange();
                     var searchResult = ui.item;
-                    var identificationResource = IdentificationFacade.withUriLabelAndDescription(
+                    var identificationResource = Identification.withUriLabelAndDescription(
                         searchResult.uri,
                         searchResult.label,
                         searchResult.description
@@ -259,7 +263,7 @@ define([
                     );
                     vertex.triggerChange();
                     var searchResult = ui.item;
-                    var identificationResource = IdentificationFacade.withUriLabelAndDescription(
+                    var identificationResource = Identification.withUriLabelAndDescription(
                         searchResult.uri,
                         searchResult.label,
                         searchResult.description

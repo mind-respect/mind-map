@@ -4,7 +4,7 @@
 define([
     "jquery",
     "triple_brain.graph_displayer",
-    "triple_brain.ui.graph_element"
+    "triple_brain.graph_element_ui"
 ], function ($, GraphDisplayer, GraphElementUi) {
     var api = {};
     api.Object = function (html) {

@@ -7,12 +7,11 @@ define([
         "triple_brain.ui.graph",
         "triple_brain.event_bus",
         "triple_brain.graph_displayer",
-        "triple_brain.ui.identified_graph_element",
+        "triple_brain.identified_graph_element_ui",
         "triple_brain.edge_service",
         "triple_brain.graph_element_button",
         "triple_brain.selection_handler",
-        "triple_brain.ui.graph_element"
-
+        "triple_brain.graph_element_ui"
     ],
     function ($, GraphUi, EventBus, GraphDisplayer, IdentifiedGraphElementUi, EdgeService, GraphElementButton, SelectionHandler, GraphElementUi) {
         "use strict";
@@ -79,17 +78,6 @@ define([
         api.Object.getMenuButtonsHtml = function () {
             return this.getMenuHtml().find(
                 ">button"
-            );
-        };
-        api.Object.prototype.setUri = function (uri) {
-            this.html.data(
-                "uri",
-                uri
-            );
-        };
-        api.Object.prototype.getUri = function () {
-            return this.html.data(
-                "uri"
             );
         };
         api.Object.prototype.getGraphElementType = function () {

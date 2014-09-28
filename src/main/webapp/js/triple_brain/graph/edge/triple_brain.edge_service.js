@@ -9,10 +9,10 @@ define([
         "triple_brain.id_uri",
         "triple_brain.user",
         "triple_brain.graph_element_service",
-        "triple_brain.edge_server_facade",
+        "triple_brain.edge",
         "triple_brain.friendly_resource_service"
     ],
-    function (require, $, EventBus, IdUri, UserService, GraphElementService, EdgeServerFacade, FriendlyResourceService) {
+    function (require, $, EventBus, IdUri, UserService, GraphElementService, Edge, FriendlyResourceService) {
         var api = {};
         api.add = function (sourceVertex, destinationVertex, callback) {
             add(
@@ -128,10 +128,10 @@ define([
         }
 
         function getEdgeServerFacade() {
-            if (undefined === EdgeServerFacade) {
-                EdgeServerFacade = require("triple_brain.edge_server_facade");
+            if (undefined === Edge) {
+                Edge = require("triple_brain.edge");
             }
-            return EdgeServerFacade;
+            return Edge;
         }
     }
 );

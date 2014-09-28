@@ -3,9 +3,9 @@
  */
 define([
         "jquery",
-        "triple_brain.ui.vertex",
+        "triple_brain.vertex_ui",
         "triple_brain.event_bus",
-        "triple_brain.ui.edge",
+        "triple_brain.edge_ui",
         "triple_brain.object_utils",
         "triple_brain.bubble",
         "triple_brain.ui.triple",
@@ -65,8 +65,11 @@ define([
         };
         api.Object.prototype.getRelationWithParent = function () {
             return EdgeUi.withHtml(
-                this.html.find("> .in-bubble-content > .relation")
+                this.getRelationWithParentHtml()
             );
+        };
+        api.Object.prototype.getRelationWithParentHtml = function () {
+            return this.html.find("> .in-bubble-content > .relation");
         };
         api.Object.prototype.applyToOtherInstances = function (apply) {
             $.each(this.getOtherInstances(), function () {

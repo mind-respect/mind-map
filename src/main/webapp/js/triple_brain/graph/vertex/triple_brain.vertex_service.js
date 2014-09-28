@@ -143,7 +143,7 @@ define([
                 url: vertex.getUri() + '/suggestions',
                 dataType: 'json'
             }).success(function (jsonSuggestions) {
-                var suggestions = getSuggestion().fromJsonArrayOfServer(
+                var suggestions = getSuggestion().fromServerArray(
                     jsonSuggestions
                 );
                 vertex.setSuggestions(
@@ -233,7 +233,6 @@ define([
             );
         };
         return api;
-
         function setCollectionPrivacy(isPublic, vertices, callback) {
             var typeQueryParam = isPublic ? "public" : "private";
             var verticesUri = [];

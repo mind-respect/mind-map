@@ -82,8 +82,7 @@ define([
                 serverFacade.getUri()
             );
             VertexHtmlCommon.setUpClickBehavior(
-                this.html,
-                RelativeTreeVertex
+                this.html
             );
         }
 
@@ -181,20 +180,20 @@ define([
         };
 
         function onMouseOver() {
-            var vertex = vertexOfSubHtmlComponent(this);
+            var vertex = vertexOfSubHtmlComponent($(this));
             RelativeTreeVertex.setVertexMouseOver(vertex);
             vertex.makeItHighProfile();
         }
 
         function onMouseOut() {
-            var vertex = vertexOfSubHtmlComponent(this);
+            var vertex = vertexOfSubHtmlComponent($(this));
             RelativeTreeVertex.unsetVertexMouseOver();
             vertex.makeItLowProfile();
         }
 
         function vertexOfSubHtmlComponent(htmlOfSubComponent) {
             return RelativeTreeVertex.withHtml(
-                $(htmlOfSubComponent).closest('.vertex')
+                htmlOfSubComponent.closest('.vertex')
             );
         }
 

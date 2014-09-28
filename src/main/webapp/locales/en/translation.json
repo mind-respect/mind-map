@@ -155,7 +155,8 @@
         "connectTo" : "Connect to existing bubble",
         "makePrivate" : "Make private",
         "makePublic" : "Make public",
-        "remove" : "Delete"
+        "remove" : "Delete",
+        "accept": "Accept"
     },
     "hidden_properties_tooltip" : "Expand (e)"
 }

@@ -12,9 +12,22 @@ define([
     };
     api.buildObjectWithUri = function (uri) {
         return {
-            uri : uri,
+            uri: uri,
             label: ""
         };
+    };
+    api.buildObjectWithUriAndLabel = function (uri, label) {
+        return {
+            uri: uri,
+            label: label
+        };
+    };
+    api.buildObjectWithUriLabelAndDescription = function (uri, label, description) {
+        return {
+            uri: uri,
+            label: label,
+            comment: description
+        }
     };
     api.withUri = function (uri) {
         return api.withUriAndLabel(
@@ -23,38 +36,26 @@ define([
         );
     };
     api.withUriAndLabel = function (uri, label) {
-        return api.fromServerFormat({
-                uri : uri,
-                label: label
-            }
+        return api.fromServerFormat(
+            api.buildObjectWithUriAndLabel(uri, label)
         );
-    };
-    api.withLabel = function(label){
-        return api.fromServerFormat({
-            label : label
-        });
-    };
-    api.withLabelAndDescription = function(label, description){
-        return api.fromServerFormat({
-            label : label,
-            description: description
-        });
     };
     api.withUriLabelAndDescription = function (uri, label, description) {
-        return api.fromServerFormat({
-                uri : uri,
-                label: label,
-                comment: description
-            }
+        return api.fromServerFormat(
+            api.buildObjectWithUriLabelAndDescription(uri, label, description)
         );
     };
-    api.Self = function () {};
+    api.Self = function () {
+    };
 
-    api.Self.prototype.init = function(friendlyResourceServerFormat){
+    api.Self.prototype.init = function (friendlyResourceServerFormat) {
         this.friendlyResourceServerFormat = friendlyResourceServerFormat;
         this._images = this._buildImages();
-        if(friendlyResourceServerFormat.comment === undefined){
+        if (friendlyResourceServerFormat.comment === undefined) {
             friendlyResourceServerFormat.comment = "";
+        }
+        if (friendlyResourceServerFormat.label === undefined) {
+            this.friendlyResourceServerFormat.label = "";
         }
         return this;
     };
@@ -62,25 +63,28 @@ define([
     api.Self.prototype.getLabel = function () {
         return this.friendlyResourceServerFormat.label;
     };
+    api.Self.prototype.isLabelEmpty = function () {
+        return this.getLabel().trim() === "";
+    };
     api.Self.prototype.getComment = function () {
         return this.friendlyResourceServerFormat.comment;
     };
-    api.Self.prototype.setComment = function(comment){
+    api.Self.prototype.setComment = function (comment) {
         return this.friendlyResourceServerFormat.comment = comment;
     };
-    api.Self.prototype.hasComment = function(){
+    api.Self.prototype.hasComment = function () {
         return this.friendlyResourceServerFormat.comment.length > 0;
     };
-    api.Self.prototype.addImage = function(image){
+    api.Self.prototype.addImage = function (image) {
         this._images.push(image);
     };
     api.Self.prototype.getImages = function () {
         return this._images;
     };
-    api.Self.prototype.hasImages = function(){
+    api.Self.prototype.hasImages = function () {
         return this._images.length > 0;
     };
-    api.Self.prototype.setUri = function(uri){
+    api.Self.prototype.setUri = function (uri) {
         this.friendlyResourceServerFormat.uri = uri;
     };
     api.Self.prototype.getUri = function () {
@@ -95,7 +99,7 @@ define([
     api.Self.prototype.getServerFormat = function () {
         return this.friendlyResourceServerFormat
     };
-    api.Self.prototype._buildImages = function(){
+    api.Self.prototype._buildImages = function () {
         return undefined === this.friendlyResourceServerFormat.images ?
             [] :
             Image.arrayFromServerJson(

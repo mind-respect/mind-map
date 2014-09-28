@@ -2,9 +2,9 @@
  * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
-    "triple_brain.graph_element_server_facade",
-    "triple_brain.vertex_server_facade"
-], function (GraphElementServerFacade, VertexServerFacade) {
+    "triple_brain.graph_element",
+    "triple_brain.vertex"
+], function (GraphElement, Vertex) {
     "use strict";
     var api = {};
     api.fromServerFormat = function (serverFormat) {
@@ -12,20 +12,20 @@ define([
     };
     api.buildObjectWithUriOfSelfSourceAndDestinationVertex = function (uri, sourceVertexUri, destinationVertexUri) {
         return {
-            graphElement: GraphElementServerFacade.buildObjectWithUri(
+            graphElement: GraphElement.buildObjectWithUri(
                 uri
             ),
-            sourceVertex: VertexServerFacade.buildObjectWithUri(
+            sourceVertex: Vertex.buildObjectWithUri(
                 sourceVertexUri
             ),
-            destinationVertex: VertexServerFacade.buildObjectWithUri(
+            destinationVertex: Vertex.buildObjectWithUri(
                 destinationVertexUri
             )
         };
     };
     api.Self = function () {};
 
-    api.Self.prototype = new GraphElementServerFacade.Self;
+    api.Self.prototype = new GraphElement.Self;
 
     api.Self.prototype.init = function(edgeServerFormat){
         if (edgeServerFormat.sourceVertex !== undefined) {
@@ -38,10 +38,10 @@ define([
                 edgeServerFormat.destinationVertex
             );
         }
-        GraphElementServerFacade.Self.apply(
+        GraphElement.Self.apply(
             this
         );
-        GraphElementServerFacade.Self.prototype.init.call(
+        GraphElement.Self.prototype.init.call(
             this,
             edgeServerFormat.graphElement
         );
@@ -56,10 +56,10 @@ define([
     };
 
     function getVertexServerFacade() {
-        if (undefined === VertexServerFacade) {
-            VertexServerFacade = require("triple_brain.vertex_server_facade");
+        if (undefined === Vertex) {
+            Vertex = require("triple_brain.vertex");
         }
-        return VertexServerFacade;
+        return Vertex;
     }
     return api;
 });

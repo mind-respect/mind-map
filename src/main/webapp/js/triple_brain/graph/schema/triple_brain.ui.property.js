@@ -3,7 +3,7 @@
  */
 define([
     "triple_brain.tree_edge",
-    "triple_brain.ui.graph_element",
+    "triple_brain.graph_element_ui",
     "triple_brain.bubble"
 ], function(TreeEdge, GraphElementUi, Bubble){
     "use strict";

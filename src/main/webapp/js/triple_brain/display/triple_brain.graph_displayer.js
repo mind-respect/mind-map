@@ -51,6 +51,11 @@ define([
         api.addVertex = function (newVertex, parentVertex) {
             return _implementation.addVertex(newVertex, parentVertex);
         };
+
+        api.showSuggestions = function (vertex) {
+            return _implementation.showSuggestions(vertex);
+        };
+
         api.addProperty = function(property){
             return _implementation.addProperty(
                 property
@@ -93,6 +98,12 @@ define([
         api.getGroupRelationSelector = function () {
             return _implementation.getGroupRelationSelector();
         };
+        api.getVertexSuggestionSelector = function () {
+            return _implementation.getVertexSuggestionSelector();
+        };
+        api.getRelationSuggestionSelector = function () {
+            return _implementation.getRelationSuggestionSelector();
+        };
         api.canAddChildTree = function () {
             return _implementation.canAddChildTree();
         };
@@ -122,6 +133,12 @@ define([
         };
         api.getPropertyMenuHandler = function () {
             return _implementation.getPropertyMenuHandler();
+        };
+        api.getVertexSuggestionMenuHandler = function(){
+            return _implementation.getVertexSuggestionMenuHandler();
+        };
+        api.getRelationSuggestionMenuHandler = function(){
+            return _implementation.getRelationSuggestionMenuHandler();
         };
         api.getGraphElementMenuHandler = function () {
             return _implementation.getGraphElementMenuHandler();

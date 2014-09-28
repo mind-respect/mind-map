@@ -2,9 +2,9 @@
  * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
-    "triple_brain.friendly_resource_server_facade",
-    "triple_brain.identification_server_facade"
-], function (FriendlyResourceFacade, IdentificationServerFacade) {
+    "triple_brain.friendly_resource",
+    "triple_brain.identification"
+], function (FriendlyResource, Identification) {
     "use strict";
     var api = {};
     api.fromServerFormat = function (serverFormat) {
@@ -21,24 +21,24 @@ define([
     };
     api.buildObjectWithUri = function(uri){
         return {
-            friendlyResource : FriendlyResourceFacade.buildObjectWithUri(
+            friendlyResource : FriendlyResource.buildObjectWithUri(
                 uri
             )
         };
     };
     api.Self = function () {};
 
-    api.Self.prototype = new FriendlyResourceFacade.Self;
+    api.Self.prototype = new FriendlyResource.Self;
 
     api.Self.prototype.init = function(graphElementServerFormat){
         this.graphElementServerFormat = graphElementServerFormat;
         this._types = this._buildTypes();
         this._sameAs = this._buildSameAs();
         this._genericIdentifications = this._buildGenericIdentifications();
-        FriendlyResourceFacade.Self.apply(
+        FriendlyResource.Self.apply(
             this
         );
-        FriendlyResourceFacade.Self.prototype.init.call(
+        FriendlyResource.Self.prototype.init.call(
             this,
             graphElementServerFormat.friendlyResource
         );
@@ -76,7 +76,7 @@ define([
         }
         $.each(this.graphElementServerFormat.additionalTypes, function () {
             types.push(
-                IdentificationServerFacade.fromServerFormat(
+                Identification.fromServerFormat(
                     this
                 )
             );
@@ -91,7 +91,7 @@ define([
         }
         $.each(this.graphElementServerFormat.sameAs, function () {
             sameAs.push(
-                IdentificationServerFacade.fromServerFormat(
+                Identification.fromServerFormat(
                     this
                 )
             );
@@ -106,7 +106,7 @@ define([
         }
         $.each(this.graphElementServerFormat.genericIdentifications, function () {
             genericIdentifications.push(
-                IdentificationServerFacade.fromServerFormat(
+                Identification.fromServerFormat(
                     this
                 )
             );

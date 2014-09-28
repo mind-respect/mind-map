@@ -3,15 +3,18 @@
  */
 define([
     "triple_brain.graph_displayer",
+    "triple_brain.graph_element_main_menu",
     "jquery.cursor-at-end"
-], function (GraphDisplayer) {
+], function (GraphDisplayer, GraphElementMainMenu) {
     var api = {};
     api.Types = {
         Vertex: "vertex",
         Relation: "relation",
         GroupRelation: "group_relation",
         Schema: "schema",
-        Property: "property"
+        Property: "property",
+        VertexSuggestion: "vertex_suggestion",
+        RelationSuggestion: "relation_suggestion"
     };
     var menuHandlerGetters = {},
         selectors = {};
@@ -19,7 +22,7 @@ define([
     initSelectors();
     api.Self = function () {
     };
-    api.Self.prototype.getId = function(){
+    api.Self.prototype.getId = function () {
         return this.getHtml().attr("id");
     };
     api.Self.prototype.isVertex = function () {
@@ -37,8 +40,17 @@ define([
     api.Self.prototype.isProperty = function () {
         return this.getGraphElementType() === api.Types.Property;
     };
+    api.Self.prototype.isVertexSuggestion = function () {
+        return this.getGraphElementType() === api.Types.VertexSuggestion;
+    };
+    api.Self.prototype.isRelationSuggestion = function () {
+        return this.getGraphElementType() === api.Types.RelationSuggestion;
+    };
+    api.Self.prototype.isRelationOrSuggestion = function () {
+        return this.isRelation() || this.isRelationSuggestion();
+    };
     api.Self.prototype.isBubble = function () {
-        return !this.isRelation();
+        return !this.isRelation() && !this.isRelationSuggestion();
     };
     api.Self.prototype.getSimilarButtonHtml = function (button) {
         return this.getMenuHtml().find(
@@ -61,24 +73,24 @@ define([
             this.getGraphElementType()
             ]();
     };
-    api.Self.prototype.getInputSizer = function(){
+    api.Self.prototype.getInputSizer = function () {
         return this.html.find(".input-size");
     };
-    api.Self.prototype.adjustWidthToNumberOfChars = function(){
+    api.Self.prototype.adjustWidthToNumberOfChars = function () {
         var text = this.text().trim(),
             label = this.getLabel();
-        if(!label.is("input")){
+        if (!label.is("input")) {
             return;
         }
-        if(text.length === 0){
+        if (text.length === 0) {
             text = label.attr("placeholder");
         }
         var biggestLetter = "M";
         //using 'text.replace(/./g, biggestLetter)' because somehow spaces and some letters don't apply as much width
         this.getInputSizer().text(text.replace(/./g, biggestLetter));
     };
-    api.Self.prototype.rightActionForType = function(vertexAction, edgeAction, groupRelationAction, schemaAction, propertyAction){
-        switch(this.getGraphElementType()){
+    api.Self.prototype.rightActionForType = function (vertexAction, edgeAction, groupRelationAction, schemaAction, propertyAction, suggestionVertexAction, suggestionRelationAction){
+        switch (this.getGraphElementType()) {
             case api.Types.Vertex :
                 return vertexAction;
             case api.Types.Relation :
@@ -89,6 +101,10 @@ define([
                 return schemaAction;
             case api.Types.Property :
                 return propertyAction;
+            case api.Types.VertexSuggestion :
+                return suggestionVertexAction;
+            case api.Types.RelationSuggestion :
+                return suggestionRelationAction;
         }
     };
     api.Self.prototype.focus = function () {
@@ -97,11 +113,42 @@ define([
     api.Self.prototype.centerOnScreen = function () {
         this.getHtml().centerOnScreen();
     };
-    api.Self.prototype.isInTypes = function(types){
+    api.Self.prototype.isInTypes = function (types) {
         return $.inArray(
             this.getGraphElementType(),
             types
         ) !== -1;
+    };
+    api.Self.prototype.getHtml = function () {
+        return this.html;
+    };
+    api.Self.prototype.rebuildMenuButtons = function () {
+        var container = this.getMenuHtml().empty();
+        GraphElementMainMenu.addRelevantButtonsInMenu(
+            container,
+            this.getMenuHandler().forSingle()
+        );
+        this.onlyShowButtonsIfApplicable();
+    };
+    api.Self.prototype.onlyShowButtonsIfApplicable = function(){
+        GraphElementMainMenu.onlyShowButtonsIfApplicable(
+            this.getMenuHandler().forSingle(),
+            this
+        );
+    };
+    api.Self.prototype.isSuggestion = function(){
+        return this.isVertexSuggestion() || this.isRelationOrSuggestion();
+    };
+    api.Self.prototype.setUri = function (uri) {
+        this.html.data(
+            "uri",
+            uri
+        );
+    };
+    api.Self.prototype.getUri = function () {
+        return this.html.data(
+            "uri"
+        );
     };
     return api;
     function initMenuHandlerGetters() {
@@ -110,12 +157,17 @@ define([
         menuHandlerGetters[api.Types.GroupRelation] = GraphDisplayer.getGroupRelationMenuHandler;
         menuHandlerGetters[api.Types.Schema] = GraphDisplayer.getSchemaMenuHandler;
         menuHandlerGetters[api.Types.Property] = GraphDisplayer.getPropertyMenuHandler;
+        menuHandlerGetters[api.Types.VertexSuggestion] = GraphDisplayer.getVertexSuggestionMenuHandler;
+        menuHandlerGetters[api.Types.RelationSuggestion] = GraphDisplayer.getRelationSuggestionMenuHandler;
     }
+
     function initSelectors() {
         selectors[api.Types.Vertex] = GraphDisplayer.getVertexSelector;
         selectors[api.Types.Relation] = GraphDisplayer.getEdgeSelector;
         selectors[api.Types.GroupRelation] = GraphDisplayer.getGroupRelationSelector;
         selectors[api.Types.Schema] = GraphDisplayer.getSchemaSelector;
         selectors[api.Types.Property] = GraphDisplayer.getPropertySelector;
+        selectors[api.Types.VertexSuggestion] = GraphDisplayer.getVertexSuggestionSelector;
+        selectors[api.Types.RelationSuggestion] = GraphDisplayer.getRelationSuggestionSelector;
     }
 });

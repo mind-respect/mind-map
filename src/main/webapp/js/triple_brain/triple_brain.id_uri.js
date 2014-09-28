@@ -32,6 +32,15 @@ define([
         api.isSchemaUri = function(uri){
             return uri.indexOf("/schema") !== -1;
         };
+        api.isPropertyUri = function(uri){
+            return uri.indexOf("/property") !== -1;
+        };
+        api.schemaUriOfProperty = function(propertyUri){
+            return propertyUri.substr(
+                0,
+                propertyUri.indexOf("/property")
+            );
+        };
         api.uriFromGraphElementId = function (id) {
             var username = UserService.authenticatedUserInCache().user_name;
             return "/users" + username + "/" + id;

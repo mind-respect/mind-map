@@ -3,7 +3,7 @@
  */
 define([
     "jquery",
-    "triple_brain.ui.identification_menu",
+    "triple_brain.identification_menu",
     "triple_brain.edge_service",
     "triple_brain.mind_map_info"
 ], function ($, IdentificationMenu, EdgeService, MindMapInfo) {

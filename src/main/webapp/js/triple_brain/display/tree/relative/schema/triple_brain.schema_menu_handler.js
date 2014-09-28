@@ -4,11 +4,11 @@
 define([
         "triple_brain.schema_service",
         "triple_brain.graph_displayer",
-        "triple_brain.graph_element_server_facade",
+        "triple_brain.graph_element",
         "triple_brain.vertex_menu_handler_common",
         "triple_brain.mind_map_info"
     ],
-    function (SchemaService, GraphDisplayer, GraphElementServerFacade, VertexMenuHandlerCommon, MindMapInfo) {
+    function (SchemaService, GraphDisplayer, GraphElement, VertexMenuHandlerCommon, MindMapInfo) {
         "use strict";
         var api = {},
             forSingle = {},
@@ -30,7 +30,7 @@ define([
                 schema,
                 function(propertyUri){
                     GraphDisplayer.addProperty(
-                        GraphElementServerFacade.withUri(
+                        GraphElement.withUri(
                             propertyUri
                         )
                     );

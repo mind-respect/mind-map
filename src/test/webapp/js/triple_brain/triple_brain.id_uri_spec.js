@@ -49,5 +49,14 @@ define([
                 "/service/users/foo/non_owned/schema/40e520f2-be43-4de8-8843-cf9c2e6dff92"
             );
         });
+        it("can get schema uri out of a schema property uri", function () {
+            expect(
+                IdUri.schemaUriOfProperty(
+                    "/service/users/oasivdj/graph/schema/d15066c1-b438-42fe-a340-e939560be6ae/property/ca7255c8-52b8-4bef-b18c-441ee24d763f"
+                )
+            ).toBe(
+                "/service/users/oasivdj/graph/schema/d15066c1-b438-42fe-a340-e939560be6ae"
+            );
+        });
     });
 });

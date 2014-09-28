@@ -8,18 +8,17 @@ define([
     "triple_brain.relative_tree_vertex",
     "triple_brain.ui.utils",
     "triple_brain.ui.triple",
-    "triple_brain.ui.identification_menu",
+    "triple_brain.identification_menu",
     "triple_brain.graph_displayer",
     "triple_brain.vertex_menu_handler_common",
     "triple_brain.delete_menu",
-    "triple_brain.ui.edge",
+    "triple_brain.edge_ui",
     "triple_brain.image_menu",
     "triple_brain.link_to_far_vertex_menu",
-    "triple_brain.ui.suggestion_menu",
     "triple_brain.included_graph_elements_menu",
-    "triple_brain.ui.vertex",
+    "triple_brain.vertex_ui",
     "triple_brain.mind_map_info"
-], function ($, VertexService, SelectionHandler, RelativeTreeVertex, UiUtils, Triple, IdentificationMenu, GraphDisplayer, VertexMenuHandlerCommon, DeleteMenu, EdgeUi, ImageMenu, LinkToFarVertexMenu, SuggestionMenu, IncludedGraphElementsMenu, Vertex, MindMapInfo) {
+], function ($, VertexService, SelectionHandler, RelativeTreeVertex, UiUtils, Triple, IdentificationMenu, GraphDisplayer, VertexMenuHandlerCommon, DeleteMenu, EdgeUi, ImageMenu, LinkToFarVertexMenu, IncludedGraphElementsMenu, VertexUi, MindMapInfo) {
     "use strict";
     var api = {},
         forSingle = {},
@@ -60,7 +59,7 @@ define([
                     vertex.getUri(),
                     vertex.getId()
                 );
-                Vertex.removeVertexFromCache(
+                VertexUi.removeVertexFromCache(
                     vertex.getUri(),
                     vertex.getId()
                 );
@@ -146,9 +145,7 @@ define([
         );
     };
     forSingle.suggestionsAction = function (vertex) {
-        SuggestionMenu.ofVertex(
-            vertex
-        ).create();
+        GraphDisplayer.showSuggestions(vertex);
     };
     forSingle.suggestionsCanDo = function (vertex) {
         return vertex.hasSuggestions();

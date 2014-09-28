@@ -3,7 +3,7 @@
  */
 define([
         "jquery",
-        "triple_brain.ui.edge",
+        "triple_brain.edge_ui",
         "triple_brain.graph_displayer"
     ],
     function ($, EdgeUi, GraphDisplayer) {
@@ -28,6 +28,9 @@ define([
                 cache[id] = cachedObject;
             }
             return cachedObject;
+        };
+        api.removeIdFromCache = function(id){
+            delete cache[id];
         };
         api.ofEdge = function (edge) {
             return api.withHtml(

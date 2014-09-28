@@ -7,14 +7,14 @@ define([
         "triple_brain.mind-map_template",
         "triple_brain.ui.graph",
         "triple_brain.point",
-        "triple_brain.identification_server_facade",
+        "triple_brain.identification",
         "triple_brain.vertex_service",
         "triple_brain.edge_service",
         "triple_brain.ui.utils",
         "triple_brain.graph_displayer",
         "triple_brain.graph_element_menu"
     ],
-    function ($, MindMapTemplate, GraphUi, Point, IdentificationFacade, VertexService, EdgeService, UiUtils, GraphDisplayer, GraphElementMenu) {
+    function ($, MindMapTemplate, GraphUi, Point, Identification, VertexService, EdgeService, UiUtils, GraphDisplayer, GraphElementMenu) {
         return {
             ofVertex: function (vertex) {
                 return new SuggestionMenu(vertex);
@@ -108,7 +108,7 @@ define([
                                 suggestionLabel
                             );
                             triple.edge().setText(suggestionLabel);
-                            var type = IdentificationFacade.withUriAndLabel(
+                            var type = Identification.withUriAndLabel(
                                 typeId,
                                 suggestionLabel
                             );

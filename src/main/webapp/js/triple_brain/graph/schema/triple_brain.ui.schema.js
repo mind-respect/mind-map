@@ -3,7 +3,7 @@
  */
 define([
     "triple_brain.relative_tree_vertex",
-    "triple_brain.ui.graph_element",
+    "triple_brain.graph_element_ui",
     "triple_brain.bubble"
 ], function (RelativeTreeVertex, GraphElementUi, Bubble) {
     "use strict";

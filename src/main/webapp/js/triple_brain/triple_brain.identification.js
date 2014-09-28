@@ -2,19 +2,29 @@
  * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
-    "triple_brain.friendly_resource_server_facade",
-    "triple_brain.freebase_uri"
-], function (FriendlyResourceServerFacade, FreebaseUri) {
+    "triple_brain.friendly_resource",
+    "triple_brain.freebase_uri",
+    "triple_brain.id_uri"
+], function (FriendlyResource, FreebaseUri, IdUri) {
     var api = {};
     api.fromServerFormat = function (serverFormat) {
         return new api.Self(
             serverFormat
         );
     };
+    api.fromFriendlyResourceServerFormat = function (serverFormat) {
+        var friendlyResource = FriendlyResource.fromServerFormat(serverFormat);
+        return new api.Self({
+            externalResourceUri: friendlyResource.getUri(),
+            friendlyResource: friendlyResource.getServerFormat()
+        });
+    };
+
     api.withUriLabelAndDescription = function (uri, label, description) {
         return new api.Self({
             externalResourceUri: uri,
-            friendlyResource: FriendlyResourceServerFacade.withLabelAndDescription(
+            friendlyResource: FriendlyResource.withUriLabelAndDescription(
+                uri,
                 label,
                 description
             ).getServerFormat()
@@ -23,14 +33,15 @@ define([
     api.withUriAndLabel = function (uri, label) {
         return new api.Self({
             externalResourceUri: uri,
-            friendlyResource: FriendlyResourceServerFacade.withLabel(
+            friendlyResource: FriendlyResource.withUriAndLabel(
+                uri,
                 label
             ).getServerFormat()
         });
     };
     api.fromFreebaseSuggestion = function (freebaseSuggestion) {
         return api.withUriAndLabel(
-            FreebaseUri.freebaseIdToURI(
+            FreebaseUri.freebaseIdToUri(
                 freebaseSuggestion.id
             ),
             freebaseSuggestion.name
@@ -44,36 +55,37 @@ define([
         );
     };
     api.Self = function (serverFormat) {
-        this.serverFormat = serverFormat;
-        FriendlyResourceServerFacade.Self.apply(
+        this.identificationServerFormat = serverFormat;
+        FriendlyResource.Self.apply(
             this
         );
         this.init(
             serverFormat.friendlyResource
         );
     };
-    api.Self.prototype = new FriendlyResourceServerFacade.Self;
+    api.Self.prototype = new FriendlyResource.Self;
     api.Self.prototype.getExternalResourceUri = function () {
-        return this.serverFormat.externalResourceUri;
+        return this.identificationServerFormat.externalResourceUri;
     };
     api.Self.prototype.getServerFormat = function () {
-        return this.serverFormat;
+        return this.identificationServerFormat;
     };
     api.Self.prototype.setType = function (type) {
-        this.serverFormat.type = type;
+        this.identificationServerFormat.type = type;
     };
     api.Self.prototype.getType = function () {
-        return this.serverFormat.type;
+        return this.identificationServerFormat.type;
     };
     api.Self.prototype.getJsonFormat = function () {
         return $.toJSON(
-            this.serverFormat
+            this.identificationServerFormat
         );
     };
-    api.Self.prototype.isARelationOrVertex = function () {
+    api.Self.prototype.isEligibleForContext = function () {
         return this.getExternalResourceUri().indexOf("/service") === 0 &&
             this.getExternalResourceUri().indexOf("/identification") === -1;
     };
+
     api.Self.prototype.rightActionForType = function(typeAction, sameAsAction, genericIdentificationAction){
         switch (this.getType()) {
             case "type" :
@@ -83,6 +95,11 @@ define([
             default :
                 return genericIdentificationAction;
         }
+    };
+    api.Self.prototype.isExternalResourceASchemaProperty = function () {
+        return IdUri.isPropertyUri(
+            this.getExternalResourceUri()
+        );
     };
     return api;
 });

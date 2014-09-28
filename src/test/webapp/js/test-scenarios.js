@@ -2,17 +2,17 @@
  * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
-        'triple_brain.vertex_server_facade',
-        'triple_brain.edge_server_facade'
+        'triple_brain.vertex',
+        'triple_brain.edge'
     ],
-    function (VertexFacade, EdgeServerFacade) {
+    function (Vertex, Edge) {
         var api = {};
         api.GraphWithAnInverseRelationScenario = function(){
             this.getGraph = function(){
                 return {"vertices":{"\/service\/users\/avasdv\/graph\/vertex\/7c92d7a4-ad89-4225-bfbc-1a19063f1d74":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/avasdv\/graph\/vertex\/7c92d7a4-ad89-4225-bfbc-1a19063f1d74","label":"straight bubble","comment":"","images":[],"creationDate":"Jul 16, 2014 4:16:37 PM","lastModificationDate":"Jul 16, 2014 4:16:46 PM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"numberOfConnectedEdges":1,"includedVertices":{},"includedEdges":{},"suggestions":[],"isPublic":false},"minDistanceFromCenterVertex":1},"\/service\/users\/avasdv\/graph\/vertex\/default":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/avasdv\/graph\/vertex\/default","label":"me","comment":"","images":[],"creationDate":"Jul 16, 2014 4:16:13 PM","lastModificationDate":"Jul 16, 2014 4:16:13 PM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"numberOfConnectedEdges":2,"includedVertices":{},"includedEdges":{},"suggestions":[],"isPublic":false},"minDistanceFromCenterVertex":0},"\/service\/users\/avasdv\/graph\/vertex\/8eabf15e-8f6f-4ede-805d-5ed0896051e2":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/avasdv\/graph\/vertex\/8eabf15e-8f6f-4ede-805d-5ed0896051e2","label":"inverse bubble","comment":"","images":[],"creationDate":"Jul 16, 2014 4:16:16 PM","lastModificationDate":"Jul 16, 2014 4:16:33 PM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"numberOfConnectedEdges":1,"includedVertices":{},"includedEdges":{},"suggestions":[],"isPublic":false},"minDistanceFromCenterVertex":1}},"edges":{"\/service\/users\/avasdv\/graph\/edge\/ebdd7aaf-cc15-4680-a104-b28cf6be8582":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/avasdv\/graph\/edge\/ebdd7aaf-cc15-4680-a104-b28cf6be8582","label":"going straight","comment":"","images":[],"creationDate":"Jul 16, 2014 4:16:37 PM","lastModificationDate":"Jul 16, 2014 4:16:42 PM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"sourceVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/avasdv\/graph\/vertex\/default","label":"me","comment":"","images":[],"creationDate":"Jul 16, 2014 4:16:13 PM","lastModificationDate":"Jul 16, 2014 4:16:13 PM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"numberOfConnectedEdges":2,"includedVertices":{},"includedEdges":{},"suggestions":[],"isPublic":false},"minDistanceFromCenterVertex":0},"destinationVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/avasdv\/graph\/vertex\/7c92d7a4-ad89-4225-bfbc-1a19063f1d74","label":"straight bubble","comment":"","images":[],"creationDate":"Jul 16, 2014 4:16:37 PM","lastModificationDate":"Jul 16, 2014 4:16:46 PM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"numberOfConnectedEdges":1,"includedVertices":{},"includedEdges":{},"suggestions":[],"isPublic":false},"minDistanceFromCenterVertex":1}},"\/service\/users\/avasdv\/graph\/edge\/daa55852-3476-401b-a21a-6d6a70a0c86e":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/avasdv\/graph\/edge\/daa55852-3476-401b-a21a-6d6a70a0c86e","label":"going inverse","comment":"","images":[],"creationDate":"Jul 16, 2014 4:16:16 PM","lastModificationDate":"Jul 16, 2014 4:16:35 PM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"sourceVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/avasdv\/graph\/vertex\/8eabf15e-8f6f-4ede-805d-5ed0896051e2","label":"inverse bubble","comment":"","images":[],"creationDate":"Jul 16, 2014 4:16:16 PM","lastModificationDate":"Jul 16, 2014 4:16:33 PM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"numberOfConnectedEdges":1,"includedVertices":{},"includedEdges":{},"suggestions":[],"isPublic":false},"minDistanceFromCenterVertex":1},"destinationVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/avasdv\/graph\/vertex\/default","label":"me","comment":"","images":[],"creationDate":"Jul 16, 2014 4:16:13 PM","lastModificationDate":"Jul 16, 2014 4:16:13 PM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"numberOfConnectedEdges":2,"includedVertices":{},"includedEdges":{},"suggestions":[],"isPublic":false},"minDistanceFromCenterVertex":0}}}};
             };
             this.getCenterVertex = function () {
-                return VertexFacade.fromServerFormat(graph.vertices[
+                return Vertex.fromServerFormat(graph.vertices[
                         uriOfVertexWithLabel(graph, "me")
                         ]
                 );
@@ -25,7 +25,7 @@ define([
             };
             var graph = this.getGraph();
             this.getCenterVertex = function () {
-                return VertexFacade.fromServerFormat(graph.vertices[
+                return Vertex.fromServerFormat(graph.vertices[
                         uriOfVertexWithLabel(graph, "me")
                         ]
                 );
@@ -36,13 +36,13 @@ define([
                 );
             };
             this.getBook1 = function () {
-                return VertexFacade.fromServerFormat(graph.vertices[
+                return Vertex.fromServerFormat(graph.vertices[
                         uriOfVertexWithLabel(graph, "book 1")
                         ]
                 );
             };
             this.getBook2 = function () {
-                return VertexFacade.fromServerFormat(graph.vertices[
+                return Vertex.fromServerFormat(graph.vertices[
                         uriOfVertexWithLabel(graph, "book 2")
                         ]
                 );
@@ -55,7 +55,7 @@ define([
         function uriOfVertexWithLabel(graph, label) {
             var uri;
             $.each(graph.vertices, function (key, value) {
-                var vertex = VertexFacade.fromServerFormat(value);
+                var vertex = Vertex.fromServerFormat(value);
                 if (vertex.getLabel() === label) {
                     uri = vertex.getUri();
                     return -1;
@@ -67,7 +67,7 @@ define([
         function relationWithLabel(graph, label) {
             var foundRelation;
             $.each(graph.edges, function (key, value) {
-                var relation = EdgeServerFacade.fromServerFormat(value);
+                var relation = Edge.fromServerFormat(value);
                 if (relation.getLabel() === label) {
                     foundRelation = relation;
                     return -1;
@@ -79,7 +79,7 @@ define([
         function relationIdentificationWithLabel(graph, label) {
             var foundIdentification;
             $.each(graph.edges, function (key, value) {
-                var edge = EdgeServerFacade.fromServerFormat(value);
+                var edge = Edge.fromServerFormat(value);
                 $.each(edge.getIdentifications(), function () {
                     var identification = this;
                     if (identification.getLabel() === label) {

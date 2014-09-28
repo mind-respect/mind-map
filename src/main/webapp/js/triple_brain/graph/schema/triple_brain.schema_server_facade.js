@@ -2,9 +2,9 @@
  * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
-    "triple_brain.friendly_resource_server_facade",
-    "triple_brain.graph_element_server_facade"
-], function(FriendlyResourceFacade, GraphElementServerFacade){
+    "triple_brain.friendly_resource",
+    "triple_brain.graph_element"
+], function(FriendlyResource, GraphElement){
     "use strict";
     var api = {
         fromServerFormat : function (serverFormat) {
@@ -16,21 +16,21 @@ define([
     function Self(schemaServerFormat){
         this.schemaServerFormat = schemaServerFormat;
         this._properties = this._buildProperties();
-        FriendlyResourceFacade.Self.apply(
+        FriendlyResource.Self.apply(
             this
         );
         this.init(
             schemaServerFormat.friendlyResource
         );
     }
-    Self.prototype = new FriendlyResourceFacade.Self;
+    Self.prototype = new FriendlyResource.Self;
     Self.prototype.getProperties = function(){
         return this._properties;
     };
     Self.prototype._buildProperties = function(){
         var properties = {};
         $.each(this.schemaServerFormat.properties, function(){
-            var property = GraphElementServerFacade.fromServerFormat(this);
+            var property = GraphElement.fromServerFormat(this);
             properties[property.getUri()] = property;
         });
         return properties;

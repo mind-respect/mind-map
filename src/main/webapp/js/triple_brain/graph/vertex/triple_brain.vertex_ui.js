@@ -9,11 +9,11 @@ define([
         "triple_brain.point",
         "triple_brain.error",
         "triple_brain.ui.vertex_segments",
-        "triple_brain.ui.edge",
+        "triple_brain.edge_ui",
         "triple_brain.event_bus",
         "triple_brain.image_displayer",
-        "triple_brain.ui.identified_graph_element",
-        "triple_brain.ui.graph_element",
+        "triple_brain.identified_graph_element_ui",
+        "triple_brain.graph_element_ui",
         "triple_brain.graph_element_button",
         "triple_brain.bubble",
         "jquery.center-on-screen"
@@ -193,17 +193,6 @@ define([
         };
         api.Object.prototype.getHtml = function () {
             return this.html;
-        };
-        api.Object.prototype.getUri = function () {
-            return this.html.data(
-                "uri"
-            );
-        };
-        api.Object.prototype.setUri = function (uri) {
-            this.html.data(
-                "uri",
-                uri
-            );
         };
         api.Object.prototype.isMouseOver = function () {
             var vertexThatIsMouseOver = api.getVertexMouseOver();

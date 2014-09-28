@@ -3,9 +3,8 @@
  */
 define([
     "jquery",
-    "triple_brain.freebase_uri",
-    "triple_brain.user"
-], function ($, FreebaseUri, User) {
+    "triple_brain.freebase_uri"
+], function ($, FreebaseUri) {
     var api = {};
     api.forFetchingTypes = function () {
         return new FreebaseAutocompleteProvider({
@@ -49,7 +48,7 @@ define([
                     label: searchResult.name,
                     value: searchResult.name,
                     source: "Freebase.com",
-                    uri: FreebaseUri.freebaseIdToURI(searchResult.mid),
+                    uri: FreebaseUri.freebaseIdToUri(searchResult.mid),
                     provider: self
                 };
                 var notable = searchResult.notable;

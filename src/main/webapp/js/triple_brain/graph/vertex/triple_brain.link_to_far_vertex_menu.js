@@ -8,10 +8,10 @@ define([
     "triple_brain.ui.graph",
     "triple_brain.user_map_autocomplete_provider",
     "triple_brain.edge_service",
-    "triple_brain.ui.edge",
+    "triple_brain.edge_ui",
     "triple_brain.graph_displayer",
     "triple_brain.graph_element_menu"
-], function($, MindMapTemplate, GraphUi, UserMapAutocompleteProvider, EdgeService, Edge, GraphDisplayer, GraphElementMenu){
+], function($, MindMapTemplate, GraphUi, UserMapAutocompleteProvider, EdgeService, EdgeUi, GraphDisplayer, GraphElementMenu){
     var api = {};
     api.ofVertex = function(vertex){
         return new LinkToFarVertexMenu(
