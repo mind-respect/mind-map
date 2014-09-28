@@ -76,7 +76,6 @@ requirejs.config({
         "triple_brain.identification_menu": "triple_brain/graph/triple_brain.identification_menu",
         "triple_brain.link_to_far_vertex_menu": "triple_brain/graph/vertex/triple_brain.link_to_far_vertex_menu",
         "triple_brain.included_graph_elements_menu": "triple_brain/graph/vertex/triple_brain.included_graph_elements_menu",
-        "triple_brain.ui.suggestion_menu": "triple_brain/graph/vertex/triple_brain.ui.suggestion_menu",
         "triple_brain.image_displayer": "triple_brain/graph/vertex/triple_brain.image_displayer",
         "triple_brain.delete_menu": "triple_brain/graph/triple_brain.delete_menu",
         "triple_brain.image_menu": "triple_brain/graph/vertex/triple_brain.image_menu",

@@ -783,41 +783,6 @@ svg {
   }
 }
 
-.suggestion {
-  &.ui-draggable {
-    list-style-type: none;
-    font-size: 1em;
-    font-weight: normal;
-    background: -moz-linear-gradient(left, #CDFFCD, #ffffff);
-    background: -webkit-gradient(linear, left right, left right, from(#CDFFCD), to(#ffffff));
-    border: 1px solid green;
-    line-height: 2.5em;
-    min-width: 20em;
-    padding-bottom: 3px;
-    padding-top: 3px;
-  }
-  ul {
-    list-style-type: none;
-    white-space: nowrap;
-  }
-  li {
-    font-size: 0.9em;
-    font-weight: normal;
-    margin-left: 0;
-    padding: 0;
-    background: -moz-linear-gradient(left, #CDFFCD, #ffffff);
-    background: -webkit-gradient(linear, left right, left right, from(#CDFFCD), to(#ffffff));
-    width: 100%;
-    text-align: left;
-    padding-bottom: 3px;
-    padding-top: 3px;
-    border: 1px solid green;
-    line-height: 2.5em;
-    .text {
-      margin-left: 0.5em;
-    }
-  }
-}
 
 .hidden-properties-container {
   display: inline-block;
