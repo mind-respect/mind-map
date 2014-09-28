@@ -34,6 +34,12 @@ define([
         };
         api.fromFreebaseSuggestionAndOriginUri = function (freebaseSuggestion, typeUri) {
             var suggestionUri = api.generateUri();
+            if(freebaseSuggestion.name === null){
+                freebaseSuggestion.name = "";
+            }
+            if(freebaseSuggestion.expected_type.name === null){
+                freebaseSuggestion.expected_type.name = "";
+            }
             return api.fromServerFormat({
                 friendlyResource: FriendlyResource.buildObjectWithUriAndLabel(
                     suggestionUri,
