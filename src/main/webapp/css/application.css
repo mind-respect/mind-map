@@ -133,6 +133,7 @@ svg { z-index: 1; }
 .group-relation .label { position: relative; display: inline-block; margin-right: 0.3em; z-index: 1; }
 
 .bubble { position: relative; min-width: 0; margin: 0 0 0 0; white-space: nowrap; }
+.bubble.suggestion .in-bubble-content { background-color: white; border: 1px dashed black; }
 .bubble.selected .in-bubble-content { z-index: 4; }
 .bubble .image_container { z-index: 3; display: inline-block; position: relative; width: 60px; }
 .bubble .image_container:empty { width: 0; }
