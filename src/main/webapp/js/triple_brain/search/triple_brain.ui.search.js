@@ -31,7 +31,7 @@ define([
                     event.preventDefault();
                 },
                 resultsProviders: [
-                    UserMapAutocompleteProvider.toFetchOnlyCurrentUserVertices()
+                    UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas()
                 ]
             });
         }

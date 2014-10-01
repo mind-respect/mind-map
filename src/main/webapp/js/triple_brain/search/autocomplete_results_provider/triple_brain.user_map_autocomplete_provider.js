@@ -16,6 +16,13 @@ define([
             undefined
         );
     };
+    api.toFetchOnlyCurrentUserVerticesAndSchemas = function(){
+        return new UserMapAutoCompleteProvider(
+            SearchService.searchForOnlyOwnVerticesAndSchemasAjaxCall,
+            false,
+            undefined
+        );
+    };
     api.toFetchOnlyCurrentUserVerticesExcept = function(vertexToIgnore){
         return new UserMapAutoCompleteProvider(
             SearchService.searchForOnlyOwnVerticesAjaxCall,

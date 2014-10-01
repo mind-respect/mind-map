@@ -26,6 +26,13 @@ define([
                     "/search/own_vertices/auto_complete?text=" + searchText
             });
         };
+        api.searchForOnlyOwnVerticesAndSchemasAjaxCall = function(searchText){
+            return $.ajax({
+                type:'GET',
+                url: UserService.currentUserUri() +
+                    "/search/own_vertices_and_schemas/auto_complete?text=" + searchText
+            });
+        };
         api.searchForOwnVerticesAndPublicOnesAjaxCall = function(searchText){
             return $.ajax({
                 type:'GET',
