@@ -94,7 +94,7 @@ define([
         ).attr(
             "data-placeholder",
             uiSelector.getWhenEmptyLabel()
-        ).appendTo(inContentContainer);
+        ).maxChar().appendTo(inContentContainer);
         GraphElementHtmlBuilder.setUpLabel(label);
         label.focus(function(){
             vertexOfSubHtmlComponent($(this)).focus();
