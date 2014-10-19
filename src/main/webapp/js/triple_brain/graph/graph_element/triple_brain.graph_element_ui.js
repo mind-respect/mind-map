@@ -118,13 +118,6 @@ define([
         );
         this.getHtml().addClass("edit");
     };
-    api.Self.prototype.nonEditMode = function(){
-        this.getLabel().attr(
-            "contenteditable",
-            "false"
-        );
-        this.getHtml().removeClass("edit");
-    };
     api.Self.prototype.centerOnScreen = function () {
         this.getHtml().centerOnScreen();
     };

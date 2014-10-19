@@ -104,7 +104,7 @@ define([
     };
 
     Self.prototype.getMenuHtml = function () {
-        return this.html.find('> .menu');
+        return this.html.find('.menu');
     };
 
     Self.prototype._showDescription = function () {
@@ -116,7 +116,7 @@ define([
     };
 
     Self.prototype._getLabelHtml = function () {
-        return this.html.find('> .label');
+        return this.html.find('.label');
     };
 
     Self.prototype.hasHiddenRelationsContainer = function(){

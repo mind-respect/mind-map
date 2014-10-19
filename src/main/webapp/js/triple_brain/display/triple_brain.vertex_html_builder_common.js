@@ -15,10 +15,11 @@ define([
     "triple_brain.selection_handler",
     "triple_brain.schema_suggestion",
     "triple_brain.suggestion_service",
+    "triple_brain.graph_element_html_builder",
     "jquery-ui",
     "jquery.triple_brain.search",
     "jquery.max_char"
-], function ($, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, SuggestionService) {
+], function ($, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, SuggestionService, GraphElementHtmlBuilder) {
     var api = {};
 
     api.applyAutoCompleteIdentificationToLabelInput = function (input) {
@@ -94,10 +95,14 @@ define([
             "data-placeholder",
             uiSelector.getWhenEmptyLabel()
         ).appendTo(inContentContainer);
+        GraphElementHtmlBuilder.setUpLabel(label);
+        label.focus(function(){
+            vertexOfSubHtmlComponent($(this)).focus();
+        });
+
         label.blur(function () {
             var $input = $(this),
                 vertex = vertexOfSubHtmlComponent($input);
-            vertex.nonEditMode();
             $input.maxChar();
             if (vertex.isVertexSuggestion()) {
                 SuggestionService.accept(
@@ -120,14 +125,12 @@ define([
                     );
                 });
             }
-
             function updateLabel() {
                 VertexService.updateLabel(
                     vertexOfSubHtmlComponent($input),
-                    $input.text()
+                    $input.maxCharCleanText()
                 );
             }
-
             SelectionHandler.setToSingleVertex(vertex);
         });
         if (vertex.isVertex()) {

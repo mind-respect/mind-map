@@ -396,19 +396,22 @@ svg {
 
 .group-relation {
   white-space: nowrap;
-  .menu {
-    display: inline;
-  }
   &.selected {
     .label {
       box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb;
     }
   }
-  .label {
-    position: relative;
-    display: inline-block;
-    margin-right: 0.3em;
-    z-index: 1;
+  .label-container{
+    position:relative;
+    .label {
+      position: relative;
+      margin-right: 0.3em;
+      z-index: 1;
+    }
+    .menu {
+      display: inline;
+      top:80%;
+    }
   }
 }
 
@@ -468,7 +471,7 @@ svg {
     height: 1px;
     border-top: 1px solid black;
     top: 50%;
-    width: 60px;
+    width: 65px;
     left: 25px;
   }
   .arrow {
@@ -478,6 +481,7 @@ svg {
     top: 50%;
     left: -42px;
     border-top: 1px solid black;
+    z-index:-1;
     &:before {
       content: url('images/icons/vertex/arrowhead_right.svg');
       position: relative;

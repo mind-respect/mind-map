@@ -14,8 +14,9 @@ define([
     "triple_brain.freebase_autocomplete_provider",
     "triple_brain.graph_element_service",
     "triple_brain.suggestion_relation_ui",
-    "triple_brain.suggestion_service"
-], function (PropertyUi, TreeEdge, MindMapInfo, FriendlyResourceService, SelectionHandler, RelativeTreeTemplates, Identification, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementService, SuggestionRelationUi, SuggestionService) {
+    "triple_brain.suggestion_service",
+    "triple_brain.graph_element_html_builder"
+], function (PropertyUi, TreeEdge, MindMapInfo, FriendlyResourceService, SelectionHandler, RelativeTreeTemplates, Identification, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementService, SuggestionRelationUi, SuggestionService, GraphElementHtmlBuilder) {
     "use strict";
     var api = {};
     api.buildLabel = function (container, text, whenEmptyLabel) {
@@ -100,6 +101,7 @@ define([
                 }
             )
         }
+        GraphElementHtmlBuilder.setUpLabel(label);
         return label;
     };
     return api;

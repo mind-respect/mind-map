@@ -41,7 +41,8 @@ define([
                 menu,
                 GraphDisplayer.getGroupRelationMenuHandler().forSingle()
             );
-            this.html[
+            var container = this.html.find("> .label-container");
+            container[
                 this.serverFacade.isLeftOriented ?
                     "prepend" :
                     "append"
@@ -62,11 +63,12 @@ define([
         };
 
         Self.prototype._addLabel = function () {
+            var container = $("<div class='label-container'>").appendTo(this.html);
             var labelHtml = $(
                 RelativeTreeTemplates['group_relation_label_container'].merge({
                     label: this.serverFacade.getIdentification().getLabel()
                 })
-            ).appendTo(this.html);
+            ).appendTo(container);
             this._setupDescriptionOnLabel(labelHtml);
         };
 

@@ -104,6 +104,7 @@ requirejs.config({
         "triple_brain.graph_element_menu_handler": "triple_brain/display/triple_brain.graph_element_menu_handler",
         "triple_brain.edge_html_builder": "triple_brain/display/tree/relative/edge/triple_brain.edge_html_builder",
         "triple_brain.edge_html_builder_common": "triple_brain/display/tree/relative/edge/triple_brain.edge_html_builder_common",
+        "triple_brain.graph_element_html_builder": "triple_brain/display/tree/relative/triple_brain.graph_element_html_builder",
         "triple_brain.edge_html_builder_view_only": "triple_brain/display/tree/relative/edge/triple_brain.edge_html_builder_view_only",
         "triple_brain.relative_tree_vertex": "triple_brain/display/tree/relative/vertex/triple_brain.relative_tree_vertex",
         "triple_brain.relative_tree_center_vertex": "triple_brain/display/tree/relative/vertex/triple_brain.relative_tree_center_vertex",
