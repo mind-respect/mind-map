@@ -48,6 +48,9 @@ define([
             ).css(
                 isToTheLeft ? "padding-left" : "padding-right", "15px"
             ).append(this.html);
+            this.html.append(
+                $("<span class='connector'>")
+            );
             EdgeHtmlBuilderCommon.buildLabel(
                 this.html,
                 this.edgeServer.getLabel(),

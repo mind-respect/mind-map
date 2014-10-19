@@ -449,7 +449,7 @@ svg {
   margin: 0 0 0 0;
   &.selected {
     .in-bubble-content {
-      z-index: 4;
+      z-index: 2;
     }
   }
   .image_container {
@@ -472,7 +472,8 @@ svg {
     border-top: 1px solid black;
     top: 50%;
     width: 65px;
-    left: 25px;
+    right: -30px;
+    z-index:-1;
   }
   .arrow {
     position: absolute;
@@ -767,7 +768,6 @@ svg {
 }
 
 .relation {
-  z-index:3;
   position: relative;
   .relation-menu {
     z-index: 11;

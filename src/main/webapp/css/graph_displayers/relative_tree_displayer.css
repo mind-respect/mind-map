@@ -73,8 +73,8 @@
 }
 
 .left-oriented .bubble .connector{
-    left: auto;
-    right:25px;
+    right: auto;
+    left:-30px;
 }
 
 .left-oriented .bubble .arrow:before{

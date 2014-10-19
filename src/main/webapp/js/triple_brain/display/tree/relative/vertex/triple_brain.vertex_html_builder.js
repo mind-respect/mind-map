@@ -145,9 +145,6 @@ define([
             this.vertex.getHtml().append(
                 $("<span class='arrow'>")
             );
-            this.vertex.getHtml().append(
-                $("<span class='connector'>")
-            );
             this.vertex.isPublic() ?
                 this.vertex.makePublic() :
                 this.vertex.makePrivate();
