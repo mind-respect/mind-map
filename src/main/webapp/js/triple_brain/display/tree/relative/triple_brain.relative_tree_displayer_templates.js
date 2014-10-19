@@ -43,10 +43,6 @@ define([
             "<div class='vertex-container'></div>"
         );
         t.add(
-            'edge_input',
-            '<input type="text" class="edge-label" value="{label}">'
-        );
-        t.add(
             "group_relation",
             "<div class='group-relation bubble graph-element'></div>"
         );

@@ -27,16 +27,11 @@ define([
                 this.html
             ),
             property = PropertyUi.withHtml(this.html);
-        EdgeHtmlBuilderCommon.buildNonInputLabel(
+        EdgeHtmlBuilderCommon.buildLabel(
             inBubbleContentContainer,
             this.serverFacade.getLabel(),
             PropertyUi.getWhenEmptyLabel()
-        ).show();
-        EdgeHtmlBuilderCommon.buildLabelAsInput(
-            property,
-            inBubbleContentContainer,
-            PropertyUi.getWhenEmptyLabel()
-        ).hide();
+        );
         this._buildMenu(inBubbleContentContainer).hide();
         this.html.append(
             $("<span class='arrow'>")

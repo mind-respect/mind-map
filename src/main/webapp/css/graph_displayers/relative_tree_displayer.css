@@ -40,11 +40,11 @@
 }
 
 .relation{
-    vertical-align: top;
     padding:0;
     margin-top:0;
     margin-right:0;
     margin-left:0;
+    vertical-align: middle;
 }
 .relation.selected .label {
     box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb;
@@ -70,6 +70,11 @@
 .left-oriented .bubble .arrow{
     left: auto;
     right:-42px;
+}
+
+.left-oriented .bubble .connector{
+    left: auto;
+    right:25px;
 }
 
 .left-oriented .bubble .arrow:before{

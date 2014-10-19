@@ -4,7 +4,7 @@
 define([
     "triple_brain.graph_displayer",
     "triple_brain.graph_element_main_menu",
-    "jquery.cursor-at-end"
+    "jquery.focus-end"
 ], function (GraphDisplayer, GraphElementMainMenu) {
     var api = {};
     api.Types = {
@@ -108,7 +108,22 @@ define([
         }
     };
     api.Self.prototype.focus = function () {
-        this.getLabel().focus().setCursorToEndOfText();
+        this.editMode();
+        this.getLabel().maxCharCleanTextApply().focusEnd();
+    };
+    api.Self.prototype.editMode = function(){
+        this.getLabel().attr(
+            "contenteditable",
+            "true"
+        );
+        this.getHtml().addClass("edit");
+    };
+    api.Self.prototype.nonEditMode = function(){
+        this.getLabel().attr(
+            "contenteditable",
+            "false"
+        );
+        this.getHtml().removeClass("edit");
     };
     api.Self.prototype.centerOnScreen = function () {
         this.getHtml().centerOnScreen();

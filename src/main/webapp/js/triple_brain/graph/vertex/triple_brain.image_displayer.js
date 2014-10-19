@@ -85,7 +85,7 @@ define(
 
             function addHtmlToBubble() {
                 bubble.getHtml().children(
-                    ".in-bubble-content"
+                    ".in-bubble-content-wrapper"
                 ).before(html);
             }
 

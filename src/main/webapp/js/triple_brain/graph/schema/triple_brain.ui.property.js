@@ -30,7 +30,7 @@ define([
         ).hasClass("left-oriented");
     };
     Self.prototype.getLabel = function () {
-        return this.html.find("> .in-bubble-content > input").is(":visible") ?
+        return this.html.find(".in-bubble-content > input").is(":visible") ?
             this.html.find("> .in-bubble-content > input") :
             this.html.find("span.label");
     };

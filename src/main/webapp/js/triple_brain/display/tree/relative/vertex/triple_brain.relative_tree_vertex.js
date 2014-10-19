@@ -69,7 +69,7 @@ define([
             );
         };
         api.Object.prototype.getRelationWithParentHtml = function () {
-            return this.html.find("> .in-bubble-content > .relation");
+            return this.html.find("> .relation");
         };
         api.Object.prototype.applyToOtherInstances = function (apply) {
             $.each(this.getOtherInstances(), function () {

@@ -49,13 +49,6 @@ define([
             function labelInput(){
                 return $(html).find('.label');
             }
-            this.applyStyleOfDefaultText = function(){
-                $(labelInput()).addClass('when-default-graph-element-text');
-            };
-
-            this.removeStyleOfDefaultText = function(){
-                $(labelInput()).removeClass('when-default-graph-element-text');
-            };
         }
         return api;
     }

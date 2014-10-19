@@ -18,15 +18,17 @@ define([
 ], function (PropertyUi, TreeEdge, MindMapInfo, FriendlyResourceService, SelectionHandler, RelativeTreeTemplates, Identification, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementService, SuggestionRelationUi, SuggestionService) {
     "use strict";
     var api = {};
-    api.buildOverlay = function () {
-        return $(
-            "<div class='overlay-container'>"
-        ).append();
-    };
-    api.buildNonInputLabel = function (container, text, whenEmptyLabel) {
-        var overlayContainer = $(
-            "<div class='overlay-container'>"
-        ).appendTo(container).on(
+    api.buildLabel = function (container, text, whenEmptyLabel) {
+        var label = $(
+            "<span>"
+        ).addClass(
+            "label label-info"
+        ).text(
+            text
+        ).attr(
+            "data-placeholder",
+            whenEmptyLabel
+        ).on(
             "click",
             function (event) {
                 event.stopPropagation();
@@ -43,9 +45,49 @@ define([
                     SelectionHandler.setToSingleRelation(edge);
                 }
             }
+        ).blur(function () {
+                var edge = edgeFromHtml($(this).closest(".relation"));
+                if (edge.isRelationSuggestion()) {
+                    SuggestionService.accept(
+                        edge.childVertexInDisplay(),
+                        updateLabel
+                    );
+                } else {
+                    updateLabel();
+                }
+                function updateLabel() {
+                    FriendlyResourceService.updateLabel(edge, edge.text());
+                }
+            }).appendTo(
+            container
+        ).tripleBrainAutocomplete({
+                limitNbRequests: true,
+                select: function (event, ui) {
+                    var edge = edgeFromHtml($(this));
+                    var identificationResource = Identification.fromSearchResult(
+                        ui.item
+                    );
+                    GraphElementService.addSameAs(
+                        edge,
+                        identificationResource
+                    );
+                    var newLabel = ui.item.label;
+                    edge.setText(newLabel);
+                    FriendlyResourceService.updateLabel(
+                        edge,
+                        newLabel
+                    );
+                },
+                resultsProviders: [
+                    UserMapAutocompleteProvider.toFetchRelationsForIdentification(
+                        edgeFromHtml(container)
+                    ),
+                    FreebaseAutocompleteProvider.forFetchingAnything()
+                ]
+            }
         );
         if (!MindMapInfo.isViewOnly()) {
-            overlayContainer.on(
+            label.on(
                 "dblclick",
                 function (event) {
                     event.stopPropagation();
@@ -54,92 +96,11 @@ define([
                     );
                     edge.deselect();
                     edge.hideMenu();
-                    edge._changeToInput();
+                    edge.focus();
                 }
             )
         }
-        var overlay = $(
-            "<div class='overlay'>"
-        ).appendTo(overlayContainer);
-        return $(
-            "<span>"
-        ).addClass(
-            "label label-info"
-        ).text(
-                text.trim() === "" ?
-                whenEmptyLabel :
-                text
-        ).appendTo(
-            overlayContainer
-        );
-    };
-    api.buildLabelAsInput = function (edge, container, whenEmptyLabel) {
-        var input = $(RelativeTreeTemplates['edge_input'].merge({
-            label: edge.text()
-        })).attr(
-            "placeholder",
-            whenEmptyLabel
-        );
-        input.blur(function () {
-            var edge = edgeFromHtml($(this));
-            edge._changeToSpan();
-            SelectionHandler.setToSingleRelation(edge);
-        });
-        input.change(function () {
-            var input = $(this);
-            var edge = edgeFromHtml(input);
-            if(edge.isRelationSuggestion()){
-                SuggestionService.accept(
-                    edge.childVertexInDisplay(),
-                    updateLabel
-                );
-            }else{
-                updateLabel();
-            }
-            function updateLabel(){
-                FriendlyResourceService.updateLabel(edge, edge.text());
-            }
-            input.blur();
-        });
-        input.tripleBrainAutocomplete({
-            limitNbRequests: true,
-            select: function (event, ui) {
-                var edge = edgeFromHtml($(this));
-                edge._changeToSpan();
-                var identificationResource = Identification.fromSearchResult(
-                    ui.item
-                );
-                GraphElementService.addSameAs(
-                    edge,
-                    identificationResource
-                );
-                var newLabel = ui.item.label;
-                edge.setText(newLabel);
-                FriendlyResourceService.updateLabel(
-                    edge,
-                    newLabel
-                );
-            },
-            resultsProviders: [
-                UserMapAutocompleteProvider.toFetchRelationsForIdentification(
-                    edge
-                ),
-                FreebaseAutocompleteProvider.forFetchingAnything()
-            ]
-        });
-        input.keydown(function () {
-            $(this).keyup();
-        });
-        input.keyup(function () {
-            var edge = edgeFromHtml(
-                $(this)
-            );
-            edge.adjustWidthToNumberOfChars();
-        });
-        container.prepend(
-            input
-        );
-        return input;
+        return label;
     };
     return api;
 

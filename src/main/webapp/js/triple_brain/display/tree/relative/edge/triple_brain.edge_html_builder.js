@@ -23,7 +23,7 @@ define([
             this.uri = edgeServer.getUri();
             this.html = $(
                 "<span class='relation graph-element'>"
-            ).css("display", "inline");
+            );
             this.parentVertexHtmlFacade = parentVertexHtmlFacade;
             this.childVertexHtmlFacade = childVertexHtmlFacade;
         }
@@ -41,24 +41,19 @@ define([
                 "destination_vertex_id",
                 isInverse ? this.parentVertexHtmlFacade.getId() : this.childVertexHtmlFacade.getId()
             );
-            var inBubbleContainer = this.childVertexHtmlFacade.getInBubbleContainer(),
+            var inBubbleContainer = this.childVertexHtmlFacade.getHtml(),
                 isToTheLeft = this.childVertexHtmlFacade.isToTheLeft();
             this.html[isToTheLeft ? "appendTo" : "prependTo"](
                 inBubbleContainer
             ).css(
-                isToTheLeft ? "margin-left" : "margin-right", "1em"
+                isToTheLeft ? "padding-left" : "padding-right", "15px"
             ).append(this.html);
-            EdgeHtmlBuilderCommon.buildNonInputLabel(
+            EdgeHtmlBuilderCommon.buildLabel(
                 this.html,
                 this.edgeServer.getLabel(),
                 TreeEdge.getWhenEmptyLabel()
-            ).css("visibility", "visible");
+            );
             var edge = this._edgeFacade();
-            EdgeHtmlBuilderCommon.buildLabelAsInput(
-                edge,
-                edge.getHtml(),
-                TreeEdge.getWhenEmptyLabel()
-            ).hide();
             buildMenu(edge);
             edge.hideMenu();
             edge.setUri(this.uri);

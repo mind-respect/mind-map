@@ -8,17 +8,13 @@ a:hover, input[type=button].link-like-button:hover, button.link-like-button:hove
 
 input[type="button"], .link-like-button { border-size: 0px; border-style: none; font: inherit; padding: 0 0 0 0; background: none; }
 
-button.graph-element-button { width: 30px; height: 30px; margin-bottom: 5px; margin-right: 3px; line-height: 20px; color: #333; text-align: center; text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); vertical-align: middle; background-image: linear-gradient(to bottom, #ffffff, #e6e6e6); background-repeat: repeat-x; border-bottom-color: #b3b3b3; border: 1px solid #ccc; border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25); -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); }
+button.graph-element-button { width: 30px; height: 30px; margin-bottom: 5px; margin-right: 3px; line-height: 20px; color: #333; text-align: center; text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); background-image: linear-gradient(to bottom, #ffffff, #e6e6e6); background-repeat: repeat-x; border-bottom-color: #b3b3b3; border: 1px solid #ccc; border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25); -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); }
 button.graph-element-button:hover { background-image: linear-gradient(to bottom, #ffffff, #cdcdcd); }
 
 li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-button-in-list { margin: auto; margin-right: 0.5em; color: red; font-weight: bold; font-size: 1.3em; background: transparent; border: none; position: absolute; right: 0; }
 
 button.add-button-in-list { color: green; font-weight: bold; font-size: 2em; margin-bottom: 0.2em; float: left; border: none; background-color: transparent; }
 button.add-button-in-list:hover { color: #00d100; }
-
-.overlay-container { position: relative; display: inline; }
-
-.overlay { position: absolute; left: 0; right: 0; bottom: 0; top: 0; z-index: 2; }
 
 .canvas-parent, .included-vertices-container.canvas-parent { overflow: scroll; }
 
@@ -122,8 +118,6 @@ svg { z-index: 1; }
 
 .graph { background-color: white; }
 
-.when-default-graph-element-text { font-style: italic; }
-
 .graph-element input[type='text'] { text-shadow: none; box-shadow: none; color: black; font-weight: normal; }
 .graph-element .label { font-size: 13px; }
 
@@ -132,46 +126,49 @@ svg { z-index: 1; }
 .group-relation.selected .label { box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb; }
 .group-relation .label { position: relative; display: inline-block; margin-right: 0.3em; z-index: 1; }
 
-.bubble { position: relative; min-width: 0; margin: 0 0 0 0; white-space: nowrap; }
+.bubble { display: table; white-space: nowrap; position: relative; min-width: 0; margin: 0 0 0 0; }
+.bubble > * { display: table-cell; vertical-align: middle; }
 .bubble.suggestion .in-bubble-content { background-color: white; border: 1px dashed black; }
+.bubble .bubble-label { outline: 0px solid transparent; border: none; padding: 0; font-family: Helvetica; font-size: 14px; width: auto; display: table-cell; white-space: pre; min-width: 1em; }
+.bubble .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); color: grey; font-style: italic; }
 .bubble.selected .in-bubble-content { z-index: 4; }
-.bubble .image_container { z-index: 3; display: inline-block; position: relative; width: 60px; }
-.bubble .image_container:empty { width: 0; }
+.bubble .image_container { z-index: 3; position: relative; min-width: 60px; }
+.bubble .image_container:empty { min-width: 0; }
+.bubble .image_container img { max-width: auto; }
 .bubble .edge-label { display: inline; }
+.bubble .connector { position: absolute; height: 1px; border-top: 1px solid black; top: 50%; width: 60px; left: 25px; }
 .bubble .arrow { position: absolute; height: 1px; width: 60px; top: 50%; left: -42px; border-top: 1px solid black; }
 .bubble .arrow:before { content: url("images/icons/vertex/arrowhead_right.svg"); position: relative; top: -10px; left: 20px; }
-.bubble .menu { float: left; width: 132px; margin-top: 5px; position: absolute; white-space: normal; background-color: white; opacity: 0.95; }
+.bubble .menu { width: 134px; margin-top: 5px; position: absolute; white-space: normal; background-color: white; opacity: 0.95; left: 0; top: 100%; }
 .bubble .menu ul:first-of-type { padding-left: 5px; }
 .bubble .menu ul { list-style: none; font-family: courier new, monospace; font-size: 18px; padding: 0 5px 0 0; margin: 0 0 0 0; display: inline; float: left; min-width: 12px; }
 .bubble .menu input { float: left; background-color: transparent; background-position: center; padding-left: 2px; padding-right: 2px; margin: 0; display: table; border: 1px solid #e30613; font-weight: bold; font-size: 19px; min-width: 25px; min-height: 14px; margin-top: 0px; }
 .bubble .menu .ui-button { float: left; background-color: white; }
 .bubble.inverse .arrow:before { content: url("images/icons/vertex/arrowhead_left.svg"); }
-.bubble .in-bubble-content, .bubble .overlay-container { display: inline-block; z-index: 3; }
-
-.input-size { visibility: hidden; padding-top: 1px; padding-bottom: 1px; margin-left: 5px; margin-right: 5px; }
 
 .relation span.label { font-family: helvetica; }
+.relation span.label:empty:not(:focus):before { content: attr(data-placeholder); font-style: italic; }
 
 .relation span.label.input-size { font-family: courier new, monospace; padding-right: 10px; font-size: 14px !important; }
 
 .vertex { cursor: default; /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */ white-space: nowrap; }
+.vertex.edit .in-bubble-content { width: 325px; max-width: 325px; }
+.vertex.edit .bubble-label { white-space: pre-wrap; }
 .vertex.public .in-bubble-content { background-color: #F9E5E5; }
 .vertex.absolute { white-space: nowrap; position: absolute !important; min-width: 120px; }
 .vertex.includes-vertices .in-bubble-content { padding-bottom: 2em; }
-.vertex.highlighted .in-bubble-content, .vertex.highlighted .image_container, .vertex.highlighted .menu, .vertex.highlighted .included-graph-elements-flag { z-index: 11; }
-.vertex.highlighted .in-bubble-content { border: 1px; -moz-border-radius: 15px; border-radius: 15px; border-color: green; border-style: solid; }
 .vertex.selected { z-index: 12; }
 .vertex.selected .in-bubble-content { border-radius: 15px; box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb; }
+.vertex.center-vertex .connector { height: 0; width: 0; }
 .vertex.center-vertex .arrow { height: 0; width: 0; top: 0; left: 0; border-top: none; }
 .vertex.center-vertex .arrow:before { content: ""; }
 .vertex.center-vertex:before { border-left: none; height: 0; width: 0; top: 0; left: 0; }
 .vertex.center-vertex .in-bubble-content { border-radius: 15px; -webkit-box-shadow: 0 0 1em rgba(255, 128, 0, 0.1); -moz-box-shadow: 0 0 1em rgba(255, 128, 0, 0.1); box-shadow: 0 0 1em rgba(255, 128, 0, 0.5); }
 .vertex.center-vertex.selected .in-bubble-content { box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb; border: solid red; }
-.vertex input[type="text"].label { border: none; padding: 0; font-family: courier new, monospace; font-size: 14px; background-color: transparent; position: absolute; width: 100%; left: 0; right: 0; }
-.vertex .input-size { font-size: 14px; font-family: courier new, monospace; }
 .vertex .included-graph-elements-flag { position: absolute; top: 25px; left: 30%; font-weight: bold; }
 .vertex .menu, .vertex .included-graph-elements-flag { z-index: 3; }
-.vertex .in-bubble-content { border-radius: 20px; background-color: #E6E6FF; white-space: nowrap; padding: 1em; padding-bottom: 0.7em; padding-top: 0.7em; margin-left: 0.3em; position: relative; display: inline-block; border: 1px; border-color: transparent; border-style: solid; }
+.vertex .in-bubble-content { border-radius: 20px; background-color: #E6E6FF; white-space: normal; padding: 1em; padding-bottom: 0.7em; padding-top: 0.7em; margin-left: 0.3em; position: relative; display: table; border: 1px; border-color: transparent; border-style: solid; z-index: 2; }
+.vertex .in-bubble-content > * { display: table-cell; }
 .vertex .in-bubble-content .note-button { margin-right: 5px; margin-top: -3px; }
 .vertex .in-bubble-content button.duplicate { position: absolute; left: -15px; top: -30px; }
 .vertex .move { background-image: url("images/icons/vertex/move.png"); min-width: 25px; min-height: 25px; margin-right: 5px; margin-left: 8px; float: left; }
@@ -180,8 +177,6 @@ svg { z-index: 1; }
 .vertex-note.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset { float: none; text-align: center; }
 .vertex-note.ui-dialog .ui-dialog-content { padding: 0; }
 .vertex-note textarea { width: 95%; height: 93%; margin-bottom: 0; }
-
-.highlighted-edge { border: 1px; border-color: green; border-style: solid; background-color: white; opacity: 0.96; background-color: white; z-index: 10; }
 
 .graph-element-menu { opacity: 0.96; margin-right: auto; text-align: center; }
 .graph-element-menu h2, .graph-element-menu h3 { line-height: inherit; }
@@ -202,11 +197,11 @@ svg { z-index: 1; }
 .property input.edge-label { background-color: #f5f5f5; font-size: 13px; }
 .property .relation-menu { left: 0; }
 
-.relation { position: relative; }
+.relation { z-index: 3; position: relative; }
 .relation .relation-menu { z-index: 11; position: absolute; left: 0; }
 .relation .ui-button { width: 1.7em; height: 1.8em; margin: 0; }
 
-.hidden-properties-container { display: inline-block; z-index: 3; width: 25px; }
+.hidden-properties-container { z-index: 3; min-width: 25px; }
 
 .link-like-button { border-size: 0px; border-style: none; font-size: 0.7em; padding: 0 0 0 0; background-color: transparent; font-weight: normal; }
 

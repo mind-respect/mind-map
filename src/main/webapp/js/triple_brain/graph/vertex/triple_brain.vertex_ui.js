@@ -84,15 +84,6 @@ define([
                 $('.center-vertex')
             );
         };
-        api.getVertexMouseOver = function () {
-            return $("body").data("vertex_mouse_over");
-        };
-        api.setVertexMouseOver = function (vertex) {
-            $("body").data("vertex_mouse_over", vertex);
-        };
-        api.unsetVertexMouseOver = function () {
-            $("body").removeData("vertex_mouse_over");
-        };
         api.Object = function (html) {
             this.html = html;
             this.bubble = Bubble.withHtmlFacade(this);
@@ -194,19 +185,6 @@ define([
         api.Object.prototype.getHtml = function () {
             return this.html;
         };
-        api.Object.prototype.isMouseOver = function () {
-            var vertexThatIsMouseOver = api.getVertexMouseOver();
-            return vertexThatIsMouseOver !== undefined &&
-                vertexThatIsMouseOver.equalsVertex(this);
-        };
-        api.Object.prototype.makeItLowProfile = function () {
-            if (!this.isLabelInFocus()) {
-                this.unhighlight();
-            }
-        };
-        api.Object.prototype.makeItHighProfile = function () {
-            this.highlight();
-        };
         api.Object.prototype.hideButtons = function () {
             this.hideMenu();
         };
@@ -225,32 +203,19 @@ define([
         api.Object.prototype.hideCenterButton = function () {
             this.centerButton().hide();
         };
-        api.Object.prototype.highlight = function () {
-            this.html.addClass(
-                'highlighted'
-            );
-        };
-        api.Object.prototype.unhighlight = function () {
-            this.html.removeClass(
-                'highlighted'
-            );
-        };
         api.Object.prototype.connectedEdges = function () {
             return EdgeUi.connectedToVertex(
                 this
             );
         };
-        api.Object.prototype.isLabelInFocus = function () {
-            return this.getLabel().is(":focus");
-        };
         api.Object.prototype.readjustLabelWidth = function () {
             this.adjustWidthToNumberOfChars();
         };
         api.Object.prototype.text = function () {
-            return this.getLabel().val();
+            return this.getLabel().text();
         };
         api.Object.prototype.setText = function (label) {
-            return this.getLabel().val(
+            return this.getLabel().text(
                 label
             );
         };
@@ -265,7 +230,7 @@ define([
         };
         api.Object.prototype.getNoteButtonInBubbleContent = function () {
             return this.getInBubbleContainer().find(
-                ".note-button"
+                "> .note-button"
             );
         };
         api.Object.prototype.getNoteButtonInMenu = function () {
@@ -273,18 +238,10 @@ define([
         };
         api.Object.prototype.getInBubbleContainer = function () {
             return this.html.find(
-                "> .in-bubble-content"
+                ".in-bubble-content"
             );
         };
-        api.Object.prototype.hasDefaultText = function () {
-            return this.getLabel().val() == api.getWhenEmptyLabel();
-        };
-        api.Object.prototype.applyStyleOfDefaultText = function () {
-            this.getLabel().addClass('when-default-graph-element-text');
-        };
-        api.Object.prototype.removeStyleOfDefaultText = function () {
-            this.getLabel().removeClass('when-default-graph-element-text');
-        };
+
         api.Object.prototype.isCenterVertex = function () {
             return this.html.hasClass("center-vertex");
         };
@@ -365,7 +322,7 @@ define([
             this.html.trigger("change");
         };
         api.Object.prototype.getLabel = function () {
-            return this.html.find("input.label");
+            return this.html.find(".bubble-label");
         };
         api.Object.prototype.equalsVertex = function (otherVertex) {
             return this.getId() == otherVertex.getId();
@@ -451,7 +408,7 @@ define([
             return this.getUri().indexOf("default") !== -1;
         };
         api.Object.prototype.getMenuHtml = function () {
-            return this.html.find('> .menu');
+            return this.html.find('.menu');
         };
         api.Object.prototype.addChildTree = function () {
             var self = this;

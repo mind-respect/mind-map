@@ -16,9 +16,11 @@ define([
     "triple_brain.schema_suggestion",
     "triple_brain.suggestion_service",
     "jquery-ui",
-    "jquery.triple_brain.search"
+    "jquery.triple_brain.search",
+    "jquery.max_char"
 ], function ($, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, SuggestionService) {
     var api = {};
+
     api.applyAutoCompleteIdentificationToLabelInput = function (input) {
         input.tripleBrainAutocomplete({
             limitNbRequests: true,
@@ -84,44 +86,19 @@ define([
         );
     };
     api.buildLabelHtml = function (vertex, inContentContainer, uiSelector, serverFacade) {
-        var labelContainer = $(
-                "<div class='overlay-container'>"
-            ).appendTo(
-                inContentContainer
-            ),
-            overlay = $("<div class='overlay'>").appendTo(
-                labelContainer
-            ),
-            label = $(
-                "<input type='text' class='label'>"
-            ).val(
-                serverFacade.getLabel().trim()
-            ).attr(
-                "placeholder",
-                uiSelector.getWhenEmptyLabel()
-            ).appendTo(labelContainer);
-        $("<div class='input-size'>").appendTo(
-            labelContainer
-        );
-        label.focus(function () {
+        var label = $(
+            "<div class='bubble-label'>"
+        ).text(
+            serverFacade.getLabel().trim()
+        ).attr(
+            "data-placeholder",
+            uiSelector.getWhenEmptyLabel()
+        ).appendTo(inContentContainer);
+        label.blur(function () {
             var $input = $(this),
                 vertex = vertexOfSubHtmlComponent($input);
-            vertex.highlight();
-            vertex.removeStyleOfDefaultText();
-            if (vertex.hasDefaultText()) {
-                $input.val("");
-                vertex.getLabel().keyup();
-            }
-        }).blur(function () {
-            var $input = $(this),
-                vertex = vertexOfSubHtmlComponent($input);
-            if (!vertex.isMouseOver()) {
-                vertex.unhighlight();
-            }
-            SelectionHandler.setToSingleVertex(vertex);
-        }).change(function () {
-            var $input = $(this).keyup(),
-                vertex = vertexOfSubHtmlComponent($input);
+            vertex.nonEditMode();
+            $input.maxChar();
             if (vertex.isVertexSuggestion()) {
                 SuggestionService.accept(
                     vertex,
@@ -130,48 +107,45 @@ define([
             } else {
                 updateLabel();
             }
-            $input.blur();
-            function updateLabel() {
-                VertexService.updateLabel(
-                    vertexOfSubHtmlComponent($input),
-                    $input.val()
-                );
-            }
-        }).keydown(function () {
-            vertexOfSubHtmlComponent(
-                $(this)
-            ).readjustLabelWidth();
-        }).keyup(function () {
-            var $input = $(this),
-                vertex = vertexOfSubHtmlComponent($input),
-                html = vertex.getHtml();
-            vertex.readjustLabelWidth();
             updateLabelsOfVerticesWithSameUri();
             function updateLabelsOfVerticesWithSameUri() {
                 var text = vertex.text();
                 var otherInstances = uiSelector.withHtml(
-                    html
+                    vertex.getHtml()
                 ).getOtherInstances();
                 $.each(otherInstances, function () {
                     var sameVertex = this;
                     sameVertex.setText(
                         text
                     );
-                    sameVertex.readjustLabelWidth();
                 });
             }
+
+            function updateLabel() {
+                VertexService.updateLabel(
+                    vertexOfSubHtmlComponent($input),
+                    $input.text()
+                );
+            }
+
+            SelectionHandler.setToSingleVertex(vertex);
         });
         if (vertex.isVertex()) {
             api.applyAutoCompleteIdentificationToLabelInput(
                 label
             );
         }
-        return labelContainer;
+        return label;
     };
     api.buildInsideBubbleContainer = function (html) {
-        return $(
-            "<div class='in-bubble-content'>"
-        ).appendTo(html);
+        var wrapper = $(
+                "<div class='in-bubble-content-wrapper'>"
+            ),
+            container = $(
+                "<div class='in-bubble-content'>"
+            );
+        wrapper.append(container).appendTo(html);
+        return container;
     };
     api.setUpClickBehavior = function (html) {
         html.on(
@@ -194,7 +168,7 @@ define([
                 "show" :
                 "hide"
             ]();
-        vertex.getInBubbleContainer().find("> .overlay-container").before(
+        vertex.getLabel().before(
             noteButton
         );
         function clickHandler(event) {
@@ -249,4 +223,5 @@ define([
             $(this)
         ).focus();
     }
-});
+})
+;

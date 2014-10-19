@@ -41,17 +41,12 @@ define([
         var label = this.serverFacade.isLabelEmpty() ?
             this.serverFacade.getSameAs().getUri() :
             this.serverFacade.getLabel();
-        EdgeHtmlBuilderCommon.buildNonInputLabel(
+        EdgeHtmlBuilderCommon.buildLabel(
             this.html,
             label,
             SuggestionRelationUi.getWhenEmptyLabel()
         ).css("visibility", "visible");
         var edge = this.edge = SuggestionRelationUi.withHtml(this.html);
-        EdgeHtmlBuilderCommon.buildLabelAsInput(
-            this.edge,
-            this.html,
-            SuggestionRelationUi.getWhenEmptyLabel()
-        ).hide();
         this._buildMenu();
         edge.hideMenu();
         edge.setUri(this.serverFacade.getUri());

@@ -16,5 +16,6 @@ define([
                 $(this).trigger(events, args);
             }
         };
-    });
+    }
+);
  

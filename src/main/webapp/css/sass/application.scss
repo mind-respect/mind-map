@@ -33,7 +33,6 @@ button.graph-element-button {
   color: #333;
   text-align: center;
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
-  vertical-align: middle;
   background-image: linear-gradient(to bottom, #fff, #e6e6e6);
   background-repeat: repeat-x;
   border-bottom-color: #b3b3b3;
@@ -72,20 +71,6 @@ button {
     border: none;
     background-color: transparent;
   }
-}
-
-.overlay-container {
-  position: relative;
-  display: inline;
-}
-
-.overlay {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  z-index:2;
 }
 
 .canvas-parent, .included-vertices-container.canvas-parent {
@@ -397,10 +382,6 @@ svg {
   background-color: white;
 }
 
-.when-default-graph-element-text {
-  font-style: italic;
-}
-
 .graph-element {
   input[type='text'] {
     text-shadow: none;
@@ -432,32 +413,63 @@ svg {
 }
 
 .bubble {
-  &.suggestion{
-    .in-bubble-content{
+  display: table;
+  > * {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  &.suggestion {
+    .in-bubble-content {
       background-color: white;
-      border:1px dashed black;
+      border: 1px dashed black;
+    }
+  }
+  white-space: nowrap;
+  .bubble-label {
+    outline: 0px solid transparent;
+    border: none;
+    padding: 0;
+    font-family: Helvetica;
+    font-size: 14px;
+    width: auto;
+    display: table-cell;
+    white-space: pre;
+    min-width: 1em;
+    &:empty:not(:focus):before {
+      content: attr(data-placeholder);
+      color: grey;
+      font-style: italic;
     }
   }
   position: relative;
   min-width: 0;
   margin: 0 0 0 0;
-  white-space: nowrap;
-  &.selected{
-    .in-bubble-content{
-      z-index:4;
+  &.selected {
+    .in-bubble-content {
+      z-index: 4;
     }
   }
   .image_container {
     z-index: 3;
-    display: inline-block;
     position: relative;
-    width: 60px;
+    min-width: 60px;
     &:empty {
-      width: 0;
+      min-width: 0;
+    }
+    img {
+      max-width: auto;
     }
   }
   .edge-label {
     display: inline;
+  }
+  .connector {
+    position: absolute;
+    height: 1px;
+    border-top: 1px solid black;
+    top: 50%;
+    width: 60px;
+    left: 25px;
   }
   .arrow {
     position: absolute;
@@ -474,13 +486,14 @@ svg {
     }
   }
   .menu {
-    float: left;
-    width: 132px;
+    width: 134px;
     margin-top: 5px;
     position: absolute;
     white-space: normal;
     background-color: white;
     opacity: 0.95;
+    left: 0;
+    top: 100%;
     ul:first-of-type {
       padding-left: 5px;
     }
@@ -519,34 +532,35 @@ svg {
       content: url('images/icons/vertex/arrowhead_left.svg');
     }
   }
-  .in-bubble-content, .overlay-container {
-    display: inline-block;
-    z-index: 3;
+}
+
+.relation span.label {
+  font-family: helvetica;
+  &:empty:not(:focus):before {
+    content: attr(data-placeholder);
+    font-style: italic;
   }
 }
 
-.input-size{
-  visibility: hidden;
-  padding-top: 1px;
-  padding-bottom: 1px;
-  margin-left:5px;
-  margin-right:5px;
-}
-
-.relation span.label{
-  font-family: helvetica;
-}
-.relation span.label.input-size{
+.relation span.label.input-size {
   font-family: courier new, monospace;
   padding-right: 10px;
-  font-size:14px !important;
+  font-size: 14px !important;
 }
-
 
 .vertex {
   cursor: default;
   /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */
   white-space: nowrap;
+  &.edit{
+    .in-bubble-content{
+      width:325px;
+      max-width:325px;
+    }
+    .bubble-label{
+      white-space:pre-wrap;
+    }
+  }
   &.public {
     .in-bubble-content {
       background-color: #F9E5E5;
@@ -563,18 +577,6 @@ svg {
       padding-bottom: 2em;
     }
   }
-  &.highlighted {
-    .in-bubble-content, .image_container, .menu, .included-graph-elements-flag {
-      z-index: 11
-    }
-    .in-bubble-content {
-      border: 1px;
-      -moz-border-radius: 15px;
-      border-radius: 15px;
-      border-color: green;
-      border-style: solid;
-    }
-  }
   &.selected {
     z-index: 12;
     .in-bubble-content {
@@ -583,6 +585,10 @@ svg {
     }
   }
   &.center-vertex {
+    .connector{
+      height: 0;
+      width: 0;
+    }
     .arrow {
       height: 0;
       width: 0;
@@ -613,21 +619,6 @@ svg {
       }
     }
   }
-  input[type="text"].label {
-    border:none;
-    padding:0;
-    font-family: courier new, monospace;
-    font-size: 14px;
-    background-color: transparent;
-    position:absolute;
-    width:100%;
-    left:0;
-    right:0;
-  }
-  .input-size{
-    font-size: 14px;
-    font-family: courier new, monospace;
-  }
   .included-graph-elements-flag {
     position: absolute;
     top: 25px;
@@ -640,13 +631,16 @@ svg {
   .in-bubble-content {
     border-radius: 20px;
     background-color: #E6E6FF;
-    white-space: nowrap;
+    white-space: normal;
     padding: 1em;
     padding-bottom: 0.7em;
     padding-top: 0.7em;
     margin-left: 0.3em;
     position: relative;
-    display: inline-block;
+    display: table;
+    > * {
+      display: table-cell;
+    }
     .note-button {
       margin-right: 5px;
       margin-top: -3px;
@@ -659,6 +653,7 @@ svg {
     border: 1px;
     border-color: transparent;
     border-style: solid;
+    z-index: 2;
   }
   .move {
     background-image: url('images/icons/vertex/move.png');
@@ -692,16 +687,6 @@ svg {
     height: 93%;
     margin-bottom: 0;
   }
-}
-
-.highlighted-edge {
-  border: 1px;
-  border-color: green;
-  border-style: solid;
-  background-color: white;
-  opacity: 0.96;
-  background-color: rgba(255, 255, 255, 1);
-  z-index: 10;
 }
 
 .graph-element-menu {
@@ -760,11 +745,11 @@ svg {
   }
 }
 
-.edge-label{
-  position:absolute;
-  width:100%;
-  left:0;
-  right:0;
+.edge-label {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  right: 0;
 }
 
 .property {
@@ -773,12 +758,13 @@ svg {
     font-size: 13px;
   }
   .relation-menu {
-    left:0;
+    left: 0;
   }
 }
 
 .relation {
-  position:relative;
+  z-index:3;
+  position: relative;
   .relation-menu {
     z-index: 11;
     position: absolute;
@@ -791,11 +777,9 @@ svg {
   }
 }
 
-
 .hidden-properties-container {
-  display: inline-block;
   z-index: 3;
-  width: 25px;
+  min-width: 25px;
 }
 
 .link-like-button {
@@ -870,6 +854,8 @@ svg {
     display: none !important;
   }
 }
-.add-identification{
-  float:left;
+
+.add-identification {
+  float: left;
 }
+

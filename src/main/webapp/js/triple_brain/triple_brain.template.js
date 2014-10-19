@@ -10,7 +10,7 @@ define([
         var api = {};
         api.withTemplateGroup = function(templateGroup){
             return new Template(templateGroup);
-        }
+        };
 
         function Template(templateGroup){
             this.add = function(name, html){

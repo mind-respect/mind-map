@@ -148,11 +148,8 @@ define([
                             vertex
                         ),
                         text = vertex.text();
-                    if ("" === text) {
+                    if ("" === text.trim()) {
                         text = GraphDisplayer.getVertexSelector().getWhenEmptyLabel();
-                        verticesListElement.applyStyleOfDefaultText();
-                    } else {
-                        verticesListElement.removeStyleOfDefaultText();
                     }
                     verticesListElement.setLabel(text);
                 }

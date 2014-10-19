@@ -16,7 +16,7 @@ define([
                 "<span>"
             ).addClass(
                 "relation"
-            ).css("display", "inline").append(
+            ).append(
                 buildInnerHtml()
             );
             var isInverse = edgeServerFormat.getSourceVertex().getUri() !== parentVertexHtmlFacade.getUri();

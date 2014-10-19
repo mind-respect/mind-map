@@ -59,7 +59,7 @@ define([
             );
             if (vertex.isToTheLeft()) {
                 var noteButton = vertex.getNoteButtonInBubbleContent();
-                noteButton.next(".overlay-container").after(noteButton);
+                noteButton.next(".bubble-label").after(noteButton);
             }
             if (vertex.hasHiddenRelations()) {
                 vertex.buildHiddenNeighborPropertiesIndicator();
@@ -132,10 +132,6 @@ define([
                 this.serverFacade.getSuggestions()
             );
             this.vertex.hideMenu();
-            this.vertex.getInBubbleContainer().hover(
-                onMouseOver,
-                onMouseOut
-            );
             VertexHtmlCommon.setUpIdentifications(
                 this.serverFacade,
                 this.vertex
@@ -143,12 +139,14 @@ define([
             this.vertex.addImages(
                 this.serverFacade.getImages()
             );
-            this.vertex.makeItLowProfile();
             this.vertex.setOriginalServerObject(
                 this.serverFacade
             );
             this.vertex.getHtml().append(
                 $("<span class='arrow'>")
+            );
+            this.vertex.getHtml().append(
+                $("<span class='connector'>")
             );
             this.vertex.isPublic() ?
                 this.vertex.makePublic() :
@@ -172,24 +170,14 @@ define([
             var vertexMenu = $(
                 MindMapTemplate['vertex_menu'].merge()
             );
-            this.html.append(vertexMenu);
+            this.html.find(
+                ".in-bubble-content"
+            ).append(vertexMenu);
             VertexHtmlCommon.addRelevantButtonsInMenu(
                 vertexMenu
             );
             return vertexMenu;
         };
-
-        function onMouseOver() {
-            var vertex = vertexOfSubHtmlComponent($(this));
-            RelativeTreeVertex.setVertexMouseOver(vertex);
-            vertex.makeItHighProfile();
-        }
-
-        function onMouseOut() {
-            var vertex = vertexOfSubHtmlComponent($(this));
-            RelativeTreeVertex.unsetVertexMouseOver();
-            vertex.makeItLowProfile();
-        }
 
         function vertexOfSubHtmlComponent(htmlOfSubComponent) {
             return RelativeTreeVertex.withHtml(

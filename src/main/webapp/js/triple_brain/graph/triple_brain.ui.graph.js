@@ -12,15 +12,6 @@ define([
             _drawnGraph,
             _topLayer,
             _bubbleIdCounter = 0;
-        api.getEdgeMouseOver = function () {
-            return htmlBody.data("edge_mouse_over");
-        };
-        api.setEdgeMouseOver = function (edge) {
-            htmlBody.data("edge_mouse_over", edge);
-        };
-        api.unsetEdgeMouseOver = function () {
-            htmlBody.removeData("edge_mouse_over");
-        };
         api.addHtml = function (html) {
             api.getDrawnGraph().append(html);
         };

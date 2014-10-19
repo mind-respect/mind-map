@@ -113,23 +113,7 @@ define([
         api.Object.prototype.serverFacade = function () {
             return EdgeService;
         };
-        api.Object.prototype.equalsEdge = function (otherEdge) {
-            return this.getId() == otherEdge.getId();
-        };
-        api.Object.prototype.hasDefaultText = function () {
-            return this.getLabel().val() == api.getWhenEmptyLabel();
-        };
-        api.Object.prototype.applyStyleOfDefaultText = function () {
-            this.getLabel().addClass('when-default-graph-element-text');
-        };
-        api.Object.prototype.removeStyleOfDefaultText = function () {
-            this.getLabel().removeClass('when-default-graph-element-text');
-        };
-        api.Object.prototype.isMouseOver = function () {
-            var edgeThatIsMouseOver = GraphUi.getEdgeMouseOver();
-            return  edgeThatIsMouseOver !== undefined &&
-                edgeThatIsMouseOver.equalsEdge(this);
-        };
+
         api.Object.prototype.remove = function () {
             SelectionHandler.removeRelation(this);
             this.html.remove();

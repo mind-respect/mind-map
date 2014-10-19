@@ -45,16 +45,10 @@ define([
             return this;
         };
         api.Self.prototype.setText = function (text) {
-            var label = this.getLabel();
-            label.is(":input") ?
-                label.val(text) :
-                label.text(text);
+            this.getLabel().text(text);
         };
         api.Self.prototype.text = function () {
-            var label = this.getLabel();
-            return label.is(":input") ?
-                label.val() :
-                label.text();
+            return this.getLabel().text();
         };
         api.Self.prototype.childVertexInDisplay = function () {
             return GraphDisplayer.getVertexSelector().withHtml(
@@ -72,9 +66,7 @@ define([
             }
         };
         api.Self.prototype.getLabel = function () {
-            return this.html.find("> input").is(":visible") ?
-                this.html.find("> input") :
-                this.html.find("span.label");
+            return this.html.find("span.label");
         };
         api.Self.prototype.readjustLabelWidth = function () {
             //do nothing;
@@ -90,42 +82,6 @@ define([
         };
         api.Self.prototype.isLeftOfCenterVertex = function () {
             return this.childVertexInDisplay().isToTheLeft();
-        };
-        api.Self.prototype.focus = function () {
-            this._changeToInput().focus().setCursorToEndOfText();
-        };
-        api.Self.prototype._changeToInput = function() {
-            this.getLabelAsSpan().css("visibility", "hidden").addClass(
-                "input-size"
-            );
-            var edgeHtml = this.getHtml(),
-                input = edgeHtml.find("input");
-            if (input.val() === this.getSelector().getWhenEmptyLabel()) {
-                input.val("");
-            }
-            input.show().focus().setCursorToEndOfText();
-            this.adjustWidthToNumberOfChars();
-            return input;
-        };
-
-        api.Self.prototype._changeToSpan = function() {
-            var text = this.getTextOrDefault();
-            this.getInputLabel().hide();
-            return this.getLabelAsSpan().text(
-                text
-            ).css("visibility", "visible").removeClass(
-                "input-size"
-            );
-        };
-        api.Self.prototype.getLabelAsSpan = api.Self.prototype.getInputSizer = function(){
-            return this.getHtml().find(
-                "span.label"
-            );
-        };
-        api.Self.prototype.getInputLabel = function(){
-            return this.getHtml().find(
-                "input.edge-label"
-            );
         };
         return api;
     }
