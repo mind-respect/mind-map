@@ -145,7 +145,7 @@ define([
         );
     };
     api.Self.prototype.isSuggestion = function(){
-        return this.isVertexSuggestion() || this.isRelationOrSuggestion();
+        return this.isVertexSuggestion() || this.isRelationSuggestion();
     };
     api.Self.prototype.setUri = function (uri) {
         this.html.data(

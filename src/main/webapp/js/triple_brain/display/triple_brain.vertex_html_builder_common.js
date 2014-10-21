@@ -96,9 +96,6 @@ define([
             uiSelector.getWhenEmptyLabel()
         ).maxChar().appendTo(inContentContainer);
         GraphElementHtmlBuilder.setUpLabel(label);
-        label.focus(function(){
-            vertexOfSubHtmlComponent($(this)).focus();
-        });
 
         label.blur(function () {
             var $input = $(this),
