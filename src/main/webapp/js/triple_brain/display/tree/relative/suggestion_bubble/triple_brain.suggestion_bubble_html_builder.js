@@ -7,8 +7,9 @@ define([
     "triple_brain.relative_tree_vertex",
     "triple_brain.suggestion_bubble_ui",
     "triple_brain.graph_element_main_menu",
-    "triple_brain.suggestion_bubble_menu_handler"
-], function (VertexHtmlCommon, RelativeTreeVertex, SuggestionBubbleUi, GraphElementMainMenu, SuggestionBubbleMenuHandler) {
+    "triple_brain.suggestion_bubble_menu_handler",
+    "triple_brain.ui.graph"
+], function (VertexHtmlCommon, RelativeTreeVertex, SuggestionBubbleUi, GraphElementMainMenu, SuggestionBubbleMenuHandler, GraphUi) {
     "use strict";
     var api = {};
     api.withServerFacade = function(serverFacade){
@@ -18,6 +19,9 @@ define([
         this.serverFacade = serverFacade;
     }
     Self.prototype.create = function(htmlId){
+        if(undefined === htmlId){
+            htmlId = GraphUi.generateBubbleHtmlId();
+        }
         this.html = $(
             "<div class='suggestion vertex graph-element relative bubble'>"
         ).data(

@@ -152,55 +152,101 @@ define([
     }
 
     function leftAction(selectedElement) {
-        if (selectedElement.isRelationOrSuggestion()) {
-            applyPressedArrowActionOnRelation(selectedElement);
-            return;
-        }
-        var newSelectedBubble;
-        if (isCenterVertex(selectedElement)) {
+        selectedElement.rightActionForType(
+            leftActionForVertex,
+            leftActionForRelation,
+            leftActionOther,
+            leftActionForSchema,
+            leftActionOther,
+            leftActionOther,
+            leftActionOther
+        )(selectedElement);
+    }
+
+    function leftActionForSchema(schema) {
+        var centerVertex = RelativeTreeCenterVertex.usingVertex(
+            schema
+        );
+        selectNew(
+            centerVertex.getToTheLeftTopMostChild()
+        );
+    }
+
+    function leftActionForVertex(vertex) {
+        var newSelectedElement;
+        if (isCenterVertex(vertex)) {
             var centerVertex = RelativeTreeCenterVertex.usingVertex(
-                selectedElement
+                vertex
             );
             if (!centerVertex.hasChildToLeft()) {
                 return;
             }
-            newSelectedBubble = centerVertex.getToTheLeftTopMostChild();
-        } else if (selectedElement.isToTheLeft()) {
+            newSelectedElement = getRelationOrBubble(
+                centerVertex.getToTheLeftTopMostChild()
+            );
+        } else if (vertex.isToTheLeft()) {
+            if (!vertex.hasChildren()) {
+                return;
+            }
+            newSelectedElement = getRelationOrBubble(
+                vertex.getTopMostChild()
+            );
+        } else {
+            newSelectedElement = vertex.getRelationWithParent();
+        }
+        selectNew(newSelectedElement);
+    }
+
+    function leftActionForRelation(relation) {
+        var childVertexInDisplay = relation.childVertexInDisplay();
+        var newSelectedGraphElement = childVertexInDisplay.isToTheLeft() ?
+            childVertexInDisplay :
+            childVertexInDisplay.getParentBubble();
+        selectNew(newSelectedGraphElement);
+    }
+
+    function leftActionOther(selectedElement) {
+        var newSelectedElement;
+        if (selectedElement.isToTheLeft()) {
             if (!selectedElement.hasChildren()) {
                 return;
             }
-            newSelectedBubble = selectedElement.getTopMostChild();
+            newSelectedElement = getRelationOrBubble(
+                selectedElement.getTopMostChild()
+            );
         } else {
-            newSelectedBubble = selectedElement.getParentBubble();
+            newSelectedElement = selectedElement.getParentBubble();
         }
-        SelectionHandler.setToSingleGraphElement(newSelectedBubble);
-        centerBubbleIfApplicable(newSelectedBubble);
+        selectNew(newSelectedElement);
     }
 
+
     function rightAction(selectedElement) {
-        if (selectedElement.isRelationOrSuggestion()) {
-            applyPressedArrowActionOnRelation(selectedElement);
-            return;
+        var newSelectedGraphElement;
+        if (selectedElement.isRelation()) {
+            var childVertexInDisplay = selectedElement.childVertexInDisplay();
+            newSelectedGraphElement = childVertexInDisplay.isToTheLeft() ?
+                childVertexInDisplay.getParentBubble() :
+                childVertexInDisplay;
         }
-        var newSelectedBubble;
-        if (isCenterVertex(selectedElement)) {
+        else if (isCenterVertex(selectedElement)) {
             var centerVertex = RelativeTreeCenterVertex.usingVertex(
                 selectedElement
             );
             if (!centerVertex.hasChildToRight()) {
                 return;
             }
-            newSelectedBubble = centerVertex.getToTheRightTopMostChild();
+            newSelectedGraphElement = centerVertex.getToTheRightTopMostChild().getRelationWithParent();
         } else if (selectedElement.isToTheLeft()) {
-            newSelectedBubble = selectedElement.getParentBubble();
+            newSelectedGraphElement = selectedElement.getParentBubble();
         } else {
             if (!selectedElement.hasChildren()) {
                 return;
             }
-            newSelectedBubble = selectedElement.getTopMostChild();
+            newSelectedGraphElement = selectedElement.getTopMostChild();
         }
-        SelectionHandler.setToSingleGraphElement(newSelectedBubble);
-        centerBubbleIfApplicable(newSelectedBubble);
+        SelectionHandler.setToSingleGraphElement(newSelectedGraphElement);
+        centerBubbleIfApplicable(newSelectedGraphElement);
     }
 
     function upAction(selectedElement) {
@@ -246,5 +292,14 @@ define([
         return selectedElement.isSchema() || (
             selectedElement.isVertex() && selectedElement.isCenterVertex()
             );
+    }
+
+    function getRelationOrBubble(element) {
+        return element.isGroupRelation() ? element : element.getRelationWithParent();
+    }
+
+    function selectNew(newSelectedElement) {
+        SelectionHandler.setToSingleGraphElement(newSelectedElement);
+        centerBubbleIfApplicable(newSelectedElement);
     }
 });

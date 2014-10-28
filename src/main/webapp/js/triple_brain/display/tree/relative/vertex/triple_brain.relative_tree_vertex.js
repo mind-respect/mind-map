@@ -5,14 +5,14 @@ define([
         "jquery",
         "triple_brain.vertex_ui",
         "triple_brain.event_bus",
-        "triple_brain.edge_ui",
+        "triple_brain.tree_edge",
         "triple_brain.object_utils",
         "triple_brain.bubble",
         "triple_brain.ui.triple",
         "triple_brain.selection_handler",
         "triple_brain.ui.vertex_hidden_neighbor_properties_indicator"
     ],
-    function ($, VertexUi, EventBus, EdgeUi, ObjectUtils, Bubble, Triple, SelectionHandler, PropertiesIndicator) {
+    function ($, VertexUi, EventBus, TreeEdge, ObjectUtils, Bubble, Triple, SelectionHandler, PropertiesIndicator) {
         var api = {},
             otherInstancesKey = "otherInstances";
         api.ofVertex = function (vertex) {
@@ -64,7 +64,7 @@ define([
             return this.bubble.getParentVertex();
         };
         api.Object.prototype.getRelationWithParent = function () {
-            return EdgeUi.withHtml(
+            return TreeEdge.withHtml(
                 this.getRelationWithParentHtml()
             );
         };

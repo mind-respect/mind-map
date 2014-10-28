@@ -116,6 +116,7 @@ requirejs.config({
         "triple_brain.tree_edge": "triple_brain/display/tree/triple_brain.tree_edge",
         "triple_brain.tree_edge_menu_handler": "triple_brain/display/tree/triple_brain.tree_edge_menu_handler",
         "triple_brain.bubble": "triple_brain/display/tree/triple_brain.bubble",
+        "triple_brain.bubble_factory": "triple_brain/triple_brain.bubble_factory",
         "triple_brain.graph_displayer_as_tree_common": "triple_brain/display/tree/triple_brain.graph_displayer_as_tree_common",
         "triple_brain.mind_map_info": "triple_brain/triple_brain.mind_map_info",
         "triple_brain.schema_service" : "triple_brain/graph/schema/triple_brain.schema_service",

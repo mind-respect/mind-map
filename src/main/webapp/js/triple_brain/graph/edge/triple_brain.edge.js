@@ -3,8 +3,8 @@
  */
 define([
     "triple_brain.graph_element",
-    "triple_brain.vertex"
-], function (GraphElement, Vertex) {
+    "triple_brain.friendly_resource"
+], function (GraphElement, FriendlyResource) {
     "use strict";
     var api = {};
     api.fromServerFormat = function (serverFormat) {
@@ -15,10 +15,10 @@ define([
             graphElement: GraphElement.buildObjectWithUri(
                 uri
             ),
-            sourceVertex: Vertex.buildObjectWithUri(
+            sourceVertex: FriendlyResource.buildObjectWithUri(
                 sourceVertexUri
             ),
-            destinationVertex: Vertex.buildObjectWithUri(
+            destinationVertex: FriendlyResource.buildObjectWithUri(
                 destinationVertexUri
             )
         };
@@ -29,13 +29,13 @@ define([
 
     api.Self.prototype.init = function(edgeServerFormat){
         if (edgeServerFormat.sourceVertex !== undefined) {
-            this.sourceVertex = getVertexServerFacade().fromServerFormat(
-                edgeServerFormat.sourceVertex
+            this.sourceVertex = FriendlyResource.fromServerFormat(
+                edgeServerFormat.sourceVertex.vertex.graphElement.friendlyResource
             );
         }
         if (edgeServerFormat.destinationVertex !== undefined) {
-            this.destinationVertex = getVertexServerFacade().fromServerFormat(
-                edgeServerFormat.destinationVertex
+            this.destinationVertex = FriendlyResource.fromServerFormat(
+                edgeServerFormat.destinationVertex.vertex.graphElement.friendlyResource
             );
         }
         GraphElement.Self.apply(
@@ -55,11 +55,5 @@ define([
         return this.destinationVertex;
     };
 
-    function getVertexServerFacade() {
-        if (undefined === Vertex) {
-            Vertex = require("triple_brain.vertex");
-        }
-        return Vertex;
-    }
     return api;
 });

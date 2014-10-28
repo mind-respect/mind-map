@@ -16,10 +16,11 @@ define([
     "triple_brain.schema_suggestion",
     "triple_brain.suggestion_service",
     "triple_brain.graph_element_html_builder",
+    "triple_brain.bubble_factory",
     "jquery-ui",
     "jquery.triple_brain.search",
     "jquery.max_char"
-], function ($, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, SuggestionService, GraphElementHtmlBuilder) {
+], function ($, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, SuggestionService, GraphElementHtmlBuilder, BubbleFactory) {
     var api = {};
 
     api.applyAutoCompleteIdentificationToLabelInput = function (input) {
@@ -122,12 +123,14 @@ define([
                     );
                 });
             }
+
             function updateLabel() {
                 VertexService.updateLabel(
                     vertexOfSubHtmlComponent($input),
                     $input.maxCharCleanText()
                 );
             }
+
             SelectionHandler.setToSingleVertex(vertex);
         });
         if (vertex.isVertex()) {
@@ -223,5 +226,4 @@ define([
             $(this)
         ).focus();
     }
-})
-;
+});

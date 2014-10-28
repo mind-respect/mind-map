@@ -3,7 +3,6 @@
  */
 
 define([
-        "require",
         "jquery",
         "triple_brain.event_bus",
         "triple_brain.id_uri",
@@ -12,7 +11,7 @@ define([
         "triple_brain.edge",
         "triple_brain.friendly_resource_service"
     ],
-    function (require, $, EventBus, IdUri, UserService, GraphElementService, Edge, FriendlyResourceService) {
+    function ($, EventBus, IdUri, UserService, GraphElementService, Edge, FriendlyResourceService) {
         var api = {};
         api.add = function (sourceVertex, destinationVertex, callback) {
             add(
@@ -117,7 +116,7 @@ define([
                         response
                     );
                     callback(
-                        getEdgeServerFacade().buildObjectWithUriOfSelfSourceAndDestinationVertex(
+                        Edge.buildObjectWithUriOfSelfSourceAndDestinationVertex(
                             responseUri,
                             sourceVertexUri,
                             destinationVertexUri
@@ -125,13 +124,6 @@ define([
                     );
                 }
             );
-        }
-
-        function getEdgeServerFacade() {
-            if (undefined === Edge) {
-                Edge = require("triple_brain.edge");
-            }
-            return Edge;
         }
     }
 );

@@ -15,8 +15,9 @@ define([
     "triple_brain.graph_element_service",
     "triple_brain.suggestion_relation_ui",
     "triple_brain.suggestion_service",
-    "triple_brain.graph_element_html_builder"
-], function (PropertyUi, TreeEdge, MindMapInfo, FriendlyResourceService, SelectionHandler, RelativeTreeTemplates, Identification, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementService, SuggestionRelationUi, SuggestionService, GraphElementHtmlBuilder) {
+    "triple_brain.graph_element_html_builder",
+    "triple_brain.bubble_factory"
+], function (PropertyUi, TreeEdge, MindMapInfo, FriendlyResourceService, SelectionHandler, RelativeTreeTemplates, Identification, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementService, SuggestionRelationUi, SuggestionService, GraphElementHtmlBuilder, BubbleFactory) {
     "use strict";
     var api = {};
     api.buildLabel = function (container, text, whenEmptyLabel) {

@@ -3,7 +3,6 @@
  */
 
 define([
-        "require",
         "jquery",
         "triple_brain.tree_edge",
         "triple_brain.event_bus",
@@ -12,7 +11,7 @@ define([
         "triple_brain.graph_element_main_menu",
         "triple_brain.edge_html_builder_common"
     ],
-    function (require, $, TreeEdge, EventBus, RelativeTreeVertex, GraphDisplayer, GraphElementMainMenu, EdgeHtmlBuilderCommon) {
+    function ($, TreeEdge, EventBus, RelativeTreeVertex, GraphDisplayer, GraphElementMainMenu, EdgeHtmlBuilderCommon) {
         "use strict";
         var api = {};
         api.get = function (edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {

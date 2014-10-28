@@ -59,6 +59,7 @@ define([
             )
         ]);
         edge.setGenericIdentifications([]);
+        return edge;
     };
     Self.prototype._buildMenu = function () {
         var menu = $("<span class='relation-menu'>");

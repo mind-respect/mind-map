@@ -2,13 +2,12 @@
  * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
-        "require",
         "jquery",
         "triple_brain.vertex",
         "triple_brain.edge",
         "triple_brain.group_relation"
     ],
-    function (require, $, Vertex, Edge, GroupRelation) {
+    function ($, Vertex, Edge, GroupRelation) {
         var api = {};
         api.enhancedVerticesInfo = function (serverGraph, centralVertexUri) {
             var vertices = serverGraph.vertices,
@@ -82,7 +81,7 @@ define([
                 if (isGraphElementFacadeBuilt(serverFormat)) {
                     return serverFormat;
                 }
-                return vertices[vertexId] = getVertexServerFacade().fromServerFormat(
+                return vertices[vertexId] = Vertex.fromServerFormat(
                     vertices[vertexId]
                 );
             }
@@ -91,14 +90,6 @@ define([
                 return graphElementServerFormat["getLabel"] !== undefined;
             }
         };
-
         return api;
-
-        function getVertexServerFacade() {
-            if (Vertex === undefined) {
-                Vertex = require("triple_brain.vertex")
-            }
-            return Vertex;
-        }
     }
 );

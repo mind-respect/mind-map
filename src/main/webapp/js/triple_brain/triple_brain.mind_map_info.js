@@ -17,10 +17,10 @@ define([
             return UserService.currentUserUri() + '/graph/vertex/default'
         };
         api.isCenterBubbleUriDefinedInUrl = function () {
-            return getCenterVertexUriInUrl() !== undefined;
+            return api._getCenterVertexUriInUrl() !== undefined;
         };
         api.getCenterBubbleUri = function () {
-            var uriInUrl = getCenterVertexUriInUrl();
+            var uriInUrl = api._getCenterVertexUriInUrl();
             return uriInUrl === undefined ?
                 api.defaultVertexUri() :
                 uriInUrl;
@@ -28,7 +28,7 @@ define([
         api.isViewOnly = function(){
             if(isViewOnly === undefined){
                 isViewOnly = _isAnonymous || !IdUriUtils.isGraphElementUriOwnedByCurrentUser(
-                    getCenterVertexUriInUrl()
+                    api._getCenterVertexUriInUrl()
                 );
                 EventBus.publish(
                     '/event/ui/mind_map_info/is_view_only',
@@ -45,12 +45,12 @@ define([
         };
         api.isSchemaMode = function(){
             return IdUriUtils.isSchemaUri(
-                getCenterVertexUriInUrl()
+                api._getCenterVertexUriInUrl()
             );
         };
-        return api;
-        function getCenterVertexUriInUrl(){
+        api._getCenterVertexUriInUrl = function(){
             return $.url().param("bubble");
-        }
+        };
+        return api;
     }
 );

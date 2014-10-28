@@ -2,11 +2,10 @@
  * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
-    "require",
     "triple_brain.graph_element",
     "triple_brain.edge",
     "triple_brain.suggestion"
-], function (require, GraphElement, Edge, Suggestion) {
+], function (GraphElement, Edge, Suggestion) {
     "use strict";
     var api = {};
     api.fromServerFormat = function (serverFormat) {
@@ -56,7 +55,7 @@ define([
             return includedEdges;
         }
         $.each(this.vertexServerFormat.vertex.includedEdges, function (key, value) {
-            includedEdges[key] = getEdgeServerFacade().fromServerFormat(
+            includedEdges[key] = Edge.fromServerFormat(
                 value
             );
         });
@@ -86,11 +85,4 @@ define([
         );
     };
     return api;
-
-    function getEdgeServerFacade() {
-        if (undefined === Edge) {
-            Edge = require("triple_brain.edge");
-        }
-        return Edge;
-    }
 });

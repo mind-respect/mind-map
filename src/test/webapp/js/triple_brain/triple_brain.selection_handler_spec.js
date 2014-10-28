@@ -4,18 +4,20 @@
 define([
     'test/webapp/js/test-scenarios',
     'triple_brain.selection_handler',
-    'triple_brain.group_relation'
-], function (Scenarios, SelectionHandler, GroupRelation) {
-    describe("selection_handler", function () {/*
+    'triple_brain.group_relation',
+    'triple_brain.vertex_html_builder'
+], function (Scenarios, SelectionHandler, GroupRelation, VertexHtmlBuilder) {
+    describe("selection_handler", function () {
         var scenario, graph, book1, book2, possession, groupRelation;
         beforeEach(function () {
             scenario = new Scenarios.GraphWithSimilarRelationsScenario();
             graph = scenario.getGraph();
-            book1 = scenario.getBook1();
-            book2 = scenario.getBook2();
+            book1 = VertexHtmlBuilder.withServerFacade(scenario.getBook1()).create();
+            book2 = VertexHtmlBuilder.withServerFacade(scenario.getBook2()).create();
             possession = scenario.getPossession();
             groupRelation = GroupRelation.usingIdentification(possession);
         });
+
         it("can tell if only one vertex is selected", function(){
             expect(
                 SelectionHandler.isOnlyASingleBubbleSelected()
@@ -24,6 +26,6 @@ define([
             expect(
                 SelectionHandler.isOnlyASingleBubbleSelected()
             ).toBeTruthy();
-        });*/
+        });
     });
 });

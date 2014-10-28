@@ -3,7 +3,6 @@
  */
 
 define([
-        "require",
         "jquery",
         "triple_brain.event_bus",
         "triple_brain.ui.triple",
@@ -12,7 +11,7 @@ define([
         "triple_brain.user",
         "triple_brain.friendly_resource_service"
     ],
-    function (require, $, EventBus, Triple, Suggestion, GraphElementService, UserService, FriendlyResourceService) {
+    function ($, EventBus, Triple, Suggestion, GraphElementService, UserService, FriendlyResourceService) {
         "use strict";
         var api = {};
         api.getByUri = function (uri, callback) {
@@ -54,8 +53,8 @@ define([
                 type: 'DELETE',
                 url: vertex.getUri()
             }).success(function () {
-                var uri = vertex.getUri();
-                var id = vertex.getId();
+                var uri = vertex.getUri(),
+                    id = vertex.getId();
                 callback(vertex);
                 EventBus.publish(
                     '/event/ui/graph/vertex/deleted/', [
@@ -143,7 +142,7 @@ define([
                 url: vertex.getUri() + '/suggestions',
                 dataType: 'json'
             }).success(function (jsonSuggestions) {
-                var suggestions = getSuggestion().fromServerArray(
+                var suggestions = Suggestion.fromServerArray(
                     jsonSuggestions
                 );
                 vertex.setSuggestions(
@@ -159,7 +158,7 @@ define([
             $.ajax({
                 type: 'POST',
                 url: vertex.getUri() + '/suggestions',
-                data: getSuggestion().formatAllForServer(suggestions),
+                data: Suggestion.formatAllForServer(suggestions),
                 contentType: 'application/json;charset=utf-8'
             }).success(function () {
                 vertex.addSuggestions(suggestions);
@@ -253,13 +252,6 @@ define([
                 type: isPublic ? 'POST' : 'DELETE',
                 url: vertex.getUri() + '/public_access'
             }).success(callback);
-        }
-
-        function getSuggestion() {
-            if (Suggestion === undefined) {
-                Suggestion = require("triple_brain.suggestion");
-            }
-            return Suggestion;
         }
 
         function getVerticesUrl() {

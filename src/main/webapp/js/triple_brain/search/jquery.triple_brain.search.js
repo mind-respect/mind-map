@@ -5,6 +5,7 @@ define([
     "jquery",
     "jquery-ui"
 ], function ($) {
+    var enterKeyCode = 13;
     $.fn.tripleBrainAutocomplete = function (options) {
         var textInput = $(this);
         setupNbRequestsIfApplicable();
@@ -17,11 +18,16 @@ define([
             "autocompleteselect",
             function() {
                 removeSearchFlyout();
+                $(this).blur();
             }
         ).on(
             "blur",
             removeSearchFlyout
-        );
+        ).on("keydown.autocomplete",function(event){
+            if(enterKeyCode === event.keyCode){
+                $(this).trigger("autocompleteselect");
+            }
+        });
         return this;
         function getAutocompleteOptions() {
             return {

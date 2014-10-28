@@ -8,10 +8,11 @@ define([
         "triple_brain.mind-map_template",
         "triple_brain.relative_tree_vertex",
         "triple_brain.vertex_html_builder_common",
+        "triple_brain.ui.graph",
         "jquery-ui",
         "jquery.is-fully-on-screen",
         "jquery.center-on-screen"
-    ], function ($, EventBus, MindMapTemplate, RelativeTreeVertex, VertexHtmlCommon) {
+    ], function ($, EventBus, MindMapTemplate, RelativeTreeVertex, VertexHtmlCommon, GraphUi) {
         var api = {};
         api.withServerFacade = function (serverFacade) {
             return new VertexCreator(serverFacade);
@@ -87,6 +88,9 @@ define([
         }
 
         VertexCreator.prototype.create = function (htmlId) {
+            if(undefined === htmlId){
+                htmlId = GraphUi.generateBubbleHtmlId();
+            }
             this.html.attr('id', htmlId);
             this.vertex = new RelativeTreeVertex.Object().init(
                 this.html

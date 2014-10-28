@@ -3,7 +3,6 @@
  */
 
 define([
-        "require",
         "jquery",
         "triple_brain.freebase_uri",
         "triple_brain.event_bus",
@@ -13,9 +12,10 @@ define([
         "triple_brain.identification",
         "triple_brain.image",
         "triple_brain.graph_element_service",
+        "triple_brain.freebase_autocomplete_provider",
         "jquery.url"
     ],
-    function (require, $, FreebaseUri, EventBus, GraphDisplayer, VertexService, Suggestion, Identification, Image, GraphElementService) {
+    function ($, FreebaseUri, EventBus, GraphDisplayer, VertexService, Suggestion, Identification, Image, GraphElementService, FreebaseAutocompleteProvider) {
         var api = {};
         api.handleIdentificationToServer = function (vertex, freebaseSuggestion, successCallBack) {
             var externalResource = Identification.fromFreebaseSuggestion(
@@ -23,13 +23,13 @@ define([
             );
             var typeId = getTypeId();
             if (FreebaseUri.isOfTypeTypeFromTypeId(typeId)) {
-                vertexService().addType(
+                VertexService.addType(
                     vertex,
                     externalResource,
                     successCallBack
                 );
             } else {
-                vertexService().addSameAs(
+                VertexService.addSameAs(
                     vertex,
                     externalResource,
                     successCallBack
@@ -85,7 +85,7 @@ define([
                     );
                 });
                 if (suggestions.length > 0) {
-                    vertexService().addSuggestions(
+                    VertexService.addSuggestions(
                         vertex,
                         suggestions
                     );
@@ -211,15 +211,15 @@ define([
                         searchResult.label,
                         searchResult.description
                     );
-                    vertexService().addGenericIdentification(
+                    VertexService.addGenericIdentification(
                         vertex,
                         identificationResource
                     );
                 },
                 resultsProviders: [
-                    require(
-                        "triple_brain.freebase_autocomplete_provider"
-                    ).toFetchForTypeId(identificationId)
+                    FreebaseAutocompleteProvider.toFetchForTypeId(
+                        identificationId
+                    )
                 ]
             });
         }
@@ -268,15 +268,13 @@ define([
                         searchResult.label,
                         searchResult.description
                     );
-                    vertexService().addSameAs(
+                    VertexService.addSameAs(
                         vertex,
                         identificationResource
                     );
                 },
                 resultsProviders: [
-                    require(
-                        "triple_brain.freebase_autocomplete_provider"
-                    ).fetchUsingOptions({
+                    FreebaseAutocompleteProvider.fetchUsingOptions({
                             filter: filterValue
                         })
                 ]
@@ -293,11 +291,6 @@ define([
                 }
             }
         );
-        function vertexService() {
-            return VertexService === undefined ?
-                require("triple_brain.vertex_service") :
-                VertexService;
-        }
 
         return api;
     }

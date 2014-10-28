@@ -3,8 +3,7 @@
  */
 
 define([
-    "triple_brain.id_uri",
-    'test/webapp/js/mock'
+    "triple_brain.id_uri"
 ], function (IdUri) {
     "use strict";
     describe("id_uri", function () {
