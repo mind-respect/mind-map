@@ -84,7 +84,7 @@ define([
                 resultsProviders: [
                     UserMapAutocompleteProvider.toFetchRelationsForIdentification(
                         BubbleFactory.fromHtml(
-                            container
+                            container.closest(".bubble")
                         )
                     ),
                     FreebaseAutocompleteProvider.forFetchingAnything()
