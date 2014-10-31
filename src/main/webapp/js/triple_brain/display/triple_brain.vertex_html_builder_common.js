@@ -27,7 +27,9 @@ define([
         input.tripleBrainAutocomplete({
             limitNbRequests: true,
             select: function (event, ui) {
-                var vertex = vertexOfSubHtmlComponent($(this)),
+                var vertex = BubbleFactory.fromSubHtml(
+                        $(this)
+                    ),
                     identificationResource = Identification.fromSearchResult(
                         ui.item
                     );
@@ -42,7 +44,7 @@ define([
             },
             resultsProviders: [
                 UserMapAutocompleteProvider.toFetchCurrentUserVerticesAndPublicOnesForIdentification(
-                    vertexOfSubHtmlComponent(input)
+                    BubbleFactory.fromSubHtml(input)
                 ),
                 FreebaseAutocompleteProvider.forFetchingAnything()
             ]
@@ -100,7 +102,7 @@ define([
 
         label.blur(function () {
             var $input = $(this),
-                vertex = vertexOfSubHtmlComponent($input);
+                vertex = BubbleFactory.fromSubHtml($input);
             $input.maxChar();
             if (vertex.isVertexSuggestion()) {
                 SuggestionService.accept(
@@ -126,7 +128,7 @@ define([
 
             function updateLabel() {
                 VertexService.updateLabel(
-                    vertexOfSubHtmlComponent($input),
+                    BubbleFactory.fromSubHtml($input),
                     $input.maxCharCleanText()
                 );
             }
@@ -175,7 +177,7 @@ define([
             noteButton
         );
         function clickHandler(event) {
-            var vertex = vertexOfSubHtmlComponent(
+            var vertex = BubbleFactory.fromSubHtml(
                 $(this)
             );
             vertex.getMenuHandler().forSingle().note(
@@ -185,26 +187,10 @@ define([
         }
     };
     return api;
-    function vertexOfSubHtmlComponent(htmlOfSubComponent) {
-        var vertexHtml = htmlOfSubComponent.closest('.vertex')
-        if (vertexHtml.hasClass("suggestion")) {
-            return GraphDisplayer.getVertexSuggestionSelector().withHtml(
-                vertexHtml
-            );
-        } else if (vertexHtml.hasClass("schema")) {
-            return GraphDisplayer.getSchemaSelector().withHtml(
-                vertexHtml
-            );
-        } else {
-            return GraphDisplayer.getVertexSelector().withHtml(
-                vertexHtml
-            );
-        }
-    }
 
     function clickHandler(event) {
         event.stopPropagation();
-        var vertex = vertexOfSubHtmlComponent(
+        var vertex = BubbleFactory.fromSubHtml(
             $(this)
         );
         if (event.ctrlKey) {
@@ -222,7 +208,7 @@ define([
 
     function dblClickHandler() {
         event.stopPropagation();
-        vertexOfSubHtmlComponent(
+        BubbleFactory.fromSubHtml(
             $(this)
         ).focus();
     }

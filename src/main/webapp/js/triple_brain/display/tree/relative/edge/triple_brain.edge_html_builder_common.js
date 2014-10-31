@@ -3,8 +3,6 @@
  */
 
 define([
-    "triple_brain.ui.property",
-    "triple_brain.tree_edge",
     "triple_brain.mind_map_info",
     "triple_brain.friendly_resource_service",
     "triple_brain.selection_handler",
@@ -13,11 +11,10 @@ define([
     "triple_brain.user_map_autocomplete_provider",
     "triple_brain.freebase_autocomplete_provider",
     "triple_brain.graph_element_service",
-    "triple_brain.suggestion_relation_ui",
     "triple_brain.suggestion_service",
     "triple_brain.graph_element_html_builder",
     "triple_brain.bubble_factory"
-], function (PropertyUi, TreeEdge, MindMapInfo, FriendlyResourceService, SelectionHandler, RelativeTreeTemplates, Identification, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementService, SuggestionRelationUi, SuggestionService, GraphElementHtmlBuilder, BubbleFactory) {
+], function (MindMapInfo, FriendlyResourceService, SelectionHandler, RelativeTreeTemplates, Identification, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementService, SuggestionService, GraphElementHtmlBuilder, BubbleFactory) {
     "use strict";
     var api = {};
     api.buildLabel = function (container, text, whenEmptyLabel) {
@@ -34,8 +31,8 @@ define([
             "click",
             function (event) {
                 event.stopPropagation();
-                var edge = edgeFromHtml(
-                    $(this).closest(".relation")
+                var edge = BubbleFactory.fromSubHtml(
+                    $(this)
                 );
                 if (event.ctrlKey) {
                     if (edge.isSelected()) {
@@ -48,7 +45,9 @@ define([
                 }
             }
         ).blur(function () {
-                var edge = edgeFromHtml($(this).closest(".relation"));
+                var edge = BubbleFactory.fromSubHtml(
+                    $(this)
+                );
                 if (edge.isRelationSuggestion()) {
                     SuggestionService.accept(
                         edge.childVertexInDisplay(),
@@ -65,7 +64,9 @@ define([
         ).tripleBrainAutocomplete({
                 limitNbRequests: true,
                 select: function (event, ui) {
-                    var edge = edgeFromHtml($(this));
+                    var edge = BubbleFactory.fromSubHtml(
+                        $(this)
+                    );
                     var identificationResource = Identification.fromSearchResult(
                         ui.item
                     );
@@ -82,7 +83,9 @@ define([
                 },
                 resultsProviders: [
                     UserMapAutocompleteProvider.toFetchRelationsForIdentification(
-                        edgeFromHtml(container)
+                        BubbleFactory.fromHtml(
+                            container
+                        )
                     ),
                     FreebaseAutocompleteProvider.forFetchingAnything()
                 ]
@@ -93,7 +96,7 @@ define([
                 "dblclick",
                 function (event) {
                     event.stopPropagation();
-                    var edge = edgeFromHtml(
+                    var edge = BubbleFactory.fromSubHtml(
                         $(this)
                     );
                     edge.deselect();
@@ -106,20 +109,4 @@ define([
         return label;
     };
     return api;
-
-    function edgeFromHtml(htmlComponent) {
-        var html = htmlComponent.hasClass("relation") ?
-            htmlComponent : htmlComponent.closest(".relation");
-        var uiFacade;
-        if (html.hasClass("suggestion")) {
-            uiFacade = SuggestionRelationUi;
-        } else if (html.hasClass("property")) {
-            uiFacade = PropertyUi;
-        } else {
-            uiFacade = TreeEdge;
-        }
-        return uiFacade.withHtml(
-            html
-        );
-    }
 });

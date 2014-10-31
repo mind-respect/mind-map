@@ -2,7 +2,7 @@
  * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
-    "triple_brain.ui.property",
+    "triple_brain.property_ui",
     "triple_brain.edge_html_builder_common",
     "triple_brain.graph_element_main_menu",
     "triple_brain.graph_displayer"

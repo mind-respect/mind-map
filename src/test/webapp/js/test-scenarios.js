@@ -4,17 +4,20 @@
 define([
         'triple_brain.vertex',
         'triple_brain.edge',
+        'triple_brain.schema',
         "triple_brain.vertex_html_builder",
         "triple_brain.edge_html_builder",
         "triple_brain.group_relation_html_builder",
         "triple_brain.suggestion_bubble_html_builder",
         "triple_brain.suggestion_relation_builder",
+        "triple_brain.schema_html_builder",
+        "triple_brain.property_html_builder",
         'test/webapp/js/mock',
         "triple_brain.graph_displayer",
         "triple_brain.graph_displayer_factory",
         'triple_brain.graph_displayer_as_tree_common'
     ],
-    function (Vertex, Edge, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, Mock, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon) {
+    function (Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, Mock, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon) {
         var api = {};
         api.threeBubblesGraph = function () {
             this.getGraph = function () {
@@ -169,6 +172,36 @@ define([
             };
             Mock.setCenterVertexUriInUrl(this.getVertex().getUri());
         };
+        api.getKaraokeSchemaGraph = function(){
+            this.getGraph = function () {
+                return {"friendlyResource":{"uri":"\/service\/users\/asdvo\/graph\/schema\/20694222-6d18-4e2b-ac22-7aac89ddb2a1","label":"karaoke","comment":"","images":[],"creationDate":"Oct 28, 2014 9:55:11 AM","lastModificationDate":"Oct 28, 2014 9:55:16 AM"},"properties":{"\/service\/users\/asdvo\/graph\/schema\/20694222-6d18-4e2b-ac22-7aac89ddb2a1\/property\/08366e60-a42a-492c-9dd5-abaa1fbaf301":{"friendlyResource":{"uri":"\/service\/users\/asdvo\/graph\/schema\/20694222-6d18-4e2b-ac22-7aac89ddb2a1\/property\/08366e60-a42a-492c-9dd5-abaa1fbaf301","label":"location","comment":"","images":[],"creationDate":"Oct 28, 2014 9:55:26 AM","lastModificationDate":"Oct 28, 2014 9:56:08 AM"},"genericIdentifications":{},"sameAs":{"\/service\/users\/asdvo\/graph\/identification\/6629f102-8dbb-415d-8c77-784b9add7df9":{"externalResourceUri":"http:\/\/rdf.freebase.com\/rdf\/m\/01n7","friendlyResource":{"uri":"\/service\/users\/asdvo\/graph\/identification\/6629f102-8dbb-415d-8c77-784b9add7df9","label":"Location","comment":"The Location type is used for any topic with a fixed location on the planet Earth. It includes geographic features such as oceans and mountains, political entities like cities and man-made objects like buildings.Guidelines for filling in location properties:geolocation: the longitude and latitude (in decimal notation) of the feature, or of the geographical center (centroid) fo the feature.contains and contained by: these properties can be used to show spatial relationships between different locations, such as an island contained by a body of water (which is equivalent to saying the body of water contains the island), a state contained by a country, a mountain within the borders of a national park, etc. For geopolitical locations,   containment two levels up and down is the ideal minimum. For example, the next two levels up for the city of Detroit are Wayne County and the state of Michigan.adjoins: also used to show spatial relations, in this case between locations that share a border.USBG Name: A unique name given to geographic features within the U.S. and its territories by the United States Board on Geographic Names. More information can be found on their website. GNIS ID: A unique id given to geographic features within the U.S. and its territories by the United States Board on Geographic Names. GNIS stands for Geographic Names Information System. More information can be found on their website.GEOnet Feature ID: The UFI (Unique Feature ID) used by GeoNet for features outside of the United States. More information can be found on their website.","images":[],"creationDate":"Oct 28, 2014 9:56:08 AM","lastModificationDate":"Oct 28, 2014 9:56:08 AM"}}},"additionalTypes":{}},"\/service\/users\/asdvo\/graph\/schema\/20694222-6d18-4e2b-ac22-7aac89ddb2a1\/property\/4a6ab1da-3610-4638-82e6-2b292e181cdf":{"friendlyResource":{"uri":"\/service\/users\/asdvo\/graph\/schema\/20694222-6d18-4e2b-ac22-7aac89ddb2a1\/property\/4a6ab1da-3610-4638-82e6-2b292e181cdf","label":"repertoire","comment":"","images":[],"creationDate":"Oct 28, 2014 9:55:30 AM","lastModificationDate":"Oct 28, 2014 9:55:34 AM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"\/service\/users\/asdvo\/graph\/schema\/20694222-6d18-4e2b-ac22-7aac89ddb2a1\/property\/a5e32250-b553-47a9-93f6-14ec58158ae0":{"friendlyResource":{"uri":"\/service\/users\/asdvo\/graph\/schema\/20694222-6d18-4e2b-ac22-7aac89ddb2a1\/property\/a5e32250-b553-47a9-93f6-14ec58158ae0","label":"invitees","comment":"","images":[],"creationDate":"Oct 28, 2014 9:55:16 AM","lastModificationDate":"Oct 28, 2014 9:55:24 AM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}}}}
+            };
+            var graph = this.getGraph();
+            this.getSchema = function(){
+                return Schema.fromServerFormat(
+                    graph
+                );
+            };
+            this.getSchemaUi = function(){
+                return SchemaHtmlBuilder.withServerFacade(
+                    this.getSchema()
+                ).create();
+            };
+            this.getInviteesPropertyUi = function(){
+                return PropertyHtmlBuilder.withServerFacade(
+                    this.getInviteesProperty()
+                ).create();
+            };
+            this.getInviteesProperty = function(){
+                return schemaPropertyWithLabel(
+                    this.getSchema(),
+                    "invitees"
+                );
+            };
+            Mock.setCenterVertexUriInUrl(
+                this.getSchema().getUri()
+            );
+        };
         GraphDisplayer.setImplementation(
             GraphDisplayerFactory.getByName(
                 "relative_tree"
@@ -185,6 +218,17 @@ define([
                 }
             });
             return uri;
+        }
+
+        function schemaPropertyWithLabel(schema, label) {
+            var foundProperty;
+            $.each(schema.getProperties(), function (key, property) {
+                if (property.getLabel() === label) {
+                    foundProperty = property;
+                    return -1;
+                }
+            });
+            return foundProperty;
         }
 
         function relationWithLabel(graph, label) {

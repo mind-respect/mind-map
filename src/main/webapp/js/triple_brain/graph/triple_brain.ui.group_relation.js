@@ -108,14 +108,14 @@ define([
     };
 
     Self.prototype._showDescription = function () {
-        this._getLabelHtml().popover('show');
+        this.getLabel().popover('show');
     };
 
     Self.prototype._hideDescription = function () {
-        this._getLabelHtml().popover('hide');
+        this.getLabel().popover('hide');
     };
 
-    Self.prototype._getLabelHtml = function () {
+    Self.prototype.getLabel = function () {
         return this.html.find('.label');
     };
 

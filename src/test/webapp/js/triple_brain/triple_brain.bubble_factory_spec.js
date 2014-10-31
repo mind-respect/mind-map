@@ -7,49 +7,104 @@ define([
 ], function (Scenarios, BubbleFactory) {
     "use strict";
     describe("bubble_factory", function () {
-        var bubble1, relation1, groupRelation, vertexSuggestion, relationSuggestion;
+        var vertexUi,
+            relationUi,
+            groupRelationUi,
+            vertexSuggestionUi,
+            relationSuggestionUi,
+            schemaUi,
+            propertyUi;
         beforeEach(function () {
             var threeBubblesScenario = new Scenarios.threeBubblesGraph();
-            bubble1 = threeBubblesScenario.getBubble1Ui();
-            relation1 = threeBubblesScenario.getRelation1Ui();
-            groupRelation = new Scenarios.GraphWithSimilarRelationsScenario().getPossessionAsGroupRelationUi();
+            vertexUi = threeBubblesScenario.getBubble1Ui();
+            relationUi = threeBubblesScenario.getRelation1Ui();
+            groupRelationUi = new Scenarios.GraphWithSimilarRelationsScenario().getPossessionAsGroupRelationUi();
             var oneBubbleWithSuggestionsScenario = new Scenarios.oneBubbleHavingSuggestionsGraph();
-            vertexSuggestion = oneBubbleWithSuggestionsScenario.getAVertexSuggestionUi();
-            relationSuggestion = oneBubbleWithSuggestionsScenario.getARelationSuggestionUi();
+            vertexSuggestionUi = oneBubbleWithSuggestionsScenario.getAVertexSuggestionUi();
+            relationSuggestionUi = oneBubbleWithSuggestionsScenario.getARelationSuggestionUi();
+            var karaokeScenario = new Scenarios.getKaraokeSchemaGraph();
+            schemaUi = karaokeScenario.getSchemaUi();
+            propertyUi = karaokeScenario.getInviteesPropertyUi();
         });
         it("can return vertex ui facade from html", function () {
             expect(
                 BubbleFactory.fromHtml(
-                    bubble1.getHtml()
+                    vertexUi.getHtml()
                 ).isVertex()
             ).toBeTruthy();
         });
         it("can return relation ui facade from html", function () {
             expect(
                 BubbleFactory.fromHtml(
-                    relation1.getHtml()
+                    relationUi.getHtml()
                 ).isRelation()
             ).toBeTruthy();
         });
         it("can return group relation ui facade from html", function () {
             expect(
                 BubbleFactory.fromHtml(
-                    groupRelation.getHtml()
+                    groupRelationUi.getHtml()
                 ).isGroupRelation()
             ).toBeTruthy();
         });
         it("can return vertex suggestion ui facade from html", function () {
             expect(
                 BubbleFactory.fromHtml(
-                    vertexSuggestion.getHtml()
+                    vertexSuggestionUi.getHtml()
                 ).isVertexSuggestion()
             ).toBeTruthy();
         });
         it("can return edge suggestion ui facade from html", function () {
             expect(
                 BubbleFactory.fromHtml(
-                    relationSuggestion.getHtml()
+                    relationSuggestionUi.getHtml()
                 ).isRelationSuggestion()
+            ).toBeTruthy();
+        });
+        it("can return schema ui facade from html", function () {
+            expect(
+                BubbleFactory.fromHtml(
+                    schemaUi.getHtml()
+                ).isSchema()
+            ).toBeTruthy();
+        });
+        it("can return property ui facade from html", function () {
+            expect(
+                BubbleFactory.fromHtml(
+                    propertyUi.getHtml()
+                ).isProperty()
+            ).toBeTruthy();
+        });
+        it("can get from sub element", function () {
+            expect(
+                BubbleFactory.fromSubHtml(
+                    vertexUi.getMenuHtml()
+                ).isVertex()
+            ).toBeTruthy();
+            expect(
+                BubbleFactory.fromSubHtml(
+                    relationUi.getLabel()
+                ).isRelation()
+            ).toBeTruthy();
+            expect(
+                BubbleFactory.fromSubHtml(
+                    groupRelationUi.getLabel()
+                ).isGroupRelation()
+            ).toBeTruthy();
+            expect(
+                BubbleFactory.fromSubHtml(
+                    vertexSuggestionUi.getHtml()
+                ).isVertexSuggestion()
+            ).toBeTruthy();
+            expect(
+                BubbleFactory.fromSubHtml(
+                    relationSuggestionUi.getLabel()
+                ).isRelationSuggestion()
+            ).toBeTruthy();
+            expect(
+                BubbleFactory.fromSubHtml(
+                    schemaUi.getMenuHtml()
+                ).isSchema()
             ).toBeTruthy();
         });
     });

@@ -2,12 +2,13 @@
  * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
-    "triple_brain.ui.schema",
+    "triple_brain.schema_ui",
     "triple_brain.vertex_html_builder_common",
     "triple_brain.graph_element_main_menu",
     "triple_brain.schema_menu_handler",
-    "triple_brain.relative_tree_vertex"
-], function(SchemaUi, VertexHtmlCommon, GraphElementMainMenu, SchemaMenuHandler, RelativeTreeVertex){
+    "triple_brain.relative_tree_vertex",
+    "triple_brain.ui.graph"
+], function(SchemaUi, VertexHtmlCommon, GraphElementMainMenu, SchemaMenuHandler, RelativeTreeVertex, GraphUi){
     "use strict";
     var api = {};
     api.withServerFacade = function(serverFacade){
@@ -28,6 +29,9 @@ define([
         );
     }
     Self.prototype.create = function(htmlId){
+        if(undefined === htmlId){
+            htmlId = GraphUi.generateBubbleHtmlId();
+        }
         this.html.attr('id', htmlId);
         var schema = SchemaUi.withHtml(
             this.html

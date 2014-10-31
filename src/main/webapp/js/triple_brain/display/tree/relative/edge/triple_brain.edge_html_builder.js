@@ -21,7 +21,7 @@ define([
             this.edgeServer = edgeServer;
             this.uri = edgeServer.getUri();
             this.html = $(
-                "<span class='relation graph-element'>"
+                "<span class='relation graph-element bubble'>"
             );
             this.parentVertexHtmlFacade = parentVertexHtmlFacade;
             this.childVertexHtmlFacade = childVertexHtmlFacade;

@@ -26,7 +26,7 @@ define([
 
     Self.prototype.create = function () {
         this.html = $(
-            "<span class='suggestion relation graph-element'>"
+            "<span class='suggestion relation graph-element bubble'>"
         ).data(
             "uri",
             this.serverFacade.getUri()
