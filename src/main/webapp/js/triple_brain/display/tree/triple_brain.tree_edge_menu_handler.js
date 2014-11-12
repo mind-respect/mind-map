@@ -45,7 +45,7 @@ define([
         reverse(edge);
     };
     forSingle.reverseToRightCanDo = function (edge) {
-        var isToTheLeft = edge.isLeftOfCenterVertex();
+        var isToTheLeft = edge.isToTheLeft();
         var isInverse = edge.isInverse();
         return  (isToTheLeft && !isInverse) ||
             (!isToTheLeft && isInverse);

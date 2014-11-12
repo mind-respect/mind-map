@@ -5,10 +5,10 @@ define([
     "triple_brain.graph_displayer",
     "triple_brain.event_bus",
     "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
-    "triple_brain.bubble",
     "triple_brain.graph_element_ui",
+    "triple_brain.bubble",
     "twitter_bootstrap"
-], function (GraphDisplayer, EventBus, PropertiesIndicator, Bubble, GraphElementUi) {
+], function (GraphDisplayer, EventBus, PropertiesIndicator, GraphElementUi, Bubble) {
     "use strict";
     var api = {};
     api.withHtml = function (html) {
@@ -25,9 +25,9 @@ define([
     };
     function Self(html) {
         this.html = html;
-        this.bubble = Bubble.withHtmlFacade(this);
+        Bubble.Self.apply(this, [this.html]);
     }
-    Self.prototype = new GraphElementUi.Self;
+    Self.prototype = new Bubble.Self;
     Self.prototype.getGraphElementType = function () {
         return GraphElementUi.Types.GroupRelation;
     };
@@ -56,30 +56,6 @@ define([
         GraphDisplayer.expandGroupRelation(
             this
         );
-    };
-    Self.prototype.getParentBubble = function () {
-        return this.bubble.getParentBubble();
-    };
-    Self.prototype.getParentVertex = function () {
-        return this.bubble.getParentVertex();
-    };
-    Self.prototype.hasChildren = function () {
-        return this.bubble.hasChildren();
-    };
-    Self.prototype.getTopMostChild = function () {
-        return this.bubble.getTopMostChild();
-    };
-    Self.prototype.hasBubbleAbove = function () {
-        return this.bubble.hasBubbleAbove();
-    };
-    Self.prototype.getBubbleAbove = function () {
-        return this.bubble.getBubbleAbove();
-    };
-    Self.prototype.hasBubbleUnder = function () {
-        return this.bubble.hasBubbleUnder();
-    };
-    Self.prototype.getBubbleUnder = function () {
-        return this.bubble.getBubbleUnder();
     };
     Self.prototype.select = function () {
         this.html.addClass("selected");
@@ -117,24 +93,6 @@ define([
 
     Self.prototype.getLabel = function () {
         return this.html.find('.label');
-    };
-
-    Self.prototype.hasHiddenRelationsContainer = function(){
-        return this.bubble.hasHiddenRelationsContainer();
-    };
-
-    Self.prototype.setHiddenRelationsContainer = function(hiddenRelationsContainer){
-        this.bubble.setHiddenRelationsContainer(
-            hiddenRelationsContainer
-        );
-    };
-
-    Self.prototype.getHiddenRelationsContainer = function(){
-        return this.bubble.getHiddenRelationsContainer();
-    };
-
-    Self.prototype.removeHiddenRelationsContainer = function(){
-        this.bubble.removeHiddenRelationsContainer();
     };
 
     Self.prototype.getOriginalServerObject = Self.prototype.getGroupRelation;

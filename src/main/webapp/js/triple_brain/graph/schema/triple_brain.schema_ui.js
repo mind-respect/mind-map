@@ -4,8 +4,7 @@
 define([
     "triple_brain.relative_tree_vertex",
     "triple_brain.graph_element_ui",
-    "triple_brain.bubble"
-], function (RelativeTreeVertex, GraphElementUi, Bubble) {
+], function (RelativeTreeVertex, GraphElementUi) {
     "use strict";
     var api = {};
     api.get = function(){
@@ -21,19 +20,12 @@ define([
     };
     function Self(html) {
         this.html = html;
-        this.bubble = Bubble.withHtmlFacade(this);
         RelativeTreeVertex.Object.apply(this);
         this.init(html);
     }
     Self.prototype = new RelativeTreeVertex.Object;
     Self.prototype.getGraphElementType = function () {
         return GraphElementUi.Types.Schema;
-    };
-    Self.prototype.hasChildren = function () {
-        return this.bubble.hasChildren();
-    };
-    Self.prototype.getTopMostChild = function () {
-        return this.bubble.getTopMostChild();
     };
     return api;
 });

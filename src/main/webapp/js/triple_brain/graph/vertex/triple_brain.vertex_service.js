@@ -5,13 +5,13 @@
 define([
         "jquery",
         "triple_brain.event_bus",
-        "triple_brain.ui.triple",
+        "triple_brain.triple_ui_builder",
         "triple_brain.suggestion",
         "triple_brain.graph_element_service",
         "triple_brain.user",
         "triple_brain.friendly_resource_service"
     ],
-    function ($, EventBus, Triple, Suggestion, GraphElementService, UserService, FriendlyResourceService) {
+    function ($, EventBus, TripleUiBuilder, Suggestion, GraphElementService, UserService, FriendlyResourceService) {
         "use strict";
         var api = {};
         api.getByUri = function (uri, callback) {
@@ -34,7 +34,7 @@ define([
                 url: vertex.getUri(),
                 dataType: 'json'
             }).success(function (tripleJson) {
-                var triple = Triple.createIntoSourceBubble(
+                var triple = TripleUiBuilder.createIntoSourceBubble(
                     sourceBubble,
                     tripleJson
                 );

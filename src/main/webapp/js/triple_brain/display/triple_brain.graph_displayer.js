@@ -68,6 +68,13 @@ define([
                 destinationVertex
             );
         };
+        api.addEdgeAndVertex = function (sourceBubbleUi, edge, destinationVertex) {
+            return _implementation.addEdgeAndVertex(
+                sourceBubbleUi,
+                edge,
+                destinationVertex
+            );
+        };
         api.addEdgeBetweenExistingVertices = function (newEdge) {
             return _implementation.addEdgeBetweenExistingVertices(newEdge);
         };
@@ -152,6 +159,11 @@ define([
         api.expandGroupRelation = function (groupRelation) {
             return _implementation.expandGroupRelation(groupRelation);
         };
+        api.reset = function(){
+            publishAboutToUpdate();
+            publishResetGraph();
+            $("#drawn_graph").empty();
+        };
         return api;
 
         function publishAboutToUpdate() {
@@ -176,9 +188,7 @@ define([
         }
 
         function displayUsingBubbleUri(centralBubbleUri, displayer, errorCallback) {
-            publishAboutToUpdate();
-            publishResetGraph();
-            $("#drawn_graph").empty();
+            api.reset();
             var shouldPushState = !MindMapInfo.isCenterBubbleUriDefinedInUrl() ||
                 MindMapInfo.getCenterBubbleUri() !== centralBubbleUri;
             if (shouldPushState) {

@@ -3,7 +3,7 @@
  */
 define([
         "triple_brain.relative_tree_displayer_templates",
-        "triple_brain.ui.group_relation",
+        "triple_brain.group_relation_ui",
         "triple_brain.selection_handler",
         "triple_brain.graph_element_main_menu",
         "triple_brain.graph_displayer",

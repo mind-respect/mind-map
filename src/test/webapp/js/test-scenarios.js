@@ -12,51 +12,86 @@ define([
         "triple_brain.suggestion_relation_builder",
         "triple_brain.schema_html_builder",
         "triple_brain.property_html_builder",
+        "triple_brain.graph_displayer_as_relative_tree",
         'test/webapp/js/mock',
+        "triple_brain.bubble_factory",
         "triple_brain.graph_displayer",
         "triple_brain.graph_displayer_factory",
         'triple_brain.graph_displayer_as_tree_common'
     ],
-    function (Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, Mock, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon) {
+    function (Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon) {
         var api = {};
+        api.getTriple = function () {
+            return {"source_vertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/77db9245-cb65-423e-ab0f-bcef1628bbc8", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:41:00 AM", "lastModificationDate": "Nov 11, 2014 8:41:00 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 4, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "edge": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/edge\/9e3d54f5-562c-4747-a1e3-9f068d423f2e", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:52:02 AM", "lastModificationDate": "Nov 11, 2014 8:52:02 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/77db9245-cb65-423e-ab0f-bcef1628bbc8", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:41:00 AM", "lastModificationDate": "Nov 11, 2014 8:41:00 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 4, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/1854be6e-05c1-4878-98f7-6e3906088e5e", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:52:02 AM", "lastModificationDate": "Nov 11, 2014 8:52:02 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}}, "end_vertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/1854be6e-05c1-4878-98f7-6e3906088e5e", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:52:02 AM", "lastModificationDate": "Nov 11, 2014 8:52:02 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}};
+        };
+        api.getAnotherTriple = function(){
+            return {"source_vertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvapok\/graph\/vertex\/77db9245-cb65-423e-ab0f-bcef1628bbc8","label":"","comment":"","images":[],"creationDate":"Nov 11, 2014 8:41:00 AM","lastModificationDate":"Nov 11, 2014 8:41:00 AM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"numberOfConnectedEdges":5,"includedVertices":{},"includedEdges":{},"suggestions":[],"isPublic":false}},"edge":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvapok\/graph\/edge\/961a4cf1-96bf-4db9-8dbb-194f24438eb4","label":"","comment":"","images":[],"creationDate":"Nov 11, 2014 8:59:42 AM","lastModificationDate":"Nov 11, 2014 8:59:42 AM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"sourceVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvapok\/graph\/vertex\/77db9245-cb65-423e-ab0f-bcef1628bbc8","label":"","comment":"","images":[],"creationDate":"Nov 11, 2014 8:41:00 AM","lastModificationDate":"Nov 11, 2014 8:41:00 AM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"numberOfConnectedEdges":5,"includedVertices":{},"includedEdges":{},"suggestions":[],"isPublic":false}},"destinationVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvapok\/graph\/vertex\/ff233c48-93e5-4619-a7e1-fe39a51c7ad9","label":"","comment":"","images":[],"creationDate":"Nov 11, 2014 8:59:42 AM","lastModificationDate":"Nov 11, 2014 8:59:42 AM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"numberOfConnectedEdges":1,"includedVertices":{},"includedEdges":{},"suggestions":[],"isPublic":false}}},"end_vertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvapok\/graph\/vertex\/ff233c48-93e5-4619-a7e1-fe39a51c7ad9","label":"","comment":"","images":[],"creationDate":"Nov 11, 2014 8:59:42 AM","lastModificationDate":"Nov 11, 2014 8:59:42 AM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"numberOfConnectedEdges":1,"includedVertices":{},"includedEdges":{},"suggestions":[],"isPublic":false}}};
+        };
         api.threeBubblesGraph = function () {
+            var isTreeBuilt = false;
             this.getGraph = function () {
                 return {"vertices": {"\/service\/users\/asvas\/graph\/vertex\/66af347b-bf7a-4081-b4da-dfc016f699a5": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/vertex\/66af347b-bf7a-4081-b4da-dfc016f699a5", "label": "b1", "comment": "", "images": [], "creationDate": "Oct 24, 2014 11:03:38 AM", "lastModificationDate": "Oct 24, 2014 11:03:51 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "\/service\/users\/asvas\/graph\/vertex\/622caec8-42ed-4847-99df-82726ca0dc99": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/vertex\/622caec8-42ed-4847-99df-82726ca0dc99", "label": "b3", "comment": "", "images": [], "creationDate": "Oct 24, 2014 11:01:15 AM", "lastModificationDate": "Oct 24, 2014 11:04:04 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "\/service\/users\/asvas\/graph\/vertex\/8b9d9a88-4ac3-4755-9d81-64a6e1773b67": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/vertex\/8b9d9a88-4ac3-4755-9d81-64a6e1773b67", "label": "b2", "comment": "", "images": [], "creationDate": "Oct 24, 2014 11:01:12 AM", "lastModificationDate": "Oct 24, 2014 11:03:57 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 2, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}}, "edges": {"\/service\/users\/asvas\/graph\/edge\/5030df9c-07f6-4212-8e9b-a2b7f7b61376": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/edge\/5030df9c-07f6-4212-8e9b-a2b7f7b61376", "label": "r1", "comment": "", "images": [], "creationDate": "Oct 24, 2014 11:03:38 AM", "lastModificationDate": "Oct 24, 2014 11:04:10 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/vertex\/66af347b-bf7a-4081-b4da-dfc016f699a5"}}}}, "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/vertex\/8b9d9a88-4ac3-4755-9d81-64a6e1773b67"}}}}}, "\/service\/users\/asvas\/graph\/edge\/8fd8ee09-4c3c-4adf-bbb9-e6eb9131e658": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/edge\/8fd8ee09-4c3c-4adf-bbb9-e6eb9131e658", "label": "r2", "comment": "", "images": [], "creationDate": "Oct 24, 2014 11:01:15 AM", "lastModificationDate": "Oct 24, 2014 11:04:00 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/vertex\/8b9d9a88-4ac3-4755-9d81-64a6e1773b67"}}}}, "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/vertex\/622caec8-42ed-4847-99df-82726ca0dc99"}}}}}}};
             };
             this.getBubble1 = function () {
                 return Vertex.fromServerFormat(graph.vertices[
-                        uriOfVertexWithLabel(graph, "b1")
+                        uriOfVertexWithLabel(this.getGraph(), "b1")
                         ]
                 );
             };
-            this.getBubble1Ui = function(){
+            this.getChild1BubbleInTree = function () {
+                return this.getBubbleWithLabelInTree("b1");
+            };
+            this.getBubble1Ui = function () {
                 return VertexHtmlBuilder.withServerFacade(
                     this.getBubble1()
                 ).create();
             };
             this.getBubble2 = function () {
                 return Vertex.fromServerFormat(graph.vertices[
-                        uriOfVertexWithLabel(graph, "b2")
+                        uriOfVertexWithLabel(this.getGraph(), "b2")
                         ]
                 );
             };
-            this.getBubble2Ui = function(){
+            this.getBubble2Ui = function () {
                 return VertexHtmlBuilder.withServerFacade(
                     this.getBubble2()
                 ).create();
+            };
+            this.getCenterBubbleInTree = function () {
+                return this.getBubbleWithLabelInTree("b2");
             };
             this.getRelation1 = function () {
                 return relationWithLabel(graph, "r1");
             };
             this.getRelation1Ui = function () {
-                return EdgeHtmlBuilder.get(
-                    this.getRelation1(),
+                var edge = EdgeHtmlBuilder.withServerFacade(
+                    this.getRelation1()
+                ).create();
+                EdgeHtmlBuilder.afterChildBuilt(
+                    edge,
                     this.getBubble1Ui(),
                     this.getBubble2Ui()
-                ).create();
+                );
+                return edge;
             };
             var graph = this.getGraph();
-            Mock.setCenterVertexUriInUrl(this.getBubble1().getUri());
+            Mock.setCenterVertexUriInUrl(this.getBubble2().getUri());
+            this.buildTree = function() {
+                if(isTreeBuilt){
+                    return;
+                }
+                makeTree(
+                    graph,
+                    uriOfVertexWithLabel(this.getGraph(), "b2")
+                );
+                isTreeBuilt = true;
+            };
+            this.getBubbleWithLabelInTree = function (label) {
+                this.buildTree();
+                return GraphDisplayer.getVertexSelector().withUri(
+                    uriOfVertexWithLabel(this.getGraph(), label)
+                )[0];
+            };
         };
         api.GraphWithAnInverseRelationScenario = function () {
             this.getGraph = function () {
@@ -98,7 +133,7 @@ define([
                     possessionUri
                     ];
             };
-            this.getPossessionAsGroupRelationUi = function(){
+            this.getPossessionAsGroupRelationUi = function () {
                 return GroupRelationHtmlBuilder.withServerFacade(
                     this.getPossessionAsGroupRelation()
                 ).create();
@@ -149,7 +184,7 @@ define([
                 ], "isPublic": false}}}, "edges": {}};
             };
             var graph = this.getGraph();
-            this.getVertex = function(){
+            this.getVertex = function () {
                 return Vertex.fromServerFormat(graph.vertices[
                         uriOfVertexWithLabel(graph, "Event")
                         ]
@@ -158,12 +193,12 @@ define([
             this.getOneSuggestion = function () {
                 return this.getVertex().getSuggestions()[0];
             };
-            this.getAVertexSuggestionUi = function(){
+            this.getAVertexSuggestionUi = function () {
                 return SuggestionBubbleHtmlBuilder.withServerFacade(
                     this.getOneSuggestion()
                 ).create();
             };
-            this.getARelationSuggestionUi = function(){
+            this.getARelationSuggestionUi = function () {
                 return SuggestionRelationBuilder.get(
                     this.getOneSuggestion(),
                     this.getVertex(),
@@ -172,27 +207,27 @@ define([
             };
             Mock.setCenterVertexUriInUrl(this.getVertex().getUri());
         };
-        api.getKaraokeSchemaGraph = function(){
+        api.getKaraokeSchemaGraph = function () {
             this.getGraph = function () {
-                return {"friendlyResource":{"uri":"\/service\/users\/asdvo\/graph\/schema\/20694222-6d18-4e2b-ac22-7aac89ddb2a1","label":"karaoke","comment":"","images":[],"creationDate":"Oct 28, 2014 9:55:11 AM","lastModificationDate":"Oct 28, 2014 9:55:16 AM"},"properties":{"\/service\/users\/asdvo\/graph\/schema\/20694222-6d18-4e2b-ac22-7aac89ddb2a1\/property\/08366e60-a42a-492c-9dd5-abaa1fbaf301":{"friendlyResource":{"uri":"\/service\/users\/asdvo\/graph\/schema\/20694222-6d18-4e2b-ac22-7aac89ddb2a1\/property\/08366e60-a42a-492c-9dd5-abaa1fbaf301","label":"location","comment":"","images":[],"creationDate":"Oct 28, 2014 9:55:26 AM","lastModificationDate":"Oct 28, 2014 9:56:08 AM"},"genericIdentifications":{},"sameAs":{"\/service\/users\/asdvo\/graph\/identification\/6629f102-8dbb-415d-8c77-784b9add7df9":{"externalResourceUri":"http:\/\/rdf.freebase.com\/rdf\/m\/01n7","friendlyResource":{"uri":"\/service\/users\/asdvo\/graph\/identification\/6629f102-8dbb-415d-8c77-784b9add7df9","label":"Location","comment":"The Location type is used for any topic with a fixed location on the planet Earth. It includes geographic features such as oceans and mountains, political entities like cities and man-made objects like buildings.Guidelines for filling in location properties:geolocation: the longitude and latitude (in decimal notation) of the feature, or of the geographical center (centroid) fo the feature.contains and contained by: these properties can be used to show spatial relationships between different locations, such as an island contained by a body of water (which is equivalent to saying the body of water contains the island), a state contained by a country, a mountain within the borders of a national park, etc. For geopolitical locations,   containment two levels up and down is the ideal minimum. For example, the next two levels up for the city of Detroit are Wayne County and the state of Michigan.adjoins: also used to show spatial relations, in this case between locations that share a border.USBG Name: A unique name given to geographic features within the U.S. and its territories by the United States Board on Geographic Names. More information can be found on their website. GNIS ID: A unique id given to geographic features within the U.S. and its territories by the United States Board on Geographic Names. GNIS stands for Geographic Names Information System. More information can be found on their website.GEOnet Feature ID: The UFI (Unique Feature ID) used by GeoNet for features outside of the United States. More information can be found on their website.","images":[],"creationDate":"Oct 28, 2014 9:56:08 AM","lastModificationDate":"Oct 28, 2014 9:56:08 AM"}}},"additionalTypes":{}},"\/service\/users\/asdvo\/graph\/schema\/20694222-6d18-4e2b-ac22-7aac89ddb2a1\/property\/4a6ab1da-3610-4638-82e6-2b292e181cdf":{"friendlyResource":{"uri":"\/service\/users\/asdvo\/graph\/schema\/20694222-6d18-4e2b-ac22-7aac89ddb2a1\/property\/4a6ab1da-3610-4638-82e6-2b292e181cdf","label":"repertoire","comment":"","images":[],"creationDate":"Oct 28, 2014 9:55:30 AM","lastModificationDate":"Oct 28, 2014 9:55:34 AM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"\/service\/users\/asdvo\/graph\/schema\/20694222-6d18-4e2b-ac22-7aac89ddb2a1\/property\/a5e32250-b553-47a9-93f6-14ec58158ae0":{"friendlyResource":{"uri":"\/service\/users\/asdvo\/graph\/schema\/20694222-6d18-4e2b-ac22-7aac89ddb2a1\/property\/a5e32250-b553-47a9-93f6-14ec58158ae0","label":"invitees","comment":"","images":[],"creationDate":"Oct 28, 2014 9:55:16 AM","lastModificationDate":"Oct 28, 2014 9:55:24 AM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}}}}
+                return {"friendlyResource": {"uri": "\/service\/users\/asdvo\/graph\/schema\/20694222-6d18-4e2b-ac22-7aac89ddb2a1", "label": "karaoke", "comment": "", "images": [], "creationDate": "Oct 28, 2014 9:55:11 AM", "lastModificationDate": "Oct 28, 2014 9:55:16 AM"}, "properties": {"\/service\/users\/asdvo\/graph\/schema\/20694222-6d18-4e2b-ac22-7aac89ddb2a1\/property\/08366e60-a42a-492c-9dd5-abaa1fbaf301": {"friendlyResource": {"uri": "\/service\/users\/asdvo\/graph\/schema\/20694222-6d18-4e2b-ac22-7aac89ddb2a1\/property\/08366e60-a42a-492c-9dd5-abaa1fbaf301", "label": "location", "comment": "", "images": [], "creationDate": "Oct 28, 2014 9:55:26 AM", "lastModificationDate": "Oct 28, 2014 9:56:08 AM"}, "genericIdentifications": {}, "sameAs": {"\/service\/users\/asdvo\/graph\/identification\/6629f102-8dbb-415d-8c77-784b9add7df9": {"externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/01n7", "friendlyResource": {"uri": "\/service\/users\/asdvo\/graph\/identification\/6629f102-8dbb-415d-8c77-784b9add7df9", "label": "Location", "comment": "The Location type is used for any topic with a fixed location on the planet Earth. It includes geographic features such as oceans and mountains, political entities like cities and man-made objects like buildings.Guidelines for filling in location properties:geolocation: the longitude and latitude (in decimal notation) of the feature, or of the geographical center (centroid) fo the feature.contains and contained by: these properties can be used to show spatial relationships between different locations, such as an island contained by a body of water (which is equivalent to saying the body of water contains the island), a state contained by a country, a mountain within the borders of a national park, etc. For geopolitical locations,   containment two levels up and down is the ideal minimum. For example, the next two levels up for the city of Detroit are Wayne County and the state of Michigan.adjoins: also used to show spatial relations, in this case between locations that share a border.USBG Name: A unique name given to geographic features within the U.S. and its territories by the United States Board on Geographic Names. More information can be found on their website. GNIS ID: A unique id given to geographic features within the U.S. and its territories by the United States Board on Geographic Names. GNIS stands for Geographic Names Information System. More information can be found on their website.GEOnet Feature ID: The UFI (Unique Feature ID) used by GeoNet for features outside of the United States. More information can be found on their website.", "images": [], "creationDate": "Oct 28, 2014 9:56:08 AM", "lastModificationDate": "Oct 28, 2014 9:56:08 AM"}}}, "additionalTypes": {}}, "\/service\/users\/asdvo\/graph\/schema\/20694222-6d18-4e2b-ac22-7aac89ddb2a1\/property\/4a6ab1da-3610-4638-82e6-2b292e181cdf": {"friendlyResource": {"uri": "\/service\/users\/asdvo\/graph\/schema\/20694222-6d18-4e2b-ac22-7aac89ddb2a1\/property\/4a6ab1da-3610-4638-82e6-2b292e181cdf", "label": "repertoire", "comment": "", "images": [], "creationDate": "Oct 28, 2014 9:55:30 AM", "lastModificationDate": "Oct 28, 2014 9:55:34 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "\/service\/users\/asdvo\/graph\/schema\/20694222-6d18-4e2b-ac22-7aac89ddb2a1\/property\/a5e32250-b553-47a9-93f6-14ec58158ae0": {"friendlyResource": {"uri": "\/service\/users\/asdvo\/graph\/schema\/20694222-6d18-4e2b-ac22-7aac89ddb2a1\/property\/a5e32250-b553-47a9-93f6-14ec58158ae0", "label": "invitees", "comment": "", "images": [], "creationDate": "Oct 28, 2014 9:55:16 AM", "lastModificationDate": "Oct 28, 2014 9:55:24 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}}}
             };
             var graph = this.getGraph();
-            this.getSchema = function(){
+            this.getSchema = function () {
                 return Schema.fromServerFormat(
                     graph
                 );
             };
-            this.getSchemaUi = function(){
+            this.getSchemaUi = function () {
                 return SchemaHtmlBuilder.withServerFacade(
                     this.getSchema()
                 ).create();
             };
-            this.getInviteesPropertyUi = function(){
+            this.getInviteesPropertyUi = function () {
                 return PropertyHtmlBuilder.withServerFacade(
                     this.getInviteesProperty()
                 ).create();
             };
-            this.getInviteesProperty = function(){
+            this.getInviteesProperty = function () {
                 return schemaPropertyWithLabel(
                     this.getSchema(),
                     "invitees"
@@ -259,6 +294,15 @@ define([
                 }
             });
             return foundIdentification;
+        }
+
+        function makeTree(graph, centralVertexUri) {
+            GraphDisplayer.reset();
+            new GraphDisplayerAsRelativeTree.TreeMaker()
+                .makeForCenterVertex(
+                graph,
+                centralVertexUri
+            );
         }
     }
 );

@@ -3,36 +3,30 @@
  */
 
 define([
-    "triple_brain.relative_tree_vertex",
-    "triple_brain.tree_edge",
-    "triple_brain.ui.group_relation",
-    "triple_brain.suggestion_bubble_ui",
-    "triple_brain.suggestion_relation_ui",
-    "triple_brain.schema_ui",
-    "triple_brain.property_ui"
-], function (RelativeTreeVertex, TreeEdge, GroupRelationUi, SuggestionBubbleUi, SuggestionRelationUi, SchemaUi, PropertyUi) {
+    "triple_brain.graph_displayer"
+], function (GraphDisplayer) {
     "use strict";
     var api = {};
     api.fromHtml = function(html){
         var uiFacade;
         if(html.hasClass("vertex")){
             if(html.hasClass("suggestion")){
-                uiFacade = SuggestionBubbleUi;
+                uiFacade = GraphDisplayer.getVertexSuggestionSelector();
             }else if(html.hasClass("schema")){
-                uiFacade = SchemaUi;
+                uiFacade = GraphDisplayer.getSchemaSelector();
             }else{
-                uiFacade = RelativeTreeVertex;
+                uiFacade = GraphDisplayer.getVertexSelector();
             }
         }else if(html.hasClass("relation")){
             if(html.hasClass("suggestion")){
-                uiFacade = SuggestionRelationUi;
+                uiFacade = GraphDisplayer.getRelationSuggestionSelector();
             }else if(html.hasClass("property")){
-                uiFacade = PropertyUi;
+                uiFacade = GraphDisplayer.getPropertySelector();
             }else{
-                uiFacade = TreeEdge;
+                uiFacade = GraphDisplayer.getEdgeSelector();
             }
         }else if(html.hasClass("group-relation")){
-            uiFacade = GroupRelationUi;
+            uiFacade = GraphDisplayer.getGroupRelationSelector();
         }
         return uiFacade.withHtml(html);
     };

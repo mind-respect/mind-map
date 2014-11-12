@@ -7,13 +7,13 @@ define([
         "triple_brain.ui.graph",
         "triple_brain.event_bus",
         "triple_brain.graph_displayer",
-        "triple_brain.identified_graph_element_ui",
+        "triple_brain.identified_bubble",
         "triple_brain.edge_service",
         "triple_brain.graph_element_button",
         "triple_brain.selection_handler",
         "triple_brain.graph_element_ui"
     ],
-    function ($, GraphUi, EventBus, GraphDisplayer, IdentifiedGraphElementUi, EdgeService, GraphElementButton, SelectionHandler, GraphElementUi) {
+    function ($, GraphUi, EventBus, GraphDisplayer, IdentifiedBubble, EdgeService, GraphElementButton, SelectionHandler, GraphElementUi) {
         "use strict";
         var api = {},
             cache = {};
@@ -68,17 +68,12 @@ define([
 
         api.Object = function (html) {
             this.html = html;
-            IdentifiedGraphElementUi.Object.apply(this, [html]);
+            IdentifiedBubble.Object.apply(this, [html]);
         };
-        api.Object.prototype = new IdentifiedGraphElementUi.Object;
+        api.Object.prototype = new IdentifiedBubble.Object;
 
         api.Object.prototype.getMenuHtml = function () {
             return this.html.find('.relation-menu');
-        };
-        api.Object.getMenuButtonsHtml = function () {
-            return this.getMenuHtml().find(
-                ">button"
-            );
         };
         api.Object.prototype.getGraphElementType = function () {
             return GraphElementUi.Types.Relation;

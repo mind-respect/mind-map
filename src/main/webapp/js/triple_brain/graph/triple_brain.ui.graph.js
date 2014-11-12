@@ -15,9 +15,6 @@ define([
         api.addHtml = function (html) {
             api.getDrawnGraph().append(html);
         };
-        api.canvas = function () {
-            return htmlBody.data("canvas");
-        };
         api.offset = function () {
             return Point.fromCoordinates(
                     htmlBody.width() / 2,

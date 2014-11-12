@@ -80,9 +80,6 @@ define([
                 ]("inverse");
             EdgeUi.withHtml(this.html).inverseAbstract();
         };
-        api.Self.prototype.isLeftOfCenterVertex = function () {
-            return this.childVertexInDisplay().isToTheLeft();
-        };
         return api;
     }
 );

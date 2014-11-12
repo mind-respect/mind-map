@@ -14,48 +14,54 @@ define([
     function ($, TreeEdge, EventBus, RelativeTreeVertex, GraphDisplayer, GraphElementMainMenu, EdgeHtmlBuilderCommon) {
         "use strict";
         var api = {};
-        api.get = function (edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
-            return new EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade);
+        api.withServerFacade = function (edgeServer) {
+            return new EdgeCreator(
+                edgeServer
+            );
         };
-        function EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
+        api.afterChildBuilt = function(edge, parentUi, childUi){
+            var edgeServer = edge.getOriginalServerObject();
+            var isInverse = edgeServer.getSourceVertex().getUri() !== parentUi.getUri();
+            if (isInverse) {
+                childUi.getHtml().addClass("inverse");
+            }
+            edge.getHtml().data(
+                "source_vertex_id",
+                isInverse ? childUi.getId() : parentUi.getId()
+            ).data(
+                "destination_vertex_id",
+                isInverse ? parentUi.getId() : childUi.getId()
+            );
+            EventBus.publish(
+                '/event/ui/html/edge/created/',
+                edge
+            );
+            edge.getHtml().closest(
+                ".vertex-tree-container"
+            ).find("> .vertical-border").addClass("small");
+        };
+        function EdgeCreator(edgeServer) {
             this.edgeServer = edgeServer;
             this.uri = edgeServer.getUri();
             this.html = $(
-                "<span class='relation graph-element bubble'>"
+                "<div class='relation graph-element bubble'>"
             );
-            this.parentVertexHtmlFacade = parentVertexHtmlFacade;
-            this.childVertexHtmlFacade = childVertexHtmlFacade;
         }
 
         EdgeCreator.prototype.create = function () {
             this.html.uniqueId();
-            var isInverse = this.edgeServer.getSourceVertex().getUri() !== this.parentVertexHtmlFacade.getUri();
-            if (isInverse) {
-                this.childVertexHtmlFacade.getHtml().addClass("inverse");
-            }
-            this.html.data(
-                "source_vertex_id",
-                isInverse ? this.childVertexHtmlFacade.getId() : this.parentVertexHtmlFacade.getId()
-            ).data(
-                "destination_vertex_id",
-                isInverse ? this.parentVertexHtmlFacade.getId() : this.childVertexHtmlFacade.getId()
-            );
-            var inBubbleContainer = this.childVertexHtmlFacade.getHtml(),
-                isToTheLeft = this.childVertexHtmlFacade.isToTheLeft();
-            this.html[isToTheLeft ? "appendTo" : "prependTo"](
-                inBubbleContainer
-            ).css(
-                isToTheLeft ? "padding-left" : "padding-right", "15px"
-            ).append(this.html);
-            this.html.append(
-                $("<span class='connector'>")
-            );
             EdgeHtmlBuilderCommon.buildLabel(
                 this.html,
                 this.edgeServer.getLabel(),
                 TreeEdge.getWhenEmptyLabel()
             );
+            this.html.append(
+                "<span class='connector'>"
+            );
             var edge = this._edgeFacade();
+            edge.setOriginalServerObject(
+                this.edgeServer
+            );
             buildMenu(edge);
             edge.hideMenu();
             edge.setUri(this.uri);
@@ -74,10 +80,6 @@ define([
                     sameAsFromServer
                 );
             });
-            EventBus.publish(
-                '/event/ui/html/edge/created/',
-                edge
-            );
             return edge;
         };
 

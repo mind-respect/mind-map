@@ -7,7 +7,7 @@ define([
     "triple_brain.selection_handler",
     "triple_brain.relative_tree_vertex",
     "triple_brain.ui.utils",
-    "triple_brain.ui.triple",
+    "triple_brain.triple_ui",
     "triple_brain.identification_menu",
     "triple_brain.graph_displayer",
     "triple_brain.vertex_menu_handler_common",
@@ -18,7 +18,7 @@ define([
     "triple_brain.included_graph_elements_menu",
     "triple_brain.vertex_ui",
     "triple_brain.mind_map_info"
-], function ($, VertexService, SelectionHandler, RelativeTreeVertex, UiUtils, Triple, IdentificationMenu, GraphDisplayer, VertexMenuHandlerCommon, DeleteMenu, EdgeUi, ImageMenu, LinkToFarVertexMenu, IncludedGraphElementsMenu, VertexUi, MindMapInfo) {
+], function ($, VertexService, SelectionHandler, RelativeTreeVertex, UiUtils, TripleUi, IdentificationMenu, GraphDisplayer, VertexMenuHandlerCommon, DeleteMenu, EdgeUi, ImageMenu, LinkToFarVertexMenu, IncludedGraphElementsMenu, VertexUi, MindMapInfo) {
     "use strict";
     var api = {},
         forSingle = {},

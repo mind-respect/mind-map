@@ -32,7 +32,8 @@ define([
                     GraphDisplayer.addProperty(
                         GraphElement.withUri(
                             propertyUri
-                        )
+                        ),
+                        schema
                     );
                 }
             );

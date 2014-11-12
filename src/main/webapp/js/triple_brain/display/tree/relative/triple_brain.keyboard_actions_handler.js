@@ -5,13 +5,13 @@ define([
     "jquery",
     "triple_brain.event_bus",
     "triple_brain.selection_handler",
-    "triple_brain.relative_tree_center_vertex",
+    "triple_brain.center_bubble",
     "triple_brain.vertex_service",
     "triple_brain.ui.utils",
     "triple_brain.identification_menu",
     "triple_brain.mind_map_info",
     "triple_brain.graph_element_ui"
-], function ($, EventBus, SelectionHandler, RelativeTreeCenterVertex, VertexService, UiUtils, IdentificationMenu, MindMapInfo, GraphElementUi) {
+], function ($, EventBus, SelectionHandler, CenterBubble, VertexService, UiUtils, IdentificationMenu, MindMapInfo, GraphElementUi) {
     "use strict";
     var api = {},
         tabKeyNumber = 9,
@@ -164,7 +164,7 @@ define([
     }
 
     function leftActionForSchema(schema) {
-        var centerVertex = RelativeTreeCenterVertex.usingVertex(
+        var centerVertex = CenterBubble.usingBubble(
             schema
         );
         selectNew(
@@ -175,7 +175,7 @@ define([
     function leftActionForVertex(vertex) {
         var newSelectedElement;
         if (isCenterVertex(vertex)) {
-            var centerVertex = RelativeTreeCenterVertex.usingVertex(
+            var centerVertex = CenterBubble.usingBubble(
                 vertex
             );
             if (!centerVertex.hasChildToLeft()) {
@@ -189,7 +189,7 @@ define([
                 return;
             }
             newSelectedElement = getRelationOrBubble(
-                vertex.getTopMostChild()
+                vertex.getTopMostChildBubble()
             );
         } else {
             newSelectedElement = vertex.getRelationWithParent();
@@ -212,7 +212,7 @@ define([
                 return;
             }
             newSelectedElement = getRelationOrBubble(
-                selectedElement.getTopMostChild()
+                selectedElement.getTopMostChildBubble()
             );
         } else {
             newSelectedElement = selectedElement.getParentBubble();
@@ -230,7 +230,7 @@ define([
                 childVertexInDisplay;
         }
         else if (isCenterVertex(selectedElement)) {
-            var centerVertex = RelativeTreeCenterVertex.usingVertex(
+            var centerVertex = CenterBubble.usingBubble(
                 selectedElement
             );
             if (!centerVertex.hasChildToRight()) {
@@ -243,7 +243,7 @@ define([
             if (!selectedElement.hasChildren()) {
                 return;
             }
-            newSelectedGraphElement = selectedElement.getTopMostChild();
+            newSelectedGraphElement = selectedElement.getTopMostChildBubble();
         }
         SelectionHandler.setToSingleGraphElement(newSelectedGraphElement);
         centerBubbleIfApplicable(newSelectedGraphElement);

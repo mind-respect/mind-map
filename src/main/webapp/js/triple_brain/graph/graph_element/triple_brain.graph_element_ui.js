@@ -22,6 +22,17 @@ define([
     initSelectors();
     api.Self = function () {
     };
+    api.Self.prototype.setOriginalServerObject = function (serverJson) {
+        this.html.data(
+            "originalServerObject",
+            serverJson
+        );
+    };
+    api.Self.prototype.getOriginalServerObject = function () {
+        return this.html.data(
+            "originalServerObject"
+        );
+    };
     api.Self.prototype.getId = function () {
         return this.getHtml().attr("id");
     };

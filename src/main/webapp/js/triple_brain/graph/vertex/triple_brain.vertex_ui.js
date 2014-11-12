@@ -12,13 +12,12 @@ define([
         "triple_brain.edge_ui",
         "triple_brain.event_bus",
         "triple_brain.image_displayer",
-        "triple_brain.identified_graph_element_ui",
+        "triple_brain.identified_bubble",
         "triple_brain.graph_element_ui",
-        "triple_brain.graph_element_button",
         "triple_brain.bubble",
         "jquery.center-on-screen"
     ],
-    function ($, GraphDisplayer, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, EventBus, ImageDisplayer, IdentifiedGraphElementUi, GraphElementUi, GraphElementButton, Bubble) {
+    function ($, GraphDisplayer, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, EventBus, ImageDisplayer, IdentifiedBubble, GraphElementUi, Bubble) {
         "use strict";
         var api = {};
         api.getWhenEmptyLabel = function () {
@@ -86,11 +85,10 @@ define([
         };
         api.Object = function (html) {
             this.html = html;
-            this.bubble = Bubble.withHtmlFacade(this);
         };
-        api.Object.prototype = new IdentifiedGraphElementUi.Object;
+        api.Object.prototype = new IdentifiedBubble.Object;
         api.Object.prototype.init = function () {
-            IdentifiedGraphElementUi.Object.apply(this, [this.html]);
+            IdentifiedBubble.Object.apply(this, [this.html]);
             return this;
         };
         api.Object.prototype.setIsPublic = function (isPublic) {
@@ -112,14 +110,7 @@ define([
                 this.getInBubbleContainer()
             );
         };
-        api.Object.prototype.getMenuButtonsHtml = function () {
-            return this.getMenuHtml().find(
-                "> button"
-            );
-        };
-        api.Object.prototype.createImageMenu = function () {
-            return this.bubble.createImageMenu();
-        };
+
         api.Object.prototype.getGraphElementType = function () {
             return GraphElementUi.Types.Vertex;
         };
@@ -276,37 +267,15 @@ define([
                 this.hideSuggestionButton();
         };
 
-        api.Object.prototype.integrateIdentification = function (identification) {
-            this.bubble.integrateIdentification(identification);
-        };
-
-        api.Object.prototype.addImages = function (images) {
-            this.bubble.addImages(images);
-        };
-
-        api.Object.prototype.refreshImages = function () {
-            this.bubble.refreshImages();
-        };
-
-        api.Object.prototype.removeImage = function (imageToRemove) {
-            this.bubble.removeImage(imageToRemove);
-        };
-        api.Object.prototype.getImages = function () {
-            return this.bubble.getImages();
-        };
-
         api.Object.prototype.serverFacade = function () {
             return VertexService;
         };
 
-        api.Object.prototype.hasImagesMenu = function () {
-            return this.bubble.hasImagesMenu();
-        };
-        api.Object.prototype.getImageMenu = function () {
-            return this.bubble.getImageMenu();
-        };
         api.Object.prototype.impactOnRemovedIdentification = function (identification) {
-            this.bubble.impactOnRemovedIdentification(identification);
+            Bubble.Self.prototype.impactOnRemovedIdentification.call(
+                this,
+                identification
+            );
             VertexService.getSuggestions(
                 this
             );
@@ -324,23 +293,11 @@ define([
         api.Object.prototype.getLabel = function () {
             return this.html.find(".bubble-label");
         };
-        api.Object.prototype.equalsVertex = function (otherVertex) {
-            return this.getId() == otherVertex.getId();
-        };
+
         api.Object.prototype.scrollTo = function () {
             this.html.centerOnScreen();
         };
-        api.Object.prototype.setOriginalServerObject = function (serverJson) {
-            this.html.data(
-                "originalServerObject",
-                serverJson
-            );
-        };
-        api.Object.prototype.getOriginalServerObject = function () {
-            return this.html.data(
-                "originalServerObject"
-            );
-        };
+
         api.Object.prototype.serverFormat = function () {
             return {
                 label: this.text(),

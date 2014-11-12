@@ -7,12 +7,11 @@ define([
         "triple_brain.event_bus",
         "triple_brain.tree_edge",
         "triple_brain.object_utils",
-        "triple_brain.bubble",
-        "triple_brain.ui.triple",
+        "triple_brain.triple_ui_builder",
         "triple_brain.selection_handler",
         "triple_brain.ui.vertex_hidden_neighbor_properties_indicator"
     ],
-    function ($, VertexUi, EventBus, TreeEdge, ObjectUtils, Bubble, Triple, SelectionHandler, PropertiesIndicator) {
+    function ($, VertexUi, EventBus, TreeEdge, ObjectUtils, TripleUiBuilder, SelectionHandler, PropertiesIndicator) {
         var api = {},
             otherInstancesKey = "otherInstances";
         api.ofVertex = function (vertex) {
@@ -28,22 +27,15 @@ define([
         api.Object.prototype = new VertexUi.Object;
         api.Object.prototype.init = function(html){
             this.html = html;
-            this.bubble = Bubble.withHtmlFacade(this);
             VertexUi.Object.apply(this, [html]);
             VertexUi.Object.prototype.init.call(
                 this
             );
             return this;
         };
-        api.Object.prototype.isToTheLeft = function () {
-            if (this._isToTheLeft === undefined) {
-                this._isToTheLeft = this.html.parents(".left-oriented").length > 0;
-            }
-            return this._isToTheLeft;
-        };
 
         api.Object.prototype.visitVerticesChildren = function (visitor) {
-            var children = this.bubble.getChildrenBubblesHtml();
+            var children = this.getChildrenBubblesHtml();
             $.each(children, function () {
                 var html = $(this);
                 if(html.hasClass("vertex")){
@@ -53,15 +45,6 @@ define([
                     visitor(vertex);
                 }
             });
-        };
-        api.Object.prototype.hasChildren = function () {
-            return this.bubble.hasChildren();
-        };
-        api.Object.prototype.getParentBubble = function () {
-            return this.bubble.getParentBubble();
-        };
-        api.Object.prototype.getParentVertex = function () {
-            return this.bubble.getParentVertex();
         };
         api.Object.prototype.getRelationWithParent = function () {
             return TreeEdge.withHtml(
@@ -104,31 +87,12 @@ define([
         };
 
         api.Object.prototype.isALeaf = function () {
-            return !this.bubble.hasChildren();
+            return !this.hasChildren();
         };
         api.Object.prototype.hasTheDuplicateButton = function () {
             return this.getInBubbleContainer().find(
                 "button.duplicate"
             ).length > 0;
-        };
-
-        api.Object.prototype.getTopMostChild = function () {
-            return this.bubble.getTopMostChild();
-        };
-        api.Object.prototype.hasBubbleAbove = function () {
-            return this.bubble.hasBubbleAbove();
-        };
-        api.Object.prototype.getBubbleAbove = function () {
-            return this.bubble.getBubbleAbove();
-        };
-        api.Object.prototype.hasBubbleUnder = function () {
-            return this.bubble.hasBubbleUnder();
-        };
-        api.Object.prototype.getBubbleUnder = function () {
-            return this.bubble.getBubbleUnder();
-        };
-        api.Object.prototype.getBubble = function () {
-            return this.bubble;
         };
 
         api.Object.prototype.buildHiddenNeighborPropertiesIndicator = function () {
@@ -145,27 +109,10 @@ define([
         api.Object.prototype.hasHiddenRelations = function () {
             return this.isALeaf() && this.getTotalNumberOfEdges() > 1;
         };
-        api.Object.prototype.hasHiddenRelationsContainer = function(){
-            return this.bubble.hasHiddenRelationsContainer();
-        };
-
-        api.Object.prototype.setHiddenRelationsContainer = function(hiddenRelationsContainer){
-            this.bubble.setHiddenRelationsContainer(
-                hiddenRelationsContainer
-            );
-        };
-
-        api.Object.prototype.getHiddenRelationsContainer = function(){
-            return this.bubble.getHiddenRelationsContainer();
-        };
-
-        api.Object.prototype.removeHiddenRelationsContainer = function(){
-            this.bubble.removeHiddenRelationsContainer();
-        };
 
         api.Object.prototype.remove = function () {
             SelectionHandler.removeVertex(this);
-            this.bubble.removeHiddenRelationsContainer();
+            this.removeHiddenRelationsContainer();
             if (this.isCenterVertex()) {
                 this.html.closest(".vertex-container").remove();
             } else {
@@ -230,7 +177,7 @@ define([
             }
             triple.destinationVertex().resetOtherInstances();
             sourceBubble.applyToOtherInstances(function (vertex) {
-                Triple.createUsingServerTriple(
+                TripleUiBuilder.createUsingServerTriple(
                     vertex,
                     tripleServerFormat
                 );

@@ -6,24 +6,28 @@ define([
         "triple_brain.event_bus",
         "triple_brain.ui.utils",
         "triple_brain.mind_map_info",
-        "triple_brain.image_displayer"
-    ], function (GraphDisplayer, EventBus, UiUtils, MindMapInfo, ImageDisplayer) {
+        "triple_brain.image_displayer",
+        "triple_brain.graph_element_ui",
+        "triple_brain.bubble_factory"
+    ], function (GraphDisplayer, EventBus, UiUtils, MindMapInfo, ImageDisplayer, GraphElementUi, BubbleFactory) {
         "use strict";
         var api = {};
-        api.withHtmlFacade = function (htmlFacade) {
-            return new Self(htmlFacade);
+        api.withHtml = function (html) {
+            return new api.Self(html);
         };
-        function Self(htmlFacade) {
-            this.html = htmlFacade.getHtml();
-            this.htmlFacade = htmlFacade;
-        }
 
-        Self.prototype.getParentBubble = function () {
+        api.Self = function (html) {
+            this.html = html;
+        };
+
+        api.Self.prototype = new GraphElementUi.Self;
+
+        api.Self.prototype.getParentBubble = function () {
             return this.getSelectorFromContainer(
                 this._getParentBubbleContainer()
             );
         };
-        Self.prototype.getParentVertex = function () {
+        api.Self.prototype.getParentVertex = function () {
             var parentContainer = this._getParentBubbleContainer(),
                 parentVertexHtml = parentContainer.find(
                     "> .vertex"
@@ -36,95 +40,85 @@ define([
                     parentVertexHtml
                 );
         };
-        Self.prototype.getChildrenContainer = function () {
+        api.Self.prototype.getChildrenContainer = function () {
             return this.html.closest(".vertex-container").siblings(
                 ".vertices-children-container"
             )
         };
 
-        Self.prototype.getTopMostChild = function () {
-            var topMostChildHtml = $(this.getChildrenBubblesHtml()[0]);
-            if(topMostChildHtml.hasClass("group-relation")){
-                return GraphDisplayer.getGroupRelationSelector().withHtml(
-                    topMostChildHtml
-                );
-            }else if(topMostChildHtml.hasClass("property")){
-                return GraphDisplayer.getPropertySelector().withHtml(
-                    topMostChildHtml
-                );
-            }else{
-                return getVertexSelector().withHtml(topMostChildHtml);
-            }
-        };
-
-        Self.prototype.getChildrenBubblesHtml = function () {
-            return this.getChildrenContainer().find(
-                ".group-relation, .vertex, .property"
+        api.Self.prototype.getTopMostChildBubble = function () {
+            return BubbleFactory.fromHtml(
+                $(this.getChildrenBubblesHtml()[0])
             );
         };
 
-        Self.prototype.getBubbleAbove = function () {
+        api.Self.prototype.getChildrenBubblesHtml = function () {
+            return this.getChildrenContainer().find(
+                ".bubble"
+            );
+        };
+
+        api.Self.prototype.getBubbleAbove = function () {
             return this.getSelectorFromContainer(
                 this._getBubbleAboveContainer()
             );
         };
-        Self.prototype.hasBubbleAbove = function(){
+        api.Self.prototype.hasBubbleAbove = function () {
             return this._getBubbleAboveContainer().length > 0;
         };
-        Self.prototype.hasBubbleUnder = function(){
+        api.Self.prototype.hasBubbleUnder = function () {
             return this._getBubbleUnderContainer().length > 0;
         };
-        Self.prototype.getBubbleUnder = function () {
+        api.Self.prototype.getBubbleUnder = function () {
             return this.getSelectorFromContainer(
                 this._getBubbleUnderContainer()
             );
         };
-        Self.prototype._getBubbleUnderContainer = function(){
+        api.Self.prototype._getBubbleUnderContainer = function () {
             return this.html.closest(
                 ".vertex-tree-container"
             ).nextAll(
                 ".vertex-tree-container:first"
             ).find("> .vertex-container")
         };
-        Self.prototype._getBubbleAboveContainer = function(){
+        api.Self.prototype._getBubbleAboveContainer = function () {
             return this.html.closest(
                 ".vertex-tree-container"
             ).prevAll(
                 ".vertex-tree-container:first"
             ).find("> .vertex-container");
         };
-        Self.prototype._getParentBubbleContainer = function () {
+        api.Self.prototype._getParentBubbleContainer = function () {
             return this.html.closest(".vertices-children-container")
                 .siblings(".vertex-container");
         };
-        Self.prototype.hasChildren = function () {
+        api.Self.prototype.hasChildren = function () {
             return this.getChildrenBubblesHtml().length > 0;
         };
-        Self.prototype.getSelectorFromContainer = function(container){
-            var vertexHtml = container.find("> .vertex");
-            return vertexHtml.length > 0 ?
-                getVertexSelector().withHtml(vertexHtml) :
-                getRelationFromParentContainer(container);
+        api.Self.prototype.getSelectorFromContainer = function (container) {
+            return BubbleFactory.fromHtml(
+                container.find("> .bubble")
+            );
         };
 
-        Self.prototype.hasHiddenRelationsContainer = function(){
+        api.Self.prototype.hasHiddenRelationsContainer = function () {
             return undefined !== this.getHiddenRelationsContainer();
         };
 
-        Self.prototype.setHiddenRelationsContainer = function(hiddenRelationsContainer){
+        api.Self.prototype.setHiddenRelationsContainer = function (hiddenRelationsContainer) {
             this.html.data(
                 "hidden_properties_indicator",
                 hiddenRelationsContainer
             );
         };
 
-        Self.prototype.getHiddenRelationsContainer = function(){
+        api.Self.prototype.getHiddenRelationsContainer = function () {
             return this.html.data(
                 "hidden_properties_indicator"
             );
         };
 
-        Self.prototype.removeHiddenRelationsContainer = function(){
+        api.Self.prototype.removeHiddenRelationsContainer = function () {
             if (this.hasHiddenRelationsContainer()) {
                 this.getHiddenRelationsContainer().remove();
             }
@@ -133,14 +127,14 @@ define([
             );
         };
 
-        Self.prototype.refreshImages = function () {
+        api.Self.prototype.refreshImages = function () {
             var imageMenu =
                 this.hasImagesMenu() ?
                     this.getImageMenu() :
                     this.createImageMenu();
             imageMenu.refreshImages();
         };
-        Self.prototype.addImages = function (images) {
+        api.Self.prototype.addImages = function (images) {
             var existingImages = this.getImages();
             this.html.data(
                 "images",
@@ -149,7 +143,7 @@ define([
                 )
             );
         };
-        Self.prototype.removeImage = function (imageToRemove) {
+        api.Self.prototype.removeImage = function (imageToRemove) {
             var images = [];
             $.each(this.getImages(), function () {
                 var image = this;
@@ -162,44 +156,55 @@ define([
                 images
             );
         };
-        Self.prototype.getImages = function () {
+        api.Self.prototype.getImages = function () {
             return this.html.data("images") === undefined ?
                 [] :
                 this.html.data("images");
         };
-        Self.prototype.hasImagesMenu = function () {
+
+        api.Self.prototype.hasImagesMenu = function () {
             return this.html.data("images_menu") !== undefined;
         };
-        Self.prototype.createImageMenu = function () {
+
+        api.Self.prototype.createImageMenu = function () {
             var imageMenu = ImageDisplayer.ofBubble(
-                this.htmlFacade
+                this
             ).create();
             this.html.data("images_menu", imageMenu);
             return imageMenu;
         };
-        Self.prototype.getImageMenu = function () {
+
+        api.Self.prototype.getImageMenu = function () {
             return this.html.data("images_menu");
         };
-        Self.prototype.impactOnRemovedIdentification = function (identification) {
+
+        api.Self.prototype.impactOnRemovedIdentification = function (identification) {
             var self = this;
             $.each(identification.getImages(), function () {
                 var image = this;
                 self.removeImage(image);
             });
-            if(this.hasImagesMenu()){
+            if (this.hasImagesMenu()) {
                 this.getImageMenu().refreshImages();
             }
         };
 
-        Self.prototype.integrateIdentification = function (identification) {
+        api.Self.prototype.integrateIdentification = function (identification) {
             this.addImages(
                 identification.getImages()
             );
         };
 
+        api.Self.prototype.isToTheLeft = function () {
+            if (this._isToTheLeft === undefined) {
+                this._isToTheLeft = this.html.parents(".left-oriented").length > 0;
+            }
+            return this._isToTheLeft;
+        };
+
         EventBus.subscribe(
             '/event/ui/graph/vertex_and_relation/added/',
-            function(event, triple, sourceBubble){
+            function (event, triple, sourceBubble) {
                 sourceBubble.removeHiddenRelationsContainer();
                 var destinationHtml = triple.destinationVertex().getHtml();
                 if (!UiUtils.isElementFullyOnScreen(destinationHtml)) {
@@ -208,21 +213,22 @@ define([
             }
         );
         return api;
-        function getVertexSelector(){
+        function getVertexSelector() {
             return MindMapInfo.isSchemaMode() ?
                 GraphDisplayer.getSchemaSelector() :
                 GraphDisplayer.getVertexSelector();
         }
-        function getRelationFromParentContainer(parentContainer){
+
+        function getRelationFromParentContainer(parentContainer) {
             var isSchemaMode = MindMapInfo.isSchemaMode(),
                 html = parentContainer.find(
                     isSchemaMode ?
                         "> .property" :
                         "> .group-relation"
                 );
-                return isSchemaMode ?
-                    GraphDisplayer.getPropertySelector().withHtml(html) :
-                    GraphDisplayer.getGroupRelationSelector().withHtml(html);
+            return isSchemaMode ?
+                GraphDisplayer.getPropertySelector().withHtml(html) :
+                GraphDisplayer.getGroupRelationSelector().withHtml(html);
         }
     }
 );

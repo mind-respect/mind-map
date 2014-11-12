@@ -4,12 +4,11 @@
 
 define([
     "triple_brain.relative_tree_vertex",
-    "triple_brain.bubble",
     "triple_brain.graph_element_ui",
     "triple_brain.vertex_ui",
     "triple_brain.event_bus",
     "triple_brain.graph_displayer"
-], function (RelativeTreeVertex, Bubble, GraphElementUi, VertexUi, EventBus, GraphDisplayer) {
+], function (RelativeTreeVertex, GraphElementUi, VertexUi, EventBus, GraphDisplayer) {
     "use strict";
     var api = {};
     api.withHtml = function (html) {
@@ -20,7 +19,6 @@ define([
     };
     function Self(html) {
         this.html = html;
-        this.bubble = Bubble.withHtmlFacade(this);
         RelativeTreeVertex.Object.apply(this);
         this.init(html);
     }
@@ -34,9 +32,7 @@ define([
     Self.prototype._getServerFacade = function(){
         return this.html.data("suggestionFacade");
     };
-    Self.prototype.getParentVertex = function () {
-        return this.bubble.getParentVertex();
-    };
+
     Self.prototype.integrate = function (newVertexUri) {
         RelativeTreeVertex.removeVertexFromCache(
             this.getUri(),

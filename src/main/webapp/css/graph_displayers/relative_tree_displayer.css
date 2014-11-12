@@ -17,7 +17,6 @@
     display:table;
     margin-left:0;
     height:1em;
-    padding-bottom:15px;
 }
 
 .clear-fix{
@@ -32,6 +31,8 @@
 .vertex-container{
     display:table-cell;
     vertical-align:middle;
+    padding-top:5px;
+    padding-bottom:5px;
 }
 
 .vertex.view-only{
@@ -73,8 +74,8 @@
 }
 
 .left-oriented .bubble .connector{
-    right: auto;
-    left:-30px;
+    left: auto;
+    right:-22px;
 }
 
 .left-oriented .bubble .arrow:before{
@@ -114,8 +115,12 @@
     border-left:1px solid black;
     padding-right:40px;
 }
+
+.vertical-border.small{
+    padding-right:20px;
+}
+
 .vertices-children-container .vertex-tree-container .vertical-border-third{
-    padding-bottom:15px;
     height:0;
 }
 
