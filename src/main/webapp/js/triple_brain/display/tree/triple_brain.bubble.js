@@ -28,17 +28,11 @@ define([
             );
         };
         api.Self.prototype.getParentVertex = function () {
-            var parentContainer = this._getParentBubbleContainer(),
-                parentVertexHtml = parentContainer.find(
-                    "> .vertex"
-                );
-            return parentVertexHtml.length === 0 ?
-                getRelationFromParentContainer(
-                    parentContainer
-                ).getParentVertex() :
-                getVertexSelector().withHtml(
-                    parentVertexHtml
-                );
+            var parentBubble = this.getParentBubble();
+            if(parentBubble.isVertex()){
+                return parentBubble();
+            }
+            return parentBubble.getParentBubble();
         };
         api.Self.prototype.getChildrenContainer = function () {
             return this.html.closest(".vertex-container").siblings(
@@ -48,7 +42,9 @@ define([
 
         api.Self.prototype.getTopMostChildBubble = function () {
             return BubbleFactory.fromHtml(
-                $(this.getChildrenBubblesHtml()[0])
+                this.getChildrenBubblesHtml().filter(
+                    ":first"
+                )
             );
         };
 

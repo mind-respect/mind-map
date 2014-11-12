@@ -23,6 +23,15 @@ define([
                 parentBubble.text()
             ).toBe("r1");
         });
+        it("can return parent vertex", function(){
+            var parentVertex = child1.getParentVertex();
+            expect(
+                parentVertex.text()
+            ).toBe("b2");
+        });
+        it("returns grand parent if parent is not a vertex", function(){
+            //todo
+        });
         it("can return top most child bubble", function(){
             var triple = Scenarios.getTriple();
             var newEdge = GraphDisplayer.addEdgeAndVertex(
