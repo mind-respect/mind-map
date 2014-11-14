@@ -30,7 +30,8 @@ define([
         api.threeBubblesGraph = function () {
             var isTreeBuilt = false;
             this.getGraph = function () {
-                return {"vertices": {"\/service\/users\/asvas\/graph\/vertex\/66af347b-bf7a-4081-b4da-dfc016f699a5": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/vertex\/66af347b-bf7a-4081-b4da-dfc016f699a5", "label": "b1", "comment": "", "images": [], "creationDate": "Oct 24, 2014 11:03:38 AM", "lastModificationDate": "Oct 24, 2014 11:03:51 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "\/service\/users\/asvas\/graph\/vertex\/622caec8-42ed-4847-99df-82726ca0dc99": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/vertex\/622caec8-42ed-4847-99df-82726ca0dc99", "label": "b3", "comment": "", "images": [], "creationDate": "Oct 24, 2014 11:01:15 AM", "lastModificationDate": "Oct 24, 2014 11:04:04 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "\/service\/users\/asvas\/graph\/vertex\/8b9d9a88-4ac3-4755-9d81-64a6e1773b67": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/vertex\/8b9d9a88-4ac3-4755-9d81-64a6e1773b67", "label": "b2", "comment": "", "images": [], "creationDate": "Oct 24, 2014 11:01:12 AM", "lastModificationDate": "Oct 24, 2014 11:03:57 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 2, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}}, "edges": {"\/service\/users\/asvas\/graph\/edge\/5030df9c-07f6-4212-8e9b-a2b7f7b61376": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/edge\/5030df9c-07f6-4212-8e9b-a2b7f7b61376", "label": "r1", "comment": "", "images": [], "creationDate": "Oct 24, 2014 11:03:38 AM", "lastModificationDate": "Oct 24, 2014 11:04:10 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/vertex\/66af347b-bf7a-4081-b4da-dfc016f699a5"}}}}, "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/vertex\/8b9d9a88-4ac3-4755-9d81-64a6e1773b67"}}}}}, "\/service\/users\/asvas\/graph\/edge\/8fd8ee09-4c3c-4adf-bbb9-e6eb9131e658": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/edge\/8fd8ee09-4c3c-4adf-bbb9-e6eb9131e658", "label": "r2", "comment": "", "images": [], "creationDate": "Oct 24, 2014 11:01:15 AM", "lastModificationDate": "Oct 24, 2014 11:04:00 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/vertex\/8b9d9a88-4ac3-4755-9d81-64a6e1773b67"}}}}, "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/vertex\/622caec8-42ed-4847-99df-82726ca0dc99"}}}}}}};
+                //  b3<-r2-b1-r1->b2
+                return {"vertices": {"\/service\/users\/asdoij\/graph\/vertex\/2e8ef30a-a98f-435e-9f22-1d6af46c43de": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdoij\/graph\/vertex\/2e8ef30a-a98f-435e-9f22-1d6af46c43de", "label": "b2", "comment": "", "images": [], "creationDate": "Nov 14, 2014 9:43:31 AM", "lastModificationDate": "Nov 14, 2014 9:43:40 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "\/service\/users\/asdoij\/graph\/vertex\/7f7fe5e2-51a3-4f77-bb96-0244446c2569": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdoij\/graph\/vertex\/7f7fe5e2-51a3-4f77-bb96-0244446c2569", "label": "b1", "comment": "", "images": [], "creationDate": "Nov 14, 2014 9:43:28 AM", "lastModificationDate": "Nov 14, 2014 9:43:43 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 2, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "\/service\/users\/asdoij\/graph\/vertex\/4e2cb6be-d03b-4b4d-b787-04939ac97323": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdoij\/graph\/vertex\/4e2cb6be-d03b-4b4d-b787-04939ac97323", "label": "b3", "comment": "", "images": [], "creationDate": "Nov 14, 2014 9:43:29 AM", "lastModificationDate": "Nov 14, 2014 9:43:51 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}}, "edges": {"\/service\/users\/asdoij\/graph\/edge\/878f9a2c-08e6-4562-8d2f-e955725e6e2c": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdoij\/graph\/edge\/878f9a2c-08e6-4562-8d2f-e955725e6e2c", "label": "r2", "comment": "", "images": [], "creationDate": "Nov 14, 2014 9:43:29 AM", "lastModificationDate": "Nov 14, 2014 9:43:54 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdoij\/graph\/vertex\/7f7fe5e2-51a3-4f77-bb96-0244446c2569"}}}}, "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdoij\/graph\/vertex\/4e2cb6be-d03b-4b4d-b787-04939ac97323"}}}}}, "\/service\/users\/asdoij\/graph\/edge\/a4fb8f95-c743-4df6-b3e3-9fce057d4ce9": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdoij\/graph\/edge\/a4fb8f95-c743-4df6-b3e3-9fce057d4ce9", "label": "r1", "comment": "", "images": [], "creationDate": "Nov 14, 2014 9:43:31 AM", "lastModificationDate": "Nov 14, 2014 9:43:38 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdoij\/graph\/vertex\/7f7fe5e2-51a3-4f77-bb96-0244446c2569"}}}}, "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdoij\/graph\/vertex\/2e8ef30a-a98f-435e-9f22-1d6af46c43de"}}}}}}};
             };
             this.getBubble1 = function () {
                 return Vertex.fromServerFormat(this.getGraph().vertices[
@@ -38,8 +39,8 @@ define([
                         ]
                 );
             };
-            this.getChild1BubbleInTree = function () {
-                return this.getBubbleWithLabelInTree("b1");
+            this.getBubble2InTree = function () {
+                return this.getBubbleWithLabelInTree("b2");
             };
             this.getRelation1InTree = function () {
                 return this.getRelationWithLabelInTree(
@@ -63,7 +64,7 @@ define([
                 ).create();
             };
             this.getCenterBubbleInTree = function () {
-                return this.getBubbleWithLabelInTree("b2");
+                return this.getBubbleWithLabelInTree("b1");
             };
             this.getRelation1 = function () {
                 return relationWithLabel(graph, "r1");
@@ -87,7 +88,7 @@ define([
                 }
                 var tree = makeTree(
                     graph,
-                    uriOfVertexWithLabel(this.getGraph(), "b2")
+                    uriOfVertexWithLabel(this.getGraph(), "b1")
                 );
                 isTreeBuilt = true;
                 return tree;
@@ -101,7 +102,7 @@ define([
             this.getRelationWithLabelInTree = function (label) {
                 var tree = this.buildTree();
                 return GraphDisplayer.getEdgeSelector().withHtml(
-                    tree.find(".relation").has(".label:contains("+label+")")
+                    tree.find(".relation").has(".label:contains(" + label + ")")
                 );
             };
         };

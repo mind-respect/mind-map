@@ -11,13 +11,13 @@ define([
 ], function (GraphDisplayerAsRelativeTree, Edge, Vertex, CenterBubble, Scenarios) {
     "use strict";
     describe("graph_displayer_as_relative_tree_spec", function () {
-        var bubble2;
+        var bubble1;
         beforeEach(function () {
-            bubble2 = new Scenarios.threeBubblesGraph().getCenterBubbleInTree();
+            bubble1 = new Scenarios.threeBubblesGraph().getCenterBubbleInTree();
         });
 
         it("distributes triples evenly to the right and left", function () {
-            var centerBubble = CenterBubble.usingBubble(bubble2);
+            var centerBubble = CenterBubble.usingBubble(bubble1);
             expect(
                 centerBubble._getNumberOfImmediateBubblesToLeft()
             ).toBe(1);
@@ -29,13 +29,13 @@ define([
         it("distributes new triples evenly to the right and left", function () {
             var triple1 = Scenarios.getTriple(),
                 firstAddedEdge = GraphDisplayerAsRelativeTree.addEdgeAndVertex(
-                    bubble2,
+                    bubble1,
                     Edge.fromServerFormat(triple1.edge),
                     Vertex.fromServerFormat(triple1.end_vertex)
                 ).edge(),
                 triple2 = Scenarios.getAnotherTriple(),
                 secondAddedEdge = GraphDisplayerAsRelativeTree.addEdgeAndVertex(
-                    bubble2,
+                    bubble1,
                     Edge.fromServerFormat(triple2.edge),
                     Vertex.fromServerFormat(triple2.end_vertex)
                 ).edge();

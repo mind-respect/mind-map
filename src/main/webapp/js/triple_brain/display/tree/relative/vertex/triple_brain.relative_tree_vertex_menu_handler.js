@@ -174,8 +174,8 @@ define([
             vertices: {}
         };
         EdgeUi.visitAllEdges(function (edge) {
-            var sourceVertex = edge.sourceVertex();
-            var destinationVertex = edge.destinationVertex();
+            var sourceVertex = edge.getSourceVertex();
+            var destinationVertex = edge.getDestinationVertex();
             var isSourceVertexSelected = sourceVertex.isSelected();
             var isDestinationVertexSelected = destinationVertex.isSelected();
             if (isSourceVertexSelected) {

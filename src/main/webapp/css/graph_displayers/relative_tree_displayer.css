@@ -155,10 +155,10 @@
     z-index:5;
 }
 
-.vertex.inverse .relation .label{
+.relation.inverse .label{
     background: red;
 }
 
-.vertex.inverse .relation input[type=text]{
+.relation.inverse input[type=text]{
     border-color:red;
 }

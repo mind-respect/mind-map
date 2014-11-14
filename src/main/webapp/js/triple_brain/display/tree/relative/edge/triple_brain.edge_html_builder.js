@@ -22,16 +22,16 @@ define([
         api.afterChildBuilt = function(edge, parentUi, childUi){
             var edgeServer = edge.getOriginalServerObject();
             var isInverse = edgeServer.getSourceVertex().getUri() !== parentUi.getUri();
-            if (isInverse) {
-                childUi.getHtml().addClass("inverse");
-            }
             edge.getHtml().data(
                 "source_vertex_id",
-                isInverse ? childUi.getId() : parentUi.getId()
+                parentUi.getId()
             ).data(
                 "destination_vertex_id",
-                isInverse ? parentUi.getId() : childUi.getId()
+                childUi.getId()
             );
+            if (isInverse) {
+                edge.inverse();
+            }
             EventBus.publish(
                 '/event/ui/html/edge/created/',
                 edge

@@ -33,8 +33,8 @@ define([
                 type: 'DELETE',
                 url: edgeUri
             }).success(function () {
-                var sourceVertex = edge.sourceVertex(),
-                    destinationVertex = edge.destinationVertex(),
+                var sourceVertex = edge.getSourceVertex(),
+                    destinationVertex = edge.getDestinationVertex(),
                     sourceVertexUri = sourceVertex.getUri(),
                     destinationVertexUri = destinationVertex.getUri(),
                     sourceVertexId = sourceVertex.getId(),

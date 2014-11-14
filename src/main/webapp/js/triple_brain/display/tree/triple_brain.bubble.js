@@ -50,7 +50,7 @@ define([
 
         api.Self.prototype.getChildrenBubblesHtml = function () {
             return this.getChildrenContainer().find(
-                ".bubble"
+                "> .vertex-tree-container > .vertex-container > .bubble"
             );
         };
 

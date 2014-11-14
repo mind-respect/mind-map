@@ -3,10 +3,9 @@
  */
 define([
         "jquery",
-        "triple_brain.edge_ui",
-        "triple_brain.graph_displayer"
+        "triple_brain.edge_ui"
     ],
-    function ($, EdgeUi, GraphDisplayer) {
+    function ($, EdgeUi) {
         "use strict";
         var api = {},
             cache = {};
@@ -59,8 +58,8 @@ define([
         api.Self.prototype.serverFormat = function () {
             return {
                 label: this.text(),
-                source_vertex_id: this.sourceVertex().getId(),
-                destination_vertex_id: this.destinationVertex().getId()
+                source_vertex_id: this.getSourceVertex().getId(),
+                destination_vertex_id: this.getDestinationVertex().getId()
             }
         };
         api.Self.prototype.getLabel = function () {
@@ -70,13 +69,18 @@ define([
             //do nothing;
         };
         api.Self.prototype.inverse = function () {
-            var vertexHtml = this.html.closest(".vertex");
-            vertexHtml[
-                vertexHtml.hasClass("inverse") ?
+            this.html[
+                this.html.hasClass("inverse") ?
                     "removeClass" :
                     "addClass"
                 ]("inverse");
-            EdgeUi.withHtml(this.html).inverseAbstract();
+            var childVertexHtml = this.childVertexInDisplay().getHtml();
+            childVertexHtml[
+                childVertexHtml.hasClass("inverse") ?
+                    "removeClass" :
+                    "addClass"
+                ]("inverse");
+            this.inverseAbstract();
         };
         return api;
     }

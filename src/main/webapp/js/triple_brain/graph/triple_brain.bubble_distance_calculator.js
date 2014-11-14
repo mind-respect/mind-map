@@ -129,10 +129,10 @@ define([
 
     function connectVerticesOfEdgeForTraversal(edge){
         var sourceVertex = graphForTraversal.getNode(
-            edge.sourceVertex().getId()
+            edge.getSourceVertex().getId()
         );
         var destinationVertex = graphForTraversal.getNode(
-            edge.destinationVertex().getId()
+            edge.getDestinationVertex().getId()
         );
         sourceVertex.connectTo(
             destinationVertex

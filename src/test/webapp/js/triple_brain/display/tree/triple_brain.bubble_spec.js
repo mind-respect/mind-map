@@ -10,24 +10,24 @@ define([
 ], function (GraphDisplayer, Edge, Vertex, Scenarios) {
     "use strict";
     describe("bubble", function(){
-        var child1,
+        var bubble2,
             centerBubble;
         beforeEach(function () {
             var scenario = new Scenarios.threeBubblesGraph();
-            child1 = scenario.getChild1BubbleInTree();
+            bubble2 = scenario.getBubble2InTree();
             centerBubble = scenario.getCenterBubbleInTree();
         });
         it("can return parent bubble", function(){
-            var parentBubble = child1.getParentBubble();
+            var parentBubble = bubble2.getParentBubble();
             expect(
                 parentBubble.text()
             ).toBe("r1");
         });
         it("can return parent vertex", function(){
-            var parentVertex = child1.getParentVertex();
+            var parentVertex = bubble2.getParentVertex();
             expect(
                 parentVertex.text()
-            ).toBe("b2");
+            ).toBe("b1");
         });
         it("returns grand parent if parent is not a vertex", function(){
             //todo
@@ -35,12 +35,12 @@ define([
         it("can return top most child bubble", function(){
             var triple = Scenarios.getTriple();
             var newEdge = GraphDisplayer.addEdgeAndVertex(
-                child1,
+                bubble2,
                 Edge.fromServerFormat(triple.edge),
                 Vertex.fromServerFormat(triple.end_vertex)
             ).edge();
             expect(
-                child1.getTopMostChildBubble().getUri()
+                bubble2.getTopMostChildBubble().getUri()
             ).toBe(newEdge.getUri());
         });
     });

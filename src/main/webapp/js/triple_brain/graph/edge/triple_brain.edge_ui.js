@@ -81,12 +81,12 @@ define([
         api.Object.prototype.serverFacade = function () {
             return EdgeService;
         };
-        api.Object.prototype.destinationVertex = function () {
+        api.Object.prototype.getDestinationVertex = function () {
             return GraphDisplayer.getVertexSelector().withId(
                 this.html.data('destination_vertex_id')
             );
         };
-        api.Object.prototype.sourceVertex = function () {
+        api.Object.prototype.getSourceVertex = function () {
             return GraphDisplayer.getVertexSelector().withId(
                 this.html.data("source_vertex_id")
             );
