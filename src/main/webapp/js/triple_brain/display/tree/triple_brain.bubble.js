@@ -12,6 +12,7 @@ define([
     ], function (GraphDisplayer, EventBus, UiUtils, MindMapInfo, ImageDisplayer, GraphElementUi, BubbleFactory) {
         "use strict";
         var api = {};
+
         api.withHtml = function (html) {
             return new api.Self(html);
         };
@@ -23,13 +24,17 @@ define([
         api.Self.prototype = new GraphElementUi.Self;
 
         api.Self.prototype.getParentBubble = function () {
-            return this.getSelectorFromContainer(
-                this._getParentBubbleContainer()
+            if(this.isCenterVertex()){
+                return this;
+            }
+            return BubbleFactory.fromHtml(
+                this.html.closest(".vertices-children-container")
+                .siblings(".vertex-container").find("> .bubble")
             );
         };
         api.Self.prototype.getParentVertex = function () {
             var parentBubble = this.getParentBubble();
-            if(parentBubble.isVertex()){
+            if (parentBubble.isVertex()) {
                 return parentBubble();
             }
             return parentBubble.getParentBubble();
@@ -55,39 +60,61 @@ define([
         };
 
         api.Self.prototype.getBubbleAbove = function () {
-            return this.getSelectorFromContainer(
-                this._getBubbleAboveContainer()
+            return this._getColumnBubble(
+                api._getBubbleHtmlAbove
             );
         };
-        api.Self.prototype.hasBubbleAbove = function () {
-            return this._getBubbleAboveContainer().length > 0;
-        };
-        api.Self.prototype.hasBubbleUnder = function () {
-            return this._getBubbleUnderContainer().length > 0;
-        };
+
         api.Self.prototype.getBubbleUnder = function () {
-            return this.getSelectorFromContainer(
-                this._getBubbleUnderContainer()
+            return this._getColumnBubble(
+                api._getBubbleHtmlUnder
             );
         };
-        api.Self.prototype._getBubbleUnderContainer = function () {
-            return this.html.closest(
+
+        api.Self.prototype._getColumnBubble = function(htmlGetter){
+            var bubbleHtmlAbove = htmlGetter(
+                this.html
+            );
+            if (bubbleHtmlAbove.length === 0) {
+                return this._getSurroundBubbleInAnotherBranch(htmlGetter);
+            }
+            return BubbleFactory.fromHtml(bubbleHtmlAbove);
+        };
+
+        api.Self.prototype._getSurroundBubbleInAnotherBranch = function (htmlGetter) {
+            var bubbleHtmlAbove = htmlGetter(
+                this.getParentBubble().getHtml()
+            );
+            if(bubbleHtmlAbove.length === 0){
+                return this;
+            }
+            return BubbleFactory.fromHtml(
+                bubbleHtmlAbove
+            ).getTopMostChildBubble();
+        };
+
+        api.Self.prototype.getBubbleUnder = function () {
+            return this._getColumnBubble(
+                api._getBubbleHtmlUnder
+            );
+        };
+        api._getBubbleHtmlUnder = function (html) {
+            return html.closest(
                 ".vertex-tree-container"
             ).nextAll(
                 ".vertex-tree-container:first"
-            ).find("> .vertex-container")
+            ).find("> .vertex-container >.bubble");
         };
-        api.Self.prototype._getBubbleAboveContainer = function () {
-            return this.html.closest(
+
+        api._getBubbleHtmlAbove = function (html) {
+            return html.closest(
                 ".vertex-tree-container"
             ).prevAll(
                 ".vertex-tree-container:first"
-            ).find("> .vertex-container");
+            ).
+                find("> .vertex-container >.bubble");
         };
-        api.Self.prototype._getParentBubbleContainer = function () {
-            return this.html.closest(".vertices-children-container")
-                .siblings(".vertex-container");
-        };
+
         api.Self.prototype.hasChildren = function () {
             return this.getChildrenBubblesHtml().length > 0;
         };

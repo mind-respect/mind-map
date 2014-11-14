@@ -21,6 +21,19 @@ define([
     ],
     function (Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon) {
         var api = {};
+        api.addTriple = function(bubble){
+            return addTriple(
+                bubble,
+                api.getTriple()
+            );
+        };
+        api.addAnotherTriple = function(bubble){
+            return addTriple(
+                bubble,
+                api.getAnotherTriple()
+            );
+        };
+
         api.getTriple = function () {
             return {"source_vertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/77db9245-cb65-423e-ab0f-bcef1628bbc8", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:41:00 AM", "lastModificationDate": "Nov 11, 2014 8:41:00 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 4, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "edge": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/edge\/9e3d54f5-562c-4747-a1e3-9f068d423f2e", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:52:02 AM", "lastModificationDate": "Nov 11, 2014 8:52:02 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/77db9245-cb65-423e-ab0f-bcef1628bbc8", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:41:00 AM", "lastModificationDate": "Nov 11, 2014 8:41:00 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 4, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/1854be6e-05c1-4878-98f7-6e3906088e5e", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:52:02 AM", "lastModificationDate": "Nov 11, 2014 8:52:02 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}}, "end_vertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/1854be6e-05c1-4878-98f7-6e3906088e5e", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:52:02 AM", "lastModificationDate": "Nov 11, 2014 8:52:02 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}};
         };
@@ -318,6 +331,14 @@ define([
                 .makeForCenterVertex(
                 graph,
                 centralVertexUri
+            );
+        }
+
+        function addTriple(bubble, triple){
+            return GraphDisplayer.addEdgeAndVertex(
+                bubble,
+                Edge.fromServerFormat(triple.edge),
+                Vertex.fromServerFormat(triple.end_vertex)
             );
         }
     }

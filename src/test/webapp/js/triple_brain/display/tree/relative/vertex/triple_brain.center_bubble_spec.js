@@ -7,7 +7,7 @@ define([
     'test/webapp/js/test-scenarios'
 ], function (CenterBubble, Scenarios) {
     "use strict";
-    describe("bubble", function () {
+    describe("center_bubble", function () {
         var centerBubble,
             relation1,
             relation2;

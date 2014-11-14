@@ -190,18 +190,12 @@ define([
     }
 
     function upAction(selectedElement) {
-        if(selectedElement.isCenterVertex() || !selectedElement.hasBubbleAbove()) {
-            return;
-        }
         selectNew(
             selectedElement.getBubbleAbove()
         );
     }
 
     function downAction(selectedElement){
-        if(selectedElement.isCenterVertex() || !selectedElement.hasBubbleUnder()) {
-            return;
-        }
         selectNew(
             selectedElement.getBubbleUnder()
         );
