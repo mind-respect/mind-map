@@ -199,7 +199,7 @@ svg { z-index: 1; }
 .property .relation-menu { left: 0; }
 
 .relation { position: relative; }
-.relation .relation-menu { z-index: 11; position: absolute; left: 0; }
+.relation .relation-menu { z-index: 11; position: absolute; left: 0; top: 22px; }
 .relation .ui-button { width: 1.7em; height: 1.8em; margin: 0; }
 
 .hidden-properties-container { z-index: 3; min-width: 25px; }

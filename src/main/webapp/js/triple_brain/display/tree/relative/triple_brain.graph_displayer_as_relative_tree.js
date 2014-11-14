@@ -532,7 +532,7 @@ define([
             );
             var vertices = serverGraph.vertices;
             buildVerticesHtml();
-            return serverGraph;
+            return verticesContainer;
             function buildVerticesHtml() {
                 var serverRootVertex = vertexWithId(rootVertexUri);
                 buildRootBubble(

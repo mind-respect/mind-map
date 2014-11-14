@@ -24,7 +24,7 @@ define([
             var id = html.prop('id');
             var cachedObject = cache[id];
             if (cachedObject === undefined) {
-                    cachedObject = new api.Object(html);
+                cachedObject = new api.Object(html);
                 cache[id] = cachedObject;
             }
             return cachedObject;
@@ -103,8 +103,10 @@ define([
                 sourceVertexUri
             );
         };
-        api.Object.prototype.impactOnRemovedIdentification = function () {};
-        api.Object.prototype.integrateIdentification = function () {};
+        api.Object.prototype.impactOnRemovedIdentification = function () {
+        };
+        api.Object.prototype.integrateIdentification = function () {
+        };
         api.Object.prototype.serverFacade = function () {
             return EdgeService;
         };

@@ -24,8 +24,8 @@ define([
         api.getTriple = function () {
             return {"source_vertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/77db9245-cb65-423e-ab0f-bcef1628bbc8", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:41:00 AM", "lastModificationDate": "Nov 11, 2014 8:41:00 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 4, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "edge": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/edge\/9e3d54f5-562c-4747-a1e3-9f068d423f2e", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:52:02 AM", "lastModificationDate": "Nov 11, 2014 8:52:02 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/77db9245-cb65-423e-ab0f-bcef1628bbc8", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:41:00 AM", "lastModificationDate": "Nov 11, 2014 8:41:00 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 4, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/1854be6e-05c1-4878-98f7-6e3906088e5e", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:52:02 AM", "lastModificationDate": "Nov 11, 2014 8:52:02 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}}, "end_vertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/1854be6e-05c1-4878-98f7-6e3906088e5e", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:52:02 AM", "lastModificationDate": "Nov 11, 2014 8:52:02 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}};
         };
-        api.getAnotherTriple = function(){
-            return {"source_vertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvapok\/graph\/vertex\/77db9245-cb65-423e-ab0f-bcef1628bbc8","label":"","comment":"","images":[],"creationDate":"Nov 11, 2014 8:41:00 AM","lastModificationDate":"Nov 11, 2014 8:41:00 AM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"numberOfConnectedEdges":5,"includedVertices":{},"includedEdges":{},"suggestions":[],"isPublic":false}},"edge":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvapok\/graph\/edge\/961a4cf1-96bf-4db9-8dbb-194f24438eb4","label":"","comment":"","images":[],"creationDate":"Nov 11, 2014 8:59:42 AM","lastModificationDate":"Nov 11, 2014 8:59:42 AM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"sourceVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvapok\/graph\/vertex\/77db9245-cb65-423e-ab0f-bcef1628bbc8","label":"","comment":"","images":[],"creationDate":"Nov 11, 2014 8:41:00 AM","lastModificationDate":"Nov 11, 2014 8:41:00 AM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"numberOfConnectedEdges":5,"includedVertices":{},"includedEdges":{},"suggestions":[],"isPublic":false}},"destinationVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvapok\/graph\/vertex\/ff233c48-93e5-4619-a7e1-fe39a51c7ad9","label":"","comment":"","images":[],"creationDate":"Nov 11, 2014 8:59:42 AM","lastModificationDate":"Nov 11, 2014 8:59:42 AM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"numberOfConnectedEdges":1,"includedVertices":{},"includedEdges":{},"suggestions":[],"isPublic":false}}},"end_vertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvapok\/graph\/vertex\/ff233c48-93e5-4619-a7e1-fe39a51c7ad9","label":"","comment":"","images":[],"creationDate":"Nov 11, 2014 8:59:42 AM","lastModificationDate":"Nov 11, 2014 8:59:42 AM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"numberOfConnectedEdges":1,"includedVertices":{},"includedEdges":{},"suggestions":[],"isPublic":false}}};
+        api.getAnotherTriple = function () {
+            return {"source_vertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/77db9245-cb65-423e-ab0f-bcef1628bbc8", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:41:00 AM", "lastModificationDate": "Nov 11, 2014 8:41:00 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 5, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "edge": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/edge\/961a4cf1-96bf-4db9-8dbb-194f24438eb4", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:59:42 AM", "lastModificationDate": "Nov 11, 2014 8:59:42 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/77db9245-cb65-423e-ab0f-bcef1628bbc8", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:41:00 AM", "lastModificationDate": "Nov 11, 2014 8:41:00 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 5, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/ff233c48-93e5-4619-a7e1-fe39a51c7ad9", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:59:42 AM", "lastModificationDate": "Nov 11, 2014 8:59:42 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}}, "end_vertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/ff233c48-93e5-4619-a7e1-fe39a51c7ad9", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:59:42 AM", "lastModificationDate": "Nov 11, 2014 8:59:42 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}};
         };
         api.threeBubblesGraph = function () {
             var isTreeBuilt = false;
@@ -33,7 +33,7 @@ define([
                 return {"vertices": {"\/service\/users\/asvas\/graph\/vertex\/66af347b-bf7a-4081-b4da-dfc016f699a5": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/vertex\/66af347b-bf7a-4081-b4da-dfc016f699a5", "label": "b1", "comment": "", "images": [], "creationDate": "Oct 24, 2014 11:03:38 AM", "lastModificationDate": "Oct 24, 2014 11:03:51 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "\/service\/users\/asvas\/graph\/vertex\/622caec8-42ed-4847-99df-82726ca0dc99": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/vertex\/622caec8-42ed-4847-99df-82726ca0dc99", "label": "b3", "comment": "", "images": [], "creationDate": "Oct 24, 2014 11:01:15 AM", "lastModificationDate": "Oct 24, 2014 11:04:04 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "\/service\/users\/asvas\/graph\/vertex\/8b9d9a88-4ac3-4755-9d81-64a6e1773b67": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/vertex\/8b9d9a88-4ac3-4755-9d81-64a6e1773b67", "label": "b2", "comment": "", "images": [], "creationDate": "Oct 24, 2014 11:01:12 AM", "lastModificationDate": "Oct 24, 2014 11:03:57 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 2, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}}, "edges": {"\/service\/users\/asvas\/graph\/edge\/5030df9c-07f6-4212-8e9b-a2b7f7b61376": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/edge\/5030df9c-07f6-4212-8e9b-a2b7f7b61376", "label": "r1", "comment": "", "images": [], "creationDate": "Oct 24, 2014 11:03:38 AM", "lastModificationDate": "Oct 24, 2014 11:04:10 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/vertex\/66af347b-bf7a-4081-b4da-dfc016f699a5"}}}}, "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/vertex\/8b9d9a88-4ac3-4755-9d81-64a6e1773b67"}}}}}, "\/service\/users\/asvas\/graph\/edge\/8fd8ee09-4c3c-4adf-bbb9-e6eb9131e658": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/edge\/8fd8ee09-4c3c-4adf-bbb9-e6eb9131e658", "label": "r2", "comment": "", "images": [], "creationDate": "Oct 24, 2014 11:01:15 AM", "lastModificationDate": "Oct 24, 2014 11:04:00 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/vertex\/8b9d9a88-4ac3-4755-9d81-64a6e1773b67"}}}}, "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvas\/graph\/vertex\/622caec8-42ed-4847-99df-82726ca0dc99"}}}}}}};
             };
             this.getBubble1 = function () {
-                return Vertex.fromServerFormat(graph.vertices[
+                return Vertex.fromServerFormat(this.getGraph().vertices[
                         uriOfVertexWithLabel(this.getGraph(), "b1")
                         ]
                 );
@@ -41,13 +41,18 @@ define([
             this.getChild1BubbleInTree = function () {
                 return this.getBubbleWithLabelInTree("b1");
             };
+            this.getRelation1InTree = function () {
+                return this.getRelationWithLabelInTree(
+                    "r1"
+                );
+            };
             this.getBubble1Ui = function () {
                 return VertexHtmlBuilder.withServerFacade(
                     this.getBubble1()
                 ).create();
             };
             this.getBubble2 = function () {
-                return Vertex.fromServerFormat(graph.vertices[
+                return Vertex.fromServerFormat(this.getGraph().vertices[
                         uriOfVertexWithLabel(this.getGraph(), "b2")
                         ]
                 );
@@ -76,21 +81,28 @@ define([
             };
             var graph = this.getGraph();
             Mock.setCenterVertexUriInUrl(this.getBubble2().getUri());
-            this.buildTree = function() {
-                if(isTreeBuilt){
+            this.buildTree = function () {
+                if (isTreeBuilt) {
                     return;
                 }
-                makeTree(
+                var tree = makeTree(
                     graph,
                     uriOfVertexWithLabel(this.getGraph(), "b2")
                 );
                 isTreeBuilt = true;
+                return tree;
             };
             this.getBubbleWithLabelInTree = function (label) {
                 this.buildTree();
                 return GraphDisplayer.getVertexSelector().withUri(
                     uriOfVertexWithLabel(this.getGraph(), label)
                 )[0];
+            };
+            this.getRelationWithLabelInTree = function (label) {
+                var tree = this.buildTree();
+                return GraphDisplayer.getEdgeSelector().withHtml(
+                    tree.find(".relation").has(".label:contains("+label+")")
+                );
             };
         };
         api.GraphWithAnInverseRelationScenario = function () {
@@ -298,7 +310,7 @@ define([
 
         function makeTree(graph, centralVertexUri) {
             GraphDisplayer.reset();
-            new GraphDisplayerAsRelativeTree.TreeMaker()
+            return new GraphDisplayerAsRelativeTree.TreeMaker()
                 .makeForCenterVertex(
                 graph,
                 centralVertexUri

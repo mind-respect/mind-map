@@ -51,9 +51,7 @@ define([
             return this.getLabel().text();
         };
         api.Self.prototype.childVertexInDisplay = function () {
-            return GraphDisplayer.getVertexSelector().withHtml(
-                this.html.closest(".vertex")
-            );
+            return this.getTopMostChildBubble();
         };
         api.Self.prototype.isInverse = function () {
             return this.html.hasClass("inverse");
