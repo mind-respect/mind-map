@@ -152,132 +152,58 @@ define([
     }
 
     function leftAction(selectedElement) {
-        selectedElement.rightActionForType(
-            leftActionForVertex,
-            leftActionForRelation,
-            leftActionOther,
-            leftActionForSchema,
-            leftActionOther,
-            leftActionOther,
-            leftActionOther
-        )(selectedElement);
-    }
-
-    function leftActionForSchema(schema) {
-        var centerVertex = CenterBubble.usingBubble(
-            schema
-        );
-        selectNew(
-            centerVertex.getToTheLeftTopMostChild()
-        );
-    }
-
-    function leftActionForVertex(vertex) {
-        var newSelectedElement;
-        if (isCenterVertex(vertex)) {
+        if (selectedElement.isCenterVertex()) {
             var centerVertex = CenterBubble.usingBubble(
-                vertex
+                selectedElement
             );
             if (!centerVertex.hasChildToLeft()) {
                 return;
             }
-            newSelectedElement = getRelationOrBubble(
+            return selectNew(
                 centerVertex.getToTheLeftTopMostChild()
             );
-        } else if (vertex.isToTheLeft()) {
-            if (!vertex.hasChildren()) {
-                return;
-            }
-            newSelectedElement = getRelationOrBubble(
-                vertex.getTopMostChildBubble()
-            );
-        } else {
-            newSelectedElement = vertex.getRelationWithParent();
         }
-        selectNew(newSelectedElement);
+        return selectNew(
+            selectedElement.isToTheLeft() ?
+                selectedElement.getTopMostChildBubble() :
+                selectedElement.getParentBubble()
+        );
     }
-
-    function leftActionForRelation(relation) {
-        var childVertexInDisplay = relation.childVertexInDisplay();
-        var newSelectedGraphElement = childVertexInDisplay.isToTheLeft() ?
-            childVertexInDisplay :
-            childVertexInDisplay.getParentBubble();
-        selectNew(newSelectedGraphElement);
-    }
-
-    function leftActionOther(selectedElement) {
-        var newSelectedElement;
-        if (selectedElement.isToTheLeft()) {
-            if (!selectedElement.hasChildren()) {
-                return;
-            }
-            newSelectedElement = getRelationOrBubble(
-                selectedElement.getTopMostChildBubble()
-            );
-        } else {
-            newSelectedElement = selectedElement.getParentBubble();
-        }
-        selectNew(newSelectedElement);
-    }
-
 
     function rightAction(selectedElement) {
-        var newSelectedGraphElement;
-        if (selectedElement.isRelation()) {
-            var childVertexInDisplay = selectedElement.childVertexInDisplay();
-            newSelectedGraphElement = childVertexInDisplay.isToTheLeft() ?
-                childVertexInDisplay.getParentBubble() :
-                childVertexInDisplay;
-        }
-        else if (isCenterVertex(selectedElement)) {
+        if (selectedElement.isCenterVertex()) {
             var centerVertex = CenterBubble.usingBubble(
                 selectedElement
             );
             if (!centerVertex.hasChildToRight()) {
                 return;
             }
-            newSelectedGraphElement = centerVertex.getToTheRightTopMostChild().getRelationWithParent();
-        } else if (selectedElement.isToTheLeft()) {
-            newSelectedGraphElement = selectedElement.getParentBubble();
-        } else {
-            if (!selectedElement.hasChildren()) {
-                return;
-            }
-            newSelectedGraphElement = selectedElement.getTopMostChildBubble();
+            return selectNew(
+                centerVertex.getToTheRightTopMostChild()
+            );
         }
-        SelectionHandler.setToSingleGraphElement(newSelectedGraphElement);
-        centerBubbleIfApplicable(newSelectedGraphElement);
+        return selectNew(
+            selectedElement.isToTheLeft() ?
+                selectedElement.getParentBubble() :
+                selectedElement.getTopMostChildBubble()
+        );
     }
 
     function upAction(selectedElement) {
-        if (selectedElement.isRelationOrSuggestion()) {
-            applyPressedArrowActionOnRelation(selectedElement);
+        if(selectedElement.isCenterVertex() || !selectedElement.hasBubbleAbove()) {
             return;
         }
-        if (isCenterVertex(selectedElement) || !selectedElement.hasBubbleAbove()) {
-            return;
-        }
-        var bubbleAbove = selectedElement.getBubbleAbove();
-        SelectionHandler.setToSingleGraphElement(bubbleAbove);
-        centerBubbleIfApplicable(bubbleAbove);
+        selectNew(
+            selectedElement.getBubbleAbove()
+        );
     }
 
-    function downAction(selectedElement) {
-        if (selectedElement.isRelationOrSuggestion()) {
-            applyPressedArrowActionOnRelation(selectedElement);
+    function downAction(selectedElement){
+        if(selectedElement.isCenterVertex() || !selectedElement.hasBubbleUnder()) {
             return;
         }
-        if (isCenterVertex(selectedElement) || !selectedElement.hasBubbleUnder()) {
-            return;
-        }
-        var bubbleUnder = selectedElement.getBubbleUnder();
-        SelectionHandler.setToSingleGraphElement(bubbleUnder);
-        centerBubbleIfApplicable(bubbleUnder);
-    }
-
-    function applyPressedArrowActionOnRelation(relation) {
-        SelectionHandler.setToSingleVertex(
-            relation.childVertexInDisplay()
+        selectNew(
+            selectedElement.getBubbleUnder()
         );
     }
 
@@ -286,16 +212,6 @@ define([
         if (!UiUtils.isElementFullyOnScreen(html)) {
             html.centerOnScreenWithAnimation();
         }
-    }
-
-    function isCenterVertex(selectedElement) {
-        return selectedElement.isSchema() || (
-            selectedElement.isVertex() && selectedElement.isCenterVertex()
-            );
-    }
-
-    function getRelationOrBubble(element) {
-        return element.isGroupRelation() ? element : element.getRelationWithParent();
     }
 
     function selectNew(newSelectedElement) {

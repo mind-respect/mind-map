@@ -233,9 +233,6 @@ define([
             );
         };
 
-        api.Object.prototype.isCenterVertex = function () {
-            return this.html.hasClass("center-vertex");
-        };
         api.Object.prototype.removeConnectedEdges = function () {
             var connectedEdges = this.connectedEdges();
             for (var i = 0; i < connectedEdges.length; i++) {

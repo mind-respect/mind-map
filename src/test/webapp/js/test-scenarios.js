@@ -67,7 +67,7 @@ define([
                 return this.getBubbleWithLabelInTree("b1");
             };
             this.getRelation1 = function () {
-                return relationWithLabel(graph, "r1");
+                return relationWithLabel(this.getGraph(), "r1");
             };
             this.getRelation1Ui = function () {
                 var edge = EdgeHtmlBuilder.withServerFacade(
@@ -79,6 +79,9 @@ define([
                     this.getBubble2Ui()
                 );
                 return edge;
+            };
+            this.getRelation2 = function () {
+                return relationWithLabel(this.getGraph(), "r2");
             };
             var graph = this.getGraph();
             Mock.setCenterVertexUriInUrl(this.getBubble2().getUri());
