@@ -17,28 +17,22 @@ define([
         "triple_brain.bubble_factory",
         "triple_brain.graph_displayer",
         "triple_brain.graph_displayer_factory",
-        'triple_brain.graph_displayer_as_tree_common'
+        'triple_brain.graph_displayer_as_tree_common',
+        "triple_brain.vertex_server_format_builder"
     ],
-    function (Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon) {
+    function (Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, VertexServerFormatBuilder) {
         var api = {};
-        api.addTriple = function(bubble){
-            return addTriple(
+        api.addTriple = function (bubble) {
+            var destinationVertex = generateVertex(),
+                edge = generateEdge(
+                    bubble.getUri,
+                    destinationVertex.getUri()
+                );
+            return GraphDisplayer.addEdgeAndVertex(
                 bubble,
-                api.getTriple()
+                edge,
+                destinationVertex
             );
-        };
-        api.addAnotherTriple = function(bubble){
-            return addTriple(
-                bubble,
-                api.getAnotherTriple()
-            );
-        };
-
-        api.getTriple = function () {
-            return {"source_vertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/77db9245-cb65-423e-ab0f-bcef1628bbc8", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:41:00 AM", "lastModificationDate": "Nov 11, 2014 8:41:00 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 4, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "edge": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/edge\/9e3d54f5-562c-4747-a1e3-9f068d423f2e", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:52:02 AM", "lastModificationDate": "Nov 11, 2014 8:52:02 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/77db9245-cb65-423e-ab0f-bcef1628bbc8", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:41:00 AM", "lastModificationDate": "Nov 11, 2014 8:41:00 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 4, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/1854be6e-05c1-4878-98f7-6e3906088e5e", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:52:02 AM", "lastModificationDate": "Nov 11, 2014 8:52:02 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}}, "end_vertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/1854be6e-05c1-4878-98f7-6e3906088e5e", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:52:02 AM", "lastModificationDate": "Nov 11, 2014 8:52:02 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}};
-        };
-        api.getAnotherTriple = function () {
-            return {"source_vertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/77db9245-cb65-423e-ab0f-bcef1628bbc8", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:41:00 AM", "lastModificationDate": "Nov 11, 2014 8:41:00 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 5, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "edge": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/edge\/961a4cf1-96bf-4db9-8dbb-194f24438eb4", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:59:42 AM", "lastModificationDate": "Nov 11, 2014 8:59:42 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/77db9245-cb65-423e-ab0f-bcef1628bbc8", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:41:00 AM", "lastModificationDate": "Nov 11, 2014 8:41:00 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 5, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/ff233c48-93e5-4619-a7e1-fe39a51c7ad9", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:59:42 AM", "lastModificationDate": "Nov 11, 2014 8:59:42 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}}, "end_vertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asvapok\/graph\/vertex\/ff233c48-93e5-4619-a7e1-fe39a51c7ad9", "label": "", "comment": "", "images": [], "creationDate": "Nov 11, 2014 8:59:42 AM", "lastModificationDate": "Nov 11, 2014 8:59:42 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}};
         };
         api.threeBubblesGraph = function () {
             var treeBuilder = new TreeBuilder(this);
@@ -46,7 +40,7 @@ define([
                 //  b3<-r2-b1-r1->b2
                 return {"vertices": {"\/service\/users\/asdoij\/graph\/vertex\/2e8ef30a-a98f-435e-9f22-1d6af46c43de": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdoij\/graph\/vertex\/2e8ef30a-a98f-435e-9f22-1d6af46c43de", "label": "b2", "comment": "", "images": [], "creationDate": "Nov 14, 2014 9:43:31 AM", "lastModificationDate": "Nov 14, 2014 9:43:40 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "\/service\/users\/asdoij\/graph\/vertex\/7f7fe5e2-51a3-4f77-bb96-0244446c2569": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdoij\/graph\/vertex\/7f7fe5e2-51a3-4f77-bb96-0244446c2569", "label": "b1", "comment": "", "images": [], "creationDate": "Nov 14, 2014 9:43:28 AM", "lastModificationDate": "Nov 14, 2014 9:43:43 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 2, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "\/service\/users\/asdoij\/graph\/vertex\/4e2cb6be-d03b-4b4d-b787-04939ac97323": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdoij\/graph\/vertex\/4e2cb6be-d03b-4b4d-b787-04939ac97323", "label": "b3", "comment": "", "images": [], "creationDate": "Nov 14, 2014 9:43:29 AM", "lastModificationDate": "Nov 14, 2014 9:43:51 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}}, "edges": {"\/service\/users\/asdoij\/graph\/edge\/878f9a2c-08e6-4562-8d2f-e955725e6e2c": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdoij\/graph\/edge\/878f9a2c-08e6-4562-8d2f-e955725e6e2c", "label": "r2", "comment": "", "images": [], "creationDate": "Nov 14, 2014 9:43:29 AM", "lastModificationDate": "Nov 14, 2014 9:43:54 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdoij\/graph\/vertex\/7f7fe5e2-51a3-4f77-bb96-0244446c2569"}}}}, "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdoij\/graph\/vertex\/4e2cb6be-d03b-4b4d-b787-04939ac97323"}}}}}, "\/service\/users\/asdoij\/graph\/edge\/a4fb8f95-c743-4df6-b3e3-9fce057d4ce9": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdoij\/graph\/edge\/a4fb8f95-c743-4df6-b3e3-9fce057d4ce9", "label": "r1", "comment": "", "images": [], "creationDate": "Nov 14, 2014 9:43:31 AM", "lastModificationDate": "Nov 14, 2014 9:43:38 AM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdoij\/graph\/vertex\/7f7fe5e2-51a3-4f77-bb96-0244446c2569"}}}}, "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdoij\/graph\/vertex\/2e8ef30a-a98f-435e-9f22-1d6af46c43de"}}}}}}};
             };
-            this.getCenterBubbleUri = function(){
+            this.getCenterBubbleUri = function () {
                 return uriOfVertexWithLabel(this.getGraph(), "b1")
             };
             this.getBubble1 = function () {
@@ -118,14 +112,14 @@ define([
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
                 /*
-                me-Possession of book 1->book 1
-                me<-Possessed by book 2-book 2
-                me-Possession of book 3->book 3
-                me-other relation->other bubble
-                */
-                return {"vertices":{"\/service\/users\/asdvui\/graph\/vertex\/533676c3-bb94-4e5e-a163-5dbdee7732d4":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asdvui\/graph\/vertex\/533676c3-bb94-4e5e-a163-5dbdee7732d4","label":"book 1","comment":"","images":[],"creationDate":"Nov 17, 2014 1:01:26 PM","lastModificationDate":"Nov 17, 2014 1:01:40 PM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"numberOfConnectedEdges":1,"includedVertices":{},"includedEdges":{},"suggestions":[],"isPublic":false}},"\/service\/users\/asdvui\/graph\/vertex\/ff3ea0bf-1710-405f-903a-42b9bac27382":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asdvui\/graph\/vertex\/ff3ea0bf-1710-405f-903a-42b9bac27382","label":"other bubble","comment":"","images":[],"creationDate":"Nov 17, 2014 1:02:11 PM","lastModificationDate":"Nov 17, 2014 1:02:20 PM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"numberOfConnectedEdges":1,"includedVertices":{},"includedEdges":{},"suggestions":[],"isPublic":false}},"\/service\/users\/asdvui\/graph\/vertex\/9cea78ce-9413-47f1-a088-e92946c72f95":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asdvui\/graph\/vertex\/9cea78ce-9413-47f1-a088-e92946c72f95","label":"book 2","comment":"","images":[],"creationDate":"Nov 17, 2014 1:01:42 PM","lastModificationDate":"Nov 17, 2014 1:01:55 PM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"numberOfConnectedEdges":1,"includedVertices":{},"includedEdges":{},"suggestions":[],"isPublic":false}},"\/service\/users\/asdvui\/graph\/vertex\/78ce8ffe-500c-4072-a6be-0865fb33195d":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asdvui\/graph\/vertex\/78ce8ffe-500c-4072-a6be-0865fb33195d","label":"book 3","comment":"","images":[],"creationDate":"Nov 17, 2014 1:01:57 PM","lastModificationDate":"Nov 17, 2014 1:02:10 PM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"numberOfConnectedEdges":1,"includedVertices":{},"includedEdges":{},"suggestions":[],"isPublic":false}},"\/service\/users\/asdvui\/graph\/vertex\/7a4460c4-d94a-4358-8bf5-f43336d69af3":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asdvui\/graph\/vertex\/7a4460c4-d94a-4358-8bf5-f43336d69af3","label":"me","comment":"","images":[],"creationDate":"Nov 17, 2014 1:01:22 PM","lastModificationDate":"Nov 17, 2014 1:01:26 PM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"numberOfConnectedEdges":4,"includedVertices":{},"includedEdges":{},"suggestions":[],"isPublic":false}}},"edges":{"\/service\/users\/asdvui\/graph\/edge\/18a75a82-20ab-4d38-a393-63c5544abde3":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asdvui\/graph\/edge\/18a75a82-20ab-4d38-a393-63c5544abde3","label":"Possessed by book 2","comment":"","images":[],"creationDate":"Nov 17, 2014 1:01:42 PM","lastModificationDate":"Nov 17, 2014 1:08:03 PM"},"genericIdentifications":{},"sameAs":{"\/service\/users\/asdvui\/graph\/identification\/fd651dce-62d5-4a7c-9367-81d1c123d8b3":{"externalResourceUri":"http:\/\/rdf.freebase.com\/rdf\/m\/0613q","friendlyResource":{"uri":"\/service\/users\/asdvui\/graph\/identification\/fd651dce-62d5-4a7c-9367-81d1c123d8b3","label":"Possession","comment":"In law, possession is the control a person intentionally exercises toward a thing. In all cases, to possess something, a person must have an intention to possess it. A person may be in possession of some property. Like ownership, the possession of things is commonly regulated by states under property law.","images":[],"creationDate":"Nov 17, 2014 1:01:02 PM","lastModificationDate":"Nov 17, 2014 1:01:02 PM"}}},"additionalTypes":{}},"sourceVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asdvui\/graph\/vertex\/9cea78ce-9413-47f1-a088-e92946c72f95"}}}},"destinationVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asdvui\/graph\/vertex\/7a4460c4-d94a-4358-8bf5-f43336d69af3"}}}}},"\/service\/users\/asdvui\/graph\/edge\/ff6d664f-a60e-4137-a521-30b690a08d79":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asdvui\/graph\/edge\/ff6d664f-a60e-4137-a521-30b690a08d79","label":"Possession of book 3","comment":"","images":[],"creationDate":"Nov 17, 2014 1:01:57 PM","lastModificationDate":"Nov 17, 2014 1:08:11 PM"},"genericIdentifications":{},"sameAs":{"\/service\/users\/asdvui\/graph\/identification\/fd651dce-62d5-4a7c-9367-81d1c123d8b3":{"externalResourceUri":"http:\/\/rdf.freebase.com\/rdf\/m\/0613q","friendlyResource":{"uri":"\/service\/users\/asdvui\/graph\/identification\/fd651dce-62d5-4a7c-9367-81d1c123d8b3","label":"Possession","comment":"In law, possession is the control a person intentionally exercises toward a thing. In all cases, to possess something, a person must have an intention to possess it. A person may be in possession of some property. Like ownership, the possession of things is commonly regulated by states under property law.","images":[],"creationDate":"Nov 17, 2014 1:01:02 PM","lastModificationDate":"Nov 17, 2014 1:01:02 PM"}}},"additionalTypes":{}},"sourceVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asdvui\/graph\/vertex\/7a4460c4-d94a-4358-8bf5-f43336d69af3"}}}},"destinationVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asdvui\/graph\/vertex\/78ce8ffe-500c-4072-a6be-0865fb33195d"}}}}},"\/service\/users\/asdvui\/graph\/edge\/117a9901-ac7b-4f8c-9955-9eab3141a655":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asdvui\/graph\/edge\/117a9901-ac7b-4f8c-9955-9eab3141a655","label":"Possession of book 1","comment":"","images":[],"creationDate":"Nov 17, 2014 1:01:26 PM","lastModificationDate":"Nov 17, 2014 1:08:16 PM"},"genericIdentifications":{},"sameAs":{"\/service\/users\/asdvui\/graph\/identification\/fd651dce-62d5-4a7c-9367-81d1c123d8b3":{"externalResourceUri":"http:\/\/rdf.freebase.com\/rdf\/m\/0613q","friendlyResource":{"uri":"\/service\/users\/asdvui\/graph\/identification\/fd651dce-62d5-4a7c-9367-81d1c123d8b3","label":"Possession","comment":"In law, possession is the control a person intentionally exercises toward a thing. In all cases, to possess something, a person must have an intention to possess it. A person may be in possession of some property. Like ownership, the possession of things is commonly regulated by states under property law.","images":[],"creationDate":"Nov 17, 2014 1:01:02 PM","lastModificationDate":"Nov 17, 2014 1:01:02 PM"}}},"additionalTypes":{}},"sourceVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asdvui\/graph\/vertex\/7a4460c4-d94a-4358-8bf5-f43336d69af3"}}}},"destinationVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asdvui\/graph\/vertex\/533676c3-bb94-4e5e-a163-5dbdee7732d4"}}}}},"\/service\/users\/asdvui\/graph\/edge\/90026179-18e7-4a67-9fbf-df1099ee6fc3":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asdvui\/graph\/edge\/90026179-18e7-4a67-9fbf-df1099ee6fc3","label":"other relation","comment":"","images":[],"creationDate":"Nov 17, 2014 1:02:11 PM","lastModificationDate":"Nov 17, 2014 1:02:16 PM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"sourceVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asdvui\/graph\/vertex\/7a4460c4-d94a-4358-8bf5-f43336d69af3"}}}},"destinationVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asdvui\/graph\/vertex\/ff3ea0bf-1710-405f-903a-42b9bac27382"}}}}}}};
+                 me-Possession of book 1->book 1
+                 me<-Possessed by book 2-book 2
+                 me-Possession of book 3->book 3
+                 me-other relation->other bubble
+                 */
+                return {"vertices": {"\/service\/users\/asdvui\/graph\/vertex\/533676c3-bb94-4e5e-a163-5dbdee7732d4": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdvui\/graph\/vertex\/533676c3-bb94-4e5e-a163-5dbdee7732d4", "label": "book 1", "comment": "", "images": [], "creationDate": "Nov 17, 2014 1:01:26 PM", "lastModificationDate": "Nov 17, 2014 1:01:40 PM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "\/service\/users\/asdvui\/graph\/vertex\/ff3ea0bf-1710-405f-903a-42b9bac27382": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdvui\/graph\/vertex\/ff3ea0bf-1710-405f-903a-42b9bac27382", "label": "other bubble", "comment": "", "images": [], "creationDate": "Nov 17, 2014 1:02:11 PM", "lastModificationDate": "Nov 17, 2014 1:02:20 PM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "\/service\/users\/asdvui\/graph\/vertex\/9cea78ce-9413-47f1-a088-e92946c72f95": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdvui\/graph\/vertex\/9cea78ce-9413-47f1-a088-e92946c72f95", "label": "book 2", "comment": "", "images": [], "creationDate": "Nov 17, 2014 1:01:42 PM", "lastModificationDate": "Nov 17, 2014 1:01:55 PM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "\/service\/users\/asdvui\/graph\/vertex\/78ce8ffe-500c-4072-a6be-0865fb33195d": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdvui\/graph\/vertex\/78ce8ffe-500c-4072-a6be-0865fb33195d", "label": "book 3", "comment": "", "images": [], "creationDate": "Nov 17, 2014 1:01:57 PM", "lastModificationDate": "Nov 17, 2014 1:02:10 PM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 1, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}, "\/service\/users\/asdvui\/graph\/vertex\/7a4460c4-d94a-4358-8bf5-f43336d69af3": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdvui\/graph\/vertex\/7a4460c4-d94a-4358-8bf5-f43336d69af3", "label": "me", "comment": "", "images": [], "creationDate": "Nov 17, 2014 1:01:22 PM", "lastModificationDate": "Nov 17, 2014 1:01:26 PM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "numberOfConnectedEdges": 4, "includedVertices": {}, "includedEdges": {}, "suggestions": [], "isPublic": false}}}, "edges": {"\/service\/users\/asdvui\/graph\/edge\/18a75a82-20ab-4d38-a393-63c5544abde3": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdvui\/graph\/edge\/18a75a82-20ab-4d38-a393-63c5544abde3", "label": "Possessed by book 2", "comment": "", "images": [], "creationDate": "Nov 17, 2014 1:01:42 PM", "lastModificationDate": "Nov 17, 2014 1:08:03 PM"}, "genericIdentifications": {}, "sameAs": {"\/service\/users\/asdvui\/graph\/identification\/fd651dce-62d5-4a7c-9367-81d1c123d8b3": {"externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/0613q", "friendlyResource": {"uri": "\/service\/users\/asdvui\/graph\/identification\/fd651dce-62d5-4a7c-9367-81d1c123d8b3", "label": "Possession", "comment": "In law, possession is the control a person intentionally exercises toward a thing. In all cases, to possess something, a person must have an intention to possess it. A person may be in possession of some property. Like ownership, the possession of things is commonly regulated by states under property law.", "images": [], "creationDate": "Nov 17, 2014 1:01:02 PM", "lastModificationDate": "Nov 17, 2014 1:01:02 PM"}}}, "additionalTypes": {}}, "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdvui\/graph\/vertex\/9cea78ce-9413-47f1-a088-e92946c72f95"}}}}, "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdvui\/graph\/vertex\/7a4460c4-d94a-4358-8bf5-f43336d69af3"}}}}}, "\/service\/users\/asdvui\/graph\/edge\/ff6d664f-a60e-4137-a521-30b690a08d79": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdvui\/graph\/edge\/ff6d664f-a60e-4137-a521-30b690a08d79", "label": "Possession of book 3", "comment": "", "images": [], "creationDate": "Nov 17, 2014 1:01:57 PM", "lastModificationDate": "Nov 17, 2014 1:08:11 PM"}, "genericIdentifications": {}, "sameAs": {"\/service\/users\/asdvui\/graph\/identification\/fd651dce-62d5-4a7c-9367-81d1c123d8b3": {"externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/0613q", "friendlyResource": {"uri": "\/service\/users\/asdvui\/graph\/identification\/fd651dce-62d5-4a7c-9367-81d1c123d8b3", "label": "Possession", "comment": "In law, possession is the control a person intentionally exercises toward a thing. In all cases, to possess something, a person must have an intention to possess it. A person may be in possession of some property. Like ownership, the possession of things is commonly regulated by states under property law.", "images": [], "creationDate": "Nov 17, 2014 1:01:02 PM", "lastModificationDate": "Nov 17, 2014 1:01:02 PM"}}}, "additionalTypes": {}}, "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdvui\/graph\/vertex\/7a4460c4-d94a-4358-8bf5-f43336d69af3"}}}}, "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdvui\/graph\/vertex\/78ce8ffe-500c-4072-a6be-0865fb33195d"}}}}}, "\/service\/users\/asdvui\/graph\/edge\/117a9901-ac7b-4f8c-9955-9eab3141a655": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdvui\/graph\/edge\/117a9901-ac7b-4f8c-9955-9eab3141a655", "label": "Possession of book 1", "comment": "", "images": [], "creationDate": "Nov 17, 2014 1:01:26 PM", "lastModificationDate": "Nov 17, 2014 1:08:16 PM"}, "genericIdentifications": {}, "sameAs": {"\/service\/users\/asdvui\/graph\/identification\/fd651dce-62d5-4a7c-9367-81d1c123d8b3": {"externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/0613q", "friendlyResource": {"uri": "\/service\/users\/asdvui\/graph\/identification\/fd651dce-62d5-4a7c-9367-81d1c123d8b3", "label": "Possession", "comment": "In law, possession is the control a person intentionally exercises toward a thing. In all cases, to possess something, a person must have an intention to possess it. A person may be in possession of some property. Like ownership, the possession of things is commonly regulated by states under property law.", "images": [], "creationDate": "Nov 17, 2014 1:01:02 PM", "lastModificationDate": "Nov 17, 2014 1:01:02 PM"}}}, "additionalTypes": {}}, "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdvui\/graph\/vertex\/7a4460c4-d94a-4358-8bf5-f43336d69af3"}}}}, "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdvui\/graph\/vertex\/533676c3-bb94-4e5e-a163-5dbdee7732d4"}}}}}, "\/service\/users\/asdvui\/graph\/edge\/90026179-18e7-4a67-9fbf-df1099ee6fc3": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdvui\/graph\/edge\/90026179-18e7-4a67-9fbf-df1099ee6fc3", "label": "other relation", "comment": "", "images": [], "creationDate": "Nov 17, 2014 1:02:11 PM", "lastModificationDate": "Nov 17, 2014 1:02:16 PM"}, "genericIdentifications": {}, "sameAs": {}, "additionalTypes": {}}, "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdvui\/graph\/vertex\/7a4460c4-d94a-4358-8bf5-f43336d69af3"}}}}, "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/asdvui\/graph\/vertex\/ff3ea0bf-1710-405f-903a-42b9bac27382"}}}}}}};
             };
-            this.getCenterBubbleUri = function(){
+            this.getCenterBubbleUri = function () {
                 return uriOfVertexWithLabel(this.getGraph(), "me")
             };
             var graph = this.getGraph();
@@ -157,7 +151,7 @@ define([
                     this.getPossessionAsGroupRelation()
                 ).create();
             };
-            this.getPossessionAsGroupRelationInTree = function(){
+            this.getPossessionAsGroupRelationInTree = function () {
                 return treeBuilder.getRelationWithLabelInTree("Possession");
             };
             this.getBook1 = function () {
@@ -172,12 +166,12 @@ define([
                         ]
                 );
             };
-            this.getRelationWithBook1InTree = function(){
+            this.getRelationWithBook1InTree = function () {
                 return treeBuilder.getRelationWithLabelInTree(
                     "Possession of book 1"
                 );
             };
-            this.getRelationWithBook2InTree = function(){
+            this.getRelationWithBook2InTree = function () {
                 return treeBuilder.getRelationWithLabelInTree(
                     "Possessed by book 2"
                 );
@@ -335,15 +329,7 @@ define([
             );
         }
 
-        function addTriple(bubble, triple){
-            return GraphDisplayer.addEdgeAndVertex(
-                bubble,
-                Edge.fromServerFormat(triple.edge),
-                Vertex.fromServerFormat(triple.end_vertex)
-            );
-        }
-
-        function TreeBuilder(context){
+        function TreeBuilder(context) {
             this.build = function () {
                 if (this._tree === undefined) {
                     this._tree = makeTree(
@@ -365,6 +351,42 @@ define([
                     tree.find(".relation").has(".label:contains(" + label + ")")
                 );
             };
+        }
+
+        function generateVertex() {
+            return Vertex.fromServerFormat(
+                VertexServerFormatBuilder.buildWithUri(
+                    generateVertexUri()
+                )
+            );
+        }
+
+        function generateEdge(sourceVertexUri, destinationVertexUri) {
+            return Edge.fromServerFormat(
+                Edge.buildObjectWithUriOfSelfSourceAndDestinationVertex(
+                    generateEdgeUri(),
+                    sourceVertexUri,
+                    destinationVertexUri
+                )
+            );
+        }
+
+        function generateVertexUri() {
+            return "\/service\/users\/foo\/graph\/vertex\/" + generateUuid();
+        }
+
+        function generateEdgeUri() {
+            return "\/service\/users\/foo\/graph\/edge\/" + generateUuid();
+        }
+
+        function generateUuid() {
+            return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+                s4() + '-' + s4() + s4() + s4();
+            function s4() {
+                return Math.floor((1 + Math.random()) * 0x10000)
+                    .toString(16)
+                    .substring(1);
+            }
         }
     }
 );

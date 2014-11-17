@@ -13,13 +13,6 @@ define([
             serverFormat
         );
     };
-    api.buildObjectWithUri = function (uri) {
-        return {
-            vertex: {
-                graphElement: GraphElement.buildObjectWithUri(uri)
-            }
-        };
-    };
     function Self(vertexServerFormat) {
         this.vertexServerFormat = vertexServerFormat;
         this._includedVertices = this._buildIncludedVertices();

@@ -53,6 +53,7 @@ requirejs.config({
         "triple_brain.graph_element_ui": "triple_brain/graph/graph_element/triple_brain.graph_element_ui",
         "triple_brain.ui.graph": "triple_brain/graph/triple_brain.ui.graph",
         "triple_brain.vertex": "triple_brain/graph/vertex/triple_brain.vertex",
+        "triple_brain.vertex_server_format_builder": "triple_brain/graph/vertex/triple_brain.vertex_server_format_builder",
         "triple_brain.vertex_ui": "triple_brain/graph/vertex/triple_brain.vertex_ui",
         "triple_brain.ui.vertex_segments": "triple_brain/graph/vertex/triple_brain.ui.vertex_segments",
         "triple_brain.search_result_facade_factory": "triple_brain/search/triple_brain.search_result_facade_factory",

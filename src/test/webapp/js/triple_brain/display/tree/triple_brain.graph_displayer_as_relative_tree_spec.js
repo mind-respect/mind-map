@@ -30,7 +30,7 @@ define([
 
         it("distributes new triples evenly to the right and left", function () {
             var firstAddedEdge = Scenarios.addTriple(bubble1).edge(),
-                secondAddedEdge = Scenarios.addAnotherTriple(bubble1).edge();
+                secondAddedEdge = Scenarios.addTriple(bubble1).edge();
             expect(
                 firstAddedEdge.isToTheLeft()
             ).toBeFalsy();

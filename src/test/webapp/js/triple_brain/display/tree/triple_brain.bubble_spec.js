@@ -58,7 +58,7 @@ define([
 
         it("can get bubble above an edge", function () {
             var newEdge1 = Scenarios.addTriple(bubble2).edge(),
-                newEdge2 = Scenarios.addAnotherTriple(bubble2).edge();
+                newEdge2 = Scenarios.addTriple(bubble2).edge();
             expect(
                 newEdge2.getBubbleAbove().getId()
             ).toBe(newEdge1.getId());
@@ -66,7 +66,7 @@ define([
 
         it("can get bubble above a vertex", function () {
             var newVertex1 = Scenarios.addTriple(bubble2).destinationVertex(),
-                newVertex2 = Scenarios.addAnotherTriple(
+                newVertex2 = Scenarios.addTriple(
                     bubble2
                 ).destinationVertex();
             expect(
@@ -86,21 +86,34 @@ define([
             ).toBe(bubble2.getId());
         });
 
-        it("can get bubble under an edge", function () {
+        it("can get bubble below", function () {
             var newEdge1 = Scenarios.addTriple(bubble2).edge(),
-                newEdge2 = Scenarios.addAnotherTriple(bubble2).edge();
+                newEdge2 = Scenarios.addTriple(bubble2).edge();
             expect(
                 newEdge1.getBubbleUnder().getId()
             ).toBe(newEdge2.getId());
         });
 
-        it("can get bubble under a vertex", function () {
+        it("can get bubble below even if both bubbles only share grand-parent", function () {
             var newVertex1 = Scenarios.addTriple(bubble2).destinationVertex(),
-                newVertex2 = Scenarios.addAnotherTriple(
+                newVertex2 = Scenarios.addTriple(
                     bubble2
                 ).destinationVertex();
             expect(
                 newVertex1.getBubbleUnder().getId()
+            ).toBe(newVertex2.getId());
+        });
+
+        it("can get closest bubble below even if common parent is further away than grand-parent", function () {
+            var newVertex1 = Scenarios.addTriple(bubble2).destinationVertex(),
+                newVertex2 = Scenarios.addTriple(
+                    bubble2
+                ).destinationVertex(),
+                childOfNewVertex1 = Scenarios.addTriple(
+                    newVertex1
+                ).destinationVertex();
+            expect(
+                childOfNewVertex1.getBubbleUnder().getId()
             ).toBe(newVertex2.getId());
         });
 

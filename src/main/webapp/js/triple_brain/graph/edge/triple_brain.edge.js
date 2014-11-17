@@ -3,8 +3,9 @@
  */
 define([
     "triple_brain.graph_element",
-    "triple_brain.friendly_resource"
-], function (GraphElement, FriendlyResource) {
+    "triple_brain.friendly_resource",
+    "triple_brain.vertex_server_format_builder"
+], function (GraphElement, FriendlyResource, VertexServerFormatBuilder) {
     "use strict";
     var api = {};
     api.fromServerFormat = function (serverFormat) {
@@ -15,29 +16,30 @@ define([
             graphElement: GraphElement.buildObjectWithUri(
                 uri
             ),
-            sourceVertex: FriendlyResource.buildObjectWithUri(
+            sourceVertex: VertexServerFormatBuilder.buildWithUri(
                 sourceVertexUri
             ),
-            destinationVertex: FriendlyResource.buildObjectWithUri(
+            destinationVertex: VertexServerFormatBuilder.buildWithUri(
                 destinationVertexUri
             )
         };
     };
-    api.Self = function () {};
+    api.Self = function () {
+    };
 
     api.Self.prototype = new GraphElement.Self;
 
-    api.Self.prototype.init = function(edgeServerFormat){
-        if (edgeServerFormat.sourceVertex !== undefined) {
-            this.sourceVertex = FriendlyResource.fromServerFormat(
-                edgeServerFormat.sourceVertex.vertex.graphElement.friendlyResource
-            );
-        }
-        if (edgeServerFormat.destinationVertex !== undefined) {
-            this.destinationVertex = FriendlyResource.fromServerFormat(
-                edgeServerFormat.destinationVertex.vertex.graphElement.friendlyResource
-            );
-        }
+    api.Self.prototype.init = function (edgeServerFormat) {
+        this.sourceVertex = FriendlyResource.fromServerFormat(
+            VertexServerFormatBuilder.getFriendlyResourceServerObject(
+                edgeServerFormat.sourceVertex
+            )
+        );
+        this.destinationVertex = FriendlyResource.fromServerFormat(
+            VertexServerFormatBuilder.getFriendlyResourceServerObject(
+                edgeServerFormat.destinationVertex
+            )
+        );
         GraphElement.Self.apply(
             this
         );
