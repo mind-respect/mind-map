@@ -8,8 +8,9 @@ define([
         "triple_brain.mind_map_info",
         "triple_brain.image_displayer",
         "triple_brain.graph_element_ui",
-        "triple_brain.bubble_factory"
-    ], function (GraphDisplayer, EventBus, UiUtils, MindMapInfo, ImageDisplayer, GraphElementUi, BubbleFactory) {
+        "triple_brain.bubble_factory",
+        "triple_brain.selection_handler"
+    ], function (GraphDisplayer, EventBus, UiUtils, MindMapInfo, ImageDisplayer, GraphElementUi, BubbleFactory, SelectionHandler) {
         "use strict";
         var api = {};
 
@@ -143,6 +144,23 @@ define([
             return this.html.data(
                 "hidden_properties_indicator"
             );
+        };
+
+        api.Self.prototype.remove = function () {
+            if(this.isVertex()){
+                SelectionHandler.removeVertex(this);
+            }else{
+                SelectionHandler.removeRelation(this);
+            }
+            this.removeHiddenRelationsContainer();
+            if (this.isCenterVertex()) {
+                this.html.closest(".vertex-container").remove();
+            } else {
+                var treeContainer = this.html.closest(".vertex-tree-container"),
+                    clearFix = treeContainer.next(".clear-fix");
+                clearFix.remove();
+                treeContainer.remove();
+            }
         };
 
         api.Self.prototype.removeHiddenRelationsContainer = function () {

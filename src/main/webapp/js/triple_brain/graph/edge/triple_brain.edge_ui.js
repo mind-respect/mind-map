@@ -111,10 +111,6 @@ define([
             return EdgeService;
         };
 
-        api.Object.prototype.remove = function () {
-            SelectionHandler.removeRelation(this);
-            this.html.remove();
-        };
         api.Object.prototype.showMenu = function () {
             this.getMenuHtml().show();
         };

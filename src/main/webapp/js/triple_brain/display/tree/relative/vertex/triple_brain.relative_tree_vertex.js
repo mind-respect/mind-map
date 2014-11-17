@@ -106,19 +106,6 @@ define([
             return this.isALeaf() && this.getTotalNumberOfEdges() > 1;
         };
 
-        api.Object.prototype.remove = function () {
-            SelectionHandler.removeVertex(this);
-            this.removeHiddenRelationsContainer();
-            if (this.isCenterVertex()) {
-                this.html.closest(".vertex-container").remove();
-            } else {
-                var treeContainer = this.html.closest(".vertex-tree-container"),
-                    clearFix = treeContainer.next(".clear-fix");
-                clearFix.remove();
-                treeContainer.remove();
-            }
-        };
-
         VertexUi.buildCommonConstructors(api);
         EventBus.subscribe(
             '/event/ui/graph/identification/added',
