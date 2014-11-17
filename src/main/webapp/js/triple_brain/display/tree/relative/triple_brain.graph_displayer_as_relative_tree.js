@@ -99,7 +99,7 @@ define([
                 }
                 parentVertex.visitVerticesChildren(VertexHtmlBuilder.completeBuild);
                 function removeRelationWithGrandParentFromServerGraph() {
-                    var relationWithGrandParentUri = parentVertex.getRelationWithParent().getUri();
+                    var relationWithGrandParentUri = parentVertex.getRelationWithUiParent().getUri();
                     var grandParentUri = parentVertex.getParentVertex().getUri();
                     var nbRelationsWithGrandParent = 0;
                     serverGraph.edges = getFilteredEdges();

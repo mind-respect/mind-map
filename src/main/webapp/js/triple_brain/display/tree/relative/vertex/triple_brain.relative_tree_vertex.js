@@ -46,14 +46,10 @@ define([
                 }
             });
         };
-        api.Object.prototype.getRelationWithParent = function () {
-            return TreeEdge.withHtml(
-                this.getRelationWithParentHtml()
-            );
+        api.Object.prototype.getRelationWithUiParent = function () {
+            return this.getParentBubble();
         };
-        api.Object.prototype.getRelationWithParentHtml = function () {
-            return this.html.find("> .relation");
-        };
+
         api.Object.prototype.applyToOtherInstances = function (apply) {
             $.each(this.getOtherInstances(), function () {
                 var vertex = this;

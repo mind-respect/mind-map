@@ -71,10 +71,5 @@ define([
         );
         return vertex;
     };
-    Self.prototype.getRelationWithParent = function () {
-        return GraphDisplayer.getRelationSuggestionSelector().withHtml(
-            this.getRelationWithParentHtml()
-        );
-    };
     return api;
 });

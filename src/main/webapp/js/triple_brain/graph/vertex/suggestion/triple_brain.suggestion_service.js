@@ -17,7 +17,7 @@ define([
             contentType: 'application/json;charset=utf-8'
         }).success(function(xhr){
             var vertexUi = suggestionUi.integrate(xhr.vertex_uri);
-            suggestionUi.getRelationWithParent().integrate(
+            suggestionUi.getRelationWithUiParent().integrate(
                 xhr.edge_uri,
                 vertexUi
             );

@@ -50,6 +50,12 @@ define([
             ).toBe(newEdge.getUri());
         });
 
+        it("returns self when getting child of leaf", function () {
+            expect(
+                bubble2.getTopMostChildBubble().getUri()
+            ).toBe(bubble2.getUri());
+        });
+
         it("can get bubble above an edge", function () {
             var newEdge1 = Scenarios.addTriple(bubble2).edge(),
                 newEdge2 = Scenarios.addAnotherTriple(bubble2).edge();

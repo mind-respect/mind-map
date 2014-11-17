@@ -24,12 +24,12 @@ define([
         api.Self.prototype = new GraphElementUi.Self;
 
         api.Self.prototype.getParentBubble = function () {
-            if(this.isCenterVertex()){
+            if (this.isCenterVertex()) {
                 return this;
             }
             return BubbleFactory.fromHtml(
                 this.html.closest(".vertices-children-container")
-                .siblings(".vertex-container").find("> .bubble")
+                    .siblings(".vertex-container").find("> .bubble")
             );
         };
         api.Self.prototype.getParentVertex = function () {
@@ -46,10 +46,14 @@ define([
         };
 
         api.Self.prototype.getTopMostChildBubble = function () {
+            var topMostBubbleHtml = this.getChildrenBubblesHtml().filter(
+                ":first"
+            );
+            if (topMostBubbleHtml.length === 0) {
+                return this;
+            }
             return BubbleFactory.fromHtml(
-                this.getChildrenBubblesHtml().filter(
-                    ":first"
-                )
+                topMostBubbleHtml
             );
         };
 
@@ -71,7 +75,7 @@ define([
             );
         };
 
-        api.Self.prototype._getColumnBubble = function(htmlGetter){
+        api.Self.prototype._getColumnBubble = function (htmlGetter) {
             var bubbleHtmlAbove = htmlGetter(
                 this.html
             );
@@ -85,7 +89,7 @@ define([
             var bubbleHtmlAbove = htmlGetter(
                 this.getParentBubble().getHtml()
             );
-            if(bubbleHtmlAbove.length === 0){
+            if (bubbleHtmlAbove.length === 0) {
                 return this;
             }
             return BubbleFactory.fromHtml(
