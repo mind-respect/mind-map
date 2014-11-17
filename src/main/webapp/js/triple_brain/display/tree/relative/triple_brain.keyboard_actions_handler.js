@@ -152,7 +152,7 @@ define([
     }
 
     function leftAction(selectedElement) {
-        if (selectedElement.isCenterVertex()) {
+        if (selectedElement.isCenterBubble()) {
             var centerVertex = CenterBubble.usingBubble(
                 selectedElement
             );
@@ -171,7 +171,7 @@ define([
     }
 
     function rightAction(selectedElement) {
-        if (selectedElement.isCenterVertex()) {
+        if (selectedElement.isCenterBubble()) {
             var centerVertex = CenterBubble.usingBubble(
                 selectedElement
             );

@@ -161,20 +161,21 @@ define([
     api.showSuggestions = function (vertex) {
         $.each(vertex.suggestions(), function () {
             var serverFormat = this,
-                suggestionBubble = addVertex(
+                suggestionRelation = addEdge(
                     serverFormat,
                     vertex,
-                    SuggestionBubbleHtmlBuilder
+                    SuggestionRelationBuilder
                 );
-            SuggestionRelationBuilder.get(
+            addVertex(
                 serverFormat,
-                vertex,
-                suggestionBubble
-            ).create();
+                suggestionRelation,
+                SuggestionBubbleHtmlBuilder
+            );
+            SuggestionRelationBuilder.afterChildBuilt(suggestionRelation);
         });
     };
     api.addProperty = function (property, schema) {
-        new api.TreeMaker().buildBubbleHtmlIntoContainer(
+        addEdge(
             property,
             schema,
             PropertyHtmlBuilder
@@ -299,12 +300,15 @@ define([
         );
     }
 
-    function addEdge(serverEdge, sourceVertexUi) {
+    function addEdge(serverEdge, sourceVertexUi, edgeUiBuilder) {
+        if (edgeUiBuilder === undefined) {
+            edgeUiBuilder = EdgeBuilder
+        }
         var treeMaker = new api.TreeMaker();
         return treeMaker.buildBubbleHtmlIntoContainer(
             serverEdge,
             sourceVertexUi,
-            EdgeBuilder
+            edgeUiBuilder
         );
     }
 
@@ -317,11 +321,8 @@ define([
                 schema,
                 buildRootBubbleContainer()
             );
-            var index = 0;
             $.each(schema.getProperties(), function () {
                 var propertyServerFacade = this;
-                propertyServerFacade.isLeftOriented = index % 2 !== 0;
-                index++;
                 self.buildBubbleHtmlIntoContainer(
                     propertyServerFacade,
                     self.rootBubble,
@@ -378,9 +379,8 @@ define([
             var childTreeContainer = RelativeTreeTemplates[
                     "vertex_tree_container"
                     ].merge(),
-                isCenterVertex = parentBubble.isVertex() && parentBubble.isCenterVertex(),
                 container;
-            if (isCenterVertex) {
+            if (parentBubble.isCenterBubble()) {
                 var centerBubble = CenterBubble.usingBubble(parentBubble);
                 if (centerBubble.shouldAddLeft()) {
                     container = centerBubble.getLeftContainer();
@@ -393,7 +393,7 @@ define([
                 container = self.childContainer(parentBubble);
                 serverFormat.isLeftOriented = parentBubble.getOriginalServerObject().isLeftOriented;
             }
-
+            childVertexHtmlFacade.setOriginalServerObject(serverFormat)
             container.append(
                 childTreeContainer
             ).append("<span class='clear-fix'>");
@@ -509,6 +509,8 @@ define([
             self.rootBubble = _htmlBuilder.withServerFacade(
                 serverFacade
             ).create(GraphUi.generateBubbleHtmlId());
+            self.rootBubble.setOriginalServerObject(serverFacade);
+            self.rootBubble.getHtml().addClass("center-vertex");
             var bubbleContainer = $(
                 RelativeTreeTemplates["vertex_container"].merge()
             );
@@ -539,7 +541,6 @@ define([
                     serverRootVertex,
                     verticesContainer
                 );
-                self.rootBubble.getHtml().addClass("center-vertex");
                 $.each(serverRootVertex.similarRelations, function (key, groupRelation) {
                     if (groupRelation.hasMultipleVertices()) {
                         self.buildBubbleHtmlIntoContainer(

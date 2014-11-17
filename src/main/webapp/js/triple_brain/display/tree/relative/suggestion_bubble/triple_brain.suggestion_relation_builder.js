@@ -10,34 +10,29 @@ define([
 ], function (EdgeHtmlBuilderCommon, SuggestionRelationUi, GraphElementMainMenu, Identification) {
     "use strict";
     var api = {};
-    api.get = function (serverFacade, sourceVertex, destinationVertex) {
-        return new Self(
-            serverFacade,
-            sourceVertex,
-            destinationVertex
-        );
+    api.withServerFacade = function (serverFacade) {
+        return new Self(serverFacade);
     };
 
-    function Self(serverFacade, sourceVertex, destinationVertex) {
+    api.afterChildBuilt = function(suggestionRelationUi){
+        suggestionRelationUi.getHtml().closest(
+            ".vertex-tree-container"
+        ).find("> .vertical-border").addClass("small");
+    };
+
+    function Self(serverFacade) {
         this.serverFacade = serverFacade;
-        this.sourceVertex = sourceVertex;
-        this.destinationVertex = destinationVertex;
     }
 
     Self.prototype.create = function () {
         this.html = $(
-            "<span class='suggestion relation graph-element bubble'>"
+            "<div class='suggestion relation graph-element bubble'>"
         ).data(
             "uri",
             this.serverFacade.getUri()
-        ).uniqueId();
-        var inBubbleContainer = this.destinationVertex.getInBubbleContainer(),
-            isToTheLeft = this.destinationVertex.isToTheLeft();
-        this.html[isToTheLeft ? "appendTo" : "prependTo"](
-            inBubbleContainer
-        ).css(
-            isToTheLeft ? "margin-left" : "margin-right", "1em"
-        ).append(this.html);
+        ).uniqueId().append(
+            "<span class='connector'>"
+        );
         var label = this.serverFacade.isLabelEmpty() ?
             this.serverFacade.getSameAs().getUri() :
             this.serverFacade.getLabel();

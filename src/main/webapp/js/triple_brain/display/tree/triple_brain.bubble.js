@@ -25,7 +25,7 @@ define([
         api.Self.prototype = new GraphElementUi.Self;
 
         api.Self.prototype.getParentBubble = function () {
-            if (this.isCenterVertex()) {
+            if (this.isCenterBubble()) {
                 return this;
             }
             return BubbleFactory.fromHtml(
@@ -153,7 +153,7 @@ define([
                 SelectionHandler.removeRelation(this);
             }
             this.removeHiddenRelationsContainer();
-            if (this.isCenterVertex()) {
+            if (this.isCenterBubble()) {
                 this.html.closest(".vertex-container").remove();
             } else {
                 var treeContainer = this.html.closest(".vertex-tree-container"),

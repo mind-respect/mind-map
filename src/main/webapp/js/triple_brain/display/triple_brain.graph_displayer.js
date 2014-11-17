@@ -56,9 +56,10 @@ define([
             return _implementation.showSuggestions(vertex);
         };
 
-        api.addProperty = function(property){
+        api.addProperty = function(property, schema){
             return _implementation.addProperty(
-                property
+                property,
+                schema
             );
         };
         api.addEdge = function (newEdge, sourceVertex, destinationVertex) {

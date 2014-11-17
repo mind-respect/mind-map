@@ -39,8 +39,8 @@ define([
     api.Self.prototype.isVertex = function () {
         return this.getGraphElementType() === api.Types.Vertex;
     };
-    api.Self.prototype.isCenterVertex = function(){
-        return this.isVertex() && this.html.hasClass("center-vertex");
+    api.Self.prototype.isCenterBubble = function(){
+        return this.html.hasClass("center-vertex");
     };
     api.Self.prototype.isSchema = function () {
         return this.getGraphElementType() === api.Types.Schema;
