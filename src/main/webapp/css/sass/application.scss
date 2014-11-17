@@ -422,9 +422,11 @@ svg {
     vertical-align: middle;
   }
   &.suggestion {
-    .in-bubble-content {
+    .in-bubble-content, .label {
       background-color: white;
       border: 1px dashed black;
+      color:black;
+      text-shadow: none;
     }
   }
   white-space: nowrap;
