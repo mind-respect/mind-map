@@ -36,7 +36,7 @@ define([
         api.Self.prototype.getParentVertex = function () {
             var parentBubble = this.getParentBubble();
             if (parentBubble.isVertex()) {
-                return parentBubble();
+                return parentBubble;
             }
             return parentBubble.getParentBubble();
         };

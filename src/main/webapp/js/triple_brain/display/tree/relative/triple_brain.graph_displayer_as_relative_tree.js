@@ -161,7 +161,7 @@ define([
     api.showSuggestions = function (vertex) {
         $.each(vertex.suggestions(), function () {
             var serverFormat = this,
-                suggestionBubble = api.addVertex(
+                suggestionBubble = addVertex(
                     serverFormat,
                     vertex,
                     SuggestionBubbleHtmlBuilder
