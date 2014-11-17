@@ -225,10 +225,8 @@ define([
                 ).create();
             };
             this.getARelationSuggestionUi = function () {
-                return SuggestionRelationBuilder.get(
-                    this.getOneSuggestion(),
-                    this.getVertex(),
-                    this.getAVertexSuggestionUi()
+                return SuggestionRelationBuilder.withServerFacade(
+                    this.getOneSuggestion()
                 ).create();
             };
             Mock.setCenterVertexUriInUrl(this.getVertex().getUri());
