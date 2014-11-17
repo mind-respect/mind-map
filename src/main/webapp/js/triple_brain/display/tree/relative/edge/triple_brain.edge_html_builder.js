@@ -19,12 +19,15 @@ define([
                 edgeServer
             );
         };
-        api.afterChildBuilt = function(edge, parentUi, childUi){
-            var edgeServer = edge.getOriginalServerObject();
-            var isInverse = edgeServer.getSourceVertex().getUri() !== parentUi.getUri();
+        api.afterChildBuilt = function (edge, parentUi, childUi) {
+            var edgeServer = edge.getOriginalServerObject(),
+                parentVertexUi = parentUi.isVertex() ?
+                    parentUi :
+                    parentUi.getParentVertex(),
+                isInverse = edgeServer.getSourceVertex().getUri() !== parentVertexUi.getUri();
             edge.getHtml().data(
                 "source_vertex_id",
-                parentUi.getId()
+                parentVertexUi.getId()
             ).data(
                 "destination_vertex_id",
                 childUi.getId()

@@ -23,7 +23,7 @@ define([
             expect(centerVertex.similarRelations).toBeDefined();
             expect(centerVertex.similarRelations[possession.getUri()]).toBeDefined();
             var numberOfRelations = Object.keys(graph.edges);
-            expect(numberOfRelations.length).toBe(3);
+            expect(numberOfRelations.length).toBe(4);
             var numberOfGroupedRelations = Object.keys(centerVertex.similarRelations);
             expect(numberOfGroupedRelations.length).toBe(2);
         });
