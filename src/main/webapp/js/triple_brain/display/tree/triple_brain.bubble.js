@@ -2,15 +2,13 @@
  * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
-        "triple_brain.graph_displayer",
         "triple_brain.event_bus",
         "triple_brain.ui.utils",
-        "triple_brain.mind_map_info",
         "triple_brain.image_displayer",
         "triple_brain.graph_element_ui",
         "triple_brain.bubble_factory",
         "triple_brain.selection_handler"
-    ], function (GraphDisplayer, EventBus, UiUtils, MindMapInfo, ImageDisplayer, GraphElementUi, BubbleFactory, SelectionHandler) {
+    ], function (EventBus, UiUtils, ImageDisplayer, GraphElementUi, BubbleFactory, SelectionHandler) {
         "use strict";
         var api = {};
 
@@ -258,22 +256,5 @@ define([
             }
         );
         return api;
-        function getVertexSelector() {
-            return MindMapInfo.isSchemaMode() ?
-                GraphDisplayer.getSchemaSelector() :
-                GraphDisplayer.getVertexSelector();
-        }
-
-        function getRelationFromParentContainer(parentContainer) {
-            var isSchemaMode = MindMapInfo.isSchemaMode(),
-                html = parentContainer.find(
-                    isSchemaMode ?
-                        "> .property" :
-                        "> .group-relation"
-                );
-            return isSchemaMode ?
-                GraphDisplayer.getPropertySelector().withHtml(html) :
-                GraphDisplayer.getGroupRelationSelector().withHtml(html);
-        }
     }
 );

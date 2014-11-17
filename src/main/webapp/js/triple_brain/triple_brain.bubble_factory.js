@@ -22,11 +22,11 @@ define([
                 uiFacade = GraphDisplayer.getRelationSuggestionSelector();
             }else if(html.hasClass("property")){
                 uiFacade = GraphDisplayer.getPropertySelector();
+            }else if(html.hasClass("group-relation")){
+                uiFacade = GraphDisplayer.getGroupRelationSelector();
             }else{
                 uiFacade = GraphDisplayer.getEdgeSelector();
             }
-        }else if(html.hasClass("group-relation")){
-            uiFacade = GraphDisplayer.getGroupRelationSelector();
         }
         return uiFacade.withHtml(html);
     };

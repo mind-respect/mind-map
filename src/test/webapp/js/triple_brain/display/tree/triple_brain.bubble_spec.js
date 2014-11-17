@@ -115,5 +115,14 @@ define([
                 bubble2.getBubbleUnder().getId()
             ).toBe(bubble2.getId());
         });
+
+        it("can tell if it has children", function () {
+            expect(
+                centerBubble.hasChildren()
+            ).toBeTruthy();
+            expect(
+                bubble2.hasChildren()
+            ).toBeFalsy();
+        });
     });
 });

@@ -9,9 +9,11 @@ define([
 ], function (GraphDisplayerAsRelativeTree, CenterBubble, Scenarios) {
     "use strict";
     describe("graph_displayer_as_relative_tree_spec", function () {
-        var bubble1;
+        var bubble1,
+            groupRelation;
         beforeEach(function () {
             bubble1 = new Scenarios.threeBubblesGraph().getCenterBubbleInTree();
+            groupRelation = new Scenarios.GraphWithSimilarRelationsScenario().getPossessionAsGroupRelationInTree();
         });
 
         it("distributes triples evenly to the right and left", function () {
@@ -32,6 +34,18 @@ define([
             ).toBeFalsy();
             expect(
                 secondAddedEdge.isToTheLeft()
+            ).toBeTruthy();
+        });
+
+        it("appends to group relation when expanding",function(){
+            expect(
+                groupRelation.hasChildren()
+            ).toBeFalsy();
+            GraphDisplayerAsRelativeTree.expandGroupRelation(
+                groupRelation
+            );
+            expect(
+                groupRelation.hasChildren()
             ).toBeTruthy();
         });
     });

@@ -44,7 +44,7 @@ define([
         );
         t.add(
             "group_relation",
-            "<div class='group-relation bubble graph-element'></div>"
+            "<div class='group-relation relation bubble graph-element'></div>"
         );
         t.add(
             'group_relation_label_container',

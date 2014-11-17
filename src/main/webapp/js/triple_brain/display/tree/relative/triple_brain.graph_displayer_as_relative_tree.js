@@ -272,8 +272,7 @@ define([
         var groupRelation = groupRelationUi.getGroupRelation();
         treeMaker.buildGroupRelation(
             groupRelation,
-            groupRelationUi.getParentVertex(),
-            groupRelationUi.isToTheLeft()
+            groupRelationUi
         );
         $.each(groupRelation.getVertices(), function (key, verticesWithSameUri) {
             $.each(verticesWithSameUri, function (vertexHtmlId) {
@@ -448,12 +447,11 @@ define([
         this.getVertexHtmlBuilder = function () {
             return _htmlBuilder;
         };
-        this.buildGroupRelation = function (groupRelation, parentVertexUi, isToTheLeft) {
+        this.buildGroupRelation = function (groupRelation, parentVertexUi) {
             $.each(groupRelation.getVertices(), function (key, verticesWithSameUri) {
                 $.each(verticesWithSameUri, function (vertexHtmlId, vertexAndEdge) {
                     var vertex = vertexAndEdge.vertex,
                         edge = vertexAndEdge.edge;
-                    edge.isLeftOriented = vertex.isLeftOriented = isToTheLeft;
                     var edgeUi = self.buildBubbleHtmlIntoContainer(
                         edge,
                         parentVertexUi,
@@ -499,8 +497,7 @@ define([
             $.each(serverParentVertex.similarRelations, function (key, groupRelation) {
                 self.buildGroupRelation(
                     groupRelation,
-                    parentBubbleUi,
-                    serverParentVertex.isLeftOriented
+                    parentBubbleUi
                 );
             });
         }
