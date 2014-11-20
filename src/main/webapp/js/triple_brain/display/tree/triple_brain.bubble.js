@@ -74,26 +74,44 @@ define([
             );
         };
 
-        api.Self.prototype._getColumnBubble = function (htmlGetter) {
-            var bubbleHtmlAbove = htmlGetter(
+        api.Self.prototype._getColumnBubble = function (surroundHtmlGetter) {
+            var surroundBubbleHtml = surroundHtmlGetter(
                 this.html
             );
-            if (bubbleHtmlAbove.length === 0) {
-                return this._getSurroundBubbleInAnotherBranch(htmlGetter);
+            if (surroundBubbleHtml.length === 0) {
+                return this._getSurroundBubbleInAnotherBranch(surroundHtmlGetter);
             }
-            return BubbleFactory.fromHtml(bubbleHtmlAbove);
+            return BubbleFactory.fromHtml(surroundBubbleHtml);
         };
 
         api.Self.prototype._getSurroundBubbleInAnotherBranch = function (htmlGetter) {
-            var bubbleHtmlAbove = htmlGetter(
-                this.getParentBubble().getHtml()
-            );
-            if (bubbleHtmlAbove.length === 0) {
+            var distance = 1,
+                parentBubble = this,
+                surroundBubble,
+                found = false,
+                surroundBubbleHtml;
+            do{
+                parentBubble = parentBubble.getParentBubble();
+                surroundBubbleHtml = htmlGetter(
+                    parentBubble.getHtml()
+                );
+                if (surroundBubbleHtml.length !== 0) {
+                    found = true;
+                }
+                distance++;
+            }while(!parentBubble.isCenterBubble() && !found);
+            var bubbleHtmlInOtherBranch = htmlGetter(parentBubble.getHtml());
+            if(bubbleHtmlInOtherBranch.length === 0){
                 return this;
             }
-            return BubbleFactory.fromHtml(
-                bubbleHtmlAbove
-            ).getTopMostChildBubble();
+            surroundBubble = BubbleFactory.fromHtml(
+                bubbleHtmlInOtherBranch
+            );
+            while(distance !== 0){
+                surroundBubble = surroundBubble.getTopMostChildBubble();
+                distance--;
+            }
+            return surroundBubble;
         };
 
         api.Self.prototype.getBubbleUnder = function () {
