@@ -97,8 +97,9 @@ define([
                 );
                 if (surroundBubbleHtml.length !== 0) {
                     found = true;
+                }else{
+                    distance++;
                 }
-                distance++;
             }while(!parentBubble.isCenterBubble() && !found);
             var bubbleHtmlInOtherBranch = htmlGetter(parentBubble.getHtml());
             if(bubbleHtmlInOtherBranch.length === 0){

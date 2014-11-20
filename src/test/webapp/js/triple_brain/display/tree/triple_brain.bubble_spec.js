@@ -116,7 +116,18 @@ define([
                 childOfNewVertex1.getBubbleUnder().getId()
             ).toBe(newVertex2.getId());
         });
-
+        it("returns bubbles below and not it's child when it has one", function () {
+            var newVertex1 = Scenarios.addTriple(bubble2).destinationVertex(),
+                newVertex2 = Scenarios.addTriple(
+                    bubble2
+                ).destinationVertex();
+            Scenarios.addTriple(
+                newVertex2
+            ).destinationVertex();
+            expect(
+                newVertex1.getBubbleUnder().getId()
+            ).toBe(newVertex2.getId());
+        });
         it("returns itself when getting bubble under center vertex", function () {
             expect(
                 centerBubble.getBubbleUnder().getId()
