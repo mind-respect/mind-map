@@ -79,12 +79,12 @@ define([
                 this.html
             );
             if (surroundBubbleHtml.length === 0) {
-                return this._getSurroundBubbleInAnotherBranch(surroundHtmlGetter);
+                return this._getColumnBubbleInAnotherBranch(surroundHtmlGetter);
             }
             return BubbleFactory.fromHtml(surroundBubbleHtml);
         };
 
-        api.Self.prototype._getSurroundBubbleInAnotherBranch = function (htmlGetter) {
+        api.Self.prototype._getColumnBubbleInAnotherBranch = function (htmlGetter) {
             var distance = 1,
                 parentBubble = this,
                 surroundBubble,
@@ -92,6 +92,9 @@ define([
                 surroundBubbleHtml;
             do{
                 parentBubble = parentBubble.getParentBubble();
+                if(parentBubble.isCenterBubble()){
+                    return this;
+                }
                 surroundBubbleHtml = htmlGetter(
                     parentBubble.getHtml()
                 );
@@ -100,13 +103,9 @@ define([
                 }else{
                     distance++;
                 }
-            }while(!parentBubble.isCenterBubble() && !found);
-            var bubbleHtmlInOtherBranch = htmlGetter(parentBubble.getHtml());
-            if(bubbleHtmlInOtherBranch.length === 0){
-                return this;
-            }
+            }while(!found);
             surroundBubble = BubbleFactory.fromHtml(
-                bubbleHtmlInOtherBranch
+                surroundBubbleHtml
             );
             while(distance !== 0){
                 surroundBubble = surroundBubble.getTopMostChildBubble();
