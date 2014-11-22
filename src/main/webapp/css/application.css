@@ -2,7 +2,7 @@
 /* Copyright Vincent Blouin under the Mozilla Public License 1.1 */
 body { cursor: all-scroll; }
 
-.root-vertex-super-container { position: absolute; padding-right: 600px; padding-left: 600px; padding-top: 300px; padding-bottom: 300px; margin: 100px; }
+.root-vertex-super-container { position: absolute; padding: 50%; }
 
 a, input[type=button].link-like-button, button.link-like-button { color: #1919ac; }
 
