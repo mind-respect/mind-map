@@ -8,18 +8,11 @@ define([
     function ($, Point) {
         "use strict";
         var api = {},
-            htmlBody =  $("body"),
             _drawnGraph,
             _topLayer,
             _bubbleIdCounter = 0;
         api.addHtml = function (html) {
             api.getDrawnGraph().append(html);
-        };
-        api.offset = function () {
-            return Point.fromCoordinates(
-                    htmlBody.width() / 2,
-                    htmlBody.height() / 2
-            );
         };
         api.getDrawnGraph = function(){
             if(!_drawnGraph){

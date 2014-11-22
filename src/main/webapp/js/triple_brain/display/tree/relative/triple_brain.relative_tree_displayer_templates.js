@@ -9,10 +9,7 @@ define([
         var t = Template.withTemplateGroup(api);
         t.add(
             'root_vertex_super_container',
-                "<div class='root-vertex-super-container' style='" +
-                "top:{offset.y}px;" +
-                "left:{offset.x}px;" +
-                "'></div>"
+                "<div class='root-vertex-super-container'></div>"
         );
         t.add(
             'vertices_children_container',

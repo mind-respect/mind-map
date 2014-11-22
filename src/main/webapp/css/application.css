@@ -1,6 +1,8 @@
 @charset "UTF-8";
 /* Copyright Vincent Blouin under the Mozilla Public License 1.1 */
-body { min-width: 30000px; min-height: 30000px; cursor: all-scroll; }
+body { cursor: all-scroll; }
+
+.root-vertex-super-container { position: absolute; padding-right: 600px; padding-left: 600px; padding-top: 300px; padding-bottom: 300px; margin: 100px; }
 
 a, input[type=button].link-like-button, button.link-like-button { color: #1919ac; }
 

@@ -330,15 +330,9 @@ define([
             });
         };
         this.makeForIncludedVerticesView = function (serverGraph, container) {
-            var graphOffset = Point.fromCoordinates(
-                    container.width() / 2,
-                    container.height() / 2
-            );
             var verticesContainer = RelativeTreeTemplates[
                 "root_vertex_super_container"
-                ].merge({
-                    offset: graphOffset
-                });
+                ].merge();
             container.append(
                 verticesContainer
             );
@@ -480,12 +474,9 @@ define([
             });
         };
         function buildRootBubbleContainer() {
-            var graphOffset = GraphUi.offset();
             var verticesContainer = RelativeTreeTemplates[
                 "root_vertex_super_container"
-                ].merge({
-                    offset: graphOffset
-                });
+                ].merge();
             GraphUi.addHtml(
                 verticesContainer
             );
