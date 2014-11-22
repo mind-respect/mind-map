@@ -5,9 +5,11 @@ define([
         "jquery",
         "triple_brain.vertex",
         "triple_brain.edge",
-        "triple_brain.group_relation"
+        "triple_brain.group_relation",
+        "triple_brain.identification"
     ],
-    function ($, Vertex, Edge, GroupRelation) {
+    function ($, Vertex, Edge, GroupRelation, Identification) {
+        "use strict";
         var api = {};
         api.enhancedVerticesInfo = function (serverGraph, centralVertexUri) {
             var vertices = serverGraph.vertices,
@@ -33,8 +35,16 @@ define([
             );
             serverGraph.edges = edgesFacade;
             function updateVerticesChildrenWithEdge(edge) {
-                initRelationsOfVertex(vertexWithId(edge.getSourceVertex().getUri()));
-                initRelationsOfVertex(vertexWithId(edge.getDestinationVertex().getUri()));
+                initRelationsOfVertex(
+                    vertexWithId(
+                        edge.getSourceVertex().getUri()
+                    )
+                );
+                initRelationsOfVertex(
+                    vertexWithId(
+                        edge.getDestinationVertex().getUri()
+                    )
+                );
                 updateRelationsIdentification(edge);
             }
 
@@ -45,34 +55,53 @@ define([
             }
 
             function updateRelationsIdentification(edge) {
-                var sourceVertex = vertexWithId(edge.getSourceVertex().getUri()),
-                    destinationVertex = vertexWithId(edge.getDestinationVertex().getUri()),
+                var sourceVertex = vertexWithId(
+                        edge.getSourceVertex().getUri()
+                    ),
+                    destinationVertex = vertexWithId(
+                        edge.getDestinationVertex().getUri()
+                    ),
                     edgeIdentifications = edge.getIdentifications();
                 if(destinationVertex.isInvolved && !sourceVertex.isInvolved){
-                    sourceVertex = vertexWithId(edge.getDestinationVertex().getUri());
-                    destinationVertex = vertexWithId(edge.getSourceVertex().getUri());
+                    sourceVertex = vertexWithId(
+                        edge.getDestinationVertex().getUri()
+                    );
+                    destinationVertex = vertexWithId(
+                        edge.getSourceVertex().getUri()
+                    );
                 }
                 sourceVertex.isInvolved = true;
                 destinationVertex.isInvolved = true;
                 $.each(edgeIdentifications, function () {
-                    var identification = this;
-                    if (sourceVertex.similarRelations[identification.getUri()] === undefined) {
-                        sourceVertex.similarRelations[identification.getUri()] = GroupRelation.usingIdentification(
+                    var identification = this,
+                        key = identification.getExternalResourceUri(),
+                        groupRelation = sourceVertex.similarRelations[key];
+                    if (groupRelation === undefined) {
+                        groupRelation = GroupRelation.usingIdentification(
                             identification
                         );
                     }
-                    sourceVertex.similarRelations[identification.getUri()].addVertex(
+                    groupRelation.addVertex(
                         destinationVertex,
                         edge
                     );
+                    sourceVertex.similarRelations[key] = groupRelation;
                 });
                 if (edgeIdentifications.length === 0) {
-                    var groupedIdentification = GroupRelation.withoutAnIdentification();
-                    groupedIdentification.addVertex(
+                    var key = edge.getUri(),
+                        groupRelation = sourceVertex.similarRelations[key];
+                    if(undefined === groupRelation) {
+                        groupRelation = GroupRelation.usingIdentification(
+                            Identification.fromFriendlyResource(
+                                edge
+                            )
+                        );
+                    }
+                    groupRelation.addVertex(
                         destinationVertex,
                         edge
                     );
-                    sourceVertex.similarRelations[edge.getUri()] = groupedIdentification;
+                    sourceVertex.similarRelations[key] = groupRelation;
                 }
             }
 

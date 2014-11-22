@@ -13,7 +13,12 @@ define([
         );
     };
     api.fromFriendlyResourceServerFormat = function (serverFormat) {
-        var friendlyResource = FriendlyResource.fromServerFormat(serverFormat);
+        return api.fromFriendlyResource(
+            FriendlyResource.fromServerFormat(serverFormat)
+        );
+    };
+
+    api.fromFriendlyResource = function(friendlyResource){
         return new api.Self({
             externalResourceUri: friendlyResource.getUri(),
             friendlyResource: friendlyResource.getServerFormat()

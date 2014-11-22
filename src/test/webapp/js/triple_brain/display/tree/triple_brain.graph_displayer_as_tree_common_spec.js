@@ -21,11 +21,11 @@ define([
             );
             centerVertex = graph.vertices[centerVertex.getUri()];
             expect(centerVertex.similarRelations).toBeDefined();
-            expect(centerVertex.similarRelations[possession.getUri()]).toBeDefined();
+            expect(centerVertex.similarRelations[possession.getExternalResourceUri()]).toBeDefined();
             var numberOfRelations = Object.keys(graph.edges);
-            expect(numberOfRelations.length).toBe(4);
+            expect(numberOfRelations.length).toBe(6);
             var numberOfGroupedRelations = Object.keys(centerVertex.similarRelations);
-            expect(numberOfGroupedRelations.length).toBe(2);
+            expect(numberOfGroupedRelations.length).toBe(3);
         });
         it("relations with no identifications are grouped by relation uri", function () {
             TreeDisplayerCommon.enhancedVerticesInfo(
