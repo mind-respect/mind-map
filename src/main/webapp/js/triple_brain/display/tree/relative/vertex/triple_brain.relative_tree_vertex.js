@@ -95,8 +95,7 @@ define([
             var propertiesIndicator = PropertiesIndicator.withVertex(
                 this
             );
-            this.html.data(
-                "hidden_properties_indicator",
+            this.setHiddenRelationsContainer(
                 propertiesIndicator
             );
             propertiesIndicator.build();

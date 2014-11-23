@@ -4,14 +4,19 @@
 
 define([
     "triple_brain.user",
-    "triple_brain.mind_map_info"
-], function (UserService, MindMapInfo) {
+    "triple_brain.mind_map_info",
+    "triple_brain.graph_service"
+], function (UserService, MindMapInfo, GraphService) {
     "use strict";
     var api = {};
     api.setCenterVertexUriInUrl = function(centerVertexUri){
         MindMapInfo._getCenterVertexUriInUrl = function(){
             return centerVertexUri;
         }
+    };
+    api.mockGetForCentralVertexUriOnce = function(returnValue){
+        GraphService.
+        getForCentralVertexUri
     };
     UserService.authenticatedUserInCache = function(){
         return {

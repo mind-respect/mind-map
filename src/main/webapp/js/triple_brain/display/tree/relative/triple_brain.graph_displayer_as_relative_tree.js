@@ -77,65 +77,73 @@ define([
         GraphService.getForCentralVertexUri(
             parentUri,
             function (serverGraph) {
-                var treeMaker = new api.TreeMaker(VertexHtmlBuilder);
-                var nbRelationsWithGrandParent = removeRelationWithGrandParentFromServerGraph();
-                TreeDisplayerCommon.enhancedVerticesInfo(
-                    serverGraph,
-                    parentUri
+                api.addChildTreeUsingGraph(
+                    parentVertex,
+                    serverGraph
                 );
-                var parentVertexServerFormat = serverGraph.vertices[parentUri];
-                parentVertexServerFormat.isLeftOriented = parentVertex.isToTheLeft();
-                parentVertex.setOriginalServerObject(parentVertexServerFormat);
-                if (nbRelationsWithGrandParent >= 1) {
-                    treeMaker.buildChildrenHtmlTreeRecursivelyEvenIfGrandParentAndIncludingDuplicates(
-                        parentVertex,
-                        serverGraph.vertices
-                    );
-                } else {
-                    treeMaker.buildChildrenHtmlTreeRecursively(
-                        parentVertex,
-                        serverGraph.vertices
-                    );
-                }
-                parentVertex.visitVerticesChildren(VertexHtmlBuilder.completeBuild);
-                function removeRelationWithGrandParentFromServerGraph() {
-                    var relationWithGrandParentUri = parentVertex.getRelationWithUiParent().getUri();
-                    var grandParentUri = parentVertex.getParentVertex().getUri();
-                    var nbRelationsWithGrandParent = 0;
-                    serverGraph.edges = getFilteredEdges();
-                    if (1 === nbRelationsWithGrandParent) {
-                        delete serverGraph.vertices[grandParentUri];
-                    }
-                    return nbRelationsWithGrandParent - 1;
-
-                    function getFilteredEdges() {
-                        var filteredEdges = {};
-                        $.each(serverGraph.edges, function () {
-                            var edge = this;
-                            var edgeFacade = Edge.fromServerFormat(
-                                edge
-                            );
-                            var sourceAndDestinationId = [
-                                edgeFacade.getSourceVertex().getUri(),
-                                edgeFacade.getDestinationVertex().getUri()
-                            ];
-                            if ($.inArray(
-                                grandParentUri,
-                                sourceAndDestinationId
-                            ) !== -1) {
-                                nbRelationsWithGrandParent++;
-                            }
-                            if (relationWithGrandParentUri !== edgeFacade.getUri()) {
-                                filteredEdges[
-                                    edgeFacade.getUri()
-                                    ] = edge
-                            }
-                        });
-                        return filteredEdges;
-                    }
-                }
             }
         );
+    };
+    api.addChildTreeUsingGraph = function(parentVertex, serverGraph){
+        var treeMaker = new api.TreeMaker(VertexHtmlBuilder),
+            nbRelationsWithGrandParent = removeRelationWithGrandParentFromServerGraph(),
+            parentUri = parentVertex.getUri();
+        TreeDisplayerCommon.enhancedVerticesInfo(
+            serverGraph,
+            parentUri
+        );
+        var parentVertexServerFormat = serverGraph.vertices[parentUri];
+        parentVertexServerFormat.isLeftOriented = parentVertex.isToTheLeft();
+        parentVertex.setOriginalServerObject(parentVertexServerFormat);
+        if (nbRelationsWithGrandParent >= 1) {
+            treeMaker.buildChildrenHtmlTreeRecursivelyEvenIfGrandParentAndIncludingDuplicates(
+                parentVertex,
+                serverGraph.vertices
+            );
+        } else {
+            treeMaker.buildChildrenHtmlTreeRecursively(
+                parentVertex,
+                serverGraph.vertices
+            );
+        }
+        parentVertex.removeHiddenRelationsContainer();
+        parentVertex.visitVerticesChildren(VertexHtmlBuilder.completeBuild);
+        function removeRelationWithGrandParentFromServerGraph() {
+            var relationWithGrandParentUri = parentVertex.getRelationWithUiParent().getUri();
+            var grandParentUri = parentVertex.getParentVertex().getUri();
+            var nbRelationsWithGrandParent = 0;
+            serverGraph.edges = getFilteredEdges();
+            if (1 === nbRelationsWithGrandParent) {
+                delete serverGraph.vertices[grandParentUri];
+            }
+            return nbRelationsWithGrandParent - 1;
+
+            function getFilteredEdges() {
+                var filteredEdges = {};
+                $.each(serverGraph.edges, function () {
+                    var edge = this;
+                    var edgeFacade = Edge.fromServerFormat(
+                        edge
+                    );
+                    var sourceAndDestinationId = [
+                        edgeFacade.getSourceVertex().getUri(),
+                        edgeFacade.getDestinationVertex().getUri()
+                    ];
+                    if ($.inArray(
+                        grandParentUri,
+                        sourceAndDestinationId
+                    ) !== -1) {
+                        nbRelationsWithGrandParent++;
+                    }
+                    if (relationWithGrandParentUri !== edgeFacade.getUri()) {
+                        filteredEdges[
+                            edgeFacade.getUri()
+                            ] = edge
+                    }
+                });
+                return filteredEdges;
+            }
+        }
     };
     api.connectVertexToVertexWithUri = function (parentVertex, destinationVertexUri, callback) {
         GraphService.getForCentralVertexUri(

@@ -10,12 +10,15 @@ define([
 ], function (GraphDisplayer, Edge, Vertex, Scenarios) {
     "use strict";
     describe("bubble", function () {
-        var bubble2,
-            centerBubble;
+        var centerBubble,
+            bubble2,
+            bubble3,
+            threeBubbleScenario;
         beforeEach(function () {
-            var scenario = new Scenarios.threeBubblesGraph();
-            bubble2 = scenario.getBubble2InTree();
-            centerBubble = scenario.getCenterBubbleInTree();
+            threeBubbleScenario = new Scenarios.threeBubblesGraph();
+            bubble2 = threeBubbleScenario.getBubble2InTree();
+            bubble3 = threeBubbleScenario.getBubble3InTree();
+            centerBubble = threeBubbleScenario.getCenterBubbleInTree();
         });
         it("can return parent bubble", function () {
             var parentBubble = bubble2.getParentBubble();
@@ -146,6 +149,33 @@ define([
             ).toBeTruthy();
             expect(
                 bubble2.hasChildren()
+            ).toBeFalsy();
+        });
+
+        it("shows hidden relation container when has some", function () {
+            expect(
+                bubble2.hasHiddenRelations()
+            ).toBeFalsy();
+            expect(
+                bubble2.hasHiddenRelationsContainer()
+            ).toBeFalsy();
+            expect(
+                bubble3.hasHiddenRelations()
+            ).toBeTruthy();
+            expect(
+                bubble3.hasHiddenRelationsContainer()
+            ).toBeTruthy();
+        });
+
+        it("hides hidden relations container after expand", function(){
+            expect(
+                bubble3.hasHiddenRelationsContainer()
+            ).toBeTruthy();
+           threeBubbleScenario.expandBubble3(
+               bubble3
+           );
+            expect(
+                bubble3.hasHiddenRelationsContainer()
             ).toBeFalsy();
         });
     });

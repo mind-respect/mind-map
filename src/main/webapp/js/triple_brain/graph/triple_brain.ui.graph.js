@@ -2,10 +2,9 @@
  * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
-        "jquery",
-        "triple_brain.point"
+        "jquery"
     ],
-    function ($, Point) {
+    function ($) {
         "use strict";
         var api = {},
             _drawnGraph,
