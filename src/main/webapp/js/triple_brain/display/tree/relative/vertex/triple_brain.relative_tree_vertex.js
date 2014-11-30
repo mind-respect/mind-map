@@ -9,9 +9,10 @@ define([
         "triple_brain.object_utils",
         "triple_brain.triple_ui_builder",
         "triple_brain.selection_handler",
-        "triple_brain.ui.vertex_hidden_neighbor_properties_indicator"
+        "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
+        "triple_brain.bubble_factory"
     ],
-    function ($, VertexUi, EventBus, TreeEdge, ObjectUtils, TripleUiBuilder, SelectionHandler, PropertiesIndicator) {
+    function ($, VertexUi, EventBus, TreeEdge, ObjectUtils, TripleUiBuilder, SelectionHandler, PropertiesIndicator, BubbleFactory) {
         var api = {},
             otherInstancesKey = "otherInstances";
         api.ofVertex = function (vertex) {
@@ -23,9 +24,10 @@ define([
             api,
             VertexUi
         );
-        api.Object = function () {};
+        api.Object = function () {
+        };
         api.Object.prototype = new VertexUi.Object;
-        api.Object.prototype.init = function(html){
+        api.Object.prototype.init = function (html) {
             this.html = html;
             VertexUi.Object.apply(this, [html]);
             VertexUi.Object.prototype.init.call(
@@ -37,12 +39,12 @@ define([
         api.Object.prototype.visitVerticesChildren = function (visitor) {
             var children = this.getChildrenBubblesHtml();
             $.each(children, function () {
-                var html = $(this);
-                if(html.hasClass("vertex")){
-                    var vertex = api.withHtml(
-                        html
-                    );
-                    visitor(vertex);
+                var bubble = BubbleFactory.fromHtml($(this));
+                if (bubble.isRelation()) {
+                    var relationChild = bubble.getTopMostChildBubble();
+                    if (relationChild.isVertex()) {
+                        visitor(relationChild);
+                    }
                 }
             });
         };
@@ -110,8 +112,8 @@ define([
             '/event/ui/graph/identification/added',
             identificationAddedHandler
         );
-        function identificationAddedHandler(event, graphElement, identification){
-            if(!graphElement.isVertex()){
+        function identificationAddedHandler(event, graphElement, identification) {
+            if (!graphElement.isVertex()) {
                 return;
             }
             var treeVertex = api.ofVertex(graphElement);
@@ -127,12 +129,13 @@ define([
                 );
             });
         }
+
         EventBus.subscribe(
             '/event/ui/graph/identification/removed',
             identificationRemovedHandler
         );
-        function identificationRemovedHandler(event, graphElement, identification){
-            if(!graphElement.isVertex()){
+        function identificationRemovedHandler(event, graphElement, identification) {
+            if (!graphElement.isVertex()) {
                 return;
             }
             var treeVertex = api.ofVertex(graphElement);
@@ -148,13 +151,14 @@ define([
                 );
             });
         }
+
         EventBus.subscribe(
             '/event/ui/graph/vertex_and_relation/added/',
             vertexAndRelationAddedHandler
         );
-        function vertexAndRelationAddedHandler(event, triple, tripleServerFormat){
+        function vertexAndRelationAddedHandler(event, triple, tripleServerFormat) {
             var sourceBubble = triple.sourceVertex();
-            if(!sourceBubble.isVertex()){
+            if (!sourceBubble.isVertex()) {
                 return;
             }
             triple.destinationVertex().resetOtherInstances();
@@ -165,6 +169,7 @@ define([
                 );
             });
         }
+
         return api;
     }
 );

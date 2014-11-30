@@ -167,16 +167,29 @@ define([
             ).toBeTruthy();
         });
 
-        it("hides hidden relations container after expand", function(){
+        it("hides hidden relations container after expand", function () {
             expect(
                 bubble3.hasHiddenRelationsContainer()
             ).toBeTruthy();
-           threeBubbleScenario.expandBubble3(
-               bubble3
-           );
+            threeBubbleScenario.expandBubble3(
+                bubble3
+            );
             expect(
                 bubble3.hasHiddenRelationsContainer()
             ).toBeFalsy();
+        });
+
+        it("shows hidden relations container of bubbles from expanded bubble", function () {
+            threeBubbleScenario.expandBubble3(
+                bubble3
+            );
+            var bubble4 = threeBubbleScenario.getBubble4InTree();
+            expect(
+                bubble4.hasHiddenRelations()
+            ).toBeTruthy();
+            expect(
+                bubble4.hasHiddenRelationsContainer()
+            ).toBeTruthy();
         });
     });
 });
