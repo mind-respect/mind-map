@@ -5,15 +5,18 @@
 define([
     "triple_brain.graph_displayer_as_relative_tree",
     "triple_brain.center_bubble",
-    'test/webapp/js/test-scenarios'
-], function (GraphDisplayerAsRelativeTree, CenterBubble, Scenarios) {
+    'test/webapp/js/test-scenarios',
+    "jquery"
+], function (GraphDisplayerAsRelativeTree, CenterBubble, Scenarios, $) {
     "use strict";
     describe("graph_displayer_as_relative_tree_spec", function () {
         var bubble1,
             groupRelation,
-            graphWithSimilarRelationsScenario;
+            graphWithSimilarRelationsScenario,
+            mergeBubble;
         beforeEach(function () {
             bubble1 = new Scenarios.threeBubblesGraph().getCenterBubbleInTree();
+            mergeBubble = new Scenarios.mergeBubbleGraph().getMergeBubbleInTree();
             graphWithSimilarRelationsScenario = new Scenarios.GraphWithSimilarRelationsScenario();
             groupRelation = graphWithSimilarRelationsScenario.getPossessionAsGroupRelationInTree();
         });
@@ -62,5 +65,15 @@ define([
                 graphWithSimilarRelationsScenario.getRelationWithBook2InTree().isInverse()
             ).toBeTruthy();
         });
+        it("can build included graph elements view", function(){
+            var builtTree = buildIncludedGraphElementsOfBubble(mergeBubble);
+            debugger;
+        });
+        function buildIncludedGraphElementsOfBubble(bubble){
+            return GraphDisplayerAsRelativeTree.buildIncludedGraphElementsView(
+                bubble,
+                $("<div>")
+            );
+        }
     });
 });

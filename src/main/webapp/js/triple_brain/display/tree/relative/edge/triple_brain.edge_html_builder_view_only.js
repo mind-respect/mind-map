@@ -5,42 +5,47 @@ define([
     "triple_brain.tree_edge"
 ], function(TreeEdge){
     var api = {};
-    api.get = function (edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade) {
-        return new EdgeCreator(edgeServer, parentVertexHtmlFacade, childVertexHtmlFacade);
+    api.withServerFacade = function (edgeServer) {
+        return new EdgeCreator(
+            edgeServer
+        );
+    };
+    api.afterChildBuilt = function (edge, parentUi, childUi) {
+        var edgeServer = edge.getOriginalServerObject(),
+            parentVertexUi = parentUi.isVertex() ?
+                parentUi :
+                parentUi.getParentVertex(),
+            isInverse = edgeServer.getSourceVertex().getUri() !== parentVertexUi.getUri();
+        edge.getHtml().data(
+            "source_vertex_id",
+            parentVertexUi.getId()
+        ).data(
+            "destination_vertex_id",
+            childUi.getId()
+        );
+        if (isInverse) {
+            edge.inverse();
+        }
+        edge.getHtml().closest(
+            ".vertex-tree-container"
+        ).find("> .vertical-border").addClass("small");
     };
     return api;
-    function EdgeCreator(edgeServerFormat, parentVertexHtmlFacade, childVertexHtmlFacade){
+    function EdgeCreator(edgeServerFormat){
         var html;
         this.create = function(){
             html = $(
-                "<span>"
+                "<div>"
             ).addClass(
                 "relation"
             ).append(
                 buildInnerHtml()
             );
-            var isInverse = edgeServerFormat.getSourceVertex().getUri() !== parentVertexHtmlFacade.getUri();
-            if (isInverse) {
-                childVertexHtmlFacade.getHtml().addClass("inverse");
-            }
-            html.data(
-                "source_vertex_id",
-                isInverse ? childVertexHtmlFacade.getId() : parentVertexHtmlFacade.getId()
-            ).data(
-                "destination_vertex_id",
-                isInverse ? parentVertexHtmlFacade.getId() : childVertexHtmlFacade.getId()
-            );
-            var textContainer = childVertexHtmlFacade.getInBubbleContainer();
-            var isToTheLeft = childVertexHtmlFacade.isToTheLeft();
-            if (isToTheLeft) {
-                textContainer.append(html);
-            } else {
-                textContainer.prepend(html);
-            }
             var edge = edgeFacade();
             edge.setUri(
                 edgeServerFormat.getUri()
             );
+            return edge;
             function buildInnerHtml(){
                 var label = edgeServerFormat.getLabel();
                 return $(
@@ -48,10 +53,11 @@ define([
                 ).addClass(
                     "label label-info"
                 ).text(
-                    label.trim() === "" ?
-                        TreeEdge.getWhenEmptyLabel() :
-                        label
-                );
+                    label.trim()
+                ).attr(
+                    "data-placeholder",
+                    TreeEdge.getWhenEmptyLabel()
+                )
             }
             function edgeFacade() {
                 return TreeEdge.withHtml(html);

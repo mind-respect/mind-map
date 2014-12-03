@@ -23,13 +23,13 @@ define([
             html = $("<div class='canvas-parent included-vertices-container'>");
             addTitle();
             GraphUi.addHtml(html);
-            var $body = $("body");
-            var layout = $("<div class='layout'>").css(
-                "min-width", $body.css("width")
-            ).css(
-                "min-height",
-                $body.css("height")
-            );
+            var $body = $("body"),
+                layout = $("<div class='layout'>").css(
+                    "min-width", $body.css("width")
+                ).css(
+                    "min-height",
+                    $body.css("height")
+                );
             html.append(layout);
             layout.dragScroll({
                 scrollContainer: html
@@ -42,15 +42,15 @@ define([
                     width: 0.6987 * $(window).width()
                 }
             );
-            var vertices = drawnTree.vertices;
-            var vertexUri = Object.keys(vertices)[0];
+            var vertices = drawnTree.vertices,
+                vertexUri = Object.keys(vertices)[0];
             GraphDisplayer.getVertexSelector().lastAddedWithUri(vertexUri).getHtml().centerOnScreen({
-                    container: html,
-                    containerVisibleSize: {
-                        x: html.innerWidth(),
-                        y: html.innerHeight()
-                    }
-                });
+                container: html,
+                containerVisibleSize: {
+                    x: html.innerWidth(),
+                    y: html.innerHeight()
+                }
+            });
             return self;
         };
         function addTitle() {

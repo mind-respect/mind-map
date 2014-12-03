@@ -35,6 +35,41 @@ define([
                 destinationVertex
             );
         };
+        api.mergeBubbleGraph = function () {
+            /*
+                one bubble labeled merge
+                merge contains bubbles
+                b1-r1->b2
+                b2-r2->b3
+                b1<-r4-b4
+             */
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                /*
+                 b1-r1->b2
+                 b1-r2->b3
+                 b3 has two hidden relations
+                 */
+                return {"vertices":{"\/service\/users\/asvoai\/graph\/vertex\/ae37e32e-496a-43cd-8028-0f873afc623c":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvoai\/graph\/vertex\/ae37e32e-496a-43cd-8028-0f873afc623c","label":"merge","comment":"","images":[],"creationDate":"Dec 3, 2014 9:15:23 AM","lastModificationDate":"Dec 3, 2014 9:15:26 AM"},"genericIdentifications":{},"sameAs":{},"additionalTypes":{}},"numberOfConnectedEdges":0,"includedVertices":{"\/service\/users\/asvoai\/graph\/vertex\/default":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvoai\/graph\/vertex\/default","label":"b1"}}}},"\/service\/users\/asvoai\/graph\/vertex\/c0875516-7c70-4855-9333-24fbee00177f":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvoai\/graph\/vertex\/c0875516-7c70-4855-9333-24fbee00177f","label":"b3"}}}},"\/service\/users\/asvoai\/graph\/vertex\/dbcfb3c5-5ad6-440d-ba46-e61a2594dadd":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvoai\/graph\/vertex\/dbcfb3c5-5ad6-440d-ba46-e61a2594dadd","label":"b4"}}}},"\/service\/users\/asvoai\/graph\/vertex\/23c00ca5-81d4-4c50-a078-25a61d94a7e0":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvoai\/graph\/vertex\/23c00ca5-81d4-4c50-a078-25a61d94a7e0","label":"b2"}}}}},"includedEdges":{"\/service\/users\/asvoai\/graph\/edge\/cf9f60d7-b7c9-400c-82a1-cfd4f4049bb2":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvoai\/graph\/edge\/cf9f60d7-b7c9-400c-82a1-cfd4f4049bb2","label":"r1"}},"sourceVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvoai\/graph\/vertex\/default","label":"b1"}}}},"destinationVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvoai\/graph\/vertex\/23c00ca5-81d4-4c50-a078-25a61d94a7e0","label":"b2"}}}}},"\/service\/users\/asvoai\/graph\/edge\/2b4d3ed4-f4ef-4a93-91ba-25941d4d148e":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvoai\/graph\/edge\/2b4d3ed4-f4ef-4a93-91ba-25941d4d148e","label":"r2"}},"sourceVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvoai\/graph\/vertex\/23c00ca5-81d4-4c50-a078-25a61d94a7e0","label":"b2"}}}},"destinationVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvoai\/graph\/vertex\/c0875516-7c70-4855-9333-24fbee00177f","label":"b3"}}}}},"\/service\/users\/asvoai\/graph\/edge\/070701e8-e11b-47de-a561-5a42eeb67e90":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvoai\/graph\/edge\/070701e8-e11b-47de-a561-5a42eeb67e90","label":"r4"}},"sourceVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvoai\/graph\/vertex\/dbcfb3c5-5ad6-440d-ba46-e61a2594dadd","label":"b4"}}}},"destinationVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"\/service\/users\/asvoai\/graph\/vertex\/default","label":"b1"}}}}}},"suggestions":[],"isPublic":false}}},"edges":{}};
+            };
+
+            this.getMergeBubble = function(){
+                return Vertex.fromServerFormat(this.getGraph().vertices[
+                        uriOfVertexWithLabel(this.getGraph(), "merge")
+                        ]
+                );
+            };
+
+            this.getCenterBubbleUri = function(){
+                return uriOfVertexWithLabel(this.getGraph(), "merge")
+            };
+
+            this.getMergeBubbleInTree = function(){
+                return treeBuilder.getBubbleWithLabelInTree("merge");
+            };
+            Mock.setCenterVertexUriInUrl(this.getMergeBubble().getUri());
+        };
+
         api.threeBubblesGraph = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
