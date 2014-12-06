@@ -20,7 +20,7 @@ define([
         var self = this,
             html;
         this.create = function () {
-            html = $("<div class='canvas-parent included-vertices-container'>");
+            html = $("<div class='included-vertices-container'>");
             addTitle();
             GraphUi.addHtml(html);
             var $body = $("body"),
@@ -34,17 +34,17 @@ define([
             layout.dragScroll({
                 scrollContainer: html
             });
-            var drawnTree = addIncludedGraphElements();
+            var tree = addIncludedGraphElements();
             GraphElementMenu.makeForMenuContentAndGraphElement(
                 html,
                 vertex, {
                     height: 0.5914 * $(window).height(),
-                    width: 0.6987 * $(window).width()
+                    width: 0.4 * $(window).width()
                 }
             );
-            var vertices = drawnTree.vertices,
-                vertexUri = Object.keys(vertices)[0];
-            GraphDisplayer.getVertexSelector().lastAddedWithUri(vertexUri).getHtml().centerOnScreen({
+            debugger;
+            var centerVertexHtml = tree.find(".center-vertex:first")
+            centerVertexHtml.centerOnScreen({
                 container: html,
                 containerVisibleSize: {
                     x: html.innerWidth(),

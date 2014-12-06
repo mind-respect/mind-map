@@ -18,8 +18,6 @@ li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-bu
 button.add-button-in-list { color: green; font-weight: bold; font-size: 2em; margin-bottom: 0.2em; float: left; border: none; background-color: transparent; }
 button.add-button-in-list:hover { color: #00d100; }
 
-.canvas-parent, .included-vertices-container.canvas-parent { overflow: scroll; }
-
 .included-vertices-container .layout { position: absolute; }
 
 #mind_map h2, #mind_map h3 { line-height: inherit; }

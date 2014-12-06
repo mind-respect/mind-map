@@ -13,10 +13,10 @@ define([
         var bubble1,
             groupRelation,
             graphWithSimilarRelationsScenario,
-            mergeBubble;
+            mergeBubbleScenario;
         beforeEach(function () {
             bubble1 = new Scenarios.threeBubblesGraph().getCenterBubbleInTree();
-            mergeBubble = new Scenarios.mergeBubbleGraph().getMergeBubbleInTree();
+            mergeBubbleScenario = new Scenarios.mergeBubbleGraph();
             graphWithSimilarRelationsScenario = new Scenarios.GraphWithSimilarRelationsScenario();
             groupRelation = graphWithSimilarRelationsScenario.getPossessionAsGroupRelationInTree();
         });
@@ -65,15 +65,28 @@ define([
                 graphWithSimilarRelationsScenario.getRelationWithBook2InTree().isInverse()
             ).toBeTruthy();
         });
-        it("can build included graph elements view", function(){
-            var builtTree = buildIncludedGraphElementsOfBubble(mergeBubble);
-            debugger;
+        it("included graph elements view contains all connected elements", function(){
+            expect(
+                mergeBubbleScenario.getBubble1()
+            ).toBeDefined();
+            expect(
+                mergeBubbleScenario.getRelation1()
+            ).toBeDefined();
+            expect(
+                mergeBubbleScenario.getBubble2()
+            ).toBeDefined();
+            expect(
+                mergeBubbleScenario.getBubble4()
+            ).toBeDefined();
+            expect(
+                mergeBubbleScenario.getRelation4()
+            ).toBeDefined();
+            expect(
+                mergeBubbleScenario.getRelation2()
+            ).toBeDefined();
+            expect(
+                mergeBubbleScenario.getBubble3()
+            ).toBeDefined();
         });
-        function buildIncludedGraphElementsOfBubble(bubble){
-            return GraphDisplayerAsRelativeTree.buildIncludedGraphElementsView(
-                bubble,
-                $("<div>")
-            );
-        }
     });
 });

@@ -6,12 +6,17 @@ define([
     'triple_brain.graph_displayer_as_tree_common'
 ], function (Scenarios, TreeDisplayerCommon) {
     describe("graph_displayer_as_tree_common", function () {
-        var similarRelationsScenario, graph, centerVertex, possession;
+        var similarRelationsScenario,
+            graph,
+            centerVertex,
+            possession,
+            deepGraphScenario
         beforeEach(function () {
             similarRelationsScenario = new Scenarios.GraphWithSimilarRelationsScenario();
             graph = similarRelationsScenario.getGraph();
             centerVertex = similarRelationsScenario.getCenterVertex();
             possession = similarRelationsScenario.getPossession();
+            deepGraphScenario = new Scenarios.deepGraph();
         });
         it("groups similar relations", function () {
             expect(centerVertex.similarRelations).toBeUndefined();
@@ -47,6 +52,37 @@ define([
             centerVertex = graph.vertices[centerVertex.getUri()];
             var objectKeys = Object.keys(centerVertex.similarRelations);
             expect(objectKeys.length).toBe(2);
+        });
+        it("relations are set even when graph is deep", function(){
+            var graph = deepGraphScenario.getGraph(),
+                centerVertex = deepGraphScenario.getCenterVertex();
+            TreeDisplayerCommon.enhancedVerticesInfo(
+                graph,
+                centerVertex.getUri()
+            );
+            centerVertex = graph.vertices[centerVertex.getUri()];
+            var numberOfGroupedRelations = Object.keys(
+                centerVertex.similarRelations
+            ).length;
+            expect(numberOfGroupedRelations).toBe(
+                2
+            );
+        });
+        it("inverse relations are set even when graph is deep", function(){
+            var graph = deepGraphScenario.getGraph();
+            TreeDisplayerCommon.enhancedVerticesInfo(
+                graph,
+                deepGraphScenario.getCenterVertex().getUri()
+            );
+            var bubble2 = graph.vertices[
+                deepGraphScenario.getBubble2().getUri()
+            ];
+            var numberOfGroupedRelations = Object.keys(
+                bubble2.similarRelations
+            ).length;
+            expect(numberOfGroupedRelations).toBe(
+                2
+            );
         });
     });
 });

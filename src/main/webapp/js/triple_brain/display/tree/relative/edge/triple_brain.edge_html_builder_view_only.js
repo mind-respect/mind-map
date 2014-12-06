@@ -35,12 +35,12 @@ define([
         var html;
         this.create = function(){
             html = $(
-                "<div>"
-            ).addClass(
-                "relation"
+                "<div class='relation bubble graph-element'>"
             ).append(
                 buildInnerHtml()
-            );
+            ).append(
+                "<span class='connector'>"
+            ).uniqueId();
             var edge = edgeFacade();
             edge.setUri(
                 edgeServerFormat.getUri()

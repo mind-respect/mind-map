@@ -41,8 +41,8 @@ define([
             return vertex;
             function createLabel(container) {
                 return $(
-                    "<input type='text' class='label'>"
-                ).val(
+                    "<div class='bubble-label'>"
+                ).text(
                     serverFormatFacade.getLabel().trim()
                 ).attr(
                     "placeholder",

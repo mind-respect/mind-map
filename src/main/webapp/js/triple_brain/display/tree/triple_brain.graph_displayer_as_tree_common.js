@@ -14,22 +14,15 @@ define([
         api.enhancedVerticesInfo = function (serverGraph, centralVertexUri) {
             var vertices = serverGraph.vertices,
                 originalEdges = serverGraph.edges,
-                edgesFacade = [],
-                centralVertex = vertexWithId(centralVertexUri);
+                centralVertex = vertexWithId(centralVertexUri),
+                edgesFacade = arrayOfEdgesHavingThoseRelatedToCenterVertexOnTop();
             centralVertex.isInvolved = true;
             initRelationsOfVertex(
                 centralVertex
             );
-
-            $.each(originalEdges, function () {
-                    var edgeFacade = isGraphElementFacadeBuilt(this) ? this : Edge.fromServerFormat(
-                        this
-                    );
-                    edgesFacade.push(
-                        edgeFacade
-                    );
+            $.each(edgesFacade, function () {
                     updateVerticesChildrenWithEdge(
-                        edgeFacade
+                        this
                     );
                 }
             );
@@ -48,8 +41,36 @@ define([
                 updateRelationsIdentification(edge);
             }
 
+            function arrayOfEdgesHavingThoseRelatedToCenterVertexOnTop() {
+                var edges = [];
+                $.each(originalEdges, function () {
+                    edges.push(
+                        isGraphElementFacadeBuilt(this) ? this : Edge.fromServerFormat(
+                            this
+                        )
+                    );
+                });
+                edges.sort(function (edge1, edge2) {
+                    var edge1IsRelated = isEdgeRelatedToCenterVertex(edge1),
+                        edge2IsRelated = isEdgeRelatedToCenterVertex(edge2);
+                    if (edge1IsRelated && edge2IsRelated) {
+                        return 0;
+                    }
+                    if (edge1IsRelated) {
+                        return -1;
+                    }
+                    return 1;
+                });
+                return edges;
+            }
+
+            function isEdgeRelatedToCenterVertex(edge) {
+                return edge.getSourceVertex().getUri() === centralVertexUri ||
+                    edge.getDestinationVertex().getUri() === centralVertexUri;
+            }
+
             function initRelationsOfVertex(vertex) {
-                if(vertex.similarRelations === undefined){
+                if (vertex.similarRelations === undefined) {
                     vertex.similarRelations = {};
                 }
             }
@@ -62,7 +83,7 @@ define([
                         edge.getDestinationVertex().getUri()
                     ),
                     edgeIdentifications = edge.getIdentifications();
-                if(destinationVertex.isInvolved && !sourceVertex.isInvolved){
+                if (destinationVertex.isInvolved && !sourceVertex.isInvolved) {
                     sourceVertex = vertexWithId(
                         edge.getDestinationVertex().getUri()
                     );
@@ -90,7 +111,7 @@ define([
                 if (edgeIdentifications.length === 0) {
                     var key = edge.getUri(),
                         groupRelation = sourceVertex.similarRelations[key];
-                    if(undefined === groupRelation) {
+                    if (undefined === groupRelation) {
                         groupRelation = GroupRelation.usingIdentification(
                             Identification.fromFriendlyResource(
                                 edge
