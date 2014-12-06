@@ -42,8 +42,7 @@ define([
                     width: 0.4 * $(window).width()
                 }
             );
-            debugger;
-            var centerVertexHtml = tree.find(".center-vertex:first")
+            var centerVertexHtml = tree.find(".center-vertex:first");
             centerVertexHtml.centerOnScreen({
                 container: html,
                 containerVisibleSize: {

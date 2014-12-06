@@ -6,9 +6,9 @@ body {
   cursor: all-scroll;
 }
 
-.root-vertex-super-container{
-  position:absolute;
-  padding:50%;
+.root-vertex-super-container {
+  position: absolute;
+  padding: 50%;
 }
 
 a, input[type=button].link-like-button, button.link-like-button {
@@ -400,8 +400,8 @@ svg {
       box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb;
     }
   }
-  .label-container{
-    position:relative;
+  .label-container {
+    position: relative;
     .label {
       position: relative;
       margin-right: 0.3em;
@@ -409,7 +409,7 @@ svg {
     }
     .menu {
       display: inline;
-      top:80%;
+      top: 80%;
     }
   }
 }
@@ -420,11 +420,19 @@ svg {
     display: table-cell;
     vertical-align: middle;
   }
+  &.view-only {
+    .arrow {
+      &:before{
+        left: 0;
+      }
+    }
+  }
+
   &.suggestion {
     .in-bubble-content, .label {
       background-color: white;
       border: 1px dashed black;
-      color:black;
+      color: black;
       text-shadow: none;
     }
   }
@@ -474,7 +482,7 @@ svg {
     top: 50%;
     width: 65px;
     left: -22px;
-    z-index:-1;
+    z-index: -1;
   }
   .arrow {
     position: absolute;
@@ -483,7 +491,7 @@ svg {
     top: 50%;
     left: -42px;
     border-top: 1px solid black;
-    z-index:-1;
+    z-index: -1;
     &:before {
       content: url('images/icons/vertex/arrowhead_right.svg');
       position: relative;
@@ -558,13 +566,13 @@ svg {
   cursor: default;
   /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */
   white-space: nowrap;
-  &.edit{
-    .in-bubble-content{
-      width:325px;
-      max-width:325px;
+  &.edit {
+    .in-bubble-content {
+      width: 325px;
+      max-width: 325px;
     }
-    .bubble-label{
-      white-space:pre-wrap;
+    .bubble-label {
+      white-space: pre-wrap;
     }
   }
   &.public {
@@ -591,7 +599,7 @@ svg {
     }
   }
   &.center-vertex {
-    .connector{
+    .connector {
       height: 0;
       width: 0;
     }
@@ -774,7 +782,7 @@ svg {
     z-index: 11;
     position: absolute;
     left: 0;
-    top:22px;
+    top: 22px;
   }
   .ui-button {
     width: 1.7em;

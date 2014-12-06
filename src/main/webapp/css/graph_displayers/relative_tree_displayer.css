@@ -83,6 +83,10 @@
      left:30px;
 }
 
+.left-oriented .bubble.view-only .arrow:before{
+    left:8px;
+}
+
 .left-oriented .bubble.inverse .arrow:before{
     content:url('../images/icons/vertex/arrowhead_right.svg');
 }
