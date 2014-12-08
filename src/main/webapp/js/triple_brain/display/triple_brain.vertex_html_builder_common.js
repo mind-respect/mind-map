@@ -21,6 +21,7 @@ define([
     "jquery.triple_brain.search",
     "jquery.max_char"
 ], function ($, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, SuggestionService, GraphElementHtmlBuilder, BubbleFactory) {
+    "use strict";
     var api = {};
 
     api.applyAutoCompleteIdentificationToLabelInput = function (input) {

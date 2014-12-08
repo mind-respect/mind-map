@@ -43,7 +43,7 @@ define([
                 }
             }
         };
-        api.listPropertiesOfFreebaseTypeId = function (vertex, freebaseId) {
+        api.addSuggestionsToVertexFromFreebaseId = function (vertex, freebaseId) {
             var propertiesOfTypeQuery = {
                 id: freebaseId,
                 type: "/type/type",
@@ -180,7 +180,7 @@ define([
             }
             var identificationId = FreebaseUri.idInFreebaseURI(identificationUri);
             if (graphElement.isVertex()) {
-                api.listPropertiesOfFreebaseTypeId(
+                api.addSuggestionsToVertexFromFreebaseId(
                     graphElement,
                     identificationId
                 );

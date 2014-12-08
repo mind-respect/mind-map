@@ -15,10 +15,11 @@ define([
         "triple_brain.search_result_facade_factory",
         "triple_brain.mind_map_info",
         "triple_brain.suggestion_service",
+        "triple_brain.schema_suggestion",
         "jquery-ui",
         "jquery.triple_brain.search"
     ],
-    function ($, Identification, MindMapTemplate, GraphUi, IdUri, FreebaseAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu, SearchService, IdentificationContext, SearchResultFacadeFactory, MindMapInfo, SuggestionService) {
+    function ($, Identification, MindMapTemplate, GraphUi, IdUri, FreebaseAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu, SearchService, IdentificationContext, SearchResultFacadeFactory, MindMapInfo, SuggestionService, SchemaSuggestion) {
         var api = {
             ofGraphElement: function (graphElementUi) {
                 return new IdentificationMenu(graphElementUi);
@@ -235,6 +236,10 @@ define([
                         ),
                         graphElement = $(semanticMenu).data("graphElement"),
                         searchResult = ui.item;
+                    SchemaSuggestion.addSchemaSuggestionsIfApplicable(
+                        graphElement,
+                        searchResult
+                    );
                     if(graphElement.isSuggestion()){
                         var vertexSuggestion = graphElement.isRelationSuggestion() ?
                             graphElement.childVertexInDisplay() : graphElement;
