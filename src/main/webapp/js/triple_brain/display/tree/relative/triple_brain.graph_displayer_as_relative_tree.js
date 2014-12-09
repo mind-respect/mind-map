@@ -84,7 +84,7 @@ define([
             }
         );
     };
-    api.addChildTreeUsingGraph = function(parentVertex, serverGraph){
+    api.addChildTreeUsingGraph = function (parentVertex, serverGraph) {
         var treeMaker = new api.TreeMaker(VertexHtmlBuilder),
             nbRelationsWithGrandParent = removeRelationWithGrandParentFromServerGraph(),
             parentUri = parentVertex.getUri();
@@ -168,14 +168,14 @@ define([
 
     api.showSuggestions = function (vertex) {
         $.each(vertex.suggestions(), function () {
-            var serverFormat = this,
+            var suggestion = this,
                 suggestionRelation = addEdge(
-                    serverFormat,
+                    suggestion,
                     vertex,
                     SuggestionRelationBuilder
                 );
             addVertex(
-                serverFormat,
+                suggestion,
                 suggestionRelation,
                 SuggestionBubbleHtmlBuilder
             );

@@ -5,20 +5,24 @@
 define([
     "triple_brain.graph_displayer_as_relative_tree",
     "triple_brain.center_bubble",
-    'test/webapp/js/test-scenarios',
-    "jquery"
-], function (GraphDisplayerAsRelativeTree, CenterBubble, Scenarios, $) {
+    'test/webapp/js/test-scenarios'
+], function (GraphDisplayerAsRelativeTree, CenterBubble, Scenarios) {
     "use strict";
     describe("graph_displayer_as_relative_tree_spec", function () {
         var bubble1,
+            bubble2,
             groupRelation,
             graphWithSimilarRelationsScenario,
-            mergeBubbleScenario;
+            mergeBubbleScenario,
+            karaokeSchemaScenario;
         beforeEach(function () {
-            bubble1 = new Scenarios.threeBubblesGraph().getCenterBubbleInTree();
+            var threeBubblesGraph = new Scenarios.threeBubblesGraph();
+            bubble1 = threeBubblesGraph.getCenterBubbleInTree();
+            bubble2 = threeBubblesGraph.getBubble2InTree();
             mergeBubbleScenario = new Scenarios.mergeBubbleGraph();
             graphWithSimilarRelationsScenario = new Scenarios.GraphWithSimilarRelationsScenario();
             groupRelation = graphWithSimilarRelationsScenario.getPossessionAsGroupRelationInTree();
+            karaokeSchemaScenario = new Scenarios.getKaraokeSchemaGraph();
         });
 
         it("distributes triples evenly to the right and left", function () {
@@ -65,7 +69,7 @@ define([
                 graphWithSimilarRelationsScenario.getRelationWithBook2InTree().isInverse()
             ).toBeTruthy();
         });
-        it("included graph elements view contains all connected elements", function(){
+        it("contains all connected elements for included graph elements view ", function(){
             expect(
                 mergeBubbleScenario.getBubble1()
             ).toBeDefined();
@@ -87,6 +91,23 @@ define([
             expect(
                 mergeBubbleScenario.getBubble3()
             ).toBeDefined();
+        });
+        it("can show a bubble suggestions", function(){
+            var locationSuggestion = karaokeSchemaScenario.getLocationPropertyAsSuggestion();
+            bubble2.setSuggestions(
+                [
+                    locationSuggestion
+                ]
+            );
+            GraphDisplayerAsRelativeTree.showSuggestions(bubble2);
+            var relationSuggestion = bubble2.getTopMostChildBubble(),
+                vertexSuggestion = relationSuggestion.getTopMostChildBubble();
+            expect(
+                relationSuggestion.text()
+            ).toBe("location");
+            expect(
+                vertexSuggestion.getIdentifications()[0].getLabel()
+            ).toBe("Location");
         });
     });
 });

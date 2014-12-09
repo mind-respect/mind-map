@@ -60,6 +60,10 @@ define([
         return this;
     };
 
+    api.Self.prototype.setLabel = function (label) {
+        this.friendlyResourceServerFormat.label = label;
+    };
+
     api.Self.prototype.getLabel = function () {
         return this.friendlyResourceServerFormat.label;
     };

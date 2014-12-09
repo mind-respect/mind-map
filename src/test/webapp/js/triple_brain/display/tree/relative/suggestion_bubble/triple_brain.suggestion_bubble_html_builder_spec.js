@@ -8,12 +8,18 @@ define([
 ], function (Scenarios, SuggestionBubbleHtmlBuilder, GraphUi) {
     "use strict";
     describe("suggestion_bubble_html_builder", function () {
-        var suggestion;
+        var suggestion,
+            locationBubbleSuggestion;
         beforeEach(function () {
             var suggestionScenario = new Scenarios.oneBubbleHavingSuggestionsGraph();
             suggestion = suggestionScenario.getOneSuggestion();
+            var karaokeSchemaScenario = new Scenarios.getKaraokeSchemaGraph(),
+                locationSuggestion = karaokeSchemaScenario.getLocationPropertyAsSuggestion();
+            locationBubbleSuggestion = SuggestionBubbleHtmlBuilder.withServerFacade(
+                locationSuggestion
+            ).create();
         });
-        it("can build from server facade", function(){
+        it("can build from server facade", function () {
             var uiId = GraphUi.generateBubbleHtmlId();
             var suggestionUi = SuggestionBubbleHtmlBuilder.withServerFacade(
                 suggestion
@@ -25,13 +31,18 @@ define([
                 suggestionUi.getUri()
             ).toBe(suggestion.getUri());
         });
-        it("if no uiId is specified it generates one", function(){
+        it("if no uiId is specified it generates one", function () {
             var suggestionUi = SuggestionBubbleHtmlBuilder.withServerFacade(
                 suggestion
             ).create();
             expect(
                 suggestionUi.getId()
             ).toBeDefined();
+        });
+        it("builds empty label bubble", function () {
+            expect(
+                locationBubbleSuggestion.text()
+            ).toBe("");
         });
     });
 });

@@ -19,9 +19,10 @@ define([
         "triple_brain.graph_displayer_factory",
         'triple_brain.graph_displayer_as_tree_common',
         "triple_brain.vertex_server_format_builder",
-        "triple_brain.event_bus"
+        "triple_brain.event_bus",
+        "triple_brain.suggestion"
     ],
-    function (Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, VertexServerFormatBuilder, EventBus) {
+    function (Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, VertexServerFormatBuilder, EventBus, Suggestion) {
         var api = {};
         api.addTriple = function (bubble) {
             var destinationVertex = generateVertex(),
@@ -410,6 +411,9 @@ define([
                     graph
                 );
             };
+            this.getProperties = function(){
+                return this.getSchema().getProperties();
+            };
             this.getSchemaUi = function () {
                 return SchemaHtmlBuilder.withServerFacade(
                     this.getSchema()
@@ -419,6 +423,18 @@ define([
                 return PropertyHtmlBuilder.withServerFacade(
                     this.getInviteesProperty()
                 ).create();
+            };
+            this.getLocationProperty = function () {
+                return schemaPropertyWithLabel(
+                    this.getSchema(),
+                    "location"
+                );
+            };
+            this.getLocationPropertyAsSuggestion = function(){
+                return Suggestion.fromSchemaPropertyAndOriginUri(
+                    this.getLocationProperty(),
+                    this.getSchema().getUri()
+                );
             };
             this.getInviteesProperty = function () {
                 return schemaPropertyWithLabel(
