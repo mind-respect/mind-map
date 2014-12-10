@@ -72,7 +72,7 @@ define([
                     suggestionUri,
                     schemaProperty.getLabel()
                 ),
-                sameAs: FriendlyResource.buildObjectWithUri(
+                sameAs: FriendlyResource.buildObjectWithUriAndLabel(
                     schemaProperty.getUri(),
                     schemaProperty.getLabel()
                 ),

@@ -244,7 +244,8 @@ define([
         );
 
         function prepareAsYouTypeSuggestions(vertex) {
-            var vertexTypes = vertex.getTypes();
+            var vertexTypes = vertex.getTypes(),
+                hasFreebaseType = false;
             if (vertexTypes.length == 0) {
                 return;
             }
@@ -253,9 +254,14 @@ define([
                 var identification = this;
                 if (FreebaseUri.isFreebaseUri(identification.getExternalResourceUri())) {
                     filterValue += "type:" + FreebaseUri.idInFreebaseURI(identification.getExternalResourceUri());
+                    hasFreebaseType = true;
                 }
             });
             filterValue += ")";
+            var fetcher = hasFreebaseType ? FreebaseAutocompleteProvider.fetchUsingOptions({
+                filter: filterValue
+            }) :
+                FreebaseAutocompleteProvider.forFetchingAnything();
             vertex.getLabel().tripleBrainAutocomplete({
                 select: function (event, ui) {
                     var vertex = GraphDisplayer.getVertexSelector().withId(
@@ -274,9 +280,7 @@ define([
                     );
                 },
                 resultsProviders: [
-                    FreebaseAutocompleteProvider.fetchUsingOptions({
-                            filter: filterValue
-                        })
+                    fetcher
                 ]
             });
         }

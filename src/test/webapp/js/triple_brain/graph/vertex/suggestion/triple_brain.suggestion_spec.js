@@ -20,11 +20,6 @@ define([
                 "location"
             );
             expect(
-                suggestion.getSameAs().getLabel()
-            ).toBe(
-                ""
-            );
-            expect(
                 suggestion.getType().getLabel()
             ).toBe(
                 "Location"
@@ -33,6 +28,18 @@ define([
                 suggestion.getOrigin().getOrigin()
             ).toBe(
                 "identification_" + karaokeSchemaScenario.getSchema().getUri()
+            );
+        });
+        it('"same as" label has the property label', function () {
+            var locationProperty = karaokeSchemaScenario.getLocationProperty(),
+                suggestion = karaokeSchemaScenario.getLocationPropertyAsSuggestion();
+            expect(
+                locationProperty.getLabel()
+            ).toBe("location")
+            expect(
+                suggestion.getSameAs().getLabel()
+            ).toBe(
+                locationProperty.getLabel()
             );
         });
     });

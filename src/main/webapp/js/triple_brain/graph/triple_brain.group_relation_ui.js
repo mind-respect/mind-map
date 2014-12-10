@@ -6,9 +6,9 @@ define([
     "triple_brain.event_bus",
     "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
     "triple_brain.graph_element_ui",
-    "triple_brain.bubble",
+    "triple_brain.tree_edge",
     "twitter_bootstrap"
-], function (GraphDisplayer, EventBus, PropertiesIndicator, GraphElementUi, Bubble) {
+], function (GraphDisplayer, EventBus, PropertiesIndicator, GraphElementUi, TreeEdge) {
     "use strict";
     var api = {};
     api.withHtml = function (html) {
@@ -25,9 +25,12 @@ define([
     };
     function Self(html) {
         this.html = html;
-        Bubble.Self.apply(this, [this.html]);
+        TreeEdge.Self.prototype.init.call(
+            this,
+            html
+        );
     }
-    Self.prototype = new Bubble.Self;
+    Self.prototype = new TreeEdge.Self;
     Self.prototype.getGraphElementType = function () {
         return GraphElementUi.Types.GroupRelation;
     };

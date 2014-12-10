@@ -349,6 +349,7 @@ define([
             this.getOtherRelation = function () {
                 return relationWithLabel(graph, "other relation");
             };
+            Mock.setCenterVertexUriInUrl(this.getCenterVertex().getUri());
         };
         api.oneBubbleHavingSuggestionsGraph = function () {
             this.getGraph = function () {
