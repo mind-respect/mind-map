@@ -8,18 +8,20 @@ define([
     "triple_brain.suggestion_bubble_ui",
     "triple_brain.graph_element_main_menu",
     "triple_brain.suggestion_bubble_menu_handler",
-    "triple_brain.ui.graph"
-], function (VertexHtmlCommon, RelativeTreeVertex, SuggestionBubbleUi, GraphElementMainMenu, SuggestionBubbleMenuHandler, GraphUi) {
+    "triple_brain.ui.graph",
+    "triple_brain.identification"
+], function (VertexHtmlCommon, RelativeTreeVertex, SuggestionBubbleUi, GraphElementMainMenu, SuggestionBubbleMenuHandler, GraphUi, Identification) {
     "use strict";
     var api = {};
-    api.withServerFacade = function(serverFacade){
+    api.withServerFacade = function (serverFacade) {
         return new Self(serverFacade);
     };
-    function Self(serverFacade){
+    function Self(serverFacade) {
         this.serverFacade = serverFacade;
     }
-    Self.prototype.create = function(htmlId){
-        if(undefined === htmlId){
+
+    Self.prototype.create = function (htmlId) {
+        if (undefined === htmlId) {
             htmlId = GraphUi.generateBubbleHtmlId();
         }
         this.html = $(
@@ -60,7 +62,7 @@ define([
             SuggestionBubbleMenuHandler.forSingle()
         );
         suggestionUi.hideMenu();
-        suggestionUi.getLabel().on("change", function(){
+        suggestionUi.getLabel().on("change", function () {
             suggestionUi.integrate()
         });
         this.html.append(
@@ -68,19 +70,25 @@ define([
         );
         return suggestionUi;
     };
-    Self.prototype._addMenu = function(){
+    Self.prototype._addMenu = function () {
         return $("<div class='menu'>").appendTo(
             this.html
         );
     };
-    Self.prototype._setupIdentifications = function(suggestionUi){
+    Self.prototype._setupIdentifications = function (suggestionUi) {
         suggestionUi.setTypes([]);
         suggestionUi.setSameAs([]);
         suggestionUi.setGenericIdentifications([]);
-        if(this.serverFacade.hasType()){
+        if (this.serverFacade.hasType()) {
             suggestionUi.addType(this.serverFacade.getType());
         }
-        suggestionUi.addType(this.serverFacade.getSameAs());
+        suggestionUi.addType(
+            Identification.withUriLabelAndDescription(
+                this.serverFacade.getSameAs().getUri(),
+                this.serverFacade.getLabel(),
+                this.serverFacade.getSameAs().getComment()
+            )
+        );
     };
     return api;
 

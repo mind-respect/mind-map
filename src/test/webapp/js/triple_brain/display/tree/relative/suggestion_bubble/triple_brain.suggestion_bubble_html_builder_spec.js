@@ -9,12 +9,13 @@ define([
     "use strict";
     describe("suggestion_bubble_html_builder", function () {
         var suggestion,
-            locationBubbleSuggestion;
+            locationBubbleSuggestion,
+            locationSuggestion;
         beforeEach(function () {
             var suggestionScenario = new Scenarios.oneBubbleHavingSuggestionsGraph();
             suggestion = suggestionScenario.getOneSuggestion();
-            var karaokeSchemaScenario = new Scenarios.getKaraokeSchemaGraph(),
-                locationSuggestion = karaokeSchemaScenario.getLocationPropertyAsSuggestion();
+            var karaokeSchemaScenario = new Scenarios.getKaraokeSchemaGraph();
+            locationSuggestion = karaokeSchemaScenario.getLocationPropertyAsSuggestion();
             locationBubbleSuggestion = SuggestionBubbleHtmlBuilder.withServerFacade(
                 locationSuggestion
             ).create();
@@ -43,6 +44,21 @@ define([
             expect(
                 locationBubbleSuggestion.text()
             ).toBe("");
+        });
+        it("has suggestion type as identification", function () {
+            expect(
+                locationBubbleSuggestion.getTypes()[0].getUri()
+            ).toBe(locationSuggestion.getType().getUri());
+        });
+        it('has suggestion "same as" as identification', function () {
+            expect(
+                locationBubbleSuggestion.getTypes()[1].getUri()
+            ).toBe(locationSuggestion.getSameAs().getUri());
+        });
+        it('has the suggestion label for its type taken from the suggestion "same as"', function () {
+            expect(
+                locationBubbleSuggestion.getTypes()[1].getLabel()
+            ).toBe(locationSuggestion.getLabel());
         });
     });
 });
