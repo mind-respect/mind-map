@@ -127,10 +127,6 @@
                     <optimizerFile>
                         src/main/webapp/r.js
                     </optimizerFile>
-                    <!-- optional parameters to optimizer executable -->
-                    <optimizerParameters>
-                        <parameter>optimize=uglify</parameter>
-                    </optimizerParameters>
                     <!--
                     Whether or not to process configFile with maven filters.
                     If you use this option, some options in your configFile
