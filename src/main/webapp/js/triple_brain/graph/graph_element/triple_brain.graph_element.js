@@ -32,9 +32,7 @@ define([
 
     api.Self.prototype.init = function(graphElementServerFormat){
         this.graphElementServerFormat = graphElementServerFormat;
-        this._types = this._buildTypes();
-        this._sameAs = this._buildSameAs();
-        this._genericIdentifications = this._buildGenericIdentifications();
+        this._buildIdentifications();
         FriendlyResource.Self.apply(
             this
         );
@@ -69,50 +67,30 @@ define([
         }
         return this._identifications;
     };
-    api.Self.prototype._buildTypes = function() {
-        var types = [];
-        if (undefined === this.graphElementServerFormat.additionalTypes) {
-            return types;
-        }
-        $.each(this.graphElementServerFormat.additionalTypes, function () {
-            types.push(
-                Identification.fromServerFormat(
-                    this
-                )
-            );
-        });
-        return types;
-    };
 
-    api.Self.prototype._buildSameAs = function() {
-        var sameAs = [];
-        if (undefined === this.graphElementServerFormat.sameAs) {
-            return sameAs;
+    api.Self.prototype._buildIdentifications = function(){
+        this._types = [];
+        this._sameAs = [];
+        this._genericIdentifications = [];
+        if (undefined === this.graphElementServerFormat.identifications) {
+            return;
         }
-        $.each(this.graphElementServerFormat.sameAs, function () {
-            sameAs.push(
-                Identification.fromServerFormat(
-                    this
-                )
+        var self = this;
+        $.each(this.graphElementServerFormat.identifications, function () {
+            var identification = Identification.fromServerFormat(
+                this
             );
+            switch(identification.getType()){
+                case "generic" :
+                    self._genericIdentifications.push(identification);
+                    return;
+                case "type":
+                    self.types.push(identification);
+                    return;
+                case "same_as":
+                    self._sameAs.push(identification);
+            }
         });
-        return sameAs;
     };
-
-    api.Self.prototype._buildGenericIdentifications = function() {
-        var genericIdentifications = [];
-        if (undefined === this.graphElementServerFormat.genericIdentifications) {
-            return genericIdentifications;
-        }
-        $.each(this.graphElementServerFormat.genericIdentifications, function () {
-            genericIdentifications.push(
-                Identification.fromServerFormat(
-                    this
-                )
-            );
-        });
-        return genericIdentifications;
-    };
-
     return api;
 });

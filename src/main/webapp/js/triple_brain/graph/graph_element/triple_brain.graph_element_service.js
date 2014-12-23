@@ -22,15 +22,23 @@ define([
         api.addIdentification(graphElement, genericIdentification, callback);
     };
     api.addIdentification = function (graphElement, identification, callback) {
-        $.ajax({
-            type: 'POST',
-            url: graphElement.getUri() + '/identification',
-            data: identification.getJsonFormat(),
-            contentType: 'application/json;charset=utf-8',
-            statusCode: {
-                201: ajaxCallBack
-            }
-        });
+        EventBus.executeAfterForEvent(
+            '/event/ui/graph/before/identification/added',
+            add,
+            [graphElement, identification]
+        );
+        function add(){
+            debugger;
+            $.ajax({
+                type: 'POST',
+                url: graphElement.getUri() + '/identification',
+                data: identification.getJsonFormat(),
+                contentType: 'application/json;charset=utf-8',
+                statusCode: {
+                    201: ajaxCallBack
+                }
+            });
+        }
         function ajaxCallBack(identificationServerFormat) {
             var updatedIdentification = Identification.fromServerFormat(
                 identificationServerFormat

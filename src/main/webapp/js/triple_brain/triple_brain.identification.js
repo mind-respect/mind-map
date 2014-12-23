@@ -76,10 +76,10 @@ define([
         return this.identificationServerFormat;
     };
     api.Self.prototype.setType = function (type) {
-        this.identificationServerFormat.type = type;
+        this.identificationServerFormat.identificationType = type;
     };
     api.Self.prototype.getType = function () {
-        return this.identificationServerFormat.type;
+        return this.identificationServerFormat.identificationType;
     };
     api.Self.prototype.getJsonFormat = function () {
         return $.toJSON(

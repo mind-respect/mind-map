@@ -96,15 +96,15 @@ define([
             vertex.getLabel().autocomplete("destroy");
         };
 
-        function defineDescription(graphElement, freebaseId, identification) {
-            $.ajax({
+        function defineDescription(freebaseId, identification) {
+            return $.ajax({
                 type: 'GET',
                 url: FreebaseUri.SEARCH_URL +
                     "?query=" + freebaseId +
                     "&key=" + FreebaseUri.key +
                     "&output=(description)&lang=" + FreebaseUri.getFreebaseFormattedUserLocales(),
                 dataType: 'jsonp'
-            }).success(function (xhr) {
+            }).done(function (xhr) {
                 var hasDescription = xhr.result[0].output.description["/common/topic/description"] !== undefined;
                 if (!hasDescription) {
                     return;
@@ -113,15 +113,13 @@ define([
                 if ('object' === typeof description) {
                     description = description.value;
                 }
-                GraphElementService.setDescriptionToIdentification(
-                    graphElement,
-                    identification,
-                    description
-                );
+                debugger;
+                identification.setComment(description);
             });
         }
 
         function defineImages(graphElement, freebaseId, identification) {
+            var deferred = $.Deferred();
             var imageQuery = {
                 id: freebaseId,
                 "/common/topic/image": [
@@ -131,18 +129,20 @@ define([
                     }
                 ]
             };
+            debugger;
             $.ajax({
                 type: 'GET',
                 url: 'https://www.googleapis.com/freebase/v1/mqlread?query=' + JSON.stringify(
                     imageQuery
                 ) + "&raw=true&key=" + FreebaseUri.key,
                 dataType: 'jsonp'
-            }).success(function (result) {
+            }).done(function (result) {
                 var freebaseImages = [];
                 if (result.result) {
                     freebaseImages = result.result["/common/topic/image"];
                 }
                 if (freebaseImages.length === 0) {
+                    deferred.resolve();
                     return;
                 }
                 var freebaseImage = freebaseImages[0],
@@ -151,27 +151,64 @@ define([
                         imageId +
                         "?maxwidth=55&key=" +
                         FreebaseUri.key;
+                debugger;
                 Image.getBase64OfExternalUrl(url, function (base64) {
-                    GraphElementService.addImageToIdentification(
-                        graphElement,
-                        identification,
-                        Image.withBase64ForSmallAndUrlForBigger(
-                            base64,
-                                FreebaseUri.IMAGE_URL +
-                                imageId +
-                                "?maxwidth=600&key=" +
-                                FreebaseUri.key
-                        )
+                    var image = Image.withBase64ForSmallAndUrlForBigger(
+                        base64,
+                            FreebaseUri.IMAGE_URL +
+                            imageId +
+                            "?maxwidth=600&key=" +
+                            FreebaseUri.key
                     );
+                    identification.addImage(image);
+                    graphElement.addImages([image]);
+                    graphElement.refreshImages();
+                    debugger;
+                    deferred.resolve();
                 });
-
             });
+            return deferred.promise();
         }
 
+        EventBus.before(
+            '/event/ui/graph/before/identification/added',
+            beforeIdentificationAdded
+        );
         EventBus.subscribe(
             '/event/ui/graph/identification/added',
             identificationAddedHandler
         );
+
+        function beforeIdentificationAdded(graphElement, identification) {
+            var identificationUri = identification.getExternalResourceUri();
+            if (!FreebaseUri.isFreebaseUri(identificationUri)) {
+                return;
+            }
+            var identificationId = FreebaseUri.idInFreebaseURI(identificationUri);
+            var modificationCalls = [];
+            if (graphElement.isBubble()) {
+                if (identification.hasImages()) {
+                    graphElement.refreshImages();
+                } else {
+                    modificationCalls.push(
+                        defineImages(
+                            graphElement,
+                            identificationId,
+                            identification
+                        )
+                    );
+                }
+            }
+            if (!identification.hasComment()) {
+                modificationCalls.push(
+                    defineDescription(
+                        identificationId,
+                        identification
+                    )
+                );
+            }
+            return $.when.apply($, modificationCalls);
+        }
 
         function identificationAddedHandler(event, graphElement, identification) {
             var identificationUri = identification.getExternalResourceUri();
@@ -183,20 +220,6 @@ define([
                 api.addSuggestionsToVertexFromFreebaseId(
                     graphElement,
                     identificationId
-                );
-            }
-            if (graphElement.isBubble()) {
-                updateIdentificationImages(
-                    identification,
-                    graphElement,
-                    identificationId
-                )
-            }
-            if (!identification.hasComment()) {
-                defineDescription(
-                    graphElement,
-                    identificationId,
-                    identification
                 );
             }
             graphElement.getLabel().tripleBrainAutocomplete({
@@ -222,18 +245,6 @@ define([
                     )
                 ]
             });
-        }
-
-        function updateIdentificationImages(identification, graphElement, identificationId) {
-            if (identification.hasImages()) {
-                graphElement.refreshImages();
-            } else {
-                defineImages(
-                    graphElement,
-                    identificationId,
-                    identification
-                );
-            }
         }
 
         EventBus.subscribe(
