@@ -95,9 +95,15 @@ define([
         return this.friendlyResourceServerFormat.uri;
     };
     api.Self.prototype.getJsonFormat = function () {
-        var self = this;
+        var serverFormat = this.getServerFormat();
+        serverFormat.images = this.getImagesServerFormat();
         return $.toJSON(
-            self.getServerFormat()
+            serverFormat
+        );
+    };
+    api.Self.prototype.getImagesServerFormat = function(){
+        return Image.arrayToServerJson(
+            this._images
         );
     };
     api.Self.prototype.getServerFormat = function () {

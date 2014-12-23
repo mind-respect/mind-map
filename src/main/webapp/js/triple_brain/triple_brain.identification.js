@@ -82,8 +82,10 @@ define([
         return this.identificationServerFormat.identificationType;
     };
     api.Self.prototype.getJsonFormat = function () {
+        var serverFormat = this.getServerFormat();
+        serverFormat.friendlyResource.images = this.getImagesServerFormat();
         return $.toJSON(
-            this.identificationServerFormat
+            serverFormat
         );
     };
     api.Self.prototype.isEligibleForContext = function () {

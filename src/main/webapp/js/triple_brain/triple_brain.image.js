@@ -11,6 +11,15 @@ define([],
                 imageAsServerJson.urlForBigger
             );
         };
+        api.arrayToServerJson = function(images){
+            var imagesJson = [];
+            $.each(images, function(){
+                imagesJson.push(
+                    this.jsonFormat()
+                );
+            });
+            return imagesJson;
+        };
         api.arrayFromServerJson = function (imagesAsServerJson) {
             var images = [];
             $.each(imagesAsServerJson, function () {
