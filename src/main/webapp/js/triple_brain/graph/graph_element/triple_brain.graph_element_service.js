@@ -28,7 +28,6 @@ define([
             [graphElement, identification]
         );
         function add(){
-            debugger;
             $.ajax({
                 type: 'POST',
                 url: graphElement.getUri() + '/identification',

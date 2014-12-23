@@ -113,7 +113,6 @@ define([
                 if ('object' === typeof description) {
                     description = description.value;
                 }
-                debugger;
                 identification.setComment(description);
             });
         }
@@ -129,7 +128,6 @@ define([
                     }
                 ]
             };
-            debugger;
             $.ajax({
                 type: 'GET',
                 url: 'https://www.googleapis.com/freebase/v1/mqlread?query=' + JSON.stringify(
@@ -151,7 +149,6 @@ define([
                         imageId +
                         "?maxwidth=55&key=" +
                         FreebaseUri.key;
-                debugger;
                 Image.getBase64OfExternalUrl(url, function (base64) {
                     var image = Image.withBase64ForSmallAndUrlForBigger(
                         base64,
@@ -163,7 +160,6 @@ define([
                     identification.addImage(image);
                     graphElement.addImages([image]);
                     graphElement.refreshImages();
-                    debugger;
                     deferred.resolve();
                 });
             });

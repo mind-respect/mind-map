@@ -25,7 +25,6 @@ define([
                 );
             },
             executeAfterForEvent: function(event, afterPromises, params){
-                debugger;
                 if(undefined === promises[event]){
                     afterPromises();
                     return;
