@@ -85,7 +85,7 @@ define([
                     self._genericIdentifications.push(identification);
                     return;
                 case "type":
-                    self.types.push(identification);
+                    self._types.push(identification);
                     return;
                 case "same_as":
                     self._sameAs.push(identification);
