@@ -93,12 +93,12 @@ define([
             return api.fromServerFormat(serverFormat);
         };
         api.formatAllForServer = function (suggestions) {
-            var suggestionsFormatedForServer = [];
+            var suggestionsFormatedForServer = {};
             $.each(suggestions, function () {
                 var suggestion = this;
-                suggestionsFormatedForServer.push(
-                    suggestion.getServerFormat()
-                );
+                suggestionsFormatedForServer[
+                    suggestion.getUri()
+                    ] = suggestion.getServerFormat();
             });
             return $.toJSON(suggestionsFormatedForServer);
         };
