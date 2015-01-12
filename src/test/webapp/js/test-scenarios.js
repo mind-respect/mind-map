@@ -20,9 +20,11 @@ define([
         'triple_brain.graph_displayer_as_tree_common',
         "triple_brain.vertex_server_format_builder",
         "triple_brain.event_bus",
-        "triple_brain.suggestion"
+        "triple_brain.suggestion",
+        "triple_brain.identification",
+        "triple_brain.friendly_resource"
     ],
-    function (Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, VertexServerFormatBuilder, EventBus, Suggestion) {
+    function (Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, VertexServerFormatBuilder, EventBus, Suggestion, Identification, FriendlyResource) {
         var api = {};
         api.addTriple = function (bubble) {
             var destinationVertex = generateVertex(),
@@ -393,6 +395,13 @@ define([
                     graph
                 );
             };
+            this.getSchemaAsIdentification = function(){
+                return Identification.fromFriendlyResource(
+                    FriendlyResource.withUri(
+                        this.getSchema().getUri()
+                    )
+                );
+            };
             this.getProperties = function(){
                 return this.getSchema().getProperties();
             };
@@ -415,6 +424,12 @@ define([
             this.getLocationPropertyAsSuggestion = function(){
                 return Suggestion.fromSchemaPropertyAndOriginUri(
                     this.getLocationProperty(),
+                    this.getSchema().getUri()
+                );
+            };
+            this.getInviteesPropertyAsSuggestion = function(){
+                return Suggestion.fromSchemaPropertyAndOriginUri(
+                    this.getInviteesProperty(),
                     this.getSchema().getUri()
                 );
             };

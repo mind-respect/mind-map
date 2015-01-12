@@ -145,6 +145,10 @@ define([
         Suggestion.prototype.getOrigin = function () {
             return this.origins[0];
         };
+        Suggestion.prototype.hasIdentificationForOrigin = function(identification){
+            return (api.IDENTIFICATION_PREFIX + identification.getExternalResourceUri()) ===
+                this.getOrigin().getOrigin();
+        };
         Suggestion.prototype.getServerFormat = function () {
             var serverFormatGetter = FriendlyResource.Self.prototype.getServerFormat;
             return {

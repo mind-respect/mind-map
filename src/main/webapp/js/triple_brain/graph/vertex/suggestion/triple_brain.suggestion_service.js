@@ -28,5 +28,6 @@ define([
             }
         });
     };
+
     return api;
 });

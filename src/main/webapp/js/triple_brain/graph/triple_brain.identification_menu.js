@@ -308,8 +308,8 @@ define([
                         identification,
                         function (graphElement, identification) {
                             $.each(facade._listElements(), function () {
-                                var listElement = $(this);
-                                var listElementIdentification = listElement.data("identification");
+                                var listElement = $(this),
+                                    listElementIdentification = listElement.data("identification");
                                 if (identification.getUri() === listElementIdentification.getUri()) {
                                     listElement.next(".description").remove();
                                     listElement.remove();

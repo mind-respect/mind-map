@@ -27,10 +27,10 @@ define([
             expect(
                 suggestion.getOrigin().getOrigin()
             ).toBe(
-                "identification_" + karaokeSchemaScenario.getSchema().getUri()
+                    "identification_" + karaokeSchemaScenario.getSchema().getUri()
             );
         });
-        it('"same as" label has the property label', function () {
+        it('"same as" label is the property label', function () {
             var locationProperty = karaokeSchemaScenario.getLocationProperty(),
                 suggestion = karaokeSchemaScenario.getLocationPropertyAsSuggestion();
             expect(
@@ -41,6 +41,20 @@ define([
             ).toBe(
                 locationProperty.getLabel()
             );
+        });
+        it('can tell if it has identification for origin', function () {
+            var suggestion = karaokeSchemaScenario.getLocationPropertyAsSuggestion(),
+                possessionIdentification = new Scenarios.GraphWithSimilarRelationsScenario().getPossession();
+            expect(
+                suggestion.hasIdentificationForOrigin(
+                    possessionIdentification
+                )
+            ).toBeFalsy();
+            expect(
+                suggestion.hasIdentificationForOrigin(
+                    karaokeSchemaScenario.getSchemaAsIdentification()
+                )
+            ).toBeTruthy();
         });
     });
 });

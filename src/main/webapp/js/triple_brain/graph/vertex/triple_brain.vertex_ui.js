@@ -273,9 +273,7 @@ define([
                 this,
                 identification
             );
-            VertexService.getSuggestions(
-                this
-            );
+            //todo remove suggestions
         };
 
         api.Object.prototype.showSuggestionButton = function () {
