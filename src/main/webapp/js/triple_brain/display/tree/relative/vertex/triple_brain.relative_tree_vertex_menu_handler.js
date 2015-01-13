@@ -139,6 +139,7 @@ define([
     forSingle.subElementsCanDo = function (vertex) {
         return vertex.hasIncludedGraphElements();
     };
+
     forSingle.suggestions = function (event, vertex) {
         forSingle.suggestionsAction(
             vertex

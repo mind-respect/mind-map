@@ -5,19 +5,18 @@ define([
         "jquery",
         "triple_brain.graph_displayer",
         "triple_brain.vertex_service",
-        "triple_brain.id_uri",
         "triple_brain.point",
         "triple_brain.error",
         "triple_brain.ui.vertex_segments",
         "triple_brain.edge_ui",
         "triple_brain.event_bus",
-        "triple_brain.image_displayer",
         "triple_brain.identified_bubble",
         "triple_brain.graph_element_ui",
         "triple_brain.bubble",
+        "triple_brain.suggestion_service",
         "jquery.center-on-screen"
     ],
-    function ($, GraphDisplayer, VertexService, IdUriUtils, Point, Error, VertexSegments, EdgeUi, EventBus, ImageDisplayer, IdentifiedBubble, GraphElementUi, Bubble) {
+    function ($, GraphDisplayer, VertexService, Point, Error, VertexSegments, EdgeUi, EventBus, IdentifiedBubble, GraphElementUi, Bubble, SuggestionService) {
         "use strict";
         var api = {};
         api.getWhenEmptyLabel = function () {
@@ -240,11 +239,11 @@ define([
             }
         };
 
-        api.Object.prototype.suggestions = function () {
+        api.Object.prototype.getSuggestions = function () {
             return this.html.data('suggestions');
         };
         api.Object.prototype.hasSuggestions = function () {
-            return this.suggestions().length > 0;
+            return this.getSuggestions().length > 0;
         };
         api.Object.prototype.addSuggestions = function (suggestions) {
             var existingSuggestions = this.html.data('suggestions');
@@ -273,7 +272,23 @@ define([
                 this,
                 identification
             );
-            //todo remove suggestions
+            var suggestions = [],
+                urisOfSuggestionsRemoved = [];
+            $.each(this.getSuggestions(), function () {
+                var suggestion = this;
+                if (suggestion.hasIdentificationForOrigin(identification)) {
+                    urisOfSuggestionsRemoved.push(
+                        suggestion.getUri()
+                    );
+                } else {
+                    suggestions.push(suggestion);
+                }
+            });
+            SuggestionService.remove(
+                urisOfSuggestionsRemoved,
+                this
+            );
+            this.setSuggestions(suggestions);
         };
 
         api.Object.prototype.showSuggestionButton = function () {
@@ -296,7 +311,7 @@ define([
         api.Object.prototype.serverFormat = function () {
             return {
                 label: this.text(),
-                suggestions: this.suggestions(),
+                getSuggestions: this.getSuggestions(),
                 types: getCollectionAsServerFormat(this.getTypes()),
                 same_as: getCollectionAsServerFormat(this.getSameAs())
             };

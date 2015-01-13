@@ -167,7 +167,7 @@ define([
     };
 
     api.showSuggestions = function (vertex) {
-        $.each(vertex.suggestions(), function () {
+        $.each(vertex.getSuggestions(), function () {
             var suggestion = this,
                 suggestionRelation = addEdge(
                     suggestion,

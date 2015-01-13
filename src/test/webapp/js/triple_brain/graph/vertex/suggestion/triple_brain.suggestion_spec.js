@@ -35,7 +35,7 @@ define([
                 suggestion = karaokeSchemaScenario.getLocationPropertyAsSuggestion();
             expect(
                 locationProperty.getLabel()
-            ).toBe("location")
+            ).toBe("location");
             expect(
                 suggestion.getSameAs().getLabel()
             ).toBe(
