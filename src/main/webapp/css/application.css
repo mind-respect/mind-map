@@ -131,7 +131,7 @@ svg { z-index: 1; }
 .bubble > * { display: table-cell; vertical-align: middle; }
 .bubble.view-only .arrow:before { left: 0; }
 .bubble.suggestion .in-bubble-content, .bubble.suggestion .label { background-color: white; border: 1px dashed black; color: black; text-shadow: none; }
-.bubble .bubble-label { outline: 0px solid transparent; border: none; padding: 0; font-family: Helvetica; font-size: 14px; width: auto; display: table-cell; white-space: pre; min-width: 1em; }
+.bubble .bubble-label { outline: 0px solid transparent; border: none; padding: 0; font-family: Helvetica; font-size: 14px; width: auto; display: table-cell; white-space: pre; min-width: 1em; height: 17px; }
 .bubble .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); color: grey; font-style: italic; }
 .bubble.selected .in-bubble-content { z-index: 2; }
 .bubble .image_container { z-index: 3; position: relative; min-width: 60px; }
@@ -148,7 +148,7 @@ svg { z-index: 1; }
 .bubble .menu .ui-button { float: left; background-color: white; }
 .bubble.inverse .arrow:before { content: url("images/icons/vertex/arrowhead_left.svg"); }
 
-.relation span.label { font-family: helvetica; }
+.relation span.label { font-family: helvetica; height: 14px; }
 .relation span.label:empty:not(:focus):before { content: attr(data-placeholder); font-style: italic; }
 
 .relation span.label.input-size { font-family: courier new, monospace; padding-right: 10px; font-size: 14px !important; }

@@ -447,6 +447,7 @@ svg {
     display: table-cell;
     white-space: pre;
     min-width: 1em;
+    height:17px;
     &:empty:not(:focus):before {
       content: attr(data-placeholder);
       color: grey;
@@ -550,6 +551,7 @@ svg {
 
 .relation span.label {
   font-family: helvetica;
+  height:14px;
   &:empty:not(:focus):before {
     content: attr(data-placeholder);
     font-style: italic;
