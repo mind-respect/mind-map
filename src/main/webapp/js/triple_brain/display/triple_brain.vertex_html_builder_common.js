@@ -207,7 +207,7 @@ define([
         }
     }
 
-    function dblClickHandler() {
+    function dblClickHandler(event) {
         event.stopPropagation();
         BubbleFactory.fromSubHtml(
             $(this)
