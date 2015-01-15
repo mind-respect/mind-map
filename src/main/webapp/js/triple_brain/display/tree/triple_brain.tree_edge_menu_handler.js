@@ -39,10 +39,10 @@ define([
         );
     };
     forSingle.reverseToRight = function (event, edge) {
-        reverse(edge);
+        forSingle.reverse(edge);
     };
     forSingle.reverseToLeft = function (event, edge) {
-        reverse(edge);
+        forSingle.reverse(edge);
     };
     forSingle.reverseToRightCanDo = function (edge) {
         var isToTheLeft = edge.isToTheLeft();
@@ -54,14 +54,14 @@ define([
     forSingle.reverseToLeftCanDo = function (edge) {
         return !api.forSingle().reverseToRightCanDo(edge);
     };
-    function reverse(edge) {
+    forSingle.reverse = function(edge) {
         EdgeService.inverse(
             edge,
             function () {
                 edge.inverse();
             }
         );
-    }
+    };
     api.forGroup = function(){
         return MindMapInfo.isViewOnly() ?
             forGroup:

@@ -24,6 +24,7 @@ define([
         escapeKeyNumber = 27,
         eKeyNumber = 69,
         sKeyNumber = 83,
+        rKeyNumber = 82,
         listenedKeysAndTheirAction = defineListenedKeysAndTheirActions();
     api.init = function () {
         EventBus.subscribe(
@@ -99,6 +100,9 @@ define([
             ],
             [
                 sKeyNumber, sKeyAction
+            ],
+            [
+                rKeyNumber, rKeyAction
             ]
         ];
     }
@@ -141,6 +145,15 @@ define([
                 selectedElement
             );
         }
+    }
+
+    function rKeyAction(selectedElement) {
+        if(!selectedElement.isRelation()){
+            return;
+        }
+        selectedElement.getMenuHandler().forSingle().reverse(
+            selectedElement
+        );
     }
 
     function tabAction(selectedElement) {
