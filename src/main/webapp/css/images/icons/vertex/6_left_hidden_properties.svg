@@ -9,22 +9,22 @@
    </cc:Work>
   </rdf:RDF>
  </metadata>
- <path id="path3" d="M24.515,21,20.979,17.464z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path5" d="M17.443,13.929,13.908,10.393z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path7" d="M10.372,6.8579,6.8368,3.3223z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path9" d="M24.515,21,20.227,18.428z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path11" d="M15.94,15.855,11.652,13.283z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path13" d="M7.3647,10.71,3.0772,8.1376z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path15" d="M24.515,21,19.612,20.019z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path17" d="M14.709,19.039,9.8058,18.058z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path19" d="M4.9029,17.078,0,16.097z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path21" d="m24.515,21-4.9029,0.98058z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path23" d="M14.709,22.961,9.8058,23.942z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path25" d="M4.9029,24.922,0,25.903z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path27" d="m24.515,21-4.2875,2.5725z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path29" d="m15.94,26.145-4.2875,2.5725z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path31" d="M7.3647,31.29,3.0772,33.862z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path33" d="m24.515,21-3.5355,3.5355z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path35" d="m17.443,28.071-3.5355,3.5355z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path37" d="M10.372,35.142,6.8368,38.678z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path3" d="M24.515,21,20.979,17.464z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path5" d="M17.443,13.929,13.908,10.393z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path7" d="M10.372,6.8579,6.8368,3.3223z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path9" d="M24.515,21,20.227,18.428z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path11" d="M15.94,15.855,11.652,13.283z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path13" d="M7.3647,10.71,3.0772,8.1376z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path15" d="M24.515,21,19.612,20.019z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path17" d="M14.709,19.039,9.8058,18.058z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path19" d="M4.9029,17.078,0,16.097z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path21" d="m24.515,21-4.9029,0.98058z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path23" d="M14.709,22.961,9.8058,23.942z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path25" d="M4.9029,24.922,0,25.903z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path27" d="m24.515,21-4.2875,2.5725z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path29" d="m15.94,26.145-4.2875,2.5725z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path31" d="M7.3647,31.29,3.0772,33.862z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path33" d="m24.515,21-3.5355,3.5355z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path35" d="m17.443,28.071-3.5355,3.5355z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path37" d="M10.372,35.142,6.8368,38.678z" stroke="#000000" stroke-width="1" fill="none"/>
 </svg>

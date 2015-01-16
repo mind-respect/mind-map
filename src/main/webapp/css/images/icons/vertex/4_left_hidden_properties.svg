@@ -9,16 +9,16 @@
    </cc:Work>
   </rdf:RDF>
  </metadata>
- <path id="path3" d="M23.717,21,20.182,17.464z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path5" d="M16.646,13.929,13.11,10.393z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path7" d="M9.5749,6.8579,6.0394,3.3223z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path9" d="M23.717,21,18.974,19.419z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path11" d="M14.23,17.838,9.4868,16.257z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path13" d="M4.7434,14.675,0,13.094z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path15" d="m23.717,21-4.7434,1.5811z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path17" d="M14.23,24.162,9.4868,25.743z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path19" d="M4.7434,27.325,0,28.906z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path21" d="m23.717,21-3.5355,3.5355z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path23" d="m16.646,28.071-3.5355,3.5355z" stroke="#1919ac" stroke-width="1" fill="none"/>
- <path id="path25" d="M9.5749,35.142,6.0394,38.678z" stroke="#1919ac" stroke-width="1" fill="none"/>
+ <path id="path3" d="M23.717,21,20.182,17.464z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path5" d="M16.646,13.929,13.11,10.393z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path7" d="M9.5749,6.8579,6.0394,3.3223z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path9" d="M23.717,21,18.974,19.419z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path11" d="M14.23,17.838,9.4868,16.257z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path13" d="M4.7434,14.675,0,13.094z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path15" d="m23.717,21-4.7434,1.5811z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path17" d="M14.23,24.162,9.4868,25.743z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path19" d="M4.7434,27.325,0,28.906z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path21" d="m23.717,21-3.5355,3.5355z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path23" d="m16.646,28.071-3.5355,3.5355z" stroke="#000000" stroke-width="1" fill="none"/>
+ <path id="path25" d="M9.5749,35.142,6.0394,38.678z" stroke="#000000" stroke-width="1" fill="none"/>
 </svg>
