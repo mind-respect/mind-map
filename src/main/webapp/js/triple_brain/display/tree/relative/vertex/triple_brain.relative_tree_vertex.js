@@ -59,26 +59,30 @@ define([
             });
         };
         api.Object.prototype.getOtherInstances = function () {
-            var vertex = api.withHtml(this.html);
             if (this.html.data(otherInstancesKey) === undefined) {
-                var verticesWithSameUri = api.withUri(
-                    vertex.getUri()
-                );
-                var otherInstances = [];
-                $.each(verticesWithSameUri, function () {
-                    var vertexWithSameUri = this;
-                    if (vertexWithSameUri.getId() !== vertex.getId()) {
-                        otherInstances.push(
-                            vertexWithSameUri
-                        );
-                    }
-                });
-                this.html.data(
-                    otherInstancesKey,
-                    otherInstances
-                );
+                this._defineSameInstances();
             }
             return this.html.data(otherInstancesKey);
+        };
+        api.Object.prototype._defineSameInstances = function (){
+            var verticesWithSameUri = api.withUri(
+                this.getUri()
+            );
+            var otherInstances = [],
+                self = this;
+            $.each(verticesWithSameUri, function () {
+                var vertexWithSameUri = this;
+                if (vertexWithSameUri.getId() === self.getId()) {
+                    return;
+                }
+                otherInstances.push(
+                    vertexWithSameUri
+                );
+            });
+            this.html.data(
+                otherInstancesKey,
+                otherInstances
+            );
         };
         api.Object.prototype.resetOtherInstances = function () {
             this.html.removeData(otherInstancesKey);

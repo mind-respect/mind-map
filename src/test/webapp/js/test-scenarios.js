@@ -376,7 +376,7 @@ define([
             this.getAVertexSuggestionUi = function () {
                 return SuggestionBubbleHtmlBuilder.withServerFacade(
                     this.getOneSuggestion()
-                ).create();
+                    ).create();
             };
             this.getARelationSuggestionUi = function () {
                 return SuggestionRelationBuilder.withServerFacade(
@@ -457,6 +457,9 @@ define([
                 "relative_tree"
             )
         );
+        api.generateVertexUri = function() {
+            return "\/service\/users\/foo\/graph\/vertex\/" + generateUuid();
+        };
         return api;
         function uriOfVertexWithLabel(graph, label) {
             var uri;
@@ -572,7 +575,7 @@ define([
         function generateVertex() {
             return Vertex.fromServerFormat(
                 VertexServerFormatBuilder.buildWithUri(
-                    generateVertexUri()
+                    api.generateVertexUri()
                 )
             );
         }
@@ -585,10 +588,6 @@ define([
                     destinationVertexUri
                 )
             );
-        }
-
-        function generateVertexUri() {
-            return "\/service\/users\/foo\/graph\/vertex\/" + generateUuid();
         }
 
         function generateEdgeUri() {

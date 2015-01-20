@@ -6,9 +6,8 @@ define([
     "triple_brain.relative_tree_vertex",
     "triple_brain.graph_element_ui",
     "triple_brain.vertex_ui",
-    "triple_brain.event_bus",
-    "triple_brain.graph_displayer"
-], function (RelativeTreeVertex, GraphElementUi, VertexUi, EventBus, GraphDisplayer) {
+    "triple_brain.event_bus"
+], function (RelativeTreeVertex, GraphElementUi, VertexUi, EventBus) {
     "use strict";
     var api = {};
     api.withHtml = function (html) {

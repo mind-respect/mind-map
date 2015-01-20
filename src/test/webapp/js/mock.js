@@ -4,8 +4,9 @@
 
 define([
     "triple_brain.user",
-    "triple_brain.mind_map_info"
-], function (UserService, MindMapInfo) {
+    "triple_brain.mind_map_info",
+    "triple_brain.suggestion_service"
+], function (UserService, MindMapInfo, SuggestionService) {
     "use strict";
     var api = {};
     api.setCenterVertexUriInUrl = function(centerVertexUri){
@@ -17,6 +18,9 @@ define([
         return {
             user_name : "foo"
         }
+    };
+    SuggestionService.accept = function(suggestionUi, callback){
+        callback();
     };
     return api;
 });

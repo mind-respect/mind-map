@@ -110,6 +110,7 @@ define([
                     vertex,
                     updateLabel
                 );
+                return;
             } else {
                 updateLabel();
             }
