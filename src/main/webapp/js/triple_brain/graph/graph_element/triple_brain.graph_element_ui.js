@@ -60,9 +60,6 @@ define([
     api.Self.prototype.isRelationSuggestion = function () {
         return this.getGraphElementType() === api.Types.RelationSuggestion;
     };
-    api.Self.prototype.isRelationOrSuggestion = function () {
-        return this.isRelation() || this.isRelationSuggestion();
-    };
     api.Self.prototype.isBubble = function () {
         return !this.isRelation() && !this.isRelationSuggestion();
     };

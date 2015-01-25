@@ -452,6 +452,20 @@ define([
                 this.getSchema().getUri()
             );
         };
+        api.getSearchResultsForImpact = function(){
+            /*
+            * schema project
+            * project -> impact on the individual
+            * project -> impact on society
+            * project -> has objective
+            * project -> has component
+            *
+            * another bubble labeled impact
+            */
+            this.get = function(){
+                return [{"graphElement":{"friendlyResource":{"uri":"/service/users/asoidv/graph/schema/3392d518-8b3d-484f-9480-8da3cca6d871","label":"project","comment":"","images":[]},"identifications":{}},"properties":{"/service/users/asoidv/graph/schema/3392d518-8b3d-484f-9480-8da3cca6d871/property/258704e6-9403-4623-ad8f-d72db5064d0a":{"friendlyResource":{"uri":"/service/users/asoidv/graph/schema/3392d518-8b3d-484f-9480-8da3cca6d871/property/258704e6-9403-4623-ad8f-d72db5064d0a","label":"has objective","comment":"","images":[],"creationDate":"Jan 23, 2015 8:42:09 AM","lastModificationDate":"Jan 23, 2015 8:42:17 AM"},"identifications":{}},"/service/users/asoidv/graph/schema/3392d518-8b3d-484f-9480-8da3cca6d871/property/51822666-b49f-4280-9763-1a7e1f4940e7":{"friendlyResource":{"uri":"/service/users/asoidv/graph/schema/3392d518-8b3d-484f-9480-8da3cca6d871/property/51822666-b49f-4280-9763-1a7e1f4940e7","label":"impact on the individual","comment":"","images":[],"creationDate":"Jan 23, 2015 8:41:31 AM","lastModificationDate":"Jan 23, 2015 8:41:46 AM"},"identifications":{}},"/service/users/asoidv/graph/schema/3392d518-8b3d-484f-9480-8da3cca6d871/property/3d2b3cc3-3ee3-491a-9088-b0cbece06bb2":{"friendlyResource":{"uri":"/service/users/asoidv/graph/schema/3392d518-8b3d-484f-9480-8da3cca6d871/property/3d2b3cc3-3ee3-491a-9088-b0cbece06bb2","label":"has component","comment":"","images":[],"creationDate":"Jan 23, 2015 8:42:02 AM","lastModificationDate":"Jan 23, 2015 8:42:07 AM"},"identifications":{}},"/service/users/asoidv/graph/schema/3392d518-8b3d-484f-9480-8da3cca6d871/property/1af58932-681c-4b6e-9bb8-34a50b254c49":{"friendlyResource":{"uri":"/service/users/asoidv/graph/schema/3392d518-8b3d-484f-9480-8da3cca6d871/property/1af58932-681c-4b6e-9bb8-34a50b254c49","label":"impact on society","comment":"","images":[],"creationDate":"Jan 23, 2015 8:41:50 AM","lastModificationDate":"Jan 23, 2015 8:42:01 AM"},"identifications":{}}}},{"graphElement":{"friendlyResource":{"uri":"/service/users/asoidv/graph/vertex/ec8fd186-79a6-48c6-935c-ae9ce024fb3c","label":"impact","comment":"","images":[]},"identifications":{}}}];
+            };
+        };
         GraphDisplayer.setImplementation(
             GraphDisplayerFactory.getByName(
                 "relative_tree"

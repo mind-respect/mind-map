@@ -40,5 +40,11 @@ define([
     Object.prototype.isVertex = function () {
         return true;
     };
+
+    Object.prototype.hasProperties = function () {
+        return this.serverFormat.properties !== undefined &&
+            !$.isEmptyObject(this.serverFormat.properties);
+
+    };
     return api;
 });

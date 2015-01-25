@@ -40,7 +40,8 @@ define([
                         ).done(function (results) {
                                 response(
                                     singleResultsProvider.formatResults(
-                                        results
+                                        results,
+                                        searchTerm
                                     )
                                 );
                             });
@@ -58,7 +59,8 @@ define([
                             var resultProvider = options.resultsProviders[i];
                             allResults = allResults.concat(
                                 resultProvider.formatResults(
-                                    results
+                                    results,
+                                    searchTerm
                                 )
                             );
                             i++;

@@ -9,35 +9,35 @@ define([
     "triple_brain.id_uri"
 ], function ($, SearchService, IdentificationContext, SearchResultFacadeFactory, IdUri) {
     var api = {};
-    api.toFetchOnlyCurrentUserVertices = function(){
+    api.toFetchOnlyCurrentUserVertices = function () {
         return new UserMapAutoCompleteProvider(
             SearchService.searchForOnlyOwnVerticesAjaxCall,
             false,
             undefined
         );
     };
-    api.toFetchOnlyCurrentUserVerticesAndSchemas = function(){
+    api.toFetchOnlyCurrentUserVerticesAndSchemas = function () {
         return new UserMapAutoCompleteProvider(
             SearchService.searchForOnlyOwnVerticesAndSchemasAjaxCall,
             false,
             undefined
         );
     };
-    api.toFetchOnlyCurrentUserVerticesExcept = function(vertexToIgnore){
+    api.toFetchOnlyCurrentUserVerticesExcept = function (vertexToIgnore) {
         return new UserMapAutoCompleteProvider(
             SearchService.searchForOnlyOwnVerticesAjaxCall,
             false,
             vertexToIgnore
         );
     };
-    api.toFetchCurrentUserVerticesAndPublicOnesForIdentification = function(vertexToIdentify){
+    api.toFetchCurrentUserVerticesAndPublicOnesForIdentification = function (vertexToIdentify) {
         return new UserMapAutoCompleteProvider(
             SearchService.searchForOwnVerticesAndPublicOnesAjaxCall,
             true,
             vertexToIdentify
         );
     };
-    api.toFetchRelationsForIdentification = function(edgeToIdentify){
+    api.toFetchRelationsForIdentification = function (edgeToIdentify) {
         return new UserMapAutoCompleteProvider(
             SearchService.searchForOwnRelationsAjaxCall,
             true,
@@ -45,77 +45,98 @@ define([
         );
     };
     return api;
-    function UserMapAutoCompleteProvider(fetchMethod, isForIdentification, graphElementToIgnore){
+    function UserMapAutoCompleteProvider(fetchMethod, isForIdentification, graphElementToIgnore) {
         var self = this;
         this.getFetchMethod = function (searchTerm) {
             return fetchMethod(
                 searchTerm
             );
         };
-        this.formatResults = function(searchResults){
-            searchResults = $.map(searchResults, function (searchResult) {
-                var searchResultFacade = SearchResultFacadeFactory.get(
-                    searchResult
-                );
-                var format = {
-                    nonFormattedSearchResult: searchResultFacade,
-                    comment:searchResultFacade.getComment(),
-                    label:searchResultFacade.getLabel(),
-                    value:searchResultFacade.getLabel(),
-                    source: $.t("vertex.search.user") + " " + IdUri.usernameFromUri(searchResultFacade.getUri()),
-                    uri:searchResultFacade.getUri(),
-                    provider:self
-                };
-                if(searchResultFacade.isVertex()){
-                    format.somethingToDistinguish = IdentificationContext.formatRelationsName(
-                        IdentificationContext.removedEmptyAndDuplicateRelationsName(
-                            searchResultFacade.getPropertiesName()
-                        )
+        this.formatResults = function (searchResults, searchTerm) {
+            var formattedResults = [];
+            $.each(searchResults, addFormattedResult);
+            function addFormattedResult() {
+                var searchResult = this,
+                    searchResultFacade = SearchResultFacadeFactory.get(
+                        searchResult
                     );
-                    format.distinctionType = "relations";
+                if (undefined !== graphElementToIgnore && searchResultFacade.getUri() === graphElementToIgnore.getUri()) {
+                    return;
                 }
-                return format;
-            });
-            return filteredSearchResults();
-            function filteredSearchResults(){
-                if(graphElementToIgnore !== undefined){
-                    return removeGraphElementToIgnoreFromResults(
-                        searchResults
-                    );
-                }else{
-                    return searchResults;
+                var formatted = applyBasicFormat(searchResultFacade);
+
+                if (searchResultFacade.isVertex()) {
+                    searchResultFacade.hasProperties() ?
+                        formatSchemaResult(formatted, searchResultFacade) :
+                        formatVertexResult(formatted, searchResultFacade);
+                    return;
+                }
+                formattedResults.push(
+                    formatted
+                );
+            }
+
+            function applyBasicFormat(searchResultFacade) {
+                return {
+                    nonFormattedSearchResult: searchResultFacade,
+                    comment: searchResultFacade.getComment(),
+                    label: searchResultFacade.getLabel(),
+                    value: searchResultFacade.getLabel(),
+                    source: $.t("vertex.search.user") + " " + IdUri.usernameFromUri(searchResultFacade.getUri()),
+                    uri: searchResultFacade.getUri(),
+                    provider: self
+                };
+            }
+
+            function formatSchemaResult(formattedSchema, schema) {
+                $.each(schema.getProperties(), function () {
+                    var property = this;
+                    if (searchTermMatchesLabel(property.getLabel())) {
+                        var newSearchResult = applyBasicFormat(property);
+                        formattedResults.push(newSearchResult);
+                    }
+                });
+                if (searchTermMatchesLabel(schema.getLabel())) {
+                    formattedResults.push(formattedSchema);
                 }
             }
+
+            function searchTermMatchesLabel(label) {
+                return label.indexOf(searchTerm) !== -1;
+            }
+
+            function formatVertexResult(formatted, searchResultFacade) {
+                formatted.somethingToDistinguish = IdentificationContext.formatRelationsName(
+                    IdentificationContext.removedEmptyAndDuplicateRelationsName(
+                        searchResultFacade.getPropertiesName()
+                    )
+                );
+                formatted.distinctionType = "relations";
+                formattedResults.push(formatted);
+            }
+
+            return formattedResults;
         };
+
         this.getMoreInfoForSearchResult = function (searchResult, callback) {
             var originalSearchResult = searchResult.nonFormattedSearchResult;
             IdentificationContext.buildWithoutBubbleLinks(
                 originalSearchResult,
-                function(context){
+                function (context) {
                     var moreInfo = context.append(
                         originalSearchResult.context,
                         $("<div>").append(originalSearchResult.getComment())
                     );
                     callback({
-                            conciseSearchResult:searchResult,
-                            title:searchResult.label,
+                            conciseSearchResult: searchResult,
+                            title: searchResult.label,
                             text: moreInfo,
-                            imageUrl:""
+                            imageUrl: ""
                         }
                     );
                 }
             );
         };
-        function removeGraphElementToIgnoreFromResults(searchResults){
-            var filteredResults = [];
-            $.each(searchResults, function(){
-                var searchResult = this;
-                var searchResultFacade = this.nonFormattedSearchResult;
-                if(searchResultFacade.getUri() !== graphElementToIgnore.getUri()){
-                    filteredResults.push(searchResult);
-                }
-            });
-            return filteredResults;
-        }
     }
-});
+})
+;
