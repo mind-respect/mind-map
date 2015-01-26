@@ -110,6 +110,11 @@ define([
                     }
                 });
                 if (searchTermMatchesLabel(schema.getLabel())) {
+                    formattedSchema.somethingToDistinguish = IdentificationContext.formatRelationsName(
+                        IdentificationContext.removedEmptyAndDuplicateRelationsName(
+                            schema.getPropertiesName()
+                        )
+                    );
                     formattedResults.push(formattedSchema);
                 }
             }
@@ -118,12 +123,7 @@ define([
                 return label.indexOf(searchTerm) !== -1;
             }
 
-            function formatVertexResult(formatted, searchResultFacade) {
-                formatted.somethingToDistinguish = IdentificationContext.formatRelationsName(
-                    IdentificationContext.removedEmptyAndDuplicateRelationsName(
-                        searchResultFacade.getPropertiesName()
-                    )
-                );
+            function formatVertexResult(formatted) {
                 formatted.distinctionType = "relations";
                 formattedResults.push(formatted);
             }
