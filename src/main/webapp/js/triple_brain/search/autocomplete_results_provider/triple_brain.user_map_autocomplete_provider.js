@@ -6,8 +6,10 @@ define([
     "triple_brain.search",
     "triple_brain.identification_context",
     "triple_brain.search_result_facade_factory",
-    "triple_brain.id_uri"
-], function ($, SearchService, IdentificationContext, SearchResultFacadeFactory, IdUri) {
+    "triple_brain.id_uri",
+    "triple_brain.search_result",
+    "triple_brain.graph_element_type"
+], function ($, SearchService, IdentificationContext, SearchResultFacadeFactory, IdUri, SearchResult, GraphElementType) {
     var api = {};
     api.toFetchOnlyCurrentUserVertices = function () {
         return new UserMapAutoCompleteProvider(
@@ -56,19 +58,25 @@ define([
             var formattedResults = [];
             $.each(searchResults, addFormattedResult);
             function addFormattedResult() {
-                var searchResult = this,
-                    searchResultFacade = SearchResultFacadeFactory.get(
-                        searchResult
-                    );
-                if (undefined !== graphElementToIgnore && searchResultFacade.getUri() === graphElementToIgnore.getUri()) {
+                var serverFormat = this,
+                    searchResult = SearchResult.fromServerFormat(serverFormat),
+                    graphElement = searchResult.getGraphElement();
+                if (undefined !== graphElementToIgnore && graphElement.getUri() === graphElementToIgnore.getUri()) {
                     return;
                 }
-                var formatted = applyBasicFormat(searchResultFacade);
-
-                if (searchResultFacade.isVertex()) {
-                    searchResultFacade.hasProperties() ?
-                        formatSchemaResult(formatted, searchResultFacade) :
-                        formatVertexResult(formatted, searchResultFacade);
+                var formatted = applyBasicFormat(searchResult);
+                if (searchResult.is(GraphElementType.Vertex)) {
+                    formatVertexResult(
+                        formatted,
+                        graphElement
+                    );
+                    return;
+                }
+                if (searchResult.is(GraphElementType.Schema)) {
+                    formatSchemaResult(
+                        formatted,
+                        graphElement
+                    );
                     return;
                 }
                 formattedResults.push(
@@ -76,24 +84,29 @@ define([
                 );
             }
 
-            function applyBasicFormat(searchResultFacade) {
+            function applyBasicFormat(searchResult) {
+                var graphElement = searchResult.getGraphElement();
                 return {
-                    nonFormattedSearchResult: searchResultFacade,
-                    comment: searchResultFacade.getComment(),
-                    label: searchResultFacade.getLabel(),
-                    value: searchResultFacade.getLabel(),
-                    source: $.t("vertex.search.user") + " " + IdUri.usernameFromUri(searchResultFacade.getUri()),
-                    uri: searchResultFacade.getUri(),
+                    nonFormattedSearchResult: searchResult,
+                    comment: graphElement.getComment(),
+                    label: graphElement.getLabel(),
+                    value: graphElement.getLabel(),
+                    source: $.t("vertex.search.user") + " " + IdUri.usernameFromUri(graphElement.getUri()),
+                    uri: graphElement.getUri(),
                     provider: self
                 };
             }
 
             function formatSchemaResult(formattedSchema, schema) {
                 $.each(schema.getProperties(), function () {
-                    var property = this;
+                    var property = this,
+                        searchResult = SearchResult.forGraphElementAndItsType(
+                            property,
+                            GraphElementType.Property
+                        );
                     if (searchTermMatchesLabel(property.getLabel())) {
-                        var newSearchResult = applyBasicFormat(property);
-                        formattedResults.push(newSearchResult);
+                        var formattedProperty = applyBasicFormat(searchResult);
+                        formattedResults.push(formattedProperty);
                     }
                 });
                 if (searchTermMatchesLabel(schema.getLabel())) {

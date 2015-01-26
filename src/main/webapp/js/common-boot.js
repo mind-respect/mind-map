@@ -58,6 +58,7 @@ requirejs.config({
         "triple_brain.ui.vertex_segments": "triple_brain/graph/vertex/triple_brain.ui.vertex_segments",
         "triple_brain.search_result_facade_factory": "triple_brain/search/triple_brain.search_result_facade_factory",
         "triple_brain.vertex_search_result_server_facade": "triple_brain/search/triple_brain.vertex_search_result_server_facade",
+        "triple_brain.search_result": "triple_brain/search/triple_brain.search_result",
         "triple_brain.relation_search_result_server_facade": "triple_brain/search/triple_brain.relation_search_result_server_facade",
         "triple_brain.search": "triple_brain/search/triple_brain.search",
         "triple_brain.ui.search": "triple_brain/search/triple_brain.ui.search",
@@ -135,7 +136,8 @@ requirejs.config({
         "triple_brain.suggestion_bubble_menu_handler" : "triple_brain/display/tree/relative/suggestion_bubble/triple_brain.suggestion_bubble_menu_handler",
         "triple_brain.suggestion_relation_builder" : "triple_brain/display/tree/relative/suggestion_bubble/triple_brain.suggestion_relation_builder",
         "triple_brain.suggestion_relation_ui" : "triple_brain/display/tree/relative/suggestion_bubble/triple_brain.suggestion_relation_ui",
-        "triple_brain.suggestion_relation_menu_handler" : "triple_brain/display/tree/relative/suggestion_bubble/triple_brain.suggestion_relation_menu_handler"
+        "triple_brain.suggestion_relation_menu_handler" : "triple_brain/display/tree/relative/suggestion_bubble/triple_brain.suggestion_relation_menu_handler",
+        "triple_brain.graph_element_type" : "triple_brain/graph/triple_brain.graph_element_type"
     },
     shim: {
         "crow": [],

@@ -30,7 +30,7 @@ define([
     };
     return api;
     function IdentificationContext(searchResult, callback, makeBubbleLinks) {
-        this.build = function() {
+        this.build = function () {
             return searchResult.isVertex() ?
                 makeBubbleContext() :
                 makeRelationContext();
@@ -44,9 +44,9 @@ define([
                     searchResult.getLabel(),
                 " "
             );
-            if (searchResult.getPropertiesName().length > 0) {
+            if (searchResult.hasProperties()) {
                 context.append(
-                    $.t(tPreString + ".with_properties") + ": ",
+                        $.t(tPreString + ".with_properties") + ": ",
                     api.formatRelationsName(
                         api.removedEmptyAndDuplicateRelationsName(
                             searchResult.getPropertiesName()
@@ -70,22 +70,22 @@ define([
                 )
             ).done(function (sourceVertexArray, destinationVertexArray) {
                     var sourceVertex = SearchResultFacadeFactory.get(
-                        sourceVertexArray[0]
-                    );
-                    var destinationVertex = SearchResultFacadeFactory.get(
-                        destinationVertexArray[0]
-                    );
-                    var context = $("<div class='context'>").append(
-                        $.t("vertex.search.destination_bubble") + ": ",
-                        makeBubbleLinks ?
-                            vertexLinkFromSearchResult(destinationVertex) :
-                            destinationVertex.getLabel(),
-                        "<br>",
-                        $.t("vertex.search.source_bubble") + ": ",
-                        makeBubbleLinks ?
-                            vertexLinkFromSearchResult(sourceVertex) :
-                            sourceVertex.getLabel()
-                    );
+                            sourceVertexArray[0]
+                        ),
+                        destinationVertex = SearchResultFacadeFactory.get(
+                            destinationVertexArray[0]
+                        ),
+                        context = $("<div class='context'>").append(
+                                $.t("vertex.search.destination_bubble") + ": ",
+                            makeBubbleLinks ?
+                                vertexLinkFromSearchResult(destinationVertex) :
+                                destinationVertex.getLabel(),
+                            "<br>",
+                                $.t("vertex.search.source_bubble") + ": ",
+                            makeBubbleLinks ?
+                                vertexLinkFromSearchResult(sourceVertex) :
+                                sourceVertex.getLabel()
+                        );
                     callback(context);
                 }
             );

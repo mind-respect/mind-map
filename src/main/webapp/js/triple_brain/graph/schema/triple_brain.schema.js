@@ -6,12 +6,17 @@ define([
     "triple_brain.graph_element"
 ], function(FriendlyResource, GraphElement){
     "use strict";
-    var api = {
-        fromServerFormat : function (serverFormat) {
-            return new Self(
-                serverFormat
-            );
-        }
+    var api = {};
+    api.fromServerFormat = function (serverFormat) {
+        return new Self(
+            serverFormat
+        );
+    };
+    api.fromSearchResult = function(searchResult){
+        searchResult.friendlyResource = searchResult.graphElement.friendlyResource;
+        return new Self(
+            searchResult
+        );
     };
     function Self(schemaServerFormat){
         this.schemaServerFormat = schemaServerFormat;

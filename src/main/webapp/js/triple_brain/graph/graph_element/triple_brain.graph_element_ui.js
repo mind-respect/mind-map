@@ -4,18 +4,11 @@
 define([
     "triple_brain.graph_displayer",
     "triple_brain.graph_element_main_menu",
+    "triple_brain.graph_element_type",
     "jquery.focus-end"
-], function (GraphDisplayer, GraphElementMainMenu) {
+], function (GraphDisplayer, GraphElementMainMenu, GraphElementType) {
     var api = {};
-    api.Types = {
-        Vertex: "vertex",
-        Relation: "relation",
-        GroupRelation: "group_relation",
-        Schema: "schema",
-        Property: "property",
-        VertexSuggestion: "vertex_suggestion",
-        RelationSuggestion: "relation_suggestion"
-    };
+    api.Types = GraphElementType;
     var menuHandlerGetters = {},
         selectors = {};
     initMenuHandlerGetters();
