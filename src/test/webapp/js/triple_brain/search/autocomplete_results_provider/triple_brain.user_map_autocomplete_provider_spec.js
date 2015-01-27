@@ -22,6 +22,18 @@ define([
                 )
             ).toBeTruthy();
         });
+        it("sets property context", function () {
+            var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),
+                property = searchProvider.formatResults(
+                    new Scenarios.getSearchResultsForImpact().get(),
+                    "impact"
+                )[0];
+            expect(
+                property.somethingToDistinguish
+            ).toBe(
+                "of schema project -> has objective, impact on the individual, has component, impact on society"
+            )
+        });
     });
     function searchResultIsProperty(searchResult){
         return stringContains(

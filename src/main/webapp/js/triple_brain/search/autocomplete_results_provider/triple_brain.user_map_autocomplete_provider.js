@@ -104,12 +104,15 @@ define([
                             property,
                             GraphElementType.Property
                         );
-                    if (searchTermMatchesLabel(property.getLabel())) {
+                    if (searchTermMatchesLabel(searchTerm, property.getLabel())) {
                         var formattedProperty = applyBasicFormat(searchResult);
+                        formattedProperty.somethingToDistinguish = buildPropertySomethingToDistinguish(
+                            schema
+                        );
                         formattedResults.push(formattedProperty);
                     }
                 });
-                if (searchTermMatchesLabel(schema.getLabel())) {
+                if (searchTermMatchesLabel(searchTerm, schema.getLabel())) {
                     formattedSchema.somethingToDistinguish = IdentificationContext.formatRelationsName(
                         IdentificationContext.removedEmptyAndDuplicateRelationsName(
                             schema.getPropertiesName()
@@ -117,10 +120,6 @@ define([
                     );
                     formattedResults.push(formattedSchema);
                 }
-            }
-
-            function searchTermMatchesLabel(label) {
-                return label.indexOf(searchTerm) !== -1;
             }
 
             function formatVertexResult(formatted) {
@@ -150,6 +149,15 @@ define([
                 }
             );
         };
+
+        function buildPropertySomethingToDistinguish(schema){
+            return $.t("search.context.property") + " " + schema.getLabel() + " -> " +
+                schema.getPropertiesName().join(", ");
+        }
+
+        function searchTermMatchesLabel(searchTerm, label) {
+            return label.indexOf(searchTerm) !== -1;
+        }
     }
 })
 ;

@@ -40,5 +40,12 @@ define([
         });
         return properties;
     };
+    Self.prototype.getPropertiesName = function () {
+        var propertiesName = [];
+        $.each(this.getProperties(), function(){
+            propertiesName.push(this.getLabel());
+        });
+        return propertiesName;
+    };
     return api;
 });

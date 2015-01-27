@@ -30,13 +30,7 @@ define([
         });
         return properties;
     };
-    Object.prototype.getPropertiesName = function () {
-        var propertiesName = [];
-        $.each(this.getProperties(), function(){
-            propertiesName.push(this.getLabel());
-        });
-        return propertiesName;
-    };
+
     Object.prototype.isVertex = function () {
         return true;
     };
