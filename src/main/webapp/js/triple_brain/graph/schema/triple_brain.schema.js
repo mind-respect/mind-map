@@ -47,5 +47,8 @@ define([
         });
         return propertiesName;
     };
+    Self.prototype.hasProperties = function(){
+        return this.getProperties().length > 0;
+    };
     return api;
 });

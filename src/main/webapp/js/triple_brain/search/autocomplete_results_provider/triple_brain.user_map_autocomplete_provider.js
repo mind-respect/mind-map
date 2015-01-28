@@ -13,40 +13,35 @@ define([
     api.toFetchOnlyCurrentUserVertices = function () {
         return new UserMapAutoCompleteProvider(
             SearchService.searchForOnlyOwnVerticesAjaxCall,
-            false,
             undefined
         );
     };
     api.toFetchOnlyCurrentUserVerticesAndSchemas = function () {
         return new UserMapAutoCompleteProvider(
             SearchService.searchForOnlyOwnVerticesAndSchemasAjaxCall,
-            false,
             undefined
         );
     };
     api.toFetchOnlyCurrentUserVerticesExcept = function (vertexToIgnore) {
         return new UserMapAutoCompleteProvider(
             SearchService.searchForOnlyOwnVerticesAjaxCall,
-            false,
             vertexToIgnore
         );
     };
     api.toFetchCurrentUserVerticesAndPublicOnesForIdentification = function (vertexToIdentify) {
         return new UserMapAutoCompleteProvider(
             SearchService.searchForOwnVerticesAndPublicOnesAjaxCall,
-            true,
             vertexToIdentify
         );
     };
     api.toFetchRelationsForIdentification = function (edgeToIdentify) {
         return new UserMapAutoCompleteProvider(
             SearchService.searchForOwnRelationsAjaxCall,
-            true,
             edgeToIdentify
         );
     };
     return api;
-    function UserMapAutoCompleteProvider(fetchMethod, isForIdentification, graphElementToIgnore) {
+    function UserMapAutoCompleteProvider(fetchMethod, graphElementToIgnore) {
         var self = this;
         this.getFetchMethod = function (searchTerm) {
             return fetchMethod(
@@ -122,7 +117,6 @@ define([
             }
 
             function formatVertexResult(formatted) {
-                formatted.distinctionType = "relations";
                 formattedResults.push(formatted);
             }
 
@@ -136,7 +130,7 @@ define([
                 function (context) {
                     var moreInfo = context.append(
                         originalSearchResult.context,
-                        $("<div>").append(originalSearchResult.getComment())
+                        $("<div>").append(originalSearchResult.getGraphElement().getComment())
                     );
                     callback({
                             conciseSearchResult: searchResult,

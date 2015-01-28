@@ -54,7 +54,6 @@ define([
                 var notable = searchResult.notable;
                 if (notable !== undefined) {
                     format.somethingToDistinguish = notable.name;
-                    format.distinctionType = "type";
                 }
                 return format;
             });

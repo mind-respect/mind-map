@@ -10,28 +10,28 @@ define([
         var textInput = $(this);
         setupNbRequestsIfApplicable();
         textInput.autocomplete($.extend(
-            getAutocompleteOptions(),
-            options
-        )
+                getAutocompleteOptions(),
+                options
+            )
         ).data("ui-autocomplete")._renderItem = renderItemCustom;
         textInput.on(
             "autocompleteselect",
-            function() {
+            function () {
                 removeSearchFlyout();
                 $(this).blur();
             }
         ).on(
             "blur",
             removeSearchFlyout
-        ).on("keydown.autocomplete",function(event){
-            if(enterKeyCode === event.keyCode){
-                $(this).trigger("autocompleteselect");
-            }
-        });
+        ).on("keydown.autocomplete", function (event) {
+                if (enterKeyCode === event.keyCode) {
+                    $(this).trigger("autocompleteselect");
+                }
+            });
         return this;
         function getAutocompleteOptions() {
             return {
-                source:function (request, response) {
+                source: function (request, response) {
                     var searchTerm = request.term;
                     if (options.resultsProviders.length === 1) {
                         var singleResultsProvider = options.resultsProviders[0];
@@ -79,13 +79,13 @@ define([
                         return fetchMethods;
                     }
                 },
-                change : function(){
+                change: function () {
                     removeSearchFlyout();
                 },
-                close:function () {
+                close: function () {
                     removeSearchFlyout();
                 },
-                focus:function (event, ui) {
+                focus: function (event, ui) {
                     var searchResult = ui.item;
                     searchResult.provider.getMoreInfoForSearchResult(
                         searchResult,
@@ -106,12 +106,12 @@ define([
                             image
                         );
                         var title = $("<span class='title'>").append(
-                            description.title + " "
+                                description.title + " "
                         );
                         var searchResult = description.conciseSearchResult;
                         var sourceContainer = $("<span>");
                         sourceContainer.append(
-                            $.t("vertex.search.source") + ": " +
+                                $.t("vertex.search.source") + ": " +
                                 searchResult.source
                         );
                         var text = $("<span>").append(
@@ -127,7 +127,7 @@ define([
                         );
                         if (description.source !== undefined) {
                             var descriptionSource = $("<span class='source'>").append(
-                                "[" + description.source + "] "
+                                    "[" + description.source + "] "
                             );
                             moreInfoPanel.append(descriptionSource);
                         }
@@ -135,15 +135,15 @@ define([
                         var listPosition = $(list).offset();
                         var widthMargin = 20;
                         var rightAlignedPosition = {
-                            x:listPosition.left + list.width() + widthMargin,
-                            y:listPosition.top
+                            x: listPosition.left + list.width() + widthMargin,
+                            y: listPosition.top
                         };
                         var mostRightPositionInScreen = $(window).width() + $("html,body").scrollLeft();
                         var position;
                         if (rightAlignedPosition.x + moreInfoPanel.width() > mostRightPositionInScreen) {
                             position = {
-                                x:listPosition.left - moreInfoPanel.width(),
-                                y:listPosition.top
+                                x: listPosition.left - moreInfoPanel.width(),
+                                y: listPosition.top
                             }
                         } else {
                             position = rightAlignedPosition;
@@ -156,33 +156,33 @@ define([
             };
         }
 
-        function setupNbRequestsIfApplicable(){
-            if(!options.limitNbRequests){
+        function setupNbRequestsIfApplicable() {
+            if (!options.limitNbRequests) {
                 return;
             }
             textInput.on(
                 "change",
-                function(){
+                function () {
                     resetInputData($(this));
                 }
             );
             textInput.on(
                 "autocompletecreate",
-                function(){
-                resetInputData($(this));
+                function () {
+                    resetInputData($(this));
                 }
             );
             textInput.on(
                 "autocompletecreate",
-                function(){
-                resetInputData($(this));
+                function () {
+                    resetInputData($(this));
                 }
             );
             textInput.on(
                 "autocompletesearch",
-                function(){
+                function () {
                     var input = $(this);
-                    if(isSearchDisabled(input)){
+                    if (isSearchDisabled(input)) {
                         input.autocomplete("option", "disabled", true);
                     }
                     addOneRequest(input);
@@ -190,60 +190,54 @@ define([
             );
         }
 
-        function resetInputData(input){
+        function resetInputData(input) {
             input.autocomplete("option", "disabled", false);
             setNbRequests(
                 input,
                 0
             );
         }
-        function addOneRequest(input){
+
+        function addOneRequest(input) {
             setNbRequests(
                 input,
-                getNbRequests(input) + 1
+                    getNbRequests(input) + 1
             );
         }
-        function isSearchDisabled(input){
+
+        function isSearchDisabled(input) {
             return getNbRequests(input) >= 4;
         }
-        function setNbRequests(input, nbRequests){
+
+        function setNbRequests(input, nbRequests) {
             input.data(
                 "jquery.triple_brain.search.nbRequests",
                 nbRequests
             );
         }
-        function getNbRequests(input){
+
+        function getNbRequests(input) {
             return input.data(
                 "jquery.triple_brain.search.nbRequests"
             );
         }
 
         function renderItemCustom(ul, item) {
-                var listElement = $("<li>");
-                var moreInfoContainer = $("<span class='info'>");
-                if (item.somethingToDistinguish !== undefined && item.somethingToDistinguish !== "") {
-                    var distinctionContainer = $("<span class='distinction'>");
-                    if (item.distinctionType === "relations") {
-                        moreInfoContainer.append("-> ")
-                    }
-                    distinctionContainer.append(
-                        item.somethingToDistinguish
-                    );
-                    moreInfoContainer.append(
-                        distinctionContainer
-                    );
-                }
-                var itemLink = $("<a>");
-                itemLink
-                    .append(item.label + " ")
-                    .append(moreInfoContainer);
-                listElement.append(
-                    itemLink
-                );
-                return listElement.appendTo(ul);
+            var listElement = $("<li>"),
+                moreInfoContainer = $("<span class='info'>");
+            if (item.somethingToDistinguish !== undefined && item.somethingToDistinguish !== "") {
+                $("<span class='distinction'>").append(
+                    item.somethingToDistinguish
+                ).appendTo(moreInfoContainer);
+            }
+            $("<a>").append(
+                    item.label + " ",
+                moreInfoContainer
+            ).appendTo(listElement);
+            return listElement.appendTo(ul);
         }
-
-        function removeSearchFlyout(){
+m
+        function removeSearchFlyout() {
             $(".autocomplete-flyout").remove();
         }
     }

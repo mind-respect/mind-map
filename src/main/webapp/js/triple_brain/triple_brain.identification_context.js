@@ -32,42 +32,54 @@ define([
     return api;
     function IdentificationContext(searchResult, callback, makeBubbleLinks) {
         this.build = function () {
-            return searchResult.is(GraphElementType.Vertex) ?
-                makeBubbleContext() :
-                makeRelationContext();
+            switch (searchResult.getGraphElementType()) {
+                case GraphElementType.Vertex :
+                    return makeBubbleContext();
+                case GraphElementType.Relation :
+                    return makeRelationContext();
+                default:
+                    callback($("<div>"));
+            }
         };
         function makeBubbleContext() {
+            var vertex = searchResult.getGraphElement();
             var tPreString = "identification.context";
             var context = $("<div class='context'>").append(
                 $.t(tPreString + ".bubble"),
                 ": ",
                 makeBubbleLinks ? vertexLinkFromSearchResult(searchResult) :
-                    searchResult.getLabel(),
+                    vertex.getLabel(),
                 " "
             );
-            if (searchResult.hasProperties()) {
-                context.append(
-                        $.t(tPreString + ".with_properties") + ": ",
-                    api.formatRelationsName(
-                        api.removedEmptyAndDuplicateRelationsName(
-                            searchResult.getPropertiesName()
-                        )
-                    )
-                );
-            }
             context.append(
                 $("<div>").append(searchResult.getComment())
             );
             callback(context);
         }
 
+        function makeSchemaContext() {
+            var schema = searchResult.getGraphElement(),
+                tPreString = "identification.context",
+                context = $("<div class='context'>");
+            if (schema.hasProperties()) {
+                context.append(
+                        $.t(tPreString + ".with_properties") + ": ");
+                api.formatRelationsName(
+                    api.removedEmptyAndDuplicateRelationsName(
+                        searchResult.getPropertiesName()
+                    )
+                );
+            }
+        }
+
         function makeRelationContext() {
+            var relation = searchResult.getGraphElement();
             $.when(
                 SearchService.getSearchResultByUriAjaxCall(
-                    searchResult.getSourceVertex().getUri()
+                    relation.getSourceVertex().getUri()
                 ),
                 SearchService.getSearchResultByUriAjaxCall(
-                    searchResult.getDestinationVertex().getUri()
+                    relation.getDestinationVertex().getUri()
                 )
             ).done(function (sourceVertexArray, destinationVertexArray) {
                     var sourceVertex = SearchResult.fromServerFormat(
