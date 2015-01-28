@@ -2,9 +2,7 @@
  * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
-    "triple_brain.vertex_search_result_server_facade",
-    "triple_brain.relation_search_result_server_facade"
-], function(VertexSearchResultServerFacade, RelationSearchResultServerFacade){
+], function(){
     var api = {};
     api.get = function(searchResult){
         return searchResult.edge === undefined ?

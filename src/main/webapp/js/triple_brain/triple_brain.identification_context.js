@@ -4,8 +4,9 @@
 define([
     "triple_brain.search",
     "triple_brain.graph_displayer",
-    "triple_brain.search_result_facade_factory"
-], function (SearchService, GraphDisplayer, SearchResultFacadeFactory) {
+    "triple_brain.search_result",
+    "triple_brain.graph_element_type"
+], function (SearchService, GraphDisplayer, SearchResult, GraphElementType) {
     var api = {};
     api.build = function (searchResult, callback) {
         return new IdentificationContext(
@@ -31,7 +32,7 @@ define([
     return api;
     function IdentificationContext(searchResult, callback, makeBubbleLinks) {
         this.build = function () {
-            return searchResult.isVertex() ?
+            return searchResult.is(GraphElementType.Vertex) ?
                 makeBubbleContext() :
                 makeRelationContext();
         };
@@ -69,12 +70,12 @@ define([
                     searchResult.getDestinationVertex().getUri()
                 )
             ).done(function (sourceVertexArray, destinationVertexArray) {
-                    var sourceVertex = SearchResultFacadeFactory.get(
+                    var sourceVertex = SearchResult.fromServerFormat(
                             sourceVertexArray[0]
-                        ),
-                        destinationVertex = SearchResultFacadeFactory.get(
+                        ).getGraphElement(),
+                        destinationVertex = SearchResult.fromServerFormat(
                             destinationVertexArray[0]
-                        ),
+                        ).getGraphElement(),
                         context = $("<div class='context'>").append(
                                 $.t("vertex.search.destination_bubble") + ": ",
                             makeBubbleLinks ?

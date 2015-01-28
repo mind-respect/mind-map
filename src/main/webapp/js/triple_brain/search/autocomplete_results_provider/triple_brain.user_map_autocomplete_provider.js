@@ -5,11 +5,10 @@ define([
     "jquery",
     "triple_brain.search",
     "triple_brain.identification_context",
-    "triple_brain.search_result_facade_factory",
     "triple_brain.id_uri",
     "triple_brain.search_result",
     "triple_brain.graph_element_type"
-], function ($, SearchService, IdentificationContext, SearchResultFacadeFactory, IdUri, SearchResult, GraphElementType) {
+], function ($, SearchService, IdentificationContext, IdUri, SearchResult, GraphElementType) {
     var api = {};
     api.toFetchOnlyCurrentUserVertices = function () {
         return new UserMapAutoCompleteProvider(
