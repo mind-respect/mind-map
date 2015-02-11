@@ -494,9 +494,7 @@ define([
              * another bubble labeled impact
              */
             this.get = function () {
-                return [
-                    {"graphElement": {"friendlyResource": {"uri": "/service/users/aosiv/graph/vertex/1cd0ddd3-5cfc-4b79-99de-b98dcbbc2292", "label": "impact", "comment": "", "images": [], "creationDate": "Feb 10, 2015 7:27:07 AM", "lastModificationDate": "Feb 10, 2015 7:27:12 AM"}, "identifications": {}}}
-                ]
+                return [{"graphElement":{"friendlyResource":{"uri":"/service/users/adsiovs/graph/schema/794bcf75-50d6-49b9-934c-08bd046e3c42/property/cde21096-b172-4631-ab92-8b6d178e2217","label":"impact on the individual","comment":"","images":[],"creationDate":"Feb 11, 2015 9:11:28 AM","lastModificationDate":"Feb 11, 2015 9:11:35 AM"},"identifications":{}},"schema":{"friendlyResource":{"uri":"/service/users/adsiovs/graph/schema/794bcf75-50d6-49b9-934c-08bd046e3c42","label":"project","comment":"","images":[],"creationDate":"Feb 11, 2015 9:12:05 AM","lastModificationDate":"Feb 11, 2015 9:12:05 AM"}}},{"graphElement":{"friendlyResource":{"uri":"/service/users/adsiovs/graph/schema/794bcf75-50d6-49b9-934c-08bd046e3c42/property/11c74d27-dc4f-4031-bf0b-6167fa4320c8","label":"impact on society","comment":"","images":[],"creationDate":"Feb 11, 2015 9:11:21 AM","lastModificationDate":"Feb 11, 2015 9:11:26 AM"},"identifications":{}},"schema":{"friendlyResource":{"uri":"/service/users/adsiovs/graph/schema/794bcf75-50d6-49b9-934c-08bd046e3c42","label":"project","comment":"","images":[],"creationDate":"Feb 11, 2015 9:12:05 AM","lastModificationDate":"Feb 11, 2015 9:12:05 AM"}}}];
             };
         };
         GraphDisplayer.setImplementation(

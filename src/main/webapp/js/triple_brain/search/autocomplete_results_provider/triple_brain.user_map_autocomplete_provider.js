@@ -144,8 +144,7 @@ define([
         };
 
         function buildPropertySomethingToDistinguish(schema){
-            return $.t("search.context.property") + " " + schema.getLabel() + " -> " +
-                schema.getPropertiesName().join(", ");
+            return $.t("search.context.property") + " " + schema.getLabel();
         }
 
         function searchTermMatchesLabel(searchTerm, label) {

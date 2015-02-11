@@ -10,7 +10,7 @@ define([
     describe("user_map_autocomplete_provider", function () {
         beforeEach(function () {
         });
-        xit("includes schema properties", function () {
+        it("includes schema properties", function () {
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),
                 formattedSearchResults = searchProvider.formatResults(
                     new Scenarios.getSearchResultsForImpact().get(),
@@ -31,7 +31,7 @@ define([
             expect(
                 property.somethingToDistinguish
             ).toBe(
-                "of schema project -> has objective, impact on the individual, has component, impact on society"
+                "of schema project"
             )
         });
     });
