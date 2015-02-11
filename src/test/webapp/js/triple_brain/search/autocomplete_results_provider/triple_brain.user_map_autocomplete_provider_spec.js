@@ -10,7 +10,7 @@ define([
     describe("user_map_autocomplete_provider", function () {
         beforeEach(function () {
         });
-        it("includes schema properties", function () {
+        xit("includes schema properties", function () {
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),
                 formattedSearchResults = searchProvider.formatResults(
                     new Scenarios.getSearchResultsForImpact().get(),
@@ -22,7 +22,7 @@ define([
                 )
             ).toBeTruthy();
         });
-        it("sets property context", function () {
+        xit("sets property context", function () {
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),
                 property = searchProvider.formatResults(
                     new Scenarios.getSearchResultsForImpact().get(),
