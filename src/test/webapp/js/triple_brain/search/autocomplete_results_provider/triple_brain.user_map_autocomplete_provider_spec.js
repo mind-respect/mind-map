@@ -22,7 +22,7 @@ define([
                 )
             ).toBeTruthy();
         });
-        xit("sets property context", function () {
+        it("sets property context", function () {
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),
                 property = searchProvider.formatResults(
                     new Scenarios.getSearchResultsForImpact().get(),
