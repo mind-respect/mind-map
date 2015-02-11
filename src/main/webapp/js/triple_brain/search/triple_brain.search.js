@@ -47,14 +47,14 @@ define([
                     "/search/relations/auto_complete?text=" + searchText
             });
         };
-        api.getSearchResultByUri = function(uri, callback){
-            api.getSearchResultByUriAjaxCall(
+        api.getSearchResultDetails = function(uri, callback){
+            api.getSearchResultDetailsAjaxCall(
                 uri
             ).success(
                 callback
             );
         };
-        api.getSearchResultByUriAjaxCall = function(uri){
+        api.getSearchResultDetailsAjaxCall = function(uri){
             return $.ajax({
                 type:'GET',
                 url: UserService.currentUserUri() +

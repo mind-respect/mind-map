@@ -174,7 +174,7 @@ define([
             var externalResourceUri = identification.isExternalResourceASchemaProperty() ?
                 IdUri.schemaUriOfProperty(identification.getExternalResourceUri()) :
                 identification.getExternalResourceUri();
-            SearchService.getSearchResultByUri(
+            SearchService.getSearchResultDetails(
                 externalResourceUri,
                 function (searchResult) {
                     IdentificationContext.build(

@@ -32,14 +32,22 @@ define([
     return api;
     function IdentificationContext(searchResult, callback, makeBubbleLinks) {
         this.build = function () {
-            switch (searchResult.getGraphElementType()) {
-                case GraphElementType.Vertex :
-                    return makeBubbleContext();
-                case GraphElementType.Relation :
-                    return makeRelationContext();
-                default:
-                    callback($("<div>"));
-            }
+            SearchService.getSearchResultDetails(
+                searchResult.getGraphElement().getUri(),
+                function (detailedSearchResult) {
+                    searchResult = SearchResult.fromServerFormat(
+                        detailedSearchResult
+                    );
+                    switch (searchResult.getGraphElementType()) {
+                        case GraphElementType.Vertex :
+                            return makeBubbleContext();
+                        case GraphElementType.Relation :
+                            return makeRelationContext();
+                        default:
+                            callback($("<div>"));
+                    }
+                }
+            );
         };
         function makeBubbleContext() {
             var vertex = searchResult.getGraphElement();
@@ -52,7 +60,9 @@ define([
                 " "
             );
             context.append(
-                $("<div>").append(searchResult.getComment())
+                $("<div>").append(
+                    vertex.getComment()
+                )
             );
             callback(context);
         }
@@ -75,10 +85,10 @@ define([
         function makeRelationContext() {
             var relation = searchResult.getGraphElement();
             $.when(
-                SearchService.getSearchResultByUriAjaxCall(
+                SearchService.getSearchResultDetailsAjaxCall(
                     relation.getSourceVertex().getUri()
                 ),
-                SearchService.getSearchResultByUriAjaxCall(
+                SearchService.getSearchResultDetailsAjaxCall(
                     relation.getDestinationVertex().getUri()
                 )
             ).done(function (sourceVertexArray, destinationVertexArray) {
