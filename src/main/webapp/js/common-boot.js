@@ -121,6 +121,7 @@ requirejs.config({
         "triple_brain.mind_map_info": "triple_brain/triple_brain.mind_map_info",
         "triple_brain.schema_service" : "triple_brain/graph/schema/triple_brain.schema_service",
         "triple_brain.schema" : "triple_brain/graph/schema/triple_brain.schema",
+        "triple_brain.property" : "triple_brain/graph/schema/triple_brain.property",
         "triple_brain.schema_html_builder": "triple_brain/display/tree/relative/schema/triple_brain.schema_html_builder",
         "triple_brain.schema_ui" : "triple_brain/graph/schema/triple_brain.schema_ui",
         "triple_brain.property_ui" : "triple_brain/graph/schema/triple_brain.property_ui",

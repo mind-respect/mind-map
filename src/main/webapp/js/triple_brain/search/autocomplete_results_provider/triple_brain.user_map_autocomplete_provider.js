@@ -48,7 +48,7 @@ define([
                 searchTerm
             );
         };
-        this.formatResults = function (searchResults, searchTerm) {
+        this.formatResults = function (searchResults) {
             var formattedResults = [];
             $.each(searchResults, addFormattedResult);
             function addFormattedResult() {
@@ -59,19 +59,19 @@ define([
                     return;
                 }
                 var formatted = applyBasicFormat(searchResult);
-                if (searchResult.is(GraphElementType.Vertex)) {
-                    formatVertexResult(
-                        formatted,
-                        graphElement
-                    );
-                    return;
-                }
-                if (searchResult.is(GraphElementType.Schema)) {
-                    formatSchemaResult(
-                        formatted,
-                        graphElement
-                    );
-                    return;
+                switch(searchResult.getGraphElementType()){
+                    case GraphElementType.Schema :
+                        formatSchemaResult(
+                            formatted,
+                            graphElement
+                        );
+                        break;
+                    case GraphElementType.Property:
+                        formatPropertyResult(
+                            formatted,
+                            graphElement
+                        );
+                        break;
                 }
                 formattedResults.push(
                     formatted
@@ -91,35 +91,19 @@ define([
                 };
             }
 
+            function formatPropertyResult(formattedProperty, property) {
+                formattedProperty.somethingToDistinguish = buildPropertySomethingToDistinguish(
+                    property
+                );
+            }
+
             function formatSchemaResult(formattedSchema, schema) {
-                $.each(schema.getProperties(), function () {
-                    var property = this,
-                        searchResult = SearchResult.forGraphElementAndItsType(
-                            property,
-                            GraphElementType.Property
-                        );
-                    if (searchTermMatchesLabel(searchTerm, property.getLabel())) {
-                        var formattedProperty = applyBasicFormat(searchResult);
-                        formattedProperty.somethingToDistinguish = buildPropertySomethingToDistinguish(
-                            schema
-                        );
-                        formattedResults.push(formattedProperty);
-                    }
-                });
-                if (searchTermMatchesLabel(searchTerm, schema.getLabel())) {
-                    formattedSchema.somethingToDistinguish = IdentificationContext.formatRelationsName(
-                        IdentificationContext.removedEmptyAndDuplicateRelationsName(
-                            schema.getPropertiesName()
-                        )
-                    );
-                    formattedResults.push(formattedSchema);
-                }
+                formattedSchema.somethingToDistinguish = IdentificationContext.formatRelationsName(
+                    IdentificationContext.removedEmptyAndDuplicateRelationsName(
+                        schema.getPropertiesName()
+                    )
+                );
             }
-
-            function formatVertexResult(formatted) {
-                formattedResults.push(formatted);
-            }
-
             return formattedResults;
         };
 
@@ -142,13 +126,8 @@ define([
                 }
             );
         };
-
-        function buildPropertySomethingToDistinguish(schema){
-            return $.t("search.context.property") + " " + schema.getLabel();
-        }
-
-        function searchTermMatchesLabel(searchTerm, label) {
-            return label.indexOf(searchTerm) !== -1;
+        function buildPropertySomethingToDistinguish(property) {
+            return $.t("search.context.property") + " " + property.getSchema().getLabel();
         }
     }
 })

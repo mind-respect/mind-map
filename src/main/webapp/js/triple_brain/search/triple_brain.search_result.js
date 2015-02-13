@@ -6,8 +6,9 @@ define([
     "triple_brain.graph_element",
     "triple_brain.edge",
     "triple_brain.schema",
+    "triple_brain.property",
     "triple_brain.graph_element_type"
-], function (GraphElement, Edge, Schema, GraphElementType) {
+], function (GraphElement, Edge, Schema, Property, GraphElementType) {
     "use strict";
     var api = {};
     function Self(graphElement, graphElementType) {
@@ -15,23 +16,30 @@ define([
         this.graphElementType = graphElementType;
     }
     api.fromServerFormat = function (searchResult) {
-        var isRelation = searchResult.edge !== undefined;
-        if(isRelation){
-            return api.forGraphElementAndItsType(
-                Edge.fromServerFormat(searchResult.edge),
-                GraphElementType.Relation
-            );
-        }
-        var isSchema = searchResult.properties !== undefined;
-        if(isSchema){
-            return api.forGraphElementAndItsType(
-                Schema.fromSearchResult(searchResult),
-                GraphElementType.Schema
-            );
+        switch(searchResult.type){
+            case "edge" :
+                return api.forGraphElementAndItsType(
+                    Edge.fromServerFormat(searchResult.edge),
+                    GraphElementType.Relation
+                );
+            case GraphElementType.Schema :
+                return api.forGraphElementAndItsType(
+                    Schema.fromSearchResult(searchResult),
+                    GraphElementType.Schema
+                );
+            case GraphElementType.Property :
+                var property = Property.fromServerFormat(searchResult.graphElement);
+                property.setSchema(
+                    Schema.fromServerFormat(searchResult.schema)
+                );
+                return api.forGraphElementAndItsType(
+                    property,
+                    GraphElementType.Property
+                );
         }
         return api.forGraphElementAndItsType(
             GraphElement.fromServerFormat(searchResult.graphElement),
-            GraphElementType.Vertex
+            searchResult.type
         );
     };
     api.forGraphElementAndItsType = function (graphElement, graphElementType) {
@@ -46,9 +54,7 @@ define([
     Self.prototype.getGraphElementType = function () {
         return this.graphElementType;
     };
-    Self.prototype.setGraphElementType = function (graphElementType) {
-        this.graphElementType = graphElementType;
-    };
+
     Self.prototype.is = function(graphElementType){
         return graphElementType === this.getGraphElementType();
     };

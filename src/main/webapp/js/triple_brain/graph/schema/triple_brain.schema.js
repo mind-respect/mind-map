@@ -34,6 +34,9 @@ define([
     };
     Self.prototype._buildProperties = function(){
         var properties = {};
+        if(!this.schemaServerFormat.properties){
+            return properties;
+        }
         $.each(this.schemaServerFormat.properties, function(){
             var property = GraphElement.fromServerFormat(this);
             properties[property.getUri()] = property;
