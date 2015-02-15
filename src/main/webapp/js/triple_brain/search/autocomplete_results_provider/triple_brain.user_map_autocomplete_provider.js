@@ -6,9 +6,8 @@ define([
     "triple_brain.search",
     "triple_brain.identification_context",
     "triple_brain.id_uri",
-    "triple_brain.search_result",
-    "triple_brain.graph_element_type"
-], function ($, SearchService, IdentificationContext, IdUri, SearchResult, GraphElementType) {
+    "triple_brain.search_result"
+], function ($, SearchService, IdentificationContext, IdUri, SearchResult) {
     var api = {};
     api.toFetchOnlyCurrentUserVertices = function () {
         return new UserMapAutoCompleteProvider(

@@ -46,16 +46,16 @@ define([
                 "bubble with relations r1, r3, r2"
             );
         });
-        xit("sets edge context", function () {
+        it("sets edge context", function () {
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),
-                vertexSearchResult = searchProvider.formatResults(
-                    new Scenarios.getSearchResultForB1().get(),
-                    "b1"
+                edgeSearchResult = searchProvider.formatResults(
+                    new Scenarios.getSearchResultForR2().get(),
+                    "r2"
                 )[0];
             expect(
-                vertexSearchResult.somethingToDistinguish
+                edgeSearchResult.somethingToDistinguish
             ).toBe(
-                "with edges -> r1, r2, r3"
+                "relation with source bubble b3 and destination bubble b1"
             );
         });
     });

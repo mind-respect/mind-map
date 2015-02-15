@@ -163,7 +163,11 @@
     "search" : {
         "context" : {
             "property" : "property of schema",
-            "vertex" : "bubble with relations"
+            "vertex" : "bubble with relations",
+            "edge" : {
+                "1" : "relation with source bubble",
+                "2" : "and destination bubble"
+            }
         }
     }
 }

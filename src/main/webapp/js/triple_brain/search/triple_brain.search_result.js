@@ -7,17 +7,28 @@ define([
     "triple_brain.edge",
     "triple_brain.schema",
     "triple_brain.property",
+    "triple_brain.vertex",
     "triple_brain.graph_element_type"
-], function (GraphElement, Edge, Schema, Property, GraphElementType) {
+
+], function (GraphElement, Edge, Schema, Property, Vertex, GraphElementType) {
     "use strict";
     var api = {};
     api.fromServerFormat = function (searchResult) {
         switch (searchResult.type) {
             case "edge" :
-                return api.forGraphElementAndItsType(
+                var sourceVertex = Vertex.fromServerFormat(
+                        searchResult.edge.sourceVertex
+                    ),
+                    destinationVertex = Vertex.fromServerFormat(
+                        searchResult.edge.destinationVertex
+                    );
+                return new Self(
                     Edge.fromServerFormat(searchResult.edge),
                     GraphElementType.Relation,
-                    ""
+                    api._buildEdgeSomethingToDistinguish(
+                        sourceVertex,
+                        destinationVertex
+                    )
                 );
             case GraphElementType.Schema :
                 var schema = Schema.fromSearchResult(searchResult);
@@ -48,6 +59,10 @@ define([
     api._buildPropertySomethingToDistinguish = function (property) {
         return $.t("search.context.property") + " " + property.getSchema().getLabel();
     };
+    api._buildEdgeSomethingToDistinguish = function (sourceVertex, destinationVertex) {
+        return $.t("search.context.edge.1") + " " + sourceVertex.getLabel() + " " +
+            $.t("search.context.edge.2") + " " + destinationVertex.getLabel();
+    };
     api._buildSchemaSomethingToDistinguish = function (schema) {
         return api.formatRelationsName(
             api.removedEmptyAndDuplicateRelationsName(
@@ -57,7 +72,7 @@ define([
     };
     api._buildVertexSomethingToDistinguish = function (searchResult) {
         var edgesName = [];
-        $.each(searchResult.properties, function(){
+        $.each(searchResult.properties, function () {
             var property = GraphElement.fromServerFormat(this);
             edgesName.push(property.getLabel());
         });
