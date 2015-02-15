@@ -70,11 +70,17 @@ define([
         );
     };
     api._buildVertexSomethingToDistinguish = function (searchResult) {
-        var edgesName = [];
+        var edgesName = [],
+            number = 0;
         $.each(searchResult.properties, function () {
             var property = GraphElement.fromServerFormat(this);
             edgesName.push(property.getLabel());
+            number++;
+            if(number === 5){
+                return -1;
+            }
         });
+
         return api.formatRelationsName(
                 api.removedEmptyAndDuplicateRelationsName(
                     edgesName
