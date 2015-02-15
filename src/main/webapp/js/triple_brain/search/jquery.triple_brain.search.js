@@ -224,9 +224,14 @@ define([
 
         function renderItemCustom(ul, item) {
             var listElement = $("<li>"),
-                moreInfoContainer = $("<span class='info'>");
+                moreInfoContainer = $("<div class='info'>");
+            if (item.elementType !== undefined && item.elementType !== "") {
+                $("<span class='type'>").append(
+                    item.elementType
+                ).appendTo(moreInfoContainer);
+            }
             if (item.somethingToDistinguish !== undefined && item.somethingToDistinguish !== "") {
-                $("<span class='distinction'>").append(
+                $("<div class='distinction'>").append(
                     item.somethingToDistinguish
                 ).appendTo(moreInfoContainer);
             }
@@ -236,7 +241,7 @@ define([
             ).appendTo(listElement);
             return listElement.appendTo(ul);
         }
-m
+
         function removeSearchFlyout() {
             $(".autocomplete-flyout").remove();
         }

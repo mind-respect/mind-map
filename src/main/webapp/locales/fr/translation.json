@@ -162,12 +162,10 @@
 
     "search" : {
         "context" : {
-            "property" : "propriété du schéma",
-            "vertex" : "bulle avec relations",
-            "edge" : {
-                "1" : "relation avec bulle source",
-                "2" : "et bulle de destination"
-            }
+            "property" : "Propriété",
+            "vertex" : "Bulle",
+            "edge" : "Relation",
+            "schema" : "Schéma"
         }
     }
 }

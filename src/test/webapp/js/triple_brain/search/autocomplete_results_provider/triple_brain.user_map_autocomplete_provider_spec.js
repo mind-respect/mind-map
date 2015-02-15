@@ -31,7 +31,12 @@ define([
             expect(
                 propertySearchResult.somethingToDistinguish
             ).toBe(
-                "property of schema project"
+                "project"
+            );
+            expect(
+                propertySearchResult.elementType
+            ).toBe(
+                "Property"
             );
         });
         it("sets vertex context", function () {
@@ -43,7 +48,12 @@ define([
             expect(
                 vertexSearchResult.somethingToDistinguish
             ).toBe(
-                "bubble with relations r1, r3, r2"
+                "r1, r3, r2"
+            );
+            expect(
+                vertexSearchResult.elementType
+            ).toBe(
+                "Bubble"
             );
         });
         it("sets edge context", function () {
@@ -55,7 +65,12 @@ define([
             expect(
                 edgeSearchResult.somethingToDistinguish
             ).toBe(
-                "relation with source bubble b3 and destination bubble b1"
+                "b3 -> b1"
+            );
+            expect(
+                edgeSearchResult.elementType
+            ).toBe(
+                "Relation"
             );
         });
     });

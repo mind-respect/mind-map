@@ -58,6 +58,10 @@ define([
                     return;
                 }
                 var formatted = applyBasicFormat(searchResult);
+                formatted.elementType = $.t(
+                        "search.context." +
+                        searchResult.getGraphElementType()
+                );
                 formatted.somethingToDistinguish = searchResult.getSomethingToDistinguish();
                 formattedResults.push(
                     formatted
@@ -76,6 +80,7 @@ define([
                     provider: self
                 };
             }
+
             return formattedResults;
         };
 

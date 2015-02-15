@@ -57,11 +57,10 @@ define([
         }
     };
     api._buildPropertySomethingToDistinguish = function (property) {
-        return $.t("search.context.property") + " " + property.getSchema().getLabel();
+        return property.getSchema().getLabel();
     };
     api._buildEdgeSomethingToDistinguish = function (sourceVertex, destinationVertex) {
-        return $.t("search.context.edge.1") + " " + sourceVertex.getLabel() + " " +
-            $.t("search.context.edge.2") + " " + destinationVertex.getLabel();
+        return sourceVertex.getLabel() + " -> " +destinationVertex.getLabel();
     };
     api._buildSchemaSomethingToDistinguish = function (schema) {
         return api.formatRelationsName(
@@ -76,8 +75,7 @@ define([
             var property = GraphElement.fromServerFormat(this);
             edgesName.push(property.getLabel());
         });
-        return  $.t("search.context.vertex") + " " +
-            api.formatRelationsName(
+        return api.formatRelationsName(
                 api.removedEmptyAndDuplicateRelationsName(
                     edgesName
                 )

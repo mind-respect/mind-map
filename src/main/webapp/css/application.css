@@ -68,6 +68,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .ui-menu .ui-menu-item .info * { font-size: 11px; }
 .ui-menu .ui-menu-item .info a { color: #1919AC; display: inline; padding: 0; white-space: nowrap; }
 .ui-menu .ui-menu-item .info a:hover { color: #47A3FF; }
+.ui-menu .ui-menu-item .type { margin-top: -17px; float: right; }
 .ui-menu .ui-menu-item .distinction { font-weight: bold; margin-right: 1em; }
 
 .frontier { position: fixed; background-color: transparent; z-index: 0; }
