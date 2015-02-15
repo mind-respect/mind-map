@@ -30,7 +30,7 @@ define([
         var api = {};
         $.i18n.init({
             lng: "en",
-            useLocalStorage: true,
+            useLocalStorage: false,
             debug: true,
             customLoad: function (lng, ns, options, loadComplete) {
                 loadComplete(
@@ -494,7 +494,29 @@ define([
              * another bubble labeled impact
              */
             this.get = function () {
-                return [{"graphElement":{"friendlyResource":{"uri":"/service/users/asoivjasd/graph/schema/b1c0a45e-dcdd-47db-802e-61c9b31ace96/property/b8088b28-821b-4268-aa85-65e53ff6a875","label":"impact on the individual","comment":"","images":[],"creationDate":"Feb 13, 2015 8:26:23 AM","lastModificationDate":"Feb 13, 2015 8:26:28 AM"},"identifications":{}},"schema":{"friendlyResource":{"uri":"/service/users/asoivjasd/graph/schema/b1c0a45e-dcdd-47db-802e-61c9b31ace96","label":"project","comment":"","images":[],"creationDate":"Feb 13, 2015 8:27:14 AM","lastModificationDate":"Feb 13, 2015 8:27:14 AM"}},"type":"property"},{"graphElement":{"friendlyResource":{"uri":"/service/users/asoivjasd/graph/schema/b1c0a45e-dcdd-47db-802e-61c9b31ace96/property/77e7c2d6-9e41-4c1c-8f33-5125ad2ce5fc","label":"impact on society","comment":"","images":[],"creationDate":"Feb 13, 2015 8:26:30 AM","lastModificationDate":"Feb 13, 2015 8:26:38 AM"},"identifications":{}},"schema":{"friendlyResource":{"uri":"/service/users/asoivjasd/graph/schema/b1c0a45e-dcdd-47db-802e-61c9b31ace96","label":"project","comment":"","images":[],"creationDate":"Feb 13, 2015 8:27:14 AM","lastModificationDate":"Feb 13, 2015 8:27:14 AM"}},"type":"property"},{"edge":{"graphElement":{"friendlyResource":{"uri":"/service/users/asoivjasd/graph/edge/15b858fc-6606-4b15-b096-f1e723dcb425","label":"impact","comment":"","images":[],"creationDate":"Feb 13, 2015 8:27:01 AM","lastModificationDate":"Feb 13, 2015 8:27:07 AM"},"identifications":{}},"sourceVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"/service/users/asoivjasd/graph/vertex/26d5bea1-1e2c-4699-a094-c7edc71177f0"}}}},"destinationVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"/service/users/asoivjasd/graph/vertex/910d0022-8a5d-4447-abcb-6d058b85176c"}}}}},"type":"edge"}];
+                return [{"graphElement":{"friendlyResource":{"uri":"/service/users/asoiajsda/graph/schema/8f4a2aeb-3a02-44cc-b72a-d7a4eb0d8ff9/property/372a46f1-937e-4742-b926-fd4faa19e365","label":"impact on the individual","comment":"","images":[],"creationDate":"Feb 14, 2015 6:01:38 PM","lastModificationDate":"Feb 14, 2015 6:01:42 PM"},"identifications":{}},"schema":{"friendlyResource":{"uri":"/service/users/asoiajsda/graph/schema/8f4a2aeb-3a02-44cc-b72a-d7a4eb0d8ff9","label":"project","comment":"","images":[],"creationDate":"Feb 14, 2015 6:10:12 PM","lastModificationDate":"Feb 14, 2015 6:10:12 PM"}},"type":"property"},{"graphElement":{"friendlyResource":{"uri":"/service/users/asoiajsda/graph/schema/8f4a2aeb-3a02-44cc-b72a-d7a4eb0d8ff9/property/ec3ca646-7c54-4969-b310-7fe0aa2a2df8","label":"impact on society","comment":"","images":[],"creationDate":"Feb 14, 2015 6:01:43 PM","lastModificationDate":"Feb 14, 2015 6:01:49 PM"},"identifications":{}},"schema":{"friendlyResource":{"uri":"/service/users/asoiajsda/graph/schema/8f4a2aeb-3a02-44cc-b72a-d7a4eb0d8ff9","label":"project","comment":"","images":[],"creationDate":"Feb 14, 2015 6:10:12 PM","lastModificationDate":"Feb 14, 2015 6:10:12 PM"}},"type":"property"}]
+            };
+        };
+        api.getSearchResultForB1 = function(){
+            /*
+             * b1 -r1-> b2
+             * b1 <-r2- b3
+             * b1 -r3-> b4
+             *
+             */
+            this.get = function () {
+                return [{"graphElement":{"friendlyResource":{"uri":"/service/users/asoiajsda/graph/vertex/4c0d51fe-ea13-4370-91e6-7ed071f8552f","label":"b1","comment":"","images":[],"creationDate":"Feb 14, 2015 6:12:54 PM","lastModificationDate":"Feb 14, 2015 6:12:57 PM"},"identifications":{}},"properties":{"/service/users/asoiajsda/graph/edge/db6aa316-650a-4dd9-9a69-c8d98e3374c0":{"friendlyResource":{"uri":"/service/users/asoiajsda/graph/edge/db6aa316-650a-4dd9-9a69-c8d98e3374c0","label":"r1"}},"/service/users/asoiajsda/graph/edge/a0a862a7-b2b0-4971-b614-51077769972f":{"friendlyResource":{"uri":"/service/users/asoiajsda/graph/edge/a0a862a7-b2b0-4971-b614-51077769972f","label":"r3"}},"/service/users/asoiajsda/graph/edge/ede2c118-8077-4b21-b953-0d6aa5221243":{"friendlyResource":{"uri":"/service/users/asoiajsda/graph/edge/ede2c118-8077-4b21-b953-0d6aa5221243","label":"r2"}}},"type":"vertex"}];
+            };
+        };
+        api.getSearchResultForR2 = function(){
+            /*
+             * b1 -r1-> b2
+             * b1 <-r2- b3
+             * b1 -r3-> b4
+             *
+             */
+            this.get = function () {
+                return [{"edge":{"graphElement":{"friendlyResource":{"uri":"/service/users/asoiajsda/graph/edge/ede2c118-8077-4b21-b953-0d6aa5221243","label":"r2","comment":"","images":[],"creationDate":"Feb 14, 2015 6:13:04 PM","lastModificationDate":"Feb 14, 2015 6:14:16 PM"},"identifications":{}},"sourceVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"/service/users/asoiajsda/graph/vertex/e5294f23-9312-46fa-a779-ea6017402958","label":"b3","comment":"","images":[],"creationDate":"Feb 14, 2015 6:16:06 PM","lastModificationDate":"Feb 14, 2015 6:16:06 PM"}}}},"destinationVertex":{"vertex":{"graphElement":{"friendlyResource":{"uri":"/service/users/asoiajsda/graph/vertex/4c0d51fe-ea13-4370-91e6-7ed071f8552f","label":"b1","comment":"","images":[],"creationDate":"Feb 14, 2015 6:16:06 PM","lastModificationDate":"Feb 14, 2015 6:16:06 PM"}}}}},"type":"edge"}];
             };
         };
         GraphDisplayer.setImplementation(

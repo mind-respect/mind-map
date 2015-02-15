@@ -162,7 +162,8 @@
 
     "search" : {
         "context" : {
-            "property" : "of schema"
+            "property" : "property of schema",
+            "vertex" : "bubble with relations"
         }
     }
 }

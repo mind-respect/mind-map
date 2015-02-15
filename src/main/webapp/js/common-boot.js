@@ -5,7 +5,7 @@
 
 requirejs.config({
     baseUrl: 'js',
-    urlArgs: "bust=" + 10,
+    urlArgs: "bust=" + 11,
     paths: {
         "module": '../module',
         "crow" : "vendor/crow.micro",

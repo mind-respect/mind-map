@@ -162,7 +162,8 @@
 
     "search" : {
         "context" : {
-            "property" : "du schéma"
+            "property" : "propriété du schéma",
+            "vertex" : "bulle avec relations"
         }
     }
 }

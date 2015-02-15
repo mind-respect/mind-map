@@ -59,20 +59,7 @@ define([
                     return;
                 }
                 var formatted = applyBasicFormat(searchResult);
-                switch(searchResult.getGraphElementType()){
-                    case GraphElementType.Schema :
-                        formatSchemaResult(
-                            formatted,
-                            graphElement
-                        );
-                        break;
-                    case GraphElementType.Property:
-                        formatPropertyResult(
-                            formatted,
-                            graphElement
-                        );
-                        break;
-                }
+                formatted.somethingToDistinguish = searchResult.getSomethingToDistinguish();
                 formattedResults.push(
                     formatted
                 );
@@ -89,20 +76,6 @@ define([
                     uri: graphElement.getUri(),
                     provider: self
                 };
-            }
-
-            function formatPropertyResult(formattedProperty, property) {
-                formattedProperty.somethingToDistinguish = buildPropertySomethingToDistinguish(
-                    property
-                );
-            }
-
-            function formatSchemaResult(formattedSchema, schema) {
-                formattedSchema.somethingToDistinguish = IdentificationContext.formatRelationsName(
-                    IdentificationContext.removedEmptyAndDuplicateRelationsName(
-                        schema.getPropertiesName()
-                    )
-                );
             }
             return formattedResults;
         };
@@ -126,9 +99,6 @@ define([
                 }
             );
         };
-        function buildPropertySomethingToDistinguish(property) {
-            return $.t("search.context.property") + " " + property.getSchema().getLabel();
-        }
     }
 })
 ;

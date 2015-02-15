@@ -18,17 +18,6 @@ define([
             searchResult, callback, false
         ).build();
     };
-    api.formatRelationsName = function (relationsName) {
-        return relationsName.join(", ");
-    };
-    api.removedEmptyAndDuplicateRelationsName = function (relationsName) {
-        return relationsName.filter(
-            function (relationName, position) {
-                return relationName !== "" &&
-                    relationsName.indexOf(relationName) == position;
-            }
-        );
-    };
     return api;
     function IdentificationContext(searchResult, callback, makeBubbleLinks) {
         this.build = function () {

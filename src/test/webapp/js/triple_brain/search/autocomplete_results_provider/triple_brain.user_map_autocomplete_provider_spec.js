@@ -24,15 +24,39 @@ define([
         });
         it("sets property context", function () {
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),
-                property = searchProvider.formatResults(
+                propertySearchResult = searchProvider.formatResults(
                     new Scenarios.getSearchResultsForImpact().get(),
                     "impact"
                 )[0];
             expect(
-                property.somethingToDistinguish
+                propertySearchResult.somethingToDistinguish
             ).toBe(
-                "of schema project"
-            )
+                "property of schema project"
+            );
+        });
+        it("sets vertex context", function () {
+            var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),
+                vertexSearchResult = searchProvider.formatResults(
+                    new Scenarios.getSearchResultForB1().get(),
+                    "b1"
+                )[0];
+            expect(
+                vertexSearchResult.somethingToDistinguish
+            ).toBe(
+                "bubble with relations r1, r3, r2"
+            );
+        });
+        xit("sets edge context", function () {
+            var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),
+                vertexSearchResult = searchProvider.formatResults(
+                    new Scenarios.getSearchResultForB1().get(),
+                    "b1"
+                )[0];
+            expect(
+                vertexSearchResult.somethingToDistinguish
+            ).toBe(
+                "with edges -> r1, r2, r3"
+            );
         });
     });
     function searchResultIsProperty(searchResult){
