@@ -164,7 +164,7 @@
         "context" : {
             "property" : "Propriété",
             "vertex" : "Bulle",
-            "edge" : "Relation",
+            "relation" : "Relation",
             "schema" : "Schéma"
         }
     }
