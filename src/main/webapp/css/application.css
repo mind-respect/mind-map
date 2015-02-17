@@ -62,14 +62,16 @@ button.add-button-in-list:hover { color: #00d100; }
 
 .ui-autocomplete { /*z-index one more than ui-dialog*/ z-index: 101; height: 200px; overflow-y: scroll; }
 
+.ui-menu .ui-menu-item { border-bottom: 1px solid #d3d2d2; }
+.ui-menu .ui-menu-item .element-label { font-weight: bold; font-size: 14px; padding-right: 43px; }
 .ui-menu .ui-menu-item a { white-space: nowrap; }
 .ui-menu .ui-menu-item span { white-space: nowrap; }
 .ui-menu .ui-menu-item .info { font-size: 11px; margin-left: 0.5em; }
 .ui-menu .ui-menu-item .info * { font-size: 11px; }
 .ui-menu .ui-menu-item .info a { color: #1919AC; display: inline; padding: 0; white-space: nowrap; }
 .ui-menu .ui-menu-item .info a:hover { color: #47A3FF; }
-.ui-menu .ui-menu-item .type { margin-top: -17px; float: right; }
-.ui-menu .ui-menu-item .distinction { font-weight: bold; margin-right: 1em; }
+.ui-menu .ui-menu-item .type { margin-top: -20px; float: right; }
+.ui-menu .ui-menu-item .distinction { margin-right: 1em; }
 
 .frontier { position: fixed; background-color: transparent; z-index: 0; }
 

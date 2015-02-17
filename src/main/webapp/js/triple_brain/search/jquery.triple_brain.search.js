@@ -224,7 +224,10 @@ define([
 
         function renderItemCustom(ul, item) {
             var listElement = $("<li>"),
-                moreInfoContainer = $("<div class='info'>");
+                moreInfoContainer = $("<div class='info'>"),
+                labelContainer = $("<span class='element-label'>").append(
+                        item.label + " "
+                );
             if (item.elementType !== undefined && item.elementType !== "") {
                 $("<span class='type'>").append(
                     item.elementType
@@ -236,7 +239,7 @@ define([
                 ).appendTo(moreInfoContainer);
             }
             $("<a>").append(
-                    item.label + " ",
+                    labelContainer,
                 moreInfoContainer
             ).appendTo(listElement);
             return listElement.appendTo(ul);

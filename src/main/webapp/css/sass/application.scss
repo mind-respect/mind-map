@@ -211,9 +211,16 @@ button {
 
 .ui-menu {
   .ui-menu-item {
+    border-bottom: 1px solid rgb(211, 210, 210);
+    .element-label{
+      font-weight:bold;
+      font-size: 14px;
+      padding-right: 43px;
+    }
     a {
       white-space: nowrap;
     }
+
     span {
       white-space: nowrap;
     }
@@ -234,11 +241,10 @@ button {
       }
     }
     .type {
-      margin-top:-17px;
+      margin-top:-20px;
       float:right;
     }
     .distinction {
-      font-weight: bold;
       margin-right: 1em;
     }
   }

@@ -56,6 +56,20 @@ define([
                 "Bubble"
             );
         });
+        it("vertex context is empty if it has no relations", function () {
+            var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas();
+            var searchResults = new Scenarios.getSearchResultForB1().get();
+            searchResults[0].properties = undefined;
+            var vertexSearchResult = searchProvider.formatResults(
+                searchResults,
+                "b1"
+            )[0];
+            expect(
+                vertexSearchResult.somethingToDistinguish
+            ).toBe(
+                ""
+            );
+        });
         it("sets edge context", function () {
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),
                 edgeSearchResult = searchProvider.formatResults(
@@ -74,12 +88,13 @@ define([
             );
         });
     });
-    function searchResultIsProperty(searchResult){
+    function searchResultIsProperty(searchResult) {
         return stringContains(
             searchResult.uri,
             "property"
         );
     }
+
     function stringContains(string, toVerify) {
         return string.indexOf(toVerify) !== -1;
     }

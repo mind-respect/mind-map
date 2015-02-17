@@ -72,6 +72,9 @@ define([
     api._buildVertexSomethingToDistinguish = function (searchResult) {
         var edgesName = [],
             number = 0;
+        if(!searchResult.properties){
+            return "";
+        }
         $.each(searchResult.properties, function () {
             var property = GraphElement.fromServerFormat(this);
             edgesName.push(property.getLabel());
