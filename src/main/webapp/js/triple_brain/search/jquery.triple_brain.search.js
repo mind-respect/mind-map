@@ -84,10 +84,8 @@ define([
                 },
                 close: function () {
                     removeSearchFlyout();
-                    $("#vertex-search-input").trigger("keydown");
                 },
                 focus: function (event, ui) {
-                    return;
                     var searchResult = ui.item;
                     searchResult.provider.getMoreInfoForSearchResult(
                         searchResult,
