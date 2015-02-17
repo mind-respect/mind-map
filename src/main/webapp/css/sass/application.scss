@@ -246,6 +246,10 @@ button {
     }
     .distinction {
       margin-right: 1em;
+      max-width: 428px;
+      font-weight:normal;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }

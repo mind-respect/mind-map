@@ -71,7 +71,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .ui-menu .ui-menu-item .info a { color: #1919AC; display: inline; padding: 0; white-space: nowrap; }
 .ui-menu .ui-menu-item .info a:hover { color: #47A3FF; }
 .ui-menu .ui-menu-item .type { margin-top: -20px; float: right; }
-.ui-menu .ui-menu-item .distinction { margin-right: 1em; }
+.ui-menu .ui-menu-item .distinction { margin-right: 1em; max-width: 428px; font-weight: normal; overflow: hidden; text-overflow: ellipsis; }
 
 .frontier { position: fixed; background-color: transparent; z-index: 0; }
 
