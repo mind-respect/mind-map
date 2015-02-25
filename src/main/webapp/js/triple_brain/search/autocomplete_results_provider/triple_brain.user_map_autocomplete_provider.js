@@ -88,16 +88,18 @@ define([
             var originalSearchResult = searchResult.nonFormattedSearchResult;
             IdentificationContext.buildWithoutBubbleLinks(
                 originalSearchResult,
-                function (context) {
+                function (context, imageUrl) {
                     var moreInfo = context.append(
                         originalSearchResult.context,
-                        $("<div>").append(originalSearchResult.getGraphElement().getComment())
+                        $("<div>").append(
+                            originalSearchResult.getGraphElement().getComment()
+                        )
                     );
                     callback({
                             conciseSearchResult: searchResult,
                             title: searchResult.label,
                             text: moreInfo,
-                            imageUrl: ""
+                            imageUrl: imageUrl
                         }
                     );
                 }

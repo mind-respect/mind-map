@@ -5,121 +5,112 @@ define([
     "triple_brain.search",
     "triple_brain.graph_displayer",
     "triple_brain.search_result",
-    "triple_brain.graph_element_type"
-], function (SearchService, GraphDisplayer, SearchResult, GraphElementType) {
+    "triple_brain.graph_element_type",
+    "triple_brain.graph_element"
+], function (SearchService, GraphDisplayer, SearchResult, GraphElementType, GraphElement) {
     var api = {};
     api.build = function (searchResult, callback) {
-        return new IdentificationContext(
-            searchResult, callback, true
-        ).build();
+        return new Self(
+            searchResult, true
+        ).build(callback);
     };
     api.buildWithoutBubbleLinks = function (searchResult, callback) {
-        return new IdentificationContext(
-            searchResult, callback, false
-        ).build();
+        return new Self(
+            searchResult, false
+        ).build(callback);
     };
-    return api;
-    function IdentificationContext(searchResult, callback, makeBubbleLinks) {
-        this.build = function () {
-            SearchService.getSearchResultDetails(
-                searchResult.getGraphElement().getUri(),
-                function (detailedSearchResult) {
-                    searchResult = SearchResult.fromServerFormat(
-                        detailedSearchResult
-                    );
-                    switch (searchResult.getGraphElementType()) {
-                        case GraphElementType.Vertex :
-                            return makeBubbleContext();
-                        case GraphElementType.Relation :
-                            return makeRelationContext();
-                        default:
-                            callback($("<div>"));
-                    }
-                }
-            );
-        };
-        function makeBubbleContext() {
-            var vertex = searchResult.getGraphElement();
-            var tPreString = "identification.context";
-            var context = $("<div class='context'>").append(
+
+    function Self(searchResult, makeBubbleLinks) {
+        this.originalSearchResult = searchResult;
+        this.makeBubbleLinks = makeBubbleLinks;
+    }
+
+    Self.prototype.build = function (callback) {
+        var self = this;
+        SearchService.getSearchResultDetails(
+            this.originalSearchResult.getGraphElement().getUri(),
+            function (detailedSearchResult) {
+                self.detailedGraphElement = GraphElement.fromDetailedSearchResult(
+                    detailedSearchResult
+                );
+                callback(
+                    self._buildHtmlContext(),
+                    self._getImageUrl()
+                )
+            }
+        );
+    };
+
+    Self.prototype._buildHtmlContext = function () {
+        switch (this.originalSearchResult.getGraphElementType()) {
+            case GraphElementType.Vertex :
+                return this._makeBubbleContext();
+            case GraphElementType.Relation :
+                return this._makeRelationContext();
+            default:
+                return $("<div>");
+        }
+    };
+
+    Self.prototype._makeBubbleContext = function () {
+        var vertex = this.detailedGraphElement,
+            tPreString = "identification.context",
+            context = $("<div class='context'>").append(
                 $.t(tPreString + ".bubble"),
                 ": ",
-                makeBubbleLinks ? vertexLinkFromSearchResult(searchResult) :
+                this.makeBubbleLinks ? this._vertexLink(this.detailedGraphElement) :
                     vertex.getLabel(),
                 " "
             );
-            context.append(
-                $("<div>").append(
-                    vertex.getComment()
-                )
-            );
-            callback(context);
-        }
+        return context.append(
+            $("<div>").append(
+                vertex.getComment()
+            )
+        );
+    };
 
-        function makeSchemaContext() {
-            var schema = searchResult.getGraphElement(),
-                tPreString = "identification.context",
-                context = $("<div class='context'>");
-            if (schema.hasProperties()) {
-                context.append(
-                        $.t(tPreString + ".with_properties") + ": ");
-                api.formatRelationsName(
-                    api.removedEmptyAndDuplicateRelationsName(
-                        searchResult.getPropertiesName()
-                    )
+    Self.prototype._getImageUrl = function () {
+        if (!this.detailedGraphElement.hasImages()) {
+            return "";
+        }
+        return this.detailedGraphElement.getImages()[0].getBase64ForSmall();
+    };
+
+    Self.prototype._makeRelationContext = function () {
+        var relation = this.originalSearchResult.getGraphElement();
+        var sourceVertex = relation.getSourceVertex(),
+            destinationVertex = relation.getDestinationVertex();
+        return $("<div class='context'>").append(
+                $.t("vertex.search.destination_bubble") + ": ",
+            this.makeBubbleLinks ?
+                this._vertexLink(destinationVertex) :
+                destinationVertex.getLabel(),
+            "<br>",
+                $.t("vertex.search.source_bubble") + ": ",
+            this.makeBubbleLinks ?
+                this._vertexLink(sourceVertex) :
+                sourceVertex.getLabel()
+        );
+    };
+    Self.prototype._vertexLink = function () {
+        return $("<button class='link-like-button'>").append(
+            this.detailedGraphElement.getLabel()
+        ).data(
+            "identificationUri",
+            this.detailedGraphElement.getUri()
+        ).on(
+            "click",
+            function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                var identificationUri = $(this).data("identificationUri");
+                GraphDisplayer.displayForBubbleWithUri(
+                    identificationUri
                 );
             }
-        }
+        );
+    };
 
-        function makeRelationContext() {
-            var relation = searchResult.getGraphElement();
-            $.when(
-                SearchService.getSearchResultDetailsAjaxCall(
-                    relation.getSourceVertex().getUri()
-                ),
-                SearchService.getSearchResultDetailsAjaxCall(
-                    relation.getDestinationVertex().getUri()
-                )
-            ).done(function (sourceVertexArray, destinationVertexArray) {
-                    var sourceVertex = SearchResult.fromServerFormat(
-                            sourceVertexArray[0]
-                        ).getGraphElement(),
-                        destinationVertex = SearchResult.fromServerFormat(
-                            destinationVertexArray[0]
-                        ).getGraphElement(),
-                        context = $("<div class='context'>").append(
-                                $.t("vertex.search.destination_bubble") + ": ",
-                            makeBubbleLinks ?
-                                vertexLinkFromSearchResult(destinationVertex) :
-                                destinationVertex.getLabel(),
-                            "<br>",
-                                $.t("vertex.search.source_bubble") + ": ",
-                            makeBubbleLinks ?
-                                vertexLinkFromSearchResult(sourceVertex) :
-                                sourceVertex.getLabel()
-                        );
-                    callback(context);
-                }
-            );
-        }
-
-        function vertexLinkFromSearchResult(searchResult) {
-            return $("<button class='link-like-button'>").append(
-                searchResult.getLabel()
-            ).data(
-                "identificationUri",
-                searchResult.getUri()
-            ).on(
-                "click",
-                function (event) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    var identificationUri = $(this).data("identificationUri");
-                    GraphDisplayer.displayForBubbleWithUri(
-                        identificationUri
-                    );
-                }
-            );
-        }
-    }
-});
+    return api;
+})
+;

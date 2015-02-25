@@ -26,6 +26,11 @@ define([
             )
         };
     };
+    api.fromDetailedSearchResult = function(detailedSearchResult){
+        return api.fromServerFormat(
+            detailedSearchResult.graphElement
+        );
+    };
     api.Self = function () {};
 
     api.Self.prototype = new FriendlyResource.Self;
