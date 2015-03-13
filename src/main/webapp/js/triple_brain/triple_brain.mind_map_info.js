@@ -14,7 +14,7 @@ define([
             isViewOnly,
             _isAnonymous;
         api.defaultVertexUri = function () {
-            return UserService.currentUserUri() + '/graph/vertex/default'
+            return UserService.currentUserUri() + '/graph/vertex/any'
         };
         api.isCenterBubbleUriDefinedInUrl = function () {
             return api._getCenterVertexUriInUrl() !== undefined;

@@ -49,12 +49,15 @@ define([
         GraphService.getForCentralVertexUri(
             centralVertexUri,
             function (graph) {
+                if(centralVertexUri.indexOf("/vertex/any") !== -1){
+                    centralVertexUri = Object.keys(graph.vertices)[0];
+                }
                 new api.TreeMaker()
                     .makeForCenterVertex(
                     graph,
                     centralVertexUri
                 );
-                callback();
+                callback(centralVertexUri);
             },
             errorCallback
         );
