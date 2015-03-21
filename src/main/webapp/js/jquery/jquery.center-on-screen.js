@@ -34,7 +34,7 @@ define([
             var element = this;
             var position = element.offset();
             var visibleSize = visibleSizeFromOptions(options);
-            container.animate({
+            container.stop().animate({
                 scrollLeft: scrollLeftFromPosition(position, element, visibleSize),
                 scrollTop: scrollTopFromPosition(position, element, visibleSize)
             }, 500);
