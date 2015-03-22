@@ -5,8 +5,9 @@
 define([
     "triple_brain.graph_displayer_as_relative_tree",
     "triple_brain.center_bubble",
-    'test/webapp/js/test-scenarios'
-], function (GraphDisplayerAsRelativeTree, CenterBubble, Scenarios) {
+    'test/webapp/js/test-scenarios',
+    'test/webapp/js/mock'
+], function (GraphDisplayerAsRelativeTree, CenterBubble, Scenarios, Mock) {
     "use strict";
     describe("graph_displayer_as_relative_tree_spec", function () {
         var bubble1,
@@ -46,7 +47,7 @@ define([
             ).toBeTruthy();
         });
 
-        it("appends to group relation when expanding",function(){
+        it("appends to group relation when expanding", function () {
             expect(
                 groupRelation.hasChildren()
             ).toBeFalsy();
@@ -58,7 +59,7 @@ define([
             ).toBeTruthy();
         });
 
-        it("preserves direction with parent vertex for expanded group relations",function(){
+        it("preserves direction with parent vertex for expanded group relations", function () {
             GraphDisplayerAsRelativeTree.expandGroupRelation(
                 groupRelation
             );
@@ -69,7 +70,7 @@ define([
                 graphWithSimilarRelationsScenario.getRelationWithBook2InTree().isInverse()
             ).toBeTruthy();
         });
-        it("contains all connected elements for included graph elements view ", function(){
+        it("contains all connected elements for included graph elements view ", function () {
             expect(
                 mergeBubbleScenario.getBubble1()
             ).toBeDefined();
@@ -92,7 +93,7 @@ define([
                 mergeBubbleScenario.getBubble3()
             ).toBeDefined();
         });
-        it("can show a bubble suggestions", function(){
+        it("can show a bubble suggestions", function () {
             var locationSuggestion = karaokeSchemaScenario.getLocationPropertyAsSuggestion();
             bubble2.setSuggestions(
                 [
@@ -108,6 +109,23 @@ define([
             expect(
                 vertexSuggestion.getIdentifications()[0].getLabel()
             ).toBe("Location");
+        });
+        it("includes vertex uri in callback for displayForVertexWithUri", function () {
+            Mock.setGetGraph(graphWithSimilarRelationsScenario.getGraph());
+            GraphDisplayerAsRelativeTree.displayForVertexWithUri(
+                graphWithSimilarRelationsScenario.getCenterBubbleUri(),
+                function (uri) {
+                    expect(
+                        uri
+                    ).toBe(
+                        graphWithSimilarRelationsScenario.getCenterBubbleUri()
+                    );
+                },
+                function(){
+                    //shouldnt be here.
+                    expect(false).toBeTruthy();
+                }
+            );
         });
     });
 });
