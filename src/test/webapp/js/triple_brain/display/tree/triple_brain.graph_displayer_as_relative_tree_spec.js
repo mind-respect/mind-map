@@ -110,7 +110,7 @@ define([
                 vertexSuggestion.getIdentifications()[0].getLabel()
             ).toBe("Location");
         });
-        it("includes vertex uri in callback for displayForVertexWithUri", function () {
+        it("includes vertex uri in callback when displaying for central vertex", function () {
             Mock.setGetGraphFromService(graphWithSimilarRelationsScenario.getGraph());
             GraphDisplayerAsRelativeTree.displayForVertexWithUri(
                 graphWithSimilarRelationsScenario.getCenterBubbleUri(),
@@ -127,7 +127,7 @@ define([
                 }
             );
         });
-        it("includes schema uri in callback for displayForSchemaWithUri", function () {
+        it("includes schema uri in callback when displaying for schema", function () {
             Mock.setGetSchemaFromService(karaokeSchemaScenario.getGraph());
             GraphDisplayerAsRelativeTree.displayForSchemaWithUri(
                 karaokeSchemaScenario.getSchema().getUri(),
