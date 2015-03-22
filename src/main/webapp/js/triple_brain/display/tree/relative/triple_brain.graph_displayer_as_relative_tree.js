@@ -68,7 +68,7 @@ define([
                 SchemaServerFacade.fromServerFormat(schemaFromServer)
             );
             if (callback !== undefined) {
-                callback();
+                callback(uri);
             }
         });
     };

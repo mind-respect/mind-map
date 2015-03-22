@@ -111,7 +111,7 @@ define([
             ).toBe("Location");
         });
         it("includes vertex uri in callback for displayForVertexWithUri", function () {
-            Mock.setGetGraph(graphWithSimilarRelationsScenario.getGraph());
+            Mock.setGetGraphFromService(graphWithSimilarRelationsScenario.getGraph());
             GraphDisplayerAsRelativeTree.displayForVertexWithUri(
                 graphWithSimilarRelationsScenario.getCenterBubbleUri(),
                 function (uri) {
@@ -122,8 +122,21 @@ define([
                     );
                 },
                 function(){
-                    //shouldnt be here.
+                    //todo replace with fail()
                     expect(false).toBeTruthy();
+                }
+            );
+        });
+        it("includes schema uri in callback for displayForSchemaWithUri", function () {
+            Mock.setGetSchemaFromService(karaokeSchemaScenario.getGraph());
+            GraphDisplayerAsRelativeTree.displayForSchemaWithUri(
+                karaokeSchemaScenario.getSchema().getUri(),
+                function (uri) {
+                    expect(
+                        uri
+                    ).toBe(
+                        karaokeSchemaScenario.getSchema().getUri()
+                    );
                 }
             );
         });
