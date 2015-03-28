@@ -31,8 +31,13 @@ define([
                 };
                 UserService.authenticate(
                     loginInfo,
-                    function(){
-                        window.location.reload();
+                    function(user){
+                        UserService.getDefaultVertexUri(
+                            user.user_name,
+                            function (uri) {
+                                window.location = "?bubble=" + uri;
+                            }
+                        );
                     },
                     function () {
                         getErrorMessage().removeClass("hidden");

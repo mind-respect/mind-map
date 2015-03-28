@@ -255,7 +255,6 @@ define([
             UserService.getDefaultVertexUri(
                 access.userNameField().val(),
                 function (uri) {
-                    debugger;
                     window.location = "?bubble=" + uri;
                 }
             );
