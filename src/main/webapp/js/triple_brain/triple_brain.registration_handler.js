@@ -2,25 +2,25 @@
  * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
-    "require",
-    "jquery",
-    "triple_brain.external_page_loader",
-    "triple_brain.user",
-    "triple_brain.language_manager"
-],
+        "require",
+        "jquery",
+        "triple_brain.external_page_loader",
+        "triple_brain.user",
+        "triple_brain.language_manager"
+    ],
     function (require, $, ExternalPageLoader, UserService, LanguageManager) {
         "use strict";
         var api = {};
         var access = defineAccess();
         api.startFlow = function () {
             ExternalPageLoader.showLinearFlowWithOptions({
-                href:"register-form.html",
-                onComplete:function () {
+                href: "register-form.html",
+                onComplete: function () {
                     handleRegisterForm();
                     handleLoginLink();
                 },
-                width:450,
-                title:$.t("register.title")
+                width: 450,
+                title: $.t("register.title")
             });
         };
         return api;
@@ -29,22 +29,30 @@ define([
             submitWhenPressingEnter();
             access.errorMessages().addClass("hidden");
             access.registerForm()[0].reset();
-            access.registerButton().on("click", function (event) {
-                event.preventDefault();
-                UserService.register(
-                    formAsJSon(),
-                    handleRegistrationSuccess,
-                    handleRegistrationError
-                );
-            });
+            access.registerButton().off(
+                "click",
+                registerButtonClickHandler
+            ).on(
+                "click",
+                registerButtonClickHandler
+            );
         }
 
-        function submitWhenPressingEnter(){
+        function registerButtonClickHandler(event){
+            event.preventDefault();
+            UserService.register(
+                formAsJSon(),
+                handleRegistrationSuccess,
+                handleRegistrationError
+            );
+        }
+
+        function submitWhenPressingEnter() {
             access.registerForm().find("input").on(
                 "keyup",
-                function(event){
+                function (event) {
                     var enterKeyCode = 13;
-                    if(event.keyCode === enterKeyCode){
+                    if (event.keyCode === enterKeyCode) {
                         access.registerButton().click();
                     }
                 }
@@ -74,34 +82,34 @@ define([
                 selectedLanguagesList.sortable().disableSelection();
             }
 
-            function handleAddLanguageButton(){
-                access.getAddLanguagesButton().on("click", function(event){
+            function handleAddLanguageButton() {
+                access.getAddLanguagesButton().on("click", function (event) {
                     event.preventDefault();
                     setupAvailableLanguagesMenu();
                 });
                 function setupAvailableLanguagesMenu() {
                     var menu = $('<div>');
                     var filterLanguagesInput = $(
-                        "<input type='text' placeholder='"+
+                            "<input type='text' placeholder='" +
                             $.t("register.language.filter")
-                        +"'>");
+                            + "'>");
                     menu.append(filterLanguagesInput);
                     filterLanguagesInput.on(
                         "keyup",
-                        function(){
+                        function () {
                             var filterInput = $(this);
                             var list = filterInput.siblings(
                                 ".registration-available-languages"
                             );
                             list.find("> li").addClass("hidden")
-                                .filter(function(){
+                                .filter(function () {
                                     var listElement = $(this);
                                     return listElement.text().toLowerCase().indexOf(
                                         filterInput.val().toLowerCase()
                                     ) !== -1;
                                 }).removeClass("hidden");
                             return false;
-                    });
+                        });
                     var availableLanguagesList = $(
                         "<ul class='registration-available-languages'>"
                     );
@@ -116,10 +124,10 @@ define([
                     });
                     menu.append(availableLanguagesList);
                     menu.dialog({
-                        title:$.t("register.language.available_languages"),
-                        width:"400px"
+                        title: $.t("register.language.available_languages"),
+                        width: "400px"
                     });
-                    function makeListElementForAvailableLanguages(language){
+                    function makeListElementForAvailableLanguages(language) {
                         var listElement = makeListElementUsingLanguage(language);
                         var addButton = $(
                             "<button class='add-button-in-list'>"
@@ -129,7 +137,7 @@ define([
                         );
                         addButton.on(
                             "click",
-                            function(){
+                            function () {
                                 var selectedListElement = $(this).closest(
                                     "li"
                                 );
@@ -152,7 +160,7 @@ define([
                 }
             }
 
-            function makeListElementForSelectedLanguages(language){
+            function makeListElementForSelectedLanguages(language) {
                 var listElement = makeListElementUsingLanguage(language);
                 var moveInstruction = $(
                     "<span class='ui-icon ui-icon-arrowthick-2-n-s'>"
@@ -161,7 +169,7 @@ define([
                 var removeButton = $(
                     "<a class='remove-button-in-list'>"
                 ).append("x");
-                removeButton.on("click", function(){
+                removeButton.on("click", function () {
                     $(this).closest("li").remove();
                 });
                 listElement.append(
@@ -192,16 +200,16 @@ define([
                 var filteredLanguages = [];
                 $.each(languages, function () {
                     var language = this;
-                    if(!languagesToRemoveContainLanguage(language)){
+                    if (!languagesToRemoveContainLanguage(language)) {
                         filteredLanguages.push(
                             language
                         );
                     }
                 });
                 return filteredLanguages;
-                function languagesToRemoveContainLanguage(language){
+                function languagesToRemoveContainLanguage(language) {
                     var containsLanguage = false;
-                    $.each(languagesToRemove, function(){
+                    $.each(languagesToRemove, function () {
                         var languageToRemove = this;
                         if (language.locale === languageToRemove.locale) {
                             containsLanguage = true;
@@ -213,10 +221,10 @@ define([
             }
         }
 
-        function getLanguageOfLocale(locale){
+        function getLanguageOfLocale(locale) {
             var language = LanguageManager.englishLanguage();
-            $.each(LanguageManager.getPossibleLanguages(), function(){
-                if(this.locale === locale){
+            $.each(LanguageManager.getPossibleLanguages(), function () {
+                if (this.locale === locale) {
                     language = this;
                     return -1;
                 }
@@ -232,9 +240,9 @@ define([
             formAsJson.password_verification = access.passwordConfirmationField().val();
             formAsJson.preferred_locales = getListOfSelectedLocales();
             return formAsJson;
-            function getListOfSelectedLocales(){
+            function getListOfSelectedLocales() {
                 var list = [];
-                $.each(access.getSelectedLanguagesList().find("> li"), function(){
+                $.each(access.getSelectedLanguagesList().find("> li"), function () {
                     list.push(
                         $(this).data("language").locale
                     );
@@ -244,20 +252,26 @@ define([
         }
 
         function handleRegistrationSuccess() {
-            window.location.reload();
+            UserService.getDefaultVertexUri(
+                access.userNameField().val(),
+                function (uri) {
+                    debugger;
+                    window.location = "?bubble=" + uri;
+                }
+            );
         }
 
         function handleRegistrationError(errors) {
             access.errorMessages().addClass("hidden");
-            $.each(errors, function(){
+            $.each(errors, function () {
                 var error = this;
                 $('#' + error.reason).removeClass("hidden");
             });
         }
 
-        function getSelectedLanguages(){
+        function getSelectedLanguages() {
             var selectedLanguages = [];
-            $.each(access.getSelectedLanguagesList().find("> li"), function(){
+            $.each(access.getSelectedLanguagesList().find("> li"), function () {
                 var lisElement = $(this);
                 selectedLanguages.push(
                     lisElement.data("language")
@@ -268,37 +282,37 @@ define([
 
         function defineAccess() {
             return {
-                registerPage:function () {
+                registerPage: function () {
                     return $("#registration-page");
                 },
-                errorMessages:function () {
+                errorMessages: function () {
                     return $('.alert-error');
                 },
-                registerButton:function () {
+                registerButton: function () {
                     return $('#register-button');
                 },
-                userNameField:function () {
+                userNameField: function () {
                     return $("#register-user_name");
                 },
-                emailField:function () {
+                emailField: function () {
                     return $("#register-email");
                 },
-                passwordField:function () {
+                passwordField: function () {
                     return $("#register-password");
                 },
-                passwordConfirmationField:function () {
+                passwordConfirmationField: function () {
                     return $("#register-retype_password");
                 },
-                registerForm:function () {
+                registerForm: function () {
                     return $('#register-form');
                 },
-                loginLink:function () {
+                loginLink: function () {
                     return $("#login-link");
                 },
-                getSelectedLanguagesList:function () {
+                getSelectedLanguagesList: function () {
                     return $("#selectedLanguages");
                 },
-                getAddLanguagesButton:function(){
+                getAddLanguagesButton: function () {
                     return $("#more-languages-link");
                 }
             };

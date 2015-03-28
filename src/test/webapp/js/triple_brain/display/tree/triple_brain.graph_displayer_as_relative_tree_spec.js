@@ -110,35 +110,5 @@ define([
                 vertexSuggestion.getIdentifications()[0].getLabel()
             ).toBe("Location");
         });
-        it("includes vertex uri in callback when displaying for central vertex", function () {
-            Mock.setGetGraphFromService(graphWithSimilarRelationsScenario.getGraph());
-            GraphDisplayerAsRelativeTree.displayForVertexWithUri(
-                graphWithSimilarRelationsScenario.getCenterBubbleUri(),
-                function (uri) {
-                    expect(
-                        uri
-                    ).toBe(
-                        graphWithSimilarRelationsScenario.getCenterBubbleUri()
-                    );
-                },
-                function(){
-                    //todo replace with fail()
-                    expect(false).toBeTruthy();
-                }
-            );
-        });
-        it("includes schema uri in callback when displaying for schema", function () {
-            Mock.setGetSchemaFromService(karaokeSchemaScenario.getGraph());
-            GraphDisplayerAsRelativeTree.displayForSchemaWithUri(
-                karaokeSchemaScenario.getSchema().getUri(),
-                function (uri) {
-                    expect(
-                        uri
-                    ).toBe(
-                        karaokeSchemaScenario.getSchema().getUri()
-                    );
-                }
-            );
-        });
     });
 });

@@ -201,9 +201,9 @@ define([
             }
             displayer(
                 centralBubbleUri,
-                function (centerVertexUri) {
+                function () {
                     publishDrawingInfoUpdated(
-                        centerVertexUri
+                        centralBubbleUri
                     );
                 },
                 errorCallback

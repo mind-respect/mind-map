@@ -20,6 +20,16 @@ define([
         api.authenticatedUserInCache = function () {
             return authenticatedUserInCache;
         };
+        api.setAuthenticatedUserInCache = function(user){
+            authenticatedUserInCache = user;
+        };
+        api.getDefaultVertexUri = function(username, callback){
+            return $.ajax({
+                type: 'GET',
+                url: usersResourceUrl + username +  "/graph/vertex/any"
+            }).success(callback);
+        };
+
         api.currentUserUri = function () {
             return usersResourceUrl + api.authenticatedUserInCache().user_name;
         };

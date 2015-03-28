@@ -49,15 +49,12 @@ define([
         GraphService.getForCentralVertexUri(
             centralVertexUri,
             function (graph) {
-                if(centralVertexUri.indexOf("/vertex/any") !== -1){
-                    centralVertexUri = Object.keys(graph.vertices)[0];
-                }
                 new api.TreeMaker()
                     .makeForCenterVertex(
                     graph,
                     centralVertexUri
                 );
-                callback(centralVertexUri);
+                callback();
             },
             errorCallback
         );
@@ -68,7 +65,7 @@ define([
                 SchemaServerFacade.fromServerFormat(schemaFromServer)
             );
             if (callback !== undefined) {
-                callback(uri);
+                callback();
             }
         });
     };
