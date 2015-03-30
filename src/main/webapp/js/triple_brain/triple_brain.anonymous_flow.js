@@ -4,13 +4,18 @@
 
 define([
     "jquery",
-    "triple_brain.big_search_box"
-], function ($, BigSearchBox) {
+    "triple_brain.big_search_box",
+    "triple_brain.language_manager"
+], function ($, BigSearchBox, LanguageManager) {
     "use strict";
     var api = {};
     api.enter = function(){
-        $("body").removeClass("hidden");
-        BigSearchBox.show();
+        LanguageManager.loadLocaleContent(function(){
+            $("html").i18n();
+            BigSearchBox.show();
+            $("body").removeClass("hidden");
+
+        });
     };
     return api;
 });
