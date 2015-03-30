@@ -54,10 +54,13 @@ define([
             );
         };
         api.getSearchResultDetailsAjaxCall = function(uri){
+            var baseUri = UserService.hasCurrentUser()?
+                UserService.currentUserUri() + "/search/" :
+                "/service/search/"
             return $.ajax({
                 type:'GET',
-                url: UserService.currentUserUri() +
-                    "/search/uri?uri=" + uri
+                url: baseUri +
+                    "details?uri=" + uri
             });
         };
         api.searchForPublicVerticesAndSchemasAjaxCall = function(searchText){

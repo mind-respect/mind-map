@@ -33,6 +33,9 @@ define([
         api.currentUserUri = function () {
             return usersResourceUrl + api.authenticatedUserInCache().user_name;
         };
+        api.hasCurrentUser = function(){
+            return authenticatedUserInCache !== undefined;
+        };
         api.authenticate = function (loginInfo, callback, errorCallback) {
             $.ajax({
                 type: 'POST',

@@ -10,8 +10,9 @@ define([
     var api = {};
     api.show = function(){
         getBox().tripleBrainAutocomplete({
-            select : function(u){
-                debugger;
+            select : function(event, ui){
+                var uri = ui.item.uri;
+                window.location = "?bubble=" + uri;
             },
             resultsProviders : [
                 UserMapAutocompleteProvider.toFetchPublicResources()
