@@ -21,11 +21,12 @@ define(
         "triple_brain.top_right_menu",
         "triple_brain.external_page_loader",
         "triple_brain.id_uri",
+        "triple_brain.anonymous_flow",
         "triple_brain.bubble_distance_calculator",
         "triple_brain.freebase",
         "jquery.triple_brain.drag_scroll"
     ],
-    function ($, UserService, EventBus, LoginHandler, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, LeftPanel, SelectionHandler, GraphElementMainMenu, MindMapInfo, TopRightMenu, ExternalPageLoader, IdUriUtils) {
+    function ($, UserService, EventBus, LoginHandler, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, LeftPanel, SelectionHandler, GraphElementMainMenu, MindMapInfo, TopRightMenu, ExternalPageLoader, IdUriUtils, AnonymousFlow) {
         "use strict";
         var api = {
             start: function () {
@@ -80,7 +81,7 @@ define(
                     );
                     if (isAnonymous) {
                         loadLocaleAndGraph();
-                    }else{
+                    } else {
                         UserService.authenticatedUser(loadLocaleAndGraph);
                     }
                     function loadLocaleAndGraph() {
@@ -95,17 +96,17 @@ define(
                     }
                 }
 
-                function handleGettingGraphError(xhr){
+                function handleGettingGraphError(xhr) {
                     $("body").removeClass("hidden");
-                    if(403 === xhr.status){
+                    if (403 === xhr.status) {
                         ExternalPageLoader.showLinearFlowWithOptions({
-                            href:"not-allowed.html",
-                            title:$.t("not_allowed.title")
+                            href: "not-allowed.html",
+                            title: $.t("not_allowed.title")
                         });
-                    }else if (404 === xhr.status) {
+                    } else if (404 === xhr.status) {
                         ExternalPageLoader.showLinearFlowWithOptions({
-                            href:"non-existent.html",
-                            title:$.t("non_existent.title")
+                            href: "non-existent.html",
+                            title: $.t("non_existent.title")
                         });
                     }
                 }
@@ -114,7 +115,8 @@ define(
                     if (MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
                         setupMindMapForAnonymousUser();
                     } else {
-                        showLoginPage();
+                        AnonymousFlow.enter();
+                        //showLoginPage();
                     }
                 }
 
@@ -131,13 +133,13 @@ define(
             function (event, centralVertexUri) {
                 SelectionHandler.removeAll();
                 var centralVertex = IdUriUtils.isSchemaUri(centralVertexUri) ?
-                    GraphDisplayer.getSchemaSelector().get():
+                    GraphDisplayer.getSchemaSelector().get() :
                     GraphDisplayer.getVertexSelector().withUri(centralVertexUri)[0];
                 centralVertex.setAsCentral();
                 $("body, html").removeDragScroll().dragScroll().on(
                     "click",
                     function (event) {
-                        if (event.ctrlKey){
+                        if (event.ctrlKey) {
                             return;
                         }
                         SelectionHandler.removeAll();

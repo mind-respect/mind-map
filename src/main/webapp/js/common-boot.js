@@ -26,6 +26,7 @@ requirejs.config({
         "twitter_bootstrap": "vendor/twitter_bootstrap/3.2/bootstrap.min",
         "jquery.max_char": "triple_brain/jquery.max_char",
         "jquery.triple_brain.search": "triple_brain/search/jquery.triple_brain.search",
+        "triple_brain.big_search_box": "triple_brain/search/triple_brain.big_search_box",
         "triple_brain.object_utils": "triple_brain/triple_brain.object_utils",
         "triple_brain.selection_handler": "triple_brain/triple_brain.selection_handler",
         "triple_brain.scroll_on_mouse_frontier": "triple_brain/triple_brain.scroll_on_mouse_frontier",
@@ -62,7 +63,6 @@ requirejs.config({
         "triple_brain.freebase_autocomplete_provider": "triple_brain/search/autocomplete_results_provider/triple_brain.freebase_autocomplete_provider",
         "triple_brain.user_map_autocomplete_provider": "triple_brain/search/autocomplete_results_provider/triple_brain.user_map_autocomplete_provider",
         "triple_brain.mind-map_template": "triple_brain/triple_brain.mind-map_template",
-        "triple_brain.config": "triple_brain/triple_brain.config",
         "triple_brain.id_uri": "triple_brain/triple_brain.id_uri",
         "triple_brain.identified_bubble": "triple_brain/graph/triple_brain.identified_bubble",
         "triple_brain.vertex_service": "triple_brain/graph/vertex/triple_brain.vertex_service",
@@ -135,7 +135,8 @@ requirejs.config({
         "triple_brain.suggestion_relation_builder" : "triple_brain/display/tree/relative/suggestion_bubble/triple_brain.suggestion_relation_builder",
         "triple_brain.suggestion_relation_ui" : "triple_brain/display/tree/relative/suggestion_bubble/triple_brain.suggestion_relation_ui",
         "triple_brain.suggestion_relation_menu_handler" : "triple_brain/display/tree/relative/suggestion_bubble/triple_brain.suggestion_relation_menu_handler",
-        "triple_brain.graph_element_type" : "triple_brain/graph/triple_brain.graph_element_type"
+        "triple_brain.graph_element_type" : "triple_brain/graph/triple_brain.graph_element_type",
+        "triple_brain.anonymous_flow": "triple_brain/triple_brain.anonymous_flow"
     },
     shim: {
         "crow": [],

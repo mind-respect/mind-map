@@ -161,6 +161,9 @@
     "hidden_properties_tooltip" : "Expand (e)",
 
     "search" : {
+        "big":{
+            "placeholder" : "Search"
+        },
         "context" : {
             "property" : "Property",
             "vertex" : "Bubble",

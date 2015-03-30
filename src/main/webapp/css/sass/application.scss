@@ -11,6 +11,15 @@ body {
   user-select: none;
 }
 
+#big-search-box{
+  position:fixed;
+  top:10%;
+  margin-left:25%;
+  width:50%;
+  min-height:20%;
+  font-size:60px;
+}
+
 .root-vertex-super-container {
   position: absolute;
   padding: 50%;

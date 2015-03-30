@@ -4,10 +4,9 @@
 
 define([
     "jquery",
-    "triple_brain.config",
     "triple_brain.user"
 ],
-    function ($, config, UserService) {
+    function ($, UserService) {
         var api = {};
         api.searchForOwnVerticesAndPublicOnes = function (searchText, successCallback) {
             api.searchForOwnVerticesAndPublicOnesAjaxCall(
@@ -59,6 +58,12 @@ define([
                 type:'GET',
                 url: UserService.currentUserUri() +
                     "/search/uri?uri=" + uri
+            });
+        };
+        api.searchForPublicVerticesAndSchemasAjaxCall = function(searchText){
+            return $.ajax({
+                type:'GET',
+                url: "/service/search?text=" + searchText
             });
         };
         return api;

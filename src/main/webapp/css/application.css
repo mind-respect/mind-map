@@ -2,6 +2,8 @@
 /* Copyright Vincent Blouin under the Mozilla Public License 1.1 */
 body { cursor: all-scroll; -moz-user-select: -moz-none; -khtml-user-select: none; -webkit-user-select: none; -ms-user-select: none; user-select: none; }
 
+#big-search-box { position: fixed; top: 10%; margin-left: 25%; width: 50%; min-height: 20%; font-size: 60px; }
+
 .root-vertex-super-container { position: absolute; padding: 50%; }
 
 a, input[type=button].link-like-button, button.link-like-button { color: #1919ac; }

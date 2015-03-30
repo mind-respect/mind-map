@@ -39,6 +39,12 @@ define([
             edgeToIdentify
         );
     };
+    api.toFetchPublicResources = function () {
+        return new UserMapAutoCompleteProvider(
+            SearchService.searchForPublicVerticesAndSchemasAjaxCall,
+            undefined
+        );
+    };
     return api;
     function UserMapAutoCompleteProvider(fetchMethod, graphElementToIgnore) {
         var self = this;
