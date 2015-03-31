@@ -7,7 +7,6 @@ define(
         "jquery",
         "triple_brain.user",
         "triple_brain.event_bus",
-        "triple_brain.login_handler",
         "triple_brain.ui.search",
         "triple_brain.graph_displayer",
         "triple_brain.graph_displayer_factory",
@@ -24,9 +23,10 @@ define(
         "triple_brain.anonymous_flow",
         "triple_brain.bubble_distance_calculator",
         "triple_brain.freebase",
-        "jquery.triple_brain.drag_scroll"
+        "jquery.triple_brain.drag_scroll",
+        "triple_brain.bottom_center_panel"
     ],
-    function ($, UserService, EventBus, LoginHandler, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, LeftPanel, SelectionHandler, GraphElementMainMenu, MindMapInfo, TopRightMenu, ExternalPageLoader, IdUriUtils, AnonymousFlow) {
+    function ($, UserService, EventBus, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, LeftPanel, SelectionHandler, GraphElementMainMenu, MindMapInfo, TopRightMenu, ExternalPageLoader, IdUriUtils, AnonymousFlow) {
         "use strict";
         var api = {
             start: function () {
@@ -116,15 +116,7 @@ define(
                         setupMindMapForAnonymousUser();
                     } else {
                         AnonymousFlow.enter();
-                        //showLoginPage();
                     }
-                }
-
-                function showLoginPage() {
-                    $("body").removeClass("hidden");
-                    LanguageManager.loadLocaleContent(function () {
-                        LoginHandler.startFlow();
-                    });
                 }
             }
         };

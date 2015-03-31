@@ -18,9 +18,9 @@ define([
                 UserMapAutocompleteProvider.toFetchPublicResources()
             ]
         }).removeClass("hidden");
+
     };
     return api;
-
     function getBox(){
         return $("#big-search-box");
     }

@@ -5,8 +5,10 @@
 define([
     "jquery",
     "triple_brain.big_search_box",
-    "triple_brain.language_manager"
-], function ($, BigSearchBox, LanguageManager) {
+    "triple_brain.language_manager",
+    "triple_brain.mind_map_info",
+    "triple_brain.event_bus"
+], function ($, BigSearchBox, LanguageManager, MindMapInfo) {
     "use strict";
     var api = {};
     api.enter = function(){
@@ -16,6 +18,8 @@ define([
             $("body").removeClass("hidden");
 
         });
+        MindMapInfo.setIsAnonymous(true);
+        MindMapInfo.defineIsViewOnlyIfUndefined();
     };
     return api;
 });

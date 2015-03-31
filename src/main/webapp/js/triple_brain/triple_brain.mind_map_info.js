@@ -25,30 +25,34 @@ define([
                 api.defaultVertexUri() :
                 uriInUrl;
         };
-        api.isViewOnly = function(){
-            if(isViewOnly === undefined){
-                isViewOnly = _isAnonymous || !IdUriUtils.isGraphElementUriOwnedByCurrentUser(
-                    api._getCenterVertexUriInUrl()
-                );
-                EventBus.publish(
-                    '/event/ui/mind_map_info/is_view_only',
-                    [isViewOnly]
-                );
-            }
+        api.isViewOnly = function () {
+            api.defineIsViewOnlyIfUndefined();
             return isViewOnly;
         };
-        api.setIsAnonymous = function(isAnonymous){
+        api.defineIsViewOnlyIfUndefined = function () {
+            if (isViewOnly !== undefined) {
+                return;
+            }
+            isViewOnly = _isAnonymous || !IdUriUtils.isGraphElementUriOwnedByCurrentUser(
+                api._getCenterVertexUriInUrl()
+            );
+            EventBus.publish(
+                '/event/ui/mind_map_info/is_view_only',
+                [isViewOnly]
+            );
+        };
+        api.setIsAnonymous = function (isAnonymous) {
             _isAnonymous = isAnonymous;
         };
-        api.isAnonymous = function(){
+        api.isAnonymous = function () {
             return _isAnonymous;
         };
-        api.isSchemaMode = function(){
+        api.isSchemaMode = function () {
             return IdUriUtils.isSchemaUri(
                 api._getCenterVertexUriInUrl()
             );
         };
-        api._getCenterVertexUriInUrl = function(){
+        api._getCenterVertexUriInUrl = function () {
             return $.url().param("bubble");
         };
         return api;

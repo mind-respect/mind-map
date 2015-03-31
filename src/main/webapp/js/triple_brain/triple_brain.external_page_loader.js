@@ -10,7 +10,6 @@ define([
         api.showLinearFlowWithOptions = function (configuration) {
             var options = $.extend({
                 width:300,
-                closeOnEscape:false,
                 modal:true,
                 draggable:false,
                 resizable:false
@@ -25,21 +24,10 @@ define([
                         configuration.onComplete();
                     }
                     getOtherPageContainer().dialog(options).i18n();
-                    hideCloseButton();
                 }
             );
-            getMindMapContainer().hide();
-            hideCloseButton();
         };
         return api;
-        function hideCloseButton() {
-            $(
-                ".ui-dialog-titlebar-close"
-            ).addClass("hidden");
-        }
-        function getMindMapContainer(){
-            return $("#mind_map");
-        }
         function isThereCurrentlyADialog(){
             return getOtherPageContainer().hasClass(
                 "ui-dialog-content"

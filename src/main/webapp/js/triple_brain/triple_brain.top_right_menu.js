@@ -3,6 +3,7 @@
  */
 define([
         "jquery",
+        "triple_brain.login_handler",
         "triple_brain.selection_handler",
         "triple_brain.user",
         "triple_brain.graph_displayer",
@@ -12,7 +13,7 @@ define([
         "triple_brain.event_bus",
         "triple_brain.schema_service"
     ],
-    function ($, SelectionHandler, UserService, GraphDisplayer, Vertex, VertexService, MindMapInfo, EventBus, SchemaService) {
+    function ($, LoginHandler, SelectionHandler, UserService, GraphDisplayer, Vertex, VertexService, MindMapInfo, EventBus, SchemaService) {
         "use strict";
         var api = {};
         api.earlyInit = function () {
@@ -21,16 +22,18 @@ define([
         EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function(event, isViewOnly){
             if(isViewOnly){
                 getCreateMenu().hide();
-            }else{
-                handleCreateNewConceptButton();
-                handleCreateNewSchemaButton();
-                handleDisconnectButton();
             }
             if(MindMapInfo.isAnonymous()){
                 getDisconnectButton().hide();
                 handleLoginRegisterButton();
             }else{
+                handleCreateNewConceptButton();
+                handleCreateNewSchemaButton();
+                handleDisconnectButton();
                 getLoginRegisterButton().hide();
+            }
+            if(!MindMapInfo.isCenterBubbleUriDefinedInUrl()){
+                getSelectButton().addClass("hidden");
             }
         });
         return api;
@@ -90,7 +93,7 @@ define([
 
         function handleLoginRegisterButton(){
             return getLoginRegisterButton().click(function(){
-                window.location = "/";
+                LoginHandler.startFlow();
             });
         }
 
@@ -126,6 +129,9 @@ define([
 
         function getLoginRegisterButton(){
             return $("#login-register");
+        }
+        function getSelectButton(){
+            return $("#select-button");
         }
     }
 );

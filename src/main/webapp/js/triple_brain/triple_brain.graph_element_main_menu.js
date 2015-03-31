@@ -6,11 +6,12 @@ define([
         "triple_brain.graph_displayer",
         "triple_brain.event_bus",
         "triple_brain.selection_handler",
-        "triple_brain.graph_element_button",        
+        "triple_brain.graph_element_button",
+        "triple_brain.mind_map_info",
         "jquery-ui",
         "jquery.i18next",
         "twitter_bootstrap"
-    ], function ($, GraphDisplayer, EventBus, SelectionHandler, GraphElementButton) {
+    ], function ($, GraphDisplayer, EventBus, SelectionHandler, GraphElementButton, MindMapInfo) {
         "use strict";
         var api = {},
             _menu;
@@ -91,6 +92,11 @@ define([
             });
         };
         EventBus.subscribe("/event/ui/selection/changed", selectionChangedHandler);
+        EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function(){
+            if(!MindMapInfo.isCenterBubbleUriDefinedInUrl()){
+                getMenu().addClass("hidden");
+            }
+        });
         return api;
 
         function selectionChangedHandler(event, selectionInfo) {

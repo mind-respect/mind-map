@@ -6,9 +6,10 @@ define([
         "triple_brain.registration_handler",
         "triple_brain.external_page_loader",
         "triple_brain.user",
+        "triple_brain.mind_map_info",
         "jquery.json.min"
     ],
-    function ($, RegistrationHandler, ExternalPageLoader, UserService) {
+    function ($, RegistrationHandler, ExternalPageLoader, UserService, MindMapInfo) {
         "use strict";
         var api = {};
         api.startFlow = function () {
@@ -35,7 +36,11 @@ define([
                         UserService.getDefaultVertexUri(
                             user.user_name,
                             function (uri) {
-                                window.location = "?bubble=" + uri;
+                                if(MindMapInfo.isCenterBubbleUriDefinedInUrl()){
+                                    window.location.reload();
+                                }else{
+                                    window.location = "?bubble=" + uri;
+                                }
                             }
                         );
                     },
