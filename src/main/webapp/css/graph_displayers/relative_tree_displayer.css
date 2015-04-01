@@ -160,7 +160,7 @@
 }
 
 .relation.inverse .label{
-    background: red;
+    background: mediumpurple;
 }
 
 .relation.inverse input[type=text]{

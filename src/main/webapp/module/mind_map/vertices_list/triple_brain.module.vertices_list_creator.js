@@ -67,38 +67,41 @@ define([
             }
 
             function addFilterInput(){
-                var filterInput = $(
-                    "<input type='text' class='filter'>"
-                ).attr(
-                    "data-i18n",
-                    "[placeholder]filter"
-                );
-                filterInput.on(
-                    "keyup",
-                    function(){
-                        var val = $(this).val().toLowerCase();
-                        getActualList().find("> li").each(function(){
-                            var listElement = $(this);
-                            var text = listElement.find(
-                                "> input"
-                            ).val().toLowerCase();
-                            if (text.search(val) > -1) {
-                                listElement.show();
-                            }
-                            else {
-                                listElement.hide();
-                            }
-                        });
-                    }
-                );
-                html.append(
-                    filterInput
-                );
+                $('<div class="col-md-12">').append(
+                    buildInput()
+                ).appendTo(html);
+                function buildInput(){
+                    return $(
+                        "<input type='text' class='filter form-control input-sm'>"
+                    ).attr(
+                        "data-i18n",
+                        "[placeholder]filter"
+                    ).on(
+                        "keyup",
+                        function(){
+                            var val = $(this).val().toLowerCase();
+                            getActualList().find("> li").each(function(){
+                                var listElement = $(this);
+                                var text = listElement.find(
+                                    "> input"
+                                ).val().toLowerCase();
+                                if (text.search(val) > -1) {
+                                    listElement.show();
+                                }
+                                else {
+                                    listElement.hide();
+                                }
+                            });
+                        }
+                    );
+                }
             }
 
             function addVerticesList() {
-                $(html).append(
-                    Template['vertices_list'].merge()
+                html.append(
+                    $('<div class="col-md-12">').append(
+                        Template['vertices_list'].merge()
+                    )
                 );
             }
         }

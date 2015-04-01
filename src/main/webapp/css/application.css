@@ -2,7 +2,8 @@
 /* Copyright Vincent Blouin under the Mozilla Public License 1.1 */
 body { cursor: all-scroll; -moz-user-select: -moz-none; -webkit-user-select: none; -ms-user-select: none; user-select: none; }
 
-#big-search-box { position: fixed; top: 10%; margin-left: 25%; width: 50%; min-height: 20%; font-size: 60px; }
+#big-search-box-container { margin-top: 10%; }
+#big-search-box-container .input-group { margin: auto; }
 
 .root-vertex-super-container { position: absolute; padding: 50%; }
 
@@ -35,8 +36,6 @@ button.add-button-in-list:hover { color: #00d100; }
 .bullet { float: left; margin-right: 7px; }
 .bullet:before { content: "• "; }
 
-#login-button, #register-button { display: block; margin-bottom: 1.2em; }
-
 #selectedLanguages, .registration-available-languages { list-style-type: none; margin: 0; background-color: gray; overflow-x: hidden; overflow-y: hidden; width: 350px; max-height: 400px; }
 
 #selectedLanguages li, .registration-available-languages li { padding-top: 0.5em; padding-bottom: 0.5em; position: relative; /*weird number 99.4%. Otherwise right border doesn't show*/ width: 99.4%; }
@@ -45,11 +44,9 @@ button.add-button-in-list:hover { color: #00d100; }
 
 #selectedLanguages li label, .registration-available-languages li label { margin-left: 0.4em; font-size: 1.2em; display: inline-block; }
 
-.security-form-wrapper { background-color: white; height: 100%; }
+.security-form-wrapper { height: 100%; }
 
 .security-form a { float: left; }
-
-#register-link, #login-link { display: block; text-align: center; }
 
 #top-center-menu { position: fixed; left: 40%; top: 0.5em; width: 20em; }
 #top-center-menu .ui-button { z-index: 3; }
@@ -109,7 +106,7 @@ svg { z-index: 1; }
 
 #toggle-left-panel-collapse { float: right; position: fixed; left: 235px; top: 10px; z-index: 2; font-size: 1em; }
 
-#left-panel h2 { font-size: 1em; white-space: nowrap; text-decoration: underline; }
+#left-panel h2, #left-panel h4 { font-size: 1em; white-space: nowrap; text-decoration: underline; }
 
 #sub-vertices-depth-slider { z-index: 3; width: 120px; }
 
@@ -132,8 +129,8 @@ svg { z-index: 1; }
 .group-relation .label-container .label { position: relative; margin-right: 0.3em; z-index: 1; }
 .group-relation .label-container .menu { display: inline; top: 80%; }
 
-.bubble { display: table; white-space: nowrap; position: relative; min-width: 0; margin: 0 0 0 0; }
-.bubble > * { display: table-cell; vertical-align: middle; }
+.bubble { display: table; /*.label to override bootstrap*/ white-space: nowrap; position: relative; min-width: 0; margin: 0 0 0 0; }
+.bubble > *, .bubble .label { display: table-cell; vertical-align: middle; }
 .bubble.view-only .arrow:before { left: 0; }
 .bubble.suggestion .in-bubble-content, .bubble.suggestion .label { background-color: white; border: 1px dashed black; color: black; text-shadow: none; }
 .bubble .bubble-label { outline: 0px solid transparent; border: none; padding: 0; font-family: Helvetica; font-size: 14px; width: auto; display: table-cell; white-space: pre; min-width: 1em; height: 17px; }
@@ -205,6 +202,7 @@ svg { z-index: 1; }
 .property .relation-menu { left: 0; }
 
 .relation { position: relative; }
+.relation .label-info { background-color: #3a87ad; }
 .relation .relation-menu { z-index: 11; position: absolute; left: 0; top: 22px; }
 .relation .ui-button { width: 1.7em; height: 1.8em; margin: 0; }
 

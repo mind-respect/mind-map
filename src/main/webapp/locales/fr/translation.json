@@ -1,10 +1,10 @@
 {
     "login" : {
-        "title" : "Authentification",
+        "title" : "S'authentifier / S'enregistrer",
         "email" : "Courriel",
         "password" : "Mot de passe",
         "login" : "Authentifier",
-        "register": "créer un compte",
+        "register": "S'enregistrer",
         "about" : "à propos",
         "error" : "Courriel ou mot de passe invalide(s)"
     },

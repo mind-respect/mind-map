@@ -26,7 +26,7 @@ define([
                 } else {
                     collapse();
                     button.animate({
-                        left: '10px'
+                        left: '15px'
                     }).text(">>");
                 }
                 function collapse() {

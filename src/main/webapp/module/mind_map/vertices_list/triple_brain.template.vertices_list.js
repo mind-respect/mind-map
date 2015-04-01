@@ -7,11 +7,11 @@ define([
     function(Template) {
         var api = {};
         var t = Template.withTemplateGroup(api);
-        t.add('panel', "<div id='vertices-list-panel'></div>");
-        t.add('title', "<h2 data-i18n='title'></h2>");
+        t.add('panel', '<div id="vertices-list-panel" class="col-md-12"></div>');
+        t.add('title', "<h4 data-i18n='title'></h4>");
 
-        t.add('sort_menu', "<div id='vertices_list_sort_menu'></div>");
-        t.add('sort_menu_title', "<label data-i18n='sort.title' for='vertices_list_sort-options'></label>:");
+        t.add('sort_menu', '<div id="vertices_list_sort_menu" class="col-md-12"></div>');
+        t.add('sort_menu_title', "<span data-i18n='sort.title' for='vertices_list_sort-options'></span>:");
         t.add('options_list', "<ul id='vertices-list-sort-options'></ul>");
         t.add(
             'sort_by_label_option',
@@ -26,7 +26,7 @@ define([
                 "</li>"
         );
 
-        t.add('vertices_list', "<ul id='vertices-list'></ul>");
+        t.add('vertices_list', '<ul id="vertices-list"</ul>');
 
         t.add(
             'list_element',

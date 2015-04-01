@@ -2,27 +2,28 @@
   ~ Copyright Vincent Blouin under the Mozilla Public License 1.1
   -->
 
-<div class="security-form-wrapper" id="login-page">
+<div class="security-form-wrapper container" id="login-page">
     <p id="login-error" class="alert alert-error hidden" data-i18n="login.error"></p>
 
-    <form id="login-form" class="security-form well">
-        <fieldset>
+    <form id="login-form" class="security-form well" role="form">
+        <div class="form-group">
             <label for="login-email" data-i18n="login.email"></label>
-            <input id="login-email" class="large" name="email" type="text">
+            <input id="login-email" class="form-control" name="email" type="text">
+        </div>
+        <div class="form-group">
             <label for="login-password" data-i18n="login.password"></label>
-            <input id="login-password" class="large" name="password" type="password"/>
+            <input id="login-password" class="form-control" name="password" type="password"/>
             <button id="login-button" type="button" class="btn" data-i18n="login.login"></button>
-            <div class="row-fluid">
-                <div class="span12">
-                    <span class="bullet"></span><a id="register-link" href="#" data-i18n="login.register"></a>
-                </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <span class="bullet"></span><a id="register-link" href="#" data-i18n="login.register"></a>
             </div>
-            <div class="row-fluid">
-                <div class="span12">
-                    <span class="bullet"></span><a href="http://community.triple-brain.org" data-i18n="login.about"></a>
-                </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <span class="bullet"></span><a href="http://community.triple-brain.org" data-i18n="login.about"></a>
             </div>
-        </fieldset>
+        </div>
     </form>
-
 </div>

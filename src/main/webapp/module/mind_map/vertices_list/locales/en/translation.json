@@ -3,7 +3,7 @@
     "sort" : {
         "title" : "Sort by",
         "1" : "label",
-        "2" : "distance from center bubble"
+        "2" : "distance"
     },
     "filter" : "filter"
 }

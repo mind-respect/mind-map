@@ -33,12 +33,13 @@
 }
 #vertices-list-sort-options{
     margin-left: 0;
-    padding-left:30px;
+    padding-left:9px;
     padding-top:0px;
     margin-top:3px;
     margin-bottom:0px;
     white-space: nowrap;
     font-size:0.9em;
+    list-style: none outside none;
 }
 
 #vertices-list-sort-options li {
@@ -46,12 +47,12 @@
     text-indent: -0.5em;
     margin-bottom:2px;
     text-color:blue;
+    display: inline;
 }
 
-#vertices-list-sort-options li:last-child {
-    margin-bottom:0px;
+#vertices-list-sort-options li:not(:first-child)::before {
+    content: " • ";
 }
-
 
 #vertices-list-sort-options li { padding-right: 0px; }
 
@@ -65,3 +66,7 @@
     font-size:1em;
 }
 
+/*override bootstrap*/
+#vertices-list .label:empty{
+    display:inline-block;
+}

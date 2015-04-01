@@ -10,13 +10,11 @@ body {
   user-select: none;
 }
 
-#big-search-box{
-  position:fixed;
-  top:10%;
-  margin-left:25%;
-  width:50%;
-  min-height:20%;
-  font-size:60px;
+#big-search-box-container{
+  margin-top:10%;
+  .input-group{
+    margin:auto;
+  }
 }
 
 .root-vertex-super-container {
@@ -129,11 +127,6 @@ button {
   }
 }
 
-#login-button, #register-button {
-  display: block;
-  margin-bottom: 1.2em;
-}
-
 #selectedLanguages, .registration-available-languages {
   list-style-type: none;
   margin: 0;
@@ -163,17 +156,11 @@ button {
 }
 
 .security-form-wrapper {
-  background-color: white;
   height: 100%;
 }
 
 .security-form a {
   float: left;
-}
-
-#register-link, #login-link {
-  display: block;
-  text-align: center;
 }
 
 #top-center-menu {
@@ -373,10 +360,13 @@ svg {
   font-size: 1em;
 }
 
-#left-panel h2 {
-  font-size: 1em;
-  white-space: nowrap;
-  text-decoration: underline
+#left-panel {
+  h2, h4{
+    font-size: 1em;
+    white-space: nowrap;
+    text-decoration: underline;
+  }
+
 }
 
 #sub-vertices-depth-slider {
@@ -441,7 +431,8 @@ svg {
 
 .bubble {
   display: table;
-  > * {
+  /*.label to override bootstrap*/
+  > *, .label {
     display: table-cell;
     vertical-align: middle;
   }
@@ -805,6 +796,9 @@ svg {
 
 .relation {
   position: relative;
+  .label-info{
+    background-color: #3a87ad;
+  }
   .relation-menu {
     z-index: 11;
     position: absolute;

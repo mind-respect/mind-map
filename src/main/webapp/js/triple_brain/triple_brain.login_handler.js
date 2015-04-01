@@ -13,14 +13,15 @@ define([
         "use strict";
         var api = {};
         api.startFlow = function () {
-            ExternalPageLoader.showLinearFlowWithOptions({
-                href: "login-form.html",
-                onComplete: function () {
-                    handleLoginForm();
-                    handleRegisterLink();
-                },
-                title: $.t("login.title")
-            });
+            $("#login-page").modal();
+            //ExternalPageLoader.showLinearFlowWithOptions({
+            //    href: "login-form.html",
+            //    onComplete: function () {
+            //        handleLoginForm();
+            //        handleRegisterLink();
+            //    },
+            //    title: $.t("login.title")
+            //});
         };
         return api;
         function handleLoginForm() {

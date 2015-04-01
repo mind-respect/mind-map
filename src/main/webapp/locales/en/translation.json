@@ -1,10 +1,10 @@
 {
     "login" : {
-        "title" : "Login",
+        "title" : "Login / Register",
         "email" : "Email",
         "password" : "Password",
         "login" : "Login",
-        "register": "create an account",
+        "register": "Register",
         "about" : "about",
         "error" : "Invalid credentials"
     },

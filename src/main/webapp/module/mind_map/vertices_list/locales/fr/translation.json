@@ -3,7 +3,7 @@
     "sort":{
         "title":"Trier par",
         "1":"texte",
-        "2":"distance de la bulle centrale"
+        "2":"distance"
     },
     "filter" : "filtrer"
 }
