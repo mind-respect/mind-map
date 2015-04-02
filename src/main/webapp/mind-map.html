@@ -153,17 +153,37 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
                         class="sr-only">Close</span></button>
                 <h4 class="modal-title" data-i18n="login.title"></h4>
-                <!--<div class="row">-->
-                <!--<div class="col-md-6">-->
-                <!--<h4 class="modal-title" data-i18n="login.title"></h4>    -->
-                <!--</div>-->
-                <!--<div class="col-md-6">-->
-                <!--<a href="http://community.triple-brain.org">Register</a>-->
-                <!--</div>-->
-                <!--</div>-->
             </div>
             <div class="modal-body">
-                <p id="login-error" class="alert alert-error hidden" data-i18n="login.error"></p>
+                <div id="login-error" class="alert alert-danger hidden" role="alert" data-i18n="login.error"></div>
+                <div id="mandatory_email"
+                     class="alert alert-danger hidden"
+                     data-i18n="register.error.email_mandatory" role="alert">
+                </div>
+
+                <div id="invalid_email"
+                     class="alert alert-danger hidden"
+                     data-i18n="register.error.email_mandatory" role="alert">
+                </div>
+
+                <div id="email_too_long"
+                     class="alert alert-danger hidden"
+                     data-i18n="register.error.email_too_long" role="alert">
+                </div>
+
+                <div id="already_registered_email"
+                     class="alert alert-danger hidden"
+                     data-i18n="register.error.email_already_exists" role="alert">
+                </div>
+
+                <div id="mandatory_password"
+                     class="alert alert-danger hidden"
+                     data-i18n="register.error.password_mandatory" role="alert">
+                </div>
+                <div id="password_too_short"
+                     class="alert alert-danger hidden"
+                     data-i18n="register.error.password_too_short" role="alert">
+                </div>
                 <form id="login-form" class="security-form well" role="form">
                     <div class="form-group">
                         <div class="input-group">
@@ -178,17 +198,6 @@
                         <input id="login-password" class="form-control" name="password" type="password"
                                data-i18n="[placeholder]login.password"/>
                     </div>
-                    <!--<div class="row">-->
-                    <!--<div class="col-md-12">-->
-                    <!--<span class="bullet"></span><a id="register-link" href="#" data-i18n="login.register"></a>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="row">-->
-                    <!--<div class="col-md-12">-->
-                    <!--<span class="bullet"></span><a href="http://community.triple-brain.org"-->
-                    <!--data-i18n="login.about"></a>-->
-                    <!--</div>-->
-                    <!--</div>-->
                 </form>
             </div>
             <div class="modal-footer">
@@ -198,7 +207,6 @@
                                 data-i18n="login.login"></button>
                         <button id="register-link" type="button" class="btn btn-primary"
                                 data-i18n="login.register"></button>
-                        <!--<a id="register-link" href="#" data-i18n="login.register"></a>-->
                     </div>
                 </div>
             </div>

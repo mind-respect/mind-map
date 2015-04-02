@@ -24,17 +24,11 @@
             "filter" : "Trier"
         },
         "error" : {
-            "mandatory" : "Le nom d'usager est obligatoire",
-            "invalid" : "Le nom d'usager est invalide, il peut contenir des lettres, des nombres, des soulignements (underscores) et des traits d'union",
-            "too_long" : "Le nom d'usager ne peut excéder 50 caractères",
-            "taken" : "Ce nom d'usager est déjà pris",
             "email_mandatory": "Le courriel est obligatoire",
             "email_invalid" : "Ce courriel est invalide",
             "email_already_exists" : "Ce courriel est déjà enregistré",
             "password_mandatory" : "Le mot de passe est obligatoire",
-            "password_too_short" : "Le mot de passe requiert un minimum de 6 caractères",
-            "passwords_dont_match" : "Les mots de passe ne correspondent pas",
-            "locales_mandatory" : "Au moins une langue préféré doit être choisie"
+            "password_too_short" : "Le mot de passe requiert un minimum de 6 caractères"
         }
     },
     "not_allowed" : {

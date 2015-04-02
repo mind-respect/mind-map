@@ -14,6 +14,8 @@ define([
         var api = {};
         api.startFlow = function () {
             $("#login-page").modal();
+            handleLoginForm();
+            handleRegisterLink();
             //ExternalPageLoader.showLinearFlowWithOptions({
             //    href: "login-form.html",
             //    onComplete: function () {
@@ -27,30 +29,27 @@ define([
         function handleLoginForm() {
             submitWhenPressingEnter();
             getLoginButton().click(function () {
-                var loginInfo = {
-                    email: getEmailField().val(),
-                    password: getPasswordField().val()
-                };
                 UserService.authenticate(
-                    loginInfo,
-                    function(user){
+                    getFormData(),
+                    function (user) {
                         UserService.getDefaultVertexUri(
                             user.user_name,
                             function (uri) {
-                                if(MindMapInfo.isCenterBubbleUriDefinedInUrl()){
+                                if (MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
                                     window.location.reload();
-                                }else{
+                                } else {
                                     window.location = "?bubble=" + uri;
                                 }
                             }
                         );
                     },
                     function () {
-                        getErrorMessage().removeClass("hidden");
+                        getErrorMessages().addClass("hidden");
+                        getLoginErrorMessage().removeClass("hidden");
                     }
                 );
             });
-            getErrorMessage().addClass("hidden");
+            getErrorMessages().addClass("hidden");
             getLoginForm()[0].reset();
         }
 
@@ -59,7 +58,11 @@ define([
                 "click",
                 function (event) {
                     event.preventDefault();
-                    RegistrationHandler.startFlow();
+                    UserService.register(
+                        getFormData(),
+                        handleRegistrationSuccess,
+                        handleRegistrationError
+                    );
                 });
         }
 
@@ -74,23 +77,56 @@ define([
                 }
             );
         }
-        function getErrorMessage(){
+
+        function handleRegistrationSuccess(user) {
+            UserService.getDefaultVertexUri(
+                user.user_name,
+                function (uri) {
+                    window.location = "?bubble=" + uri;
+                }
+            );
+        }
+
+        function handleRegistrationError(errors) {
+            getLoginErrorMessage().addClass("hidden");
+            $.each(errors, function () {
+                var error = this;
+                $('#' + error.reason).removeClass("hidden");
+            });
+        }
+
+        function getFormData() {
+            return {
+                email: getEmailField().val(),
+                password: getPasswordField().val()
+            }
+        }
+
+        function getLoginErrorMessage() {
             return $('#login-error');
         }
-        function getLoginButton(){
+
+        function getLoginButton() {
             return $('#login-button');
         }
-        function getEmailField(){
+
+        function getEmailField() {
             return $("#login-email");
         }
-        function getPasswordField(){
+
+        function getPasswordField() {
             return $("#login-password");
         }
-        function getLoginForm(){
+
+        function getLoginForm() {
             return $('#login-form');
         }
-        function getRegisterLink(){
+
+        function getRegisterLink() {
             return $("#register-link");
+        }
+        function getErrorMessages(){
+            return $('.alert-danger');
         }
     }
 );
