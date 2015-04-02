@@ -3,27 +3,17 @@
  */
 define([
         "jquery",
-        "triple_brain.registration_handler",
-        "triple_brain.external_page_loader",
         "triple_brain.user",
         "triple_brain.mind_map_info",
         "jquery.json.min"
     ],
-    function ($, RegistrationHandler, ExternalPageLoader, UserService, MindMapInfo) {
+    function ($, UserService, MindMapInfo) {
         "use strict";
         var api = {};
         api.startFlow = function () {
             $("#login-page").modal();
             handleLoginForm();
-            handleRegisterLink();
-            //ExternalPageLoader.showLinearFlowWithOptions({
-            //    href: "login-form.html",
-            //    onComplete: function () {
-            //        handleLoginForm();
-            //        handleRegisterLink();
-            //    },
-            //    title: $.t("login.title")
-            //});
+            handleRegisterButton();
         };
         return api;
         function handleLoginForm() {
@@ -53,7 +43,7 @@ define([
             getLoginForm()[0].reset();
         }
 
-        function handleRegisterLink() {
+        function handleRegisterButton() {
             getRegisterLink().on(
                 "click",
                 function (event) {
