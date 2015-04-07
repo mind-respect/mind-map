@@ -8,7 +8,7 @@ define([
         "triple_brain.triple_ui_builder",
         "triple_brain.suggestion",
         "triple_brain.graph_element_service",
-        "triple_brain.user",
+        "triple_brain.user_service",
         "triple_brain.friendly_resource_service"
     ],
     function ($, EventBus, TripleUiBuilder, Suggestion, GraphElementService, UserService, FriendlyResourceService) {

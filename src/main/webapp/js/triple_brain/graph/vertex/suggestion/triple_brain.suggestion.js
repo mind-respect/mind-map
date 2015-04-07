@@ -8,7 +8,7 @@ define([
         "triple_brain.friendly_resource",
         "triple_brain.identification",
         "triple_brain.id_uri",
-        "triple_brain.user",
+        "triple_brain.user_service",
         "triple_brain.suggestion_origin",
         "jquery.json.min"
     ],

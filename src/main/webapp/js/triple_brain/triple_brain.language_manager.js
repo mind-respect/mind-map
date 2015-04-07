@@ -3,7 +3,7 @@
  */
 define([
     "jquery",
-    "triple_brain.user",
+    "triple_brain.user_service",
     "jquery.i18next"
 ], function($, UserService){
     "use strict";

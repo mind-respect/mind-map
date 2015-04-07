@@ -4,7 +4,7 @@
 
 define([
     "jquery",
-    "triple_brain.user"
+    "triple_brain.user_service"
 ],
     function ($, UserService) {
         var api = {};

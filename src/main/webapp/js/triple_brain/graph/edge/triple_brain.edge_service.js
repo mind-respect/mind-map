@@ -6,7 +6,7 @@ define([
         "jquery",
         "triple_brain.event_bus",
         "triple_brain.id_uri",
-        "triple_brain.user",
+        "triple_brain.user_service",
         "triple_brain.graph_element_service",
         "triple_brain.edge",
         "triple_brain.friendly_resource_service"

@@ -5,7 +5,7 @@ define([
         "jquery",
         "triple_brain.login_handler",
         "triple_brain.selection_handler",
-        "triple_brain.user",
+        "triple_brain.user_service",
         "triple_brain.graph_displayer",
         "triple_brain.vertex",
         "triple_brain.vertex_service",

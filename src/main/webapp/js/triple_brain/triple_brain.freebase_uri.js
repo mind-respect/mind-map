@@ -1,7 +1,9 @@
 /*
  * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
-define(["triple_brain.user"], function (UserService) {
+define([
+    "triple_brain.user_service"
+], function (UserService) {
     var baseUrl = "https://www.googleapis.com/freebase/v1",
         api = {
             key: "AIzaSyBHOqdqbswxnNmNb4k59ARSx-RWokLZhPA",
@@ -10,7 +12,7 @@ define(["triple_brain.user"], function (UserService) {
             SEARCH_URL: baseUrl + "/search",
             IMAGE_URL: baseUrl + "/image",
             DESCRIPTION_URL: baseUrl + "/text",
-            DESCRIPTION_KEY : "/common/topic/description"
+            DESCRIPTION_KEY: "/common/topic/description"
         },
         _freebaseFormattedUserLocales,
         _freebaseUserLocalesArray;
@@ -33,9 +35,9 @@ define(["triple_brain.user"], function (UserService) {
     };
     api.isFreebaseUri = function (uri) {
         return $.url(uri).attr()
-            .host
-            .toLowerCase()
-            .indexOf("freebase.com") != -1;
+                .host
+                .toLowerCase()
+                .indexOf("freebase.com") != -1;
     };
     api.getFreebaseFormattedUserLocales = function () {
         if (_freebaseFormattedUserLocales === undefined) {
@@ -46,7 +48,7 @@ define(["triple_brain.user"], function (UserService) {
     api.getMqlReadLocale = function () {
         return "/lang/" + getUserFreebaseLocalesArray()[0];
     };
-    api.descriptionInFreebaseResult = function(object){
+    api.descriptionInFreebaseResult = function (object) {
         return object[api.DESCRIPTION_KEY] === undefined ?
             "" : object[api.DESCRIPTION_KEY][0];
     };

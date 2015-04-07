@@ -3,7 +3,7 @@
  */
 define([
         "jquery",
-        "triple_brain.user",
+        "triple_brain.user_service",
         "triple_brain.mind_map_info",
         "jquery.json.min"
     ],
@@ -14,6 +14,7 @@ define([
             $("#login-page").modal();
             handleLoginForm();
             handleRegisterButton();
+            handleForgotPassword();
         };
         return api;
         function handleLoginForm() {
@@ -54,6 +55,18 @@ define([
                         handleRegistrationError
                     );
                 });
+        }
+
+        function handleForgotPassword(){
+            getForgotPasswordButton().click(function(event){
+                event.preventDefault();
+                getErrorMessages().addClass("hidden");
+                if(getEmailField().val().trim() === ""){
+                    getMandatoryEmailErrorMessage().removeClass("hidden");
+                    return;
+                }
+                UserService.resetPassword();
+            });
         }
 
         function submitWhenPressingEnter() {
@@ -115,8 +128,14 @@ define([
         function getRegisterLink() {
             return $("#register-link");
         }
+        function getForgotPasswordButton(){
+            return $("#forgot-password-link");
+        }
         function getErrorMessages(){
             return $('.alert-danger');
+        }
+        function getMandatoryEmailErrorMessage(){
+            return $("#mandatory_email");
         }
     }
 );

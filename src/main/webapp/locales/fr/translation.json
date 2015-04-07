@@ -6,7 +6,8 @@
         "login" : "Authentifier",
         "register": "S'enregistrer",
         "about" : "à propos",
-        "error" : "Courriel ou mot de passe invalide(s)"
+        "error" : "Courriel ou mot de passe invalide(s)",
+        "forgot": "Mot de passe oublié"
     },
 
     "register" : {

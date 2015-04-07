@@ -96,6 +96,13 @@ define([
                 url: sessionResourceUrl
             }).success(successCallBack);
         };
+        api.resetPassword = function(email, callback){
+            $.ajax({
+                type: 'POST',
+                url: "/service/forget-password",
+                data: JSON.stringify({email: email})
+            }).success(callback);
+        };
         return api;
     }
 );

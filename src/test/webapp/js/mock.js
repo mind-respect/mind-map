@@ -3,7 +3,7 @@
  */
 
 define([
-    "triple_brain.user",
+    "triple_brain.user_service",
     "triple_brain.mind_map_info",
     "triple_brain.suggestion_service",
     "triple_brain.graph_service",

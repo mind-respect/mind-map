@@ -4,7 +4,7 @@
 
 define([
         "triple_brain.id_uri",
-        "triple_brain.user",
+        "triple_brain.user_service",
         "triple_brain.event_bus",
         "jquery.url"
     ],

@@ -5,7 +5,7 @@
 define(
     [
         "jquery",
-        "triple_brain.user",
+        "triple_brain.user_service",
         "triple_brain.event_bus",
         "triple_brain.ui.search",
         "triple_brain.graph_displayer",
