@@ -11,7 +11,7 @@
 
     "forgot_password" :{
         "button" : "Forgot password",
-        "success": "The instructions to change your password were sent to your email",
+        "success": "The instructions to change your password were sent to you by email",
         "error": "No account is related to this email"
     },
 
