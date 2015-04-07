@@ -11,7 +11,7 @@ define([
         "use strict";
         var api = {};
         api.startFlow = function () {
-            $("#login-page").modal();
+            getSection().modal();
             handleLoginForm();
             handleRegisterButton();
             handleForgotPassword();
@@ -35,12 +35,12 @@ define([
                         );
                     },
                     function () {
-                        getErrorMessages().addClass("hidden");
+                        hideAllMessages();
                         getLoginErrorMessage().removeClass("hidden");
                     }
                 );
             });
-            getErrorMessages().addClass("hidden");
+            hideAllMessages();
             getLoginForm()[0].reset();
         }
 
@@ -60,13 +60,24 @@ define([
         function handleForgotPassword(){
             getForgotPasswordButton().click(function(event){
                 event.preventDefault();
-                getErrorMessages().addClass("hidden");
-                if(getEmailField().val().trim() === ""){
+                hideAllMessages();
+                var email = getEmailField().val().trim();
+                if("" === email){
                     getMandatoryEmailErrorMessage().removeClass("hidden");
                     return;
                 }
-                UserService.resetPassword();
+                UserService.resetPassword(
+                    email,
+                    success,
+                    error
+                );
             });
+            function success(){
+                $("#forgot-password-email-sent").removeClass("hidden");
+            }
+            function error(){
+                getInexistentEmailErrorMessage().removeClass("hidden");
+            }
         }
 
         function submitWhenPressingEnter() {
@@ -131,11 +142,20 @@ define([
         function getForgotPasswordButton(){
             return $("#forgot-password-link");
         }
-        function getErrorMessages(){
-            return $('.alert-danger');
-        }
         function getMandatoryEmailErrorMessage(){
             return $("#mandatory_email");
+        }
+        function hideAllMessages(){
+            getMessages().addClass("hidden");
+        }
+        function getMessages(){
+            return getSection().find('.alert');
+        }
+        function getInexistentEmailErrorMessage(){
+            return $("#inexistent-email");
+        }
+        function getSection(){
+            return $("#login-page");
         }
     }
 );

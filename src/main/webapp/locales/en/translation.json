@@ -6,8 +6,13 @@
         "login" : "Login",
         "register": "Register",
         "about" : "about",
-        "error" : "Invalid credentials",
-        "forgot": "Forgot password"
+        "error" : "Invalid credentials"
+    },
+
+    "forgot_password" :{
+        "button" : "Forgot password",
+        "success": "The instructions to change your password were sent to your email",
+        "error": "No account is related to this email"
     },
 
     "register" : {

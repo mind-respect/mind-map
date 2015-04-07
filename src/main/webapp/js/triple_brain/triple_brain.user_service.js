@@ -96,12 +96,13 @@ define([
                 url: sessionResourceUrl
             }).success(successCallBack);
         };
-        api.resetPassword = function(email, callback){
+        api.resetPassword = function(email, callback, errorCallback){
             $.ajax({
                 type: 'POST',
-                url: "/service/forget-password",
+                url: "/service/reset-password",
+                contentType: 'application/json',
                 data: JSON.stringify({email: email})
-            }).success(callback);
+            }).success(callback).error(errorCallback);
         };
         return api;
     }

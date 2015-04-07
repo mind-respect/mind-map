@@ -6,8 +6,13 @@
         "login" : "Authentifier",
         "register": "S'enregistrer",
         "about" : "à propos",
-        "error" : "Courriel ou mot de passe invalide(s)",
-        "forgot": "Mot de passe oublié"
+        "error" : "Courriel ou mot de passe invalide(s)"
+    },
+
+    "forgot_password" :{
+        "button" : "Mot de passe oublié",
+        "success": "Les instructions pour modifier votre mot de passe vous ont été envoyé par courriel",
+        "error": "Aucun compte n'est relié à ce courriel"
     },
 
     "register" : {
