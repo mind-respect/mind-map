@@ -104,6 +104,18 @@ define([
                 data: JSON.stringify({email: email})
             }).success(callback).error(errorCallback);
         };
+        api.changePassword = function(password, email, token, callback, errorCallback){
+            $.ajax({
+                type: 'POST',
+                url: "/service/users/password",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    email: email,
+                    password:password,
+                    token:token
+                })
+            }).success(callback).error(errorCallback);
+        };
         return api;
     }
 );

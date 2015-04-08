@@ -7,8 +7,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--<link rel="stylesheet" href="css/twitter_bootstrap/bootstrap.min.css"/>-->
-    <!--<link rel="stylesheet" href="css/twitter_bootstrap/bootstrap-responsive.min.css"/>-->
     <link rel="stylesheet" href="css/twitter_bootstrap/3.2/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/twitter_bootstrap/3.2/css/bootstrap-theme.min.css"/>
     <link rel="stylesheet" href="css/jquery/jquery-ui-11-0/jquery-ui.min.css"/>
@@ -24,6 +22,57 @@
 </head>
 <body class='hidden'>
 <div class="container-fluid">
+    <div class="page-header" id="app-presentation">
+            <h1>bubl.guru</h1>
+    </div>
+    <div class="hidden row" id="change-password-page">
+        <div class="col-lg-4">
+        </div>
+        <div class="col-lg-4 well well-lg">
+            <div>
+                <h4 data-i18n="change_password.title"></h4>
+            </div>
+            <div>
+                <div id="change-password-dont-match"
+                     class="alert alert-danger hidden"
+                     data-i18n="change_password.error.match" role="alert">
+                </div>
+                <div id="change-password-success"
+                     class="alert alert-success hidden"
+                     data-i18n="change_password.success" role="alert">
+                </div>
+                <div id="change-password-too-short"
+                     class="alert alert-danger hidden"
+                     data-i18n="change_password.error.too_short" role="alert">
+                </div>
+                <div id="change-password-wrong"
+                     class="alert alert-danger hidden"
+                     data-i18n="change_password.error.wrong" role="alert">
+                </div>
+                <form id="change-password-form" class="security-form" role="form">
+                    <div class="form-group">
+                        <label for="change-password-input" class="sr-only" data-i18n="change_password.input"></label>
+                        <input id="change-password-input" class="form-control" type="password"
+                               data-i18n="[placeholder]change_password.input">
+                    </div>
+                    <div class="form-group">
+                        <label for="change-password-repeat-input" class="sr-only"
+                               data-i18n="change_password.repeat"></label>
+                        <input id="change-password-repeat-input" class="form-control" type="password"
+                               data-i18n="[placeholder]change_password.repeat"/>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button id="forgot-password-submit" type="button" class="btn btn-primary"
+                            data-i18n="change_password.submit"></button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+        </div>
+    </div>
     <div class="row hidden" id='big-search-box-container'>
         <div class="col-lg-4"></div>
         <div class="col-lg-4">
@@ -35,7 +84,6 @@
         </div>
         <div class="col-lg-4"></div>
     </div>
-
     <div id="other-page-container" class='hidden'></div>
     <div id="mind_map" data-role="page" data-url="mind-map.html">
         <div data-role="content">
@@ -128,7 +176,6 @@
     <div class='frontier bottom-frontier'></div>
     <div id="selection-box" class='hidden'></div>
 </div>
-
 
 <div class="security-form-wrapper modal fade row" id="login-page" role="dialog" aria-hidden="true">
     <div class="modal-dialog">

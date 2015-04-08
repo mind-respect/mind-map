@@ -15,6 +15,19 @@
         "error": "No account is related to this email"
     },
 
+    "change_password":{
+        "title": "Password change",
+        "input": "Password",
+        "repeat": "Retype password",
+        "submit": "Change",
+        "success": "Password changed",
+        "error":{
+            "match":"Passwords don't match",
+            "too_short":"The password must have a minimum of 6 characters",
+            "wrong":"You can't modify your password with this link anymore"
+        }
+    },
+
     "register" : {
         "title" : "Register",
         "username" : "Username",
@@ -36,7 +49,7 @@
             "email_invalid" : "This email is invalid",
             "email_already_exists" : "This email is already registered",
             "password_mandatory" : "Password is mandatory",
-            "password_too_short" : "The password needs a minimum of 6 characters"
+            "password_too_short" : "The password must have a minimum of 6 characters"
         }
     },
     "not_allowed" : {
@@ -164,7 +177,7 @@
 
     "search" : {
         "big":{
-            "placeholder" : "Search"
+            "placeholder" : "Search bubbles"
         },
         "context" : {
             "property" : "Property",

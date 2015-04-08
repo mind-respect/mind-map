@@ -5,7 +5,7 @@ define([
         "jquery",
         "triple_brain.user_service",
         "triple_brain.mind_map_info",
-        "jquery.json.min"
+        "bootstrap"
     ],
     function ($, UserService, MindMapInfo) {
         "use strict";

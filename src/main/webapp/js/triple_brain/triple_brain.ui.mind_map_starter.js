@@ -21,12 +21,13 @@ define(
         "triple_brain.external_page_loader",
         "triple_brain.id_uri",
         "triple_brain.anonymous_flow",
+        "triple_brain.change_password",
         "triple_brain.bubble_distance_calculator",
         "triple_brain.freebase",
         "jquery.triple_brain.drag_scroll",
         "triple_brain.bottom_center_panel"
     ],
-    function ($, UserService, EventBus, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, LeftPanel, SelectionHandler, GraphElementMainMenu, MindMapInfo, TopRightMenu, ExternalPageLoader, IdUriUtils, AnonymousFlow) {
+    function ($, UserService, EventBus, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, LeftPanel, SelectionHandler, GraphElementMainMenu, MindMapInfo, TopRightMenu, ExternalPageLoader, IdUriUtils, AnonymousFlow, ChangePassword) {
         "use strict";
         var api = {
             start: function () {
@@ -112,6 +113,9 @@ define(
                 }
 
                 function callBackWhenNotAuthenticated() {
+                    if(ChangePassword.isChangePasswordFlow()){
+                        ChangePassword.enterFlow();
+                    }
                     if (MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
                         setupMindMapForAnonymousUser();
                     } else {
@@ -158,5 +162,3 @@ define(
         return api;
     }
 );
-
-

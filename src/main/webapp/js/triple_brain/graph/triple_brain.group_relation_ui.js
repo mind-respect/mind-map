@@ -7,7 +7,7 @@ define([
     "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
     "triple_brain.graph_element_ui",
     "triple_brain.tree_edge",
-    "twitter_bootstrap"
+    "bootstrap"
 ], function (GraphDisplayer, EventBus, PropertiesIndicator, GraphElementUi, TreeEdge) {
     "use strict";
     var api = {};

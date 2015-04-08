@@ -15,6 +15,19 @@
         "error": "Aucun compte n'est relié à ce courriel"
     },
 
+    "change_password":{
+        "title": "Modification de mot de passe",
+        "input": "Mot de passe",
+        "repeat": "Répéter le mot de passe",
+        "submit": "Modifier",
+        "success": "Mot de passe modifié",
+        "error":{
+            "match":"Les mots de passe ne sont pas pareil",
+            "too_short":"Le mot de passe requiert un minimum de 6 caractères",
+            "wrong":"Vous ne pouvez plus modifier votre mot de passe à l'aide de ce lien"
+        }
+    },
+
     "register" : {
         "title" : "Enregistrement",
         "username" : "Nom d'utilisateur",
@@ -162,7 +175,7 @@
 
     "search" : {
         "big":{
-            "placeholder" : "Chercher"
+            "placeholder" : "Chercher des bulles"
         },
         "context" : {
             "property" : "Propriété",

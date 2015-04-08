@@ -11,6 +11,7 @@ requirejs.config({
         "crow" : "vendor/crow.micro",
         "polyk" : "vendor/polyk",
         "jquery": "jquery/jquery-2.1.1",
+        "jQuery": "jquery/jquery-2.1.1",
         "jquery-ui": "jquery/jquery-ui-11-0/jquery-ui.min",
         "jquery.url": "jquery/jquery.url",
         "jquery.nano": "jquery/jquery.nano",
@@ -22,8 +23,7 @@ requirejs.config({
         "jquery.center-on-screen": "jquery/jquery.center-on-screen",
         "jquery.is-fully-on-screen": "jquery/jquery.is-fully-on-screen",
         "jquery.i18next": "vendor/i18next.amd.withJQuery-1.6.3",
-//        "twitter_bootstrap": "vendor/twitter_bootstrap/3-0/js/bootstrap.min",
-        "twitter_bootstrap": "vendor/twitter_bootstrap/3.2/bootstrap.min",
+        "bootstrap": "vendor/bootstrap/3.2/bootstrap.min",
         "jquery.max_char": "triple_brain/jquery.max_char",
         "jquery.triple_brain.search": "triple_brain/search/jquery.triple_brain.search",
         "triple_brain.big_search_box": "triple_brain/search/triple_brain.big_search_box",
@@ -41,6 +41,7 @@ requirejs.config({
         "triple_brain.ui.utils": "triple_brain/triple_brain.ui.utils",
         "triple_brain.user_service": "triple_brain/triple_brain.user_service",
         "triple_brain.login_handler": "triple_brain/triple_brain.login_handler",
+        "triple_brain.change_password": "triple_brain/triple_brain.change_password",
         "triple_brain.event_bus": "triple_brain/triple_brain.event_bus",
         "jquery.triple_brain.drag_scroll": "triple_brain/jquery.triple_brain.drag_scroll",
         "triple_brain.bubble_distance_calculator": "triple_brain/graph/triple_brain.bubble_distance_calculator",
@@ -152,7 +153,6 @@ requirejs.config({
         "jquery.cometd-reload": ["jquery"],
         "jquery.cometd-timestamp": ["jquery"],
         "jquery.cometd-timesync": ["jquery"],
-        "jquery.colorbox": ["jquery"],
-        "twitter_bootstrap": ["jquery"]
+        "jquery.colorbox": ["jquery"]
     }
 });

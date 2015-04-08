@@ -10,7 +10,7 @@ define([
         "triple_brain.mind_map_info",
         "jquery-ui",
         "jquery.i18next",
-        "twitter_bootstrap"
+        "bootstrap"
     ], function ($, GraphDisplayer, EventBus, SelectionHandler, GraphElementButton, MindMapInfo) {
         "use strict";
         var api = {},
