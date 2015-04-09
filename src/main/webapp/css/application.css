@@ -100,7 +100,7 @@ svg { z-index: 1; }
 
 .public.legend { background-color: #F9E5E5; }
 
-#top-panel { margin-right: 75px; position: fixed; right: 0.1em; top: 0.5em; }
+#top-panel { margin-right: 160px; position: fixed; right: 0.1em; top: 0.5em; }
 #top-panel > input[type=button], #top-panel > button, #top-panel > .link-like-button { float: left; margin-left: 15px; font-size: 0.9em; margin-top: 4px; }
 #top-panel .dropdown a { text-align: left; }
 
