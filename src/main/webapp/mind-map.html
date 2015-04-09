@@ -7,6 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>bubl.guru</title>
     <link rel="stylesheet" href="css/twitter_bootstrap/3.2/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/twitter_bootstrap/3.2/css/bootstrap-theme.min.css"/>
     <link rel="stylesheet" href="css/jquery/jquery-ui-11-0/jquery-ui.min.css"/>
@@ -23,7 +24,7 @@
 <body class='hidden'>
 <div class="container-fluid">
     <div class="page-header" id="app-presentation">
-            <h1>bubl.guru</h1>
+        <h1>bubl.guru</h1>
     </div>
     <div class="hidden row" id="change-password-page">
         <div class="col-lg-4">
@@ -104,7 +105,7 @@
                     <div class="private legend" data-i18n="caption.private"></div>
                     <div class="public legend" data-i18n="caption.public"></div>
                 </div>
-                <a href="http://community.triple-brain.org" data-i18n="login.about"></a>
+                <a href="http://community.bubl.guru" data-i18n="login.about"></a>
             </div>
             <div id="top-center-menu" class="main-panel top-panel">
                 <div id="graph-elements-selected" class="hidden">
@@ -145,9 +146,26 @@
                         </ul>
                     </div>
                 </div>
-                <button id="disconnect-btn"
-                        data-i18n="top_menu.disconnect"
-                        class="link-like-button"></button>
+                <!--<button id="disconnect-btn"-->
+                <!--data-i18n="top_menu.disconnect"-->
+                <!--class="link-like-button"></button>-->
+                <div class="link-like-button" id="">
+                    <div class="dropdown">
+                        <a data-toggle="dropdown" class="fa fa-user">
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <li>
+                                <a href=""  role="menuitem"
+                                   data-i18n='top_menu.create.bubble'></a>
+                            </li>
+                            <li>
+                                <a href="" role="menuitem"
+                                   data-i18n='top_menu.create.schema'></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
             <div id="graph-element-menu" class="main-panel">
                 <button data-action="accept" data-icon="fa-check" class="graph-element-button"></button>
@@ -163,7 +181,8 @@
                 <button data-action="center" data-icon="fa-bullseye" class="graph-element-button"></button>
                 <button data-action="note" data-icon="fa-book" class="note-button graph-element-button"></button>
                 <button data-action="images" data-icon="fa-picture-o" class="graph-element-button"></button>
-                <button data-action="connectTo" data-icon="fa-long-arrow-right" class="graph-element-button"></button>
+                <button data-action="connectTo" data-icon="fa-long-arrow-right"
+                        class="graph-element-button"></button>
                 <button data-action="makePublic" data-icon="fa-unlock" class="graph-element-button"></button>
                 <button data-action="makePrivate" data-icon="fa-lock" class="graph-element-button"></button>
                 <button data-action="remove" data-icon="fa-trash-o" class="graph-element-button"></button>
@@ -181,7 +200,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                <button type="button" class="close" data-dismiss="modal"><span
+                        aria-hidden="true">&times;</span><span
                         class="sr-only">Close</span></button>
                 <h4 class="modal-title" data-i18n="login.title"></h4>
             </div>

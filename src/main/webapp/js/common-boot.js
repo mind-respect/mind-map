@@ -11,7 +11,6 @@ requirejs.config({
         "crow" : "vendor/crow.micro",
         "polyk" : "vendor/polyk",
         "jquery": "jquery/jquery-2.1.1",
-        "jQuery": "jquery/jquery-2.1.1",
         "jquery-ui": "jquery/jquery-ui-11-0/jquery-ui.min",
         "jquery.url": "jquery/jquery.url",
         "jquery.nano": "jquery/jquery.nano",
@@ -153,6 +152,7 @@ requirejs.config({
         "jquery.cometd-reload": ["jquery"],
         "jquery.cometd-timestamp": ["jquery"],
         "jquery.cometd-timesync": ["jquery"],
-        "jquery.colorbox": ["jquery"]
+        "jquery.colorbox": ["jquery"],
+        "bootstrap": ["jquery"]
     }
 });
