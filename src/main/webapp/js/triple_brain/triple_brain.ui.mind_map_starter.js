@@ -71,6 +71,7 @@ define(
 
                 function setupMindMap(isAnonymous) {
                     startLoginFlowWhenForbiddenActionIsPerformed();
+                    $("#app-presentation").addClass("hidden");
                     TopRightMenu.earlyInit();
                     TopCenterMenu.init();
                     LeftPanel.init();
@@ -132,7 +133,7 @@ define(
                     GraphDisplayer.getSchemaSelector().get() :
                     GraphDisplayer.getVertexSelector().withUri(centralVertexUri)[0];
                 centralVertex.setAsCentral();
-                $("body, html").removeDragScroll().dragScroll().on(
+                $("#drawn_graph").removeDragScroll().dragScroll().on(
                     "click",
                     function (event) {
                         if (event.ctrlKey) {

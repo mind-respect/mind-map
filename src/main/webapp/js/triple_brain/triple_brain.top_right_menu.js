@@ -24,13 +24,14 @@ define([
                 getCreateMenu().hide();
             }
             if(MindMapInfo.isAnonymous()){
-                getDisconnectButton().hide();
+                getDisconnectButton().addClass("hidden");
+                getUserMenu().addClass("hidden")
                 handleLoginRegisterButton();
             }else{
                 handleCreateNewConceptButton();
                 handleCreateNewSchemaButton();
                 handleDisconnectButton();
-                getLoginRegisterButton().hide();
+                getLoginRegisterButton().addClass("hidden");
             }
             if(!MindMapInfo.isCenterBubbleUriDefinedInUrl()){
                 getSelectButton().addClass("hidden");
@@ -132,6 +133,10 @@ define([
         }
         function getSelectButton(){
             return $("#select-button");
+        }
+
+        function getUserMenu(){
+            return $("#user-menu");
         }
     }
 );
