@@ -461,6 +461,16 @@ define([
             };
         };
 
+        api.getSchemaProjectDetailsSearchResult = function () {
+            /*
+             * schema project having description :
+             * something cool
+             */
+            this.get = function(){
+                return TestScenarioData.getSchemaProjectDetailsSearchResult();
+            };
+        };
+
         api.getSearchResultsForImpact = function () {
             /*
              * schema project

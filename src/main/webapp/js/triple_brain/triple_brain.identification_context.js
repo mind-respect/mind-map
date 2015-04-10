@@ -45,6 +45,8 @@ define([
         switch (this.originalSearchResult.getGraphElementType()) {
             case GraphElementType.Vertex :
                 return this._makeBubbleContext();
+            case GraphElementType.Schema :
+                return this._makeBubbleContext();
             case GraphElementType.Relation :
                 return this._makeRelationContext();
             default:

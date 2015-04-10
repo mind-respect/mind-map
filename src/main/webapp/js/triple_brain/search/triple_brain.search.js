@@ -7,6 +7,7 @@ define([
     "triple_brain.user_service"
 ],
     function ($, UserService) {
+        "use strict";
         var api = {};
         api.searchForOwnVerticesAndPublicOnes = function (searchText, successCallback) {
             api.searchForOwnVerticesAndPublicOnesAjaxCall(
@@ -56,7 +57,7 @@ define([
         api.getSearchResultDetailsAjaxCall = function(uri){
             var baseUri = UserService.hasCurrentUser()?
                 UserService.currentUserUri() + "/search/" :
-                "/service/search/"
+                "/service/search/";
             return $.ajax({
                 type:'GET',
                 url: baseUri +

@@ -8,8 +8,9 @@ define([
     "triple_brain.suggestion_service",
     "triple_brain.graph_service",
     "triple_brain.schema_service",
-    "triple_brain.vertex_service"
-], function (UserService, MindMapInfo, SuggestionService, GraphService, SchemaService, VertexService) {
+    "triple_brain.vertex_service",
+    "triple_brain.search"
+], function (UserService, MindMapInfo, SuggestionService, GraphService, SchemaService, VertexService, SearchService) {
     "use strict";
     var api = {};
     api.setCenterVertexUriInUrl = function(centerVertexUri){
@@ -29,6 +30,11 @@ define([
             callback(
                 schema
             );
+        };
+    };
+    api.getSearchResultDetailsToReturn = function(toReturn){
+        SearchService.getSearchResultDetails = function(uri, callback){
+            callback(toReturn);
         };
     };
     UserService.authenticatedUserInCache = function(){

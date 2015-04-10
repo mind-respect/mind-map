@@ -1341,6 +1341,20 @@ define([], function () {
             "type": "schema"
         }];
     };
+    api.getSchemaProjectDetailsSearchResult = function () {
+        return {
+            "graphElement": {
+                "friendlyResource": {
+                    "uri": "/service/users/oujl74s65c/graph/schema/b8281e7c-6b00-46d2-8759-9be08aacc35a",
+                    "label": "project",
+                    "comment": "something cool",
+                    "images": [],
+                    "creationDate": "Apr 10, 2015 4:17:19 PM",
+                    "lastModificationDate": "Apr 10, 2015 4:22:03 PM"
+                }, "identifications": {}
+            }, "type": "schema"
+        };
+    };
     api.getFreebaseSearchResultForProject = function () {
         return {
             "status": "200 OK",
