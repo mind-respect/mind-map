@@ -21,6 +21,7 @@ define([
         downArrowKeyNumber = 40,
         iArrowKeyNumber = 73,
         enterKeyNumber = 13,
+        spaceBarKeyNumber = 32,
         escapeKeyNumber = 27,
         eKeyNumber = 69,
         sKeyNumber = 83,
@@ -93,7 +94,7 @@ define([
                 iArrowKeyNumber, iAction
             ],
             [
-                enterKeyNumber, enterKeyAction
+                spaceBarKeyNumber, spacebarAction
             ],
             [
                 eKeyNumber, eKeyAction
@@ -116,7 +117,7 @@ define([
         ).create();
     }
 
-    function enterKeyAction(selectedElement) {
+    function spacebarAction(selectedElement) {
         if (MindMapInfo.isViewOnly() || selectedElement.isGroupRelation()) {
             return;
         }
