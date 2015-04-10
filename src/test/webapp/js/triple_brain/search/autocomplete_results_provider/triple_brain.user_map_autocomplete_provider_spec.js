@@ -4,8 +4,9 @@
 
 define([
     'triple_brain.user_map_autocomplete_provider',
+    "triple_brain.graph_element_type",
     'test/webapp/js/test-scenarios'
-], function (UserMapAutocompleteProvider, Scenarios) {
+], function (UserMapAutocompleteProvider, GraphElementType, Scenarios) {
     "use strict";
     describe("user_map_autocomplete_provider", function () {
         beforeEach(function () {
@@ -21,6 +22,16 @@ define([
                     formattedSearchResults[0]
                 )
             ).toBeTruthy();
+        });
+        it("includes schemas", function () {
+            var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),
+                formattedSearchResults = searchProvider.formatResults(
+                    new Scenarios.getSearchResultsForProject().get(),
+                    "project"
+                );
+            expect(
+                formattedSearchResults[0].nonFormattedSearchResult.getGraphElementType()
+            ).toBe(GraphElementType.Schema);
         });
         it("sets property context", function () {
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),
