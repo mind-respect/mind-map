@@ -7,8 +7,9 @@ define([
     "triple_brain.mind_map_info",
     "triple_brain.suggestion_service",
     "triple_brain.graph_service",
-    "triple_brain.schema_service"
-], function (UserService, MindMapInfo, SuggestionService, GraphService, SchemaService) {
+    "triple_brain.schema_service",
+    "triple_brain.vertex_service"
+], function (UserService, MindMapInfo, SuggestionService, GraphService, SchemaService, VertexService) {
     "use strict";
     var api = {};
     api.setCenterVertexUriInUrl = function(centerVertexUri){
@@ -38,5 +39,7 @@ define([
     SuggestionService.accept = function(suggestionUi, callback){
         callback();
     };
+    VertexService.addSuggestions = function(){};
+
     return api;
 });

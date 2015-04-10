@@ -5,17 +5,19 @@
 define([
     "jquery",
     "triple_brain.id_uri",
+    "triple_brain.graph_element_type",
     "triple_brain.suggestion",
     "triple_brain.vertex_service"
-], function ($, IdUri, Suggestion, VertexService) {
+], function ($, IdUri, GraphElementType, Suggestion, VertexService) {
     "use strict";
     var api = {};
     api.addSchemaSuggestionsIfApplicable = function (vertex, searchResult) {
-        var suggestions = [];
-        if (IdUri.isSchemaUri(searchResult.uri)) {
+        var suggestions = [],
+            originalSearchResult = searchResult.nonFormattedSearchResult;
+        if (!originalSearchResult.is(GraphElementType.Schema)) {
             return suggestions;
         }
-        $.each(searchResult.nonFormattedSearchResult.getProperties(), function () {
+        $.each(originalSearchResult.getGraphElement().getProperties(), function () {
             suggestions.push(
                 Suggestion.fromSchemaPropertyAndOriginUri(
                     this,
