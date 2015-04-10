@@ -442,6 +442,12 @@ define([
             );
         };
 
+        api.getFreebaseSearchResultForProject = function(){
+            this.get = function () {
+                return TestScenarioData.getFreebaseSearchResultForProject();
+            };
+        };
+
         api.getSearchResultsForProject = function(){
             /*
              * schema project

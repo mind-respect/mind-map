@@ -12,11 +12,11 @@ define([
     "use strict";
     var api = {};
     api.addSchemaSuggestionsIfApplicable = function (vertex, searchResult) {
-        var suggestions = [],
-            originalSearchResult = searchResult.nonFormattedSearchResult;
-        if (!originalSearchResult.is(GraphElementType.Schema)) {
+        var suggestions = [];
+        if (!IdUri.isSchemaUri(searchResult.uri)) {
             return suggestions;
         }
+        var originalSearchResult = searchResult.nonFormattedSearchResult;
         $.each(originalSearchResult.getGraphElement().getProperties(), function () {
             suggestions.push(
                 Suggestion.fromSchemaPropertyAndOriginUri(
