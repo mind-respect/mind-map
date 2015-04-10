@@ -26,7 +26,6 @@ define([
             ).data("group_relation", this.serverFacade);
             this._addLabel();
             this._addArrow();
-            this._handleClick();
             this._createMenu();
             var groupRelation = GroupRelationUi.withHtml(
                 this.html
@@ -51,23 +50,20 @@ define([
             );
         };
 
-        Self.prototype._handleClick = function () {
-            this.html.click(function (event) {
-                event.stopPropagation();
-                SelectionHandler.setToSingleGroupRelation(
-                    GroupRelationUi.withHtml(
-                        $(this)
-                    )
-                );
-            });
-        };
-
         Self.prototype._addLabel = function () {
             var container = $("<div class='label-container'>").appendTo(this.html);
             var labelHtml = $(
                 RelativeTreeTemplates['group_relation_label_container'].merge({
                     label: this.serverFacade.getIdentification().getLabel()
                 })
+            ).click(function (event) {
+                    event.stopPropagation();
+                    SelectionHandler.setToSingleGroupRelation(
+                        GroupRelationUi.withHtml(
+                            $(this).closest(".group-relation")
+                        )
+                    );
+                }
             ).appendTo(container);
             this._setupDescriptionOnLabel(labelHtml);
         };

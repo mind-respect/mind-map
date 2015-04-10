@@ -442,13 +442,13 @@ define([
             );
         };
 
-        api.getFreebaseSearchResultForProject = function(){
+        api.getFreebaseSearchResultForProject = function () {
             this.get = function () {
                 return TestScenarioData.getFreebaseSearchResultForProject();
             };
         };
 
-        api.getSearchResultsForProject = function(){
+        api.getSearchResultsForProject = function () {
             /*
              * schema project
              * project -> impact on the individual
@@ -475,7 +475,7 @@ define([
                 return TestScenarioData.getSearchResultsForImpact();
             };
         };
-        api.getSearchResultForB1 = function(){
+        api.getSearchResultForB1 = function () {
             /*
              * b1 -r1-> b2
              * b1 <-r2- b3
@@ -486,7 +486,7 @@ define([
                 return TestScenarioData.getSearchResultForB1();
             };
         };
-        api.getSearchResultForR2 = function(){
+        api.getSearchResultForR2 = function () {
             /*
              * b1 -r1-> b2
              * b1 <-r2- b3
@@ -574,11 +574,13 @@ define([
                 );
             });
             GraphDisplayer.getGroupRelationSelector().visitAll(function (groupRelationUi) {
-                EventBus.publish(
-                    '/event/ui/group_relation/visit_after_graph_drawn',
-                    groupRelationUi
-                );
-            });
+                    EventBus.publish(
+                        '/event/ui/group_relation/visit_after_graph_drawn',
+                        groupRelationUi
+                    );
+                },
+                tree
+            );
             return tree;
         }
 

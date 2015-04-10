@@ -14,8 +14,11 @@ define([
     api.withHtml = function (html) {
         return new Self(html);
     };
-    api.visitAll = function (visitor) {
-        $(".group-relation").each(function () {
+    api.visitAll = function (visitor, container) {
+        if(container === undefined){
+            container = $("html");
+        }
+        container.find(".group-relation").each(function () {
             visitor(
                 api.withHtml(
                     $(this)

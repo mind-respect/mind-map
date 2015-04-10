@@ -289,6 +289,7 @@ define([
                 );
             });
         });
+        groupRelationUi.removeHiddenRelationsContainer();
     };
 
     function addVertex(newVertex, parentBubble, vertexHtmlBuilder) {
@@ -374,9 +375,6 @@ define([
             return serverGraph;
         };
         this.buildBubbleHtmlIntoContainer = function (serverFormat, parentBubble, builder, htmlId) {
-            var childVertexHtmlFacade = builder.withServerFacade(
-                serverFormat
-            ).create(htmlId);
             var childTreeContainer = RelativeTreeTemplates[
                     "vertex_tree_container"
                     ].merge(),
@@ -394,6 +392,9 @@ define([
                 container = self.childContainer(parentBubble);
                 serverFormat.isLeftOriented = parentBubble.getOriginalServerObject().isLeftOriented;
             }
+            var childVertexHtmlFacade = builder.withServerFacade(
+                serverFormat
+            ).create(htmlId);
             childVertexHtmlFacade.setOriginalServerObject(serverFormat)
             container.append(
                 childTreeContainer

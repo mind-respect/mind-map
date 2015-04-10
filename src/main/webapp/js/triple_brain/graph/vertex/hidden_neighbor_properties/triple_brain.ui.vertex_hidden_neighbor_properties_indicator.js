@@ -58,7 +58,7 @@ define([
             };
         }
 
-        function handleHiddenPropertiesContainerClick() {
+        function handleHiddenPropertiesContainerClick(event) {
             if (!GraphDisplayer.canAddChildTree()) {
                 return;
             }

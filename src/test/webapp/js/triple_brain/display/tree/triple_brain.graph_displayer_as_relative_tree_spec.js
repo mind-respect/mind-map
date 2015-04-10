@@ -70,6 +70,17 @@ define([
                 graphWithSimilarRelationsScenario.getRelationWithBook2InTree().isInverse()
             ).toBeTruthy();
         });
+        it("removes hidden properties indicator when expanding group relation", function () {
+            expect(
+                groupRelation.hasHiddenRelationsContainer()
+            ).toBeTruthy();
+            GraphDisplayerAsRelativeTree.expandGroupRelation(
+                groupRelation
+            );
+            expect(
+                groupRelation.hasHiddenRelationsContainer()
+            ).toBeFalsy();
+        });
         it("contains all connected elements for included graph elements view ", function () {
             expect(
                 mergeBubbleScenario.getBubble1()
