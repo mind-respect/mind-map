@@ -40,6 +40,9 @@ define([
         );
     };
     forSingle.remove = function (event, vertex) {
+        forSingle.removeAction(vertex);
+    };
+    forSingle.removeAction = function (vertex) {
         if (vertex.isAbsoluteDefaultVertex()) {
             return;
         }

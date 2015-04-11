@@ -12,6 +12,7 @@ define([
         forSingleNotOwned = {},
         forGroup = {},
         forGroupNotOwned = {};
+        forGroupNotOwned = {};
     api.forSingle = function(){
         return MindMapInfo.isViewOnly() ?
             forSingleNotOwned:
@@ -27,6 +28,9 @@ define([
         return property.hasIdentifications();
     };
     forSingle.remove = function(event, property){
+        forSingle.removeAction(property)
+    };
+    forSingle.removeAction = function(property){
         FriendlyResourceService.remove(property, function(){
             property.remove();
         });

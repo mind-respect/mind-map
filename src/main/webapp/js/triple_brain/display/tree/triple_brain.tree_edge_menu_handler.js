@@ -26,6 +26,9 @@ define([
         return edge.hasIdentifications();
     };
     forSingle.remove = function (event, edge) {
+        forSingle.removeAction(edge);
+    };
+    forSingle.removeAction = function (edge) {
         EdgeService.remove(edge,
             function (edge) {
                 var vertex = edge.childVertexInDisplay();

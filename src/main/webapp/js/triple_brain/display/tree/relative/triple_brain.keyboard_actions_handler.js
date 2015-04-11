@@ -21,6 +21,7 @@ define([
         downArrowKeyNumber = 40,
         iArrowKeyNumber = 73,
         enterKeyNumber = 13,
+        deleteKeyNumber = 46,
         spaceBarKeyNumber = 32,
         escapeKeyNumber = 27,
         eKeyNumber = 69,
@@ -104,6 +105,9 @@ define([
             ],
             [
                 rKeyNumber, rKeyAction
+            ],
+            [
+                deleteKeyNumber, deleteKeyAction
             ]
         ];
     }
@@ -224,5 +228,14 @@ define([
     function selectNew(newSelectedElement) {
         SelectionHandler.setToSingleGraphElement(newSelectedElement);
         centerBubbleIfApplicable(newSelectedElement);
+    }
+
+    function deleteKeyAction(selectedElement){
+        if(MindMapInfo.isViewOnly()){
+            return;
+        }
+        selectedElement.getMenuHandler().forSingle().removeAction(
+            selectedElement
+        );
     }
 });
