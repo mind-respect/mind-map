@@ -158,5 +158,9 @@ define([
         //todo
         //it("when connecting to a distant vertex, similar relations are grouped", function(){
         //});
+
+        //todo
+        //it("when connecting to a distant vertex, distant vertex child bubbles have their images", function(){
+        //});
     });
 });

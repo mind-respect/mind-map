@@ -162,6 +162,7 @@ define([
                     farVertex = RelativeTreeVertex.lastAddedWithUri(
                         destinationVertexUri
                     );
+                farVertex.visitVerticesChildren(VertexHtmlBuilder.completeBuild);
                 if(callback !== undefined){
                     callback(drawnTree, farVertex);
                 }
