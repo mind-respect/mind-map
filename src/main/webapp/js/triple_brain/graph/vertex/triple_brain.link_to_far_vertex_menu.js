@@ -60,9 +60,7 @@ define([
                     EdgeService.addToFarVertex(parentVertex, farVertexUri, function(){
                             GraphDisplayer.connectVertexToVertexWithUri(
                                 parentVertex,
-                                farVertexUri,
-                                function(drawnTree, farVertex) {
-                                }
+                                farVertexUri
                             );
                     });
                 },

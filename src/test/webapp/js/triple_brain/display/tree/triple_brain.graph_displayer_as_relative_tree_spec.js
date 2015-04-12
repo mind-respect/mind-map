@@ -10,7 +10,8 @@ define([
 ], function (GraphDisplayerAsRelativeTree, CenterBubble, Scenarios, Mock) {
     "use strict";
     describe("graph_displayer_as_relative_tree_spec", function () {
-        var bubble1,
+        var threeBubblesGraph,
+            bubble1,
             bubble2,
             graphWithHiddenSimilarRelationsScenario,
             groupRelation,
@@ -18,7 +19,7 @@ define([
             mergeBubbleScenario,
             karaokeSchemaScenario;
         beforeEach(function () {
-            var threeBubblesGraph = new Scenarios.threeBubblesGraph();
+            threeBubblesGraph = new Scenarios.threeBubblesGraph();
             bubble1 = threeBubblesGraph.getCenterBubbleInTree();
             bubble2 = threeBubblesGraph.getBubble2InTree();
             graphWithHiddenSimilarRelationsScenario = new Scenarios.getGraphWithHiddenSimilarRelations();
@@ -139,5 +140,23 @@ define([
                 vertexSuggestion.getIdentifications()[0].getLabel()
             ).toBe("Location");
         });
+        //todo need to get graph where they are actually connected
+        //it("can make a vertex connect to a distant vertex", function(){
+        //    Mock.setGetGraphFromService(threeBubblesGraph.getGraph());
+        //    var hasVisitedCallback = false;
+        //    GraphDisplayerAsRelativeTree.connectVertexToVertexWithUri(
+        //        mergeBubbleScenario.getMergeBubbleInTree(),
+        //        bubble1.getUri(),
+        //        function(){
+        //            hasVisitedCallback = true;
+        //        }
+        //    );
+        //    expect(
+        //        hasVisitedCallback
+        //    ).toBeTruthy();
+        //});
+        //todo
+        //it("when connecting to a distant vertex, similar relations are grouped", function(){
+        //});
     });
 });

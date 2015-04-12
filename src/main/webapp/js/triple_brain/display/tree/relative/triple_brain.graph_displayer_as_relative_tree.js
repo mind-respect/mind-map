@@ -162,7 +162,9 @@ define([
                     farVertex = RelativeTreeVertex.lastAddedWithUri(
                         destinationVertexUri
                     );
-                callback(drawnTree, farVertex);
+                if(callback !== undefined){
+                    callback(drawnTree, farVertex);
+                }
             }
         );
     };
@@ -375,7 +377,14 @@ define([
             serverVertex.isLeftOriented = parentVertex.isToTheLeft();
             parentVertex.setOriginalServerObject(serverVertex);
             self.buildChildrenHtmlTreeRecursively(parentVertex, serverGraph.vertices);
-            parentVertex.visitVerticesChildren(VertexHtmlBuilder.completeBuild);
+            parentVertex.visitVerticesChildren(function(vertex){
+                VertexHtmlBuilder.completeBuild(vertex)
+                vertex.visitAllChild(function(childBubble){
+                    if(childBubble.isGroupRelation()){
+                        GroupRelationHtmlBuilder.completeBuild(childBubble);
+                    }
+                });
+            });
             return serverGraph;
         };
         this.buildBubbleHtmlIntoContainer = function (serverFormat, parentBubble, builder, htmlId) {
