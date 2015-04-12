@@ -12,6 +12,7 @@ define([
     describe("graph_displayer_as_relative_tree_spec", function () {
         var bubble1,
             bubble2,
+            graphWithHiddenSimilarRelationsScenario,
             groupRelation,
             graphWithSimilarRelationsScenario,
             mergeBubbleScenario,
@@ -20,6 +21,7 @@ define([
             var threeBubblesGraph = new Scenarios.threeBubblesGraph();
             bubble1 = threeBubblesGraph.getCenterBubbleInTree();
             bubble2 = threeBubblesGraph.getBubble2InTree();
+            graphWithHiddenSimilarRelationsScenario = new Scenarios.getGraphWithHiddenSimilarRelations();
             mergeBubbleScenario = new Scenarios.mergeBubbleGraph();
             graphWithSimilarRelationsScenario = new Scenarios.GraphWithSimilarRelationsScenario();
             groupRelation = graphWithSimilarRelationsScenario.getPossessionAsGroupRelationInTree();
@@ -59,6 +61,13 @@ define([
             ).toBeTruthy();
         });
 
+        it("groups similar relations when they come out of an expanded bubble", function () {
+            var bubble2 = graphWithHiddenSimilarRelationsScenario.getBubble2InTree();
+            expect(
+                bubble2.hasHiddenRelationsContainer()
+            ).toBeTruthy();
+        });
+
         it("preserves direction with parent vertex for expanded group relations", function () {
             GraphDisplayerAsRelativeTree.expandGroupRelation(
                 groupRelation
@@ -81,7 +90,7 @@ define([
                 groupRelation.hasHiddenRelationsContainer()
             ).toBeFalsy();
         });
-        it("contains all connected elements for included graph elements view ", function () {
+        it("contains all connected elements for included graph elements view", function () {
             expect(
                 mergeBubbleScenario.getBubble1()
             ).toBeDefined();

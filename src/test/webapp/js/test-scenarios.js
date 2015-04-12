@@ -184,6 +184,7 @@ define([
         };
 
         api.threeBubblesGraph = function () {
+
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
                 return TestScenarioData.threeBubblesGraph();
@@ -263,6 +264,33 @@ define([
             };
             Mock.setCenterVertexUriInUrl(this.getBubble2().getUri());
         };
+
+        api.getGraphWithHiddenSimilarRelations = function(){
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function(){
+                return TestScenarioData.getGraphWithHiddenSimilarRelations().getGraph();
+            };
+            this.getCenterBubbleUri = function () {
+                return this.getBubble1().getUri();
+            };
+            this.expandBubble2 = function (bubble2) {
+                return GraphDisplayerAsRelativeTree.addChildTreeUsingGraph(
+                    bubble2,
+                    TestScenarioData.getGraphWithHiddenSimilarRelations().getSimilarRelations()
+                );
+            };
+            this.getBubble1 = function () {
+                return Vertex.fromServerFormat(this.getGraph().vertices[
+                        uriOfVertexWithLabel(this.getGraph(), "b1")
+                        ]
+                );
+            };
+            this.getBubble2InTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("b2");
+            };
+            Mock.setCenterVertexUriInUrl(this.getBubble1().getUri());
+        };
+
         api.GraphWithAnInverseRelationScenario = function () {
             this.getGraph = function () {
                 return TestScenarioData.GraphWithAnInverseRelationScenario();
