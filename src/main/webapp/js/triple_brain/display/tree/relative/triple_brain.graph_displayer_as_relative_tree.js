@@ -73,9 +73,8 @@ define([
         return true;
     };
     api.addChildTree = function (parentVertex) {
-        var parentUri = parentVertex.getUri();
         GraphService.getForCentralVertexUri(
-            parentUri,
+            parentVertex.getUri(),
             function (serverGraph) {
                 api.addChildTreeUsingGraph(
                     parentVertex,
@@ -108,6 +107,11 @@ define([
         }
         parentVertex.removeHiddenRelationsContainer();
         parentVertex.visitVerticesChildren(VertexHtmlBuilder.completeBuild);
+        parentVertex.visitAllChild(function(childBubble){
+            if(childBubble.isGroupRelation()){
+                GroupRelationHtmlBuilder.completeBuild(childBubble);
+            }
+        });
         function removeRelationWithGrandParentFromServerGraph() {
             var relationWithGrandParentUri = parentVertex.getRelationWithUiParent().getUri();
             var grandParentUri = parentVertex.getParentVertex().getUri();
@@ -130,9 +134,9 @@ define([
                         edgeFacade.getDestinationVertex().getUri()
                     ];
                     if ($.inArray(
-                        grandParentUri,
-                        sourceAndDestinationId
-                    ) !== -1) {
+                            grandParentUri,
+                            sourceAndDestinationId
+                        ) !== -1) {
                         nbRelationsWithGrandParent++;
                     }
                     if (relationWithGrandParentUri !== edgeFacade.getUri()) {
@@ -276,9 +280,9 @@ define([
         );
     };
     api.expandGroupRelation = function (groupRelationUi) {
-        var treeMaker = new api.TreeMaker(VertexHtmlBuilder);
-        var groupRelation = groupRelationUi.getGroupRelation();
-        treeMaker.buildGroupRelation(
+        var treeMaker = new api.TreeMaker(VertexHtmlBuilder),
+            groupRelation = groupRelationUi.getGroupRelation();
+        treeMaker.buildGroupRelationToExpand(
             groupRelation,
             groupRelationUi
         );
@@ -427,7 +431,7 @@ define([
             vertexHtmlFacade.getHtml().closest(
                 ".vertex-tree-container, .root-vertex-super-container"
             )[
-                    toLeft && vertexHtmlFacade ? "prepend" : "append"
+                toLeft && vertexHtmlFacade ? "prepend" : "append"
                 ](childrenContainer);
             return childrenContainer;
         };
@@ -451,6 +455,28 @@ define([
             return _htmlBuilder;
         };
         this.buildGroupRelation = function (groupRelation, parentVertexUi) {
+            this.buildGroupRelationToExpandOrNot(
+                groupRelation,
+                parentVertexUi,
+                false
+            );
+        };
+        this.buildGroupRelationToExpand = function(groupRelation, parentVertexUi){
+            this.buildGroupRelationToExpandOrNot(
+                groupRelation,
+                parentVertexUi,
+                true
+            );
+        };
+        this.buildGroupRelationToExpandOrNot = function(groupRelation, parentVertexUi, isToExpand){
+            if (!isToExpand && groupRelation.hasMultipleVertices()) {
+                self.buildBubbleHtmlIntoContainer(
+                    groupRelation,
+                    parentVertexUi,
+                    GroupRelationHtmlBuilder
+                );
+                return;
+            };
             $.each(groupRelation.getVertices(), function (key, verticesWithSameUri) {
                 $.each(verticesWithSameUri, function (vertexHtmlId, vertexAndEdge) {
                     var vertex = vertexAndEdge.vertex,

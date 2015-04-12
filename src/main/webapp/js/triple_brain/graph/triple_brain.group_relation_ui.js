@@ -3,12 +3,10 @@
  */
 define([
     "triple_brain.graph_displayer",
-    "triple_brain.event_bus",
-    "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
     "triple_brain.graph_element_ui",
     "triple_brain.tree_edge",
     "bootstrap"
-], function (GraphDisplayer, EventBus, PropertiesIndicator, GraphElementUi, TreeEdge) {
+], function (GraphDisplayer, GraphElementUi, TreeEdge) {
     "use strict";
     var api = {};
     api.withHtml = function (html) {
@@ -103,17 +101,5 @@ define([
 
     Self.prototype.getOriginalServerObject = Self.prototype.getGroupRelation;
 
-    EventBus.subscribe(
-        "/event/ui/group_relation/visit_after_graph_drawn",
-        function (event, groupRelationUi) {
-            var indicator = PropertiesIndicator.withVertex(
-                groupRelationUi
-            );
-            groupRelationUi.setHiddenRelationsContainer(
-                indicator
-            );
-            indicator.build();
-        }
-    );
     return api;
 });

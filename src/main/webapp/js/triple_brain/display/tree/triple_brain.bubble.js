@@ -56,6 +56,14 @@ define([
             );
         };
 
+        api.Self.prototype.visitAllChild = function (visitor) {
+            $.each(this.getChildrenBubblesHtml(), function(){
+                visitor(BubbleFactory.fromHtml(
+                    $(this)
+                ));
+            });
+        };
+
         api.Self.prototype.getChildrenBubblesHtml = function () {
             return this.getChildrenContainer().find(
                 "> .vertex-tree-container > .vertex-container > .bubble"
@@ -90,9 +98,9 @@ define([
                 surroundBubble,
                 found = false,
                 surroundBubbleHtml;
-            do{
+            do {
                 parentBubble = parentBubble.getParentBubble();
-                if(parentBubble.isCenterBubble()){
+                if (parentBubble.isCenterBubble()) {
                     return this;
                 }
                 surroundBubbleHtml = htmlGetter(
@@ -100,14 +108,14 @@ define([
                 );
                 if (surroundBubbleHtml.length !== 0) {
                     found = true;
-                }else{
+                } else {
                     distance++;
                 }
-            }while(!found);
+            } while (!found);
             surroundBubble = BubbleFactory.fromHtml(
                 surroundBubbleHtml
             );
-            while(distance !== 0){
+            while (distance !== 0) {
                 surroundBubble = surroundBubble.getTopMostChildBubble();
                 distance--;
             }
@@ -163,9 +171,9 @@ define([
         };
 
         api.Self.prototype.remove = function () {
-            if(this.isVertex()){
+            if (this.isVertex()) {
                 SelectionHandler.removeVertex(this);
-            }else{
+            } else {
                 SelectionHandler.removeRelation(this);
             }
             this.removeHiddenRelationsContainer();

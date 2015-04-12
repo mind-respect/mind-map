@@ -66,6 +66,15 @@ define([
             expect(
                 bubble2.hasHiddenRelationsContainer()
             ).toBeTruthy();
+            graphWithHiddenSimilarRelationsScenario.expandBubble2(
+                bubble2
+            );
+            expect(
+                bubble2.hasHiddenRelationsContainer()
+            ).toBeFalsy();
+            expect(
+                bubble2.getTopMostChildBubble().isGroupRelation()
+            ).toBeTruthy();
         });
 
         it("preserves direction with parent vertex for expanded group relations", function () {
