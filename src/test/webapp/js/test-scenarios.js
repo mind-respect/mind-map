@@ -538,7 +538,7 @@ define([
              */
             this.get = function () {
                 return getTestData(
-                    "getSearchResultsForProject"
+                    "projectSchemaSearchResults.getForProject"
                 );
             };
         };
@@ -567,7 +567,7 @@ define([
              */
             this.get = function () {
                 return getTestData(
-                    "getSearchResultsForImpact"
+                    "projectSchemaSearchResults.resultsForImpact"
                 );
             };
         };

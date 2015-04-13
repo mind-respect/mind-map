@@ -1059,48 +1059,92 @@
       }
     }
   },
-  "getSearchResultsForProject": [
-    {
-      "graphElement": {
-        "friendlyResource": {
-          "uri": "/service/users/hg8g2cwco5/graph/schema/3ac15f41-5c4e-4f0e-bf5e-c8969626d098",
-          "label": "project",
-          "comment": "",
-          "images": [],
-          "creationDate": "Apr 10, 2015 10:45:19 AM",
-          "lastModificationDate": "Apr 10, 2015 10:45:25 AM"
+  "projectSchemaSearchResults": {
+    "getForProject": [
+      {
+        "graphElement": {
+          "friendlyResource": {
+            "uri": "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c",
+            "label": "project",
+            "comment": "",
+            "images": [],
+            "creationDate": "Apr 13, 2015 5:32:52 PM",
+            "lastModificationDate": "Apr 13, 2015 5:32:52 PM"
+          },
+          "identifications": {}
         },
-        "identifications": {}
+        "properties": {
+          "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c\/property\/97ff8ba5-db98-4c21-81ac-f65ca8838b8f": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c\/property\/97ff8ba5-db98-4c21-81ac-f65ca8838b8f",
+              "label": "has objective"
+            }
+          },
+          "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c\/property\/0ccd1d81-3b1d-433c-92e7-82cb6218b26c": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c\/property\/0ccd1d81-3b1d-433c-92e7-82cb6218b26c",
+              "label": "has component"
+            }
+          },
+          "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c\/property\/0035ddcd-6b83-4e51-b589-1e0f9867d0e0": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c\/property\/0035ddcd-6b83-4e51-b589-1e0f9867d0e0",
+              "label": "impact on society"
+            }
+          },
+          "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c\/property\/e1c5adf8-ade1-44e5-ba6d-fd8b1318e018": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c\/property\/e1c5adf8-ade1-44e5-ba6d-fd8b1318e018",
+              "label": "impact on the individual"
+            }
+          }
+        },
+        "type": "schema"
+      }
+    ],
+    "resultsForImpact": [
+      {
+        "graphElement": {
+          "friendlyResource": {
+            "uri": "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c\/property\/e1c5adf8-ade1-44e5-ba6d-fd8b1318e018",
+            "label": "impact on the individual",
+            "comment": "",
+            "images": [],
+            "creationDate": "Apr 13, 2015 5:32:52 PM",
+            "lastModificationDate": "Apr 13, 2015 5:32:52 PM"
+          },
+          "identifications": {}
+        },
+        "schema": {
+          "friendlyResource": {
+            "uri": "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c",
+            "label": "project"
+          }
+        },
+        "type": "property"
       },
-      "properties": {
-        "/service/users/hg8g2cwco5/graph/schema/3ac15f41-5c4e-4f0e-bf5e-c8969626d098/property/130d2a4f-327c-4fcc-a026-eff3399de4a3": {
+      {
+        "graphElement": {
           "friendlyResource": {
-            "uri": "/service/users/hg8g2cwco5/graph/schema/3ac15f41-5c4e-4f0e-bf5e-c8969626d098/property/130d2a4f-327c-4fcc-a026-eff3399de4a3",
-            "label": "impact on society"
+            "uri": "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c\/property\/0035ddcd-6b83-4e51-b589-1e0f9867d0e0",
+            "label": "impact on society",
+            "comment": "",
+            "images": [],
+            "creationDate": "Apr 13, 2015 5:32:52 PM",
+            "lastModificationDate": "Apr 13, 2015 5:32:52 PM"
+          },
+          "identifications": {}
+        },
+        "schema": {
+          "friendlyResource": {
+            "uri": "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c",
+            "label": "project"
           }
         },
-        "/service/users/hg8g2cwco5/graph/schema/3ac15f41-5c4e-4f0e-bf5e-c8969626d098/property/d55a3ec5-483d-462b-9037-6539ae83d655": {
-          "friendlyResource": {
-            "uri": "/service/users/hg8g2cwco5/graph/schema/3ac15f41-5c4e-4f0e-bf5e-c8969626d098/property/d55a3ec5-483d-462b-9037-6539ae83d655",
-            "label": "impact on the individual"
-          }
-        },
-        "/service/users/hg8g2cwco5/graph/schema/3ac15f41-5c4e-4f0e-bf5e-c8969626d098/property/f083019e-0d11-4eab-a52c-12dff126edb9": {
-          "friendlyResource": {
-            "uri": "/service/users/hg8g2cwco5/graph/schema/3ac15f41-5c4e-4f0e-bf5e-c8969626d098/property/f083019e-0d11-4eab-a52c-12dff126edb9",
-            "label": "has objective"
-          }
-        },
-        "/service/users/hg8g2cwco5/graph/schema/3ac15f41-5c4e-4f0e-bf5e-c8969626d098/property/083d0de8-e77a-4d2b-9e0c-c2fcd32091f2": {
-          "friendlyResource": {
-            "uri": "/service/users/hg8g2cwco5/graph/schema/3ac15f41-5c4e-4f0e-bf5e-c8969626d098/property/083d0de8-e77a-4d2b-9e0c-c2fcd32091f2",
-            "label": "has component"
-          }
-        }
-      },
-      "type": "schema"
-    }
-  ],
+        "type": "property"
+      }
+    ]
+  },
   "getSchemaProjectDetailsSearchResult": {
     "graphElement": {
       "friendlyResource": {
@@ -1263,56 +1307,7 @@
     "cost": 17,
     "hits": 88195
   },
-  "getSearchResultsForImpact": [
-    {
-      "graphElement": {
-        "friendlyResource": {
-          "uri": "/service/users/asoiajsda/graph/schema/8f4a2aeb-3a02-44cc-b72a-d7a4eb0d8ff9/property/372a46f1-937e-4742-b926-fd4faa19e365",
-          "label": "impact on the individual",
-          "comment": "",
-          "images": [],
-          "creationDate": "Feb 14, 2015 6:01:38 PM",
-          "lastModificationDate": "Feb 14, 2015 6:01:42 PM"
-        },
-        "identifications": {}
-      },
-      "schema": {
-        "friendlyResource": {
-          "uri": "/service/users/asoiajsda/graph/schema/8f4a2aeb-3a02-44cc-b72a-d7a4eb0d8ff9",
-          "label": "project",
-          "comment": "",
-          "images": [],
-          "creationDate": "Feb 14, 2015 6:10:12 PM",
-          "lastModificationDate": "Feb 14, 2015 6:10:12 PM"
-        }
-      },
-      "type": "property"
-    },
-    {
-      "graphElement": {
-        "friendlyResource": {
-          "uri": "/service/users/asoiajsda/graph/schema/8f4a2aeb-3a02-44cc-b72a-d7a4eb0d8ff9/property/ec3ca646-7c54-4969-b310-7fe0aa2a2df8",
-          "label": "impact on society",
-          "comment": "",
-          "images": [],
-          "creationDate": "Feb 14, 2015 6:01:43 PM",
-          "lastModificationDate": "Feb 14, 2015 6:01:49 PM"
-        },
-        "identifications": {}
-      },
-      "schema": {
-        "friendlyResource": {
-          "uri": "/service/users/asoiajsda/graph/schema/8f4a2aeb-3a02-44cc-b72a-d7a4eb0d8ff9",
-          "label": "project",
-          "comment": "",
-          "images": [],
-          "creationDate": "Feb 14, 2015 6:10:12 PM",
-          "lastModificationDate": "Feb 14, 2015 6:10:12 PM"
-        }
-      },
-      "type": "property"
-    }
-  ],
+
   "getSearchResultForB1": [
     {
       "graphElement": {
