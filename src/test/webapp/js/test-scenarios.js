@@ -416,6 +416,11 @@ define([
             Mock.setCenterVertexUriInUrl(this.getCenterVertex().getUri());
         };
         api.oneBubbleHavingSuggestionsGraph = function () {
+            /*
+            * Bubble labeled Event.
+            * Has a generic identification to freebase "Event" http://rdf.freebase.com/rdf/m/02xm94t
+            * Has 2 suggestions
+            */
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
                 return getTestData("oneBubbleHavingSuggestionsGraph");

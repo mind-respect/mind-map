@@ -11,7 +11,7 @@ define([
             var vertexWithEventRelatedSuggestions = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();
             expect(
                 vertexWithEventRelatedSuggestions.getSuggestions().length
-            ).toBe(8);
+            ).toBe(2);
 
             vertexWithEventRelatedSuggestions.addSuggestions([
                     new Scenarios.getKaraokeSchemaGraph().getInviteesPropertyAsSuggestion()
@@ -19,7 +19,7 @@ define([
             );
             expect(
                 vertexWithEventRelatedSuggestions.getSuggestions().length
-            ).toBe(9);
+            ).toBe(3);
             vertexWithEventRelatedSuggestions.impactOnRemovedIdentification(
                 vertexWithEventRelatedSuggestions.getIdentifications()[0]
             );
