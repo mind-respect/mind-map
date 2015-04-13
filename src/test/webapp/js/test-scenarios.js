@@ -199,7 +199,9 @@ define([
              */
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
-                return getTestData("threeBubblesGraph");
+                return getTestData(
+                    "threeBubblesGraph.getGraph"
+                );
             };
 
             this.reset = function () {
@@ -217,11 +219,13 @@ define([
             function getSurroundBubble3Graph() {
                 /*
                  b3<-r2-b1
-                 b3->r3-b4
+                 b3-r3>-b4
                  b3-r4->b5
                  b4 has hidden relations
                  */
-                return getTestData("getSurroundBubble3Graph");
+                return getTestData(
+                    "threeBubblesGraph.getSurroundBubble3Graph"
+                );
             }
 
             this.getCenterBubbleUri = function () {
@@ -321,8 +325,12 @@ define([
         };
 
         api.GraphWithAnInverseRelationScenario = function () {
+            /*
+             * me -going straight->straight bubble
+             * me <-going inverse-inverse bubble
+             */
             this.getGraph = function () {
-                return getTestData("GraphWithAnInverseRelationScenario");
+                return getTestData("graphWithAnInverseRelation");
             };
             this.getCenterVertex = function () {
                 return Vertex.fromServerFormat(graph.vertices[
