@@ -2,7 +2,7 @@
  * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
-        "test/webapp/js/test-scenarios-data",
+        "text!test/resources/test-scenarios-data.json",
         'triple_brain.vertex',
         'triple_brain.edge',
         'triple_brain.schema',
@@ -28,7 +28,8 @@ define([
         "text!main/webapp/locales/en/translation.json"
     ],
     function (TestScenarioData, Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, VertexServerFormatBuilder, EventBus, Suggestion, Identification, FriendlyResource, LanguageManager, enTranslation) {
-        var api = {};
+        var api = {},
+            testData = JSON.parse(TestScenarioData);
         $.i18n.init({
             lng: "en",
             useLocalStorage: false,
@@ -61,7 +62,7 @@ define([
                  b2<-r3-b4
                  b1<-r4-b5
                  */
-                return TestScenarioData.deepGraph();
+                return getTestData("deepGraph");
             };
             this.getCenterVertex = function () {
                 var graph = this.getGraph();
@@ -80,11 +81,18 @@ define([
         };
 
         api.mergeBubbleGraph = function () {
+            /*
+             one bubble labeled merge
+             merge contains bubbles
+             b1-r1->b2
+             b2-r2->b3
+             b1<-r4-b4
+             */
             var treeBuilder = new TreeBuilder(this),
                 includedElementsTree,
                 self = this;
             this.getGraph = function () {
-                return TestScenarioData.mergeBubbleGraph();
+                return getTestData("mergeBubbleGraph");
             };
 
             this.getMergeBubble = function () {
@@ -117,7 +125,6 @@ define([
                     "b3"
                 )
             };
-
             this.getBubble4 = function () {
                 return new TreeQuerier(
                     getIncludedElementsTree()
@@ -184,10 +191,15 @@ define([
         };
 
         api.threeBubblesGraph = function () {
-
+            /*
+             b1-r1->b2
+             b1-r2->b3
+             b2 has two hidden relations
+             b3 has two hidden relations
+             */
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
-                return TestScenarioData.threeBubblesGraph();
+                return getTestData("threeBubblesGraph");
             };
 
             this.reset = function () {
@@ -203,7 +215,13 @@ define([
                 return treeBuilder.getBubbleWithLabelInTree("b4");
             };
             function getSurroundBubble3Graph() {
-                return TestScenarioData.getSurroundBubble3Graph();
+                /*
+                 b3<-r2-b1
+                 b3->r3-b4
+                 b3-r4->b5
+                 b4 has hidden relations
+                 */
+                return getTestData("getSurroundBubble3Graph");
             }
 
             this.getCenterBubbleUri = function () {
@@ -265,10 +283,19 @@ define([
             Mock.setCenterVertexUriInUrl(this.getBubble2().getUri());
         };
 
-        api.getGraphWithHiddenSimilarRelations = function(){
+        api.getGraphWithHiddenSimilarRelations = function () {
+            /*
+             * b1-r1->b2
+             * b2 has hidden relations
+             * b2-T-shirt->shirt1
+             * b2-T-shirt->shirt2
+             * relations T-shirt are identified to Freebase T-shirt.
+             */
             var treeBuilder = new TreeBuilder(this);
-            this.getGraph = function(){
-                return TestScenarioData.getGraphWithHiddenSimilarRelations().getGraph();
+            this.getGraph = function () {
+                return getTestData(
+                    "getGraphWithHiddenSimilarRelations.getGraph"
+                );
             };
             this.getCenterBubbleUri = function () {
                 return this.getBubble1().getUri();
@@ -276,7 +303,9 @@ define([
             this.expandBubble2 = function (bubble2) {
                 return GraphDisplayerAsRelativeTree.addChildTreeUsingGraph(
                     bubble2,
-                    TestScenarioData.getGraphWithHiddenSimilarRelations().getSimilarRelations()
+                    getTestData(
+                        "getGraphWithHiddenSimilarRelations.getSimilarRelations"
+                    )
                 );
             };
             this.getBubble1 = function () {
@@ -293,7 +322,7 @@ define([
 
         api.GraphWithAnInverseRelationScenario = function () {
             this.getGraph = function () {
-                return TestScenarioData.GraphWithAnInverseRelationScenario();
+                return getTestData("GraphWithAnInverseRelationScenario");
             };
             this.getCenterVertex = function () {
                 return Vertex.fromServerFormat(graph.vertices[
@@ -304,9 +333,17 @@ define([
             var graph = this.getGraph();
         };
         api.GraphWithSimilarRelationsScenario = function () {
+            /*
+             me-Possession of book 1->book 1
+             me<-Possessed by book 2-book 2
+             me-Possession of book 3->book 3
+             me-other relation->other bubble
+             me-original relation->b1
+             me-same as original relation->b2
+             */
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
-                return TestScenarioData.GraphWithSimilarRelationsScenario();
+                return getTestData("GraphWithSimilarRelationsScenario");
             };
             this.getCenterBubbleUri = function () {
                 return uriOfVertexWithLabel(this.getGraph(), "me")
@@ -373,7 +410,7 @@ define([
         api.oneBubbleHavingSuggestionsGraph = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
-                return TestScenarioData.oneBubbleHavingSuggestionsGraph();
+                return getTestData("oneBubbleHavingSuggestionsGraph");
             };
             var graph = this.getGraph();
             this.getVertex = function () {
@@ -413,7 +450,7 @@ define([
              location identified to Freebase Location
              */
             this.getGraph = function () {
-                return TestScenarioData.getKaraokeSchemaGraph();
+                return getTestData("getKaraokeSchemaGraph");
             };
             var graph = this.getGraph();
             this.getSchema = function () {
@@ -472,7 +509,9 @@ define([
 
         api.getFreebaseSearchResultForProject = function () {
             this.get = function () {
-                return TestScenarioData.getFreebaseSearchResultForProject();
+                return getTestData(
+                    "getFreebaseSearchResultForProject"
+                );
             };
         };
 
@@ -485,7 +524,9 @@ define([
              * project -> has component
              */
             this.get = function () {
-                return TestScenarioData.getSearchResultsForProject();
+                return getTestData(
+                    "getSearchResultsForProject"
+                );
             };
         };
 
@@ -494,8 +535,10 @@ define([
              * schema project having description :
              * something cool
              */
-            this.get = function(){
-                return TestScenarioData.getSchemaProjectDetailsSearchResult();
+            this.get = function () {
+                return getTestData(
+                    "getSchemaProjectDetailsSearchResult"
+                );
             };
         };
 
@@ -510,7 +553,9 @@ define([
              * another bubble labeled impact
              */
             this.get = function () {
-                return TestScenarioData.getSearchResultsForImpact();
+                return getTestData(
+                    "getSearchResultsForImpact"
+                );
             };
         };
         api.getSearchResultForB1 = function () {
@@ -521,7 +566,9 @@ define([
              *
              */
             this.get = function () {
-                return TestScenarioData.getSearchResultForB1();
+                return getTestData(
+                    "getSearchResultForB1"
+                );
             };
         };
         api.getSearchResultForR2 = function () {
@@ -532,7 +579,9 @@ define([
              *
              */
             this.get = function () {
-                return TestScenarioData.getSearchResultForR2();
+                return getTestData(
+                    "getSearchResultForR2"
+                );
             };
         };
         GraphDisplayer.setImplementation(
@@ -687,6 +736,16 @@ define([
                     .toString(16)
                     .substring(1);
             }
+        }
+
+        function getTestData(key) {
+            var splitKey = key.split(/\./),
+                data = testData;
+            while (splitKey.length && data) {
+                data = data[splitKey.shift()];
+            }
+            var deep = true;
+            return $.extend(deep, {}, data)
         }
     }
 );
