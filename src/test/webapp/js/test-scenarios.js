@@ -463,7 +463,7 @@ define([
              location identified to Freebase Location
              */
             this.getGraph = function () {
-                return getTestData("getKaraokeSchemaGraph");
+                return getTestData("karaokeSchemaGraph");
             };
             var graph = this.getGraph();
             this.getSchema = function () {

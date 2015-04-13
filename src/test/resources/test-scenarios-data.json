@@ -1002,59 +1002,58 @@
     },
     "edges": {}
   },
-  "getKaraokeSchemaGraph": {
+  "karaokeSchemaGraph": {
     "friendlyResource": {
-      "uri": "\/service\/users\/aovsd\/graph\/schema\/cd67eeab-6de9-425d-822e-6c05b7493c85",
+      "uri": "\/service\/users\/b\/graph\/schema\/f8ea9574-1222-4789-a877-4317aa094751",
       "label": "karaoke",
       "comment": "",
       "images": [],
-      "creationDate": "Dec 24, 2014 2:23:49 PM",
-      "lastModificationDate": "Dec 24, 2014 2:24:01 PM"
+      "creationDate": "Apr 13, 2015 4:42:32 PM",
+      "lastModificationDate": "Apr 13, 2015 4:42:32 PM"
     },
     "properties": {
-      "\/service\/users\/aovsd\/graph\/schema\/cd67eeab-6de9-425d-822e-6c05b7493c85\/property\/fb4714c5-cce7-43a7-9146-eabdb784cd1d": {
+      "\/service\/users\/b\/graph\/schema\/f8ea9574-1222-4789-a877-4317aa094751\/property\/b7c8cb1f-ac12-4b73-8eb9-10932782c1e2": {
         "friendlyResource": {
-          "uri": "\/service\/users\/aovsd\/graph\/schema\/cd67eeab-6de9-425d-822e-6c05b7493c85\/property\/fb4714c5-cce7-43a7-9146-eabdb784cd1d",
-          "label": "repertoire",
-          "comment": "",
-          "images": [],
-          "creationDate": "Dec 24, 2014 2:24:07 PM",
-          "lastModificationDate": "Dec 24, 2014 2:24:10 PM"
-        },
-        "identifications": {}
-      },
-      "\/service\/users\/aovsd\/graph\/schema\/cd67eeab-6de9-425d-822e-6c05b7493c85\/property\/8fbfebcf-861d-48ce-82d1-93a8715bda95": {
-        "friendlyResource": {
-          "uri": "\/service\/users\/aovsd\/graph\/schema\/cd67eeab-6de9-425d-822e-6c05b7493c85\/property\/8fbfebcf-861d-48ce-82d1-93a8715bda95",
+          "uri": "\/service\/users\/b\/graph\/schema\/f8ea9574-1222-4789-a877-4317aa094751\/property\/b7c8cb1f-ac12-4b73-8eb9-10932782c1e2",
           "label": "location",
           "comment": "",
           "images": [],
-          "creationDate": "Dec 24, 2014 2:24:11 PM",
-          "lastModificationDate": "Dec 24, 2014 2:24:15 PM"
+          "creationDate": "Apr 13, 2015 4:42:32 PM",
+          "lastModificationDate": "Apr 13, 2015 4:42:32 PM"
         },
         "identifications": {
           "http:\/\/rdf.freebase.com\/rdf\/m\/01n7": {
             "externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/01n7",
             "friendlyResource": {
-              "uri": "\/service\/users\/aovsd\/graph\/identification\/e03aefcd-83a8-4fc3-898f-8803e352f4bf",
+              "uri": "\/service\/users\/b\/graph\/identification\/d2f9d3d2-018e-4f09-a5d1-4262c15a41bf",
               "label": "Location",
               "comment": "The Location type is used for any topic with a fixed location on the planet Earth. It includes geographic features such as oceans and mountains, political entities like cities and man-made objects like buildings.Guidelines for filling in location properties:geolocation: the longitude and latitude (in decimal notation) of the feature, or of the geographical center (centroid) fo the feature.contains and contained by: these properties can be used to show spatial relationships between different locations, such as an island contained by a body of water (which is equivalent to saying the body of water contains the island), a state contained by a country, a mountain within the borders of a national park, etc. For geopolitical locations,   containment two levels up and down is the ideal minimum. For example, the next two levels up for the city of Detroit are Wayne County and the state of Michigan.adjoins: also used to show spatial relations, in this case between locations that share a border.USBG Name: A unique name given to geographic features within the U.S. and its territories by the United States Board on Geographic Names. More information can be found on their website. GNIS ID: A unique id given to geographic features within the U.S. and its territories by the United States Board on Geographic Names. GNIS stands for Geographic Names Information System. More information can be found on their website.GEOnet Feature ID: The UFI (Unique Feature ID) used by GeoNet for features outside of the United States. More information can be found on their website.",
-              "images": [],
-              "creationDate": "Dec 24, 2014 2:24:37 PM",
-              "lastModificationDate": "Dec 24, 2014 2:24:37 PM"
+              "creationDate": "Apr 13, 2015 4:42:32 PM",
+              "lastModificationDate": "Apr 13, 2015 4:42:32 PM"
             },
             "identificationType": "same_as"
           }
         }
       },
-      "\/service\/users\/aovsd\/graph\/schema\/cd67eeab-6de9-425d-822e-6c05b7493c85\/property\/ee24ba1e-01a7-4745-ae8d-bc220cd2cfd9": {
+      "\/service\/users\/b\/graph\/schema\/f8ea9574-1222-4789-a877-4317aa094751\/property\/101e8605-d31a-42b9-81b8-5842100b1eb7": {
         "friendlyResource": {
-          "uri": "\/service\/users\/aovsd\/graph\/schema\/cd67eeab-6de9-425d-822e-6c05b7493c85\/property\/ee24ba1e-01a7-4745-ae8d-bc220cd2cfd9",
+          "uri": "\/service\/users\/b\/graph\/schema\/f8ea9574-1222-4789-a877-4317aa094751\/property\/101e8605-d31a-42b9-81b8-5842100b1eb7",
           "label": "invitees",
           "comment": "",
           "images": [],
-          "creationDate": "Dec 24, 2014 2:24:01 PM",
-          "lastModificationDate": "Dec 24, 2014 2:24:06 PM"
+          "creationDate": "Apr 13, 2015 4:42:32 PM",
+          "lastModificationDate": "Apr 13, 2015 4:42:32 PM"
+        },
+        "identifications": {}
+      },
+      "\/service\/users\/b\/graph\/schema\/f8ea9574-1222-4789-a877-4317aa094751\/property\/d98c0cfd-450e-4636-9efa-e06537fbf438": {
+        "friendlyResource": {
+          "uri": "\/service\/users\/b\/graph\/schema\/f8ea9574-1222-4789-a877-4317aa094751\/property\/d98c0cfd-450e-4636-9efa-e06537fbf438",
+          "label": "repertoire",
+          "comment": "",
+          "images": [],
+          "creationDate": "Apr 13, 2015 4:42:32 PM",
+          "lastModificationDate": "Apr 13, 2015 4:42:32 PM"
         },
         "identifications": {}
       }
