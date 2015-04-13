@@ -351,7 +351,7 @@ define([
              */
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
-                return getTestData("GraphWithSimilarRelationsScenario");
+                return getTestData("graphWithSimilarRelations");
             };
             this.getCenterBubbleUri = function () {
                 return uriOfVertexWithLabel(this.getGraph(), "me")
