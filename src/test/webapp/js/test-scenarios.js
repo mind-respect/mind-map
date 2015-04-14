@@ -298,7 +298,7 @@ define([
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
                 return getTestData(
-                    "getGraphWithHiddenSimilarRelations.getGraph"
+                    "graphWithHiddenSimilarRelations.b1Graph"
                 );
             };
             this.getCenterBubbleUri = function () {
@@ -308,7 +308,7 @@ define([
                 return GraphDisplayerAsRelativeTree.addChildTreeUsingGraph(
                     bubble2,
                     getTestData(
-                        "getGraphWithHiddenSimilarRelations.getSimilarRelations"
+                        "graphWithHiddenSimilarRelations.b2Graph"
                     )
                 );
             };
@@ -544,13 +544,9 @@ define([
         };
 
         api.getSchemaProjectDetailsSearchResult = function () {
-            /*
-             * schema project having description :
-             * something cool
-             */
             this.get = function () {
                 return getTestData(
-                    "getSchemaProjectDetailsSearchResult"
+                    "projectSchemaSearchResults.projectSearchDetails"
                 );
             };
         };

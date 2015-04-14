@@ -29,7 +29,7 @@ define([
                 function(html){
                     hasBeenIntoCallback = true;
                     expect(
-                        html.html().indexOf("something cool") !== -1
+                        html.html().indexOf("A project is defined as a collaborative enterprise ...") !== -1
                     ).toBeTruthy();
                 }
             );

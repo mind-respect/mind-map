@@ -1132,38 +1132,38 @@
       {
         "graphElement": {
           "friendlyResource": {
-            "uri": "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c",
+            "uri": "\/service\/users\/b\/graph\/schema\/a2c53a49-4670-4a4b-8043-bb2b48c12512",
             "label": "project",
             "comment": "",
             "images": [],
-            "creationDate": "Apr 13, 2015 5:32:52 PM",
-            "lastModificationDate": "Apr 13, 2015 5:32:52 PM"
+            "creationDate": "Apr 14, 2015 12:58:14 PM",
+            "lastModificationDate": "Apr 14, 2015 12:58:14 PM"
           },
           "identifications": {}
         },
         "properties": {
-          "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c\/property\/97ff8ba5-db98-4c21-81ac-f65ca8838b8f": {
+          "\/service\/users\/b\/graph\/schema\/a2c53a49-4670-4a4b-8043-bb2b48c12512\/property\/f1177e29-ca5e-4839-8ce3-8a9f39946e36": {
             "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c\/property\/97ff8ba5-db98-4c21-81ac-f65ca8838b8f",
-              "label": "has objective"
+              "uri": "\/service\/users\/b\/graph\/schema\/a2c53a49-4670-4a4b-8043-bb2b48c12512\/property\/f1177e29-ca5e-4839-8ce3-8a9f39946e36",
+              "label": "impact on the individual"
             }
           },
-          "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c\/property\/0ccd1d81-3b1d-433c-92e7-82cb6218b26c": {
+          "\/service\/users\/b\/graph\/schema\/a2c53a49-4670-4a4b-8043-bb2b48c12512\/property\/f7be8a4a-6b15-4efb-9171-fbf3e90392a0": {
             "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c\/property\/0ccd1d81-3b1d-433c-92e7-82cb6218b26c",
-              "label": "has component"
-            }
-          },
-          "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c\/property\/0035ddcd-6b83-4e51-b589-1e0f9867d0e0": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c\/property\/0035ddcd-6b83-4e51-b589-1e0f9867d0e0",
+              "uri": "\/service\/users\/b\/graph\/schema\/a2c53a49-4670-4a4b-8043-bb2b48c12512\/property\/f7be8a4a-6b15-4efb-9171-fbf3e90392a0",
               "label": "impact on society"
             }
           },
-          "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c\/property\/e1c5adf8-ade1-44e5-ba6d-fd8b1318e018": {
+          "\/service\/users\/b\/graph\/schema\/a2c53a49-4670-4a4b-8043-bb2b48c12512\/property\/15c184a5-137b-4450-8662-3f75689af95b": {
             "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c\/property\/e1c5adf8-ade1-44e5-ba6d-fd8b1318e018",
-              "label": "impact on the individual"
+              "uri": "\/service\/users\/b\/graph\/schema\/a2c53a49-4670-4a4b-8043-bb2b48c12512\/property\/15c184a5-137b-4450-8662-3f75689af95b",
+              "label": "has objective"
+            }
+          },
+          "\/service\/users\/b\/graph\/schema\/a2c53a49-4670-4a4b-8043-bb2b48c12512\/property\/e993c304-0055-4afb-9268-5014de746077": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/schema\/a2c53a49-4670-4a4b-8043-bb2b48c12512\/property\/e993c304-0055-4afb-9268-5014de746077",
+              "label": "has component"
             }
           }
         },
@@ -1174,18 +1174,18 @@
       {
         "graphElement": {
           "friendlyResource": {
-            "uri": "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c\/property\/e1c5adf8-ade1-44e5-ba6d-fd8b1318e018",
-            "label": "impact on the individual",
+            "uri": "\/service\/users\/b\/graph\/schema\/a2c53a49-4670-4a4b-8043-bb2b48c12512\/property\/f7be8a4a-6b15-4efb-9171-fbf3e90392a0",
+            "label": "impact on society",
             "comment": "",
             "images": [],
-            "creationDate": "Apr 13, 2015 5:32:52 PM",
-            "lastModificationDate": "Apr 13, 2015 5:32:52 PM"
+            "creationDate": "Apr 14, 2015 12:58:14 PM",
+            "lastModificationDate": "Apr 14, 2015 12:58:14 PM"
           },
           "identifications": {}
         },
         "schema": {
           "friendlyResource": {
-            "uri": "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c",
+            "uri": "\/service\/users\/b\/graph\/schema\/a2c53a49-4670-4a4b-8043-bb2b48c12512",
             "label": "project"
           }
         },
@@ -1194,38 +1194,38 @@
       {
         "graphElement": {
           "friendlyResource": {
-            "uri": "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c\/property\/0035ddcd-6b83-4e51-b589-1e0f9867d0e0",
-            "label": "impact on society",
+            "uri": "\/service\/users\/b\/graph\/schema\/a2c53a49-4670-4a4b-8043-bb2b48c12512\/property\/f1177e29-ca5e-4839-8ce3-8a9f39946e36",
+            "label": "impact on the individual",
             "comment": "",
             "images": [],
-            "creationDate": "Apr 13, 2015 5:32:52 PM",
-            "lastModificationDate": "Apr 13, 2015 5:32:52 PM"
+            "creationDate": "Apr 14, 2015 12:58:14 PM",
+            "lastModificationDate": "Apr 14, 2015 12:58:14 PM"
           },
           "identifications": {}
         },
         "schema": {
           "friendlyResource": {
-            "uri": "\/service\/users\/b\/graph\/schema\/220920b1-cbfd-47ff-b897-1c000f58067c",
+            "uri": "\/service\/users\/b\/graph\/schema\/a2c53a49-4670-4a4b-8043-bb2b48c12512",
             "label": "project"
           }
         },
         "type": "property"
       }
-    ]
-  },
-  "getSchemaProjectDetailsSearchResult": {
-    "graphElement": {
-      "friendlyResource": {
-        "uri": "/service/users/oujl74s65c/graph/schema/b8281e7c-6b00-46d2-8759-9be08aacc35a",
-        "label": "project",
-        "comment": "something cool",
-        "images": [],
-        "creationDate": "Apr 10, 2015 4:17:19 PM",
-        "lastModificationDate": "Apr 10, 2015 4:22:03 PM"
+    ],
+    "projectSearchDetails": {
+      "graphElement": {
+        "friendlyResource": {
+          "uri": "\/service\/users\/b\/graph\/schema\/a2c53a49-4670-4a4b-8043-bb2b48c12512",
+          "label": "project",
+          "comment": "A project is defined as a collaborative enterprise ...",
+          "images": [],
+          "creationDate": "Apr 14, 2015 12:58:14 PM",
+          "lastModificationDate": "Apr 14, 2015 12:58:14 PM"
+        },
+        "identifications": {}
       },
-      "identifications": {}
-    },
-    "type": "schema"
+      "type": "schema"
+    }
   },
   "getFreebaseSearchResultForProject": {
     "status": "200 OK",
@@ -1375,39 +1375,19 @@
     "cost": 17,
     "hits": 88195
   },
-  "getGraphWithHiddenSimilarRelations": {
-    "getGraph": {
+  "graphWithHiddenSimilarRelations": {
+    "b1Graph": {
       "vertices": {
-        "\/service\/users\/cgc9ptoqcx\/graph\/vertex\/87630395-91e3-43f1-8109-e657f191cf24": {
+        "\/service\/users\/b\/graph\/vertex\/37cab6e9-9366-4cf3-a3f4-5f0c80c3adc1": {
           "vertex": {
             "graphElement": {
               "friendlyResource": {
-                "uri": "\/service\/users\/cgc9ptoqcx\/graph\/vertex\/87630395-91e3-43f1-8109-e657f191cf24",
-                "label": "b1",
-                "comment": "",
-                "images": [],
-                "creationDate": "Apr 12, 2015 10:02:29 AM",
-                "lastModificationDate": "Apr 12, 2015 10:02:35 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 1,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        },
-        "\/service\/users\/cgc9ptoqcx\/graph\/vertex\/860e3064-36b5-4a08-8861-762d57a2d544": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/cgc9ptoqcx\/graph\/vertex\/860e3064-36b5-4a08-8861-762d57a2d544",
+                "uri": "\/service\/users\/b\/graph\/vertex\/37cab6e9-9366-4cf3-a3f4-5f0c80c3adc1",
                 "label": "b2",
                 "comment": "",
                 "images": [],
-                "creationDate": "Apr 12, 2015 10:02:36 AM",
-                "lastModificationDate": "Apr 12, 2015 10:02:41 AM"
+                "creationDate": "Apr 14, 2015 1:12:40 PM",
+                "lastModificationDate": "Apr 14, 2015 1:12:40 PM"
               },
               "identifications": {}
             },
@@ -1417,78 +1397,58 @@
             "suggestions": {},
             "isPublic": false
           }
+        },
+        "\/service\/users\/b\/graph\/vertex\/4051d41b-fae2-45ab-a4f2-0bf8f17fe1a0": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/4051d41b-fae2-45ab-a4f2-0bf8f17fe1a0",
+                "label": "b1",
+                "comment": "",
+                "images": [],
+                "creationDate": "Apr 14, 2015 1:12:40 PM",
+                "lastModificationDate": "Apr 14, 2015 1:12:40 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 1,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
         }
       },
       "edges": {
-        "\/service\/users\/cgc9ptoqcx\/graph\/edge\/e05b2aa5-350c-43f5-a8b0-ffaece797240": {
+        "\/service\/users\/b\/graph\/edge\/3600c840-efe9-4f64-bc5e-35451d8c9ddb": {
           "graphElement": {
             "friendlyResource": {
-              "uri": "\/service\/users\/cgc9ptoqcx\/graph\/edge\/e05b2aa5-350c-43f5-a8b0-ffaece797240",
+              "uri": "\/service\/users\/b\/graph\/edge\/3600c840-efe9-4f64-bc5e-35451d8c9ddb",
               "label": "r1",
               "comment": "",
               "images": [],
-              "creationDate": "Apr 12, 2015 10:02:36 AM",
-              "lastModificationDate": "Apr 12, 2015 10:02:39 AM"
+              "creationDate": "Apr 14, 2015 1:12:40 PM",
+              "lastModificationDate": "Apr 14, 2015 1:12:40 PM"
             },
             "identifications": {}
           },
-          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/cgc9ptoqcx\/graph\/vertex\/87630395-91e3-43f1-8109-e657f191cf24"}}}},
-          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/cgc9ptoqcx\/graph\/vertex\/860e3064-36b5-4a08-8861-762d57a2d544"}}}}
+          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/4051d41b-fae2-45ab-a4f2-0bf8f17fe1a0"}}}},
+          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/37cab6e9-9366-4cf3-a3f4-5f0c80c3adc1"}}}}
         }
       }
     },
-    "getSimilarRelations": {
+    "b2Graph": {
       "vertices": {
-        "\/service\/users\/cgc9ptoqcx\/graph\/vertex\/87630395-91e3-43f1-8109-e657f191cf24": {
+        "\/service\/users\/b\/graph\/vertex\/37cab6e9-9366-4cf3-a3f4-5f0c80c3adc1": {
           "vertex": {
             "graphElement": {
               "friendlyResource": {
-                "uri": "\/service\/users\/cgc9ptoqcx\/graph\/vertex\/87630395-91e3-43f1-8109-e657f191cf24",
-                "label": "b1",
-                "comment": "",
-                "images": [],
-                "creationDate": "Apr 12, 2015 10:02:29 AM",
-                "lastModificationDate": "Apr 12, 2015 10:02:35 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 1,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        },
-        "\/service\/users\/cgc9ptoqcx\/graph\/vertex\/f3dba499-ad8c-418a-9d44-1207ddfcde42": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/cgc9ptoqcx\/graph\/vertex\/f3dba499-ad8c-418a-9d44-1207ddfcde42",
-                "label": "shirt2",
-                "comment": "",
-                "images": [],
-                "creationDate": "Apr 12, 2015 10:03:12 AM",
-                "lastModificationDate": "Apr 12, 2015 10:03:19 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 1,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        },
-        "\/service\/users\/cgc9ptoqcx\/graph\/vertex\/860e3064-36b5-4a08-8861-762d57a2d544": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/cgc9ptoqcx\/graph\/vertex\/860e3064-36b5-4a08-8861-762d57a2d544",
+                "uri": "\/service\/users\/b\/graph\/vertex\/37cab6e9-9366-4cf3-a3f4-5f0c80c3adc1",
                 "label": "b2",
                 "comment": "",
                 "images": [],
-                "creationDate": "Apr 12, 2015 10:02:36 AM",
-                "lastModificationDate": "Apr 12, 2015 10:02:41 AM"
+                "creationDate": "Apr 14, 2015 1:12:40 PM",
+                "lastModificationDate": "Apr 14, 2015 1:12:40 PM"
               },
               "identifications": {}
             },
@@ -1499,16 +1459,56 @@
             "isPublic": false
           }
         },
-        "\/service\/users\/cgc9ptoqcx\/graph\/vertex\/ca997ec2-f812-4903-bdfa-f81f6d15eec9": {
+        "\/service\/users\/b\/graph\/vertex\/a5367467-fce2-4ff8-a2da-8a202bc3714d": {
           "vertex": {
             "graphElement": {
               "friendlyResource": {
-                "uri": "\/service\/users\/cgc9ptoqcx\/graph\/vertex\/ca997ec2-f812-4903-bdfa-f81f6d15eec9",
+                "uri": "\/service\/users\/b\/graph\/vertex\/a5367467-fce2-4ff8-a2da-8a202bc3714d",
+                "label": "shirt2",
+                "comment": "",
+                "images": [],
+                "creationDate": "Apr 14, 2015 1:12:40 PM",
+                "lastModificationDate": "Apr 14, 2015 1:12:40 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 1,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
+        },
+        "\/service\/users\/b\/graph\/vertex\/381bed21-de7a-4d9f-8f53-86156e4ea3d1": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/381bed21-de7a-4d9f-8f53-86156e4ea3d1",
                 "label": "shirt1",
                 "comment": "",
                 "images": [],
-                "creationDate": "Apr 12, 2015 10:02:41 AM",
-                "lastModificationDate": "Apr 12, 2015 10:03:09 AM"
+                "creationDate": "Apr 14, 2015 1:12:40 PM",
+                "lastModificationDate": "Apr 14, 2015 1:12:40 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 1,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
+        },
+        "\/service\/users\/b\/graph\/vertex\/4051d41b-fae2-45ab-a4f2-0bf8f17fe1a0": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/4051d41b-fae2-45ab-a4f2-0bf8f17fe1a0",
+                "label": "b1",
+                "comment": "",
+                "images": [],
+                "creationDate": "Apr 14, 2015 1:12:40 PM",
+                "lastModificationDate": "Apr 14, 2015 1:12:40 PM"
               },
               "identifications": {}
             },
@@ -1521,76 +1521,74 @@
         }
       },
       "edges": {
-        "\/service\/users\/cgc9ptoqcx\/graph\/edge\/2a33c63a-6fc5-4d7c-9784-2b15e278cfe4": {
+        "\/service\/users\/b\/graph\/edge\/3600c840-efe9-4f64-bc5e-35451d8c9ddb": {
           "graphElement": {
             "friendlyResource": {
-              "uri": "\/service\/users\/cgc9ptoqcx\/graph\/edge\/2a33c63a-6fc5-4d7c-9784-2b15e278cfe4",
-              "label": "T-shirt",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 12, 2015 10:02:41 AM",
-              "lastModificationDate": "Apr 12, 2015 10:03:07 AM"
-            },
-            "identifications": {
-              "http:\/\/rdf.freebase.com\/rdf\/m\/013s93": {
-                "externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/013s93",
-                "friendlyResource": {
-                  "uri": "\/service\/users\/cgc9ptoqcx\/graph\/identification\/16d80ad7-a2e5-4836-8b93-b519bfed56dc",
-                  "label": "T-shirt",
-                  "comment": "A T-shirt is a style of fabric shirt, named after the T shape of the body and sleeves. It is normally associated with short sleeves, a round neck line known as a \"crew neck\", and no collar.\nTypically made of cotton fibers knitted in a jersey stitch, they have a distinctive soft texture compared to woven shirts. The majority of modern versions have a body made from a continuously woven tube, on a circular loom, so that the torso has no side seams. The manufacture of T-shirts has become highly automated, and may include fabric cutting by laser or water jet.\nThe T-shirt evolved from undergarments used in the 19th century, through cutting the one-piece \"union suit\" underwear into separate top and bottom garments, with the top long enough to tuck under the waistband of the bottoms. With and without buttons, they were adopted by miners and stevedores during the late 19th century as a convenient covering for hot environments.\nAs slip-on garments without buttons, they originally became popular in the United States when they were issued by the U.S. Navy during or following the Spanish–American War of 1898.",
-                  "images": [],
-                  "creationDate": "Apr 12, 2015 10:03:07 AM",
-                  "lastModificationDate": "Apr 12, 2015 10:03:07 AM"
-                },
-                "identificationType": "same_as"
-              }
-            }
-          },
-          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/cgc9ptoqcx\/graph\/vertex\/860e3064-36b5-4a08-8861-762d57a2d544"}}}},
-          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/cgc9ptoqcx\/graph\/vertex\/ca997ec2-f812-4903-bdfa-f81f6d15eec9"}}}}
-        },
-        "\/service\/users\/cgc9ptoqcx\/graph\/edge\/4cb2fcbb-c72d-45a3-b99f-6d0e4e7abd0e": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/cgc9ptoqcx\/graph\/edge\/4cb2fcbb-c72d-45a3-b99f-6d0e4e7abd0e",
-              "label": "T-shirt",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 12, 2015 10:03:12 AM",
-              "lastModificationDate": "Apr 12, 2015 10:03:17 AM"
-            },
-            "identifications": {
-              "http:\/\/rdf.freebase.com\/rdf\/m\/013s93": {
-                "externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/013s93",
-                "friendlyResource": {
-                  "uri": "\/service\/users\/cgc9ptoqcx\/graph\/identification\/3a543140-bc2c-4ee3-9df9-dfe6f53762cf",
-                  "label": "T-shirt",
-                  "comment": "A T-shirt is a style of fabric shirt, named after the T shape of the body and sleeves. It is normally associated with short sleeves, a round neck line known as a \"crew neck\", and no collar.\nTypically made of cotton fibers knitted in a jersey stitch, they have a distinctive soft texture compared to woven shirts. The majority of modern versions have a body made from a continuously woven tube, on a circular loom, so that the torso has no side seams. The manufacture of T-shirts has become highly automated, and may include fabric cutting by laser or water jet.\nThe T-shirt evolved from undergarments used in the 19th century, through cutting the one-piece \"union suit\" underwear into separate top and bottom garments, with the top long enough to tuck under the waistband of the bottoms. With and without buttons, they were adopted by miners and stevedores during the late 19th century as a convenient covering for hot environments.\nAs slip-on garments without buttons, they originally became popular in the United States when they were issued by the U.S. Navy during or following the Spanish–American War of 1898.",
-                  "images": [],
-                  "creationDate": "Apr 12, 2015 10:03:17 AM",
-                  "lastModificationDate": "Apr 12, 2015 10:03:17 AM"
-                },
-                "identificationType": "same_as"
-              }
-            }
-          },
-          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/cgc9ptoqcx\/graph\/vertex\/860e3064-36b5-4a08-8861-762d57a2d544"}}}},
-          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/cgc9ptoqcx\/graph\/vertex\/f3dba499-ad8c-418a-9d44-1207ddfcde42"}}}}
-        },
-        "\/service\/users\/cgc9ptoqcx\/graph\/edge\/e05b2aa5-350c-43f5-a8b0-ffaece797240": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/cgc9ptoqcx\/graph\/edge\/e05b2aa5-350c-43f5-a8b0-ffaece797240",
+              "uri": "\/service\/users\/b\/graph\/edge\/3600c840-efe9-4f64-bc5e-35451d8c9ddb",
               "label": "r1",
               "comment": "",
               "images": [],
-              "creationDate": "Apr 12, 2015 10:02:36 AM",
-              "lastModificationDate": "Apr 12, 2015 10:02:39 AM"
+              "creationDate": "Apr 14, 2015 1:12:40 PM",
+              "lastModificationDate": "Apr 14, 2015 1:12:40 PM"
             },
             "identifications": {}
           },
-          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/cgc9ptoqcx\/graph\/vertex\/87630395-91e3-43f1-8109-e657f191cf24"}}}},
-          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/cgc9ptoqcx\/graph\/vertex\/860e3064-36b5-4a08-8861-762d57a2d544"}}}}
+          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/4051d41b-fae2-45ab-a4f2-0bf8f17fe1a0"}}}},
+          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/37cab6e9-9366-4cf3-a3f4-5f0c80c3adc1"}}}}
+        },
+        "\/service\/users\/b\/graph\/edge\/5d340346-dc01-4b1e-bed5-5b4a5c456b76": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/edge\/5d340346-dc01-4b1e-bed5-5b4a5c456b76",
+              "label": "shirt1",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 14, 2015 1:12:40 PM",
+              "lastModificationDate": "Apr 14, 2015 1:12:40 PM"
+            },
+            "identifications": {
+              "http:\/\/rdf.freebase.com\/rdf\/m\/013s93": {
+                "externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/013s93",
+                "friendlyResource": {
+                  "uri": "\/service\/users\/b\/graph\/identification\/681eb9ad-cd08-4cf6-ad59-7b751a944af4",
+                  "label": "T-shirt",
+                  "comment": "A T-shirt is a style of fabric shirt, named after the T shape of the body and sleeves.",
+                  "creationDate": "Apr 14, 2015 1:12:40 PM",
+                  "lastModificationDate": "Apr 14, 2015 1:12:40 PM"
+                },
+                "identificationType": "same_as"
+              }
+            }
+          },
+          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/37cab6e9-9366-4cf3-a3f4-5f0c80c3adc1"}}}},
+          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/381bed21-de7a-4d9f-8f53-86156e4ea3d1"}}}}
+        },
+        "\/service\/users\/b\/graph\/edge\/aa4358b4-2948-4798-a0b9-9e059fc9c19a": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/edge\/aa4358b4-2948-4798-a0b9-9e059fc9c19a",
+              "label": "shirt2",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 14, 2015 1:12:40 PM",
+              "lastModificationDate": "Apr 14, 2015 1:12:40 PM"
+            },
+            "identifications": {
+              "http:\/\/rdf.freebase.com\/rdf\/m\/013s93": {
+                "externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/013s93",
+                "friendlyResource": {
+                  "uri": "\/service\/users\/b\/graph\/identification\/9329c656-8ce6-4dc2-bcf9-3b5c8f9d8e29",
+                  "label": "T-shirt",
+                  "comment": "A T-shirt is a style of fabric shirt, named after the T shape of the body and sleeves.",
+                  "creationDate": "Apr 14, 2015 1:12:40 PM",
+                  "lastModificationDate": "Apr 14, 2015 1:12:40 PM"
+                },
+                "identificationType": "same_as"
+              }
+            }
+          },
+          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/37cab6e9-9366-4cf3-a3f4-5f0c80c3adc1"}}}},
+          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/a5367467-fce2-4ff8-a2da-8a202bc3714d"}}}}
         }
       }
     }
