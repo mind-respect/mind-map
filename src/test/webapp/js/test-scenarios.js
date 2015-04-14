@@ -103,7 +103,7 @@ define([
             };
 
             this.getBubble1 = function () {
-                return new TreeQuerier(
+                return new api.TreeQuerier(
                     getIncludedElementsTree()
                 ).getBubbleWithLabelInTree(
                     "b1"
@@ -111,7 +111,7 @@ define([
             };
 
             this.getBubble2 = function () {
-                return new TreeQuerier(
+                return new api.TreeQuerier(
                     getIncludedElementsTree()
                 ).getBubbleWithLabelInTree(
                     "b2"
@@ -119,14 +119,14 @@ define([
             };
 
             this.getBubble3 = function () {
-                return new TreeQuerier(
+                return new api.TreeQuerier(
                     getIncludedElementsTree()
                 ).getBubbleWithLabelInTree(
                     "b3"
                 )
             };
             this.getBubble4 = function () {
-                return new TreeQuerier(
+                return new api.TreeQuerier(
                     getIncludedElementsTree()
                 ).getBubbleWithLabelInTree(
                     "b4"
@@ -134,7 +134,7 @@ define([
             };
 
             this.getBubble1 = function () {
-                return new TreeQuerier(
+                return new api.TreeQuerier(
                     getIncludedElementsTree()
                 ).getBubbleWithLabelInTree(
                     "b1"
@@ -142,7 +142,7 @@ define([
             };
 
             this.getRelation1 = function () {
-                return new TreeQuerier(
+                return new api.TreeQuerier(
                     getIncludedElementsTree()
                 ).getRelationWithLabelInTree(
                     "r1"
@@ -150,7 +150,7 @@ define([
             };
 
             this.getRelation2 = function () {
-                return new TreeQuerier(
+                return new api.TreeQuerier(
                     getIncludedElementsTree()
                 ).getRelationWithLabelInTree(
                     "r2"
@@ -158,7 +158,7 @@ define([
             };
 
             this.getRelation4 = function () {
-                return new TreeQuerier(
+                return new api.TreeQuerier(
                     getIncludedElementsTree()
                 ).getRelationWithLabelInTree(
                     "r4"
@@ -293,6 +293,7 @@ define([
              * b2 has hidden relations
              * b2-T-shirt->shirt1
              * b2-T-shirt->shirt2
+             * shirt2 has an image
              * relations T-shirt are identified to Freebase T-shirt.
              */
             var treeBuilder = new TreeBuilder(this);
@@ -312,9 +313,20 @@ define([
                     )
                 );
             };
+            this.getB2GraphWhenConnectedToDistantBubble = function(){
+                return getTestData(
+                    "graphWithHiddenSimilarRelations.b2GraphWhenConnectedToDistantBubble"
+                );
+            };
             this.getBubble1 = function () {
                 return Vertex.fromServerFormat(this.getGraph().vertices[
                         uriOfVertexWithLabel(this.getGraph(), "b1")
+                        ]
+                );
+            };
+            this.getBubble2 = function () {
+                return Vertex.fromServerFormat(this.getGraph().vertices[
+                        uriOfVertexWithLabel(this.getGraph(), "b2")
                         ]
                 );
             };
@@ -322,6 +334,28 @@ define([
                 return treeBuilder.getBubbleWithLabelInTree("b2");
             };
             Mock.setCenterVertexUriInUrl(this.getBubble1().getUri());
+        };
+
+        api.getDistantGraph = function () {
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                return getTestData(
+                    "graphWithHiddenSimilarRelations.distantBubbleGraph"
+                );
+            };
+            this.getBubble = function () {
+                return Vertex.fromServerFormat(this.getGraph().vertices[
+                        uriOfVertexWithLabel(this.getGraph(), "distant bubble")
+                        ]
+                );
+            };
+            this.getBubbleInTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("distant bubble");
+            };
+            this.getCenterBubbleUri = function () {
+                return this.getBubble().getUri();
+            };
+            Mock.setCenterVertexUriInUrl(this.getBubble().getUri());
         };
 
         api.GraphWithAnInverseRelationScenario = function () {
@@ -589,6 +623,23 @@ define([
         api.generateVertexUri = function () {
             return "\/service\/users\/foo\/graph\/vertex\/" + generateUuid();
         };
+        api.TreeQuerier = function(tree) {
+            this.getBubbleWithLabelInTree = function (label) {
+                return BubbleFactory.fromHtml(
+                    tree.find(".bubble").has(".bubble-label:contains(" + label + ")")
+                );
+            };
+            this.getRelationWithLabelInTree = function (label) {
+                return BubbleFactory.fromHtml(
+                    tree.find(".relation").has(".label:contains(" + label + ")")
+                );
+            };
+            this.getGroupRelationWithLabelInTree = function (label) {
+                return BubbleFactory.fromHtml(
+                    tree.find(".group-relation").has(".label:contains(" + label + ")")
+                );
+            };
+        };
         return api;
         function uriOfVertexWithLabel(graph, label) {
             var uri;
@@ -679,27 +730,14 @@ define([
                 return this._tree;
             };
             this.getBubbleWithLabelInTree = function (label) {
-                return new TreeQuerier(
+                return new api.TreeQuerier(
                     this.build()
                 ).getBubbleWithLabelInTree(label);
             };
             this.getRelationWithLabelInTree = function (label) {
-                return new TreeQuerier(
+                return new api.TreeQuerier(
                     this.build()
                 ).getRelationWithLabelInTree(label);
-            };
-        }
-
-        function TreeQuerier(tree) {
-            this.getBubbleWithLabelInTree = function (label) {
-                return BubbleFactory.fromHtml(
-                    tree.find(".bubble").has(".bubble-label:contains(" + label + ")")
-                );
-            };
-            this.getRelationWithLabelInTree = function (label) {
-                return BubbleFactory.fromHtml(
-                    tree.find(".relation").has(".label:contains(" + label + ")")
-                );
             };
         }
 

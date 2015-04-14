@@ -58,7 +58,7 @@ define([
 
         api.Self.prototype.visitAllChild = function (visitor) {
             $.each(this.getChildrenBubblesHtml(), function(){
-                visitor(BubbleFactory.fromHtml(
+                return visitor(BubbleFactory.fromHtml(
                     $(this)
                 ));
             });

@@ -17,9 +17,11 @@ define([
             groupRelation,
             graphWithSimilarRelationsScenario,
             mergeBubbleScenario,
-            karaokeSchemaScenario;
+            karaokeSchemaScenario,
+            distantGraphScenario;
         beforeEach(function () {
             threeBubblesGraph = new Scenarios.threeBubblesGraph();
+            distantGraphScenario = new Scenarios.getDistantGraph();
             bubble1 = threeBubblesGraph.getCenterBubbleInTree();
             bubble2 = threeBubblesGraph.getBubble2InTree();
             graphWithHiddenSimilarRelationsScenario = new Scenarios.getGraphWithHiddenSimilarRelations();
@@ -140,27 +142,55 @@ define([
                 vertexSuggestion.getIdentifications()[0].getLabel()
             ).toBe("Location");
         });
-        //todo need to get graph where they are actually connected
-        //it("can make a vertex connect to a distant vertex", function(){
-        //    Mock.setGetGraphFromService(threeBubblesGraph.getGraph());
-        //    var hasVisitedCallback = false;
-        //    GraphDisplayerAsRelativeTree.connectVertexToVertexWithUri(
-        //        mergeBubbleScenario.getMergeBubbleInTree(),
-        //        bubble1.getUri(),
-        //        function(){
-        //            hasVisitedCallback = true;
-        //        }
-        //    );
-        //    expect(
-        //        hasVisitedCallback
-        //    ).toBeTruthy();
-        //});
-        //todo
-        //it("when connecting to a distant vertex, similar relations are grouped", function(){
-        //});
+        it("can make a vertex connect to a distant vertex", function () {
+            connectDistantVertexTest(function(distantBubble){
+                var connectedBubble = distantBubble.getTopMostChildBubble().getTopMostChildBubble();
+                expect(
+                    connectedBubble.text()
+                ).toBe("b2");
+            });
+        });
 
-        //todo
+        it("when connecting to a distant vertex, similar relations are grouped", function(){
+            connectDistantVertexTest(function(distantBubble){
+                var connectedBubble = distantBubble.getTopMostChildBubble().getTopMostChildBubble();
+                var tShirtBubble = new Scenarios.TreeQuerier(
+                    connectedBubble.getChildrenContainer()
+                ).getGroupRelationWithLabelInTree("T-shirt");
+                expect(
+                    tShirtBubble.isGroupRelation()
+                ).toBeTruthy();
+            });
+        });
         //it("when connecting to a distant vertex, distant vertex child bubbles have their images", function(){
+        //    connectDistantVertexTest(function(distantBubble){
+        //        var connectedBubble = distantBubble.getTopMostChildBubble().getTopMostChildBubble();
+        //        var tShirtBubble = new Scenarios.TreeQuerier(
+        //            connectedBubble.getChildrenContainer()
+        //        ).getGroupRelationWithLabelInTree("T-shirt");
+        //        expect(
+        //            tShirtBubble.isGroupRelation()
+        //        ).toBeTruthy();
+        //    });
         //});
+        function connectDistantVertexTest(callback){
+            Mock.setGetGraphFromService(
+                graphWithHiddenSimilarRelationsScenario.getB2GraphWhenConnectedToDistantBubble()
+            );
+            var distantBubble = distantGraphScenario.getBubbleInTree(),
+                hasVisitedCallback = false,
+                bubble2 = graphWithHiddenSimilarRelationsScenario.getBubble2();
+            GraphDisplayerAsRelativeTree.connectVertexToVertexWithUri(
+                distantBubble,
+                bubble2.getUri(),
+                function () {
+                    hasVisitedCallback = true;
+                    callback(distantBubble);
+                }
+            );
+            expect(
+                hasVisitedCallback
+            ).toBeTruthy();
+        }
     });
 });
