@@ -59,7 +59,7 @@ define([
             expect(
                 vertexSearchResult.somethingToDistinguish
             ).toBe(
-                "r1, r3, r2"
+                "r1, r2"
             );
             expect(
                 vertexSearchResult.elementType

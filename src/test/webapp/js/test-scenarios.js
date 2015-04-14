@@ -580,7 +580,7 @@ define([
              */
             this.get = function () {
                 return getTestData(
-                    "getSearchResultForB1"
+                    "threeBubblesGraph.searchResultsForB1"
                 );
             };
         };
