@@ -90,7 +90,7 @@ define([
             expect(
                 edgeSearchResult.somethingToDistinguish
             ).toBe(
-                "b3 -> b1"
+                "b1 -> b3"
             );
             expect(
                 edgeSearchResult.elementType

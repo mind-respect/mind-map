@@ -417,10 +417,10 @@ define([
         };
         api.oneBubbleHavingSuggestionsGraph = function () {
             /*
-            * Bubble labeled Event.
-            * Has a generic identification to freebase "Event" http://rdf.freebase.com/rdf/m/02xm94t
-            * Has 2 suggestions
-            */
+             * Bubble labeled Event.
+             * Has a generic identification to freebase "Event" http://rdf.freebase.com/rdf/m/02xm94t
+             * Has 2 suggestions
+             */
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
                 return getTestData("oneBubbleHavingSuggestionsGraph");
@@ -572,12 +572,6 @@ define([
             };
         };
         api.getSearchResultForB1 = function () {
-            /*
-             * b1 -r1-> b2
-             * b1 <-r2- b3
-             * b1 -r3-> b4
-             *
-             */
             this.get = function () {
                 return getTestData(
                     "threeBubblesGraph.searchResultsForB1"
@@ -585,15 +579,9 @@ define([
             };
         };
         api.getSearchResultForR2 = function () {
-            /*
-             * b1 -r1-> b2
-             * b1 <-r2- b3
-             * b1 -r3-> b4
-             *
-             */
             this.get = function () {
                 return getTestData(
-                    "getSearchResultForR2"
+                    "threeBubblesGraph.searchResultsForR2"
                 );
             };
         };
