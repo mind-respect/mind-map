@@ -162,17 +162,14 @@ define([
                 ).toBeTruthy();
             });
         });
-        //it("when connecting to a distant vertex, distant vertex child bubbles have their images", function(){
-        //    connectDistantVertexTest(function(distantBubble){
-        //        var connectedBubble = distantBubble.getTopMostChildBubble().getTopMostChildBubble();
-        //        var tShirtBubble = new Scenarios.TreeQuerier(
-        //            connectedBubble.getChildrenContainer()
-        //        ).getGroupRelationWithLabelInTree("T-shirt");
-        //        expect(
-        //            tShirtBubble.isGroupRelation()
-        //        ).toBeTruthy();
-        //    });
-        //});
+        it("when connecting to a distant vertex, distant vertex child bubbles have their images", function(){
+            connectDistantVertexTest(function(distantBubble){
+                var connectedBubble = distantBubble.getTopMostChildBubble().getTopMostChildBubble();
+                expect(
+                    connectedBubble.hasImagesMenu()
+                ).toBeTruthy();
+            });
+        });
         function connectDistantVertexTest(callback){
             Mock.setGetGraphFromService(
                 graphWithHiddenSimilarRelationsScenario.getB2GraphWhenConnectedToDistantBubble()
