@@ -523,7 +523,7 @@ define([
         api.getFreebaseSearchResultForProject = function () {
             this.get = function () {
                 return getTestData(
-                    "getFreebaseSearchResultForProject"
+                    "freebaseSearchResultForProject"
                 );
             };
         };

@@ -57,10 +57,9 @@ define([
                     "b1"
                 )[0];
             expect(
-                vertexSearchResult.somethingToDistinguish
-            ).toBe(
-                "r1, r2"
-            );
+                vertexSearchResult.somethingToDistinguish === "r1, r2" ||
+                vertexSearchResult.somethingToDistinguish === "r2, r1"
+            ).toBeTruthy();
             expect(
                 vertexSearchResult.elementType
             ).toBe(
