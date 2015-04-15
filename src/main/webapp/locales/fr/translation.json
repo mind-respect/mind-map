@@ -103,7 +103,7 @@
     },
     "vertex" : {
         "default" : "bulle",
-        "same_bubble": "Aller à la même bulle dans un autre contexte",
+        "same_bubble": "Visiter la même bulle mais dans un autre contexte",
         "search" : {
             "user" : "usager",
             "source" : "source",
