@@ -20,10 +20,7 @@ define([
             return api._getCenterVertexUriInUrl() !== undefined;
         };
         api.getCenterBubbleUri = function () {
-            var uriInUrl = api._getCenterVertexUriInUrl();
-            return uriInUrl === undefined ?
-                api.defaultVertexUri() :
-                uriInUrl;
+            return api._getCenterVertexUriInUrl();
         };
         api.isViewOnly = function () {
             api.defineIsViewOnlyIfUndefined();

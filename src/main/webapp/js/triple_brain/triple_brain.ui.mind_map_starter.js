@@ -32,12 +32,9 @@ define(
         var api = {
             start: function () {
                 UserService.isAuthenticated(
-                    callBackWhenIsAuthenticated,
+                    setupMindMapForAuthenticatedUser,
                     callBackWhenNotAuthenticated
                 );
-                function callBackWhenIsAuthenticated() {
-                    setupMindMapForAuthenticatedUser();
-                }
 
                 function handleHistoryBrowse() {
                     $(window).on("popstate", function () {
@@ -60,6 +57,17 @@ define(
                 }
 
                 function setupMindMapForAuthenticatedUser() {
+                    if(!MindMapInfo.isCenterBubbleUriDefinedInUrl()){
+                        UserService.authenticatedUser(function(user){
+                            UserService.getDefaultVertexUri(
+                                user.user_name,
+                                function (uri) {
+                                    window.location = "?bubble=" + uri
+                                }
+                            );
+                        });
+                        return;
+                    }
                     MindMapInfo.setIsAnonymous(false);
                     setupMindMap(false);
                 }
