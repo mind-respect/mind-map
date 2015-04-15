@@ -107,8 +107,8 @@ define([
         }
         parentVertex.removeHiddenRelationsContainer();
         parentVertex.visitVerticesChildren(VertexHtmlBuilder.completeBuild);
-        parentVertex.visitAllChild(function(childBubble){
-            if(childBubble.isGroupRelation()){
+        parentVertex.visitAllChild(function (childBubble) {
+            if (childBubble.isGroupRelation()) {
                 GroupRelationHtmlBuilder.completeBuild(childBubble);
             }
         });
@@ -161,9 +161,11 @@ define([
                     ),
                     farVertex = RelativeTreeVertex.lastAddedWithUri(
                         destinationVertexUri
-                    );
+                    ),
+                    relation = farVertex.getParentBubble();
+                relation.focus();
                 farVertex.visitVerticesChildren(VertexHtmlBuilder.completeBuild);
-                if(callback !== undefined){
+                if (callback !== undefined) {
                     callback(drawnTree, farVertex);
                 }
             }
@@ -378,10 +380,10 @@ define([
             serverVertex.isLeftOriented = parentVertex.isToTheLeft();
             parentVertex.setOriginalServerObject(serverVertex);
             self.buildChildrenHtmlTreeRecursively(parentVertex, serverGraph.vertices);
-            parentVertex.visitVerticesChildren(function(vertex){
+            parentVertex.visitVerticesChildren(function (vertex) {
                 VertexHtmlBuilder.completeBuild(vertex)
-                vertex.visitAllChild(function(childBubble){
-                    if(childBubble.isGroupRelation()){
+                vertex.visitAllChild(function (childBubble) {
+                    if (childBubble.isGroupRelation()) {
                         GroupRelationHtmlBuilder.completeBuild(childBubble);
                     }
                 });
@@ -471,14 +473,14 @@ define([
                 false
             );
         };
-        this.buildGroupRelationToExpand = function(groupRelation, parentVertexUi){
+        this.buildGroupRelationToExpand = function (groupRelation, parentVertexUi) {
             this.buildGroupRelationToExpandOrNot(
                 groupRelation,
                 parentVertexUi,
                 true
             );
         };
-        this.buildGroupRelationToExpandOrNot = function(groupRelation, parentVertexUi, isToExpand){
+        this.buildGroupRelationToExpandOrNot = function (groupRelation, parentVertexUi, isToExpand) {
             if (!isToExpand && groupRelation.hasMultipleVertices()) {
                 self.buildBubbleHtmlIntoContainer(
                     groupRelation,
@@ -486,7 +488,8 @@ define([
                     GroupRelationHtmlBuilder
                 );
                 return;
-            };
+            }
+            ;
             $.each(groupRelation.getVertices(), function (key, verticesWithSameUri) {
                 $.each(verticesWithSameUri, function (vertexHtmlId, vertexAndEdge) {
                     var vertex = vertexAndEdge.vertex,

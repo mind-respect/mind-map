@@ -170,6 +170,17 @@ define([
                 ).toBeTruthy();
             });
         });
+        it("when connecting to a distant vertex, new relation has focus", function(){
+            connectDistantVertexTest(function(distantBubble){
+                var newRelation = distantBubble.getTopMostChildBubble();
+                expect(
+                    newRelation.isRelation()
+                ).toBeTruthy();
+                expect(
+                    "true" === newRelation.getLabel().attr("contenteditable")
+                ).toBeTruthy();
+            });
+        });
         function connectDistantVertexTest(callback){
             Mock.setGetGraphFromService(
                 graphWithHiddenSimilarRelationsScenario.getB2GraphWhenConnectedToDistantBubble()
