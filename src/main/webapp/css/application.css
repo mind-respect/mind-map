@@ -88,8 +88,6 @@ button.add-button-in-list:hover { color: #00d100; }
 
 svg { z-index: 1; }
 
-[data-role=page] { font-family: helvetica; font-size: 1em; }
-
 .main-panel { z-index: 12; background-color: white; opacity: 0.91; -moz-border-radius: 15px; border-radius: 15px; cursor: default; }
 
 #bottom-center-panel { position: fixed; left: 45%; top: 95%; }
@@ -229,3 +227,5 @@ svg { z-index: 1; }
 .image-upload-wrapper .hidden { display: none !important; }
 
 .add-identification { float: left; }
+
+#big-search-box-container .search-icon { font-size: 1.7em; }

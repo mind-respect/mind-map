@@ -75,11 +75,18 @@
         </div>
     </div>
     <div class="row hidden" id='big-search-box-container'>
-        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+        </div>
         <div class="col-lg-4">
             <div class="form-group form-group-lg col-xl-12">
                 <div class="col-xl-12">
-                    <input type='text' class='form-control input-lg' data-i18n="[placeholder]search.big.placeholder">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-search search-icon"></i>
+                        </div>
+                        <input type='text' class='form-control input-lg'
+                               data-i18n="[placeholder]search.big.placeholder">
+                    </div>
                 </div>
             </div>
         </div>
@@ -88,13 +95,7 @@
     <div id="other-page-container" class='hidden'></div>
     <div id="mind_map">
         <div>
-            <div id="left-panel" class="main-panel row">
-                <div id="search-component" class="col-md-12">
-                    <div class="ui-widget form-group">
-                        <input id="vertex-search-input" data-i18n="[placeholder]left_menu.search" class='form-control'/>
-                    </div>
-                </div>
-            </div>
+            <div id="left-panel" class="main-panel row"></div>
             <button id="toggle-left-panel-collapse" class="link-like-button">
                 <<
             </button>
@@ -108,9 +109,24 @@
                 <a href="http://community.bubl.guru" data-i18n="login.about"></a>
             </div>
             <div id="top-center-menu" class="main-panel top-panel">
-                <div id="graph-elements-selected" class="hidden">
-                    <span class='nb'></span>
-                    <span data-i18n='selection.selected_graph_elements'></span>
+                <div class="row">
+                    <div id="search-component" class="col-md-12">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-search"></i>
+                                </div>
+                                <input id="vertex-search-input" data-i18n="[placeholder]left_menu.search"
+                                       class='form-control input-md11'/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="graph-elements-selected" class="hidden row">
+                    <div class="col-md-12 text-center">
+                        <span class='nb'></span>
+                        <span data-i18n='selection.selected_graph_elements'></span>
+                    </div>
                 </div>
             </div>
             <div id="top-panel" class="main-panel top-panel">

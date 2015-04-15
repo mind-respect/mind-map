@@ -10,13 +10,14 @@ body {
   user-select: none;
 }
 
-#app-presentation{
-  margin-top:5%;
+#app-presentation {
+  margin-top: 5%;
 }
-#big-search-box-container{
-  margin-top:20px;
-  .input-group{
-    margin:auto;
+
+#big-search-box-container {
+  margin-top: 20px;
+  .input-group {
+    margin: auto;
   }
 }
 
@@ -214,8 +215,8 @@ button {
 .ui-menu {
   .ui-menu-item {
     border-bottom: 1px solid rgb(211, 210, 210);
-    .element-label{
-      font-weight:bold;
+    .element-label {
+      font-weight: bold;
       font-size: 14px;
       padding-right: 43px;
     }
@@ -242,13 +243,13 @@ button {
       }
     }
     .type {
-      margin-top:-20px;
-      float:right;
+      margin-top: -20px;
+      float: right;
     }
     .distinction {
       margin-right: 1em;
       max-width: 428px;
-      font-weight:normal;
+      font-weight: normal;
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -359,7 +360,7 @@ svg {
 }
 
 #left-panel {
-  h2, h4{
+  h2, h4 {
     font-size: 1em;
     white-space: nowrap;
     text-decoration: underline;
@@ -436,7 +437,7 @@ svg {
   }
   &.view-only {
     .arrow {
-      &:before{
+      &:before {
         left: 0;
       }
     }
@@ -461,7 +462,7 @@ svg {
     display: table-cell;
     white-space: pre;
     min-width: 1em;
-    height:17px;
+    height: 17px;
     &:empty:not(:focus):before {
       content: attr(data-placeholder);
       color: grey;
@@ -565,7 +566,7 @@ svg {
 
 .relation span.label {
   font-family: helvetica;
-  height:14px;
+  height: 14px;
   &:empty:not(:focus):before {
     content: attr(data-placeholder);
     font-style: italic;
@@ -794,7 +795,7 @@ svg {
 
 .relation {
   position: relative;
-  .label-info{
+  .label-info {
     background-color: #3a87ad;
   }
   .relation-menu {
@@ -891,3 +892,8 @@ svg {
   float: left;
 }
 
+#big-search-box-container {
+  .search-icon {
+    font-size: 1.7em;
+  }
+}
