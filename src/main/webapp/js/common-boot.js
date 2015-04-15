@@ -11,7 +11,7 @@ requirejs.config({
         "crow" : "vendor/crow.micro",
         "polyk" : "vendor/polyk",
         "jquery": "jquery/jquery-2.1.1",
-        "jquery-ui": "jquery/jquery-ui-11-0/jquery-ui.min",
+        "jquery-ui": "jquery/jquery-ui-11-4/jquery-ui.min",
         "jquery.url": "jquery/jquery.url",
         "jquery.nano": "jquery/jquery.nano",
         "jquery.json.min": "jquery/jquery.json.min",
