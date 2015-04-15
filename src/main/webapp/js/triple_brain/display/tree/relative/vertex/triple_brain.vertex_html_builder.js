@@ -34,13 +34,13 @@ define([
             });
             function addDuplicateButton(vertex) {
                 vertex.getInBubbleContainer().prepend(
-                    buildDuplicateButton().tooltip()
+                    buildDuplicateButton()
                 );
             }
 
             function buildDuplicateButton() {
-                return $(
-                    "<button class='duplicate graph-element-button' data-toggle='tooltip'>"
+                var button = $(
+                    "<button class='duplicate graph-element-button' data-toggle='tooltip' data-placement='top'>"
                 ).prop(
                     "title",
                     goToSameBubbleText
@@ -56,6 +56,9 @@ define([
                         ).centerOnScreenWithAnimation();
                     }
                 );
+                return $("<div class='duplicate-button-container'>").append(
+                    button
+                ).tooltip();
             }
         };
         api.completeBuild = function (vertex) {

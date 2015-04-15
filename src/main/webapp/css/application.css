@@ -174,7 +174,7 @@ svg { z-index: 1; }
 .vertex .in-bubble-content { border-radius: 20px; background-color: #E6E6FF; white-space: normal; padding: 1em; padding-bottom: 0.7em; padding-top: 0.7em; margin-left: 0.3em; position: relative; display: table; border: 1px; border-color: transparent; border-style: solid; z-index: 2; }
 .vertex .in-bubble-content > * { display: table-cell; }
 .vertex .in-bubble-content .note-button { margin-right: 5px; margin-top: -3px; }
-.vertex .in-bubble-content button.duplicate { position: absolute; left: -15px; top: -30px; }
+.vertex .in-bubble-content .duplicate-button-container { position: absolute; left: -15px; top: -30px; }
 .vertex .move { background-image: url("images/icons/vertex/move.png"); min-width: 25px; min-height: 25px; margin-right: 5px; margin-left: 8px; float: left; }
 .vertex .ui-button { width: 1.7em; height: 1.8em; margin-right: 0; font-size: 1.1em; padding: 0; }
 
