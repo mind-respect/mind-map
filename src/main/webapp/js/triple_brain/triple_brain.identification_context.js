@@ -2,12 +2,14 @@
  * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
+    "jquery",
     "triple_brain.search",
     "triple_brain.graph_displayer",
     "triple_brain.search_result",
     "triple_brain.graph_element_type",
-    "triple_brain.graph_element"
-], function (SearchService, GraphDisplayer, SearchResult, GraphElementType, GraphElement) {
+    "triple_brain.graph_element",
+    "jquery.i18next"
+], function ($, SearchService, GraphDisplayer, SearchResult, GraphElementType, GraphElement) {
     var api = {};
     api.build = function (searchResult, callback) {
         return new Self(

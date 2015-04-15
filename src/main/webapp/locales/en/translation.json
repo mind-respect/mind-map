@@ -105,6 +105,7 @@
     },
     "vertex" : {
         "default" : "bubble",
+        "same_bubble": "Go to same bubble in another context",
         "search" : {
             "user" : "user",
             "source" : "source",

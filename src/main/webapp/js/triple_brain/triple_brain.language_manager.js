@@ -4,16 +4,17 @@
 define([
     "jquery",
     "triple_brain.user_service",
+    "triple_brain.event_bus",
     "jquery.i18next"
-], function($, UserService){
+], function ($, UserService, EventBus) {
     "use strict";
     var api = {},
         possibleLanguages;
-    api.getBrowserLocale = function(){
+    api.getBrowserLocale = function () {
         return $.i18n.detectLanguage();
     };
-    api.getPossibleLanguages = function(){
-        if(possibleLanguages === undefined){
+    api.getPossibleLanguages = function () {
+        if (possibleLanguages === undefined) {
             possibleLanguages = makeLanguages([
                 ["Albanian (Albania)", "sq_AL"],
                 ["Albanian", "sq"],
@@ -171,65 +172,67 @@ define([
         }
         return possibleLanguages;
     };
-    api.englishLanguage = function(){
+    api.englishLanguage = function () {
         return makeLanguage(
             "english",
             "en"
         );
     };
-    api.frenchLanguage = function(){
+    api.frenchLanguage = function () {
         return makeLanguage(
             "français",
             "fr"
         );
     };
-    api.loadLocaleContent = function(callback){
+    api.loadLocaleContent = function (callback) {
         var locale = getLocaleUsedForSiteTranslation();
         $.i18n.init({
-            lng : locale,
+            lng: locale,
             useLocalStorage: false,
             debug: true,
-            customLoad : function(lng, ns, options, loadComplete){
+            customLoad: function (lng, ns, options, loadComplete) {
                 var basePath = ns === "translation" ?
                     "locales/" :
-                    "module/mind_map/" + ns + "/locales/";
-                var url =  basePath + lng + "/" + "translation" + ".json";
+                "module/mind_map/" + ns + "/locales/";
+                var url = basePath + lng + "/" + "translation" + ".json";
                 $.ajax({
-                    url : url,
-                    dataType:'json'
-                }).success(function(data){
-                        loadComplete(
-                            null,
-                            data
-                        );
-                    });
+                    url: url,
+                    dataType: 'json'
+                }).success(function (data) {
+                    loadComplete(
+                        null,
+                        data
+                    );
+                    EventBus.publish("localized-text-loaded")
+                });
 
             }
         }, callback);
     };
     return api;
 
-    function isLocaleFrench(locale){
+    function isLocaleFrench(locale) {
         return locale.indexOf(
-            "fr"
-        ) >= 0;
+                "fr"
+            ) >= 0;
     }
 
-    function isLocaleEnglish(locale){
+    function isLocaleEnglish(locale) {
         return locale.indexOf(
-            "en"
-        ) >= 0;
+                "en"
+            ) >= 0;
     }
 
-    function makeLanguage(fullname, locale){
+    function makeLanguage(fullname, locale) {
         return {
-            fullname : fullname,
-            locale : locale
+            fullname: fullname,
+            locale: locale
         };
     }
-    function makeLanguages(languages){
+
+    function makeLanguages(languages) {
         var formattedLanguages = [];
-        $.each(languages, function(){
+        $.each(languages, function () {
             formattedLanguages.push(
                 makeLanguage(
                     this[0],
@@ -240,27 +243,28 @@ define([
         return formattedLanguages;
     }
 
-    function getLocaleUsedForSiteTranslation(){
+    function getLocaleUsedForSiteTranslation() {
         var currentUser = UserService.authenticatedUserInCache();
         return currentUser === undefined ?
             getFromBrowser() :
             getFromUser();
-        function getFromUser(){
+        function getFromUser() {
             var localeUsedForSiteTranslation = "en";
-            $.each(currentUser.preferred_locales, function(){
+            $.each(currentUser.preferred_locales, function () {
                 var locale = this;
-                if(isLocaleEnglish(locale)){
+                if (isLocaleEnglish(locale)) {
                     return false;
                 }
-                if(isLocaleFrench(locale)){
+                if (isLocaleFrench(locale)) {
                     localeUsedForSiteTranslation = "fr";
                     return false;
                 }
             });
             return localeUsedForSiteTranslation;
         }
-        function getFromBrowser(){
-            return isLocaleFrench(api.getBrowserLocale())?
+
+        function getFromBrowser() {
+            return isLocaleFrench(api.getBrowserLocale()) ?
                 "fr" :
                 "en";
         }

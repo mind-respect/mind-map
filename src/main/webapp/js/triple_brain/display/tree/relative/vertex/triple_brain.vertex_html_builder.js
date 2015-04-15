@@ -11,9 +11,11 @@ define([
         "triple_brain.ui.graph",
         "jquery-ui",
         "jquery.is-fully-on-screen",
-        "jquery.center-on-screen"
+        "jquery.center-on-screen",
+        "jquery.i18next"
     ], function ($, EventBus, MindMapTemplate, RelativeTreeVertex, VertexHtmlCommon, GraphUi) {
-        var api = {};
+        var api = {},
+            goToSameBubbleText;
         api.withServerFacade = function (serverFacade) {
             return new VertexCreator(serverFacade);
         };
@@ -32,13 +34,16 @@ define([
             });
             function addDuplicateButton(vertex) {
                 vertex.getInBubbleContainer().prepend(
-                    buildDuplicateButton()
+                    buildDuplicateButton().tooltip()
                 );
             }
 
             function buildDuplicateButton() {
                 return $(
-                    "<button class='duplicate graph-element-button'>"
+                    "<button class='duplicate graph-element-button' data-toggle='tooltip'>"
+                ).prop(
+                    "title",
+                    goToSameBubbleText
                 ).append(
                     $("<i class='fa fa-link'>")
                 ).on(
@@ -69,6 +74,12 @@ define([
         EventBus.subscribe(
             '/event/ui/vertex/visit_after_graph_drawn',
             handleVisitAfterGraphDrawn
+        );
+        EventBus.subscribe(
+            'localized-text-loaded',
+            function(){
+                goToSameBubbleText = $.t("vertex.same_bubble");
+            }
         );
         function handleVisitAfterGraphDrawn(event, vertex) {
             api.completeBuild(vertex);
