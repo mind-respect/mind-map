@@ -19,6 +19,7 @@ define([
             forSingle.addChildAction(groupRelation);
         };
         forSingle.addChildAction = function (groupRelation) {
+            groupRelation.hideDescription();
             VertexService.addRelationAndVertexToVertex(
                 groupRelation.getParentVertex(),
                 groupRelation,
@@ -38,7 +39,6 @@ define([
                             edge.setText(identification.getLabel());
                         }
                     );
-                    triple.destinationVertex().focus();
                 }
             );
         };

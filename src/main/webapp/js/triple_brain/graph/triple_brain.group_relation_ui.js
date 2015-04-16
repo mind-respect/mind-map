@@ -68,7 +68,7 @@ define([
     Self.prototype.deselect = function () {
         this.html.removeClass("selected");
         this.hideButtons();
-        this._hideDescription();
+        this.hideDescription();
     };
 
     Self.prototype.makeSingleSelected = function () {
@@ -92,7 +92,7 @@ define([
         this.getLabel().popover('show');
     };
 
-    Self.prototype._hideDescription = function () {
+    Self.prototype.hideDescription = function () {
         this.getLabel().popover('hide');
     };
 

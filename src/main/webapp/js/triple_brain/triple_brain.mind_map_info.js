@@ -11,7 +11,7 @@ define([
     function (IdUriUtils, UserService, EventBus) {
         "use strict";
         var api = {},
-            isViewOnly,
+            _isViewOnly,
             _isAnonymous;
         api.defaultVertexUri = function () {
             return UserService.currentUserUri() + '/graph/vertex/any'
@@ -24,18 +24,18 @@ define([
         };
         api.isViewOnly = function () {
             api.defineIsViewOnlyIfUndefined();
-            return isViewOnly;
+            return _isViewOnly;
         };
         api.defineIsViewOnlyIfUndefined = function () {
-            if (isViewOnly !== undefined) {
+            if (_isViewOnly !== undefined) {
                 return;
             }
-            isViewOnly = _isAnonymous || !IdUriUtils.isGraphElementUriOwnedByCurrentUser(
+            _isViewOnly = _isAnonymous || !IdUriUtils.isGraphElementUriOwnedByCurrentUser(
                 api._getCenterVertexUriInUrl()
             );
             EventBus.publish(
                 '/event/ui/mind_map_info/is_view_only',
-                [isViewOnly]
+                [_isViewOnly]
             );
         };
         api.setIsAnonymous = function (isAnonymous) {
@@ -43,6 +43,9 @@ define([
         };
         api.isAnonymous = function () {
             return _isAnonymous;
+        };
+        api._setIsViewOnly = function (isViewOnly) {
+            _isViewOnly = isViewOnly;
         };
         api.isSchemaMode = function () {
             return IdUriUtils.isSchemaUri(
