@@ -47,6 +47,7 @@ define([
             "group_relation"
         );
     };
+
     Self.prototype.isToTheLeft = function () {
         if (this._isToTheLeft === undefined) {
             this._isToTheLeft = this.html.parents(".left-oriented").length > 0;
