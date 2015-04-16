@@ -40,7 +40,7 @@ define([
 
             function buildDuplicateButton() {
                 var button = $(
-                    "<button class='duplicate graph-element-button' data-toggle='tooltip' data-placement='top'>"
+                    "<button class='duplicate graph-element-button round-button' data-toggle='tooltip' data-placement='top'>"
                 ).prop(
                     "title",
                     goToSameBubbleText

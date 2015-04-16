@@ -21,6 +21,10 @@ body {
   }
 }
 
+.round-button{
+  border-radius: 20px;
+}
+
 .root-vertex-super-container {
   position: absolute;
   padding: 50%;
@@ -676,8 +680,8 @@ svg {
     }
     .duplicate-button-container {
       position: absolute;
-      left: -15px;
-      top: -30px;
+      left: -17px;
+      top: -18px;
     }
     border: 1px;
     border-color: transparent;
