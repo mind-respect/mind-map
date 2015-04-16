@@ -61,7 +61,7 @@ button.add-button-in-list:hover { color: #00d100; }
 
 .ui-dialog { opacity: 0.9; }
 
-.ui-autocomplete { /*z-index one more than ui-dialog*/ z-index: 101; height: 200px; overflow-y: scroll; }
+.ui-autocomplete { height: 200px; overflow-y: scroll; }
 
 .ui-menu .ui-menu-item { border-bottom: 1px solid #d3d2d2; }
 .ui-menu .ui-menu-item .element-label { font-weight: bold; font-size: 14px; padding-right: 43px; }

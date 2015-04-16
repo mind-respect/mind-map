@@ -44,6 +44,7 @@ define([
                     width: 550
                 }
             );
+            this._setupAutoCompleteSuggestionZIndex();
             return this;
         };
 
@@ -224,6 +225,7 @@ define([
             );
             this.html.append(identificationTextField);
             this._setUpAutoComplete(identificationTextField);
+            this.identificationTextField = identificationTextField;
             return identificationTextField;
         };
 
@@ -343,6 +345,12 @@ define([
             this._addIdentificationAsListElement(identificationResource);
             this._makeListElementsCollapsible();
             this._setTemporaryDescription(identificationResource);
+        };
+        IdentificationMenu.prototype._setupAutoCompleteSuggestionZIndex= function () {
+            //http://stackoverflow.com/a/17178927/541493
+            this.identificationTextField.autocomplete("widget").insertAfter(
+                this.identificationTextField.closest(".ui-dialog").parent()
+            );
         };
         return api;
     }
