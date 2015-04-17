@@ -80,19 +80,6 @@ define([
     api.Self.prototype.getInputSizer = function () {
         return this.html.find(".input-size");
     };
-    api.Self.prototype.adjustWidthToNumberOfChars = function () {
-        var text = this.text(),
-            label = this.getLabel();
-        if (!label.is("input")) {
-            return;
-        }
-        if (text.trim().length === 0) {
-            text = label.attr("placeholder");
-        }
-        var biggestLetter = "M";
-        //using 'text.replace(/./g, biggestLetter)' because somehow spaces and some letters don't apply as much width
-        this.getInputSizer().text(text.replace(/./g, biggestLetter));
-    };
     api.Self.prototype.rightActionForType = function (vertexAction, edgeAction, groupRelationAction, schemaAction, propertyAction, suggestionVertexAction, suggestionRelationAction){
         switch (this.getGraphElementType()) {
             case api.Types.Vertex :

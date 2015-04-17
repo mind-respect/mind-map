@@ -65,9 +65,6 @@ define([
         api.Self.prototype.getLabel = function () {
             return this.html.find("span.label");
         };
-        api.Self.prototype.readjustLabelWidth = function () {
-            //do nothing;
-        };
         api.Self.prototype.inverse = function () {
             this.html[
                 this.html.hasClass("inverse") ?

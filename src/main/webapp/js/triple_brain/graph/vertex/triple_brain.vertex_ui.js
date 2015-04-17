@@ -198,9 +198,6 @@ define([
                 this
             );
         };
-        api.Object.prototype.readjustLabelWidth = function () {
-            this.adjustWidthToNumberOfChars();
-        };
         api.Object.prototype.text = function () {
             return this.getLabel().text();
         };

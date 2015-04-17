@@ -40,7 +40,6 @@ define([
         this.getLabel().attr(
             "placeholder", TreeEdge.getWhenEmptyLabel()
         );
-        this.readjustLabelWidth();
         TreeEdge.removeIdFromCache(this.getId());
         var edge = new TreeEdge.withHtml(
             this.html

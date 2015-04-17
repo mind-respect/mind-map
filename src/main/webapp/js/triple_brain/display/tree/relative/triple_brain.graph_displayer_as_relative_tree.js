@@ -432,7 +432,6 @@ define([
             vertexContainer.append(
                 childVertexHtmlFacade.getHtml()
             );
-            childVertexHtmlFacade.readjustLabelWidth();
             self.addChildrenContainerToBubble(childVertexHtmlFacade, serverFormat.isLeftOriented);
             return childVertexHtmlFacade;
         };
@@ -552,7 +551,6 @@ define([
             );
             bubblesContainer.append(bubbleContainer);
             bubbleContainer.append(self.rootBubble.getHtml());
-            self.rootBubble.readjustLabelWidth();
             self.leftChildrenContainer = self.addChildrenContainerToBubble(
                 self.rootBubble,
                 true

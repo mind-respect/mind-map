@@ -35,9 +35,7 @@ define([
     Self.prototype.getGraphElementType = function () {
         return GraphElementUi.Types.GroupRelation;
     };
-    Self.prototype.readjustLabelWidth = function () {
-        //do nothing
-    };
+
     Self.prototype.getNumberOfRelationsToFlag = function () {
         return this.getGroupRelation().getNumberOfVertices();
     };

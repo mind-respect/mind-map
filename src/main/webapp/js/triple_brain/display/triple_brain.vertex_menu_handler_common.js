@@ -27,7 +27,7 @@ define([
             height: 350,
             width: 500,
             dialogClass: "vertex-note",
-            modal: true
+            modal: false
         };
         if(!MindMapInfo.isViewOnly()){
             menuExtraOptions.buttons = defineUpdateNoteButtonOptions(
@@ -52,15 +52,12 @@ define([
                 vertex,
                 dialog.find("textarea").val(),
                 function (vertex) {
-                    if (vertex.hasNote()) {
-                        vertex.getNoteButtonInBubbleContent().removeClass("hidden");
-                        vertex.getNoteButtonInMenu().addClass("hidden");
-                    } else {
-                        vertex.getNoteButtonInBubbleContent().addClass("hidden");
-                        vertex.getNoteButtonInMenu().removeClass("hidden");
-                    }
+                    vertex.getNoteButtonInBubbleContent()[
+                        vertex.hasNote() ?
+                            "removeClass":
+                            "addClass"
+                        ]("hidden");
                     $(dialog).dialog("close");
-                    vertex.readjustLabelWidth();
                 }
             );
         };

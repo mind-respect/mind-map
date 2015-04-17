@@ -53,7 +53,6 @@ define([
         this.getLabel().attr(
             "placeholder", RelativeTreeVertex.getWhenEmptyLabel()
         );
-        this.readjustLabelWidth();
         var vertex = new RelativeTreeVertex.Object().init(
             this.html
         );
