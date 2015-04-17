@@ -589,6 +589,9 @@ svg {
     .in-bubble-content {
       width: 325px;
       max-width: 325px;
+      .in-bubble-note-button{
+        display:none;
+      }
     }
     .bubble-label {
       white-space: pre-wrap;
@@ -674,9 +677,15 @@ svg {
     > * {
       display: table-cell;
     }
-    .note-button {
-      margin-right: 5px;
-      margin-top: -3px;
+    .in-bubble-note-button{
+      width:8px;
+      margin:0 17px 0 0;
+      position: relative;
+      display:block;
+      i{
+        font-size:1.5em;
+        position:absolute;
+      }
     }
     .duplicate-button-container {
       position: absolute;

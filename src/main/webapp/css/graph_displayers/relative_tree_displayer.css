@@ -91,6 +91,10 @@
     content:url('../images/icons/vertex/arrowhead_right.svg');
 }
 
+.left-oriented .vertex .in-bubble-content .in-bubble-note-button{
+    margin:0 5px 0 4px;
+}
+
 /*BORDER*/
 
 .vertices-children-container .vertex-tree-container:first-child > .vertical-border-first{

@@ -220,7 +220,7 @@ define([
         };
         api.Object.prototype.getNoteButtonInBubbleContent = function () {
             return this.getInBubbleContainer().find(
-                "> .note-button"
+                "> .in-bubble-note-button"
             );
         };
         api.Object.prototype.getNoteButtonInMenu = function () {

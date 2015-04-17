@@ -167,14 +167,16 @@ define([
         }
     };
     api.addNoteButtonNextToLabel = function (vertex) {
-        var noteButton = vertex.getNoteButtonInMenu().clone().on(
-            "click", clickHandler
-        );
+        var noteButton = $(
+            "<div class='in-bubble-note-button'>"
+        ).append(
+            "<i class='fa fa-book'>"
+        ).click(clickHandler);
         noteButton[
             vertex.hasNote() ?
-                "show" :
-                "hide"
-            ]();
+                "removeClass" :
+                "addClass"
+            ]("hidden");
         vertex.getLabel().before(
             noteButton
         );

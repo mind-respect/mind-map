@@ -53,11 +53,11 @@ define([
                 dialog.find("textarea").val(),
                 function (vertex) {
                     if (vertex.hasNote()) {
-                        vertex.getNoteButtonInBubbleContent().show();
-                        vertex.getNoteButtonInMenu().hide();
+                        vertex.getNoteButtonInBubbleContent().removeClass("hidden");
+                        vertex.getNoteButtonInMenu().addClass("hidden");
                     } else {
-                        vertex.getNoteButtonInBubbleContent().hide();
-                        vertex.getNoteButtonInMenu().show();
+                        vertex.getNoteButtonInBubbleContent().addClass("hidden");
+                        vertex.getNoteButtonInMenu().removeClass("hidden");
                     }
                     $(dialog).dialog("close");
                     vertex.readjustLabelWidth();
