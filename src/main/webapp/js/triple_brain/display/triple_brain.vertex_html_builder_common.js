@@ -171,7 +171,11 @@ define([
             "<div class='in-bubble-note-button'>"
         ).append(
             "<i class='fa fa-book'>"
+        ).prop(
+            "title",
+            vertex.getNoteButtonInMenu().prop("title")
         ).click(clickHandler);
+        noteButton.parent().tooltip();
         noteButton[
             vertex.hasNote() ?
                 "removeClass" :
