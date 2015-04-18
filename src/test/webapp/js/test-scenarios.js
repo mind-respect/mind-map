@@ -133,14 +133,6 @@ define([
                 )
             };
 
-            this.getBubble1 = function () {
-                return new api.TreeQuerier(
-                    getIncludedElementsTree()
-                ).getBubbleWithLabelInTree(
-                    "b1"
-                )
-            };
-
             this.getRelation1 = function () {
                 return new api.TreeQuerier(
                     getIncludedElementsTree()
@@ -313,7 +305,7 @@ define([
                     )
                 );
             };
-            this.getB2GraphWhenConnectedToDistantBubble = function(){
+            this.getB2GraphWhenConnectedToDistantBubble = function () {
                 return getTestData(
                     "graphWithHiddenSimilarRelations.b2GraphWhenConnectedToDistantBubble"
                 );
@@ -615,6 +607,46 @@ define([
                 );
             };
         };
+        api.graphWithCircularityScenario = function () {
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                return getTestData(
+                    "graphWithCircularity.b1Graph"
+                );
+            };
+            this.expandBubble2 = function (bubble2) {
+                return GraphDisplayerAsRelativeTree.addChildTreeUsingGraph(
+                    bubble2,
+                    getTestData(
+                        "graphWithCircularity.b2Graph"
+                    )
+                );
+            };
+            this.expandBubble3 = function (bubble3) {
+                return GraphDisplayerAsRelativeTree.addChildTreeUsingGraph(
+                    bubble3,
+                    getTestData(
+                        "graphWithCircularity.b3Graph"
+                    )
+                );
+            };
+            this.getCenterBubbleUri = function () {
+                return uriOfVertexWithLabel(
+                    this.getGraph(),
+                    "b1"
+                )
+            };
+            this.getBubble1InTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree(
+                    "b1"
+                );
+            };
+            this.getBubble2InTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree(
+                    "b2"
+                );
+            };
+        };
         GraphDisplayer.setImplementation(
             GraphDisplayerFactory.getByName(
                 "relative_tree"
@@ -623,7 +655,7 @@ define([
         api.generateVertexUri = function () {
             return "\/service\/users\/foo\/graph\/vertex\/" + generateUuid();
         };
-        api.TreeQuerier = function(tree) {
+        api.TreeQuerier = function (tree) {
             this.getBubbleWithLabelInTree = function (label) {
                 return BubbleFactory.fromHtml(
                     tree.find(".bubble").has(".bubble-label:contains(" + label + ")")

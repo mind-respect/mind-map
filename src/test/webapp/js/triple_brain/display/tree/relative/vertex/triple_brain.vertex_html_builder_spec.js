@@ -8,10 +8,11 @@ define([
 ], function (Scenarios, VertexHtmlBuilder, GraphUi) {
     "use strict";
     describe("vertex_html_builder", function () {
-        var bubble1;
+        var bubble1, graphWithCircularityScenario;
         beforeEach(function () {
             var threeBubblesScenario = new Scenarios.threeBubblesGraph();
             bubble1 = threeBubblesScenario.getBubble1();
+            graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
         });
         it("can build from server facade", function(){
             var uiId = GraphUi.generateBubbleHtmlId();
@@ -32,6 +33,22 @@ define([
             expect(
                 vertexUi.getId()
             ).toBeDefined();
+        });
+        it("adds duplicate bubble if has duplicate", function(){
+            var bubble1 = graphWithCircularityScenario.getBubble1InTree();
+            expect(
+                bubble1.hasTheDuplicateButton()
+            ).toBeFalsy();
+            var bubble2 = graphWithCircularityScenario.getBubble2InTree();
+            graphWithCircularityScenario.expandBubble2(bubble2);
+            var bubble3 = bubble2.getTopMostChildBubble().getTopMostChildBubble();
+            graphWithCircularityScenario.expandBubble3(bubble3);
+            expect(
+                bubble1.hasTheDuplicateButton()
+            ).toBeTruthy();
+            expect(
+                bubble3.hasTheDuplicateButton()
+            ).toBeTruthy();
         });
     });
 });
