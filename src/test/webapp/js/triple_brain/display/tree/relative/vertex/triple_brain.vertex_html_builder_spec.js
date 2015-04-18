@@ -34,7 +34,7 @@ define([
                 vertexUi.getId()
             ).toBeDefined();
         });
-        it("adds duplicate bubble if has duplicate", function(){
+        it("adds duplicate button if has duplicate", function(){
             var bubble1 = graphWithCircularityScenario.getBubble1InTree();
             expect(
                 bubble1.hasTheDuplicateButton()
