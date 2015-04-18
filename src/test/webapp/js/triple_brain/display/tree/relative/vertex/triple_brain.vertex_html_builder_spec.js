@@ -49,6 +49,10 @@ define([
             expect(
                 bubble3.hasTheDuplicateButton()
             ).toBeTruthy();
+            var bubble1Duplicate = bubble3.getTopMostChildBubble().getTopMostChildBubble();
+            expect(
+                bubble1Duplicate.hasTheDuplicateButton()
+            ).toBeTruthy();
         });
     });
 });
