@@ -594,6 +594,45 @@ define([
             };
         };
 
+        api.graphWithARelationInTwoSimilarRelationsGroup = function () {
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                return getTestData("projectSchema.someProjectGraph");
+            };
+            this.getCenterBubbleUri = function () {
+                return uriOfVertexWithLabel(
+                    this.getGraph(),
+                    "some project"
+                )
+            };
+            this.getSomeProjectInTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("some project");
+            };
+            this.getImpact3RelationInTheImpactOnTheIndividualContext = function(){
+                var theRelation;
+                this.getSomeProjectInTree().visitAllChild(function(childBubble){
+                    if(childBubble.isRelation()){
+                        theRelation = childBubble;
+                    }
+                });
+                return theRelation;
+            };
+            this.getImpact3RelationInTheImpactOnSocietyContext = function(){
+                var theRelation;
+                this.getSomeProjectInTree().visitAllChild(function(childBubble){
+                    if(childBubble.isGroupRelation()){
+                        GraphDisplayerAsRelativeTree.expandGroupRelation(childBubble);
+                        var treeQuerier = new api.TreeQuerier(childBubble.getChildrenContainer());
+                        theRelation = treeQuerier.getRelationWithLabelInTree("impact 3");
+                    }
+                });
+                return theRelation;
+            };
+            Mock.setCenterVertexUriInUrl(
+                this.getCenterBubbleUri()
+            );
+        };
+
         api.getSchemaProjectDetailsSearchResult = function () {
             this.get = function () {
                 return getTestData(

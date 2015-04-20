@@ -196,7 +196,21 @@ define([
                 deepGraphWithCircularity.getBubble1InTree()
             ).toBeDefined();
         });
-
+        it("can have duplicate relations", function () {
+            var duplicateRelationsScenario = new Scenarios.graphWithARelationInTwoSimilarRelationsGroup(),
+                impact3InImpactOnTheIndividualContext = duplicateRelationsScenario.getImpact3RelationInTheImpactOnTheIndividualContext(),
+                impact3InImpactOnSocietyContext = duplicateRelationsScenario.getImpact3RelationInTheImpactOnSocietyContext();
+            expect(
+                impact3InImpactOnTheIndividualContext.getUri()
+            ).toBe(
+                impact3InImpactOnSocietyContext.getUri()
+            );
+            expect(
+                impact3InImpactOnTheIndividualContext.getId()
+            ).not.toBe(
+                impact3InImpactOnSocietyContext.getId()
+            )
+        });
         function connectDistantVertexTest(callback){
             Mock.setGetGraphFromService(
                 graphWithHiddenSimilarRelationsScenario.getB2GraphWhenConnectedToDistantBubble()

@@ -94,7 +94,6 @@ define([
             });
             return edge;
         };
-
         function buildMenu(edge) {
             var edgeHtml = edge.getHtml(),
                 menu = $("<span class='relation-menu'>");
@@ -104,10 +103,6 @@ define([
                 GraphDisplayer.getRelationMenuHandler().forSingle()
             );
         }
-
-        EdgeCreator.prototype._edgeFacade = function () {
-            return TreeEdge.withHtml(this.html);
-        };
         return api;
     }
 );
