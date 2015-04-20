@@ -23,59 +23,14 @@ define([
             return $.t("vertex.default");
         };
         api.buildCommonConstructors = function (api) {
-            var cacheWithIdAsKey = {},
-                cacheWithUriAsKey = {};
-            api.initCache = function (vertex) {
-                cacheWithIdAsKey[vertex.getId()] = vertex;
-                updateUriCache(vertex.getUri(), vertex);
-            };
-            api.withHtml = function (html) {
-                return cacheWithIdAsKey[
-                    html.prop('id')
-                    ];
-            };
-            api.withId = function (id) {
-                return cacheWithIdAsKey[id];
-            };
-            api.withUri = function (uri) {
-                return cacheWithUriAsKey[uri];
-            };
-            api.lastAddedWithUri = function (uri) {
-                return cacheWithUriAsKey[uri][
-                    cacheWithUriAsKey[uri].length - 1
-                    ];
-            };
+            GraphElementUi.buildCommonConstructors(api);
             api.visitAllVertices = function (visitor) {
-                $.each(cacheWithIdAsKey, function () {
-                    return visitor(
-                        this
-                    );
+                api.visitAll(function(element){
+                    if(element.isVertex()){
+                        visitor(element);
+                    }
                 });
             };
-
-            EventBus.subscribe('/event/ui/graph/reset', emptyCache);
-            function emptyCache() {
-                cacheWithIdAsKey = {};
-                cacheWithUriAsKey = {};
-            }
-
-            api.removeVertexFromCache = function (uri, id) {
-                var len = cacheWithUriAsKey[uri].length;
-                while (len--) {
-                    var vertex = cacheWithUriAsKey[uri][len];
-                    if (vertex.getId() === uri) {
-                        cacheWithUriAsKey.splice(len, 1);
-                    }
-                }
-                delete cacheWithIdAsKey[id];
-            };
-
-            function updateUriCache(uri, vertex) {
-                if (undefined === cacheWithUriAsKey[uri]) {
-                    cacheWithUriAsKey[uri] = [];
-                }
-                cacheWithUriAsKey[uri].push(vertex);
-            }
         };
         api.centralVertex = function () {
             return GraphDisplayer.getVertexSelector().withHtml(
@@ -367,9 +322,6 @@ define([
         };
         api.Object.prototype.getIncludedEdges = function () {
             return this.html.data("includedEdges");
-        };
-        api.Object.prototype.isAbsoluteDefaultVertex = function () {
-            return this.getUri().indexOf("default") !== -1;
         };
         api.Object.prototype.getMenuHtml = function () {
             return this.html.find('.menu');

@@ -5,14 +5,67 @@ define([
     "triple_brain.graph_displayer",
     "triple_brain.graph_element_main_menu",
     "triple_brain.graph_element_type",
+    "triple_brain.event_bus",
     "jquery.focus-end"
-], function (GraphDisplayer, GraphElementMainMenu, GraphElementType) {
+], function (GraphDisplayer, GraphElementMainMenu, GraphElementType, EventBus) {
     var api = {};
     api.Types = GraphElementType;
     var menuHandlerGetters = {},
         selectors = {};
     initMenuHandlerGetters();
     initSelectors();
+    api.buildCommonConstructors = function (api) {
+        var cacheWithIdAsKey = {},
+            cacheWithUriAsKey = {};
+        api.initCache = function (graphElement) {
+            cacheWithIdAsKey[graphElement.getId()] = graphElement;
+            updateUriCache(graphElement.getUri(), graphElement);
+        };
+        api.withHtml = function (html) {
+            return cacheWithIdAsKey[
+                html.prop('id')
+                ];
+        };
+        api.withId = function (id) {
+            return cacheWithIdAsKey[id];
+        };
+        api.withUri = function (uri) {
+            return cacheWithUriAsKey[uri];
+        };
+        api.lastAddedWithUri = function (uri) {
+            return cacheWithUriAsKey[uri][
+            cacheWithUriAsKey[uri].length - 1
+                ];
+        };
+        api.visitAll = function(visitor){
+            $.each(cacheWithIdAsKey, function () {
+                return visitor(
+                    this
+                );
+            });
+        };
+        api.removeFromCache = function (uri, id) {
+            var len = cacheWithUriAsKey[uri].length;
+            while (len--) {
+                var vertex = cacheWithUriAsKey[uri][len];
+                if (vertex.getId() === uri) {
+                    cacheWithUriAsKey.splice(len, 1);
+                }
+            }
+            delete cacheWithIdAsKey[id];
+        };
+        EventBus.subscribe('/event/ui/graph/reset', emptyCache);
+        function emptyCache() {
+            cacheWithIdAsKey = {};
+            cacheWithUriAsKey = {};
+        }
+        function updateUriCache(uri, vertex) {
+            if (undefined === cacheWithUriAsKey[uri]) {
+                cacheWithUriAsKey[uri] = [];
+            }
+            cacheWithUriAsKey[uri].push(vertex);
+        }
+    };
     api.Self = function () {
     };
     api.Self.prototype.setOriginalServerObject = function (serverJson) {

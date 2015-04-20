@@ -49,5 +49,12 @@ define([
                 edge1.childVertexInDisplay().getUri()
             ).toBe(child1.getUri())
         });
+
+        it("can get child vertex in display even if inverse", function(){
+            edge1.inverse();
+            expect(
+                edge1.childVertexInDisplay().getUri()
+            ).toBe(child1.getUri())
+        });
     });
 });

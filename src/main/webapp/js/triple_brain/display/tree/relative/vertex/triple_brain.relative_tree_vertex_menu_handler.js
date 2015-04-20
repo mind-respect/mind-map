@@ -42,27 +42,27 @@ define([
     forSingle.remove = function (event, vertex) {
         forSingle.removeAction(vertex);
     };
-    forSingle.removeAction = function (vertex) {
-        if (vertex.isAbsoluteDefaultVertex()) {
+    forSingle.removeAction = function (vertex, skipConfirmation) {
+        if(skipConfirmation){
+            deleteAfterConfirmationBehavior(vertex);
             return;
         }
         DeleteMenu.ofVertexAndDeletionBehavior(
             vertex,
             deleteAfterConfirmationBehavior
         ).build();
-        function deleteAfterConfirmationBehavior(event, vertex) {
-            event.stopPropagation();
+        function deleteAfterConfirmationBehavior(vertex) {
             VertexService.remove(vertex, function (vertex) {
                 removeChildren(vertex);
                 RelativeTreeVertex.ofVertex(vertex).applyToOtherInstances(function (vertex) {
                     removeChildren(vertex);
                     removeEdges(vertex);
                 });
-                RelativeTreeVertex.removeVertexFromCache(
+                RelativeTreeVertex.removeFromCache(
                     vertex.getUri(),
                     vertex.getId()
                 );
-                VertexUi.removeVertexFromCache(
+                VertexUi.removeFromCache(
                     vertex.getUri(),
                     vertex.getId()
                 );
@@ -76,7 +76,6 @@ define([
                         childVertex.remove();
                     });
                 }
-
                 function removeEdges(vertex) {
                     vertex.removeConnectedEdges();
                     vertex.remove();

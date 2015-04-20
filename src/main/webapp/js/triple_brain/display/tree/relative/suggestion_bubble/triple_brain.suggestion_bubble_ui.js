@@ -33,11 +33,11 @@ define([
     };
 
     Self.prototype.integrate = function (newVertexUri) {
-        RelativeTreeVertex.removeVertexFromCache(
+        RelativeTreeVertex.removeFromCache(
             this.getUri(),
             this.getId()
         );
-        VertexUi.removeVertexFromCache(
+        VertexUi.removeFromCache(
             this.getUri(),
             this.getId()
         );

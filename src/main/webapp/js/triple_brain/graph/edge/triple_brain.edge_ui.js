@@ -15,38 +15,21 @@ define([
     ],
     function ($, GraphUi, EventBus, GraphDisplayer, IdentifiedBubble, EdgeService, GraphElementButton, SelectionHandler, GraphElementUi) {
         "use strict";
-        var api = {},
-            cache = {};
+        var api = {};
         api.getWhenEmptyLabel = function () {
             return $.t("edge.default");
         };
-        api.withHtml = function (html) {
-            var id = html.prop('id');
-            var cachedObject = cache[id];
-            if (cachedObject === undefined) {
-                cachedObject = new api.Object(html);
-                cache[id] = cachedObject;
-            }
-            return cachedObject;
+        api.buildCommonConstructors = function (api) {
+            GraphElementUi.buildCommonConstructors(api);
+            api.visitAllEdges = function (visitor) {
+                api.visitAll(function(element){
+                    if(element.isRelation()){
+                        visitor(element);
+                    }
+                });
+            };
         };
-        api.allEdges = function () {
-            var edges = [];
-            GraphUi.getDrawnGraph().find(".relation").each(function () {
-                edges.push(api.withHtml(
-                    $(this)
-                ));
-            });
-            return edges;
-        };
-        api.visitAllEdges = function (visitor) {
-            GraphUi.getDrawnGraph().find(".relation").each(function () {
-                visitor(
-                    api.withHtml(
-                        $(this)
-                    )
-                )
-            });
-        };
+        api.buildCommonConstructors(api);
         api.connectedToVertex = function (vertex) {
             var edgesConnectedToVertex = [];
             var vertexId = vertex.getId();

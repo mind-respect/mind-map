@@ -229,6 +229,9 @@ define([
                         ]
                 );
             };
+            this.getBubble1InTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("b1");
+            };
             this.getBubble2InTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("b2");
             };

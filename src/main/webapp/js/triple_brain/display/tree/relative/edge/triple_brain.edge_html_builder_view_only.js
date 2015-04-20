@@ -2,8 +2,9 @@
  * Copyright Vincent Blouin under the Mozilla Public License 1.1
  */
 define([
-    "triple_brain.tree_edge"
-], function(TreeEdge){
+    "triple_brain.tree_edge",
+    "triple_brain.edge_ui"
+], function(TreeEdge, EdgeUi){
     var api = {};
     api.withServerFacade = function (edgeServer) {
         return new EdgeCreator(
@@ -41,7 +42,15 @@ define([
             ).append(
                 "<span class='connector'>"
             ).uniqueId();
-            var edge = edgeFacade();
+            var edge = new TreeEdge.Self().init(
+                html
+            );
+            TreeEdge.initCache(
+                edge
+            );
+            EdgeUi.initCache(
+                edge
+            );
             edge.setUri(
                 edgeServerFormat.getUri()
             );
@@ -58,9 +67,6 @@ define([
                     "data-placeholder",
                     TreeEdge.getWhenEmptyLabel()
                 )
-            }
-            function edgeFacade() {
-                return TreeEdge.withHtml(html);
             }
         };
     }

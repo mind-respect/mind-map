@@ -145,7 +145,10 @@ define([
         };
 
         api.Self.prototype.hasChildren = function () {
-            return this.getChildrenBubblesHtml().length > 0;
+            return this.getNumberOfChild() > 0;
+        };
+        api.Self.prototype.getNumberOfChild = function(){
+            return this.getChildrenBubblesHtml().length;
         };
         api.Self.prototype.getSelectorFromContainer = function (container) {
             return BubbleFactory.fromHtml(

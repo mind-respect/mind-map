@@ -37,6 +37,11 @@ define([
             callback(toReturn);
         };
     };
+    api.mockRemoveVertex = function(){
+        return spyOn(VertexService, "remove").andCallFake(function(vertex, callback){
+            callback(vertex);
+        });
+    };
     UserService.authenticatedUserInCache = function(){
         return {
             user_name : "foo"

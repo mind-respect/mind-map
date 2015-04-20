@@ -49,7 +49,7 @@ define([
                 ).css(
                     "margin-top",
                     "1.5em"
-                )
+                );
                 function confirmButton(){
                     return $(
                         "<button>"
@@ -62,9 +62,9 @@ define([
                     ).on(
                         "click",
                         function(event){
+                            event.stopPropagation();
                             var button = $(this);
                             deleteCallback(
-                                event,
                                 button.data("vertex")
                             );
                             GraphElementMenu.fromContentComponent(

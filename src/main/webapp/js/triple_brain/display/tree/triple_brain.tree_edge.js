@@ -7,29 +7,10 @@ define([
     ],
     function ($, EdgeUi) {
         "use strict";
-        var api = {},
-            cache = {};
+        var api = {};
+        EdgeUi.buildCommonConstructors(api);
         api.getWhenEmptyLabel = function () {
             return EdgeUi.getWhenEmptyLabel();
-        };
-        api.visitAllEdges = function (visitor) {
-            $(".relation").each(function () {
-                visitor(
-                    api.withHtml($(this))
-                );
-            });
-        };
-        api.withHtml = function (html) {
-            var id = html.prop('id');
-            var cachedObject = cache[id];
-            if(cachedObject === undefined){
-                cachedObject = new api.Self().init(html);
-                cache[id] = cachedObject;
-            }
-            return cachedObject;
-        };
-        api.removeIdFromCache = function(id){
-            delete cache[id];
         };
         api.ofEdge = function (edge) {
             return api.withHtml(

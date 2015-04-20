@@ -5,13 +5,14 @@
 define([
         "jquery",
         "triple_brain.tree_edge",
+        "triple_brain.edge_ui",
         "triple_brain.event_bus",
         "triple_brain.relative_tree_vertex",
         "triple_brain.graph_displayer",
         "triple_brain.graph_element_main_menu",
         "triple_brain.edge_html_builder_common"
     ],
-    function ($, TreeEdge, EventBus, RelativeTreeVertex, GraphDisplayer, GraphElementMainMenu, EdgeHtmlBuilderCommon) {
+    function ($, TreeEdge, EdgeUi, EventBus, RelativeTreeVertex, GraphDisplayer, GraphElementMainMenu, EdgeHtmlBuilderCommon) {
         "use strict";
         var api = {};
         api.withServerFacade = function (edgeServer) {
@@ -61,7 +62,15 @@ define([
             this.html.append(
                 "<span class='connector'>"
             );
-            var edge = this._edgeFacade();
+            var edge = new TreeEdge.Self().init(
+                this.html
+            );
+            TreeEdge.initCache(
+                edge
+            );
+            EdgeUi.initCache(
+                edge
+            );
             edge.setOriginalServerObject(
                 this.edgeServer
             );
