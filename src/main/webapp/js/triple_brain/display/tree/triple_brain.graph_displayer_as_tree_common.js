@@ -15,7 +15,8 @@ define([
             var vertices = serverGraph.vertices,
                 originalEdges = serverGraph.edges,
                 centralVertex = vertexWithId(centralVertexUri),
-                edgesFacade = arrayOfEdgesHavingThoseRelatedToCenterVertexOnTop();
+                edgesFacade = arrayOfEdgesHavingThoseRelatedToCenterVertexOnTop(),
+                nonEnhancedEdges = {};
             centralVertex.isInvolved = true;
             initRelationsOfVertex(
                 centralVertex
@@ -53,7 +54,7 @@ define([
                 edges.sort(function (edge1, edge2) {
                     var edge1IsRelated = isEdgeRelatedToCenterVertex(edge1),
                         edge2IsRelated = isEdgeRelatedToCenterVertex(edge2);
-                    if (edge1IsRelated && edge2IsRelated) {
+                    if (edge1IsRelated === edge2IsRelated) {
                         return 0;
                     }
                     if (edge1IsRelated) {
@@ -81,8 +82,11 @@ define([
                     ),
                     destinationVertex = vertexWithId(
                         edge.getDestinationVertex().getUri()
-                    ),
-                    edgeIdentifications = edge.getIdentifications();
+                    );
+                if(!sourceVertex.isInvolved && !destinationVertex.isInvolved){
+                    nonEnhancedEdges[edge.getUri()] = edge;
+                    return;
+                }
                 if (destinationVertex.isInvolved && !sourceVertex.isInvolved) {
                     sourceVertex = vertexWithId(
                         edge.getDestinationVertex().getUri()
@@ -93,6 +97,7 @@ define([
                 }
                 sourceVertex.isInvolved = true;
                 destinationVertex.isInvolved = true;
+                var edgeIdentifications = edge.getIdentifications();
                 $.each(edgeIdentifications, function () {
                     var identification = this,
                         key = identification.getExternalResourceUri(),
@@ -124,6 +129,14 @@ define([
                     );
                     sourceVertex.similarRelations[key] = groupRelation;
                 }
+                delete nonEnhancedEdges[edge.getUri()];
+                revisitNonEnhancedEdges();
+            }
+
+            function revisitNonEnhancedEdges(){
+                $.each(nonEnhancedEdges, function(){
+                    updateRelationsIdentification(this);
+                });
             }
 
             function vertexWithId(vertexId) {

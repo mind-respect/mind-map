@@ -45,6 +45,18 @@ define([
             IdentifiedBubble.Object.apply(this, [this.html]);
             return this;
         };
+
+        api.Object.prototype.remove = function () {
+            api.removeFromCache(
+                this.getUri(),
+                this.getId()
+            );
+            this.removeConnectedEdges();
+            Bubble.Self.prototype.remove.call(
+                this
+            );
+        };
+
         api.Object.prototype.setIsPublic = function (isPublic) {
             this.html.data(
                 "isPublic",

@@ -53,33 +53,7 @@ define([
         ).build();
         function deleteAfterConfirmationBehavior(vertex) {
             VertexService.remove(vertex, function (vertex) {
-                removeChildren(vertex);
-                RelativeTreeVertex.ofVertex(vertex).applyToOtherInstances(function (vertex) {
-                    removeChildren(vertex);
-                    removeEdges(vertex);
-                });
-                RelativeTreeVertex.removeFromCache(
-                    vertex.getUri(),
-                    vertex.getId()
-                );
-                VertexUi.removeFromCache(
-                    vertex.getUri(),
-                    vertex.getId()
-                );
-                removeEdges(vertex);
-                function removeChildren(vertex) {
-                    var relativeVertex = RelativeTreeVertex.ofVertex(
-                        vertex
-                    );
-                    relativeVertex.visitVerticesChildren(function (childVertex) {
-                        vertex.removeConnectedEdges();
-                        childVertex.remove();
-                    });
-                }
-                function removeEdges(vertex) {
-                    vertex.removeConnectedEdges();
-                    vertex.remove();
-                }
+                vertex.remove();
             });
         }
     };

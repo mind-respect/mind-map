@@ -15,6 +15,7 @@ define([
     function ($, VertexUi, EventBus, TreeEdge, ObjectUtils, TripleUiBuilder, SelectionHandler, PropertiesIndicator, BubbleFactory) {
         var api = {},
             otherInstancesKey = "otherInstances";
+        VertexUi.buildCommonConstructors(api);
         api.ofVertex = function (vertex) {
             return api.withHtml(
                 vertex.getHtml()
@@ -48,6 +49,23 @@ define([
                 }
             });
         };
+
+        api.Object.prototype.remove = function () {
+            this.applyToOtherInstances(function (otherInstance) {
+                otherInstance.remove();
+            });
+            this.visitVerticesChildren(function (childVertex) {
+                childVertex.remove();
+            });
+            api.removeFromCache(
+                this.getUri(),
+                this.getId()
+            );
+            VertexUi.Object.prototype.remove.call(
+                this
+            );
+        };
+
         api.Object.prototype.getRelationWithUiParent = function () {
             return this.getParentBubble();
         };
@@ -110,8 +128,6 @@ define([
         api.Object.prototype.hasHiddenRelations = function () {
             return this.isALeaf() && this.getTotalNumberOfEdges() > 1;
         };
-
-        VertexUi.buildCommonConstructors(api);
         EventBus.subscribe(
             '/event/ui/graph/identification/added',
             identificationAddedHandler

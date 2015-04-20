@@ -80,6 +80,28 @@ define([
             };
         };
 
+        api.deepGraphWithCircularity = function () {
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                return getTestData("deepGraphWithCircularity");
+            };
+            this.getCenterBubbleUri = function () {
+                return uriOfVertexWithLabel(this.getGraph(), "b3")
+            };
+            this.getBubble1InTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("b1");
+            };
+            this.getBubble2InTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("b2");
+            };
+            this.getBubble3InTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("b3");
+            };
+            this.getBubble4InTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("b4");
+            };
+        };
+
         api.mergeBubbleGraph = function () {
             /*
              one bubble labeled merge
@@ -567,7 +589,7 @@ define([
              */
             this.get = function () {
                 return getTestData(
-                    "projectSchemaSearchResults.getForProject"
+                    "projectSchema.searchResultsForProject"
                 );
             };
         };
@@ -575,7 +597,7 @@ define([
         api.getSchemaProjectDetailsSearchResult = function () {
             this.get = function () {
                 return getTestData(
-                    "projectSchemaSearchResults.projectSearchDetails"
+                    "projectSchema.projectSearchDetails"
                 );
             };
         };
@@ -592,7 +614,7 @@ define([
              */
             this.get = function () {
                 return getTestData(
-                    "projectSchemaSearchResults.resultsForImpact"
+                    "projectSchema.searchResultsForImpact"
                 );
             };
         };

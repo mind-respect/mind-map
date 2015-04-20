@@ -19,10 +19,7 @@ define([
             Mock.mockRemoveVertex();
             MindMapInfo._setIsViewOnly(false);
             var bubble1 = threeBubbles.getBubble1InTree(),
-                r1 = bubble1.getTopMostChildBubble();
-            expect(
-                r1.text()
-            ).toBe("r1");
+                r1 = threeBubbles.getRelation1InTree();
             expect(
                 bubble1.getNumberOfChild()
             ).toBe(2);

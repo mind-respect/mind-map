@@ -57,7 +57,7 @@ define([
         };
 
         api.Self.prototype.visitAllChild = function (visitor) {
-            $.each(this.getChildrenBubblesHtml(), function(){
+            $.each(this.getChildrenBubblesHtml(), function () {
                 return visitor(BubbleFactory.fromHtml(
                     $(this)
                 ));
@@ -147,7 +147,7 @@ define([
         api.Self.prototype.hasChildren = function () {
             return this.getNumberOfChild() > 0;
         };
-        api.Self.prototype.getNumberOfChild = function(){
+        api.Self.prototype.getNumberOfChild = function () {
             return this.getChildrenBubblesHtml().length;
         };
         api.Self.prototype.getSelectorFromContainer = function (container) {

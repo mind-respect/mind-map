@@ -181,6 +181,22 @@ define([
                 ).toBeTruthy();
             });
         });
+        it("contains all elements for deep circular graph", function(){
+            var deepGraphWithCircularity = new Scenarios.deepGraphWithCircularity();
+            expect(
+                deepGraphWithCircularity.getBubble3InTree()
+            ).toBeDefined();
+            expect(
+                deepGraphWithCircularity.getBubble2InTree()
+            ).toBeDefined();
+            expect(
+                deepGraphWithCircularity.getBubble4InTree()
+            ).toBeDefined();
+            expect(
+                deepGraphWithCircularity.getBubble1InTree()
+            ).toBeDefined();
+        });
+
         function connectDistantVertexTest(callback){
             Mock.setGetGraphFromService(
                 graphWithHiddenSimilarRelationsScenario.getB2GraphWhenConnectedToDistantBubble()

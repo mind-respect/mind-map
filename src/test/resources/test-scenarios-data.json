@@ -1,136 +1,176 @@
 {
-  "graphWithSimilarRelations": {
+  "projectSchema": {
+    "searchResultsForProject": [
+      {
+        "graphElement": {
+          "friendlyResource": {
+            "uri": "\/service\/users\/b\/graph\/schema\/5e114abe-21e0-447c-a2b5-95abfaa0feb9",
+            "label": "project",
+            "comment": "",
+            "images": [],
+            "creationDate": "Apr 20, 2015 1:07:29 PM",
+            "lastModificationDate": "Apr 20, 2015 1:07:29 PM"
+          },
+          "identifications": {}
+        },
+        "properties": {
+          "\/service\/users\/b\/graph\/schema\/5e114abe-21e0-447c-a2b5-95abfaa0feb9\/property\/74d13683-6368-4811-b577-7e7bf2ef12ba": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/schema\/5e114abe-21e0-447c-a2b5-95abfaa0feb9\/property\/74d13683-6368-4811-b577-7e7bf2ef12ba",
+              "label": "impact on the individual"
+            }
+          },
+          "\/service\/users\/b\/graph\/schema\/5e114abe-21e0-447c-a2b5-95abfaa0feb9\/property\/8ae6f97a-313b-4a61-bc5d-f437c6d4fc40": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/schema\/5e114abe-21e0-447c-a2b5-95abfaa0feb9\/property\/8ae6f97a-313b-4a61-bc5d-f437c6d4fc40",
+              "label": "has objective"
+            }
+          },
+          "\/service\/users\/b\/graph\/schema\/5e114abe-21e0-447c-a2b5-95abfaa0feb9\/property\/3cf63e06-e2e5-44bc-aaf8-21ab7cab93fc": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/schema\/5e114abe-21e0-447c-a2b5-95abfaa0feb9\/property\/3cf63e06-e2e5-44bc-aaf8-21ab7cab93fc",
+              "label": "impact on society"
+            }
+          },
+          "\/service\/users\/b\/graph\/schema\/5e114abe-21e0-447c-a2b5-95abfaa0feb9\/property\/77b68663-3e01-41bf-93a3-9b79223f5094": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/schema\/5e114abe-21e0-447c-a2b5-95abfaa0feb9\/property\/77b68663-3e01-41bf-93a3-9b79223f5094",
+              "label": "has component"
+            }
+          }
+        },
+        "type": "schema"
+      }
+    ],
+    "searchResultsForImpact": [
+      {
+        "graphElement": {
+          "friendlyResource": {
+            "uri": "\/service\/users\/b\/graph\/schema\/5e114abe-21e0-447c-a2b5-95abfaa0feb9\/property\/74d13683-6368-4811-b577-7e7bf2ef12ba",
+            "label": "impact on the individual",
+            "comment": "",
+            "images": [],
+            "creationDate": "Apr 20, 2015 1:07:29 PM",
+            "lastModificationDate": "Apr 20, 2015 1:07:29 PM"
+          },
+          "identifications": {}
+        },
+        "schema": {
+          "friendlyResource": {
+            "uri": "\/service\/users\/b\/graph\/schema\/5e114abe-21e0-447c-a2b5-95abfaa0feb9",
+            "label": "project"
+          }
+        },
+        "type": "property"
+      },
+      {
+        "graphElement": {
+          "friendlyResource": {
+            "uri": "\/service\/users\/b\/graph\/schema\/5e114abe-21e0-447c-a2b5-95abfaa0feb9\/property\/3cf63e06-e2e5-44bc-aaf8-21ab7cab93fc",
+            "label": "impact on society",
+            "comment": "",
+            "images": [],
+            "creationDate": "Apr 20, 2015 1:07:29 PM",
+            "lastModificationDate": "Apr 20, 2015 1:07:29 PM"
+          },
+          "identifications": {}
+        },
+        "schema": {
+          "friendlyResource": {
+            "uri": "\/service\/users\/b\/graph\/schema\/5e114abe-21e0-447c-a2b5-95abfaa0feb9",
+            "label": "project"
+          }
+        },
+        "type": "property"
+      }
+    ],
+    "projectSearchDetails": {
+      "graphElement": {
+        "friendlyResource": {
+          "uri": "\/service\/users\/b\/graph\/schema\/5e114abe-21e0-447c-a2b5-95abfaa0feb9",
+          "label": "project",
+          "comment": "A project is defined as a collaborative enterprise ...",
+          "images": [],
+          "creationDate": "Apr 20, 2015 1:07:29 PM",
+          "lastModificationDate": "Apr 20, 2015 1:07:29 PM"
+        },
+        "identifications": {}
+      },
+      "type": "schema"
+    }
+  },
+  "deepGraphWithCircularity": {
     "vertices": {
-      "\/service\/users\/b\/graph\/vertex\/3f3ecd99-2615-4f39-aca6-f35fef9cc733": {
+      "\/service\/users\/b\/graph\/vertex\/a7359124-6a37-452b-b745-c37ac59edd94": {
         "vertex": {
           "graphElement": {
             "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/vertex\/3f3ecd99-2615-4f39-aca6-f35fef9cc733",
+              "uri": "\/service\/users\/b\/graph\/vertex\/a7359124-6a37-452b-b745-c37ac59edd94",
+              "label": "b4",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:29 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:29 PM"
+            },
+            "identifications": {}
+          },
+          "numberOfConnectedEdges": 1,
+          "includedVertices": {},
+          "includedEdges": {},
+          "suggestions": {},
+          "isPublic": false
+        }
+      },
+      "\/service\/users\/b\/graph\/vertex\/d3b3c4a9-7796-430c-b200-33e00df9a33b": {
+        "vertex": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/vertex\/d3b3c4a9-7796-430c-b200-33e00df9a33b",
+              "label": "b1",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:29 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:29 PM"
+            },
+            "identifications": {}
+          },
+          "numberOfConnectedEdges": 2,
+          "includedVertices": {},
+          "includedEdges": {},
+          "suggestions": {},
+          "isPublic": false
+        }
+      },
+      "\/service\/users\/b\/graph\/vertex\/7bfc2d82-0dc1-4bdc-a888-da5eafdcfc40": {
+        "vertex": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/vertex\/7bfc2d82-0dc1-4bdc-a888-da5eafdcfc40",
               "label": "b2",
               "comment": "",
               "images": [],
-              "creationDate": "Apr 18, 2015 11:05:40 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:40 AM"
+              "creationDate": "Apr 20, 2015 1:07:29 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:29 PM"
             },
             "identifications": {}
           },
-          "numberOfConnectedEdges": 1,
+          "numberOfConnectedEdges": 2,
           "includedVertices": {},
           "includedEdges": {},
           "suggestions": {},
           "isPublic": false
         }
       },
-      "\/service\/users\/b\/graph\/vertex\/9827ae6b-aaba-46a3-9b4f-747fa2ccaa79": {
+      "\/service\/users\/b\/graph\/vertex\/68336734-4477-44f3-8d61-eff83cbe5e55": {
         "vertex": {
           "graphElement": {
             "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/vertex\/9827ae6b-aaba-46a3-9b4f-747fa2ccaa79",
-              "label": "me",
+              "uri": "\/service\/users\/b\/graph\/vertex\/68336734-4477-44f3-8d61-eff83cbe5e55",
+              "label": "b3",
               "comment": "",
               "images": [],
-              "creationDate": "Apr 18, 2015 11:05:40 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:40 AM"
-            },
-            "identifications": {}
-          },
-          "numberOfConnectedEdges": 6,
-          "includedVertices": {},
-          "includedEdges": {},
-          "suggestions": {},
-          "isPublic": false
-        }
-      },
-      "\/service\/users\/b\/graph\/vertex\/f961cee5-d30d-4d70-9e25-458b12a625fa": {
-        "vertex": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/vertex\/f961cee5-d30d-4d70-9e25-458b12a625fa",
-              "label": "book 3",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:40 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:40 AM"
-            },
-            "identifications": {}
-          },
-          "numberOfConnectedEdges": 1,
-          "includedVertices": {},
-          "includedEdges": {},
-          "suggestions": {},
-          "isPublic": false
-        }
-      },
-      "\/service\/users\/b\/graph\/vertex\/1f76db24-0c43-4da0-93eb-792c50115b0f": {
-        "vertex": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/vertex\/1f76db24-0c43-4da0-93eb-792c50115b0f",
-              "label": "book 1",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:40 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:40 AM"
-            },
-            "identifications": {}
-          },
-          "numberOfConnectedEdges": 1,
-          "includedVertices": {},
-          "includedEdges": {},
-          "suggestions": {},
-          "isPublic": false
-        }
-      },
-      "\/service\/users\/b\/graph\/vertex\/7b26375b-3069-46eb-953e-e9c9daf5a988": {
-        "vertex": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/vertex\/7b26375b-3069-46eb-953e-e9c9daf5a988",
-              "label": "",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:40 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:40 AM"
-            },
-            "identifications": {}
-          },
-          "numberOfConnectedEdges": 1,
-          "includedVertices": {},
-          "includedEdges": {},
-          "suggestions": {},
-          "isPublic": false
-        }
-      },
-      "\/service\/users\/b\/graph\/vertex\/db08035f-1229-43a0-b825-699a0c361fe4": {
-        "vertex": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/vertex\/db08035f-1229-43a0-b825-699a0c361fe4",
-              "label": "",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:40 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:40 AM"
-            },
-            "identifications": {}
-          },
-          "numberOfConnectedEdges": 1,
-          "includedVertices": {},
-          "includedEdges": {},
-          "suggestions": {},
-          "isPublic": false
-        }
-      },
-      "\/service\/users\/b\/graph\/vertex\/4d403399-51df-4cf6-ab6e-a2e443c91114": {
-        "vertex": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/vertex\/4d403399-51df-4cf6-ab6e-a2e443c91114",
-              "label": "book 2",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:40 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:40 AM"
+              "creationDate": "Apr 20, 2015 1:07:29 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:29 PM"
             },
             "identifications": {}
           },
@@ -143,158 +183,219 @@
       }
     },
     "edges": {
-      "\/service\/users\/b\/graph\/edge\/2b44de91-c27f-48a2-8fa0-fec79586e249": {
+      "\/service\/users\/b\/graph\/edge\/7d3ca106-368e-47b9-bcbb-f3889c16bf46": {
         "graphElement": {
           "friendlyResource": {
-            "uri": "\/service\/users\/b\/graph\/edge\/2b44de91-c27f-48a2-8fa0-fec79586e249",
-            "label": "same as original relation",
+            "uri": "\/service\/users\/b\/graph\/edge\/7d3ca106-368e-47b9-bcbb-f3889c16bf46",
+            "label": "r1",
             "comment": "",
             "images": [],
-            "creationDate": "Apr 18, 2015 11:05:41 AM",
-            "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
-          },
-          "identifications": {
-            "\/service\/users\/b\/graph\/edge\/07767546-8323-4ef2-867c-b1f5be6ac9bf": {
-              "externalResourceUri": "\/service\/users\/b\/graph\/edge\/07767546-8323-4ef2-867c-b1f5be6ac9bf",
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/identification\/b560d65c-6d79-4c13-ba00-4fcd0676e9c5",
-                "label": "original relation",
-                "creationDate": "Apr 18, 2015 11:05:41 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
-              },
-              "identificationType": "same_as"
-            }
-          }
-        },
-        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/9827ae6b-aaba-46a3-9b4f-747fa2ccaa79"}}}},
-        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/db08035f-1229-43a0-b825-699a0c361fe4"}}}}
-      },
-      "\/service\/users\/b\/graph\/edge\/07767546-8323-4ef2-867c-b1f5be6ac9bf": {
-        "graphElement": {
-          "friendlyResource": {
-            "uri": "\/service\/users\/b\/graph\/edge\/07767546-8323-4ef2-867c-b1f5be6ac9bf",
-            "label": "original relation",
-            "comment": "",
-            "images": [],
-            "creationDate": "Apr 18, 2015 11:05:41 AM",
-            "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
+            "creationDate": "Apr 20, 2015 1:07:29 PM",
+            "lastModificationDate": "Apr 20, 2015 1:07:29 PM"
           },
           "identifications": {}
         },
-        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/9827ae6b-aaba-46a3-9b4f-747fa2ccaa79"}}}},
-        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/7b26375b-3069-46eb-953e-e9c9daf5a988"}}}}
+        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/7bfc2d82-0dc1-4bdc-a888-da5eafdcfc40"}}}},
+        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/68336734-4477-44f3-8d61-eff83cbe5e55"}}}}
       },
-      "\/service\/users\/b\/graph\/edge\/2ba8b657-62a9-4dc7-b14f-0d9d4350255f": {
+      "\/service\/users\/b\/graph\/edge\/3604b05c-6cc3-45a2-8d67-3bae9666dbc9": {
         "graphElement": {
           "friendlyResource": {
-            "uri": "\/service\/users\/b\/graph\/edge\/2ba8b657-62a9-4dc7-b14f-0d9d4350255f",
-            "label": "Possession of book 1",
+            "uri": "\/service\/users\/b\/graph\/edge\/3604b05c-6cc3-45a2-8d67-3bae9666dbc9",
+            "label": "r2",
             "comment": "",
             "images": [],
-            "creationDate": "Apr 18, 2015 11:05:41 AM",
-            "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
-          },
-          "identifications": {
-            "http:\/\/rdf.freebase.com\/rdf\/m\/0613q": {
-              "externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/0613q",
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/identification\/d32eb960-3f5c-4d43-9d40-00fcdbf3e59d",
-                "label": "Possession",
-                "comment": "In law, possession is the control a person intentionally exercises toward a thing. In all cases, to possess something, a person must have an intention to possess it. A person may be in possession of some property. Like ownership, the possession of things is commonly regulated by states under property law.",
-                "creationDate": "Apr 18, 2015 11:05:41 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
-              },
-              "identificationType": "same_as"
-            }
-          }
-        },
-        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/9827ae6b-aaba-46a3-9b4f-747fa2ccaa79"}}}},
-        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/1f76db24-0c43-4da0-93eb-792c50115b0f"}}}}
-      },
-      "\/service\/users\/b\/graph\/edge\/f2c3334f-b041-4205-a58d-43cf0aaf5288": {
-        "graphElement": {
-          "friendlyResource": {
-            "uri": "\/service\/users\/b\/graph\/edge\/f2c3334f-b041-4205-a58d-43cf0aaf5288",
-            "label": "Possessed by book 2",
-            "comment": "",
-            "images": [],
-            "creationDate": "Apr 18, 2015 11:05:41 AM",
-            "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
-          },
-          "identifications": {
-            "http:\/\/rdf.freebase.com\/rdf\/m\/0613q": {
-              "externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/0613q",
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/identification\/19ecd146-2bd0-46b8-9608-00ef07a35d21",
-                "label": "Possession",
-                "comment": "In law, possession is the control a person intentionally exercises toward a thing. In all cases, to possess something, a person must have an intention to possess it. A person may be in possession of some property. Like ownership, the possession of things is commonly regulated by states under property law.",
-                "creationDate": "Apr 18, 2015 11:05:41 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
-              },
-              "identificationType": "same_as"
-            }
-          }
-        },
-        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/4d403399-51df-4cf6-ab6e-a2e443c91114"}}}},
-        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/9827ae6b-aaba-46a3-9b4f-747fa2ccaa79"}}}}
-      },
-      "\/service\/users\/b\/graph\/edge\/6f5ee73d-7da5-4f49-bc36-27094066c90c": {
-        "graphElement": {
-          "friendlyResource": {
-            "uri": "\/service\/users\/b\/graph\/edge\/6f5ee73d-7da5-4f49-bc36-27094066c90c",
-            "label": "Possession of book 3",
-            "comment": "",
-            "images": [],
-            "creationDate": "Apr 18, 2015 11:05:41 AM",
-            "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
-          },
-          "identifications": {
-            "http:\/\/rdf.freebase.com\/rdf\/m\/0613q": {
-              "externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/0613q",
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/identification\/928b7897-5a70-42a3-8b62-944cebb1aa9d",
-                "label": "Possession",
-                "comment": "In law, possession is the control a person intentionally exercises toward a thing. In all cases, to possess something, a person must have an intention to possess it. A person may be in possession of some property. Like ownership, the possession of things is commonly regulated by states under property law.",
-                "creationDate": "Apr 18, 2015 11:05:41 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
-              },
-              "identificationType": "same_as"
-            }
-          }
-        },
-        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/9827ae6b-aaba-46a3-9b4f-747fa2ccaa79"}}}},
-        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/f961cee5-d30d-4d70-9e25-458b12a625fa"}}}}
-      },
-      "\/service\/users\/b\/graph\/edge\/c7e8a6a8-112b-427d-be9c-f43651a65876": {
-        "graphElement": {
-          "friendlyResource": {
-            "uri": "\/service\/users\/b\/graph\/edge\/c7e8a6a8-112b-427d-be9c-f43651a65876",
-            "label": "other relation",
-            "comment": "",
-            "images": [],
-            "creationDate": "Apr 18, 2015 11:05:41 AM",
-            "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
+            "creationDate": "Apr 20, 2015 1:07:29 PM",
+            "lastModificationDate": "Apr 20, 2015 1:07:29 PM"
           },
           "identifications": {}
         },
-        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/9827ae6b-aaba-46a3-9b4f-747fa2ccaa79"}}}},
-        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/3f3ecd99-2615-4f39-aca6-f35fef9cc733"}}}}
+        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/a7359124-6a37-452b-b745-c37ac59edd94"}}}},
+        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/d3b3c4a9-7796-430c-b200-33e00df9a33b"}}}}
+      },
+      "\/service\/users\/b\/graph\/edge\/902be115-17c8-41f1-86f3-292377e31036": {
+        "graphElement": {
+          "friendlyResource": {
+            "uri": "\/service\/users\/b\/graph\/edge\/902be115-17c8-41f1-86f3-292377e31036",
+            "label": "r3",
+            "comment": "",
+            "images": [],
+            "creationDate": "Apr 20, 2015 1:07:29 PM",
+            "lastModificationDate": "Apr 20, 2015 1:07:29 PM"
+          },
+          "identifications": {}
+        },
+        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/d3b3c4a9-7796-430c-b200-33e00df9a33b"}}}},
+        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/7bfc2d82-0dc1-4bdc-a888-da5eafdcfc40"}}}}
       }
     }
   },
-  "threeBubblesGraph": {
-    "getGraph": {
+  "karaokeSchemaGraph": {
+    "friendlyResource": {
+      "uri": "\/service\/users\/b\/graph\/schema\/ee5de55c-ecc8-4900-9a77-23e15f87e7f4",
+      "label": "karaoke",
+      "comment": "",
+      "images": [],
+      "creationDate": "Apr 20, 2015 1:07:39 PM",
+      "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+    },
+    "properties": {
+      "\/service\/users\/b\/graph\/schema\/ee5de55c-ecc8-4900-9a77-23e15f87e7f4\/property\/ca1227ac-ab2f-4718-a18a-5e4c068ef521": {
+        "friendlyResource": {
+          "uri": "\/service\/users\/b\/graph\/schema\/ee5de55c-ecc8-4900-9a77-23e15f87e7f4\/property\/ca1227ac-ab2f-4718-a18a-5e4c068ef521",
+          "label": "invitees",
+          "comment": "",
+          "images": [],
+          "creationDate": "Apr 20, 2015 1:07:39 PM",
+          "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+        },
+        "identifications": {}
+      },
+      "\/service\/users\/b\/graph\/schema\/ee5de55c-ecc8-4900-9a77-23e15f87e7f4\/property\/ef6df5f2-2e51-4f80-b4df-2c76905e18f9": {
+        "friendlyResource": {
+          "uri": "\/service\/users\/b\/graph\/schema\/ee5de55c-ecc8-4900-9a77-23e15f87e7f4\/property\/ef6df5f2-2e51-4f80-b4df-2c76905e18f9",
+          "label": "repertoire",
+          "comment": "",
+          "images": [],
+          "creationDate": "Apr 20, 2015 1:07:39 PM",
+          "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+        },
+        "identifications": {}
+      },
+      "\/service\/users\/b\/graph\/schema\/ee5de55c-ecc8-4900-9a77-23e15f87e7f4\/property\/cb95171e-05a9-4f7d-a415-719f0d2533b4": {
+        "friendlyResource": {
+          "uri": "\/service\/users\/b\/graph\/schema\/ee5de55c-ecc8-4900-9a77-23e15f87e7f4\/property\/cb95171e-05a9-4f7d-a415-719f0d2533b4",
+          "label": "location",
+          "comment": "",
+          "images": [],
+          "creationDate": "Apr 20, 2015 1:07:39 PM",
+          "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+        },
+        "identifications": {
+          "http:\/\/rdf.freebase.com\/rdf\/m\/01n7": {
+            "externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/01n7",
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/identification\/9affe4aa-c7b1-4fba-ad0e-167215164699",
+              "label": "Location",
+              "comment": "The Location type is used for any topic with a fixed location on the planet Earth. It includes geographic features such as oceans and mountains, political entities like cities and man-made objects like buildings.Guidelines for filling in location properties:geolocation: the longitude and latitude (in decimal notation) of the feature, or of the geographical center (centroid) fo the feature.contains and contained by: these properties can be used to show spatial relationships between different locations, such as an island contained by a body of water (which is equivalent to saying the body of water contains the island), a state contained by a country, a mountain within the borders of a national park, etc. For geopolitical locations,   containment two levels up and down is the ideal minimum. For example, the next two levels up for the city of Detroit are Wayne County and the state of Michigan.adjoins: also used to show spatial relations, in this case between locations that share a border.USBG Name: A unique name given to geographic features within the U.S. and its territories by the United States Board on Geographic Names. More information can be found on their website. GNIS ID: A unique id given to geographic features within the U.S. and its territories by the United States Board on Geographic Names. GNIS stands for Geographic Names Information System. More information can be found on their website.GEOnet Feature ID: The UFI (Unique Feature ID) used by GeoNet for features outside of the United States. More information can be found on their website.",
+              "creationDate": "Apr 20, 2015 1:07:39 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+            },
+            "identificationType": "same_as"
+          }
+        }
+      }
+    }
+  },
+  "graphWithAnInverseRelation": {
+    "vertices": {
+      "\/service\/users\/b\/graph\/vertex\/d187f107-9118-4877-8675-274d22c0ee33": {
+        "vertex": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/vertex\/d187f107-9118-4877-8675-274d22c0ee33",
+              "label": "straight bubble",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:39 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+            },
+            "identifications": {}
+          },
+          "numberOfConnectedEdges": 1,
+          "includedVertices": {},
+          "includedEdges": {},
+          "suggestions": {},
+          "isPublic": false
+        }
+      },
+      "\/service\/users\/b\/graph\/vertex\/70bffe71-bf23-4bbb-b8b0-5312b261b327": {
+        "vertex": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/vertex\/70bffe71-bf23-4bbb-b8b0-5312b261b327",
+              "label": "inverse bubble",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:39 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+            },
+            "identifications": {}
+          },
+          "numberOfConnectedEdges": 1,
+          "includedVertices": {},
+          "includedEdges": {},
+          "suggestions": {},
+          "isPublic": false
+        }
+      },
+      "\/service\/users\/b\/graph\/vertex\/d7de3ed5-c400-4fff-ba1d-863368dc8af1": {
+        "vertex": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/vertex\/d7de3ed5-c400-4fff-ba1d-863368dc8af1",
+              "label": "me",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:39 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+            },
+            "identifications": {}
+          },
+          "numberOfConnectedEdges": 2,
+          "includedVertices": {},
+          "includedEdges": {},
+          "suggestions": {},
+          "isPublic": false
+        }
+      }
+    },
+    "edges": {
+      "\/service\/users\/b\/graph\/edge\/4f9d47e5-ef83-45dd-acad-e61ce45cc09c": {
+        "graphElement": {
+          "friendlyResource": {
+            "uri": "\/service\/users\/b\/graph\/edge\/4f9d47e5-ef83-45dd-acad-e61ce45cc09c",
+            "label": "going straight",
+            "comment": "",
+            "images": [],
+            "creationDate": "Apr 20, 2015 1:07:39 PM",
+            "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+          },
+          "identifications": {}
+        },
+        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/d7de3ed5-c400-4fff-ba1d-863368dc8af1"}}}},
+        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/d187f107-9118-4877-8675-274d22c0ee33"}}}}
+      },
+      "\/service\/users\/b\/graph\/edge\/73ff5d7e-c760-4828-aee4-653364c20bac": {
+        "graphElement": {
+          "friendlyResource": {
+            "uri": "\/service\/users\/b\/graph\/edge\/73ff5d7e-c760-4828-aee4-653364c20bac",
+            "label": "going inverse",
+            "comment": "",
+            "images": [],
+            "creationDate": "Apr 20, 2015 1:07:39 PM",
+            "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+          },
+          "identifications": {}
+        },
+        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/70bffe71-bf23-4bbb-b8b0-5312b261b327"}}}},
+        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/d7de3ed5-c400-4fff-ba1d-863368dc8af1"}}}}
+      }
+    }
+  },
+  "graphWithCircularity": {
+    "b1Graph": {
       "vertices": {
-        "\/service\/users\/b\/graph\/vertex\/ac6baad6-4081-46c0-bdec-3f1a4a070d49": {
+        "\/service\/users\/b\/graph\/vertex\/88d3368e-330b-46c9-801a-3b55b9e3b7a4": {
           "vertex": {
             "graphElement": {
               "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/ac6baad6-4081-46c0-bdec-3f1a4a070d49",
+                "uri": "\/service\/users\/b\/graph\/vertex\/88d3368e-330b-46c9-801a-3b55b9e3b7a4",
                 "label": "b1",
                 "comment": "",
                 "images": [],
-                "creationDate": "Apr 18, 2015 11:05:41 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
+                "creationDate": "Apr 20, 2015 1:07:39 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
               },
               "identifications": {}
             },
@@ -305,16 +406,286 @@
             "isPublic": false
           }
         },
-        "\/service\/users\/b\/graph\/vertex\/d957ca53-239d-4a6e-b84b-8b91e0ce5ce6": {
+        "\/service\/users\/b\/graph\/vertex\/a242c659-21fd-4ca8-ba13-816d44bfc741": {
           "vertex": {
             "graphElement": {
               "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/d957ca53-239d-4a6e-b84b-8b91e0ce5ce6",
+                "uri": "\/service\/users\/b\/graph\/vertex\/a242c659-21fd-4ca8-ba13-816d44bfc741",
+                "label": "b2",
+                "comment": "",
+                "images": [],
+                "creationDate": "Apr 20, 2015 1:07:39 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 2,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
+        },
+        "\/service\/users\/b\/graph\/vertex\/575fbe71-8609-4c17-b344-3e1f2308a734": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/575fbe71-8609-4c17-b344-3e1f2308a734",
                 "label": "b3",
                 "comment": "",
                 "images": [],
-                "creationDate": "Apr 18, 2015 11:05:41 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
+                "creationDate": "Apr 20, 2015 1:07:39 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 2,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
+        }
+      },
+      "edges": {
+        "\/service\/users\/b\/graph\/edge\/d51601d8-8606-4290-9db2-5a4ac58484c0": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/edge\/d51601d8-8606-4290-9db2-5a4ac58484c0",
+              "label": "r3",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:39 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+            },
+            "identifications": {}
+          },
+          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/575fbe71-8609-4c17-b344-3e1f2308a734"}}}},
+          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/88d3368e-330b-46c9-801a-3b55b9e3b7a4"}}}}
+        },
+        "\/service\/users\/b\/graph\/edge\/bec5edaf-e8d6-4926-82ba-68a580855949": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/edge\/bec5edaf-e8d6-4926-82ba-68a580855949",
+              "label": "r1",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:39 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+            },
+            "identifications": {}
+          },
+          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/88d3368e-330b-46c9-801a-3b55b9e3b7a4"}}}},
+          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/a242c659-21fd-4ca8-ba13-816d44bfc741"}}}}
+        }
+      }
+    },
+    "b2Graph": {
+      "vertices": {
+        "\/service\/users\/b\/graph\/vertex\/88d3368e-330b-46c9-801a-3b55b9e3b7a4": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/88d3368e-330b-46c9-801a-3b55b9e3b7a4",
+                "label": "b1",
+                "comment": "",
+                "images": [],
+                "creationDate": "Apr 20, 2015 1:07:39 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 2,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
+        },
+        "\/service\/users\/b\/graph\/vertex\/a242c659-21fd-4ca8-ba13-816d44bfc741": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/a242c659-21fd-4ca8-ba13-816d44bfc741",
+                "label": "b2",
+                "comment": "",
+                "images": [],
+                "creationDate": "Apr 20, 2015 1:07:39 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 2,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
+        },
+        "\/service\/users\/b\/graph\/vertex\/575fbe71-8609-4c17-b344-3e1f2308a734": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/575fbe71-8609-4c17-b344-3e1f2308a734",
+                "label": "b3",
+                "comment": "",
+                "images": [],
+                "creationDate": "Apr 20, 2015 1:07:39 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 2,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
+        }
+      },
+      "edges": {
+        "\/service\/users\/b\/graph\/edge\/129e75a1-49ff-4384-b3ca-37b1f0e29a93": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/edge\/129e75a1-49ff-4384-b3ca-37b1f0e29a93",
+              "label": "r2",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:39 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+            },
+            "identifications": {}
+          },
+          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/a242c659-21fd-4ca8-ba13-816d44bfc741"}}}},
+          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/575fbe71-8609-4c17-b344-3e1f2308a734"}}}}
+        },
+        "\/service\/users\/b\/graph\/edge\/bec5edaf-e8d6-4926-82ba-68a580855949": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/edge\/bec5edaf-e8d6-4926-82ba-68a580855949",
+              "label": "r1",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:39 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+            },
+            "identifications": {}
+          },
+          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/88d3368e-330b-46c9-801a-3b55b9e3b7a4"}}}},
+          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/a242c659-21fd-4ca8-ba13-816d44bfc741"}}}}
+        }
+      }
+    },
+    "b3Graph": {
+      "vertices": {
+        "\/service\/users\/b\/graph\/vertex\/88d3368e-330b-46c9-801a-3b55b9e3b7a4": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/88d3368e-330b-46c9-801a-3b55b9e3b7a4",
+                "label": "b1",
+                "comment": "",
+                "images": [],
+                "creationDate": "Apr 20, 2015 1:07:39 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 2,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
+        },
+        "\/service\/users\/b\/graph\/vertex\/a242c659-21fd-4ca8-ba13-816d44bfc741": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/a242c659-21fd-4ca8-ba13-816d44bfc741",
+                "label": "b2",
+                "comment": "",
+                "images": [],
+                "creationDate": "Apr 20, 2015 1:07:39 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 2,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
+        },
+        "\/service\/users\/b\/graph\/vertex\/575fbe71-8609-4c17-b344-3e1f2308a734": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/575fbe71-8609-4c17-b344-3e1f2308a734",
+                "label": "b3",
+                "comment": "",
+                "images": [],
+                "creationDate": "Apr 20, 2015 1:07:39 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 2,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
+        }
+      },
+      "edges": {
+        "\/service\/users\/b\/graph\/edge\/d51601d8-8606-4290-9db2-5a4ac58484c0": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/edge\/d51601d8-8606-4290-9db2-5a4ac58484c0",
+              "label": "r3",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:39 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+            },
+            "identifications": {}
+          },
+          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/575fbe71-8609-4c17-b344-3e1f2308a734"}}}},
+          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/88d3368e-330b-46c9-801a-3b55b9e3b7a4"}}}}
+        },
+        "\/service\/users\/b\/graph\/edge\/129e75a1-49ff-4384-b3ca-37b1f0e29a93": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/edge\/129e75a1-49ff-4384-b3ca-37b1f0e29a93",
+              "label": "r2",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:39 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+            },
+            "identifications": {}
+          },
+          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/a242c659-21fd-4ca8-ba13-816d44bfc741"}}}},
+          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/575fbe71-8609-4c17-b344-3e1f2308a734"}}}}
+        }
+      }
+    }
+  },
+  "threeBubblesGraph": {
+    "getGraph": {
+      "vertices": {
+        "\/service\/users\/b\/graph\/vertex\/8b58025b-08f4-4a35-883c-e95a3cb2e20d": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/8b58025b-08f4-4a35-883c-e95a3cb2e20d",
+                "label": "b3",
+                "comment": "",
+                "images": [],
+                "creationDate": "Apr 20, 2015 1:07:39 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
               },
               "identifications": {}
             },
@@ -325,16 +696,16 @@
             "isPublic": false
           }
         },
-        "\/service\/users\/b\/graph\/vertex\/582856ba-7eec-4ddb-adc3-3b69ac919349": {
+        "\/service\/users\/b\/graph\/vertex\/762d6a44-5e25-46d0-8f19-3d4e6a52faa9": {
           "vertex": {
             "graphElement": {
               "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/582856ba-7eec-4ddb-adc3-3b69ac919349",
+                "uri": "\/service\/users\/b\/graph\/vertex\/762d6a44-5e25-46d0-8f19-3d4e6a52faa9",
                 "label": "b2",
                 "comment": "",
                 "images": [],
-                "creationDate": "Apr 18, 2015 11:05:41 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
+                "creationDate": "Apr 20, 2015 1:07:39 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
               },
               "identifications": {}
             },
@@ -344,38 +715,58 @@
             "suggestions": {},
             "isPublic": false
           }
+        },
+        "\/service\/users\/b\/graph\/vertex\/9313c7bd-5203-4683-b004-2482338bbbfe": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/9313c7bd-5203-4683-b004-2482338bbbfe",
+                "label": "b1",
+                "comment": "",
+                "images": [],
+                "creationDate": "Apr 20, 2015 1:07:39 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 2,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
         }
       },
       "edges": {
-        "\/service\/users\/b\/graph\/edge\/ff833db5-ac4f-4c01-8c12-ff1d2aa75ab2": {
+        "\/service\/users\/b\/graph\/edge\/242f2b09-41fa-41af-9c04-6c9986803e91": {
           "graphElement": {
             "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/edge\/ff833db5-ac4f-4c01-8c12-ff1d2aa75ab2",
+              "uri": "\/service\/users\/b\/graph\/edge\/242f2b09-41fa-41af-9c04-6c9986803e91",
               "label": "r2",
               "comment": "",
               "images": [],
-              "creationDate": "Apr 18, 2015 11:05:41 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
+              "creationDate": "Apr 20, 2015 1:07:40 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
             },
             "identifications": {}
           },
-          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/ac6baad6-4081-46c0-bdec-3f1a4a070d49"}}}},
-          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/d957ca53-239d-4a6e-b84b-8b91e0ce5ce6"}}}}
+          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/9313c7bd-5203-4683-b004-2482338bbbfe"}}}},
+          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/8b58025b-08f4-4a35-883c-e95a3cb2e20d"}}}}
         },
-        "\/service\/users\/b\/graph\/edge\/7dd31c80-184b-43c9-ae54-0113db28eb14": {
+        "\/service\/users\/b\/graph\/edge\/bd4946aa-b626-48d4-9b0a-6b3b5b6a53db": {
           "graphElement": {
             "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/edge\/7dd31c80-184b-43c9-ae54-0113db28eb14",
+              "uri": "\/service\/users\/b\/graph\/edge\/bd4946aa-b626-48d4-9b0a-6b3b5b6a53db",
               "label": "r1",
               "comment": "",
               "images": [],
-              "creationDate": "Apr 18, 2015 11:05:41 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
+              "creationDate": "Apr 20, 2015 1:07:40 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
             },
             "identifications": {}
           },
-          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/ac6baad6-4081-46c0-bdec-3f1a4a070d49"}}}},
-          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/582856ba-7eec-4ddb-adc3-3b69ac919349"}}}}
+          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/9313c7bd-5203-4683-b004-2482338bbbfe"}}}},
+          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/762d6a44-5e25-46d0-8f19-3d4e6a52faa9"}}}}
         }
       }
     },
@@ -383,25 +774,25 @@
       {
         "graphElement": {
           "friendlyResource": {
-            "uri": "\/service\/users\/b\/graph\/vertex\/ac6baad6-4081-46c0-bdec-3f1a4a070d49",
+            "uri": "\/service\/users\/b\/graph\/vertex\/9313c7bd-5203-4683-b004-2482338bbbfe",
             "label": "b1",
             "comment": "",
             "images": [],
-            "creationDate": "Apr 18, 2015 11:05:41 AM",
-            "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
+            "creationDate": "Apr 20, 2015 1:07:39 PM",
+            "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
           },
           "identifications": {}
         },
         "properties": {
-          "\/service\/users\/b\/graph\/edge\/ff833db5-ac4f-4c01-8c12-ff1d2aa75ab2": {
+          "\/service\/users\/b\/graph\/edge\/242f2b09-41fa-41af-9c04-6c9986803e91": {
             "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/edge\/ff833db5-ac4f-4c01-8c12-ff1d2aa75ab2",
+              "uri": "\/service\/users\/b\/graph\/edge\/242f2b09-41fa-41af-9c04-6c9986803e91",
               "label": "r2"
             }
           },
-          "\/service\/users\/b\/graph\/edge\/7dd31c80-184b-43c9-ae54-0113db28eb14": {
+          "\/service\/users\/b\/graph\/edge\/bd4946aa-b626-48d4-9b0a-6b3b5b6a53db": {
             "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/edge\/7dd31c80-184b-43c9-ae54-0113db28eb14",
+              "uri": "\/service\/users\/b\/graph\/edge\/bd4946aa-b626-48d4-9b0a-6b3b5b6a53db",
               "label": "r1"
             }
           }
@@ -414,12 +805,12 @@
         "edge": {
           "graphElement": {
             "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/edge\/ff833db5-ac4f-4c01-8c12-ff1d2aa75ab2",
+              "uri": "\/service\/users\/b\/graph\/edge\/242f2b09-41fa-41af-9c04-6c9986803e91",
               "label": "r2",
               "comment": "",
               "images": [],
-              "creationDate": "Apr 18, 2015 11:05:41 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
+              "creationDate": "Apr 20, 2015 1:07:40 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
             },
             "identifications": {}
           },
@@ -427,7 +818,7 @@
             "vertex": {
               "graphElement": {
                 "friendlyResource": {
-                  "uri": "\/service\/users\/b\/graph\/vertex\/ac6baad6-4081-46c0-bdec-3f1a4a070d49",
+                  "uri": "\/service\/users\/b\/graph\/vertex\/9313c7bd-5203-4683-b004-2482338bbbfe",
                   "label": "b1"
                 }
               }
@@ -437,7 +828,7 @@
             "vertex": {
               "graphElement": {
                 "friendlyResource": {
-                  "uri": "\/service\/users\/b\/graph\/vertex\/d957ca53-239d-4a6e-b84b-8b91e0ce5ce6",
+                  "uri": "\/service\/users\/b\/graph\/vertex\/8b58025b-08f4-4a35-883c-e95a3cb2e20d",
                   "label": "b3"
                 }
               }
@@ -449,36 +840,16 @@
     ],
     "getSurroundBubble3Graph": {
       "vertices": {
-        "\/service\/users\/b\/graph\/vertex\/ac6baad6-4081-46c0-bdec-3f1a4a070d49": {
+        "\/service\/users\/b\/graph\/vertex\/8b58025b-08f4-4a35-883c-e95a3cb2e20d": {
           "vertex": {
             "graphElement": {
               "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/ac6baad6-4081-46c0-bdec-3f1a4a070d49",
-                "label": "b1",
+                "uri": "\/service\/users\/b\/graph\/vertex\/8b58025b-08f4-4a35-883c-e95a3cb2e20d",
+                "label": "b3",
                 "comment": "",
                 "images": [],
-                "creationDate": "Apr 18, 2015 11:05:41 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 2,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        },
-        "\/service\/users\/b\/graph\/vertex\/3c32991e-4200-486c-9c75-fcd766eba2ad": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/3c32991e-4200-486c-9c75-fcd766eba2ad",
-                "label": "b4",
-                "comment": "",
-                "images": [],
-                "creationDate": "Apr 18, 2015 11:05:41 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
+                "creationDate": "Apr 20, 2015 1:07:39 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
               },
               "identifications": {}
             },
@@ -489,16 +860,295 @@
             "isPublic": false
           }
         },
-        "\/service\/users\/b\/graph\/vertex\/bd207262-c42a-4691-8de9-cc713beb9a9b": {
+        "\/service\/users\/b\/graph\/vertex\/9313c7bd-5203-4683-b004-2482338bbbfe": {
           "vertex": {
             "graphElement": {
               "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/bd207262-c42a-4691-8de9-cc713beb9a9b",
+                "uri": "\/service\/users\/b\/graph\/vertex\/9313c7bd-5203-4683-b004-2482338bbbfe",
+                "label": "b1",
+                "comment": "",
+                "images": [],
+                "creationDate": "Apr 20, 2015 1:07:39 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:39 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 2,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
+        },
+        "\/service\/users\/b\/graph\/vertex\/0daf6563-96a6-4f90-a21a-dfe886ba1784": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/0daf6563-96a6-4f90-a21a-dfe886ba1784",
+                "label": "b4",
+                "comment": "",
+                "images": [],
+                "creationDate": "Apr 20, 2015 1:07:40 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 3,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
+        },
+        "\/service\/users\/b\/graph\/vertex\/f733511f-f77b-43e6-84fc-34885fc2add3": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/f733511f-f77b-43e6-84fc-34885fc2add3",
                 "label": "b5",
                 "comment": "",
                 "images": [],
-                "creationDate": "Apr 18, 2015 11:05:41 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
+                "creationDate": "Apr 20, 2015 1:07:40 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 1,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
+        }
+      },
+      "edges": {
+        "\/service\/users\/b\/graph\/edge\/242f2b09-41fa-41af-9c04-6c9986803e91": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/edge\/242f2b09-41fa-41af-9c04-6c9986803e91",
+              "label": "r2",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:40 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+            },
+            "identifications": {}
+          },
+          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/9313c7bd-5203-4683-b004-2482338bbbfe"}}}},
+          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/8b58025b-08f4-4a35-883c-e95a3cb2e20d"}}}}
+        },
+        "\/service\/users\/b\/graph\/edge\/8c477d45-b9f6-45f0-a9b5-df6881229e46": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/edge\/8c477d45-b9f6-45f0-a9b5-df6881229e46",
+              "label": "r4",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:40 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+            },
+            "identifications": {}
+          },
+          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/8b58025b-08f4-4a35-883c-e95a3cb2e20d"}}}},
+          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/f733511f-f77b-43e6-84fc-34885fc2add3"}}}}
+        },
+        "\/service\/users\/b\/graph\/edge\/08a30731-bdcd-4e52-9286-70485df87a29": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/edge\/08a30731-bdcd-4e52-9286-70485df87a29",
+              "label": "r3",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:40 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+            },
+            "identifications": {}
+          },
+          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/8b58025b-08f4-4a35-883c-e95a3cb2e20d"}}}},
+          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/0daf6563-96a6-4f90-a21a-dfe886ba1784"}}}}
+        }
+      }
+    }
+  },
+  "deepGraph": {
+    "vertices": {
+      "\/service\/users\/b\/graph\/vertex\/4eedaf2a-1c23-4e1e-9e22-135f2a9d173b": {
+        "vertex": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/vertex\/4eedaf2a-1c23-4e1e-9e22-135f2a9d173b",
+              "label": "b2",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:40 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+            },
+            "identifications": {}
+          },
+          "numberOfConnectedEdges": 3,
+          "includedVertices": {},
+          "includedEdges": {},
+          "suggestions": {},
+          "isPublic": false
+        }
+      },
+      "\/service\/users\/b\/graph\/vertex\/c4a64187-ae1a-48d4-b36e-35f39d1dfdfa": {
+        "vertex": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/vertex\/c4a64187-ae1a-48d4-b36e-35f39d1dfdfa",
+              "label": "b3",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:40 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+            },
+            "identifications": {}
+          },
+          "numberOfConnectedEdges": 1,
+          "includedVertices": {},
+          "includedEdges": {},
+          "suggestions": {},
+          "isPublic": false
+        }
+      },
+      "\/service\/users\/b\/graph\/vertex\/c730e290-db32-4745-b031-67526e8e34ce": {
+        "vertex": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/vertex\/c730e290-db32-4745-b031-67526e8e34ce",
+              "label": "b4",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:40 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+            },
+            "identifications": {}
+          },
+          "numberOfConnectedEdges": 1,
+          "includedVertices": {},
+          "includedEdges": {},
+          "suggestions": {},
+          "isPublic": false
+        }
+      },
+      "\/service\/users\/b\/graph\/vertex\/f366b453-a47a-408c-b09c-de1b6a871858": {
+        "vertex": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/vertex\/f366b453-a47a-408c-b09c-de1b6a871858",
+              "label": "b5",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:40 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+            },
+            "identifications": {}
+          },
+          "numberOfConnectedEdges": 1,
+          "includedVertices": {},
+          "includedEdges": {},
+          "suggestions": {},
+          "isPublic": false
+        }
+      },
+      "\/service\/users\/b\/graph\/vertex\/ff218ba7-f5ef-4cf9-9dde-1851ee5deef9": {
+        "vertex": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/vertex\/ff218ba7-f5ef-4cf9-9dde-1851ee5deef9",
+              "label": "b1",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:40 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+            },
+            "identifications": {}
+          },
+          "numberOfConnectedEdges": 2,
+          "includedVertices": {},
+          "includedEdges": {},
+          "suggestions": {},
+          "isPublic": false
+        }
+      }
+    },
+    "edges": {
+      "\/service\/users\/b\/graph\/edge\/eaacce2b-d2ff-4dab-8cb6-cc00e5d3348d": {
+        "graphElement": {
+          "friendlyResource": {
+            "uri": "\/service\/users\/b\/graph\/edge\/eaacce2b-d2ff-4dab-8cb6-cc00e5d3348d",
+            "label": "r4",
+            "comment": "",
+            "images": [],
+            "creationDate": "Apr 20, 2015 1:07:40 PM",
+            "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+          },
+          "identifications": {}
+        },
+        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/f366b453-a47a-408c-b09c-de1b6a871858"}}}},
+        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/ff218ba7-f5ef-4cf9-9dde-1851ee5deef9"}}}}
+      },
+      "\/service\/users\/b\/graph\/edge\/6fd92bce-4f6e-4d6e-886d-f9d5f5656f76": {
+        "graphElement": {
+          "friendlyResource": {
+            "uri": "\/service\/users\/b\/graph\/edge\/6fd92bce-4f6e-4d6e-886d-f9d5f5656f76",
+            "label": "r1",
+            "comment": "",
+            "images": [],
+            "creationDate": "Apr 20, 2015 1:07:40 PM",
+            "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+          },
+          "identifications": {}
+        },
+        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/ff218ba7-f5ef-4cf9-9dde-1851ee5deef9"}}}},
+        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/4eedaf2a-1c23-4e1e-9e22-135f2a9d173b"}}}}
+      },
+      "\/service\/users\/b\/graph\/edge\/b441de16-fe5a-41a4-a9a9-09ec4027490f": {
+        "graphElement": {
+          "friendlyResource": {
+            "uri": "\/service\/users\/b\/graph\/edge\/b441de16-fe5a-41a4-a9a9-09ec4027490f",
+            "label": "r2",
+            "comment": "",
+            "images": [],
+            "creationDate": "Apr 20, 2015 1:07:40 PM",
+            "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+          },
+          "identifications": {}
+        },
+        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/4eedaf2a-1c23-4e1e-9e22-135f2a9d173b"}}}},
+        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/c4a64187-ae1a-48d4-b36e-35f39d1dfdfa"}}}}
+      },
+      "\/service\/users\/b\/graph\/edge\/77ad8394-2790-4aa9-8443-7ec706384e80": {
+        "graphElement": {
+          "friendlyResource": {
+            "uri": "\/service\/users\/b\/graph\/edge\/77ad8394-2790-4aa9-8443-7ec706384e80",
+            "label": "r3",
+            "comment": "",
+            "images": [],
+            "creationDate": "Apr 20, 2015 1:07:40 PM",
+            "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+          },
+          "identifications": {}
+        },
+        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/c730e290-db32-4745-b031-67526e8e34ce"}}}},
+        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/4eedaf2a-1c23-4e1e-9e22-135f2a9d173b"}}}}
+      }
+    }
+  },
+  "graphWithHiddenSimilarRelations": {
+    "b1Graph": {
+      "vertices": {
+        "\/service\/users\/b\/graph\/vertex\/cf20469b-0151-4983-bf8a-8bceacde570d": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/cf20469b-0151-4983-bf8a-8bceacde570d",
+                "label": "b1",
+                "comment": "",
+                "images": [],
+                "creationDate": "Apr 20, 2015 1:07:40 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
               },
               "identifications": {}
             },
@@ -509,16 +1159,21 @@
             "isPublic": false
           }
         },
-        "\/service\/users\/b\/graph\/vertex\/d957ca53-239d-4a6e-b84b-8b91e0ce5ce6": {
+        "\/service\/users\/b\/graph\/vertex\/68ba922c-a8e6-4283-bcbf-4ac688c48227": {
           "vertex": {
             "graphElement": {
               "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/d957ca53-239d-4a6e-b84b-8b91e0ce5ce6",
-                "label": "b3",
+                "uri": "\/service\/users\/b\/graph\/vertex\/68ba922c-a8e6-4283-bcbf-4ac688c48227",
+                "label": "b2",
                 "comment": "",
-                "images": [],
-                "creationDate": "Apr 18, 2015 11:05:41 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
+                "images": [
+                  {
+                    "base64ForSmall": "base64ForB2",
+                    "urlForBigger": "http:\/\/example.org\/bigImageForB2"
+                  }
+                ],
+                "creationDate": "Apr 20, 2015 1:07:40 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
               },
               "identifications": {}
             },
@@ -531,75 +1186,586 @@
         }
       },
       "edges": {
-        "\/service\/users\/b\/graph\/edge\/9bf9a2f6-ec08-44e8-8a62-92d4dde1f94f": {
+        "\/service\/users\/b\/graph\/edge\/0ddf0514-94b2-4177-8d90-1ccdc1c07062": {
           "graphElement": {
             "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/edge\/9bf9a2f6-ec08-44e8-8a62-92d4dde1f94f",
-              "label": "r4",
+              "uri": "\/service\/users\/b\/graph\/edge\/0ddf0514-94b2-4177-8d90-1ccdc1c07062",
+              "label": "r1",
               "comment": "",
               "images": [],
-              "creationDate": "Apr 18, 2015 11:05:41 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
+              "creationDate": "Apr 20, 2015 1:07:40 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
             },
             "identifications": {}
           },
-          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/d957ca53-239d-4a6e-b84b-8b91e0ce5ce6"}}}},
-          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/bd207262-c42a-4691-8de9-cc713beb9a9b"}}}}
+          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/cf20469b-0151-4983-bf8a-8bceacde570d"}}}},
+          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/68ba922c-a8e6-4283-bcbf-4ac688c48227"}}}}
+        }
+      }
+    },
+    "b2Graph": {
+      "vertices": {
+        "\/service\/users\/b\/graph\/vertex\/ea53061d-598f-42a8-b6c3-ef62a80ff26d": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/ea53061d-598f-42a8-b6c3-ef62a80ff26d",
+                "label": "shirt2",
+                "comment": "",
+                "images": [
+                  {
+                    "base64ForSmall": "base64ForShirt2",
+                    "urlForBigger": "http:\/\/example.org\/bigImageForShirt2"
+                  }
+                ],
+                "creationDate": "Apr 20, 2015 1:07:40 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 1,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
         },
-        "\/service\/users\/b\/graph\/edge\/ff833db5-ac4f-4c01-8c12-ff1d2aa75ab2": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/edge\/ff833db5-ac4f-4c01-8c12-ff1d2aa75ab2",
-              "label": "r2",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:41 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
+        "\/service\/users\/b\/graph\/vertex\/cf20469b-0151-4983-bf8a-8bceacde570d": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/cf20469b-0151-4983-bf8a-8bceacde570d",
+                "label": "b1",
+                "comment": "",
+                "images": [],
+                "creationDate": "Apr 20, 2015 1:07:40 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+              },
+              "identifications": {}
             },
-            "identifications": {}
-          },
-          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/ac6baad6-4081-46c0-bdec-3f1a4a070d49"}}}},
-          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/d957ca53-239d-4a6e-b84b-8b91e0ce5ce6"}}}}
+            "numberOfConnectedEdges": 1,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
         },
-        "\/service\/users\/b\/graph\/edge\/9bf9f0ff-4efe-4d20-b022-f43aa7ba6a8f": {
+        "\/service\/users\/b\/graph\/vertex\/1b0474a5-874c-43cb-bf0e-442a8e3c54da": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/1b0474a5-874c-43cb-bf0e-442a8e3c54da",
+                "label": "shirt1",
+                "comment": "",
+                "images": [],
+                "creationDate": "Apr 20, 2015 1:07:40 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 1,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
+        },
+        "\/service\/users\/b\/graph\/vertex\/68ba922c-a8e6-4283-bcbf-4ac688c48227": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/68ba922c-a8e6-4283-bcbf-4ac688c48227",
+                "label": "b2",
+                "comment": "",
+                "images": [
+                  {
+                    "base64ForSmall": "base64ForB2",
+                    "urlForBigger": "http:\/\/example.org\/bigImageForB2"
+                  }
+                ],
+                "creationDate": "Apr 20, 2015 1:07:40 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 3,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
+        }
+      },
+      "edges": {
+        "\/service\/users\/b\/graph\/edge\/c6fe3c87-f239-4aa0-9a08-2cf60d2b3879": {
           "graphElement": {
             "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/edge\/9bf9f0ff-4efe-4d20-b022-f43aa7ba6a8f",
-              "label": "r3",
+              "uri": "\/service\/users\/b\/graph\/edge\/c6fe3c87-f239-4aa0-9a08-2cf60d2b3879",
+              "label": "shirt2",
               "comment": "",
               "images": [],
-              "creationDate": "Apr 18, 2015 11:05:41 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:41 AM"
+              "creationDate": "Apr 20, 2015 1:07:40 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+            },
+            "identifications": {
+              "http:\/\/rdf.freebase.com\/rdf\/m\/013s93": {
+                "externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/013s93",
+                "friendlyResource": {
+                  "uri": "\/service\/users\/b\/graph\/identification\/2fdf276d-603e-48d6-9ea6-9ba725af3eef",
+                  "label": "T-shirt",
+                  "comment": "A T-shirt is a style of fabric shirt, named after the T shape of the body and sleeves.",
+                  "creationDate": "Apr 20, 2015 1:07:40 PM",
+                  "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+                },
+                "identificationType": "same_as"
+              }
+            }
+          },
+          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/68ba922c-a8e6-4283-bcbf-4ac688c48227"}}}},
+          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/ea53061d-598f-42a8-b6c3-ef62a80ff26d"}}}}
+        },
+        "\/service\/users\/b\/graph\/edge\/0ddf0514-94b2-4177-8d90-1ccdc1c07062": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/edge\/0ddf0514-94b2-4177-8d90-1ccdc1c07062",
+              "label": "r1",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:40 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
             },
             "identifications": {}
           },
-          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/d957ca53-239d-4a6e-b84b-8b91e0ce5ce6"}}}},
-          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/3c32991e-4200-486c-9c75-fcd766eba2ad"}}}}
+          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/cf20469b-0151-4983-bf8a-8bceacde570d"}}}},
+          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/68ba922c-a8e6-4283-bcbf-4ac688c48227"}}}}
+        },
+        "\/service\/users\/b\/graph\/edge\/80f4b12a-3132-4d52-873d-e8d7cb05e013": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/edge\/80f4b12a-3132-4d52-873d-e8d7cb05e013",
+              "label": "shirt1",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:40 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+            },
+            "identifications": {
+              "http:\/\/rdf.freebase.com\/rdf\/m\/013s93": {
+                "externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/013s93",
+                "friendlyResource": {
+                  "uri": "\/service\/users\/b\/graph\/identification\/667e3c88-522e-4740-aa25-8c8939534600",
+                  "label": "T-shirt",
+                  "comment": "A T-shirt is a style of fabric shirt, named after the T shape of the body and sleeves.",
+                  "creationDate": "Apr 20, 2015 1:07:40 PM",
+                  "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+                },
+                "identificationType": "same_as"
+              }
+            }
+          },
+          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/68ba922c-a8e6-4283-bcbf-4ac688c48227"}}}},
+          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/1b0474a5-874c-43cb-bf0e-442a8e3c54da"}}}}
+        }
+      }
+    },
+    "distantBubbleGraph": {
+      "vertices": {
+        "\/service\/users\/b\/graph\/vertex\/a9bbcc92-e25d-4911-9607-2a89a4d54f3e": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/a9bbcc92-e25d-4911-9607-2a89a4d54f3e",
+                "label": "distant bubble",
+                "comment": "",
+                "images": [],
+                "creationDate": "Apr 20, 2015 1:07:40 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 0,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
+        }
+      },
+      "edges": {}
+    },
+    "b2GraphWhenConnectedToDistantBubble": {
+      "vertices": {
+        "\/service\/users\/b\/graph\/vertex\/ea53061d-598f-42a8-b6c3-ef62a80ff26d": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/ea53061d-598f-42a8-b6c3-ef62a80ff26d",
+                "label": "shirt2",
+                "comment": "",
+                "images": [
+                  {
+                    "base64ForSmall": "base64ForShirt2",
+                    "urlForBigger": "http:\/\/example.org\/bigImageForShirt2"
+                  }
+                ],
+                "creationDate": "Apr 20, 2015 1:07:40 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 1,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
+        },
+        "\/service\/users\/b\/graph\/vertex\/a9bbcc92-e25d-4911-9607-2a89a4d54f3e": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/a9bbcc92-e25d-4911-9607-2a89a4d54f3e",
+                "label": "distant bubble",
+                "comment": "",
+                "images": [],
+                "creationDate": "Apr 20, 2015 1:07:40 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 1,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
+        },
+        "\/service\/users\/b\/graph\/vertex\/cf20469b-0151-4983-bf8a-8bceacde570d": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/cf20469b-0151-4983-bf8a-8bceacde570d",
+                "label": "b1",
+                "comment": "",
+                "images": [],
+                "creationDate": "Apr 20, 2015 1:07:40 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 1,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
+        },
+        "\/service\/users\/b\/graph\/vertex\/1b0474a5-874c-43cb-bf0e-442a8e3c54da": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/1b0474a5-874c-43cb-bf0e-442a8e3c54da",
+                "label": "shirt1",
+                "comment": "",
+                "images": [],
+                "creationDate": "Apr 20, 2015 1:07:40 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 1,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
+        },
+        "\/service\/users\/b\/graph\/vertex\/68ba922c-a8e6-4283-bcbf-4ac688c48227": {
+          "vertex": {
+            "graphElement": {
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/vertex\/68ba922c-a8e6-4283-bcbf-4ac688c48227",
+                "label": "b2",
+                "comment": "",
+                "images": [
+                  {
+                    "base64ForSmall": "base64ForB2",
+                    "urlForBigger": "http:\/\/example.org\/bigImageForB2"
+                  }
+                ],
+                "creationDate": "Apr 20, 2015 1:07:40 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+              },
+              "identifications": {}
+            },
+            "numberOfConnectedEdges": 4,
+            "includedVertices": {},
+            "includedEdges": {},
+            "suggestions": {},
+            "isPublic": false
+          }
+        }
+      },
+      "edges": {
+        "\/service\/users\/b\/graph\/edge\/c6fe3c87-f239-4aa0-9a08-2cf60d2b3879": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/edge\/c6fe3c87-f239-4aa0-9a08-2cf60d2b3879",
+              "label": "shirt2",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:40 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+            },
+            "identifications": {
+              "http:\/\/rdf.freebase.com\/rdf\/m\/013s93": {
+                "externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/013s93",
+                "friendlyResource": {
+                  "uri": "\/service\/users\/b\/graph\/identification\/2fdf276d-603e-48d6-9ea6-9ba725af3eef",
+                  "label": "T-shirt",
+                  "comment": "A T-shirt is a style of fabric shirt, named after the T shape of the body and sleeves.",
+                  "creationDate": "Apr 20, 2015 1:07:40 PM",
+                  "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+                },
+                "identificationType": "same_as"
+              }
+            }
+          },
+          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/68ba922c-a8e6-4283-bcbf-4ac688c48227"}}}},
+          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/ea53061d-598f-42a8-b6c3-ef62a80ff26d"}}}}
+        },
+        "\/service\/users\/b\/graph\/edge\/0ddf0514-94b2-4177-8d90-1ccdc1c07062": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/edge\/0ddf0514-94b2-4177-8d90-1ccdc1c07062",
+              "label": "r1",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:40 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+            },
+            "identifications": {}
+          },
+          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/cf20469b-0151-4983-bf8a-8bceacde570d"}}}},
+          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/68ba922c-a8e6-4283-bcbf-4ac688c48227"}}}}
+        },
+        "\/service\/users\/b\/graph\/edge\/80f4b12a-3132-4d52-873d-e8d7cb05e013": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/edge\/80f4b12a-3132-4d52-873d-e8d7cb05e013",
+              "label": "shirt1",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:40 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+            },
+            "identifications": {
+              "http:\/\/rdf.freebase.com\/rdf\/m\/013s93": {
+                "externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/013s93",
+                "friendlyResource": {
+                  "uri": "\/service\/users\/b\/graph\/identification\/667e3c88-522e-4740-aa25-8c8939534600",
+                  "label": "T-shirt",
+                  "comment": "A T-shirt is a style of fabric shirt, named after the T shape of the body and sleeves.",
+                  "creationDate": "Apr 20, 2015 1:07:40 PM",
+                  "lastModificationDate": "Apr 20, 2015 1:07:40 PM"
+                },
+                "identificationType": "same_as"
+              }
+            }
+          },
+          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/68ba922c-a8e6-4283-bcbf-4ac688c48227"}}}},
+          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/1b0474a5-874c-43cb-bf0e-442a8e3c54da"}}}}
+        },
+        "\/service\/users\/b\/graph\/edge\/0f45d000-8ccd-4f62-abe2-c8337d62b41e": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/edge\/0f45d000-8ccd-4f62-abe2-c8337d62b41e",
+              "label": "",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:41 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:41 PM"
+            },
+            "identifications": {}
+          },
+          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/a9bbcc92-e25d-4911-9607-2a89a4d54f3e"}}}},
+          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/68ba922c-a8e6-4283-bcbf-4ac688c48227"}}}}
         }
       }
     }
   },
-  "oneBubbleHavingSuggestionsGraph": {
+  "mergeBubbleGraph": {
     "vertices": {
-      "\/service\/users\/b\/graph\/vertex\/b5246217-74b9-47ba-b9b2-7d33eac27cbd": {
+      "\/service\/users\/b\/graph\/vertex\/a7bf4361-2c1e-443c-9c10-7232639cf7f3": {
         "vertex": {
           "graphElement": {
             "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/vertex\/b5246217-74b9-47ba-b9b2-7d33eac27cbd",
+              "uri": "\/service\/users\/b\/graph\/vertex\/a7bf4361-2c1e-443c-9c10-7232639cf7f3",
+              "label": "merge",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:41 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:41 PM"
+            },
+            "identifications": {}
+          },
+          "numberOfConnectedEdges": 0,
+          "includedVertices": {
+            "\/service\/users\/b\/graph\/vertex\/01f338a0-6a54-47f6-bf12-97f232ffe32f": {
+              "vertex": {
+                "graphElement": {
+                  "friendlyResource": {
+                    "uri": "\/service\/users\/b\/graph\/vertex\/01f338a0-6a54-47f6-bf12-97f232ffe32f",
+                    "label": "b3"
+                  }
+                }
+              }
+            },
+            "\/service\/users\/b\/graph\/vertex\/f80226e0-141e-4531-8fde-f9ec66c66f5d": {
+              "vertex": {
+                "graphElement": {
+                  "friendlyResource": {
+                    "uri": "\/service\/users\/b\/graph\/vertex\/f80226e0-141e-4531-8fde-f9ec66c66f5d",
+                    "label": "b1"
+                  }
+                }
+              }
+            },
+            "\/service\/users\/b\/graph\/vertex\/bad9ea3c-2d47-4b8e-bc56-e7b4f2656825": {
+              "vertex": {
+                "graphElement": {
+                  "friendlyResource": {
+                    "uri": "\/service\/users\/b\/graph\/vertex\/bad9ea3c-2d47-4b8e-bc56-e7b4f2656825",
+                    "label": "b4"
+                  }
+                }
+              }
+            },
+            "\/service\/users\/b\/graph\/vertex\/79d1172f-c979-4c5a-b743-d7555bf6f114": {
+              "vertex": {
+                "graphElement": {
+                  "friendlyResource": {
+                    "uri": "\/service\/users\/b\/graph\/vertex\/79d1172f-c979-4c5a-b743-d7555bf6f114",
+                    "label": "b2"
+                  }
+                }
+              }
+            }
+          },
+          "includedEdges": {
+            "\/service\/users\/b\/graph\/edge\/c8e6c144-0e3a-4a49-8e6a-dacc16be50e2": {
+              "graphElement": {
+                "friendlyResource": {
+                  "uri": "\/service\/users\/b\/graph\/edge\/c8e6c144-0e3a-4a49-8e6a-dacc16be50e2",
+                  "label": "r4"
+                }
+              },
+              "sourceVertex": {
+                "vertex": {
+                  "graphElement": {
+                    "friendlyResource": {
+                      "uri": "\/service\/users\/b\/graph\/vertex\/bad9ea3c-2d47-4b8e-bc56-e7b4f2656825",
+                      "label": ""
+                    }
+                  }
+                }
+              },
+              "destinationVertex": {
+                "vertex": {
+                  "graphElement": {
+                    "friendlyResource": {
+                      "uri": "\/service\/users\/b\/graph\/vertex\/f80226e0-141e-4531-8fde-f9ec66c66f5d",
+                      "label": ""
+                    }
+                  }
+                }
+              }
+            },
+            "\/service\/users\/b\/graph\/edge\/1e461a96-db9b-42a1-b3b7-c031a529a08c": {
+              "graphElement": {
+                "friendlyResource": {
+                  "uri": "\/service\/users\/b\/graph\/edge\/1e461a96-db9b-42a1-b3b7-c031a529a08c",
+                  "label": "r1"
+                }
+              },
+              "sourceVertex": {
+                "vertex": {
+                  "graphElement": {
+                    "friendlyResource": {
+                      "uri": "\/service\/users\/b\/graph\/vertex\/f80226e0-141e-4531-8fde-f9ec66c66f5d",
+                      "label": ""
+                    }
+                  }
+                }
+              },
+              "destinationVertex": {
+                "vertex": {
+                  "graphElement": {
+                    "friendlyResource": {
+                      "uri": "\/service\/users\/b\/graph\/vertex\/79d1172f-c979-4c5a-b743-d7555bf6f114",
+                      "label": ""
+                    }
+                  }
+                }
+              }
+            },
+            "\/service\/users\/b\/graph\/edge\/1a3b809d-8ac8-413c-a887-98aabbc1ba65": {
+              "graphElement": {
+                "friendlyResource": {
+                  "uri": "\/service\/users\/b\/graph\/edge\/1a3b809d-8ac8-413c-a887-98aabbc1ba65",
+                  "label": "r2"
+                }
+              },
+              "sourceVertex": {
+                "vertex": {
+                  "graphElement": {
+                    "friendlyResource": {
+                      "uri": "\/service\/users\/b\/graph\/vertex\/79d1172f-c979-4c5a-b743-d7555bf6f114",
+                      "label": ""
+                    }
+                  }
+                }
+              },
+              "destinationVertex": {
+                "vertex": {
+                  "graphElement": {
+                    "friendlyResource": {
+                      "uri": "\/service\/users\/b\/graph\/vertex\/01f338a0-6a54-47f6-bf12-97f232ffe32f",
+                      "label": ""
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "suggestions": {},
+          "isPublic": false
+        }
+      }
+    },
+    "edges": {}
+  },
+  "oneBubbleHavingSuggestionsGraph": {
+    "vertices": {
+      "\/service\/users\/b\/graph\/vertex\/8f27681d-7366-401d-888e-ef3b2fa9696f": {
+        "vertex": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/vertex\/8f27681d-7366-401d-888e-ef3b2fa9696f",
               "label": "Event",
               "comment": "",
               "images": [],
-              "creationDate": "Apr 18, 2015 11:05:42 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
+              "creationDate": "Apr 20, 2015 1:07:41 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:41 PM"
             },
             "identifications": {
               "http:\/\/rdf.freebase.com\/rdf\/time\/event": {
                 "externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/time\/event",
                 "friendlyResource": {
-                  "uri": "\/service\/users\/b\/graph\/identification\/dd8ad38b-630c-4703-b879-5ca461fda920",
+                  "uri": "\/service\/users\/b\/graph\/identification\/94b6810b-ad16-4c54-852a-fc47357412b6",
                   "label": "Event",
-                  "creationDate": "Apr 18, 2015 11:05:42 AM",
-                  "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
+                  "creationDate": "Apr 20, 2015 1:07:41 PM",
+                  "lastModificationDate": "Apr 20, 2015 1:07:41 PM"
                 },
                 "identificationType": "generic"
               }
@@ -609,9 +1775,9 @@
           "includedVertices": {},
           "includedEdges": {},
           "suggestions": {
-            "\/service\/users\/b\/suggestion\/3dede9b5-ecaa-4588-bb57-9ceddb58e57e": {
+            "\/service\/users\/b\/suggestion\/b1dd568f-99a2-41bb-a656-b5f003dc88e3": {
               "friendlyResource": {
-                "uri": "\/service\/users\/b\/suggestion\/3dede9b5-ecaa-4588-bb57-9ceddb58e57e",
+                "uri": "\/service\/users\/b\/suggestion\/b1dd568f-99a2-41bb-a656-b5f003dc88e3",
                 "label": "People involved"
               },
               "sameAs": {
@@ -625,14 +1791,14 @@
               },
               "origins": [
                 {
-                  "friendlyResource": {"uri": "\/service\/users\/b\/suggestion\/3dede9b5-ecaa-4588-bb57-9ceddb58e57e\/origin\/b15dff6f-fe79-4a2e-a59d-e817d5600130"},
+                  "friendlyResource": {"uri": "\/service\/users\/b\/suggestion\/b1dd568f-99a2-41bb-a656-b5f003dc88e3\/origin\/c650a9b6-96b7-48ed-a5ec-5bbdb780541a"},
                   "origin": "identification_http:\/\/rdf.freebase.com\/rdf\/time\/event"
                 }
               ]
             },
-            "\/service\/users\/b\/suggestion\/802c2a8d-eb9c-4b9e-826a-e46061eb285b": {
+            "\/service\/users\/b\/suggestion\/be3827a1-48d9-40ec-9669-b9a67bd38ea3": {
               "friendlyResource": {
-                "uri": "\/service\/users\/b\/suggestion\/802c2a8d-eb9c-4b9e-826a-e46061eb285b",
+                "uri": "\/service\/users\/b\/suggestion\/be3827a1-48d9-40ec-9669-b9a67bd38ea3",
                 "label": "Start date"
               },
               "sameAs": {
@@ -645,7 +1811,7 @@
               },
               "origins": [
                 {
-                  "friendlyResource": {"uri": "\/service\/users\/b\/suggestion\/802c2a8d-eb9c-4b9e-826a-e46061eb285b\/origin\/3f829eda-372c-4c3b-9afe-da1fb4041ecb"},
+                  "friendlyResource": {"uri": "\/service\/users\/b\/suggestion\/be3827a1-48d9-40ec-9669-b9a67bd38ea3\/origin\/a1d4e09f-dc93-4a4c-94fc-2d4ac3bea022"},
                   "origin": "identification_http:\/\/rdf.freebase.com\/rdf\/time\/event"
                 }
               ]
@@ -656,6 +1822,289 @@
       }
     },
     "edges": {}
+  },
+  "graphWithSimilarRelations": {
+    "vertices": {
+      "\/service\/users\/b\/graph\/vertex\/41774cb4-217f-400b-a050-7d5cf1697ab5": {
+        "vertex": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/vertex\/41774cb4-217f-400b-a050-7d5cf1697ab5",
+              "label": "",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:41 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:41 PM"
+            },
+            "identifications": {}
+          },
+          "numberOfConnectedEdges": 1,
+          "includedVertices": {},
+          "includedEdges": {},
+          "suggestions": {},
+          "isPublic": false
+        }
+      },
+      "\/service\/users\/b\/graph\/vertex\/4fd7bfaa-88ef-4986-852c-d7127108424a": {
+        "vertex": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/vertex\/4fd7bfaa-88ef-4986-852c-d7127108424a",
+              "label": "",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:41 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:41 PM"
+            },
+            "identifications": {}
+          },
+          "numberOfConnectedEdges": 1,
+          "includedVertices": {},
+          "includedEdges": {},
+          "suggestions": {},
+          "isPublic": false
+        }
+      },
+      "\/service\/users\/b\/graph\/vertex\/ce4cd3da-bd20-4fe1-ad13-10fc92a5fa3b": {
+        "vertex": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/vertex\/ce4cd3da-bd20-4fe1-ad13-10fc92a5fa3b",
+              "label": "book 3",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:41 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:41 PM"
+            },
+            "identifications": {}
+          },
+          "numberOfConnectedEdges": 1,
+          "includedVertices": {},
+          "includedEdges": {},
+          "suggestions": {},
+          "isPublic": false
+        }
+      },
+      "\/service\/users\/b\/graph\/vertex\/789f7bb6-500d-4c27-a330-4d3317a1176b": {
+        "vertex": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/vertex\/789f7bb6-500d-4c27-a330-4d3317a1176b",
+              "label": "me",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:41 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:41 PM"
+            },
+            "identifications": {}
+          },
+          "numberOfConnectedEdges": 6,
+          "includedVertices": {},
+          "includedEdges": {},
+          "suggestions": {},
+          "isPublic": false
+        }
+      },
+      "\/service\/users\/b\/graph\/vertex\/8e5da035-9404-4b73-ae51-ce1c41f700a8": {
+        "vertex": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/vertex\/8e5da035-9404-4b73-ae51-ce1c41f700a8",
+              "label": "book 1",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:41 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:41 PM"
+            },
+            "identifications": {}
+          },
+          "numberOfConnectedEdges": 1,
+          "includedVertices": {},
+          "includedEdges": {},
+          "suggestions": {},
+          "isPublic": false
+        }
+      },
+      "\/service\/users\/b\/graph\/vertex\/ac0ce9ad-b9b4-49ea-afaa-9c44db359975": {
+        "vertex": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/vertex\/ac0ce9ad-b9b4-49ea-afaa-9c44db359975",
+              "label": "book 2",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:41 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:41 PM"
+            },
+            "identifications": {}
+          },
+          "numberOfConnectedEdges": 1,
+          "includedVertices": {},
+          "includedEdges": {},
+          "suggestions": {},
+          "isPublic": false
+        }
+      },
+      "\/service\/users\/b\/graph\/vertex\/845a7aab-6afb-4b73-bd91-bcee684cbb6f": {
+        "vertex": {
+          "graphElement": {
+            "friendlyResource": {
+              "uri": "\/service\/users\/b\/graph\/vertex\/845a7aab-6afb-4b73-bd91-bcee684cbb6f",
+              "label": "b2",
+              "comment": "",
+              "images": [],
+              "creationDate": "Apr 20, 2015 1:07:41 PM",
+              "lastModificationDate": "Apr 20, 2015 1:07:41 PM"
+            },
+            "identifications": {}
+          },
+          "numberOfConnectedEdges": 1,
+          "includedVertices": {},
+          "includedEdges": {},
+          "suggestions": {},
+          "isPublic": false
+        }
+      }
+    },
+    "edges": {
+      "\/service\/users\/b\/graph\/edge\/2f125c52-b049-434f-87e2-9db52c03b73f": {
+        "graphElement": {
+          "friendlyResource": {
+            "uri": "\/service\/users\/b\/graph\/edge\/2f125c52-b049-434f-87e2-9db52c03b73f",
+            "label": "other relation",
+            "comment": "",
+            "images": [],
+            "creationDate": "Apr 20, 2015 1:07:41 PM",
+            "lastModificationDate": "Apr 20, 2015 1:07:41 PM"
+          },
+          "identifications": {}
+        },
+        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/789f7bb6-500d-4c27-a330-4d3317a1176b"}}}},
+        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/845a7aab-6afb-4b73-bd91-bcee684cbb6f"}}}}
+      },
+      "\/service\/users\/b\/graph\/edge\/51af731c-4696-4396-92d8-bcbfc9452604": {
+        "graphElement": {
+          "friendlyResource": {
+            "uri": "\/service\/users\/b\/graph\/edge\/51af731c-4696-4396-92d8-bcbfc9452604",
+            "label": "Possession of book 1",
+            "comment": "",
+            "images": [],
+            "creationDate": "Apr 20, 2015 1:07:41 PM",
+            "lastModificationDate": "Apr 20, 2015 1:07:41 PM"
+          },
+          "identifications": {
+            "http:\/\/rdf.freebase.com\/rdf\/m\/0613q": {
+              "externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/0613q",
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/identification\/9f1ee844-bae2-46e4-a070-b196b67524f8",
+                "label": "Possession",
+                "comment": "In law, possession is the control a person intentionally exercises toward a thing. In all cases, to possess something, a person must have an intention to possess it. A person may be in possession of some property. Like ownership, the possession of things is commonly regulated by states under property law.",
+                "creationDate": "Apr 20, 2015 1:07:41 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:41 PM"
+              },
+              "identificationType": "same_as"
+            }
+          }
+        },
+        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/789f7bb6-500d-4c27-a330-4d3317a1176b"}}}},
+        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/8e5da035-9404-4b73-ae51-ce1c41f700a8"}}}}
+      },
+      "\/service\/users\/b\/graph\/edge\/23615bc2-17dd-4912-a461-d83360b31ded": {
+        "graphElement": {
+          "friendlyResource": {
+            "uri": "\/service\/users\/b\/graph\/edge\/23615bc2-17dd-4912-a461-d83360b31ded",
+            "label": "original relation",
+            "comment": "",
+            "images": [],
+            "creationDate": "Apr 20, 2015 1:07:41 PM",
+            "lastModificationDate": "Apr 20, 2015 1:07:41 PM"
+          },
+          "identifications": {}
+        },
+        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/789f7bb6-500d-4c27-a330-4d3317a1176b"}}}},
+        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/4fd7bfaa-88ef-4986-852c-d7127108424a"}}}}
+      },
+      "\/service\/users\/b\/graph\/edge\/c7a193e6-555c-4925-9743-a14ac6412968": {
+        "graphElement": {
+          "friendlyResource": {
+            "uri": "\/service\/users\/b\/graph\/edge\/c7a193e6-555c-4925-9743-a14ac6412968",
+            "label": "Possessed by book 2",
+            "comment": "",
+            "images": [],
+            "creationDate": "Apr 20, 2015 1:07:41 PM",
+            "lastModificationDate": "Apr 20, 2015 1:07:41 PM"
+          },
+          "identifications": {
+            "http:\/\/rdf.freebase.com\/rdf\/m\/0613q": {
+              "externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/0613q",
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/identification\/2428ec1c-5d2d-4a1d-b275-be8c25e67347",
+                "label": "Possession",
+                "comment": "In law, possession is the control a person intentionally exercises toward a thing. In all cases, to possess something, a person must have an intention to possess it. A person may be in possession of some property. Like ownership, the possession of things is commonly regulated by states under property law.",
+                "creationDate": "Apr 20, 2015 1:07:41 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:41 PM"
+              },
+              "identificationType": "same_as"
+            }
+          }
+        },
+        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/ac0ce9ad-b9b4-49ea-afaa-9c44db359975"}}}},
+        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/789f7bb6-500d-4c27-a330-4d3317a1176b"}}}}
+      },
+      "\/service\/users\/b\/graph\/edge\/698f5609-eebc-48cb-9d53-6c3a1d3d8db5": {
+        "graphElement": {
+          "friendlyResource": {
+            "uri": "\/service\/users\/b\/graph\/edge\/698f5609-eebc-48cb-9d53-6c3a1d3d8db5",
+            "label": "same as original relation",
+            "comment": "",
+            "images": [],
+            "creationDate": "Apr 20, 2015 1:07:41 PM",
+            "lastModificationDate": "Apr 20, 2015 1:07:41 PM"
+          },
+          "identifications": {
+            "\/service\/users\/b\/graph\/edge\/23615bc2-17dd-4912-a461-d83360b31ded": {
+              "externalResourceUri": "\/service\/users\/b\/graph\/edge\/23615bc2-17dd-4912-a461-d83360b31ded",
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/identification\/19bb6a4c-cf65-4ed2-b221-1a0084a2a5ad",
+                "label": "original relation",
+                "creationDate": "Apr 20, 2015 1:07:41 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:41 PM"
+              },
+              "identificationType": "same_as"
+            }
+          }
+        },
+        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/789f7bb6-500d-4c27-a330-4d3317a1176b"}}}},
+        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/41774cb4-217f-400b-a050-7d5cf1697ab5"}}}}
+      },
+      "\/service\/users\/b\/graph\/edge\/e11bf85f-0452-4d42-be84-450205df8000": {
+        "graphElement": {
+          "friendlyResource": {
+            "uri": "\/service\/users\/b\/graph\/edge\/e11bf85f-0452-4d42-be84-450205df8000",
+            "label": "Possession of book 3",
+            "comment": "",
+            "images": [],
+            "creationDate": "Apr 20, 2015 1:07:41 PM",
+            "lastModificationDate": "Apr 20, 2015 1:07:41 PM"
+          },
+          "identifications": {
+            "http:\/\/rdf.freebase.com\/rdf\/m\/0613q": {
+              "externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/0613q",
+              "friendlyResource": {
+                "uri": "\/service\/users\/b\/graph\/identification\/2e4767e6-8799-46b2-99dc-384b14ea2926",
+                "label": "Possession",
+                "comment": "In law, possession is the control a person intentionally exercises toward a thing. In all cases, to possess something, a person must have an intention to possess it. A person may be in possession of some property. Like ownership, the possession of things is commonly regulated by states under property law.",
+                "creationDate": "Apr 20, 2015 1:07:41 PM",
+                "lastModificationDate": "Apr 20, 2015 1:07:41 PM"
+              },
+              "identificationType": "same_as"
+            }
+          }
+        },
+        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/789f7bb6-500d-4c27-a330-4d3317a1176b"}}}},
+        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/ce4cd3da-bd20-4fe1-ad13-10fc92a5fa3b"}}}}
+      }
+    }
   },
   "freebaseSearchResultForProject": {
     "status": "200 OK",
@@ -804,1323 +2253,5 @@
     "cursor": 20,
     "cost": 17,
     "hits": 88195
-  },
-  "projectSchemaSearchResults": {
-    "getForProject": [
-      {
-        "graphElement": {
-          "friendlyResource": {
-            "uri": "\/service\/users\/b\/graph\/schema\/a9117530-b789-4549-a882-84ebe1ffa741",
-            "label": "project",
-            "comment": "",
-            "images": [],
-            "creationDate": "Apr 18, 2015 11:05:42 AM",
-            "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-          },
-          "identifications": {}
-        },
-        "properties": {
-          "\/service\/users\/b\/graph\/schema\/a9117530-b789-4549-a882-84ebe1ffa741\/property\/8ffd0090-6543-4ac5-a502-076b31eff949": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/schema\/a9117530-b789-4549-a882-84ebe1ffa741\/property\/8ffd0090-6543-4ac5-a502-076b31eff949",
-              "label": "has component"
-            }
-          },
-          "\/service\/users\/b\/graph\/schema\/a9117530-b789-4549-a882-84ebe1ffa741\/property\/ea5b80ba-6972-4ec0-a569-dde5bd4e4b75": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/schema\/a9117530-b789-4549-a882-84ebe1ffa741\/property\/ea5b80ba-6972-4ec0-a569-dde5bd4e4b75",
-              "label": "has objective"
-            }
-          },
-          "\/service\/users\/b\/graph\/schema\/a9117530-b789-4549-a882-84ebe1ffa741\/property\/2de1e5f4-933e-4a4d-a415-4d9886db121b": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/schema\/a9117530-b789-4549-a882-84ebe1ffa741\/property\/2de1e5f4-933e-4a4d-a415-4d9886db121b",
-              "label": "impact on the individual"
-            }
-          },
-          "\/service\/users\/b\/graph\/schema\/a9117530-b789-4549-a882-84ebe1ffa741\/property\/66dda941-7e39-47e9-b5f3-bcd6986936a8": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/schema\/a9117530-b789-4549-a882-84ebe1ffa741\/property\/66dda941-7e39-47e9-b5f3-bcd6986936a8",
-              "label": "impact on society"
-            }
-          }
-        },
-        "type": "schema"
-      }
-    ],
-    "resultsForImpact": [
-      {
-        "graphElement": {
-          "friendlyResource": {
-            "uri": "\/service\/users\/b\/graph\/schema\/a9117530-b789-4549-a882-84ebe1ffa741\/property\/2de1e5f4-933e-4a4d-a415-4d9886db121b",
-            "label": "impact on the individual",
-            "comment": "",
-            "images": [],
-            "creationDate": "Apr 18, 2015 11:05:42 AM",
-            "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-          },
-          "identifications": {}
-        },
-        "schema": {
-          "friendlyResource": {
-            "uri": "\/service\/users\/b\/graph\/schema\/a9117530-b789-4549-a882-84ebe1ffa741",
-            "label": "project"
-          }
-        },
-        "type": "property"
-      },
-      {
-        "graphElement": {
-          "friendlyResource": {
-            "uri": "\/service\/users\/b\/graph\/schema\/a9117530-b789-4549-a882-84ebe1ffa741\/property\/66dda941-7e39-47e9-b5f3-bcd6986936a8",
-            "label": "impact on society",
-            "comment": "",
-            "images": [],
-            "creationDate": "Apr 18, 2015 11:05:42 AM",
-            "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-          },
-          "identifications": {}
-        },
-        "schema": {
-          "friendlyResource": {
-            "uri": "\/service\/users\/b\/graph\/schema\/a9117530-b789-4549-a882-84ebe1ffa741",
-            "label": "project"
-          }
-        },
-        "type": "property"
-      }
-    ],
-    "projectSearchDetails": {
-      "graphElement": {
-        "friendlyResource": {
-          "uri": "\/service\/users\/b\/graph\/schema\/a9117530-b789-4549-a882-84ebe1ffa741",
-          "label": "project",
-          "comment": "A project is defined as a collaborative enterprise ...",
-          "images": [],
-          "creationDate": "Apr 18, 2015 11:05:42 AM",
-          "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-        },
-        "identifications": {}
-      },
-      "type": "schema"
-    }
-  },
-  "graphWithHiddenSimilarRelations": {
-    "b1Graph": {
-      "vertices": {
-        "\/service\/users\/b\/graph\/vertex\/0ae6eeb6-7f8a-4baf-baea-222c975feb6c": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/0ae6eeb6-7f8a-4baf-baea-222c975feb6c",
-                "label": "b2",
-                "comment": "",
-                "images": [
-                  {
-                    "base64ForSmall": "base64ForB2",
-                    "urlForBigger": "http:\/\/example.org\/bigImageForB2"
-                  }
-                ],
-                "creationDate": "Apr 18, 2015 11:05:42 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 3,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        },
-        "\/service\/users\/b\/graph\/vertex\/abfc1d58-03b6-4101-b5c7-dd5c313d9d2e": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/abfc1d58-03b6-4101-b5c7-dd5c313d9d2e",
-                "label": "b1",
-                "comment": "",
-                "images": [],
-                "creationDate": "Apr 18, 2015 11:05:42 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 1,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        }
-      },
-      "edges": {
-        "\/service\/users\/b\/graph\/edge\/7898f11f-5115-4eaa-aebc-97e38d3a08d1": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/edge\/7898f11f-5115-4eaa-aebc-97e38d3a08d1",
-              "label": "r1",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:42 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-            },
-            "identifications": {}
-          },
-          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/abfc1d58-03b6-4101-b5c7-dd5c313d9d2e"}}}},
-          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/0ae6eeb6-7f8a-4baf-baea-222c975feb6c"}}}}
-        }
-      }
-    },
-    "b2Graph": {
-      "vertices": {
-        "\/service\/users\/b\/graph\/vertex\/0ae6eeb6-7f8a-4baf-baea-222c975feb6c": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/0ae6eeb6-7f8a-4baf-baea-222c975feb6c",
-                "label": "b2",
-                "comment": "",
-                "images": [
-                  {
-                    "base64ForSmall": "base64ForB2",
-                    "urlForBigger": "http:\/\/example.org\/bigImageForB2"
-                  }
-                ],
-                "creationDate": "Apr 18, 2015 11:05:42 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 3,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        },
-        "\/service\/users\/b\/graph\/vertex\/bda23a6e-fb24-42c4-abe7-1b1e0731d06a": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/bda23a6e-fb24-42c4-abe7-1b1e0731d06a",
-                "label": "shirt1",
-                "comment": "",
-                "images": [],
-                "creationDate": "Apr 18, 2015 11:05:42 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 1,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        },
-        "\/service\/users\/b\/graph\/vertex\/df77db82-477f-4e0f-9355-d359099d0933": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/df77db82-477f-4e0f-9355-d359099d0933",
-                "label": "shirt2",
-                "comment": "",
-                "images": [
-                  {
-                    "base64ForSmall": "base64ForShirt2",
-                    "urlForBigger": "http:\/\/example.org\/bigImageForShirt2"
-                  }
-                ],
-                "creationDate": "Apr 18, 2015 11:05:42 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 1,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        },
-        "\/service\/users\/b\/graph\/vertex\/abfc1d58-03b6-4101-b5c7-dd5c313d9d2e": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/abfc1d58-03b6-4101-b5c7-dd5c313d9d2e",
-                "label": "b1",
-                "comment": "",
-                "images": [],
-                "creationDate": "Apr 18, 2015 11:05:42 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 1,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        }
-      },
-      "edges": {
-        "\/service\/users\/b\/graph\/edge\/7898f11f-5115-4eaa-aebc-97e38d3a08d1": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/edge\/7898f11f-5115-4eaa-aebc-97e38d3a08d1",
-              "label": "r1",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:42 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-            },
-            "identifications": {}
-          },
-          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/abfc1d58-03b6-4101-b5c7-dd5c313d9d2e"}}}},
-          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/0ae6eeb6-7f8a-4baf-baea-222c975feb6c"}}}}
-        },
-        "\/service\/users\/b\/graph\/edge\/32f2fa63-0a86-40db-9bcd-e3fba89fd0d6": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/edge\/32f2fa63-0a86-40db-9bcd-e3fba89fd0d6",
-              "label": "shirt1",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:42 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-            },
-            "identifications": {
-              "http:\/\/rdf.freebase.com\/rdf\/m\/013s93": {
-                "externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/013s93",
-                "friendlyResource": {
-                  "uri": "\/service\/users\/b\/graph\/identification\/1957cdc2-af32-472e-8e3e-59144bebaec0",
-                  "label": "T-shirt",
-                  "comment": "A T-shirt is a style of fabric shirt, named after the T shape of the body and sleeves.",
-                  "creationDate": "Apr 18, 2015 11:05:42 AM",
-                  "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-                },
-                "identificationType": "same_as"
-              }
-            }
-          },
-          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/0ae6eeb6-7f8a-4baf-baea-222c975feb6c"}}}},
-          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/bda23a6e-fb24-42c4-abe7-1b1e0731d06a"}}}}
-        },
-        "\/service\/users\/b\/graph\/edge\/012872da-05bf-4a41-8020-899bc085695a": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/edge\/012872da-05bf-4a41-8020-899bc085695a",
-              "label": "shirt2",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:42 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-            },
-            "identifications": {
-              "http:\/\/rdf.freebase.com\/rdf\/m\/013s93": {
-                "externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/013s93",
-                "friendlyResource": {
-                  "uri": "\/service\/users\/b\/graph\/identification\/eb515e9e-eb56-4e32-bc8d-511e312c70c7",
-                  "label": "T-shirt",
-                  "comment": "A T-shirt is a style of fabric shirt, named after the T shape of the body and sleeves.",
-                  "creationDate": "Apr 18, 2015 11:05:42 AM",
-                  "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-                },
-                "identificationType": "same_as"
-              }
-            }
-          },
-          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/0ae6eeb6-7f8a-4baf-baea-222c975feb6c"}}}},
-          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/df77db82-477f-4e0f-9355-d359099d0933"}}}}
-        }
-      }
-    },
-    "distantBubbleGraph": {
-      "vertices": {
-        "\/service\/users\/b\/graph\/vertex\/89f49649-5c23-47a5-b8e1-353d07333136": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/89f49649-5c23-47a5-b8e1-353d07333136",
-                "label": "distant bubble",
-                "comment": "",
-                "images": [],
-                "creationDate": "Apr 18, 2015 11:05:42 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 0,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        }
-      },
-      "edges": {}
-    },
-    "b2GraphWhenConnectedToDistantBubble": {
-      "vertices": {
-        "\/service\/users\/b\/graph\/vertex\/89f49649-5c23-47a5-b8e1-353d07333136": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/89f49649-5c23-47a5-b8e1-353d07333136",
-                "label": "distant bubble",
-                "comment": "",
-                "images": [],
-                "creationDate": "Apr 18, 2015 11:05:42 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 1,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        },
-        "\/service\/users\/b\/graph\/vertex\/0ae6eeb6-7f8a-4baf-baea-222c975feb6c": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/0ae6eeb6-7f8a-4baf-baea-222c975feb6c",
-                "label": "b2",
-                "comment": "",
-                "images": [
-                  {
-                    "base64ForSmall": "base64ForB2",
-                    "urlForBigger": "http:\/\/example.org\/bigImageForB2"
-                  }
-                ],
-                "creationDate": "Apr 18, 2015 11:05:42 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 4,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        },
-        "\/service\/users\/b\/graph\/vertex\/bda23a6e-fb24-42c4-abe7-1b1e0731d06a": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/bda23a6e-fb24-42c4-abe7-1b1e0731d06a",
-                "label": "shirt1",
-                "comment": "",
-                "images": [],
-                "creationDate": "Apr 18, 2015 11:05:42 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 1,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        },
-        "\/service\/users\/b\/graph\/vertex\/df77db82-477f-4e0f-9355-d359099d0933": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/df77db82-477f-4e0f-9355-d359099d0933",
-                "label": "shirt2",
-                "comment": "",
-                "images": [
-                  {
-                    "base64ForSmall": "base64ForShirt2",
-                    "urlForBigger": "http:\/\/example.org\/bigImageForShirt2"
-                  }
-                ],
-                "creationDate": "Apr 18, 2015 11:05:42 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 1,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        },
-        "\/service\/users\/b\/graph\/vertex\/abfc1d58-03b6-4101-b5c7-dd5c313d9d2e": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/abfc1d58-03b6-4101-b5c7-dd5c313d9d2e",
-                "label": "b1",
-                "comment": "",
-                "images": [],
-                "creationDate": "Apr 18, 2015 11:05:42 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 1,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        }
-      },
-      "edges": {
-        "\/service\/users\/b\/graph\/edge\/bc4614dc-197b-45d7-a0ba-effb95059a88": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/edge\/bc4614dc-197b-45d7-a0ba-effb95059a88",
-              "label": "",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:43 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-            },
-            "identifications": {}
-          },
-          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/89f49649-5c23-47a5-b8e1-353d07333136"}}}},
-          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/0ae6eeb6-7f8a-4baf-baea-222c975feb6c"}}}}
-        },
-        "\/service\/users\/b\/graph\/edge\/7898f11f-5115-4eaa-aebc-97e38d3a08d1": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/edge\/7898f11f-5115-4eaa-aebc-97e38d3a08d1",
-              "label": "r1",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:42 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-            },
-            "identifications": {}
-          },
-          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/abfc1d58-03b6-4101-b5c7-dd5c313d9d2e"}}}},
-          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/0ae6eeb6-7f8a-4baf-baea-222c975feb6c"}}}}
-        },
-        "\/service\/users\/b\/graph\/edge\/32f2fa63-0a86-40db-9bcd-e3fba89fd0d6": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/edge\/32f2fa63-0a86-40db-9bcd-e3fba89fd0d6",
-              "label": "shirt1",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:42 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-            },
-            "identifications": {
-              "http:\/\/rdf.freebase.com\/rdf\/m\/013s93": {
-                "externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/013s93",
-                "friendlyResource": {
-                  "uri": "\/service\/users\/b\/graph\/identification\/1957cdc2-af32-472e-8e3e-59144bebaec0",
-                  "label": "T-shirt",
-                  "comment": "A T-shirt is a style of fabric shirt, named after the T shape of the body and sleeves.",
-                  "creationDate": "Apr 18, 2015 11:05:42 AM",
-                  "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-                },
-                "identificationType": "same_as"
-              }
-            }
-          },
-          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/0ae6eeb6-7f8a-4baf-baea-222c975feb6c"}}}},
-          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/bda23a6e-fb24-42c4-abe7-1b1e0731d06a"}}}}
-        },
-        "\/service\/users\/b\/graph\/edge\/012872da-05bf-4a41-8020-899bc085695a": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/edge\/012872da-05bf-4a41-8020-899bc085695a",
-              "label": "shirt2",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:42 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-            },
-            "identifications": {
-              "http:\/\/rdf.freebase.com\/rdf\/m\/013s93": {
-                "externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/013s93",
-                "friendlyResource": {
-                  "uri": "\/service\/users\/b\/graph\/identification\/eb515e9e-eb56-4e32-bc8d-511e312c70c7",
-                  "label": "T-shirt",
-                  "comment": "A T-shirt is a style of fabric shirt, named after the T shape of the body and sleeves.",
-                  "creationDate": "Apr 18, 2015 11:05:42 AM",
-                  "lastModificationDate": "Apr 18, 2015 11:05:42 AM"
-                },
-                "identificationType": "same_as"
-              }
-            }
-          },
-          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/0ae6eeb6-7f8a-4baf-baea-222c975feb6c"}}}},
-          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/df77db82-477f-4e0f-9355-d359099d0933"}}}}
-        }
-      }
-    }
-  },
-  "karaokeSchemaGraph": {
-    "friendlyResource": {
-      "uri": "\/service\/users\/b\/graph\/schema\/92ad344a-0259-40f5-97cc-0b4b5f52a7d5",
-      "label": "karaoke",
-      "comment": "",
-      "images": [],
-      "creationDate": "Apr 18, 2015 11:05:43 AM",
-      "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-    },
-    "properties": {
-      "\/service\/users\/b\/graph\/schema\/92ad344a-0259-40f5-97cc-0b4b5f52a7d5\/property\/963c288b-f05b-4226-9f7f-594725c0b971": {
-        "friendlyResource": {
-          "uri": "\/service\/users\/b\/graph\/schema\/92ad344a-0259-40f5-97cc-0b4b5f52a7d5\/property\/963c288b-f05b-4226-9f7f-594725c0b971",
-          "label": "repertoire",
-          "comment": "",
-          "images": [],
-          "creationDate": "Apr 18, 2015 11:05:43 AM",
-          "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-        },
-        "identifications": {}
-      },
-      "\/service\/users\/b\/graph\/schema\/92ad344a-0259-40f5-97cc-0b4b5f52a7d5\/property\/2485c161-3435-446a-85a1-489ce8adba49": {
-        "friendlyResource": {
-          "uri": "\/service\/users\/b\/graph\/schema\/92ad344a-0259-40f5-97cc-0b4b5f52a7d5\/property\/2485c161-3435-446a-85a1-489ce8adba49",
-          "label": "invitees",
-          "comment": "",
-          "images": [],
-          "creationDate": "Apr 18, 2015 11:05:43 AM",
-          "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-        },
-        "identifications": {}
-      },
-      "\/service\/users\/b\/graph\/schema\/92ad344a-0259-40f5-97cc-0b4b5f52a7d5\/property\/a6d59980-9298-4042-83a7-9b1a8894b7ef": {
-        "friendlyResource": {
-          "uri": "\/service\/users\/b\/graph\/schema\/92ad344a-0259-40f5-97cc-0b4b5f52a7d5\/property\/a6d59980-9298-4042-83a7-9b1a8894b7ef",
-          "label": "location",
-          "comment": "",
-          "images": [],
-          "creationDate": "Apr 18, 2015 11:05:43 AM",
-          "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-        },
-        "identifications": {
-          "http:\/\/rdf.freebase.com\/rdf\/m\/01n7": {
-            "externalResourceUri": "http:\/\/rdf.freebase.com\/rdf\/m\/01n7",
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/identification\/53125211-0c85-4b47-8e00-c20bdc27681a",
-              "label": "Location",
-              "comment": "The Location type is used for any topic with a fixed location on the planet Earth. It includes geographic features such as oceans and mountains, political entities like cities and man-made objects like buildings.Guidelines for filling in location properties:geolocation: the longitude and latitude (in decimal notation) of the feature, or of the geographical center (centroid) fo the feature.contains and contained by: these properties can be used to show spatial relationships between different locations, such as an island contained by a body of water (which is equivalent to saying the body of water contains the island), a state contained by a country, a mountain within the borders of a national park, etc. For geopolitical locations,   containment two levels up and down is the ideal minimum. For example, the next two levels up for the city of Detroit are Wayne County and the state of Michigan.adjoins: also used to show spatial relations, in this case between locations that share a border.USBG Name: A unique name given to geographic features within the U.S. and its territories by the United States Board on Geographic Names. More information can be found on their website. GNIS ID: A unique id given to geographic features within the U.S. and its territories by the United States Board on Geographic Names. GNIS stands for Geographic Names Information System. More information can be found on their website.GEOnet Feature ID: The UFI (Unique Feature ID) used by GeoNet for features outside of the United States. More information can be found on their website.",
-              "creationDate": "Apr 18, 2015 11:05:43 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-            },
-            "identificationType": "same_as"
-          }
-        }
-      }
-    }
-  },
-  "graphWithCircularity": {
-    "b1Graph": {
-      "vertices": {
-        "\/service\/users\/b\/graph\/vertex\/7eb902c9-295b-4393-b617-6608582de223": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/7eb902c9-295b-4393-b617-6608582de223",
-                "label": "b2",
-                "comment": "",
-                "images": [],
-                "creationDate": "Apr 18, 2015 11:05:43 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 2,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        },
-        "\/service\/users\/b\/graph\/vertex\/62392913-6cea-4c4c-bd8a-ec4ce0fd7baf": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/62392913-6cea-4c4c-bd8a-ec4ce0fd7baf",
-                "label": "b1",
-                "comment": "",
-                "images": [],
-                "creationDate": "Apr 18, 2015 11:05:43 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 2,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        },
-        "\/service\/users\/b\/graph\/vertex\/c4714dda-ca71-4fef-8d28-db28d84c4645": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/c4714dda-ca71-4fef-8d28-db28d84c4645",
-                "label": "b3",
-                "comment": "",
-                "images": [],
-                "creationDate": "Apr 18, 2015 11:05:43 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 2,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        }
-      },
-      "edges": {
-        "\/service\/users\/b\/graph\/edge\/f465ddc0-f8e6-40c2-92b2-dbab1ea9459e": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/edge\/f465ddc0-f8e6-40c2-92b2-dbab1ea9459e",
-              "label": "r3",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:43 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-            },
-            "identifications": {}
-          },
-          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/c4714dda-ca71-4fef-8d28-db28d84c4645"}}}},
-          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/62392913-6cea-4c4c-bd8a-ec4ce0fd7baf"}}}}
-        },
-        "\/service\/users\/b\/graph\/edge\/6bb75797-4afd-4630-a722-6dd2c2272a4a": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/edge\/6bb75797-4afd-4630-a722-6dd2c2272a4a",
-              "label": "r1",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:43 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-            },
-            "identifications": {}
-          },
-          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/62392913-6cea-4c4c-bd8a-ec4ce0fd7baf"}}}},
-          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/7eb902c9-295b-4393-b617-6608582de223"}}}}
-        }
-      }
-    },
-    "b2Graph": {
-      "vertices": {
-        "\/service\/users\/b\/graph\/vertex\/62392913-6cea-4c4c-bd8a-ec4ce0fd7baf": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/62392913-6cea-4c4c-bd8a-ec4ce0fd7baf",
-                "label": "b1",
-                "comment": "",
-                "images": [],
-                "creationDate": "Apr 18, 2015 11:05:43 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 2,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        },
-        "\/service\/users\/b\/graph\/vertex\/7eb902c9-295b-4393-b617-6608582de223": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/7eb902c9-295b-4393-b617-6608582de223",
-                "label": "b2",
-                "comment": "",
-                "images": [],
-                "creationDate": "Apr 18, 2015 11:05:43 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 2,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        },
-        "\/service\/users\/b\/graph\/vertex\/c4714dda-ca71-4fef-8d28-db28d84c4645": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/c4714dda-ca71-4fef-8d28-db28d84c4645",
-                "label": "b3",
-                "comment": "",
-                "images": [],
-                "creationDate": "Apr 18, 2015 11:05:43 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 2,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        }
-      },
-      "edges": {
-        "\/service\/users\/b\/graph\/edge\/4fb7f104-0429-41c5-b61a-56bf3959d5f5": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/edge\/4fb7f104-0429-41c5-b61a-56bf3959d5f5",
-              "label": "r2",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:43 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-            },
-            "identifications": {}
-          },
-          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/7eb902c9-295b-4393-b617-6608582de223"}}}},
-          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/c4714dda-ca71-4fef-8d28-db28d84c4645"}}}}
-        },
-        "\/service\/users\/b\/graph\/edge\/6bb75797-4afd-4630-a722-6dd2c2272a4a": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/edge\/6bb75797-4afd-4630-a722-6dd2c2272a4a",
-              "label": "r1",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:43 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-            },
-            "identifications": {}
-          },
-          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/62392913-6cea-4c4c-bd8a-ec4ce0fd7baf"}}}},
-          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/7eb902c9-295b-4393-b617-6608582de223"}}}}
-        }
-      }
-    },
-    "b3Graph": {
-      "vertices": {
-        "\/service\/users\/b\/graph\/vertex\/7eb902c9-295b-4393-b617-6608582de223": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/7eb902c9-295b-4393-b617-6608582de223",
-                "label": "b2",
-                "comment": "",
-                "images": [],
-                "creationDate": "Apr 18, 2015 11:05:43 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 2,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        },
-        "\/service\/users\/b\/graph\/vertex\/62392913-6cea-4c4c-bd8a-ec4ce0fd7baf": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/62392913-6cea-4c4c-bd8a-ec4ce0fd7baf",
-                "label": "b1",
-                "comment": "",
-                "images": [],
-                "creationDate": "Apr 18, 2015 11:05:43 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 2,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        },
-        "\/service\/users\/b\/graph\/vertex\/c4714dda-ca71-4fef-8d28-db28d84c4645": {
-          "vertex": {
-            "graphElement": {
-              "friendlyResource": {
-                "uri": "\/service\/users\/b\/graph\/vertex\/c4714dda-ca71-4fef-8d28-db28d84c4645",
-                "label": "b3",
-                "comment": "",
-                "images": [],
-                "creationDate": "Apr 18, 2015 11:05:43 AM",
-                "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-              },
-              "identifications": {}
-            },
-            "numberOfConnectedEdges": 2,
-            "includedVertices": {},
-            "includedEdges": {},
-            "suggestions": {},
-            "isPublic": false
-          }
-        }
-      },
-      "edges": {
-        "\/service\/users\/b\/graph\/edge\/4fb7f104-0429-41c5-b61a-56bf3959d5f5": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/edge\/4fb7f104-0429-41c5-b61a-56bf3959d5f5",
-              "label": "r2",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:43 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-            },
-            "identifications": {}
-          },
-          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/7eb902c9-295b-4393-b617-6608582de223"}}}},
-          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/c4714dda-ca71-4fef-8d28-db28d84c4645"}}}}
-        },
-        "\/service\/users\/b\/graph\/edge\/f465ddc0-f8e6-40c2-92b2-dbab1ea9459e": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/edge\/f465ddc0-f8e6-40c2-92b2-dbab1ea9459e",
-              "label": "r3",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:43 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-            },
-            "identifications": {}
-          },
-          "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/c4714dda-ca71-4fef-8d28-db28d84c4645"}}}},
-          "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/62392913-6cea-4c4c-bd8a-ec4ce0fd7baf"}}}}
-        }
-      }
-    }
-  },
-  "graphWithAnInverseRelation": {
-    "vertices": {
-      "\/service\/users\/b\/graph\/vertex\/11977334-a5b4-41d3-bd96-60e64d8ecba1": {
-        "vertex": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/vertex\/11977334-a5b4-41d3-bd96-60e64d8ecba1",
-              "label": "inverse bubble",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:43 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-            },
-            "identifications": {}
-          },
-          "numberOfConnectedEdges": 1,
-          "includedVertices": {},
-          "includedEdges": {},
-          "suggestions": {},
-          "isPublic": false
-        }
-      },
-      "\/service\/users\/b\/graph\/vertex\/8e6ae9bb-e313-4007-9f97-e0f979207e3a": {
-        "vertex": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/vertex\/8e6ae9bb-e313-4007-9f97-e0f979207e3a",
-              "label": "straight bubble",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:43 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-            },
-            "identifications": {}
-          },
-          "numberOfConnectedEdges": 1,
-          "includedVertices": {},
-          "includedEdges": {},
-          "suggestions": {},
-          "isPublic": false
-        }
-      },
-      "\/service\/users\/b\/graph\/vertex\/3dc4b095-0a96-42b4-a4da-06442dc58049": {
-        "vertex": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/vertex\/3dc4b095-0a96-42b4-a4da-06442dc58049",
-              "label": "me",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:43 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-            },
-            "identifications": {}
-          },
-          "numberOfConnectedEdges": 2,
-          "includedVertices": {},
-          "includedEdges": {},
-          "suggestions": {},
-          "isPublic": false
-        }
-      }
-    },
-    "edges": {
-      "\/service\/users\/b\/graph\/edge\/2975c34f-3b3f-4854-9e55-1e0b84cc46e9": {
-        "graphElement": {
-          "friendlyResource": {
-            "uri": "\/service\/users\/b\/graph\/edge\/2975c34f-3b3f-4854-9e55-1e0b84cc46e9",
-            "label": "going inverse",
-            "comment": "",
-            "images": [],
-            "creationDate": "Apr 18, 2015 11:05:43 AM",
-            "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-          },
-          "identifications": {}
-        },
-        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/11977334-a5b4-41d3-bd96-60e64d8ecba1"}}}},
-        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/3dc4b095-0a96-42b4-a4da-06442dc58049"}}}}
-      },
-      "\/service\/users\/b\/graph\/edge\/71d815d5-ae6f-4156-b29b-6bea537f88a2": {
-        "graphElement": {
-          "friendlyResource": {
-            "uri": "\/service\/users\/b\/graph\/edge\/71d815d5-ae6f-4156-b29b-6bea537f88a2",
-            "label": "going straight",
-            "comment": "",
-            "images": [],
-            "creationDate": "Apr 18, 2015 11:05:43 AM",
-            "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-          },
-          "identifications": {}
-        },
-        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/3dc4b095-0a96-42b4-a4da-06442dc58049"}}}},
-        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/8e6ae9bb-e313-4007-9f97-e0f979207e3a"}}}}
-      }
-    }
-  },
-  "mergeBubbleGraph": {
-    "vertices": {
-      "\/service\/users\/b\/graph\/vertex\/91226311-00a6-4931-ac69-959e13589cfd": {
-        "vertex": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/vertex\/91226311-00a6-4931-ac69-959e13589cfd",
-              "label": "merge",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:43 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-            },
-            "identifications": {}
-          },
-          "numberOfConnectedEdges": 0,
-          "includedVertices": {
-            "\/service\/users\/b\/graph\/vertex\/265f7ed5-660a-40e3-bdc1-1d964f2e81e9": {
-              "vertex": {
-                "graphElement": {
-                  "friendlyResource": {
-                    "uri": "\/service\/users\/b\/graph\/vertex\/265f7ed5-660a-40e3-bdc1-1d964f2e81e9",
-                    "label": "b2"
-                  }
-                }
-              }
-            },
-            "\/service\/users\/b\/graph\/vertex\/3c6c3251-99ae-4970-a927-5484af5257fb": {
-              "vertex": {
-                "graphElement": {
-                  "friendlyResource": {
-                    "uri": "\/service\/users\/b\/graph\/vertex\/3c6c3251-99ae-4970-a927-5484af5257fb",
-                    "label": "b1"
-                  }
-                }
-              }
-            },
-            "\/service\/users\/b\/graph\/vertex\/36ea43b0-0240-4add-9be3-ebae39e740d0": {
-              "vertex": {
-                "graphElement": {
-                  "friendlyResource": {
-                    "uri": "\/service\/users\/b\/graph\/vertex\/36ea43b0-0240-4add-9be3-ebae39e740d0",
-                    "label": "b4"
-                  }
-                }
-              }
-            },
-            "\/service\/users\/b\/graph\/vertex\/515902e6-24e1-40cb-b7ad-1caff26c4a4d": {
-              "vertex": {
-                "graphElement": {
-                  "friendlyResource": {
-                    "uri": "\/service\/users\/b\/graph\/vertex\/515902e6-24e1-40cb-b7ad-1caff26c4a4d",
-                    "label": "b3"
-                  }
-                }
-              }
-            }
-          },
-          "includedEdges": {
-            "\/service\/users\/b\/graph\/edge\/aceca565-9785-42eb-99e1-80c5597294ea": {
-              "graphElement": {
-                "friendlyResource": {
-                  "uri": "\/service\/users\/b\/graph\/edge\/aceca565-9785-42eb-99e1-80c5597294ea",
-                  "label": "r1"
-                }
-              },
-              "sourceVertex": {
-                "vertex": {
-                  "graphElement": {
-                    "friendlyResource": {
-                      "uri": "\/service\/users\/b\/graph\/vertex\/3c6c3251-99ae-4970-a927-5484af5257fb",
-                      "label": ""
-                    }
-                  }
-                }
-              },
-              "destinationVertex": {
-                "vertex": {
-                  "graphElement": {
-                    "friendlyResource": {
-                      "uri": "\/service\/users\/b\/graph\/vertex\/265f7ed5-660a-40e3-bdc1-1d964f2e81e9",
-                      "label": ""
-                    }
-                  }
-                }
-              }
-            },
-            "\/service\/users\/b\/graph\/edge\/24834d65-f04e-4dc1-9e83-5f78bcee6b14": {
-              "graphElement": {
-                "friendlyResource": {
-                  "uri": "\/service\/users\/b\/graph\/edge\/24834d65-f04e-4dc1-9e83-5f78bcee6b14",
-                  "label": "r4"
-                }
-              },
-              "sourceVertex": {
-                "vertex": {
-                  "graphElement": {
-                    "friendlyResource": {
-                      "uri": "\/service\/users\/b\/graph\/vertex\/36ea43b0-0240-4add-9be3-ebae39e740d0",
-                      "label": ""
-                    }
-                  }
-                }
-              },
-              "destinationVertex": {
-                "vertex": {
-                  "graphElement": {
-                    "friendlyResource": {
-                      "uri": "\/service\/users\/b\/graph\/vertex\/3c6c3251-99ae-4970-a927-5484af5257fb",
-                      "label": ""
-                    }
-                  }
-                }
-              }
-            },
-            "\/service\/users\/b\/graph\/edge\/797db5d6-9a08-42ad-9c2b-f487134f4134": {
-              "graphElement": {
-                "friendlyResource": {
-                  "uri": "\/service\/users\/b\/graph\/edge\/797db5d6-9a08-42ad-9c2b-f487134f4134",
-                  "label": "r2"
-                }
-              },
-              "sourceVertex": {
-                "vertex": {
-                  "graphElement": {
-                    "friendlyResource": {
-                      "uri": "\/service\/users\/b\/graph\/vertex\/265f7ed5-660a-40e3-bdc1-1d964f2e81e9",
-                      "label": ""
-                    }
-                  }
-                }
-              },
-              "destinationVertex": {
-                "vertex": {
-                  "graphElement": {
-                    "friendlyResource": {
-                      "uri": "\/service\/users\/b\/graph\/vertex\/515902e6-24e1-40cb-b7ad-1caff26c4a4d",
-                      "label": ""
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "suggestions": {},
-          "isPublic": false
-        }
-      }
-    },
-    "edges": {}
-  },
-  "deepGraph": {
-    "vertices": {
-      "\/service\/users\/b\/graph\/vertex\/92a030e2-86c1-466e-99d5-d09ed50e5e14": {
-        "vertex": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/vertex\/92a030e2-86c1-466e-99d5-d09ed50e5e14",
-              "label": "b5",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:43 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-            },
-            "identifications": {}
-          },
-          "numberOfConnectedEdges": 1,
-          "includedVertices": {},
-          "includedEdges": {},
-          "suggestions": {},
-          "isPublic": false
-        }
-      },
-      "\/service\/users\/b\/graph\/vertex\/9438928b-6510-42ca-a46f-99f490ac1e82": {
-        "vertex": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/vertex\/9438928b-6510-42ca-a46f-99f490ac1e82",
-              "label": "b2",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:43 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-            },
-            "identifications": {}
-          },
-          "numberOfConnectedEdges": 3,
-          "includedVertices": {},
-          "includedEdges": {},
-          "suggestions": {},
-          "isPublic": false
-        }
-      },
-      "\/service\/users\/b\/graph\/vertex\/b5aaba43-45f4-4471-b465-cfdd87d3be47": {
-        "vertex": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/vertex\/b5aaba43-45f4-4471-b465-cfdd87d3be47",
-              "label": "b4",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:43 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-            },
-            "identifications": {}
-          },
-          "numberOfConnectedEdges": 1,
-          "includedVertices": {},
-          "includedEdges": {},
-          "suggestions": {},
-          "isPublic": false
-        }
-      },
-      "\/service\/users\/b\/graph\/vertex\/4187e9c5-08cf-4918-bd6d-5c37086a2733": {
-        "vertex": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/vertex\/4187e9c5-08cf-4918-bd6d-5c37086a2733",
-              "label": "b3",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:43 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-            },
-            "identifications": {}
-          },
-          "numberOfConnectedEdges": 1,
-          "includedVertices": {},
-          "includedEdges": {},
-          "suggestions": {},
-          "isPublic": false
-        }
-      },
-      "\/service\/users\/b\/graph\/vertex\/4cf3daf2-6015-4719-a9e2-b803e1ca9f78": {
-        "vertex": {
-          "graphElement": {
-            "friendlyResource": {
-              "uri": "\/service\/users\/b\/graph\/vertex\/4cf3daf2-6015-4719-a9e2-b803e1ca9f78",
-              "label": "b1",
-              "comment": "",
-              "images": [],
-              "creationDate": "Apr 18, 2015 11:05:43 AM",
-              "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-            },
-            "identifications": {}
-          },
-          "numberOfConnectedEdges": 2,
-          "includedVertices": {},
-          "includedEdges": {},
-          "suggestions": {},
-          "isPublic": false
-        }
-      }
-    },
-    "edges": {
-      "\/service\/users\/b\/graph\/edge\/aa76404b-bf26-4ae0-986f-f0be24979697": {
-        "graphElement": {
-          "friendlyResource": {
-            "uri": "\/service\/users\/b\/graph\/edge\/aa76404b-bf26-4ae0-986f-f0be24979697",
-            "label": "r1",
-            "comment": "",
-            "images": [],
-            "creationDate": "Apr 18, 2015 11:05:43 AM",
-            "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-          },
-          "identifications": {}
-        },
-        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/4cf3daf2-6015-4719-a9e2-b803e1ca9f78"}}}},
-        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/9438928b-6510-42ca-a46f-99f490ac1e82"}}}}
-      },
-      "\/service\/users\/b\/graph\/edge\/b6bd8d7c-0a36-4b4d-b9c1-b2d8c1a1db99": {
-        "graphElement": {
-          "friendlyResource": {
-            "uri": "\/service\/users\/b\/graph\/edge\/b6bd8d7c-0a36-4b4d-b9c1-b2d8c1a1db99",
-            "label": "r4",
-            "comment": "",
-            "images": [],
-            "creationDate": "Apr 18, 2015 11:05:43 AM",
-            "lastModificationDate": "Apr 18, 2015 11:05:44 AM"
-          },
-          "identifications": {}
-        },
-        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/92a030e2-86c1-466e-99d5-d09ed50e5e14"}}}},
-        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/4cf3daf2-6015-4719-a9e2-b803e1ca9f78"}}}}
-      },
-      "\/service\/users\/b\/graph\/edge\/b436b3ea-67a0-44a7-8012-041cb5c746c4": {
-        "graphElement": {
-          "friendlyResource": {
-            "uri": "\/service\/users\/b\/graph\/edge\/b436b3ea-67a0-44a7-8012-041cb5c746c4",
-            "label": "r3",
-            "comment": "",
-            "images": [],
-            "creationDate": "Apr 18, 2015 11:05:43 AM",
-            "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-          },
-          "identifications": {}
-        },
-        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/b5aaba43-45f4-4471-b465-cfdd87d3be47"}}}},
-        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/9438928b-6510-42ca-a46f-99f490ac1e82"}}}}
-      },
-      "\/service\/users\/b\/graph\/edge\/ba4679a7-20cb-4473-80c5-fff8be576554": {
-        "graphElement": {
-          "friendlyResource": {
-            "uri": "\/service\/users\/b\/graph\/edge\/ba4679a7-20cb-4473-80c5-fff8be576554",
-            "label": "r2",
-            "comment": "",
-            "images": [],
-            "creationDate": "Apr 18, 2015 11:05:43 AM",
-            "lastModificationDate": "Apr 18, 2015 11:05:43 AM"
-          },
-          "identifications": {}
-        },
-        "sourceVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/9438928b-6510-42ca-a46f-99f490ac1e82"}}}},
-        "destinationVertex": {"vertex": {"graphElement": {"friendlyResource": {"uri": "\/service\/users\/b\/graph\/vertex\/4187e9c5-08cf-4918-bd6d-5c37086a2733"}}}}
-      }
-    }
   }
 }

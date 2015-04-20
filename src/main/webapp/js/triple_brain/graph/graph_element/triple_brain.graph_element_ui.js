@@ -38,11 +38,9 @@ define([
                 ];
         };
         api.visitAll = function(visitor){
-            $.each(cacheWithIdAsKey, function () {
-                return visitor(
-                    this
-                );
-            });
+            for (var id in cacheWithIdAsKey) {
+                visitor(cacheWithIdAsKey[id]);
+            }
         };
         api.removeFromCache = function (uri, id) {
             var len = cacheWithUriAsKey[uri].length;
