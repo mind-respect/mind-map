@@ -3,8 +3,9 @@
  */
 
 define([
+    'test/webapp/js/test-scenarios',
     "triple_brain.id_uri"
-], function (IdUri) {
+], function (Scenarios, IdUri) {
     "use strict";
     describe("id_uri", function () {
         it("can tell if vertex uri is owned by current user", function () {
@@ -56,6 +57,25 @@ define([
             ).toBe(
                 "/service/users/oasivdj/graph/schema/d15066c1-b438-42fe-a340-e939560be6ae"
             );
+        });
+        it("can tell if a uri is a schema uri", function(){
+            var schemaScenario = new Scenarios.getKaraokeSchemaGraph();
+            expect(
+                IdUri.isSchemaUri(
+                    schemaScenario.getSchema().getUri()
+                )
+            ).toBeTruthy();
+            expect(
+                IdUri.isSchemaUri(
+                    schemaScenario.getLocationProperty().getUri()
+                )
+            ).toBeFalsy();
+            var threeBubblesScenario = new Scenarios.threeBubblesGraph();
+            expect(
+                IdUri.isSchemaUri(
+                    threeBubblesScenario.getBubble1().getUri()
+                )
+            ).toBeFalsy();
         });
     });
 });

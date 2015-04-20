@@ -15,7 +15,7 @@ define([
         beforeEach(function () {
             threeBubbles = new Scenarios.threeBubblesGraph();
         });
-        it("removing vertex removes connected edges", function () {
+        it("removes connected edges when removing a vertex", function () {
             Mock.mockRemoveVertex();
             MindMapInfo._setIsViewOnly(false);
             var bubble1 = threeBubbles.getBubble1InTree(),

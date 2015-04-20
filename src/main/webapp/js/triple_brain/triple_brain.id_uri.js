@@ -30,7 +30,8 @@ define([
             );
         };
         api.isSchemaUri = function(uri){
-            return uri.indexOf("/schema") !== -1;
+            return uri.indexOf("/schema/") !== -1 &&
+                uri.indexOf("/property") === -1;
         };
         api.isPropertyUri = function(uri){
             return uri.indexOf("/property") !== -1;
