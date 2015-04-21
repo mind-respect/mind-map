@@ -10,34 +10,28 @@ define([
 ], function (RelativeTreeVertex, GraphElementUi, VertexUi, EventBus) {
     "use strict";
     var api = {};
-    api.withHtml = function (html) {
-        return new Self(html);
-    };
+    RelativeTreeVertex.buildCommonConstructors(api);
     api.getWhenEmptyLabel = function(){
         return "suggestion";
     };
-    function Self(html) {
+    api.Self = function(html) {
         this.html = html;
         RelativeTreeVertex.Object.apply(this);
         this.init(html);
-    }
-    Self.prototype = new RelativeTreeVertex.Object;
-    Self.prototype.getGraphElementType = function () {
+    };
+    api.Self.prototype = new RelativeTreeVertex.Object;
+    api.Self.prototype.getGraphElementType = function () {
         return GraphElementUi.Types.VertexSuggestion;
     };
-    Self.prototype.getServerFormat = function () {
+    api.Self.prototype.getServerFormat = function () {
         return this._getServerFacade().getServerFormat();
     };
-    Self.prototype._getServerFacade = function(){
+    api.Self.prototype._getServerFacade = function(){
         return this.html.data("suggestionFacade");
     };
 
-    Self.prototype.integrate = function (newVertexUri) {
-        RelativeTreeVertex.removeFromCache(
-            this.getUri(),
-            this.getId()
-        );
-        VertexUi.removeFromCache(
+    api.Self.prototype.integrate = function (newVertexUri) {
+        api.removeFromCache(
             this.getUri(),
             this.getId()
         );
@@ -57,9 +51,6 @@ define([
             this.html
         );
         RelativeTreeVertex.initCache(
-            vertex
-        );
-        VertexUi.initCache(
             vertex
         );
         vertex.rebuildMenuButtons();

@@ -8,6 +8,7 @@ define([
     function ($, EdgeUi) {
         "use strict";
         var api = {};
+        api.buildCommonConstructors = EdgeUi.buildCommonConstructors;
         EdgeUi.buildCommonConstructors(api);
         api.getWhenEmptyLabel = function () {
             return EdgeUi.getWhenEmptyLabel();

@@ -13,8 +13,7 @@ define([
         "triple_brain.bubble_factory"
     ],
     function ($, VertexUi, EventBus, TreeEdge, ObjectUtils, TripleUiBuilder, SelectionHandler, PropertiesIndicator, BubbleFactory) {
-        var api = {},
-            otherInstancesKey = "otherInstances";
+        var api = {};
         VertexUi.buildCommonConstructors(api);
         api.ofVertex = function (vertex) {
             return api.withHtml(
@@ -70,49 +69,8 @@ define([
             return this.getParentBubble();
         };
 
-        api.Object.prototype.applyToOtherInstances = function (apply) {
-            $.each(this.getOtherInstances(), function () {
-                var vertex = this;
-                apply(vertex);
-            });
-        };
-        api.Object.prototype.getOtherInstances = function () {
-            if (this.html.data(otherInstancesKey) === undefined) {
-                this._defineSameInstances();
-            }
-            return this.html.data(otherInstancesKey);
-        };
-        api.Object.prototype._defineSameInstances = function (){
-            var verticesWithSameUri = api.withUri(
-                this.getUri()
-            );
-            var otherInstances = [],
-                self = this;
-            $.each(verticesWithSameUri, function () {
-                var vertexWithSameUri = this;
-                if (vertexWithSameUri.getId() === self.getId()) {
-                    return;
-                }
-                otherInstances.push(
-                    vertexWithSameUri
-                );
-            });
-            this.html.data(
-                otherInstancesKey,
-                otherInstances
-            );
-        };
-        api.Object.prototype.resetOtherInstances = function () {
-            this.html.removeData(otherInstancesKey);
-        };
-
         api.Object.prototype.isALeaf = function () {
             return !this.hasChildren();
-        };
-        api.Object.prototype.hasTheDuplicateButton = function () {
-            return this.getInBubbleContainer().find(
-                "button.duplicate"
-            ).length > 0;
         };
 
         api.Object.prototype.buildHiddenNeighborPropertiesIndicator = function () {

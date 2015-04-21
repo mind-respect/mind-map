@@ -10,9 +10,10 @@ define([
         "triple_brain.relative_tree_vertex",
         "triple_brain.graph_displayer",
         "triple_brain.graph_element_main_menu",
-        "triple_brain.edge_html_builder_common"
+        "triple_brain.edge_html_builder_common",
+        "triple_brain.graph_element_html_builder"
     ],
-    function ($, TreeEdge, EdgeUi, EventBus, RelativeTreeVertex, GraphDisplayer, GraphElementMainMenu, EdgeHtmlBuilderCommon) {
+    function ($, TreeEdge, EdgeUi, EventBus, RelativeTreeVertex, GraphDisplayer, GraphElementMainMenu, EdgeHtmlBuilderCommon, GraphElementHtmlBuilder) {
         "use strict";
         var api = {};
         api.withServerFacade = function (edgeServer) {
@@ -36,6 +37,7 @@ define([
             if (isInverse) {
                 edge.inverse();
             }
+            GraphElementHtmlBuilder.addDuplicateElementButtonIfApplicable(edge);
             EventBus.publish(
                 '/event/ui/html/edge/created/',
                 edge
@@ -49,7 +51,7 @@ define([
             this.uri = edgeServer.getUri();
             this.html = $(
                 "<div class='relation graph-element bubble'>"
-            );
+            ).append("<div class='in-bubble-content'>")
         }
 
         EdgeCreator.prototype.create = function () {
@@ -65,6 +67,7 @@ define([
             var edge = new TreeEdge.Self().init(
                 this.html
             );
+            edge.setUri(this.uri);
             TreeEdge.initCache(
                 edge
             );
@@ -76,7 +79,6 @@ define([
             );
             buildMenu(edge);
             edge.hideMenu();
-            edge.setUri(this.uri);
             edge.setTypes([]);
             edge.setSameAs([]);
             edge.setGenericIdentifications([]);

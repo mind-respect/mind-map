@@ -190,11 +190,6 @@ define([
         api.Object.prototype.getNoteButtonInMenu = function () {
             return this.getMenuHtml().find("> .note-button");
         };
-        api.Object.prototype.getInBubbleContainer = function () {
-            return this.html.find(
-                ".in-bubble-content"
-            );
-        };
 
         api.Object.prototype.removeConnectedEdges = function () {
             var connectedEdges = this.connectedEdges();

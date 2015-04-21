@@ -34,11 +34,13 @@ define([
             this.html = $(
                 RelativeTreeTemplates['group_relation'].merge()
             ).data("group_relation", this.serverFacade);
+            this.html.uniqueId();
             this._addLabel();
             this._addArrow();
             this._createMenu();
-            var groupRelation = GroupRelationUi.withHtml(
-                this.html
+            var groupRelation = new GroupRelationUi.Self(this.html);
+            GroupRelationUi.initCache(
+                groupRelation
             );
             groupRelation.hideButtons();
             return groupRelation;

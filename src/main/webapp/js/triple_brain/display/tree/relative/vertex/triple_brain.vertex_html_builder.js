@@ -8,62 +8,20 @@ define([
         "triple_brain.mind-map_template",
         "triple_brain.relative_tree_vertex",
         "triple_brain.vertex_html_builder_common",
+        "triple_brain.graph_element_html_builder",
         "triple_brain.ui.graph",
         "jquery-ui",
         "jquery.is-fully-on-screen",
         "jquery.center-on-screen",
         "jquery.i18next"
-    ], function ($, EventBus, MindMapTemplate, RelativeTreeVertex, VertexHtmlCommon, GraphUi) {
-        var api = {},
-            goToSameBubbleText;
+    ], function ($, EventBus, MindMapTemplate, RelativeTreeVertex, VertexHtmlCommon, GraphElementHtmlBuilder, GraphUi) {
+        var api = {};
         api.withServerFacade = function (serverFacade) {
             return new VertexCreator(serverFacade);
         };
-        api.addDuplicateVerticesButtonIfApplicable = function (vertex) {
-            var otherInstances = vertex.getOtherInstances();
-            if (otherInstances.length === 0) {
-                return;
-            }
-            addDuplicateButton(vertex);
-            $.each(otherInstances, function () {
-                var otherInstance = this;
-                otherInstance.resetOtherInstances();
-                if (!otherInstance.hasTheDuplicateButton()) {
-                    addDuplicateButton(otherInstance);
-                }
-            });
-            function addDuplicateButton(vertex) {
-                vertex.getInBubbleContainer().prepend(
-                    buildDuplicateButton()
-                );
-            }
-
-            function buildDuplicateButton() {
-                var button = $(
-                    "<button class='duplicate graph-element-button round-button' data-toggle='tooltip' data-placement='top'>"
-                ).prop(
-                    "title",
-                    goToSameBubbleText
-                ).append(
-                    $("<i class='fa fa-link'>")
-                ).on(
-                    "click",
-                    function (event) {
-                        event.stopPropagation();
-                        var vertex = vertexOfSubHtmlComponent($(this));
-                        $(
-                            vertex.getOtherInstances()[0].getHtml()
-                        ).centerOnScreenWithAnimation();
-                    }
-                );
-                return $("<div class='duplicate-button-container'>").append(
-                    button
-                ).tooltip();
-            }
-        };
         api.completeBuild = function (vertex) {
             vertex.refreshImages();
-            api.addDuplicateVerticesButtonIfApplicable(
+            GraphElementHtmlBuilder.addDuplicateElementButtonIfApplicable(
                 vertex
             );
             if (vertex.isToTheLeft()) {
@@ -77,12 +35,6 @@ define([
         EventBus.subscribe(
             '/event/ui/vertex/visit_after_graph_drawn',
             handleVisitAfterGraphDrawn
-        );
-        EventBus.subscribe(
-            'localized-text-loaded',
-            function(){
-                goToSameBubbleText = $.t("vertex.same_bubble");
-            }
         );
         function handleVisitAfterGraphDrawn(event, vertex) {
             api.completeBuild(vertex);
@@ -191,13 +143,6 @@ define([
             );
             return vertexMenu;
         };
-
-        function vertexOfSubHtmlComponent(htmlOfSubComponent) {
-            return RelativeTreeVertex.withHtml(
-                htmlOfSubComponent.closest('.vertex')
-            );
-        }
-
         return api;
     }
 );

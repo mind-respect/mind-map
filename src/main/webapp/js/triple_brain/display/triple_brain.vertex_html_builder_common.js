@@ -105,6 +105,9 @@ define([
             var $input = $(this),
                 vertex = BubbleFactory.fromSubHtml($input);
             $input.maxChar();
+            if(!vertex.hasTextChangedAfterModification()){
+                return;
+            }
             if (vertex.isVertexSuggestion()) {
                 SuggestionService.accept(
                     vertex,
@@ -117,10 +120,7 @@ define([
             updateLabelsOfVerticesWithSameUri();
             function updateLabelsOfVerticesWithSameUri() {
                 var text = vertex.text();
-                var otherInstances = uiSelector.withHtml(
-                    vertex.getHtml()
-                ).getOtherInstances();
-                $.each(otherInstances, function () {
+                $.each(vertex.getOtherInstances(), function () {
                     var sameVertex = this;
                     sameVertex.setText(
                         text

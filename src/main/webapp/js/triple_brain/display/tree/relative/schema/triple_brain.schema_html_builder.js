@@ -33,9 +33,10 @@ define([
             htmlId = GraphUi.generateBubbleHtmlId();
         }
         this.html.attr('id', htmlId);
-        var schema = SchemaUi.withHtml(
+        var schema = new SchemaUi.Self(
             this.html
         );
+        SchemaUi.initCache(schema);
         VertexHtmlCommon.buildLabelHtml(
             schema,
             VertexHtmlCommon.buildInsideBubbleContainer(

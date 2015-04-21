@@ -15,6 +15,7 @@ define([
         "triple_brain.property_html_builder",
         "triple_brain.graph_displayer_as_relative_tree",
         'test/webapp/js/mock',
+        'test/webapp/js/test-utils',
         "triple_brain.bubble_factory",
         "triple_brain.graph_displayer",
         "triple_brain.graph_displayer_factory",
@@ -27,7 +28,7 @@ define([
         "triple_brain.language_manager",
         "text!main/webapp/locales/en/translation.json"
     ],
-    function (TestScenarioData, Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, VertexServerFormatBuilder, EventBus, Suggestion, Identification, FriendlyResource, LanguageManager, enTranslation) {
+    function (TestScenarioData, Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, TestUtils, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, VertexServerFormatBuilder, EventBus, Suggestion, Identification, FriendlyResource, LanguageManager, enTranslation) {
         var api = {},
             testData = JSON.parse(TestScenarioData);
         $.i18n.init({
@@ -472,7 +473,8 @@ define([
              * Has a generic identification to freebase "Event" http://rdf.freebase.com/rdf/m/02xm94t
              * Has 2 suggestions
              */
-            var treeBuilder = new TreeBuilder(this);
+            var treeBuilder = new TreeBuilder(this),
+                hasShownSuggestions = false;
             this.getGraph = function () {
                 return getTestData("oneBubbleHavingSuggestionsGraph");
             };
@@ -495,6 +497,18 @@ define([
                 return SuggestionBubbleHtmlBuilder.withServerFacade(
                     this.getOneSuggestion()
                 ).create();
+            };
+            this.getAVertexSuggestionInTree = function () {
+                debugger;
+                if(!hasShownSuggestions){
+                    GraphDisplayerAsRelativeTree.showSuggestions(
+                        this.getVertexUi()
+                    );
+                    hasShownSuggestions = true;
+                }
+                treeBuilder.getBubbleWithLabelInTree(
+                    this.getOneSuggestion().getLabel()
+                );
             };
             this.getARelationSuggestionUi = function () {
                 return SuggestionRelationBuilder.withServerFacade(
@@ -716,9 +730,6 @@ define([
                 "relative_tree"
             )
         );
-        api.generateVertexUri = function () {
-            return "\/service\/users\/foo\/graph\/vertex\/" + generateUuid();
-        };
         api.TreeQuerier = function (tree) {
             this.getBubbleWithLabelInTree = function (label) {
                 return BubbleFactory.fromHtml(
@@ -804,13 +815,12 @@ define([
                     vertex
                 );
             });
-            GraphDisplayer.getGroupRelationSelector().visitAll(function (groupRelationUi) {
+            GraphDisplayer.getGroupRelationSelector().visitAllGroupRelations(function (groupRelationUi) {
                     EventBus.publish(
                         '/event/ui/group_relation/visit_after_graph_drawn',
                         groupRelationUi
                     );
-                },
-                tree
+                }
             );
             return tree;
         }
@@ -840,7 +850,7 @@ define([
         function generateVertex() {
             return Vertex.fromServerFormat(
                 VertexServerFormatBuilder.buildWithUri(
-                    api.generateVertexUri()
+                    TestUtils.generateVertexUri()
                 )
             );
         }
@@ -848,25 +858,11 @@ define([
         function generateEdge(sourceVertexUri, destinationVertexUri) {
             return Edge.fromServerFormat(
                 Edge.buildObjectWithUriOfSelfSourceAndDestinationVertex(
-                    generateEdgeUri(),
+                    TestUtils.generateEdgeUri(),
                     sourceVertexUri,
                     destinationVertexUri
                 )
             );
-        }
-
-        function generateEdgeUri() {
-            return "\/service\/users\/foo\/graph\/edge\/" + generateUuid();
-        }
-
-        function generateUuid() {
-            return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-                s4() + '-' + s4() + s4() + s4();
-            function s4() {
-                return Math.floor((1 + Math.random()) * 0x10000)
-                    .toString(16)
-                    .substring(1);
-            }
         }
 
         function getTestData(key) {

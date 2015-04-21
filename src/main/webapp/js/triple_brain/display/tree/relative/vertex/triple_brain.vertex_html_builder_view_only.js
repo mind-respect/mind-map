@@ -10,9 +10,6 @@ define([
     api.withServerFacade = function (serverVertex) {
         return new VertexCreator(serverVertex);
     };
-    api.addDuplicateVerticesButtonIfApplicable = function(){
-        //not applicable
-    };
     function VertexCreator(serverFormatFacade){
         var html,
             vertex;

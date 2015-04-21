@@ -41,10 +41,11 @@ define([
             label,
             SuggestionRelationUi.getWhenEmptyLabel()
         ).css("visibility", "visible");
-        var edge = this.edge = SuggestionRelationUi.withHtml(this.html);
+        var edge = this.edge = new SuggestionRelationUi.Self(this.html);
+        edge.setUri(this.serverFacade.getUri());
+        SuggestionRelationUi.initCache(edge);
         this._buildMenu();
         edge.hideMenu();
-        edge.setUri(this.serverFacade.getUri());
         edge.setTypes([]);
         edge.setSameAs([
             Identification.withUriLabelAndDescription(

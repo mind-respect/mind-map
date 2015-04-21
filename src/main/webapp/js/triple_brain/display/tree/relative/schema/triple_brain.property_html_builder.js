@@ -8,16 +8,13 @@ define([
     "triple_brain.graph_displayer"
 ], function (PropertyUi, EdgeHtmlBuilderCommon, GraphElementMainMenu, GraphDisplayer) {
     "use strict";
-    var api = {
-        withServerFacade: function (serverFacade) {
-            return new Self(serverFacade);
-        }
+    var api = {};
+    api.withServerFacade = function (serverFacade) {
+        return new Self(serverFacade);
     };
-
     function Self(serverFacade) {
         this.serverFacade = serverFacade;
     }
-
     Self.prototype.create = function () {
         this.html = $("<div class='property relation bubble graph-element'>").data(
             "uri",
@@ -26,7 +23,8 @@ define([
         var inBubbleContentContainer = $("<div class='in-bubble-content'>").appendTo(
                 this.html
             ),
-            property = PropertyUi.withHtml(this.html);
+            property = new PropertyUi.Self(this.html);
+        PropertyUi.initCache(property);
         EdgeHtmlBuilderCommon.buildLabel(
             inBubbleContentContainer,
             this.serverFacade.getLabel(),
@@ -54,7 +52,7 @@ define([
         property.refreshImages();
         return property;
     };
-    Self.prototype._buildMenu = function(container){
+    Self.prototype._buildMenu = function (container) {
         var menu = $("<div class='relation-menu'>").appendTo(
             container
         );

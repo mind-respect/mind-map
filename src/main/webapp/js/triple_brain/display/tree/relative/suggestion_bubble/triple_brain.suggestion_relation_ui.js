@@ -9,22 +9,24 @@ define([
 ], function (TreeEdge, GraphElementUi, EventBus) {
     "use strict";
     var api = {};
+    TreeEdge.buildCommonConstructors(api);
     api.getWhenEmptyLabel = function () {
         return "suggestion"
     };
-    api.withHtml = function(html){
-        return new Self(html);
-    };
-    function Self(html){
+    api.Self = function(html){
         this.html = html;
         TreeEdge.Self.apply(this);
         this.init(html);
-    }
-    Self.prototype = new TreeEdge.Self;
-    Self.prototype.getGraphElementType = function () {
+    };
+    api.Self.prototype = new TreeEdge.Self;
+    api.Self.prototype.getGraphElementType = function () {
         return GraphElementUi.Types.RelationSuggestion;
     };
-    Self.prototype.integrate = function (newRelationUri, destinationVertex) {
+    api.Self.prototype.integrate = function (newRelationUri, destinationVertex) {
+        api.removeFromCache(
+            this.getUri(),
+            this.getId()
+        );
         this.setUri(
             newRelationUri
         );
@@ -32,7 +34,7 @@ define([
             "suggestion"
         ).data(
             "source_vertex_id",
-            destinationVertex.getParentVertex().getId()
+            this.getParentBubble().getId()
         ).data(
             "destination_vertex_id",
             destinationVertex.getId()
@@ -40,12 +42,9 @@ define([
         this.getLabel().attr(
             "placeholder", TreeEdge.getWhenEmptyLabel()
         );
-        TreeEdge.removeFromCache(
-            this.getUri(),
-            this.getId()
-        );
-        var edge = new TreeEdge.withHtml(
-            this.html
+        var edge = new TreeEdge.Self().init(this.html);
+        TreeEdge.initCache(
+            edge
         );
         edge.rebuildMenuButtons();
         EventBus.publish(

@@ -70,6 +70,12 @@ define([
             );
         };
 
+        api.Self.prototype.getInBubbleContainer = function () {
+            return this.html.find(
+                ".in-bubble-content"
+            );
+        };
+
         api.Self.prototype.getBubbleAbove = function () {
             return this._getColumnBubble(
                 api._getBubbleHtmlAbove

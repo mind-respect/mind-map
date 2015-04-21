@@ -8,7 +8,9 @@ define([
     "triple_brain.event_bus",
     "jquery.focus-end"
 ], function (GraphDisplayer, GraphElementMainMenu, GraphElementType, EventBus) {
-    var api = {};
+    var api = {},
+        otherInstancesKey = "otherInstances",
+        textBeforeModificationKey = "textBeforeModification";
     api.Types = GraphElementType;
     var menuHandlerGetters = {},
         selectors = {};
@@ -37,10 +39,10 @@ define([
             cacheWithUriAsKey[uri].length - 1
                 ];
         };
-        api.visitAll = function(visitor){
-            for (var id in cacheWithIdAsKey) {
-                visitor(cacheWithIdAsKey[id]);
-            }
+        api.visitAll = function (visitor) {
+            $.each(cacheWithIdAsKey, function () {
+                visitor(this);
+            });
         };
         api.removeFromCache = function (uri, id) {
             var len = cacheWithUriAsKey[uri].length;
@@ -57,6 +59,7 @@ define([
             cacheWithIdAsKey = {};
             cacheWithUriAsKey = {};
         }
+
         function updateUriCache(uri, vertex) {
             if (undefined === cacheWithUriAsKey[uri]) {
                 cacheWithUriAsKey[uri] = [];
@@ -80,10 +83,53 @@ define([
     api.Self.prototype.getId = function () {
         return this.getHtml().attr("id");
     };
+    api.Self.prototype.hasTheDuplicateButton = function () {
+        return this.getInBubbleContainer().find(
+                "button.duplicate"
+            ).length > 0;
+    };
+
+    api.Self.prototype.getOtherInstances = function () {
+        if (this.html.data(otherInstancesKey) === undefined) {
+            this._defineSameInstances();
+        }
+        return this.html.data(otherInstancesKey);
+    };
+
+    api.Self.prototype._defineSameInstances = function () {
+        var elementsWithSameUri = this.getSelector().withUri(
+            this.getUri()
+        );
+        var otherInstances = [],
+            self = this;
+        $.each(elementsWithSameUri, function () {
+            var elementWithSameUri = this;
+            if (elementWithSameUri.getId() === self.getId()) {
+                return;
+            }
+            otherInstances.push(
+                elementWithSameUri
+            );
+        });
+        this.html.data(
+            otherInstancesKey,
+            otherInstances
+        );
+    };
+    api.Self.prototype.applyToOtherInstances = function (apply) {
+        $.each(this.getOtherInstances(), function () {
+            var element = this;
+            apply(element);
+        });
+    };
+
+    api.Self.prototype.resetOtherInstances = function () {
+        this.html.removeData(otherInstancesKey);
+    };
     api.Self.prototype.isVertex = function () {
         return this.getGraphElementType() === api.Types.Vertex;
     };
-    api.Self.prototype.isCenterBubble = function(){
+    api.Self.prototype.isCenterBubble = function () {
         return this.html.hasClass("center-vertex");
     };
     api.Self.prototype.isSchema = function () {
@@ -109,7 +155,7 @@ define([
     };
     api.Self.prototype.getSimilarButtonHtml = function (button) {
         return this.getMenuHtml().find(
-                "[data-action=" + button.getAction() + "]"
+            "[data-action=" + button.getAction() + "]"
         );
     };
     api.Self.prototype.getMenuHandler = function () {
@@ -128,10 +174,8 @@ define([
             this.getGraphElementType()
             ]();
     };
-    api.Self.prototype.getInputSizer = function () {
-        return this.html.find(".input-size");
-    };
-    api.Self.prototype.rightActionForType = function (vertexAction, edgeAction, groupRelationAction, schemaAction, propertyAction, suggestionVertexAction, suggestionRelationAction){
+
+    api.Self.prototype.rightActionForType = function (vertexAction, edgeAction, groupRelationAction, schemaAction, propertyAction, suggestionVertexAction, suggestionRelationAction) {
         switch (this.getGraphElementType()) {
             case api.Types.Vertex :
                 return vertexAction;
@@ -151,9 +195,20 @@ define([
     };
     api.Self.prototype.focus = function () {
         this.editMode();
+        this._setTextBeforeModification();
         this.getLabel().maxCharCleanTextApply().focusEnd();
     };
-    api.Self.prototype.editMode = function(){
+    api.Self.prototype._setTextBeforeModification = function(){
+        this.getHtml().data(
+            textBeforeModificationKey, this.text()
+        );
+    };
+    api.Self.prototype.hasTextChangedAfterModification = function(){
+        return this.getHtml().data(
+            textBeforeModificationKey
+        ) !== this.text();
+    };
+    api.Self.prototype.editMode = function () {
         this.getLabel().attr(
             "contenteditable",
             "true"
@@ -165,9 +220,9 @@ define([
     };
     api.Self.prototype.isInTypes = function (types) {
         return $.inArray(
-            this.getGraphElementType(),
-            types
-        ) !== -1;
+                this.getGraphElementType(),
+                types
+            ) !== -1;
     };
     api.Self.prototype.getHtml = function () {
         return this.html;
@@ -180,13 +235,13 @@ define([
         );
         this.onlyShowButtonsIfApplicable();
     };
-    api.Self.prototype.onlyShowButtonsIfApplicable = function(){
+    api.Self.prototype.onlyShowButtonsIfApplicable = function () {
         GraphElementMainMenu.onlyShowButtonsIfApplicable(
             this.getMenuHandler().forSingle(),
             this
         );
     };
-    api.Self.prototype.isSuggestion = function(){
+    api.Self.prototype.isSuggestion = function () {
         return this.isVertexSuggestion() || this.isRelationSuggestion();
     };
     api.Self.prototype.setUri = function (uri) {
