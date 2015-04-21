@@ -445,6 +445,10 @@ svg {
     }
   }
 
+  .duplicate-button-container {
+    position: absolute;
+  }
+
   &.suggestion {
     .in-bubble-content, .label {
       background-color: white;
@@ -688,7 +692,6 @@ svg {
       }
     }
     .duplicate-button-container {
-      position: absolute;
       left: -17px;
       top: -18px;
     }
@@ -819,6 +822,10 @@ svg {
     width: 1.7em;
     height: 1.8em;
     margin: 0;
+  }
+  .duplicate-button-container {
+    left:-20px;
+    top:-23px;
   }
 }
 
