@@ -5,26 +5,64 @@
 define([
     "jquery",
     "triple_brain.event_bus",
-    "triple_brain.bubble_factory"
-], function ($, EventBus, BubbleFactory) {
+    "triple_brain.bubble_factory",
+    "triple_brain.suggestion_service",
+    "triple_brain.friendly_resource_service",
+    "triple_brain.selection_handler"
+], function ($, EventBus, BubbleFactory, SuggestionService, FriendlyResourceService, SelectionHandler) {
     "use strict";
     var enterKeyCode = 13,
         api = {},
         goToSameBubbleText;
     api.setUpLabel = function (label) {
         label.blur(function () {
-            nonEditMode($(this));
+            var $input = $(this),
+                element = BubbleFactory.fromSubHtml($input);
+            nonEditMode($input);
+            $input.maxChar();
+            if (!element.hasTextChangedAfterModification()) {
+                return;
+            }
+            if (element.isSuggestion()) {
+                var vertexSuggestion = element.isRelationSuggestion() ?
+                    element.getTopMostChildBubble() : element;
+                SuggestionService.accept(
+                    vertexSuggestion,
+                    updateLabel
+                );
+                return;
+            } else {
+                updateLabel();
+            }
+            updateLabelsOfElementsWithSameUri();
+            function updateLabelsOfElementsWithSameUri() {
+                var text = element.text();
+                $.each(element.getOtherInstances(), function () {
+                    var sameElement = this;
+                    sameElement.setText(
+                        text
+                    );
+                });
+            }
+            function updateLabel() {
+                FriendlyResourceService.updateLabel(
+                    element,
+                    $input.maxCharCleanText()
+                );
+            }
+            SelectionHandler.setToSingleGraphElement(element);
+
         }).keydown(function (event) {
             if (enterKeyCode === event.which) {
                 var hasSelectedFromAutocomplete = $("ul.ui-autocomplete:visible").find(".ui-state-focus").length > 0;
-                if (!hasSelectedFromAutocomplete){
+                if (!hasSelectedFromAutocomplete) {
                     event.preventDefault();
                     $(this).blur();
                 }
             }
         });
     };
-    api.addDuplicateElementButtonIfApplicable = function(element){
+    api.addDuplicateElementButtonIfApplicable = function (element) {
         var otherInstances = element.getOtherInstances();
         if (otherInstances.length === 0) {
             return;
@@ -69,7 +107,7 @@ define([
 
     EventBus.subscribe(
         'localized-text-loaded',
-        function(){
+        function () {
             goToSameBubbleText = $.t("vertex.same_bubble");
         }
     );

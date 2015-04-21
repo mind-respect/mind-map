@@ -44,22 +44,7 @@ define([
                     SelectionHandler.setToSingleRelation(edge);
                 }
             }
-        ).blur(function () {
-                var edge = BubbleFactory.fromSubHtml(
-                    $(this)
-                );
-                if (edge.isRelationSuggestion()) {
-                    SuggestionService.accept(
-                        edge.childVertexInDisplay(),
-                        updateLabel
-                    );
-                } else {
-                    updateLabel();
-                }
-                function updateLabel() {
-                    FriendlyResourceService.updateLabel(edge, edge.text());
-                }
-            }).appendTo(
+        ).appendTo(
             container
         ).tripleBrainAutocomplete({
                 limitNbRequests: true,

@@ -498,18 +498,6 @@ define([
                     this.getOneSuggestion()
                 ).create();
             };
-            this.getAVertexSuggestionInTree = function () {
-                debugger;
-                if(!hasShownSuggestions){
-                    GraphDisplayerAsRelativeTree.showSuggestions(
-                        this.getVertexUi()
-                    );
-                    hasShownSuggestions = true;
-                }
-                treeBuilder.getBubbleWithLabelInTree(
-                    this.getOneSuggestion().getLabel()
-                );
-            };
             this.getARelationSuggestionUi = function () {
                 return SuggestionRelationBuilder.withServerFacade(
                     this.getOneSuggestion()

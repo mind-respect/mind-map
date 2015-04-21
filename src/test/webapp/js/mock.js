@@ -66,10 +66,6 @@ define([
             user_name : "foo"
         }
     };
-    SuggestionService.accept = function(suggestionUi, callback){
-        callback();
-    };
     VertexService.addSuggestions = function(){};
-
     return api;
 });

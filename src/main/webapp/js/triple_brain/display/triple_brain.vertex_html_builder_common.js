@@ -100,43 +100,6 @@ define([
             uiSelector.getWhenEmptyLabel()
         ).maxChar().appendTo(inContentContainer);
         GraphElementHtmlBuilder.setUpLabel(label);
-
-        label.blur(function () {
-            var $input = $(this),
-                vertex = BubbleFactory.fromSubHtml($input);
-            $input.maxChar();
-            if(!vertex.hasTextChangedAfterModification()){
-                return;
-            }
-            if (vertex.isVertexSuggestion()) {
-                SuggestionService.accept(
-                    vertex,
-                    updateLabel
-                );
-                return;
-            } else {
-                updateLabel();
-            }
-            updateLabelsOfVerticesWithSameUri();
-            function updateLabelsOfVerticesWithSameUri() {
-                var text = vertex.text();
-                $.each(vertex.getOtherInstances(), function () {
-                    var sameVertex = this;
-                    sameVertex.setText(
-                        text
-                    );
-                });
-            }
-
-            function updateLabel() {
-                VertexService.updateLabel(
-                    BubbleFactory.fromSubHtml($input),
-                    $input.maxCharCleanText()
-                );
-            }
-
-            SelectionHandler.setToSingleVertex(vertex);
-        });
         if (vertex.isVertex()) {
             api.applyAutoCompleteIdentificationToLabelInput(
                 label

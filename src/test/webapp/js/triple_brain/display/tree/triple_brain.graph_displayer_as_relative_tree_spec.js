@@ -198,17 +198,17 @@ define([
         });
         it("can have duplicate relations", function () {
             var duplicateRelationsScenario = new Scenarios.graphWithARelationInTwoSimilarRelationsGroup(),
-                impact3InImpactOnTheIndividualContext = duplicateRelationsScenario.getImpact3RelationInTheImpactOnTheIndividualContext(),
-                impact3InImpactOnSocietyContext = duplicateRelationsScenario.getImpact3RelationInTheImpactOnSocietyContext();
+                impact3InIndividualContext = duplicateRelationsScenario.getImpact3RelationInTheImpactOnTheIndividualContext(),
+                impact3InSocietyContext = duplicateRelationsScenario.getImpact3RelationInTheImpactOnSocietyContext();
             expect(
-                impact3InImpactOnTheIndividualContext.getUri()
+                impact3InIndividualContext.getUri()
             ).toBe(
-                impact3InImpactOnSocietyContext.getUri()
+                impact3InSocietyContext.getUri()
             );
             expect(
-                impact3InImpactOnTheIndividualContext.getId()
+                impact3InIndividualContext.getId()
             ).not.toBe(
-                impact3InImpactOnSocietyContext.getId()
+                impact3InSocietyContext.getId()
             )
         });
         function connectDistantVertexTest(callback){
