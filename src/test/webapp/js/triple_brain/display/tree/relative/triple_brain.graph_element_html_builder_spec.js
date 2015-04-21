@@ -41,20 +41,22 @@ define([
             var vertexSuggestionInTree = eventBubble.getTopMostChildBubble().getTopMostChildBubble();
             Mock.mockAcceptSuggestion();
             expect(
-                vertexSuggestionInTree.getHtml().hasClass("suggestion")
+                vertexSuggestionInTree.isVertexSuggestion()
             ).toBeTruthy();
             var vertexSuggestionLabel = vertexSuggestionInTree.getLabel();
             vertexSuggestionInTree.focus();
             vertexSuggestionLabel.append("");
             vertexSuggestionLabel.blur();
+            vertexSuggestionInTree = eventBubble.getTopMostChildBubble().getTopMostChildBubble();
             expect(
-                vertexSuggestionInTree.getHtml().hasClass("suggestion")
+                vertexSuggestionInTree.isVertexSuggestion()
             ).toBeTruthy();
             vertexSuggestionInTree.focus();
             vertexSuggestionLabel.append("new text");
             vertexSuggestionLabel.blur();
+            vertexSuggestionInTree = eventBubble.getTopMostChildBubble().getTopMostChildBubble();
             expect(
-                vertexSuggestionInTree.getHtml().hasClass("suggestion")
+                vertexSuggestionInTree.isVertexSuggestion()
             ).toBeFalsy();
         });
         it("accepts relation and vertex suggestion if relation label is changed", function () {
@@ -65,20 +67,22 @@ define([
             var vertexSuggestionInTree = relationSuggestion.getTopMostChildBubble();
             Mock.mockAcceptSuggestion();
             expect(
-                relationSuggestion.getHtml().hasClass("suggestion")
+                relationSuggestion.isRelationSuggestion()
             ).toBeTruthy();
             expect(
-                vertexSuggestionInTree.getHtml().hasClass("suggestion")
+                vertexSuggestionInTree.isVertexSuggestion()
             ).toBeTruthy();
             var relationLabel = relationSuggestion.getLabel();
             relationSuggestion.focus();
             relationLabel.append("new text");
             relationLabel.blur();
+            relationSuggestion = eventBubble.getTopMostChildBubble();
+            vertexSuggestionInTree = relationSuggestion.getTopMostChildBubble();
             expect(
-                relationSuggestion.getHtml().hasClass("suggestion")
+                relationSuggestion.isRelationSuggestion()
             ).toBeFalsy();
             expect(
-                vertexSuggestionInTree.getHtml().hasClass("suggestion")
+                vertexSuggestionInTree.isVertexSuggestion()
             ).toBeFalsy();
         });
 

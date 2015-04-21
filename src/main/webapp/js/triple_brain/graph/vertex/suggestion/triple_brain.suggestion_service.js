@@ -25,14 +25,13 @@ define([
         });
     };
     api.acceptCallback = function(vertexUri, edgeUri, suggestionUi, callback){
-        var vertexUi = suggestionUi.integrate(vertexUri);
-        suggestionUi.getRelationWithUiParent().integrate(
-            edgeUri,
-            vertexUi
+        var newVertexUi = suggestionUi.integrateUsingNewVertexAndEdgeUri(
+            vertexUri,
+            edgeUri
         );
         if(callback !== undefined){
             callback(
-                vertexUi
+                newVertexUi
             );
         }
     };

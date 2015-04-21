@@ -4,8 +4,10 @@
 
 define([
     "test/webapp/js/test-scenarios",
-    "triple_brain.suggestion_service"
-], function (Scenarios, SuggestionService) {
+    "test/webapp/js/test-utils",
+    "triple_brain.suggestion_service",
+    "triple_brain.graph_displayer_as_relative_tree"
+], function (Scenarios, TestUtils, SuggestionService, GraphDisplayerAsRelativeTree) {
     "use strict";
     describe("suggestion_bubble_ui", function () {
         var oneSuggestionScenario;
@@ -23,6 +25,25 @@ define([
             expect(
                 sameSuggestion.text()
             ).not.toBe("test");
+        });
+        it("can remove newly accepted suggestion", function () {
+            var oneBubbleHavingSuggestionsGraph = new Scenarios.oneBubbleHavingSuggestionsGraph();
+            var eventBubble = oneBubbleHavingSuggestionsGraph.getVertexUi();
+            GraphDisplayerAsRelativeTree.showSuggestions(eventBubble);
+            var vertexSuggestionInTree = eventBubble.getTopMostChildBubble().getTopMostChildBubble();
+            vertexSuggestionInTree.integrateUsingNewVertexAndEdgeUri(
+                TestUtils.generateVertexUri(),
+                TestUtils.generateEdgeUri()
+            );
+            var newVertex = eventBubble.getTopMostChildBubble().getTopMostChildBubble();
+            expect(
+                eventBubble.hasChildren()
+            ).toBeTruthy();
+            var numberOfChild = eventBubble.getNumberOfChild();
+            newVertex.remove();
+            expect(
+                eventBubble.getNumberOfChild()
+            ).toBe(numberOfChild - 1);
         });
     });
 });

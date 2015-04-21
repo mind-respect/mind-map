@@ -30,6 +30,15 @@ define([
         return this.html.data("suggestionFacade");
     };
 
+    api.Self.prototype.integrateUsingNewVertexAndEdgeUri = function(newVertexUri, newEdgeUri){
+        var vertexUi = this.integrate(newVertexUri);
+        this.getRelationWithUiParent().integrate(
+            newEdgeUri,
+            vertexUi
+        );
+        return vertexUi;
+    };
+
     api.Self.prototype.integrate = function (newVertexUri) {
         api.removeFromCache(
             this.getUri(),
