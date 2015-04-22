@@ -25,10 +25,9 @@ define([
                 "click",
                 handleClickToDisplayVertexAsCentralVertex
             );
-            vertex = new RelativeTreeVertex.Object().init(
+            vertex = RelativeTreeVertex.createFromHtml(
                 html
             );
-            RelativeTreeVertex.initCache(vertex);
             var bubbleContent = $("<div class='in-bubble-content'>").appendTo(html);
             createLabel(bubbleContent);
             html.append("<span class='arrow'>");

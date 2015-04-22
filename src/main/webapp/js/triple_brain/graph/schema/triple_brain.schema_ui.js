@@ -3,11 +3,25 @@
  */
 define([
     "triple_brain.relative_tree_vertex",
+    "triple_brain.vertex_ui",
     "triple_brain.graph_element_ui"
-], function (RelativeTreeVertex, GraphElementUi) {
+], function (RelativeTreeVertex, VertexUi, GraphElementUi) {
     "use strict";
     var api = {};
     RelativeTreeVertex.buildCommonConstructors(api);
+    api.createFromHtml = function(html){
+        var schema = new api.Self(
+            html
+        );
+        api.initCache(schema);
+        RelativeTreeVertex.initCache(
+            schema
+        );
+        VertexUi.initCache(
+            schema
+        );
+        return schema;
+    };
     api.get = function(){
         return api.withHtml(
             $(".schema.vertex")

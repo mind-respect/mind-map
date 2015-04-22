@@ -10,6 +10,19 @@ define([
         var api = {};
         api.buildCommonConstructors = EdgeUi.buildCommonConstructors;
         EdgeUi.buildCommonConstructors(api);
+        api.createFromHtmlAndUri = function(html, uri){
+            var edge = new api.Self().init(
+                html
+            );
+            edge.setUri(uri);
+            api.initCache(
+                edge
+            );
+            EdgeUi.initCache(
+                edge
+            );
+            return edge;
+        };
         api.getWhenEmptyLabel = function () {
             return EdgeUi.getWhenEmptyLabel();
         };

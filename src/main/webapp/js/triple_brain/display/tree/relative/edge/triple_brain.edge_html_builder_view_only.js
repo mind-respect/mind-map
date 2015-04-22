@@ -42,16 +42,8 @@ define([
             ).append(
                 "<span class='connector'>"
             ).uniqueId();
-            var edge = new TreeEdge.Self().init(
-                html
-            );
-            TreeEdge.initCache(
-                edge
-            );
-            EdgeUi.initCache(
-                edge
-            );
-            edge.setUri(
+            var edge = TreeEdge.createFromHtmlAndUri(
+                html,
                 edgeServerFormat.getUri()
             );
             return edge;

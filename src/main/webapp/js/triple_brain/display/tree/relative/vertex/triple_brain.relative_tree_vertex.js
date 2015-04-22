@@ -15,6 +15,18 @@ define([
     function ($, VertexUi, EventBus, TreeEdge, ObjectUtils, TripleUiBuilder, SelectionHandler, PropertiesIndicator, BubbleFactory) {
         var api = {};
         VertexUi.buildCommonConstructors(api);
+        api.createFromHtml = function (html) {
+            var vertex = new api.Object().init(
+                html
+            );
+            api.initCache(
+                vertex
+            );
+            VertexUi.initCache(
+                vertex
+            );
+            return vertex;
+        };
         api.ofVertex = function (vertex) {
             return api.withHtml(
                 vertex.getHtml()

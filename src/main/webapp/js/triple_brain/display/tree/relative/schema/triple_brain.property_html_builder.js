@@ -15,6 +15,7 @@ define([
     function Self(serverFacade) {
         this.serverFacade = serverFacade;
     }
+
     Self.prototype.create = function () {
         this.html = $("<div class='property relation bubble graph-element'>").data(
             "uri",
@@ -23,8 +24,9 @@ define([
         var inBubbleContentContainer = $("<div class='in-bubble-content'>").appendTo(
                 this.html
             ),
-            property = new PropertyUi.Self(this.html);
-        PropertyUi.initCache(property);
+            property = PropertyUi.createFromHtml(
+                this.html
+            );
         EdgeHtmlBuilderCommon.buildLabel(
             inBubbleContentContainer,
             this.serverFacade.getLabel(),

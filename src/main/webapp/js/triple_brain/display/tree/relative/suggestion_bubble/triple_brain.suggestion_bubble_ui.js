@@ -11,6 +11,13 @@ define([
     "use strict";
     var api = {};
     RelativeTreeVertex.buildCommonConstructors(api);
+    api.createFromHtml = function(html){
+        var suggestion = new api.Self(
+            html
+        );
+        api.initCache(suggestion);
+        return suggestion;
+    };
     api.getWhenEmptyLabel = function(){
         return "suggestion";
     };
@@ -56,14 +63,8 @@ define([
         this.getLabel().attr(
             "placeholder", RelativeTreeVertex.getWhenEmptyLabel()
         );
-        var vertex = new RelativeTreeVertex.Object().init(
+        var vertex = RelativeTreeVertex.createFromHtml(
             this.html
-        );
-        RelativeTreeVertex.initCache(
-            vertex
-        );
-        VertexUi.initCache(
-            vertex
         );
         vertex.rebuildMenuButtons();
         EventBus.publish(

@@ -64,15 +64,9 @@ define([
             this.html.append(
                 "<span class='connector'>"
             );
-            var edge = new TreeEdge.Self().init(
-                this.html
-            );
-            edge.setUri(this.uri);
-            TreeEdge.initCache(
-                edge
-            );
-            EdgeUi.initCache(
-                edge
+            var edge = TreeEdge.createFromHtmlAndUri(
+                this.html,
+                this.uri
             );
             edge.setOriginalServerObject(
                 this.edgeServer

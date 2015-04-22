@@ -85,11 +85,6 @@ define([
             GraphDisplayer.getVertexMenuHandler().forSingle()
         );
     };
-    api.initCache = function (vertex) {
-        VertexUi.initCache(
-            vertex
-        );
-    };
     api.buildLabelHtml = function (vertex, inContentContainer, uiSelector, serverFacade) {
         var label = $(
             "<div class='bubble-label'>"

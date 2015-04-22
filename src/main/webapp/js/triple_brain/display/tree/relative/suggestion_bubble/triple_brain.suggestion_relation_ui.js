@@ -11,6 +11,12 @@ define([
     "use strict";
     var api = {};
     TreeEdge.buildCommonConstructors(api);
+    api.createFromHtmlAndUri = function(html, uri){
+        var relationSuggestion = new api.Self(html);
+        relationSuggestion.setUri(uri);
+        api.initCache(relationSuggestion);
+        return relationSuggestion;
+    };
     api.getWhenEmptyLabel = function () {
         return "suggestion"
     };
@@ -28,9 +34,6 @@ define([
             this.getUri(),
             this.getId()
         );
-        this.setUri(
-            newRelationUri
-        );
         this.html.removeClass(
             "suggestion"
         ).data(
@@ -43,12 +46,9 @@ define([
         this.getLabel().attr(
             "placeholder", TreeEdge.getWhenEmptyLabel()
         );
-        var edge = new TreeEdge.Self().init(this.html);
-        TreeEdge.initCache(
-            edge
-        );
-        EdgeUi.initCache(
-            edge
+        var edge = TreeEdge.createFromHtmlAndUri(
+            this.html,
+            newRelationUri
         );
         edge.rebuildMenuButtons();
         EventBus.publish(

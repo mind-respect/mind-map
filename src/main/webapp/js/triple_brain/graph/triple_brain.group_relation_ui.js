@@ -10,6 +10,13 @@ define([
     "use strict";
     var api = {};
     TreeEdge.buildCommonConstructors(api);
+    api.createFromHtml = function(html){
+        var groupRelation = new api.Self(html);
+        api.initCache(
+            groupRelation
+        );
+        return groupRelation;
+    };
     api.visitAllGroupRelations = function (visitor) {
         api.visitAll(function(element){
             if(element.isGroupRelation()){

@@ -38,9 +38,8 @@ define([
             this._addLabel();
             this._addArrow();
             this._createMenu();
-            var groupRelation = new GroupRelationUi.Self(this.html);
-            GroupRelationUi.initCache(
-                groupRelation
+            var groupRelation = GroupRelationUi.createFromHtml(
+                this.html
             );
             groupRelation.hideButtons();
             return groupRelation;

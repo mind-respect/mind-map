@@ -58,14 +58,8 @@ define([
                 htmlId = GraphUi.generateBubbleHtmlId();
             }
             this.html.attr('id', htmlId);
-            this.vertex = new RelativeTreeVertex.Object().init(
+            this.vertex = RelativeTreeVertex.createFromHtml(
                 this.html
-            );
-            RelativeTreeVertex.initCache(
-                this.vertex
-            );
-            VertexHtmlCommon.initCache(
-                this.vertex
             );
             this.vertex.setTotalNumberOfEdges(
                 this.serverFacade.getNumberOfConnectedEdges()

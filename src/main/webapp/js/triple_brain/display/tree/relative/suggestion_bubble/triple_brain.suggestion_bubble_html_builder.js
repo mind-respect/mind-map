@@ -32,14 +32,13 @@ define([
         ).attr('id', htmlId).data(
             "suggestionFacade", this.serverFacade
         );
-        var suggestionUi = new SuggestionBubbleUi.Self(
+        var suggestionUi = SuggestionBubbleUi.createFromHtml(
             this.html
         );
         suggestionUi.setSuggestions([]);
         suggestionUi.setIncludedVertices([]);
         suggestionUi.setIncludedEdges([]);
         this._setupIdentifications(suggestionUi);
-        SuggestionBubbleUi.initCache(suggestionUi);
         VertexHtmlCommon.setUpClickBehavior(
             this.html
         );

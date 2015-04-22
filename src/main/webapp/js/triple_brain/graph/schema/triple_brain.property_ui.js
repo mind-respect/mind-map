@@ -8,6 +8,11 @@ define([
     "use strict";
     var api = {};
     TreeEdge.buildCommonConstructors(api);
+    api.createFromHtml = function(html){
+        var property = new api.Self(html);
+        api.initCache(property);
+        return property;
+    };
     api.getWhenEmptyLabel = function(){
         return "property";
     };

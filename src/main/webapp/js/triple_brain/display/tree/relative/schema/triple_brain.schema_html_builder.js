@@ -33,10 +33,9 @@ define([
             htmlId = GraphUi.generateBubbleHtmlId();
         }
         this.html.attr('id', htmlId);
-        var schema = new SchemaUi.Self(
+        var schema = SchemaUi.createFromHtml(
             this.html
         );
-        SchemaUi.initCache(schema);
         VertexHtmlCommon.buildLabelHtml(
             schema,
             VertexHtmlCommon.buildInsideBubbleContainer(
@@ -53,12 +52,6 @@ define([
         schema.makePublic();
         schema.setNote(
             this.serverFacade.getComment()
-        );
-        RelativeTreeVertex.initCache(
-            schema
-        );
-        VertexHtmlCommon.initCache(
-            schema
         );
         VertexHtmlCommon.addNoteButtonNextToLabel(
             schema
