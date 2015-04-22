@@ -60,16 +60,22 @@ define([
             });
         };
         api.Object.prototype.remove = function () {
-            if(this._hasBeenCalledToRemove()){
+            if (this._hasBeenCalledToRemove() || this._isRemoved()) {
                 return;
             }
             this._setHasBeenCalledToRemove();
             this.applyToOtherInstances(function (otherInstance) {
                 otherInstance.remove();
             });
+            if (this._isRemoved()) {
+                return;
+            }
             this.visitVerticesChildren(function (childVertex) {
                 childVertex.remove();
             });
+            if (this._isRemoved()) {
+                return;
+            }
             api.removeFromCache(
                 this.getUri(),
                 this.getId()
@@ -78,14 +84,19 @@ define([
                 this
             );
         };
-        api.Object.prototype._setHasBeenCalledToRemove = function(){
+        api.Object.prototype._setHasBeenCalledToRemove = function () {
             this.getHtml().data(
                 "hasBeenCalledToRemove",
                 true
             );
         };
-        api.Object.prototype._hasBeenCalledToRemove = function(){
+        api.Object.prototype._hasBeenCalledToRemove = function () {
             return this.getHtml().data("hasBeenCalledToRemove") === true;
+        };
+        api.Object.prototype._isRemoved = function () {
+            return $.isEmptyObject(
+                this.getHtml().data()
+            );
         };
         api.Object.prototype.getRelationWithUiParent = function () {
             return this.getParentBubble();
@@ -122,6 +133,7 @@ define([
                 );
             });
         }
+
         return api;
     }
 );

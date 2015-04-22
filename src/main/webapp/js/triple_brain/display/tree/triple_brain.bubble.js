@@ -180,11 +180,7 @@ define([
         };
 
         api.Self.prototype.remove = function () {
-            if (this.isVertex()) {
-                SelectionHandler.removeVertex(this);
-            } else {
-                SelectionHandler.removeRelation(this);
-            }
+            SelectionHandler.removeAll();
             this.removeHiddenRelationsContainer();
             if (this.isCenterBubble()) {
                 this.html.closest(".vertex-container").remove();
