@@ -108,11 +108,7 @@ define([
         it("changes label of duplicate vertices", function () {
             var graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
             var bubble1 = graphWithCircularityScenario.getBubble1InTree();
-            var bubble2 = graphWithCircularityScenario.getBubble2InTree();
-            graphWithCircularityScenario.expandBubble2(bubble2);
-            var bubble3 = bubble2.getTopMostChildBubble().getTopMostChildBubble();
-            graphWithCircularityScenario.expandBubble3(bubble3);
-            var bubble1Duplicate = bubble3.getTopMostChildBubble().getTopMostChildBubble();
+            var bubble1Duplicate = graphWithCircularityScenario.getBubble1Duplicate();
             bubble1.focus();
             bubble1.getLabel().append(" new text");
             bubble1.getLabel().blur();

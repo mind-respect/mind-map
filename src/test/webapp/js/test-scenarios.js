@@ -696,6 +696,13 @@ define([
                     )
                 );
             };
+            this.getBubble1Duplicate = function(){
+                var bubble2 = this.getBubble2InTree();
+                this.expandBubble2(bubble2);
+                var bubble3 = bubble2.getTopMostChildBubble().getTopMostChildBubble();
+                this.expandBubble3(bubble3);
+                return bubble3.getTopMostChildBubble().getTopMostChildBubble();
+            };
             this.getCenterBubbleUri = function () {
                 return uriOfVertexWithLabel(
                     this.getGraph(),

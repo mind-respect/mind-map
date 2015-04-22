@@ -47,7 +47,6 @@ define([
             );
             return this;
         };
-
         api.Object.prototype.visitVerticesChildren = function (visitor) {
             var children = this.getChildrenBubblesHtml();
             $.each(children, function () {
@@ -60,7 +59,6 @@ define([
                 }
             });
         };
-
         api.Object.prototype.remove = function () {
             this.applyToOtherInstances(function (otherInstance) {
                 otherInstance.remove();
@@ -76,15 +74,12 @@ define([
                 this
             );
         };
-
         api.Object.prototype.getRelationWithUiParent = function () {
             return this.getParentBubble();
         };
-
         api.Object.prototype.isALeaf = function () {
             return !this.hasChildren();
         };
-
         api.Object.prototype.buildHiddenNeighborPropertiesIndicator = function () {
             var propertiesIndicator = PropertiesIndicator.withVertex(
                 this
@@ -94,54 +89,9 @@ define([
             );
             propertiesIndicator.build();
         };
-
         api.Object.prototype.hasHiddenRelations = function () {
             return this.isALeaf() && this.getTotalNumberOfEdges() > 1;
         };
-        EventBus.subscribe(
-            '/event/ui/graph/identification/added',
-            identificationAddedHandler
-        );
-        function identificationAddedHandler(event, graphElement, identification) {
-            if (!graphElement.isVertex()) {
-                return;
-            }
-            var treeVertex = api.ofVertex(graphElement);
-            treeVertex.applyToOtherInstances(function (vertex) {
-                var addAction = identification.rightActionForType(
-                    graphElement.addType,
-                    graphElement.addSameAs,
-                    graphElement.addGenericIdentification
-                );
-                addAction.call(
-                    vertex,
-                    identification
-                );
-            });
-        }
-
-        EventBus.subscribe(
-            '/event/ui/graph/identification/removed',
-            identificationRemovedHandler
-        );
-        function identificationRemovedHandler(event, graphElement, identification) {
-            if (!graphElement.isVertex()) {
-                return;
-            }
-            var treeVertex = api.ofVertex(graphElement);
-            treeVertex.applyToOtherInstances(function (vertex) {
-                var removeAction = identification.rightActionForType(
-                    graphElement.removeType,
-                    graphElement.removeSameAs,
-                    graphElement.removeGenericIdentification
-                );
-                removeAction.call(
-                    vertex,
-                    identification
-                );
-            });
-        }
-
         EventBus.subscribe(
             '/event/ui/graph/vertex_and_relation/added/',
             vertexAndRelationAddedHandler
@@ -159,7 +109,6 @@ define([
                 );
             });
         }
-
         return api;
     }
 );

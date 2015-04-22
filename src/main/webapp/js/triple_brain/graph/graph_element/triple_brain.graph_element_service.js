@@ -34,37 +34,43 @@ define([
                 data: identification.getJsonFormat(),
                 contentType: 'application/json;charset=utf-8',
                 statusCode: {
-                    201: ajaxCallBack
+                    201: function(serverIdentification){
+                        api._addIdentificationCallback(
+                            graphElement,
+                            identification,
+                            serverIdentification,
+                            callback
+                        )
+                    }
                 }
             });
         }
-        function ajaxCallBack(identificationServerFormat) {
-            var updatedIdentification = Identification.fromServerFormat(
-                identificationServerFormat
-            );
-            updatedIdentification.setType(identification.getType());
-            var addAction = updatedIdentification.rightActionForType(
-                graphElement.addType,
-                graphElement.addSameAs,
-                graphElement.addGenericIdentification
-            );
-            addAction.call(
+    };
+    api._addIdentificationCallback = function(graphElement, identification, serverIdentification, callback){
+        var updatedIdentification = Identification.fromServerFormat(
+            serverIdentification
+        );
+        updatedIdentification.setType(identification.getType());
+        var addAction = updatedIdentification.rightActionForType(
+            graphElement.addType,
+            graphElement.addSameAs,
+            graphElement.addGenericIdentification
+        );
+        addAction.call(
+            graphElement,
+            updatedIdentification
+        );
+        if (callback !== undefined) {
+            callback.call(
+                this,
                 graphElement,
                 updatedIdentification
             );
-            if (callback !== undefined) {
-                callback.call(
-                    this,
-                    graphElement,
-                    updatedIdentification
-                );
-            }
-            var eventBusKey = identificationBaseEventBusKey + "added";
-            EventBus.publish(
-                eventBusKey,
-                [graphElement, updatedIdentification]
-            );
         }
+        EventBus.publish(
+            identificationBaseEventBusKey + "added",
+            [graphElement, updatedIdentification]
+        );
     };
     api.removeIdentification = function (graphElement, identification, callback) {
         $.ajax({

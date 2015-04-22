@@ -255,6 +255,43 @@ define([
             "uri"
         );
     };
+
+    EventBus.subscribe(
+        '/event/ui/graph/identification/added',
+        identificationAddedHandler
+    );
+    function identificationAddedHandler(event, graphElement, identification) {
+        graphElement.applyToOtherInstances(function (vertex) {
+            var addAction = identification.rightActionForType(
+                graphElement.addType,
+                graphElement.addSameAs,
+                graphElement.addGenericIdentification
+            );
+            addAction.call(
+                vertex,
+                identification
+            );
+        });
+    }
+
+    EventBus.subscribe(
+        '/event/ui/graph/identification/removed',
+        identificationRemovedHandler
+    );
+    function identificationRemovedHandler(event, graphElement, identification) {
+        graphElement.applyToOtherInstances(function (vertex) {
+            var removeAction = identification.rightActionForType(
+                graphElement.removeType,
+                graphElement.removeSameAs,
+                graphElement.removeGenericIdentification
+            );
+            removeAction.call(
+                vertex,
+                identification
+            );
+        });
+    }
+
     return api;
     function initMenuHandlerGetters() {
         menuHandlerGetters[api.Types.Vertex] = GraphDisplayer.getVertexMenuHandler;
