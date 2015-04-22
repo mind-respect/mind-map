@@ -12,9 +12,9 @@ define([
         forSingleNotOwned = {},
         forGroup = {},
         forGroupNotOwned = {};
-    api.forSingle = function(){
+    api.forSingle = function () {
         return MindMapInfo.isViewOnly() ?
-            forSingleNotOwned:
+            forSingleNotOwned :
             forSingle;
     };
     forSingleNotOwned.identify = forSingle.identify = function (event, edge) {
@@ -22,24 +22,17 @@ define([
             edge
         ).create();
     };
-    forSingleNotOwned.identifyCanDo = function(edge){
+    forSingleNotOwned.identifyCanDo = function (edge) {
         return edge.hasIdentifications();
     };
     forSingle.remove = function (event, edge) {
         forSingle.removeAction(edge);
     };
     forSingle.removeAction = function (edge) {
-        EdgeService.remove(edge,
-            function (edge) {
-                var vertex = edge.childVertexInDisplay();
-                vertex.visitVerticesChildren(function (childVertex) {
-                    childVertex.removeConnectedEdges();
-                    childVertex.remove();
-                });
-                edge.remove();
-                vertex.remove();
-            }
-        );
+        EdgeService.remove(edge, function () {
+            var childVertex = edge.getTopMostChildBubble();
+            childVertex.remove();
+        });
     };
     forSingle.reverseToRight = function (event, edge) {
         forSingle.reverse(edge);
@@ -50,14 +43,14 @@ define([
     forSingle.reverseToRightCanDo = function (edge) {
         var isToTheLeft = edge.isToTheLeft();
         var isInverse = edge.isInverse();
-        return  (isToTheLeft && !isInverse) ||
+        return (isToTheLeft && !isInverse) ||
             (!isToTheLeft && isInverse);
 
     };
     forSingle.reverseToLeftCanDo = function (edge) {
         return !api.forSingle().reverseToRightCanDo(edge);
     };
-    forSingle.reverse = function(edge) {
+    forSingle.reverse = function (edge) {
         EdgeService.inverse(
             edge,
             function () {
@@ -65,9 +58,9 @@ define([
             }
         );
     };
-    api.forGroup = function(){
+    api.forGroup = function () {
         return MindMapInfo.isViewOnly() ?
-            forGroup:
+            forGroup :
             forGroupNotOwned;
     };
     return api;

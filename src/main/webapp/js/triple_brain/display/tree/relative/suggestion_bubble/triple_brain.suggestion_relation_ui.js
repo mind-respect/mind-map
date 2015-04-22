@@ -4,9 +4,10 @@
 
 define([
     "triple_brain.tree_edge",
+    "triple_brain.edge_ui",
     "triple_brain.graph_element_ui",
     "triple_brain.event_bus"
-], function (TreeEdge, GraphElementUi, EventBus) {
+], function (TreeEdge, EdgeUi, GraphElementUi, EventBus) {
     "use strict";
     var api = {};
     TreeEdge.buildCommonConstructors(api);
@@ -44,6 +45,9 @@ define([
         );
         var edge = new TreeEdge.Self().init(this.html);
         TreeEdge.initCache(
+            edge
+        );
+        EdgeUi.initCache(
             edge
         );
         edge.rebuildMenuButtons();

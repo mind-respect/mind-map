@@ -10,7 +10,7 @@ define([
             graph,
             centerVertex,
             possession,
-            deepGraphScenario
+            deepGraphScenario;
         beforeEach(function () {
             similarRelationsScenario = new Scenarios.GraphWithSimilarRelationsScenario();
             graph = similarRelationsScenario.getGraph();

@@ -62,6 +62,9 @@ define([
         RelativeTreeVertex.initCache(
             vertex
         );
+        VertexUi.initCache(
+            vertex
+        );
         vertex.rebuildMenuButtons();
         EventBus.publish(
             '/event/ui/html/vertex/created/',

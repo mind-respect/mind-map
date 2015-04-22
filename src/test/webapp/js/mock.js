@@ -11,8 +11,9 @@ define([
     "triple_brain.schema_service",
     "triple_brain.vertex_service",
     "triple_brain.friendly_resource_service",
+    "triple_brain.edge_service",
     "triple_brain.search"
-], function (TestUtils, UserService, MindMapInfo, SuggestionService, GraphService, SchemaService, VertexService, FriendlyResourceService, SearchService) {
+], function (TestUtils, UserService, MindMapInfo, SuggestionService, GraphService, SchemaService, VertexService, FriendlyResourceService, EdgeService, SearchService) {
     "use strict";
     var api = {};
     api.setCenterVertexUriInUrl = function(centerVertexUri){
@@ -59,6 +60,11 @@ define([
                 suggestionUi,
                 callback
             );
+        });
+    };
+    api.mockRemoveEdge = function(){
+        return spyOn(EdgeService, "remove").andCallFake(function(edge, callback){
+            callback(edge);
         });
     };
     UserService.authenticatedUserInCache = function(){
