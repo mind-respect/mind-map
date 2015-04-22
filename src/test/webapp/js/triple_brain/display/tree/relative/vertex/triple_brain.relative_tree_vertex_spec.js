@@ -4,8 +4,9 @@
 
 define([
     'test/webapp/js/test-scenarios',
+    'test/webapp/js/test-utils',
     'triple_brain.relative_tree_vertex'
-], function (Scenarios, RelativeTreeVertex) {
+], function (Scenarios, TestUtils, RelativeTreeVertex) {
     "use strict";
     describe("bubble", function () {
         var bubble1,
@@ -50,6 +51,32 @@ define([
                 numberOfVisitedVertices++;
             });
             expect(numberOfVisitedVertices).toBe(0);
+        });
+        it("can remove a vertex even if it has duplicates", function () {
+            var graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
+            var bubble1 = graphWithCircularityScenario.getBubble1InTree();
+            var bubble1Duplicate = graphWithCircularityScenario.getBubble1Duplicate();
+            expect(
+                TestUtils.isGraphElementUiRemoved(
+                    bubble1
+                )
+            ).toBeFalsy();
+            expect(
+                TestUtils.isGraphElementUiRemoved(
+                    bubble1Duplicate
+                )
+            ).toBeFalsy();
+            bubble1.remove();
+            expect(
+                TestUtils.isGraphElementUiRemoved(
+                    bubble1
+                )
+            ).toBeTruthy();
+            expect(
+                TestUtils.isGraphElementUiRemoved(
+                    bubble1Duplicate
+                )
+            ).toBeTruthy();
         });
     });
 });

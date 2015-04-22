@@ -12,6 +12,9 @@ define([
     api.generateEdgeUri = function(){
         return "\/service\/users\/foo\/graph\/edge\/" + generateUuid();
     };
+    api.isGraphElementUiRemoved = function(element){
+        return element.getHtml().parents(".root-vertex-super-container").length === 0;
+    };
     return api;
 
     function generateUuid() {

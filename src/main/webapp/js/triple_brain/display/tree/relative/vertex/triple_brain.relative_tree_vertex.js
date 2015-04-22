@@ -60,6 +60,10 @@ define([
             });
         };
         api.Object.prototype.remove = function () {
+            if(this._hasBeenCalledToRemove()){
+                return;
+            }
+            this._setHasBeenCalledToRemove();
             this.applyToOtherInstances(function (otherInstance) {
                 otherInstance.remove();
             });
@@ -73,6 +77,15 @@ define([
             VertexUi.Object.prototype.remove.call(
                 this
             );
+        };
+        api.Object.prototype._setHasBeenCalledToRemove = function(){
+            this.getHtml().data(
+                "hasBeenCalledToRemove",
+                true
+            );
+        };
+        api.Object.prototype._hasBeenCalledToRemove = function(){
+            return this.getHtml().data("hasBeenCalledToRemove") === true;
         };
         api.Object.prototype.getRelationWithUiParent = function () {
             return this.getParentBubble();
