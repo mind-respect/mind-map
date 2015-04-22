@@ -57,16 +57,16 @@ define([
             var formattedResults = [];
             $.each(searchResults, addFormattedResult);
             function addFormattedResult() {
-                var serverFormat = this,
-                    searchResult = SearchResult.fromServerFormat(serverFormat),
-                    graphElement = searchResult.getGraphElement();
+                var serverFormat = this;
+                var searchResult = SearchResult.fromServerFormat(serverFormat);
+                var graphElement = searchResult.getGraphElement();
                 if (undefined !== graphElementToIgnore && graphElement.getUri() === graphElementToIgnore.getUri()) {
                     return;
                 }
                 var formatted = applyBasicFormat(searchResult);
                 formatted.elementType = $.t(
-                        "search.context." +
-                        searchResult.getGraphElementType()
+                    "search.context." +
+                    searchResult.getGraphElementType()
                 );
                 formatted.somethingToDistinguish = searchResult.getSomethingToDistinguish();
                 formattedResults.push(

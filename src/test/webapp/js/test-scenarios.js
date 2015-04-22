@@ -867,6 +867,9 @@ define([
                 data = data[splitKey.shift()];
             }
             var deep = true;
+            if(data.constructor === Array){
+                return data.slice();
+            }
             return $.extend(deep, {}, data)
         }
     }

@@ -12,10 +12,9 @@ define([
         beforeEach(function () {
         });
         it("includes schema properties", function () {
-            var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),
-                formattedSearchResults = searchProvider.formatResults(
-                    new Scenarios.getSearchResultsForImpact().get(),
-                    "impact"
+            var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas();
+            var formattedSearchResults = searchProvider.formatResults(
+                    new Scenarios.getSearchResultsForImpact().get()
                 );
             expect(
                 searchResultIsProperty(
