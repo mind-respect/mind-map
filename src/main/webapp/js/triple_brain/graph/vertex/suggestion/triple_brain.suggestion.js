@@ -34,6 +34,7 @@ define([
         };
         api.fromFreebaseSuggestionAndOriginUri = function (freebaseSuggestion, typeUri) {
             var suggestionUri = api.generateUri();
+            debugger;
             if(freebaseSuggestion.name === null){
                 freebaseSuggestion.name = "";
             }

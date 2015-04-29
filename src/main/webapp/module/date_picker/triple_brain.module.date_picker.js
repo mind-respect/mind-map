@@ -4,13 +4,13 @@
 define([
         "jquery",
         "triple_brain.event_bus",
-        "jquery-ui"
+        "bootstrap-datepicker"
     ],
     function ($, EventBus) {
         "use strict";
         EventBus.subscribe(
-                "/event/ui/graph/identification/added",
-                handleIdentificationAdded
+            "/event/ui/graph/identification/added",
+            handleIdentificationAdded
         );
         EventBus.subscribe(
             '/event/ui/html/vertex/created/',
@@ -22,6 +22,7 @@ define([
                 applyDatePickerToVertex(graphlement);
             }
         }
+
         function handleVertexCreated(event, vertex) {
             $.each(vertex.getIdentifications(), function () {
                 var identification = this;
@@ -31,8 +32,19 @@ define([
                 }
             });
         }
+
         function applyDatePickerToVertex(graphlement) {
-            graphlement.getLabel().datepicker()
+            graphlement.getLabel().on(
+                "click",
+                function(){
+                    $(this).closest(".bubble").datepicker({
+                        container:"body"
+                    }).on("changeDate", function(event){
+                        event.date.toLocaleDateString();
+                        console.log("fun");
+                    });
+                }
+            );
         }
 
         function isIdentificationADate(identification) {

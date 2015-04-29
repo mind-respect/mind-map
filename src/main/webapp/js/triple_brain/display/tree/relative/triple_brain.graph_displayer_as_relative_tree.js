@@ -176,6 +176,7 @@ define([
     };
 
     api.showSuggestions = function (vertex) {
+        debugger;
         $.each(vertex.getSuggestions(), function () {
             var suggestion = this,
                 suggestionRelation = addEdge(

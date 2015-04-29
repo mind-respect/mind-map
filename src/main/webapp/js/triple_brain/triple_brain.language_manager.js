@@ -193,7 +193,7 @@ define([
             customLoad: function (lng, ns, options, loadComplete) {
                 var basePath = ns === "translation" ?
                     "locales/" :
-                "module/mind_map/" + ns + "/locales/";
+                "module/" + ns + "/locales/";
                 var url = basePath + lng + "/" + "translation" + ".json";
                 $.ajax({
                     url: url,

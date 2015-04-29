@@ -14,7 +14,7 @@ requirejs.config({
         "jquery-ui": "jquery/jquery-ui-11-4/jquery-ui.min",
         "jquery.url": "jquery/jquery.url",
         "jquery.nano": "jquery/jquery.nano",
-        "jquery.json.min": "jquery/jquery.json.min",
+        "jquery.json.min": "jquery/jquery.json.min", //TODO remove
         "jquery.tinysort.min": "jquery/jquery.tinysort.min",
         "jquery.cookie": "jquery/jquery.cookie",
         "jquery.colorbox": "jquery/jquery.colorbox-min",
@@ -23,6 +23,7 @@ requirejs.config({
         "jquery.is-fully-on-screen": "jquery/jquery.is-fully-on-screen",
         "jquery.i18next": "vendor/i18next.amd.withJQuery-1.6.3",
         "bootstrap": "vendor/bootstrap/3.3.4/bootstrap.min",
+        "bootstrap-datepicker": "vendor/bootstrap/3.3.4/bootstrap-datepicker.min",
         "jquery.max_char": "triple_brain/jquery.max_char",
         "jquery.triple_brain.search": "triple_brain/search/jquery.triple_brain.search",
         "triple_brain.big_search_box": "triple_brain/search/triple_brain.big_search_box",
@@ -153,6 +154,8 @@ requirejs.config({
         "jquery.cometd-timestamp": ["jquery"],
         "jquery.cometd-timesync": ["jquery"],
         "jquery.colorbox": ["jquery"],
-        "bootstrap": ["jquery"]
+        "bootstrap": ["jquery"],
+        "bootstrap-datepicker": ["bootstrap"]
+
     }
 });
