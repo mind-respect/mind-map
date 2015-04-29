@@ -38,6 +38,9 @@ define([
                 edge.inverse();
             }
             GraphElementHtmlBuilder.addDuplicateElementButtonIfApplicable(edge);
+            GraphElementHtmlBuilder.moveNoteButtonIfIsToTheLeft(
+                edge
+            );
             EventBus.publish(
                 '/event/ui/html/edge/created/',
                 edge

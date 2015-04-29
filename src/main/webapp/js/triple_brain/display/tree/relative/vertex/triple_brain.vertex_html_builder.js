@@ -24,10 +24,9 @@ define([
             GraphElementHtmlBuilder.addDuplicateElementButtonIfApplicable(
                 vertex
             );
-            if (vertex.isToTheLeft()) {
-                var noteButton = vertex.getNoteButtonInBubbleContent();
-                noteButton.next(".bubble-label").after(noteButton);
-            }
+            GraphElementHtmlBuilder.moveNoteButtonIfIsToTheLeft(
+                vertex
+            );
             if (vertex.hasHiddenRelations()) {
                 vertex.buildHiddenNeighborPropertiesIndicator();
             }

@@ -59,8 +59,13 @@
     left:auto;
     right:0;
 }
-.left-oriented .vertex .in-bubble-content .note-button{
+.left-oriented .vertex .in-bubble-content .in-bubble-note-button{
     margin-right:0;
+}
+
+.left-oriented .relation .in-bubble-content .in-bubble-note-button i{
+    margin-right:0;
+    margin-left:5px;
 }
 
 .left-oriented .group-relation .label{

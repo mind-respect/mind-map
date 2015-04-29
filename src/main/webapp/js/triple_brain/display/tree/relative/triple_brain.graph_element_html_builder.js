@@ -14,6 +14,12 @@ define([
     var enterKeyCode = 13,
         api = {},
         goToSameBubbleText;
+    api.moveNoteButtonIfIsToTheLeft = function(element){
+        if (element.isToTheLeft()) {
+            var noteButton = element.getNoteButtonInBubbleContent();
+            noteButton.next(".bubble-label").after(noteButton);
+        }
+    };
     api.setUpLabel = function (label) {
         label.blur(function () {
             var $input = $(this),
