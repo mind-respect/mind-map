@@ -54,7 +54,7 @@ define([
             this.uri = edgeServer.getUri();
             this.html = $(
                 "<div class='relation graph-element bubble'>"
-            ).append("<div class='in-bubble-content label label-info'>")
+            ).append("<div class='in-bubble-content label label-info'>");
         }
 
         EdgeCreator.prototype.create = function () {

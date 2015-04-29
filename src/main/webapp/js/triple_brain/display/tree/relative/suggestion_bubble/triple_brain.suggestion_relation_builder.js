@@ -32,12 +32,12 @@ define([
             this.serverFacade.getUri()
         ).uniqueId().append(
             "<span class='connector'>"
-        );
+        ).append("<div class='in-bubble-content label label-info'>");
         var label = this.serverFacade.isLabelEmpty() ?
             this.serverFacade.getSameAs().getUri() :
             this.serverFacade.getLabel();
         EdgeHtmlBuilderCommon.buildLabel(
-            this.html,
+            this.html.find(".in-bubble-content"),
             label,
             SuggestionRelationUi.getWhenEmptyLabel()
         ).css("visibility", "visible");
