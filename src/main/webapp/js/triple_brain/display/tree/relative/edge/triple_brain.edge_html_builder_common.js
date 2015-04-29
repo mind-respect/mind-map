@@ -69,7 +69,8 @@ define([
                         BubbleFactory.fromHtml(
                             container.closest(".bubble")
                         )
-                    )
+                    ),
+                    FreebaseAutocompleteProvider.forFetchingAnything()
                 ]
             }
         );
