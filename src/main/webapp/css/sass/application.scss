@@ -416,16 +416,12 @@ svg {
       box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb;
     }
   }
-  .label-container {
-    position: relative;
-    .label {
-      position: relative;
+  .in-bubble-content {
+    display: table-cell !important;
+    .bubble-label {
+      display: table-cell;
       margin-right: 0.3em;
       z-index: 1;
-    }
-    .menu {
-      display: inline;
-      top: 80%;
     }
   }
 }

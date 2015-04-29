@@ -127,9 +127,8 @@ svg { z-index: 1; }
 
 .group-relation { white-space: nowrap; }
 .group-relation.selected .in-bubble-content { box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb; }
-.group-relation .label-container { position: relative; }
-.group-relation .label-container .label { position: relative; margin-right: 0.3em; z-index: 1; }
-.group-relation .label-container .menu { display: inline; top: 80%; }
+.group-relation .in-bubble-content { display: table-cell !important; }
+.group-relation .in-bubble-content .bubble-label { display: table-cell; margin-right: 0.3em; z-index: 1; }
 
 .bubble { cursor: default; display: table; /*.label to override bootstrap*/ white-space: nowrap; position: relative; min-width: 0; margin: 0 0 0 0; }
 .bubble > *, .bubble .label { display: table-cell; vertical-align: middle; }

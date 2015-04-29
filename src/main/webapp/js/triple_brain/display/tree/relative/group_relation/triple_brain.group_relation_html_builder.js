@@ -33,7 +33,12 @@ define([
         Self.prototype.create = function () {
             this.html = $(
                 RelativeTreeTemplates['group_relation'].merge()
-            ).data("group_relation", this.serverFacade);
+            ).data(
+                "group_relation",
+                this.serverFacade
+            ).append(
+                "<div class='in-bubble-content label label-info'>"
+            );
             this.html.uniqueId();
             this._addLabel();
             this._addArrow();
@@ -51,8 +56,7 @@ define([
                 menu,
                 GraphDisplayer.getGroupRelationMenuHandler().forSingle()
             );
-            var container = this.html.find("> .label-container");
-            container[
+            this.html[
                 this.serverFacade.isLeftOriented ?
                     "prepend" :
                     "append"
@@ -62,11 +66,11 @@ define([
         };
 
         Self.prototype._addLabel = function () {
-            var container = $("<div class='label-container'>").appendTo(this.html);
+            var container = this.html.find(".in-bubble-content");
             var labelHtml = $(
-                RelativeTreeTemplates['group_relation_label_container'].merge({
-                    label: this.serverFacade.getIdentification().getLabel()
-                })
+                "<span class='bubble-label'>"
+            ).text(
+                this.serverFacade.getIdentification().getLabel()
             ).click(function (event) {
                     event.stopPropagation();
                     SelectionHandler.setToSingleGroupRelation(

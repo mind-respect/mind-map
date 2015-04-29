@@ -43,10 +43,6 @@ define([
             "group_relation",
             "<div class='group-relation relation bubble graph-element'></div>"
         );
-        t.add(
-            'group_relation_label_container',
-                '<div class="label label-info">{label}</div>'
-        );
         return api;
     }
 );
