@@ -25,12 +25,6 @@ define([
     api.Self.prototype.getGraphElementType = function(){
         return GraphElementUi.Types.Property;
     };
-
-    api.Self.prototype.getLabel = function () {
-        return this.html.find(".in-bubble-content > input").is(":visible") ?
-            this.html.find("> .in-bubble-content > input") :
-            this.html.find("span.label");
-    };
     api.Self.prototype.integrateIdentification = function (identification) {
         this.addImages(
             identification.getImages()

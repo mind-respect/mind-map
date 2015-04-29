@@ -21,7 +21,7 @@ define([
             "uri",
             this.serverFacade.getUri()
         ).uniqueId();
-        var inBubbleContentContainer = $("<div class='in-bubble-content'>").appendTo(
+        var inBubbleContentContainer = $("<div class='in-bubble-content label label-info'>").appendTo(
                 this.html
             ),
             property = PropertyUi.createFromHtml(
@@ -32,7 +32,7 @@ define([
             this.serverFacade.getLabel(),
             PropertyUi.getWhenEmptyLabel()
         );
-        this._buildMenu(inBubbleContentContainer).hide();
+        this._buildMenu(this.html).hide();
         this.html.append(
             $("<span class='arrow'>")
         );

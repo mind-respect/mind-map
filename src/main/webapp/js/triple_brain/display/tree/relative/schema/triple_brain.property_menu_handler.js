@@ -3,9 +3,10 @@
  */
 define([
     "triple_brain.mind_map_info",
+    "triple_brain.graph_element_menu_handler",
     "triple_brain.identification_menu",
     "triple_brain.friendly_resource_service"
-], function(MindMapInfo, IdentificationMenu, FriendlyResourceService){
+], function(MindMapInfo, GraphElementMenuHandler, IdentificationMenu, FriendlyResourceService){
    "use strict";
     var api = {},
         forSingle = {},
@@ -18,6 +19,13 @@ define([
             forSingleNotOwned:
             forSingle;
     };
+
+    forSingleNotOwned.note = forSingle.note = function (event, vertex) {
+        GraphElementMenuHandler.forSingle().note(
+            event, vertex
+        );
+    };
+
     forSingleNotOwned.identify = forSingle.identify = function (event, property) {
         event.stopPropagation();
         IdentificationMenu.ofGraphElement(

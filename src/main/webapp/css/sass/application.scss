@@ -412,7 +412,7 @@ svg {
 .group-relation {
   white-space: nowrap;
   &.selected {
-    .label {
+    .in-bubble-content {
       box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb;
     }
   }
@@ -460,7 +460,7 @@ svg {
   }
 
   &.suggestion {
-    .in-bubble-content, .label {
+    .in-bubble-content{
       background-color: white;
       border: 1px dashed black;
       color: black;
@@ -802,7 +802,7 @@ svg {
 
 .relation {
   position: relative;
-  .label-info {
+  .in-bubble-content {
     background-color: #3a87ad;
   }
   .in-bubble-note-button{

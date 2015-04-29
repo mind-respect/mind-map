@@ -126,7 +126,7 @@ svg { z-index: 1; }
 .graph-element .bubble-label { font-size: 13px; }
 
 .group-relation { white-space: nowrap; }
-.group-relation.selected .label { box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb; }
+.group-relation.selected .in-bubble-content { box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb; }
 .group-relation .label-container { position: relative; }
 .group-relation .label-container .label { position: relative; margin-right: 0.3em; z-index: 1; }
 .group-relation .label-container .menu { display: inline; top: 80%; }
@@ -137,7 +137,7 @@ svg { z-index: 1; }
 .bubble .in-bubble-note-button { cursor: pointer; margin: 0 17px 0 0; display: inherit; }
 .bubble .in-bubble-note-button i { font-size: 1.5em; }
 .bubble .duplicate-button-container { position: absolute; }
-.bubble.suggestion .in-bubble-content, .bubble.suggestion .label { background-color: white; border: 1px dashed black; color: black; text-shadow: none; }
+.bubble.suggestion .in-bubble-content { background-color: white; border: 1px dashed black; color: black; text-shadow: none; }
 .bubble .bubble-label { outline: 0px solid transparent; border: none; padding: 0; font-family: Helvetica; font-size: 14px; width: auto; display: table-cell; white-space: pre; min-width: 1em; height: 17px; }
 .bubble .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); color: grey; font-style: italic; }
 .bubble.selected .in-bubble-content { z-index: 2; }
@@ -204,7 +204,7 @@ svg { z-index: 1; }
 .property .relation-menu { left: 0; }
 
 .relation { position: relative; }
-.relation .label-info { background-color: #3a87ad; }
+.relation .in-bubble-content { background-color: #3a87ad; }
 .relation .in-bubble-note-button i { margin-right: 5px; margin-top: 3px; font-size: 1.5em; }
 .relation .bubble-label { font-family: helvetica; height: 14px; }
 .relation .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); font-style: italic; color: white; }
