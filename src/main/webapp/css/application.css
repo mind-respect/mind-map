@@ -146,7 +146,7 @@ svg { z-index: 1; }
 .bubble .connector { position: absolute; height: 1px; border-top: 1px solid black; top: 50%; width: 65px; left: -22px; z-index: -1; }
 .bubble .arrow { position: absolute; height: 1px; width: 60px; top: 50%; left: -42px; border-top: 1px solid black; z-index: -1; }
 .bubble .arrow:before { content: url("images/icons/vertex/arrowhead_right.svg"); position: relative; top: -10px; left: 20px; }
-.bubble .menu { width: 134px; margin-top: 5px; position: absolute; white-space: normal; background-color: white; opacity: 0.95; left: 0; top: 100%; }
+.bubble .menu { z-index: 3; width: 134px; margin-top: 5px; position: absolute; white-space: normal; background-color: white; opacity: 0.95; left: 0; top: 100%; }
 .bubble .menu ul:first-of-type { padding-left: 5px; }
 .bubble .menu ul { list-style: none; font-family: courier new, monospace; font-size: 18px; padding: 0 5px 0 0; margin: 0 0 0 0; display: inline; float: left; min-width: 12px; }
 .bubble .menu input { float: left; background-color: transparent; background-position: center; padding-left: 2px; padding-right: 2px; margin: 0; display: table; border: 1px solid #e30613; font-weight: bold; font-size: 19px; min-width: 25px; min-height: 14px; margin-top: 0px; }
@@ -169,7 +169,7 @@ svg { z-index: 1; }
 .vertex.center-vertex .in-bubble-content { border-radius: 15px; -webkit-box-shadow: 0 0 1em rgba(255, 128, 0, 0.1); -moz-box-shadow: 0 0 1em rgba(255, 128, 0, 0.1); box-shadow: 0 0 1em rgba(255, 128, 0, 0.5); }
 .vertex.center-vertex.selected .in-bubble-content { box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb; border: solid red; }
 .vertex .included-graph-elements-flag { position: absolute; top: 25px; left: 30%; font-weight: bold; }
-.vertex .menu, .vertex .included-graph-elements-flag { z-index: 3; }
+.vertex .included-graph-elements-flag { z-index: 3; }
 .vertex .in-bubble-content { border-radius: 20px; background-color: #E6E6FF; white-space: normal; padding: 1em; padding-bottom: 0.7em; padding-top: 0.7em; margin-left: 0.3em; position: relative; display: table; border: 1px; border-color: transparent; border-style: solid; z-index: 2; }
 .vertex .in-bubble-content > * { display: table-cell; }
 .vertex .in-bubble-content .in-bubble-note-button { width: 8px; margin: 0 17px 0 0; display: inherit; }

@@ -526,6 +526,7 @@ svg {
     }
   }
   .menu {
+    z-index:3;
     width: 134px;
     margin-top: 5px;
     position: absolute;
@@ -653,7 +654,7 @@ svg {
     left: 30%;
     font-weight: bold;
   }
-  .menu, .included-graph-elements-flag {
+  .included-graph-elements-flag {
     z-index: 3;
   }
   .in-bubble-content {
