@@ -4,11 +4,12 @@
 define([
     "triple_brain.schema_ui",
     "triple_brain.vertex_html_builder_common",
+    "triple_brain.graph_element_html_builder",
     "triple_brain.graph_element_main_menu",
     "triple_brain.schema_menu_handler",
     "triple_brain.relative_tree_vertex",
     "triple_brain.ui.graph"
-], function(SchemaUi, VertexHtmlCommon, GraphElementMainMenu, SchemaMenuHandler, RelativeTreeVertex, GraphUi){
+], function(SchemaUi, VertexHtmlCommon, GraphElementHtmlBuilder, GraphElementMainMenu, SchemaMenuHandler, RelativeTreeVertex, GraphUi){
     "use strict";
     var api = {};
     api.withServerFacade = function(serverFacade){
@@ -53,7 +54,7 @@ define([
         schema.setNote(
             this.serverFacade.getComment()
         );
-        VertexHtmlCommon.addNoteButtonNextToLabel(
+        GraphElementHtmlBuilder.addNoteButtonNextToLabel(
             schema
         );
         return schema;

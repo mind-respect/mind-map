@@ -173,23 +173,6 @@ define([
                 label
             );
         };
-        api.Object.prototype.setNote = function (note) {
-            this.html.data("note", note);
-        };
-        api.Object.prototype.getNote = function () {
-            return this.html.data("note");
-        };
-        api.Object.prototype.hasNote = function () {
-            return this.getNote().trim().length > 0;
-        };
-        api.Object.prototype.getNoteButtonInBubbleContent = function () {
-            return this.getInBubbleContainer().find(
-                "> .in-bubble-note-button"
-            );
-        };
-        api.Object.prototype.getNoteButtonInMenu = function () {
-            return this.getMenuHtml().find("> .note-button");
-        };
 
         api.Object.prototype.removeConnectedEdges = function () {
             var connectedEdges = this.connectedEdges();

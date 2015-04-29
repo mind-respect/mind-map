@@ -206,12 +206,6 @@ define([
         };
 
         api.threeBubblesGraph = function () {
-            /*
-             b1-r1->b2
-             b1-r2->b3
-             b2 has two hidden relations
-             b3 has two hidden relations
-             */
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
                 return getTestData(

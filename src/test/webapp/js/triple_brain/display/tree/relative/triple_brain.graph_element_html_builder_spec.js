@@ -123,5 +123,22 @@ define([
                 "b1 new text"
             );
         });
+        it("shows note button only if element has a note", function () {
+            var threeBubblesGraph = new Scenarios.threeBubblesGraph();
+            var bubble1InTree = threeBubblesGraph.getBubble1InTree();
+            expect(
+                bubble1InTree.hasNote()
+            ).toBeFalsy();
+            expect(
+                bubble1InTree.getNoteButtonInBubbleContent().hasClass("hidden")
+            ).toBeTruthy();
+            var bubble3InTree = threeBubblesGraph.getBubble3InTree();
+            expect(
+                bubble3InTree.hasNote()
+            ).toBeTruthy();
+            expect(
+                bubble3InTree.getNoteButtonInBubbleContent().hasClass("hidden")
+            ).toBeFalsy();
+        });
     });
 });

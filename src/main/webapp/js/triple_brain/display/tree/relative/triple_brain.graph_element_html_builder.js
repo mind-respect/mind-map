@@ -105,6 +105,35 @@ define([
         }
     };
 
+    api.addNoteButtonNextToLabel = function (graphElement) {
+        var noteButton = $(
+            "<div class='in-bubble-note-button'>"
+        ).append(
+            "<i class='fa fa-book'>"
+        ).prop(
+            "title",
+            graphElement.getNoteButtonInMenu().prop("title")
+        ).click(clickHandler);
+        noteButton.parent().tooltip();
+        noteButton[
+            graphElement.hasNote() ?
+                "removeClass" :
+                "addClass"
+            ]("hidden");
+        graphElement.getLabel().before(
+            noteButton
+        );
+        function clickHandler(event) {
+            var vertex = BubbleFactory.fromSubHtml(
+                $(this)
+            );
+            vertex.getMenuHandler().forSingle().note(
+                event,
+                vertex
+            );
+        }
+    };
+
     EventBus.subscribe(
         'localized-text-loaded',
         function () {

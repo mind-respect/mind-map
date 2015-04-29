@@ -255,7 +255,23 @@ define([
             "uri"
         );
     };
-
+    api.Self.prototype.setNote = function (note) {
+        this.html.data("note", note);
+    };
+    api.Self.prototype.getNote = function () {
+        return this.html.data("note");
+    };
+    api.Self.prototype.hasNote = function () {
+        return this.getNote().trim().length > 0;
+    };
+    api.Self.prototype.getNoteButtonInBubbleContent = function () {
+        return this.getInBubbleContainer().find(
+            "> .in-bubble-note-button"
+        );
+    };
+    api.Self.prototype.getNoteButtonInMenu = function () {
+        return this.getMenuHtml().find("> .note-button");
+    };
     EventBus.subscribe(
         '/event/ui/graph/identification/added',
         identificationAddedHandler

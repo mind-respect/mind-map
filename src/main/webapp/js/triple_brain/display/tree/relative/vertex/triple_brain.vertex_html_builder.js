@@ -89,7 +89,7 @@ define([
                 this.serverFacade.getComment()
             );
             this._createMenu();
-            VertexHtmlCommon.addNoteButtonNextToLabel(
+            GraphElementHtmlBuilder.addNoteButtonNextToLabel(
                 this.vertex
             );
             this.vertex.addSuggestions(

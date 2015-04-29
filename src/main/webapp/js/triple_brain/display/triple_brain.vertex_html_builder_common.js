@@ -124,36 +124,7 @@ define([
             );
         }
     };
-    api.addNoteButtonNextToLabel = function (vertex) {
-        var noteButton = $(
-            "<div class='in-bubble-note-button'>"
-        ).append(
-            "<i class='fa fa-book'>"
-        ).prop(
-            "title",
-            vertex.getNoteButtonInMenu().prop("title")
-        ).click(clickHandler);
-        noteButton.parent().tooltip();
-        noteButton[
-            vertex.hasNote() ?
-                "removeClass" :
-                "addClass"
-            ]("hidden");
-        vertex.getLabel().before(
-            noteButton
-        );
-        function clickHandler(event) {
-            var vertex = BubbleFactory.fromSubHtml(
-                $(this)
-            );
-            vertex.getMenuHandler().forSingle().note(
-                event,
-                vertex
-            );
-        }
-    };
     return api;
-
     function clickHandler(event) {
         event.stopPropagation();
         var vertex = BubbleFactory.fromSubHtml(
