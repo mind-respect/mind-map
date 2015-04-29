@@ -37,5 +37,28 @@ define([
                 hasBeenIntoCallback
             ).toBeTruthy();
         });
+        it("includes schema property comment", function(){
+            var searchProvider = UserMapAutocompleteProvider.toFetchRelationsForIdentification(),
+                formattedSearchResults = searchProvider.formatResults(
+                    new Scenarios.getSearchResultsForImpact().get(),
+                    "impact on society"
+                ),
+                hasBeenIntoCallback = false;
+            Mock.getSearchResultDetailsToReturn(
+                new Scenarios.impactOnSocietyPropertySearchDetails().get()
+            );
+            IdentificationContext.build(
+                formattedSearchResults[0].nonFormattedSearchResult,
+                function(html){
+                    hasBeenIntoCallback = true;
+                    expect(
+                        html.html().indexOf("impact on society comment") !== -1
+                    ).toBeTruthy();
+                }
+            );
+            expect(
+                hasBeenIntoCallback
+            ).toBeTruthy();
+        });
     });
 });

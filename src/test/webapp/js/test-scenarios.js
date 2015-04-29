@@ -637,16 +637,15 @@ define([
             };
         };
 
+        api.impactOnSocietyPropertySearchDetails = function () {
+            this.get = function () {
+                return getTestData(
+                    "projectSchema.impactOnSocietySearchDetails"
+                );
+            };
+        };
+
         api.getSearchResultsForImpact = function () {
-            /*
-             * schema project
-             * project -> impact on the individual
-             * project -> impact on society
-             * project -> has objective
-             * project -> has component
-             *
-             * another bubble labeled impact
-             */
             this.get = function () {
                 return getTestData(
                     "projectSchema.searchResultsForImpact"

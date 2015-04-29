@@ -51,6 +51,8 @@ define([
                 return this._makeBubbleContext();
             case GraphElementType.Relation :
                 return this._makeRelationContext();
+            case GraphElementType.Property :
+                return this._makePropertyContext();
             default:
                 return $("<div>");
         }
@@ -66,9 +68,16 @@ define([
                     vertex.getLabel(),
                 " "
             );
-        return context.append(
+        this._addCommentToContext(
+            context
+        );
+        return context
+    };
+
+    Self.prototype._addCommentToContext = function (context) {
+        context.append(
             $("<div>").append(
-                vertex.getComment()
+                this.detailedGraphElement.getComment()
             )
         );
     };
@@ -84,17 +93,29 @@ define([
         var relation = this.originalSearchResult.getGraphElement();
         var sourceVertex = relation.getSourceVertex(),
             destinationVertex = relation.getDestinationVertex();
-        return $("<div class='context'>").append(
-                $.t("vertex.search.destination_bubble") + ": ",
+        var context = $("<div class='context'>").append(
+            $.t("vertex.search.destination_bubble") + ": ",
             this.makeBubbleLinks ?
                 this._vertexLink(destinationVertex) :
                 destinationVertex.getLabel(),
             "<br>",
-                $.t("vertex.search.source_bubble") + ": ",
+            $.t("vertex.search.source_bubble") + ": ",
             this.makeBubbleLinks ?
                 this._vertexLink(sourceVertex) :
                 sourceVertex.getLabel()
         );
+        this._addCommentToContext(
+            context
+        );
+        return context;
+    };
+
+    Self.prototype._makePropertyContext = function () {
+        var context = $("<div>");
+        this._addCommentToContext(
+            context
+        );
+        return context;
     };
     Self.prototype._vertexLink = function () {
         return $("<button class='link-like-button'>").append(
