@@ -10,7 +10,7 @@ define([
     "triple_brain.triple_ui",
     "triple_brain.identification_menu",
     "triple_brain.graph_displayer",
-    "triple_brain.vertex_menu_handler_common",
+    "triple_brain.graph_element_menu_handler",
     "triple_brain.delete_menu",
     "triple_brain.edge_ui",
     "triple_brain.image_menu",
@@ -18,7 +18,7 @@ define([
     "triple_brain.included_graph_elements_menu",
     "triple_brain.vertex_ui",
     "triple_brain.mind_map_info"
-], function ($, VertexService, SelectionHandler, RelativeTreeVertex, UiUtils, TripleUi, IdentificationMenu, GraphDisplayer, VertexMenuHandlerCommon, DeleteMenu, EdgeUi, ImageMenu, LinkToFarVertexMenu, IncludedGraphElementsMenu, VertexUi, MindMapInfo) {
+], function ($, VertexService, SelectionHandler, RelativeTreeVertex, UiUtils, TripleUi, IdentificationMenu, GraphDisplayer, GraphElementMenuHandler, DeleteMenu, EdgeUi, ImageMenu, LinkToFarVertexMenu, IncludedGraphElementsMenu, VertexUi, MindMapInfo) {
     "use strict";
     var api = {},
         forSingle = {},
@@ -72,7 +72,7 @@ define([
         );
     };
     forSingleNotOwned.note = forSingle.note = function (event, vertex) {
-        VertexMenuHandlerCommon.forSingle().note(
+        GraphElementMenuHandler.forSingle().note(
             event, vertex
         );
     };

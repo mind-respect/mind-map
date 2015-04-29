@@ -404,7 +404,7 @@ svg {
     color: black;
     font-weight: normal;
   }
-  .label {
+  .bubble-label {
     font-size: 13px;
   }
 }
@@ -431,6 +431,7 @@ svg {
 }
 
 .bubble {
+  cursor: default;
   display: table;
   /*.label to override bootstrap*/
   > *, .label {
@@ -442,6 +443,15 @@ svg {
       &:before {
         left: 0;
       }
+    }
+  }
+
+  .in-bubble-note-button{
+    cursor: pointer;
+    margin:0 17px 0 0;
+    display:inherit;
+    i{
+      font-size:1.5em;
     }
   }
 
@@ -570,23 +580,7 @@ svg {
   }
 }
 
-.relation span.label {
-  font-family: helvetica;
-  height: 14px;
-  &:empty:not(:focus):before {
-    content: attr(data-placeholder);
-    font-style: italic;
-  }
-}
-
-.relation span.label.input-size {
-  font-family: courier new, monospace;
-  padding-right: 10px;
-  font-size: 14px !important;
-}
-
 .vertex {
-  cursor: default;
   /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */
   white-space: nowrap;
   &.edit {
@@ -682,10 +676,9 @@ svg {
       display: table-cell;
     }
     .in-bubble-note-button{
-      cursor: pointer;
       width:8px;
       margin:0 17px 0 0;
-      display:block;
+      display:inherit;
       i{
         font-size:1.5em;
         position:absolute;
@@ -811,6 +804,22 @@ svg {
   position: relative;
   .label-info {
     background-color: #3a87ad;
+  }
+  .in-bubble-note-button{
+    i{
+      margin-right:5px;
+      margin-top:3px;
+      font-size:1.5em;
+    }
+  }
+  .bubble-label{
+    font-family: helvetica;
+    height: 14px;
+    &:empty:not(:focus):before {
+      content: attr(data-placeholder);
+      font-style: italic;
+      color:white;
+    }
   }
   .relation-menu {
     z-index: 11;

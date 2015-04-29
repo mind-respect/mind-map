@@ -124,12 +124,12 @@ define([
             noteButton
         );
         function clickHandler(event) {
-            var vertex = BubbleFactory.fromSubHtml(
+            var element = BubbleFactory.fromSubHtml(
                 $(this)
             );
-            vertex.getMenuHandler().forSingle().note(
+            element.getMenuHandler().forSingle().note(
                 event,
-                vertex
+                element
             );
         }
     };

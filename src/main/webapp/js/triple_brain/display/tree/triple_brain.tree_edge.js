@@ -58,7 +58,7 @@ define([
             }
         };
         api.Self.prototype.getLabel = function () {
-            return this.html.find("span.label");
+            return this.html.find(".bubble-label");
         };
         api.Self.prototype.inverse = function () {
             this.html[

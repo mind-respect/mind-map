@@ -19,9 +19,7 @@ define([
     var api = {};
     api.buildLabel = function (container, text, whenEmptyLabel) {
         var label = $(
-            "<span>"
-        ).addClass(
-            "label label-info"
+            "<span class='bubble-label'>"
         ).text(
             text
         ).attr(

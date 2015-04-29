@@ -123,7 +123,7 @@ svg { z-index: 1; }
 .graph { background-color: white; }
 
 .graph-element input[type='text'] { text-shadow: none; box-shadow: none; color: black; font-weight: normal; }
-.graph-element .label { font-size: 13px; }
+.graph-element .bubble-label { font-size: 13px; }
 
 .group-relation { white-space: nowrap; }
 .group-relation.selected .label { box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb; }
@@ -131,9 +131,11 @@ svg { z-index: 1; }
 .group-relation .label-container .label { position: relative; margin-right: 0.3em; z-index: 1; }
 .group-relation .label-container .menu { display: inline; top: 80%; }
 
-.bubble { display: table; /*.label to override bootstrap*/ white-space: nowrap; position: relative; min-width: 0; margin: 0 0 0 0; }
+.bubble { cursor: default; display: table; /*.label to override bootstrap*/ white-space: nowrap; position: relative; min-width: 0; margin: 0 0 0 0; }
 .bubble > *, .bubble .label { display: table-cell; vertical-align: middle; }
 .bubble.view-only .arrow:before { left: 0; }
+.bubble .in-bubble-note-button { cursor: pointer; margin: 0 17px 0 0; display: inherit; }
+.bubble .in-bubble-note-button i { font-size: 1.5em; }
 .bubble .duplicate-button-container { position: absolute; }
 .bubble.suggestion .in-bubble-content, .bubble.suggestion .label { background-color: white; border: 1px dashed black; color: black; text-shadow: none; }
 .bubble .bubble-label { outline: 0px solid transparent; border: none; padding: 0; font-family: Helvetica; font-size: 14px; width: auto; display: table-cell; white-space: pre; min-width: 1em; height: 17px; }
@@ -153,12 +155,7 @@ svg { z-index: 1; }
 .bubble .menu .ui-button { float: left; background-color: white; }
 .bubble.inverse .arrow:before { content: url("images/icons/vertex/arrowhead_left.svg"); }
 
-.relation span.label { font-family: helvetica; height: 14px; }
-.relation span.label:empty:not(:focus):before { content: attr(data-placeholder); font-style: italic; }
-
-.relation span.label.input-size { font-family: courier new, monospace; padding-right: 10px; font-size: 14px !important; }
-
-.vertex { cursor: default; /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */ white-space: nowrap; }
+.vertex { /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */ white-space: nowrap; }
 .vertex.edit .in-bubble-content { width: 325px; max-width: 325px; }
 .vertex.edit .in-bubble-content .in-bubble-note-button { display: none; }
 .vertex.edit .bubble-label { white-space: pre-wrap; }
@@ -177,7 +174,7 @@ svg { z-index: 1; }
 .vertex .menu, .vertex .included-graph-elements-flag { z-index: 3; }
 .vertex .in-bubble-content { border-radius: 20px; background-color: #E6E6FF; white-space: normal; padding: 1em; padding-bottom: 0.7em; padding-top: 0.7em; margin-left: 0.3em; position: relative; display: table; border: 1px; border-color: transparent; border-style: solid; z-index: 2; }
 .vertex .in-bubble-content > * { display: table-cell; }
-.vertex .in-bubble-content .in-bubble-note-button { cursor: pointer; width: 8px; margin: 0 17px 0 0; display: block; }
+.vertex .in-bubble-content .in-bubble-note-button { width: 8px; margin: 0 17px 0 0; display: inherit; }
 .vertex .in-bubble-content .in-bubble-note-button i { font-size: 1.5em; position: absolute; }
 .vertex .in-bubble-content .duplicate-button-container { left: -17px; top: -18px; }
 .vertex .move { background-image: url("images/icons/vertex/move.png"); min-width: 25px; min-height: 25px; margin-right: 5px; margin-left: 8px; float: left; }
@@ -208,6 +205,9 @@ svg { z-index: 1; }
 
 .relation { position: relative; }
 .relation .label-info { background-color: #3a87ad; }
+.relation .in-bubble-note-button i { margin-right: 5px; margin-top: 3px; font-size: 1.5em; }
+.relation .bubble-label { font-family: helvetica; height: 14px; }
+.relation .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); font-style: italic; color: white; }
 .relation .relation-menu { z-index: 11; position: absolute; left: 0; top: 22px; }
 .relation .ui-button { width: 1.7em; height: 1.8em; margin: 0; }
 .relation .duplicate-button-container { left: -20px; top: -23px; }

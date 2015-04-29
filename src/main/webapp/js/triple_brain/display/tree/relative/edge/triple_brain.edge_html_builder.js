@@ -51,13 +51,13 @@ define([
             this.uri = edgeServer.getUri();
             this.html = $(
                 "<div class='relation graph-element bubble'>"
-            ).append("<div class='in-bubble-content'>")
+            ).append("<div class='in-bubble-content label label-info'>")
         }
 
         EdgeCreator.prototype.create = function () {
             this.html.uniqueId();
             EdgeHtmlBuilderCommon.buildLabel(
-                this.html,
+                this.html.find(".in-bubble-content"),
                 this.edgeServer.getLabel(),
                 TreeEdge.getWhenEmptyLabel()
             );
@@ -71,7 +71,13 @@ define([
             edge.setOriginalServerObject(
                 this.edgeServer
             );
+            edge.setNote(
+                this.edgeServer.getComment()
+            );
             buildMenu(edge);
+            GraphElementHtmlBuilder.addNoteButtonNextToLabel(
+                edge
+            );
             edge.hideMenu();
             edge.setTypes([]);
             edge.setSameAs([]);
@@ -92,7 +98,7 @@ define([
         };
         function buildMenu(edge) {
             var edgeHtml = edge.getHtml(),
-                menu = $("<span class='relation-menu'>");
+                menu = $("<span class='relation-menu menu'>");
             edgeHtml.append(menu);
             GraphElementMainMenu.addRelevantButtonsInMenu(
                 menu,

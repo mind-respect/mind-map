@@ -3,10 +3,11 @@
  */
 define([
     "jquery",
+    "triple_brain.graph_element_menu_handler",
     "triple_brain.identification_menu",
     "triple_brain.edge_service",
     "triple_brain.mind_map_info"
-], function ($, IdentificationMenu, EdgeService, MindMapInfo) {
+], function ($, GraphElementMenuHandler, IdentificationMenu, EdgeService, MindMapInfo) {
     var api = {},
         forSingle = {},
         forSingleNotOwned = {},
@@ -16,6 +17,11 @@ define([
         return MindMapInfo.isViewOnly() ?
             forSingleNotOwned :
             forSingle;
+    };
+    forSingleNotOwned.note = forSingle.note = function (event, vertex) {
+        GraphElementMenuHandler.forSingle().note(
+            event, vertex
+        );
     };
     forSingleNotOwned.identify = forSingle.identify = function (event, edge) {
         IdentificationMenu.ofGraphElement(
