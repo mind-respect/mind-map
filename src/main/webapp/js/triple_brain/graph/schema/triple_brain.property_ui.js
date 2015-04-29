@@ -13,6 +13,13 @@ define([
         api.initCache(property);
         return property;
     };
+    api.visitAllProperties = function (visitor) {
+        api.visitAll(function(element){
+            if(element.isProperty()){
+                visitor(element);
+            }
+        });
+    };
     api.getWhenEmptyLabel = function(){
         return "property";
     };
