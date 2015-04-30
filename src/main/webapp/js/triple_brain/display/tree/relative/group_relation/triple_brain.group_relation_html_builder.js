@@ -37,7 +37,7 @@ define([
                 "group_relation",
                 this.serverFacade
             ).append(
-                "<div class='in-bubble-content label label-info'>"
+                "<div class='in-bubble-content'>"
             );
             this.html.uniqueId();
             this._addLabel();
@@ -68,7 +68,7 @@ define([
         Self.prototype._addLabel = function () {
             var container = this.html.find(".in-bubble-content");
             var labelHtml = $(
-                "<span class='bubble-label'>"
+                "<div class='bubble-label label label-info'>"
             ).text(
                 this.serverFacade.getIdentification().getLabel()
             ).click(function (event) {

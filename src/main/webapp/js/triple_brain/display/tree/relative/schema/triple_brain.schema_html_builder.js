@@ -54,7 +54,7 @@ define([
         schema.setNote(
             this.serverFacade.getComment()
         );
-        GraphElementHtmlBuilder.addNoteButtonNextToLabel(
+        VertexHtmlCommon.buildNoteButton(
             schema
         );
         return schema;

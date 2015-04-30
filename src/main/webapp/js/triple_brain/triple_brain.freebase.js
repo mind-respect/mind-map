@@ -44,7 +44,6 @@ define([
             }
         };
         api.addSuggestionsToVertexFromFreebaseId = function (vertex, freebaseId) {
-            debugger;
             var propertiesOfTypeQuery = {
                 id: freebaseId,
                 type: "/type/type",

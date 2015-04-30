@@ -38,7 +38,7 @@ define([
                 edge.inverse();
             }
             GraphElementHtmlBuilder.addDuplicateElementButtonIfApplicable(edge);
-            GraphElementHtmlBuilder.moveNoteButtonIfIsToTheLeft(
+            EdgeHtmlBuilderCommon.moveNoteButtonIfIsToTheLeft(
                 edge
             );
             EventBus.publish(
@@ -54,7 +54,7 @@ define([
             this.uri = edgeServer.getUri();
             this.html = $(
                 "<div class='relation graph-element bubble'>"
-            ).append("<div class='in-bubble-content label label-info'>");
+            ).append("<div class='in-bubble-content'>");
         }
 
         EdgeCreator.prototype.create = function () {
@@ -78,7 +78,7 @@ define([
                 this.edgeServer.getComment()
             );
             buildMenu(edge);
-            GraphElementHtmlBuilder.addNoteButtonNextToLabel(
+            EdgeHtmlBuilderCommon.buildNoteButton(
                 edge
             );
             edge.hideMenu();

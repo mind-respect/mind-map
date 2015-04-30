@@ -15,7 +15,7 @@ define([
         return new Self(serverFacade);
     };
     api.completeBuild = function(property){
-        GraphElementHtmlBuilder.moveNoteButtonIfIsToTheLeft(
+        EdgeHtmlBuilderCommon.moveNoteButtonIfIsToTheLeft(
             property
         );
     };
@@ -28,7 +28,7 @@ define([
             "uri",
             this.serverFacade.getUri()
         ).uniqueId();
-        var inBubbleContentContainer = $("<div class='in-bubble-content label label-info'>").appendTo(
+        var inBubbleContentContainer = $("<div class='in-bubble-content'>").appendTo(
                 this.html
             ),
             property = PropertyUi.createFromHtml(
@@ -43,7 +43,7 @@ define([
             this.serverFacade.getComment()
         );
         this._buildMenu(this.html).hide();
-        GraphElementHtmlBuilder.addNoteButtonNextToLabel(
+        EdgeHtmlBuilderCommon.buildNoteButton(
             property
         );
         this.html.append(

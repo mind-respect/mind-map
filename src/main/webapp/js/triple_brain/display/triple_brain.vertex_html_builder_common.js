@@ -124,6 +124,20 @@ define([
             );
         }
     };
+    api.buildNoteButton = function(vertex){
+        var noteButton = GraphElementHtmlBuilder.buildNoteButton(
+            vertex
+        );
+        vertex.getLabel().before(
+            noteButton
+        );
+    };
+    api.moveNoteButtonIfIsToTheLeft = function(vertex){
+        if (vertex.isToTheLeft()) {
+            var noteButton = vertex.getNoteButtonInBubbleContent();
+            noteButton.next(".bubble-label").after(noteButton);
+        }
+    };
     return api;
     function clickHandler(event) {
         event.stopPropagation();

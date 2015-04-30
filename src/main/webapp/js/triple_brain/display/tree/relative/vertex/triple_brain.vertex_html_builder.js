@@ -24,7 +24,7 @@ define([
             GraphElementHtmlBuilder.addDuplicateElementButtonIfApplicable(
                 vertex
             );
-            GraphElementHtmlBuilder.moveNoteButtonIfIsToTheLeft(
+            VertexHtmlCommon.moveNoteButtonIfIsToTheLeft(
                 vertex
             );
             if (vertex.hasHiddenRelations()) {
@@ -88,7 +88,7 @@ define([
                 this.serverFacade.getComment()
             );
             this._createMenu();
-            GraphElementHtmlBuilder.addNoteButtonNextToLabel(
+            VertexHtmlCommon.buildNoteButton(
                 this.vertex
             );
             this.vertex.addSuggestions(

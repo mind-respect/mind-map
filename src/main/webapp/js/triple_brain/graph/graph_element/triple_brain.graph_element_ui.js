@@ -265,8 +265,8 @@ define([
         return this.getNote().trim().length > 0;
     };
     api.Self.prototype.getNoteButtonInBubbleContent = function () {
-        return this.getInBubbleContainer().find(
-            "> .in-bubble-note-button"
+        return this.getHtml().find(
+            ".in-bubble-note-button"
         );
     };
     api.Self.prototype.getNoteButtonInMenu = function () {

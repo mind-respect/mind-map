@@ -412,7 +412,7 @@ svg {
 .group-relation {
   white-space: nowrap;
   &.selected {
-    .in-bubble-content {
+    .in-bubble-content .bubble-label{
       box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb;
     }
   }
@@ -465,7 +465,6 @@ svg {
   .bubble-label {
     outline: 0px solid transparent;
     border: none;
-    padding: 0;
     font-family: Helvetica;
     font-size: 14px;
     width: auto;
@@ -491,6 +490,8 @@ svg {
     z-index: 3;
     position: relative;
     min-width: 60px;
+    text-align:right;
+    left:3px;
     &:empty {
       min-width: 0;
     }
@@ -513,11 +514,17 @@ svg {
   .arrow {
     position: absolute;
     height: 1px;
-    width: 60px;
+    width: 67px;
     top: 50%;
     left: -42px;
     border-top: 1px solid black;
     z-index: -1;
+    ~{
+      background-color:yellow;
+    }
+    ~ .in-bubble-note-button:not(hidden){
+      width:100%;
+    }
     &:before {
       content: url('images/icons/vertex/arrowhead_right.svg');
       position: relative;
@@ -525,6 +532,7 @@ svg {
       left: 20px;
     }
   }
+
   .menu {
     z-index:3;
     width: 134px;
@@ -670,6 +678,9 @@ svg {
     > * {
       display: table-cell;
     }
+    .bubble-label{
+      padding:0;
+    }
     .in-bubble-note-button{
       width:8px;
       margin:0 17px 0 0;
@@ -797,23 +808,24 @@ svg {
 
 .relation {
   position: relative;
-  .in-bubble-content {
-    background-color: #3a87ad;
-  }
-  .in-bubble-note-button{
-    i{
-      margin-right:5px;
-      margin-top:3px;
-      font-size:1.5em;
+  .in-bubble-content{
+    .bubble-label{
+      background-color: #3a87ad;
+      font-family: helvetica;
+      font-size:13px;
+      height: auto;
+      &:empty:not(:focus):before {
+        content: attr(data-placeholder);
+        font-style: italic;
+        color:white;
+      }
     }
   }
-  .bubble-label{
-    font-family: helvetica;
-    height: 14px;
-    &:empty:not(:focus):before {
-      content: attr(data-placeholder);
-      font-style: italic;
-      color:white;
+  .in-bubble-note-button{
+    margin-right:5px;
+    i{
+      margin-top:3px;
+      font-size:1.5em;
     }
   }
   .relation-menu {

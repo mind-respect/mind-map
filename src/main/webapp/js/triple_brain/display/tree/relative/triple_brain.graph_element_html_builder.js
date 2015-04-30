@@ -14,12 +14,6 @@ define([
     var enterKeyCode = 13,
         api = {},
         goToSameBubbleText;
-    api.moveNoteButtonIfIsToTheLeft = function(element){
-        if (element.isToTheLeft()) {
-            var noteButton = element.getNoteButtonInBubbleContent();
-            noteButton.next(".bubble-label").after(noteButton);
-        }
-    };
     api.setUpLabel = function (label) {
         label.blur(function () {
             var $input = $(this),
@@ -111,7 +105,7 @@ define([
         }
     };
 
-    api.addNoteButtonNextToLabel = function (graphElement) {
+    api.buildNoteButton = function (graphElement) {
         var noteButton = $(
             "<div class='in-bubble-note-button'>"
         ).append(
@@ -126,9 +120,7 @@ define([
                 "removeClass" :
                 "addClass"
             ]("hidden");
-        graphElement.getLabel().before(
-            noteButton
-        );
+        return noteButton;
         function clickHandler(event) {
             var element = BubbleFactory.fromSubHtml(
                 $(this)

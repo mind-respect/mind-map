@@ -17,9 +17,15 @@ define([
 ], function (MindMapInfo, FriendlyResourceService, SelectionHandler, RelativeTreeTemplates, Identification, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementService, SuggestionService, GraphElementHtmlBuilder, BubbleFactory) {
     "use strict";
     var api = {};
+    api.moveNoteButtonIfIsToTheLeft = function(edge){
+        if (edge.isToTheLeft()) {
+            var noteButton = edge.getNoteButtonInBubbleContent();
+            edge.getHtml().append(noteButton);
+        }
+    };
     api.buildLabel = function (container, text, whenEmptyLabel) {
         var label = $(
-            "<span class='bubble-label'>"
+            "<div class='bubble-label label label-info'>"
         ).text(
             text
         ).attr(
@@ -90,6 +96,14 @@ define([
         }
         GraphElementHtmlBuilder.setUpLabel(label);
         return label;
+    };
+    api.buildNoteButton = function(edge){
+        var noteButton = GraphElementHtmlBuilder.buildNoteButton(
+            edge
+        );
+        edge.getInBubbleContainer().before(
+            noteButton
+        );
     };
     return api;
 });

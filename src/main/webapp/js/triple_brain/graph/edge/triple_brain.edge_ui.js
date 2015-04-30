@@ -22,8 +22,8 @@ define([
         api.buildCommonConstructors = function (api) {
             GraphElementUi.buildCommonConstructors(api);
             api.visitAllEdges = function (visitor) {
-                api.visitAll(function(element){
-                    if(element.isRelation()){
+                api.visitAll(function (element) {
+                    if (element.isRelation()) {
                         visitor(element);
                     }
                 });

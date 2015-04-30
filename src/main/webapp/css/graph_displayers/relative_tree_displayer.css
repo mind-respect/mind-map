@@ -63,7 +63,7 @@
     margin-right:0;
 }
 
-.left-oriented .relation .in-bubble-content .in-bubble-note-button i{
+.left-oriented .relation .in-bubble-note-button{
     margin-right:0;
     margin-left:5px;
 }
@@ -85,7 +85,7 @@
 
 .left-oriented .bubble .arrow:before{
      content:url('../images/icons/vertex/arrowhead_left.svg');
-     left:30px;
+     left:43px;
 }
 
 .left-oriented .bubble.view-only .arrow:before{
@@ -168,7 +168,7 @@
     z-index:5;
 }
 
-.relation.inverse .in-bubble-content{
+.relation.inverse .in-bubble-content .bubble-label{
     background: mediumpurple;
 }
 
