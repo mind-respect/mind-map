@@ -1,3 +1,7 @@
+/*
+ * Copyright Vincent Blouin under the GPL License version 3
+ */
+
 (function( window, undefined ) {
 
 // Can't do this because several apps including ASP.NET trace

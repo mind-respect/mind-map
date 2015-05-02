@@ -1,6 +1,7 @@
 /*
- * Copyright Vincent Blouin under the Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the GPL License version 3
  */
+
 define([
     "triple_brain.relative_tree_vertex",
     "triple_brain.vertex_ui",

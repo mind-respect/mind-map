@@ -1,3 +1,7 @@
+/*
+ * Copyright Vincent Blouin under the GPL License version 3
+ */
+
 (function($)
 {
     function bind($, org_cometd)

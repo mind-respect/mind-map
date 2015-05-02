@@ -1,6 +1,7 @@
 /*
- * Copyright Vincent Blouin under the Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the GPL License version 3
  */
+
 define([
         "text!test/resources/test-scenarios-data.json",
         'triple_brain.vertex',

@@ -1,6 +1,7 @@
 /*
- * Copyright Vincent Blouin under the Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the GPL License version 3
  */
+
 define([
         "triple_brain.relative_tree_displayer_templates",
         "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",

@@ -1,6 +1,6 @@
 
 /*
- * Copyright Vincent Blouin under the Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the GPL License version 3
  */
 
 /**

@@ -1,3 +1,7 @@
+/*
+ * Copyright Vincent Blouin under the GPL License version 3
+ */
+
 (function( global, factory ) {
 
     if ( typeof module === "object" && typeof module.exports === "object" ) {

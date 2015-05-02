@@ -1,6 +1,7 @@
 /*
- * Copyright Vincent Blouin under the Mozilla Public License 1.1
+ * Copyright Vincent Blouin under the GPL License version 3
  */
+
 define([
         "jquery",
         "triple_brain.id_uri",

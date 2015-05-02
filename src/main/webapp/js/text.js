@@ -1,8 +1,7 @@
-/**
- * @license RequireJS text 2.0.13+ Copyright (c) 2010-2014, The Dojo Foundation All Rights Reserved.
- * Available via the MIT or new BSD license.
- * see: http://github.com/requirejs/text for details
+/*
+ * Copyright Vincent Blouin under the GPL License version 3
  */
+
 /*jslint regexp: true */
 /*global require, XMLHttpRequest, ActiveXObject,
   define, window, process, Packages,

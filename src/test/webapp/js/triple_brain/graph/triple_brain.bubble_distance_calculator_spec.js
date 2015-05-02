@@ -1,3 +1,7 @@
+/*
+ * Copyright Vincent Blouin under the GPL License version 3
+ */
+
 define([
     'test/webapp/js/test-scenarios',
     'triple_brain.event_bus',
