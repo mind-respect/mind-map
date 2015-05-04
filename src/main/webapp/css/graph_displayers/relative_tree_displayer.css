@@ -75,7 +75,7 @@
 
 .left-oriented .bubble .arrow{
     left: auto;
-    right:-42px;
+    right:-50px;
 }
 
 .left-oriented .bubble .connector{
@@ -85,7 +85,7 @@
 
 .left-oriented .bubble .arrow:before{
      content:url('../images/icons/vertex/arrowhead_left.svg');
-     left:43px;
+     left:34px;
 }
 
 .left-oriented .bubble.view-only .arrow:before{

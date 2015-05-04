@@ -84,8 +84,11 @@ define(
             };
 
             function addHtmlToBubble() {
+                var className = bubble.isInTheRelationFamily()?
+                    ".in-bubble-content":
+                    ".in-bubble-content-wrapper";
                 bubble.getHtml().children(
-                    ".in-bubble-content-wrapper"
+                    className
                 ).before(html);
             }
 

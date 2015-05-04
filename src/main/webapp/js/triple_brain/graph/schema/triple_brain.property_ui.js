@@ -33,11 +33,6 @@ define([
     api.Self.prototype.getGraphElementType = function(){
         return GraphElementUi.Types.Property;
     };
-    api.Self.prototype.integrateIdentification = function (identification) {
-        this.addImages(
-            identification.getImages()
-        );
-    };
     api.Self.prototype.remove = function () {
         this.html.closest(".vertex-tree-container").remove();
     };

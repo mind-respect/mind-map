@@ -41,6 +41,7 @@ define([
             EdgeHtmlBuilderCommon.moveNoteButtonIfIsToTheLeft(
                 edge
             );
+            edge.refreshImages();
             EventBus.publish(
                 '/event/ui/html/edge/created/',
                 edge
@@ -97,6 +98,9 @@ define([
                     sameAsFromServer
                 );
             });
+            edge.addImages(
+                this.edgeServer.getImages()
+            );
             return edge;
         };
         function buildMenu(edge) {

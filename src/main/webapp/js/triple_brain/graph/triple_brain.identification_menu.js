@@ -285,7 +285,10 @@ define([
             return this.graphElement.isVertex() ? function (concept, identificationResource) {
                 graphElement.serverFacade().addGenericIdentification(concept, identificationResource);
                 graphElement.refreshImages();
-            } : graphElement.serverFacade().addSameAs;
+            } : function(concept, identificationResource){
+                graphElement.serverFacade().addSameAs(concept, identificationResource);
+                graphElement.refreshImages();
+            }
         };
 
         IdentificationMenu.prototype._makeRemoveButton = function () {

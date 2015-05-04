@@ -86,10 +86,6 @@ define([
                 sourceVertexUri
             );
         };
-        api.Object.prototype.impactOnRemovedIdentification = function () {
-        };
-        api.Object.prototype.integrateIdentification = function () {
-        };
         api.Object.prototype.serverFacade = function () {
             return EdgeService;
         };

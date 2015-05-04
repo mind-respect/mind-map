@@ -151,8 +151,8 @@ define([
     api.Self.prototype.isRelationSuggestion = function () {
         return this.getGraphElementType() === api.Types.RelationSuggestion;
     };
-    api.Self.prototype.isBubble = function () {
-        return !this.isRelation() && !this.isRelationSuggestion();
+    api.Self.prototype.isInTheRelationFamily = function () {
+        return this.getHtml().hasClass("relation");
     };
     api.Self.prototype.getSimilarButtonHtml = function (button) {
         return this.getMenuHtml().find(

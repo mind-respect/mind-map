@@ -48,7 +48,8 @@ define([
                 id: freebaseId,
                 type: "/type/type",
                 properties: [
-                    {   id: null,
+                    {
+                        id: null,
                         name: null,
                         "/common/topic/description": [],
                         expected_type: {
@@ -64,8 +65,8 @@ define([
                 url: FreebaseUri.MQL_READ_URL + "?query=" + JSON.stringify(
                     propertiesOfTypeQuery
                 ) +
-                    "&lang=" + FreebaseUri.getMqlReadLocale() +
-                    "&key=" + FreebaseUri.key,
+                "&lang=" + FreebaseUri.getMqlReadLocale() +
+                "&key=" + FreebaseUri.key,
                 dataType: 'jsonp'
             }).success(function (result) {
                 var freebaseProperties = [];
@@ -100,9 +101,9 @@ define([
             return $.ajax({
                 type: 'GET',
                 url: FreebaseUri.SEARCH_URL +
-                    "?query=" + freebaseId +
-                    "&key=" + FreebaseUri.key +
-                    "&output=(description)&lang=" + FreebaseUri.getFreebaseFormattedUserLocales(),
+                "?query=" + freebaseId +
+                "&key=" + FreebaseUri.key +
+                "&output=(description)&lang=" + FreebaseUri.getFreebaseFormattedUserLocales(),
                 dataType: 'jsonp'
             }).done(function (xhr) {
                 var hasDescription = xhr.result[0].output.description["/common/topic/description"] !== undefined;
@@ -152,10 +153,10 @@ define([
                 Image.getBase64OfExternalUrl(url, function (base64) {
                     var image = Image.withBase64ForSmallAndUrlForBigger(
                         base64,
-                            FreebaseUri.IMAGE_URL +
-                            imageId +
-                            "?maxwidth=600&key=" +
-                            FreebaseUri.key
+                        FreebaseUri.IMAGE_URL +
+                        imageId +
+                        "?maxwidth=600&key=" +
+                        FreebaseUri.key
                     );
                     identification.addImage(image);
                     graphElement.addImages([image]);
@@ -182,18 +183,17 @@ define([
             }
             var identificationId = FreebaseUri.idInFreebaseURI(identificationUri);
             var modificationCalls = [];
-            if (graphElement.isBubble()) {
-                if (identification.hasImages()) {
-                    graphElement.refreshImages();
-                } else {
-                    modificationCalls.push(
-                        defineImages(
-                            graphElement,
-                            identificationId,
-                            identification
-                        )
-                    );
-                }
+            debugger;
+            if (identification.hasImages()) {
+                graphElement.refreshImages();
+            } else {
+                modificationCalls.push(
+                    defineImages(
+                        graphElement,
+                        identificationId,
+                        identification
+                    )
+                );
             }
             if (!identification.hasComment()) {
                 modificationCalls.push(

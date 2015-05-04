@@ -19,6 +19,7 @@ define([
         EdgeHtmlBuilderCommon.moveNoteButtonIfIsToTheLeft(
             property
         );
+        property.refreshImages();
     };
     function Self(serverFacade) {
         this.serverFacade = serverFacade;
@@ -65,7 +66,9 @@ define([
                 sameAsFromServer
             );
         });
-        property.refreshImages();
+        property.addImages(
+            this.serverFacade.getImages()
+        );
         return property;
     };
     Self.prototype._buildMenu = function (container) {

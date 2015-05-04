@@ -115,7 +115,6 @@ define([
     };
 
     function removeEdgeInGraphForTraversal(sourceVertexId, destinationVertexId){
-        debugger;
         var sourceVertex = graphForTraversal.getNode(
             sourceVertexId
         );
