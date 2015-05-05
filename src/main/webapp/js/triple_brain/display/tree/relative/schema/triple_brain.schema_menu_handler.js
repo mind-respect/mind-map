@@ -7,9 +7,10 @@ define([
         "triple_brain.graph_displayer",
         "triple_brain.graph_element",
         "triple_brain.graph_element_menu_handler",
-        "triple_brain.mind_map_info"
+        "triple_brain.mind_map_info",
+        "triple_brain.identification_menu"
     ],
-    function (SchemaService, GraphDisplayer, GraphElement, GraphElementMenuHandler, MindMapInfo) {
+    function (SchemaService, GraphDisplayer, GraphElement, GraphElementMenuHandler, MindMapInfo, IdentificationMenu) {
         "use strict";
         var api = {},
             forSingle = {},
@@ -38,6 +39,12 @@ define([
                     );
                 }
             );
+        };
+        forSingleNotOwned.identify = forSingle.identify = function (event, vertex) {
+            event.stopPropagation();
+            IdentificationMenu.ofGraphElement(
+                vertex
+            ).create();
         };
         forSingleNotOwned.note = forSingle.note = function (event, vertex) {
             GraphElementMenuHandler.forSingle().note(

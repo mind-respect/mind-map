@@ -22,14 +22,14 @@ define([
     function Self(schemaServerFormat){
         this.schemaServerFormat = schemaServerFormat;
         this._properties = this._buildProperties();
-        FriendlyResource.Self.apply(
+        GraphElement.Self.apply(
             this
         );
         this.init(
-            schemaServerFormat.friendlyResource
+            schemaServerFormat.graphElement
         );
     }
-    Self.prototype = new FriendlyResource.Self;
+    Self.prototype = new GraphElement.Self;
     Self.prototype.getProperties = function(){
         return this._properties;
     };

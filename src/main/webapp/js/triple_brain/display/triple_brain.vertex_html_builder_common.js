@@ -96,11 +96,9 @@ define([
             uiSelector.getWhenEmptyLabel()
         ).maxChar().appendTo(inContentContainer);
         GraphElementHtmlBuilder.setUpLabel(label);
-        if (vertex.isVertex()) {
-            api.applyAutoCompleteIdentificationToLabelInput(
-                label
-            );
-        }
+        api.applyAutoCompleteIdentificationToLabelInput(
+            label
+        );
         return label;
     };
     api.buildInsideBubbleContainer = function (html) {

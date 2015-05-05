@@ -102,7 +102,6 @@ define([
             this.vertex.addImages(
                 this.serverFacade.getImages()
             );
-
             this.vertex.getHtml().append(
                 $("<span class='arrow'>")
             );

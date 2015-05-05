@@ -4,19 +4,27 @@
 
 define([
     "triple_brain.schema_ui",
+    "triple_brain.mind_map_info",
     "triple_brain.vertex_html_builder_common",
     "triple_brain.graph_element_html_builder",
     "triple_brain.graph_element_main_menu",
     "triple_brain.schema_menu_handler",
     "triple_brain.relative_tree_vertex",
-    "triple_brain.ui.graph"
-], function(SchemaUi, VertexHtmlCommon, GraphElementHtmlBuilder, GraphElementMainMenu, SchemaMenuHandler, RelativeTreeVertex, GraphUi){
+    "triple_brain.ui.graph",
+    "triple_brain.event_bus"
+], function(SchemaUi, MindMapInfo, VertexHtmlCommon, GraphElementHtmlBuilder, GraphElementMainMenu, SchemaMenuHandler, RelativeTreeVertex, GraphUi, EventBus){
     "use strict";
     var api = {};
     api.withServerFacade = function(serverFacade){
         return new Self(
             serverFacade
         );
+    };
+    api.completeBuild = function(){
+        if(!MindMapInfo.isSchemaMode()){
+            return;
+        }
+        SchemaUi.get().refreshImages();
     };
     function Self(serverFacade){
         this.serverFacade = serverFacade;
@@ -50,6 +58,13 @@ define([
             this._addMenu(),
             SchemaMenuHandler.forSingle()
         );
+        VertexHtmlCommon.setUpIdentifications(
+            this.serverFacade,
+            schema
+        );
+        schema.addImages(
+            this.serverFacade.getImages()
+        );
         schema.hideMenu();
         schema.makePublic();
         schema.setNote(
@@ -65,6 +80,10 @@ define([
             this.html
         );
     };
-
+    EventBus.subscribe(
+        '/event/ui/graph/drawn',
+        api.completeBuild
+    );
     return api;
+
 });
