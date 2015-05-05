@@ -808,6 +808,9 @@ svg {
 
 .relation {
   position: relative;
+  .menu{
+    background-color:transparent;
+  }
   &.suggestion {
     .in-bubble-content{
       border:none;

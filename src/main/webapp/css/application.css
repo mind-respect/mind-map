@@ -205,6 +205,7 @@ svg { z-index: 1; }
 .property .relation-menu { left: 0; }
 
 .relation { position: relative; }
+.relation .menu { background-color: transparent; }
 .relation.suggestion .in-bubble-content { border: none; }
 .relation.suggestion .in-bubble-content .bubble-label { border: 1px dashed black; background-color: white; color: black; text-shadow: none; }
 .relation .in-bubble-content .bubble-label { background-color: #3a87ad; font-family: helvetica; font-size: 13px; height: auto; }
