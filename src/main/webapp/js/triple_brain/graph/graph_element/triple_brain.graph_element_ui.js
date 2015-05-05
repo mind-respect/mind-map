@@ -7,7 +7,8 @@ define([
     "triple_brain.graph_element_main_menu",
     "triple_brain.graph_element_type",
     "triple_brain.event_bus",
-    "jquery.focus-end"
+    "jquery.focus-end",
+    "jquery.center-on-screen"
 ], function (GraphDisplayer, GraphElementMainMenu, GraphElementType, EventBus) {
     var api = {},
         otherInstancesKey = "otherInstances",
@@ -195,6 +196,7 @@ define([
         }
     };
     api.Self.prototype.focus = function () {
+        this.getHtml().centerOnScreen();
         this.editMode();
         this._setTextBeforeModification();
         this.getLabel().maxCharCleanTextApply().focusEnd();
