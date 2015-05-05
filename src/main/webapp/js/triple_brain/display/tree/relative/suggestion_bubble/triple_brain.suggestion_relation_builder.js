@@ -32,7 +32,7 @@ define([
             this.serverFacade.getUri()
         ).uniqueId().append(
             "<span class='connector'>"
-        ).append("<div class='in-bubble-content label label-info'>");
+        ).append("<div class='in-bubble-content'>");
         var label = this.serverFacade.isLabelEmpty() ?
             this.serverFacade.getSameAs().getUri() :
             this.serverFacade.getLabel();

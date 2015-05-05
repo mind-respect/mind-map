@@ -1,9 +1,5 @@
-/*
- * Copyright Vincent Blouin under the GPL License version 3
- */
-
 @charset "UTF-8";
-/* Copyright Vincent Blouin under the Mozilla Public License 1.1 */
+/* Copyright Vincent Blouin under the GPL License version 3 */
 body { cursor: all-scroll; -moz-user-select: -moz-none; -webkit-user-select: none; -ms-user-select: none; user-select: none; }
 
 #app-presentation { margin-top: 5%; }
@@ -209,6 +205,8 @@ svg { z-index: 1; }
 .property .relation-menu { left: 0; }
 
 .relation { position: relative; }
+.relation.suggestion .in-bubble-content { border: none; }
+.relation.suggestion .in-bubble-content .bubble-label { border: 1px dashed black; background-color: white; color: black; text-shadow: none; }
 .relation .in-bubble-content .bubble-label { background-color: #3a87ad; font-family: helvetica; font-size: 13px; height: auto; }
 .relation .in-bubble-content .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); font-style: italic; color: white; }
 .relation .in-bubble-note-button { margin-right: 5px; }

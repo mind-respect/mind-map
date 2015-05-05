@@ -808,6 +808,17 @@ svg {
 
 .relation {
   position: relative;
+  &.suggestion {
+    .in-bubble-content{
+      border:none;
+      .bubble-label{
+        border: 1px dashed black;
+        background-color: white;
+        color: black;
+        text-shadow: none;
+      }
+    }
+  }
   .in-bubble-content{
     .bubble-label{
       background-color: #3a87ad;

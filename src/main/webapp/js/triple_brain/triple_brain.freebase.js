@@ -183,7 +183,6 @@ define([
             }
             var identificationId = FreebaseUri.idInFreebaseURI(identificationUri);
             var modificationCalls = [];
-            debugger;
             if (identification.hasImages()) {
                 graphElement.refreshImages();
             } else {
