@@ -5,6 +5,7 @@
 define([
     'test/webapp/js/test-utils',
     "triple_brain.user_service",
+    "triple_brain.graph_element_service",
     "triple_brain.mind_map_info",
     "triple_brain.suggestion_service",
     "triple_brain.graph_service",
@@ -13,7 +14,7 @@ define([
     "triple_brain.friendly_resource_service",
     "triple_brain.edge_service",
     "triple_brain.search"
-], function (TestUtils, UserService, MindMapInfo, SuggestionService, GraphService, SchemaService, VertexService, FriendlyResourceService, EdgeService, SearchService) {
+], function (TestUtils, UserService, GraphElementService, MindMapInfo, SuggestionService, GraphService, SchemaService, VertexService, FriendlyResourceService, EdgeService, SearchService) {
     "use strict";
     var api = {};
     api.setCenterVertexUriInUrl = function(centerVertexUri){
@@ -65,6 +66,16 @@ define([
     api.mockRemoveEdge = function(){
         return spyOn(EdgeService, "remove").andCallFake(function(edge, callback){
             callback(edge);
+        });
+    };
+    api.mockAddIdentification = function(){
+        return spyOn(GraphElementService, "addIdentification").andCallFake(function(graphElement, identification, callback){
+            GraphElementService._addIdentificationCallback(
+                graphElement,
+                identification,
+                identification.getServerFormat(),
+                callback
+            );
         });
     };
     UserService.authenticatedUserInCache = function(){

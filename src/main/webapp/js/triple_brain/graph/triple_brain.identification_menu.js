@@ -237,34 +237,45 @@ define([
                     var semanticMenu = $(this).closest(
                             '.identifications'
                         ),
-                        graphElement = $(semanticMenu).data("graphElement"),
                         searchResult = ui.item;
-                    SchemaSuggestion.addSchemaSuggestionsIfApplicable(
-                        graphElement,
-                        searchResult
+                    self._handleSelectIdentification(
+                        searchResult,
+                        semanticMenu.data("graphElement")
                     );
-                    if(graphElement.isSuggestion()){
-                        var vertexSuggestion = graphElement.isRelationSuggestion() ?
-                            graphElement.childVertexInDisplay() : graphElement;
-                        SuggestionService.accept(
-                            vertexSuggestion,
-                            identify
-                        );
-                    }else{
-                        identify();
-                    }
-                    function identify(){
-                        self._identifyUsingServerIdentificationFctn(
-                            graphElement,
-                            searchResult,
-                            self._getServerIdentificationFctn()
-                        );
-                    }
                 },
                 resultsProviders: this.graphElement.isVertex() ?
                     this._getResultsProvidersForVertex() :
                     this._getResultsProvidersForRelations()
             });
+        };
+
+        IdentificationMenu.prototype._handleSelectIdentification = function(searchResult, graphElement){
+            if(graphElement.hasSearchResultAsIdentification(searchResult)){
+                return false;
+            }
+            var self = this;
+            SchemaSuggestion.addSchemaSuggestionsIfApplicable(
+                graphElement,
+                searchResult
+            );
+            if(graphElement.isSuggestion()){
+                var vertexSuggestion = graphElement.isRelationSuggestion() ?
+                    graphElement.childVertexInDisplay() : graphElement;
+                SuggestionService.accept(
+                    vertexSuggestion,
+                    identify
+                );
+            }else{
+                identify();
+            }
+            return true;
+            function identify(){
+                self._identifyUsingServerIdentificationFctn(
+                    graphElement,
+                    searchResult,
+                    self._getServerIdentificationFctn()
+                );
+            }
         };
 
         IdentificationMenu.prototype._getResultsProvidersForVertex = function(){

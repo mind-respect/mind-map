@@ -107,5 +107,16 @@ define([
     api.Object.prototype.hasIdentifications = function(){
         return this.getIdentifications().length > 0;
     };
+    api.Object.prototype.hasSearchResultAsIdentification = function(searchResult){
+        var hasIdentification = false;
+        $.each(this.getIdentifications(), function(){
+            var identification = this;
+            if(searchResult.uri === identification.getExternalResourceUri()){
+                hasIdentification = true;
+                return false;
+            }
+        });
+        return hasIdentification;
+    };
     return api;
 });
