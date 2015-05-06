@@ -78,13 +78,20 @@
     right:-50px;
 }
 
+.left-oriented .bubble.group-relation .arrow{
+    right:-42px;
+}
+
+.left-oriented .bubble.group-relation .arrow:before {
+    left:42px;
+}
+
 .left-oriented .bubble .connector{
     left: auto;
     right:-22px;
 }
 
 .left-oriented .bubble .arrow:before{
-     content:url('../images/icons/vertex/arrowhead_left.svg');
      left:34px;
 }
 
