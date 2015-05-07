@@ -15,13 +15,12 @@ define([
     "triple_brain.mind_map_info",
     "triple_brain.selection_handler",
     "triple_brain.schema_suggestion",
-    "triple_brain.suggestion_service",
     "triple_brain.graph_element_html_builder",
     "triple_brain.bubble_factory",
     "jquery-ui",
     "jquery.triple_brain.search",
     "jquery.max_char"
-], function ($, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, SuggestionService, GraphElementHtmlBuilder, BubbleFactory) {
+], function ($, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, GraphElementHtmlBuilder, BubbleFactory) {
     "use strict";
     var api = {};
 
@@ -29,19 +28,11 @@ define([
         input.tripleBrainAutocomplete({
             limitNbRequests: true,
             select: function (event, ui) {
-                var vertex = BubbleFactory.fromSubHtml(
+                api._labelAutocompleteSelectHandler(
+                    BubbleFactory.fromSubHtml(
                         $(this)
                     ),
-                    identificationResource = Identification.fromSearchResult(
-                        ui.item
-                    );
-                SchemaSuggestion.addSchemaSuggestionsIfApplicable(
-                    vertex,
                     ui.item
-                );
-                VertexService.addGenericIdentification(
-                    vertex,
-                    identificationResource
                 );
             },
             resultsProviders: [
@@ -51,6 +42,27 @@ define([
                 FreebaseAutocompleteProvider.forFetchingAnything()
             ]
         });
+    };
+
+    api._labelAutocompleteSelectHandler = function(bubble, searchResult){
+        var identificationResource = Identification.fromSearchResult(
+            searchResult
+        );
+        if(bubble.isSuggestion()){
+            bubble.whenItIntegrates().then(handle);
+        }else{
+            handle();
+        }
+        function handle(){
+            SchemaSuggestion.addSchemaSuggestionsIfApplicable(
+                bubble,
+                searchResult
+            );
+            VertexService.addGenericIdentification(
+                bubble,
+                identificationResource
+            );
+        }
     };
 
     api.setUpIdentifications = function (serverFormat, vertex) {
@@ -123,7 +135,7 @@ define([
             );
         }
     };
-    api.buildNoteButton = function(vertex){
+    api.buildNoteButton = function (vertex) {
         var noteButton = GraphElementHtmlBuilder.buildNoteButton(
             vertex
         );
@@ -131,7 +143,7 @@ define([
             noteButton
         );
     };
-    api.moveNoteButtonIfIsToTheLeft = function(vertex){
+    api.moveNoteButtonIfIsToTheLeft = function (vertex) {
         if (vertex.isToTheLeft()) {
             var noteButton = vertex.getNoteButtonInBubbleContent();
             noteButton.next(".bubble-label").after(noteButton);

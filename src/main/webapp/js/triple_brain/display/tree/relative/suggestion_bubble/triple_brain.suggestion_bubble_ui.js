@@ -3,11 +3,12 @@
  */
 
 define([
+    "jquery",
     "triple_brain.relative_tree_vertex",
     "triple_brain.graph_element_ui",
     "triple_brain.vertex_ui",
     "triple_brain.event_bus"
-], function (RelativeTreeVertex, GraphElementUi, VertexUi, EventBus) {
+], function ($, RelativeTreeVertex, GraphElementUi, VertexUi, EventBus) {
     "use strict";
     var api = {};
     RelativeTreeVertex.buildCommonConstructors(api);
@@ -23,6 +24,7 @@ define([
     };
     api.Self = function(html) {
         this.html = html;
+        this.integrationDeferrer = $.Deferred();
         RelativeTreeVertex.Object.apply(this);
         this.init(html);
     };
@@ -46,6 +48,10 @@ define([
         return vertexUi;
     };
 
+    api.Self.prototype.whenItIntegrates = function(){
+        return this.integrationDeferrer.promise();
+    };
+
     api.Self.prototype.integrate = function (newVertexUri) {
         api.removeFromCache(
             this.getUri(),
@@ -67,6 +73,7 @@ define([
             this.html
         );
         vertex.rebuildMenuButtons();
+        this.integrationDeferrer.resolve();
         EventBus.publish(
             '/event/ui/html/vertex/created/',
             vertex

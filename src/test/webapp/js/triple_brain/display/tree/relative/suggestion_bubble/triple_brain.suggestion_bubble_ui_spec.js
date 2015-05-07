@@ -45,5 +45,21 @@ define([
                 eventBubble.getNumberOfChild()
             ).toBe(numberOfChild - 1);
         });
+        it("can take subscribers that get notified when bubble is integrated", function () {
+            var eventBubble = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();
+            GraphDisplayerAsRelativeTree.showSuggestions(eventBubble);
+            var vertexSuggestionInTree = eventBubble.getTopMostChildBubble().getTopMostChildBubble();
+            var promiseOfIntegrationHasBeenResolved = false;
+            vertexSuggestionInTree.whenItIntegrates().then(function(){
+                promiseOfIntegrationHasBeenResolved = true;
+            });
+            expect(
+                promiseOfIntegrationHasBeenResolved
+            ).toBeFalsy();
+            vertexSuggestionInTree.integrate();
+            expect(
+                promiseOfIntegrationHasBeenResolved
+            ).toBeTruthy();
+        });
     });
 });
