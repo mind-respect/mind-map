@@ -72,7 +72,7 @@ define([
         return property;
     };
     Self.prototype._buildMenu = function (container) {
-        var menu = $("<div class='relation-menu'>").appendTo(
+        var menu = $("<div class='relation-menu menu'>").appendTo(
             container
         );
         GraphElementMainMenu.addRelevantButtonsInMenu(
