@@ -8,9 +8,8 @@ define([
     "test/webapp/js/mock",
     "triple_brain.vertex_service",
     "triple_brain.user_map_autocomplete_provider",
-    "triple_brain.vertex_html_builder_common",
-    "triple_brain.graph_displayer_as_relative_tree"
-], function (Scenarios, TestUtils, Mock, VertexService, UserMapAutocompleteProvider, VertexHtmlBuilderCommon, GraphDisplayerAsRelativeTree) {
+    "triple_brain.vertex_html_builder_common"
+], function (Scenarios, TestUtils, Mock, VertexService, UserMapAutocompleteProvider, VertexHtmlBuilderCommon) {
     "use strict";
     describe("vertex_html_builder_common", function () {
         beforeEach(function () {

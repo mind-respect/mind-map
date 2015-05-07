@@ -176,7 +176,7 @@ svg { z-index: 1; }
 .vertex .in-bubble-content > * { display: table-cell; }
 .vertex .in-bubble-content .bubble-label { padding: 0; }
 .vertex .in-bubble-content .in-bubble-note-button { width: 8px; margin: 0 17px 0 0; display: inherit; }
-.vertex .in-bubble-content .in-bubble-note-button i { font-size: 1.5em; position: absolute; }
+.vertex .in-bubble-content .in-bubble-note-button i { font-size: 1.5em; position: absolute; top: 25%; }
 .vertex .in-bubble-content .duplicate-button-container { left: -17px; top: -18px; }
 .vertex .move { background-image: url("images/icons/vertex/move.png"); min-width: 25px; min-height: 25px; margin-right: 5px; margin-left: 8px; float: left; }
 .vertex .ui-button { width: 1.7em; height: 1.8em; margin-right: 0; font-size: 1.1em; padding: 0; }
