@@ -46,9 +46,7 @@ define([
             ).toBe(numberOfChild - 1);
         });
         it("can take subscribers that get notified when bubble is integrated", function () {
-            var eventBubble = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();
-            GraphDisplayerAsRelativeTree.showSuggestions(eventBubble);
-            var vertexSuggestionInTree = eventBubble.getTopMostChildBubble().getTopMostChildBubble();
+            var vertexSuggestionInTree = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
             var promiseOfIntegrationHasBeenResolved = false;
             vertexSuggestionInTree.whenItIntegrates().then(function(){
                 promiseOfIntegrationHasBeenResolved = true;
@@ -60,6 +58,20 @@ define([
             expect(
                 promiseOfIntegrationHasBeenResolved
             ).toBeTruthy();
+        });
+        it("returns the new vertex when it notifies for integration", function () {
+            var vertexSuggestionInTree = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
+            var isASuggestion = true;
+            vertexSuggestionInTree.whenItIntegrates().then(function(newVertex){
+                isASuggestion = newVertex.isSuggestion();
+            });
+            expect(
+                isASuggestion
+            ).toBeTruthy();
+            vertexSuggestionInTree.integrate();
+            expect(
+                isASuggestion
+            ).toBeFalsy();
         });
     });
 });

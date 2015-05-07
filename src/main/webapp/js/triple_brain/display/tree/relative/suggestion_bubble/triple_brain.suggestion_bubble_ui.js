@@ -73,7 +73,7 @@ define([
             this.html
         );
         vertex.rebuildMenuButtons();
-        this.integrationDeferrer.resolve();
+        this.integrationDeferrer.resolve(vertex);
         EventBus.publish(
             '/event/ui/html/vertex/created/',
             vertex

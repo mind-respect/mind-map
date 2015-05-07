@@ -51,9 +51,9 @@ define([
         if(bubble.isSuggestion()){
             bubble.whenItIntegrates().then(handle);
         }else{
-            handle();
+            handle(bubble);
         }
-        function handle(){
+        function handle(bubble){
             SchemaSuggestion.addSchemaSuggestionsIfApplicable(
                 bubble,
                 searchResult

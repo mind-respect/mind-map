@@ -485,6 +485,11 @@ define([
                     "Event"
                 );
             };
+            this.getAnySuggestionInTree = function () {
+                var eventBubble = this.getVertexUi();
+                GraphDisplayerAsRelativeTree.showSuggestions(eventBubble);
+                return eventBubble.getTopMostChildBubble().getTopMostChildBubble()
+            };
             this.getOneSuggestion = function () {
                 return this.getVertex().getSuggestions()[0];
             };

@@ -22,34 +22,32 @@ define([
                     new Scenarios.getSearchResultsForProject().get(),
                     "project"
                 )[0];
-            var addGenericIdentification = spyOn(
-                VertexService,
-                "addGenericIdentification"
-            );
+            Mock.mockAddIdentification();
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            expect(
+                bubble1.hasIdentifications()
+            ).toBeFalsy();
             VertexHtmlBuilderCommon._labelAutocompleteSelectHandler(
                 bubble1,
                 projectSearchResult
             );
             expect(
-                VertexService.addGenericIdentification.callCount
-            ).toBe(1);
-            var oneBubble = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();
-            GraphDisplayerAsRelativeTree.showSuggestions(oneBubble);
-            var vertexSuggestion = oneBubble.getTopMostChildBubble().getTopMostChildBubble();
+                bubble1.hasIdentifications()
+            ).toBeTruthy();
+            var suggestionInTree = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
             VertexHtmlBuilderCommon._labelAutocompleteSelectHandler(
-                vertexSuggestion,
+                suggestionInTree,
                 projectSearchResult
             );
             expect(
-                VertexService.addGenericIdentification.callCount
-            ).toBe(1);
-            vertexSuggestion.integrate(
+                suggestionInTree.getIdentifications().length
+            ).toBe(2);
+            suggestionInTree.integrate(
                 TestUtils.generateVertexUri()
             );
             expect(
-                VertexService.addGenericIdentification.callCount
-            ).toBe(2);
+                suggestionInTree.getIdentifications().length
+            ).toBe(3);
         });
     });
 });
