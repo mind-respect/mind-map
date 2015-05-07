@@ -57,7 +57,7 @@ define([
                 menu,
                 GraphDisplayer.getGroupRelationMenuHandler().forSingle()
             );
-            this.html[
+            this.html.find(".label-container")[
                 this.serverFacade.isLeftOriented ?
                     "prepend" :
                     "append"
@@ -67,7 +67,9 @@ define([
         };
 
         Self.prototype._addLabel = function () {
-            var container = this.html.find(".in-bubble-content");
+            var container = $("<div class='label-container'>").appendTo(
+                this.html.find(".in-bubble-content")
+            );
             var labelHtml = $(
                 "<div class='bubble-label label label-info'>"
             ).text(

@@ -105,7 +105,7 @@ define([
         function buildMenu(edge) {
             var edgeHtml = edge.getHtml(),
                 menu = $("<span class='relation-menu menu'>");
-            edgeHtml.append(menu);
+            edgeHtml.find(".label-container").append(menu);
             GraphElementMainMenu.addRelevantButtonsInMenu(
                 menu,
                 GraphDisplayer.getRelationMenuHandler().forSingle()

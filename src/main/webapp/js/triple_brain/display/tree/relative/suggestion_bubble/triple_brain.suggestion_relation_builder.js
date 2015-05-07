@@ -60,7 +60,7 @@ define([
     };
     Self.prototype._buildMenu = function () {
         var menu = $("<span class='relation-menu'>");
-        this.html.append(menu);
+        this.html.find(".label-container").append(menu);
         GraphElementMainMenu.addRelevantButtonsInMenu(
             menu,
             this.edge.getMenuHandler().forSingle()

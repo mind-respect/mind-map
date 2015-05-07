@@ -44,7 +44,7 @@ define([
         property.setNote(
             this.serverFacade.getComment()
         );
-        this._buildMenu(this.html).hide();
+        this._buildMenu(this.html.find(".label-container")).hide();
         EdgeHtmlBuilderCommon.buildNoteButton(
             property
         );

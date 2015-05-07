@@ -132,6 +132,7 @@ svg { z-index: 1; }
 .bubble { cursor: default; display: table; /*.label to override bootstrap*/ white-space: nowrap; position: relative; min-width: 0; margin: 0 0 0 0; }
 .bubble > *, .bubble .label { display: table-cell; vertical-align: middle; }
 .bubble.view-only .arrow:before { left: 0; }
+.bubble .in-bubble-content { position: relative; }
 .bubble .in-bubble-note-button { cursor: pointer; margin: 0 17px 0 0; display: inherit; }
 .bubble .in-bubble-note-button i { font-size: 1.5em; }
 .bubble .duplicate-button-container { position: absolute; }
@@ -172,7 +173,7 @@ svg { z-index: 1; }
 .vertex.center-vertex.selected .in-bubble-content { box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb; border: solid red; }
 .vertex .included-graph-elements-flag { position: absolute; top: 25px; left: 30%; font-weight: bold; }
 .vertex .included-graph-elements-flag { z-index: 3; }
-.vertex .in-bubble-content { border-radius: 20px; background-color: #E6E6FF; white-space: normal; padding: 1em; padding-bottom: 0.7em; padding-top: 0.7em; margin-left: 0.3em; position: relative; display: table; border: 1px; border-color: transparent; border-style: solid; z-index: 2; }
+.vertex .in-bubble-content { border-radius: 20px; background-color: #E6E6FF; white-space: normal; padding: 1em; padding-bottom: 0.7em; padding-top: 0.7em; margin-left: 0.3em; display: table; border: 1px; border-color: transparent; border-style: solid; z-index: 2; }
 .vertex .in-bubble-content > * { display: table-cell; }
 .vertex .in-bubble-content .bubble-label { padding: 0; }
 .vertex .in-bubble-content .in-bubble-note-button { width: 8px; margin: 0 17px 0 0; display: inherit; }
@@ -205,15 +206,14 @@ svg { z-index: 1; }
 .property .relation-menu { left: 0; }
 
 .relation { position: relative; }
-.relation .menu { background-color: transparent; }
-.relation .label-container { display: table-cell; padding-left: 6px; }
+.relation .menu { background-color: transparent; z-index: 11; }
+.relation .label-container { display: table-cell; padding-left: 6px; position: relative; }
 .relation.suggestion .in-bubble-content { border: none; }
 .relation.suggestion .in-bubble-content .bubble-label { border: 1px dashed black; background-color: white; color: black; text-shadow: none; }
 .relation .in-bubble-content .bubble-label { background-color: #3a87ad; font-family: helvetica; font-size: 13px; height: auto; }
 .relation .in-bubble-content .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); font-style: italic; color: white; }
 .relation .in-bubble-note-button { margin-right: 5px; }
 .relation .in-bubble-note-button i { margin-top: 3px; font-size: 1.5em; }
-.relation .relation-menu { z-index: 11; position: absolute; left: 0; top: 22px; }
 .relation .ui-button { width: 1.7em; height: 1.8em; margin: 0; }
 .relation .duplicate-button-container { left: -20px; top: -23px; }
 

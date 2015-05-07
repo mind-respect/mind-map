@@ -439,7 +439,9 @@ svg {
       }
     }
   }
-
+  .in-bubble-content{
+    position: relative;
+  }
   .in-bubble-note-button{
     cursor: pointer;
     margin:0 17px 0 0;
@@ -672,7 +674,6 @@ svg {
     padding-bottom: 0.7em;
     padding-top: 0.7em;
     margin-left: 0.3em;
-    position: relative;
     display: table;
     > * {
       display: table-cell;
@@ -810,10 +811,12 @@ svg {
   position: relative;
   .menu{
     background-color:transparent;
+    z-index: 11;
   }
   .label-container{
     display:table-cell;
     padding-left:6px;
+    position: relative;
   }
   &.suggestion {
     .in-bubble-content{
@@ -845,12 +848,6 @@ svg {
       margin-top:3px;
       font-size:1.5em;
     }
-  }
-  .relation-menu {
-    z-index: 11;
-    position: absolute;
-    left: 0;
-    top: 22px;
   }
   .ui-button {
     width: 1.7em;
