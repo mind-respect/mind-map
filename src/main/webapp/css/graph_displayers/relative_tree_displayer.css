@@ -78,11 +78,11 @@
     right:-50px;
 }
 
-.left-oriented .bubble.group-relation .arrow{
+.left-oriented .bubble.group-relation .arrow, .left-oriented .bubble.property .arrow{
     right:-42px;
 }
 
-.left-oriented .bubble.group-relation .arrow:before {
+.left-oriented .bubble.group-relation .arrow:before, .left-oriented .bubble.property .arrow:before{
     left:42px;
 }
 
