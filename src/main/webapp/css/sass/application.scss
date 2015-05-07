@@ -470,7 +470,6 @@ svg {
     width: auto;
     display: table-cell;
     white-space: pre;
-    min-width: 1em;
     height: 17px;
     &:empty:not(:focus):before {
       content: attr(data-placeholder);
@@ -514,7 +513,7 @@ svg {
   .arrow {
     position: absolute;
     height: 1px;
-    width: 67px;
+    width: 73px;
     top: 50%;
     left: -42px;
     border-top: 1px solid black;
@@ -810,6 +809,10 @@ svg {
   position: relative;
   .menu{
     background-color:transparent;
+  }
+  .label-container{
+    display:table-cell;
+    padding-left:6px;
   }
   &.suggestion {
     .in-bubble-content{

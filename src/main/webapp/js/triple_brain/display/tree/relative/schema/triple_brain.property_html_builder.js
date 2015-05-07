@@ -15,7 +15,7 @@ define([
     api.withServerFacade = function (serverFacade) {
         return new Self(serverFacade);
     };
-    api.completeBuild = function(property){
+    api.completeBuild = function (property) {
         EdgeHtmlBuilderCommon.moveNoteButtonIfIsToTheLeft(
             property
         );
@@ -30,14 +30,14 @@ define([
             "uri",
             this.serverFacade.getUri()
         ).uniqueId();
-        var inBubbleContentContainer = $("<div class='in-bubble-content'>").appendTo(
-                this.html
-            ),
-            property = PropertyUi.createFromHtml(
-                this.html
-            );
+        $("<div class='in-bubble-content'>").appendTo(
+            this.html
+        );
+        var property = PropertyUi.createFromHtml(
+            this.html
+        );
         EdgeHtmlBuilderCommon.buildLabel(
-            inBubbleContentContainer,
+            this.html,
             this.serverFacade.getLabel(),
             PropertyUi.getWhenEmptyLabel()
         );
@@ -81,7 +81,7 @@ define([
         );
         return menu;
     };
-    EventBus.subscribe('/event/ui/graph/drawn', function(){
+    EventBus.subscribe('/event/ui/graph/drawn', function () {
         PropertyUi.visitAllProperties(api.completeBuild);
     });
     return api;

@@ -57,11 +57,10 @@ define([
                 "<div class='relation graph-element bubble'>"
             ).append("<div class='in-bubble-content'>");
         }
-
         EdgeCreator.prototype.create = function () {
             this.html.uniqueId();
             EdgeHtmlBuilderCommon.buildLabel(
-                this.html.find(".in-bubble-content"),
+                this.html,
                 this.edgeServer.getLabel(),
                 TreeEdge.getWhenEmptyLabel()
             );

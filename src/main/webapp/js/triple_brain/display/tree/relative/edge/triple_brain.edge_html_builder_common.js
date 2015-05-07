@@ -20,10 +20,14 @@ define([
     api.moveNoteButtonIfIsToTheLeft = function(edge){
         if (edge.isToTheLeft()) {
             var noteButton = edge.getNoteButtonInBubbleContent();
-            edge.getHtml().append(noteButton);
+            edge.getInBubbleContainer().append(noteButton);
         }
     };
-    api.buildLabel = function (container, text, whenEmptyLabel) {
+    api.buildLabel = function (edgeHtml, text, whenEmptyLabel) {
+        var bubbleContentContainer = edgeHtml.find(".in-bubble-content");
+        var labelContainer = $(
+            "<div class='label-container'>"
+        ).appendTo(bubbleContentContainer);
         var label = $(
             "<div class='bubble-label label label-info'>"
         ).text(
@@ -49,7 +53,7 @@ define([
                 }
             }
         ).appendTo(
-            container
+            labelContainer
         ).tripleBrainAutocomplete({
                 limitNbRequests: true,
                 select: function (event, ui) {
@@ -73,7 +77,7 @@ define([
                 resultsProviders: [
                     UserMapAutocompleteProvider.toFetchRelationsForIdentification(
                         BubbleFactory.fromHtml(
-                            container.closest(".bubble")
+                            edgeHtml.closest(".bubble")
                         )
                     ),
                     FreebaseAutocompleteProvider.forFetchingAnything()
@@ -101,7 +105,7 @@ define([
         var noteButton = GraphElementHtmlBuilder.buildNoteButton(
             edge
         );
-        edge.getInBubbleContainer().before(
+        edge.getInBubbleContainer().prepend(
             noteButton
         );
     };

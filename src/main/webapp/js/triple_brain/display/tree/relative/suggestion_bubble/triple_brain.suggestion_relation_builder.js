@@ -37,7 +37,7 @@ define([
             this.serverFacade.getSameAs().getUri() :
             this.serverFacade.getLabel();
         EdgeHtmlBuilderCommon.buildLabel(
-            this.html.find(".in-bubble-content"),
+            this.html,
             label,
             SuggestionRelationUi.getWhenEmptyLabel()
         ).css("visibility", "visible");

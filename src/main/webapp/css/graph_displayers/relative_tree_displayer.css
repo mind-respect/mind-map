@@ -78,13 +78,15 @@
     right:-50px;
 }
 
+.left-oriented .relation .label-container{
+    padding-left:0;
+    padding-right:6px;
+}
+
 .left-oriented .bubble.group-relation .arrow, .left-oriented .bubble.property .arrow{
     right:-42px;
 }
 
-.left-oriented .bubble.group-relation .arrow:before, .left-oriented .bubble.property .arrow:before{
-    left:42px;
-}
 
 .left-oriented .bubble .connector{
     left: auto;
@@ -92,11 +94,15 @@
 }
 
 .left-oriented .bubble .arrow:before{
-     left:34px;
+     left:42px;
 }
 
 .left-oriented .bubble.view-only .arrow:before{
     left:8px;
+}
+
+.left-oriented .bubble .arrow:before{
+    content:url('../images/icons/vertex/arrowhead_left.svg');
 }
 
 .left-oriented .bubble.inverse .arrow:before{

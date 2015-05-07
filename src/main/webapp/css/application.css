@@ -136,7 +136,7 @@ svg { z-index: 1; }
 .bubble .in-bubble-note-button i { font-size: 1.5em; }
 .bubble .duplicate-button-container { position: absolute; }
 .bubble.suggestion .in-bubble-content { background-color: white; border: 1px dashed black; color: black; text-shadow: none; }
-.bubble .bubble-label { outline: 0px solid transparent; border: none; font-family: Helvetica; font-size: 14px; width: auto; display: table-cell; white-space: pre; min-width: 1em; height: 17px; }
+.bubble .bubble-label { outline: 0px solid transparent; border: none; font-family: Helvetica; font-size: 14px; width: auto; display: table-cell; white-space: pre; height: 17px; }
 .bubble .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); color: grey; font-style: italic; }
 .bubble.selected .in-bubble-content { z-index: 2; }
 .bubble .image_container { z-index: 3; position: relative; min-width: 60px; text-align: right; left: 3px; }
@@ -144,7 +144,7 @@ svg { z-index: 1; }
 .bubble .image_container img { max-width: auto; }
 .bubble .edge-label { display: inline; }
 .bubble .connector { position: absolute; height: 1px; border-top: 1px solid black; top: 50%; width: 65px; left: -22px; z-index: -1; }
-.bubble .arrow { position: absolute; height: 1px; width: 67px; top: 50%; left: -42px; border-top: 1px solid black; z-index: -1; }
+.bubble .arrow { position: absolute; height: 1px; width: 73px; top: 50%; left: -42px; border-top: 1px solid black; z-index: -1; }
 .bubble .arrow ~ { background-color: yellow; }
 .bubble .arrow ~ .in-bubble-note-button:not(hidden) { width: 100%; }
 .bubble .arrow:before { content: url("images/icons/vertex/arrowhead_right.svg"); position: relative; top: -10px; left: 20px; }
@@ -206,6 +206,7 @@ svg { z-index: 1; }
 
 .relation { position: relative; }
 .relation .menu { background-color: transparent; }
+.relation .label-container { display: table-cell; padding-left: 6px; }
 .relation.suggestion .in-bubble-content { border: none; }
 .relation.suggestion .in-bubble-content .bubble-label { border: 1px dashed black; background-color: white; color: black; text-shadow: none; }
 .relation .in-bubble-content .bubble-label { background-color: #3a87ad; font-family: helvetica; font-size: 13px; height: auto; }
