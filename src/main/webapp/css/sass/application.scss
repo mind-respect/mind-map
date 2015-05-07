@@ -483,6 +483,7 @@ svg {
   min-width: 0;
   margin: 0 0 0 0;
   &.selected {
+    z-index:11;
     .in-bubble-content {
       z-index: 2;
     }
