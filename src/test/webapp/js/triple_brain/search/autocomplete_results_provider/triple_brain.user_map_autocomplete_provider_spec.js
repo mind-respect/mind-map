@@ -96,6 +96,30 @@ define([
                 "Relation"
             );
         });
+        it("puts schemas on top of bubbles in the list of formatted search results", function () {
+            var serverResults = [];
+            serverResults = serverResults.concat(
+                new Scenarios.getSearchResultForB1().get()
+            );
+            serverResults = serverResults.concat(
+                new Scenarios.getSearchResultsForProject().get()
+            );
+            expect(
+                serverResults[0].type
+            ).toBe("vertex");
+            expect(
+                serverResults[1].type
+            ).toBe("schema");
+            var topSearchResult = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas().formatResults(
+                    serverResults,
+                    ""
+                )[0];
+            expect(
+                topSearchResult.elementType
+            ).toBe(
+                "Schema"
+            );
+        });
     });
     function searchResultIsProperty(searchResult) {
         return stringContains(

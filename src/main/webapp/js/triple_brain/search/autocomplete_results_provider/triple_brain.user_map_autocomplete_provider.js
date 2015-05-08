@@ -5,10 +5,11 @@
 define([
     "jquery",
     "triple_brain.search",
+    "triple_brain.graph_element_type",
     "triple_brain.identification_context",
     "triple_brain.id_uri",
     "triple_brain.search_result"
-], function ($, SearchService, IdentificationContext, IdUri, SearchResult) {
+], function ($, SearchService, GraphElementType, IdentificationContext, IdUri, SearchResult) {
     var api = {};
     api.toFetchOnlyCurrentUserVertices = function () {
         return new UserMapAutoCompleteProvider(
@@ -87,8 +88,24 @@ define([
                     provider: self
                 };
             }
-
+            this.sortFormattedResults(formattedResults);
             return formattedResults;
+        };
+
+        this.sortFormattedResults = function(formattedResults){
+            formattedResults.sort(function(a, b){
+                a = a.nonFormattedSearchResult;
+                b = b.nonFormattedSearchResult;
+                if(a.is(GraphElementType.Schema)){
+                    if(b.is(GraphElementType.Schema)){
+                        return 0;
+                    }
+                    return -1;
+                }
+                if(b.is(GraphElementType.Schema)){
+                    return 1;
+                }
+            });
         };
 
         this.getMoreInfoForSearchResult = function (searchResult, callback) {

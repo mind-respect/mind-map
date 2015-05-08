@@ -58,12 +58,6 @@ define([
 
         api.deepGraph = function () {
             this.getGraph = function () {
-                /*
-                 b1-r1->b2
-                 b2-r2->b3
-                 b2<-r3-b4
-                 b1<-r4-b5
-                 */
                 return getTestData("deepGraph");
             };
             this.getCenterVertex = function () {
@@ -105,13 +99,6 @@ define([
         };
 
         api.mergeBubbleGraph = function () {
-            /*
-             one bubble labeled merge
-             merge contains bubbles
-             b1-r1->b2
-             b2-r2->b3
-             b1<-r4-b4
-             */
             var treeBuilder = new TreeBuilder(this),
                 includedElementsTree,
                 self = this;
@@ -582,13 +569,6 @@ define([
         };
 
         api.getSearchResultsForProject = function () {
-            /*
-             * schema project
-             * project -> impact on the individual
-             * project -> impact on society
-             * project -> has objective
-             * project -> has component
-             */
             this.get = function () {
                 return getTestData(
                     "projectSchema.searchResultsForProject"
