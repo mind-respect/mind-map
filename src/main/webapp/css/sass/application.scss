@@ -450,7 +450,9 @@ svg {
       font-size:1.5em;
     }
   }
-
+  &.edit{
+    -moz-user-select: text;
+  }
   .duplicate-button-container {
     position: absolute;
   }
