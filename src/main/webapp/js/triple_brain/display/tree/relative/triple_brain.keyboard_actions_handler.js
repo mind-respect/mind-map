@@ -32,19 +32,19 @@ define([
     api.init = function () {
         EventBus.subscribe(
             "/event/ui/graph/drawing_info/updated/",
-            handleKeyboardActions
+            api._handleKeyboardActions
+        );
+    };
+    api._handleKeyboardActions = function(){
+        $(window).off(
+            "keydown", keyDownHandler
+        ).on(
+            "keydown", keyDownHandler
         );
     };
     return api;
-    function handleKeyboardActions() {
-        $(window).off(
-            "keydown", keyDownHanlder
-        ).on(
-            "keydown", keyDownHanlder
-        );
-    }
 
-    function keyDownHanlder(event) {
+    function keyDownHandler(event) {
         var target = $(event.target),
             isWorkingOnSomething = !target.is("body");
         if (isWorkingOnSomething) {

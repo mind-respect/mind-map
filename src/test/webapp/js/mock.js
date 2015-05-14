@@ -41,11 +41,7 @@ define([
             callback(toReturn);
         };
     };
-    api.mockRemoveVertex = function(){
-        return spyOn(VertexService, "remove").andCallFake(function(vertex, callback){
-            callback(vertex);
-        });
-    };
+
     api.mockUpdateLabel = function(){
         return spyOn(FriendlyResourceService, "updateLabel").andCallFake(function(friendlyResource, label, callback){
             if (callback !== undefined) {

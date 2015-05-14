@@ -218,6 +218,9 @@ define([
         );
         this.getHtml().addClass("edit");
     };
+    api.Self.prototype.isInEditMode = function () {
+        return this.getHtml().hasClass("edit");
+    };
     api.Self.prototype.centerOnScreen = function () {
         this.getHtml().centerOnScreen();
     };

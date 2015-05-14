@@ -14,6 +14,18 @@ define([
             serverFormat
         );
     };
+    api.buildServerFormatFromUri = function(uri){
+        return {
+            vertex:{
+                graphElement: GraphElement.buildObjectWithUri(uri),
+                includedEdges:{},
+                includedVertices:{},
+                isPublic:false,
+                numberOfConnectedEdges:1,
+                suggestions:{}
+            }
+        };
+    };
     function Self(vertexServerFormat) {
         this.vertexServerFormat = vertexServerFormat;
         this._includedVertices = this._buildIncludedVertices();

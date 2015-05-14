@@ -4,11 +4,11 @@
 
 define([
     'test/webapp/js/test-scenarios',
-    'test/webapp/js/mock',
+    "test/webapp/js/mock/triple_brain.vertex_service_mock",
     'triple_brain.relative_tree_vertex_menu_handler',
     'triple_brain.vertex_service',
     'triple_brain.mind_map_info'
-], function (Scenarios, Mock, RelativeTreeVertexMenuHandler, VertexService, MindMapInfo) {
+], function (Scenarios, VertexServiceMock, RelativeTreeVertexMenuHandler, VertexService, MindMapInfo) {
     "use strict";
     describe("relative_tree_vertex_menu_handler", function () {
         var threeBubbles;
@@ -16,7 +16,7 @@ define([
             threeBubbles = new Scenarios.threeBubblesGraph();
         });
         it("removes connected edges when removing a vertex", function () {
-            Mock.mockRemoveVertex();
+            VertexServiceMock.removeVertex();
             MindMapInfo._setIsViewOnly(false);
             var bubble1 = threeBubbles.getBubble1InTree(),
                 r1 = threeBubbles.getRelation1InTree();

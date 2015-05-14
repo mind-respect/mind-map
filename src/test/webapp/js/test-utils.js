@@ -3,7 +3,8 @@
  */
 
 define([
-], function () {
+    "jquery"
+], function ($) {
     "use strict";
     var api = {};
     api.generateVertexUri = function(){
@@ -14,6 +15,11 @@ define([
     };
     api.isGraphElementUiRemoved = function(element){
         return element.getHtml().parents(".root-vertex-super-container").length === 0;
+    };
+    api.pressKey = function(char){
+        var event = $.Event("keydown");
+        event.which = event.keyCode = char.charCodeAt(0);
+        $("body").trigger(event);
     };
     return api;
 

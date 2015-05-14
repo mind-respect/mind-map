@@ -34,19 +34,27 @@ define([
                 url: vertex.getUri(),
                 dataType: 'json'
             }).success(function (tripleJson) {
-                var triple = TripleUiBuilder.createIntoSourceBubble(
+                console.log(vertex.getOriginalServerObject());
+                debugger;
+                api._addRelationAndVertexToVertexCallback(
+                    tripleJson,
                     sourceBubble,
-                    tripleJson
+                    callback
                 );
-                if (callback !== undefined) {
-                    callback(triple, tripleJson);
-                }
-                EventBus.publish(
-                    '/event/ui/graph/vertex_and_relation/added/',
-                    [triple, sourceBubble]
-                );
-
             });
+        };
+        api._addRelationAndVertexToVertexCallback = function(tripleJson, sourceBubble, callback){
+            var triple = TripleUiBuilder.createIntoSourceBubble(
+                sourceBubble,
+                tripleJson
+            );
+            if (callback !== undefined) {
+                callback(triple, tripleJson);
+            }
+            EventBus.publish(
+                '/event/ui/graph/vertex_and_relation/added/',
+                [triple, sourceBubble]
+            );
         };
         api.remove = function (vertex, callback) {
             $.ajax({
