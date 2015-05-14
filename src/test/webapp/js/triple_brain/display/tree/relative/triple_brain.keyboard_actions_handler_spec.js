@@ -62,5 +62,19 @@ define([
                 bubble1.isInEditMode()
             ).toBeFalsy();
         });
+
+        it("adds a sibling when pressing enter", function(){
+            VertexServiceMock.addRelationAndVertexToVertexMock();
+            var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            var numberOfChild = bubble1.getNumberOfChild();
+            var someChild = bubble1.getTopMostChildBubble().getTopMostChildBubble();
+            SelectionHandler.setToSingleGraphElement(someChild);
+            var enterKeyCode = 13;
+            TestUtils.pressKeyCode(enterKeyCode);
+            expect(
+                bubble1.getNumberOfChild()
+            ).toBe(numberOfChild + 1);
+        });
+
     });
 });

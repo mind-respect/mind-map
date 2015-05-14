@@ -11,8 +11,9 @@ define([
     "triple_brain.ui.utils",
     "triple_brain.identification_menu",
     "triple_brain.mind_map_info",
-    "triple_brain.graph_element_ui"
-], function ($, EventBus, SelectionHandler, CenterBubble, VertexService, UiUtils, IdentificationMenu, MindMapInfo, GraphElementUi) {
+    "triple_brain.graph_element_ui",
+    "triple_brain.graph_element_type"
+], function ($, EventBus, SelectionHandler, CenterBubble, VertexService, UiUtils, IdentificationMenu, MindMapInfo, GraphElementUi, GraphElementType) {
     "use strict";
     var api = {},
         tabKeyNumber = 9,
@@ -23,6 +24,7 @@ define([
         iArrowKeyNumber = 73,
         deleteKeyNumber = 46,
         escapeKeyNumber = 27,
+        enterKeyCode = 13,
         eKeyNumber = 69,
         sKeyNumber = 83,
         rKeyNumber = 82,
@@ -63,18 +65,34 @@ define([
             ctrlPlusActions :
             nonCtrlPlusActions;
         var selectedElement = SelectionHandler.getSingleElement();
-        var action = actionSet[event.which];
-        if(action === undefined){
+        var feature = actionSet[event.which];
+        if(feature === undefined){
             if(event.which !== ctrlKeyNumber){
                 selectedElement.focus();
             }
             return;
         }
         event.preventDefault();
-        action(selectedElement);
+        executeFeature(feature, selectedElement);
         function isThereASpecialKeyPressed() {
             return event.altKey ||  event.metaKey;
         }
+    }
+
+    function executeFeature(feature, selectedElement){
+        if(typeof feature === "string"){
+            var handler = selectedElement.getMenuHandler().forSingle();
+            if(handler[feature] === undefined){
+                return;
+            }
+            var canDoValidator = handler[feature + "CanDo"];
+            if(canDoValidator !== undefined && !canDoValidator(selectedElement)){
+                return;
+            }
+            handler[feature + "Action"](selectedElement);
+            return;
+        }
+        feature(selectedElement);
     }
 
     function defineNonCtrlPlusKeysAndTheirActions() {
@@ -85,6 +103,7 @@ define([
         actions[rightArrowKeyNumber] = rightAction;
         actions[upArrowKeyNumber] = upAction;
         actions[downArrowKeyNumber] = downAction;
+        actions[enterKeyCode] = "addSibling";
         return actions;
     }
     function defineCtrlPlusKeysAndTheirActions() {
