@@ -42,6 +42,9 @@ define([
         };
         forSingleNotOwned.identify = forSingle.identify = function (event, vertex) {
             event.stopPropagation();
+            forSingle.identifyAction(vertex);
+        };
+        forSingle.identifyAction = function(vertex){
             IdentificationMenu.ofGraphElement(
                 vertex
             ).create();

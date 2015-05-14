@@ -160,10 +160,10 @@
         "select" : "Hand selector",
         "group" : "Merge bubbles into one",
         "addChild" : "Add a child (tab)",
-        "identify" : "Identifications (i)",
-        "reverseToRight" : "Inverse relation (r)",
-        "reverseToLeft" : "Inverse relation (r)",
-        "suggestions" : "Suggestions (s)",
+        "identify" : "Identifications (ctrl+i)",
+        "reverseToRight" : "Inverse relation (ctrl+r)",
+        "reverseToLeft" : "Inverse relation (ctrl+r)",
+        "suggestions" : "Suggestions (ctrl+s)",
         "subElements" : "Made of graph elements",
         "center" : "Center bubble",
         "note" : "Description",
@@ -171,10 +171,10 @@
         "connectTo" : "Connect to existing bubble",
         "makePrivate" : "Make private",
         "makePublic" : "Make public",
-        "remove" : "Delete",
+        "remove" : "Delete (del)",
         "accept": "Accept"
     },
-    "hidden_properties_tooltip" : "Expand (e)",
+    "hidden_properties_tooltip" : "Expand (ctrl+e)",
 
     "search" : {
         "big":{

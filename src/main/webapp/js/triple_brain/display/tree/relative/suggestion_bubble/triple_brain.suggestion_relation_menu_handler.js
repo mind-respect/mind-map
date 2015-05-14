@@ -13,10 +13,14 @@ define([
     api.forSingle = function () {
         return forSingle;
     };
-    forSingleNotOwned.identify = forSingle.identify = function (event, property) {
+    forSingleNotOwned.identify = forSingle.identify = function (event, suggestionRelationUi) {
+        event.stopPropagation();
+        forSingle.identifyAction(suggestionRelationUi);
+    };
+    forSingle.identifyAction = function (suggestionRelationUi) {
         event.stopPropagation();
         IdentificationMenu.ofGraphElement(
-            property
+            suggestionRelationUi
         ).create();
     };
     return api;

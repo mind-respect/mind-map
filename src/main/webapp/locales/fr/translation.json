@@ -158,10 +158,10 @@
         "select" : "Sélection à la main",
         "group" : "Créer une bulle à partir de celles sélectionnés",
         "addChild" : "Ajouter un enfant (tab)",
-        "identify" : "Identifications (i)",
-        "reverseToRight" : "Inverser la relation (r)",
-        "reverseToLeft" : "Inverser la relation (r)",
-        "suggestions" : "Suggestions (s)",
+        "identify" : "Identifications (ctrl+i)",
+        "reverseToRight" : "Inverser la relation (ctrl+r)",
+        "reverseToLeft" : "Inverser la relation (ctrl+r)",
+        "suggestions" : "Suggestions (ctrl+s)",
         "subElements" : "De quoi est composé la bulle",
         "center" : "Centrer la bulle",
         "note" : "Description",
@@ -169,10 +169,10 @@
         "connectTo" : "Relier à une bulle existante",
         "makePrivate" : "Rendre privé",
         "makePublic" : "Rendre public",
-        "remove" : "Effacer",
+        "remove" : "Effacer (suppr)",
         "accept": "Accepter"
     },
-    "hidden_properties_tooltip" : "Expandre (e)",
+    "hidden_properties_tooltip" : "Expandre (ctrl+e)",
 
     "search" : {
         "big":{

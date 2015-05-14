@@ -97,7 +97,7 @@ define([
     }
 
     function iAction(selectedElement) {
-        if (MindMapInfo.isViewOnly() || selectedElement.isGroupRelation() || selectedElement.isSchema()) {
+        if (MindMapInfo.isViewOnly() || selectedElement.isGroupRelation()) {
             return;
         }
         selectedElement.getMenuHandler().forSingle().identifyAction(

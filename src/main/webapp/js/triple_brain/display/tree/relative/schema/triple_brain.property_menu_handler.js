@@ -29,6 +29,9 @@ define([
 
     forSingleNotOwned.identify = forSingle.identify = function (event, property) {
         event.stopPropagation();
+        forSingle.identifyAction(property);
+    };
+    forSingle.identifyAction = function(property){
         IdentificationMenu.ofGraphElement(
             property
         ).create();

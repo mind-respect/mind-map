@@ -25,6 +25,9 @@ define([
         );
     };
     forSingleNotOwned.identify = forSingle.identify = function (event, edge) {
+        forSingle.identifyAction(edge);
+    };
+    forSingle.identifyAction = function(edge){
         IdentificationMenu.ofGraphElement(
             edge
         ).create();

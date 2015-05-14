@@ -15,10 +15,13 @@ define([
     api.forSingle = function () {
         return forSingle;
     };
-    forSingleNotOwned.identify = forSingle.identify = function (event, property) {
+    forSingleNotOwned.identify = forSingle.identify = function (event, suggestionUi) {
         event.stopPropagation();
+        forSingle.identifyAction(suggestionUi);
+    };
+    forSingle.identifyAction = function(suggestionUi){
         IdentificationMenu.ofGraphElement(
-            property
+            suggestionUi
         ).create();
     };
     forSingle.accept = function(event, suggestionUi){
