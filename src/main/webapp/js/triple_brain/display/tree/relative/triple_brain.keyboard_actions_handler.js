@@ -35,7 +35,7 @@ define([
             api._handleKeyboardActions
         );
     };
-    api._handleKeyboardActions = function(){
+    api._handleKeyboardActions = function () {
         $(window).off(
             "keydown", keyDownHandler
         ).on(
@@ -60,57 +60,31 @@ define([
             return;
         }
         var selectedElement = SelectionHandler.getSingleElement();
-        $.each(listenedKeysAndTheirAction, function () {
-            var key = this[0];
-            if (event.which !== key) {
-                return;
-            }
-            event.preventDefault();
-            var action = this[1];
-            action(selectedElement);
-            return false;
-        });
+        var action = listenedKeysAndTheirAction[event.which];
+        if(action === undefined){
+            return;
+        }
+        event.preventDefault();
+        action(selectedElement);
         function isThereASpecialKeyPressed() {
             return event.altKey || event.ctrlKey || event.metaKey;
         }
     }
 
     function defineListenedKeysAndTheirActions() {
-        return [
-            [
-                tabKeyNumber, tabAction
-            ],
-            [
-                leftArrowKeyNumber, leftAction
-            ],
-            [
-                rightArrowKeyNumber, rightAction
-            ],
-            [
-                upArrowKeyNumber, upAction
-            ],
-            [
-                downArrowKeyNumber, downAction
-            ],
-            [
-                iArrowKeyNumber, iAction
-            ],
-            [
-                spaceBarKeyNumber, spacebarAction
-            ],
-            [
-                eKeyNumber, eKeyAction
-            ],
-            [
-                sKeyNumber, sKeyAction
-            ],
-            [
-                rKeyNumber, rKeyAction
-            ],
-            [
-                deleteKeyNumber, deleteKeyAction
-            ]
-        ];
+        var actions = {};
+        actions[tabKeyNumber] = tabAction;
+        actions[leftArrowKeyNumber] = leftAction;
+        actions[rightArrowKeyNumber] = rightAction;
+        actions[upArrowKeyNumber] = upAction;
+        actions[downArrowKeyNumber] = downAction;
+        actions[iArrowKeyNumber] = iAction;
+        actions[spaceBarKeyNumber] = spacebarAction;
+        actions[eKeyNumber] = eKeyAction;
+        actions[sKeyNumber] = sKeyAction;
+        actions[rKeyNumber] = rKeyAction;
+        actions[deleteKeyNumber] = deleteKeyAction;
+        return actions;
     }
 
     function iAction(selectedElement) {
@@ -131,9 +105,9 @@ define([
 
     function eKeyAction(selectedElement) {
         if (!selectedElement.isInTypes([
-            GraphElementUi.Types.GroupRelation,
-            GraphElementUi.Types.Vertex
-        ])) {
+                GraphElementUi.Types.GroupRelation,
+                GraphElementUi.Types.Vertex
+            ])) {
             return;
         }
         if (selectedElement.hasHiddenRelationsContainer()) {
@@ -154,7 +128,7 @@ define([
     }
 
     function rKeyAction(selectedElement) {
-        if(!selectedElement.isRelation()){
+        if (!selectedElement.isRelation()) {
             return;
         }
         selectedElement.getMenuHandler().forSingle().reverse(
@@ -213,7 +187,7 @@ define([
         );
     }
 
-    function downAction(selectedElement){
+    function downAction(selectedElement) {
         selectNew(
             selectedElement.getBubbleUnder()
         );
@@ -231,8 +205,8 @@ define([
         centerBubbleIfApplicable(newSelectedElement);
     }
 
-    function deleteKeyAction(selectedElement){
-        if(MindMapInfo.isViewOnly()){
+    function deleteKeyAction(selectedElement) {
+        if (MindMapInfo.isViewOnly()) {
             return;
         }
         selectedElement.getMenuHandler().forSingle().removeAction(
