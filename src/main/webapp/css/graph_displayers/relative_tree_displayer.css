@@ -51,6 +51,10 @@
     box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb;
 }
 
+.left-oriented [data-action=addChild] .fa-arrow-right{
+    transform: rotate(180deg);
+}
+
 .left-oriented .vertex .in-bubble-content .in-bubble-note-button{
     margin-right:0;
 }
