@@ -30,7 +30,18 @@ define([
             ).toBe(1);
         });
         it("cannot add sibling if center bubble", function () {
-
+            var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            var someChild = bubble1.getTopMostChildBubble().getTopMostChildBubble();
+            expect(
+                RelativeTreeVertexMenuHandler.forSingle().addSiblingCanDo(
+                    someChild
+                )
+            ).toBeTruthy();
+            expect(
+                RelativeTreeVertexMenuHandler.forSingle().addSiblingCanDo(
+                    bubble1
+                )
+            ).toBeFalsy();
         });
         it("can add sibling", function () {
             VertexServiceMock.addRelationAndVertexToVertexMock();
