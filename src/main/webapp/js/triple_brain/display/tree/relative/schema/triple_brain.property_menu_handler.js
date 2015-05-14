@@ -47,5 +47,17 @@ define([
             property.remove();
         });
     };
+
+    forSingle.addSibling = function(event, property){
+        forSingle.addSiblingAction(property);
+    };
+
+    forSingle.addSiblingAction = function(property){
+        var schema = property.getParentBubble();
+        schema.getMenuHandler().forSingle().addChildAction(
+            schema
+        );
+    };
+
     return api;
 });
