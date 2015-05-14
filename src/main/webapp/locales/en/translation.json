@@ -172,7 +172,8 @@
         "makePrivate" : "Make private",
         "makePublic" : "Make public",
         "remove" : "Delete (del)",
-        "accept": "Accept"
+        "accept": "Accept",
+        "addSibling": "Add sibling (enter)"
     },
     "hidden_properties_tooltip" : "Expand (ctrl+e)",
 

@@ -170,7 +170,8 @@
         "makePrivate" : "Rendre privé",
         "makePublic" : "Rendre public",
         "remove" : "Effacer (suppr)",
-        "accept": "Accepter"
+        "accept": "Accepter",
+        "addSibling": "Ajouter une bulle soeur (enter)"
     },
     "hidden_properties_tooltip" : "Expandre (ctrl+e)",
 
