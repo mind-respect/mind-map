@@ -16,9 +16,23 @@ define([
     api.isGraphElementUiRemoved = function(element){
         return element.getHtml().parents(".root-vertex-super-container").length === 0;
     };
-    api.pressKey = function(char){
+    api.pressCtrlPlusKey = function(char){
+        api.pressKey(
+            char, {ctrlKey: true}
+        );
+    };
+    api.pressKey = function(char, options){
+        api.pressKeyCode(
+            char.charCodeAt(0),
+            options
+        );
+    };
+    api.pressKeyCode = function(keyCode, options){
         var event = $.Event("keydown");
-        event.which = event.keyCode = char.charCodeAt(0);
+        if(options !== undefined){
+            $.extend(event, options);
+        }
+        event.which = event.keyCode = keyCode;
         $("body").trigger(event);
     };
     return api;

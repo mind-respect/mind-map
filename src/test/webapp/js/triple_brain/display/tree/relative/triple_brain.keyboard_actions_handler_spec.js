@@ -7,8 +7,10 @@ define([
     "test/webapp/js/test-utils",
     "test/webapp/js/mock/triple_brain.vertex_service_mock",
     "triple_brain.keyboard_actions_handler",
-    "triple_brain.selection_handler"
-], function (Scenarios, TestUtils, VertexServiceMock, KeyBoardActionsHandler, SelectionHandler) {
+    "triple_brain.selection_handler",
+    "triple_brain.relative_tree_vertex_menu_handler",
+    'triple_brain.mind_map_info'
+], function (Scenarios, TestUtils, VertexServiceMock, KeyBoardActionsHandler, SelectionHandler, RelativeTreeVertexMenuHandler, MindMapInfo) {
     "use strict";
     describe("keyboard_action_handler", function () {
         beforeEach(function () {
@@ -36,6 +38,30 @@ define([
             expect(
                 bubble1.isInEditMode()
             ).toBeTruthy();
+        });
+
+        it("calls identification action when pressing ctrl+i", function(){
+            MindMapInfo._setIsViewOnly(false);
+            var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            SelectionHandler.setToSingleGraphElement(bubble1);
+            var actionSpy = spyOn(RelativeTreeVertexMenuHandler.forSingle(), "identifyAction");
+            expect(
+                actionSpy
+            ).not.toHaveBeenCalled();
+            TestUtils.pressCtrlPlusKey("I");
+            expect(
+                actionSpy
+            ).toHaveBeenCalled();
+        });
+
+        it("does not focus when pressing control only", function(){
+            var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            SelectionHandler.setToSingleGraphElement(bubble1);
+            var ctrlKeyCode = 17;
+            TestUtils.pressKeyCode(ctrlKeyCode);
+            expect(
+                bubble1.isInEditMode()
+            ).toBeFalsy();
         });
     });
 });

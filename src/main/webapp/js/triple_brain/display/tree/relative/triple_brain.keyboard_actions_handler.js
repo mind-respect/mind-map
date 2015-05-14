@@ -21,14 +21,14 @@ define([
         upArrowKeyNumber = 38,
         downArrowKeyNumber = 40,
         iArrowKeyNumber = 73,
-        enterKeyNumber = 13,
         deleteKeyNumber = 46,
-        spaceBarKeyNumber = 32,
         escapeKeyNumber = 27,
         eKeyNumber = 69,
         sKeyNumber = 83,
         rKeyNumber = 82,
-        listenedKeysAndTheirAction = defineListenedKeysAndTheirActions();
+        ctrlKeyNumber = 17,
+        nonCtrlPlusActions = defineNonCtrlPlusKeysAndTheirActions(),
+        ctrlPlusActions = defineCtrlPlusKeysAndTheirActions();
     api.init = function () {
         EventBus.subscribe(
             "/event/ui/graph/drawing_info/updated/",
@@ -59,31 +59,40 @@ define([
         if (!SelectionHandler.isOnlyASingleElementSelected()) {
             return;
         }
+        var actionSet = event.ctrlKey ?
+            ctrlPlusActions :
+            nonCtrlPlusActions;
         var selectedElement = SelectionHandler.getSingleElement();
-        var action = listenedKeysAndTheirAction[event.which];
+        var action = actionSet[event.which];
         if(action === undefined){
+            if(event.which !== ctrlKeyNumber){
+                selectedElement.focus();
+            }
             return;
         }
         event.preventDefault();
         action(selectedElement);
         function isThereASpecialKeyPressed() {
-            return event.altKey || event.ctrlKey || event.metaKey;
+            return event.altKey ||  event.metaKey;
         }
     }
 
-    function defineListenedKeysAndTheirActions() {
+    function defineNonCtrlPlusKeysAndTheirActions() {
         var actions = {};
         actions[tabKeyNumber] = tabAction;
+        actions[deleteKeyNumber] = deleteKeyAction;
         actions[leftArrowKeyNumber] = leftAction;
         actions[rightArrowKeyNumber] = rightAction;
         actions[upArrowKeyNumber] = upAction;
         actions[downArrowKeyNumber] = downAction;
+        return actions;
+    }
+    function defineCtrlPlusKeysAndTheirActions() {
+        var actions = {};
         actions[iArrowKeyNumber] = iAction;
-        actions[spaceBarKeyNumber] = spacebarAction;
         actions[eKeyNumber] = eKeyAction;
         actions[sKeyNumber] = sKeyAction;
         actions[rKeyNumber] = rKeyAction;
-        actions[deleteKeyNumber] = deleteKeyAction;
         return actions;
     }
 
@@ -91,16 +100,9 @@ define([
         if (MindMapInfo.isViewOnly() || selectedElement.isGroupRelation() || selectedElement.isSchema()) {
             return;
         }
-        IdentificationMenu.ofGraphElement(
+        selectedElement.getMenuHandler().forSingle().identifyAction(
             selectedElement
-        ).create();
-    }
-
-    function spacebarAction(selectedElement) {
-        if (MindMapInfo.isViewOnly() || selectedElement.isGroupRelation()) {
-            return;
-        }
-        selectedElement.focus();
+        );
     }
 
     function eKeyAction(selectedElement) {

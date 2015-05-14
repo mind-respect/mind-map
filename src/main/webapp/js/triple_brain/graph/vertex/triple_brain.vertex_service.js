@@ -34,8 +34,6 @@ define([
                 url: vertex.getUri(),
                 dataType: 'json'
             }).success(function (tripleJson) {
-                console.log(vertex.getOriginalServerObject());
-                debugger;
                 api._addRelationAndVertexToVertexCallback(
                     tripleJson,
                     sourceBubble,
