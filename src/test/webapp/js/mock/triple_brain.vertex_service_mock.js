@@ -10,7 +10,7 @@ define([
 ], function (VertexService, Edge, Vertex, TestUtils) {
     "use strict";
     var api = {};
-    api.addRelationAndVertexToVertex = function () {
+    api.addRelationAndVertexToVertexMock = function () {
         return spyOn(VertexService, "addRelationAndVertexToVertex").andCallFake(function (vertex, sourceBubble, callback) {
             var tripleJson = {};
             tripleJson.source_vertex = vertex.getOriginalServerObject().vertexServerFormat

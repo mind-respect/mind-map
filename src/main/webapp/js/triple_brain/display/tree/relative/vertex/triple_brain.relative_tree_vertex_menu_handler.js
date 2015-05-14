@@ -40,6 +40,17 @@ define([
             sourceVertex
         );
     };
+    forSingle.addSibling = function(event, vertex){
+        forSingle.addSibling(vertex);
+    };
+    forSingle.addSiblingAction = function(vertex){
+        forSingle.addChildAction(
+            vertex.getParentVertex()
+        );
+    };
+    forSingle.addSiblingCanDo = function(vertex){
+        return !vertex.isCenterBubble();
+    };
     forSingle.remove = function (event, vertex) {
         forSingle.removeAction(vertex);
     };

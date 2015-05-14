@@ -20,7 +20,7 @@ define([
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             SelectionHandler.setToSingleGraphElement(bubble1);
             var numberOfChild = bubble1.getNumberOfChild();
-            VertexServiceMock.addRelationAndVertexToVertex();
+            VertexServiceMock.addRelationAndVertexToVertexMock();
             TestUtils.pressKey("\t");
             expect(
                 bubble1.getNumberOfChild()
@@ -53,7 +53,6 @@ define([
                 actionSpy
             ).toHaveBeenCalled();
         });
-
         it("does not focus when pressing control only", function(){
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             SelectionHandler.setToSingleGraphElement(bubble1);

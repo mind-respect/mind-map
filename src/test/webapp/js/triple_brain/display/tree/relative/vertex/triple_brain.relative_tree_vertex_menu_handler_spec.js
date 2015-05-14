@@ -29,5 +29,18 @@ define([
                 bubble1.getNumberOfChild()
             ).toBe(1);
         });
+        it("cannot add sibling if center bubble", function () {
+
+        });
+        it("can add sibling", function () {
+            VertexServiceMock.addRelationAndVertexToVertexMock();
+            var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            var numberOfChild = bubble1.getNumberOfChild();
+            var someChild = bubble1.getTopMostChildBubble().getTopMostChildBubble();
+            RelativeTreeVertexMenuHandler.forSingle().addSiblingAction(someChild);
+            expect(
+                bubble1.getNumberOfChild()
+            ).toBe(numberOfChild + 1);
+        });
     });
 });
