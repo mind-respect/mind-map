@@ -41,7 +41,7 @@ define([
         );
     };
     forSingle.addSibling = function(event, vertex){
-        forSingle.addSibling(vertex);
+        forSingle.addSiblingAction(vertex);
     };
     forSingle.addSiblingAction = function(vertex){
         forSingle.addChildAction(
