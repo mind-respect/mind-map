@@ -441,6 +441,7 @@ svg {
   }
   .in-bubble-content{
     position: relative;
+    z-index:4;
   }
   .in-bubble-note-button{
     cursor: pointer;
@@ -487,7 +488,7 @@ svg {
   &.selected {
     z-index:11;
     .in-bubble-content {
-      z-index: 2;
+      z-index: 5;
     }
   }
   .image_container {
@@ -701,7 +702,6 @@ svg {
     border: 1px;
     border-color: transparent;
     border-style: solid;
-    z-index: 2;
   }
   .move {
     background-image: url('images/icons/vertex/move.png');
