@@ -88,25 +88,32 @@ define([
                     provider: self
                 };
             }
+
             this.sortFormattedResults(formattedResults);
             return formattedResults;
         };
 
-        this.sortFormattedResults = function(formattedResults){
-            formattedResults.sort(function(a, b){
-                a = a.nonFormattedSearchResult;
-                b = b.nonFormattedSearchResult;
-                if(a.is(GraphElementType.Schema)){
-                    if(b.is(GraphElementType.Schema)){
+        this.sortFormattedResults = function (formattedResults) {
+            formattedResults.sort(function (a, b) {
+                if (isPrioritySearchResult(a)) {
+                    if (isPrioritySearchResult(b)) {
                         return 0;
                     }
                     return -1;
                 }
-                if(b.is(GraphElementType.Schema)){
+                if (isPrioritySearchResult(b)) {
                     return 1;
                 }
             });
         };
+
+        function isPrioritySearchResult(formattedResult) {
+            return formattedResult.nonFormattedSearchResult.is(
+                    GraphElementType.Schema
+                ) || formattedResult.nonFormattedSearchResult.is(
+                    GraphElementType.Property
+                );
+        }
 
         this.getMoreInfoForSearchResult = function (searchResult, callback) {
             var originalSearchResult = searchResult.nonFormattedSearchResult;

@@ -96,7 +96,7 @@ define([
                 "Relation"
             );
         });
-        it("puts schemas on top of bubbles in the list of formatted search results", function () {
+        it("puts schemas above bubbles in the list of formatted search results", function () {
             var serverResults = [];
             serverResults = serverResults.concat(
                 new Scenarios.getSearchResultForB1().get()
@@ -118,6 +118,30 @@ define([
                 topSearchResult.elementType
             ).toBe(
                 "Schema"
+            );
+        });
+        it("puts proprieties above relations in the list of formatted search results", function () {
+            var serverResults = [];
+            serverResults = serverResults.concat(
+                new Scenarios.getSearchResultForR2().get()
+            );
+            serverResults = serverResults.concat(
+                new Scenarios.getSearchResultsForImpact().get()
+            );
+            expect(
+                serverResults[0].type
+            ).toBe("edge");
+            expect(
+                serverResults[1].type
+            ).toBe("property");
+            var topSearchResult = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas().formatResults(
+                serverResults,
+                ""
+            )[0];
+            expect(
+                topSearchResult.elementType
+            ).toBe(
+                "Property"
             );
         });
     });
