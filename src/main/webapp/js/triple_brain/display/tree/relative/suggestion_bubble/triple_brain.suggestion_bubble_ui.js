@@ -7,8 +7,9 @@ define([
     "triple_brain.relative_tree_vertex",
     "triple_brain.graph_element_ui",
     "triple_brain.vertex_ui",
-    "triple_brain.event_bus"
-], function ($, RelativeTreeVertex, GraphElementUi, VertexUi, EventBus) {
+    "triple_brain.event_bus",
+    "triple_brain.selection_handler"
+], function ($, RelativeTreeVertex, GraphElementUi, VertexUi, EventBus, SelectionHandler) {
     "use strict";
     var api = {};
     RelativeTreeVertex.buildCommonConstructors(api);
@@ -73,6 +74,7 @@ define([
             this.html
         );
         vertex.rebuildMenuButtons();
+        SelectionHandler.setToSingleGraphElement(vertex);
         this.integrationDeferrer.resolve(vertex);
         EventBus.publish(
             '/event/ui/html/vertex/created/',

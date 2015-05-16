@@ -64,7 +64,6 @@
 .left-oriented .bubble.inverse .arrow:before { content: url("images/icons/vertex/arrowhead_right.svg"); }
 .left-oriented .bubble.view-only .arrow:before { left: 8px; }
 .left-oriented .bubble.group-relation .arrow, .left-oriented .bubble.property .arrow { right: -42px; }
-.left-oriented .bubble.group-relation .arrow:before, .left-oriented .bubble.property .arrow:before { left: 39px; }
 .left-oriented .bubble .connector { left: auto; right: -22px; }
 .left-oriented .vertex-tree-container .vertical-border { border-left: none; border-right: 1px solid black; }
 

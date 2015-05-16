@@ -6,8 +6,9 @@ define([
     "test/webapp/js/test-scenarios",
     "test/webapp/js/test-utils",
     "triple_brain.suggestion_service",
-    "triple_brain.graph_displayer_as_relative_tree"
-], function (Scenarios, TestUtils, SuggestionService, GraphDisplayerAsRelativeTree) {
+    "triple_brain.graph_displayer_as_relative_tree",
+    "triple_brain.selection_handler"
+], function (Scenarios, TestUtils, SuggestionService, GraphDisplayerAsRelativeTree, SelectionHandler) {
     "use strict";
     describe("suggestion_bubble_ui", function () {
         var oneSuggestionScenario;
@@ -72,6 +73,23 @@ define([
             expect(
                 isASuggestion
             ).toBeFalsy();
+        });
+        it("updates selection handler to new vertex after integration", function () {
+            var vertexSuggestionInTree = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
+            SelectionHandler.setToSingleGraphElement(vertexSuggestionInTree);
+            expect(
+                SelectionHandler.getSingleElement().isSuggestion()
+            ).toBeTruthy();
+            expect(
+                SelectionHandler.getSingleElement().isVertex()
+            ).toBeFalsy();
+            vertexSuggestionInTree.integrate();
+            expect(
+                SelectionHandler.getSingleElement().isSuggestion()
+            ).toBeFalsy();
+            expect(
+                SelectionHandler.getSingleElement().isVertex()
+            ).toBeTruthy();
         });
     });
 });
