@@ -209,7 +209,6 @@ button.add-button-in-list:hover { color: #00d100; }
 .bubble .in-bubble-note-button i { font-size: 1.5em; }
 .bubble.edit { -moz-user-select: text; }
 .bubble .duplicate-button-container { position: absolute; }
-.bubble.suggestion .in-bubble-content { background-color: white; border: 1px dashed black; color: black; text-shadow: none; }
 .bubble .bubble-label { outline: 0px solid transparent; border: none; font-family: Helvetica; font-size: 14px; width: auto; display: table-cell; white-space: pre; height: 17px; }
 .bubble .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); color: grey; font-style: italic; }
 .bubble.selected { z-index: 11; }
@@ -231,6 +230,7 @@ button.add-button-in-list:hover { color: #00d100; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .vertex { /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */ white-space: nowrap; }
+.vertex.suggestion .in-bubble-content { background-color: white; border: 1px dashed black; color: black; text-shadow: none; }
 .vertex.edit .in-bubble-content { width: 325px; max-width: 325px; }
 .vertex.edit .in-bubble-content .in-bubble-note-button { display: none; }
 .vertex.edit .bubble-label { white-space: pre-wrap; }

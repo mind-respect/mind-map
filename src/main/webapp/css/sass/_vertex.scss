@@ -5,6 +5,14 @@
 .vertex {
   /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */
   white-space: nowrap;
+  &.suggestion {
+    .in-bubble-content{
+      background-color: white;
+      border: 1px dashed black;
+      color: black;
+      text-shadow: none;
+    }
+  }
   &.edit {
     .in-bubble-content {
       width: 325px;
