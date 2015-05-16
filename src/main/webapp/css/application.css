@@ -1,37 +1,6 @@
 @charset "UTF-8";
 /* Copyright Vincent Blouin under the GPL License version 3 */
-body { cursor: all-scroll; -moz-user-select: -moz-none; -webkit-user-select: none; -ms-user-select: none; user-select: none; }
-
-#app-presentation { margin-top: 5%; }
-
-#big-search-box-container { margin-top: 20px; }
-#big-search-box-container .input-group { margin: auto; }
-
-.round-button { border-radius: 20px; }
-
-.root-vertex-super-container { position: absolute; padding: 50%; }
-
-a, input[type=button].link-like-button, button.link-like-button { color: #1919ac; }
-
-a:hover, input[type=button].link-like-button:hover, button.link-like-button:hover { color: #47A3FF; }
-
-input[type="button"], .link-like-button { border-style: none; font: inherit; padding: 0 0 0 0; background: none; }
-
-button.graph-element-button { width: 30px; height: 30px; margin-bottom: 5px; margin-right: 3px; line-height: 20px; color: #333; text-align: center; text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); background-image: linear-gradient(to bottom, #ffffff, #e6e6e6); background-repeat: repeat-x; border-bottom-color: #b3b3b3; border: 1px solid #ccc; border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25); -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); }
-button.graph-element-button:hover { background-image: linear-gradient(to bottom, #ffffff, #cdcdcd); }
-
-li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-button-in-list { margin: auto; margin-right: 0.5em; color: red; font-weight: bold; font-size: 1.3em; background: transparent; border: none; position: absolute; right: 0; }
-
-button.add-button-in-list { color: green; font-weight: bold; font-size: 2em; margin-bottom: 0.2em; float: left; border: none; background-color: transparent; }
-button.add-button-in-list:hover { color: #00d100; }
-
-.included-vertices-container .layout { position: absolute; }
-
-#mind_map h2, #mind_map h3 { line-height: inherit; }
-
-#cboxClose { left: -5px; }
-
-/************ Registration and login *********************/
+/* Copyright Vincent Blouin under the GPL License version 3 */
 #registration-page { overflow-y: scroll; max-height: 500px; }
 #registration-page .language-list { float: left; width: 100%; margin-bottom: 1em; }
 #registration-page .language-list h5 { display: table-cell; vertical-align: bottom; padding-bottom: 0.8em; }
@@ -52,29 +21,67 @@ button.add-button-in-list:hover { color: #00d100; }
 
 .security-form a { float: left; }
 
+/* Copyright Vincent Blouin under the GPL License version 3 */
+.root-vertex-super-container { position: absolute; }
+
+.vertices-children-container { display: table-cell; vertical-align: middle; }
+
+.vertices-children-container.left-oriented .vertex-tree-container { float: right; }
+
+.vertex-tree-container { display: table; margin-left: 0; height: 1em; }
+
+.clear-fix { clear: both; display: block; height: 0; width: 0; padding: 0; margin: 0; }
+
+.vertex-container { display: table-cell; vertical-align: middle; padding-top: 5px; padding-bottom: 5px; }
+
+.vertex.view-only { margin-top: 2em; margin-bottom: 2em; }
+
+/*BORDER*/
+.vertices-children-container .vertex-tree-container:first-child > .vertical-border-first { border-left: none; border-right: none; }
+
+.vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-second { border-left: none; border-right: none; }
+
+.vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-third { border-left: none; border-right: none; }
+
+.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container > .vertex:before { border-left: none; border-right: none; }
+
+.vertical-border { display: table; height: 50%; border-left: 1px solid black; padding-right: 40px; }
+
+.vertical-border.small { padding-right: 20px; }
+
+.vertices-children-container .vertex-tree-container .vertical-border-third { height: 0; }
+
+.vertical-border-filling { display: table; height: 0; padding: 0; width: 1px; }
+
+/* Copyright Vincent Blouin under the GPL License version 3 */
+.left-oriented [data-action=addChild] .fa-arrow-right { transform: rotate(180deg); }
+.left-oriented .vertex .in-bubble-content .in-bubble-note-button { margin: 0 5px 0 4px; }
+.left-oriented .relation .in-bubble-note-button { margin-right: 0; margin-left: 5px; }
+.left-oriented .relation .label-container { padding-left: 0; padding-right: 6px; }
+.left-oriented .group-relation .label { margin-right: 0; margin-left: 0.3em; }
+.left-oriented .bubble .arrow { left: auto; width: 48px; margin-left: -3px; }
+.left-oriented .bubble .arrow:before { content: url("images/icons/vertex/arrowhead_left.svg"); }
+.left-oriented .bubble.inverse .arrow:before { content: url("images/icons/vertex/arrowhead_right.svg"); }
+.left-oriented .bubble.view-only .arrow:before { left: 8px; }
+.left-oriented .bubble.group-relation .arrow, .left-oriented .bubble.property .arrow { right: -42px; }
+.left-oriented .bubble.group-relation .arrow:before, .left-oriented .bubble.property .arrow:before { left: 39px; }
+.left-oriented .bubble .connector { left: auto; right: -22px; }
+.left-oriented .vertex-tree-container .vertical-border { border-left: none; border-right: 1px solid black; }
+
+/* Copyright Vincent Blouin under the GPL License version 3 */
 #top-center-menu { position: fixed; left: 40%; top: 0.5em; width: 20em; }
 #top-center-menu .ui-button { z-index: 3; }
 
-#graph-element-menu { position: fixed; right: 10px; top: 100px; border: 1px solid #0088CC; border-radius: 9px; max-width: 107px; padding: 1em; padding-top: 2em; cursor: all-scroll; margin-right: 0; margin-left: 0; }
+#bottom-center-panel { position: fixed; left: 45%; top: 95%; }
 
-.ui-button { padding: .4em 1em; cursor: pointer; font-size: 0.9em; }
+#left-panel { margin-left: 5px; position: fixed; left: 0.1em; top: 0.5em; overflow: hidden; width: 225px; }
+#left-panel h2, #left-panel h4 { font-size: 1em; white-space: nowrap; text-decoration: underline; }
 
-.ui-accordion { font-size: 0.9em; }
+#toggle-left-panel-collapse { float: right; position: fixed; left: 235px; top: 10px; z-index: 2; font-size: 1em; }
 
-.ui-dialog { opacity: 0.9; }
-
-.ui-autocomplete { height: 200px; overflow-y: scroll; }
-
-.ui-menu .ui-menu-item { border-bottom: 1px solid #d3d2d2; }
-.ui-menu .ui-menu-item .element-label { font-weight: bold; font-size: 14px; padding-right: 43px; }
-.ui-menu .ui-menu-item a { white-space: nowrap; }
-.ui-menu .ui-menu-item span { white-space: nowrap; }
-.ui-menu .ui-menu-item .info { font-size: 11px; }
-.ui-menu .ui-menu-item .info * { font-size: 11px; }
-.ui-menu .ui-menu-item .info a { color: #1919AC; display: inline; padding: 0; white-space: nowrap; }
-.ui-menu .ui-menu-item .info a:hover { color: #47A3FF; }
-.ui-menu .ui-menu-item .type { margin-top: -20px; float: right; }
-.ui-menu .ui-menu-item .distinction { margin-right: 1em; max-width: 428px; font-weight: normal; overflow: hidden; text-overflow: ellipsis; }
+#top-panel { margin-right: 160px; position: fixed; right: 0.1em; top: 0.5em; }
+#top-panel > input[type=button], #top-panel > button, #top-panel > .link-like-button { float: left; margin-left: 15px; font-size: 1em; margin-top: 4px; }
+#top-panel .dropdown a { text-align: left; }
 
 .frontier { position: fixed; background-color: transparent; z-index: 0; }
 
@@ -86,33 +93,74 @@ button.add-button-in-list:hover { color: #00d100; }
 
 .bottom-frontier { width: 100%; min-height: 2em; bottom: 0; }
 
-.ui-loader { display: none; }
-
-svg { z-index: 1; }
-
-.main-panel { z-index: 12; background-color: white; opacity: 0.91; -moz-border-radius: 15px; border-radius: 15px; cursor: default; }
-
-#bottom-center-panel { position: fixed; left: 45%; top: 95%; }
-
 .legend { display: inline; padding: 0.3em; }
 
 .private.legend { background-color: #E6E6FF; }
 
 .public.legend { background-color: #F9E5E5; }
 
-#top-panel { margin-right: 160px; position: fixed; right: 0.1em; top: 0.5em; }
-#top-panel > input[type=button], #top-panel > button, #top-panel > .link-like-button { float: left; margin-left: 15px; font-size: 1em; margin-top: 4px; }
-#top-panel .dropdown a { text-align: left; }
+/* Copyright Vincent Blouin under the GPL License version 3 */
+.ui-menu .ui-menu-item { border-bottom: 1px solid #d3d2d2; }
+.ui-menu .ui-menu-item .element-label { font-weight: bold; font-size: 14px; padding-right: 43px; }
+.ui-menu .ui-menu-item a { white-space: nowrap; }
+.ui-menu .ui-menu-item span { white-space: nowrap; }
+.ui-menu .ui-menu-item .info { font-size: 11px; }
+.ui-menu .ui-menu-item .info * { font-size: 11px; }
+.ui-menu .ui-menu-item .info a { color: #1919AC; display: inline; padding: 0; white-space: nowrap; }
+.ui-menu .ui-menu-item .info a:hover { color: #47A3FF; }
+.ui-menu .ui-menu-item .type { margin-top: -20px; float: right; }
+.ui-menu .ui-menu-item .distinction { margin-right: 1em; max-width: 428px; font-weight: normal; overflow: hidden; text-overflow: ellipsis; }
 
-#left-panel { margin-left: 5px; position: fixed; left: 0.1em; top: 0.5em; overflow: hidden; width: 225px; }
+#big-search-box-container { margin-top: 20px; }
+#big-search-box-container .input-group { margin: auto; }
+#big-search-box-container .search-icon { font-size: 1.7em; }
 
-#toggle-left-panel-collapse { float: right; position: fixed; left: 235px; top: 10px; z-index: 2; font-size: 1em; }
+.autocomplete-flyout { position: absolute; width: 300px; background-color: white; /*one more than jquery ui dialog*/ z-index: 101; }
+.autocomplete-flyout img { float: left; margin-right: 0.7em; }
+.autocomplete-flyout .title { font-weight: bold; }
+.autocomplete-flyout .source { font-weight: lighter; font-size: 85%; }
 
-#left-panel h2, #left-panel h4 { font-size: 1em; white-space: nowrap; text-decoration: underline; }
+.ui-autocomplete { height: 200px; overflow-y: scroll; }
 
-#sub-vertices-depth-slider { z-index: 3; width: 120px; }
+.ui-dialog { opacity: 0.9; }
 
-#sub-vertices-depth-index { border: 0; font-size: 1.2em; }
+#graph-element-menu { position: fixed; right: 10px; top: 100px; border: 1px solid #0088CC; border-radius: 9px; max-width: 107px; padding: 1em; padding-top: 2em; cursor: all-scroll; margin-right: 0; margin-left: 0; }
+
+button.graph-element-button { width: 30px; height: 30px; margin-bottom: 5px; margin-right: 3px; line-height: 20px; color: #333; text-align: center; text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); background-image: linear-gradient(to bottom, #ffffff, #e6e6e6); background-repeat: repeat-x; border-bottom-color: #b3b3b3; border: 1px solid #ccc; border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25); -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); }
+button.graph-element-button:hover { background-image: linear-gradient(to bottom, #ffffff, #cdcdcd); }
+
+button.add-button-in-list { color: green; font-weight: bold; font-size: 2em; margin-bottom: 0.2em; float: left; border: none; background-color: transparent; }
+button.add-button-in-list:hover { color: #00d100; }
+
+#selection-box { min-width: 45px; min-height: 40px; z-index: 100; background: rgba(0, 203, 255, 0.1); border: solid black; position: absolute; }
+
+/* Copyright Vincent Blouin under the GPL License version 3 */
+.vertex-note.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset { float: none; text-align: center; }
+.vertex-note.ui-dialog .ui-dialog-content { padding: 0; }
+.vertex-note textarea { width: 95%; height: 93%; margin-bottom: 0; }
+
+.graph-element-menu { opacity: 0.96; margin-right: auto; text-align: center; }
+.graph-element-menu h2, .graph-element-menu h3 { line-height: inherit; }
+.graph-element-menu h2 { font-size: 1em; }
+.graph-element-menu h3 { margin-top: 5px; font-weight: normal; font-size: 0.8em; }
+.graph-element-menu ul { margin-left: 0px; margin-bottom: 5px; padding: 0; list-style-type: none; }
+.graph-element-menu li { margin-left: 0px; padding: 0; font-size: 12px; }
+.graph-element-menu .identifications { /*:-moz-placeholder for firefox 18- and ::-moz-placeholder for firefox 19+
+*/ }
+.graph-element-menu .identifications h3 { text-align: left; font-size: 0.9em; }
+.graph-element-menu .identifications .type-label { text-align: center; padding-top: 10px; padding-bottom: 10px; margin: auto; overflow: hidden; font-size: 1em; }
+.graph-element-menu .identifications .description { font-size: 0.9em; text-align: left; }
+.graph-element-menu .identifications ::-webkit-input-placeholder, .graph-element-menu .identifications :-moz-placeholder, .graph-element-menu .identifications ::-moz-placeholder, .graph-element-menu .identifications :-ms-input-placeholder { color: black; }
+.graph-element-menu .ui-dialog-titlebar-close { background: transparent; border: none; }
+
+.image-upload-wrapper .holder { border: 10px dashed #ccc; width: 150px; min-height: 150px; margin: 20px auto; }
+.image-upload-wrapper .holder.hover { border: 10px dashed #0c0; }
+.image-upload-wrapper .holder img { display: block; margin: 10px auto; }
+.image-upload-wrapper .holder p { margin: 10px; font-size: 14px; }
+.image-upload-wrapper .progress-label { position: relative; left: -100px; font-size: small; }
+.image-upload-wrapper .progress-label:after { content: '%'; }
+.image-upload-wrapper .fail { background: #c00; padding: 2px; color: #fff; }
+.image-upload-wrapper .hidden { display: none !important; }
 
 .ui-dialog-content ul { overflow-y: scroll; max-height: 400px; }
 
@@ -120,19 +168,43 @@ svg { z-index: 1; }
 
 .ui-dialog-content a:hover { color: #47A3FF; }
 
-.graph { background-color: white; }
+/* Copyright Vincent Blouin under the GPL License version 3 */
+.relation { position: relative; }
+.relation .menu { background-color: transparent; z-index: 11; margin-left: 5px; }
+.relation .label-container { display: table-cell; padding-left: 6px; position: relative; }
+.relation.suggestion .in-bubble-content { border: none; }
+.relation.suggestion .in-bubble-content .bubble-label { border: 1px dashed black; background-color: white; color: black; text-shadow: none; }
+.relation .in-bubble-content .bubble-label { background-color: #3a87ad; font-family: helvetica; font-size: 13px; height: auto; }
+.relation .in-bubble-content .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); font-style: italic; color: white; }
+.relation .in-bubble-note-button { margin-right: 5px; }
+.relation .in-bubble-note-button i { margin-top: 3px; font-size: 1.5em; }
+.relation .ui-button { width: 1.7em; height: 1.8em; margin: 0; }
+.relation .duplicate-button-container { left: -20px; top: -23px; }
 
-.graph-element input[type='text'] { text-shadow: none; box-shadow: none; color: black; font-weight: normal; }
-.graph-element .bubble-label { font-size: 13px; }
+.relation { padding: 0; margin-top: 0; margin-right: 0; margin-left: 0; vertical-align: middle; }
+
+.relation.selected .label { box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb; }
+
+.relation input { border-radius: 3px 3px 3px 3px; border-width: 0.2em; border-color: #3A87AD; padding: 0; outline: none; font-family: courier new, monospace; font-size: 14px; vertical-align: middle; background-color: transparent; overflow: hidden; position: absolute; width: 100%; top: 0; left: 0; right: 0; z-index: 5; }
+
+.relation.inverse .in-bubble-content .bubble-label { background: mediumpurple; }
+
+.relation.inverse input[type=text] { border-color: red; }
+
+.property input.edge-label { background-color: #f5f5f5; font-size: 13px; }
+.property .relation-menu { left: 0; }
 
 .group-relation { white-space: nowrap; }
 .group-relation.selected .in-bubble-content .bubble-label { box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb; }
 .group-relation .in-bubble-content .bubble-label { margin-right: 0.3em; z-index: 1; }
 
+.edge-label { position: absolute; width: 100%; left: 0; right: 0; }
+
+/* Copyright Vincent Blouin under the GPL License version 3 */
 .bubble { cursor: default; display: table; /*.label to override bootstrap*/ white-space: nowrap; position: relative; min-width: 0; margin: 0 0 0 0; }
 .bubble > *, .bubble .label { display: table-cell; vertical-align: middle; }
 .bubble.view-only .arrow:before { left: 0; }
-.bubble .in-bubble-content { position: relative; z-index: 4; }
+.bubble .in-bubble-content { position: relative; z-index: 3; }
 .bubble .in-bubble-note-button { cursor: pointer; margin: 0 17px 0 0; display: inherit; }
 .bubble .in-bubble-note-button i { font-size: 1.5em; }
 .bubble.edit { -moz-user-select: text; }
@@ -142,9 +214,8 @@ svg { z-index: 1; }
 .bubble .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); color: grey; font-style: italic; }
 .bubble.selected { z-index: 11; }
 .bubble.selected .in-bubble-content { z-index: 5; }
-.bubble .image_container { z-index: 3; position: relative; min-width: 60px; text-align: right; left: 3px; }
+.bubble .image_container { z-index: 3; position: relative; min-width: 60px; text-align: right; }
 .bubble .image_container:empty { min-width: 0; }
-.bubble .image_container img { max-width: auto; }
 .bubble .edge-label { display: inline; }
 .bubble .connector { position: absolute; height: 1px; border-top: 1px solid black; top: 50%; width: 65px; left: -22px; z-index: -1; }
 .bubble .arrow { position: absolute; height: 1px; width: 73px; top: 50%; left: -42px; border-top: 1px solid black; z-index: -1; }
@@ -158,6 +229,7 @@ svg { z-index: 1; }
 .bubble .menu .ui-button { float: left; background-color: white; }
 .bubble.inverse .arrow:before { content: url("images/icons/vertex/arrowhead_left.svg"); }
 
+/* Copyright Vincent Blouin under the GPL License version 3 */
 .vertex { /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */ white-space: nowrap; }
 .vertex.edit .in-bubble-content { width: 325px; max-width: 325px; }
 .vertex.edit .in-bubble-content .in-bubble-note-button { display: none; }
@@ -184,61 +256,36 @@ svg { z-index: 1; }
 .vertex .move { background-image: url("images/icons/vertex/move.png"); min-width: 25px; min-height: 25px; margin-right: 5px; margin-left: 8px; float: left; }
 .vertex .ui-button { width: 1.7em; height: 1.8em; margin-right: 0; font-size: 1.1em; padding: 0; }
 
-.vertex-note.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset { float: none; text-align: center; }
-.vertex-note.ui-dialog .ui-dialog-content { padding: 0; }
-.vertex-note textarea { width: 95%; height: 93%; margin-bottom: 0; }
+.included-vertices-container .layout { position: absolute; }
 
-.graph-element-menu { opacity: 0.96; margin-right: auto; text-align: center; }
-.graph-element-menu h2, .graph-element-menu h3 { line-height: inherit; }
-.graph-element-menu h2 { font-size: 1em; }
-.graph-element-menu h3 { margin-top: 5px; font-weight: normal; font-size: 0.8em; }
-.graph-element-menu ul { margin-left: 0px; margin-bottom: 5px; padding: 0; list-style-type: none; }
-.graph-element-menu li { margin-left: 0px; padding: 0; font-size: 12px; }
-.graph-element-menu .identifications { /*:-moz-placeholder for firefox 18- and ::-moz-placeholder for firefox 19+
-*/ }
-.graph-element-menu .identifications h3 { text-align: left; font-size: 0.9em; }
-.graph-element-menu .identifications .type-label { text-align: center; padding-top: 10px; padding-bottom: 10px; margin: auto; overflow: hidden; font-size: 1em; }
-.graph-element-menu .identifications .description { font-size: 0.9em; text-align: left; }
-.graph-element-menu .identifications ::-webkit-input-placeholder, .graph-element-menu .identifications :-moz-placeholder, .graph-element-menu .identifications ::-moz-placeholder, .graph-element-menu .identifications :-ms-input-placeholder { color: black; }
-.graph-element-menu .ui-dialog-titlebar-close { background: transparent; border: none; }
+body { cursor: all-scroll; -moz-user-select: -moz-none; -webkit-user-select: none; -ms-user-select: none; user-select: none; }
 
-.edge-label { position: absolute; width: 100%; left: 0; right: 0; }
+#app-presentation { margin-top: 5%; }
 
-.property input.edge-label { background-color: #f5f5f5; font-size: 13px; }
-.property .relation-menu { left: 0; }
+.round-button { border-radius: 20px; }
 
-.relation { position: relative; }
-.relation .menu { background-color: transparent; z-index: 11; margin-left: 5px; }
-.relation .label-container { display: table-cell; padding-left: 6px; position: relative; }
-.relation.suggestion .in-bubble-content { border: none; }
-.relation.suggestion .in-bubble-content .bubble-label { border: 1px dashed black; background-color: white; color: black; text-shadow: none; }
-.relation .in-bubble-content .bubble-label { background-color: #3a87ad; font-family: helvetica; font-size: 13px; height: auto; }
-.relation .in-bubble-content .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); font-style: italic; color: white; }
-.relation .in-bubble-note-button { margin-right: 5px; }
-.relation .in-bubble-note-button i { margin-top: 3px; font-size: 1.5em; }
-.relation .ui-button { width: 1.7em; height: 1.8em; margin: 0; }
-.relation .duplicate-button-container { left: -20px; top: -23px; }
+.root-vertex-super-container { position: absolute; padding: 50%; }
+
+a, input[type=button].link-like-button, button.link-like-button { color: #1919ac; }
+
+a:hover, input[type=button].link-like-button:hover, button.link-like-button:hover { color: #47A3FF; }
+
+input[type="button"], .link-like-button { border-style: none; font: inherit; padding: 0 0 0 0; background: none; }
+
+li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-button-in-list { margin: auto; margin-right: 0.5em; color: red; font-weight: bold; font-size: 1.3em; background: transparent; border: none; position: absolute; right: 0; }
+
+#mind_map h2, #mind_map h3 { line-height: inherit; }
+
+#cboxClose { left: -5px; }
+
+.ui-button { padding: .4em 1em; cursor: pointer; font-size: 0.9em; }
+
+.ui-accordion { font-size: 0.9em; }
+
+.main-panel { z-index: 12; background-color: white; opacity: 0.91; -moz-border-radius: 15px; border-radius: 15px; cursor: default; }
 
 .hidden-properties-container { z-index: 3; min-width: 25px; }
 
 .link-like-button { border-style: none; font-size: 0.7em; padding: 0 0 0 0; background-color: transparent; font-weight: normal; }
 
-.autocomplete-flyout { position: absolute; width: 300px; background-color: white; /*one more than jquery ui dialog*/ z-index: 101; }
-.autocomplete-flyout img { float: left; margin-right: 0.7em; }
-.autocomplete-flyout .title { font-weight: bold; }
-.autocomplete-flyout .source { font-weight: lighter; font-size: 85%; }
-
-#selection-box { min-width: 45px; min-height: 40px; z-index: 100; background: rgba(0, 203, 255, 0.1); border: solid black; position: absolute; }
-
-.image-upload-wrapper .holder { border: 10px dashed #ccc; width: 150px; min-height: 150px; margin: 20px auto; }
-.image-upload-wrapper .holder.hover { border: 10px dashed #0c0; }
-.image-upload-wrapper .holder img { display: block; margin: 10px auto; }
-.image-upload-wrapper .holder p { margin: 10px; font-size: 14px; }
-.image-upload-wrapper .progress-label { position: relative; left: -100px; font-size: small; }
-.image-upload-wrapper .progress-label:after { content: '%'; }
-.image-upload-wrapper .fail { background: #c00; padding: 2px; color: #fff; }
-.image-upload-wrapper .hidden { display: none !important; }
-
 .add-identification { float: left; }
-
-#big-search-box-container .search-icon { font-size: 1.7em; }

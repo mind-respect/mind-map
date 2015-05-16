@@ -1,0 +1,84 @@
+/*
+ * Copyright Vincent Blouin under the GPL License version 3
+ */
+
+.root-vertex-super-container{
+  position:absolute;
+}
+
+.vertices-children-container{
+  display:table-cell;
+  vertical-align: middle;
+}
+.vertices-children-container.left-oriented .vertex-tree-container{
+  float:right;
+}
+.vertex-tree-container{
+  display:table;
+  margin-left:0;
+  height:1em;
+}
+
+.clear-fix{
+  clear: both;
+  display:block;
+  height:0;
+  width:0;
+  padding:0;
+  margin:0;
+}
+
+.vertex-container{
+  display:table-cell;
+  vertical-align:middle;
+  padding-top:5px;
+  padding-bottom:5px;
+}
+
+.vertex.view-only{
+  margin-top:2em;
+  margin-bottom:2em;
+}
+
+/*BORDER*/
+.vertices-children-container .vertex-tree-container:first-child > .vertical-border-first{
+  border-left:none;
+  border-right:none;
+}
+
+.vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-second{
+  border-left:none;
+  border-right:none;
+}
+
+.vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-third{
+  border-left:none;
+  border-right:none;
+}
+
+.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container > .vertex:before{
+  border-left:none;
+  border-right:none;
+}
+
+.vertical-border{
+  display:table;
+  height:50%;
+  border-left:1px solid black;
+  padding-right:40px;
+}
+
+.vertical-border.small{
+  padding-right:20px;
+}
+
+.vertices-children-container .vertex-tree-container .vertical-border-third{
+  height:0;
+}
+
+.vertical-border-filling{
+  display:table;
+  height:0;
+  padding:0;
+  width:1px;
+}

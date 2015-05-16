@@ -1,0 +1,66 @@
+/*
+ * Copyright Vincent Blouin under the GPL License version 3
+ */
+.left-oriented {
+  [data-action=addChild] .fa-arrow-right {
+    transform: rotate(180deg);
+  }
+  .vertex {
+    .in-bubble-content {
+      .in-bubble-note-button{
+        margin: 0 5px 0 4px;
+      }
+    }
+  }
+  .relation {
+    .in-bubble-note-button {
+      margin-right: 0;
+      margin-left: 5px;
+    }
+    .label-container {
+      padding-left: 0;
+      padding-right: 6px;
+    }
+  }
+  .group-relation .label {
+    margin-right: 0;
+    margin-left: 0.3em;
+  }
+  .bubble {
+    .arrow {
+      left: auto;
+      width:48px;
+      margin-left:-3px;
+      &:before{
+        content: url('images/icons/vertex/arrowhead_left.svg');
+      }
+    }
+    &.inverse{
+      .arrow:before {
+        content: url('images/icons/vertex/arrowhead_right.svg');
+      }
+    }
+    &.view-only {
+      .arrow:before {
+        left: 8px;
+      }
+    }
+    &.group-relation, &.property {
+      .arrow {
+        right: -42px;
+        &:before {
+          left: 39px;
+        }
+      }
+    }
+    .connector {
+      left: auto;
+      right: -22px;
+    }
+  }
+  .vertex-tree-container .vertical-border {
+    border-left: none;
+    border-right: 1px solid black;
+  }
+}
+

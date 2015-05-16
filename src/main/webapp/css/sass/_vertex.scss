@@ -1,0 +1,141 @@
+/*
+ * Copyright Vincent Blouin under the GPL License version 3
+ */
+
+.vertex {
+  /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */
+  white-space: nowrap;
+  &.edit {
+    .in-bubble-content {
+      width: 325px;
+      max-width: 325px;
+      .in-bubble-note-button{
+        display:none;
+      }
+    }
+    .bubble-label {
+      white-space: pre-wrap;
+    }
+  }
+  &.public {
+    .in-bubble-content {
+      background-color: #F9E5E5;
+    }
+  }
+  &.absolute {
+    white-space: nowrap;
+    position: absolute !important;
+    min-width: 120px;
+  }
+
+  &.includes-vertices {
+    .in-bubble-content {
+      padding-bottom: 2em;
+    }
+  }
+  &.selected {
+    z-index: 12;
+    .in-bubble-content {
+      border-radius: 15px;
+      box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb;
+    }
+  }
+  &.center-vertex {
+    .connector {
+      height: 0;
+      width: 0;
+    }
+    .arrow {
+      height: 0;
+      width: 0;
+      top: 0;
+      left: 0;
+      border-top: none;
+      &:before {
+        content: ""
+      }
+    }
+    &:before {
+      border-left: none;
+      height: 0;
+      width: 0;
+      top: 0;
+      left: 0;
+    }
+    .in-bubble-content {
+      border-radius: 15px;
+      -webkit-box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.1);
+      -moz-box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.1);
+      box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.5);
+    }
+    &.selected {
+      .in-bubble-content {
+        box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb;
+        border: solid red;
+      }
+    }
+  }
+  .included-graph-elements-flag {
+    position: absolute;
+    top: 25px;
+    left: 30%;
+    font-weight: bold;
+  }
+  .included-graph-elements-flag {
+    z-index: 3;
+  }
+  .in-bubble-content {
+    border-radius: 20px;
+    background-color: #E6E6FF;
+    white-space: normal;
+    padding: 1em;
+    padding-bottom: 0.7em;
+    padding-top: 0.7em;
+    margin-left: 0.3em;
+    display: table;
+    > * {
+      display: table-cell;
+    }
+    .bubble-label{
+      padding:0;
+    }
+    .in-bubble-note-button{
+      width:8px;
+      margin:0 17px 0 0;
+      display:inherit;
+      i{
+        font-size:1.5em;
+        position:absolute;
+        top:25%;
+      }
+    }
+    .duplicate-button-container {
+      left: -17px;
+      top: -18px;
+    }
+    border: 1px;
+    border-color: transparent;
+    border-style: solid;
+  }
+  .move {
+    background-image: url('images/icons/vertex/move.png');
+    min-width: 25px;
+    min-height: 25px;
+    margin-right: 5px;
+    margin-left: 8px;
+    float: left;
+  }
+  .ui-button {
+    width: 1.7em;
+    height: 1.8em;
+    margin-right: 0;
+    font-size: 1.1em;
+    padding: 0;
+  }
+}
+
+.included-vertices-container {
+  .layout {
+    position: absolute;
+  }
+}

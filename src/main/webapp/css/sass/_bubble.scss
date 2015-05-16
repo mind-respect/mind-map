@@ -1,0 +1,163 @@
+/*
+ * Copyright Vincent Blouin under the GPL License version 3
+ */
+
+.bubble {
+  cursor: default;
+  display: table;
+  /*.label to override bootstrap*/
+  > *, .label {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  &.view-only {
+    .arrow {
+      &:before {
+        left: 0;
+      }
+    }
+  }
+  .in-bubble-content{
+    position: relative;
+    z-index:3;
+  }
+  .in-bubble-note-button{
+    cursor: pointer;
+    margin:0 17px 0 0;
+    display:inherit;
+    i{
+      font-size:1.5em;
+    }
+  }
+  &.edit{
+    -moz-user-select: text;
+  }
+  .duplicate-button-container {
+    position: absolute;
+  }
+
+  &.suggestion {
+    .in-bubble-content{
+      background-color: white;
+      border: 1px dashed black;
+      color: black;
+      text-shadow: none;
+    }
+  }
+  white-space: nowrap;
+  .bubble-label {
+    outline: 0px solid transparent;
+    border: none;
+    font-family: Helvetica;
+    font-size: 14px;
+    width: auto;
+    display: table-cell;
+    white-space: pre;
+    height: 17px;
+    &:empty:not(:focus):before {
+      content: attr(data-placeholder);
+      color: grey;
+      font-style: italic;
+    }
+  }
+  position: relative;
+  min-width: 0;
+  margin: 0 0 0 0;
+  &.selected {
+    z-index:11;
+    .in-bubble-content {
+      z-index: 5;
+    }
+  }
+  .image_container {
+    z-index: 3;
+    position: relative;
+    min-width: 60px;
+    text-align:right;
+    &:empty {
+      min-width: 0;
+    }
+  }
+  .edge-label {
+    display: inline;
+  }
+  .connector {
+    position: absolute;
+    height: 1px;
+    border-top: 1px solid black;
+    top: 50%;
+    width: 65px;
+    left: -22px;
+    z-index: -1;
+  }
+  .arrow {
+    position: absolute;
+    height: 1px;
+    width: 73px;
+    top: 50%;
+    left: -42px;
+    border-top: 1px solid black;
+    z-index: -1;
+    ~{
+      background-color:yellow;
+    }
+    ~ .in-bubble-note-button:not(hidden){
+      width:100%;
+    }
+    &:before {
+      content: url('images/icons/vertex/arrowhead_right.svg');
+      position: relative;
+      top: -10px;
+      left: 20px;
+    }
+  }
+
+  .menu {
+    z-index:3;
+    width: 134px;
+    margin-top: 5px;
+    position: absolute;
+    white-space: normal;
+    background-color: white;
+    opacity: 0.95;
+    left: 0;
+    top: 100%;
+    ul:first-of-type {
+      padding-left: 5px;
+    }
+    ul {
+      list-style: none;
+      font-family: courier new, monospace;
+      font-size: 18px;
+      padding: 0 5px 0 0;
+      margin: 0 0 0 0;
+      display: inline;
+      float: left;
+      min-width: 12px;
+    }
+    input {
+      float: left;
+      background-color: transparent;
+      background-position: center;
+      padding-left: 2px;
+      padding-right: 2px;
+      margin: 0;
+      display: table;
+      border: 1px solid #e30613;
+      font-weight: bold;
+      font-size: 19px;
+      min-width: 25px;
+      min-height: 14px;
+      margin-top: 0px;
+    }
+    .ui-button {
+      float: left;
+      background-color: white;
+    }
+  }
+  &.inverse {
+    .arrow:before {
+      content: url('images/icons/vertex/arrowhead_left.svg');
+    }
+  }
+}

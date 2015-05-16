@@ -1,0 +1,84 @@
+/*
+ * Copyright Vincent Blouin under the GPL License version 3
+ */
+
+.ui-menu {
+  .ui-menu-item {
+    border-bottom: 1px solid rgb(211, 210, 210);
+    .element-label {
+      font-weight: bold;
+      font-size: 14px;
+      padding-right: 43px;
+    }
+    a {
+      white-space: nowrap;
+    }
+
+    span {
+      white-space: nowrap;
+    }
+    .info {
+      font-size: 11px;
+      * {
+        font-size: 11px;
+      }
+      a {
+        color: #1919AC;
+        display: inline;
+        padding: 0;
+        white-space: nowrap;
+        &:hover {
+          color: #47A3FF;
+        }
+      }
+    }
+    .type {
+      margin-top: -20px;
+      float: right;
+    }
+    .distinction {
+      margin-right: 1em;
+      max-width: 428px;
+      font-weight: normal;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+#big-search-box-container {
+  margin-top: 20px;
+  .input-group {
+    margin: auto;
+  }
+  .search-icon {
+    font-size: 1.7em;
+  }
+}
+.autocomplete-flyout {
+  position: absolute;
+  width: 300px;
+  background-color: white;
+  /*one more than jquery ui dialog*/
+  z-index: 101;
+  img {
+    float: left;
+    margin-right: 0.7em;
+  }
+  .title {
+    font-weight: bold;
+  }
+  .source {
+    font-weight: lighter;
+    font-size: 85%;
+  }
+}
+
+.ui-autocomplete {
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.ui-dialog {
+  opacity: 0.9;
+}

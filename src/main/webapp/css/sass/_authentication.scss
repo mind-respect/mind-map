@@ -1,0 +1,65 @@
+/*
+ * Copyright Vincent Blouin under the GPL License version 3
+ */
+
+#registration-page {
+  overflow-y: scroll;
+  max-height: 500px;
+  .language-list {
+    float: left;
+    width: 100%;
+    margin-bottom: 1em;
+    h5 {
+      display: table-cell;
+      vertical-align: bottom;
+      padding-bottom: 0.8em;
+    }
+    > button {
+      margin-top: 0.7em;
+    }
+  }
+}
+
+.bullet {
+  float: left;
+  margin-right: 7px;
+  &:before {
+    content: "• "
+  }
+}
+
+#selectedLanguages, .registration-available-languages {
+  list-style-type: none;
+  margin: 0;
+  background-color: gray;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  width: 350px;
+  max-height: 400px;
+}
+
+#selectedLanguages li, .registration-available-languages li {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  position: relative;
+  /*weird number 99.4%. Otherwise right border doesn't show*/
+  width: 99.4%;
+}
+
+#selectedLanguages li .ui-icon, .registration-available-languages li .ui-icon {
+  display: inline-block;
+}
+
+#selectedLanguages li label, .registration-available-languages li label {
+  margin-left: 0.4em;
+  font-size: 1.2em;
+  display: inline-block;
+}
+
+.security-form-wrapper {
+  height: 100%;
+}
+
+.security-form a {
+  float: left;
+}

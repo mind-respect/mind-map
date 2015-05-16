@@ -1,0 +1,59 @@
+#graph-element-menu {
+  position: fixed;
+  right: 10px;
+  top: 100px;
+  border: 1px solid #0088CC;
+  border-radius: 9px;
+  max-width: 107px;
+  padding: 1em;
+  padding-top: 2em;
+  cursor: all-scroll;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+button.graph-element-button {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 5px;
+  margin-right: 3px;
+  line-height: 20px;
+  color: #333;
+  text-align: center;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+  background-image: linear-gradient(to bottom, #fff, #e6e6e6);
+  background-repeat: repeat-x;
+  border-bottom-color: #b3b3b3;
+  border: 1px solid #ccc;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  &:hover {
+    background-image: linear-gradient(to bottom, #fff, #CDCDCD);
+  }
+}
+
+button {
+  &.add-button-in-list {
+    color: green;
+    font-weight: bold;
+    font-size: 2em;
+    margin-bottom: 0.2em;
+    float: left;
+    &:hover {
+      color: #00d100;
+    }
+    border: none;
+    background-color: transparent;
+  }
+}
+
+#selection-box {
+  min-width: 45px;
+  min-height: 40px;
+  z-index: 100;
+  background: rgba(0, 203, 255, 0.1);
+  border: solid black;
+  position: absolute;
+}
