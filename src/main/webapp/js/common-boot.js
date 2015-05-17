@@ -9,6 +9,7 @@ requirejs.config({
     paths: {
         "module": '../module',
         "crow" : "vendor/crow.micro",
+        "md5" : "vendor/md5.min",
         "polyk" : "vendor/polyk",
         "jquery": "jquery/jquery-2.1.1",
         "jquery-ui": "jquery/jquery-ui-11-4/jquery-ui.min",
@@ -63,6 +64,7 @@ requirejs.config({
         "triple_brain.ui.search": "triple_brain/search/triple_brain.ui.search",
         "triple_brain.freebase_autocomplete_provider": "triple_brain/search/autocomplete_results_provider/triple_brain.freebase_autocomplete_provider",
         "triple_brain.user_map_autocomplete_provider": "triple_brain/search/autocomplete_results_provider/triple_brain.user_map_autocomplete_provider",
+        "triple_brain.wikidata_autocomplete_provider": "triple_brain/search/autocomplete_results_provider/triple_brain.wikidata_autocomplete_provider",
         "triple_brain.mind-map_template": "triple_brain/triple_brain.mind-map_template",
         "triple_brain.id_uri": "triple_brain/triple_brain.id_uri",
         "triple_brain.identified_bubble": "triple_brain/graph/triple_brain.identified_bubble",
@@ -86,6 +88,7 @@ requirejs.config({
         "triple_brain.ui.vertex_hidden_neighbor_properties_indicator": "triple_brain/graph/vertex/hidden_neighbor_properties/triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
         "triple_brain.freebase": "triple_brain/triple_brain.freebase",
         "triple_brain.freebase_uri": "triple_brain/triple_brain.freebase_uri",
+        "triple_brain.wikidata_uri": "triple_brain/triple_brain.wikidata_uri",
         "triple_brain.transform_matrix_2d": "triple_brain/triple_brain.transform_matrix_2d",
         "triple_brain.error": "triple_brain/triple_brain.error",
         "triple_brain.triple_ui": "triple_brain/graph/triple_brain.triple_ui",
@@ -141,6 +144,7 @@ requirejs.config({
     shim: {
         "crow": [],
         "polyk": [],
+        "md5": [],
         "jquery-ui": ["jquery"],
         "jquery.url": ["jquery"],
         "jquery.nano": ["jquery"],
@@ -155,6 +159,5 @@ requirejs.config({
         "jquery.colorbox": ["jquery"],
         "bootstrap": ["jquery"],
         "bootstrap-datepicker": ["bootstrap"]
-
     }
 });

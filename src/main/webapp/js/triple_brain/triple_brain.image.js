@@ -58,7 +58,7 @@ define([],
             canvas.height = imgElem.clientHeight;
             var ctx = canvas.getContext("2d");
             ctx.drawImage(imgElem, 0, 0);
-            imgElem.crossOrigin = '';
+            imgElem.crossOrigin = 'Access-Control-Allow-Origin';
             var dataURL = canvas.toDataURL("image/png");
             return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
         }
