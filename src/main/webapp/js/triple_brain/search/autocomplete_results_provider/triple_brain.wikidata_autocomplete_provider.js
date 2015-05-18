@@ -46,45 +46,46 @@ define([
             var wikidataId = WikidataUri.idInWikidataUri(
                 searchResult.uri
             );
-
             var url = WikidataUri.BASE_URL + "/w/api.php?action=wbgetentities&ids=" +
                 wikidataId + "&languages=en&props=claims&format=json";
             $.ajax({
                 type: 'GET',
                 dataType: "jsonp",
                 url: url
-            }).success(function (result) {
-                imageUrlFromSearchResult(result, wikidataId, function (imageUrl) {
-                    callback({
-                            conciseSearchResult: searchResult,
-                            title: searchResult.label,
-                            text: searchResult.somethingToDistinguish,
-                            imageUrl: imageUrl
-                        }
-                    );
-                });
-
+            }).then(function (result) {
+                return imageUrlFromSearchResult(result, wikidataId);
+            }).then(function (imageUrl) {
+                callback({
+                        conciseSearchResult: searchResult,
+                        title: searchResult.label,
+                        text: searchResult.somethingToDistinguish,
+                        imageUrl: imageUrl
+                    }
+                );
             });
         };
-        function imageUrlFromSearchResult(result, wikidataId, callback) {
+        function imageUrlFromSearchResult(result, wikidataId) {
+            var deferred = $.Deferred();
             var imageUrl = "";
             var claims = result.entities[wikidataId].claims;
             if (claims === undefined) {
-                return imageUrl;
+                deferred.resolve(imageUrl);
+                return;
             }
             var imageRelation = claims.P18;
             if (imageRelation === undefined) {
-                callback(imageUrl);
+                deferred.resolve(imageUrl);
                 return;
             }
             var imageId = imageRelation[0].mainsnak.datavalue.value;
-            imageUrl = Image.getBase64OfExternalUrl(
-                WikidataUri.thumbUrlForImageId(imageId),
-                function (base64) {
-                    console.log(base64);
-                    callback(imageUrl);
-                }
-            );
+            Image.getBase64OfExternalUrl(
+                WikidataUri.thumbUrlForImageId(imageId)
+            ).then(function (imageUrl) {
+                deferred.resolve(
+                    Image.srcUrlForBase64(imageUrl)
+                );
+            });
+            return deferred.promise();
         }
     }
 });

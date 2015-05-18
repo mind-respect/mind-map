@@ -16,7 +16,7 @@ define(["md5"], function (MD5) {
         var md5 = MD5(encodedImageId);
         var firstChar = md5[0];
         var firstAndSecondChar = firstChar + md5[1];
-        return "https://upload.wikimedia.org/wikipedia/commons/thumb/"+firstChar+"/"+firstAndSecondChar+"/"+
+        return "//upload.wikimedia.org/wikipedia/commons/thumb/"+firstChar+"/"+firstAndSecondChar+"/"+
             encodedImageId + "/60px-" +
             encodedImageId;
     };

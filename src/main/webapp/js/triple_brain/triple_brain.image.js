@@ -36,13 +36,14 @@ define([],
                 urlForBigger
             );
         };
-        api.getBase64OfExternalUrl = function (url, callback) {
+        api.getBase64OfExternalUrl = function (url) {
+            var deferred = $.Deferred();
             var img = $("<img>")
                 .attr(
                 "crossOrigin",
                 "Anonymous"
             ).appendTo("body").load(function () {
-                    callback(
+                    deferred.resolve(
                         getBase64Image(this)
                     );
                 }
@@ -50,6 +51,10 @@ define([],
                 "src",
                 url
             );
+            return deferred.promise();
+        };
+        api.srcUrlForBase64 = function(base64){
+            return "data:application/octet-stream;base64," + base64;
         };
         return api;
         function getBase64Image(imgElem) {
@@ -71,7 +76,7 @@ define([],
                 ) != -1;
             };
             this.getBase64ForSmall = function () {
-                return "data:application/octet-stream;base64," + base64ForSmall;
+                return api.srcUrlForBase64(base64ForSmall);
             };
             this.getUrlForBigger = function () {
                 return urlForBigger;

@@ -243,7 +243,7 @@ define([
             this.getBubble3InTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("b3");
             };
-            this.getRelation1InTree = function () {
+                this.getRelation1InTree = function () {
                 return treeBuilder.getRelationWithLabelInTree(
                     "r1"
                 );

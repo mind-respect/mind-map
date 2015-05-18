@@ -6,7 +6,8 @@ define([
     "jquery",
     "jquery-ui"
 ], function ($) {
-    var enterKeyCode = 13;
+    var enterKeyCode = 13,
+        api = {};
     $.fn.tripleBrainAutocomplete = function (options) {
         var textInput = $(this);
         setupNbRequestsIfApplicable();
@@ -87,72 +88,10 @@ define([
                     removeSearchFlyout();
                 },
                 focus: function (event, ui) {
-                    var searchResult = ui.item;
-                    searchResult.provider.getMoreInfoForSearchResult(
-                        searchResult,
-                        function (moreInfo) {
-                            displayDescriptionPanel(
-                                event.currentTarget,
-                                moreInfo
-                            );
-                        }
+                    api._onFocusAction(
+                        ui.item,
+                        $(event.currentTarget)
                     );
-                    function displayDescriptionPanel(list, description) {
-                        removeSearchFlyout();
-                        var moreInfoPanel = $("<div>");
-                        moreInfoPanel.addClass("autocomplete-flyout");
-                        list = $(list);
-                        var image = $("<img src='" + description.imageUrl + "'>");
-                        moreInfoPanel.append(
-                            image
-                        );
-                        var title = $("<span class='title'>").append(
-                                description.title + " "
-                        );
-                        var searchResult = description.conciseSearchResult;
-                        var sourceContainer = $("<span>");
-                        sourceContainer.append(
-                                $.t("vertex.search.source") + ": " +
-                                searchResult.source
-                        );
-                        var text = $("<span>").append(
-                            description.text,
-                            " "
-                        );
-                        $("body").append(moreInfoPanel.hide());
-                        moreInfoPanel.append(
-                            title,
-                            "<br/>",
-                            sourceContainer,
-                            "<br/>"
-                        );
-                        if (description.source !== undefined) {
-                            var descriptionSource = $("<span class='source'>").append(
-                                    "[" + description.source + "] "
-                            );
-                            moreInfoPanel.append(descriptionSource);
-                        }
-                        moreInfoPanel.append(text);
-                        var listPosition = $(list).offset();
-                        var widthMargin = 20;
-                        var rightAlignedPosition = {
-                            x: listPosition.left + list.width() + widthMargin,
-                            y: listPosition.top
-                        };
-                        var mostRightPositionInScreen = $(window).width() + $("html,body").scrollLeft();
-                        var position;
-                        if (rightAlignedPosition.x + moreInfoPanel.width() > mostRightPositionInScreen) {
-                            position = {
-                                x: listPosition.left - moreInfoPanel.width(),
-                                y: listPosition.top
-                            }
-                        } else {
-                            position = rightAlignedPosition;
-                        }
-                        moreInfoPanel.css("left", position.x);
-                        moreInfoPanel.css("top", position.y);
-                        moreInfoPanel.show();
-                    }
                 }
             };
         }
@@ -202,7 +141,7 @@ define([
         function addOneRequest(input) {
             setNbRequests(
                 input,
-                    getNbRequests(input) + 1
+                getNbRequests(input) + 1
             );
         }
 
@@ -227,7 +166,7 @@ define([
             var listElement = $("<li>"),
                 moreInfoContainer = $("<div class='info'>"),
                 labelContainer = $("<span class='element-label'>").append(
-                        item.label + " "
+                    item.label + " "
                 );
             if (item.elementType !== undefined && item.elementType !== "") {
                 $("<span class='type'>").append(
@@ -240,14 +179,80 @@ define([
                 ).appendTo(moreInfoContainer);
             }
             $("<a>").append(
-                    labelContainer,
+                labelContainer,
                 moreInfoContainer
             ).appendTo(listElement);
             return listElement.appendTo(ul);
         }
-
-        function removeSearchFlyout() {
-            $(".autocomplete-flyout").remove();
+    };
+    api._onFocusAction = function (searchResult, resultsList) {
+        searchResult.moreInfo === undefined ?
+            searchResult.provider.getMoreInfoForSearchResult(
+                searchResult,
+                function (moreInfo) {
+                    displayDescriptionPanel(
+                        moreInfo
+                    );
+                }
+            ) : displayDescriptionPanel(searchResult.moreInfo);
+        function displayDescriptionPanel(description) {
+            removeSearchFlyout();
+            var moreInfoPanel = $("<div class='hidden'>");
+            moreInfoPanel.addClass("autocomplete-flyout");
+            var image = $("<img src='" + description.imageUrl + "'>");
+            moreInfoPanel.append(
+                image
+            );
+            var title = $("<span class='title'>").append(
+                description.title + " "
+            );
+            var searchResult = description.conciseSearchResult;
+            var sourceContainer = $("<span>");
+            sourceContainer.append(
+                $.t("vertex.search.source") + ": " +
+                searchResult.source
+            );
+            var text = $("<span>").append(
+                description.text,
+                " "
+            );
+            $("body").append(moreInfoPanel);
+            moreInfoPanel.append(
+                title,
+                "<br/>",
+                sourceContainer,
+                "<br/>"
+            );
+            if (description.source !== undefined) {
+                var descriptionSource = $("<span class='source'>").append(
+                    "[" + description.source + "] "
+                );
+                moreInfoPanel.append(descriptionSource);
+            }
+            moreInfoPanel.append(text);
+            var listPosition = resultsList.offset();
+            var widthMargin = 20;
+            var rightAlignedPosition = {
+                x: listPosition.left + resultsList.width() + widthMargin,
+                y: listPosition.top
+            };
+            var mostRightPositionInScreen = $(window).width() + $("html,body").scrollLeft();
+            var position;
+            if (rightAlignedPosition.x + moreInfoPanel.width() > mostRightPositionInScreen) {
+                position = {
+                    x: listPosition.left - moreInfoPanel.width(),
+                    y: listPosition.top
+                }
+            } else {
+                position = rightAlignedPosition;
+            }
+            moreInfoPanel.css("left", position.x);
+            moreInfoPanel.css("top", position.y);
+            moreInfoPanel.removeClass("hidden");
         }
+    };
+    return api;
+    function removeSearchFlyout() {
+        $(".autocomplete-flyout").remove();
     }
 });
