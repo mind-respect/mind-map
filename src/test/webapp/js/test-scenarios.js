@@ -243,7 +243,7 @@ define([
             this.getBubble3InTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("b3");
             };
-                this.getRelation1InTree = function () {
+            this.getRelation1InTree = function () {
                 return treeBuilder.getRelationWithLabelInTree(
                     "r1"
                 );
@@ -590,19 +590,19 @@ define([
             this.getSomeProjectInTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("some project");
             };
-            this.getImpact3RelationInTheImpactOnTheIndividualContext = function(){
+            this.getImpact3RelationInTheImpactOnTheIndividualContext = function () {
                 var theRelation;
-                this.getSomeProjectInTree().visitAllChild(function(childBubble){
-                    if(childBubble.isRelation()){
+                this.getSomeProjectInTree().visitAllChild(function (childBubble) {
+                    if (childBubble.isRelation()) {
                         theRelation = childBubble;
                     }
                 });
                 return theRelation;
             };
-            this.getImpact3RelationInTheImpactOnSocietyContext = function(){
+            this.getImpact3RelationInTheImpactOnSocietyContext = function () {
                 var theRelation;
-                this.getSomeProjectInTree().visitAllChild(function(childBubble){
-                    if(childBubble.isGroupRelation()){
+                this.getSomeProjectInTree().visitAllChild(function (childBubble) {
+                    if (childBubble.isGroupRelation()) {
                         GraphDisplayerAsRelativeTree.expandGroupRelation(childBubble);
                         var treeQuerier = new api.TreeQuerier(childBubble.getChildrenContainer());
                         theRelation = treeQuerier.getRelationWithLabelInTree("impact 3");
@@ -675,7 +675,7 @@ define([
                     )
                 );
             };
-            this.getBubble1Duplicate = function(){
+            this.getBubble1Duplicate = function () {
                 var bubble2 = this.getBubble2InTree();
                 this.expandBubble2(bubble2);
                 var bubble3 = bubble2.getTopMostChildBubble().getTopMostChildBubble();
@@ -846,7 +846,7 @@ define([
                 data = data[splitKey.shift()];
             }
             var deep = true;
-            if(data.constructor === Array){
+            if (data.constructor === Array) {
                 return data.slice();
             }
             return $.extend(deep, {}, data)
