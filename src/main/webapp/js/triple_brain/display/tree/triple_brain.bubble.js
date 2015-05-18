@@ -268,6 +268,9 @@ define([
             this.addImages(
                 identification.getImages()
             );
+            if(identification.hasImages()){
+                this.refreshImages();
+            }
         };
 
         api.Self.prototype.isToTheLeft = function () {

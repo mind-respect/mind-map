@@ -60,6 +60,7 @@ define([
             graphElement,
             updatedIdentification
         );
+
         if (callback !== undefined) {
             callback.call(
                 this,
