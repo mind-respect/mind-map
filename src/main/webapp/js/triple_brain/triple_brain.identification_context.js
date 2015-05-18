@@ -38,7 +38,7 @@ define([
                 );
                 callback(
                     self._buildHtmlContext(),
-                    self._getImageUrl()
+                    self._getImage()
                 )
             }
         );
@@ -83,11 +83,11 @@ define([
         );
     };
 
-    Self.prototype._getImageUrl = function () {
+    Self.prototype._getImage = function () {
         if (!this.detailedGraphElement.hasImages()) {
             return "";
         }
-        return this.detailedGraphElement.getImages()[0].getBase64ForSmall();
+        return this.detailedGraphElement.getImages()[0];
     };
 
     Self.prototype._makeRelationContext = function () {

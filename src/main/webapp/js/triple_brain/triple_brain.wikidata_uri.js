@@ -11,7 +11,7 @@ define(["md5"], function (MD5) {
             uri.lastIndexOf("/") + 1
         );
     };
-    api.thumbUrlForImageId = function (imageName) {
+    api.thumbUrlForImageName = function (imageName) {
         imageName = replaceWhiteSpace(imageName);
         var md5 = MD5(imageName);
         var firstChar = md5[0];
@@ -24,6 +24,10 @@ define(["md5"], function (MD5) {
         return "//upload.wikimedia.org/wikipedia/commons/thumb/" + firstChar + "/" + firstAndSecondChar + "/" +
             imageName + "/60px-" +
             imageName;
+    };
+    api.rawImageUrlFromThumbUrl = function(thumbUrl){
+        thumbUrl = thumbUrl.replace("thumb/", "");
+        return thumbUrl.substr(0, thumbUrl.lastIndexOf("/"));
     };
     return api;
     function replaceWhiteSpace(imageName) {

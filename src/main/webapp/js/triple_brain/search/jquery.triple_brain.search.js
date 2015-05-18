@@ -7,7 +7,8 @@ define([
     "jquery-ui"
 ], function ($) {
     var enterKeyCode = 13,
-        api = {};
+        api = {},
+        detailsCache = {};
     $.fn.tripleBrainAutocomplete = function (options) {
         var textInput = $(this);
         setupNbRequestsIfApplicable();
@@ -186,23 +187,35 @@ define([
         }
     };
     api._onFocusAction = function (searchResult, resultsList) {
-        searchResult.moreInfo === undefined ?
-            searchResult.provider.getMoreInfoForSearchResult(
-                searchResult,
-                function (moreInfo) {
-                    displayDescriptionPanel(
-                        moreInfo
-                    );
-                }
-            ) : displayDescriptionPanel(searchResult.moreInfo);
+        if (api.hasCachedDetailsForSearchResult(searchResult)) {
+            displayDescriptionPanel(
+                api.getCachedDetailsOfSearchResult(
+                    searchResult
+                )
+            );
+            return;
+        }
+        searchResult.provider.getMoreInfoForSearchResult(
+            searchResult,
+            function (moreInfo) {
+                detailsCache[searchResult.uri] = moreInfo;
+                displayDescriptionPanel(moreInfo);
+            }
+        );
         function displayDescriptionPanel(description) {
             removeSearchFlyout();
             var moreInfoPanel = $("<div class='hidden'>");
             moreInfoPanel.addClass("autocomplete-flyout");
-            var image = $("<img src='" + description.imageUrl + "'>");
-            moreInfoPanel.append(
-                image
-            );
+            if (description.image !== undefined) {
+                var image = $(
+                    "<img src='" +
+                    description.image.getBase64ForSmall() +
+                    "'>"
+                );
+                moreInfoPanel.append(
+                    image
+                );
+            }
             var title = $("<span class='title'>").append(
                 description.title + " "
             );
@@ -250,6 +263,12 @@ define([
             moreInfoPanel.css("top", position.y);
             moreInfoPanel.removeClass("hidden");
         }
+    };
+    api.hasCachedDetailsForSearchResult = function (searchResult) {
+        return detailsCache[searchResult.uri] !== undefined;
+    };
+    api.getCachedDetailsOfSearchResult = function (searchResult) {
+        return detailsCache[searchResult.uri];
     };
     return api;
     function removeSearchFlyout() {

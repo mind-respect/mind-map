@@ -54,35 +54,38 @@ define([
                 url: url
             }).then(function (result) {
                 return imageUrlFromSearchResult(result, wikidataId);
-            }).then(function (imageUrl) {
+            }).then(function (image) {
                 callback({
                         conciseSearchResult: searchResult,
                         title: searchResult.label,
                         text: searchResult.somethingToDistinguish,
-                        imageUrl: imageUrl
+                        image: image
                     }
                 );
             });
         };
         function imageUrlFromSearchResult(result, wikidataId) {
             var deferred = $.Deferred();
-            var imageUrl = "";
             var claims = result.entities[wikidataId].claims;
             if (claims === undefined) {
-                deferred.resolve(imageUrl);
+                deferred.resolve();
                 return;
             }
             var imageRelation = claims.P18;
             if (imageRelation === undefined) {
-                deferred.resolve(imageUrl);
+                deferred.resolve();
                 return;
             }
-            var imageId = imageRelation[0].mainsnak.datavalue.value;
+            var imageName = imageRelation[0].mainsnak.datavalue.value;
+            var thumbUrl = WikidataUri.thumbUrlForImageName(imageName);
             Image.getBase64OfExternalUrl(
-                WikidataUri.thumbUrlForImageId(imageId)
-            ).then(function (imageUrl) {
+                thumbUrl
+            ).then(function (imageBase64) {
                 deferred.resolve(
-                    Image.srcUrlForBase64(imageUrl)
+                    Image.withBase64ForSmallAndUrlForBigger(
+                        imageBase64,
+                        WikidataUri.rawImageUrlFromThumbUrl(thumbUrl)
+                    )
                 );
             });
             return deferred.promise();

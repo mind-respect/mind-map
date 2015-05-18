@@ -119,7 +119,7 @@ define([
             var originalSearchResult = searchResult.nonFormattedSearchResult;
             IdentificationContext.buildWithoutBubbleLinks(
                 originalSearchResult,
-                function (context, imageUrl) {
+                function (context, image) {
                     var moreInfo = context.append(
                         originalSearchResult.context,
                         $("<div>").append(
@@ -130,7 +130,7 @@ define([
                             conciseSearchResult: searchResult,
                             title: searchResult.label,
                             text: moreInfo,
-                            imageUrl: imageUrl
+                            image: image
                         }
                     );
                 }

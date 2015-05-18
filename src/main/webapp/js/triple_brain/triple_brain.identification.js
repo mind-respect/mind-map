@@ -5,8 +5,9 @@
 define([
     "triple_brain.friendly_resource",
     "triple_brain.freebase_uri",
-    "triple_brain.id_uri"
-], function (FriendlyResource, FreebaseUri, IdUri) {
+    "triple_brain.id_uri",
+    "jquery.triple_brain.search"
+], function (FriendlyResource, FreebaseUri, IdUri, $Search) {
     var api = {};
     api.fromServerFormat = function (serverFormat) {
         return new api.Self(
@@ -54,11 +55,18 @@ define([
         );
     };
     api.fromSearchResult = function (searchResult) {
-        return api.withUriLabelAndDescription(
+        var identification = api.withUriLabelAndDescription(
             searchResult.uri,
             searchResult.label,
             searchResult.comment
         );
+        if($Search.hasCachedDetailsForSearchResult(searchResult)){
+            var moreInfo = $Search.getCachedDetailsOfSearchResult(searchResult);
+            if(moreInfo.image !== undefined){
+                identification.addImage(moreInfo.image);
+            }
+        }
+        return identification;
     };
     api.Self = function (serverFormat) {
         this.identificationServerFormat = serverFormat;

@@ -10,19 +10,17 @@ define([
 ], function (Scenarios, UserMapAutocompleteProvider, $, $Search) {
     "use strict";
     describe("jquery.triple_brain.search", function () {
-        it("doesn't fetch more info more than once", function(){
+        it("doesn't fetch more info more than once", function () {
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas();
             var searchResult = searchProvider.formatResults(
                 new Scenarios.getSearchResultsForImpact().get()
             )[0];
             var getMoreInfoSpy = spyOn(searchResult.provider,
                 "getMoreInfoForSearchResult"
-            ).andCallFake(function(searchResult, callback){
-                    var moreInfo = {
-                        conciseSearchResult:searchResult
-                    };
-                    searchResult.moreInfo = moreInfo;
-                    callback(moreInfo);
+            ).andCallFake(function (searchResult, callback) {
+                    callback({
+                        conciseSearchResult: searchResult
+                    });
                 });
             expect(getMoreInfoSpy.calls.length).toBe(0);
             var listHtml = $("<div>");
