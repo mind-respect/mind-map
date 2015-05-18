@@ -144,7 +144,6 @@ requirejs.config({
     shim: {
         "crow": [],
         "polyk": [],
-        "md5": [],
         "jquery-ui": ["jquery"],
         "jquery.url": ["jquery"],
         "jquery.nano": ["jquery"],
