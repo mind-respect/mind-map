@@ -11,6 +11,9 @@ define(["md5"], function (MD5) {
             uri.lastIndexOf("/") + 1
         );
     };
+    api.isAWikidataUri = function (uri) {
+        return uri.indexOf("wikidata.org") !== -1;
+    };
     api.thumbUrlForImageName = function (imageName) {
         imageName = replaceWhiteSpace(imageName);
         var md5 = MD5(imageName);

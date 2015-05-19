@@ -11,7 +11,7 @@ define([
     var api = {};
     EventBus.before(
         '/event/ui/graph/before/identification/added',
-        beforeIdentificationAdded
+        api._beforeIdentificationAdded
     );
     api.getImageForWikidataUri = function (wikidataUri) {
         var deferred = $.Deferred();
@@ -58,8 +58,11 @@ define([
         return deferred.promise();
     }
 
-    function beforeIdentificationAdded(graphElement, identification) {
+    api._beforeIdentificationAdded = function(graphElement, identification) {
         if (identification.hasImages()) {
+            return;
+        }
+        if(!WikidataUri.isAWikidataUri(identification.getUri())){
             return;
         }
         api.getImageForWikidataUri(identification.getUri()).then(function (image) {
@@ -70,7 +73,7 @@ define([
             graphElement.addImages([image]);
             graphElement.refreshImages();
         });
-    }
+    };
 
     return api;
 });
