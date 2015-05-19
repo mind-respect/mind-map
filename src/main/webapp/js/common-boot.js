@@ -86,6 +86,7 @@ requirejs.config({
         "triple_brain.point": "triple_brain/triple_brain.point",
         "triple_brain.segment": "triple_brain/triple_brain.segment",
         "triple_brain.ui.vertex_hidden_neighbor_properties_indicator": "triple_brain/graph/vertex/hidden_neighbor_properties/triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
+        "triple_brain.wikidata": "triple_brain/triple_brain.wikidata",
         "triple_brain.freebase": "triple_brain/triple_brain.freebase",
         "triple_brain.freebase_uri": "triple_brain/triple_brain.freebase_uri",
         "triple_brain.wikidata_uri": "triple_brain/triple_brain.wikidata_uri",
