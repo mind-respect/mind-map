@@ -5,10 +5,10 @@
 define([
     'triple_brain.schema_suggestion',
     'triple_brain.user_map_autocomplete_provider',
-    'triple_brain.freebase_autocomplete_provider',
+    'triple_brain.wikidata_autocomplete_provider',
     "triple_brain.graph_element_type",
     'test/webapp/js/test-scenarios'
-], function (SchemaSuggestion, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementType, Scenarios) {
+], function (SchemaSuggestion, UserMapAutocompleteProvider, WikidataAutocompleteProvider, GraphElementType, Scenarios) {
     "use strict";
     describe("schema_suggestion", function () {
         beforeEach(function () {
@@ -28,9 +28,9 @@ define([
             ).toBe(4);
         });
         it("can handle freebase search results", function(){
-            var searchProvider = FreebaseAutocompleteProvider.forFetchingAnything(),
+            var searchProvider = WikidataAutocompleteProvider.build(),
                 formattedSearchResults = searchProvider.formatResults(
-                    new Scenarios.getFreebaseSearchResultForProject().get(),
+                    new Scenarios.getWikidataSearchResultForProject().get(),
                     "project"
                 );
             var suggestions = SchemaSuggestion.addSchemaSuggestionsIfApplicable(

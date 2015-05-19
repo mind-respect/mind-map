@@ -4,7 +4,6 @@
 
 define([
         "jquery",
-        "triple_brain.freebase_uri",
         "triple_brain.friendly_resource",
         "triple_brain.identification",
         "triple_brain.id_uri",
@@ -12,7 +11,7 @@ define([
         "triple_brain.suggestion_origin",
         "jquery.json.min"
     ],
-    function ($, FreebaseUri, FriendlyResource, Identification, IdUri, UserService, SuggestionOrigin) {
+    function ($, FriendlyResource, Identification, IdUri, UserService, SuggestionOrigin) {
         var api = {
             IDENTIFICATION_PREFIX: "identification_"
         };
@@ -32,40 +31,6 @@ define([
             });
             return suggestions;
         };
-        api.fromFreebaseSuggestionAndOriginUri = function (freebaseSuggestion, typeUri) {
-            var suggestionUri = api.generateUri();
-            debugger;
-            if(freebaseSuggestion.name === null){
-                freebaseSuggestion.name = "";
-            }
-            if(freebaseSuggestion.expected_type.name === null){
-                freebaseSuggestion.expected_type.name = "";
-            }
-            return api.fromServerFormat({
-                friendlyResource: FriendlyResource.buildObjectWithUriAndLabel(
-                    suggestionUri,
-                    freebaseSuggestion.name
-                ),
-                sameAs: FriendlyResource.buildObjectWithUriLabelAndDescription(
-                    FreebaseUri.freebaseIdToUri(
-                        freebaseSuggestion.id
-                    ),
-                    freebaseSuggestion.name,
-                    FreebaseUri.descriptionInFreebaseResult(freebaseSuggestion)
-                ),
-                type: FriendlyResource.buildObjectWithUriLabelAndDescription(
-                    FreebaseUri.freebaseIdToUri(
-                        freebaseSuggestion.expected_type.id
-                    ),
-                    freebaseSuggestion.expected_type.name,
-                    FreebaseUri.descriptionInFreebaseResult(freebaseSuggestion.expected_type)
-                ),
-                origins: [SuggestionOrigin.buildObjectWithUriAndOrigin(
-                    api.generateOriginUriFromSuggestionUri(suggestionUri),
-                        api.IDENTIFICATION_PREFIX + typeUri
-                )]
-            });
-        };
         api.fromSchemaPropertyAndOriginUri = function (schemaProperty, originUri) {
             var suggestionUri = api.generateUri();
             var serverFormat = {
@@ -80,7 +45,7 @@ define([
                 origins: [
                     SuggestionOrigin.buildObjectWithUriAndOrigin(
                         api.generateOriginUriFromSuggestionUri(suggestionUri),
-                            api.IDENTIFICATION_PREFIX + originUri
+                        api.IDENTIFICATION_PREFIX + originUri
                     )
                 ]
             };
@@ -115,7 +80,7 @@ define([
             this.sameAs = Identification.fromFriendlyResourceServerFormat(
                 serverFormat.sameAs
             );
-            if(serverFormat.type !== undefined){
+            if (serverFormat.type !== undefined) {
                 this.type = Identification.fromFriendlyResourceServerFormat(
                     serverFormat.type
                 );
@@ -131,7 +96,6 @@ define([
                 serverFormat.friendlyResource
             );
         }
-
         Suggestion.prototype = new FriendlyResource.Self;
 
         Suggestion.prototype.getSameAs = function () {
@@ -146,7 +110,7 @@ define([
         Suggestion.prototype.getOrigin = function () {
             return this.origins[0];
         };
-        Suggestion.prototype.hasIdentificationForOrigin = function(identification){
+        Suggestion.prototype.hasIdentificationForOrigin = function (identification) {
             return (api.IDENTIFICATION_PREFIX + identification.getExternalResourceUri()) ===
                 this.getOrigin().getOrigin();
         };

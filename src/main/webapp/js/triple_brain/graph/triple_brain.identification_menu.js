@@ -8,7 +8,7 @@ define([
         "triple_brain.mind-map_template",
         "triple_brain.ui.graph",
         "triple_brain.id_uri",
-        "triple_brain.freebase_autocomplete_provider",
+        "triple_brain.wikidata_autocomplete_provider",
         "triple_brain.user_map_autocomplete_provider",
         "triple_brain.graph_element_menu",
         "triple_brain.search",
@@ -20,7 +20,7 @@ define([
         "jquery-ui",
         "jquery.triple_brain.search"
     ],
-    function ($, Identification, MindMapTemplate, GraphUi, IdUri, FreebaseAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu, SearchService, IdentificationContext, SearchResult, MindMapInfo, SuggestionService, SchemaSuggestion) {
+    function ($, Identification, MindMapTemplate, GraphUi, IdUri, WikidataAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu, SearchService, IdentificationContext, SearchResult, MindMapInfo, SuggestionService, SchemaSuggestion) {
         var api = {
             ofGraphElement: function (graphElementUi) {
                 return new IdentificationMenu(graphElementUi);
@@ -281,13 +281,13 @@ define([
         IdentificationMenu.prototype._getResultsProvidersForVertex = function(){
             return [
                 UserMapAutocompleteProvider.toFetchCurrentUserVerticesAndPublicOnesForIdentification(this.graphElement),
-                FreebaseAutocompleteProvider.forFetchingAnything()
+                WikidataAutocompleteProvider.build()
             ];
         };
         IdentificationMenu.prototype._getResultsProvidersForRelations = function() {
             return [
                 UserMapAutocompleteProvider.toFetchRelationsForIdentification(this.graphElement),
-                FreebaseAutocompleteProvider.forFetchingAnything()
+                WikidataAutocompleteProvider.build()
             ];
         };
 

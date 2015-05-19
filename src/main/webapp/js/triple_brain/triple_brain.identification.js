@@ -4,10 +4,9 @@
 
 define([
     "triple_brain.friendly_resource",
-    "triple_brain.freebase_uri",
     "triple_brain.id_uri",
     "jquery.triple_brain.search"
-], function (FriendlyResource, FreebaseUri, IdUri, $Search) {
+], function (FriendlyResource, IdUri, $Search) {
     var api = {};
     api.fromServerFormat = function (serverFormat) {
         return new api.Self(

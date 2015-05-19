@@ -9,10 +9,6 @@ define([
 ], function (WikidataUri, Image, EventBus) {
     "use strict";
     var api = {};
-    EventBus.before(
-        '/event/ui/graph/before/identification/added',
-        api._beforeIdentificationAdded
-    );
     api.getImageForWikidataUri = function (wikidataUri) {
         var deferred = $.Deferred();
         var wikidataId = WikidataUri.idInWikidataUri(
@@ -59,11 +55,11 @@ define([
     }
 
     api._beforeIdentificationAdded = function(graphElement, identification) {
-        if (identification.hasImages()) {
-            return;
-        }
-        if(!WikidataUri.isAWikidataUri(identification.getUri())){
-            return;
+        var deferred = $.Deferred();
+        var isAWikidataIdentification = WikidataUri.isAWikidataUri(identification.getUri());
+        if (identification.hasImages() || !isAWikidataIdentification) {
+            deferred.resolve();
+            return deferred.promise();
         }
         api.getImageForWikidataUri(identification.getUri()).then(function (image) {
             if(image === undefined) {
@@ -72,8 +68,13 @@ define([
             identification.addImage(image);
             graphElement.addImages([image]);
             graphElement.refreshImages();
+            deferred.resolve();
         });
+        return deferred.promise();
     };
-
+    EventBus.before(
+        '/event/ui/graph/before/identification/added',
+        api._beforeIdentificationAdded
+    );
     return api;
 });

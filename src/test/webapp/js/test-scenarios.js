@@ -560,10 +560,10 @@ define([
             );
         };
 
-        api.getFreebaseSearchResultForProject = function () {
+        api.getWikidataSearchResultForProject = function () {
             this.get = function () {
                 return getTestData(
-                    "freebaseSearchResultForProject"
+                    "wikidataSearchResultForProject"
                 );
             };
         };

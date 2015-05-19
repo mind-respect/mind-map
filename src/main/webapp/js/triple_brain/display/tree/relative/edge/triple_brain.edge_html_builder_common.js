@@ -9,12 +9,12 @@ define([
     "triple_brain.relative_tree_displayer_templates",
     "triple_brain.identification",
     "triple_brain.user_map_autocomplete_provider",
-    "triple_brain.freebase_autocomplete_provider",
+    "triple_brain.wikidata_autocomplete_provider",
     "triple_brain.graph_element_service",
     "triple_brain.suggestion_service",
     "triple_brain.graph_element_html_builder",
     "triple_brain.bubble_factory"
-], function (MindMapInfo, FriendlyResourceService, SelectionHandler, RelativeTreeTemplates, Identification, UserMapAutocompleteProvider, FreebaseAutocompleteProvider, GraphElementService, SuggestionService, GraphElementHtmlBuilder, BubbleFactory) {
+], function (MindMapInfo, FriendlyResourceService, SelectionHandler, RelativeTreeTemplates, Identification, UserMapAutocompleteProvider, WikidataAutocompleteProvider, GraphElementService, SuggestionService, GraphElementHtmlBuilder, BubbleFactory) {
     "use strict";
     var api = {};
     api.moveNoteButtonIfIsToTheLeft = function(edge){
@@ -80,7 +80,7 @@ define([
                             edgeHtml.closest(".bubble")
                         )
                     ),
-                    FreebaseAutocompleteProvider.forFetchingAnything()
+                    WikidataAutocompleteProvider.build()
                 ]
             }
         );

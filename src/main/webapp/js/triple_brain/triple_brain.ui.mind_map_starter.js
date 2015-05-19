@@ -23,7 +23,7 @@ define(
         "triple_brain.id_uri",
         "triple_brain.anonymous_flow",
         "triple_brain.change_password",
-        "triple_brain.freebase",
+        "triple_brain.wikidata",
         "jquery.triple_brain.drag_scroll",
         "triple_brain.bottom_center_panel"
     ],
