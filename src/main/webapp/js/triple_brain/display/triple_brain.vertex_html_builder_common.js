@@ -45,7 +45,6 @@ define([
     };
 
     api._labelAutocompleteSelectHandler = function(bubble, searchResult){
-        debugger;
         var identificationResource = Identification.fromSearchResult(
             searchResult
         );
