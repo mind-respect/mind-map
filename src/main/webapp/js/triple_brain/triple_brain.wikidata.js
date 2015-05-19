@@ -63,6 +63,7 @@ define([
         }
         api.getImageForWikidataUri(identification.getUri()).then(function (image) {
             if(image === undefined) {
+                deferred.resolve();
                 return;
             }
             identification.addImage(image);
