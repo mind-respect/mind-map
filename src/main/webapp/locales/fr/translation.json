@@ -97,7 +97,8 @@
                     "concept" : "Trouvez autant de ressources qui identifient ou sont une généralisation de cette bulle.",
                     "relation" : "Identifiez cette relation à une autre qui signifie la même chose."
                 },
-                "placeholder" : "Identifier"
+                "placeholder" : "Identifier",
+                "remove": "Supprimer"
             }
         }
     },

@@ -20,6 +20,7 @@
 }
 
 .graph-element-menu {
+  cursor: default;
   opacity: 0.96;
   margin-right: auto;
   text-align: center;
@@ -30,9 +31,7 @@
     font-size: 1em;
   }
   h3 {
-    margin-top: 5px;
     font-weight: normal;
-    font-size: 0.8em;
   }
   ul {
     margin-left: 0px;
@@ -43,24 +42,29 @@
   li {
     margin-left: 0px;
     padding: 0;
-    font-size: 12px;
   }
   .identifications {
-    h3 {
-      text-align: left;
-      font-size: 0.9em;
+    .img-container{
+      float:left;
     }
-    .type-label {
-      text-align: center;
-      padding-top: 10px;
-      padding-bottom: 10px;
-      margin: auto;
-      overflow: hidden;
-      font-size: 1em;
+    .remove-btn{
+      background-color:white;
+      border:none;
+      &:focus{
+        outline: none;
+      }
+      i{
+        color:red;
+        margin-top:50%;
+      }
     }
-    .description {
-      font-size: 0.9em;
-      text-align: left;
+    ul{
+      text-align:left;
+    }
+    .instruction{
+      margin-top:26px;
+      font-size:1em;
+      text-align:left;
     }
     /*:-moz-placeholder for firefox 18-
       and ::-moz-placeholder for firefox 19+
@@ -111,10 +115,6 @@
   }
 }
 
-.ui-dialog-content ul {
-  overflow-y: scroll;
-  max-height: 400px;
-}
 
 .ui-dialog-content a {
   color: #1919AC

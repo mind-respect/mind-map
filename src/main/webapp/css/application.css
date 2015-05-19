@@ -138,17 +138,20 @@ button.add-button-in-list:hover { color: #00d100; }
 .vertex-note.ui-dialog .ui-dialog-content { padding: 0; }
 .vertex-note textarea { width: 95%; height: 93%; margin-bottom: 0; }
 
-.graph-element-menu { opacity: 0.96; margin-right: auto; text-align: center; }
+.graph-element-menu { cursor: default; opacity: 0.96; margin-right: auto; text-align: center; }
 .graph-element-menu h2, .graph-element-menu h3 { line-height: inherit; }
 .graph-element-menu h2 { font-size: 1em; }
-.graph-element-menu h3 { margin-top: 5px; font-weight: normal; font-size: 0.8em; }
+.graph-element-menu h3 { font-weight: normal; }
 .graph-element-menu ul { margin-left: 0px; margin-bottom: 5px; padding: 0; list-style-type: none; }
-.graph-element-menu li { margin-left: 0px; padding: 0; font-size: 12px; }
+.graph-element-menu li { margin-left: 0px; padding: 0; }
 .graph-element-menu .identifications { /*:-moz-placeholder for firefox 18- and ::-moz-placeholder for firefox 19+
 */ }
-.graph-element-menu .identifications h3 { text-align: left; font-size: 0.9em; }
-.graph-element-menu .identifications .type-label { text-align: center; padding-top: 10px; padding-bottom: 10px; margin: auto; overflow: hidden; font-size: 1em; }
-.graph-element-menu .identifications .description { font-size: 0.9em; text-align: left; }
+.graph-element-menu .identifications .img-container { float: left; }
+.graph-element-menu .identifications .remove-btn { background-color: white; border: none; }
+.graph-element-menu .identifications .remove-btn:focus { outline: none; }
+.graph-element-menu .identifications .remove-btn i { color: red; margin-top: 50%; }
+.graph-element-menu .identifications ul { text-align: left; }
+.graph-element-menu .identifications .instruction { margin-top: 26px; font-size: 1em; text-align: left; }
 .graph-element-menu .identifications ::-webkit-input-placeholder, .graph-element-menu .identifications :-moz-placeholder, .graph-element-menu .identifications ::-moz-placeholder, .graph-element-menu .identifications :-ms-input-placeholder { color: black; }
 .graph-element-menu .ui-dialog-titlebar-close { background: transparent; border: none; }
 
@@ -160,8 +163,6 @@ button.add-button-in-list:hover { color: #00d100; }
 .image-upload-wrapper .progress-label:after { content: '%'; }
 .image-upload-wrapper .fail { background: #c00; padding: 2px; color: #fff; }
 .image-upload-wrapper .hidden { display: none !important; }
-
-.ui-dialog-content ul { overflow-y: scroll; max-height: 400px; }
 
 .ui-dialog-content a { color: #1919ac; }
 

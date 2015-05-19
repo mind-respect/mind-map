@@ -99,7 +99,8 @@
                     "concept" : "Find as many resources that identify or are a generalization of this bubble.",
                     "relation" : "Identify this relation to another that means the same"
                 },
-                "placeholder" : "Identify"
+                "placeholder" : "Identify",
+                "remove": "Remove"
             }
         }
     },

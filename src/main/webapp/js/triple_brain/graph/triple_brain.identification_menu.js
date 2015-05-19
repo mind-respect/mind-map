@@ -32,15 +32,16 @@ define([
         }
 
         IdentificationMenu.prototype.create = function () {
+            var row = $("<div class='row'>");
             this.html = $(
-                "<div class='identifications'>"
-            ).data("facade", this);
-            GraphUi.addHtml(this.html);
+                "<div class='identifications col-md-12'>"
+            ).data("facade", this).appendTo(row);
+            GraphUi.addHtml(row);
             this._buildMenu();
             this.html.data("graphElement", this.graphElement);
             GraphElementMenu.makeForMenuContentAndGraphElement(
-                this.html,
-                this.graphElement,{
+                row,
+                this.graphElement, {
                     height: 350,
                     width: 550
                 }
@@ -67,14 +68,14 @@ define([
         IdentificationMenu.prototype._addInstructions = function () {
             this.html.append(
                 $(
-                    "<h3>"
+                    "<div class='instruction'>"
                 ).attr(
                     "data-i18n",
                     (
                         this.graphElement.isVertex() ?
                             "graph_element.menu.identification.instruction.concept" :
                             "graph_element.menu.identification.instruction.relation"
-                        )
+                    )
                 )
             );
         };
@@ -90,7 +91,6 @@ define([
                     this
                 );
             });
-            this._makeListElementsCollapsible();
         };
 
         IdentificationMenu.prototype._getListHtml = function () {
@@ -101,29 +101,34 @@ define([
             return this._getListHtml().find(".identification");
         };
 
-        IdentificationMenu.prototype._makeListElementsCollapsible = function () {
-            var listHtml = this._getListHtml();
-            listHtml.accordion().accordion("destroy");
-            listHtml.accordion({
-                collapsible: true,
-                active: false,
-                heightStyle: "content"
-            });
-        };
-
         IdentificationMenu.prototype._addIdentificationAsListElement = function (identification) {
+            var li = $("<li class='list-group-item'>");
             var title = this._makeTitle(identification);
             var description = this._makeDescription(identification);
-            this._getListHtml().append(
+            li.append(
+                this._makeImage(identification),
                 title,
                 description
             );
-            return $(title, description);
+            this._getListHtml().append(
+                li
+            );
+        };
+
+        IdentificationMenu.prototype._makeImage = function (identification) {
+            var container = $("<div class='img-container'>");
+            if(identification.hasImages()){
+                $("<img>").prop(
+                    "src",
+                    identification.getImages()[0].getBase64ForSmall()
+                ).appendTo(container);
+            }
+            return container;
         };
 
         IdentificationMenu.prototype._makeDescription = function (identification) {
             return $(
-                "<div class='group description'>"
+                "<div class='group list-group-item-text description'>"
             ).append(
                 identification.getComment()
                     .replace("\n", "<br/><br/>")
@@ -132,7 +137,7 @@ define([
 
         IdentificationMenu.prototype._makeTitle = function (identification) {
             return $(
-                "<h3 class='type-label identification'>"
+                "<h3 class='list-group-item-heading identification'>"
             ).attr(
                 "identification-uri", identification.getUri()
             ).append(
@@ -144,55 +149,9 @@ define([
             ).data(
                 "identification",
                 identification
-            ).on(
-                "click",
-                function () {
-                    var title = $(this);
-                    addContextIfApplicable();
-                    function addContextIfApplicable() {
-                        var context = title.data("has_context"),
-                            facade = title.closest(".identifications").data("facade");
-                        if (context === undefined) {
-                            title.data(
-                                "has_context",
-                                true
-                            );
-                            var identification = title.data("identification");
-                            if (!identification.isEligibleForContext()) {
-                                return;
-                            }
-                            facade._addContextInContainer(
-                                identification,
-                                facade._descriptionDivFromTitleDiv(title)
-                            );
-                        }
-                    }
-                }
             );
         };
 
-        IdentificationMenu.prototype._addContextInContainer = function (identification, container) {
-            var self = this;
-            var externalResourceUri = identification.isExternalResourceASchemaProperty() ?
-                IdUri.schemaUriOfProperty(identification.getExternalResourceUri()) :
-                identification.getExternalResourceUri();
-            SearchService.getSearchResultDetails(
-                externalResourceUri,
-                function (searchResult) {
-                    IdentificationContext.build(
-                        SearchResult.fromServerFormat(
-                            searchResult
-                        ),
-                        function (context) {
-                            container.prepend(
-                                context
-                            );
-                            self._getListHtml().accordion("refresh");
-                        }
-                    );
-                }
-            );
-        };
         IdentificationMenu.prototype._descriptionDivFromTitleDiv = function (title) {
             return title.next(".description")
         };
@@ -214,7 +173,7 @@ define([
 
         IdentificationMenu.prototype._titleFromIdentification = function (identification) {
             return this.html.find(
-                    "[identification-uri='" + identification.getUri() + "']"
+                "[identification-uri='" + identification.getUri() + "']"
             );
         };
 
@@ -249,8 +208,8 @@ define([
             });
         };
 
-        IdentificationMenu.prototype._handleSelectIdentification = function(searchResult, graphElement){
-            if(graphElement.hasSearchResultAsIdentification(searchResult)){
+        IdentificationMenu.prototype._handleSelectIdentification = function (searchResult, graphElement) {
+            if (graphElement.hasSearchResultAsIdentification(searchResult)) {
                 return false;
             }
             var self = this;
@@ -258,18 +217,18 @@ define([
                 graphElement,
                 searchResult
             );
-            if(graphElement.isSuggestion()){
+            if (graphElement.isSuggestion()) {
                 var vertexSuggestion = graphElement.isRelationSuggestion() ?
                     graphElement.childVertexInDisplay() : graphElement;
                 SuggestionService.accept(
                     vertexSuggestion,
                     identify
                 );
-            }else{
+            } else {
                 identify();
             }
             return true;
-            function identify(){
+            function identify() {
                 self._identifyUsingServerIdentificationFctn(
                     graphElement,
                     searchResult,
@@ -278,36 +237,38 @@ define([
             }
         };
 
-        IdentificationMenu.prototype._getResultsProvidersForVertex = function(){
+        IdentificationMenu.prototype._getResultsProvidersForVertex = function () {
             return [
                 UserMapAutocompleteProvider.toFetchCurrentUserVerticesAndPublicOnesForIdentification(this.graphElement),
                 WikidataAutocompleteProvider.build()
             ];
         };
-        IdentificationMenu.prototype._getResultsProvidersForRelations = function() {
+        IdentificationMenu.prototype._getResultsProvidersForRelations = function () {
             return [
                 UserMapAutocompleteProvider.toFetchRelationsForIdentification(this.graphElement),
                 WikidataAutocompleteProvider.build()
             ];
         };
 
-        IdentificationMenu.prototype._getServerIdentificationFctn = function() {
+        IdentificationMenu.prototype._getServerIdentificationFctn = function () {
             var graphElement = this.graphElement;
             return this.graphElement.isVertex() ? function (concept, identificationResource) {
                 graphElement.serverFacade().addGenericIdentification(concept, identificationResource);
                 graphElement.refreshImages();
-            } : function(concept, identificationResource){
+            } : function (concept, identificationResource) {
                 graphElement.serverFacade().addSameAs(concept, identificationResource);
                 graphElement.refreshImages();
             }
         };
 
         IdentificationMenu.prototype._makeRemoveButton = function () {
-            return $(
-                "<button class='remove-button-in-list'>"
+            var container = $("<span class='pull-right'>");
+            var button = $(
+                "<button class='btn remove-btn'>"
             ).append(
-                "x"
-            ).click(function (event) {
+                "<i class='fa fa-trash-o'>"
+            ).appendTo(container).click(
+                function (event) {
                     event.stopPropagation();
                     var identificationListElement = $(this).closest(
                             '.identification'
@@ -347,9 +308,10 @@ define([
                     }
                 }
             );
+            return container;
         };
 
-        IdentificationMenu.prototype._identifyUsingServerIdentificationFctn = function(graphElement, searchResult, serverIdentificationFctn) {
+        IdentificationMenu.prototype._identifyUsingServerIdentificationFctn = function (graphElement, searchResult, serverIdentificationFctn) {
             var identificationResource = Identification.fromSearchResult(
                 searchResult
             );
@@ -358,10 +320,9 @@ define([
                 identificationResource
             );
             this._addIdentificationAsListElement(identificationResource);
-            this._makeListElementsCollapsible();
             this._setTemporaryDescription(identificationResource);
         };
-        IdentificationMenu.prototype._setupAutoCompleteSuggestionZIndex= function () {
+        IdentificationMenu.prototype._setupAutoCompleteSuggestionZIndex = function () {
             //http://stackoverflow.com/a/17178927/541493
             this.identificationTextField.autocomplete("widget").insertAfter(
                 this.identificationTextField.closest(".ui-dialog").parent()

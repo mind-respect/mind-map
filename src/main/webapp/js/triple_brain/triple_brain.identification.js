@@ -45,14 +45,6 @@ define([
             ).getServerFormat()
         });
     };
-    api.fromFreebaseSuggestion = function (freebaseSuggestion) {
-        return api.withUriAndLabel(
-            FreebaseUri.freebaseIdToUri(
-                freebaseSuggestion.id
-            ),
-            freebaseSuggestion.name
-        );
-    };
     api.fromSearchResult = function (searchResult) {
         var identification = api.withUriLabelAndDescription(
             searchResult.uri,
@@ -96,10 +88,6 @@ define([
             serverFormat
         );
     };
-    api.Self.prototype.isEligibleForContext = function () {
-        return this.getExternalResourceUri().indexOf("/service") === 0 &&
-            this.getExternalResourceUri().indexOf("/identification") === -1;
-    };
 
     api.Self.prototype.rightActionForType = function(typeAction, sameAsAction, genericIdentificationAction){
         switch (this.getType()) {
@@ -110,11 +98,6 @@ define([
             default :
                 return genericIdentificationAction;
         }
-    };
-    api.Self.prototype.isExternalResourceASchemaProperty = function () {
-        return IdUri.isPropertyUri(
-            this.getExternalResourceUri()
-        );
     };
     return api;
 });
