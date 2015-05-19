@@ -85,7 +85,7 @@ define([
 
     Self.prototype._getImage = function () {
         if (!this.detailedGraphElement.hasImages()) {
-            return "";
+            return;
         }
         return this.detailedGraphElement.getImages()[0];
     };
