@@ -95,8 +95,8 @@
         "menu" : {
             "identification" :{
                 "title" : "Identifications",
-                "instruction" : "Is it Albert Einstein? Is it a place? An animal? What is it?",
-                "placeholder" : "What is this bubble?",
+                "instruction" : "What is it? Albert Einstein? A location? An animal?",
+                "placeholder" : "Add an identification to this bubble",
                 "remove": "Remove"
             }
         }

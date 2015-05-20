@@ -93,8 +93,8 @@
         "menu" : {
             "identification" :{
                 "title" : "Identifications",
-                "instruction" : "Est-ce Albert Einstein? Est-ce un lieu? Un animal? Qu'est-ce que c'est?",
-                "placeholder" : "Qu'est-ce que cette bulle",
+                "instruction" : "Qu'est-ce c'est? Albert Einstein? Un lieu? Un animal?",
+                "placeholder" : "Ajoutez un identifiant à cette bulle",
                 "remove": "Supprimer"
             }
         }
