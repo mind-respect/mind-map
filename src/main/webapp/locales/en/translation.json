@@ -95,11 +95,8 @@
         "menu" : {
             "identification" :{
                 "title" : "Identifications",
-                "instruction" : {
-                    "concept" : "Find as many resources that identify or are a generalization of this bubble.",
-                    "relation" : "Identify this relation to another that means the same"
-                },
-                "placeholder" : "Identify",
+                "instruction" : "Is it Albert Einstein? Is it a place? An animal? What is it?",
+                "placeholder" : "What is this bubble?",
                 "remove": "Remove"
             }
         }

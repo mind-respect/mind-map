@@ -134,24 +134,27 @@ button.add-button-in-list:hover { color: #00d100; }
 #selection-box { min-width: 45px; min-height: 40px; z-index: 100; background: rgba(0, 203, 255, 0.1); border: solid black; position: absolute; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
+.ui-dialog-titlebar { text-align: center; }
+
 .vertex-note.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset { float: none; text-align: center; }
 .vertex-note.ui-dialog .ui-dialog-content { padding: 0; }
-.vertex-note textarea { width: 95%; height: 93%; margin-bottom: 0; }
+.vertex-note textarea { width: 100%; height: 93%; margin-bottom: 0; }
 
 .graph-element-menu { cursor: default; opacity: 0.96; margin-right: auto; font-size: 1em; }
 .graph-element-menu .html-content { margin-right: 1px; margin-left: 1px; }
 .graph-element-menu h2, .graph-element-menu h3 { line-height: inherit; }
-.graph-element-menu h2 { font-size: 1.3em; }
+.graph-element-menu h2 { font-size: 1.3em; text-align: center; }
 .graph-element-menu h3 { font-weight: normal; }
 .graph-element-menu ul { list-style-type: none; }
 .graph-element-menu .identifications { /*:-moz-placeholder for firefox 18- and ::-moz-placeholder for firefox 19+
 */ }
+.graph-element-menu .identifications .add-identification { margin-top: 10px; }
+.graph-element-menu .identifications .instruction { margin-top: 7px; margin-bottom: 11px; text-align: left; }
 .graph-element-menu .identifications .img-container { float: left; margin-right: 15px; }
 .graph-element-menu .identifications .remove-btn { background-color: white; border: none; }
 .graph-element-menu .identifications .remove-btn:focus { outline: none; }
 .graph-element-menu .identifications .remove-btn i { color: red; margin-top: 50%; }
 .graph-element-menu .identifications ul { text-align: left; }
-.graph-element-menu .identifications .instruction { margin-top: 26px; font-size: 1em; text-align: left; }
 .graph-element-menu .identifications ::-webkit-input-placeholder, .graph-element-menu .identifications :-moz-placeholder, .graph-element-menu .identifications ::-moz-placeholder, .graph-element-menu .identifications :-ms-input-placeholder { color: black; }
 .graph-element-menu .ui-dialog-titlebar-close { background: transparent; border: none; }
 
@@ -287,5 +290,3 @@ li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-bu
 .hidden-properties-container { z-index: 3; min-width: 25px; }
 
 .link-like-button { border-style: none; font-size: 0.7em; padding: 0 0 0 0; background-color: transparent; font-weight: normal; }
-
-.add-identification { float: left; }

@@ -25,8 +25,6 @@ define([
         );
         t.add('vertex_menu', '<div class="menu"></div>');
         t.add('vertex_move_button', '<div class="move"></div>');
-
-        t.add('identification_menu_title', '<h2 data-i18n="graph_element.menu.identification.title"></h2>');
         t.add('identification_existing_identities', '<ul class="list list-group"></ul>');
         t.add(
             'identification_existing_identity',

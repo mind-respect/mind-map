@@ -51,18 +51,11 @@ define([
         };
 
         IdentificationMenu.prototype._buildMenu = function () {
-            this._addTitle();
-            this._addIdentifications();
-            if (MindMapInfo.isViewOnly()) {
-                return;
+            if (!MindMapInfo.isViewOnly()) {
+                this._addIdentificationTextField().focus();
             }
             this._addInstructions();
-            this._addIdentificationTextField().focus();
-        };
-        IdentificationMenu.prototype._addTitle = function () {
-            this.html.append(
-                MindMapTemplate['identification_menu_title'].merge()
-            );
+            this._addIdentifications();
         };
 
         IdentificationMenu.prototype._addInstructions = function () {
@@ -72,9 +65,7 @@ define([
                 ).attr(
                     "data-i18n",
                     (
-                        this.graphElement.isVertex() ?
-                            "graph_element.menu.identification.instruction.concept" :
-                            "graph_element.menu.identification.instruction.relation"
+                        "graph_element.menu.identification.instruction"
                     )
                 )
             );
@@ -95,10 +86,6 @@ define([
 
         IdentificationMenu.prototype._getListHtml = function () {
             return this.html.find(".list")
-        };
-
-        IdentificationMenu.prototype._listElements = function () {
-            return this._getListHtml().find(".identification");
         };
 
         IdentificationMenu.prototype._addIdentificationAsListElement = function (identification) {
