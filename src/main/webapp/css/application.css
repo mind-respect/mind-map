@@ -138,15 +138,15 @@ button.add-button-in-list:hover { color: #00d100; }
 .vertex-note.ui-dialog .ui-dialog-content { padding: 0; }
 .vertex-note textarea { width: 95%; height: 93%; margin-bottom: 0; }
 
-.graph-element-menu { cursor: default; opacity: 0.96; margin-right: auto; text-align: center; }
+.graph-element-menu { cursor: default; opacity: 0.96; margin-right: auto; font-size: 1em; }
+.graph-element-menu .html-content { margin-right: 1px; margin-left: 1px; }
 .graph-element-menu h2, .graph-element-menu h3 { line-height: inherit; }
-.graph-element-menu h2 { font-size: 1em; }
+.graph-element-menu h2 { font-size: 1.3em; }
 .graph-element-menu h3 { font-weight: normal; }
-.graph-element-menu ul { margin-left: 0px; margin-bottom: 5px; padding: 0; list-style-type: none; }
-.graph-element-menu li { margin-left: 0px; padding: 0; }
+.graph-element-menu ul { list-style-type: none; }
 .graph-element-menu .identifications { /*:-moz-placeholder for firefox 18- and ::-moz-placeholder for firefox 19+
 */ }
-.graph-element-menu .identifications .img-container { float: left; }
+.graph-element-menu .identifications .img-container { float: left; margin-right: 15px; }
 .graph-element-menu .identifications .remove-btn { background-color: white; border: none; }
 .graph-element-menu .identifications .remove-btn:focus { outline: none; }
 .graph-element-menu .identifications .remove-btn i { color: red; margin-top: 50%; }

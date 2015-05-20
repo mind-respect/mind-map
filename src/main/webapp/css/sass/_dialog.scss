@@ -23,29 +23,27 @@
   cursor: default;
   opacity: 0.96;
   margin-right: auto;
-  text-align: center;
+  font-size:1em;
+  .html-content{
+    margin-right:1px;
+    margin-left:1px;
+  }
   h2, h3 {
     line-height: inherit;
   }
   h2 {
-    font-size: 1em;
+    font-size: 1.3em;
   }
   h3 {
     font-weight: normal;
   }
   ul {
-    margin-left: 0px;
-    margin-bottom: 5px;
-    padding: 0;
     list-style-type: none;
-  }
-  li {
-    margin-left: 0px;
-    padding: 0;
   }
   .identifications {
     .img-container{
       float:left;
+      margin-right:15px;
     }
     .remove-btn{
       background-color:white;

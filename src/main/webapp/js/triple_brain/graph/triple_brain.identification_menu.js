@@ -35,7 +35,7 @@ define([
             var row = $("<div class='row'>");
             this.html = $(
                 "<div class='identifications col-md-12'>"
-            ).data("facade", this).appendTo(row);
+            ).appendTo(row);
             GraphUi.addHtml(row);
             this._buildMenu();
             this.html.data("graphElement", this.graphElement);
@@ -102,7 +102,12 @@ define([
         };
 
         IdentificationMenu.prototype._addIdentificationAsListElement = function (identification) {
-            var li = $("<li class='list-group-item'>");
+            var li = $(
+                "<li class='list-group-item clearfix'>"
+            ).data(
+                "identification",
+                identification
+            );
             var title = this._makeTitle(identification);
             var description = this._makeDescription(identification);
             li.append(
@@ -117,7 +122,7 @@ define([
 
         IdentificationMenu.prototype._makeImage = function (identification) {
             var container = $("<div class='img-container'>");
-            if(identification.hasImages()){
+            if (identification.hasImages()) {
                 $("<img>").prop(
                     "src",
                     identification.getImages()[0].getBase64ForSmall()
@@ -137,43 +142,13 @@ define([
 
         IdentificationMenu.prototype._makeTitle = function (identification) {
             return $(
-                "<h3 class='list-group-item-heading identification'>"
-            ).attr(
-                "identification-uri", identification.getUri()
+                "<h3 class='list-group-item-heading'>"
             ).append(
                 identification.isLabelEmpty() ?
                     identification.getUri() :
                     identification.getLabel()
             ).append(
                 this._makeRemoveButton()
-            ).data(
-                "identification",
-                identification
-            );
-        };
-
-        IdentificationMenu.prototype._descriptionDivFromTitleDiv = function (title) {
-            return title.next(".description")
-        };
-        IdentificationMenu.prototype._setTemporaryDescription = function (identification) {
-            $(
-                this._descriptionFromIdentification(
-                    identification
-                )
-            ).text(
-                identification.getComment()
-            );
-        };
-
-        IdentificationMenu.prototype._descriptionFromIdentification = function (identification) {
-            return this._descriptionDivFromTitleDiv(
-                this._titleFromIdentification(identification)
-            );
-        };
-
-        IdentificationMenu.prototype._titleFromIdentification = function (identification) {
-            return this.html.find(
-                "[identification-uri='" + identification.getUri() + "']"
             );
         };
 
@@ -271,7 +246,7 @@ define([
                 function (event) {
                     event.stopPropagation();
                     var identificationListElement = $(this).closest(
-                            '.identification'
+                            'li'
                         ),
                         identification = identificationListElement.data(
                             "identification"
@@ -279,22 +254,11 @@ define([
                         semanticMenu = identificationListElement.closest(
                             '.identifications'
                         ),
-                        graphElement = semanticMenu.data("graphElement"),
-                        facade = semanticMenu.data("facade");
+                        graphElement = semanticMenu.data("graphElement");
+                        identificationListElement.remove();
                     getServerRemoveIdentificationFunction()(
                         graphElement,
-                        identification,
-                        function (graphElement, identification) {
-                            $.each(facade._listElements(), function () {
-                                var listElement = $(this),
-                                    listElementIdentification = listElement.data("identification");
-                                if (identification.getUri() === listElementIdentification.getUri()) {
-                                    listElement.next(".description").remove();
-                                    listElement.remove();
-                                    return false;
-                                }
-                            });
-                        }
+                        identification
                     );
                     function getServerRemoveIdentificationFunction() {
                         switch (identification.getType()) {
@@ -320,7 +284,6 @@ define([
                 identificationResource
             );
             this._addIdentificationAsListElement(identificationResource);
-            this._setTemporaryDescription(identificationResource);
         };
         IdentificationMenu.prototype._setupAutoCompleteSuggestionZIndex = function () {
             //http://stackoverflow.com/a/17178927/541493
