@@ -12,12 +12,16 @@
         "bubble",
         "vertex";
 
-body {
+
+#mind_map {
   cursor: all-scroll;
   -moz-user-select: -moz-none;
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  h2, h3{
+    line-height: inherit;
+  }
 }
 
 #app-presentation {
@@ -58,10 +62,6 @@ li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-bu
   border: none;
   position: absolute;
   right: 0;
-}
-
-#mind_map h2, #mind_map h3 {
-  line-height: inherit;
 }
 
 #cboxClose {

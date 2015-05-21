@@ -140,7 +140,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .vertex-note.ui-dialog .ui-dialog-content { padding: 0; }
 .vertex-note textarea { width: 100%; height: 93%; margin-bottom: 0; }
 
-.graph-element-menu { cursor: default; opacity: 0.96; margin-right: auto; font-size: 1em; }
+.graph-element-menu { opacity: 0.96; margin-right: auto; font-size: 1em; }
 .graph-element-menu .html-content { margin-right: 1px; margin-left: 1px; }
 .graph-element-menu h2, .graph-element-menu h3 { line-height: inherit; }
 .graph-element-menu h2 { font-size: 1.3em; text-align: center; }
@@ -261,7 +261,8 @@ button.add-button-in-list:hover { color: #00d100; }
 
 .included-vertices-container .layout { position: absolute; }
 
-body { cursor: all-scroll; -moz-user-select: -moz-none; -webkit-user-select: none; -ms-user-select: none; user-select: none; }
+#mind_map { cursor: all-scroll; -moz-user-select: -moz-none; -webkit-user-select: none; -ms-user-select: none; user-select: none; }
+#mind_map h2, #mind_map h3 { line-height: inherit; }
 
 #app-presentation { margin-top: 5%; }
 
@@ -276,8 +277,6 @@ a:hover, input[type=button].link-like-button:hover, button.link-like-button:hove
 input[type="button"], .link-like-button { border-style: none; font: inherit; padding: 0 0 0 0; background: none; }
 
 li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-button-in-list { margin: auto; margin-right: 0.5em; color: red; font-weight: bold; font-size: 1.3em; background: transparent; border: none; position: absolute; right: 0; }
-
-#mind_map h2, #mind_map h3 { line-height: inherit; }
 
 #cboxClose { left: -5px; }
 
