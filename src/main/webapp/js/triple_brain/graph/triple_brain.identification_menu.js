@@ -27,7 +27,7 @@ define([
                     return new IdentificationMenu(graphElementUi);
                 }
             },
-            DESCRIPTION_MAX_CHAR = 143;
+            DESCRIPTION_MAX_CHAR = 160;
 
         function IdentificationMenu(graphElement) {
             this.graphElement = graphElement;

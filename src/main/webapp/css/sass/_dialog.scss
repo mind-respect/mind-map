@@ -52,6 +52,9 @@
       &:before, &:after{
         content: "\00a0 ";
       }
+      a {
+        font-weight:bold;
+      }
     }
     .instruction {
       margin-top: 7px;
