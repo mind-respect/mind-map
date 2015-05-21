@@ -56,6 +56,9 @@ define([
             if(moreInfo.image !== undefined){
                 identification.addImage(moreInfo.image);
             }
+            if(!identification.hasComment() && moreInfo.comment !== ""){
+                identification.setComment(moreInfo.comment);
+            }
         }
         return identification;
     };

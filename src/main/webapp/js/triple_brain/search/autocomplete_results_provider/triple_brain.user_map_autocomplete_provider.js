@@ -119,7 +119,7 @@ define([
             var originalSearchResult = searchResult.nonFormattedSearchResult;
             IdentificationContext.buildWithoutBubbleLinks(
                 originalSearchResult,
-                function (context, image) {
+                function (context, image, comment) {
                     var moreInfo = context.append(
                         originalSearchResult.context,
                         $("<div>").append(
@@ -130,12 +130,12 @@ define([
                             conciseSearchResult: searchResult,
                             title: searchResult.label,
                             text: moreInfo,
-                            image: image
+                            image: image,
+                            comment:comment
                         }
                     );
                 }
             );
         };
     }
-})
-;
+});

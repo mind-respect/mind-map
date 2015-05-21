@@ -38,7 +38,8 @@ define([
                 );
                 callback(
                     self._buildHtmlContext(),
-                    self._getImage()
+                    self._getImage(),
+                    self.detailedGraphElement.getComment()
                 )
             }
         );
