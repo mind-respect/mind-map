@@ -95,7 +95,8 @@
                 "title" : "Identifications",
                 "instruction" : "Qu'est-ce c'est? Albert Einstein? Un lieu? Un animal?",
                 "placeholder" : "Ajoutez un identifiant à cette bulle",
-                "remove": "Supprimer"
+                "readMore" : "plus",
+                "readLess" : "moins"
             }
         }
     },

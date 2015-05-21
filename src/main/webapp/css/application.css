@@ -149,6 +149,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .graph-element-menu .identifications { /*:-moz-placeholder for firefox 18- and ::-moz-placeholder for firefox 19+
 */ }
 .graph-element-menu .identifications .add-identification { margin-top: 10px; }
+.graph-element-menu .identifications .read-more:before, .graph-element-menu .identifications .read-more:after { content: "\00a0 "; }
 .graph-element-menu .identifications .instruction { margin-top: 7px; margin-bottom: 11px; text-align: left; }
 .graph-element-menu .identifications .img-container { float: left; margin-right: 15px; }
 .graph-element-menu .identifications .remove-btn { background-color: white; border: none; }

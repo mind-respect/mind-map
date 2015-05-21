@@ -12,8 +12,7 @@ define([
         "triple_brain.ui.graph",
         "jquery-ui",
         "jquery.is-fully-on-screen",
-        "jquery.center-on-screen",
-        "jquery.i18next"
+        "jquery.center-on-screen"
     ], function ($, EventBus, MindMapTemplate, RelativeTreeVertex, VertexHtmlCommon, GraphElementHtmlBuilder, GraphUi) {
         var api = {};
         api.withServerFacade = function (serverFacade) {

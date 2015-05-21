@@ -18,14 +18,16 @@ define([
         "triple_brain.suggestion_service",
         "triple_brain.schema_suggestion",
         "jquery-ui",
-        "jquery.triple_brain.search"
+        "jquery.triple_brain.search",
+        "jquery.i18next"
     ],
     function ($, Identification, MindMapTemplate, GraphUi, IdUri, WikidataAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu, SearchService, IdentificationContext, SearchResult, MindMapInfo, SuggestionService, SchemaSuggestion) {
         var api = {
-            ofGraphElement: function (graphElementUi) {
-                return new IdentificationMenu(graphElementUi);
-            }
-        };
+                ofGraphElement: function (graphElementUi) {
+                    return new IdentificationMenu(graphElementUi);
+                }
+            },
+            DESCRIPTION_MAX_CHAR = 143;
 
         function IdentificationMenu(graphElement) {
             this.graphElement = graphElement;
@@ -119,12 +121,41 @@ define([
         };
 
         IdentificationMenu.prototype._makeDescription = function (identification) {
-            return $(
-                "<div class='group list-group-item-text description'>"
-            ).append(
-                identification.getComment()
-                    .replace("\n", "<br/><br/>")
+            var description = identification.getComment()
+                .replace("\n", "<br/><br/>");
+            var beginingDescription = $("<span>").append(
+                description.substr(0, DESCRIPTION_MAX_CHAR)
             );
+            var endDescription = $("<div class='end-description hidden'>").append(
+                description.substr(DESCRIPTION_MAX_CHAR)
+            );
+
+            var container = $("<div class='group list-group-item-text description'>").append(
+                beginingDescription
+            );
+            if (description.length > DESCRIPTION_MAX_CHAR) {
+                $("<span class='read-more'>").append(
+                    $(
+                        "<a href='#' data-i18n='graph_element.menu.identification.readMore'>"
+                    ).click(function (event) {
+                            event.preventDefault();
+                            var $this = $(this);
+                            var collapsible = $this.closest('.description').find(
+                                '.end-description'
+                            ).toggleClass('hidden');
+                            $this.text(
+                                $.t(
+                                    collapsible.is(":visible") ?
+                                        "graph_element.menu.identification.readLess" :
+                                        "graph_element.menu.identification.readMore"
+                                )
+                            );
+                        }
+                    )
+                ).appendTo(container);
+            }
+            container.append(endDescription);
+            return container;
         };
 
         IdentificationMenu.prototype._makeTitle = function (identification) {
@@ -242,7 +273,7 @@ define([
                             '.identifications'
                         ),
                         graphElement = semanticMenu.data("graphElement");
-                        identificationListElement.remove();
+                    identificationListElement.remove();
                     getServerRemoveIdentificationFunction()(
                         graphElement,
                         identification
