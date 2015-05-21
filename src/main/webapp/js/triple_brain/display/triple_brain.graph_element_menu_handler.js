@@ -14,7 +14,7 @@ define([
     api.forSingle = function(){
         return forSingle;
     };
-    forSingle.note = function (event, vertex) {
+    forSingle.noteAction = function (vertex) {
         var noteDialog = $(
             "<div>"
         ).attr(

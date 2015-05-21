@@ -87,10 +87,10 @@ define([
         );
     };
     forSingleNotOwned.note = forSingle.note = function (event, vertex) {
-        GraphElementMenuHandler.forSingle().note(
-            event, vertex
-        );
+        forSingle.noteAction(vertex);
     };
+    forSingleNotOwned.noteAction = forSingle.noteAction = GraphElementMenuHandler.forSingle().noteAction;
+
     forSingleNotOwned.noteCanDo = function(vertex){
         return vertex.hasNote();
     };

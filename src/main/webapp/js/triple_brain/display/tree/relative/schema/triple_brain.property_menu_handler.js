@@ -21,11 +21,10 @@ define([
             forSingle;
     };
 
-    forSingleNotOwned.note = forSingle.note = function (event, vertex) {
-        GraphElementMenuHandler.forSingle().note(
-            event, vertex
-        );
+    forSingleNotOwned.note = forSingle.note = function (event, element) {
+        forSingle.noteAction(element);
     };
+    forSingleNotOwned.noteAction = forSingle.noteAction = GraphElementMenuHandler.forSingle().noteAction;
 
     forSingleNotOwned.identify = forSingle.identify = function (event, property) {
         event.stopPropagation();

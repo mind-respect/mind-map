@@ -25,6 +25,7 @@ define([
         deleteKeyNumber = 46,
         escapeKeyNumber = 27,
         enterKeyCode = 13,
+        dKeyNumber = 68,
         eKeyNumber = 69,
         sKeyNumber = 83,
         rKeyNumber = 82,
@@ -112,6 +113,7 @@ define([
         actions[eKeyNumber] = eKeyAction;
         actions[sKeyNumber] = sKeyAction;
         actions[rKeyNumber] = rKeyAction;
+        actions[dKeyNumber] = "note";
         return actions;
     }
 

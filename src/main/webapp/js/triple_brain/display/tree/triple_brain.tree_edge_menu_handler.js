@@ -19,11 +19,12 @@ define([
             forSingleNotOwned :
             forSingle;
     };
-    forSingleNotOwned.note = forSingle.note = function (event, vertex) {
-        GraphElementMenuHandler.forSingle().note(
-            event, vertex
-        );
+    forSingleNotOwned.note = forSingle.note = function (event, edge) {
+        forSingle.noteAction(edge);
     };
+
+    forSingleNotOwned.noteAction = forSingle.noteAction = GraphElementMenuHandler.forSingle().noteAction;
+
     forSingleNotOwned.identify = forSingle.identify = function (event, edge) {
         forSingle.identifyAction(edge);
     };
