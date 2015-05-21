@@ -165,7 +165,7 @@
         "suggestions" : "Suggestions (ctrl+s)",
         "subElements" : "Made of graph elements",
         "center" : "Center bubble",
-        "note" : "Description",
+        "note" : "Description (ctrl+d)",
         "images" : "Add images",
         "connectTo" : "Connect to existing bubble",
         "makePrivate" : "Make private",
