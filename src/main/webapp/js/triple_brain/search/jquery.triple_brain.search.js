@@ -12,7 +12,8 @@ define([
     $.fn.tripleBrainAutocomplete = function (options) {
         var textInput = $(this);
         setupNbRequestsIfApplicable();
-        textInput.autocomplete($.extend(
+        textInput.autocomplete(
+            $.extend(
                 getAutocompleteOptions(),
                 options
             )
@@ -204,6 +205,9 @@ define([
         );
         function displayDescriptionPanel(description) {
             removeSearchFlyout();
+            if(!resultsList.is(":visible")){
+                return;
+            }
             var moreInfoPanel = $("<div class='hidden'>");
             moreInfoPanel.addClass("autocomplete-flyout");
             if (description.image !== undefined) {
