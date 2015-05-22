@@ -30,7 +30,9 @@ define([
                                 if (MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
                                     window.location.reload();
                                 } else {
-                                    window.location = "?bubble=" + uri;
+                                    window.location = MindMapInfo.htmlUrlForBubbleUri(
+                                        uri
+                                    );
                                 }
                             }
                         );
@@ -58,12 +60,12 @@ define([
                 });
         }
 
-        function handleForgotPassword(){
-            getForgotPasswordButton().click(function(event){
+        function handleForgotPassword() {
+            getForgotPasswordButton().click(function (event) {
                 event.preventDefault();
                 hideAllMessages();
                 var email = getEmailField().val().trim();
-                if("" === email){
+                if ("" === email) {
                     getMandatoryEmailErrorMessage().removeClass("hidden");
                     return;
                 }
@@ -73,10 +75,11 @@ define([
                     error
                 );
             });
-            function success(){
+            function success() {
                 $("#forgot-password-email-sent").removeClass("hidden");
             }
-            function error(){
+
+            function error() {
                 getInexistentEmailErrorMessage().removeClass("hidden");
             }
         }
@@ -140,22 +143,28 @@ define([
         function getRegisterLink() {
             return $("#register-link");
         }
-        function getForgotPasswordButton(){
+
+        function getForgotPasswordButton() {
             return $("#forgot-password-link");
         }
-        function getMandatoryEmailErrorMessage(){
+
+        function getMandatoryEmailErrorMessage() {
             return $("#mandatory_email");
         }
-        function hideAllMessages(){
+
+        function hideAllMessages() {
             getMessages().addClass("hidden");
         }
-        function getMessages(){
+
+        function getMessages() {
             return getSection().find('.alert');
         }
-        function getInexistentEmailErrorMessage(){
+
+        function getInexistentEmailErrorMessage() {
             return $("#inexistent-email");
         }
-        function getSection(){
+
+        function getSection() {
             return $("#login-page");
         }
     }

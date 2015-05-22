@@ -13,6 +13,9 @@ define([
         var api = {},
             _isViewOnly,
             _isAnonymous;
+        api.htmlUrlForBubbleUri = function (bubbleUri) {
+            return window.location.origin + "?bubble=" + bubbleUri;
+        };
         api.defaultVertexUri = function () {
             return UserService.currentUserUri() + '/graph/vertex/any'
         };

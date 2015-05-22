@@ -98,7 +98,8 @@
                 "instruction" : "What is it? Albert Einstein? A location? An animal?",
                 "placeholder" : "Add an identification to this bubble",
                 "readMore" : "more",
-                "readLess" : "less"
+                "readLess" : "less",
+                "origin" : "source"
             }
         }
     },

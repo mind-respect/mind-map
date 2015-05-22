@@ -29,14 +29,14 @@ define([
                 api.uriFromGraphElementId(id)
             );
         };
-        api.isSchemaUri = function(uri){
+        api.isSchemaUri = function (uri) {
             return uri.indexOf("/schema/") !== -1 &&
                 uri.indexOf("/property") === -1;
         };
-        api.isPropertyUri = function(uri){
+        api.isPropertyUri = function (uri) {
             return uri.indexOf("/property") !== -1;
         };
-        api.schemaUriOfProperty = function(propertyUri){
+        api.schemaUriOfProperty = function (propertyUri) {
             return propertyUri.substr(
                 0,
                 propertyUri.indexOf("/property")
@@ -46,7 +46,7 @@ define([
             var username = UserService.authenticatedUserInCache().user_name;
             return "/users" + username + "/" + id;
         };
-        api.resourceUriFromAjaxResponse = function(response){
+        api.resourceUriFromAjaxResponse = function (response) {
             return api.removeDomainNameFromGraphElementUri(
                 response.getResponseHeader("Location")
             );
@@ -58,7 +58,7 @@ define([
         };
         api.elementIdFromUri = function (uri) {
             return uri.substr(
-                    uri.lastIndexOf("/") + 1
+                uri.lastIndexOf("/") + 1
             );
         };
         api.generateUuid = function () {
@@ -80,7 +80,7 @@ define([
         };
         api.getOwnerFromUri = function (uri) {
             return uri.substring(
-                    uri.indexOf("/users") + 7,
+                uri.indexOf("/users") + 7,
                 uri.indexOf("/graph")
             );
         };
@@ -91,17 +91,25 @@ define([
         };
         api.getVertexShortId = function (uri) {
             return uri.substring(
-                    uri.indexOf("vertex/") + 7
+                uri.indexOf("vertex/") + 7
             );
         };
         api.getSchemaShortId = function (uri) {
             return uri.substring(
-                    uri.indexOf("schema/") + 7
+                uri.indexOf("schema/") + 7
             );
         };
-        api.convertSchemaUriToNonOwnedUri= function (uri) {
+        api.convertSchemaUriToNonOwnedUri = function (uri) {
             return UserService.currentUserUri() + "/non_owned/schema/" +
                 api.getSchemaShortId(uri)
+        };
+        api.hostNameOfUri = function (uri) {
+            return $.url(
+                uri
+            ).attr("host");
+        };
+        api.isUriOfAGraphElement = function(uri){
+            return uri.indexOf("/service/users") === 0;
         };
         return api;
     }

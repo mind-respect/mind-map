@@ -49,11 +49,11 @@
       margin-top: 10px;
     }
     .read-more {
-      &:before, &:after{
+      &:before, &:after {
         content: "\00a0 ";
       }
       a {
-        font-weight:bold;
+        font-weight: bold;
       }
     }
     .instruction {
@@ -64,6 +64,13 @@
     .img-container {
       float: left;
       margin-right: 15px;
+    }
+    .origin-container {
+      margin-top: -13px;
+      margin-bottom: -9px;
+      a {
+        color: inherit;
+      }
     }
     .remove-btn {
       background-color: white;

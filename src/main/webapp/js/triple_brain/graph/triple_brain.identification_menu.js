@@ -27,7 +27,7 @@ define([
                     return new IdentificationMenu(graphElementUi);
                 }
             },
-            DESCRIPTION_MAX_CHAR = 160;
+            DESCRIPTION_MAX_CHAR = 155;
 
         function IdentificationMenu(graphElement) {
             this.graphElement = graphElement;
@@ -123,15 +123,19 @@ define([
         IdentificationMenu.prototype._makeDescription = function (identification) {
             var description = identification.getComment()
                 .replace("\n", "<br/><br/>");
-            var beginingDescription = $("<span>").append(
-                description.substr(0, DESCRIPTION_MAX_CHAR)
+            var beginningDescription = $("<span>").append(
+                description.length > DESCRIPTION_MAX_CHAR ?
+                    description.substr(
+                        0,
+                        description.indexOf(" ", DESCRIPTION_MAX_CHAR)
+                    ) : description
             );
             var endDescription = $("<div class='end-description hidden'>").append(
                 description.substr(DESCRIPTION_MAX_CHAR)
             );
 
             var container = $("<div class='group list-group-item-text description'>").append(
-                beginingDescription
+                beginningDescription
             );
             if (description.length > DESCRIPTION_MAX_CHAR) {
                 $("<span class='read-more'>").append(
@@ -159,14 +163,38 @@ define([
         };
 
         IdentificationMenu.prototype._makeTitle = function (identification) {
-            return $(
-                "<h3 class='list-group-item-heading'>"
+            var url = identification.getExternalResourceUri();
+            var origin = IdUri.hostNameOfUri(url);
+            if (IdUri.isUriOfAGraphElement(url)) {
+                url = MindMapInfo.htmlUrlForBubbleUri(
+                    url
+                );
+                origin = window.location.hostname;
+            }
+            var anchor = $("<a target=_blank>").prop(
+                "href",
+                url
             ).append(
                 identification.isLabelEmpty() ?
                     identification.getUri() :
                     identification.getLabel()
+            );
+            var originContainer = $(
+                "<div class='origin-container'>"
             ).append(
-                this._makeRemoveButton()
+                $("<small>").append(
+                    $.t(
+                        "graph_element.menu.identification.origin"
+                    ) + ": ",
+                    $("<a target='_blank'>").prop("href", "http://" + origin).text(origin)
+                )
+            );
+            return $(
+                "<h3 class='list-group-item-heading'>"
+            ).append(
+                anchor,
+                this._makeRemoveButton(),
+                originContainer
             );
         };
 
