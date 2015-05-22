@@ -102,7 +102,8 @@ define([
             li.append(
                 this._makeImage(identification),
                 title,
-                description
+                description,
+                this._makeOrigin(identification)
             );
             this._getListHtml().append(
                 li
@@ -164,12 +165,10 @@ define([
 
         IdentificationMenu.prototype._makeTitle = function (identification) {
             var url = identification.getExternalResourceUri();
-            var origin = IdUri.hostNameOfUri(url);
             if (IdUri.isUriOfAGraphElement(url)) {
                 url = MindMapInfo.htmlUrlForBubbleUri(
                     url
                 );
-                origin = window.location.hostname;
             }
             var anchor = $("<a target=_blank>").prop(
                 "href",
@@ -179,7 +178,21 @@ define([
                     identification.getUri() :
                     identification.getLabel()
             );
-            var originContainer = $(
+            return $(
+                "<h3 class='list-group-item-heading'>"
+            ).append(
+                anchor,
+                this._makeRemoveButton()
+            );
+        };
+
+        IdentificationMenu.prototype._makeOrigin = function(identification){
+            var url = identification.getExternalResourceUri();
+            var origin = IdUri.hostNameOfUri(url);
+            if (IdUri.isUriOfAGraphElement(url)) {
+                origin = window.location.hostname;
+            }
+            return $(
                 "<div class='origin-container'>"
             ).append(
                 $("<small>").append(
@@ -188,13 +201,6 @@ define([
                     ) + ": ",
                     $("<a target='_blank'>").prop("href", "http://" + origin).text(origin)
                 )
-            );
-            return $(
-                "<h3 class='list-group-item-heading'>"
-            ).append(
-                anchor,
-                this._makeRemoveButton(),
-                originContainer
             );
         };
 
