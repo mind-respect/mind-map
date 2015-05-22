@@ -132,7 +132,9 @@ define([
                     ) : description
             );
             var endDescription = $("<div class='end-description hidden'>").append(
-                description.substr(beginningDescription.length)
+                description.substr(
+                    beginningDescription.length - 1
+                )
             );
             var container = $("<div class='group list-group-item-text description'>").append(
                 beginningDescription
