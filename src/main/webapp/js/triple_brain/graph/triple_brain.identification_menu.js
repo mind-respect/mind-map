@@ -124,18 +124,20 @@ define([
         IdentificationMenu.prototype._makeDescription = function (identification) {
             var description = identification.getComment()
                 .replace("\n", "<br/><br/>");
+            var beginingDescriptionText = description.length > DESCRIPTION_MAX_CHAR ?
+                description.substr(
+                    0,
+                    description.indexOf(" ", DESCRIPTION_MAX_CHAR)
+                ) : description;
             var beginningDescription = $("<span>").append(
-                description.length > DESCRIPTION_MAX_CHAR ?
-                    description.substr(
-                        0,
-                        description.indexOf(" ", DESCRIPTION_MAX_CHAR)
-                    ) : description
+                beginingDescriptionText
             );
             var endDescription = $("<div class='end-description hidden'>").append(
                 description.substr(
-                    beginningDescription.length - 1
+                    beginingDescriptionText.length + 1
                 )
             );
+            debugger;
             var container = $("<div class='group list-group-item-text description'>").append(
                 beginningDescription
             );
