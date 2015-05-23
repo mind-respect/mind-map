@@ -42,8 +42,9 @@ define([
     "triple_brain.suggestion_bubble_menu_handler",
     "triple_brain.suggestion_relation_menu_handler",
     "triple_brain.triple_ui",
-    "triple_brain.center_bubble"
-], function ($, GraphService, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, RelativeTreeVertexMenuHandler, GroupRelationMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler, KeyboardActionsHandler, Edge, GroupRelationHtmlBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaHtmlBuilder, SchemaUi, SchemaMenuHandler, PropertyHtmlBuilder, PropertyMenuHandler, PropertyUi, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SuggestionBubbleUi, SuggestionRelationUi, SuggestionBubbleMenuHandler, SuggestionRelationMenuHandler, TripleUi, CenterBubble) {
+    "triple_brain.center_bubble",
+    "triple_brain.selection_handler"
+], function ($, GraphService, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, RelativeTreeVertexMenuHandler, GroupRelationMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler, KeyboardActionsHandler, Edge, GroupRelationHtmlBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaHtmlBuilder, SchemaUi, SchemaMenuHandler, PropertyHtmlBuilder, PropertyMenuHandler, PropertyUi, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SuggestionBubbleUi, SuggestionRelationUi, SuggestionBubbleMenuHandler, SuggestionRelationMenuHandler, TripleUi, CenterBubble, SelectionHandler) {
     KeyboardActionsHandler.init();
     var api = {};
     api.displayForVertexWithUri = function (centralVertexUri, callback, errorCallback) {
@@ -164,7 +165,7 @@ define([
                         destinationVertexUri
                     ),
                     relation = farVertex.getParentBubble();
-                relation.focus();
+                SelectionHandler.setToSingleRelation(relation);
                 farVertex.visitVerticesChildren(VertexHtmlBuilder.completeBuild);
                 if (callback !== undefined) {
                     callback(drawnTree, farVertex);
