@@ -22,13 +22,12 @@ define([
         "jquery.i18next"
     ],
     function ($, Identification, MindMapTemplate, GraphUi, IdUri, WikidataAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu, SearchService, IdentificationContext, SearchResult, MindMapInfo, SuggestionService, SchemaSuggestion) {
-        var api = {
-                ofGraphElement: function (graphElementUi) {
-                    return new IdentificationMenu(graphElementUi);
-                }
-            },
+        var api = {},
             DESCRIPTION_MAX_CHAR = 155;
 
+        api.ofGraphElement = function (graphElementUi) {
+            return new IdentificationMenu(graphElementUi);
+        };
         function IdentificationMenu(graphElement) {
             this.graphElement = graphElement;
         }
@@ -48,7 +47,9 @@ define([
                     width: 550
                 }
             );
-            this._setupAutoCompleteSuggestionZIndex();
+            GraphElementMenu.setupAutoCompleteSuggestionZIndex(
+                this.identificationTextField
+            );
             return this;
         };
 
@@ -188,7 +189,7 @@ define([
             );
         };
 
-        IdentificationMenu.prototype._makeOrigin = function(identification){
+        IdentificationMenu.prototype._makeOrigin = function (identification) {
             var url = identification.getExternalResourceUri();
             var origin = IdUri.hostNameOfUri(url);
             if (IdUri.isUriOfAGraphElement(url)) {
@@ -338,12 +339,6 @@ define([
                 identificationResource
             );
             this._addIdentificationAsListElement(identificationResource);
-        };
-        IdentificationMenu.prototype._setupAutoCompleteSuggestionZIndex = function () {
-            //http://stackoverflow.com/a/17178927/541493
-            this.identificationTextField.autocomplete("widget").insertAfter(
-                this.identificationTextField.closest(".ui-dialog").parent()
-            );
         };
         return api;
     }

@@ -8,6 +8,12 @@ define([
     "jquery-ui"
 ], function ($, GraphDisplayer) {
     var api = {};
+    api.setupAutoCompleteSuggestionZIndex = function (input) {
+        //http://stackoverflow.com/a/17178927/541493
+        input.autocomplete("widget").insertAfter(
+            input.closest(".ui-dialog").parent()
+        );
+    };
     api.makeForMenuContentAndGraphElement = function (menuContent, graphElement, extraOptions) {
         var dialogClass = "graph-element-menu",
             horizontalPosition = getHorizontalPosition(),

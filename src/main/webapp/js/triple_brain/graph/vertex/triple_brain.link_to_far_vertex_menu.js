@@ -31,21 +31,23 @@ define([
                 vertex
             );
             GraphUi.addHtml(html);
-            addTitle();
-            addSearchBox();
+            var searchBox = addSearchBox();
             GraphElementMenu.makeForMenuContentAndGraphElement(
                 html,
                 vertex
             );
+            GraphElementMenu.setupAutoCompleteSuggestionZIndex(
+                searchBox
+            );
             return self;
         };
-        function addTitle(){
-            html.append(
-                "<h2 data-i18n='vertex.menu.link_to_far_vertex.title'></h2>"
-            );
-        }
         function addSearchBox(){
-            var searchBox = $("<input type='text'>");
+            var searchBox = $(
+                "<input type='text' class='link_to_far_vertex_menu form-control'>"
+            ).attr(
+                "data-i18n",
+                "[placeholder]vertex.menu.link_to_far_vertex.title"
+            );
             searchBox.tripleBrainAutocomplete({
                 select:function (event, ui) {
                     var menu = $(this).closest(
@@ -73,7 +75,7 @@ define([
             html.append(
                 searchBox
             );
-            searchBox.focus();
+            return searchBox.focus();
         }
     }
 });
