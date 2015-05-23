@@ -137,7 +137,6 @@ define([
                     beginingDescriptionText.length + 1
                 )
             );
-            debugger;
             var container = $("<div class='group list-group-item-text description'>").append(
                 beginningDescription
             );

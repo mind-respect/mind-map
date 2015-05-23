@@ -26,7 +26,7 @@ define([
         forSingleNotOwned = {},
         forGroup = {},
         forGroupNotOwned = {};
-    api.forSingle = function(){
+    api.forSingle = function () {
         return MindMapInfo.isViewOnly() ?
             forSingleNotOwned :
             forSingle;
@@ -37,25 +37,30 @@ define([
     forSingle.addChildAction = function (sourceVertex) {
         VertexService.addRelationAndVertexToVertex(
             sourceVertex,
-            sourceVertex
+            sourceVertex,
+            function (triple) {
+                SelectionHandler.setToSingleGraphElement(
+                    triple.destinationVertex()
+                );
+            }
         );
     };
-    forSingle.addSibling = function(event, vertex){
+    forSingle.addSibling = function (event, vertex) {
         forSingle.addSiblingAction(vertex);
     };
-    forSingle.addSiblingAction = function(vertex){
+    forSingle.addSiblingAction = function (vertex) {
         forSingle.addChildAction(
             vertex.getParentVertex()
         );
     };
-    forSingle.addSiblingCanDo = function(vertex){
+    forSingle.addSiblingCanDo = function (vertex) {
         return !vertex.isCenterBubble();
     };
     forSingle.remove = function (event, vertex) {
         forSingle.removeAction(vertex);
     };
     forSingle.removeAction = function (vertex, skipConfirmation) {
-        if(skipConfirmation){
+        if (skipConfirmation) {
             deleteAfterConfirmationBehavior(vertex);
             return;
         }
@@ -73,12 +78,12 @@ define([
         event.stopPropagation();
         forSingle.identifyAction(vertex);
     };
-    forSingle.identifyAction = function(vertex){
+    forSingle.identifyAction = function (vertex) {
         IdentificationMenu.ofGraphElement(
             vertex
         ).create();
     };
-    forSingleNotOwned.identifyCanDo = function(vertex){
+    forSingleNotOwned.identifyCanDo = function (vertex) {
         return vertex.hasIdentifications();
     };
     forSingle.center = function (event, vertex) {
@@ -91,7 +96,7 @@ define([
     };
     forSingleNotOwned.noteAction = forSingle.noteAction = GraphElementMenuHandler.forSingle().noteAction;
 
-    forSingleNotOwned.noteCanDo = function(vertex){
+    forSingleNotOwned.noteCanDo = function (vertex) {
         return vertex.hasNote();
     };
     forSingle.images = function (event, vertex) {
@@ -149,15 +154,16 @@ define([
     function getMakePublicButtons() {
         return $("button[data-action=makePublic]");
     }
-    api.forGroup = function(){
+
+    api.forGroup = function () {
         return MindMapInfo.isViewOnly() ?
             forGroupNotOwned :
             forGroup;
     };
-    forGroup.makePrivate = function(event, vertices){
+    forGroup.makePrivate = function (event, vertices) {
         VertexService.makeCollectionPrivate(vertices);
     };
-    forGroup.makePublic = function(event, vertices){
+    forGroup.makePublic = function (event, vertices) {
         VertexService.makeCollectionPublic(vertices);
     };
     forGroup.group = function () {

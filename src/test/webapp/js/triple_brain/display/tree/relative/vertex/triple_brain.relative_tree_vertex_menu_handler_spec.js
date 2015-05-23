@@ -53,5 +53,14 @@ define([
                 bubble1.getNumberOfChild()
             ).toBe(numberOfChild + 1);
         });
+        it("adding bubble and relation selects new bubble", function () {
+            VertexServiceMock.addRelationAndVertexToVertexMock();
+            var bubble = new Scenarios.threeBubblesGraph().getBubble2InTree();
+            RelativeTreeVertexMenuHandler.forSingle().addChildAction(bubble);
+            var newBubble = bubble.getTopMostChildBubble().getTopMostChildBubble();
+            expect(
+                newBubble.isSelected()
+            ).toBeTruthy();
+        });
     });
 });
