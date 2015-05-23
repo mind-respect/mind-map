@@ -28,6 +28,7 @@ define([
         dKeyNumber = 68,
         eKeyNumber = 69,
         sKeyNumber = 83,
+        zeroKeyNumber = 48,
         rKeyNumber = 82,
         ctrlKeyNumber = 17,
         nonCtrlPlusActions = defineNonCtrlPlusKeysAndTheirActions(),
@@ -74,6 +75,7 @@ define([
             return;
         }
         event.preventDefault();
+        event.stopPropagation();
         executeFeature(feature, selectedElement);
         function isThereASpecialKeyPressed() {
             return event.altKey ||  event.metaKey;
@@ -114,6 +116,7 @@ define([
         actions[sKeyNumber] = sKeyAction;
         actions[rKeyNumber] = rKeyAction;
         actions[dKeyNumber] = "note";
+        actions[zeroKeyNumber] = "center";
         return actions;
     }
 

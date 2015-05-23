@@ -87,10 +87,15 @@ define([
         return vertex.hasIdentifications();
     };
     forSingle.center = function (event, vertex) {
+        forSingle.centerAction(vertex);
+    };
+
+    forSingle.centerAction = function (vertex) {
         GraphDisplayer.displayUsingCentralVertex(
             vertex
         );
     };
+
     forSingleNotOwned.note = forSingle.note = function (event, vertex) {
         forSingle.noteAction(vertex);
     };
