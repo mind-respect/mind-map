@@ -170,14 +170,14 @@ define([
                 ).toBeTruthy();
             });
         });
-        it("when connecting to a distant vertex, new relation has focus", function(){
+        it("when connecting to a distant vertex, new relation is selected", function(){
             connectDistantVertexTest(function(distantBubble){
                 var newRelation = distantBubble.getTopMostChildBubble();
                 expect(
                     newRelation.isRelation()
                 ).toBeTruthy();
                 expect(
-                    "true" === newRelation.getLabel().attr("contenteditable")
+                    newRelation.isSelected()
                 ).toBeTruthy();
             });
         });
