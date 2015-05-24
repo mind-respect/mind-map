@@ -12,17 +12,30 @@ define([
         "use strict";
         var api = {};
         api.startFlow = function () {
-            getSection().modal();
-            handleLoginForm();
-            handleRegisterButton();
-            handleForgotPassword();
+            var modalForm = getModalLoginForm();
+            new LoginForm(
+                modalForm
+            ).setup();
+            modalForm.modal();
         };
-        return api;
-        function handleLoginForm() {
-            submitWhenPressingEnter();
-            getLoginButton().click(function () {
+        api.enterWelcomePageFlow = function () {
+
+        };
+        function LoginForm(container) {
+            this.container = container;
+        }
+
+        LoginForm.prototype.setup = function () {
+            this.handleLoginForm();
+            this.handleRegisterButton();
+            this.handleForgotPassword();
+        };
+        LoginForm.prototype.handleLoginForm = function () {
+            var self = this;
+            this.submitWhenPressingEnter();
+            this.getLoginButton().click(function () {
                 UserService.authenticate(
-                    getFormData(),
+                    self.getFormData(),
                     function (user) {
                         UserService.getDefaultVertexUri(
                             user.user_name,
@@ -38,35 +51,39 @@ define([
                         );
                     },
                     function () {
-                        hideAllMessages();
-                        getLoginErrorMessage().removeClass("hidden");
+                        self.hideAllMessages();
+                        self.getLoginErrorMessage().removeClass("hidden");
                     }
                 );
             });
-            hideAllMessages();
-            getLoginForm()[0].reset();
-        }
+            this.hideAllMessages();
+            this.getLoginForm()[0].reset();
+        };
 
-        function handleRegisterButton() {
-            getRegisterLink().on(
+        LoginForm.prototype.handleRegisterButton = function () {
+            var self = this;
+            this.getRegisterLink().on(
                 "click",
                 function (event) {
                     event.preventDefault();
                     UserService.register(
-                        getFormData(),
+                        self.getFormData(),
                         handleRegistrationSuccess,
-                        handleRegistrationError
+                        function(errors){
+                            self.handleRegistrationError.call(self, errors);
+                        }
                     );
                 });
-        }
+        };
 
-        function handleForgotPassword() {
-            getForgotPasswordButton().click(function (event) {
+        LoginForm.prototype.handleForgotPassword = function () {
+            var self = this;
+            this.getForgotPasswordButton().click(function (event) {
                 event.preventDefault();
-                hideAllMessages();
-                var email = getEmailField().val().trim();
+                self.hideAllMessages();
+                var email = self.getEmailField().val().trim();
                 if ("" === email) {
-                    getMandatoryEmailErrorMessage().removeClass("hidden");
+                    self.getMandatoryEmailErrorMessage().removeClass("hidden");
                     return;
                 }
                 UserService.resetPassword(
@@ -76,25 +93,28 @@ define([
                 );
             });
             function success() {
-                $("#forgot-password-email-sent").removeClass("hidden");
+                self.container.find(
+                    ".forgot-password-email-sent"
+                ).removeClass("hidden");
             }
 
             function error() {
-                getInexistentEmailErrorMessage().removeClass("hidden");
+                self.getInexistentEmailErrorMessage().removeClass("hidden");
             }
-        }
+        };
 
-        function submitWhenPressingEnter() {
-            getLoginForm().find("input").on(
+        LoginForm.prototype.submitWhenPressingEnter = function () {
+            var self = this;
+            this.getLoginForm().find("input").on(
                 "keyup",
                 function (event) {
                     var enterKeyCode = 13;
                     if (event.keyCode === enterKeyCode) {
-                        getLoginButton().click();
+                        self.getLoginButton().click();
                     }
                 }
             );
-        }
+        };
 
         function handleRegistrationSuccess(user) {
             UserService.getDefaultVertexUri(
@@ -105,67 +125,76 @@ define([
             );
         }
 
-        function handleRegistrationError(errors) {
-            getLoginErrorMessage().addClass("hidden");
+        LoginForm.prototype.handleRegistrationError = function (errors) {
+            var self = this;
+            this.getLoginErrorMessage().addClass("hidden");
             $.each(errors, function () {
                 var error = this;
-                $('#' + error.reason).removeClass("hidden");
+                self._getErrorWithName(
+                    error.reason
+                ).removeClass("hidden");
             });
-        }
+        };
 
-        function getFormData() {
+        LoginForm.prototype.getFormData = function () {
             return {
-                email: getEmailField().val(),
-                password: getPasswordField().val()
+                email: this.getEmailField().val(),
+                password: this.getPasswordField().val()
             }
-        }
+        };
 
-        function getLoginErrorMessage() {
-            return $('#login-error');
-        }
+        LoginForm.prototype.getLoginErrorMessage = function () {
+            return this.container.find('.login-error');
+        };
 
-        function getLoginButton() {
-            return $('#login-button');
-        }
+        LoginForm.prototype.getLoginButton = function () {
+            return this.container.find('.login-button');
+        };
 
-        function getEmailField() {
-            return $("#login-email");
-        }
+        LoginForm.prototype.getEmailField = function () {
+            return this.container.find(".login-email");
+        };
 
-        function getPasswordField() {
-            return $("#login-password");
-        }
+        LoginForm.prototype.getPasswordField = function () {
+            return this.container.find(".login-password");
+        };
 
-        function getLoginForm() {
-            return $('#login-form');
-        }
+        LoginForm.prototype.getLoginForm = function () {
+            return this.container.find('.login-form');
+        };
 
-        function getRegisterLink() {
-            return $("#register-link");
-        }
+        LoginForm.prototype.getRegisterLink = function() {
+            return this.container.find(".register-link");
+        };
 
-        function getForgotPasswordButton() {
-            return $("#forgot-password-link");
-        }
+        LoginForm.prototype.getForgotPasswordButton = function() {
+            return this.container.find(".forgot-password-link");
+        };
 
         function getMandatoryEmailErrorMessage() {
-            return $("#mandatory_email");
+            return this._getErrorWithName("mandatory_email");
         }
 
-        function hideAllMessages() {
-            getMessages().addClass("hidden");
-        }
+        LoginForm.prototype.hideAllMessages = function () {
+            this.getMessages().addClass("hidden");
+        };
 
-        function getMessages() {
-            return getSection().find('.alert');
-        }
+        LoginForm.prototype.getMessages = function () {
+            return this.container.find('.alert');
+        };
 
-        function getInexistentEmailErrorMessage() {
-            return $("#inexistent-email");
-        }
+        LoginForm.prototype.getInexistentEmailErrorMessage = function () {
+            return this._getErrorWithName("inexistent-email");
+        };
 
-        function getSection() {
+        LoginForm.prototype._getErrorWithName = function (errorName) {
+            return this.container.find("[data-error=" + errorName + "]");
+        };
+
+        function getModalLoginForm() {
             return $("#login-page");
         }
+
+        return api;
     }
 );

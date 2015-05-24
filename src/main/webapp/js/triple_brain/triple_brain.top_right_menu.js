@@ -94,7 +94,9 @@ define([
 
 
         function handleLoginRegisterButton(){
-            return getLoginRegisterButton().click(function(){
+            return getLoginRegisterButton().add(
+                getLoginRegisterButtonInPage()
+            ).click(function(){
                 LoginHandler.startFlow();
             });
         }
@@ -132,6 +134,11 @@ define([
         function getLoginRegisterButton(){
             return $("#login-register");
         }
+
+        function getLoginRegisterButtonInPage(){
+            return $("#login-register-in-page");
+        }
+
         function getSelectButton(){
             return $("#select-button");
         }

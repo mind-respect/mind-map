@@ -92,6 +92,13 @@
         </div>
         <div class="col-lg-4"></div>
     </div>
+    <div class="row" id='authenticate-invite'>
+        <div class="col-md-12 text-center">
+            <h3>
+                <a id="login-register-in-page" href="#" data-i18n="top_menu.login_register"></a>
+            </h3>
+        </div>
+    </div>
     <div id="other-page-container" class='hidden'></div>
     <div id="mind_map">
         <div>
@@ -216,55 +223,54 @@
                 <h4 class="modal-title" data-i18n="login.title"></h4>
             </div>
             <div class="modal-body">
-                <div id="login-error" class="alert alert-danger hidden" role="alert" data-i18n="login.error"></div>
-                <div id="mandatory_email"
+                <div class="login-error alert alert-danger hidden" role="alert" data-i18n="login.error"></div>
+                <div data-error="mandatory_email"
                      class="alert alert-danger hidden"
                      data-i18n="register.error.email_mandatory" role="alert">
                 </div>
 
-                <div id="invalid_email"
+                <div data-error="invalid_email"
                      class="alert alert-danger hidden"
                      data-i18n="register.error.email_mandatory" role="alert">
                 </div>
 
-                <div id="email_too_long"
+                <div data-error="email_too_long"
                      class="alert alert-danger hidden"
                      data-i18n="register.error.email_too_long" role="alert">
                 </div>
 
-                <div id="already_registered_email"
+                <div data-error="already_registered_email"
                      class="alert alert-danger hidden"
                      data-i18n="register.error.email_already_exists" role="alert">
                 </div>
 
-                <div id="mandatory_password"
+                <div data-error="mandatory_password"
                      class="alert alert-danger hidden"
                      data-i18n="register.error.password_mandatory" role="alert">
                 </div>
-                <div id="password_too_short"
+                <div data-error="password_too_short"
                      class="alert alert-danger hidden"
                      data-i18n="register.error.password_too_short" role="alert">
                 </div>
-                <div id="inexistent-email"
+                <div data-error="inexistent-email"
                      class="alert alert-danger hidden"
                      data-i18n="forgot_password.error" role="alert">
                 </div>
-                <div id="forgot-password-email-sent"
-                     class="alert alert-success hidden"
+                <div class="forgot-password-email-sent alert alert-success hidden"
                      data-i18n="forgot_password.success" role="alert">
                 </div>
-                <form id="login-form" class="security-form well" role="form">
+                <form class="login-form security-form well" role="form">
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon">@</div>
-                            <label for="login-email" class="sr-only" data-i18n="login.email"></label>
-                            <input id="login-email" class="form-control" name="email" type="email"
+                            <label for="login-email-modal" class="sr-only" data-i18n="login.email"></label>
+                            <input id="login-email-modal" class="login-email form-control" name="email" type="email"
                                    data-i18n="[placeholder]login.email">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="login-password" class="sr-only" data-i18n="login.password"></label>
-                        <input id="login-password" class="form-control" name="password" type="password"
+                        <label for="login-password-modal" class="sr-only" data-i18n="login.password"></label>
+                        <input id="login-password-modal" class="login-password form-control" name="password" type="password"
                                data-i18n="[placeholder]login.password"/>
                     </div>
                 </form>
@@ -272,11 +278,11 @@
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-md-12">
-                        <button id="login-button" type="button" class="btn btn-primary"
+                        <button type="button" class="login-button btn btn-primary"
                                 data-i18n="login.login"></button>
-                        <button id="register-link" type="button" class="btn btn-primary"
+                        <button type="button" class="register-link btn btn-primary"
                                 data-i18n="login.register"></button>
-                        <button id="forgot-password-link" type="button" class="btn btn-primary"
+                        <button type="button" class="forgot-password-link btn btn-primary"
                                 data-i18n="forgot_password.button"></button>
                     </div>
                 </div>
