@@ -10,16 +10,25 @@ define([
     "use strict";
     describe("group_relation_html_builder", function () {
         var groupRelationBubble;
-        beforeEach(function () {
+        it("has the label of the identification", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
             groupRelationBubble = scenario.getPossessionAsGroupRelationUi();
-        });
-        it("has the label of the identification", function () {
             expect(
                 groupRelationBubble.text()
             ).toBe(
                 "Possession"
             );
+        });
+        it("adds the image of it's identification", function () {
+            var scenario = new Scenarios.groupRelationWithImage();
+            var component = scenario.getComponentGroupRelationInTree();
+            expect(
+                component.hasImages()
+            ).toBeFalsy();
+            var idea = scenario.getIdeaGroupRelationInTree();
+            expect(
+                idea.hasImages()
+            ).toBeTruthy();
         });
     });
 });

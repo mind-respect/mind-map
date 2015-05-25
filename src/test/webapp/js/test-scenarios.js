@@ -449,6 +449,22 @@ define([
             };
             Mock.setCenterVertexUriInUrl(this.getCenterVertex().getUri());
         };
+        api.groupRelationWithImage = function () {
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                return getTestData("groupRelationWithImage");
+            };
+            this.getIdeaGroupRelationInTree = function(){
+                return treeBuilder.getRelationWithLabelInTree("idea");
+            };
+            this.getComponentGroupRelationInTree = function(){
+                return treeBuilder.getRelationWithLabelInTree("component");
+            };
+            this.getCenterBubbleUri = function () {
+                return uriOfVertexWithLabel(this.getGraph(), "some project")
+            };
+            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
+        };
         api.oneBubbleHavingSuggestionsGraph = function () {
             /*
              * Bubble labeled Event.

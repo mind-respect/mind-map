@@ -231,6 +231,9 @@ define([
                 images
             );
         };
+        api.Self.prototype.hasImages = function () {
+            return this.getImages().length > 0;
+        };
         api.Self.prototype.getImages = function () {
             return this.html.data("images") === undefined ?
                 [] :
@@ -268,7 +271,7 @@ define([
             this.addImages(
                 identification.getImages()
             );
-            if(identification.hasImages()){
+            if (identification.hasImages()) {
                 this.refreshImages();
             }
         };
