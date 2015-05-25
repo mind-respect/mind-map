@@ -23,11 +23,12 @@ define(
         "triple_brain.id_uri",
         "triple_brain.anonymous_flow",
         "triple_brain.change_password",
+        "triple_brain.login_handler",
         "triple_brain.wikidata",
         "jquery.triple_brain.drag_scroll",
         "triple_brain.bottom_center_panel"
     ],
-    function ($, UserService, BubbleDistanceCalculator, EventBus, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, LeftPanel, SelectionHandler, GraphElementMainMenu, MindMapInfo, TopRightMenu, ExternalPageLoader, IdUriUtils, AnonymousFlow, ChangePassword) {
+    function ($, UserService, BubbleDistanceCalculator, EventBus, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, LeftPanel, SelectionHandler, GraphElementMainMenu, MindMapInfo, TopRightMenu, ExternalPageLoader, IdUriUtils, AnonymousFlow, ChangePassword, LoginHandler) {
         "use strict";
         var api = {
             start: function () {
@@ -51,7 +52,7 @@ define(
                 function startLoginFlowWhenForbiddenActionIsPerformed() {
                     $("html").ajaxError(function (e, jqxhr) {
                         if (403 === jqxhr.status) {
-                            showLoginPage();
+                            LoginHandler.showModal();
                         }
                     });
                 }
@@ -123,6 +124,8 @@ define(
                 }
 
                 function callBackWhenNotAuthenticated() {
+                    LoginHandler.setupModal();
+                    LoginHandler.setupWelcomePageAuth();
                     if(ChangePassword.isChangePasswordFlow()){
                         ChangePassword.enterFlow();
                     }

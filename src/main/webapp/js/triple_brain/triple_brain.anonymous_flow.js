@@ -14,7 +14,8 @@ define([
     api.enter = function(){
         LanguageManager.loadLocaleContent(function(){
             $("html").i18n();
-            BigSearchBox.show();
+            getWelcomeContent().removeClass("hidden");
+            BigSearchBox.setup();
             $("body").removeClass("hidden");
 
         });
@@ -22,4 +23,7 @@ define([
         MindMapInfo.defineIsViewOnlyIfUndefined();
     };
     return api;
+    function getWelcomeContent(){
+        return $("#welcome-content");
+    }
 });

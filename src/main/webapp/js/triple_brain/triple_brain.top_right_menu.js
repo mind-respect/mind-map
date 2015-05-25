@@ -20,21 +20,21 @@ define([
         api.earlyInit = function () {
             handleTopMenuSelectButtons();
         };
-        EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function(event, isViewOnly){
-            if(isViewOnly){
+        EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function (event, isViewOnly) {
+            if (isViewOnly) {
                 getCreateMenu().hide();
             }
-            if(MindMapInfo.isAnonymous()){
+            if (MindMapInfo.isAnonymous()) {
                 getDisconnectButton().addClass("hidden");
                 getUserMenu().addClass("hidden")
                 handleLoginRegisterButton();
-            }else{
+            } else {
                 handleCreateNewConceptButton();
                 handleCreateNewSchemaButton();
                 handleDisconnectButton();
                 getLoginRegisterButton().addClass("hidden");
             }
-            if(!MindMapInfo.isCenterBubbleUriDefinedInUrl()){
+            if (!MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
                 getSelectButton().addClass("hidden");
             }
         });
@@ -52,7 +52,7 @@ define([
             });
         }
 
-        function getCreateMenu(){
+        function getCreateMenu() {
             return $("#create-menu");
         }
 
@@ -66,7 +66,7 @@ define([
             );
         }
 
-        function disconnect(){
+        function disconnect() {
             UserService.logout(function () {
                 window.location = "/";
             });
@@ -93,21 +93,22 @@ define([
         }
 
 
-        function handleLoginRegisterButton(){
+        function handleLoginRegisterButton() {
             return getLoginRegisterButton().add(
                 getLoginRegisterButtonInPage()
-            ).click(function(){
-                LoginHandler.startFlow();
-            });
+            ).click(
+                LoginHandler.showModal
+            );
         }
 
-        function createNewSchema(event){
+        function createNewSchema(event) {
             event.preventDefault();
             SchemaService.create(
                 GraphDisplayer.displayForSchemaWithUri
             );
         }
-        function createNewConcept(event){
+
+        function createNewConcept(event) {
             event.preventDefault();
             VertexService.createVertex(function (newVertex) {
                 var serverFormatFacade = Vertex.fromServerFormat(
@@ -119,31 +120,31 @@ define([
             });
         }
 
-        function getCreateBubbleButton(){
+        function getCreateBubbleButton() {
             return $("#create-concept");
         }
 
-        function getCreateSchemaButton(){
+        function getCreateSchemaButton() {
             return $("#create-schema");
         }
 
-        function getDisconnectButton(){
+        function getDisconnectButton() {
             return $("#disconnect-btn");
         }
 
-        function getLoginRegisterButton(){
+        function getLoginRegisterButton() {
             return $("#login-register");
         }
 
-        function getLoginRegisterButtonInPage(){
+        function getLoginRegisterButtonInPage() {
             return $("#login-register-in-page");
         }
 
-        function getSelectButton(){
+        function getSelectButton() {
             return $("#select-button");
         }
 
-        function getUserMenu(){
+        function getUserMenu() {
             return $("#user-menu");
         }
     }

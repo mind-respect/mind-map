@@ -9,8 +9,8 @@ define([
 ], function ($, UserMapAutocompleteProvider) {
     "use strict";
     var api = {};
-    api.show = function(){
-        getBoxContainer().removeClass("hidden").find(
+    api.setup = function(){
+        getBoxContainer().find(
             "input"
         ).tripleBrainAutocomplete({
             select : function(event, ui){

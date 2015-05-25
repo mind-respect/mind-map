@@ -11,16 +11,31 @@ define([
     function ($, UserService, MindMapInfo) {
         "use strict";
         var api = {};
-        api.startFlow = function () {
-            var modalForm = getModalLoginForm();
+        api.setupModal = function(){
             new LoginForm(
-                modalForm
+                buildModal()
             ).setup();
-            modalForm.modal();
         };
-        api.enterWelcomePageFlow = function () {
+        api.showModal = function () {
+            getModalSection().modal();
+        };
+        api.setupWelcomePageAuth = function () {
+            new LoginForm(
+                getOnPageAuthenticateSection()
+            ).setup();
+        };
 
-        };
+        function buildModal(){
+            var modalSection = getModalSection();
+            getOnPageAuthenticateSection().find(".body").children().clone().appendTo(
+                modalSection.find(".modal-body")
+            );
+            getOnPageAuthenticateSection().find(".footer").children().clone().appendTo(
+                modalSection.find(".modal-footer")
+            );
+            return modalSection;
+        }
+
         function LoginForm(container) {
             this.container = container;
         }
@@ -171,9 +186,9 @@ define([
             return this.container.find(".forgot-password-link");
         };
 
-        function getMandatoryEmailErrorMessage() {
+        LoginForm.prototype.getMandatoryEmailErrorMessage = function(){
             return this._getErrorWithName("mandatory_email");
-        }
+        };
 
         LoginForm.prototype.hideAllMessages = function () {
             this.getMessages().addClass("hidden");
@@ -191,8 +206,12 @@ define([
             return this.container.find("[data-error=" + errorName + "]");
         };
 
-        function getModalLoginForm() {
-            return $("#login-page");
+        function getModalSection() {
+            return $("#login-page-modal");
+        }
+
+        function getOnPageAuthenticateSection(){
+            return $("#authenticate");
         }
 
         return api;

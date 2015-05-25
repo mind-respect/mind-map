@@ -110,7 +110,6 @@
 .ui-menu .ui-menu-item .type { margin-top: -20px; float: right; }
 .ui-menu .ui-menu-item .distinction { margin-right: 1em; max-width: 428px; font-weight: normal; overflow: hidden; text-overflow: ellipsis; }
 
-#big-search-box-container { margin-top: 20px; }
 #big-search-box-container .input-group { margin: auto; }
 #big-search-box-container .search-icon { font-size: 1.7em; }
 
@@ -269,6 +268,8 @@ button.add-button-in-list:hover { color: #00d100; }
 #mind_map h2, #mind_map h3 { line-height: inherit; }
 
 #app-presentation { margin-top: 5%; }
+
+#welcome-content .content > *:not(:first-child) { margin-top: 30px; }
 
 .round-button { border-radius: 20px; }
 
