@@ -15,6 +15,16 @@ define([
     };
 
     api.afterChildBuilt = function(suggestionRelationUi){
+        suggestionRelationUi.setTypes([]);
+        var serverFacade = suggestionRelationUi.getOriginalServerObject();
+        suggestionRelationUi.setSameAs([
+            Identification.withUriLabelAndDescription(
+                serverFacade.getSameAs().getUri(),
+                serverFacade.getLabel(),
+                serverFacade.getSameAs().getComment()
+            )
+        ]);
+        suggestionRelationUi.setGenericIdentifications([]);
         suggestionRelationUi.getHtml().closest(
             ".vertex-tree-container"
         ).find("> .vertical-border").addClass("small");
@@ -45,17 +55,9 @@ define([
             this.html,
             this.serverFacade.getUri()
         );
+        edge.setOriginalServerObject(this.serverFacade);
         this._buildMenu();
         edge.hideMenu();
-        edge.setTypes([]);
-        edge.setSameAs([
-            Identification.withUriLabelAndDescription(
-                this.serverFacade.getSameAs().getUri(),
-                this.serverFacade.getLabel(),
-                this.serverFacade.getSameAs().getComment()
-            )
-        ]);
-        edge.setGenericIdentifications([]);
         return edge;
     };
     Self.prototype._buildMenu = function () {

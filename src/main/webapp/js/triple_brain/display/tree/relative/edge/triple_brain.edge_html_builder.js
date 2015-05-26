@@ -38,6 +38,10 @@ define([
                 edge.inverse();
             }
             GraphElementHtmlBuilder.addDuplicateElementButtonIfApplicable(edge);
+            GraphElementHtmlBuilder.setUpIdentifications(
+                edgeServer,
+                edge
+            );
             EdgeHtmlBuilderCommon.moveNoteButtonIfIsToTheLeft(
                 edge
             );
@@ -82,21 +86,6 @@ define([
                 edge
             );
             edge.hideMenu();
-            edge.setTypes([]);
-            edge.setSameAs([]);
-            edge.setGenericIdentifications([]);
-            $.each(this.edgeServer.getTypes(), function () {
-                var typeFromServer = this;
-                edge.addType(
-                    typeFromServer
-                );
-            });
-            $.each(this.edgeServer.getSameAs(), function () {
-                var sameAsFromServer = this;
-                edge.addSameAs(
-                    sameAsFromServer
-                );
-            });
             edge.addImages(
                 this.edgeServer.getImages()
             );

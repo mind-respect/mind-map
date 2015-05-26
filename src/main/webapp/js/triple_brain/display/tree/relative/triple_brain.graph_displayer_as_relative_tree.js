@@ -185,10 +185,13 @@ define([
                     vertex,
                     SuggestionRelationBuilder
                 );
-            addVertex(
+            var suggestionBubble = addVertex(
                 suggestion,
                 suggestionRelation,
                 SuggestionBubbleHtmlBuilder
+            );
+            SuggestionBubbleHtmlBuilder.completeBuild(
+                suggestionBubble
             );
             SuggestionRelationBuilder.afterChildBuilt(suggestionRelation);
         });

@@ -6,8 +6,9 @@ define([
     "triple_brain.graph_displayer",
     "triple_brain.edge",
     "triple_brain.vertex",
-    'test/webapp/js/test-scenarios'
-], function (GraphDisplayer, Edge, Vertex, Scenarios) {
+    'test/webapp/js/test-scenarios',
+    'test/webapp/js/test-utils'
+], function (GraphDisplayer, Edge, Vertex, Scenarios, TestUtils) {
     "use strict";
     describe("bubble", function () {
         var centerBubble,
@@ -190,6 +191,24 @@ define([
             expect(
                 bubble4.hasHiddenRelationsContainer()
             ).toBeTruthy();
+        });
+
+        it("doesn't integrate an identification's image if the identification is related to the parent group relation", function () {
+            var scenario = new Scenarios.groupRelationWithImage();
+            var someProject = scenario.getSomeProject();
+            var idea = TestUtils.getChildWithLabel(someProject, "idea");
+            expect(
+                idea.hasImages()
+            ).toBeTruthy();
+            idea.addChildTree();
+            var ideaFor1 = TestUtils.getChildWithLabel(idea, "idea for 1");
+            var ideaFor2 = TestUtils.getChildWithLabel(idea, "idea for 2");
+            expect(
+                ideaFor1.hasImages()
+            ).toBeFalsy();
+            expect(
+                ideaFor2.hasImages()
+            ).toBeFalsy();
         });
     });
 });

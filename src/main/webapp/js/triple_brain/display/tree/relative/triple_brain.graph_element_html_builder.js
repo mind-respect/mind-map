@@ -132,6 +132,34 @@ define([
         }
     };
 
+    api.setUpIdentifications = function (serverFormat, graphElement) {
+        setup(
+            graphElement.setTypes,
+            serverFormat.getTypes,
+            graphElement.addType
+        );
+        setup(
+            graphElement.setSameAs,
+            serverFormat.getSameAs,
+            graphElement.addSameAs
+        );
+        setup(
+            graphElement.setGenericIdentifications,
+            serverFormat.getGenericIdentifications,
+            graphElement.addGenericIdentification
+        );
+        function setup(identificationsSetter, identificationGetter, addFctn) {
+            identificationsSetter.call(graphElement, []);
+            $.each(identificationGetter.call(serverFormat, []), function () {
+                var identificationFromServer = this;
+                addFctn.call(
+                    graphElement,
+                    identificationFromServer
+                );
+            });
+        }
+    };
+
     EventBus.subscribe(
         'localized-text-loaded',
         function () {

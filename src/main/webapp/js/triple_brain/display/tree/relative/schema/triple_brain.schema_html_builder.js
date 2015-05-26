@@ -24,7 +24,12 @@ define([
         if(!MindMapInfo.isSchemaMode()){
             return;
         }
-        SchemaUi.get().refreshImages();
+        var schema = SchemaUi.get();
+        GraphElementHtmlBuilder.setUpIdentifications(
+            schema.getOriginalServerObject(),
+            schema
+        );
+        schema.refreshImages();
     };
     function Self(serverFacade){
         this.serverFacade = serverFacade;
@@ -57,10 +62,6 @@ define([
         GraphElementMainMenu.addRelevantButtonsInMenu(
             this._addMenu(),
             SchemaMenuHandler.forSingle()
-        );
-        VertexHtmlCommon.setUpIdentifications(
-            this.serverFacade,
-            schema
         );
         schema.addImages(
             this.serverFacade.getImages()

@@ -35,6 +35,16 @@ define([
         event.which = event.keyCode = keyCode;
         $("body").trigger(event);
     };
+    api.getChildWithLabel = function(bubble, label){
+        var childWithLabel = bubble;
+        bubble.visitAllChild(function(child){
+            if(child.text() === label){
+                childWithLabel = child;
+                return -1;
+            }
+        });
+        return childWithLabel;
+    };
     return api;
 
     function generateUuid() {

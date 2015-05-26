@@ -19,6 +19,10 @@ define([
             return new VertexCreator(serverFacade);
         };
         api.completeBuild = function (vertex) {
+            GraphElementHtmlBuilder.setUpIdentifications(
+                vertex.getOriginalServerObject(),
+                vertex
+            );
             vertex.refreshImages();
             GraphElementHtmlBuilder.addDuplicateElementButtonIfApplicable(
                 vertex
@@ -29,6 +33,10 @@ define([
             if (vertex.hasHiddenRelations()) {
                 vertex.buildHiddenNeighborPropertiesIndicator();
             }
+            EventBus.publish(
+                '/event/ui/vertex/build_complete',
+                vertex
+            );
         };
         EventBus.subscribe(
             '/event/ui/vertex/visit_after_graph_drawn',
@@ -94,10 +102,6 @@ define([
                 this.serverFacade.getSuggestions()
             );
             this.vertex.hideMenu();
-            VertexHtmlCommon.setUpIdentifications(
-                this.serverFacade,
-                this.vertex
-            );
             this.vertex.addImages(
                 this.serverFacade.getImages()
             );

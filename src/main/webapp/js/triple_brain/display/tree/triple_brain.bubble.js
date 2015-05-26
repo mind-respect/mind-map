@@ -268,6 +268,15 @@ define([
         };
 
         api.Self.prototype.integrateIdentification = function (identification) {
+            var parentBubble = this.getParentBubble();
+            if (parentBubble.isGroupRelation()) {
+                var areIdentificationsTheSame =
+                    identification.getExternalResourceUri() ===
+                    parentBubble.getGroupRelation().getIdentification().getExternalResourceUri()
+                if (areIdentificationsTheSame) {
+                    return;
+                }
+            }
             this.addImages(
                 identification.getImages()
             );

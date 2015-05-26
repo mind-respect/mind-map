@@ -24,6 +24,9 @@ define([
             groupRelationUi.setHiddenRelationsContainer(
                 indicator
             );
+            groupRelationUi.integrateIdentification(
+                groupRelationUi.getOriginalServerObject().getIdentification()
+            );
             groupRelationUi.refreshImages();
             indicator.build();
         };
@@ -47,9 +50,6 @@ define([
             this._createMenu();
             var groupRelation = GroupRelationUi.createFromHtml(
                 this.html
-            );
-            groupRelation.integrateIdentification(
-                this.serverFacade.getIdentification()
             );
             groupRelation.hideButtons();
             return groupRelation;

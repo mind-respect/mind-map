@@ -4,8 +4,9 @@
 
 define([
     "triple_brain.suggestion_relation_builder",
+    "triple_brain.bubble",
     "test/webapp/js/test-scenarios"
-], function (SuggestionRelationBuilder, Scenarios) {
+], function (SuggestionRelationBuilder, Bubble, Scenarios) {
     "use strict";
     describe("suggestion_relation_html_builder", function () {
         var suggestion,
@@ -19,6 +20,8 @@ define([
             locationRelationSuggestion = SuggestionRelationBuilder.withServerFacade(
                 locationSuggestion
             ).create();
+            spyOn(Bubble.Self.prototype, "integrateIdentification").andCallFake(function(){});
+            SuggestionRelationBuilder.afterChildBuilt(locationRelationSuggestion);
         });
         it("has the suggestion label", function () {
             expect(

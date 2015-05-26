@@ -5,8 +5,9 @@
 define([
     "test/webapp/js/test-scenarios",
     "triple_brain.suggestion_bubble_html_builder",
+    "triple_brain.bubble",
     "triple_brain.ui.graph"
-], function (Scenarios, SuggestionBubbleHtmlBuilder, GraphUi) {
+], function (Scenarios, SuggestionBubbleHtmlBuilder, Bubble, GraphUi) {
     "use strict";
     describe("suggestion_bubble_html_builder", function () {
         var suggestion,
@@ -20,6 +21,8 @@ define([
             locationBubbleSuggestion = SuggestionBubbleHtmlBuilder.withServerFacade(
                 locationSuggestion
             ).create();
+            spyOn(Bubble.Self.prototype, "integrateIdentification").andCallFake(function(){});
+            SuggestionBubbleHtmlBuilder.completeBuild(locationBubbleSuggestion);
         });
         it("can build from server facade", function () {
             var uiId = GraphUi.generateBubbleHtmlId();

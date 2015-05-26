@@ -4,17 +4,23 @@
 
 define([
     "triple_brain.vertex_html_builder_common",
+    "triple_brain.graph_element_html_builder",
     "triple_brain.relative_tree_vertex",
     "triple_brain.suggestion_bubble_ui",
     "triple_brain.graph_element_main_menu",
     "triple_brain.suggestion_bubble_menu_handler",
     "triple_brain.ui.graph",
     "triple_brain.identification"
-], function (VertexHtmlCommon, RelativeTreeVertex, SuggestionBubbleUi, GraphElementMainMenu, SuggestionBubbleMenuHandler, GraphUi, Identification) {
+], function (VertexHtmlCommon, GraphElementHtmlBuilder, RelativeTreeVertex, SuggestionBubbleUi, GraphElementMainMenu, SuggestionBubbleMenuHandler, GraphUi, Identification) {
     "use strict";
     var api = {};
     api.withServerFacade = function (serverFacade) {
         return new Self(serverFacade);
+    };
+    api.completeBuild = function(suggestionUi){
+        setupIdentifications(
+            suggestionUi
+        );
     };
     function Self(serverFacade) {
         this.serverFacade = serverFacade;
@@ -35,10 +41,12 @@ define([
         var suggestionUi = SuggestionBubbleUi.createFromHtml(
             this.html
         );
+        suggestionUi.setOriginalServerObject(
+            this.serverFacade
+        );
         suggestionUi.setSuggestions([]);
         suggestionUi.setIncludedVertices([]);
         suggestionUi.setIncludedEdges([]);
-        this._setupIdentifications(suggestionUi);
         VertexHtmlCommon.setUpClickBehavior(
             this.html
         );
@@ -69,21 +77,22 @@ define([
             this.html
         );
     };
-    Self.prototype._setupIdentifications = function (suggestionUi) {
+    function setupIdentifications(suggestionUi){
         suggestionUi.setTypes([]);
         suggestionUi.setSameAs([]);
         suggestionUi.setGenericIdentifications([]);
-        if (this.serverFacade.hasType()) {
-            suggestionUi.addType(this.serverFacade.getType());
+        var serverFormat = suggestionUi.getOriginalServerObject();
+        if (serverFormat.hasType()) {
+            suggestionUi.addType(serverFormat.getType());
         }
         suggestionUi.addType(
             Identification.withUriLabelAndDescription(
-                this.serverFacade.getSameAs().getUri(),
-                this.serverFacade.getLabel(),
-                this.serverFacade.getSameAs().getComment()
+                serverFormat.getSameAs().getUri(),
+                serverFormat.getLabel(),
+                serverFormat.getSameAs().getComment()
             )
         );
-    };
+    }
     return api;
 
 });

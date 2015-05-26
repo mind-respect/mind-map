@@ -460,6 +460,9 @@ define([
             this.getComponentGroupRelationInTree = function(){
                 return treeBuilder.getRelationWithLabelInTree("component");
             };
+            this.getSomeProject = function () {
+                return treeBuilder.getBubbleWithLabelInTree("some project");
+            };
             this.getCenterBubbleUri = function () {
                 return uriOfVertexWithLabel(this.getGraph(), "some project")
             };

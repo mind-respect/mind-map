@@ -19,6 +19,10 @@ define([
         EdgeHtmlBuilderCommon.moveNoteButtonIfIsToTheLeft(
             property
         );
+        GraphElementHtmlBuilder.setUpIdentifications(
+            property.getOriginalServerObject(),
+            property
+        );
         property.refreshImages();
     };
     function Self(serverFacade) {
@@ -51,21 +55,6 @@ define([
         this.html.append(
             $("<span class='arrow'>")
         );
-        property.setTypes([]);
-        property.setSameAs([]);
-        property.setGenericIdentifications([]);
-        $.each(this.serverFacade.getTypes(), function () {
-            var typeFromServer = this;
-            property.addType(
-                typeFromServer
-            );
-        });
-        $.each(this.serverFacade.getSameAs(), function () {
-            var sameAsFromServer = this;
-            property.addSameAs(
-                sameAsFromServer
-            );
-        });
         property.addImages(
             this.serverFacade.getImages()
         );

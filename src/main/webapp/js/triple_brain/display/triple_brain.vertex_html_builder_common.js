@@ -65,33 +65,6 @@ define([
         }
     };
 
-    api.setUpIdentifications = function (serverFormat, vertex) {
-        setup(
-            vertex.setTypes,
-            serverFormat.getTypes,
-            vertex.addType
-        );
-        setup(
-            vertex.setSameAs,
-            serverFormat.getSameAs,
-            vertex.addSameAs
-        );
-        setup(
-            vertex.setGenericIdentifications,
-            serverFormat.getGenericIdentifications,
-            vertex.addGenericIdentification
-        );
-        function setup(identificationsSetter, identificationGetter, addFctn) {
-            identificationsSetter.call(vertex, []);
-            $.each(identificationGetter.call(serverFormat, []), function () {
-                var identificationFromServer = this;
-                addFctn.call(
-                    vertex,
-                    identificationFromServer
-                );
-            });
-        }
-    };
     api.addRelevantButtonsInMenu = function (menuContainer) {
         GraphElementMainMenu.addRelevantButtonsInMenu(
             menuContainer,

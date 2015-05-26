@@ -14,7 +14,7 @@ define([
             handleIdentificationAdded
         );
         EventBus.subscribe(
-            '/event/ui/html/vertex/created/',
+            '/event/ui/vertex/build_complete',
             handleVertexCreated
         );
         return {};
