@@ -27,8 +27,14 @@ define([
             var isOriginalToTheLeft = this.isToTheLeft();
             var treeContainer = this.html.closest(".vertex-tree-container");
             var toMove = treeContainer.add(treeContainer.next(".clear-fix"));
-            if(parent.isGroupRelation() && !parent.isExpanded()){
-                parent.addChildTree();
+            if (parent.isGroupRelation()) {
+                if(!parent.isExpanded()){
+                    parent.addChildTree();
+                }
+                var identification = parent.getGroupRelation().getIdentification();
+                if(this.hasIdentification(identification)){
+                    this.revertIdentificationIntegration(identification);
+                }
             }
             parent.getHtml().closest(".vertex-container").siblings(".vertices-children-container").append(
                 toMove
@@ -200,7 +206,7 @@ define([
             );
         };
 
-        api.Self.prototype.isExpanded = function(){
+        api.Self.prototype.isExpanded = function () {
             return !this.hasHiddenRelationsContainer();
         };
 
@@ -322,6 +328,16 @@ define([
                 identification.getImages()
             );
             if (identification.hasImages()) {
+                this.refreshImages();
+            }
+        };
+
+        api.Self.prototype.revertIdentificationIntegration = function (identification) {
+            var self = this;
+            $.each(identification.getImages(), function(){
+                self.removeImage(this)
+            });
+            if(identification.hasImages()){
                 this.refreshImages();
             }
         };

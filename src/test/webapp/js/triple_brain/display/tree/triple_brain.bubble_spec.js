@@ -264,5 +264,27 @@ define([
                 SelectionHandler.getSingleElement().getUri()
             ).toBe(relation1.getUri());
         });
+        it("removes image related to an identification when a relation moved to a group relation that shares that identification", function () {
+            var scenario = new Scenarios.groupRelationWithImage();
+            var centerBubble = scenario.getSomeProject();
+            var otherRelation = TestUtils.getChildWithLabel(
+                centerBubble,
+                "other relation"
+            );
+            var idea = scenario.getIdeaGroupRelationInTree();
+            expect(
+                idea.hasImages()
+            ).toBeTruthy();
+            otherRelation.addGenericIdentification(
+                idea.getGroupRelation().getIdentification()
+            );
+            expect(
+                otherRelation.hasImages()
+            ).toBeTruthy();
+            otherRelation.moveToParent(idea);
+            expect(
+                otherRelation.hasImages()
+            ).toBeFalsy();
+        });
     });
 });
