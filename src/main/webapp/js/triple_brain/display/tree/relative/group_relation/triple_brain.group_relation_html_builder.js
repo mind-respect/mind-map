@@ -131,6 +131,18 @@ define([
                 });
             }
         );
+        EventBus.subscribe(
+            "/event/ui/graph/identification/removed",
+            function(event, graphElement){
+                var parentBubble = graphElement.getParentBubble();
+                if(!parentBubble.isGroupRelation()){
+                    return;
+                }
+                graphElement.moveToParent(
+                    parentBubble.getParentBubble()
+                );
+            }
+        );
         return api;
     }
 );

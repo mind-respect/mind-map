@@ -8,8 +8,9 @@ define([
         "triple_brain.image_displayer",
         "triple_brain.graph_element_ui",
         "triple_brain.bubble_factory",
-        "triple_brain.selection_handler"
-    ], function (EventBus, UiUtils, ImageDisplayer, GraphElementUi, BubbleFactory, SelectionHandler) {
+        "triple_brain.selection_handler",
+        "triple_brain.center_bubble"
+    ], function (EventBus, UiUtils, ImageDisplayer, GraphElementUi, BubbleFactory, SelectionHandler, CenterBubble) {
         "use strict";
         var api = {};
 
@@ -25,18 +26,22 @@ define([
 
         api.Self.prototype.moveToParent = function (parent) {
             var isOriginalToTheLeft = this.isToTheLeft();
+
             var treeContainer = this.html.closest(".vertex-tree-container");
             var toMove = treeContainer.add(treeContainer.next(".clear-fix"));
             if (parent.isGroupRelation()) {
-                if(!parent.isExpanded()){
+                if (!parent.isExpanded()) {
                     parent.addChildTree();
                 }
                 var identification = parent.getGroupRelation().getIdentification();
-                if(this.hasIdentification(identification)){
+                if (this.hasIdentification(identification)) {
                     this.revertIdentificationIntegration(identification);
                 }
             }
-            parent.getHtml().closest(".vertex-container").siblings(".vertices-children-container").append(
+            var newContainer = parent.isCenterBubble() ?
+                CenterBubble.usingBubble(parent).getContainerItShouldNextAddTo() :
+                parent.getHtml().closest(".vertex-container").siblings(".vertices-children-container");
+            newContainer.append(
                 toMove
             );
             this._resetIsToTheLeft();
@@ -334,10 +339,10 @@ define([
 
         api.Self.prototype.revertIdentificationIntegration = function (identification) {
             var self = this;
-            $.each(identification.getImages(), function(){
+            $.each(identification.getImages(), function () {
                 self.removeImage(this)
             });
-            if(identification.hasImages()){
+            if (identification.hasImages()) {
                 this.refreshImages();
             }
         };

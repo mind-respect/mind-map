@@ -31,6 +31,12 @@ define(["jquery"],
             );
         };
 
+        Self.prototype.getContainerItShouldNextAddTo = function () {
+            return this.shouldAddLeft() ?
+                this.getLeftContainer() :
+                this.getRightContainer();
+        };
+
         Self.prototype.shouldAddLeft = function () {
             return this._getNumberOfImmediateBubblesToLeft() <
                 this._getNumberOfImmediateBubblesToRight();

@@ -286,5 +286,20 @@ define([
                 otherRelation.hasImages()
             ).toBeFalsy();
         });
+        it("doesn't create a duplicate when moving a bubble to the center vertex", function () {
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var centerBubble = scenario.getCenterVertexInTree();
+            var possessionGroupRelation = TestUtils.getChildWithLabel(
+                centerBubble,
+                "Possession"
+            );
+            possessionGroupRelation.addChildTree();
+            var possessionRelation = possessionGroupRelation.getTopMostChildBubble();
+            var centerBubbleNumberOfChild = centerBubble.getNumberOfChild();
+            possessionRelation.moveToParent(centerBubble);
+            expect(
+                centerBubble.getNumberOfChild()
+            ).toBe(centerBubbleNumberOfChild + 1);
+        });
     });
 });
