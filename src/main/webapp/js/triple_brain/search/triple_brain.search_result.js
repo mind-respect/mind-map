@@ -80,7 +80,7 @@ define([
             edgesName.push(property.getLabel());
             number++;
             if(number === 5){
-                return -1;
+                return false;
             }
         });
 

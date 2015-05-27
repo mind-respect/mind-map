@@ -40,10 +40,20 @@ define([
         bubble.visitAllChild(function(child){
             if(child.text() === label){
                 childWithLabel = child;
-                return -1;
+                return false;
             }
         });
         return childWithLabel;
+    };
+    api.hasChildWithLabel = function(bubble, label){
+        var hasChild = false;
+        bubble.visitAllChild(function(child){
+            if(child.text() === label){
+                hasChild= true;
+                return false;
+            }
+        });
+        return hasChild;
     };
     return api;
 

@@ -166,6 +166,12 @@ define([
             publishResetGraph();
             $("#drawn_graph").empty();
         };
+        api.addNewGroupRelation = function(identification, parentBubble){
+            return _implementation.addNewGroupRelation(
+                identification,
+                parentBubble
+            );
+        };
         return api;
 
         function publishAboutToUpdate() {

@@ -358,6 +358,10 @@ define([
             return this._isToTheLeft;
         };
 
+        api.Self.prototype.isSameBubble = function (bubble) {
+            return this.getId() === bubble.getId();
+        };
+
         EventBus.subscribe(
             '/event/ui/graph/vertex_and_relation/added/',
             function (event, triple, sourceBubble) {

@@ -43,8 +43,9 @@ define([
     "triple_brain.suggestion_relation_menu_handler",
     "triple_brain.triple_ui",
     "triple_brain.center_bubble",
-    "triple_brain.selection_handler"
-], function ($, GraphService, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, RelativeTreeVertexMenuHandler, GroupRelationMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler, KeyboardActionsHandler, Edge, GroupRelationHtmlBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaHtmlBuilder, SchemaUi, SchemaMenuHandler, PropertyHtmlBuilder, PropertyMenuHandler, PropertyUi, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SuggestionBubbleUi, SuggestionRelationUi, SuggestionBubbleMenuHandler, SuggestionRelationMenuHandler, TripleUi, CenterBubble, SelectionHandler) {
+    "triple_brain.selection_handler",
+    "triple_brain.group_relation"
+], function ($, GraphService, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, RelativeTreeVertexMenuHandler, GroupRelationMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler, KeyboardActionsHandler, Edge, GroupRelationHtmlBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaHtmlBuilder, SchemaUi, SchemaMenuHandler, PropertyHtmlBuilder, PropertyMenuHandler, PropertyUi, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SuggestionBubbleUi, SuggestionRelationUi, SuggestionBubbleMenuHandler, SuggestionRelationMenuHandler, TripleUi, CenterBubble, SelectionHandler, GroupRelation) {
     KeyboardActionsHandler.init();
     var api = {};
     api.displayForVertexWithUri = function (centralVertexUri, callback, errorCallback) {
@@ -306,6 +307,16 @@ define([
         groupRelationUi.removeHiddenRelationsContainer();
     };
 
+    api.addNewGroupRelation = function(identification, parentBubble){
+        var newGroupRelation = new api.TreeMaker().buildBubbleHtmlIntoContainer(
+            GroupRelation.usingIdentification(identification),
+            parentBubble,
+            GroupRelationHtmlBuilder
+        );
+        GroupRelationHtmlBuilder.completeBuild(newGroupRelation);
+        return newGroupRelation;
+    };
+
     function addVertex(newVertex, parentBubble, vertexHtmlBuilder) {
         if (vertexHtmlBuilder === undefined) {
             vertexHtmlBuilder = VertexHtmlBuilder
@@ -493,7 +504,6 @@ define([
                 );
                 return;
             }
-            ;
             $.each(groupRelation.getVertices(), function (key, verticesWithSameUri) {
                 $.each(verticesWithSameUri, function (vertexHtmlId, vertexAndEdge) {
                     var vertex = vertexAndEdge.vertex,

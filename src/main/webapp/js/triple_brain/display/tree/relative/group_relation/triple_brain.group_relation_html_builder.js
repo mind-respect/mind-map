@@ -6,13 +6,14 @@ define([
         "triple_brain.relative_tree_displayer_templates",
         "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
         "triple_brain.group_relation_ui",
+        "triple_brain.group_relation",
         "triple_brain.selection_handler",
         "triple_brain.graph_element_main_menu",
         "triple_brain.graph_displayer",
         "triple_brain.event_bus",
         "jquery-ui"
     ],
-    function (RelativeTreeTemplates, PropertiesIndicator, GroupRelationUi, SelectionHandler, GraphElementMainMenu, GraphDisplayer, EventBus) {
+    function (RelativeTreeTemplates, PropertiesIndicator, GroupRelationUi, GroupRelation, SelectionHandler, GraphElementMainMenu, GraphDisplayer, EventBus) {
         var api = {};
         api.withServerFacade = function (serverFacade) {
             return new Self(serverFacade);
@@ -118,15 +119,30 @@ define([
         EventBus.subscribe(
             "/event/ui/graph/identification/added",
             function(event, graphElement, identification){
-                graphElement.getParentBubble().visitAllChild(function(child){
+                var parentBubble = graphElement.getParentBubble();
+                parentBubble.visitAllChild(function(child){
                     if(child.isGroupRelation()){
                         var isSameIdentification =
                             child.getGroupRelation().getIdentification().getExternalResourceUri() ===
                             identification.getExternalResourceUri();
                         if(isSameIdentification){
                             graphElement.moveToParent(child);
-                            return -1;
+                            return false;
                         }
+                    }
+                    if(child.isRelation() && !child.isSameBubble(graphElement)){
+                        $.each(child.getIdentifications(), function(){
+                            var identification = this;
+                            if(graphElement.hasIdentification(identification)){
+                                var newGroupRelation = GraphDisplayer.addNewGroupRelation(
+                                    identification,
+                                    parentBubble
+                                );
+                                child.moveToParent(newGroupRelation);
+                                graphElement.moveToParent(newGroupRelation);
+                                return false;
+                            }
+                        });
                     }
                 });
             }

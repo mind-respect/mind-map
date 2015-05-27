@@ -126,5 +126,60 @@ define([
                 possessionGroupRelation.getNumberOfChild()
             ).toBe(2);
         });
+        it("creates a group-relation when adding to a relation an identification that exists at the same level", function () {
+            var centerBubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            expect(TestUtils.hasChildWithLabel(
+                centerBubble,
+                "r1"
+            )).toBeTruthy();
+            expect(TestUtils.hasChildWithLabel(
+                centerBubble,
+                "r2"
+            )).toBeTruthy();
+            expect(TestUtils.hasChildWithLabel(
+                centerBubble,
+                "some identification"
+            )).toBeFalsy();
+
+            var someIdentification = Identification.withUriAndLabel(
+                TestUtils.generateVertexUri(),
+                "some identification"
+            );
+            var relation1 = TestUtils.getChildWithLabel(centerBubble, "r1");
+            relation1.addGenericIdentification(
+                someIdentification
+            );
+            EventBus.publish(
+                "/event/ui/graph/identification/added",
+                [relation1, someIdentification]
+            );
+            var relation2 = TestUtils.getChildWithLabel(centerBubble, "r2");
+            relation2.addGenericIdentification(
+                someIdentification
+            );
+            EventBus.publish(
+                "/event/ui/graph/identification/added",
+                [relation2, someIdentification]
+            );
+            expect(TestUtils.hasChildWithLabel(
+                centerBubble,
+                "some identification"
+            )).toBeTruthy();
+            var newGroupRelation = TestUtils.getChildWithLabel(
+                centerBubble,
+                "some identification"
+            );
+            expect(
+                newGroupRelation.getNumberOfChild()
+            ).toBe(2);
+            expect(TestUtils.hasChildWithLabel(
+                centerBubble,
+                "r1"
+            )).toBeFalsy();
+            expect(TestUtils.hasChildWithLabel(
+                centerBubble,
+                "r2"
+            )).toBeFalsy();
+        });
     });
 });
