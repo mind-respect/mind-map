@@ -6,9 +6,10 @@ define([
     "triple_brain.graph_displayer",
     "triple_brain.edge",
     "triple_brain.vertex",
+    "triple_brain.selection_handler",
     'test/webapp/js/test-scenarios',
     'test/webapp/js/test-utils'
-], function (GraphDisplayer, Edge, Vertex, Scenarios, TestUtils) {
+], function (GraphDisplayer, Edge, Vertex, SelectionHandler, Scenarios, TestUtils) {
     "use strict";
     describe("bubble", function () {
         var centerBubble,
@@ -248,6 +249,20 @@ define([
             expect(
                 possessionGroupRelation.isExpanded()
             ).toBeTruthy();
+        });
+        it("selects the moved bubble after it moved", function () {
+            var relation1  = threeBubbleScenario.getRelation1InTree();
+            var bubble3 = threeBubbleScenario.getBubble3InTree();
+            expect(
+                SelectionHandler.getNbSelected()
+            ).toBe(0);
+            relation1.moveToParent(bubble3);
+            expect(
+                SelectionHandler.getNbSelected()
+            ).toBe(1);
+            expect(
+                SelectionHandler.getSingleElement().getUri()
+            ).toBe(relation1.getUri());
         });
     });
 });

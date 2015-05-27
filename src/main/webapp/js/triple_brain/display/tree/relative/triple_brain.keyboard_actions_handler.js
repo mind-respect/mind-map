@@ -8,12 +8,10 @@ define([
     "triple_brain.selection_handler",
     "triple_brain.center_bubble",
     "triple_brain.vertex_service",
-    "triple_brain.ui.utils",
     "triple_brain.identification_menu",
     "triple_brain.mind_map_info",
-    "triple_brain.graph_element_ui",
-    "triple_brain.graph_element_type"
-], function ($, EventBus, SelectionHandler, CenterBubble, VertexService, UiUtils, IdentificationMenu, MindMapInfo, GraphElementUi, GraphElementType) {
+    "triple_brain.graph_element_ui"
+], function ($, EventBus, SelectionHandler, CenterBubble, VertexService, IdentificationMenu, MindMapInfo, GraphElementUi) {
     "use strict";
     var api = {},
         tabKeyNumber = 9,
@@ -219,16 +217,8 @@ define([
         );
     }
 
-    function centerBubbleIfApplicable(bubble) {
-        var html = bubble.getHtml();
-        if (!UiUtils.isElementFullyOnScreen(html)) {
-            html.centerOnScreenWithAnimation();
-        }
-    }
-
     function selectNew(newSelectedElement) {
         SelectionHandler.setToSingleGraphElement(newSelectedElement);
-        centerBubbleIfApplicable(newSelectedElement);
     }
 
     function deleteKeyAction(selectedElement) {

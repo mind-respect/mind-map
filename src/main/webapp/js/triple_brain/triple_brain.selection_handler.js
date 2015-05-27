@@ -48,6 +48,7 @@ define([
             api.setToSingleRelation
         );
         setter(graphElement);
+        centerBubbleIfApplicable(graphElement);
     };
 
     api.setToSingleGroupRelation = function (groupRelation) {
@@ -163,6 +164,12 @@ define([
     };
     EventBus.subscribe("/event/ui/graph/reset", selectionInfo.removeAll);
     return api;
+    function centerBubbleIfApplicable(bubble) {
+        var html = bubble.getHtml();
+        if (!UiUtils.isElementFullyOnScreen(html)) {
+            html.centerOnScreenWithAnimation();
+        }
+    }
     function reflectSelectionChange() {
         var nbSelectedGraphElements = selectionInfo.getNbSelected();
         if (0 === nbSelectedGraphElements) {
