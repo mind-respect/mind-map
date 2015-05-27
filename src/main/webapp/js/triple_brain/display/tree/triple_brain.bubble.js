@@ -23,6 +23,39 @@ define([
 
         api.Self.prototype = new GraphElementUi.Self;
 
+        api.Self.prototype.moveToParent = function (parent) {
+            var isOriginalToTheLeft = this.isToTheLeft();
+            var treeContainer = this.html.closest(".vertex-tree-container");
+            var toMove = treeContainer.add(treeContainer.next(".clear-fix"));
+            parent.getHtml().closest(".vertex-container").siblings(".vertices-children-container").append(
+                toMove
+            );
+            this._resetIsToTheLeft();
+            if (isOriginalToTheLeft === this.isToTheLeft()) {
+                return;
+            }
+            var treeContainers = treeContainer.add(
+                treeContainer.find("> .vertices-children-container").find(".vertex-tree-container")
+            );
+            if (this.isToTheLeft()) {
+                $.each(treeContainers, convertTreeStructureToLeft);
+            } else {
+                $.each(treeContainers, convertTreeStructureToRight);
+            }
+        };
+        function convertTreeStructureToLeft() {
+            var treeContainer = $(this);
+            treeContainer.find("> .vertex-container").prependTo(treeContainer);
+            treeContainer.find("> .vertices-children-container").prependTo(treeContainer);
+        }
+
+        function convertTreeStructureToRight() {
+            var treeContainer = $(this);
+            treeContainer.find("> .vertex-container").appendTo(treeContainer);
+            treeContainer.find("> .vertices-children-container").appendTo(treeContainer);
+        }
+
+
         api.Self.prototype.getParentBubble = function () {
             if (this.isCenterBubble()) {
                 return this;
@@ -283,6 +316,10 @@ define([
             if (identification.hasImages()) {
                 this.refreshImages();
             }
+        };
+
+        api.Self.prototype._resetIsToTheLeft = function () {
+            this._isToTheLeft = undefined;
         };
 
         api.Self.prototype.isToTheLeft = function () {

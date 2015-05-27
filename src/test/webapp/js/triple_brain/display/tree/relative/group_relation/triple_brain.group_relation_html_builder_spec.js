@@ -3,10 +3,12 @@
  */
 
 define([
+    "test/webapp/js/test-scenarios",
+    "test/webapp/js/test-utils",
     "triple_brain.group_relation_html_builder",
-    "test/webapp/js/test-scenarios"
-
-], function (GroupRelationHtmlBuilder, Scenarios) {
+    "triple_brain.identification",
+    "triple_brain.event_bus"
+], function (Scenarios, TestUtils, GroupRelationHtmlBuilder, Identification, EventBus) {
     "use strict";
     describe("group_relation_html_builder", function () {
         var groupRelationBubble;
@@ -29,6 +31,51 @@ define([
             expect(
                 idea.hasImages()
             ).toBeTruthy();
+        });
+        it('moves a relation under a "group relation" if newly added identification is related to a group relation', function () {
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var centerBubble = scenario.getCenterVertexInTree();
+            expect(
+                centerBubble.getNumberOfChild()
+            ).toBe(3);
+            var possessionGroupRelation = TestUtils.getChildWithLabel(
+                centerBubble,
+                "Possession"
+            );
+            possessionGroupRelation.addChildTree();
+            expect(
+                possessionGroupRelation.getNumberOfChild()
+            ).toBe(3);
+            var otherRelation = TestUtils.getChildWithLabel(
+                centerBubble,
+                "other relation"
+            );
+            var dummyIdentification = Identification.withUriAndLabel(
+                TestUtils.generateVertexUri(),
+                "dummy identification"
+            );
+            EventBus.publish(
+                "/event/ui/graph/identification/added",
+                [otherRelation, dummyIdentification]
+            );
+
+            expect(
+                centerBubble.getNumberOfChild()
+            ).toBe(3);
+            expect(
+                possessionGroupRelation.getNumberOfChild()
+            ).toBe(3);
+
+            EventBus.publish(
+                "/event/ui/graph/identification/added",
+                [otherRelation, possessionGroupRelation.getGroupRelation().getIdentification()]
+            );
+            expect(
+                centerBubble.getNumberOfChild()
+            ).toBe(2);
+            expect(
+                possessionGroupRelation.getNumberOfChild()
+            ).toBe(4);
         });
     });
 });

@@ -375,14 +375,6 @@ define([
             var graph = this.getGraph();
         };
         api.GraphWithSimilarRelationsScenario = function () {
-            /*
-             me-Possession of book 1->book 1
-             me<-Possessed by book 2-book 2
-             me-Possession of book 3->book 3
-             me-other relation->other bubble
-             me-original relation->b1
-             me-same as original relation->b2
-             */
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
                 return getTestData("graphWithSimilarRelations");
@@ -395,6 +387,11 @@ define([
                 return Vertex.fromServerFormat(graph.vertices[
                         uriOfVertexWithLabel(graph, "me")
                         ]
+                );
+            };
+            this.getCenterVertexInTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree(
+                    "me"
                 );
             };
             this.getPossession = function () {

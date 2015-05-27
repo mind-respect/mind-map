@@ -115,6 +115,22 @@ define([
                 api.completeBuild(groupRelationUi);
             }
         );
+        EventBus.subscribe(
+            "/event/ui/graph/identification/added",
+            function(event, graphElement, identification){
+                graphElement.getParentBubble().visitAllChild(function(child){
+                    if(child.isGroupRelation()){
+                        var isSameIdentification =
+                            child.getGroupRelation().getIdentification().getExternalResourceUri() ===
+                            identification.getExternalResourceUri();
+                        if(isSameIdentification){
+                            graphElement.moveToParent(child);
+                            return -1;
+                        }
+                    }
+                });
+            }
+        );
         return api;
     }
 );

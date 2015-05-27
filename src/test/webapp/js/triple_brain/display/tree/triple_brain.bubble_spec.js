@@ -210,5 +210,23 @@ define([
                 ideaFor2.hasImages()
             ).toBeFalsy();
         });
+        it("can move to another parent", function () {
+            var centerBubble = threeBubbleScenario.getBubble1InTree();
+            expect(
+                centerBubble.getNumberOfChild()
+            ).toBe(2);
+            var bubble3 = threeBubbleScenario.getBubble3InTree();
+            expect(
+                bubble3.getNumberOfChild()
+            ).toBe(0);
+            var relation1  = threeBubbleScenario.getRelation1InTree();
+            relation1.moveToParent(bubble3);
+            expect(
+                centerBubble.getNumberOfChild()
+            ).toBe(1);
+            expect(
+                bubble3.getNumberOfChild()
+            ).toBe(1);
+        });
     });
 });
