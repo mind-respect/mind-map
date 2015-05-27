@@ -27,6 +27,9 @@ define([
             var isOriginalToTheLeft = this.isToTheLeft();
             var treeContainer = this.html.closest(".vertex-tree-container");
             var toMove = treeContainer.add(treeContainer.next(".clear-fix"));
+            if(parent.isGroupRelation() && !parent.isExpanded()){
+                parent.addChildTree();
+            }
             parent.getHtml().closest(".vertex-container").siblings(".vertices-children-container").append(
                 toMove
             );
@@ -194,6 +197,10 @@ define([
             return BubbleFactory.fromHtml(
                 container.find("> .bubble")
             );
+        };
+
+        api.Self.prototype.isExpanded = function(){
+            return !this.hasHiddenRelationsContainer();
         };
 
         api.Self.prototype.hasHiddenRelationsContainer = function () {

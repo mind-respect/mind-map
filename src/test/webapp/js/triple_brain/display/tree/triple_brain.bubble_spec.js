@@ -228,5 +228,26 @@ define([
                 bubble3.getNumberOfChild()
             ).toBe(1);
         });
+        it("expands a closed group relation when moving a graph element to it", function () {
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var centerBubble = scenario.getCenterVertexInTree();
+            var possessionGroupRelation = TestUtils.getChildWithLabel(
+                centerBubble,
+                "Possession"
+            );
+            expect(
+                possessionGroupRelation.isExpanded()
+            ).toBeFalsy();
+            var otherRelation = TestUtils.getChildWithLabel(
+                centerBubble,
+                "other relation"
+            );
+            otherRelation.moveToParent(
+                possessionGroupRelation
+            );
+            expect(
+                possessionGroupRelation.isExpanded()
+            ).toBeTruthy();
+        });
     });
 });
