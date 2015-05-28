@@ -4,10 +4,10 @@
 
 define([
     'test/webapp/js/test-scenarios',
-    'test/webapp/js/mock',
+    "test/webapp/js/mock/triple_brain.graph_element_service_mock",
     'triple_brain.identification_menu',
     'triple_brain.user_map_autocomplete_provider'
-], function (Scenarios, Mock, IdentificationMenu, UserMapAutocompleteProvider) {
+], function (Scenarios, GraphElementServiceMock, IdentificationMenu, UserMapAutocompleteProvider) {
     "use strict";
     describe("identification_menu", function () {
         beforeEach(function () {
@@ -19,7 +19,7 @@ define([
                 new Scenarios.getSearchResultsForProject().get()
             )[0];
             var identificationMenu = IdentificationMenu.ofGraphElement(bubble1).create();
-            Mock.mockAddIdentification();
+            GraphElementServiceMock.addIdentificationMock();
             var hasIntegratedIdentification = identificationMenu._handleSelectIdentification(
                 projectSchemaSearchResult,
                 bubble1

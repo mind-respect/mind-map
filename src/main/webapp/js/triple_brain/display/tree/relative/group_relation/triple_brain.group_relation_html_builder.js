@@ -120,6 +120,9 @@ define([
             "/event/ui/graph/identification/added",
             function(event, graphElement, identification){
                 var parentBubble = graphElement.getParentBubble();
+                if(parentBubble.isGroupRelation()){
+                    return;
+                }
                 parentBubble.visitAllChild(function(child){
                     if(child.isGroupRelation()){
                         var isSameIdentification =

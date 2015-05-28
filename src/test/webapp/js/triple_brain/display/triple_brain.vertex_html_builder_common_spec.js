@@ -5,23 +5,20 @@
 define([
     "test/webapp/js/test-scenarios",
     "test/webapp/js/test-utils",
-    "test/webapp/js/mock",
+    "test/webapp/js/mock/triple_brain.graph_element_service_mock",
     "triple_brain.vertex_service",
     "triple_brain.user_map_autocomplete_provider",
     "triple_brain.vertex_html_builder_common"
-], function (Scenarios, TestUtils, Mock, VertexService, UserMapAutocompleteProvider, VertexHtmlBuilderCommon) {
+], function (Scenarios, TestUtils, GraphElementServiceMock, VertexService, UserMapAutocompleteProvider, VertexHtmlBuilderCommon) {
     "use strict";
     describe("vertex_html_builder_common", function () {
-        beforeEach(function () {
-
-        });
         it("waits for suggestion to be integrated before handling autocomplete select", function () {
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),
                 projectSearchResult = searchProvider.formatResults(
                     new Scenarios.getSearchResultsForProject().get(),
                     "project"
                 )[0];
-            Mock.mockAddIdentification();
+            GraphElementServiceMock.addIdentificationMock();
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             expect(
                 bubble1.hasIdentifications()

@@ -5,18 +5,22 @@
 define([
     "test/webapp/js/test-scenarios",
     "test/webapp/js/test-utils",
+    "test/webapp/js/mock/triple_brain.vertex_service_mock",
+    "test/webapp/js/mock/triple_brain.graph_element_service_mock",
+    "triple_brain.mind_map_info",
     "triple_brain.group_relation_html_builder",
+    "triple_brain.group_relation_menu_handler",
     "triple_brain.identification",
     "triple_brain.event_bus"
-], function (Scenarios, TestUtils, GroupRelationHtmlBuilder, Identification, EventBus) {
+], function (Scenarios, TestUtils, VertexServiceMock, GraphElementServiceMock, MindMapInfo, GroupRelationHtmlBuilder, GroupRelationMenuHandler, Identification, EventBus) {
     "use strict";
     describe("group_relation_html_builder", function () {
-        var groupRelationBubble;
+        var groupRelation;
         it("has the label of the identification", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
-            groupRelationBubble = scenario.getPossessionAsGroupRelationUi();
+            groupRelation = scenario.getPossessionAsGroupRelationUi();
             expect(
-                groupRelationBubble.text()
+                groupRelation.text()
             ).toBe(
                 "Possession"
             );
@@ -180,6 +184,21 @@ define([
                 centerBubble,
                 "r2"
             )).toBeFalsy();
+        });
+        it("doesn't create a group-relation when adding to a relation an identification that exists at the same level if its already in a group relation", function () {
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            groupRelation = scenario.getPossessionAsGroupRelationInTree();
+            groupRelation.addChildTree();
+            expect(
+                groupRelation.getNumberOfChild()
+            ).toBe(3);
+            VertexServiceMock.addRelationAndVertexToVertexMock();
+            GraphElementServiceMock.addIdentificationMock();
+            MindMapInfo._setIsViewOnly(false);
+            GroupRelationMenuHandler.forSingle().addChildAction(groupRelation);
+            expect(
+                groupRelation.getNumberOfChild()
+            ).toBe(4);
         });
     });
 });
