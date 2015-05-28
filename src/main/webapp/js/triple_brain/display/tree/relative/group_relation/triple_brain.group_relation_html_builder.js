@@ -11,9 +11,10 @@ define([
         "triple_brain.graph_element_main_menu",
         "triple_brain.graph_displayer",
         "triple_brain.event_bus",
+        "triple_brain.identification",
         "jquery-ui"
     ],
-    function (RelativeTreeTemplates, PropertiesIndicator, GroupRelationUi, GroupRelation, SelectionHandler, GraphElementMainMenu, GraphDisplayer, EventBus) {
+    function (RelativeTreeTemplates, PropertiesIndicator, GroupRelationUi, GroupRelation, SelectionHandler, GraphElementMainMenu, GraphDisplayer, EventBus, Identification) {
         var api = {};
         api.withServerFacade = function (serverFacade) {
             return new Self(serverFacade);
@@ -134,6 +135,21 @@ define([
                         }
                     }
                     if(child.isRelation() && !child.isSameBubble(graphElement)){
+                        var childAsAnIdentification = Identification.fromFriendlyResource(
+                            child.getOriginalServerObject()
+                        );
+                        var isIdentifiedToRelation = graphElement.hasIdentification(
+                            childAsAnIdentification
+                        );
+                        if(isIdentifiedToRelation){
+                            var newGroupRelation = GraphDisplayer.addNewGroupRelation(
+                                childAsAnIdentification,
+                                parentBubble
+                            );
+                            child.moveToParent(newGroupRelation);
+                            graphElement.moveToParent(newGroupRelation);
+                            return;
+                        }
                         $.each(child.getIdentifications(), function(){
                             var identification = this;
                             if(graphElement.hasIdentification(identification)){

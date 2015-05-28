@@ -130,7 +130,7 @@ define([
                 possessionGroupRelation.getNumberOfChild()
             ).toBe(2);
         });
-        it("creates a group-relation when adding to a relation an identification that exists at the same level", function () {
+        it("creates a group-relation when adding an identification to a relation shared with another relation at the same level", function () {
             var centerBubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
             expect(TestUtils.hasChildWithLabel(
                 centerBubble,
@@ -185,7 +185,49 @@ define([
                 "r2"
             )).toBeFalsy();
         });
-        it("doesn't create a group-relation when adding to a relation an identification that exists at the same level if its already in a group relation", function () {
+        it("creates a group-relation when identifying a relation to a relation that exists at the same level", function () {
+            var centerBubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            expect(TestUtils.hasChildWithLabel(
+                centerBubble,
+                "r1"
+            )).toBeTruthy();
+            var r2ChildOfCenterBubble = TestUtils.getChildWithLabel(
+                centerBubble,
+                "r2"
+            );
+            expect(
+                r2ChildOfCenterBubble.isGroupRelation()
+            ).toBeFalsy();
+            var identificationToRelation2 = Identification.fromFriendlyResource(
+                r2ChildOfCenterBubble.getOriginalServerObject()
+            );
+            var relation1 = TestUtils.getChildWithLabel(centerBubble, "r1");
+            relation1.addSameAs(
+                identificationToRelation2
+            );
+            EventBus.publish(
+                "/event/ui/graph/identification/added",
+                [relation1, identificationToRelation2]
+            );
+            r2ChildOfCenterBubble = TestUtils.getChildWithLabel(centerBubble, "r2");
+            expect(
+                r2ChildOfCenterBubble.isGroupRelation()
+            ).toBeTruthy();
+            expect(TestUtils.hasChildWithLabel(
+                centerBubble,
+                "r1"
+            )).toBeFalsy();
+            r2ChildOfCenterBubble.addChildTree();
+            expect(TestUtils.hasChildWithLabel(
+                r2ChildOfCenterBubble,
+                "r1"
+            )).toBeTruthy();
+            expect(TestUtils.hasChildWithLabel(
+                r2ChildOfCenterBubble,
+                "r2"
+            )).toBeTruthy();
+        });
+        it("doesn't create a group-relation when adding to a relation an identification that exists at the same level if its already under group relation", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
             groupRelation = scenario.getPossessionAsGroupRelationInTree();
             groupRelation.addChildTree();
