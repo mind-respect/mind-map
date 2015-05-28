@@ -78,7 +78,7 @@ define([
         t.add('auto_complete_suggestion_list_element', '<li>{name}</li>');
         t.add(
             'image_upload',
-                "<section class='image-upload-wrapper'>" +
+                "<section class='image-upload-wrapper text-center'>" +
                 "<header>" +
                 "<h2 data-i18n='vertex.menu.image.title'></h2>" +
                 "</header>" +
