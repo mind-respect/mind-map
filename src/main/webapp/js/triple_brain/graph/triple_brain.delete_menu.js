@@ -18,7 +18,7 @@ define([
         return api;
         function DeleteMenu(vertex, deleteCallback) {
             var self = this;
-            var html = $("<div class='delete-menu'>");
+            var html = $("<div class='delete-menu text-center'>");
             this.build = function () {
                 GraphUi.addHtml(html);
                 html.append(
