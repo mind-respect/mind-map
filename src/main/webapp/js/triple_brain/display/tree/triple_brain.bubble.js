@@ -82,10 +82,13 @@ define([
         };
         api.Self.prototype.getParentVertex = function () {
             var parentBubble = this.getParentBubble();
+            if(this.isSameBubble(parentBubble)){
+                return this;
+            }
             if (parentBubble.isVertex()) {
                 return parentBubble;
             }
-            return parentBubble.getParentBubble();
+            return parentBubble.getParentVertex();
         };
         api.Self.prototype.getChildrenContainer = function () {
             return this.html.closest(".vertex-container").siblings(

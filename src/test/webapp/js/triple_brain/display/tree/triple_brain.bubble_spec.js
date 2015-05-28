@@ -46,6 +46,16 @@ define([
                 newVertex.getParentVertex().getUri()
             ).toBe(bubble2.getUri());
         });
+        it("can get parent vertex of a vertex under a group relation", function () {
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var centerBubble = scenario.getCenterVertexInTree();
+            var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+            groupRelation.addChildTree();
+            var bubbleUnderGroupRelation = groupRelation.getTopMostChildBubble().getTopMostChildBubble();
+            expect(
+                bubbleUnderGroupRelation.getParentVertex().getUri()
+            ).toBe(centerBubble.getUri());
+        });
         it("can return top most child bubble", function () {
             var newEdge = Scenarios.addTriple(
                 bubble2
