@@ -5,10 +5,15 @@
 define([
         "jquery",
         "triple_brain.event_bus",
+        "triple_brain.bubble_factory",
         "bootstrap-datepicker"
     ],
-    function ($, EventBus) {
+    function ($, EventBus, BubbleFactory) {
         "use strict";
+        var urisToApply = [
+            "http://rdf.freebase.com/rdf/type/datetime",
+            "//wikidata.org/wiki/Q1656682"
+        ];
         EventBus.subscribe(
             "/event/ui/graph/identification/added",
             handleIdentificationAdded
@@ -16,6 +21,12 @@ define([
         EventBus.subscribe(
             '/event/ui/vertex/build_complete',
             handleVertexCreated
+        );
+        EventBus.subscribe(
+            "/event/ui/selection/changed",
+            function(){
+
+            }
         );
         return {};
         function handleIdentificationAdded(event, graphlement, identification) {
@@ -34,22 +45,46 @@ define([
             });
         }
 
-        function applyDatePickerToVertex(graphlement) {
-            graphlement.getLabel().on(
-                "click",
-                function(){
-                    $(this).closest(".bubble").datepicker({
-                        container:"body"
-                    }).on("changeDate", function(event){
-                        event.date.toLocaleDateString();
-                        console.log("fun");
-                    });
-                }
-            );
+        function applyDatePickerToVertex(graphElement) {
+            var html = graphElement.getHtml();
+            html.datepicker({
+                container: body,
+                autoclose: false
+            }).on("changeDate", function (event) {
+                var bubble = BubbleFactory.fromSubHtml(
+                    $(this)
+                );
+                bubble.getLabel().focus().text(event.date.toLocaleDateString()).blur();
+                hideDatePicker(bubble);
+            });
+            hideDatePicker(graphElement);
+            graphElement.getLabel().click(function () {
+                showDatePicker(
+                    BubbleFactory.fromSubHtml(
+                        $(this)
+                    )
+                );
+            });
+        }
+
+        function hideDatePicker(graphElement) {
+            graphElement.getHtml().find(
+                "> .datepicker"
+            ).addClass("hidden");
+        }
+
+        function showDatePicker(graphElement) {
+            graphElement.getHtml().datepicker(
+                "show"
+            ).find(
+                "> .datepicker"
+            ).removeClass("hidden");
         }
 
         function isIdentificationADate(identification) {
-            return identification.getExternalResourceUri() === "http://rdf.freebase.com/rdf/type/datetime";
+            return urisToApply.indexOf(
+                identification.getExternalResourceUri()
+            );
         }
     }
 );
