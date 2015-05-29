@@ -5,9 +5,9 @@
 define([
     "require",
     "jquery",
-    "./triple_brain.template.vertices_list.js",
+    "triple_brain.template.vertices_list",
     "triple_brain.ui.left_panel",
-    "./triple_brain.template.vertices_list.js"
+    "triple_brain.module.vertices_list"
 ],
     function (require, $, Template, LeftPanel, VerticesList) {
         "use strict";

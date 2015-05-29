@@ -4,9 +4,9 @@
 
 define([
         "jquery",
-        "./triple_brain.module.vertices_list_creator.js",
-        "./triple_brain.module.vertices_list_element_creator.js",
-        "./triple_brain.module.vertices_list_element.js",
+        "triple_brain.module.vertices_list_creator",
+        "triple_brain.module.vertices_list_element_creator",
+        "triple_brain.module.vertices_list_element",
         "triple_brain.event_bus",
         "triple_brain.graph_displayer",
         "triple_brain.mind_map_info",

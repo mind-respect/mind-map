@@ -6,8 +6,8 @@ define([
     "require",
     "jquery",
     "triple_brain.graph_displayer",
-    "./triple_brain.template.vertices_list.js",
-    "./triple_brain.module.vertices_list_element.js"
+    "triple_brain.template.vertices_list",
+    "triple_brain.module.vertices_list_element"
 ],
     function(require, $, GraphDisplayer, Template, VerticesListElement) {
         "use strict";

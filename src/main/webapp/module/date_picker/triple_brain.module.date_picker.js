@@ -24,7 +24,7 @@ define([
         );
         EventBus.subscribe(
             "/event/ui/selection/changed",
-            function(){
+            function () {
 
             }
         );
@@ -76,7 +76,8 @@ define([
         function showDatePicker(graphElement) {
             graphElement.getHtml().datepicker(
                 "show"
-            ).find(
+            );
+            graphElement.getHtml().find(
                 "> .datepicker"
             ).removeClass("hidden");
         }
