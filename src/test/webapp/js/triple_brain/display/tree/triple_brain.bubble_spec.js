@@ -3,13 +3,13 @@
  */
 
 define([
+    'test/webapp/js/test-scenarios',
+    'test/webapp/js/test-utils',
     "triple_brain.graph_displayer",
     "triple_brain.edge",
     "triple_brain.vertex",
-    "triple_brain.selection_handler",
-    'test/webapp/js/test-scenarios',
-    'test/webapp/js/test-utils'
-], function (GraphDisplayer, Edge, Vertex, SelectionHandler, Scenarios, TestUtils) {
+    "triple_brain.selection_handler"
+], function (Scenarios, TestUtils, GraphDisplayer, Edge, Vertex, SelectionHandler) {
     "use strict";
     describe("bubble", function () {
         var centerBubble,
@@ -41,7 +41,7 @@ define([
             ).toBe("b1");
         });
         it("returns grand parent if parent is not a vertex", function () {
-            var newVertex = Scenarios.addTriple(bubble2).destinationVertex();
+            var newVertex = TestUtils.addTriple(bubble2).destinationVertex();
             expect(
                 newVertex.getParentVertex().getUri()
             ).toBe(bubble2.getUri());
@@ -57,7 +57,7 @@ define([
             ).toBe(centerBubble.getUri());
         });
         it("can return top most child bubble", function () {
-            var newEdge = Scenarios.addTriple(
+            var newEdge = TestUtils.addTriple(
                 bubble2
             ).edge();
             expect(
@@ -72,16 +72,16 @@ define([
         });
 
         it("can get bubble above an edge", function () {
-            var newEdge1 = Scenarios.addTriple(bubble2).edge(),
-                newEdge2 = Scenarios.addTriple(bubble2).edge();
+            var newEdge1 = TestUtils.addTriple(bubble2).edge(),
+                newEdge2 = TestUtils.addTriple(bubble2).edge();
             expect(
                 newEdge2.getBubbleAbove().getId()
             ).toBe(newEdge1.getId());
         });
 
         it("can get bubble above a vertex", function () {
-            var newVertex1 = Scenarios.addTriple(bubble2).destinationVertex(),
-                newVertex2 = Scenarios.addTriple(
+            var newVertex1 = TestUtils.addTriple(bubble2).destinationVertex(),
+                newVertex2 = TestUtils.addTriple(
                     bubble2
                 ).destinationVertex();
             expect(
@@ -102,16 +102,16 @@ define([
         });
 
         it("can get bubble below", function () {
-            var newEdge1 = Scenarios.addTriple(bubble2).edge(),
-                newEdge2 = Scenarios.addTriple(bubble2).edge();
+            var newEdge1 = TestUtils.addTriple(bubble2).edge(),
+                newEdge2 = TestUtils.addTriple(bubble2).edge();
             expect(
                 newEdge1.getBubbleUnder().getId()
             ).toBe(newEdge2.getId());
         });
 
         it("can get bubble below even if both bubbles only share grand-parent", function () {
-            var newVertex1 = Scenarios.addTriple(bubble2).destinationVertex(),
-                newVertex2 = Scenarios.addTriple(
+            var newVertex1 = TestUtils.addTriple(bubble2).destinationVertex(),
+                newVertex2 = TestUtils.addTriple(
                     bubble2
                 ).destinationVertex();
             expect(
@@ -120,11 +120,11 @@ define([
         });
 
         it("can get closest bubble below even if common parent is further away than grand-parent", function () {
-            var newVertex1 = Scenarios.addTriple(bubble2).destinationVertex(),
-                newVertex2 = Scenarios.addTriple(
+            var newVertex1 = TestUtils.addTriple(bubble2).destinationVertex(),
+                newVertex2 = TestUtils.addTriple(
                     bubble2
                 ).destinationVertex(),
-                childOfNewVertex1 = Scenarios.addTriple(
+                childOfNewVertex1 = TestUtils.addTriple(
                     newVertex1
                 ).destinationVertex();
             expect(
@@ -132,11 +132,11 @@ define([
             ).toBe(newVertex2.getId());
         });
         it("returns bubbles below and not it's child when it has one", function () {
-            var newVertex1 = Scenarios.addTriple(bubble2).destinationVertex(),
-                newVertex2 = Scenarios.addTriple(
+            var newVertex1 = TestUtils.addTriple(bubble2).destinationVertex(),
+                newVertex2 = TestUtils.addTriple(
                     bubble2
                 ).destinationVertex();
-            Scenarios.addTriple(
+            TestUtils.addTriple(
                 newVertex2
             ).destinationVertex();
             expect(

@@ -223,6 +223,7 @@ define([
             sourceBubbleUi,
             destinationVertexUi
         );
+        VertexHtmlBuilder.completeBuild(destinationVertexUi);
         var parentVertexUi = sourceBubbleUi.isGroupRelation() ?
             sourceBubbleUi.getParentVertex() : sourceBubbleUi;
 

@@ -4,8 +4,8 @@
 
 define([
         "text!test/resources/test-scenarios-data.json",
-        'triple_brain.vertex',
-        'triple_brain.edge',
+        "triple_brain.vertex",
+        "triple_brain.edge",
         'triple_brain.schema',
         "triple_brain.vertex_html_builder",
         "triple_brain.edge_html_builder",
@@ -21,7 +21,6 @@ define([
         "triple_brain.graph_displayer",
         "triple_brain.graph_displayer_factory",
         'triple_brain.graph_displayer_as_tree_common',
-        "triple_brain.vertex_server_format_builder",
         "triple_brain.event_bus",
         "triple_brain.suggestion",
         "triple_brain.identification",
@@ -29,7 +28,7 @@ define([
         "triple_brain.language_manager",
         "text!main/webapp/locales/en/translation.json"
     ],
-    function (TestScenarioData, Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, TestUtils, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, VertexServerFormatBuilder, EventBus, Suggestion, Identification, FriendlyResource, LanguageManager, enTranslation) {
+    function (TestScenarioData, Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, TestUtils, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, EventBus, Suggestion, Identification, FriendlyResource, LanguageManager, enTranslation) {
         var api = {},
             testData = JSON.parse(TestScenarioData);
         $.i18n.init({
@@ -43,18 +42,6 @@ define([
                 );
             }
         });
-        api.addTriple = function (bubble) {
-            var destinationVertex = generateVertex(),
-                edge = generateEdge(
-                    bubble.getUri,
-                    destinationVertex.getUri()
-                );
-            return GraphDisplayer.addEdgeAndVertex(
-                bubble,
-                edge,
-                destinationVertex
-            );
-        };
 
         api.deepGraph = function () {
             this.getGraph = function () {
@@ -835,24 +822,6 @@ define([
                     this.build()
                 ).getRelationWithLabelInTree(label);
             };
-        }
-
-        function generateVertex() {
-            return Vertex.fromServerFormat(
-                VertexServerFormatBuilder.buildWithUri(
-                    TestUtils.generateVertexUri()
-                )
-            );
-        }
-
-        function generateEdge(sourceVertexUri, destinationVertexUri) {
-            return Edge.fromServerFormat(
-                Edge.buildObjectWithUriOfSelfSourceAndDestinationVertex(
-                    TestUtils.generateEdgeUri(),
-                    sourceVertexUri,
-                    destinationVertexUri
-                )
-            );
         }
 
         function getTestData(key) {

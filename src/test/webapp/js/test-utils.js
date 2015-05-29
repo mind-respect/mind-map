@@ -3,8 +3,12 @@
  */
 
 define([
-    "jquery"
-], function ($) {
+    "jquery",
+    "triple_brain.vertex_server_format_builder",
+    'triple_brain.vertex',
+    'triple_brain.edge',
+    "triple_brain.graph_displayer"
+], function ($, VertexServerFormatBuilder, Vertex, Edge, GraphDisplayer) {
     "use strict";
     var api = {};
     api.generateVertexUri = function(){
@@ -54,6 +58,36 @@ define([
             }
         });
         return hasChild;
+    };
+
+    api.addTriple = function (bubble) {
+        var destinationVertex = api.generateVertex(),
+            edge = api.generateEdge(
+                bubble.getUri,
+                destinationVertex.getUri()
+            );
+        return GraphDisplayer.addEdgeAndVertex(
+            bubble,
+            edge,
+            destinationVertex
+        );
+    };
+
+    api.generateVertex = function(){
+        return Vertex.fromServerFormat(
+            VertexServerFormatBuilder.buildWithUri(
+                api.generateVertexUri()
+            )
+        );
+    };
+    api.generateEdge = function(sourceVertexUri, destinationVertexUri) {
+        return Edge.fromServerFormat(
+            Edge.buildObjectWithUriOfSelfSourceAndDestinationVertex(
+                api.generateEdgeUri(),
+                sourceVertexUri,
+                destinationVertexUri
+            )
+        );
     };
     return api;
 

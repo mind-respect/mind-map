@@ -3,11 +3,14 @@
  */
 
 define([
+    'test/webapp/js/test-scenarios',
+    'test/webapp/js/test-utils',
+    'test/webapp/js/mock',
     "triple_brain.graph_displayer_as_relative_tree",
     "triple_brain.center_bubble",
-    'test/webapp/js/test-scenarios',
-    'test/webapp/js/mock'
-], function (GraphDisplayerAsRelativeTree, CenterBubble, Scenarios, Mock) {
+    "triple_brain.vertex_html_builder",
+    "triple_brain.edge_html_builder"
+], function (Scenarios, TestUtils, Mock, GraphDisplayerAsRelativeTree, CenterBubble, VertexHtmlBuilder, EdgeHtmlBuilder) {
     "use strict";
     describe("graph_displayer_as_relative_tree_spec", function () {
         var threeBubblesGraph,
@@ -42,8 +45,8 @@ define([
         });
 
         it("distributes new triples evenly to the right and left", function () {
-            var firstAddedEdge = Scenarios.addTriple(bubble1).edge(),
-                secondAddedEdge = Scenarios.addTriple(bubble1).edge();
+            var firstAddedEdge = TestUtils.addTriple(bubble1).edge(),
+                secondAddedEdge = TestUtils.addTriple(bubble1).edge();
             expect(
                 firstAddedEdge.isToTheLeft()
             ).toBeFalsy();
@@ -143,7 +146,7 @@ define([
             ).toBe("Location");
         });
         it("can make a vertex connect to a distant vertex", function () {
-            connectDistantVertexTest(function(distantBubble){
+            connectDistantVertexTest(function (distantBubble) {
                 var connectedBubble = distantBubble.getTopMostChildBubble().getTopMostChildBubble();
                 expect(
                     connectedBubble.text()
@@ -151,8 +154,8 @@ define([
             });
         });
 
-        it("when connecting to a distant vertex, similar relations are grouped", function(){
-            connectDistantVertexTest(function(distantBubble){
+        it("when connecting to a distant vertex, similar relations are grouped", function () {
+            connectDistantVertexTest(function (distantBubble) {
                 var connectedBubble = distantBubble.getTopMostChildBubble().getTopMostChildBubble();
                 var tShirtBubble = new Scenarios.TreeQuerier(
                     connectedBubble.getChildrenContainer()
@@ -162,16 +165,16 @@ define([
                 ).toBeTruthy();
             });
         });
-        it("when connecting to a distant vertex, distant vertex child bubbles have their images", function(){
-            connectDistantVertexTest(function(distantBubble){
+        it("when connecting to a distant vertex, distant vertex child bubbles have their images", function () {
+            connectDistantVertexTest(function (distantBubble) {
                 var connectedBubble = distantBubble.getTopMostChildBubble().getTopMostChildBubble();
                 expect(
                     connectedBubble.hasImagesMenu()
                 ).toBeTruthy();
             });
         });
-        it("when connecting to a distant vertex, new relation is selected", function(){
-            connectDistantVertexTest(function(distantBubble){
+        it("when connecting to a distant vertex, new relation is selected", function () {
+            connectDistantVertexTest(function (distantBubble) {
                 var newRelation = distantBubble.getTopMostChildBubble();
                 expect(
                     newRelation.isRelation()
@@ -181,7 +184,7 @@ define([
                 ).toBeTruthy();
             });
         });
-        it("contains all elements for deep circular graph", function(){
+        it("contains all elements for deep circular graph", function () {
             var deepGraphWithCircularity = new Scenarios.deepGraphWithCircularity();
             expect(
                 deepGraphWithCircularity.getBubble3InTree()
@@ -211,7 +214,28 @@ define([
                 impact3InSocietyContext.getId()
             )
         });
-        function connectDistantVertexTest(callback){
+        it("completes build of new graph elements when adding new edge and vertex", function () {
+            var parent = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            var destinationVertex = TestUtils.generateVertex();
+            var edge = TestUtils.generateEdge(
+                parent.getUri(),
+                destinationVertex.getUri()
+            );
+            var spyOnVertexCompleteBuild = spyOn(VertexHtmlBuilder, "completeBuild");
+            var spyOnEdgeCompleteBuild = spyOn(EdgeHtmlBuilder, "afterChildBuilt");
+            GraphDisplayerAsRelativeTree.addEdgeAndVertex(
+                parent,
+                edge,
+                destinationVertex
+            );
+            expect(
+                spyOnEdgeCompleteBuild.calls.length
+            ).toBe(1);
+            expect(
+                spyOnVertexCompleteBuild.calls.length
+            ).toBe(1);
+        });
+        function connectDistantVertexTest(callback) {
             Mock.setGetGraphFromService(
                 graphWithHiddenSimilarRelationsScenario.getB2GraphWhenConnectedToDistantBubble()
             );
