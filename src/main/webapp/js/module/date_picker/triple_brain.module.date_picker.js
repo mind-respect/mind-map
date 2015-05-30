@@ -14,6 +14,13 @@ define([
             "http://rdf.freebase.com/rdf/type/datetime",
             "//wikidata.org/wiki/Q1656682"
         ];
+
+        var api = {};
+        api.isAppliedToBubble = function(bubble){
+            return bubble.getHtml().find(
+                "> .datepicker"
+            ).length > 0;
+        };
         EventBus.subscribe(
             "/event/ui/graph/identification/added",
             handleIdentificationAdded
@@ -28,7 +35,7 @@ define([
 
             }
         );
-        return {};
+        return api;
         function handleIdentificationAdded(event, graphlement, identification) {
             if (isIdentificationADate(identification)) {
                 applyDatePickerToVertex(graphlement);
@@ -48,7 +55,7 @@ define([
         function applyDatePickerToVertex(graphElement) {
             var html = graphElement.getHtml();
             html.datepicker({
-                container: body,
+                container: "body",
                 autoclose: false
             }).on("changeDate", function (event) {
                 var bubble = BubbleFactory.fromSubHtml(
@@ -85,7 +92,7 @@ define([
         function isIdentificationADate(identification) {
             return urisToApply.indexOf(
                 identification.getExternalResourceUri()
-            );
+            ) !== -1;
         }
     }
 );

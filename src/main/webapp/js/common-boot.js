@@ -139,12 +139,12 @@ requirejs.config({
         "triple_brain.graph_element_type" : "triple_brain/graph/triple_brain.graph_element_type",
         "triple_brain.anonymous_flow": "triple_brain/triple_brain.anonymous_flow",
         "triple_brain.modules": "triple_brain/triple_brain.modules",
-        "triple_brain.module.date_picker": "../module/date_picker/triple_brain.module.date_picker",
-        "triple_brain.module.vertices_list":"../module/vertices_list/triple_brain.module.vertices_list",
-        "triple_brain.module.vertices_list_creator":"../module/vertices_list/triple_brain.module.vertices_list_creator",
-        "triple_brain.module.vertices_list_element_creator":"../module/vertices_list/triple_brain.module.vertices_list_element_creator",
-        "triple_brain.module.vertices_list_element":"../module/vertices_list/triple_brain.module.vertices_list_element",
-        "triple_brain.template.vertices_list":"../module/vertices_list/triple_brain.template.vertices_list"
+        "triple_brain.module.date_picker": "module/date_picker/triple_brain.module.date_picker",
+        "triple_brain.module.vertices_list":"module/vertices_list/triple_brain.module.vertices_list",
+        "triple_brain.module.vertices_list_creator":"module/vertices_list/triple_brain.module.vertices_list_creator",
+        "triple_brain.module.vertices_list_element_creator":"module/vertices_list/triple_brain.module.vertices_list_element_creator",
+        "triple_brain.module.vertices_list_element":"module/vertices_list/triple_brain.module.vertices_list_element",
+        "triple_brain.template.vertices_list":"module/vertices_list/triple_brain.template.vertices_list"
     },
     shim: {
         "crow": [],
