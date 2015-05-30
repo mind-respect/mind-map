@@ -12,15 +12,11 @@ define([
         "use strict";
         var urisToApply = [
             "http://rdf.freebase.com/rdf/type/datetime",
-            "//wikidata.org/wiki/Q1656682"
+            "//wikidata.org/wiki/Q1656682",
+            "/service/users/xfco1gsr2b/graph/vertex/de6a691b-36ee-4481-a0a0-4995ce113f3f"
         ];
 
         var api = {};
-        api.isAppliedToBubble = function(bubble){
-            return bubble.getHtml().find(
-                "> .datepicker"
-            ).length > 0;
-        };
         EventBus.subscribe(
             "/event/ui/graph/identification/added",
             handleIdentificationAdded
