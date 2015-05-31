@@ -31,7 +31,7 @@ define([
             function () {
                 $.each(_bubblesWithDatePicker, function () {
                     var bubble = this;
-                    if(bubble.isSelected()){
+                    if (bubble.isSelected()) {
                         return;
                     }
                     hideDatePicker(bubble);
@@ -62,7 +62,11 @@ define([
             html.datepicker({
                 container: "body",
                 autoclose: false
-            }).on("changeDate", function (event) {
+            }).datepicker(
+                "setDate",
+                graphElement.text()
+            );
+            html.on("changeDate", function (event) {
                 var bubble = BubbleFactory.fromSubHtml(
                     $(this)
                 );

@@ -65,6 +65,25 @@ define([
             ).toBeFalsy();
         });
 
+        it("parses the date of the bubble label to set it in the calendar", function () {
+            var bubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            bubble.setText("5/29/2013");
+            EventBus.publish(
+                "/event/ui/graph/identification/added",
+                [bubble, eventIdentification()]
+            );
+            var date = bubble.getHtml().datepicker("getDate");
+            expect(
+                date.getFullYear()
+            ).toBe(2013);
+            expect(
+                date.getMonth()
+            ).toBe(4);
+            expect(
+                date.getDate()
+            ).toBe(29);
+        });
+
         function eventIdentification() {
             return Identification.withUriAndLabel(
                 "//wikidata.org/wiki/Q1656682",
