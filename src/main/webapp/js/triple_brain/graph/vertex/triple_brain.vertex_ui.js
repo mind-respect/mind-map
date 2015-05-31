@@ -290,9 +290,6 @@ define([
         api.Object.prototype.makeSingleSelected = function () {
             this.showButtons();
         };
-        api.Object.prototype.isSelected = function () {
-            return this.html.hasClass("selected");
-        };
         api.Object.prototype.setIncludedVertices = function (includedVertices) {
             this.html.data(
                 "includedVertices",

@@ -7,8 +7,9 @@ define([
     'test/webapp/js/test-utils',
     'triple_brain.identification',
     'triple_brain.event_bus',
+    'triple_brain.selection_handler',
     'triple_brain.module.date_picker'
-], function (Scenarios, TestUtils, Identification, EventBus) {
+], function (Scenarios, TestUtils, Identification, EventBus, SelectionHandler) {
     "use strict";
     describe("module.date_picker", function () {
         it("applies date picker for some specific identifications", function () {
@@ -49,7 +50,19 @@ define([
         });
 
         it("hides datepicker when bubble is deselected", function () {
-
+            var bubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            EventBus.publish(
+                "/event/ui/graph/identification/added",
+                [bubble, eventIdentification()]
+            );
+            bubble.getLabel().click();
+            expect(
+                isVisible(bubble)
+            ).toBeTruthy();
+            SelectionHandler.removeAll();
+            expect(
+                isVisible(bubble)
+            ).toBeFalsy();
         });
 
         function eventIdentification() {

@@ -365,6 +365,10 @@ define([
             return this.getId() === bubble.getId();
         };
 
+        api.Self.prototype.isSelected = function () {
+            return this.html.hasClass("selected");
+        };
+
         EventBus.subscribe(
             '/event/ui/graph/vertex_and_relation/added/',
             function (event, triple, sourceBubble) {

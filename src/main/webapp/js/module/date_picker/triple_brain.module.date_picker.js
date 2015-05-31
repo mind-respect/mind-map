@@ -11,10 +11,11 @@ define([
     function ($, EventBus, BubbleFactory) {
         "use strict";
         var urisToApply = [
-            "http://rdf.freebase.com/rdf/type/datetime",
-            "//wikidata.org/wiki/Q1656682",
-            "/service/users/xfco1gsr2b/graph/vertex/de6a691b-36ee-4481-a0a0-4995ce113f3f"
-        ];
+                "http://rdf.freebase.com/rdf/type/datetime",
+                "//wikidata.org/wiki/Q1656682",
+                "/service/users/4x9zpdzn8n/graph/vertex/333628d9-32ba-4581-b6bc-9c4e66b6306b"
+            ],
+            _bubblesWithDatePicker = [];
 
         var api = {};
         EventBus.subscribe(
@@ -28,9 +29,14 @@ define([
         EventBus.subscribe(
             "/event/ui/selection/changed",
             function () {
-
-            }
-        );
+                $.each(_bubblesWithDatePicker, function () {
+                    var bubble = this;
+                    if(bubble.isSelected()){
+                        return;
+                    }
+                    hideDatePicker(bubble);
+                });
+            });
         return api;
         function handleIdentificationAdded(event, graphlement, identification) {
             if (isIdentificationADate(identification)) {
@@ -50,6 +56,9 @@ define([
 
         function applyDatePickerToVertex(graphElement) {
             var html = graphElement.getHtml();
+            _bubblesWithDatePicker.push(
+                graphElement
+            );
             html.datepicker({
                 container: "body",
                 autoclose: false
@@ -87,8 +96,9 @@ define([
 
         function isIdentificationADate(identification) {
             return urisToApply.indexOf(
-                identification.getExternalResourceUri()
-            ) !== -1;
+                    identification.getExternalResourceUri()
+                ) !== -1;
         }
     }
-);
+)
+;
