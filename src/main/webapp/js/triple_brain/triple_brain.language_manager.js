@@ -194,7 +194,7 @@ define([
             customLoad: function (lng, ns, options, loadComplete) {
                 var basePath = ns === "translation" ?
                     "locales/" :
-                "module/" + ns + "/locales/";
+                "/js/module/" + ns + "/locales/";
                 var url = basePath + lng + "/" + "translation" + ".json";
                 $.ajax({
                     url: url,

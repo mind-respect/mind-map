@@ -22,7 +22,7 @@ define([
                 Template['panel'].merge()
             );
             this.create = function () {
-                VerticesList = require("./triple_brain.module.vertices_list");
+                VerticesList = require("triple_brain.module.vertices_list");
                 LeftPanel.addHtml(html);
                 addTitle();
                 addSortMenu();

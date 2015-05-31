@@ -19,7 +19,7 @@ define([
 
         function VerticesListElementCreator(vertex, centralVertex){
             var BubbleDistanceCalculator = require("triple_brain.bubble_distance_calculator");
-            var VerticesList = require("./triple_brain.module.vertices_list");
+            var VerticesList = require("triple_brain.module.vertices_list");
             var html = $(Template['list_element'].merge());
             var verticesListElement = VerticesListElement.withHtml(html);
             this.create = function(){
