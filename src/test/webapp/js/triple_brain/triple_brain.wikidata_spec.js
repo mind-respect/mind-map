@@ -15,7 +15,7 @@ define([
             var getImageSpy = spyOn(
                 Wikidata,
                 "getImageForWikidataUri"
-            ).andCallFake(function(){
+            ).and.callFake(function(){
                     var deferred = $.Deferred();
                     deferred.resolve();
                     return deferred.promise();
@@ -25,7 +25,7 @@ define([
                 "Albert Einstein"
             );
             expect(
-                getImageSpy.calls.length
+                getImageSpy.calls.count()
             ).toBe(0);
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             Wikidata._beforeIdentificationAdded(
@@ -33,7 +33,7 @@ define([
                 wikidataIdentification
             );
             expect(
-                getImageSpy.calls.length
+                getImageSpy.calls.count()
             ).toBe(1);
             var nonWikidataIdentification = Identification.withUriAndLabel(
                 TestUtils.generateVertexUri(),
@@ -44,7 +44,7 @@ define([
                 nonWikidataIdentification
             );
             expect(
-                getImageSpy.calls.length
+                getImageSpy.calls.count()
             ).toBe(1);
         });
     });

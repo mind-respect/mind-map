@@ -8,7 +8,7 @@ define([
     "use strict";
     var api = {};
     api.addIdentificationMock = function () {
-        return spyOn(GraphElementService, "addIdentification").andCallFake(function(graphElement, identification, callback){
+        return spyOn(GraphElementService, "addIdentification").and.callFake(function(graphElement, identification, callback){
             GraphElementService._addIdentificationCallback(
                 graphElement,
                 identification,

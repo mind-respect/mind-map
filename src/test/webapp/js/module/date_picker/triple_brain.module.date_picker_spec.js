@@ -9,7 +9,7 @@ define([
     'triple_brain.event_bus',
     'triple_brain.selection_handler',
     'triple_brain.module.date_picker'
-], function (Scenarios, TestUtils, Identification, EventBus, SelectionHandler) {
+], function (Scenarios, TestUtils, Identification, EventBus, SelectionHandler, ModuleDatePicker) {
     "use strict";
     describe("module.date_picker", function () {
         it("applies date picker for some specific identifications", function () {
@@ -34,7 +34,7 @@ define([
             )).toBeTruthy();
         });
 
-        it("shows datepicker when clicking on label", function () {
+        it("shows datepicker when label is on focus", function () {
             var bubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
             EventBus.publish(
                 "/event/ui/graph/identification/added",
@@ -43,23 +43,23 @@ define([
             expect(
                 isVisible(bubble)
             ).toBeFalsy();
-            bubble.getLabel().click();
+            focus(bubble);
             expect(
                 isVisible(bubble)
             ).toBeTruthy();
         });
 
-        it("hides datepicker when bubble is deselected", function () {
+        it("hides datepicker when bubble is blurred", function () {
             var bubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
             EventBus.publish(
                 "/event/ui/graph/identification/added",
                 [bubble, eventIdentification()]
             );
-            bubble.getLabel().click();
+            focus(bubble);
             expect(
                 isVisible(bubble)
             ).toBeTruthy();
-            SelectionHandler.removeAll();
+            bubble.getLabel().blur();
             expect(
                 isVisible(bubble)
             ).toBeFalsy();
@@ -86,7 +86,7 @@ define([
 
         function eventIdentification() {
             return Identification.withUriAndLabel(
-                "//wikidata.org/wiki/Q1656682",
+                "//www.wikidata.org/wiki/Q1656682",
                 "event"
             );
         }
@@ -106,6 +106,17 @@ define([
         function getContainer(bubble) {
             return bubble.getHtml().find(
                 "> .datepicker"
+            );
+        }
+        function focus(bubble){
+            /*
+                I should use bubble.getLabel().focus() to trigger the focus
+                but I think its because of phantomjs, it doesnt trigger the focus!
+                When phantomjs fixes it or I figure I was doing something wrong
+                to refactor _handleFocus doesn't have to be exposed in ModuleDatePicker
+             */
+            ModuleDatePicker._handleFocus.call(
+                bubble.getLabel()
             );
         }
     });

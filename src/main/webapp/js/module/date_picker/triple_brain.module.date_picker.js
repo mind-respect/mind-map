@@ -12,12 +12,19 @@ define([
         "use strict";
         var urisToApply = [
                 "http://rdf.freebase.com/rdf/type/datetime",
-                "//wikidata.org/wiki/Q1656682",
-                "/service/users/4x9zpdzn8n/graph/vertex/333628d9-32ba-4581-b6bc-9c4e66b6306b"
+                "//www.wikidata.org/wiki/Q1656682"
             ],
             _bubblesWithDatePicker = [];
 
         var api = {};
+        api._handleFocus = function(){
+            showDatePicker(
+                BubbleFactory.fromSubHtml(
+                    $(this)
+                )
+            );
+        };
+
         EventBus.subscribe(
             "/event/ui/graph/identification/added",
             handleIdentificationAdded
@@ -26,17 +33,7 @@ define([
             '/event/ui/vertex/build_complete',
             handleVertexCreated
         );
-        EventBus.subscribe(
-            "/event/ui/selection/changed",
-            function () {
-                $.each(_bubblesWithDatePicker, function () {
-                    var bubble = this;
-                    if (bubble.isSelected()) {
-                        return;
-                    }
-                    hideDatePicker(bubble);
-                });
-            });
+
         return api;
         function handleIdentificationAdded(event, graphlement, identification) {
             if (isIdentificationADate(identification)) {
@@ -70,22 +67,40 @@ define([
                 var bubble = BubbleFactory.fromSubHtml(
                     $(this)
                 );
-                bubble.getLabel().focus().text(event.date.toLocaleDateString()).blur();
+                bubble.getLabel().off(
+                    "focus", api._handleFocus
+                ).off(
+                    "blur", handleBlur
+                ).focus().text(
+                    event.date.toLocaleDateString()
+                ).blur().on(
+                    "focus", api._handleFocus
+                ).on(
+                    "blur", handleBlur
+                );
                 hideDatePicker(bubble);
             });
-            hideDatePicker(graphElement);
-            graphElement.getLabel().click(function () {
-                showDatePicker(
-                    BubbleFactory.fromSubHtml(
+            getDatePickerContainer(
+                graphElement
+            ).on("mousedown", function () {
+                    var bubble = BubbleFactory.fromSubHtml(
                         $(this)
-                    )
-                );
-            });
+                    );
+                    bubble.getHtml().data("module.date_picker.has_clicked", true)
+                });
+            hideDatePicker(graphElement);
+            graphElement.getLabel().on(
+                "focus",
+                api._handleFocus
+            ).on(
+                "blur",
+                handleBlur
+            );
         }
 
         function hideDatePicker(graphElement) {
-            graphElement.getHtml().find(
-                "> .datepicker"
+            getDatePickerContainer(
+                graphElement
             ).addClass("hidden");
         }
 
@@ -93,8 +108,8 @@ define([
             graphElement.getHtml().datepicker(
                 "show"
             );
-            graphElement.getHtml().find(
-                "> .datepicker"
+            getDatePickerContainer(
+                graphElement
             ).removeClass("hidden");
         }
 
@@ -102,6 +117,29 @@ define([
             return urisToApply.indexOf(
                     identification.getExternalResourceUri()
                 ) !== -1;
+        }
+
+        function getDatePickerContainer(graphElement) {
+            return graphElement.getHtml().find(
+                "> .datepicker"
+            );
+        }
+
+        function handleBlur(){
+            var bubble = BubbleFactory.fromSubHtml(
+                $(this)
+            );
+            if(bubble.getHtml().data("module.date_picker.has_clicked")){
+                event.stopImmediatePropagation();
+                bubble.getHtml().data(
+                    "module.date_picker.has_clicked",
+                    false
+                );
+                return;
+            }
+            hideDatePicker(
+                bubble
+            );
         }
     }
 )

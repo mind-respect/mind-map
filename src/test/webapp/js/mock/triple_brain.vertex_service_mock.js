@@ -11,7 +11,7 @@ define([
     "use strict";
     var api = {};
     api.addRelationAndVertexToVertexMock = function () {
-        return spyOn(VertexService, "addRelationAndVertexToVertex").andCallFake(function (vertex, sourceBubble, callback) {
+        return spyOn(VertexService, "addRelationAndVertexToVertex").and.callFake(function (vertex, sourceBubble, callback) {
             var tripleJson = {};
             tripleJson.source_vertex = vertex.getOriginalServerObject().vertexServerFormat
             var newVertexUri = TestUtils.generateVertexUri();
@@ -29,7 +29,7 @@ define([
         });
     };
     api.removeVertex = function(){
-        return spyOn(VertexService, "remove").andCallFake(function(vertex, callback){
+        return spyOn(VertexService, "remove").and.callFake(function(vertex, callback){
             callback(vertex);
         });
     };

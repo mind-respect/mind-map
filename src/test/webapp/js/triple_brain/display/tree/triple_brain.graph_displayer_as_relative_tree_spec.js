@@ -229,10 +229,10 @@ define([
                 destinationVertex
             );
             expect(
-                spyOnEdgeCompleteBuild.calls.length
+                spyOnEdgeCompleteBuild.calls.count()
             ).toBe(1);
             expect(
-                spyOnVertexCompleteBuild.calls.length
+                spyOnVertexCompleteBuild.calls.count()
             ).toBe(1);
         });
         function connectDistantVertexTest(callback) {

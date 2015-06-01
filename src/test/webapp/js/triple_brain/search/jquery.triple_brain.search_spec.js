@@ -17,17 +17,17 @@ define([
             )[0];
             var getMoreInfoSpy = spyOn(searchResult.provider,
                 "getMoreInfoForSearchResult"
-            ).andCallFake(function (searchResult, callback) {
+            ).and.callFake(function (searchResult, callback) {
                     callback({
                         conciseSearchResult: searchResult
                     });
                 });
-            expect(getMoreInfoSpy.calls.length).toBe(0);
+            expect(getMoreInfoSpy.calls.count()).toBe(0);
             var listHtml = $("<div>");
             $Search._onFocusAction(searchResult, listHtml);
-            expect(getMoreInfoSpy.calls.length).toBe(1);
+            expect(getMoreInfoSpy.calls.count()).toBe(1);
             $Search._onFocusAction(searchResult, listHtml);
-            expect(getMoreInfoSpy.calls.length).toBe(1);
+            expect(getMoreInfoSpy.calls.count()).toBe(1);
         });
     });
 });

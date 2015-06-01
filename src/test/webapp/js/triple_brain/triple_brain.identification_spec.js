@@ -26,7 +26,7 @@ define([
             ).toBeFalsy();
             spyOn(searchResult.provider,
                 "getMoreInfoForSearchResult"
-            ).andCallFake(function (searchResult, callback) {
+            ).and.callFake(function (searchResult, callback) {
                     callback({
                         conciseSearchResult: searchResult,
                         image: Image.withBase64ForSmallAndUrlForBigger(

@@ -42,14 +42,14 @@ define([
     };
 
     api.mockUpdateLabel = function(){
-        return spyOn(FriendlyResourceService, "updateLabel").andCallFake(function(friendlyResource, label, callback){
+        return spyOn(FriendlyResourceService, "updateLabel").and.callFake(function(friendlyResource, label, callback){
             if (callback !== undefined) {
                 callback(friendlyResource);
             }
         });
     };
     api.mockAcceptSuggestion = function(){
-        return spyOn(SuggestionService, "accept").andCallFake(function(suggestionUi, callback){
+        return spyOn(SuggestionService, "accept").and.callFake(function(suggestionUi, callback){
             SuggestionService.acceptCallback(
                 TestUtils.generateVertexUri(),
                 TestUtils.generateEdgeUri(),
@@ -59,7 +59,7 @@ define([
         });
     };
     api.mockRemoveEdge = function(){
-        return spyOn(EdgeService, "remove").andCallFake(function(edge, callback){
+        return spyOn(EdgeService, "remove").and.callFake(function(edge, callback){
             callback(edge);
         });
     };
