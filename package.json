@@ -17,6 +17,7 @@
   "devDependencies": {
     "connect": "*",
     "serve-static": "*",
+    "grunt-cli": "*",
     "grunt-contrib-jasmine": "~0.8.2",
     "grunt-template-jasmine-requirejs": "~0.2.3",
     "grunt-contrib-requirejs": "*",
