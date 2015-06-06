@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<!--
+  ~ Copyright Vincent Blouin under the GPL License version 3
+  -->
+
+<html lang="en-au">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>bubl.guru</title>
+    <link rel="stylesheet" href="/css/twitter_bootstrap/3.3.4/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/twitter_bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/twitter_bootstrap/3.3.4/css/bootstrap-datepicker3.min.css"/>
+    <link rel="stylesheet" href="/css/jquery/jquery-ui-11-4/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="/css/jquery/colorbox/colorbox.css"/>
+    <link rel="stylesheet" href="/css/application.css"/>
+    <link rel="stylesheet" href="/font-awesome-4.0.3/css/font-awesome.min.css">
+
+    <!--Modules-->
+    <link rel="stylesheet" href="/js/module/vertices_list/vertices_list.css"/>
+    <link rel="stylesheet" href="/js/module/date_picker/date-picker.css"/>
+
+    <script src="/js/require.js"></script>
+</head>
+<body class='hidden' id="body">
+<div class="container">
+    <div class="page-header" id="app-presentation">
+        <h1>bubl.guru</h1>
+    </div>
+    <div class="hidden row" id="change-password-page">
+        <div class="col-lg-4">
+        </div>
+        <div class="col-lg-4 well well-lg">
+            <div>
+                <h4 data-i18n="change_password.title"></h4>
+            </div>
+            <div>
+                <div id="change-password-dont-match"
+                     class="alert alert-danger hidden"
+                     data-i18n="change_password.error.match" role="alert">
+                </div>
+                <div id="change-password-success"
+                     class="alert alert-success hidden"
+                     data-i18n="change_password.success" role="alert">
+                </div>
+                <div id="change-password-too-short"
+                     class="alert alert-danger hidden"
+                     data-i18n="change_password.error.too_short" role="alert">
+                </div>
+                <div id="change-password-wrong"
+                     class="alert alert-danger hidden"
+                     data-i18n="change_password.error.wrong" role="alert">
+                </div>
+                <form id="change-password-form" class="security-form" role="form">
+                    <div class="form-group">
+                        <label for="change-password-input" class="sr-only" data-i18n="change_password.input"></label>
+                        <input id="change-password-input" class="form-control" type="password"
+                               data-i18n="[placeholder]change_password.input">
+                    </div>
+                    <div class="form-group">
+                        <label for="change-password-repeat-input" class="sr-only"
+                               data-i18n="change_password.repeat"></label>
+                        <input id="change-password-repeat-input" class="form-control" type="password"
+                               data-i18n="[placeholder]change_password.repeat"/>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button id="forgot-password-submit" type="button" class="btn btn-primary"
+                            data-i18n="change_password.submit"></button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+        </div>
+    </div>
+
+    <div class="row hidden" id="welcome-content">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4 content">
+            <div class="row" id="big-search-box-container">
+                <div class="form-group form-group-lg col-xl-12">
+                    <div class="col-xl-12">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-search search-icon"></i>
+                            </div>
+                            <input type='text' class='form-control input-lg'
+                                   data-i18n="[placeholder]search.big.placeholder">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="security-form-wrapper row panel panel-default" id="authenticate">
+                <div class="panel-body">
+                    <div class="body">
+                        <div class="login-error alert alert-danger hidden" role="alert" data-i18n="login.error"></div>
+                        <div data-error="mandatory_email"
+                             class="alert alert-danger hidden"
+                             data-i18n="register.error.email_mandatory" role="alert">
+                        </div>
+
+                        <div data-error="invalid_email"
+                             class="alert alert-danger hidden"
+                             data-i18n="register.error.email_mandatory" role="alert">
+                        </div>
+
+                        <div data-error="email_too_long"
+                             class="alert alert-danger hidden"
+                             data-i18n="register.error.email_too_long" role="alert">
+                        </div>
+
+                        <div data-error="already_registered_email"
+                             class="alert alert-danger hidden"
+                             data-i18n="register.error.email_already_exists" role="alert">
+                        </div>
+
+                        <div data-error="mandatory_password"
+                             class="alert alert-danger hidden"
+                             data-i18n="register.error.password_mandatory" role="alert">
+                        </div>
+                        <div data-error="password_too_short"
+                             class="alert alert-danger hidden"
+                             data-i18n="register.error.password_too_short" role="alert">
+                        </div>
+                        <div data-error="inexistent-email"
+                             class="alert alert-danger hidden"
+                             data-i18n="forgot_password.error" role="alert">
+                        </div>
+                        <div class="forgot-password-email-sent alert alert-success hidden"
+                             data-i18n="forgot_password.success" role="alert">
+                        </div>
+                        <form class="login-form security-form well" role="form">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">@</div>
+                                    <label for="login-email-modal" class="sr-only" data-i18n="login.email"></label>
+                                    <input id="login-email-modal" class="login-email form-control" name="email"
+                                           type="email"
+                                           data-i18n="[placeholder]login.email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="login-password-modal" class="sr-only" data-i18n="login.password"></label>
+                                <input id="login-password-modal" class="login-password form-control" name="password"
+                                       type="password"
+                                       data-i18n="[placeholder]login.password"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row footer">
+                        <div class="col-lg-12 text-center">
+                            <button type="button" class="login-button btn btn-primary"
+                                    data-i18n="login.login"></button>
+                            <button type="button" class="register-link btn btn-primary"
+                                    data-i18n="login.register"></button>
+                            <button type="button" class="forgot-password-link btn btn-primary"
+                                    data-i18n="forgot_password.button"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row text-center">
+                <h4>
+                    <a href="http://about.bubl.guru" data-i18n="login.about"></a>
+                </h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4"></div>
+</div>
+<div id="other-page-container" class='hidden'></div>
+<div id="mind_map">
+    <div>
+        <div id="left-panel" class="main-panel row"></div>
+        <button id="toggle-left-panel-collapse" class="link-like-button">
+            <<
+        </button>
+        <div id="drawn_graph"></div>
+        <div id="bottom-center-panel" class="main-panel">
+            <div class="legend-container">
+                <span data-i18n="caption.title"></span>:
+                <div class="private legend" data-i18n="caption.private"></div>
+                <div class="public legend" data-i18n="caption.public"></div>
+            </div>
+        </div>
+        <div id="top-center-menu" class="main-panel top-panel">
+            <div class="row">
+                <div id="search-component" class="col-md-12">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-search"></i>
+                            </div>
+                            <input id="vertex-search-input" data-i18n="[placeholder]left_menu.search"
+                                   class='form-control input-md11'/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="graph-elements-selected" class="hidden row">
+                <div class="col-md-12 text-center">
+                    <span class='nb'></span>
+                    <span data-i18n='selection.selected_graph_elements'></span>
+                </div>
+            </div>
+        </div>
+        <div id="top-panel" class="main-panel top-panel">
+            <div class="link-like-button">
+                <div class="dropdown">
+                    <a id="select-button" data-toggle="dropdown" data-i18n='top_menu.selection.title'></a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <li>
+                            <a href="" id="select-all-bubbles" role="menuitem"
+                               data-i18n='top_menu.selection.bubbles'></a>
+                        </li>
+                        <li>
+                            <a href="" id="select-all-relations" role="menuitem"
+                               data-i18n='top_menu.selection.relations'></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <button id="login-register" class="link-like-button"
+                    data-i18n="top_menu.login_register"></button>
+            <div class="link-like-button" id="create-menu">
+                <div class="dropdown">
+                    <a data-toggle="dropdown" data-i18n='top_menu.create.title'></a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <li>
+                            <a href="" id="create-concept" role="menuitem"
+                               data-i18n='top_menu.create.bubble'></a>
+                        </li>
+                        <li>
+                            <a href="" id="create-schema" role="menuitem"
+                               data-i18n='top_menu.create.schema'></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="link-like-button" id="user-menu">
+                <div class="dropdown">
+                    <a data-toggle="dropdown" class="fa fa-user">
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <li>
+                            <a href="" role="menuitem" id="disconnect-btn"
+                               data-i18n='top_menu.disconnect'></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div id="graph-element-menu" class="main-panel hidden-sm hidden-xs">
+            <button data-action="accept" data-icon="fa-check" class="graph-element-button"></button>
+            <button data-action="select" data-icon="fa-square-o" class="graph-element-button"></button>
+            <button data-action="group" data-icon="fa-compress" class="graph-element-button"></button>
+            <button data-action="addChild" data-icon="fa-arrow-right" class="graph-element-button"></button>
+            <button data-action="addSibling" data-icon="fa-arrows-v" class="graph-element-button"></button>
+            <button data-action="note" data-icon="fa-book" class="note-button graph-element-button"></button>
+            <button data-action="identify" data-icon="fa-info-circle" class="graph-element-button"></button>
+            <button data-action="reverseToRight" data-icon="fa-share" class="graph-element-button"></button>
+            <button data-action="reverseToLeft" data-icon="fa-reply" class="graph-element-button"></button>
+            <button data-action="suggestions" data-icon="fa-lightbulb-o"
+                    class="suggestion graph-element-button"></button>
+            <button data-action="subElements" data-icon="fa-expand" class="graph-element-button"></button>
+            <button data-action="center" data-icon="fa-bullseye" class="graph-element-button"></button>
+            <button data-action="images" data-icon="fa-picture-o" class="graph-element-button"></button>
+            <button data-action="connectTo" data-icon="fa-long-arrow-right"
+                    class="graph-element-button"></button>
+            <button data-action="makePublic" data-icon="fa-unlock" class="graph-element-button"></button>
+            <button data-action="makePrivate" data-icon="fa-lock" class="graph-element-button"></button>
+            <button data-action="remove" data-icon="fa-trash-o" class="graph-element-button"></button>
+        </div>
+    </div>
+</div>
+<div class='frontier left-frontier'></div>
+<div class='frontier right-frontier'></div>
+<div class='frontier top-frontier'></div>
+<div class='frontier bottom-frontier'></div>
+<div id="selection-box" class='hidden'></div>
+</div>
+
+<div class="security-form-wrapper modal fade row" id="login-page-modal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span
+                            class="sr-only">Close</span></button>
+                <h4 class="modal-title" data-i18n="login.title"></h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+<% if(isDebug){ %>
+<script src="/js/common-boot.js"></script>
+<script src="/js/mind_map-boot.js"></script>
+<% } else { %>
+<script src="/js/mind-map-built.js"></script>
+<% } %>
+</body>
+</html>

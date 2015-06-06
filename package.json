@@ -1,0 +1,26 @@
+{
+  "name": "mind_map",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "ejs": "*",
+    "compression": "*",
+    "body-parser": "~1.12.4",
+    "cookie-parser": "~1.3.5",
+    "debug": "~2.2.0",
+    "express": "~4.12.4",
+    "morgan": "~1.5.3",
+    "serve-favicon": "~2.2.1"
+  },
+  "devDependencies": {
+    "connect": "*",
+    "serve-static": "*",
+    "grunt-contrib-jasmine": "~0.8.2",
+    "grunt-template-jasmine-requirejs": "~0.2.3",
+    "grunt-contrib-requirejs": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-contrib-connect": "*"
+  }
+}
