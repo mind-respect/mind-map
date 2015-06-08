@@ -10,6 +10,7 @@ define([
     "triple_brain.id_uri",
     "triple_brain.search_result"
 ], function ($, SearchService, GraphElementType, IdentificationContext, IdUri, SearchResult) {
+    "use strict";
     var api = {};
     api.toFetchOnlyCurrentUserVertices = function () {
         return new UserMapAutoCompleteProvider(

@@ -30,8 +30,12 @@ define([
                 stop: function () {
                     var menu = $(this);
                     var topOff = menu.offset().top - $(window).scrollTop();
-                    menu.css("top", topOff);
-                    menu.css("position", "fixed")
+                    menu.css(
+                        "top", topOff
+                    ).css(
+                        "position",
+                        "fixed"
+                    );
                 }
             }).tooltip();
             function initButtons() {

@@ -26,8 +26,8 @@ define([
         api.buildCommonConstructors = function (api) {
             GraphElementUi.buildCommonConstructors(api);
             api.visitAllVertices = function (visitor) {
-                api.visitAll(function(element){
-                    if(element.isVertex()){
+                api.visitAll(function (element) {
+                    if (element.isVertex()) {
                         visitor(element);
                     }
                 });
@@ -41,7 +41,7 @@ define([
         api.Object = function (html) {
             this.html = html;
         };
-        api.Object.prototype = new IdentifiedBubble.Object;
+        api.Object.prototype = new IdentifiedBubble.Object();
         api.Object.prototype.init = function () {
             IdentifiedBubble.Object.apply(this, [this.html]);
             return this;
@@ -103,7 +103,7 @@ define([
                     Error.withName(
                         "no_intersection"
                     )
-                    );
+                );
             }
             return this.getSegments().intersectionPointWithSegment(segmentToCompare);
         };
@@ -195,15 +195,19 @@ define([
                 existingSuggestions;
             var mergedSuggestions = existingSuggestions.concat(suggestions);
             this.html.data('suggestions', mergedSuggestions);
-            mergedSuggestions.length > 0 ?
-                this.showSuggestionButton() :
-                this.hideSuggestionButton();
+            if (mergedSuggestions.length > 0) {
+                this.showSuggestionButton();
+                return;
+            }
+            this.hideSuggestionButton();
         };
         api.Object.prototype.setSuggestions = function (suggestions) {
             this.html.data('suggestions', suggestions);
-            suggestions.length > 0 ?
-                this.showSuggestionButton() :
-                this.hideSuggestionButton();
+            if (suggestions.length > 0) {
+                this.showSuggestionButton();
+                return;
+            }
+            this.hideSuggestionButton();
         };
 
         api.Object.prototype.serverFacade = function () {

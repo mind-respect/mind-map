@@ -3,12 +3,10 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
-/**
- * Copyright Mozilla Public License 1.1
- */
 define(
     [],
     function() {
+        "use strict";
         return {
             withName : function(name){
                 new Error(name, "");
@@ -22,13 +20,14 @@ define(
             log();
             this.name = function(){
                 return name;
-            }
+            };
             this.message = function(){
                 return message;
-            }
+            };
             function log(){
                 console.log('error name : ' + name + " message : " + message);
             }
         }
 
-    })
+    }
+);

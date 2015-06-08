@@ -2,7 +2,10 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
-define([], function () {
+define([
+    "jquery"
+], function ($) {
+    "use strict";
     var api = {};
     api.fromHtml = function (html) {
         return new Self(

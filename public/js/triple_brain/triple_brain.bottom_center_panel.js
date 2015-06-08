@@ -3,9 +3,10 @@
  */
 
 define([
+    "jquery",
     "triple_brain.mind_map_info",
     "triple_brain.event_bus"
-], function (MindMapInfo, EventBus) {
+], function ($, MindMapInfo, EventBus) {
     "use strict";
     var api = {};
     EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function () {

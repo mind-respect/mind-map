@@ -67,7 +67,7 @@ define([
                         uri,
                         id
                     ]);
-            })
+            });
         };
         api.updateLabel = function (vertex, label, callback) {
             FriendlyResourceService.updateLabel(
@@ -112,7 +112,7 @@ define([
                 vertex,
                 typeToRemove,
                 callback
-            )
+            );
         };
         api.addSameAs = function (vertex, sameAs, callback) {
             GraphElementService.addSameAs(
@@ -243,7 +243,9 @@ define([
             var verticesUri = [];
             $.each(vertices, function () {
                 var vertex = this;
-                verticesUri.push(vertex.getUri())
+                verticesUri.push(
+                    vertex.getUri()
+                );
             });
             $.ajax({
                 type: 'POST',
@@ -259,9 +261,8 @@ define([
                 url: vertex.getUri() + '/public_access'
             }).success(callback);
         }
-
         function getVerticesUrl() {
-            return UserService.currentUserUri() + "/graph/vertex"
+            return UserService.currentUserUri() + "/graph/vertex";
         }
     }
 );

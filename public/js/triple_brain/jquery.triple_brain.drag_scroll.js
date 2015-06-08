@@ -9,6 +9,7 @@ define([
         "triple_brain.ui.utils"
     ],
     function ($, Point, Segment, UiUtils) {
+        "use strict";
         $.fn.dragScroll = function (options) {
             if (options === undefined) {
                 options = {};

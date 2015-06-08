@@ -27,7 +27,7 @@ define([
             uri: uri,
             label: label,
             comment: description
-        }
+        };
     };
     api.withUri = function (uri) {
         return api.withUriAndLabel(
@@ -45,7 +45,7 @@ define([
             api.buildObjectWithUriLabelAndDescription(uri, label, description)
         );
     };
-    api.Self = function () {};
+    api.Self = function () {    };
 
     api.Self.prototype.init = function (friendlyResourceServerFormat) {
         this.friendlyResourceServerFormat = friendlyResourceServerFormat;
@@ -106,7 +106,7 @@ define([
         );
     };
     api.Self.prototype.getServerFormat = function () {
-        return this.friendlyResourceServerFormat
+        return this.friendlyResourceServerFormat;
     };
     api.Self.prototype._buildImages = function () {
         return undefined === this.friendlyResourceServerFormat.images ?

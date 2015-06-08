@@ -3,14 +3,14 @@
  */
 
 define([
+    "jquery",
     "triple_brain.graph_element",
     "triple_brain.edge",
     "triple_brain.schema",
     "triple_brain.property",
     "triple_brain.vertex",
     "triple_brain.graph_element_type"
-
-], function (GraphElement, Edge, Schema, Property, Vertex, GraphElementType) {
+], function ($, GraphElement, Edge, Schema, Property, Vertex, GraphElementType) {
     "use strict";
     var api = {};
     api.fromServerFormat = function (searchResult) {
@@ -103,7 +103,7 @@ define([
         return relationsName.filter(
             function (relationName, position) {
                 return relationName !== "" &&
-                    relationsName.indexOf(relationName) == position;
+                    relationsName.indexOf(relationName) === position;
             }
         );
     };

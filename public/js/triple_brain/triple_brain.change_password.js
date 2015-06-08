@@ -24,7 +24,7 @@ define([
                 getToken(),
                 changePasswordSuccess,
                 changePasswordError
-            )
+            );
         });
     };
     api.isChangePasswordFlow = function(){

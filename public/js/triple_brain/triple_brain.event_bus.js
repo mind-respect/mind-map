@@ -6,6 +6,7 @@ define([
         "jquery"
     ],
     function ($) {
+        "use strict";
         var promises = {};
         return {
             subscribe: function (events, fn) {

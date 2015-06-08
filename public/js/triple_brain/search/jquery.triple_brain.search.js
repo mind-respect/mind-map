@@ -6,6 +6,7 @@ define([
     "jquery",
     "jquery-ui"
 ], function ($) {
+    "use strict";
     var enterKeyCode = 13,
         api = {},
         detailsCache = {};
@@ -59,7 +60,7 @@ define([
                         var allResults = [],
                             i = 0;
                         $.each(arguments, function () {
-                            var results = jQuery.isArray(this) ? this[0] : this;
+                            var results = $.isArray(this) ? this[0] : this;
                             var resultProvider = options.resultsProviders[i];
                             allResults = allResults.concat(
                                 resultProvider.formatResults(
@@ -259,7 +260,7 @@ define([
                 position = {
                     x: listPosition.left - moreInfoPanel.width(),
                     y: listPosition.top
-                }
+                };
             } else {
                 position = rightAlignedPosition;
             }
