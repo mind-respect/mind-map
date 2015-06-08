@@ -7,6 +7,7 @@ define([
     "triple_brain.graph_displayer",
     "jquery-ui"
 ], function ($, GraphDisplayer) {
+    "use strict";
     var api = {};
     api.setupAutoCompleteSuggestionZIndex = function (input) {
         //http://stackoverflow.com/a/17178927/541493
