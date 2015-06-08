@@ -27,7 +27,7 @@ define([
                 suggestions.length
             ).toBe(4);
         });
-        it("can handle freebase search results", function(){
+        it("can handle wikidata search results", function(){
             var searchProvider = WikidataAutocompleteProvider.build(),
                 formattedSearchResults = searchProvider.formatResults(
                     new Scenarios.getWikidataSearchResultForProject().get(),

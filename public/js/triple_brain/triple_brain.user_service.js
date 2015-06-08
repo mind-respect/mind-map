@@ -86,6 +86,7 @@ define([
                 type: 'GET',
                 url: usersResourceUrl + "is_authenticated"
             }).success(function (isAuthenticated) {
+
                 isAuthenticated.is_authenticated ?
                     isAuthenticatedCallBack() :
                     isNotAuthenticatedCallBack()
