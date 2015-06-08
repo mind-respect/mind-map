@@ -3,10 +3,11 @@
  */
 
 define([
+    "jquery",
     "triple_brain.wikidata_uri",
     "triple_brain.image",
     "triple_brain.event_bus"
-], function (WikidataUri, Image, EventBus) {
+], function ($, WikidataUri, Image, EventBus) {
     "use strict";
     var api = {};
     api.getImageForWikidataUri = function (wikidataUri) {

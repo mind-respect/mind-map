@@ -3,8 +3,9 @@
  */
 
 define([
+    "jquery",
     "triple_brain.event_bus"
-], function (EventBus) {
+], function ($, EventBus) {
     "use strict";
     describe("event_bus", function () {
         beforeEach(function () {

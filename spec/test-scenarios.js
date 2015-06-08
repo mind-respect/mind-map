@@ -3,6 +3,7 @@
  */
 
 define([
+        "jquery",
         "text!test/test-scenarios-data.json",
         "triple_brain.vertex",
         "triple_brain.edge",
@@ -28,7 +29,8 @@ define([
         "triple_brain.language_manager",
         "text!locales/en/translation.json"
     ],
-    function (TestScenarioData, Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, TestUtils, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, EventBus, Suggestion, Identification, FriendlyResource, LanguageManager, enTranslation) {
+    function ($, TestScenarioData, Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, TestUtils, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, EventBus, Suggestion, Identification, FriendlyResource, LanguageManager, enTranslation) {
+        "use strict";
         var api = {},
             testData = JSON.parse(TestScenarioData);
         $.i18n.init({
@@ -45,7 +47,7 @@ define([
 
         api.deepGraph = function () {
             this.getGraph = function () {
-                return getTestData("deepGraph");
+                return api._getTestData("deepGraph");
             };
             this.getCenterVertex = function () {
                 var graph = this.getGraph();
@@ -66,10 +68,10 @@ define([
         api.deepGraphWithCircularity = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
-                return getTestData("deepGraphWithCircularity");
+                return api._getTestData("deepGraphWithCircularity");
             };
             this.getCenterBubbleUri = function () {
-                return uriOfVertexWithLabel(this.getGraph(), "b3")
+                return uriOfVertexWithLabel(this.getGraph(), "b3");
             };
             this.getBubble1InTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("b1");
@@ -90,9 +92,8 @@ define([
                 includedElementsTree,
                 self = this;
             this.getGraph = function () {
-                return getTestData("mergeBubbleGraph");
+                return api._getTestData("mergeBubbleGraph");
             };
-
             this.getMergeBubble = function () {
                 return Vertex.fromServerFormat(this.getGraph().vertices[
                         uriOfVertexWithLabel(this.getGraph(), "merge")
@@ -105,7 +106,7 @@ define([
                     getIncludedElementsTree()
                 ).getBubbleWithLabelInTree(
                     "b1"
-                )
+                );
             };
 
             this.getBubble2 = function () {
@@ -113,7 +114,7 @@ define([
                     getIncludedElementsTree()
                 ).getBubbleWithLabelInTree(
                     "b2"
-                )
+                );
             };
 
             this.getBubble3 = function () {
@@ -121,14 +122,14 @@ define([
                     getIncludedElementsTree()
                 ).getBubbleWithLabelInTree(
                     "b3"
-                )
+                );
             };
             this.getBubble4 = function () {
                 return new api.TreeQuerier(
                     getIncludedElementsTree()
                 ).getBubbleWithLabelInTree(
                     "b4"
-                )
+                );
             };
 
             this.getRelation1 = function () {
@@ -136,7 +137,7 @@ define([
                     getIncludedElementsTree()
                 ).getRelationWithLabelInTree(
                     "r1"
-                )
+                );
             };
 
             this.getRelation2 = function () {
@@ -144,7 +145,7 @@ define([
                     getIncludedElementsTree()
                 ).getRelationWithLabelInTree(
                     "r2"
-                )
+                );
             };
 
             this.getRelation4 = function () {
@@ -152,11 +153,11 @@ define([
                     getIncludedElementsTree()
                 ).getRelationWithLabelInTree(
                     "r4"
-                )
+                );
             };
 
             this.getCenterBubbleUri = function () {
-                return uriOfVertexWithLabel(this.getGraph(), "merge")
+                return uriOfVertexWithLabel(this.getGraph(), "merge");
             };
 
             this.getMergeBubbleInTree = function () {
@@ -183,7 +184,7 @@ define([
         api.threeBubblesGraph = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
-                return getTestData(
+                return api._getTestData(
                     "threeBubblesGraph.getGraph"
                 );
             };
@@ -207,13 +208,13 @@ define([
                  b3-r4->b5
                  b4 has hidden relations
                  */
-                return getTestData(
+                return api._getTestData(
                     "threeBubblesGraph.getSurroundBubble3Graph"
                 );
             }
 
             this.getCenterBubbleUri = function () {
-                return uriOfVertexWithLabel(this.getGraph(), "b1")
+                return uriOfVertexWithLabel(this.getGraph(), "b1");
             };
             this.getBubble1 = function () {
                 return Vertex.fromServerFormat(this.getGraph().vertices[
@@ -285,7 +286,7 @@ define([
              */
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
-                return getTestData(
+                return api._getTestData(
                     "graphWithHiddenSimilarRelations.b1Graph"
                 );
             };
@@ -295,13 +296,13 @@ define([
             this.expandBubble2 = function (bubble2) {
                 return GraphDisplayerAsRelativeTree.addChildTreeUsingGraph(
                     bubble2,
-                    getTestData(
+                    api._getTestData(
                         "graphWithHiddenSimilarRelations.b2Graph"
                     )
                 );
             };
             this.getB2GraphWhenConnectedToDistantBubble = function () {
-                return getTestData(
+                return api._getTestData(
                     "graphWithHiddenSimilarRelations.b2GraphWhenConnectedToDistantBubble"
                 );
             };
@@ -326,7 +327,7 @@ define([
         api.getDistantGraph = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
-                return getTestData(
+                return api._getTestData(
                     "graphWithHiddenSimilarRelations.distantBubbleGraph"
                 );
             };
@@ -351,7 +352,7 @@ define([
              * me <-going inverse-inverse bubble
              */
             this.getGraph = function () {
-                return getTestData("graphWithAnInverseRelation");
+                return api._getTestData("graphWithAnInverseRelation");
             };
             this.getCenterVertex = function () {
                 return Vertex.fromServerFormat(graph.vertices[
@@ -364,10 +365,10 @@ define([
         api.GraphWithSimilarRelationsScenario = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
-                return getTestData("graphWithSimilarRelations");
+                return api._getTestData("graphWithSimilarRelations");
             };
             this.getCenterBubbleUri = function () {
-                return uriOfVertexWithLabel(this.getGraph(), "me")
+                return uriOfVertexWithLabel(this.getGraph(), "me");
             };
             var graph = this.getGraph();
             this.getCenterVertex = function () {
@@ -436,19 +437,19 @@ define([
         api.groupRelationWithImage = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
-                return getTestData("groupRelationWithImage");
+                return api._getTestData("groupRelationWithImage");
             };
-            this.getIdeaGroupRelationInTree = function(){
+            this.getIdeaGroupRelationInTree = function () {
                 return treeBuilder.getRelationWithLabelInTree("idea");
             };
-            this.getComponentGroupRelationInTree = function(){
+            this.getComponentGroupRelationInTree = function () {
                 return treeBuilder.getRelationWithLabelInTree("component");
             };
             this.getSomeProject = function () {
                 return treeBuilder.getBubbleWithLabelInTree("some project");
             };
             this.getCenterBubbleUri = function () {
-                return uriOfVertexWithLabel(this.getGraph(), "some project")
+                return uriOfVertexWithLabel(this.getGraph(), "some project");
             };
             Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
         };
@@ -458,10 +459,9 @@ define([
              * Has a generic identification to freebase "Event" http://rdf.freebase.com/rdf/m/02xm94t
              * Has 2 suggestions
              */
-            var treeBuilder = new TreeBuilder(this),
-                hasShownSuggestions = false;
+            var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
-                return getTestData("oneBubbleHavingSuggestionsGraph");
+                return api._getTestData("oneBubbleHavingSuggestionsGraph");
             };
             var graph = this.getGraph();
             this.getVertex = function () {
@@ -478,7 +478,7 @@ define([
             this.getAnySuggestionInTree = function () {
                 var eventBubble = this.getVertexUi();
                 GraphDisplayerAsRelativeTree.showSuggestions(eventBubble);
-                return eventBubble.getTopMostChildBubble().getTopMostChildBubble()
+                return eventBubble.getTopMostChildBubble().getTopMostChildBubble();
             };
             this.getOneSuggestion = function () {
                 return this.getVertex().getSuggestions()[0];
@@ -506,7 +506,7 @@ define([
              location identified to Freebase Location
              */
             this.getGraph = function () {
-                return getTestData("karaokeSchemaGraph");
+                return api._getTestData("karaokeSchemaGraph");
             };
             var graph = this.getGraph();
             this.getSchema = function () {
@@ -565,7 +565,7 @@ define([
 
         api.getWikidataSearchResultForProject = function () {
             this.get = function () {
-                return getTestData(
+                return api._getTestData(
                     "wikidataSearchResultForProject"
                 );
             };
@@ -573,7 +573,7 @@ define([
 
         api.getSearchResultsForProject = function () {
             this.get = function () {
-                return getTestData(
+                return api._getTestData(
                     "projectSchema.searchResultsForProject"
                 );
             };
@@ -582,13 +582,13 @@ define([
         api.graphWithARelationInTwoSimilarRelationsGroup = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
-                return getTestData("projectSchema.someProjectGraph");
+                return api._getTestData("projectSchema.someProjectGraph");
             };
             this.getCenterBubbleUri = function () {
                 return uriOfVertexWithLabel(
                     this.getGraph(),
                     "some project"
-                )
+                );
             };
             this.getSomeProjectInTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("some project");
@@ -620,7 +620,7 @@ define([
 
         api.getSchemaProjectDetailsSearchResult = function () {
             this.get = function () {
-                return getTestData(
+                return api._getTestData(
                     "projectSchema.projectSearchDetails"
                 );
             };
@@ -628,7 +628,7 @@ define([
 
         api.impactOnSocietyPropertySearchDetails = function () {
             this.get = function () {
-                return getTestData(
+                return api._getTestData(
                     "projectSchema.impactOnSocietySearchDetails"
                 );
             };
@@ -636,21 +636,21 @@ define([
 
         api.getSearchResultsForImpact = function () {
             this.get = function () {
-                return getTestData(
+                return api._getTestData(
                     "projectSchema.searchResultsForImpact"
                 );
             };
         };
         api.getSearchResultForB1 = function () {
             this.get = function () {
-                return getTestData(
+                return api._getTestData(
                     "threeBubblesGraph.searchResultsForB1"
                 );
             };
         };
         api.getSearchResultForR2 = function () {
             this.get = function () {
-                return getTestData(
+                return api._getTestData(
                     "threeBubblesGraph.searchResultsForR2"
                 );
             };
@@ -658,14 +658,14 @@ define([
         api.graphWithCircularityScenario = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
-                return getTestData(
+                return api._getTestData(
                     "graphWithCircularity.b1Graph"
                 );
             };
             this.expandBubble2 = function (bubble2) {
                 return GraphDisplayerAsRelativeTree.addChildTreeUsingGraph(
                     bubble2,
-                    getTestData(
+                    api._getTestData(
                         "graphWithCircularity.b2Graph"
                     )
                 );
@@ -673,7 +673,7 @@ define([
             this.expandBubble3 = function (bubble3) {
                 return GraphDisplayerAsRelativeTree.addChildTreeUsingGraph(
                     bubble3,
-                    getTestData(
+                    api._getTestData(
                         "graphWithCircularity.b3Graph"
                     )
                 );
@@ -689,7 +689,7 @@ define([
                 return uriOfVertexWithLabel(
                     this.getGraph(),
                     "b1"
-                )
+                );
             };
             this.getBubble1InTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree(
@@ -723,6 +723,18 @@ define([
                     tree.find(".group-relation").has(".label:contains(" + label + ")")
                 );
             };
+        };
+        api._getTestData = function(key) {
+            var splitKey = key.split(/\./),
+                data = testData;
+            while (splitKey.length && data) {
+                data = data[splitKey.shift()];
+            }
+            var deep = true;
+            if (data.constructor === Array) {
+                return data.slice();
+            }
+            return $.extend(deep, {}, data);
         };
         return api;
         function uriOfVertexWithLabel(graph, label) {
@@ -822,19 +834,6 @@ define([
                     this.build()
                 ).getRelationWithLabelInTree(label);
             };
-        }
-
-        function getTestData(key) {
-            var splitKey = key.split(/\./),
-                data = testData;
-            while (splitKey.length && data) {
-                data = data[splitKey.shift()];
-            }
-            var deep = true;
-            if (data.constructor === Array) {
-                return data.slice();
-            }
-            return $.extend(deep, {}, data)
         }
     }
 );

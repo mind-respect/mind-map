@@ -8,6 +8,7 @@ define(
         "triple_brain.point"
     ],
     function($, Point){
+        "use strict";
         var api = {};
         api.positionLeft = function(componentToPosition, staticComponent){
             var horizontalBuffer = 16;
@@ -61,7 +62,7 @@ define(
         };
 
         api.getBrowserSafeScrollY = function(){
-            return Math.max($('body').scrollTop(), $('html').scrollTop())
+            return Math.max($('body').scrollTop(), $('html').scrollTop());
         };
 
         api.doComponentsCollide = function($div1, $div2){
@@ -103,4 +104,4 @@ define(
             return position.y < 10;
         }
     }
-)
+);

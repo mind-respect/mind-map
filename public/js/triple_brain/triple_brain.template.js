@@ -3,23 +3,23 @@
  */
 
 define([
-    "jquery",
-    "jquery.nano"
-],
+        "jquery",
+        "jquery.nano"
+    ],
     function ($) {
+        "use strict";
         var api = {};
-        api.withTemplateGroup = function(templateGroup){
+        api.withTemplateGroup = function (templateGroup) {
             return new Template(templateGroup);
         };
-
-        function Template(templateGroup){
-            this.add = function(name, html){
+        function Template(templateGroup) {
+            this.add = function (name, html) {
                 templateGroup[name] = {
-                    merge:function (obj) {
+                    merge: function (obj) {
                         return $($.nano(html, obj || null));
                     }
-                }
-            }
+                };
+            };
         }
         return api;
     }

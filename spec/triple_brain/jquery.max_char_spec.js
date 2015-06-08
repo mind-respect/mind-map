@@ -48,7 +48,7 @@ define([
             editable.maxChar();
             expect(
                 contentOfLineNumber(editable.text(), 2)
-            ).toBe(word)
+            ).toBe(word);
         });
 
         function addNumberOfChars(target, number){

@@ -3,16 +3,17 @@
  */
 
 define([
-    "triple_brain.point",
-    "triple_brain.transform_matrix_2d",
-    "triple_brain.error"
-],
+        "triple_brain.point",
+        "triple_brain.transform_matrix_2d",
+        "triple_brain.error"
+    ],
     function (Point, TransformMatrix2d, Error) {
+        "use strict";
         var api = {
-            withStartAndEndPoint:function (startPoint, endPoint) {
+            withStartAndEndPoint: function (startPoint, endPoint) {
                 return new Segment(startPoint, endPoint);
             },
-            withStartAndEndPointAtOrigin:function () {
+            withStartAndEndPointAtOrigin: function () {
                 return new Segment(
                     Point.centeredAtOrigin(),
                     Point.centeredAtOrigin()
@@ -23,17 +24,17 @@ define([
         function Segment(startPoint, endPoint) {
             this.startPoint = startPoint;
             this.endPoint = endPoint;
-            this.getStartPoint = function(){
+            this.getStartPoint = function () {
                 return startPoint;
             };
-            this.getEndPoint = function(){
+            this.getEndPoint = function () {
                 return endPoint;
             };
             this.middlePoint = function () {
                 return Point.fromCoordinates(
                     (this.startPoint.x + this.endPoint.x) / 2,
                     (this.startPoint.y + this.endPoint.y) / 2
-                )
+                );
             };
             this.intersectsWithSegment = function (segmentToCompare) {
                 var lengthCross = this.length().cross(segmentToCompare.length());
@@ -51,7 +52,7 @@ define([
                         Error.withName(
                             "no_intersection"
                         )
-                        );
+                    );
                 }
                 var intersectionPoint = Point.centeredAtOrigin();
 

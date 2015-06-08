@@ -33,7 +33,7 @@ define([
         api.init = function (callback) {
             console.log("intiliazing cometd");
             cometd.addListener('/meta/handshake', function (handshake) {
-                _metaHandshake(handshake, callback)
+                _metaHandshake(handshake, callback);
             });
             cometd.addListener('/meta/connect', _metaConnect);
             cometd.addListener('/meta/subscribe', _metaSubscribe);
@@ -48,7 +48,7 @@ define([
                 );
                 var subscriptionInfo = cometd.subscribe(event, function (message) {
                     notificationCallBack(
-                        $.parseJSON(
+                        JSON.parse(
                             message.data
                         )
                     );
@@ -99,7 +99,7 @@ define([
             if (handshake.successful === true) {
                 callback();
             } else {
-                console.log("failed to handshake push server")
+                console.log("failed to handshake push server");
             }
         }
     }

@@ -3,12 +3,13 @@
  */
 
 define([
+        "jquery",
         "triple_brain.id_uri",
         "triple_brain.user_service",
         "triple_brain.event_bus",
         "jquery.url"
     ],
-    function (IdUriUtils, UserService, EventBus) {
+    function ($, IdUriUtils, UserService, EventBus) {
         "use strict";
         var api = {},
             _isViewOnly,
@@ -17,7 +18,7 @@ define([
             return window.location.origin + "?bubble=" + bubbleUri;
         };
         api.defaultVertexUri = function () {
-            return UserService.currentUserUri() + '/graph/vertex/any'
+            return UserService.currentUserUri() + '/graph/vertex/any';
         };
         api.isCenterBubbleUriDefinedInUrl = function () {
             return api._getCenterVertexUriInUrl() !== undefined;

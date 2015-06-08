@@ -11,6 +11,7 @@ define([
     "triple_brain.graph_element",
     "jquery.i18next"
 ], function ($, SearchService, GraphDisplayer, SearchResult, GraphElementType, GraphElement) {
+    "use strict";
     var api = {};
     api.build = function (searchResult, callback) {
         return new Self(
@@ -40,7 +41,7 @@ define([
                     self._buildHtmlContext(),
                     self._getImage(),
                     self.detailedGraphElement.getComment()
-                )
+                );
             }
         );
     };
@@ -73,7 +74,7 @@ define([
         this._addCommentToContext(
             context
         );
-        return context
+        return context;
     };
 
     Self.prototype._addCommentToContext = function (context) {

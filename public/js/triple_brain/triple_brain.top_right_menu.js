@@ -26,7 +26,7 @@ define([
             }
             if (MindMapInfo.isAnonymous()) {
                 getDisconnectButton().addClass("hidden");
-                getUserMenu().addClass("hidden")
+                getUserMenu().addClass("hidden");
                 handleLoginRegisterButton();
             } else {
                 handleCreateNewConceptButton();

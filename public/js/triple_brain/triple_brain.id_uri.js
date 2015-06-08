@@ -87,7 +87,7 @@ define([
         api.convertVertexUriToNonOwnedUri = function (uri) {
             return "/service/users/" + api.getOwnerFromUri(uri) +
                 "/non_owned/vertex/" + api.getVertexShortId(uri) +
-                "/surround_graph"
+                "/surround_graph";
         };
         api.getVertexShortId = function (uri) {
             return uri.substring(
@@ -101,7 +101,7 @@ define([
         };
         api.convertSchemaUriToNonOwnedUri = function (uri) {
             return UserService.currentUserUri() + "/non_owned/schema/" +
-                api.getSchemaShortId(uri)
+                api.getSchemaShortId(uri);
         };
         api.hostNameOfUri = function (uri) {
             return $.url(

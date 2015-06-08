@@ -212,7 +212,7 @@ define([
                 impact3InIndividualContext.getId()
             ).not.toBe(
                 impact3InSocietyContext.getId()
-            )
+            );
         });
         it("completes build of new graph elements when adding new edge and vertex", function () {
             var parent = new Scenarios.threeBubblesGraph().getBubble1InTree();

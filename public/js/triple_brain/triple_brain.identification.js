@@ -7,6 +7,7 @@ define([
     "triple_brain.id_uri",
     "jquery.triple_brain.search"
 ], function (FriendlyResource, IdUri, $Search) {
+    "use strict";
     var api = {};
     api.fromServerFormat = function (serverFormat) {
         return new api.Self(
@@ -19,7 +20,7 @@ define([
         );
     };
 
-    api.fromFriendlyResource = function(friendlyResource){
+    api.fromFriendlyResource = function (friendlyResource) {
         return new api.Self({
             externalResourceUri: friendlyResource.getUri(),
             friendlyResource: friendlyResource.getServerFormat()
@@ -51,12 +52,12 @@ define([
             searchResult.label,
             searchResult.comment
         );
-        if($Search.hasCachedDetailsForSearchResult(searchResult)){
+        if ($Search.hasCachedDetailsForSearchResult(searchResult)) {
             var moreInfo = $Search.getCachedDetailsOfSearchResult(searchResult);
-            if(moreInfo.image !== undefined){
+            if (moreInfo.image !== undefined) {
                 identification.addImage(moreInfo.image);
             }
-            if(!identification.hasComment() && moreInfo.comment !== ""){
+            if (!identification.hasComment() && moreInfo.comment !== "") {
                 identification.setComment(moreInfo.comment);
             }
         }
@@ -71,7 +72,7 @@ define([
             serverFormat.friendlyResource
         );
     };
-    api.Self.prototype = new FriendlyResource.Self;
+    api.Self.prototype = new FriendlyResource.Self();
     api.Self.prototype.getExternalResourceUri = function () {
         return this.identificationServerFormat.externalResourceUri;
     };
@@ -87,12 +88,12 @@ define([
     api.Self.prototype.getJsonFormat = function () {
         var serverFormat = this.getServerFormat();
         serverFormat.friendlyResource.images = this.getImagesServerFormat();
-        return $.toJSON(
+        return JSON.stringify(
             serverFormat
         );
     };
 
-    api.Self.prototype.rightActionForType = function(typeAction, sameAsAction, genericIdentificationAction){
+    api.Self.prototype.rightActionForType = function (typeAction, sameAsAction, genericIdentificationAction) {
         switch (this.getType()) {
             case "type" :
                 return typeAction;

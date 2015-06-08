@@ -8,8 +8,7 @@ define([
         "triple_brain.identification",
         "triple_brain.id_uri",
         "triple_brain.user_service",
-        "triple_brain.suggestion_origin",
-        "jquery.json.min"
+        "triple_brain.suggestion_origin"
     ],
     function ($, FriendlyResource, Identification, IdUri, UserService, SuggestionOrigin) {
         var api = {
@@ -66,7 +65,7 @@ define([
                     suggestion.getUri()
                     ] = suggestion.getServerFormat();
             });
-            return $.toJSON(suggestionsFormatedForServer);
+            return JSON.stringify(suggestionsFormatedForServer);
         };
 
         api.generateOriginUriFromSuggestionUri = function (suggestionUri) {

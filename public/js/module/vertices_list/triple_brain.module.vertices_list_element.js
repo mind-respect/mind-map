@@ -33,12 +33,12 @@ define([
             this.setDistanceFromCentralVertex= function(distanceFromCentralVertex){
                 $(containerWithDistanceFromCentralVertex()).html(
                     distanceFromCentralVertex
-                )
+                );
             };
             this.setLabel = function(label){
                 $(labelInput()).val(
                     label
-                )
+                );
             };
             this.remove = function(){
                 $(html).remove();

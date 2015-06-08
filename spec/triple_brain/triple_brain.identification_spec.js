@@ -5,11 +5,12 @@
 define([
     'test/test-scenarios',
     'test/test-utils',
+    'jquery',
     'triple_brain.user_map_autocomplete_provider',
     "triple_brain.identification",
     "triple_brain.image",
     "jquery.triple_brain.search"
-], function (Scenarios, TestUtils, UserMapAutocompleteProvider, Identification, Image, $Search) {
+], function (Scenarios, TestUtils, $, UserMapAutocompleteProvider, Identification, Image, $Search) {
     "use strict";
     describe("identification", function () {
         it("sets image if search result has one", function(){

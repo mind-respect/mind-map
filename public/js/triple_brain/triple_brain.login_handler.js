@@ -155,7 +155,7 @@ define([
             return {
                 email: this.getEmailField().val(),
                 password: this.getPasswordField().val()
-            }
+            };
         };
 
         LoginForm.prototype.getLoginErrorMessage = function () {

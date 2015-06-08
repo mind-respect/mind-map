@@ -4,43 +4,42 @@
 
 define([
         "jquery",
-        "triple_brain.event_bus",
-        "jquery.json.min"
+        "triple_brain.event_bus"
     ],
     function ($, EventBus) {
         "use strict";
         var api = {},
             usersResourceUrl = "/service/users/",
             sessionResourceUrl = usersResourceUrl + "session/",
-            authenticatedUserInCache = undefined;
+            authenticatedUserInCache;
 
-        api.getUsersResourceUrl = function(){
+        api.getUsersResourceUrl = function () {
             return usersResourceUrl;
         };
 
         api.authenticatedUserInCache = function () {
             return authenticatedUserInCache;
         };
-        api.setAuthenticatedUserInCache = function(user){
+        api.setAuthenticatedUserInCache = function (user) {
             authenticatedUserInCache = user;
         };
-        api.getDefaultVertexUri = function(username, callback){
+        api.getDefaultVertexUri = function (username, callback) {
             return $.ajax({
                 type: 'GET',
-                url: usersResourceUrl + username +  "/graph/vertex/any"
+                url: usersResourceUrl + username + "/graph/vertex/any"
             }).success(callback);
         };
 
         api.currentUserUri = function () {
             return usersResourceUrl + api.authenticatedUserInCache().user_name;
         };
-        api.hasCurrentUser = function(){
+        api.hasCurrentUser = function () {
             return authenticatedUserInCache !== undefined;
         };
         api.authenticate = function (loginInfo, callback, errorCallback) {
             $.ajax({
                 type: 'POST',
-                data: $.toJSON(loginInfo),
+                data: JSON.stringify(loginInfo),
                 url: sessionResourceUrl,
                 contentType: 'application/json'
             }).success(callback)
@@ -50,12 +49,12 @@ define([
             $.ajax({
                 type: 'POST',
                 url: usersResourceUrl,
-                data: $.toJSON(userObject),
+                data: JSON.stringify(userObject),
                 contentType: 'application/json;charset=utf-8'
             }).success(successCallback)
                 .error(function (xhr) {
                     errorCallback(
-                        $.parseJSON(xhr.responseText)
+                        JSON.parse(xhr.responseText)
                     );
                 });
         };
@@ -64,11 +63,11 @@ define([
                 type: 'GET',
                 url: sessionResourceUrl
             }).success(function (authenticatedUser) {
-                authenticatedUser.preferred_locales = $.parseJSON(
+                authenticatedUser.preferred_locales = JSON.parse(
                     authenticatedUser.preferred_locales
                 );
                 authenticatedUserInCache = authenticatedUser;
-                if (callback != undefined) {
+                if (callback !== undefined) {
                     callback.call(this, authenticatedUser);
                 }
                 EventBus.publish(
@@ -86,10 +85,11 @@ define([
                 type: 'GET',
                 url: usersResourceUrl + "is_authenticated"
             }).success(function (isAuthenticated) {
-
-                isAuthenticated.is_authenticated ?
-                    isAuthenticatedCallBack() :
-                    isNotAuthenticatedCallBack()
+                if (isAuthenticated.is_authenticated) {
+                    isAuthenticatedCallBack();
+                    return;
+                }
+                isNotAuthenticatedCallBack();
             }).error(isNotAuthenticatedCallBack);
         };
         api.logout = function (successCallBack) {
@@ -98,7 +98,7 @@ define([
                 url: sessionResourceUrl
             }).success(successCallBack);
         };
-        api.resetPassword = function(email, callback, errorCallback){
+        api.resetPassword = function (email, callback, errorCallback) {
             $.ajax({
                 type: 'POST',
                 url: "/service/reset-password",
@@ -106,15 +106,15 @@ define([
                 data: JSON.stringify({email: email})
             }).success(callback).error(errorCallback);
         };
-        api.changePassword = function(password, email, token, callback, errorCallback){
+        api.changePassword = function (password, email, token, callback, errorCallback) {
             $.ajax({
                 type: 'POST',
                 url: "/service/users/password",
                 contentType: 'application/json',
                 data: JSON.stringify({
                     email: email,
-                    password:password,
-                    token:token
+                    password: password,
+                    token: token
                 })
             }).success(callback).error(errorCallback);
         };

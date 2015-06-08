@@ -5,6 +5,7 @@
 define(
     [],
     function () {
+        "use strict";
         return {
             withPositions:function (a, b, c, d, tx, ty) {
                 return new TransformMatrix2d(a, b, c, d, 1, 1);
@@ -14,7 +15,7 @@ define(
                 var endPoint = segment.endPoint;
                 return new TransformMatrix2d(startPoint.x, endPoint.x, startPoint.y, endPoint.y, 1, 1);
             }
-        }
+        };
 
         /**
          *  _        _
@@ -43,7 +44,7 @@ define(
 
             this.divideWithMatrix = function (matrix) {
                 return this.multiplyWithMatrix(matrix.inverse());
-            }
+            };
 
             this.inverse = function () {
                 var determinant = this.determinant();
@@ -55,10 +56,10 @@ define(
                     (c * ty - d * tx) / determinant,
                     (b * tx - a * ty) / determinant
                 );
-            },
+            };
             this.determinant = function () {
                 return a * d - b * c;
-            }
+            };
         }
     }
 );

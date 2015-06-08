@@ -3,7 +3,9 @@
  */
 
 define([
-], function(){
+    "jquery"
+], function($){
+    "use strict";
     var api = {};
     api.makeChildInheritParent = function(childApi, parentApi){
         return $.extend(

@@ -11,7 +11,7 @@ define([
         $.ajax({
             type: 'POST',
             url: friendlyResource.getUri() + '/label',
-            data: $.toJSON({content: label}),
+            data: JSON.stringify({content: label}),
             contentType: 'application/json;charset=utf-8'
         }).success(function () {
             if (callback !== undefined) {

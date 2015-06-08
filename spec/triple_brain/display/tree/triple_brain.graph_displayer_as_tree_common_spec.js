@@ -6,6 +6,7 @@ define([
     'test/test-scenarios',
     'triple_brain.graph_displayer_as_tree_common'
 ], function (Scenarios, TreeDisplayerCommon) {
+    "use strict";
     describe("graph_displayer_as_tree_common", function () {
         var similarRelationsScenario,
             graph,

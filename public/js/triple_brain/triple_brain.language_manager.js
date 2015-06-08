@@ -204,7 +204,7 @@ define([
                         null,
                         data
                     );
-                    EventBus.publish("localized-text-loaded")
+                    EventBus.publish("localized-text-loaded");
                 });
 
             }

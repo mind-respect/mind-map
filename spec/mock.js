@@ -19,7 +19,7 @@ define([
     api.setCenterVertexUriInUrl = function(centerVertexUri){
         MindMapInfo._getCenterVertexUriInUrl = function(){
             return centerVertexUri;
-        }
+        };
     };
     api.setGetGraphFromService = function(graph){
         GraphService.getForCentralVertexUri = function(centerVertexUri, callback){
@@ -66,7 +66,7 @@ define([
     UserService.authenticatedUserInCache = function(){
         return {
             user_name : "foo"
-        }
+        };
     };
     VertexService.addSuggestions = function(){};
     return api;

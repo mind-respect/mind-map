@@ -135,7 +135,7 @@ define([
                         xhr.onload = function () {
                             vertex.addImages(
                                 Image.arrayFromServerJson(
-                                    $.parseJSON(this.response)
+                                    JSON.parse(this.response)
                                 )
                             );
                             vertex.refreshImages();

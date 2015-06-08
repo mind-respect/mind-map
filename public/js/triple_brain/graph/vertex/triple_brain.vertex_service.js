@@ -224,7 +224,7 @@ define([
             var response = $.ajax({
                 type: 'POST',
                 url: getVerticesUrl() + '/group',
-                data: $.toJSON(graphElementsUris),
+                data: JSON.stringify(graphElementsUris),
                 contentType: 'application/json;charset=utf-8'
             }).success(function () {
                     var createdVertexUri = response.getResponseHeader("Location");
@@ -247,7 +247,7 @@ define([
             });
             $.ajax({
                 type: 'POST',
-                data: $.toJSON(verticesUri),
+                data: JSON.stringify(verticesUri),
                 contentType: 'application/json;charset=utf-8',
                 url: getVerticesUrl() + '/collection/public_access?type=' + typeQueryParam
             }).success(callback);

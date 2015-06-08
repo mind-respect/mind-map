@@ -13,7 +13,7 @@ define([
         $.ajax({
             type: 'POST',
             url: vertex.getUri()+ '/suggestions/accept',
-            data: $.toJSON(serverFormat),
+            data: JSON.stringify(serverFormat),
             contentType: 'application/json;charset=utf-8'
         }).success(function(xhr){
             api.acceptCallback(
@@ -39,7 +39,7 @@ define([
         $.ajax({
             type: 'POST',
             url: vertex.getUri()+ '/suggestions/delete',
-            data: $.toJSON(suggestionsUri),
+            data: JSON.stringify(suggestionsUri),
             contentType: 'application/json;charset=utf-8'
         }).success(function(){
             if(callback !== undefined){

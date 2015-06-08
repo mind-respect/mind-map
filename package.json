@@ -16,12 +16,13 @@
   },
   "devDependencies": {
     "connect": "*",
-    "serve-static": "*",
     "grunt-cli": "*",
+    "grunt-contrib-connect": "*",
     "grunt-contrib-jasmine": "~0.8.2",
-    "grunt-template-jasmine-requirejs": "~0.2.3",
+    "grunt-contrib-jshint": "^0.11.2",
     "grunt-contrib-requirejs": "*",
     "grunt-contrib-watch": "*",
-    "grunt-contrib-connect": "*"
+    "grunt-template-jasmine-requirejs": "~0.2.3",
+    "serve-static": "*"
   }
 }

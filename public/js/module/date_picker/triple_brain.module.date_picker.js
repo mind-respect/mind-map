@@ -18,7 +18,7 @@ define([
             _bubblesWithDatePicker = [];
 
         var api = {};
-        api._handleFocus = function(){
+        api._handleFocus = function () {
             showDatePicker(
                 BubbleFactory.fromSubHtml(
                     $(this)
@@ -87,7 +87,10 @@ define([
                     var bubble = BubbleFactory.fromSubHtml(
                         $(this)
                     );
-                    bubble.getHtml().data("module.date_picker.has_clicked", true)
+                    bubble.getHtml().data(
+                        "module.date_picker.has_clicked",
+                        true
+                    );
                 });
             hideDatePicker(graphElement);
             graphElement.getLabel().on(
@@ -126,11 +129,11 @@ define([
             );
         }
 
-        function handleBlur(){
+        function handleBlur() {
             var bubble = BubbleFactory.fromSubHtml(
                 $(this)
             );
-            if(bubble.getHtml().data("module.date_picker.has_clicked")){
+            if (bubble.getHtml().data("module.date_picker.has_clicked")) {
                 event.stopImmediatePropagation();
                 bubble.getHtml().data(
                     "module.date_picker.has_clicked",
@@ -143,5 +146,4 @@ define([
             );
         }
     }
-)
-;
+);

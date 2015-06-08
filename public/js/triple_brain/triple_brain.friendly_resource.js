@@ -3,8 +3,7 @@
  */
 
 define([
-    "triple_brain.image",
-    "jquery.json.min"
+    "triple_brain.image"
 ], function (Image) {
     "use strict";
     var api = {};
@@ -46,8 +45,7 @@ define([
             api.buildObjectWithUriLabelAndDescription(uri, label, description)
         );
     };
-    api.Self = function () {
-    };
+    api.Self = function () {};
 
     api.Self.prototype.init = function (friendlyResourceServerFormat) {
         this.friendlyResourceServerFormat = friendlyResourceServerFormat;
@@ -98,7 +96,7 @@ define([
     api.Self.prototype.getJsonFormat = function () {
         var serverFormat = this.getServerFormat();
         serverFormat.images = this.getImagesServerFormat();
-        return $.toJSON(
+        return JSON.stringify(
             serverFormat
         );
     };

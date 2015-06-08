@@ -44,7 +44,7 @@ define([
                     vertex.scrollTo();
                 });
                 return verticesListElement;
-            }
+            };
         }
     }
 );

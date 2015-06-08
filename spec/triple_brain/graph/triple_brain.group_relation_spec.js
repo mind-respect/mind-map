@@ -6,6 +6,7 @@ define([
     'test/test-scenarios',
     'triple_brain.group_relation'
 ], function (Scenarios, GroupRelation) {
+    "use strict";
     describe("grouped_relation", function () {
         var scenario, graph, centerVertex, possession, groupRelation;
         beforeEach(function () {
@@ -48,5 +49,5 @@ define([
                 groupRelation.getNumberOfVertices()
             ).toBe(2);
         });
-    })
+    });
 });

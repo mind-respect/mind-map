@@ -17,7 +17,6 @@ requirejs.config({
         "jquery-ui": "jquery/jquery-ui-11-4/jquery-ui.min",
         "jquery.url": "jquery/jquery.url",
         "jquery.nano": "jquery/jquery.nano",
-        "jquery.json.min": "jquery/jquery.json.min", //TODO remove
         "jquery.tinysort.min": "jquery/jquery.tinysort.min",
         "jquery.cookie": "jquery/jquery.cookie",
         "jquery.colorbox": "jquery/jquery.colorbox-min",
@@ -154,7 +153,6 @@ requirejs.config({
         "jquery-ui": ["jquery"],
         "jquery.url": ["jquery"],
         "jquery.nano": ["jquery"],
-        "jquery.json.min": ["jquery"],
         "jquery.tinysort.min": ["jquery"],
         "jquery.cookie": ["jquery"],
         "jquery.cometd": ["jquery"],

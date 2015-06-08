@@ -7,6 +7,7 @@ define([
     "triple_brain.point",
     "triple_brain.ui.utils"
 ], function ($, Point, UiUtils) {
+    "use strict";
     var scrollNumber = 40,
         frontiers,
         topFrontier,

@@ -37,7 +37,7 @@ define([
                 $(html).append(htmlToAdd);
             };
             this.sort = function () {
-                if (sortType() == SORT_TYPE_LABEL) {
+                if (SORT_TYPE_LABEL === sortType()) {
                     sortByLabel();
                 } else {
                     sortByDistanceFromCentralVertex();

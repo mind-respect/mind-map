@@ -8,6 +8,7 @@ define([
     'triple_brain.group_relation',
     'triple_brain.vertex_html_builder'
 ], function (Scenarios, SelectionHandler, GroupRelation, VertexHtmlBuilder) {
+    "use strict";
     describe("selection_handler", function () {
         var scenario, graph, book1, book2, possession, groupRelation;
         beforeEach(function () {

@@ -13,7 +13,7 @@ define([
         "use strict";
         return {
             create:function () {
-                return new VerticesListCreator().create()
+                return new VerticesListCreator().create();
             }
         };
 
@@ -51,7 +51,7 @@ define([
             function addTitle() {
                 $(html).append(
                     Template['title'].merge()
-                )
+                );
             }
 
             function addSortMenu() {

@@ -13,7 +13,7 @@ define([
     api.addRelationAndVertexToVertexMock = function () {
         return spyOn(VertexService, "addRelationAndVertexToVertex").and.callFake(function (vertex, sourceBubble, callback) {
             var tripleJson = {};
-            tripleJson.source_vertex = vertex.getOriginalServerObject().vertexServerFormat
+            tripleJson.source_vertex = vertex.getOriginalServerObject().vertexServerFormat;
             var newVertexUri = TestUtils.generateVertexUri();
             tripleJson.end_vertex = Vertex.buildServerFormatFromUri(newVertexUri);
             tripleJson.edge = Edge.buildObjectWithUriOfSelfSourceAndDestinationVertex(

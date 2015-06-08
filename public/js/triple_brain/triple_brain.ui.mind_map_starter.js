@@ -64,7 +64,7 @@ define(
                             UserService.getDefaultVertexUri(
                                 user.user_name,
                                 function (uri) {
-                                    window.location = "?bubble=" + uri
+                                    window.location = "?bubble=" + uri;
                                 }
                             );
                         });

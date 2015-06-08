@@ -8,6 +8,7 @@ define([
     'triple_brain.tree_edge_menu_handler',
     'triple_brain.mind_map_info'
 ], function (Scenarios, Mock, TreeEdgeMenuHandler, MindMapInfo) {
+    "use strict";
     describe("graph_displayer_as_tree_common", function () {
         beforeEach(function () {});
         it("can remove edge", function () {

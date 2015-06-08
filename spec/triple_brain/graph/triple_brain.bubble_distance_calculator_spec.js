@@ -4,9 +4,10 @@
 
 define([
     'test/test-scenarios',
+    'jquery',
     'triple_brain.event_bus',
     'triple_brain.bubble_distance_calculator'
-], function (Scenarios, EventBus, BubbleDistanceCalculator) {
+], function (Scenarios, $, EventBus, BubbleDistanceCalculator) {
     "use strict";
     describe("bubble_distance_calculator", function () {
         it("can remove all elements after there was more than one", function () {

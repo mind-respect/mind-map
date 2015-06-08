@@ -2,8 +2,11 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
-define([],
-    function () {
+define([
+        "jquery"
+    ],
+    function ($) {
+        "use strict";
         var api = {};
         api.fromServerJson = function (imageAsServerJson) {
             return new Image(
@@ -73,7 +76,7 @@ define([],
             this.isUploadedByUser = function () {
                 return self.getUrlForBigger().indexOf(
                     window.location.hostname
-                ) != -1;
+                ) !== -1;
             };
             this.getBase64ForSmall = function () {
                 return api.srcUrlForBase64(base64ForSmall);
@@ -82,7 +85,7 @@ define([],
                 return urlForBigger;
             };
             this.serverFormat = function () {
-                return $.toJSON(
+                return JSON.stringify(
                     self.jsonFormat()
                 );
             };
