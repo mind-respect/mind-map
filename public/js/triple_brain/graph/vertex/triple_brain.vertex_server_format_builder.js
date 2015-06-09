@@ -15,7 +15,7 @@ define([
         };
     };
     api.getFriendlyResourceServerObject = function (serverFormat) {
-        return serverFormat.vertex.graphElement.friendlyResource
+        return serverFormat.vertex.graphElement.friendlyResource;
     };
     return api;
 });

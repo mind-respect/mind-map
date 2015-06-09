@@ -12,6 +12,7 @@ define([
     "triple_brain.graph_displayer",
     "triple_brain.graph_element_menu"
 ], function($, MindMapTemplate, GraphUi, UserMapAutocompleteProvider, EdgeService, EdgeUi, GraphDisplayer, GraphElementMenu){
+    "use strict";
     var api = {};
     api.ofVertex = function(vertex){
         return new LinkToFarVertexMenu(

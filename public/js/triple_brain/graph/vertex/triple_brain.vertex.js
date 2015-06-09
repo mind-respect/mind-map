@@ -3,10 +3,11 @@
  */
 
 define([
+    "jquery",
     "triple_brain.graph_element",
     "triple_brain.edge",
     "triple_brain.suggestion"
-], function (GraphElement, Edge, Suggestion) {
+], function ($, GraphElement, Edge, Suggestion) {
     "use strict";
     var api = {};
     api.fromServerFormat = function (serverFormat) {
@@ -37,7 +38,7 @@ define([
         this.init(vertexServerFormat.vertex.graphElement);
     }
 
-    Self.prototype = new GraphElement.Self;
+    Self.prototype = new GraphElement.Self();
 
     Self.prototype.getIncludedVertices = function () {
         return this._includedVertices;

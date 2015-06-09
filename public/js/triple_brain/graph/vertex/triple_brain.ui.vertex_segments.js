@@ -3,12 +3,13 @@
  */
 
 define([
+        "jquery",
         "triple_brain.error",
         "triple_brain.point",
         "triple_brain.segment",
         "polyk"
     ],
-    function (Error, Point, Segment, Polyk) {
+    function ($, Error, Point, Segment, PolyK) {
         "use strict";
         return {
             LEFT_SIDE: 0,
@@ -136,14 +137,14 @@ define([
                 if (_width === undefined) {
                     _width = $(htmlVertex).width() + widthIncrease;
                 }
-                return _width
+                return _width;
             }
 
             function getHeight() {
                 if (_height === undefined) {
                     _height = $(htmlVertex).height() + heightIncrease;
                 }
-                return _height
+                return _height;
             }
 
             function getTopLeftPoint() {
