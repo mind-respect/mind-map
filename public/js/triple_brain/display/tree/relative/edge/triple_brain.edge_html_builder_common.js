@@ -3,6 +3,7 @@
  */
 
 define([
+    "jquery",
     "triple_brain.mind_map_info",
     "triple_brain.friendly_resource_service",
     "triple_brain.selection_handler",
@@ -14,7 +15,7 @@ define([
     "triple_brain.suggestion_service",
     "triple_brain.graph_element_html_builder",
     "triple_brain.bubble_factory"
-], function (MindMapInfo, FriendlyResourceService, SelectionHandler, RelativeTreeTemplates, Identification, UserMapAutocompleteProvider, WikidataAutocompleteProvider, GraphElementService, SuggestionService, GraphElementHtmlBuilder, BubbleFactory) {
+], function ($, MindMapInfo, FriendlyResourceService, SelectionHandler, RelativeTreeTemplates, Identification, UserMapAutocompleteProvider, WikidataAutocompleteProvider, GraphElementService, SuggestionService, GraphElementHtmlBuilder, BubbleFactory) {
     "use strict";
     var api = {};
     api.moveNoteButtonIfIsToTheLeft = function(edge){
@@ -96,7 +97,7 @@ define([
                     edge.hideMenu();
                     edge.focus();
                 }
-            )
+            );
         }
         GraphElementHtmlBuilder.setUpLabel(label);
         return label;

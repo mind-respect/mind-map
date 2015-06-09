@@ -53,7 +53,8 @@ define([
             this.html = html;
             IdentifiedBubble.Object.apply(this, [html]);
         };
-        api.Object.prototype = new IdentifiedBubble.Object;
+
+        api.Object.prototype = new IdentifiedBubble.Object();
 
         api.Object.prototype.getMenuHtml = function () {
             return this.html.find('.relation-menu');

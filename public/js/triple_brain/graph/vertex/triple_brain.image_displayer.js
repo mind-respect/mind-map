@@ -9,6 +9,7 @@ define(
         "jquery.colorbox"
     ],
     function ($, MindMapTemplate) {
+        "use strict";
         var api = {};
         api.ofBubble = function (bubble) {
             return new ImageMenu(bubble);
@@ -29,13 +30,13 @@ define(
             };
             this.refreshImages = function () {
                 var images = bubble.getImages();
-                if (images.length <= 0){
+                if (images.length <= 0) {
                     html.empty();
                     return;
                 }
                 images = imagesInOrderThatPrioritizeUserUploadedImages(images);
                 var featuredImage = images[0];
-                var featuredImageBigUri =  featuredImage.getUrlForBigger();
+                var featuredImageBigUri = featuredImage.getUrlForBigger();
                 var featuredImageHtml = $(MindMapTemplate["image_container_image"].merge({
                         src: featuredImage.getBase64ForSmall()
                     }
@@ -51,23 +52,15 @@ define(
                     ).prop(
                         "href",
                         urlForBigger
-                    ).click(function(e){
-                            e.preventDefault();
-                            var anchor = $(this);
-                            $.colorbox({
-                                rel:anchor.attr("rel"),
-                                href:anchor.prop("href"),
-                                photo:true,
-                                onOpen:function(){
-                                    $.colorbox.next();
-                                }
-                            });
-                        }).colorbox({
+                    ).click(
+                        handleImageClick
+                    ).colorbox({
                             rel: bubbleId,
                             href: urlForBigger,
-                            photo:true
-                        });
-                    if(urlForBigger === featuredImageBigUri){
+                            photo: true
+                        }
+                    );
+                    if (urlForBigger === featuredImageBigUri) {
                         bigImageAnchor.append(
                             featuredImageHtml
                         );
@@ -83,9 +76,22 @@ define(
                 return $(html).width();
             };
 
+            function handleImageClick(event) {
+                event.preventDefault();
+                var anchor = $(this);
+                $.colorbox({
+                    rel: anchor.attr("rel"),
+                    href: anchor.prop("href"),
+                    photo: true,
+                    onOpen: function () {
+                        $.colorbox.next();
+                    }
+                });
+            }
+
             function addHtmlToBubble() {
-                var className = bubble.isInTheRelationFamily()?
-                    ".in-bubble-content":
+                var className = bubble.isInTheRelationFamily() ?
+                    ".in-bubble-content" :
                     ".in-bubble-content-wrapper";
                 bubble.getHtml().children(
                     className

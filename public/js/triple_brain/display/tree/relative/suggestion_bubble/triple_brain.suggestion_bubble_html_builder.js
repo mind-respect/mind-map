@@ -3,6 +3,7 @@
  */
 
 define([
+    "jquery",
     "triple_brain.vertex_html_builder_common",
     "triple_brain.graph_element_html_builder",
     "triple_brain.relative_tree_vertex",
@@ -11,7 +12,7 @@ define([
     "triple_brain.suggestion_bubble_menu_handler",
     "triple_brain.ui.graph",
     "triple_brain.identification"
-], function (VertexHtmlCommon, GraphElementHtmlBuilder, RelativeTreeVertex, SuggestionBubbleUi, GraphElementMainMenu, SuggestionBubbleMenuHandler, GraphUi, Identification) {
+], function ($, VertexHtmlCommon, GraphElementHtmlBuilder, RelativeTreeVertex, SuggestionBubbleUi, GraphElementMainMenu, SuggestionBubbleMenuHandler, GraphUi, Identification) {
     "use strict";
     var api = {};
     api.withServerFacade = function (serverFacade) {
@@ -65,7 +66,7 @@ define([
         );
         suggestionUi.hideMenu();
         suggestionUi.getLabel().on("change", function () {
-            suggestionUi.integrate()
+            suggestionUi.integrate();
         });
         this.html.append(
             $("<span class='arrow'>")

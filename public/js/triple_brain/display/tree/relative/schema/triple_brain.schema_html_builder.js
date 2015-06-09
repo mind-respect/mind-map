@@ -3,6 +3,7 @@
  */
 
 define([
+    "jquery",
     "triple_brain.schema_ui",
     "triple_brain.mind_map_info",
     "triple_brain.vertex_html_builder_common",
@@ -12,7 +13,7 @@ define([
     "triple_brain.relative_tree_vertex",
     "triple_brain.ui.graph",
     "triple_brain.event_bus"
-], function(SchemaUi, MindMapInfo, VertexHtmlCommon, GraphElementHtmlBuilder, GraphElementMainMenu, SchemaMenuHandler, RelativeTreeVertex, GraphUi, EventBus){
+], function($, SchemaUi, MindMapInfo, VertexHtmlCommon, GraphElementHtmlBuilder, GraphElementMainMenu, SchemaMenuHandler, RelativeTreeVertex, GraphUi, EventBus){
     "use strict";
     var api = {};
     api.withServerFacade = function(serverFacade){

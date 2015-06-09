@@ -3,9 +3,11 @@
  */
 
 define([
+    "jquery",
     "triple_brain.event_bus",
     "crow"
-], function(EventBus){
+], function($, EventBus){
+    "use strict";
     var graphForTraversal;
     var api = {};
     api.numberOfEdgesBetween = function(vertexA, vertexB){
@@ -128,7 +130,7 @@ define([
     function removeVertexInConnections(vertexId, connections){
         for(var j = 0 ; j < connections; j++){
             var connection = connections[j];
-            if(connection.id == vertexId){
+            if(connection.id === vertexId){
                 connections.splice(j,1);
             }
         }
@@ -137,7 +139,7 @@ define([
     function findVertexInGraphForTraversalNodesAfterItWasDeleted(vertexId){
         for(var i = 0 ; i< graphForTraversal.nodes.length; i++){
             var node = graphForTraversal.nodes[i];
-            if(node.id == vertexId){
+            if(node.id === vertexId){
                 return node;
             }
         }
@@ -147,6 +149,6 @@ define([
         this._initialize = function(){};
         crow.ConnectedNode.apply(this, [vertex.getId()]);
     }
-    VertexAsCrowNode.prototype = new crow.ConnectedNode;
+    VertexAsCrowNode.prototype = new crow.ConnectedNode();
     return api;
 });

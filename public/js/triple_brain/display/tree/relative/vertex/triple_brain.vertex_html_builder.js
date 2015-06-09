@@ -14,6 +14,7 @@ define([
         "jquery.is-fully-on-screen",
         "jquery.center-on-screen"
     ], function ($, EventBus, MindMapTemplate, RelativeTreeVertex, VertexHtmlCommon, GraphElementHtmlBuilder, GraphUi) {
+        "use strict";
         var api = {};
         api.withServerFacade = function (serverFacade) {
             return new VertexCreator(serverFacade);
@@ -60,7 +61,7 @@ define([
         }
 
         VertexCreator.prototype.create = function (htmlId) {
-            if(undefined === htmlId){
+            if (undefined === htmlId) {
                 htmlId = GraphUi.generateBubbleHtmlId();
             }
             this.html.attr('id', htmlId);
@@ -108,9 +109,11 @@ define([
             this.vertex.getHtml().append(
                 $("<span class='arrow'>")
             );
-            this.vertex.isPublic() ?
-                this.vertex.makePublic() :
+            if (this.vertex.isPublic()) {
+                this.vertex.makePublic();
+            } else {
                 this.vertex.makePrivate();
+            }
             EventBus.publish(
                 '/event/ui/html/vertex/created/',
                 this.vertex

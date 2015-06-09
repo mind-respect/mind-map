@@ -33,7 +33,7 @@ define([
             );
         };
         api.Self = function() {};
-        api.Self.prototype = new EdgeUi.Object;
+        api.Self.prototype = new EdgeUi.Object();
         api.Self.prototype.init = function(html){
             this.html = html;
             EdgeUi.Object.apply(this, [html]);
@@ -56,7 +56,7 @@ define([
                 label: this.text(),
                 source_vertex_id: this.getSourceVertex().getId(),
                 destination_vertex_id: this.getDestinationVertex().getId()
-            }
+            };
         };
         api.Self.prototype.getLabel = function () {
             return this.html.find(".bubble-label");

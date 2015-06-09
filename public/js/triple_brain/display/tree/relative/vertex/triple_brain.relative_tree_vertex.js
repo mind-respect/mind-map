@@ -14,6 +14,7 @@ define([
         "triple_brain.bubble_factory"
     ],
     function ($, VertexUi, EventBus, TreeEdge, ObjectUtils, TripleUiBuilder, SelectionHandler, PropertiesIndicator, BubbleFactory) {
+        "use strict";
         var api = {};
         VertexUi.buildCommonConstructors(api);
         api.createFromHtml = function (html) {
@@ -39,7 +40,9 @@ define([
         );
         api.Object = function () {
         };
-        api.Object.prototype = new VertexUi.Object;
+
+        api.Object.prototype = new VertexUi.Object();
+
         api.Object.prototype.init = function (html) {
             this.html = html;
             VertexUi.Object.apply(this, [html]);

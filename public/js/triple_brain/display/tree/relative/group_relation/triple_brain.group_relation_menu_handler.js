@@ -8,12 +8,13 @@ define([
         "triple_brain.mind_map_info"
     ],
     function (VertexService, EdgeService, MindMapInfo) {
+        "use strict";
         var api = {},
             forSingle = {},
             forSingleNotOwned = {};
-        api.forSingle = function(){
+        api.forSingle = function () {
             return MindMapInfo.isViewOnly() ?
-                forSingleNotOwned:
+                forSingleNotOwned :
                 forSingle;
         };
         forSingle.addChild = function (event, groupRelation) {

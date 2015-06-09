@@ -6,6 +6,7 @@ define([
         "triple_brain.template"
     ],
     function (Template) {
+        "use strict";
         var api = {};
         var t = Template.withTemplateGroup(api);
         t.add(

@@ -28,7 +28,7 @@ define([
     api.Self = function () {
     };
 
-    api.Self.prototype = new GraphElement.Self;
+    api.Self.prototype = new GraphElement.Self();
 
     api.Self.prototype.init = function (edgeServerFormat) {
         this.sourceVertex = FriendlyResource.fromServerFormat(

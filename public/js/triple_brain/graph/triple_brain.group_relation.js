@@ -5,6 +5,7 @@
 define([
         "triple_brain.ui.graph"
     ], function (GraphUi) {
+        "use strict";
         var api = {};
         api.withoutAnIdentification = function () {
             return new Self(undefined);

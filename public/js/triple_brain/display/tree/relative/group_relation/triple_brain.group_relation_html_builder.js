@@ -3,6 +3,7 @@
  */
 
 define([
+        "jquery",
         "triple_brain.relative_tree_displayer_templates",
         "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
         "triple_brain.group_relation_ui",
@@ -14,7 +15,8 @@ define([
         "triple_brain.identification",
         "jquery-ui"
     ],
-    function (RelativeTreeTemplates, PropertiesIndicator, GroupRelationUi, GroupRelation, SelectionHandler, GraphElementMainMenu, GraphDisplayer, EventBus, Identification) {
+    function ($, RelativeTreeTemplates, PropertiesIndicator, GroupRelationUi, GroupRelation, SelectionHandler, GraphElementMainMenu, GraphDisplayer, EventBus, Identification) {
+        "use strict";
         var api = {};
         api.withServerFacade = function (serverFacade) {
             return new Self(serverFacade);

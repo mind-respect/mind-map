@@ -20,13 +20,13 @@ define([
             propertyServerFormat
         );
     }
-    Self.prototype = new GraphElement.Self;
+    Self.prototype = new GraphElement.Self();
 
     Self.prototype.setSchema = function (schema) {
         this.schema = schema;
     };
     Self.prototype.getSchema = function(){
-        return this.schema
+        return this.schema;
     };
     return api;
 });

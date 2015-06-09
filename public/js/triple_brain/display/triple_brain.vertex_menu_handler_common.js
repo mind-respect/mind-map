@@ -9,6 +9,7 @@ define([
     "triple_brain.graph_element_menu",
     "triple_brain.mind_map_info"
 ], function ($, VertexService, GraphDisplayer, GraphElementMenu, MindMapInfo) {
+    "use strict";
     var api = {},
         forSingle = {};
     api.forSingle = function(){

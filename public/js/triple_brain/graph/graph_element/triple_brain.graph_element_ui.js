@@ -3,13 +3,15 @@
  */
 
 define([
+    "jquery",
     "triple_brain.graph_displayer",
     "triple_brain.graph_element_main_menu",
     "triple_brain.graph_element_type",
     "triple_brain.event_bus",
     "jquery.focus-end",
     "jquery.center-on-screen"
-], function (GraphDisplayer, GraphElementMainMenu, GraphElementType, EventBus) {
+], function ($, GraphDisplayer, GraphElementMainMenu, GraphElementType, EventBus) {
+    "use strict";
     var api = {},
         otherInstancesKey = "otherInstances",
         textBeforeModificationKey = "textBeforeModification";

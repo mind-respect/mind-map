@@ -11,7 +11,6 @@ define([
         switch(name){
             case "relative_tree":
                 return GraphDisplayerAsRelativeTree;
-                break;
         }
     };
     return api;

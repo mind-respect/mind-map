@@ -3,9 +3,10 @@
  */
 
 define([
+    "jquery",
     "triple_brain.friendly_resource",
     "triple_brain.identification"
-], function (FriendlyResource, Identification) {
+], function ($, FriendlyResource, Identification) {
     "use strict";
     var api = {};
     api.fromServerFormat = function (serverFormat) {
@@ -34,7 +35,7 @@ define([
     };
     api.Self = function () {};
 
-    api.Self.prototype = new FriendlyResource.Self;
+    api.Self.prototype = new FriendlyResource.Self();
 
     api.Self.prototype.init = function(graphElementServerFormat){
         this.graphElementServerFormat = graphElementServerFormat;

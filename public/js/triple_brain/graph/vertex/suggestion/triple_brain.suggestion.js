@@ -11,6 +11,7 @@ define([
         "triple_brain.suggestion_origin"
     ],
     function ($, FriendlyResource, Identification, IdUri, UserService, SuggestionOrigin) {
+        "use strict";
         var api = {
             IDENTIFICATION_PREFIX: "identification_"
         };
@@ -95,7 +96,7 @@ define([
                 serverFormat.friendlyResource
             );
         }
-        Suggestion.prototype = new FriendlyResource.Self;
+        Suggestion.prototype = new FriendlyResource.Self();
 
         Suggestion.prototype.getSameAs = function () {
             return this.sameAs;
@@ -122,7 +123,7 @@ define([
                 sameAs: serverFormatGetter.call(this.getSameAs()),
                 type: (this.hasType() ? serverFormatGetter.call(this.getType()) : undefined),
                 origins: this._getOriginsServerFormat()
-            }
+            };
         };
         Suggestion.prototype._getOriginsServerFormat = function () {
             var origins = [];

@@ -3,10 +3,11 @@
  */
 
 define([
+    "jquery",
     "triple_brain.relative_tree_vertex",
     "triple_brain.vertex_ui",
     "triple_brain.graph_element_ui"
-], function (RelativeTreeVertex, VertexUi, GraphElementUi) {
+], function ($, RelativeTreeVertex, VertexUi, GraphElementUi) {
     "use strict";
     var api = {};
     RelativeTreeVertex.buildCommonConstructors(api);
@@ -36,7 +37,7 @@ define([
         RelativeTreeVertex.Object.apply(this);
         this.init(html);
     };
-    api.Self.prototype = new RelativeTreeVertex.Object;
+    api.Self.prototype = new RelativeTreeVertex.Object();
     api.Self.prototype.getGraphElementType = function () {
         return GraphElementUi.Types.Schema;
     };

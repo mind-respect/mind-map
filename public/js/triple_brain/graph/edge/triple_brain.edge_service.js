@@ -12,6 +12,7 @@ define([
         "triple_brain.friendly_resource_service"
     ],
     function ($, EventBus, IdUri, UserService, GraphElementService, Edge, FriendlyResourceService) {
+        "use strict";
         var api = {};
         api.add = function (sourceVertex, destinationVertex, callback) {
             add(

@@ -3,10 +3,12 @@
  */
 
 define([
+    "jquery",
     "triple_brain.mind-map_template",
     "triple_brain.relative_tree_vertex",
     "triple_brain.graph_displayer"
-], function(MindMapTemplate, RelativeTreeVertex, GraphDisplayer){
+], function($, MindMapTemplate, RelativeTreeVertex, GraphDisplayer){
+    "use strict";
     var api = {};
     api.withServerFacade = function (serverVertex) {
         return new VertexCreator(serverVertex);

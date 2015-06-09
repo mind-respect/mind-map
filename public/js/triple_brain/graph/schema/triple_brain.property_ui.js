@@ -29,7 +29,7 @@ define([
         TreeEdge.Self.apply(this);
         this.init(this.html);
     };
-    api.Self.prototype = new TreeEdge.Self;
+    api.Self.prototype = new TreeEdge.Self();
     api.Self.prototype.getGraphElementType = function(){
         return GraphElementUi.Types.Property;
     };

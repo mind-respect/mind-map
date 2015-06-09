@@ -8,6 +8,7 @@ define([
     "triple_brain.ui.graph"
 ],
     function ($, GraphElementMenu, GraphUi) {
+        "use strict";
         var api = {};
         api.ofVertexAndDeletionBehavior = function (vertex, deleteCallback) {
             return new DeleteMenu(

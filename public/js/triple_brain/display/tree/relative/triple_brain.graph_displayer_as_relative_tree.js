@@ -46,6 +46,7 @@ define([
     "triple_brain.selection_handler",
     "triple_brain.group_relation"
 ], function ($, GraphService, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, RelativeTreeVertexMenuHandler, GroupRelationMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler, KeyboardActionsHandler, Edge, GroupRelationHtmlBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaHtmlBuilder, SchemaUi, SchemaMenuHandler, PropertyHtmlBuilder, PropertyMenuHandler, PropertyUi, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SuggestionBubbleUi, SuggestionRelationUi, SuggestionBubbleMenuHandler, SuggestionRelationMenuHandler, TripleUi, CenterBubble, SelectionHandler, GroupRelation) {
+    "use strict";
     KeyboardActionsHandler.init();
     var api = {};
     api.displayForVertexWithUri = function (centralVertexUri, callback, errorCallback) {
@@ -145,7 +146,7 @@ define([
                     if (relationWithGrandParentUri !== edgeFacade.getUri()) {
                         filteredEdges[
                             edgeFacade.getUri()
-                            ] = edge
+                            ] = edge;
                     }
                 });
                 return filteredEdges;
@@ -320,7 +321,7 @@ define([
 
     function addVertex(newVertex, parentBubble, vertexHtmlBuilder) {
         if (vertexHtmlBuilder === undefined) {
-            vertexHtmlBuilder = VertexHtmlBuilder
+            vertexHtmlBuilder = VertexHtmlBuilder;
         }
         var treeMaker = new api.TreeMaker(
             vertexHtmlBuilder
@@ -336,7 +337,7 @@ define([
 
     function addEdge(serverEdge, sourceVertexUi, edgeUiBuilder) {
         if (edgeUiBuilder === undefined) {
-            edgeUiBuilder = EdgeBuilder
+            edgeUiBuilder = EdgeBuilder;
         }
         var treeMaker = new api.TreeMaker();
         return treeMaker.buildBubbleHtmlIntoContainer(
@@ -398,7 +399,7 @@ define([
             parentVertex.setOriginalServerObject(serverVertex);
             self.buildChildrenHtmlTreeRecursively(parentVertex, serverGraph.vertices);
             parentVertex.visitVerticesChildren(function (vertex) {
-                VertexHtmlBuilder.completeBuild(vertex)
+                VertexHtmlBuilder.completeBuild(vertex);
                 vertex.visitAllChild(function (childBubble) {
                     if (childBubble.isGroupRelation()) {
                         GroupRelationHtmlBuilder.completeBuild(childBubble);
@@ -428,7 +429,7 @@ define([
             var childVertexHtmlFacade = builder.withServerFacade(
                 serverFormat
             ).create(htmlId);
-            childVertexHtmlFacade.setOriginalServerObject(serverFormat)
+            childVertexHtmlFacade.setOriginalServerObject(serverFormat);
             container.append(
                 childTreeContainer
             ).append("<span class='clear-fix'>");
@@ -629,7 +630,7 @@ define([
             }
 
             function vertexWithId(vertexId) {
-                return vertices[vertexId]
+                return vertices[vertexId];
             }
         }
     };

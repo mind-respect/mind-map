@@ -22,6 +22,7 @@ define([
         "jquery.i18next"
     ],
     function ($, Identification, MindMapTemplate, GraphUi, IdUri, WikidataAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu, SearchService, IdentificationContext, SearchResult, MindMapInfo, SuggestionService, SchemaSuggestion) {
+        "use strict";
         var api = {},
             DESCRIPTION_MAX_CHAR = 155;
 
@@ -88,7 +89,7 @@ define([
         };
 
         IdentificationMenu.prototype._getListHtml = function () {
-            return this.html.find(".list")
+            return this.html.find(".list");
         };
 
         IdentificationMenu.prototype._addIdentificationAsListElement = function (identification) {
@@ -288,7 +289,7 @@ define([
             } : function (concept, identificationResource) {
                 graphElement.serverFacade().addSameAs(concept, identificationResource);
                 graphElement.refreshImages();
-            }
+            };
         };
 
         IdentificationMenu.prototype._makeRemoveButton = function () {

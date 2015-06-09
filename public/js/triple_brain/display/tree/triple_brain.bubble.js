@@ -3,6 +3,7 @@
  */
 
 define([
+        "jquery",
         "triple_brain.event_bus",
         "triple_brain.ui.utils",
         "triple_brain.image_displayer",
@@ -10,7 +11,7 @@ define([
         "triple_brain.bubble_factory",
         "triple_brain.selection_handler",
         "triple_brain.center_bubble"
-    ], function (EventBus, UiUtils, ImageDisplayer, GraphElementUi, BubbleFactory, SelectionHandler, CenterBubble) {
+    ], function ($, EventBus, UiUtils, ImageDisplayer, GraphElementUi, BubbleFactory, SelectionHandler, CenterBubble) {
         "use strict";
         var api = {};
 
@@ -22,7 +23,7 @@ define([
             this.html = html;
         };
 
-        api.Self.prototype = new GraphElementUi.Self;
+        api.Self.prototype = new GraphElementUi.Self();
 
         api.Self.prototype.moveToParent = function (parent) {
             var isOriginalToTheLeft = this.isToTheLeft();
@@ -93,7 +94,7 @@ define([
         api.Self.prototype.getChildrenContainer = function () {
             return this.html.closest(".vertex-container").siblings(
                 ".vertices-children-container"
-            )
+            );
         };
 
         api.Self.prototype.getTopMostChildBubble = function () {
@@ -327,7 +328,7 @@ define([
             if (parentBubble.isGroupRelation()) {
                 var areIdentificationsTheSame =
                     identification.getExternalResourceUri() ===
-                    parentBubble.getGroupRelation().getIdentification().getExternalResourceUri()
+                    parentBubble.getGroupRelation().getIdentification().getExternalResourceUri();
                 if (areIdentificationsTheSame) {
                     return;
                 }
@@ -343,7 +344,7 @@ define([
         api.Self.prototype.revertIdentificationIntegration = function (identification) {
             var self = this;
             $.each(identification.getImages(), function () {
-                self.removeImage(this)
+                self.removeImage(this);
             });
             if (identification.hasImages()) {
                 this.refreshImages();

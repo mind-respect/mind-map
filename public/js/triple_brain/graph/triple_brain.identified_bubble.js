@@ -7,11 +7,12 @@ define([
     "triple_brain.graph_displayer",
     "triple_brain.bubble"
 ], function ($, GraphDisplayer, Bubble) {
+    "use strict";
     var api = {};
     api.Object = function (html) {
         this.html = html;
     };
-    api.Object.prototype = new Bubble.Self;
+    api.Object.prototype = new Bubble.Self();
     api.Object.prototype.removeType = function (type) {
         var types = this.removeIdentificationInArray(
             type,

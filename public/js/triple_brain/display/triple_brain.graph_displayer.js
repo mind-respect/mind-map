@@ -3,11 +3,12 @@
  */
 
 define([
+        "jquery",
         "triple_brain.event_bus",
         "triple_brain.mind_map_info",
         "triple_brain.id_uri"
     ],
-    function (EventBus, MindMapInfo, IdUriUtils) {
+    function ($, EventBus, MindMapInfo, IdUriUtils) {
         "use strict";
         var _implementation,
             api = {};

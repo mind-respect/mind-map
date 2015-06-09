@@ -39,7 +39,7 @@ define([
         return property.hasIdentifications();
     };
     forSingle.remove = function(event, property){
-        forSingle.removeAction(property)
+        forSingle.removeAction(property);
     };
     forSingle.removeAction = function(property){
         FriendlyResourceService.remove(property, function(){

@@ -9,6 +9,7 @@ define([
     "triple_brain.graph_displayer",
     "jquery.triple_brain.drag_scroll"
 ], function ($, GraphElementMenu, GraphUi, GraphDisplayer) {
+    "use strict";
     var api = {};
     api.ofVertex = function (vertex) {
         return new IncludedVerticesMenu(
@@ -17,7 +18,6 @@ define([
     };
     return api;
     function IncludedVerticesMenu(vertex) {
-        "use strict";
         var self = this,
             html;
         this.create = function () {

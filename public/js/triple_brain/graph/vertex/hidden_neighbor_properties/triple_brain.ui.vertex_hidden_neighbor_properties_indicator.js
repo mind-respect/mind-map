@@ -19,7 +19,7 @@ define([
             var hiddenNeighborPropertiesContainer;
             this.build = function () {
                 var numberOfHiddenRelationsToFlag = bubble.getNumberOfRelationsToFlag();
-                if(numberOfHiddenRelationsToFlag > 10){
+                if (numberOfHiddenRelationsToFlag > 10) {
                     numberOfHiddenRelationsToFlag = 10;
                 }
                 var isLeftOriented = bubble.isToTheLeft();
@@ -30,8 +30,8 @@ define([
                 ).data("vertex", bubble);
                 var imageUrl = "/css/images/icons/vertex/" +
                     numberOfHiddenRelationsToFlag +
-                    "_"
-                    + (isLeftOriented ? "left_" : "") +
+                    "_" +
+                    (isLeftOriented ? "left_" : "") +
                     "hidden_properties.svg";
                 var img = $("<img>").attr(
                     "src",

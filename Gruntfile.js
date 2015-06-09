@@ -36,7 +36,6 @@ module.exports = function (grunt) {
         jshint: {
             all : {
                 src : [
-                    'Gruntfile.js',
                     'public/js/triple_brain/**',
                     'public/js/module/**/*.js',
                     'spec/**'
@@ -53,7 +52,7 @@ module.exports = function (grunt) {
                 eqnull: true,
                 strict:true,
                 jasmine:true,
-                predef:["define", "crypto"],
+                predef:["define", "crow", "crypto"],
                 browser:true,
                 funcscope:true,
                 validthis:true,

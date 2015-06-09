@@ -3,11 +3,12 @@
  */
 
 define([
+    "jquery",
     "triple_brain.edge_html_builder_common",
     "triple_brain.suggestion_relation_ui",
     "triple_brain.graph_element_main_menu",
     "triple_brain.identification"
-], function (EdgeHtmlBuilderCommon, SuggestionRelationUi, GraphElementMainMenu, Identification) {
+], function ($, EdgeHtmlBuilderCommon, SuggestionRelationUi, GraphElementMainMenu, Identification) {
     "use strict";
     var api = {};
     api.withServerFacade = function (serverFacade) {

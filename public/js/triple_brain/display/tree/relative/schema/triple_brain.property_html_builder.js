@@ -3,13 +3,14 @@
  */
 
 define([
+    "jquery",
     "triple_brain.property_ui",
     "triple_brain.graph_element_html_builder",
     "triple_brain.edge_html_builder_common",
     "triple_brain.graph_element_main_menu",
     "triple_brain.graph_displayer",
     "triple_brain.event_bus"
-], function (PropertyUi, GraphElementHtmlBuilder, EdgeHtmlBuilderCommon, GraphElementMainMenu, GraphDisplayer, EventBus) {
+], function ($, PropertyUi, GraphElementHtmlBuilder, EdgeHtmlBuilderCommon, GraphElementMainMenu, GraphDisplayer, EventBus) {
     "use strict";
     var api = {};
     api.withServerFacade = function (serverFacade) {

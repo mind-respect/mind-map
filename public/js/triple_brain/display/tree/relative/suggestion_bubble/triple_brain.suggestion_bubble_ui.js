@@ -29,7 +29,7 @@ define([
         RelativeTreeVertex.Object.apply(this);
         this.init(html);
     };
-    api.Self.prototype = new RelativeTreeVertex.Object;
+    api.Self.prototype = new RelativeTreeVertex.Object();
     api.Self.prototype.getGraphElementType = function () {
         return GraphElementUi.Types.VertexSuggestion;
     };

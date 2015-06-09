@@ -6,6 +6,7 @@ define([
     "triple_brain.selection_handler",
     "triple_brain.mind_map_info"
 ], function(SelectionHandler, MindMapInfo){
+    "use strict";
     var api = {};
     api.select = function(){
         SelectionHandler.handleButtonClick();

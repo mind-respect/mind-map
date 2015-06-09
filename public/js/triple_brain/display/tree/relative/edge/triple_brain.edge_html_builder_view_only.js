@@ -3,9 +3,10 @@
  */
 
 define([
-    "triple_brain.tree_edge",
-    "triple_brain.edge_ui"
-], function(TreeEdge, EdgeUi){
+    "jquery",
+    "triple_brain.tree_edge"
+], function($, TreeEdge){
+    "use strict";
     var api = {};
     api.withServerFacade = function (edgeServer) {
         return new EdgeCreator(
@@ -59,7 +60,7 @@ define([
                 ).attr(
                     "data-placeholder",
                     TreeEdge.getWhenEmptyLabel()
-                )
+                );
             }
         };
     }

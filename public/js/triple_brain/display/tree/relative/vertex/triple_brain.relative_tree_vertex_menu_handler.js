@@ -184,12 +184,12 @@ define([
             if (isSourceVertexSelected) {
                 selectedGraphElements.vertices[
                     sourceVertex.getUri()
-                    ] = ""
+                    ] = "";
             }
             if (isDestinationVertexSelected) {
                 selectedGraphElements.vertices[
                     destinationVertex.getUri()
-                    ] = ""
+                    ] = "";
             }
             if (isSourceVertexSelected && isDestinationVertexSelected) {
                 selectedGraphElements.edges[

@@ -5,6 +5,7 @@
 define([
     ],
     function () {
+        "use strict";
         var api = {};
         api.Self = function (sourceVertexUi, edgeUi, destinationVertexUi) {
             this.sourceVertex = function () {

@@ -10,6 +10,7 @@ define([
         "triple_brain.mind-map_template"
     ],
     function ($, GraphElementMenu, GraphUi, Image, MindMapTemplate) {
+        "use strict";
         var api = {};
         api.ofVertex = function (vertex) {
             return new ImageMenu(
@@ -36,10 +37,10 @@ define([
                 var content = $(MindMapTemplate["image_upload"].merge()).i18n(),
                     $holder = content.find('.holder'),
                     tests = {
-                        filereader: typeof FileReader != 'undefined',
+                        filereader: typeof FileReader !== 'undefined',
                         dnd: 'draggable' in document.createElement('span'),
                         formdata: !!window.FormData,
-                        progress: "upload" in new XMLHttpRequest
+                        progress: "upload" in new XMLHttpRequest()
                     },
                     support = {
                         filereader: content.find(".filereader"),
@@ -124,7 +125,9 @@ define([
                 function readFiles(files, vertex) {
                     var formData = tests.formdata ? new FormData() : null;
                     for (var i = 0; i < files.length; i++) {
-                        if (tests.formdata) formData.append('file', files[i]);
+                        if (tests.formdata){
+                            formData.append('file', files[i]);
+                        }
                         previewFile(files[i]);
                     }
 
@@ -150,7 +153,7 @@ define([
                                     uploadProgress.val(complete);
                                     progressLabel.text(complete);
                                 }
-                            }
+                            };
                         }
                         xhr.send(formData);
                     }

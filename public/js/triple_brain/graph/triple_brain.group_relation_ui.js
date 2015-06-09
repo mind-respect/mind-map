@@ -32,7 +32,7 @@ define([
             html
         );
     };
-    api.Self.prototype = new TreeEdge.Self;
+    api.Self.prototype = new TreeEdge.Self();
     api.Self.prototype.getGraphElementType = function () {
         return GraphElementUi.Types.GroupRelation;
     };

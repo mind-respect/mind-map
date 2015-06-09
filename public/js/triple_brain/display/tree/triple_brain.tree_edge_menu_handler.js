@@ -9,6 +9,7 @@ define([
     "triple_brain.edge_service",
     "triple_brain.mind_map_info"
 ], function ($, GraphElementMenuHandler, IdentificationMenu, EdgeService, MindMapInfo) {
+    "use strict";
     var api = {},
         forSingle = {},
         forSingleNotOwned = {},

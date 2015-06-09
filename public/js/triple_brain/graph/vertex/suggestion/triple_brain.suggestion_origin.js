@@ -3,8 +3,9 @@
  */
 
 define([
+    "jquery",
     "triple_brain.friendly_resource"
-], function (FriendlyResource) {
+], function ($, FriendlyResource) {
     "use strict";
     var api = {};
     api.fromServerFormat = function(serverFormat){
@@ -25,7 +26,7 @@ define([
                 uri
             ),
             origin: origin
-        }
+        };
     };
     function Self(serverFormat){
         this.originServerFormat = serverFormat;
@@ -37,7 +38,7 @@ define([
             serverFormat.friendlyResource
         );
     }
-    Self.prototype = new FriendlyResource.Self;
+    Self.prototype = new FriendlyResource.Self();
     Self.prototype.getOrigin = function(){
         return this.originServerFormat.origin;
     };
@@ -45,7 +46,7 @@ define([
         return {
             friendlyResource : FriendlyResource.Self.prototype.getServerFormat.call(this),
             origin: this.getOrigin()
-        }
+        };
     };
     return api;
 });

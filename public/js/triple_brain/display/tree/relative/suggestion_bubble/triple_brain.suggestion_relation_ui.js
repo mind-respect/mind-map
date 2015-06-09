@@ -18,14 +18,14 @@ define([
         return relationSuggestion;
     };
     api.getWhenEmptyLabel = function () {
-        return "suggestion"
+        return "suggestion";
     };
     api.Self = function(html){
         this.html = html;
         TreeEdge.Self.apply(this);
         this.init(html);
     };
-    api.Self.prototype = new TreeEdge.Self;
+    api.Self.prototype = new TreeEdge.Self();
     api.Self.prototype.getGraphElementType = function () {
         return GraphElementUi.Types.RelationSuggestion;
     };

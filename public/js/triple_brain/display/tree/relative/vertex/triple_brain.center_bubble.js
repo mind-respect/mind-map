@@ -2,8 +2,11 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
-define(["jquery"],
+define([
+        "jquery"
+    ],
     function () {
+        "use strict";
         var api = {};
         api.usingBubble = function (bubble) {
             return new Self(
@@ -51,7 +54,7 @@ define(["jquery"],
         Self.prototype._getNumberOfImmediateBubblesToRight = function () {
             return this.getRightContainer().children(
                 ".vertex-tree-container"
-            ).length
+            ).length;
         };
 
         Self.prototype.getLeftContainer = function () {

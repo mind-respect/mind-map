@@ -7,6 +7,7 @@ define([
     "triple_brain.identification",
     "triple_brain.event_bus"
 ], function ($, Identification, EventBus) {
+    "use strict";
     var api = {},
         identificationBaseEventBusKey = "/event/ui/graph/identification/";
     api.addSameAs = function (graphElement, sameAs, callback) {
@@ -27,26 +28,26 @@ define([
             add,
             [graphElement, identification]
         );
-        function add(){
+        function add() {
             $.ajax({
                 type: 'POST',
                 url: graphElement.getUri() + '/identification',
                 data: identification.getJsonFormat(),
                 contentType: 'application/json;charset=utf-8',
                 statusCode: {
-                    201: function(serverIdentification){
+                    201: function (serverIdentification) {
                         api._addIdentificationCallback(
                             graphElement,
                             identification,
                             serverIdentification,
                             callback
-                        )
+                        );
                     }
                 }
             });
         }
     };
-    api._addIdentificationCallback = function(graphElement, identification, serverIdentification, callback){
+    api._addIdentificationCallback = function (graphElement, identification, serverIdentification, callback) {
         var updatedIdentification = Identification.fromServerFormat(
             serverIdentification
         );
@@ -76,8 +77,7 @@ define([
     api.removeIdentification = function (graphElement, identification, callback) {
         $.ajax({
             type: 'DELETE',
-            url: graphElement.getUri()
-                + '/identification?uri=' + identification.getUri()
+            url: graphElement.getUri() + '/identification?uri=' + identification.getUri()
         }).success(function () {
             var removeAction = identification.rightActionForType(
                 graphElement.removeType,

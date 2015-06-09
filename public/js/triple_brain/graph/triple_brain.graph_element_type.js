@@ -5,6 +5,7 @@
 define(
     [],
     function () {
+        "use strict";
         return {
             "Vertex": "vertex",
             "Relation": "relation",
@@ -13,6 +14,6 @@ define(
             "Property": "property",
             "VertexSuggestion": "vertex_suggestion",
             "RelationSuggestion": "relation_suggestion"
-        }
+        };
     }
 );
