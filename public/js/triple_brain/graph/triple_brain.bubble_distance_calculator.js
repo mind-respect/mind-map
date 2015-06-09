@@ -19,7 +19,7 @@ define([
     };
     api._reset = function(){
         if(graphForTraversal !== undefined){
-            graphForTraversal.invalidate();
+            graphForTraversal.invalidate()
         }
         graphForTraversal = new crow.Graph();
     };
