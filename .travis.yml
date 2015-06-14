@@ -1,3 +1,16 @@
 language: node_js
 node_js:
   - "0.12.4"
+
+# blacklist
+branches:
+  except:
+    - built-files
+
+after_success:
+    - git clone -b built-files https://github.com/VincentBlouin/bubl.guru_mind-map built-files
+    - mv public/js/mind-map-built* built-files
+    - cd built-files
+    - git add .
+    - git commit -m "built files"
+    - git push
