@@ -1,8 +1,9 @@
 language: node_js
 node_js:
   - "0.12.4"
+
 deploy:
-  provider: releases
+  provider: built
   api-key: "GITHUB OAUTH TOKEN"
   file:
     - "public/js/mind-map-built.js"
