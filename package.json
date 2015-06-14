@@ -24,5 +24,8 @@
     "grunt-contrib-watch": "*",
     "grunt-template-jasmine-requirejs": "~0.2.3",
     "serve-static": "*"
+  },
+  "scripts": {
+    "test": "grunt test && grunt jshint && grunt requirejs"
   }
 }
