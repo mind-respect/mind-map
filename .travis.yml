@@ -2,4 +2,20 @@ language: node_js
 node_js:
   - "0.12.4"
 
-before_script: grunt jshint
+"scripts": {
+  "test": "grunt test"
+}
+
+script:
+  - grunt jshint
+  - grunt requirejs
+
+deploy:
+  provider: releases
+  api-key: "GITHUB OAUTH TOKEN"
+  file:
+    - "public/js/mind-map-built.js"
+    - "public/js/mind-map-built.js.map"
+  skip_cleanup: true
+  on:
+    tags: true
