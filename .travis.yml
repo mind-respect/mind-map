@@ -13,9 +13,4 @@ before_install:
 after_success:
     - chmod 600 ssh
     - ssh-add ssh
-    - git clone -b built-files https://github.com/VincentBlouin/bubl.guru_mind-map built-files
-    - mv public/js/mind-map-built* built-files
-    - cd built-files
-    - git add .
-    - git commit -m "built files"
-    - git push deploy
+    - scp public/js/mind-map-built* continuous_integration@bubl.guru:builds
