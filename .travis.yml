@@ -16,4 +16,4 @@ before_install:
 after_success:
     - chmod 600 ssh
     - ssh-add ssh
-    - scp public/js/mind-map-buiq lt* continuous_integration@bubl.guru:builds
+    - scp public/js/mind-map-built* continuous_integration@bubl.guru:builds
