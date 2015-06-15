@@ -7,10 +7,13 @@ branches:
   except:
     - built-files
 
+addons:
+  ssh_known_hosts: bubl.guru
+
 before_install:
-- openssl aes-256-cbc -K $encrypted_97f757139999_key -iv $encrypted_97f757139999_iv -in ssh.enc -out ssh -d
+- openssl aes-256-cbc -K $encrypted_97f757139999_key -iv $encrypted_97f757139999_iv -in .travis/ssh.enc -out ssh -d
 
 after_success:
     - chmod 600 ssh
     - ssh-add ssh
-    - scp public/js/mind-map-built* continuous_integration@bubl.guru:builds
+    - scp public/js/mind-map-buiq lt* continuous_integration@bubl.guru:builds
