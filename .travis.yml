@@ -11,9 +11,9 @@ addons:
   ssh_known_hosts: bubl.guru
 
 before_install:
-- openssl aes-256-cbc -K $encrypted_97f757139999_key -iv $encrypted_97f757139999_iv -in ssh.enc -out ssh -d
+openssl aes-256-cbc -K $encrypted_bb9043306a09_key -iv $encrypted_bb9043306a09_iv -in id_rsa.enc -out id_rsa -d
 
 after_success:
-    - chmod 600 ssh
-    - ssh-add ssh
+    - chmod 600 id_rsa
+    - ssh-add id_rsa
     - scp public/js/mind-map-built* continuous_integration@bubl.guru:builds
