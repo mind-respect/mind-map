@@ -11,7 +11,7 @@ addons:
   ssh_known_hosts: bubl.guru
 
 before_install:
-openssl aes-256-cbc -K $encrypted_bb9043306a09_key -iv $encrypted_bb9043306a09_iv -in id_rsa.enc -out id_rsa -d
+    - openssl aes-256-cbc -K $encrypted_bb9043306a09_key -iv $encrypted_bb9043306a09_iv -in id_rsa.enc -out id_rsa -d
 
 after_success:
     - chmod 600 id_rsa
