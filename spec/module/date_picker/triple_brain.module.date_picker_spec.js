@@ -149,7 +149,28 @@ define([
         });
 
         it("it replaces bubble text with selected date if bubble has text that is a date", function () {
-
+            var bubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            EventBus.publish(
+                "/event/ui/graph/identification/added",
+                [bubble, eventIdentification()]
+            );
+            bubble.setText("2012-11-15");
+            bubble.getHtml().datepicker(
+                "setUTCDates",
+                new Date("2013/4/29")
+            );
+            var date = dateStrToDate(
+                bubble.text()
+            );
+            expect(
+                date.getDate()
+            ).toBe(29);
+            expect(
+                date.getMonth()
+            ).toBe(3);
+            expect(
+                date.getFullYear()
+            ).toBe(2013);
         });
 
         function eventIdentification() {
