@@ -130,7 +130,7 @@ define([
                 new Date("2013/4/29")
             );
             expect(
-                bubble.text().startsWith("some text ")
+                bubble.text().indexOf("some text ") === 0
             ).toBeTruthy();
             var date = dateStrToDate(
                 bubble.text().substr(
