@@ -68,12 +68,26 @@ define([
                 var bubble = BubbleFactory.fromSubHtml(
                     $(this)
                 );
+                var dateString = event.date.toISOString().substring(
+                    0, 10
+                );
+                var bubbleText = bubble.text();
+                var isBubbleTextADate = !isNaN(
+                    Date.parse(
+                        bubbleText
+                    )
+                );
+                if(isBubbleTextADate || bubbleText === ""){
+                    bubbleText = dateString;
+                }else{
+                    bubbleText += " " + dateString;
+                }
                 bubble.getLabel().off(
                     "focus", api._handleFocus
                 ).off(
                     "blur", handleBlur
                 ).focus().text(
-                    event.date.toLocaleDateString()
+                    bubbleText
                 ).blur().on(
                     "focus", api._handleFocus
                 ).on(

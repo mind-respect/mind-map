@@ -84,6 +84,73 @@ define([
             ).toBe(29);
         });
 
+        it("it changes bubble text for new date if bubble has no text", function () {
+            var bubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            EventBus.publish(
+                "/event/ui/graph/identification/added",
+                [bubble, eventIdentification()]
+            );
+            bubble.setText("");
+            expect(
+                bubble.text()
+            ).toBe("");
+            bubble.getHtml().datepicker(
+                "setUTCDates",
+                new Date("2013/4/29")
+            );
+            expect(
+                bubble.text() === ""
+            ).toBeFalsy();
+            var date = dateStrToDate(
+                bubble.text()
+            );
+            expect(
+                date.getDate()
+            ).toBe(29);
+            expect(
+                date.getMonth()
+            ).toBe(3);
+            expect(
+                date.getFullYear()
+            ).toBe(2013);
+        });
+
+        it("it appends selected date to bubble text if bubble has text that isn't a date", function () {
+            var bubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            EventBus.publish(
+                "/event/ui/graph/identification/added",
+                [bubble, eventIdentification()]
+            );
+            bubble.setText("some text");
+            expect(
+                bubble.text()
+            ).toBe("some text");
+            bubble.getHtml().datepicker(
+                "setUTCDates",
+                new Date("2013/4/29")
+            );
+            expect(
+                bubble.text().startsWith("some text ")
+            ).toBeTruthy();
+            var date = dateStrToDate(
+                bubble.text().substr(
+                    "some text ".length
+                )
+            );
+            expect(
+                date.getDate()
+            ).toBe(29);
+            expect(
+                date.getMonth()
+            ).toBe(3);
+            expect(
+                date.getFullYear()
+            ).toBe(2013);
+        });
+
+        it("it replaces bubble text with selected date if bubble has text that is a date", function () {
+
+        });
 
         function eventIdentification() {
             return Identification.withUriAndLabel(
@@ -118,6 +185,14 @@ define([
              */
             ModuleDatePicker._handleFocus.call(
                 bubble.getLabel()
+            );
+        }
+        function dateStrToDate(dateStr){
+            dateStr = dateStr.replace(
+                new RegExp('-', 'g'), "/"
+            );
+            return new Date(
+                dateStr
             );
         }
     });

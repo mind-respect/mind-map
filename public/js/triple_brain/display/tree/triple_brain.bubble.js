@@ -370,6 +370,10 @@ define([
             return this.html.hasClass("selected");
         };
 
+        api.Self.prototype.setText = function (text) {
+            this.getLabel().text(text);
+        };
+
         EventBus.subscribe(
             '/event/ui/graph/vertex_and_relation/added/',
             function (event, triple, sourceBubble) {
