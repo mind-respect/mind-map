@@ -80,7 +80,8 @@ define([
                         BubbleFactory.fromHtml(
                             edgeHtml.closest(".bubble")
                         )
-                    )
+                    ),
+                    WikidataAutocompleteProvider.build()
                 ]
             }
         );
