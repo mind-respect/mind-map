@@ -27,7 +27,7 @@ define([
             )).toBeFalsy();
             EventBus.publish(
                 "/event/ui/graph/identification/added",
-                [bubble, eventIdentification()]
+                [bubble, dateIdentification()]
             );
             expect(isAppliedToBubble(
                 bubble
@@ -38,7 +38,7 @@ define([
             var bubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
             EventBus.publish(
                 "/event/ui/graph/identification/added",
-                [bubble, eventIdentification()]
+                [bubble, dateIdentification()]
             );
             expect(
                 isVisible(bubble)
@@ -53,7 +53,7 @@ define([
             var bubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
             EventBus.publish(
                 "/event/ui/graph/identification/added",
-                [bubble, eventIdentification()]
+                [bubble, dateIdentification()]
             );
             focus(bubble);
             expect(
@@ -70,7 +70,7 @@ define([
             bubble.setText("5/29/2013");
             EventBus.publish(
                 "/event/ui/graph/identification/added",
-                [bubble, eventIdentification()]
+                [bubble, dateIdentification()]
             );
             var date = bubble.getHtml().datepicker("getDate");
             expect(
@@ -88,7 +88,7 @@ define([
             var bubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
             EventBus.publish(
                 "/event/ui/graph/identification/added",
-                [bubble, eventIdentification()]
+                [bubble, dateIdentification()]
             );
             bubble.setText("");
             expect(
@@ -119,7 +119,7 @@ define([
             var bubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
             EventBus.publish(
                 "/event/ui/graph/identification/added",
-                [bubble, eventIdentification()]
+                [bubble, dateIdentification()]
             );
             bubble.setText("some text");
             expect(
@@ -152,7 +152,7 @@ define([
             var bubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
             EventBus.publish(
                 "/event/ui/graph/identification/added",
-                [bubble, eventIdentification()]
+                [bubble, dateIdentification()]
             );
             bubble.setText("2012-11-15");
             bubble.getHtml().datepicker(
@@ -173,10 +173,10 @@ define([
             ).toBe(2013);
         });
 
-        function eventIdentification() {
+        function dateIdentification() {
             return Identification.withUriAndLabel(
-                "//www.wikidata.org/wiki/Q1656682",
-                "event"
+                "//www.wikidata.org/wiki/Q205892",
+                "date"
             );
         }
 

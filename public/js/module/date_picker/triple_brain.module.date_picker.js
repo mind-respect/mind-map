@@ -12,8 +12,7 @@ define([
         "use strict";
         var urisToApply = [
                 "http://rdf.freebase.com/rdf/type/datetime",
-                "//www.wikidata.org/wiki/Q1656682",
-                "//www.wikidata.org/wiki/Q1190554"
+                "//www.wikidata.org/wiki/Q205892"
             ],
             _bubblesWithDatePicker = [];
 
