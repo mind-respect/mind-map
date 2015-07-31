@@ -8,8 +8,10 @@ define([
     "triple_brain.graph_element_ui",
     "triple_brain.vertex_ui",
     "triple_brain.event_bus",
-    "triple_brain.selection_handler"
-], function ($, RelativeTreeVertex, GraphElementUi, VertexUi, EventBus, SelectionHandler) {
+    "triple_brain.selection_handler",
+    "triple_brain.vertex_html_builder",
+    "triple_brain.graph_element"
+], function ($, RelativeTreeVertex, GraphElementUi, VertexUi, EventBus, SelectionHandler, VertexHtmlBuilder, GraphElement) {
     "use strict";
     var api = {};
     RelativeTreeVertex.buildCommonConstructors(api);
@@ -58,12 +60,17 @@ define([
             this.getUri(),
             this.getId()
         );
+        var originalServerObject = GraphElement.fromSuggestionAndElementUri(
+            this._getServerFacade(),
+            newVertexUri
+        );
+        originalServerObject.isLeftOriented = this.isToTheLeft();
         this.html.data(
             "uri",
             newVertexUri
         ).data(
             "originalServerObject",
-            {isLeftOriented : this.isToTheLeft()}
+            originalServerObject
         ).removeClass(
             "suggestion"
         );
@@ -75,11 +82,12 @@ define([
         );
         vertex.rebuildMenuButtons();
         SelectionHandler.setToSingleGraphElement(vertex);
-        this.integrationDeferrer.resolve(vertex);
         EventBus.publish(
             '/event/ui/html/vertex/created/',
             vertex
         );
+        VertexHtmlBuilder.completeBuild(vertex);
+        this.integrationDeferrer.resolve(vertex);
         return vertex;
     };
     return api;

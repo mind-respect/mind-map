@@ -24,7 +24,7 @@ define([
         });
     };
     api.get = function(uri, callback){
-        $.ajax({
+        return $.ajax({
             type: 'GET',
             url: adaptSchemaUri(uri)
         }).success(callback);

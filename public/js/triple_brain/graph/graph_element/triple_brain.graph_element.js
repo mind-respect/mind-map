@@ -14,6 +14,25 @@ define([
             serverFormat
         );
     };
+    api.fromSuggestionAndElementUri = function (suggestion, elementUri) {
+        var serverFormat = api.buildObjectWithUri(
+            elementUri
+        );
+        serverFormat.identifications = [];
+        var sameAs = suggestion.getSameAs();
+        sameAs.setType("same_as");
+        serverFormat.identifications.push(
+            sameAs.getServerFormat()
+        );
+        var type = suggestion.getType();
+        type.setType("type");
+        serverFormat.identifications.push(
+            type.getServerFormat()
+        );
+        return api.fromServerFormat(
+            serverFormat
+        );
+    };
     api.withUri = function(uri){
         return api.fromServerFormat(
             api.buildObjectWithUri(

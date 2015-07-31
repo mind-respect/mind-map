@@ -285,14 +285,14 @@ define([
         identificationAddedHandler
     );
     function identificationAddedHandler(event, graphElement, identification) {
-        graphElement.applyToOtherInstances(function (vertex) {
+        graphElement.applyToOtherInstances(function (otherInstance) {
             var addAction = identification.rightActionForType(
                 graphElement.addType,
                 graphElement.addSameAs,
                 graphElement.addGenericIdentification
             );
             addAction.call(
-                vertex,
+                otherInstance,
                 identification
             );
         });

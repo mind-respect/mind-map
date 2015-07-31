@@ -6,10 +6,11 @@ define([
     "test/test-scenarios",
     "test/test-utils",
     "test/mock/triple_brain.graph_element_service_mock",
+    "test/mock/triple_brain.schema_service_mock",
     "triple_brain.vertex_service",
     "triple_brain.user_map_autocomplete_provider",
     "triple_brain.vertex_html_builder_common"
-], function (Scenarios, TestUtils, GraphElementServiceMock, VertexService, UserMapAutocompleteProvider, VertexHtmlBuilderCommon) {
+], function (Scenarios, TestUtils, GraphElementServiceMock, SchemaServiceMock, VertexService, UserMapAutocompleteProvider, VertexHtmlBuilderCommon) {
     "use strict";
     describe("vertex_html_builder_common", function () {
         it("waits for suggestion to be integrated before handling autocomplete select", function () {
@@ -30,6 +31,9 @@ define([
             expect(
                 bubble1.hasIdentifications()
             ).toBeTruthy();
+            SchemaServiceMock.getMock(
+                new Scenarios.getProjectSchema().getGraph()
+            );
             var suggestionInTree = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
             VertexHtmlBuilderCommon._labelAutocompleteSelectHandler(
                 suggestionInTree,

@@ -499,14 +499,10 @@ define([
             Mock.setCenterVertexUriInUrl(this.getVertex().getUri());
         };
         api.getKaraokeSchemaGraph = function () {
-            /*
-             karaoke->invitees
-             karaoke->repertoire
-             karaoke->location
-             location identified to Freebase Location
-             */
             this.getGraph = function () {
-                return api._getTestData("karaokeSchemaGraph");
+                return api._getTestData(
+                    "karaokeSchema.schema"
+                );
             };
             var graph = this.getGraph();
             this.getSchema = function () {
@@ -563,10 +559,26 @@ define([
             );
         };
 
+        api.karaokeSchemaSearchResults = function () {
+            this.get = function () {
+                return api._getTestData(
+                    "karaokeSchema.searchResults"
+                );
+            };
+        };
+
         api.getWikidataSearchResultForProject = function () {
             this.get = function () {
                 return api._getTestData(
                     "wikidataSearchResultForProject"
+                );
+            };
+        };
+
+        api.getProjectSchema = function () {
+            this.getGraph = function () {
+                return api._getTestData(
+                    "projectSchema.schema"
                 );
             };
         };
