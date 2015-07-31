@@ -587,7 +587,7 @@ define([
             this.getCenterBubbleUri = function () {
                 return Schema.fromServerFormat(
                     graph
-                ).getUri()
+                ).getUri();
             };
             this.getSchemaInTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("project");
