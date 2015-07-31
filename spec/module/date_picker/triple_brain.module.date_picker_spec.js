@@ -190,6 +190,16 @@ define([
                 suggestionUi
             )).toBeTruthy();
         });
+        it("wont fail if suggestion has no type", function(){
+            var suggestionUi = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
+            suggestionUi._getServerFacade()._setType(undefined);
+            EventBus.publish(
+                "suggestion_ui_shown", suggestionUi
+            );
+            expect(isAppliedToBubble(
+                suggestionUi
+            )).toBeFalsy();
+        });
         function dateIdentification() {
             return Identification.withUriAndLabel(
                 "//www.wikidata.org/wiki/Q205892",
