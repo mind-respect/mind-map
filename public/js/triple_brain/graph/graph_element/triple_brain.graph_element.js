@@ -24,11 +24,13 @@ define([
         serverFormat.identifications.push(
             sameAs.getServerFormat()
         );
-        var type = suggestion.getType();
-        type.setType("type");
-        serverFormat.identifications.push(
-            type.getServerFormat()
-        );
+        if(suggestion.hasType()){
+            var type = suggestion.getType();
+            type.setType("type");
+            serverFormat.identifications.push(
+                type.getServerFormat()
+            );
+        }
         return api.fromServerFormat(
             serverFormat
         );

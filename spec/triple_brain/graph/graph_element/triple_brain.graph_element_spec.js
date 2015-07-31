@@ -9,7 +9,7 @@ define([
 ], function (Scenarios, TestUtils, GraphElement) {
     "use strict";
     describe("graph_element", function () {
-        it("takes the type and same as of a suggestion and sets them as identifications for the graph element when build from suggestion", function(){
+        it("takes the type and same as of a suggestion and sets them as identifications", function(){
             var vertexSuggestionInTree = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
             var graphElement = GraphElement.fromSuggestionAndElementUri(
                 vertexSuggestionInTree._getServerFacade(),
@@ -21,6 +21,17 @@ define([
             expect(
                 graphElement.getTypes().length
             ).toBe(1);
+        });
+        it("does not fail if suggestion has no type", function(){
+            var vertexSuggestionInTree = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
+            vertexSuggestionInTree._getServerFacade()._setType(undefined);
+            var graphElement = GraphElement.fromSuggestionAndElementUri(
+                vertexSuggestionInTree._getServerFacade(),
+                TestUtils.generateVertexUri()
+            );
+            expect(
+                graphElement.getTypes().length
+            ).toBe(0);
         });
     });
 });
