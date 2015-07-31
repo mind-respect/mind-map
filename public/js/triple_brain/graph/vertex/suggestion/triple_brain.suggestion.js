@@ -104,6 +104,9 @@ define([
         Suggestion.prototype.getType = function () {
             return this.type;
         };
+        Suggestion.prototype._setType = function (type) {
+            return this.type = type;
+        };
         Suggestion.prototype.hasType = function () {
             return this.type !== undefined;
         };

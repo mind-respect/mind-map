@@ -172,7 +172,24 @@ define([
                 date.getFullYear()
             ).toBe(2013);
         });
-
+        it("can apply datepicker to a suggestion", function(){
+            var suggestionUi = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
+            EventBus.publish(
+                "suggestion_ui_shown", suggestionUi
+            );
+            expect(isAppliedToBubble(
+                suggestionUi
+            )).toBeFalsy();
+            suggestionUi._getServerFacade()._setType(
+                dateIdentification()
+            );
+            EventBus.publish(
+                "suggestion_ui_shown", suggestionUi
+            );
+            expect(isAppliedToBubble(
+                suggestionUi
+            )).toBeTruthy();
+        });
         function dateIdentification() {
             return Identification.withUriAndLabel(
                 "//www.wikidata.org/wiki/Q205892",

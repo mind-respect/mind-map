@@ -33,6 +33,10 @@ define([
             '/event/ui/vertex/build_complete',
             handleVertexCreated
         );
+        EventBus.subscribe(
+            'suggestion_ui_shown',
+            handleSuggestionShown
+        );
 
         return api;
         function handleIdentificationAdded(event, graphlement, identification) {
@@ -49,6 +53,17 @@ define([
                     return false;
                 }
             });
+        }
+
+        function handleSuggestionShown(event, suggestion){
+            var isIdentifiedToDate = isIdentificationADate(
+                suggestion._getServerFacade().getSameAs()
+            ) || isIdentificationADate(
+                    suggestion._getServerFacade().getType()
+                );
+            if(isIdentifiedToDate){
+                applyDatePickerToVertex(suggestion);
+            }
         }
 
         function applyDatePickerToVertex(graphElement) {
