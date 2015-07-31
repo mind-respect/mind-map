@@ -199,11 +199,13 @@ define([
         });
     };
     api.addProperty = function (property, schema) {
-        addEdge(
+        var propertyUi = addEdge(
             property,
             schema,
             PropertyHtmlBuilder
         );
+        PropertyHtmlBuilder.completeBuild(propertyUi);
+        return propertyUi;
     };
     api.allowsMovingVertices = function () {
         return false;
@@ -352,9 +354,10 @@ define([
         this.edgeBuilder = EdgeBuilder;
         this.makeForSchema = function (schema) {
             _htmlBuilder = SchemaHtmlBuilder;
+            var container = buildRootBubbleContainer();
             buildRootBubble(
                 schema,
-                buildRootBubbleContainer()
+                container
             );
             $.each(schema.getProperties(), function () {
                 var propertyServerFacade = this;
@@ -364,6 +367,7 @@ define([
                     PropertyHtmlBuilder
                 );
             });
+            return container;
         };
         this.makeForIncludedVerticesView = function (serverGraph, container) {
             var verticesContainer = RelativeTreeTemplates[

@@ -9,8 +9,9 @@ define([
     "triple_brain.graph_displayer_as_relative_tree",
     "triple_brain.center_bubble",
     "triple_brain.vertex_html_builder",
-    "triple_brain.edge_html_builder"
-], function (Scenarios, TestUtils, Mock, GraphDisplayerAsRelativeTree, CenterBubble, VertexHtmlBuilder, EdgeHtmlBuilder) {
+    "triple_brain.edge_html_builder",
+    "triple_brain.graph_element"
+], function (Scenarios, TestUtils, Mock, GraphDisplayerAsRelativeTree, CenterBubble, VertexHtmlBuilder, EdgeHtmlBuilder, GraphElement) {
     "use strict";
     describe("graph_displayer_as_relative_tree_spec", function () {
         var threeBubblesGraph,
@@ -234,6 +235,18 @@ define([
             expect(
                 spyOnVertexCompleteBuild.calls.count()
             ).toBe(1);
+        });
+        it("completes the build of a property after adding one", function(){
+            var schema = new Scenarios.getProjectSchema().getSchemaInTree();
+            var propertyUi = GraphDisplayerAsRelativeTree.addProperty(
+                GraphElement.withUri(
+                    TestUtils.generateVertexUri()
+                ),
+                schema
+            );
+            expect(
+                propertyUi.getIdentifications().length
+            ).toBe(0);
         });
         function connectDistantVertexTest(callback) {
             Mock.setGetGraphFromService(

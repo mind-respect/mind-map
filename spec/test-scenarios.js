@@ -26,10 +26,11 @@ define([
         "triple_brain.suggestion",
         "triple_brain.identification",
         "triple_brain.friendly_resource",
+        "triple_brain.id_uri",
         "triple_brain.language_manager",
         "text!locales/en/translation.json"
     ],
-    function ($, TestScenarioData, Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, TestUtils, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, EventBus, Suggestion, Identification, FriendlyResource, LanguageManager, enTranslation) {
+    function ($, TestScenarioData, Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, TestUtils, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, EventBus, Suggestion, Identification, FriendlyResource, IdUri, LanguageManager, enTranslation) {
         "use strict";
         var api = {},
             testData = JSON.parse(TestScenarioData);
@@ -576,10 +577,20 @@ define([
         };
 
         api.getProjectSchema = function () {
+            var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
                 return api._getTestData(
                     "projectSchema.schema"
                 );
+            };
+            var graph = this.getGraph();
+            this.getCenterBubbleUri = function () {
+                return Schema.fromServerFormat(
+                    graph
+                ).getUri()
+            };
+            this.getSchemaInTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("project");
             };
         };
 
@@ -736,7 +747,7 @@ define([
                 );
             };
         };
-        api._getTestData = function(key) {
+        api._getTestData = function (key) {
             var splitKey = key.split(/\./),
                 data = testData;
             while (splitKey.length && data) {
@@ -802,14 +813,17 @@ define([
             return foundIdentification;
         }
 
-        function makeTree(graph, centralVertexUri) {
+        function makeTree(graph, centerBubbleUri) {
             GraphDisplayer.reset();
-            var tree = new GraphDisplayerAsRelativeTree.TreeMaker()
-                .makeForCenterVertex(
-                graph,
-                centralVertexUri
-            );
-
+            var treeMaker = new GraphDisplayerAsRelativeTree.TreeMaker();
+            var tree = IdUri.isSchemaUri(centerBubbleUri) ?
+                treeMaker.makeForSchema(
+                    Schema.fromServerFormat(graph)
+                ) :
+                treeMaker.makeForCenterVertex(
+                    graph,
+                    centerBubbleUri
+                );
             GraphDisplayer.getVertexSelector().visitAllVertices(function (vertex) {
                 EventBus.publish(
                     '/event/ui/vertex/visit_after_graph_drawn',
