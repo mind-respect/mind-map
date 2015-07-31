@@ -11,8 +11,9 @@ define([
     "triple_brain.graph_element_main_menu",
     "triple_brain.suggestion_bubble_menu_handler",
     "triple_brain.ui.graph",
-    "triple_brain.identification"
-], function ($, VertexHtmlCommon, GraphElementHtmlBuilder, RelativeTreeVertex, SuggestionBubbleUi, GraphElementMainMenu, SuggestionBubbleMenuHandler, GraphUi, Identification) {
+    "triple_brain.identification",
+    "triple_brain.event_bus"
+], function ($, VertexHtmlCommon, GraphElementHtmlBuilder, RelativeTreeVertex, SuggestionBubbleUi, GraphElementMainMenu, SuggestionBubbleMenuHandler, GraphUi, Identification, EventBus) {
     "use strict";
     var api = {};
     api.withServerFacade = function (serverFacade) {
@@ -71,6 +72,7 @@ define([
         this.html.append(
             $("<span class='arrow'>")
         );
+        EventBus.publish("suggestion_ui_shown", suggestionUi);
         return suggestionUi;
     };
     Self.prototype._addMenu = function () {

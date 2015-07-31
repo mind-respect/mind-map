@@ -6,8 +6,9 @@ define([
     "test/test-scenarios",
     "triple_brain.suggestion_bubble_html_builder",
     "triple_brain.bubble",
-    "triple_brain.ui.graph"
-], function (Scenarios, SuggestionBubbleHtmlBuilder, Bubble, GraphUi) {
+    "triple_brain.ui.graph",
+    "triple_brain.event_bus"
+], function (Scenarios, SuggestionBubbleHtmlBuilder, Bubble, GraphUi, EventBus) {
     "use strict";
     describe("suggestion_bubble_html_builder", function () {
         var suggestion,
@@ -63,6 +64,16 @@ define([
             expect(
                 locationBubbleSuggestion.getTypes()[1].getLabel()
             ).toBe(locationSuggestion.getLabel());
+        });
+        it("publishes that it created a suggestion bubble ui", function(){
+            var hasPublished = false;
+            EventBus.subscribe("suggestion_ui_shown", function(){
+               hasPublished = true;
+            });
+            new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
+            expect(
+                hasPublished
+            ).toBeTruthy();
         });
     });
 });
