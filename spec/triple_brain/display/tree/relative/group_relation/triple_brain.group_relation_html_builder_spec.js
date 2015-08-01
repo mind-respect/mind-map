@@ -11,8 +11,9 @@ define([
     "triple_brain.group_relation_html_builder",
     "triple_brain.group_relation_menu_handler",
     "triple_brain.identification",
+    "triple_brain.relative_tree_vertex_menu_handler",
     "triple_brain.event_bus"
-], function (Scenarios, TestUtils, VertexServiceMock, GraphElementServiceMock, MindMapInfo, GroupRelationHtmlBuilder, GroupRelationMenuHandler, Identification, EventBus) {
+], function (Scenarios, TestUtils, VertexServiceMock, GraphElementServiceMock, MindMapInfo, GroupRelationHtmlBuilder, GroupRelationMenuHandler, Identification, RelativeTreeVertexMenuHandler, EventBus) {
     "use strict";
     describe("group_relation_html_builder", function () {
         var groupRelation;
@@ -226,6 +227,39 @@ define([
                 r2ChildOfCenterBubble,
                 "r2"
             )).toBeTruthy();
+        });
+        it("sets the group relation label and comment correctly when identifying a relation to a new relation that exists at the same level", function () {
+            VertexServiceMock.addRelationAndVertexToVertexMock();
+            MindMapInfo._setIsViewOnly(false);
+            var centerBubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            RelativeTreeVertexMenuHandler.forSingle().addChildAction(centerBubble);
+            var newRelation = TestUtils.getChildWithLabel(centerBubble, "");
+            newRelation.setText("new relation");
+            newRelation.setNote("some comment");
+            var identificationToNewRelation = Identification.fromFriendlyResource(
+                newRelation.getOriginalServerObject()
+            );
+            var relation1 = TestUtils.getChildWithLabel(centerBubble, "r1");
+            relation1.addSameAs(
+                identificationToNewRelation
+            );
+            EventBus.publish(
+                "/event/ui/graph/identification/added",
+                [relation1, identificationToNewRelation]
+            );
+            expect(
+                TestUtils.hasChildWithLabel(centerBubble, "new relation")
+            ).toBeTruthy();
+            var newGroupRelation = TestUtils.getChildWithLabel(
+                centerBubble,
+                "new relation"
+            );
+            expect(
+                newGroupRelation.isGroupRelation()
+            ).toBeTruthy();
+            expect(
+                newGroupRelation.getNote()
+            ).toBe("some comment");
         });
         it("doesn't create a group-relation when adding to a relation an identification that exists at the same level if its already under group relation", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();

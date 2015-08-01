@@ -144,6 +144,12 @@ define([
                             childAsAnIdentification
                         );
                         if(isIdentifiedToRelation){
+                            childAsAnIdentification.setLabel(
+                                child.text()
+                            );
+                            childAsAnIdentification.setComment(
+                                child.getNote()
+                            );
                             var newGroupRelation = GraphDisplayer.addNewGroupRelation(
                                 childAsAnIdentification,
                                 parentBubble

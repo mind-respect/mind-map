@@ -99,6 +99,10 @@ define([
         return this.html.find('.label');
     };
 
+    api.Self.prototype.getNote = function () {
+        return this.getLabel().attr("data-content");
+    };
+
     api.Self.prototype.getOriginalServerObject = api.Self.prototype.getGroupRelation;
 
     return api;
