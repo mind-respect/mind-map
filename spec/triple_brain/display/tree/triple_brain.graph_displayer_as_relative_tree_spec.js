@@ -155,7 +155,7 @@ define([
             });
         });
 
-        it("when connecting to a distant vertex, similar relations are grouped", function () {
+        it("groups similar relations when connecting to a distant vertex, ", function () {
             connectDistantVertexTest(function (distantBubble) {
                 var connectedBubble = distantBubble.getTopMostChildBubble().getTopMostChildBubble();
                 var tShirtBubble = new Scenarios.TreeQuerier(
@@ -166,7 +166,7 @@ define([
                 ).toBeTruthy();
             });
         });
-        it("when connecting to a distant vertex, distant vertex child bubbles have their images", function () {
+        it("shows child bubbles images of a distant vertex when connecting to a distant vertex", function () {
             connectDistantVertexTest(function (distantBubble) {
                 var connectedBubble = distantBubble.getTopMostChildBubble().getTopMostChildBubble();
                 expect(
@@ -174,7 +174,7 @@ define([
                 ).toBeTruthy();
             });
         });
-        it("when connecting to a distant vertex, new relation is selected", function () {
+        it("selects new relation when connecting to a distant vertex", function () {
             connectDistantVertexTest(function (distantBubble) {
                 var newRelation = distantBubble.getTopMostChildBubble();
                 expect(
@@ -185,6 +185,34 @@ define([
                 ).toBeTruthy();
             });
         });
+
+        it("does not duplicate the hidden relation image of a child bubble when creating a distant relationship", function () {
+            var bubble1 = graphWithHiddenSimilarRelationsScenario.getBubble1InTree();
+            var bubble2 = TestUtils.getChildWithLabel(
+                bubble1, "r1"
+            ).getTopMostChildBubble();
+            expect(
+                getNumberOfHiddenPropertiesContainer(
+                    bubble2
+                )
+            ).toBe(1);
+            connectBubbleToDistantBubbleWithUriAndGraphWhenConnected(
+                bubble1,
+                graphWithHiddenSimilarRelationsScenario.getDistantBubbleUri(),
+                graphWithHiddenSimilarRelationsScenario.getDistantBubbleGraphWhenConnectedToBubble1(),
+                function (bubble1) {
+                    bubble2 = TestUtils.getChildWithLabel(
+                        bubble1, "r1"
+                    ).getTopMostChildBubble();
+                    expect(
+                        getNumberOfHiddenPropertiesContainer(
+                            bubble2
+                        )
+                    ).toBe(1);
+                }
+            );
+        });
+
         it("contains all elements for deep circular graph", function () {
             var deepGraphWithCircularity = new Scenarios.deepGraphWithCircularity();
             expect(
@@ -236,7 +264,7 @@ define([
                 spyOnVertexCompleteBuild.calls.count()
             ).toBe(1);
         });
-        it("completes the build of a property after adding one", function(){
+        it("completes the build of a property after adding one", function () {
             var schema = new Scenarios.getProjectSchema().getSchemaInTree();
             var propertyUi = GraphDisplayerAsRelativeTree.addProperty(
                 GraphElement.withUri(
@@ -248,24 +276,38 @@ define([
                 propertyUi.getIdentifications().length
             ).toBe(0);
         });
+
         function connectDistantVertexTest(callback) {
-            Mock.setGetGraphFromService(
-                graphWithHiddenSimilarRelationsScenario.getB2GraphWhenConnectedToDistantBubble()
+            connectBubbleToDistantBubbleWithUriAndGraphWhenConnected(
+                distantGraphScenario.getBubbleInTree(),
+                graphWithHiddenSimilarRelationsScenario.getBubble2().getUri(),
+                graphWithHiddenSimilarRelationsScenario.getB2GraphWhenConnectedToDistantBubble(),
+                callback
             );
-            var distantBubble = distantGraphScenario.getBubbleInTree(),
-                hasVisitedCallback = false,
-                bubble2 = graphWithHiddenSimilarRelationsScenario.getBubble2();
+        }
+
+        function connectBubbleToDistantBubbleWithUriAndGraphWhenConnected(currentBubble, distantBubbleUri, graphOfDistantBubble, callback) {
+            Mock.setGetGraphFromService(
+                graphOfDistantBubble
+            );
+            var hasVisitedCallback = false;
             GraphDisplayerAsRelativeTree.connectVertexToVertexWithUri(
-                distantBubble,
-                bubble2.getUri(),
+                currentBubble,
+                distantBubbleUri,
                 function () {
                     hasVisitedCallback = true;
-                    callback(distantBubble);
+                    callback(currentBubble);
                 }
             );
             expect(
                 hasVisitedCallback
             ).toBeTruthy();
+        }
+
+        function getNumberOfHiddenPropertiesContainer(bubble) {
+            return bubble.getHtml().find(
+                ".hidden-properties-container"
+            ).length;
         }
     });
 });

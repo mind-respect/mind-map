@@ -403,6 +403,10 @@ define([
             parentVertex.setOriginalServerObject(serverVertex);
             self.buildChildrenHtmlTreeRecursively(parentVertex, serverGraph.vertices);
             parentVertex.visitVerticesChildren(function (vertex) {
+                var wasAlreadyShownInGraph = serverGraph.vertices[vertex.getUri()] === undefined;
+                if(wasAlreadyShownInGraph){
+                    return;
+                }
                 VertexHtmlBuilder.completeBuild(vertex);
                 vertex.visitAllChild(function (childBubble) {
                     if (childBubble.isGroupRelation()) {

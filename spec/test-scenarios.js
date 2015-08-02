@@ -277,14 +277,6 @@ define([
         };
 
         api.getGraphWithHiddenSimilarRelations = function () {
-            /*
-             * b1-r1->b2
-             * b2 has hidden relations
-             * b2-T-shirt->shirt1
-             * b2-T-shirt->shirt2
-             * shirt2 has an image
-             * relations T-shirt are identified to Freebase T-shirt.
-             */
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
                 return api._getTestData(
@@ -307,6 +299,16 @@ define([
                     "graphWithHiddenSimilarRelations.b2GraphWhenConnectedToDistantBubble"
                 );
             };
+            this.getDistantBubbleGraphWhenConnectedToBubble1 = function () {
+                return api._getTestData(
+                    "graphWithHiddenSimilarRelations.distantBubbleGraphWhenConnectedToBubble1"
+                );
+            };
+            this.getDistantBubbleUri = function () {
+                return api._getTestData(
+                    "graphWithHiddenSimilarRelations.distantBubbleUri"
+                );
+            };
             this.getBubble1 = function () {
                 return Vertex.fromServerFormat(this.getGraph().vertices[
                         uriOfVertexWithLabel(this.getGraph(), "b1")
@@ -318,6 +320,9 @@ define([
                         uriOfVertexWithLabel(this.getGraph(), "b2")
                         ]
                 );
+            };
+            this.getBubble1InTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("b1");
             };
             this.getBubble2InTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("b2");
@@ -757,7 +762,10 @@ define([
             if (data.constructor === Array) {
                 return data.slice();
             }
-            return $.extend(deep, {}, data);
+            if(typeof data === 'object'){
+                return $.extend(deep, {}, data);
+            }
+            return data;
         };
         return api;
         function uriOfVertexWithLabel(graph, label) {
