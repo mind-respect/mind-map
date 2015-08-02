@@ -200,6 +200,32 @@ define([
                 suggestionUi
             )).toBeFalsy();
         });
+        it("date on suggestion is correct", function(){
+            var suggestionUi = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
+            suggestionUi._getServerFacade()._setType(
+                dateIdentification()
+            );
+            EventBus.publish(
+                "suggestion_ui_shown", suggestionUi
+            );
+            suggestionUi.getHtml().datepicker(
+                "setUTCDates",
+                new Date("2013/4/29")
+            );
+            suggestionUi.integrate();
+            var date = dateStrToDate(
+                suggestionUi.text()
+            );
+            expect(
+                date.getDate()
+            ).toBe(29);
+            expect(
+                date.getMonth()
+            ).toBe(3);
+            expect(
+                date.getFullYear()
+            ).toBe(2013);
+        });
         function dateIdentification() {
             return Identification.withUriAndLabel(
                 "//www.wikidata.org/wiki/Q205892",
