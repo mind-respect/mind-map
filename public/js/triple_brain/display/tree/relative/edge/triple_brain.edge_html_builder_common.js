@@ -56,7 +56,6 @@ define([
         ).appendTo(
             labelContainer
         ).tripleBrainAutocomplete({
-                limitNbRequests: true,
                 select: function (event, ui) {
                     var edge = BubbleFactory.fromSubHtml(
                         $(this)

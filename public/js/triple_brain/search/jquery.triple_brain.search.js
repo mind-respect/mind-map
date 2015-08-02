@@ -12,7 +12,6 @@ define([
         detailsCache = {};
     $.fn.tripleBrainAutocomplete = function (options) {
         var textInput = $(this);
-        setupNbRequestsIfApplicable();
         textInput.autocomplete(
             $.extend(
                 getAutocompleteOptions(),
@@ -97,72 +96,6 @@ define([
                     );
                 }
             };
-        }
-
-        function setupNbRequestsIfApplicable() {
-            if (!options.limitNbRequests) {
-                return;
-            }
-            textInput.on(
-                "change",
-                function () {
-                    resetInputData($(this));
-                }
-            );
-            textInput.on(
-                "autocompletecreate",
-                function () {
-                    resetInputData($(this));
-                }
-            );
-            textInput.on(
-                "autocompletecreate",
-                function () {
-                    resetInputData($(this));
-                }
-            );
-            textInput.on(
-                "autocompletesearch",
-                function () {
-                    var input = $(this);
-                    if (isSearchDisabled(input)) {
-                        input.autocomplete("option", "disabled", true);
-                    }
-                    addOneRequest(input);
-                }
-            );
-        }
-
-        function resetInputData(input) {
-            input.autocomplete("option", "disabled", false);
-            setNbRequests(
-                input,
-                0
-            );
-        }
-
-        function addOneRequest(input) {
-            setNbRequests(
-                input,
-                getNbRequests(input) + 1
-            );
-        }
-
-        function isSearchDisabled(input) {
-            return getNbRequests(input) >= 4;
-        }
-
-        function setNbRequests(input, nbRequests) {
-            input.data(
-                "jquery.triple_brain.search.nbRequests",
-                nbRequests
-            );
-        }
-
-        function getNbRequests(input) {
-            return input.data(
-                "jquery.triple_brain.search.nbRequests"
-            );
         }
 
         function renderItemCustom(ul, item) {
