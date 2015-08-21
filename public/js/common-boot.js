@@ -2,10 +2,9 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
-
 requirejs.config({
     baseUrl: 'js',
-    urlArgs: "bust=" + 11,
+    urlArgs: "bust=" + 12,
     paths: {
         "locales": '../locales',
         "test": '../../spec',

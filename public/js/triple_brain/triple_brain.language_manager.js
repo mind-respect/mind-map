@@ -195,7 +195,7 @@ define([
                 var basePath = ns === "translation" ?
                     "/locales/" :
                 "/js/module/" + ns + "/locales/";
-                var url = basePath + lng + "/" + "translation" + ".json";
+                var url = basePath + lng + "/" + "translation" + ".json?bust=1";
                 $.ajax({
                     url: url,
                     dataType: 'json'
