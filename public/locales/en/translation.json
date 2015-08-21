@@ -1,191 +1,190 @@
 {
-    "login" : {
-        "title" : "Login / Register",
-        "email" : "Email",
-        "password" : "Password",
-        "login" : "Login",
-        "register": "Register",
-        "about" : "about",
-        "error" : "Invalid credentials"
-    },
-
-    "forgot_password" :{
-        "button" : "Forgot password",
-        "success": "The instructions to change your password were sent to you by email",
-        "error": "No account is related to this email"
-    },
-
-    "change_password":{
-        "title": "Password change",
-        "input": "Password",
-        "repeat": "Retype password",
-        "submit": "Change",
-        "success": "Password changed",
-        "error":{
-            "match":"Passwords don't match",
-            "too_short":"The password must have a minimum of 6 characters",
-            "wrong":"You can't modify your password with this link anymore"
-        }
-    },
-
-    "register" : {
-        "title" : "Register",
-        "username" : "Username",
-        "email" : "Email",
-        "password" : "Password",
-        "retype_password" : "Retype Password",
-        "register" : "Register",
-        "login" : "I have an account, log me in !",
-        "language" : {
-            "selected_languages" : "Languages I understand in order of preference",
-            "more_languages" : "Add language(s)",
-            "available_languages" : "Available languages",
-            "filter" : "Filter"
-        },
-        "error" : {
-            "too_long" : "Username can't exceed 50 characters",
-            "taken" : "This username is already taken",
-            "email_mandatory": "Email is mandatory",
-            "email_invalid" : "This email is invalid",
-            "email_already_exists" : "This email is already registered",
-            "password_mandatory" : "Password is mandatory",
-            "password_too_short" : "The password must have a minimum of 6 characters"
-        }
-    },
-    "not_allowed" : {
-        "title" : "Access denied",
-        "about" : "You don't have the rights to read this bubble",
-        "go_home" : "Continue"
-    },
-    "non_existent" : {
-        "title" : "Does not exists",
-        "about" : "The bubble with given URL does not exist. It was either deleted, moved or has never existed.",
-        "go_home" : "Continue"
-    },
-    "top_menu" : {
-        "create" :  {
-            "title" : "create",
-            "bubble" : "bubble",
-            "schema" : "schema"
-        },
-        "disconnect" : "disconnect",
-        "redraw" : "redraw",
-        "selection" : {
-            "title" : "select",
-            "bubbles" : "bubbles",
-            "relations" : "relations"
-        },
-        "login_register" : "login/register"
-    },
-    "top_center_menu" : {
-        "select": "select"
-    },
-    "left_menu" : {
-        "search" : "Search my bubbles"
-    },
-    "caption" : {
-        "title" : "Caption",
-        "private" : "private",
-        "public" : "public"
-    },
-    "edge": {
-        "default" : "relation"
-    },
-    "graph_element" : {
-        "menu" : {
-            "identification" :{
-                "title" : "Identifications",
-                "instruction" : "What is it? Albert Einstein? A location? An animal?",
-                "placeholder" : "Add an identification to this bubble",
-                "readMore" : "more",
-                "readLess" : "less",
-                "origin" : "source"
-            }
-        }
-    },
-    "vertex" : {
-        "default" : "bubble",
-        "same_bubble": "Visit the same bubble but in another context",
-        "search" : {
-            "user" : "user",
-            "source" : "source",
-            "source_bubble" : "Source bubble",
-            "destination_bubble" : "Destination bubble"
-        },
-        "menu" : {
-            "image" : {
-                "title" : "Click on the dashed area to select an image, or just drag and drop the file into the dashed area",
-                "progress" : "Upload progress"
-            },
-            "note":{
-                "update" : "Update",
-                "saving" : "Saving"
-            },
-            "link_to_far_vertex": {
-                "title" : "Search for a bubble to link to"
-            },
-            "suggestion" : {
-                "title" : "Relation suggestions",
-                "instruction" : {
-                    "1" : "Drag a relation outside the box",
-                    "2" : "to add it to your mind map"
-                }
-            },
-            "included_graph_elements" : {
-                "title" : "Bubbles and relations that compose this one"
-            },
-            "delete" : {
-                "title" : "Do you really want to delete this bubble?",
-                "button" : {
-                    "confirm" : "Yes",
-                    "cancel" : "No"
-                }
-            }
-        }
-    },
-    "identification" : {
-        "context" : {
-            "bubble" : "Bubble",
-            "with_properties" : "with properties",
-            "relation" : "Relation",
-            "source_bubble" : "Source bubble",
-            "destination_bubble" : "Destination bubble"
-        }
-    },
-    "selection" : {
-        "selected_graph_elements" : "graph element(s) selected",
-        "group" : "group"
-    },
-    "menu-button" : {
-        "select" : "Hand selector",
-        "group" : "Merge bubbles into one",
-        "addChild" : "Add a child (tab)",
-        "identify" : "Identifications (ctrl+i)",
-        "reverseToRight" : "Inverse relation (ctrl+r)",
-        "reverseToLeft" : "Inverse relation (ctrl+r)",
-        "suggestions" : "Suggestions (ctrl+s)",
-        "subElements" : "Made of graph elements",
-        "center" : "Center bubble (ctrl+0)",
-        "note" : "Description (ctrl+d)",
-        "images" : "Add images",
-        "connectTo" : "Connect to existing bubble",
-        "makePrivate" : "Make private",
-        "makePublic" : "Make public",
-        "remove" : "Delete (del)",
-        "accept": "Accept",
-        "addSibling": "Add sibling (enter)"
-    },
-    "hidden_properties_tooltip" : "Expand (ctrl+e)",
-
-    "search" : {
-        "big":{
-            "placeholder" : "Search bubbles"
-        },
-        "context" : {
-            "property" : "Property",
-            "vertex" : "Bubble",
-            "relation" : "Relation",
-            "schema" : "Schema"
-        }
+  "landing": {
+    "description": "Your mind is a temple"
+  },
+  "login": {
+    "title": "Login / Register",
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "register": "Register",
+    "about": "about",
+    "error": "Invalid credentials"
+  },
+  "forgot_password": {
+    "button": "Forgot password",
+    "success": "The instructions to change your password were sent to you by email",
+    "error": "No account is related to this email"
+  },
+  "change_password": {
+    "title": "Password change",
+    "input": "Password",
+    "repeat": "Retype password",
+    "submit": "Change",
+    "success": "Password changed",
+    "error": {
+      "match": "Passwords don't match",
+      "too_short": "The password must have a minimum of 6 characters",
+      "wrong": "You can't modify your password with this link anymore"
     }
+  },
+  "register": {
+    "title": "Register",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "retype_password": "Retype Password",
+    "register": "Register",
+    "login": "I have an account, log me in !",
+    "language": {
+      "selected_languages": "Languages I understand in order of preference",
+      "more_languages": "Add language(s)",
+      "available_languages": "Available languages",
+      "filter": "Filter"
+    },
+    "error": {
+      "too_long": "Username can't exceed 50 characters",
+      "taken": "This username is already taken",
+      "email_mandatory": "Email is mandatory",
+      "email_invalid": "This email is invalid",
+      "email_already_exists": "This email is already registered",
+      "password_mandatory": "Password is mandatory",
+      "password_too_short": "The password must have a minimum of 6 characters"
+    }
+  },
+  "not_allowed": {
+    "title": "Access denied",
+    "about": "You don't have the rights to read this bubble",
+    "go_home": "Continue"
+  },
+  "non_existent": {
+    "title": "Does not exists",
+    "about": "The bubble with given URL does not exist. It was either deleted, moved or has never existed.",
+    "go_home": "Continue"
+  },
+  "top_menu": {
+    "create": {
+      "title": "create",
+      "bubble": "bubble",
+      "schema": "schema"
+    },
+    "disconnect": "disconnect",
+    "redraw": "redraw",
+    "selection": {
+      "title": "select",
+      "bubbles": "bubbles",
+      "relations": "relations"
+    },
+    "login_register": "login/register"
+  },
+  "top_center_menu": {
+    "select": "select"
+  },
+  "left_menu": {
+    "search": "Search my bubbles"
+  },
+  "caption": {
+    "title": "Caption",
+    "private": "private",
+    "public": "public"
+  },
+  "edge": {
+    "default": "relation"
+  },
+  "graph_element": {
+    "menu": {
+      "identification": {
+        "title": "Identifications",
+        "instruction": "What is it? Albert Einstein? A location? An animal?",
+        "placeholder": "Add an identification to this bubble",
+        "readMore": "more",
+        "readLess": "less",
+        "origin": "source"
+      }
+    }
+  },
+  "vertex": {
+    "default": "bubble",
+    "same_bubble": "Visit the same bubble but in another context",
+    "search": {
+      "user": "user",
+      "source": "source",
+      "source_bubble": "Source bubble",
+      "destination_bubble": "Destination bubble"
+    },
+    "menu": {
+      "image": {
+        "title": "Click on the dashed area to select an image, or just drag and drop the file into the dashed area",
+        "progress": "Upload progress"
+      },
+      "note": {
+        "update": "Update",
+        "saving": "Saving"
+      },
+      "link_to_far_vertex": {
+        "title": "Search for a bubble to link to"
+      },
+      "suggestion": {
+        "title": "Relation suggestions",
+        "instruction": {
+          "1": "Drag a relation outside the box",
+          "2": "to add it to your mind map"
+        }
+      },
+      "included_graph_elements": {
+        "title": "Bubbles and relations that compose this one"
+      },
+      "delete": {
+        "title": "Do you really want to delete this bubble?",
+        "button": {
+          "confirm": "Yes",
+          "cancel": "No"
+        }
+      }
+    }
+  },
+  "identification": {
+    "context": {
+      "bubble": "Bubble",
+      "with_properties": "with properties",
+      "relation": "Relation",
+      "source_bubble": "Source bubble",
+      "destination_bubble": "Destination bubble"
+    }
+  },
+  "selection": {
+    "selected_graph_elements": "graph element(s) selected",
+    "group": "group"
+  },
+  "menu-button": {
+    "select": "Hand selector",
+    "group": "Merge bubbles into one",
+    "addChild": "Add a child (tab)",
+    "identify": "Identifications (ctrl+i)",
+    "reverseToRight": "Inverse relation (ctrl+r)",
+    "reverseToLeft": "Inverse relation (ctrl+r)",
+    "suggestions": "Suggestions (ctrl+s)",
+    "subElements": "Made of graph elements",
+    "center": "Center bubble (ctrl+0)",
+    "note": "Description (ctrl+d)",
+    "images": "Add images",
+    "connectTo": "Connect to existing bubble",
+    "makePrivate": "Make private",
+    "makePublic": "Make public",
+    "remove": "Delete (del)",
+    "accept": "Accept",
+    "addSibling": "Add sibling (enter)"
+  },
+  "hidden_properties_tooltip": "Expand (ctrl+e)",
+  "search": {
+    "big": {
+      "placeholder": "Search bubbles"
+    },
+    "context": {
+      "property": "Property",
+      "vertex": "Bubble",
+      "relation": "Relation",
+      "schema": "Schema"
+    }
+  }
 }

@@ -1,189 +1,188 @@
 {
-    "login" : {
-        "title" : "S'authentifier / S'enregistrer",
-        "email" : "Courriel",
-        "password" : "Mot de passe",
-        "login" : "Authentifier",
-        "register": "S'enregistrer",
-        "about" : "à propos",
-        "error" : "Courriel ou mot de passe invalide(s)"
-    },
-
-    "forgot_password" :{
-        "button" : "Mot de passe oublié",
-        "success": "Les instructions pour modifier votre mot de passe vous ont été envoyé par courriel",
-        "error": "Aucun compte n'est relié à ce courriel"
-    },
-
-    "change_password":{
-        "title": "Modification de mot de passe",
-        "input": "Mot de passe",
-        "repeat": "Répéter le mot de passe",
-        "submit": "Modifier",
-        "success": "Mot de passe modifié",
-        "error":{
-            "match":"Les mots de passe ne sont pas pareil",
-            "too_short":"Le mot de passe requiert un minimum de 6 caractères",
-            "wrong":"Vous ne pouvez plus modifier votre mot de passe à l'aide de ce lien"
-        }
-    },
-
-    "register" : {
-        "title" : "Enregistrement",
-        "username" : "Nom d'utilisateur",
-        "email" : "Courriel",
-        "password" : "Mot de passe",
-        "retype_password" : "Retaper le mot de passe",
-        "register" : "Enregistrer",
-        "login" : "s'authentifier",
-        "language" : {
-            "selected_languages" : "Langues que je connais en ordre de préférence",
-            "more_languages" : "Ajouter langue(s)",
-            "available_languages" : "Langues disponibles",
-            "filter" : "Trier"
-        },
-        "error" : {
-            "email_mandatory": "Le courriel est obligatoire",
-            "email_invalid" : "Ce courriel est invalide",
-            "email_already_exists" : "Ce courriel est déjà enregistré",
-            "password_mandatory" : "Le mot de passe est obligatoire",
-            "password_too_short" : "Le mot de passe requiert un minimum de 6 caractères"
-        }
-    },
-    "not_allowed" : {
-        "title" : "Accès refusé",
-        "about" : "Vous n'avez pas les droits nécessaire pour consulter cette bulle.",
-        "go_home" : "Continuer"
-    },
-    "non_existent" : {
-        "title" : "N'existe pas",
-        "about" : "La bulle avec l'URL donné n'existe pas. Elle a soit été supprimée, déplacée ou n'a jamais existé",
-        "go_home" : "Continuer"
-    },
-    "top_menu" : {
-        "create" :  {
-            "title" : "créer",
-            "bubble" : "bulle",
-            "schema" : "schéma"
-        },
-        "disconnect" : "déconnecter",
-        "redraw" : "redessiner",
-        "selection" : {
-            "title" : "sélectionner",
-            "bubbles" : "les bulles",
-            "relations" : "les relations"
-        },
-        "login_register" : "s'authentifier/s'enregistrer"
-    },
-    "top_center_menu" : {
-        "select": "sélection"
-    },
-    "left_menu" : {
-        "search" : "Chercher mes bulles"
-    },
-    "caption" : {
-        "title" : "Légende",
-        "private" : "privé",
-        "public" : "public"
-    },
-    "edge": {
-        "default" : "relation"
-    },
-    "graph_element" : {
-        "menu" : {
-            "identification" :{
-                "title" : "Identifications",
-                "instruction" : "Qu'est-ce c'est? Albert Einstein? Un lieu? Un animal?",
-                "placeholder" : "Ajoutez un identifiant à cette bulle",
-                "readMore" : "plus",
-                "readLess" : "moins",
-                "origin" : "source"
-            }
-        }
-    },
-    "vertex" : {
-        "default" : "bulle",
-        "same_bubble": "Visiter la même bulle mais dans un autre contexte",
-        "search" : {
-            "user" : "usager",
-            "source" : "source",
-            "source_bubble" : "Bulle source",
-            "destination_bubble" : "Bulle destination"
-        },
-        "menu" : {
-            "image":{
-                "title" : "Cliquer sur l'aire pointillée pour sélectionner une image, ou glisser simplement le fichier dans l'aire pointillée",
-                "progress" : "Progression du téléversement"
-            },
-            "note":{
-                "update" : "Mettre à jour",
-                "saving" : "Sauvegarde"
-            },
-            "link_to_far_vertex": {
-                "title" : "Chercher une bulle pour la lier à celle-ci"
-            },
-            "suggestion" : {
-                "title" : "Suggestions de relation",
-                "instruction" : {
-                    "1" : "Faites glisser une relation en dehors de la boîte",
-                    "2" : "pour l'ajouter à votre carte"
-                }
-            },
-            "included_graph_elements" : {
-                "title" : "Bulles et relations comprises dans celle-ci"
-            },
-            "delete" : {
-                "title" : "Voulez-vous vraiment effacer cette bulle?",
-                "button" : {
-                    "confirm" : "Oui",
-                    "cancel" : "Non"
-                }
-            }
-        }
-    },
-    "identification" : {
-        "context" : {
-            "bubble" : "Bulle",
-            "with_properties" : "avec les propriétés",
-            "relation" : "Relation",
-            "source_bubble" : "Bulle source",
-            "destination_bubble" : "Bulle destination"
-        }
-    },
-    "selection" : {
-        "selected_graph_elements" : "élément(s) de graphe sélectionné(s)",
-        "group" : "grouper"
-    },
-    "menu-button" : {
-        "select" : "Sélection à la main",
-        "group" : "Créer une bulle à partir de celles sélectionnés",
-        "addChild" : "Ajouter un enfant (tab)",
-        "identify" : "Identifications (ctrl+i)",
-        "reverseToRight" : "Inverser la relation (ctrl+r)",
-        "reverseToLeft" : "Inverser la relation (ctrl+r)",
-        "suggestions" : "Suggestions (ctrl+s)",
-        "subElements" : "De quoi est composé la bulle",
-        "center" : "Centrer la bulle (ctrl + 0)",
-        "note" : "Description (ctrl+d)",
-        "images" : "Ajouter des images",
-        "connectTo" : "Relier à une bulle existante",
-        "makePrivate" : "Rendre privé",
-        "makePublic" : "Rendre public",
-        "remove" : "Effacer (suppr)",
-        "accept": "Accepter",
-        "addSibling": "Ajouter une bulle soeur (enter)"
-    },
-    "hidden_properties_tooltip" : "Expandre (ctrl+e)",
-
-    "search" : {
-        "big":{
-            "placeholder" : "Chercher des bulles"
-        },
-        "context" : {
-            "property" : "Propriété",
-            "vertex" : "Bulle",
-            "relation" : "Relation",
-            "schema" : "Schéma"
-        }
+  "landing": {
+    "description": "Votre esprit est un temple"
+  },
+  "login": {
+    "title": "S'authentifier / S'enregistrer",
+    "email": "Courriel",
+    "password": "Mot de passe",
+    "login": "Authentifier",
+    "register": "S'enregistrer",
+    "about": "à propos",
+    "error": "Courriel ou mot de passe invalide(s)"
+  },
+  "forgot_password": {
+    "button": "Mot de passe oublié",
+    "success": "Les instructions pour modifier votre mot de passe vous ont été envoyé par courriel",
+    "error": "Aucun compte n'est relié à ce courriel"
+  },
+  "change_password": {
+    "title": "Modification de mot de passe",
+    "input": "Mot de passe",
+    "repeat": "Répéter le mot de passe",
+    "submit": "Modifier",
+    "success": "Mot de passe modifié",
+    "error": {
+      "match": "Les mots de passe ne sont pas pareil",
+      "too_short": "Le mot de passe requiert un minimum de 6 caractères",
+      "wrong": "Vous ne pouvez plus modifier votre mot de passe à l'aide de ce lien"
     }
+  },
+  "register": {
+    "title": "Enregistrement",
+    "username": "Nom d'utilisateur",
+    "email": "Courriel",
+    "password": "Mot de passe",
+    "retype_password": "Retaper le mot de passe",
+    "register": "Enregistrer",
+    "login": "s'authentifier",
+    "language": {
+      "selected_languages": "Langues que je connais en ordre de préférence",
+      "more_languages": "Ajouter langue(s)",
+      "available_languages": "Langues disponibles",
+      "filter": "Trier"
+    },
+    "error": {
+      "email_mandatory": "Le courriel est obligatoire",
+      "email_invalid": "Ce courriel est invalide",
+      "email_already_exists": "Ce courriel est déjà enregistré",
+      "password_mandatory": "Le mot de passe est obligatoire",
+      "password_too_short": "Le mot de passe requiert un minimum de 6 caractères"
+    }
+  },
+  "not_allowed": {
+    "title": "Accès refusé",
+    "about": "Vous n'avez pas les droits nécessaire pour consulter cette bulle.",
+    "go_home": "Continuer"
+  },
+  "non_existent": {
+    "title": "N'existe pas",
+    "about": "La bulle avec l'URL donné n'existe pas. Elle a soit été supprimée, déplacée ou n'a jamais existé",
+    "go_home": "Continuer"
+  },
+  "top_menu": {
+    "create": {
+      "title": "créer",
+      "bubble": "bulle",
+      "schema": "schéma"
+    },
+    "disconnect": "déconnecter",
+    "redraw": "redessiner",
+    "selection": {
+      "title": "sélectionner",
+      "bubbles": "les bulles",
+      "relations": "les relations"
+    },
+    "login_register": "s'authentifier/s'enregistrer"
+  },
+  "top_center_menu": {
+    "select": "sélection"
+  },
+  "left_menu": {
+    "search": "Chercher mes bulles"
+  },
+  "caption": {
+    "title": "Légende",
+    "private": "privé",
+    "public": "public"
+  },
+  "edge": {
+    "default": "relation"
+  },
+  "graph_element": {
+    "menu": {
+      "identification": {
+        "title": "Identifications",
+        "instruction": "Qu'est-ce c'est? Albert Einstein? Un lieu? Un animal?",
+        "placeholder": "Ajoutez un identifiant à cette bulle",
+        "readMore": "plus",
+        "readLess": "moins",
+        "origin": "source"
+      }
+    }
+  },
+  "vertex": {
+    "default": "bulle",
+    "same_bubble": "Visiter la même bulle mais dans un autre contexte",
+    "search": {
+      "user": "usager",
+      "source": "source",
+      "source_bubble": "Bulle source",
+      "destination_bubble": "Bulle destination"
+    },
+    "menu": {
+      "image": {
+        "title": "Cliquer sur l'aire pointillée pour sélectionner une image, ou glisser simplement le fichier dans l'aire pointillée",
+        "progress": "Progression du téléversement"
+      },
+      "note": {
+        "update": "Mettre à jour",
+        "saving": "Sauvegarde"
+      },
+      "link_to_far_vertex": {
+        "title": "Chercher une bulle pour la lier à celle-ci"
+      },
+      "suggestion": {
+        "title": "Suggestions de relation",
+        "instruction": {
+          "1": "Faites glisser une relation en dehors de la boîte",
+          "2": "pour l'ajouter à votre carte"
+        }
+      },
+      "included_graph_elements": {
+        "title": "Bulles et relations comprises dans celle-ci"
+      },
+      "delete": {
+        "title": "Voulez-vous vraiment effacer cette bulle?",
+        "button": {
+          "confirm": "Oui",
+          "cancel": "Non"
+        }
+      }
+    }
+  },
+  "identification": {
+    "context": {
+      "bubble": "Bulle",
+      "with_properties": "avec les propriétés",
+      "relation": "Relation",
+      "source_bubble": "Bulle source",
+      "destination_bubble": "Bulle destination"
+    }
+  },
+  "selection": {
+    "selected_graph_elements": "élément(s) de graphe sélectionné(s)",
+    "group": "grouper"
+  },
+  "menu-button": {
+    "select": "Sélection à la main",
+    "group": "Créer une bulle à partir de celles sélectionnés",
+    "addChild": "Ajouter un enfant (tab)",
+    "identify": "Identifications (ctrl+i)",
+    "reverseToRight": "Inverser la relation (ctrl+r)",
+    "reverseToLeft": "Inverser la relation (ctrl+r)",
+    "suggestions": "Suggestions (ctrl+s)",
+    "subElements": "De quoi est composé la bulle",
+    "center": "Centrer la bulle (ctrl + 0)",
+    "note": "Description (ctrl+d)",
+    "images": "Ajouter des images",
+    "connectTo": "Relier à une bulle existante",
+    "makePrivate": "Rendre privé",
+    "makePublic": "Rendre public",
+    "remove": "Effacer (suppr)",
+    "accept": "Accepter",
+    "addSibling": "Ajouter une bulle soeur (enter)"
+  },
+  "hidden_properties_tooltip": "Expandre (ctrl+e)",
+  "search": {
+    "big": {
+      "placeholder": "Chercher des bulles"
+    },
+    "context": {
+      "property": "Propriété",
+      "vertex": "Bulle",
+      "relation": "Relation",
+      "schema": "Schéma"
+    }
+  }
 }
