@@ -305,11 +305,14 @@
         </div>
     </div>
 </div>
+<script>
+    var bubl_guru_force_refresh = "<%=bust%>";
+</script>
 <% if(isDebug){ %>
 <script src="/js/common-boot.js"></script>
 <script src="/js/mind_map-boot.js"></script>
 <% } else { %>
-<script src="/js/mind-map-built.js"></script>
+<script src="/js/mind-map-built.js?bust=<%=bust%>"></script>
 <% } %>
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

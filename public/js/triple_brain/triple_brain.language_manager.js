@@ -195,7 +195,7 @@ define([
                 var basePath = ns === "translation" ?
                     "/locales/" :
                 "/js/module/" + ns + "/locales/";
-                var url = basePath + lng + "/" + "translation" + ".json?bust=1";
+                var url = basePath + lng + "/" + "translation" + ".json?bust=" + bubl_guru_force_refresh;
                 $.ajax({
                     url: url,
                     dataType: 'json'

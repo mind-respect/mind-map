@@ -7,7 +7,8 @@ router.get('/', function (req, res, next) {
         .render(
         'index',
         {
-            isDebug:isDebug
+            isDebug:isDebug,
+            bust: process.env.bust
         }
     );
 });
