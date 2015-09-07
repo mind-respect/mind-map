@@ -1,0 +1,94 @@
+/*
+ * Copyright Vincent Blouin under the GPL License version 3
+ */
+
+$vertical-padding-ratio: 0.7;
+.zoom {
+  .vertex {
+    .in-bubble-note-button {
+      i {
+        top: 50%;
+      }
+    }
+  }
+}
+
+.zoom-1 {
+  .bubble {
+    .in-bubble-content {
+      border-radius: 100px;
+    }
+  }
+  .vertex {
+    &.edit {
+      .in-bubble-content {
+        width: 1500px;
+        max-width: 1500px;
+      }
+    }
+    .in-bubble-content {
+      $horizontal-padding: 15;
+      $vertical-padding: $horizontal-padding * $vertical-padding-ratio;
+      padding: $horizontal-padding + em;
+      padding-bottom: $vertical-padding + em;
+      padding-top: $vertical-padding + em;
+      button, .in-bubble-note-button {
+        width: 60px;
+        height: 60px;
+        font-size: 2em;
+      }
+      .menu {
+        width: 260px;
+      }
+    }
+  }
+  .bubble-label {
+    font-size: 10em;
+  }
+}
+
+.zoom-2 {
+  .bubble {
+    .in-bubble-content {
+      border-radius: 100px;
+    }
+  }
+  .vertex {
+    &.edit {
+      .in-bubble-content {
+        width: 1500px;
+        max-width: 1500px;
+      }
+    }
+    .in-bubble-content {
+      $horizontal-padding: 5;
+      $vertical-padding: $horizontal-padding * $vertical-padding-ratio;
+      padding: $horizontal-padding + em;
+      padding-bottom: $vertical-padding + em;
+      padding-top: $vertical-padding + em;
+    }
+  }
+  .bubble-label {
+    font-size: 10em;
+  }
+}
+
+.zoom-scale {
+  .menu {
+    zoom: 30%;
+    -moz-transform: scale(0.3);
+  }
+}
+
+.zoom-scale-1 {
+  .in-bubble-content {
+    zoom: 500%;
+    -moz-transform: scale(5);
+    .bubble-label {
+      //zoom:2000%;
+    }
+  }
+  .bubble-content {
+    //zoom:500%;
+  }
+}

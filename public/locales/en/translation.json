@@ -89,7 +89,7 @@
     "public": "public"
   },
   "edge": {
-    "default": "relation"
+    "default": "relate"
   },
   "graph_element": {
     "menu": {
@@ -104,7 +104,7 @@
     }
   },
   "vertex": {
-    "default": "bubble",
+    "default": "say it",
     "same_bubble": "Visit the same bubble but in another context",
     "search": {
       "user": "user",

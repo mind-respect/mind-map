@@ -87,7 +87,7 @@
     "public": "public"
   },
   "edge": {
-    "default": "relation"
+    "default": "relie"
   },
   "graph_element": {
     "menu": {
@@ -102,7 +102,7 @@
     }
   },
   "vertex": {
-    "default": "bulle",
+    "default": "dis le",
     "same_bubble": "Visiter la même bulle mais dans un autre contexte",
     "search": {
       "user": "usager",

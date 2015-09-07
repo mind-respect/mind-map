@@ -20,7 +20,7 @@ define([
             horizontalPosition = getHorizontalPosition(),
             options = {
                 position: {
-                    of: graphElement.getLabel(),
+                    of: graphElement.getHtml(),
                     my: horizontalPosition.my + " center",
                     at: horizontalPosition.at + " right top",
                     collision: 'none'

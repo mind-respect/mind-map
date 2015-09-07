@@ -207,7 +207,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .edge-label { position: absolute; width: 100%; left: 0; right: 0; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
-.bubble { cursor: default; display: table; /*.label to override bootstrap*/ white-space: nowrap; position: relative; min-width: 0; margin: 0 0 0 0; }
+.bubble { z-index: 5; cursor: default; display: table; /*.label to override bootstrap*/ white-space: nowrap; position: relative; min-width: 0; margin: 0 0 0 0; }
 .bubble > *, .bubble .label { display: table-cell; vertical-align: middle; }
 .bubble.view-only .arrow:before { left: 0; }
 .bubble .in-bubble-content { position: relative; z-index: 3; }
@@ -215,7 +215,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .bubble .in-bubble-note-button i { font-size: 1.5em; }
 .bubble.edit { -moz-user-select: text; }
 .bubble .duplicate-button-container { position: absolute; }
-.bubble .bubble-label { outline: 0px solid transparent; border: none; font-family: Helvetica; font-size: 14px; width: auto; display: table-cell; white-space: pre; height: 17px; }
+.bubble .bubble-label { outline: 0 solid transparent; border: none; font-family: Helvetica; font-size: 14px; width: auto; display: table-cell; white-space: pre; height: 17px; }
 .bubble .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); color: grey; font-style: italic; }
 .bubble.selected { z-index: 11; }
 .bubble.selected .in-bubble-content { z-index: 5; }
@@ -263,6 +263,25 @@ button.add-button-in-list:hover { color: #00d100; }
 .vertex .ui-button { width: 1.7em; height: 1.8em; margin-right: 0; font-size: 1.1em; padding: 0; }
 
 .included-vertices-container .layout { position: absolute; }
+
+/* Copyright Vincent Blouin under the GPL License version 3 */
+.zoom .vertex .in-bubble-note-button i { top: 50%; }
+
+.zoom-1 .bubble .in-bubble-content { border-radius: 100px; }
+.zoom-1 .vertex.edit .in-bubble-content { width: 1500px; max-width: 1500px; }
+.zoom-1 .vertex .in-bubble-content { padding: 15em; padding-bottom: 10.5em; padding-top: 10.5em; }
+.zoom-1 .vertex .in-bubble-content button, .zoom-1 .vertex .in-bubble-content .in-bubble-note-button { width: 60px; height: 60px; font-size: 2em; }
+.zoom-1 .vertex .in-bubble-content .menu { width: 260px; }
+.zoom-1 .bubble-label { font-size: 10em; }
+
+.zoom-2 .bubble .in-bubble-content { border-radius: 100px; }
+.zoom-2 .vertex.edit .in-bubble-content { width: 1500px; max-width: 1500px; }
+.zoom-2 .vertex .in-bubble-content { padding: 5em; padding-bottom: 3.5em; padding-top: 3.5em; }
+.zoom-2 .bubble-label { font-size: 10em; }
+
+.zoom-scale .menu { zoom: 30%; -moz-transform: scale(0.3); }
+
+.zoom-scale-1 .in-bubble-content { zoom: 500%; -moz-transform: scale(5); }
 
 #mind_map { cursor: all-scroll; -moz-user-select: -moz-none; -webkit-user-select: none; -ms-user-select: none; user-select: none; }
 #mind_map h2, #mind_map h3 { line-height: inherit; }
