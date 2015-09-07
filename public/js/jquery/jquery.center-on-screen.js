@@ -6,6 +6,7 @@ define([
     "jquery"
 ],
     function ($) {
+        var BUFFER_FOR_HEADER_SIZE = 75;
         $.fn.centerOnScreen = function (options) {
             if(options === undefined){
                 options = {};
@@ -16,8 +17,8 @@ define([
             var elementOffset = element.offset();
             var containerOffset = container.offset();
             var position = {
-                top : elementOffset.top - element.height() / 2 - containerOffset.top,
-                left : elementOffset.left - element.width() / 2 - containerOffset.left
+                top : elementOffset.top  - containerOffset.top,
+                left : elementOffset.left  - containerOffset.left
             };
             container.scrollLeft(
                 scrollLeftFromPosition(position, element, visibleSize)
@@ -48,10 +49,10 @@ define([
         }
 
         function scrollTopFromPosition(position, element, visibleSize){
-            return position.top - visibleSize.y / 4 + element.height() / 2;
+            return position.top - visibleSize.y / 4 + element.height() / 2 - BUFFER_FOR_HEADER_SIZE;
         }
         function scrollLeftFromPosition(position, element, visibleSize){
-            return position.left - visibleSize.x / 6 + element.width() / 2;
+            return position.left - visibleSize.x / 2 + element.width() / 2;
         }
 
         function visibleSizeFromOptions(options){
