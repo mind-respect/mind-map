@@ -3,6 +3,7 @@
  */
 
 .bubble {
+  z-index: 5;
   cursor: default;
   display: table;
   /*.label to override bootstrap*/
@@ -37,7 +38,7 @@
   }
   white-space: nowrap;
   .bubble-label {
-    outline: 0px solid transparent;
+    outline: 0 solid transparent;
     border: none;
     font-family: Helvetica;
     font-size: 14px;
@@ -80,6 +81,7 @@
     width: 65px;
     left: -22px;
     z-index: -1;
+    //border-image: url("images/rope.svg.thumb.png") 30 round;
   }
   .arrow {
     position: absolute;
