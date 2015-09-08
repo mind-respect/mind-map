@@ -30,7 +30,10 @@ define([
     };
     api.removeVertex = function(){
         return spyOn(VertexService, "remove").and.callFake(function(vertex, callback){
-            callback(vertex);
+            VertexService._removeVertexCallback(
+                vertex,
+                callback
+            );
         });
     };
     return api;

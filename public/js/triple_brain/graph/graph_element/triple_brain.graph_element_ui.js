@@ -48,6 +48,9 @@ define([
                 visitor(this);
             });
         };
+        api.getNumber = function(){
+            return Object.keys(cacheWithIdAsKey).length;
+        };
         api.removeFromCache = function (uri, id) {
             var len = cacheWithUriAsKey[uri].length;
             while (len--) {

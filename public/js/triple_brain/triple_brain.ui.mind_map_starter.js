@@ -27,7 +27,8 @@ define(
         "triple_brain.wikidata",
         "jquery.triple_brain.drag_scroll",
         "triple_brain.bottom_center_panel",
-        "triple_brain.modules"
+        "triple_brain.modules",
+        "triple_brain.zoom_handler"
     ],
     function ($, UserService, BubbleDistanceCalculator, EventBus, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, LeftPanel, SelectionHandler, GraphElementMainMenu, MindMapInfo, TopRightMenu, ExternalPageLoader, IdUriUtils, AnonymousFlow, ChangePassword, LoginHandler) {
         "use strict";

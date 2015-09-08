@@ -59,15 +59,21 @@ define([
                 type: 'DELETE',
                 url: vertex.getUri()
             }).success(function () {
-                var uri = vertex.getUri(),
-                    id = vertex.getId();
-                callback(vertex);
-                EventBus.publish(
-                    '/event/ui/graph/vertex/deleted/', [
-                        uri,
-                        id
-                    ]);
+                api._removeVertexCallback(
+                    vertex,
+                    callback
+                );
             });
+        };
+        api._removeVertexCallback = function(vertex, callback){
+            var uri = vertex.getUri(),
+                id = vertex.getId();
+            callback(vertex);
+            EventBus.publish(
+                '/event/ui/graph/vertex/deleted/', [
+                    uri,
+                    id
+                ]);
         };
         api.updateLabel = function (vertex, label, callback) {
             FriendlyResourceService.updateLabel(
