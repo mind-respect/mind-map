@@ -20,6 +20,7 @@ define([
                 element = BubbleFactory.fromSubHtml($input);
             nonEditMode($input);
             $input.maxChar();
+            element.getHtml().centerOnScreen();
             if (!element.hasTextChangedAfterModification()) {
                 return;
             }

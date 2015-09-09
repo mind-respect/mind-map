@@ -243,18 +243,17 @@ button.add-button-in-list:hover { color: #00d100; }
 .vertex.public .in-bubble-content { background-color: #F9E5E5; }
 .vertex.absolute { white-space: nowrap; position: absolute !important; min-width: 120px; }
 .vertex.includes-vertices .in-bubble-content { padding-bottom: 2em; }
-.vertex .in-bubble-content { background: radial-gradient(#77d19e, #46c17b); }
 .vertex.selected { z-index: 12; }
-.vertex.selected .in-bubble-content { border-radius: 15px; box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb; }
+.vertex.selected .in-bubble-content { box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb; }
 .vertex.center-vertex .connector { height: 0; width: 0; }
 .vertex.center-vertex .arrow { height: 0; width: 0; top: 0; left: 0; border-top: none; }
 .vertex.center-vertex .arrow:before { content: ""; }
 .vertex.center-vertex:before { border-left: none; height: 0; width: 0; top: 0; left: 0; }
-.vertex.center-vertex .in-bubble-content { border-radius: 15px; -webkit-box-shadow: 0 0 1em rgba(255, 128, 0, 0.1); -moz-box-shadow: 0 0 1em rgba(255, 128, 0, 0.1); box-shadow: 0 0 1em rgba(255, 128, 0, 0.5); }
+.vertex.center-vertex .in-bubble-content { -webkit-box-shadow: 0 0 1em rgba(255, 128, 0, 0.1); -moz-box-shadow: 0 0 1em rgba(255, 128, 0, 0.1); box-shadow: 0 0 1em rgba(255, 128, 0, 0.5); }
 .vertex.center-vertex.selected .in-bubble-content { box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb; border: solid red; }
 .vertex .included-graph-elements-flag { position: absolute; top: 25px; left: 30%; font-weight: bold; }
 .vertex .included-graph-elements-flag { z-index: 3; }
-.vertex .in-bubble-content { border-radius: 20px; /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c3d9ff+0,b1c8ef+41,98b0d9+100;Lavender+3D */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#daeef6+0,96ddf2+50,ddeff7+100 */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffedb7+0,ffe28d+100 */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fff2cb+0,ffebaf+100 */ white-space: normal; padding: 1em; padding-bottom: 0.7em; padding-top: 0.7em; margin-left: 0.3em; display: table; border: 1px; border-color: transparent; border-style: solid; }
+.vertex .in-bubble-content { border-radius: 100px; /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c3d9ff+0,b1c8ef+41,98b0d9+100;Lavender+3D */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#daeef6+0,96ddf2+50,ddeff7+100 */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffedb7+0,ffe28d+100 */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fff2cb+0,ffebaf+100 */ white-space: normal; padding: 1em; padding-bottom: 0.7em; padding-top: 0.7em; margin-left: 0.3em; display: table; border: 1px; border-color: transparent; border-style: solid; }
 .vertex .in-bubble-content > * { display: table-cell; }
 .vertex .in-bubble-content .bubble-label { padding: 0; }
 .vertex .in-bubble-content .in-bubble-note-button { width: 8px; margin: 0 17px 0 0; display: inherit; }
@@ -268,17 +267,71 @@ button.add-button-in-list:hover { color: #00d100; }
 /* Copyright Vincent Blouin under the GPL License version 3 */
 [data-zoom] .vertex .in-bubble-note-button i { top: 50%; }
 
-[data-zoom="1"] .bubble .in-bubble-content { border-radius: 100px; }
-[data-zoom="1"] .vertex.edit .in-bubble-content { width: 1500px; max-width: 1500px; }
-[data-zoom="1"] .vertex .in-bubble-content { padding: 15em; padding-bottom: 10.5em; padding-top: 10.5em; }
+[data-zoom="0"] .vertex.edit .in-bubble-content { width: 1500px; max-width: 1500px; }
+[data-zoom="0"] .vertex .in-bubble-content { padding: 15em; padding-bottom: 10.5em; padding-top: 10.5em; }
+[data-zoom="0"] .vertex .in-bubble-content button, [data-zoom="0"] .vertex .in-bubble-content .in-bubble-note-button { width: 60px; height: 60px; font-size: 2em; }
+[data-zoom="0"] .vertex .in-bubble-content .menu { width: 260px; }
+[data-zoom="0"] .bubble-label { font-size: 10em; }
+
+[data-zoom="1"] .vertex.edit .in-bubble-content { width: 1375px; max-width: 1375px; }
+[data-zoom="1"] .vertex .in-bubble-content { padding: 12em; padding-bottom: 8.4em; padding-top: 8.4em; }
 [data-zoom="1"] .vertex .in-bubble-content button, [data-zoom="1"] .vertex .in-bubble-content .in-bubble-note-button { width: 60px; height: 60px; font-size: 2em; }
 [data-zoom="1"] .vertex .in-bubble-content .menu { width: 260px; }
-[data-zoom="1"] .bubble-label { font-size: 10em; }
+[data-zoom="1"] .bubble-label { font-size: 8em; }
 
-[data-zoom="2"] .bubble .in-bubble-content { border-radius: 100px; }
-[data-zoom="2"] .vertex.edit .in-bubble-content { width: 1500px; max-width: 1500px; }
-[data-zoom="2"] .vertex .in-bubble-content { padding: 5em; padding-bottom: 3.5em; padding-top: 3.5em; }
-[data-zoom="2"] .bubble-label { font-size: 10em; }
+[data-zoom="2"] .vertex.edit .in-bubble-content { width: 1250px; max-width: 1250px; }
+[data-zoom="2"] .vertex .in-bubble-content { padding: 9em; padding-bottom: 6.3em; padding-top: 6.3em; }
+[data-zoom="2"] .vertex .in-bubble-content button, [data-zoom="2"] .vertex .in-bubble-content .in-bubble-note-button { width: 60px; height: 60px; font-size: 2em; }
+[data-zoom="2"] .vertex .in-bubble-content .menu { width: 260px; }
+[data-zoom="2"] .bubble-label { font-size: 6em; }
+
+[data-zoom="3"] .vertex.edit .in-bubble-content { width: 1125px; max-width: 1125px; }
+[data-zoom="3"] .vertex .in-bubble-content { padding: 6em; padding-bottom: 4.2em; padding-top: 4.2em; }
+[data-zoom="3"] .vertex .in-bubble-content button, [data-zoom="3"] .vertex .in-bubble-content .in-bubble-note-button { width: 60px; height: 60px; font-size: 2em; }
+[data-zoom="3"] .vertex .in-bubble-content .menu { width: 260px; }
+[data-zoom="3"] .bubble-label { font-size: 4em; }
+
+[data-zoom="4"] .vertex.edit .in-bubble-content { width: 1000px; max-width: 1000px; }
+[data-zoom="4"] .vertex .in-bubble-content { padding: 3em; padding-bottom: 2.1em; padding-top: 2.1em; }
+[data-zoom="4"] .vertex .in-bubble-content button, [data-zoom="4"] .vertex .in-bubble-content .in-bubble-note-button { width: 60px; height: 60px; font-size: 2em; }
+[data-zoom="4"] .vertex .in-bubble-content .menu { width: 260px; }
+[data-zoom="4"] .bubble-label { font-size: 2em; }
+
+[data-zoom="5"] .vertex.edit .in-bubble-content { width: 875px; max-width: 875px; }
+[data-zoom="5"] .vertex .in-bubble-content { padding: 0em; padding-bottom: 0em; padding-top: 0em; }
+[data-zoom="5"] .vertex .in-bubble-content button, [data-zoom="5"] .vertex .in-bubble-content .in-bubble-note-button { width: 60px; height: 60px; font-size: 2em; }
+[data-zoom="5"] .vertex .in-bubble-content .menu { width: 260px; }
+[data-zoom="5"] .bubble-label { font-size: 0em; }
+
+[data-zoom="6"] .vertex.edit .in-bubble-content { width: 750px; max-width: 750px; }
+[data-zoom="6"] .vertex .in-bubble-content { padding: -3em; padding-bottom: -2.1em; padding-top: -2.1em; }
+[data-zoom="6"] .vertex .in-bubble-content button, [data-zoom="6"] .vertex .in-bubble-content .in-bubble-note-button { width: 60px; height: 60px; font-size: 2em; }
+[data-zoom="6"] .vertex .in-bubble-content .menu { width: 260px; }
+[data-zoom="6"] .bubble-label { font-size: -2em; }
+
+[data-zoom="7"] .vertex.edit .in-bubble-content { width: 625px; max-width: 625px; }
+[data-zoom="7"] .vertex .in-bubble-content { padding: -6em; padding-bottom: -4.2em; padding-top: -4.2em; }
+[data-zoom="7"] .vertex .in-bubble-content button, [data-zoom="7"] .vertex .in-bubble-content .in-bubble-note-button { width: 60px; height: 60px; font-size: 2em; }
+[data-zoom="7"] .vertex .in-bubble-content .menu { width: 260px; }
+[data-zoom="7"] .bubble-label { font-size: -4em; }
+
+[data-zoom="8"] .vertex.edit .in-bubble-content { width: 500px; max-width: 500px; }
+[data-zoom="8"] .vertex .in-bubble-content { padding: -9em; padding-bottom: -6.3em; padding-top: -6.3em; }
+[data-zoom="8"] .vertex .in-bubble-content button, [data-zoom="8"] .vertex .in-bubble-content .in-bubble-note-button { width: 60px; height: 60px; font-size: 2em; }
+[data-zoom="8"] .vertex .in-bubble-content .menu { width: 260px; }
+[data-zoom="8"] .bubble-label { font-size: -6em; }
+
+[data-zoom="9"] .vertex.edit .in-bubble-content { width: 375px; max-width: 375px; }
+[data-zoom="9"] .vertex .in-bubble-content { padding: -12em; padding-bottom: -8.4em; padding-top: -8.4em; }
+[data-zoom="9"] .vertex .in-bubble-content button, [data-zoom="9"] .vertex .in-bubble-content .in-bubble-note-button { width: 60px; height: 60px; font-size: 2em; }
+[data-zoom="9"] .vertex .in-bubble-content .menu { width: 260px; }
+[data-zoom="9"] .bubble-label { font-size: -8em; }
+
+[data-zoom="10"] .vertex.edit .in-bubble-content { width: 250px; max-width: 250px; }
+[data-zoom="10"] .vertex .in-bubble-content { padding: -15em; padding-bottom: -10.5em; padding-top: -10.5em; }
+[data-zoom="10"] .vertex .in-bubble-content button, [data-zoom="10"] .vertex .in-bubble-content .in-bubble-note-button { width: 60px; height: 60px; font-size: 2em; }
+[data-zoom="10"] .vertex .in-bubble-content .menu { width: 260px; }
+[data-zoom="10"] .bubble-label { font-size: -10em; }
 
 .zoom-scale .menu { zoom: 30%; -moz-transform: scale(0.3); }
 

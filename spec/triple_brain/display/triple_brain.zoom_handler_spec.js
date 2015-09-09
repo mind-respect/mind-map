@@ -14,22 +14,22 @@ define([
         "use strict";
         describe("zoom_handler", function () {
             it("changes zoom when adding a second bubble", function () {
-                mockZoomHandlerStartingAtLevel(1);
+                mockZoomHandlerStartingAtLevel(0);
                 expect(
                     ZoomHandler.getLevel()
-                ).toBe(1);
+                ).toBe(0);
                 var singleBubble = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();
                 VertexServiceMock.addRelationAndVertexToVertexMock();
                 RelativeTreeVertexMenuHandler.forSingle().addChildAction(singleBubble);
                 expect(
                     ZoomHandler.getLevel()
-                ).toBe(2);
+                ).toBe(1);
             });
         });
 
         it("changes zoom when removing a bubble", function () {
             MindMapInfo._setIsViewOnly(false);
-            mockZoomHandlerStartingAtLevel(2);
+            mockZoomHandlerStartingAtLevel(1);
             var threeVerticesScenario = new Scenarios.threeBubblesGraph();
             VertexServiceMock.removeVertex();
             RelativeTreeVertexMenuHandler.forSingle().removeAction(
@@ -38,14 +38,53 @@ define([
             );
             expect(
                 ZoomHandler.getLevel()
-            ).toBe(2);
+            ).toBe(1);
             RelativeTreeVertexMenuHandler.forSingle().removeAction(
                 threeVerticesScenario.getBubble3InTree(),
                 true
             );
             expect(
                 ZoomHandler.getLevel()
+            ).toBe(0);
+        });
+
+        it("changes zoom when many characters", function () {
+            mockZoomHandlerStartingAtLevel(0);
+            var singleBubble = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();
+            singleBubble.setText("");
+            TestUtils.pressKeyInBubble(
+                "1234567",
+                singleBubble
+            );
+            expect(
+                ZoomHandler.getLevel()
+            ).toBe(0);
+            TestUtils.pressKeyInBubble(
+                "8",
+                singleBubble
+            );
+            expect(
+                ZoomHandler.getLevel()
             ).toBe(1);
+        });
+
+        it("changes zoom when removing characters", function () {
+            mockZoomHandlerStartingAtLevel(0);
+            var singleBubble = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();
+            singleBubble.setText("");
+            TestUtils.pressKeyInBubble(
+                "12345678",
+                singleBubble
+            );
+            expect(
+                ZoomHandler.getLevel()
+            ).toBe(1);
+            TestUtils.removeOneCharInBubble(
+                singleBubble
+            );
+            expect(
+                ZoomHandler.getLevel()
+            ).toBe(0);
         });
 
         function mockZoomHandlerStartingAtLevel(level) {

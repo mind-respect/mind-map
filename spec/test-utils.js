@@ -11,49 +11,79 @@ define([
 ], function ($, VertexServerFormatBuilder, Vertex, Edge, GraphDisplayer) {
     "use strict";
     var api = {};
-    api.generateVertexUri = function(){
+    api.generateVertexUri = function () {
         return "\/service\/users\/foo\/graph\/vertex\/" + generateUuid();
     };
-    api.generateEdgeUri = function(){
+    api.generateEdgeUri = function () {
         return "\/service\/users\/foo\/graph\/edge\/" + generateUuid();
     };
-    api.isGraphElementUiRemoved = function(element){
+    api.isGraphElementUiRemoved = function (element) {
         return element.getHtml().parents(".root-vertex-super-container").length === 0;
     };
-    api.pressCtrlPlusKey = function(char){
+    api.pressCtrlPlusKey = function (char) {
         api.pressKey(
             char, {ctrlKey: true}
         );
     };
-    api.pressKey = function(char, options){
+    api.pressKey = function (char, options) {
         api.pressKeyCode(
             char.charCodeAt(0),
             options
         );
     };
-    api.pressKeyCode = function(keyCode, options){
+    api.pressKeyCode = function (keyCode, options) {
+        api._pressKeyCodeInContainer(
+            keyCode,
+            $("body"),
+            options
+        );
+    };
+    api.pressKeyInBubble = function (char, bubble) {
+        bubble.getLabel().append(char);
+        api._pressKeyCodeInContainer(
+            char.charCodeAt(0),
+            bubble.getLabel(),
+            {}
+        );
+    };
+    api.removeOneCharInBubble = function (bubble) {
+        var text = bubble.getLabel().text();
+        bubble.getLabel().text(
+            text.substr(
+                0,
+                text.length - 1
+            )
+        );
+        var backspaceKeyCode = 8;
+        api._pressKeyCodeInContainer(
+            backspaceKeyCode,
+            bubble.getLabel(),
+            {}
+        );
+    };
+    api._pressKeyCodeInContainer = function (keyCode, container, options) {
         var event = $.Event("keydown");
-        if(options !== undefined){
+        if (options !== undefined) {
             $.extend(event, options);
         }
         event.which = event.keyCode = keyCode;
-        $("body").trigger(event);
+        container.trigger(event);
     };
-    api.getChildWithLabel = function(bubble, label){
+    api.getChildWithLabel = function (bubble, label) {
         var childWithLabel = bubble;
-        bubble.visitAllChild(function(child){
-            if(child.text() === label){
+        bubble.visitAllChild(function (child) {
+            if (child.text() === label) {
                 childWithLabel = child;
                 return false;
             }
         });
         return childWithLabel;
     };
-    api.hasChildWithLabel = function(bubble, label){
+    api.hasChildWithLabel = function (bubble, label) {
         var hasChild = false;
-        bubble.visitAllChild(function(child){
-            if(child.text() === label){
-                hasChild= true;
+        bubble.visitAllChild(function (child) {
+            if (child.text() === label) {
+                hasChild = true;
                 return false;
             }
         });
@@ -73,14 +103,14 @@ define([
         );
     };
 
-    api.generateVertex = function(){
+    api.generateVertex = function () {
         return Vertex.fromServerFormat(
             VertexServerFormatBuilder.buildWithUri(
                 api.generateVertexUri()
             )
         );
     };
-    api.generateEdge = function(sourceVertexUri, destinationVertexUri) {
+    api.generateEdge = function (sourceVertexUri, destinationVertexUri) {
         return Edge.fromServerFormat(
             Edge.buildObjectWithUriOfSelfSourceAndDestinationVertex(
                 api.generateEdgeUri(),
@@ -95,6 +125,7 @@ define([
         return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
             s4() + '-' + s4() + s4() + s4();
     }
+
     function s4() {
         return Math.floor((1 + Math.random()) * 0x10000)
             .toString(16)

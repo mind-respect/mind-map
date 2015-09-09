@@ -28,10 +28,22 @@ define([
         '/event/ui/graph/vertex/deleted/',
         refreshZoom
     );
+
+    EventBus.subscribe(
+        '/event/ui/html/vertex/created/',
+        function (event, vertex) {
+            vertex.getLabel().on("keydown", function () {
+                var label = $(this);
+                var level = label.text().length >= 8 ? 1 : 0;
+                api._setLevel(level);
+            });
+        }
+    );
+
     return api;
-    function refreshZoom(){
+    function refreshZoom() {
         var numberOfVertices = VertexUi.getNumber();
-        var zoomLevel = numberOfVertices === 1 ? 1 : 2;
+        var zoomLevel = numberOfVertices === 1 ? 0 : 1;
         api._setLevel(zoomLevel);
     }
 });

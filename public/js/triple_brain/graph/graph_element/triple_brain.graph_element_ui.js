@@ -201,10 +201,10 @@ define([
         }
     };
     api.Self.prototype.focus = function () {
-        this.getHtml().centerOnScreen();
         this.editMode();
         this._setTextBeforeModification();
         this.getLabel().maxCharCleanTextApply().focusEnd();
+        this.getHtml().centerOnScreen();
     };
     api.Self.prototype._setTextBeforeModification = function(){
         this.getHtml().data(

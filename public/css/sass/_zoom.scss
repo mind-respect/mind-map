@@ -2,8 +2,8 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
-$vertical-padding-ratio: 0.7;
-[data-zoom]{
+$verticalPaddingRatio: 0.7;
+[data-zoom] {
   .vertex {
     .in-bubble-note-button {
       i {
@@ -13,65 +13,98 @@ $vertical-padding-ratio: 0.7;
   }
 }
 
-[data-zoom="1"] {
-  .bubble {
-    .in-bubble-content {
-      border-radius: 100px;
-    }
-  }
-  .vertex {
-    &.edit {
-      .in-bubble-content {
-        width: 1500px;
-        max-width: 1500px;
+$editWidth: 1500;
+$horizontalPaddingHighest: 15;
+$fontSize: 10;
+
+@mixin zoom {
+  @for $i from 0 through 10 {
+    $horizontalPadding: $horizontalPaddingHighest - ($i * 3);
+    [data-zoom="#{$i}"] {
+      .vertex {
+        &.edit {
+          .in-bubble-content {
+            width: ($editWidth - ($i * 125)) + px;
+            max-width: ($editWidth - ($i * 125)) + px;
+          }
+        }
+        .in-bubble-content {
+          $verticalPadding: $horizontalPadding * $verticalPaddingRatio;
+          padding: $horizontalPadding + em;
+          padding-bottom: $verticalPadding + em;
+          padding-top: $verticalPadding + em;
+          button, .in-bubble-note-button {
+            width: 60px;
+            height: 60px;
+            font-size: 2em;
+          }
+          .menu {
+            width: 260px;
+          }
+        }
+      }
+      .bubble-label {
+        font-size: ($fontSize - ($i * 2)) + em;
       }
     }
-    .in-bubble-content {
-      $horizontal-padding: 15;
-      $vertical-padding: $horizontal-padding * $vertical-padding-ratio;
-      padding: $horizontal-padding + em;
-      padding-bottom: $vertical-padding + em;
-      padding-top: $vertical-padding + em;
-      button, .in-bubble-note-button {
-        width: 60px;
-        height: 60px;
-        font-size: 2em;
-      }
-      .menu {
-        width: 260px;
-      }
-    }
-  }
-  .bubble-label {
-    font-size: 10em;
   }
 }
 
-[data-zoom="2"] {
-  .bubble {
-    .in-bubble-content {
-      border-radius: 100px;
-    }
-  }
-  .vertex {
-    &.edit {
-      .in-bubble-content {
-        width: 1500px;
-        max-width: 1500px;
-      }
-    }
-    .in-bubble-content {
-      $horizontal-padding: 5;
-      $vertical-padding: $horizontal-padding * $vertical-padding-ratio;
-      padding: $horizontal-padding + em;
-      padding-bottom: $vertical-padding + em;
-      padding-top: $vertical-padding + em;
-    }
-  }
-  .bubble-label {
-    font-size: 10em;
-  }
-}
+@include zoom;
+
+//[data-zoom="1"] {
+//  .vertex {
+//    &.edit {
+//      .in-bubble-content {
+//        width: $editWidth + px;
+//        max-width: $editWidth + px;
+//      }
+//    }
+//    .in-bubble-content {
+//      $verticalPadding: $horizontalPadding * $verticalPaddingRatio;
+//      padding: $horizontalPadding + em;
+//      padding-bottom: $verticalPadding + em;
+//      padding-top: $verticalPadding + em;
+//      button, .in-bubble-note-button {
+//        width: 60px;
+//        height: 60px;
+//        font-size: 2em;
+//      }
+//      .menu {
+//        width: 260px;
+//      }
+//    }
+//  }
+//  .bubble-label {
+//    font-size: $fontSize + em;
+//  }
+//}
+//
+//[data-zoom="2"] {
+//  .bubble {
+//    .in-bubble-content {
+//      border-radius: 100px;
+//    }
+//  }
+//  .vertex {
+//    &.edit {
+//      .in-bubble-content {
+//        width: 1500px;
+//        max-width: 1500px;
+//      }
+//    }
+//    .in-bubble-content {
+//      $horizontal-padding: 5;
+//      $verticalPadding: $horizontal-padding * $verticalPaddingRatio;
+//      padding: $horizontal-padding + em;
+//      padding-bottom: $verticalPadding + em;
+//      padding-top: $verticalPadding + em;
+//    }
+//  }
+//  .bubble-label {
+//    font-size: 10em;
+//  }
+//}
 
 .zoom-scale {
   .menu {
