@@ -109,8 +109,6 @@ define([
     api.buildNoteButton = function (graphElement) {
         var noteButton = $(
             "<div class='in-bubble-note-button'>"
-        ).append(
-            "<i class='fa fa-book'>"
         ).prop(
             "title",
             graphElement.getNoteButtonInMenu().prop("title")

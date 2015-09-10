@@ -24,11 +24,8 @@
   }
   .in-bubble-note-button{
     cursor: pointer;
-    margin:0 17px 0 0;
-    display:inherit;
-    i{
-      font-size:1.5em;
-    }
+    margin:0 0.4em 0 0;
+    display:block;
   }
   &.edit{
     -moz-user-select: text;
@@ -46,7 +43,7 @@
     display: table-cell;
     white-space: pre;
     height: 17px;
-    &:empty:not(:focus):before {
+    &:empty:not(:focus):before{
       content: attr(data-placeholder);
       color: grey;
       font-style: italic;
