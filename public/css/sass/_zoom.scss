@@ -2,7 +2,7 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
-$verticalPaddingRatio: 0.7;
+$verticalPaddingRatio: 0.9;
 [data-zoom] {
   .vertex {
     .in-bubble-note-button {
@@ -13,38 +13,46 @@ $verticalPaddingRatio: 0.7;
   }
 }
 
-$editWidth: 1500;
-$horizontalPaddingHighest: 15;
-$fontSize: 10;
+//$editWidth: 200; //vm;
+//$editWidth: 1500; //px;
+//$editWidth: 60; //rem;
+$editWidth: 70;
+//vw;
+$horizontalPaddingHighest: 9;
 
 @mixin zoom {
   @for $i from 0 through 10 {
-    $horizontalPadding: $horizontalPaddingHighest - ($i * 3);
+    $horizontalPadding: max($horizontalPaddingHighest - ($i * 1.3), 1);
     [data-zoom="#{$i}"] {
       .vertex {
         &.edit {
           .in-bubble-content {
-            width: ($editWidth - ($i * 125)) + px;
-            max-width: ($editWidth - ($i * 125)) + px;
+            width: ($editWidth - ($i * 5)) + vw;
+            max-width: ($editWidth - ($i * 5)) + vw;
           }
         }
         .in-bubble-content {
           $verticalPadding: $horizontalPadding * $verticalPaddingRatio;
-          padding: $horizontalPadding + em;
-          padding-bottom: $verticalPadding + em;
-          padding-top: $verticalPadding + em;
+          padding: $horizontalPadding + vw;
+          padding-bottom: $verticalPadding + vh;
+          padding-top: $verticalPadding + vh;
+          $buttonExtraSize: max(0, 1.5 - $i * 0.3);
+          $buttonSize: calc(30px + #{$buttonExtraSize}vw);
           button, .in-bubble-note-button {
-            width: 60px;
-            height: 60px;
-            font-size: 2em;
+            width: $buttonSize;
+            height: $buttonSize;
+            $fontSizeExtra: max(0, 0.5 - $i * 0.1);
+            font-size: calc(1em + #{$fontSizeExtra}vw);
           }
           .menu {
-            width: 260px;
+            $menuWidthExtra:$buttonExtraSize * 5;
+            width:calc(146px + #{$menuWidthExtra}vw);
           }
         }
       }
       .bubble-label {
-        font-size: ($fontSize - ($i * 2)) + em;
+        $fontSizeExtra: max(0, 8 - $i);
+        font-size: calc(1em + #{$fontSizeExtra}vw);
       }
     }
   }
