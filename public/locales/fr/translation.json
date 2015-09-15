@@ -79,7 +79,7 @@
     "select": "sélection"
   },
   "left_menu": {
-    "search": "Chercher mes bulles"
+    "search": "Trouvez vos bulles dans cette boîte"
   },
   "caption": {
     "title": "Légende",
@@ -151,7 +151,6 @@
     }
   },
   "selection": {
-    "selected_graph_elements": "élément(s) de graphe sélectionné(s)",
     "group": "grouper"
   },
   "menu-button": {

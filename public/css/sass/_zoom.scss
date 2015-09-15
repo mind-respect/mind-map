@@ -13,7 +13,7 @@ $horizontalPaddingHighest: 9;
 
 @mixin zoom {
   @for $i from 0 through 10 {
-    $horizontalPadding: max(1, $horizontalPaddingHighest - ($i * 1.3));
+    $horizontalPadding: max(1, $horizontalPaddingHighest - ($i * 0.9));
     [data-zoom="#{$i}"] {
       .vertex {
         &.edit {
@@ -61,7 +61,7 @@ $horizontalPaddingHighest: 9;
       .in-bubble-note-button {
         $fontSizeExtra: max(0, 8 - $i) / 1.5;
         font-size: calc(1em + #{$fontSizeExtra}vw);
-        &:before{
+        &:before {
           font-family: FontAwesome;
           content: "\f02d";
         }

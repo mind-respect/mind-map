@@ -1,9 +1,0 @@
-{
-    "title":"Bulles sur la page",
-    "sort":{
-        "title":"Trier par",
-        "1":"texte",
-        "2":"distance"
-    },
-    "filter" : "filtrer"
-}

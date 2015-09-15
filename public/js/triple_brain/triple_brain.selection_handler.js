@@ -14,7 +14,6 @@ define([
     "use strict";
     var api = {},
         _selectBox,
-        _selectionManagementButton,
         SELECT_BOX_MIN_WIDTH = 45,
         SELECT_BOX_MIN_HEIGHT = 40,
         selectionInfo = new SelectionInfo();
@@ -126,12 +125,6 @@ define([
             activateSelectionOnMindMap
         ).removeDragScroll();
     };
-    api.getSelectionManagementButton = function () {
-        if (!_selectionManagementButton) {
-            _selectionManagementButton = $("#graph-elements-selected");
-        }
-        return _selectionManagementButton;
-    };
 
     api.isOnlyASingleBubbleSelected = function () {
         return (1 === selectionInfo.getNbSelectedBubbles()) &&
@@ -173,17 +166,12 @@ define([
     function reflectSelectionChange() {
         var nbSelectedGraphElements = selectionInfo.getNbSelected();
         if (0 === nbSelectedGraphElements) {
-            api.getSelectionManagementButton().addClass("hidden");
             EventBus.publish(
                 "/event/ui/selection/changed",
                 selectionInfo
             );
             return;
         }
-        api.getSelectionManagementButton().removeClass("hidden");
-        getWhereToPutNbSelectedGraphElements().text(
-            nbSelectedGraphElements
-        );
         EventBus.publish(
             "/event/ui/selection/changed",
             selectionInfo
@@ -251,10 +239,6 @@ define([
             _selectBox = $("#selection-box");
         }
         return _selectBox;
-    }
-
-    function getWhereToPutNbSelectedGraphElements() {
-        return api.getSelectionManagementButton().find(".nb");
     }
 
     function SelectionInfo() {

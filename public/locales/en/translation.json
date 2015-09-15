@@ -81,7 +81,7 @@
     "select": "select"
   },
   "left_menu": {
-    "search": "Search my bubbles"
+    "search": "Find your bubbles in this box"
   },
   "caption": {
     "title": "Caption",
@@ -153,7 +153,6 @@
     }
   },
   "selection": {
-    "selected_graph_elements": "graph element(s) selected",
     "group": "group"
   },
   "menu-button": {

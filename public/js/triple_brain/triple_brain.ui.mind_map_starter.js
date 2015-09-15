@@ -14,7 +14,6 @@ define(
         "triple_brain.ui.graph",
         "triple_brain.language_manager",
         "triple_brain.top_center_menu",
-        "triple_brain.ui.left_panel",
         "triple_brain.selection_handler",
         "triple_brain.graph_element_main_menu",
         "triple_brain.mind_map_info",
@@ -24,13 +23,13 @@ define(
         "triple_brain.anonymous_flow",
         "triple_brain.change_password",
         "triple_brain.login_handler",
+        "triple_brain.zoom_handler",
         "triple_brain.wikidata",
         "jquery.triple_brain.drag_scroll",
         "triple_brain.bottom_center_panel",
-        "triple_brain.modules",
-        "triple_brain.zoom_handler"
+        "triple_brain.modules"
     ],
-    function ($, UserService, BubbleDistanceCalculator, EventBus, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, LeftPanel, SelectionHandler, GraphElementMainMenu, MindMapInfo, TopRightMenu, ExternalPageLoader, IdUriUtils, AnonymousFlow, ChangePassword, LoginHandler) {
+    function ($, UserService, BubbleDistanceCalculator, EventBus, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, SelectionHandler, GraphElementMainMenu, MindMapInfo, TopRightMenu, ExternalPageLoader, IdUriUtils, AnonymousFlow, ChangePassword, LoginHandler, ZoomHandler) {
         "use strict";
         var api = {
             start: function () {
@@ -86,7 +85,6 @@ define(
                     $("#app-presentation").addClass("hidden");
                     TopRightMenu.earlyInit();
                     TopCenterMenu.init();
-                    LeftPanel.init();
                     handleHistoryBrowse();
                     GraphDisplayer.setImplementation(
                         GraphDisplayerFactory.getByName(
@@ -168,6 +166,7 @@ define(
                         groupRelationUi
                     );
                 });
+                ZoomHandler.init();
                 $("body").removeClass("hidden");
                 centralVertex.scrollTo();
                 SelectionHandler.setToSingleVertex(centralVertex);

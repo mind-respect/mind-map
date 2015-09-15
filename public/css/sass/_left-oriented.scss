@@ -13,9 +13,11 @@
     }
   }
   .relation {
-    .in-bubble-note-button {
-      margin-right: 0;
-      margin-left: 5px;
+    .in-bubble-content{
+      .in-bubble-note-button {
+        left:auto;
+        right:-32px;
+      }
     }
     .label-container {
       padding-left: 0;
@@ -57,7 +59,7 @@
   }
   .vertex-tree-container .vertical-border {
     border-left: none;
-    border-right: 1px solid black;
+    border-right: $edgeStyle;
   }
 }
 

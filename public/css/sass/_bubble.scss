@@ -73,7 +73,7 @@
   .connector {
     position: absolute;
     height: 1px;
-    border-top: 1px solid black;
+    border-top: $edgeStyle;
     top: 50%;
     width: 65px;
     left: -22px;
@@ -86,7 +86,7 @@
     width: 73px;
     top: 50%;
     left: -42px;
-    border-top: 1px solid black;
+    border-top: $edgeStyle;
     z-index: -1;
     ~{
       background-color:yellow;
@@ -97,7 +97,7 @@
     &:before {
       content: url('images/icons/vertex/arrowhead_right.svg');
       position: relative;
-      top: -10px;
+      top: -11px;
       left: 20px;
     }
   }
@@ -108,7 +108,7 @@
     margin-top: 5px;
     position: absolute;
     white-space: normal;
-    background-color: white;
+    background-color: transparent;
     opacity: 0.95;
     left: 0;
     top: 100%;

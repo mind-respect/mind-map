@@ -18,10 +18,6 @@ define([
                 "click",
                 SelectionHandler.handleButtonClick
             );
-            SelectionHandler.getSelectionManagementButton().on(
-                "click",
-                SelectionHandler.handleSelectionManagementClick
-            );
         };
         return api;
         function getSelectionButton() {

@@ -7,7 +7,7 @@ define([
     "jquery.focus-end"
 ], function ($) {
     "use strict";
-    var defaultMaxChar = 50;
+    var defaultMaxChar = 30;
     $.fn.maxChar = function (maxChars) {
         var $this = $(this);
         if (undefined === maxChars) {

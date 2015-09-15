@@ -3,7 +3,6 @@
  */
 
 define([
-    "triple_brain.module.vertices_list",
     "triple_brain.module.date_picker"
 ], function () {
     "use strict";

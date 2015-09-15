@@ -10,6 +10,7 @@ define([
 ], function ($, GraphUi, EventBus, VertexUi) {
     "use strict";
     var api = {};
+    api.init = refreshZoom;
     api.getLevel = function () {
         return GraphUi.getDrawnGraph().data("zoom");
     };
@@ -32,18 +33,54 @@ define([
     EventBus.subscribe(
         '/event/ui/html/vertex/created/',
         function (event, vertex) {
-            vertex.getLabel().on("keydown", function () {
-                var label = $(this);
-                var level = label.text().length >= 8 ? 1 : 0;
-                api._setLevel(level);
-            });
+            vertex.getLabel().on("keydown", refreshZoom);
         }
     );
 
     return api;
     function refreshZoom() {
+        return;
+        api._setLevel(
+            getAppropriateZoomLevel()
+        );
+    }
+
+    function getAppropriateZoomLevel() {
         var numberOfVertices = VertexUi.getNumber();
-        var zoomLevel = numberOfVertices === 1 ? 0 : 1;
-        api._setLevel(zoomLevel);
+        switch (numberOfVertices) {
+            case 1 :
+                return getZoomLevelWhenOneVertex();
+            default :
+                return Math.min(8, numberOfVertices + 1);
+        }
+    }
+
+    function getZoomLevelWhenOneVertex() {
+        var zoomLevel = 0;
+        VertexUi.visitAll(function (vertex) {
+            var textLength = vertex.getLabel().text().length;
+            if(textLength >= 19){
+                zoomLevel = 5;
+                return;
+            }
+            if(textLength >= 16){
+                zoomLevel = 4;
+                return;
+            }
+            if(textLength >= 13){
+                zoomLevel = 3;
+                return;
+            }
+            if(textLength >= 10){
+                zoomLevel = 2;
+                return;
+            }
+            if(textLength >= 7){
+                zoomLevel = 1;
+                return;
+            }
+        });
+        console.log(zoomLevel);
+        return zoomLevel;
     }
 });

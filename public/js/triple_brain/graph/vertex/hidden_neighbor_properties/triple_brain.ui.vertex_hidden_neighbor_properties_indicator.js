@@ -18,10 +18,6 @@ define([
         function HiddenNeighborPropertiesIndicator(bubble) {
             var hiddenNeighborPropertiesContainer;
             this.build = function () {
-                var numberOfHiddenRelationsToFlag = bubble.getNumberOfRelationsToFlag();
-                if (numberOfHiddenRelationsToFlag > 10) {
-                    numberOfHiddenRelationsToFlag = 10;
-                }
                 var isLeftOriented = bubble.isToTheLeft();
                 hiddenNeighborPropertiesContainer = $(
                     MindMapTemplate[
@@ -29,10 +25,8 @@ define([
                         ].merge()
                 ).data("vertex", bubble);
                 var imageUrl = "/css/images/icons/vertex/" +
-                    numberOfHiddenRelationsToFlag +
-                    "_" +
-                    (isLeftOriented ? "left_" : "") +
-                    "hidden_properties.svg";
+                    (isLeftOriented ? "left-" : "") +
+                    "more-leaf.svg";
                 var img = $("<img>").attr(
                     "src",
                     imageUrl

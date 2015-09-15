@@ -1,9 +1,0 @@
-{
-    "title": "Bubbles on page",
-    "sort" : {
-        "title" : "Sort by",
-        "1" : "label",
-        "2" : "distance"
-    },
-    "filter" : "filter"
-}

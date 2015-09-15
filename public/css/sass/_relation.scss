@@ -3,20 +3,20 @@
  */
 .relation {
   position: relative;
-  .menu{
-    background-color:transparent;
+  .menu {
+    background-color: transparent;
     z-index: 11;
-    margin-left:5px;
+    margin-left: 5px;
   }
-  .label-container{
-    display:table-cell;
-    padding-left:6px;
+  .label-container {
+    display: table-cell;
+    padding-left: 6px;
     position: relative;
   }
   &.suggestion {
-    .in-bubble-content{
-      border:none;
-      .bubble-label{
+    .in-bubble-content {
+      border: none;
+      .bubble-label {
         border: 1px dashed black;
         background-color: white;
         color: black;
@@ -24,24 +24,24 @@
       }
     }
   }
-  .in-bubble-content{
-    .bubble-label{
+  .in-bubble-content {
+    $fontSize: calc(0.6em + 0.5vw);
+    .bubble-label {
       background-color: #3a87ad;
       font-family: helvetica;
-      font-size:13px;
+      font-size: $fontSize;
       height: auto;
       &:empty:not(:focus):before {
         content: attr(data-placeholder);
         font-style: italic;
-        color:white;
+        color: white;
       }
     }
-  }
-  .in-bubble-note-button{
-    margin-right:5px;
-    i{
-      margin-top:3px;
-      font-size:1.5em;
+    .in-bubble-note-button {
+      font-size: calc(1em + 0.6vw);
+      position: absolute;
+      left:-20px;
+      top: 0;
     }
   }
   .ui-button {
@@ -50,26 +50,27 @@
     margin: 0;
   }
   .duplicate-button-container {
-    left:-20px;
-    top:-23px;
+    left: -20px;
+    top: -23px;
   }
 }
 
-.relation{
-  padding:0;
-  margin-top:0;
-  margin-right:0;
-  margin-left:0;
+.relation {
+  padding: 0;
+  margin-top: 0;
+  margin-right: 0;
+  margin-left: 0;
   vertical-align: middle;
 }
+
 .relation.selected .label {
   box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb;
 }
 
-.relation input{
+.relation input {
   border-radius: 3px 3px 3px 3px;
-  border-width:0.2em;
-  border-color:#3A87AD;
+  border-width: 0.2em;
+  border-color: #3A87AD;
   padding: 0;
   outline: none;
   font-family: courier new, monospace;
@@ -77,20 +78,20 @@
   vertical-align: middle;
   background-color: transparent;
   overflow: hidden;
-  position:absolute;
-  width:100%;
-  top:0;
-  left:0;
-  right:0;
-  z-index:5;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
 }
 
-.relation.inverse .in-bubble-content .bubble-label{
+.relation.inverse .in-bubble-content .bubble-label {
   background: mediumpurple;
 }
 
-.relation.inverse input[type=text]{
-  border-color:red;
+.relation.inverse input[type=text] {
+  border-color: red;
 }
 
 .property {
@@ -106,7 +107,7 @@
 .group-relation {
   white-space: nowrap;
   &.selected {
-    .in-bubble-content .bubble-label{
+    .in-bubble-content .bubble-label {
       box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb;
     }
   }
