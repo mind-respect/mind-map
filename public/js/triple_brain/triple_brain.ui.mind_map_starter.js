@@ -23,13 +23,12 @@ define(
         "triple_brain.anonymous_flow",
         "triple_brain.change_password",
         "triple_brain.login_handler",
-        "triple_brain.zoom_handler",
         "triple_brain.wikidata",
         "jquery.triple_brain.drag_scroll",
         "triple_brain.bottom_center_panel",
         "triple_brain.modules"
     ],
-    function ($, UserService, BubbleDistanceCalculator, EventBus, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, SelectionHandler, GraphElementMainMenu, MindMapInfo, TopRightMenu, ExternalPageLoader, IdUriUtils, AnonymousFlow, ChangePassword, LoginHandler, ZoomHandler) {
+    function ($, UserService, BubbleDistanceCalculator, EventBus, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, SelectionHandler, GraphElementMainMenu, MindMapInfo, TopRightMenu, ExternalPageLoader, IdUriUtils, AnonymousFlow, ChangePassword, LoginHandler) {
         "use strict";
         var api = {
             start: function () {
@@ -166,7 +165,6 @@ define(
                         groupRelationUi
                     );
                 });
-                ZoomHandler.init();
                 $("body").removeClass("hidden");
                 centralVertex.scrollTo();
                 SelectionHandler.setToSingleVertex(centralVertex);
