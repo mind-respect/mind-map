@@ -181,7 +181,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .relation .label-container { display: table-cell; padding-left: 6px; position: relative; }
 .relation.suggestion .in-bubble-content { border: none; }
 .relation.suggestion .in-bubble-content .bubble-label { border: 1px dashed black; background-color: white; color: black; text-shadow: none; }
-.relation .in-bubble-content .bubble-label { background-color: #3a87ad; font-family: helvetica; font-size: calc(0.6em + 0.5vw); height: auto; }
+.relation .in-bubble-content .bubble-label { background-color: #3a87ad; font-family: helvetica; font-size: 1.3em; height: auto; }
 .relation .in-bubble-content .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); font-style: italic; color: white; }
 .relation .in-bubble-content .in-bubble-note-button { font-size: calc(1em + 0.6vw); position: absolute; left: -20px; top: 0; }
 .relation .ui-button { width: 1.7em; height: 1.8em; margin: 0; }
