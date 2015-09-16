@@ -177,11 +177,12 @@ button.add-button-in-list:hover { color: #00d100; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .relation { position: relative; }
+.relation .label { border-radius: 0.75em; }
 .relation .menu { background-color: transparent; z-index: 11; margin-left: 5px; }
 .relation .label-container { display: table-cell; padding-left: 6px; position: relative; }
 .relation.suggestion .in-bubble-content { border: none; }
 .relation.suggestion .in-bubble-content .bubble-label { border: 1px dashed black; background-color: white; color: black; text-shadow: none; }
-.relation .in-bubble-content .bubble-label { background-color: #3a87ad; font-family: helvetica; font-size: 1.3em; height: auto; }
+.relation .in-bubble-content .bubble-label { background-color: #3a87ad; font-family: helvetica; font-size: 1.2em; height: auto; }
 .relation .in-bubble-content .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); font-style: italic; color: white; }
 .relation .in-bubble-content .in-bubble-note-button { font-size: calc(1em + 0.6vw); position: absolute; left: -20px; top: 0; }
 .relation .ui-button { width: 1.7em; height: 1.8em; margin: 0; }
@@ -214,7 +215,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .bubble .in-bubble-note-button { cursor: pointer; margin: 0 0.4em 0 0; display: block; }
 .bubble.edit { -moz-user-select: text; }
 .bubble .duplicate-button-container { position: absolute; }
-.bubble .bubble-label { outline: 0 solid transparent; border: none; font-family: Helvetica; font-size: 14px; width: auto; display: table-cell; white-space: pre; height: 17px; }
+.bubble .bubble-label { outline: 0 solid transparent; border: none; font-family: Helvetica; font-size: 14px; width: auto; display: table-cell; white-space: pre; }
 .bubble .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); color: grey; font-style: italic; }
 .bubble.selected { z-index: 11; }
 .bubble.selected .in-bubble-content { z-index: 5; }
@@ -252,10 +253,11 @@ button.add-button-in-list:hover { color: #00d100; }
 .vertex.center-vertex.selected .in-bubble-content { box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb; border: solid red; }
 .vertex .included-graph-elements-flag { position: absolute; top: 25px; left: 30%; font-weight: bold; }
 .vertex .included-graph-elements-flag { z-index: 3; }
-.vertex .in-bubble-content { border-radius: 100px; /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c3d9ff+0,b1c8ef+41,98b0d9+100;Lavender+3D */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#daeef6+0,96ddf2+50,ddeff7+100 */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffedb7+0,ffe28d+100 */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fff2cb+0,ffebaf+100 */ white-space: normal; padding: 1em; padding-bottom: 0.7em; padding-top: 0.7em; margin-left: 0.3em; display: table; border: 1px; border-color: transparent; border-style: solid; }
+.vertex .in-bubble-content { border-radius: 50px; /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c3d9ff+0,b1c8ef+41,98b0d9+100;Lavender+3D */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#daeef6+0,96ddf2+50,ddeff7+100 */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffedb7+0,ffe28d+100 */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fff2cb+0,ffebaf+100 */ white-space: normal; padding: 1em; padding-bottom: 0.7em; padding-top: 0.7em; margin-left: 0.3em; display: table; }
 .vertex .in-bubble-content > * { display: table-cell; }
 .vertex .in-bubble-content .bubble-label { padding: 0; }
 .vertex .in-bubble-content .in-bubble-note-button { display: block; }
+.vertex .in-bubble-content.surround-indicator { box-shadow: -10px 0 10px -10px #ff80ef, 10px 0 10px -10px #ff80ef; }
 .vertex .in-bubble-content .duplicate-button-container { left: -17px; top: -18px; }
 .vertex .move { background-image: url("images/icons/vertex/move.png"); min-width: 25px; min-height: 25px; margin-right: 5px; margin-left: 8px; float: left; }
 .vertex .ui-button { width: 1.7em; height: 1.8em; margin-right: 0; font-size: 1.1em; padding: 0; }
@@ -264,7 +266,7 @@ button.add-button-in-list:hover { color: #00d100; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 [data-zoom="0"] .vertex.edit .in-bubble-content { width: 70vw; max-width: 70vw; }
-[data-zoom="0"] .vertex .in-bubble-content { padding: 9vw; padding-bottom: 8.1vh; padding-top: 8.1vh; }
+[data-zoom="0"] .vertex .in-bubble-content { padding: 9vw; padding-bottom: 18vh; padding-top: 18vh; }
 [data-zoom="0"] .vertex .in-bubble-content button { width: calc(30px + 1.5vw); height: calc(30px + 1.5vw); font-size: calc(1em + 0.5vw); }
 [data-zoom="0"] .vertex .in-bubble-content button i { top: 50%; }
 [data-zoom="0"] .vertex .in-bubble-content .menu { width: calc(146px + 7.5vw); }
@@ -273,7 +275,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="0"] .bubble-label { font-size: calc(1em + 8vw); }
 
 [data-zoom="1"] .vertex.edit .in-bubble-content { width: 65vw; max-width: 65vw; }
-[data-zoom="1"] .vertex .in-bubble-content { padding: 8.1vw; padding-bottom: 7.29vh; padding-top: 7.29vh; }
+[data-zoom="1"] .vertex .in-bubble-content { padding: 7.9vw; padding-bottom: 15.8vh; padding-top: 15.8vh; }
 [data-zoom="1"] .vertex .in-bubble-content button { width: calc(30px + 1.2vw); height: calc(30px + 1.2vw); font-size: calc(1em + 0.4vw); }
 [data-zoom="1"] .vertex .in-bubble-content button i { top: 48%; }
 [data-zoom="1"] .vertex .in-bubble-content .menu { width: calc(146px + 6vw); }
@@ -282,7 +284,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="1"] .bubble-label { font-size: calc(1em + 7vw); }
 
 [data-zoom="2"] .vertex.edit .in-bubble-content { width: 60vw; max-width: 60vw; }
-[data-zoom="2"] .vertex .in-bubble-content { padding: 7.2vw; padding-bottom: 6.48vh; padding-top: 6.48vh; }
+[data-zoom="2"] .vertex .in-bubble-content { padding: 6.8vw; padding-bottom: 13.6vh; padding-top: 13.6vh; }
 [data-zoom="2"] .vertex .in-bubble-content button { width: calc(30px + 0.9vw); height: calc(30px + 0.9vw); font-size: calc(1em + 0.3vw); }
 [data-zoom="2"] .vertex .in-bubble-content button i { top: 46%; }
 [data-zoom="2"] .vertex .in-bubble-content .menu { width: calc(146px + 4.5vw); }
@@ -291,7 +293,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="2"] .bubble-label { font-size: calc(1em + 6vw); }
 
 [data-zoom="3"] .vertex.edit .in-bubble-content { width: 55vw; max-width: 55vw; }
-[data-zoom="3"] .vertex .in-bubble-content { padding: 6.3vw; padding-bottom: 5.67vh; padding-top: 5.67vh; }
+[data-zoom="3"] .vertex .in-bubble-content { padding: 5.7vw; padding-bottom: 11.4vh; padding-top: 11.4vh; }
 [data-zoom="3"] .vertex .in-bubble-content button { width: calc(30px + 0.6vw); height: calc(30px + 0.6vw); font-size: calc(1em + 0.2vw); }
 [data-zoom="3"] .vertex .in-bubble-content button i { top: 44%; }
 [data-zoom="3"] .vertex .in-bubble-content .menu { width: calc(146px + 3.0vw); }
@@ -300,7 +302,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="3"] .bubble-label { font-size: calc(1em + 5vw); }
 
 [data-zoom="4"] .vertex.edit .in-bubble-content { width: 50vw; max-width: 50vw; }
-[data-zoom="4"] .vertex .in-bubble-content { padding: 5.4vw; padding-bottom: 4.86vh; padding-top: 4.86vh; }
+[data-zoom="4"] .vertex .in-bubble-content { padding: 4.6vw; padding-bottom: 9.2vh; padding-top: 9.2vh; }
 [data-zoom="4"] .vertex .in-bubble-content button { width: calc(30px + 0.3vw); height: calc(30px + 0.3vw); font-size: calc(1em + 0.1vw); }
 [data-zoom="4"] .vertex .in-bubble-content button i { top: 42%; }
 [data-zoom="4"] .vertex .in-bubble-content .menu { width: calc(146px + 1.5vw); }
@@ -309,7 +311,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="4"] .bubble-label { font-size: calc(1em + 4vw); }
 
 [data-zoom="5"] .vertex.edit .in-bubble-content { width: 45vw; max-width: 45vw; }
-[data-zoom="5"] .vertex .in-bubble-content { padding: 4.5vw; padding-bottom: 4.05vh; padding-top: 4.05vh; }
+[data-zoom="5"] .vertex .in-bubble-content { padding: 3.5vw; padding-bottom: 7vh; padding-top: 7vh; }
 [data-zoom="5"] .vertex .in-bubble-content button { width: calc(30px + 0vw); height: calc(30px + 0vw); font-size: calc(1em + 0vw); }
 [data-zoom="5"] .vertex .in-bubble-content button i { top: 40%; }
 [data-zoom="5"] .vertex .in-bubble-content .menu { width: calc(146px + 0vw); }
@@ -318,7 +320,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="5"] .bubble-label { font-size: calc(1em + 3vw); }
 
 [data-zoom="6"] .vertex.edit .in-bubble-content { width: 40vw; max-width: 40vw; }
-[data-zoom="6"] .vertex .in-bubble-content { padding: 3.6vw; padding-bottom: 3.24vh; padding-top: 3.24vh; }
+[data-zoom="6"] .vertex .in-bubble-content { padding: 2.4vw; padding-bottom: 4.8vh; padding-top: 4.8vh; }
 [data-zoom="6"] .vertex .in-bubble-content button { width: calc(30px + 0vw); height: calc(30px + 0vw); font-size: calc(1em + 0vw); }
 [data-zoom="6"] .vertex .in-bubble-content button i { top: 38%; }
 [data-zoom="6"] .vertex .in-bubble-content .menu { width: calc(146px + 0vw); }
@@ -327,7 +329,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="6"] .bubble-label { font-size: calc(1em + 2vw); }
 
 [data-zoom="7"] .vertex.edit .in-bubble-content { width: 35vw; max-width: 35vw; }
-[data-zoom="7"] .vertex .in-bubble-content { padding: 2.7vw; padding-bottom: 2.43vh; padding-top: 2.43vh; }
+[data-zoom="7"] .vertex .in-bubble-content { padding: 1.3vw; padding-bottom: 2.6vh; padding-top: 2.6vh; }
 [data-zoom="7"] .vertex .in-bubble-content button { width: calc(30px + 0vw); height: calc(30px + 0vw); font-size: calc(1em + 0vw); }
 [data-zoom="7"] .vertex .in-bubble-content button i { top: 36%; }
 [data-zoom="7"] .vertex .in-bubble-content .menu { width: calc(146px + 0vw); }
@@ -336,7 +338,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="7"] .bubble-label { font-size: calc(1em + 1vw); }
 
 [data-zoom="8"] .vertex.edit .in-bubble-content { width: 30vw; max-width: 30vw; }
-[data-zoom="8"] .vertex .in-bubble-content { padding: 1.8vw; padding-bottom: 1.62vh; padding-top: 1.62vh; }
+[data-zoom="8"] .vertex .in-bubble-content { padding: 1vw; padding-bottom: 2vh; padding-top: 2vh; }
 [data-zoom="8"] .vertex .in-bubble-content button { width: calc(30px + 0vw); height: calc(30px + 0vw); font-size: calc(1em + 0vw); }
 [data-zoom="8"] .vertex .in-bubble-content button i { top: 34%; }
 [data-zoom="8"] .vertex .in-bubble-content .menu { width: calc(146px + 0vw); }
@@ -345,7 +347,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="8"] .bubble-label { font-size: calc(1em + 0vw); }
 
 [data-zoom="9"] .vertex.edit .in-bubble-content { width: 25vw; max-width: 25vw; }
-[data-zoom="9"] .vertex .in-bubble-content { padding: 1vw; padding-bottom: 0.9vh; padding-top: 0.9vh; }
+[data-zoom="9"] .vertex .in-bubble-content { padding: 1vw; padding-bottom: 2vh; padding-top: 2vh; }
 [data-zoom="9"] .vertex .in-bubble-content button { width: calc(30px + 0vw); height: calc(30px + 0vw); font-size: calc(1em + 0vw); }
 [data-zoom="9"] .vertex .in-bubble-content button i { top: 32%; }
 [data-zoom="9"] .vertex .in-bubble-content .menu { width: calc(146px + 0vw); }
@@ -354,7 +356,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="9"] .bubble-label { font-size: calc(1em + 0vw); }
 
 [data-zoom="10"] .vertex.edit .in-bubble-content { width: 20vw; max-width: 20vw; }
-[data-zoom="10"] .vertex .in-bubble-content { padding: 1vw; padding-bottom: 0.9vh; padding-top: 0.9vh; }
+[data-zoom="10"] .vertex .in-bubble-content { padding: 1vw; padding-bottom: 2vh; padding-top: 2vh; }
 [data-zoom="10"] .vertex .in-bubble-content button { width: calc(30px + 0vw); height: calc(30px + 0vw); font-size: calc(1em + 0vw); }
 [data-zoom="10"] .vertex .in-bubble-content button i { top: 30%; }
 [data-zoom="10"] .vertex .in-bubble-content .menu { width: calc(146px + 0vw); }

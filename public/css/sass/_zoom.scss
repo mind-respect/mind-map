@@ -2,7 +2,7 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
-$verticalPaddingRatio: 0.9;
+$verticalPaddingRatio: 2;
 
 //$editWidth: 200; //vm;
 //$editWidth: 1500; //px;
@@ -13,7 +13,7 @@ $horizontalPaddingHighest: 9;
 
 @mixin zoom {
   @for $i from 0 through 10 {
-    $horizontalPadding: max(1, $horizontalPaddingHighest - ($i * 0.9));
+    $horizontalPadding: max(1, $horizontalPaddingHighest - ($i * 1.1));
     [data-zoom="#{$i}"] {
       .vertex {
         &.edit {

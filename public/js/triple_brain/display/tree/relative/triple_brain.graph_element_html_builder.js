@@ -79,7 +79,7 @@ define([
         function addDuplicateButton(element) {
             element.getInBubbleContainer().prepend(
                 buildDuplicateButton()
-            );
+            ).addClass("surround-indicator");
         }
 
         function buildDuplicateButton() {
@@ -102,7 +102,9 @@ define([
             );
             return $("<div class='duplicate-button-container'>").append(
                 button
-            ).tooltip();
+            ).tooltip({
+                    delay:{"show":0, "hide":0}
+                });
         }
     };
 
@@ -113,7 +115,9 @@ define([
             "title",
             graphElement.getNoteButtonInMenu().prop("title")
         ).click(clickHandler);
-        noteButton.parent().tooltip();
+        noteButton.parent().tooltip({
+            delay:{"show":0, "hide":0}
+        });
         noteButton[
             graphElement.hasNote() ?
                 "removeClass" :

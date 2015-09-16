@@ -42,7 +42,6 @@
     width: auto;
     display: table-cell;
     white-space: pre;
-    height: 17px;
     &:empty:not(:focus):before{
       content: attr(data-placeholder);
       color: grey;

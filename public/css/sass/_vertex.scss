@@ -6,7 +6,7 @@
   /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */
   white-space: nowrap;
   &.suggestion {
-    .in-bubble-content{
+    .in-bubble-content {
       background-color: white;
       border: 1px dashed black;
       color: black;
@@ -17,8 +17,8 @@
     .in-bubble-content {
       width: 325px;
       max-width: 325px;
-      .in-bubble-note-button{
-        display:none;
+      .in-bubble-note-button {
+        display: none;
       }
     }
     .bubble-label {
@@ -41,7 +41,7 @@
       padding-bottom: 2em;
     }
   }
-  .in-bubble-content{
+  .in-bubble-content {
     //box-shadow: inset 0px 1px 200px 1rem #E3E300 !important;
     //-webkit-box-shadow: inset 0px 1px 100px -1px #E3E300;
     //-moz-box-shadow: inset 0px 1px 100px -1px #E3E300;
@@ -99,7 +99,7 @@
     z-index: 3;
   }
   .in-bubble-content {
-    border-radius: 100px;
+    border-radius: 50px;
     //background-color: #E6E6FF;
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c3d9ff+0,b1c8ef+41,98b0d9+100;Lavender+3D */
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#daeef6+0,96ddf2+50,ddeff7+100 */
@@ -123,7 +123,6 @@
     //background: linear-gradient(to bottom,  #fff2cb 0%,#ffebaf 100%); /* W3C */
     //filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff2cb', endColorstr='#ffebaf',GradientType=0 ); /* IE6-9 */
 
-
     white-space: normal;
     padding: 1em;
     padding-bottom: 0.7em;
@@ -133,19 +132,41 @@
     > * {
       display: table-cell;
     }
-    .bubble-label{
-      padding:0;
+    .bubble-label {
+      padding: 0;
     }
-    .in-bubble-note-button{
-      display:block;
+    .in-bubble-note-button {
+      display: block;
+    }
+    &.surround-indicator{
+      //box-shadow: -10px 0 10px -10px #d18798, 10px 0 10px -10px #d18798;
+      box-shadow: -10px 0 10px -10px #ff80ef, 10px 0 10px -10px #ff80ef;
     }
     .duplicate-button-container {
       left: -17px;
       top: -18px;
     }
-    border: 1px;
-    border-color: transparent;
-    border-style: solid;
+
+    //box-shadow: -10px 0 10px -10px #333, 10px 0 10px -10px #333;
+    //box-shadow: -10px 0 10px -10px #333, 10px 0 10px -10px #333;
+
+    //box-shadow: -7px 0px 10px 0px #000, 7px 0px 10px 0px #000;
+    //box-shadow: 0 3px 6px rgba(0,0,0,0.3), inset 0 -3px 3px rgba(0,0,0,0.1);
+    //box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.5);
+    //box-shadow: -15px 0 15px -15px inset;
+    //&:after{
+    //  box-shadow: -15px 0 15px -15px inset;
+    //  content: " ";
+    //  height: 100%;
+    //  left: -15px;
+    //  position: absolute;
+    //  top: 0;
+    //  width: 15px;
+    //  border-radius: 100px;
+    //}
+    //&:after{
+    //  box-shadow: -15px 0 15px -15px inset;
+    //}
   }
   .move {
     background-image: url('images/icons/vertex/move.png');

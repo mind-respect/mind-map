@@ -37,7 +37,9 @@ define([
                         "fixed"
                     );
                 }
-            }).tooltip();
+            }).tooltip({
+                delay:{"show":0, "hide":0}
+            });
             function initButtons() {
                 api.visitButtons(function (button) {
                     setIcon(button);

@@ -42,7 +42,9 @@ define([
                 bubble.getHtml()[isLeftOriented ? "prepend" : "append"](
                     hiddenNeighborPropertiesContainer
                 );
-                hiddenNeighborPropertiesContainer.tooltip().on(
+                hiddenNeighborPropertiesContainer.tooltip({
+                    delay:{"show":0, "hide":0}
+                }).on(
                     "click",
                     handleHiddenPropertiesContainerClick
                 );
