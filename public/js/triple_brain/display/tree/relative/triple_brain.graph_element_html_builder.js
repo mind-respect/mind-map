@@ -79,7 +79,7 @@ define([
         function addDuplicateButton(element) {
             element.getInBubbleContainer().prepend(
                 buildDuplicateButton()
-            ).addClass("surround-indicator");
+            ).closest(".bubble").addClass("surround-indicator");
         }
 
         function buildDuplicateButton() {

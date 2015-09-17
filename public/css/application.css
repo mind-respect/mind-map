@@ -72,13 +72,6 @@
 #top-center-menu { position: fixed; left: 38%; top: 0.5em; width: 30em; }
 #top-center-menu .ui-button { z-index: 3; }
 
-#bottom-center-panel { position: fixed; left: 45%; top: 95%; }
-
-#left-panel { margin-left: 5px; position: fixed; left: 0.1em; top: 0.5em; overflow: hidden; width: 225px; }
-#left-panel h2, #left-panel h4 { font-size: 1em; white-space: nowrap; text-decoration: underline; }
-
-#toggle-left-panel-collapse { float: right; position: fixed; left: 235px; top: 10px; z-index: 2; font-size: 1em; }
-
 #top-panel { margin-right: 160px; position: fixed; right: 0.1em; top: 0.5em; }
 #top-panel > input[type=button], #top-panel > button, #top-panel > .link-like-button { float: left; margin-left: 15px; font-size: 1em; margin-top: 4px; }
 #top-panel .dropdown a { text-align: left; }
@@ -92,12 +85,6 @@
 .top-frontier { width: 100%; min-height: 2em; }
 
 .bottom-frontier { width: 100%; min-height: 2em; bottom: 0; }
-
-.legend { display: inline; padding: 0.3em; }
-
-.private.legend { background-color: #E6E6FF; }
-
-.public.legend { background-color: #F9E5E5; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .ui-menu .ui-menu-item { border-bottom: 1px solid #d3d2d2; }
@@ -177,7 +164,7 @@ button.add-button-in-list:hover { color: #00d100; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .relation { position: relative; }
-.relation .label { border-radius: 0.75em; }
+.relation .label { border-radius: 0.80em; }
 .relation .menu { background-color: transparent; z-index: 11; margin-left: 5px; }
 .relation .label-container { display: table-cell; padding-left: 6px; position: relative; }
 .relation.suggestion .in-bubble-content { border: none; }
@@ -237,10 +224,11 @@ button.add-button-in-list:hover { color: #00d100; }
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .vertex { /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */ white-space: nowrap; }
 .vertex.suggestion .in-bubble-content { background-color: white; border: 1px dashed black; color: black; text-shadow: none; }
+.vertex.public:after { font-family: FontAwesome; content: "\f09c"; position: absolute; font-size: 1.6em; }
+.vertex.public .in-bubble-content { box-shadow: -10px 0 10px -10px #ff80ef, 10px 0 10px -10px #ff80ef; }
 .vertex.edit .in-bubble-content { width: 325px; max-width: 325px; }
 .vertex.edit .in-bubble-content .in-bubble-note-button { display: none; }
 .vertex.edit .bubble-label { white-space: pre-wrap; }
-.vertex.public .in-bubble-content { background-color: #F9E5E5; }
 .vertex.absolute { white-space: nowrap; position: absolute !important; min-width: 120px; }
 .vertex.includes-vertices .in-bubble-content { padding-bottom: 2em; }
 .vertex.selected { z-index: 12; }
@@ -266,7 +254,7 @@ button.add-button-in-list:hover { color: #00d100; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 [data-zoom="0"] .vertex.edit .in-bubble-content { width: 70vw; max-width: 70vw; }
-[data-zoom="0"] .vertex .in-bubble-content { padding: 9vw; padding-bottom: 18vh; padding-top: 18vh; }
+[data-zoom="0"] .vertex .in-bubble-content { padding: calc(1em + 4vw); padding-bottom: calc(1em + 6vh); padding-top: calc(1em + 6vh); }
 [data-zoom="0"] .vertex .in-bubble-content button { width: calc(30px + 1.5vw); height: calc(30px + 1.5vw); font-size: calc(1em + 0.5vw); }
 [data-zoom="0"] .vertex .in-bubble-content button i { top: 50%; }
 [data-zoom="0"] .vertex .in-bubble-content .menu { width: calc(146px + 7.5vw); }
@@ -275,7 +263,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="0"] .bubble-label { font-size: calc(1em + 8vw); }
 
 [data-zoom="1"] .vertex.edit .in-bubble-content { width: 65vw; max-width: 65vw; }
-[data-zoom="1"] .vertex .in-bubble-content { padding: 7.9vw; padding-bottom: 15.8vh; padding-top: 15.8vh; }
+[data-zoom="1"] .vertex .in-bubble-content { padding: calc(1em + 2.9vw); padding-bottom: calc(1em + 4.35vh); padding-top: calc(1em + 4.35vh); }
 [data-zoom="1"] .vertex .in-bubble-content button { width: calc(30px + 1.2vw); height: calc(30px + 1.2vw); font-size: calc(1em + 0.4vw); }
 [data-zoom="1"] .vertex .in-bubble-content button i { top: 48%; }
 [data-zoom="1"] .vertex .in-bubble-content .menu { width: calc(146px + 6vw); }
@@ -284,7 +272,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="1"] .bubble-label { font-size: calc(1em + 7vw); }
 
 [data-zoom="2"] .vertex.edit .in-bubble-content { width: 60vw; max-width: 60vw; }
-[data-zoom="2"] .vertex .in-bubble-content { padding: 6.8vw; padding-bottom: 13.6vh; padding-top: 13.6vh; }
+[data-zoom="2"] .vertex .in-bubble-content { padding: calc(1em + 1.8vw); padding-bottom: calc(1em + 2.7vh); padding-top: calc(1em + 2.7vh); }
 [data-zoom="2"] .vertex .in-bubble-content button { width: calc(30px + 0.9vw); height: calc(30px + 0.9vw); font-size: calc(1em + 0.3vw); }
 [data-zoom="2"] .vertex .in-bubble-content button i { top: 46%; }
 [data-zoom="2"] .vertex .in-bubble-content .menu { width: calc(146px + 4.5vw); }
@@ -293,7 +281,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="2"] .bubble-label { font-size: calc(1em + 6vw); }
 
 [data-zoom="3"] .vertex.edit .in-bubble-content { width: 55vw; max-width: 55vw; }
-[data-zoom="3"] .vertex .in-bubble-content { padding: 5.7vw; padding-bottom: 11.4vh; padding-top: 11.4vh; }
+[data-zoom="3"] .vertex .in-bubble-content { padding: calc(1em + 1vw); padding-bottom: calc(1em + 1.5vh); padding-top: calc(1em + 1.5vh); }
 [data-zoom="3"] .vertex .in-bubble-content button { width: calc(30px + 0.6vw); height: calc(30px + 0.6vw); font-size: calc(1em + 0.2vw); }
 [data-zoom="3"] .vertex .in-bubble-content button i { top: 44%; }
 [data-zoom="3"] .vertex .in-bubble-content .menu { width: calc(146px + 3.0vw); }
@@ -302,7 +290,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="3"] .bubble-label { font-size: calc(1em + 5vw); }
 
 [data-zoom="4"] .vertex.edit .in-bubble-content { width: 50vw; max-width: 50vw; }
-[data-zoom="4"] .vertex .in-bubble-content { padding: 4.6vw; padding-bottom: 9.2vh; padding-top: 9.2vh; }
+[data-zoom="4"] .vertex .in-bubble-content { padding: calc(1em + 1vw); padding-bottom: calc(1em + 1.5vh); padding-top: calc(1em + 1.5vh); }
 [data-zoom="4"] .vertex .in-bubble-content button { width: calc(30px + 0.3vw); height: calc(30px + 0.3vw); font-size: calc(1em + 0.1vw); }
 [data-zoom="4"] .vertex .in-bubble-content button i { top: 42%; }
 [data-zoom="4"] .vertex .in-bubble-content .menu { width: calc(146px + 1.5vw); }
@@ -311,7 +299,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="4"] .bubble-label { font-size: calc(1em + 4vw); }
 
 [data-zoom="5"] .vertex.edit .in-bubble-content { width: 45vw; max-width: 45vw; }
-[data-zoom="5"] .vertex .in-bubble-content { padding: 3.5vw; padding-bottom: 7vh; padding-top: 7vh; }
+[data-zoom="5"] .vertex .in-bubble-content { padding: calc(1em + 1vw); padding-bottom: calc(1em + 1.5vh); padding-top: calc(1em + 1.5vh); }
 [data-zoom="5"] .vertex .in-bubble-content button { width: calc(30px + 0vw); height: calc(30px + 0vw); font-size: calc(1em + 0vw); }
 [data-zoom="5"] .vertex .in-bubble-content button i { top: 40%; }
 [data-zoom="5"] .vertex .in-bubble-content .menu { width: calc(146px + 0vw); }
@@ -320,7 +308,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="5"] .bubble-label { font-size: calc(1em + 3vw); }
 
 [data-zoom="6"] .vertex.edit .in-bubble-content { width: 40vw; max-width: 40vw; }
-[data-zoom="6"] .vertex .in-bubble-content { padding: 2.4vw; padding-bottom: 4.8vh; padding-top: 4.8vh; }
+[data-zoom="6"] .vertex .in-bubble-content { padding: calc(1em + 1vw); padding-bottom: calc(1em + 1.5vh); padding-top: calc(1em + 1.5vh); }
 [data-zoom="6"] .vertex .in-bubble-content button { width: calc(30px + 0vw); height: calc(30px + 0vw); font-size: calc(1em + 0vw); }
 [data-zoom="6"] .vertex .in-bubble-content button i { top: 38%; }
 [data-zoom="6"] .vertex .in-bubble-content .menu { width: calc(146px + 0vw); }
@@ -329,7 +317,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="6"] .bubble-label { font-size: calc(1em + 2vw); }
 
 [data-zoom="7"] .vertex.edit .in-bubble-content { width: 35vw; max-width: 35vw; }
-[data-zoom="7"] .vertex .in-bubble-content { padding: 1.3vw; padding-bottom: 2.6vh; padding-top: 2.6vh; }
+[data-zoom="7"] .vertex .in-bubble-content { padding: calc(1em + 1vw); padding-bottom: calc(1em + 1.5vh); padding-top: calc(1em + 1.5vh); }
 [data-zoom="7"] .vertex .in-bubble-content button { width: calc(30px + 0vw); height: calc(30px + 0vw); font-size: calc(1em + 0vw); }
 [data-zoom="7"] .vertex .in-bubble-content button i { top: 36%; }
 [data-zoom="7"] .vertex .in-bubble-content .menu { width: calc(146px + 0vw); }
@@ -338,7 +326,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="7"] .bubble-label { font-size: calc(1em + 1vw); }
 
 [data-zoom="8"] .vertex.edit .in-bubble-content { width: 30vw; max-width: 30vw; }
-[data-zoom="8"] .vertex .in-bubble-content { padding: 1vw; padding-bottom: 2vh; padding-top: 2vh; }
+[data-zoom="8"] .vertex .in-bubble-content { padding: calc(1em + 1vw); padding-bottom: calc(1em + 1.5vh); padding-top: calc(1em + 1.5vh); }
 [data-zoom="8"] .vertex .in-bubble-content button { width: calc(30px + 0vw); height: calc(30px + 0vw); font-size: calc(1em + 0vw); }
 [data-zoom="8"] .vertex .in-bubble-content button i { top: 34%; }
 [data-zoom="8"] .vertex .in-bubble-content .menu { width: calc(146px + 0vw); }
@@ -347,7 +335,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="8"] .bubble-label { font-size: calc(1em + 0vw); }
 
 [data-zoom="9"] .vertex.edit .in-bubble-content { width: 25vw; max-width: 25vw; }
-[data-zoom="9"] .vertex .in-bubble-content { padding: 1vw; padding-bottom: 2vh; padding-top: 2vh; }
+[data-zoom="9"] .vertex .in-bubble-content { padding: calc(1em + 1vw); padding-bottom: calc(1em + 1.5vh); padding-top: calc(1em + 1.5vh); }
 [data-zoom="9"] .vertex .in-bubble-content button { width: calc(30px + 0vw); height: calc(30px + 0vw); font-size: calc(1em + 0vw); }
 [data-zoom="9"] .vertex .in-bubble-content button i { top: 32%; }
 [data-zoom="9"] .vertex .in-bubble-content .menu { width: calc(146px + 0vw); }
@@ -356,7 +344,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="9"] .bubble-label { font-size: calc(1em + 0vw); }
 
 [data-zoom="10"] .vertex.edit .in-bubble-content { width: 20vw; max-width: 20vw; }
-[data-zoom="10"] .vertex .in-bubble-content { padding: 1vw; padding-bottom: 2vh; padding-top: 2vh; }
+[data-zoom="10"] .vertex .in-bubble-content { padding: calc(1em + 1vw); padding-bottom: calc(1em + 1.5vh); padding-top: calc(1em + 1.5vh); }
 [data-zoom="10"] .vertex .in-bubble-content button { width: calc(30px + 0vw); height: calc(30px + 0vw); font-size: calc(1em + 0vw); }
 [data-zoom="10"] .vertex .in-bubble-content button i { top: 30%; }
 [data-zoom="10"] .vertex .in-bubble-content .menu { width: calc(146px + 0vw); }

@@ -2,14 +2,14 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
-$verticalPaddingRatio: 2;
+$verticalPaddingRatio: 1.5;
 
 //$editWidth: 200; //vm;
 //$editWidth: 1500; //px;
 //$editWidth: 60; //rem;
 $editWidth: 70;
 //vw;
-$horizontalPaddingHighest: 9;
+$horizontalPaddingHighest: 4;
 
 @mixin zoom {
   @for $i from 0 through 10 {
@@ -24,9 +24,9 @@ $horizontalPaddingHighest: 9;
         }
         .in-bubble-content {
           $verticalPadding: $horizontalPadding * $verticalPaddingRatio;
-          padding: $horizontalPadding + vw;
-          padding-bottom: $verticalPadding + vh;
-          padding-top: $verticalPadding + vh;
+          padding: calc(1em + #{$horizontalPadding}vw);
+          padding-bottom: calc(1em + #{$verticalPadding}vh);
+          padding-top: calc(1em + #{$verticalPadding}vh);
           $buttonExtraSize: max(0, 1.5 - $i * 0.3);
           $buttonSize: calc(30px + #{$buttonExtraSize}vw);
           $fontSizeExtra: max(0, 0.5 - $i * 0.1);

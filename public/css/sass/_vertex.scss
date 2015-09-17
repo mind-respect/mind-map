@@ -1,7 +1,7 @@
 /*
  * Copyright Vincent Blouin under the GPL License version 3
  */
-
+$boxShadowWhenSurroundIndicator: -10px 0 10px -10px #ff80ef, 10px 0 10px -10px #ff80ef;
 .vertex {
   /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */
   white-space: nowrap;
@@ -11,6 +11,38 @@
       border: 1px dashed black;
       color: black;
       text-shadow: none;
+    }
+  }
+  &.public {
+      &:after {
+        font-family: FontAwesome;
+        content: "\f09c";
+        //font-weight: bold;
+        //font-style: italic;
+        position: absolute;
+        font-size: 1.6em;
+        //top: -24px;
+        //right: -18px;
+        //right:-10%;
+
+      }
+    //.bubble-label {
+    //  &:after {
+    //    font-family: FontAwesome;
+    //    content: "\publique";
+    //    //content: "\f06e";
+    //    font-weight: bold;
+    //    font-style: italic;
+    //    position: absolute;
+    //    font-size: 0.4em;
+    //    //top: -24px;
+    //    //right: -18px;
+    //    right:-10%;
+    //    top: 0;
+    //  }
+    //}
+    .in-bubble-content {
+      box-shadow: $boxShadowWhenSurroundIndicator;
     }
   }
   &.edit {
@@ -23,11 +55,6 @@
     }
     .bubble-label {
       white-space: pre-wrap;
-    }
-  }
-  &.public {
-    .in-bubble-content {
-      background-color: #F9E5E5;
     }
   }
   &.absolute {
@@ -138,9 +165,9 @@
     .in-bubble-note-button {
       display: block;
     }
-    &.surround-indicator{
+    &.surround-indicator {
       //box-shadow: -10px 0 10px -10px #d18798, 10px 0 10px -10px #d18798;
-      box-shadow: -10px 0 10px -10px #ff80ef, 10px 0 10px -10px #ff80ef;
+      box-shadow: $boxShadowWhenSurroundIndicator;
     }
     .duplicate-button-container {
       left: -17px;

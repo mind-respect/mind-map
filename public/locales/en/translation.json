@@ -83,11 +83,6 @@
   "left_menu": {
     "search": "Find your bubbles in this box"
   },
-  "caption": {
-    "title": "Caption",
-    "private": "private",
-    "public": "public"
-  },
   "edge": {
     "default": "relate"
   },

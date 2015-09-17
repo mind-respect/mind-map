@@ -81,11 +81,6 @@
   "left_menu": {
     "search": "Trouvez vos bulles dans cette boîte"
   },
-  "caption": {
-    "title": "Légende",
-    "private": "privé",
-    "public": "public"
-  },
   "edge": {
     "default": "relie"
   },

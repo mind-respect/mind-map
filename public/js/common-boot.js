@@ -9,7 +9,6 @@ requirejs.config({
         "locales": '../locales',
         "test": '../../spec',
         "module": '../module',
-        "crow" : "vendor/crow.micro",
         "md5" : "vendor/md5.min",
         "polyk" : "vendor/polyk",
         "jquery": "jquery/jquery-2.1.1",
@@ -33,7 +32,6 @@ requirejs.config({
         "triple_brain.scroll_on_mouse_frontier": "triple_brain/triple_brain.scroll_on_mouse_frontier",
         "triple_brain.top_center_menu": "triple_brain/triple_brain.top_center_menu",
         "triple_brain.top_right_menu": "triple_brain/triple_brain.top_right_menu",
-        "triple_brain.bottom_center_panel": "triple_brain/triple_brain.bottom_center_panel",
         "triple_brain.language_manager": "triple_brain/triple_brain.language_manager",
         "triple_brain.external_page_loader": "triple_brain/triple_brain.external_page_loader",
         "triple_brain.graph_element_button": "triple_brain/triple_brain.graph_element_button",
@@ -45,7 +43,6 @@ requirejs.config({
         "triple_brain.change_password": "triple_brain/triple_brain.change_password",
         "triple_brain.event_bus": "triple_brain/triple_brain.event_bus",
         "jquery.triple_brain.drag_scroll": "triple_brain/jquery.triple_brain.drag_scroll",
-        "triple_brain.bubble_distance_calculator": "triple_brain/graph/triple_brain.bubble_distance_calculator",
         "triple_brain.group_relation": "triple_brain/graph/triple_brain.group_relation",
         "triple_brain.group_relation_ui": "triple_brain/graph/triple_brain.group_relation_ui",
         "triple_brain.group_relation_html_builder":"triple_brain/display/tree/relative/group_relation/triple_brain.group_relation_html_builder",
@@ -141,7 +138,6 @@ requirejs.config({
         "triple_brain.module.date_picker": "module/date_picker/triple_brain.module.date_picker"
     },
     shim: {
-        "crow": [],
         "polyk": [],
         "jquery-ui": ["jquery"],
         "jquery.url": ["jquery"],

@@ -12,37 +12,6 @@
   }
 }
 
-#bottom-center-panel {
-  position: fixed;
-  left: 45%;
-  top: 95%;
-}
-
-#left-panel {
-  margin-left: 5px;
-  position: fixed;
-  left: 0.1em;
-  top: 0.5em;
-  overflow: hidden;
-  width: 225px;
-
-  h2, h4 {
-    font-size: 1em;
-    white-space: nowrap;
-    text-decoration: underline;
-  }
-
-}
-
-#toggle-left-panel-collapse {
-  float: right;
-  position: fixed;
-  left: 235px;
-  top: 10px;
-  z-index: 2;
-  font-size: 1em;
-}
-
 #top-panel {
   margin-right: 160px;
   position: fixed;
@@ -87,17 +56,4 @@
   width: 100%;
   min-height: 2em;
   bottom: 0;
-}
-
-.legend {
-  display: inline;
-  padding: 0.3em;
-}
-
-.private.legend {
-  background-color: #E6E6FF;
-}
-
-.public.legend {
-  background-color: #F9E5E5;
 }

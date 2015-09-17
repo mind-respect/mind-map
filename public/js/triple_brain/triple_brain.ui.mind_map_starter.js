@@ -6,7 +6,6 @@ define(
     [
         "jquery",
         "triple_brain.user_service",
-        "triple_brain.bubble_distance_calculator",
         "triple_brain.event_bus",
         "triple_brain.ui.search",
         "triple_brain.graph_displayer",
@@ -25,10 +24,9 @@ define(
         "triple_brain.login_handler",
         "triple_brain.wikidata",
         "jquery.triple_brain.drag_scroll",
-        "triple_brain.bottom_center_panel",
         "triple_brain.modules"
     ],
-    function ($, UserService, BubbleDistanceCalculator, EventBus, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, SelectionHandler, GraphElementMainMenu, MindMapInfo, TopRightMenu, ExternalPageLoader, IdUriUtils, AnonymousFlow, ChangePassword, LoginHandler) {
+    function ($, UserService, EventBus, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, SelectionHandler, GraphElementMainMenu, MindMapInfo, TopRightMenu, ExternalPageLoader, IdUriUtils, AnonymousFlow, ChangePassword, LoginHandler) {
         "use strict";
         var api = {
             start: function () {
@@ -79,7 +77,6 @@ define(
                 }
 
                 function setupMindMap(isAnonymous) {
-                    BubbleDistanceCalculator.activate();
                     startLoginFlowWhenForbiddenActionIsPerformed();
                     $("#app-presentation").addClass("hidden");
                     TopRightMenu.earlyInit();
