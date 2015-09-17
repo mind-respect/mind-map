@@ -115,12 +115,12 @@ body {
 }
 
 a, input[type=button].link-like-button, button.link-like-button {
-  color: darkblue;
+  color: $linksColor;
   font-weight:bold;
 }
 
 a:hover, input[type=button].link-like-button:hover, button.link-like-button:hover {
-  color: #7a7a7a;
+  color: #646464;
 }
 
 input[type="button"], .link-like-button {
