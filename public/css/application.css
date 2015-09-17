@@ -39,12 +39,14 @@
 
 /*BORDER*/
 .vertices-children-container .vertex-tree-container:first-child > .vertical-border-first { border-left: none; border-right: none; }
-
-.vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-second { border-left: none; border-right: none; }
-
-.vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-third { border-left: none; border-right: none; }
-
+.vertices-children-container .vertex-tree-container:first-child > .vertical-border-second { border-top-right-radius: 12px; border-top-left-radius: 12px; }
+.vertices-children-container .vertex-tree-container:first-child > .vertex-container .connector { border-radius: 50px; }
+.vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .connector { border-radius: 0; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container > .vertex:before { border-left: none; border-right: none; }
+.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .connector { border-radius: 50px; border-bottom: 2px solid #ff80ef; border-top: none; top: -0.5em; }
+.vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-first { border-bottom-right-radius: 12px; border-bottom-left-radius: 12px; }
+.vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-second { border-left: none; border-right: none; }
+.vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-third { border-left: none; border-right: none; }
 
 .vertical-border { display: table; height: 50%; border-left: 2px solid #ff80ef; padding-right: 40px; }
 
@@ -212,7 +214,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .bubble .image_container { z-index: 3; position: relative; min-width: 60px; text-align: right; }
 .bubble .image_container:empty { min-width: 0; }
 .bubble .edge-label { display: inline; }
-.bubble .connector { position: absolute; height: 1px; border-top: 2px solid #ff80ef; top: 50%; width: 65px; left: -22px; z-index: -1; }
+.bubble .connector { position: absolute; height: 21px; border-top: 2px solid #ff80ef; top: 50%; width: 65px; left: -22px; z-index: -1; }
 .bubble .arrow { position: absolute; height: 1px; width: 47px; top: 50%; left: -42px; border-top: 2px solid #ff80ef; z-index: -1; }
 .bubble .arrow ~ { background-color: yellow; }
 .bubble .arrow ~ .in-bubble-note-button:not(hidden) { width: 100%; }

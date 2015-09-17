@@ -27,7 +27,7 @@
   //background:radial-gradient(circle farthest-corner at 45px 45px , #00FFFF 0%, rgba(0, 0, 255, 0) 50%, #0000FF 95%);
 
   //background:radial-gradient(rgba(0, 0, 255, 0) 5%, #0000FF 100%);
-  background:radial-gradient(rgba(0, 0, 255, 0) 5%, #0b46ff 100%);
+  background: radial-gradient(rgba(0, 0, 255, 0) 5%, #0b46ff 100%);
 
 }
 
@@ -68,24 +68,55 @@
 }
 
 /*BORDER*/
-.vertices-children-container .vertex-tree-container:first-child > .vertical-border-first {
-  border-left: none;
-  border-right: none;
-}
-
-.vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-second {
-  border-left: none;
-  border-right: none;
-}
-
-.vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-third {
-  border-left: none;
-  border-right: none;
-}
-
-.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container > .vertex:before {
-  border-left: none;
-  border-right: none;
+.vertices-children-container .vertex-tree-container {
+  &:first-child{
+    > .vertical-border-first {
+      border-left: none;
+      border-right: none;
+    }
+    > .vertical-border-second {
+      border-top-right-radius: 12px;
+      border-top-left-radius: 12px;
+    }
+    > .vertex-container {
+      .connector {
+        border-radius: 50px;
+      }
+    }
+    &:last-of-type{
+      > .vertex-container {
+        .connector {
+          border-radius: 0;
+        }
+      }
+    }
+  }
+  &:last-of-type{
+    > .vertex-container {
+      > .vertex:before {
+        border-left: none;
+        border-right: none;
+      }
+      .connector {
+        border-radius: 50px;
+        border-bottom:$edgeStyle;
+        border-top:none;
+        top:-0.5em;
+      }
+    }
+    > .vertical-border-first {
+      border-bottom-right-radius: 12px;
+      border-bottom-left-radius: 12px;
+    }
+    > .vertical-border-second {
+      border-left: none;
+      border-right: none;
+    }
+    > .vertical-border-third {
+      border-left: none;
+      border-right: none;
+    }
+  }
 }
 
 .vertical-border {
