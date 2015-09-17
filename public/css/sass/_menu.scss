@@ -22,6 +22,9 @@
       height: 80%;
     }
   }
+  button:not(.main-menu){
+    display:none;
+  }
 }
 
 button.graph-element-button {

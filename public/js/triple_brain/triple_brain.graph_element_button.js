@@ -22,14 +22,14 @@ define([
         );
         this.html[
             canActionBePerformed ?
-                "show" : "hide"
-            ]();
+                "removeClass" : "addClass"
+            ]("hidden");
         var onlyOneSelected = !Array.isArray(selected);
         if (onlyOneSelected) {
             selected.getSimilarButtonHtml(this)[
                 canActionBePerformed ?
-                    "show" : "hide"
-                ]();
+                    "removeClass" : "addClass"
+                ]("hidden");
         }
         else {
             this._hideMenuOfElements(selected);
@@ -73,7 +73,7 @@ define([
             copyBehavior
         ).appendTo(
             container
-        ).show();
+        );
     };
     Self.prototype._hideMenuOfElements = function (elements) {
         $.each(elements, function () {

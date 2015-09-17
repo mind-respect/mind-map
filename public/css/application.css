@@ -113,6 +113,7 @@
 #graph-element-menu { position: fixed; right: 10px; top: 100px; border: 1px solid #00005a; border-radius: 9px; max-width: 107px; padding: 1em; padding-top: 2em; cursor: all-scroll; margin-right: 0; margin-left: 0; }
 #graph-element-menu [data-action=select] { position: relative; }
 #graph-element-menu [data-action=select] i { position: absolute; top: 0; left: 0; margin: 0.20em; border: 1px dotted black; width: 80%; height: 80%; }
+#graph-element-menu button:not(.main-menu) { display: none; }
 
 button.graph-element-button { width: 30px; height: 30px; margin-bottom: 5px; margin-right: 3px; line-height: 20px; color: #333; text-align: center; text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); background-image: linear-gradient(to bottom, #ffffff, #e6e6e6); background-repeat: repeat-x; border-bottom-color: #b3b3b3; border: 1px solid #ccc; border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25); -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); }
 button.graph-element-button:hover { background-image: linear-gradient(to bottom, #ffffff, #cdcdcd); }
@@ -373,7 +374,7 @@ html { font-size: 93.8%; }
 
 .root-vertex-super-container { position: absolute; padding: 50%; }
 
-a, input[type=button].link-like-button, button.link-like-button { color: #00005a; font-weight: bold; }
+a, input[type=button].link-like-button, button.link-like-button { color: #00005a; }
 
 a:hover, input[type=button].link-like-button:hover, button.link-like-button:hover { color: #646464; }
 
