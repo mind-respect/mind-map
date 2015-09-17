@@ -371,9 +371,9 @@ html { font-size: 93.8%; }
 
 .root-vertex-super-container { position: absolute; padding: 50%; }
 
-a, input[type=button].link-like-button, button.link-like-button { color: #1919ac; }
+a, input[type=button].link-like-button, button.link-like-button { color: darkblue; font-weight: bold; }
 
-a:hover, input[type=button].link-like-button:hover, button.link-like-button:hover { color: #47A3FF; }
+a:hover, input[type=button].link-like-button:hover, button.link-like-button:hover { color: #7a7a7a; }
 
 input[type="button"], .link-like-button { border-style: none; font: inherit; padding: 0 0 0 0; background: none; }
 
