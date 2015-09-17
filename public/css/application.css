@@ -171,7 +171,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .relation .menu { background-color: transparent; z-index: 11; margin-left: 5px; }
 .relation .label-container { display: table-cell; padding-left: 6px; position: relative; }
 .relation.suggestion .in-bubble-content { border: none; }
-.relation.suggestion .in-bubble-content .bubble-label { border: 1px dashed black; background-color: white; color: black; text-shadow: none; }
+.relation.suggestion .in-bubble-content .bubble-label { border: 2px dashed black; background-color: white; color: black; text-shadow: none; }
 .relation .in-bubble-content .bubble-label { background-color: #3a87ad; font-family: helvetica; font-size: 1.2em; height: auto; }
 .relation .in-bubble-content .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); font-style: italic; color: white; }
 .relation .in-bubble-content .in-bubble-note-button { font-size: calc(1em + 0.6vw); position: absolute; left: -20px; top: 0; }
@@ -226,7 +226,7 @@ button.add-button-in-list:hover { color: #00d100; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .vertex { /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */ white-space: nowrap; }
-.vertex.suggestion .in-bubble-content { background-color: white; border: 1px dashed black; color: black; text-shadow: none; }
+.vertex.suggestion .in-bubble-content { border: 2px dashed black; color: black; text-shadow: none; }
 .vertex.public:after { font-family: FontAwesome; content: "\f09c"; position: absolute; font-size: 1.6em; }
 .vertex.public .in-bubble-content { box-shadow: -10px 0 10px -10px #ff80ef, 10px 0 10px -10px #ff80ef; }
 .vertex.edit .in-bubble-content { width: 325px; max-width: 325px; }

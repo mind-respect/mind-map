@@ -20,7 +20,7 @@
     .in-bubble-content {
       border: none;
       .bubble-label {
-        border: 1px dashed black;
+        border: $edgeSize dashed black;
         background-color: white;
         color: black;
         text-shadow: none;

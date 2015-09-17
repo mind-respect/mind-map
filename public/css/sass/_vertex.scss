@@ -7,8 +7,7 @@ $boxShadowWhenSurroundIndicator: -10px 0 10px -10px #ff80ef, 10px 0 10px -10px #
   white-space: nowrap;
   &.suggestion {
     .in-bubble-content {
-      background-color: white;
-      border: 1px dashed black;
+      border: $edgeSize dashed black;
       color: black;
       text-shadow: none;
     }
