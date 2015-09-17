@@ -12,6 +12,12 @@ $boxShadowWhenSurroundIndicator: -10px 0 10px -10px #ff80ef, 10px 0 10px -10px #
       text-shadow: none;
     }
   }
+  &.surround-indicator {
+    .in-bubble-content {
+      //box-shadow: -10px 0 10px -10px #d18798, 10px 0 10px -10px #d18798;
+      box-shadow: $boxShadowWhenSurroundIndicator;
+    }
+  }
   &.public {
       &:after {
         font-family: FontAwesome;
@@ -163,10 +169,6 @@ $boxShadowWhenSurroundIndicator: -10px 0 10px -10px #ff80ef, 10px 0 10px -10px #
     }
     .in-bubble-note-button {
       display: block;
-    }
-    &.surround-indicator {
-      //box-shadow: -10px 0 10px -10px #d18798, 10px 0 10px -10px #d18798;
-      box-shadow: $boxShadowWhenSurroundIndicator;
     }
     .duplicate-button-container {
       left: -17px;

@@ -229,6 +229,7 @@ button.add-button-in-list:hover { color: #00d100; }
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .vertex { /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */ white-space: nowrap; }
 .vertex.suggestion .in-bubble-content { border: 2px dashed black; color: black; text-shadow: none; }
+.vertex.surround-indicator .in-bubble-content { box-shadow: -10px 0 10px -10px #ff80ef, 10px 0 10px -10px #ff80ef; }
 .vertex.public:after { font-family: FontAwesome; content: "\f09c"; position: absolute; font-size: 1.6em; }
 .vertex.public .in-bubble-content { box-shadow: -10px 0 10px -10px #ff80ef, 10px 0 10px -10px #ff80ef; }
 .vertex.edit .in-bubble-content { width: 325px; max-width: 325px; }
@@ -250,7 +251,6 @@ button.add-button-in-list:hover { color: #00d100; }
 .vertex .in-bubble-content > * { display: table-cell; }
 .vertex .in-bubble-content .bubble-label { padding: 0; }
 .vertex .in-bubble-content .in-bubble-note-button { display: block; }
-.vertex .in-bubble-content.surround-indicator { box-shadow: -10px 0 10px -10px #ff80ef, 10px 0 10px -10px #ff80ef; }
 .vertex .in-bubble-content .duplicate-button-container { left: -17px; top: -18px; }
 .vertex .move { background-image: url("images/icons/vertex/move.png"); min-width: 25px; min-height: 25px; margin-right: 5px; margin-left: 8px; float: left; }
 .vertex .ui-button { width: 1.7em; height: 1.8em; margin-right: 0; font-size: 1.1em; padding: 0; }
