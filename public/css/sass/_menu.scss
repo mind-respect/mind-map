@@ -2,7 +2,7 @@
   position: fixed;
   right: 10px;
   top: 100px;
-  border: 1px solid #0088CC;
+  border: 1px solid darkblue;
   border-radius: 9px;
   max-width: 107px;
   padding: 1em;
@@ -10,6 +10,18 @@
   cursor: all-scroll;
   margin-right: 0;
   margin-left: 0;
+  [data-action=select] {
+    position: relative;
+    i{
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin: 0.20em;
+      border: 1px dotted black;
+      width: 80%;
+      height: 80%;
+    }
+  }
 }
 
 button.graph-element-button {
