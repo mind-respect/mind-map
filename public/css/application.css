@@ -182,7 +182,7 @@ button.add-button-in-list:hover { color: #00d100; }
 
 .relation { padding: 0; margin-top: 0; margin-right: 0; margin-left: 0; vertical-align: middle; }
 
-.relation.selected .label { box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb; }
+.relation.selected .label { box-shadow: 4px 4px 4px black; }
 
 .relation input { border-radius: 3px 3px 3px 3px; border-width: 0.2em; border-color: #3A87AD; padding: 0; outline: none; font-family: courier new, monospace; font-size: 14px; vertical-align: middle; background-color: transparent; overflow: hidden; position: absolute; width: 100%; top: 0; left: 0; right: 0; z-index: 5; }
 
@@ -194,7 +194,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .property .relation-menu { left: 0; }
 
 .group-relation { white-space: nowrap; }
-.group-relation.selected .in-bubble-content .bubble-label { box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb; }
+.group-relation.selected .in-bubble-content .bubble-label { box-shadow: 5px 5px 5px black; }
 .group-relation .in-bubble-content .bubble-label { margin-right: 0.3em; z-index: 1; }
 
 .edge-label { position: absolute; width: 100%; left: 0; right: 0; }
@@ -229,22 +229,20 @@ button.add-button-in-list:hover { color: #00d100; }
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .vertex { /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */ white-space: nowrap; }
 .vertex.suggestion .in-bubble-content { border: 2px dashed black; color: black; text-shadow: none; }
-.vertex.surround-indicator .in-bubble-content { box-shadow: -10px 0 10px -10px #ff80ef, 10px 0 10px -10px #ff80ef; }
+.vertex.surround-indicator .in-bubble-content { box-shadow: -1px -2px 1px #ff80ef; }
 .vertex.public:after { font-family: FontAwesome; content: "\f09c"; position: absolute; font-size: 1.6em; }
-.vertex.public .in-bubble-content { box-shadow: -10px 0 10px -10px #ff80ef, 10px 0 10px -10px #ff80ef; }
+.vertex.public .in-bubble-content { box-shadow: -1px -2px 1px #ff80ef; }
 .vertex.edit .in-bubble-content { width: 325px; max-width: 325px; }
 .vertex.edit .in-bubble-content .in-bubble-note-button { display: none; }
 .vertex.edit .bubble-label { white-space: pre-wrap; }
 .vertex.absolute { white-space: nowrap; position: absolute !important; min-width: 120px; }
 .vertex.includes-vertices .in-bubble-content { padding-bottom: 2em; }
 .vertex.selected { z-index: 12; }
-.vertex.selected .in-bubble-content { box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb; }
+.vertex.selected .in-bubble-content { box-shadow: 5px 5px 5px black; }
 .vertex.center-vertex .connector { height: 0; width: 0; }
 .vertex.center-vertex .arrow { height: 0; width: 0; top: 0; left: 0; border-top: none; }
 .vertex.center-vertex .arrow:before { content: ""; }
 .vertex.center-vertex:before { border-left: none; height: 0; width: 0; top: 0; left: 0; }
-.vertex.center-vertex .in-bubble-content { -webkit-box-shadow: 0 0 1em rgba(255, 128, 0, 0.1); -moz-box-shadow: 0 0 1em rgba(255, 128, 0, 0.1); box-shadow: 0 0 1em rgba(255, 128, 0, 0.5); }
-.vertex.center-vertex.selected .in-bubble-content { box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb; border: solid red; }
 .vertex .included-graph-elements-flag { position: absolute; top: 25px; left: 30%; font-weight: bold; }
 .vertex .included-graph-elements-flag { z-index: 3; }
 .vertex .in-bubble-content { border-radius: 50px; /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c3d9ff+0,b1c8ef+41,98b0d9+100;Lavender+3D */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#daeef6+0,96ddf2+50,ddeff7+100 */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffedb7+0,ffe28d+100 */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fff2cb+0,ffebaf+100 */ white-space: normal; padding: 1em; padding-bottom: 0.7em; padding-top: 0.7em; margin-left: 0.3em; display: table; }

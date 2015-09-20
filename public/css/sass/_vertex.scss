@@ -2,6 +2,7 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 $boxShadowWhenSurroundIndicator: -10px 0 10px -10px #ff80ef, 10px 0 10px -10px #ff80ef;
+$boxShadowWhenSurroundIndicator: -1px -2px 1px #ff80ef;
 .vertex {
   /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */
   white-space: nowrap;
@@ -84,7 +85,7 @@ $boxShadowWhenSurroundIndicator: -10px 0 10px -10px #ff80ef, 10px 0 10px -10px #
   &.selected {
     z-index: 12;
     .in-bubble-content {
-      box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb;
+      box-shadow: 5px 5px 5px black;
     }
   }
   &.center-vertex {
@@ -110,14 +111,12 @@ $boxShadowWhenSurroundIndicator: -10px 0 10px -10px #ff80ef, 10px 0 10px -10px #
       left: 0;
     }
     .in-bubble-content {
-      -webkit-box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.1);
-      -moz-box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.1);
-      box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.5);
+      //box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.5);
     }
     &.selected {
       .in-bubble-content {
-        box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb;
-        border: solid red;
+        //box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb;
+        //border: solid red;
       }
     }
   }
@@ -132,6 +131,7 @@ $boxShadowWhenSurroundIndicator: -10px 0 10px -10px #ff80ef, 10px 0 10px -10px #
   }
   .in-bubble-content {
     border-radius: 50px;
+    //box-shadow: 1px 5px 5px rgba(204,204,204,.8);
     //background-color: #E6E6FF;
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c3d9ff+0,b1c8ef+41,98b0d9+100;Lavender+3D */
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#daeef6+0,96ddf2+50,ddeff7+100 */

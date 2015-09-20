@@ -3,8 +3,8 @@
  */
 .relation {
   position: relative;
-  .label{
-    border-radius:0.80em;
+  .label {
+    border-radius: 0.80em;
   }
   .menu {
     background-color: transparent;
@@ -43,7 +43,7 @@
     .in-bubble-note-button {
       font-size: calc(1em + 0.6vw);
       position: absolute;
-      left:-20px;
+      left: -20px;
       top: 0;
     }
   }
@@ -67,7 +67,8 @@
 }
 
 .relation.selected .label {
-  box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb;
+  //box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb;
+  box-shadow: 4px 4px 4px black;
 }
 
 .relation input {
@@ -110,8 +111,11 @@
 .group-relation {
   white-space: nowrap;
   &.selected {
-    .in-bubble-content .bubble-label {
-      box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb;
+    .in-bubble-content {
+      .bubble-label {
+        box-shadow: 5px 5px 5px black;
+        //box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb;
+      }
     }
   }
   .in-bubble-content {
