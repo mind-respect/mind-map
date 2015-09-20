@@ -121,7 +121,7 @@ define([
         }
 
         function getButtonsHtml() {
-            return getMenu().find("> button:not(.main-menu)");
+            return getMenu().find("> button");
         }
 
         function getMenu() {

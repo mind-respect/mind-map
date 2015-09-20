@@ -17,6 +17,9 @@ define([
     }
 
     Self.prototype.showOnlyIfApplicable = function (clickHandler, selected) {
+        if(this.isForMainMenu()){
+            return;
+        }
         var canActionBePerformed = this.canActionBePerformedOnSelected(
             selected, clickHandler
         );
@@ -56,6 +59,9 @@ define([
     };
     Self.prototype.getHtml = function () {
         return this.html;
+    };
+    Self.prototype.isForMainMenu = function () {
+        return this.html.hasClass("main-menu");
     };
     Self.prototype.getAction = function () {
         return this.html.attr(
