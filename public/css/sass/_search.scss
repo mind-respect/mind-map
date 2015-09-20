@@ -56,20 +56,26 @@
 }
 .autocomplete-flyout {
   position: absolute;
-  width: 300px;
+  width: auto;
+  min-width: 300px;
   background-color: white;
+  padding:20px;
   /*one more than jquery ui dialog*/
   z-index: 101;
+  text-align:center;
+  border-radius:20px;
   img {
     float: left;
     margin-right: 0.7em;
   }
   .title {
     font-weight: bold;
+    margin:10px;
   }
   .source {
     font-weight: lighter;
     font-size: 85%;
+    margin:10px;
   }
 }
 
