@@ -72,6 +72,14 @@ define([
             return this.html.find('.center');
         };
 
+        api.Object.prototype.getMakePrivateButton = function () {
+            return this.getMenuHtml().find("button[data-action=makePrivate]");
+        };
+
+        api.Object.prototype.getMakePublicButton = function () {
+            return this.getMenuHtml().find("button[data-action=makePublic]");
+        };
+
         api.Object.prototype.getSegments = function () {
             return VertexSegments.withHtmlVertex(
                 this.getInBubbleContainer()
@@ -150,16 +158,16 @@ define([
             this.showMenu();
         };
         api.Object.prototype.hideMenu = function () {
-            this.getMenuHtml().hide();
+            this.getMenuHtml().addClass("hidden");
         };
         api.Object.prototype.showMenu = function () {
-            this.getMenuHtml().show();
+            this.getMenuHtml().removeClass("hidden");
         };
         api.Object.prototype.showCenterButton = function () {
-            this.centerButton().hide();
+            this.centerButton().addClass("hidden");
         };
         api.Object.prototype.hideCenterButton = function () {
-            this.centerButton().hide();
+            this.centerButton().removeClass("hidden");
         };
         api.Object.prototype.connectedEdges = function () {
             return EdgeUi.connectedToVertex(

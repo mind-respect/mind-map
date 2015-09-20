@@ -116,8 +116,8 @@ define([
     };
     forSingle.makePrivate = function (event, vertex) {
         VertexService.makePrivate(vertex, function () {
-            getMakePrivateButtons().hide();
-            getMakePublicButtons().show();
+            vertex.getMakePrivateButton().addClass("hidden");
+            vertex.getMakePublicButton().removeClass("hidden");
         });
     };
     forSingle.makePrivateCanDo = function (vertex) {
@@ -125,8 +125,8 @@ define([
     };
     forSingle.makePublic = function (event, vertex) {
         VertexService.makePublic(vertex, function () {
-            getMakePrivateButtons().show();
-            getMakePublicButtons().hide();
+            vertex.getMakePrivateButton().removeClass("hidden");
+            vertex.getMakePublicButton().addClass("hidden");
         });
     };
     forSingle.makePublicCanDo = function (vertex) {
@@ -152,13 +152,6 @@ define([
     forSingle.suggestionsCanDo = function (vertex) {
         return vertex.hasSuggestions();
     };
-    function getMakePrivateButtons() {
-        return $("button[data-action=makePrivate]");
-    }
-
-    function getMakePublicButtons() {
-        return $("button[data-action=makePublic]");
-    }
 
     api.forGroup = function () {
         return MindMapInfo.isViewOnly() ?
