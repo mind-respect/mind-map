@@ -14,10 +14,9 @@ define([
         "use strict";
         EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function(){
             if(MindMapInfo.isAnonymous()){
-                $("#search-component").hide();
-            }else{
-                init();
+                return;
             }
+            init();
         });
         function init(){
             getInput().empty().tripleBrainAutocomplete({

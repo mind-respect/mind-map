@@ -4,6 +4,7 @@
 
 define([
         "jquery",
+        "triple_brain.big_search_box",
         "triple_brain.login_handler",
         "triple_brain.selection_handler",
         "triple_brain.user_service",
@@ -14,7 +15,7 @@ define([
         "triple_brain.event_bus",
         "triple_brain.schema_service"
     ],
-    function ($, LoginHandler, SelectionHandler, UserService, GraphDisplayer, Vertex, VertexService, MindMapInfo, EventBus, SchemaService) {
+    function ($, BigSearchBox, LoginHandler, SelectionHandler, UserService, GraphDisplayer, Vertex, VertexService, MindMapInfo, EventBus, SchemaService) {
         "use strict";
         var api = {};
         api.earlyInit = function () {
@@ -23,6 +24,7 @@ define([
         EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function (event, isViewOnly) {
             if (isViewOnly) {
                 getCreateMenu().addClass("hidden");
+                BigSearchBox.setup();
             }
             if (MindMapInfo.isAnonymous()) {
                 getLandingPageSearchInput().removeClass("hidden");

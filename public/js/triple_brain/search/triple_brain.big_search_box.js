@@ -10,9 +10,7 @@ define([
     "use strict";
     var api = {};
     api.setup = function(){
-        getBoxContainer().find(
-            "input"
-        ).tripleBrainAutocomplete({
+        getInput().tripleBrainAutocomplete({
             select : function(event, ui){
                 var uri = ui.item.uri;
                 window.location = "?bubble=" + uri;
@@ -24,7 +22,7 @@ define([
 
     };
     return api;
-    function getBoxContainer(){
-        return $("#big-search-box-container");
+    function getInput(){
+        return $("#landing-page-search");
     }
 });
