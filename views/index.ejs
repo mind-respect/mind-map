@@ -46,10 +46,10 @@
                         <div class="input-group-addon">
                             <i class="fa fa-search search-icon"></i>
                         </div>
-                        <!--<input type='text' size=35 class='form-control input-lg'-->
-                        <!--data-i18n="[placeholder]search.big.placeholder">-->
+                        <input type='text' id="landing-page-search" size=35 class='form-control input-lg hidden'
+                        data-i18n="[placeholder]search.big.placeholder"/>
                         <input id="vertex-search-input" size=35 data-i18n="[placeholder]left_menu.search"
-                               class='form-control input-lg'/>
+                               class='form-control input-lg hidden'>
                     </div>
                 </div>
             </form>
@@ -73,7 +73,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="dropdown">
+                <li class="dropdown" id="create-menu">
                     <a data-toggle="dropdown" data-i18n='top_menu.create.title'></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                         <li>
@@ -86,7 +86,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="dropdown">
+                <li class="dropdown" id="user-menu">
                     <a data-toggle="dropdown" class="fa fa-user">
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
@@ -262,66 +262,6 @@
 <div id="mind_map">
     <div>
         <div id="drawn_graph" data-zoom="7"></div>
-        <div id="top-center-menu" class="main-panel top-panel">
-            <div class="row">
-                <!--<div id="search-component" class="col-md-12">-->
-                <!--<div class="form-group form-group-lg">-->
-                <!--<div class="input-group input-group-lg">-->
-                <!--<div class="input-group-addon">-->
-                <!--<i class="fa fa-search"></i>-->
-                <!--</div>-->
-                <!--<input id="vertex-search-input" data-i18n="[placeholder]left_menu.search"-->
-                <!--class='form-control input-lg'/>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-            </div>
-        </div>
-        <div id="top-panel" class="main-panel top-panel">
-            <!--<div class="link-like-button">-->
-                <!--<div class="dropdown">-->
-                    <!--<a id="select-button" data-toggle="dropdown" data-i18n='top_menu.selection.title'></a>-->
-                    <!--<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">-->
-                        <!--<li>-->
-                            <!--<a href="" id="select-all-bubbles" role="menuitem"-->
-                               <!--data-i18n='top_menu.selection.bubbles'></a>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<a href="" id="select-all-relations" role="menuitem"-->
-                               <!--data-i18n='top_menu.selection.relations'></a>-->
-                        <!--</li>-->
-                    <!--</ul>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="link-like-button" id="create-menu">-->
-                <!--<div class="dropdown">-->
-                    <!--<a data-toggle="dropdown" data-i18n='top_menu.create.title'></a>-->
-                    <!--<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">-->
-                        <!--<li>-->
-                            <!--<a href="" id="create-concept" role="menuitem"-->
-                               <!--data-i18n='top_menu.create.bubble'></a>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<a href="" id="create-schema" role="menuitem"-->
-                               <!--data-i18n='top_menu.create.schema'></a>-->
-                        <!--</li>-->
-                    <!--</ul>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="link-like-button" id="user-menu">-->
-                <!--<div class="dropdown">-->
-                    <!--<a data-toggle="dropdown" class="fa fa-user">-->
-                    <!--</a>-->
-                    <!--<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">-->
-                        <!--<li>-->
-                            <!--<a href="" role="menuitem" id="disconnect-btn"-->
-                               <!--data-i18n='top_menu.disconnect'></a>-->
-                        <!--</li>-->
-                    <!--</ul>-->
-                <!--</div>-->
-            <!--</div>-->
-
-        </div>
         <div id="graph-element-menu" class="main-panel hidden-sm hidden-xs">
             <button data-action="accept" data-icon="fa-check" class="graph-element-button"></button>
             <button data-action="select" data-icon="none" class="graph-element-button main-menu">

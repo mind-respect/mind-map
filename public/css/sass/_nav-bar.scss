@@ -1,7 +1,8 @@
 $bgDefault      : #071f79;
-$bgHighlight    : #e8e8e8;
+$bgHighlight    : #121D46;
+$bgHighlight    : rgba(18, 29, 70, 0.4);
 $colDefault     : #ffffff;
-$colHighlight   : black;
+$colHighlight   : #ffffff;
 $dropDown       : false;
 .navbar-default {
   background-image: none;
@@ -19,6 +20,7 @@ $dropDown       : false;
   .navbar-nav {
     > li {
       > a {
+        font-size:1.1em;
         color: $colDefault;
         &:hover,  &:focus {
           color: $colHighlight;

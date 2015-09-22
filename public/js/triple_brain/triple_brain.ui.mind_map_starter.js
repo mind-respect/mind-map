@@ -12,11 +12,10 @@ define(
         "triple_brain.graph_displayer_factory",
         "triple_brain.ui.graph",
         "triple_brain.language_manager",
-        "triple_brain.top_center_menu",
         "triple_brain.selection_handler",
         "triple_brain.graph_element_main_menu",
         "triple_brain.mind_map_info",
-        "triple_brain.top_right_menu",
+        "triple_brain.header",
         "triple_brain.external_page_loader",
         "triple_brain.id_uri",
         "triple_brain.anonymous_flow",
@@ -26,7 +25,7 @@ define(
         "jquery.triple_brain.drag_scroll",
         "triple_brain.modules"
     ],
-    function ($, UserService, EventBus, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, TopCenterMenu, SelectionHandler, GraphElementMainMenu, MindMapInfo, TopRightMenu, ExternalPageLoader, IdUriUtils, AnonymousFlow, ChangePassword, LoginHandler) {
+    function ($, UserService, EventBus, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, SelectionHandler, GraphElementMainMenu, MindMapInfo, Header, ExternalPageLoader, IdUriUtils, AnonymousFlow, ChangePassword, LoginHandler) {
         "use strict";
         var api = {
             start: function () {
@@ -56,8 +55,8 @@ define(
                 }
 
                 function setupMindMapForAuthenticatedUser() {
-                    if(!MindMapInfo.isCenterBubbleUriDefinedInUrl()){
-                        UserService.authenticatedUser(function(user){
+                    if (!MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
+                        UserService.authenticatedUser(function (user) {
                             UserService.getDefaultVertexUri(
                                 user.user_name,
                                 function (uri) {
@@ -79,8 +78,7 @@ define(
                 function setupMindMap(isAnonymous) {
                     startLoginFlowWhenForbiddenActionIsPerformed();
                     $("#app-presentation").addClass("hidden");
-                    TopRightMenu.earlyInit();
-                    TopCenterMenu.init();
+                    Header.earlyInit();
                     handleHistoryBrowse();
                     GraphDisplayer.setImplementation(
                         GraphDisplayerFactory.getByName(
@@ -122,7 +120,7 @@ define(
                 function callBackWhenNotAuthenticated() {
                     LoginHandler.setupModal();
                     LoginHandler.setupWelcomePageAuth();
-                    if(ChangePassword.isChangePasswordFlow()){
+                    if (ChangePassword.isChangePasswordFlow()) {
                         ChangePassword.enterFlow();
                     }
                     if (MindMapInfo.isCenterBubbleUriDefinedInUrl()) {

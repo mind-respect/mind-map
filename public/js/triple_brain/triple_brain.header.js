@@ -22,13 +22,15 @@ define([
         };
         EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function (event, isViewOnly) {
             if (isViewOnly) {
-                getCreateMenu().hide();
+                getCreateMenu().addClass("hidden");
             }
             if (MindMapInfo.isAnonymous()) {
+                getLandingPageSearchInput().removeClass("hidden");
                 getDisconnectButton().addClass("hidden");
                 getUserMenu().addClass("hidden");
                 handleLoginRegisterButton();
             } else {
+                getMyBubblesSearchInput().removeClass("hidden");
                 handleCreateNewConceptButton();
                 handleCreateNewSchemaButton();
                 handleDisconnectButton();
@@ -146,6 +148,14 @@ define([
 
         function getUserMenu() {
             return $("#user-menu");
+        }
+
+        function getLandingPageSearchInput() {
+            return $("#landing-page-search");
+        }
+
+        function getMyBubblesSearchInput() {
+            return $("#vertex-search-input");
         }
     }
 );

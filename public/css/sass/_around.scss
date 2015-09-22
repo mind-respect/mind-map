@@ -2,34 +2,6 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
-#top-center-menu {
-  position: fixed;
-  left: 38%;
-  top: 0.5em;
-  width: 30em;
-  .ui-button {
-    z-index: 3;
-  }
-}
-
-#top-panel {
-  margin-right: 160px;
-  position: fixed;
-  right: 0.1em;
-  top: 0.5em;
-  > input[type=button], > button, > .link-like-button {
-    float: left;
-    margin-left: 15px;
-    font-size: 1em;
-    margin-top: 4px;
-  }
-  .dropdown {
-    a {
-      text-align: left;
-    }
-  }
-}
-
 .frontier {
   position: fixed;
   background-color: transparent;

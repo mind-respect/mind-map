@@ -3,22 +3,22 @@
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .navbar-default { background-image: none; background-color: rgba(0, 0, 0, 0.3); }
 .navbar-default .navbar-brand { color: white; }
-.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus { color: black; }
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus { color: white; }
 .navbar-default .navbar-text { color: white; }
-.navbar-default .navbar-nav > li > a { color: white; }
-.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus { color: black; text-decoration: underline; }
-.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus { color: black; background-color: #e8e8e8; }
-.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus { background-image: none; color: black; background-color: #e8e8e8; }
-.navbar-default .navbar-toggle { border-color: #e8e8e8; }
-.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus { background-color: #e8e8e8; }
+.navbar-default .navbar-nav > li > a { font-size: 1.1em; color: white; }
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus { color: white; text-decoration: underline; }
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus { color: white; background-color: rgba(18, 29, 70, 0.4); }
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus { background-image: none; color: white; background-color: rgba(18, 29, 70, 0.4); }
+.navbar-default .navbar-toggle { border-color: rgba(18, 29, 70, 0.4); }
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus { background-color: rgba(18, 29, 70, 0.4); }
 .navbar-default .navbar-toggle .icon-bar { background-color: white; }
 .navbar-default .navbar-collapse, .navbar-default .navbar-form { border-color: white; }
 .navbar-default .navbar-link { color: white; }
-.navbar-default .navbar-link:hover { color: black; }
+.navbar-default .navbar-link:hover { color: white; }
 
 @media (max-width: 767px) { .navbar-default .navbar-nav .open .dropdown-menu > li > a { color: white; }
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus { color: black; }
-  .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus { color: black; background-color: #e8e8e8; } }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus { color: white; }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus { color: white; background-color: rgba(18, 29, 70, 0.4); } }
 /* Copyright Vincent Blouin under the GPL License version 3 */
 #registration-page { overflow-y: scroll; max-height: 500px; }
 #registration-page .language-list { float: left; width: 100%; margin-bottom: 1em; }
@@ -89,13 +89,6 @@
 .left-oriented .vertex-tree-container .vertical-border { border-left: none; border-right: 2px solid #ff80ef; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
-#top-center-menu { position: fixed; left: 38%; top: 0.5em; width: 30em; }
-#top-center-menu .ui-button { z-index: 3; }
-
-#top-panel { margin-right: 160px; position: fixed; right: 0.1em; top: 0.5em; }
-#top-panel > input[type=button], #top-panel > button, #top-panel > .link-like-button { float: left; margin-left: 15px; font-size: 1em; margin-top: 4px; }
-#top-panel .dropdown a { text-align: left; }
-
 .frontier { position: fixed; background-color: transparent; z-index: 0; }
 
 .left-frontier { height: 100%; min-width: 2em; }
