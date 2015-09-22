@@ -163,7 +163,7 @@ define([
                 $.t("vertex.search.source") + ": " +
                 searchResult.source
             );
-            var text = $("<span>").append(
+            var text = $("<div class='description'>").append(
                 description.text,
                 " "
             );

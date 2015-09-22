@@ -2,6 +2,11 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
+/*one more than navigation bar dialog*/
+$zIndex:1031;
+#header-search-form{
+  margin-left:21%;
+}
 .ui-menu {
   .ui-menu-item {
     border-bottom: 1px solid rgb(211, 210, 210);
@@ -56,32 +61,41 @@
 }
 .autocomplete-flyout {
   position: absolute;
-  width: auto;
-  min-width: 300px;
+  width: 300px;
   background-color: white;
-  padding:20px;
-  /*one more than jquery ui dialog*/
-  z-index: 101;
+  z-index: $zIndex;
   text-align:center;
   border-radius:20px;
   img {
     float: left;
-    margin-right: 0.7em;
+    //margin-right: 0.7em;
+    margin-left:0.7em;
+    margin-top:0.7em;
+    margin-bottom:0.7em;
   }
   .title {
     font-weight: bold;
-    margin:10px;
+    margin:0.7em;
+    margin-left:0.5em;
   }
   .source {
     font-weight: lighter;
     font-size: 85%;
-    margin:10px;
+    margin:0.7em;
+    margin-left:0.5em;
+  }
+  .description{
+    margin:0.7em;
+    margin-top:0;
+    margin-left:0.5em;
+    text-align:center;
   }
 }
 
 .ui-autocomplete {
   height: 200px;
   overflow-y: scroll;
+  z-index: $zIndex;
 }
 
 .ui-dialog {
