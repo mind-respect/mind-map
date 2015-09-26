@@ -1,6 +1,7 @@
 {
   "landing": {
-    "description": "Votre esprit est un temple"
+    "slogan": "Dynamisez vos notes",
+    "description": "Découpez, liez, schématisez, partagez et trouvez vos notes."
   },
   "login": {
     "title": "S'authentifier / S'enregistrer",

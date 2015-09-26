@@ -108,8 +108,14 @@
   }
 }
 
-.group-relation {
+.bubble.group-relation {
   white-space: nowrap;
+  .arrow{
+    height:20px;
+    &:before{
+      content:none;
+    }
+  }
   &.selected {
     .in-bubble-content {
       .bubble-label {

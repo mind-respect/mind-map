@@ -2,6 +2,9 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
+$verticalBorderRadius: 25px;
+$connectorRadius: 25px;
+
 .root-vertex-super-container {
   position: absolute;
   //background:
@@ -68,45 +71,103 @@
 }
 
 /*BORDER*/
+.left-oriented {
+  &.vertices-children-container, .vertices-children-container {
+    .vertex-tree-container {
+      &:first-child {
+        > .vertex-container {
+          .group-relation {
+            .arrow {
+              border-top-left-radius: 0;
+              border-top-right-radius: $connectorRadius;
+            }
+          }
+        }
+        &:last-of-type {
+          > .vertex-container {
+            .group-relation {
+              .arrow {
+                border-top-right-radius: 0;
+                border-top-left-radius: 0;
+              }
+            }
+          }
+        }
+      }
+      &:last-of-type {
+        > .vertex-container {
+          .group-relation {
+            .arrow {
+              border-top:none;
+              top: calc(50% - 1.2em);
+              border-bottom:$edgeStyle;
+              border-bottom-left-radius: 0;
+              border-bottom-right-radius: $connectorRadius;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 .vertices-children-container .vertex-tree-container {
-  &:first-child{
+  &:first-child {
     > .vertical-border-first {
       border-left: none;
       border-right: none;
     }
     > .vertical-border-second {
-      border-top-right-radius: 12px;
-      border-top-left-radius: 12px;
+      border-top-right-radius: $verticalBorderRadius;
+      border-top-left-radius: $verticalBorderRadius;
     }
     > .vertex-container {
       .connector {
-        border-radius: 50px;
+        border-radius: $connectorRadius;
+      }
+      .group-relation {
+        .arrow {
+          border-top-left-radius: $connectorRadius;
+        }
       }
     }
-    &:last-of-type{
+    &:last-of-type {
       > .vertex-container {
         .connector {
           border-radius: 0;
         }
+        .group-relation {
+          .arrow {
+            border-radius:0;
+          }
+        }
       }
     }
   }
-  &:last-of-type{
+  &:last-of-type {
     > .vertex-container {
       > .vertex:before {
         border-left: none;
         border-right: none;
       }
       .connector {
-        border-radius: 50px;
-        border-bottom:$edgeStyle;
-        border-top:none;
-        top:-0.5em;
+        border-radius: $connectorRadius;
+        border-bottom: $edgeStyle;
+        border-top: none;
+        top: -0.5em;
+      }
+      .group-relation {
+        .arrow {
+          border-top:none;
+          top: calc(50% - 1.2em);
+          border-bottom:$edgeStyle;
+          border-bottom-left-radius: $connectorRadius;
+        }
       }
     }
     > .vertical-border-first {
-      border-bottom-right-radius: 12px;
-      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: $verticalBorderRadius;
+      border-bottom-left-radius: $verticalBorderRadius;
     }
     > .vertical-border-second {
       border-left: none;

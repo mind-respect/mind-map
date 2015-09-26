@@ -13,28 +13,12 @@ define([
         var api = {};
         api.setupModal = function(){
             new LoginForm(
-                buildModal()
+                getModalSection()
             ).setup();
         };
         api.showModal = function () {
             getModalSection().modal();
         };
-        api.setupWelcomePageAuth = function () {
-            new LoginForm(
-                getOnPageAuthenticateSection()
-            ).setup();
-        };
-
-        function buildModal(){
-            var modalSection = getModalSection();
-            getOnPageAuthenticateSection().find(".body").children().clone().appendTo(
-                modalSection.find(".modal-body")
-            );
-            getOnPageAuthenticateSection().find(".footer").children().clone().appendTo(
-                modalSection.find(".modal-footer")
-            );
-            return modalSection;
-        }
 
         function LoginForm(container) {
             this.container = container;
@@ -208,10 +192,6 @@ define([
 
         function getModalSection() {
             return $("#login-page-modal");
-        }
-
-        function getOnPageAuthenticateSection(){
-            return $("#authenticate");
         }
 
         return api;

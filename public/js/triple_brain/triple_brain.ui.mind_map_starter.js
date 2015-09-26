@@ -119,7 +119,6 @@ define(
 
                 function callBackWhenNotAuthenticated() {
                     LoginHandler.setupModal();
-                    LoginHandler.setupWelcomePageAuth();
                     if (ChangePassword.isChangePasswordFlow()) {
                         ChangePassword.enterFlow();
                     }

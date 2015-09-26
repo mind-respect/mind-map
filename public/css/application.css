@@ -1,7 +1,7 @@
 @charset "UTF-8";
 /* Copyright Vincent Blouin under the GPL License version 3 */
 /* Copyright Vincent Blouin under the GPL License version 3 */
-.navbar-default { background-image: none; background-color: rgba(0, 0, 0, 0.3); }
+.navbar-default { border: none; background-image: none; background-color: rgba(0, 0, 0, 0.3); }
 .navbar-default .navbar-brand { color: white; }
 .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus { color: white; }
 .navbar-default .navbar-text { color: white; }
@@ -19,6 +19,13 @@
 @media (max-width: 767px) { .navbar-default .navbar-nav .open .dropdown-menu > li > a { color: white; }
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus { color: white; }
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus { color: white; background-color: rgba(18, 29, 70, 0.4); } }
+/* Copyright Vincent Blouin under the GPL License version 3 */
+#app-presentation { margin-top: 0; color: white; }
+#app-presentation .background { position: absolute; background-image: url("images/sky-cut.jpg"); left: 0; width: 100%; min-height: 454px; }
+#app-presentation .jumbotron { z-index: 1; display: flex; align-items: center; min-height: 454px; }
+#app-presentation .jumbotron * { z-index: 1; width: 100%; font-weight: bold; }
+#app-presentation .jumbotron p { box-sizing: border-box; padding-left: 20%; padding-right: 20%; }
+
 /* Copyright Vincent Blouin under the GPL License version 3 */
 #registration-page { overflow-y: scroll; max-height: 500px; }
 #registration-page .language-list { float: left; width: 100%; margin-bottom: 1em; }
@@ -56,23 +63,30 @@
 .vertex.view-only { margin-top: 2em; margin-bottom: 2em; }
 
 /*BORDER*/
+.left-oriented.vertices-children-container .vertex-tree-container:first-child > .vertex-container .group-relation .arrow, .left-oriented .vertices-children-container .vertex-tree-container:first-child > .vertex-container .group-relation .arrow { border-top-left-radius: 0; border-top-right-radius: 25px; }
+.left-oriented.vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .group-relation .arrow, .left-oriented .vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .group-relation .arrow { border-top-right-radius: 0; border-top-left-radius: 0; }
+.left-oriented.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow, .left-oriented .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow { border-top: none; top: calc(50% - 1.2em); border-bottom: 3px solid #ff80ef; border-bottom-left-radius: 0; border-bottom-right-radius: 25px; }
+
 .vertices-children-container .vertex-tree-container:first-child > .vertical-border-first { border-left: none; border-right: none; }
-.vertices-children-container .vertex-tree-container:first-child > .vertical-border-second { border-top-right-radius: 12px; border-top-left-radius: 12px; }
-.vertices-children-container .vertex-tree-container:first-child > .vertex-container .connector { border-radius: 50px; }
+.vertices-children-container .vertex-tree-container:first-child > .vertical-border-second { border-top-right-radius: 25px; border-top-left-radius: 25px; }
+.vertices-children-container .vertex-tree-container:first-child > .vertex-container .connector { border-radius: 25px; }
+.vertices-children-container .vertex-tree-container:first-child > .vertex-container .group-relation .arrow { border-top-left-radius: 25px; }
 .vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .connector { border-radius: 0; }
+.vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .group-relation .arrow { border-radius: 0; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container > .vertex:before { border-left: none; border-right: none; }
-.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .connector { border-radius: 50px; border-bottom: 2px solid #ff80ef; border-top: none; top: -0.5em; }
-.vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-first { border-bottom-right-radius: 12px; border-bottom-left-radius: 12px; }
+.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .connector { border-radius: 25px; border-bottom: 3px solid #ff80ef; border-top: none; top: -0.5em; }
+.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow { border-top: none; top: calc(50% - 1.2em); border-bottom: 3px solid #ff80ef; border-bottom-left-radius: 25px; }
+.vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-first { border-bottom-right-radius: 25px; border-bottom-left-radius: 25px; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-second { border-left: none; border-right: none; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-third { border-left: none; border-right: none; }
 
-.vertical-border { display: table; height: 50%; border-left: 2px solid #ff80ef; padding-right: 40px; }
+.vertical-border { display: table; height: 50%; border-left: 3px solid #ff80ef; padding-right: 40px; }
 
 .vertical-border.small { padding-right: 20px; }
 
 .vertices-children-container .vertex-tree-container .vertical-border-third { height: 0; }
 
-.vertical-border-filling { display: table; height: 0; padding: 0; width: 2px; }
+.vertical-border-filling { display: table; height: 0; padding: 0; width: 3px; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .left-oriented [data-action=addChild] .fa-arrow-right { transform: rotate(180deg); }
@@ -86,7 +100,7 @@
 .left-oriented .bubble.view-only .arrow:before { left: 8px; }
 .left-oriented .bubble.group-relation .arrow, .left-oriented .bubble.property .arrow { right: -42px; }
 .left-oriented .bubble .connector { left: auto; right: -22px; }
-.left-oriented .vertex-tree-container .vertical-border { border-left: none; border-right: 2px solid #ff80ef; }
+.left-oriented .vertex-tree-container .vertical-border { border-left: none; border-right: 3px solid #ff80ef; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .frontier { position: fixed; background-color: transparent; z-index: 0; }
@@ -188,7 +202,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .relation .menu { background-color: transparent; z-index: 11; margin-left: 5px; }
 .relation .label-container { display: table-cell; padding-left: 6px; position: relative; }
 .relation.suggestion .in-bubble-content { border: none; }
-.relation.suggestion .in-bubble-content .bubble-label { border: 2px dashed black; background-color: white; color: black; text-shadow: none; }
+.relation.suggestion .in-bubble-content .bubble-label { border: 3px dashed black; background-color: white; color: black; text-shadow: none; }
 .relation .in-bubble-content .bubble-label { background-color: #3a87ad; font-family: helvetica; font-size: 1.2em; height: auto; }
 .relation .in-bubble-content .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); font-style: italic; color: white; }
 .relation .in-bubble-content .in-bubble-note-button { font-size: calc(1em + 0.6vw); position: absolute; left: -20px; top: 0; }
@@ -208,9 +222,11 @@ button.add-button-in-list:hover { color: #00d100; }
 .property input.edge-label { background-color: #f5f5f5; font-size: 13px; }
 .property .relation-menu { left: 0; }
 
-.group-relation { white-space: nowrap; }
-.group-relation.selected .in-bubble-content .bubble-label { box-shadow: 5px 5px 5px black; }
-.group-relation .in-bubble-content .bubble-label { margin-right: 0.3em; z-index: 1; }
+.bubble.group-relation { white-space: nowrap; }
+.bubble.group-relation .arrow { height: 20px; }
+.bubble.group-relation .arrow:before { content: none; }
+.bubble.group-relation.selected .in-bubble-content .bubble-label { box-shadow: 5px 5px 5px black; }
+.bubble.group-relation .in-bubble-content .bubble-label { margin-right: 0.3em; z-index: 1; }
 
 .edge-label { position: absolute; width: 100%; left: 0; right: 0; }
 
@@ -229,8 +245,8 @@ button.add-button-in-list:hover { color: #00d100; }
 .bubble .image_container { z-index: 3; position: relative; min-width: 60px; text-align: right; }
 .bubble .image_container:empty { min-width: 0; }
 .bubble .edge-label { display: inline; }
-.bubble .connector { position: absolute; height: 21px; border-top: 2px solid #ff80ef; top: 50%; width: 65px; left: -22px; z-index: -1; }
-.bubble .arrow { position: absolute; height: 1px; width: 47px; top: 50%; left: -42px; border-top: 2px solid #ff80ef; z-index: -1; }
+.bubble .connector { position: absolute; height: 21px; border-top: 3px solid #ff80ef; top: 50%; width: 65px; left: -22px; z-index: -1; }
+.bubble .arrow { position: absolute; height: 1px; width: 47px; top: 50%; left: -42px; border-top: 3px solid #ff80ef; z-index: -1; }
 .bubble .arrow ~ { background-color: yellow; }
 .bubble .arrow ~ .in-bubble-note-button:not(hidden) { width: 100%; }
 .bubble .arrow:before { content: url("images/icons/vertex/arrowhead_right.svg"); position: relative; top: -11px; left: 20px; }
@@ -243,7 +259,7 @@ button.add-button-in-list:hover { color: #00d100; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .vertex { /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */ white-space: nowrap; }
-.vertex.suggestion .in-bubble-content { border: 2px dashed black; color: black; text-shadow: none; }
+.vertex.suggestion .in-bubble-content { border: 3px dashed black; color: black; text-shadow: none; }
 .vertex.surround-indicator .in-bubble-content { box-shadow: -1px -2px 1px #ff80ef; }
 .vertex.public:after { font-family: FontAwesome; content: "\f09c"; position: absolute; font-size: 1.6em; }
 .vertex.public .in-bubble-content { box-shadow: -1px -2px 1px #ff80ef; }
@@ -380,8 +396,6 @@ html { font-size: 93.8%; }
 @media screen and (min-width: 800px) { html { font-size: 125%; } }
 #mind_map { cursor: all-scroll; -moz-user-select: -moz-none; -webkit-user-select: none; -ms-user-select: none; user-select: none; }
 #mind_map h2, #mind_map h3 { line-height: inherit; }
-
-#app-presentation { margin-top: 5%; }
 
 #welcome-content .content > *:not(:first-child) { margin-top: 30px; }
 

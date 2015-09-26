@@ -33,13 +33,10 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">bubl.guru</a>
+            <a class="navbar-brand" href="/">bubl.guru</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <!--<div class="row">-->
-            <!--<div class="col-md-4"></div>-->
-            <!--<div class="col-md-4">-->
             <form class="navbar-form navbar-left" role="search" id="header-search-form">
                 <div class="form-group form-group-lg">
                     <div class="input-group">
@@ -47,15 +44,12 @@
                             <i class="fa fa-search search-icon"></i>
                         </div>
                         <input type='text' id="landing-page-search" size=35 class='form-control input-lg hidden'
-                        data-i18n="[placeholder]search.big.placeholder"/>
+                               data-i18n="[placeholder]search.big.placeholder"/>
                         <input id="vertex-search-input" size=35 data-i18n="[placeholder]left_menu.search"
                                class='form-control input-lg hidden'>
                     </div>
                 </div>
             </form>
-            <!--</div>-->
-            <!--<div class="col-md-4"></div>-->
-            <!--</div>-->
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a href="#" id="login-register" data-i18n="top_menu.login_register"></a>
@@ -104,13 +98,22 @@
 </nav>
 <div class="container">
     <div class="page-header" id="app-presentation">
-        <div class="row">
-            <div class="col-md-4"></div>
-            <div class="col-md-4"><h2>Votre esprit est un temple</h2></div>
-            <div class="col-md-4"></div>
+        <div class="background"></div>
+        <div class="jumbotron text-center">
+            <div class="container">
+                <h2 class="text-center" data-i18n="landing.slogan"></h2>
+
+                <p data-i18n="landing.description"></p>
+            </div>
         </div>
-        <h1>bubl.guru</h1>
-        <h4 data-i18n="landing.description"></h4>
+        <!--<div class="background"></div>-->
+        <!--<div class="row message">-->
+        <!--<div class="col-md-4"></div>-->
+        <!--<div class="col-md-4"><h2>Votre esprit est un temple</h2></div>-->
+        <!--<div class="col-md-4"></div>-->
+        <!--</div>-->
+        <!--<h1>bubl.guru</h1>-->
+        <!--<h4 data-i18n="landing.description"></h4>-->
     </div>
     <div class="hidden row" id="change-password-page">
         <div class="col-lg-4">
@@ -162,99 +165,17 @@
     </div>
 
     <div class="row hidden" id="welcome-content">
-        <div class="col-lg-4 content">
-            <div class="row" id="big-search-box-container">
-                <div class="form-group form-group-lg col-xl-12">
-                    <div class="col-xl-12">
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="fa fa-search search-icon"></i>
-                            </div>
-                            <input type='text' class='form-control input-lg'
-                                   data-i18n="[placeholder]search.big.placeholder">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="security-form-wrapper row panel panel-default" id="authenticate">
-                <div class="panel-body">
-                    <div class="body">
-                        <div class="login-error alert alert-danger hidden" role="alert" data-i18n="login.error"></div>
-                        <div data-error="mandatory_email"
-                             class="alert alert-danger hidden"
-                             data-i18n="register.error.email_mandatory" role="alert">
-                        </div>
-
-                        <div data-error="invalid_email"
-                             class="alert alert-danger hidden"
-                             data-i18n="register.error.email_mandatory" role="alert">
-                        </div>
-
-                        <div data-error="email_too_long"
-                             class="alert alert-danger hidden"
-                             data-i18n="register.error.email_too_long" role="alert">
-                        </div>
-
-                        <div data-error="already_registered_email"
-                             class="alert alert-danger hidden"
-                             data-i18n="register.error.email_already_exists" role="alert">
-                        </div>
-
-                        <div data-error="mandatory_password"
-                             class="alert alert-danger hidden"
-                             data-i18n="register.error.password_mandatory" role="alert">
-                        </div>
-                        <div data-error="password_too_short"
-                             class="alert alert-danger hidden"
-                             data-i18n="register.error.password_too_short" role="alert">
-                        </div>
-                        <div data-error="inexistent-email"
-                             class="alert alert-danger hidden"
-                             data-i18n="forgot_password.error" role="alert">
-                        </div>
-                        <div class="forgot-password-email-sent alert alert-success hidden"
-                             data-i18n="forgot_password.success" role="alert">
-                        </div>
-                        <form class="login-form security-form well" role="form">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-addon">@</div>
-                                    <label for="login-email-modal" class="sr-only" data-i18n="login.email"></label>
-                                    <input id="login-email-modal" class="login-email form-control" name="email"
-                                           type="email"
-                                           data-i18n="[placeholder]login.email">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="login-password-modal" class="sr-only" data-i18n="login.password"></label>
-                                <input id="login-password-modal" class="login-password form-control" name="password"
-                                       type="password"
-                                       data-i18n="[placeholder]login.password"/>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="row footer">
-                        <div class="col-lg-12 text-center">
-                            <button type="button" class="login-button btn btn-primary"
-                                    data-i18n="login.login"></button>
-                            <button type="button" class="register-link btn btn-primary"
-                                    data-i18n="login.register"></button>
-                            <button type="button" class="forgot-password-link btn btn-primary"
-                                    data-i18n="forgot_password.button"></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row text-center">
+        <div class="col-lg-12 content text-center">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/mDfv3Tn6yYY"
+                    frameborder="0"
+                    allowfullscreen></iframe>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
                 <h4>
                     <a href="http://about.bubl.guru" data-i18n="login.about"></a>
                 </h4>
             </div>
-        </div>
-        <div class="col-lg-8 text-center">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/mDfv3Tn6yYY"
-                    frameborder="0"
-                    allowfullscreen></iframe>
         </div>
     </div>
 </div>
@@ -303,10 +224,69 @@
                 <h4 class="modal-title" data-i18n="login.title"></h4>
             </div>
             <div class="modal-body">
+                <div class="login-error alert alert-danger hidden" role="alert" data-i18n="login.error"></div>
+                <div data-error="mandatory_email"
+                     class="alert alert-danger hidden"
+                     data-i18n="register.error.email_mandatory" role="alert">
+                </div>
 
+                <div data-error="invalid_email"
+                     class="alert alert-danger hidden"
+                     data-i18n="register.error.email_mandatory" role="alert">
+                </div>
+
+                <div data-error="email_too_long"
+                     class="alert alert-danger hidden"
+                     data-i18n="register.error.email_too_long" role="alert">
+                </div>
+
+                <div data-error="already_registered_email"
+                     class="alert alert-danger hidden"
+                     data-i18n="register.error.email_already_exists" role="alert">
+                </div>
+
+                <div data-error="mandatory_password"
+                     class="alert alert-danger hidden"
+                     data-i18n="register.error.password_mandatory" role="alert">
+                </div>
+                <div data-error="password_too_short"
+                     class="alert alert-danger hidden"
+                     data-i18n="register.error.password_too_short" role="alert">
+                </div>
+                <div data-error="inexistent-email"
+                     class="alert alert-danger hidden"
+                     data-i18n="forgot_password.error" role="alert">
+                </div>
+                <div class="forgot-password-email-sent alert alert-success hidden"
+                     data-i18n="forgot_password.success" role="alert">
+                </div>
+                <form class="login-form security-form well" role="form">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">@</div>
+                            <label for="login-email-modal" class="sr-only" data-i18n="login.email"></label>
+                            <input id="login-email-modal" class="login-email form-control" name="email"
+                                   type="email"
+                                   data-i18n="[placeholder]login.email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password-modal" class="sr-only" data-i18n="login.password"></label>
+                        <input id="login-password-modal" class="login-password form-control" name="password"
+                               type="password"
+                               data-i18n="[placeholder]login.password"/>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
-
+                <div class="col-lg-12 text-center">
+                    <button type="button" class="login-button btn btn-primary"
+                            data-i18n="login.login"></button>
+                    <button type="button" class="register-link btn btn-primary"
+                            data-i18n="login.register"></button>
+                    <button type="button" class="forgot-password-link btn btn-primary"
+                            data-i18n="forgot_password.button"></button>
+                </div>
             </div>
         </div>
     </div>

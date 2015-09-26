@@ -1,0 +1,52 @@
+/*
+ * Copyright Vincent Blouin under the GPL License version 3
+ */
+
+#app-presentation {
+  $height:454px;
+  margin-top:0;
+  color:white;
+  .background{
+    position:absolute;
+    background-image: url("images/sky-cut.jpg");
+    left:0;
+    width:100%;
+    min-height:$height;
+  }
+  .jumbotron{
+    z-index:1;
+    *{
+      z-index:1;
+      width:100%;
+      font-weight:bold;
+    }
+    p{
+      box-sizing: border-box;
+      padding-left:20%;
+      padding-right:20%;
+    }
+    display: flex;
+    align-items: center;
+    min-height:$height;
+  }
+}
+
+//#app-presentation{
+//  height:300px;
+//  color:white;
+//  .background{
+//    position:absolute;
+//    left:0;
+//    height:300px;
+//    width:100%;
+//    //background: linear-gradient(45deg, hsla(340, 100%, 55%, 1) 0%, hsla(340, 100%, 55%, 0) 70%),
+//    //linear-gradient(135deg, hsla(225, 95%, 50%, 1) 10%, hsla(225, 95%, 50%, 0) 80%),
+//    //linear-gradient(225deg, hsla(140, 90%, 50%, 1) 10%, hsla(140, 90%, 50%, 0) 80%),
+//    //linear-gradient(315deg, hsla(35, 95%, 55%, 1) 100%, hsla(35, 95%, 55%, 0) 70%);
+//    background-image:url("images/astronomy.jpg");
+//  }
+//  .message{
+//    position:absolute;
+//    top:40%;
+//  }
+//}

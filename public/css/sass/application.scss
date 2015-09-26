@@ -3,6 +3,7 @@
  */
 @import "variables",
 "nav-bar",
+"landing",
 "authentication",
 "graph-structure",
 "left-oriented",
@@ -90,10 +91,6 @@ body {
   h2, h3 {
     line-height: inherit;
   }
-}
-
-#app-presentation {
-  margin-top: 5%;
 }
 
 #welcome-content {
