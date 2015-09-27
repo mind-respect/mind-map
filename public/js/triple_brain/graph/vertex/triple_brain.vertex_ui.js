@@ -64,9 +64,6 @@ define([
                 isPublic
             );
         };
-        api.Object.prototype.suggestionButton = function () {
-            return this.html.find('.suggestion');
-        };
 
         api.Object.prototype.centerButton = function () {
             return this.html.find('.center');
@@ -203,20 +200,11 @@ define([
                 [] :
                 existingSuggestions;
             var mergedSuggestions = existingSuggestions.concat(suggestions);
-            this.html.data('suggestions', mergedSuggestions);
-            if (mergedSuggestions.length > 0) {
-                this.showSuggestionButton();
-                return;
-            }
-            this.hideSuggestionButton();
+            this.setSuggestions(mergedSuggestions);
+            GraphDisplayer.showSuggestions(this);
         };
         api.Object.prototype.setSuggestions = function (suggestions) {
             this.html.data('suggestions', suggestions);
-            if (suggestions.length > 0) {
-                this.showSuggestionButton();
-                return;
-            }
-            this.hideSuggestionButton();
         };
 
         api.Object.prototype.serverFacade = function () {
@@ -246,24 +234,12 @@ define([
             );
             this.setSuggestions(suggestions);
         };
-
-        api.Object.prototype.showSuggestionButton = function () {
-            this.suggestionButton().show();
-        };
-        api.Object.prototype.hideSuggestionButton = function () {
-            this.suggestionButton().hide();
-        };
-        api.Object.prototype.triggerChange = function () {
-            this.html.trigger("change");
-        };
         api.Object.prototype.getLabel = function () {
             return this.html.find(".bubble-label");
         };
-
         api.Object.prototype.scrollTo = function () {
             this.html.centerOnScreen();
         };
-
         api.Object.prototype.serverFormat = function () {
             return {
                 label: this.text(),

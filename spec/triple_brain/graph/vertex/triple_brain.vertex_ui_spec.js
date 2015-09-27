@@ -3,7 +3,8 @@
  */
 
 define([
-    "test/test-scenarios"
+    "test/test-scenarios",
+    "triple_brain.event_bus"
 ], function (Scenarios) {
     "use strict";
     describe("vertex_ui", function () {
@@ -12,7 +13,6 @@ define([
             expect(
                 vertexWithEventRelatedSuggestions.getSuggestions().length
             ).toBe(2);
-
             vertexWithEventRelatedSuggestions.addSuggestions([
                     new Scenarios.getKaraokeSchemaGraph().getInviteesPropertyAsSuggestion()
                 ]
@@ -26,6 +26,22 @@ define([
             expect(
                 vertexWithEventRelatedSuggestions.getSuggestions().length
             ).toBe(1);
+        });
+
+        it("shows suggestions when new suggestions are added", function () {
+            var bubble2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
+            expect(
+                bubble2.hasChildren()
+            ).toBeFalsy();
+            var suggestions = [
+                new Scenarios.getKaraokeSchemaGraph().getLocationPropertyAsSuggestion()
+            ];
+            bubble2.addSuggestions(
+                suggestions
+            );
+            expect(
+                bubble2.hasChildren()
+            ).toBeTruthy();
         });
     });
 });

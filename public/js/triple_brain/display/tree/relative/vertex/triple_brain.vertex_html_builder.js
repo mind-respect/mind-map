@@ -99,7 +99,7 @@ define([
             VertexHtmlCommon.buildNoteButton(
                 this.vertex
             );
-            this.vertex.addSuggestions(
+            this.vertex.setSuggestions(
                 this.serverFacade.getSuggestions()
             );
             this.vertex.hideMenu();
