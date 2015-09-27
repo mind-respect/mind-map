@@ -83,7 +83,7 @@ define([
         };
         api.Self.prototype.getParentVertex = function () {
             var parentBubble = this.getParentBubble();
-            if(this.isSameBubble(parentBubble)){
+            if (this.isSameBubble(parentBubble)) {
                 return this;
             }
             if (parentBubble.isVertex()) {
@@ -237,15 +237,48 @@ define([
         };
 
         api.Self.prototype.remove = function () {
-            SelectionHandler.removeAll();
+            this._removeHideOrShow("remove");
             this.removeHiddenRelationsContainer();
+        };
+
+        api.Self.prototype.show = function () {
+            this.showHiddenRelationsContainer();
+            this._removeHideOrShow("removeClass", "hidden");
+        };
+
+        api.Self.prototype.hide = function () {
+            this.hideHiddenRelationsContainer();
+            this._removeHideOrShow("addClass", "hidden");
+        };
+
+        api.Self.prototype.isVisible = function () {
+            return !this.html.closest(
+                ".vertex-container"
+            ).hasClass("hidden") &&
+                !this.html.closest(".vertex-tree-container").hasClass("hidden");
+        };
+
+        api.Self.prototype._removeHideOrShow = function (action, argument) {
+            SelectionHandler.removeAll();
             if (this.isCenterBubble()) {
-                this.html.closest(".vertex-container").remove();
+                this.html.closest(".vertex-container")[action](argument);
             } else {
                 var treeContainer = this.html.closest(".vertex-tree-container"),
                     clearFix = treeContainer.next(".clear-fix");
-                clearFix.remove();
-                treeContainer.remove();
+                clearFix[action](argument);
+                treeContainer[action](argument);
+            }
+        };
+
+        api.Self.prototype.showHiddenRelationsContainer = function () {
+            if (this.hasHiddenRelationsContainer()) {
+                this.getHiddenRelationsContainer().removeClass("hidden");
+            }
+        };
+
+        api.Self.prototype.hideHiddenRelationsContainer = function () {
+            if (this.hasHiddenRelationsContainer()) {
+                this.getHiddenRelationsContainer().addClass("hidden");
             }
         };
 

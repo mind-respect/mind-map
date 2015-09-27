@@ -147,7 +147,19 @@ define([
         );
     };
     forSingle.suggestionsAction = function (vertex) {
-        GraphDisplayer.showSuggestions(vertex);
+        if(vertex.areSuggestionsShown()){
+            vertex.visitAllChild(function(child){
+                if(child.isSuggestion()){
+                    child.hide();
+                }
+            });
+        }else{
+            vertex.visitAllChild(function(child){
+                if(child.isSuggestion()){
+                    child.show();
+                }
+            });
+        }
     };
     forSingle.suggestionsCanDo = function (vertex) {
         return vertex.hasSuggestions();

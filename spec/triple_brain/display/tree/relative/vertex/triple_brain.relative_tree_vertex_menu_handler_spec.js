@@ -62,5 +62,18 @@ define([
                 newBubble.isSelected()
             ).toBeTruthy();
         });
+        it("hides suggestions when calling the suggestions action when they are already visible", function () {
+            var eventBubble = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();
+            MindMapInfo._setIsViewOnly(false);
+            expect(
+                eventBubble.getTopMostChildBubble().isVisible()
+            ).toBeTruthy();
+            RelativeTreeVertexMenuHandler.forSingle().suggestionsAction(
+                eventBubble
+            );
+            expect(
+                eventBubble.getTopMostChildBubble().isVisible()
+            ).toBeFalsy();
+        });
     });
 });

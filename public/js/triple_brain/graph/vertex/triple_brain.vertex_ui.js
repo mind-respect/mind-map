@@ -65,6 +65,17 @@ define([
             );
         };
 
+        api.Object.prototype.areSuggestionsShown = function () {
+            var areShown = false;
+            this.visitAllChild(function(child){
+                if(child.isSuggestion()){
+                    areShown = child.isVisible() ;
+                    return false;
+                }
+            });
+            return areShown;
+        };
+
         api.Object.prototype.centerButton = function () {
             return this.html.find('.center');
         };
