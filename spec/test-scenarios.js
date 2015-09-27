@@ -462,14 +462,9 @@ define([
             Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
         };
         api.oneBubbleHavingSuggestionsGraph = function () {
-            /*
-             * Bubble labeled Event.
-             * Has a generic identification to freebase "Event" http://rdf.freebase.com/rdf/m/02xm94t
-             * Has 2 suggestions
-             */
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
-                return api._getTestData("oneBubbleHavingSuggestionsGraph");
+                return api._getTestData("oneBubbleHavingSuggestionsGraph.original");
             };
             var graph = this.getGraph();
             this.getVertex = function () {
@@ -505,6 +500,29 @@ define([
                 return this.getVertex().getUri();
             };
             Mock.setCenterVertexUriInUrl(this.getVertex().getUri());
+        };
+        api.oneBubbleHavingSuggestionsGraphNotCentered = function () {
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                return api._getTestData("oneBubbleHavingSuggestionsGraph.not_centered");
+            };
+            this.getCenterBubbleInTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree(
+                    "center"
+                );
+            };
+            this.getEventBubbleInTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree(
+                    "Event"
+                );
+            };
+            this.getCenterBubbleUri = function () {
+                return uriOfVertexWithLabel(
+                    this.getGraph(),
+                    "center"
+                );
+            };
+            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
         };
         api.getKaraokeSchemaGraph = function () {
             this.getGraph = function () {

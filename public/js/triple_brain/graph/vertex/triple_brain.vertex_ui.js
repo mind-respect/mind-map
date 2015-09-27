@@ -194,7 +194,8 @@ define([
             return this.html.data('suggestions');
         };
         api.Object.prototype.hasSuggestions = function () {
-            return this.getSuggestions().length > 0;
+            var suggestions = this.getSuggestions();
+            return suggestions !== undefined && suggestions.length > 0;
         };
         api.Object.prototype.addSuggestions = function (suggestions) {
             var existingSuggestions = this.html.data('suggestions');

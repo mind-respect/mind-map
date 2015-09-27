@@ -277,6 +277,20 @@ define([
             ).toBe(0);
         });
 
+        it("displays suggestions by default", function(){
+            var centerBubble = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();
+            expect(
+                centerBubble.getNumberOfChild() > 0
+            ).toBeTruthy();
+        });
+
+        it("also displays suggestions by default for children", function(){
+            var eventBubble = new Scenarios.oneBubbleHavingSuggestionsGraphNotCentered().getEventBubbleInTree();
+            expect(
+                eventBubble.getNumberOfChild() > 0
+            ).toBeTruthy();
+        });
+
         function connectDistantVertexTest(callback) {
             connectBubbleToDistantBubbleWithUriAndGraphWhenConnected(
                 distantGraphScenario.getBubbleInTree(),

@@ -311,7 +311,7 @@ define([
         groupRelationUi.removeHiddenRelationsContainer();
     };
 
-    api.addNewGroupRelation = function(identification, parentBubble){
+    api.addNewGroupRelation = function (identification, parentBubble) {
         var newGroupRelation = new api.TreeMaker().buildBubbleHtmlIntoContainer(
             GroupRelation.usingIdentification(identification),
             parentBubble,
@@ -404,7 +404,7 @@ define([
             self.buildChildrenHtmlTreeRecursively(parentVertex, serverGraph.vertices);
             parentVertex.visitVerticesChildren(function (vertex) {
                 var wasAlreadyShownInGraph = serverGraph.vertices[vertex.getUri()] === undefined;
-                if(wasAlreadyShownInGraph){
+                if (wasAlreadyShownInGraph) {
                     return;
                 }
                 VertexHtmlBuilder.completeBuild(vertex);
@@ -441,7 +441,6 @@ define([
             container.append(
                 childTreeContainer
             ).append("<span class='clear-fix'>");
-
             var vertexContainer = RelativeTreeTemplates[
                 "vertex_container"
                 ].merge();
@@ -459,6 +458,9 @@ define([
                 childVertexHtmlFacade.getHtml()
             );
             self.addChildrenContainerToBubble(childVertexHtmlFacade, serverFormat.isLeftOriented);
+            if(childVertexHtmlFacade.isVertex() && childVertexHtmlFacade.hasSuggestions()){
+                api.showSuggestions(childVertexHtmlFacade);
+            }
             return childVertexHtmlFacade;
         };
         this.addChildrenContainerToBubble = function (vertexHtmlFacade, toLeft) {
@@ -600,6 +602,9 @@ define([
                     serverRootVertex,
                     verticesContainer
                 );
+                if (self.rootBubble.hasSuggestions()) {
+                    api.showSuggestions(self.rootBubble);
+                }
                 $.each(serverRootVertex.similarRelations, function (key, groupRelation) {
                     if (groupRelation.hasMultipleVertices()) {
                         self.buildBubbleHtmlIntoContainer(
