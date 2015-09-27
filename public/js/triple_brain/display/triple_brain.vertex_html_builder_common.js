@@ -25,7 +25,7 @@ define([
     var api = {};
 
     api.applyAutoCompleteIdentificationToLabelInput = function (input) {
-        input.tripleBrainAutocomplete({
+        input.tripleBrainAutocomplete(  {
             select: function (event, ui) {
                 api._labelAutocompleteSelectHandler(
                     BubbleFactory.fromSubHtml(

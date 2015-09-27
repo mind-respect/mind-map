@@ -12,8 +12,6 @@ define([
 ], function (SchemaSuggestion, UserMapAutocompleteProvider, WikidataAutocompleteProvider, GraphElementType, SchemaServiceMock, Scenarios) {
     "use strict";
     describe("schema_suggestion", function () {
-        beforeEach(function () {
-        });
         it("makes a suggestion out of every property", function () {
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),
                 formattedSearchResults = searchProvider.formatResults(

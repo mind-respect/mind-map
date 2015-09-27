@@ -159,6 +159,9 @@ define([
     api.isOnlyASingleElementSelected = function(){
         return selectionInfo.getNbSelectedElements() === 1;
     };
+    api.getSelectionInfo = function(){
+        return selectionInfo;
+    };
     EventBus.subscribe("/event/ui/graph/reset", selectionInfo.removeAll);
     return api;
     function centerBubbleIfApplicable(bubble) {

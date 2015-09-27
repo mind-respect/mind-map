@@ -97,7 +97,8 @@ define([
                 );
             });
         };
-        EventBus.subscribe("/event/ui/selection/changed", selectionChangedHandler);
+        EventBus.subscribe("/event/ui/selection/changed", reviewButtonsVisibility);
+        EventBus.subscribe('/event/ui/graph/vertex/suggestions/updated', reviewButtonsVisibility);
         EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function(){
             if(!MindMapInfo.isCenterBubbleUriDefinedInUrl()){
                 api._getMenu().addClass("hidden");
@@ -122,7 +123,8 @@ define([
 
         return api;
 
-        function selectionChangedHandler(event, selectionInfo) {
+        function reviewButtonsVisibility(){
+            var selectionInfo = SelectionHandler.getSelectionInfo();
             var clickHandler = updateCurrentClickHandler(selectionInfo);
             if (undefined === clickHandler) {
                 return;
@@ -140,8 +142,8 @@ define([
             return api._getMenu().find("> button");
         }
 
-        function updateCurrentClickHandler(selectedElements) {
-            var nbSelectedGraphElements = selectedElements.getNbSelected(),
+        function updateCurrentClickHandler(selectionInfo) {
+            var nbSelectedGraphElements = selectionInfo.getNbSelected(),
                 currentClickHandler,
                 vertexMenuHandler = GraphDisplayer.getVertexMenuHandler(),
                 relationMenuHandler = GraphDisplayer.getRelationMenuHandler();
@@ -149,11 +151,11 @@ define([
                 currentClickHandler = GraphDisplayer.getGraphMenuHandler();
             }
             else if (1 === nbSelectedGraphElements) {
-                currentClickHandler = selectedElements.getSingleElement().getMenuHandler().forSingle();
+                currentClickHandler = selectionInfo.getSingleElement().getMenuHandler().forSingle();
             } else {
-                var nbSelectedVertices = selectedElements.getNbSelectedVertices(),
-                    nbSelectedRelations = selectedElements.getNbSelectedRelations(),
-                    nbSelectedGroupRelations = selectedElements.getNbSelectedGroupRelations();
+                var nbSelectedVertices = selectionInfo.getNbSelectedVertices(),
+                    nbSelectedRelations = selectionInfo.getNbSelectedRelations(),
+                    nbSelectedGroupRelations = selectionInfo.getNbSelectedGroupRelations();
                 if (0 === nbSelectedVertices && 0 === nbSelectedGroupRelations) {
                     currentClickHandler = relationMenuHandler.forGroup();
                 } else if (0 === nbSelectedRelations && 0 === nbSelectedGroupRelations) {

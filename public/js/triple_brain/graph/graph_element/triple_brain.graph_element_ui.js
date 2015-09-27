@@ -161,8 +161,13 @@ define([
         return this.getHtml().hasClass("relation");
     };
     api.Self.prototype.getSimilarButtonHtml = function (button) {
+        return this.getButtonHtmlHavingAction(
+            button.getAction()
+        );
+    };
+    api.Self.prototype.getButtonHtmlHavingAction = function (action) {
         return this.getMenuHtml().find(
-            "[data-action=" + button.getAction() + "]"
+            "[data-action=" + action + "]"
         );
     };
     api.Self.prototype.getMenuHandler = function () {
