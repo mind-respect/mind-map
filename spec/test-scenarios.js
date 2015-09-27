@@ -28,7 +28,8 @@ define([
         "triple_brain.friendly_resource",
         "triple_brain.id_uri",
         "triple_brain.language_manager",
-        "text!locales/en/translation.json"
+        "text!locales/en/translation.json",
+        "test/jasmine-jquery"
     ],
     function ($, TestScenarioData, Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, TestUtils, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, EventBus, Suggestion, Identification, FriendlyResource, IdUri, LanguageManager, enTranslation) {
         "use strict";
@@ -46,6 +47,7 @@ define([
             }
         });
 
+        jasmine.getFixtures().fixturesPath = '../spec/fixtures';
         api.deepGraph = function () {
             this.getGraph = function () {
                 return api._getTestData("deepGraph");

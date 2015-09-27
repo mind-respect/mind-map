@@ -22,7 +22,7 @@ module.exports = function (grunt) {
             testAll: {
                 options: {
                     src: 'public/js/**/*.js',
-                    specs: 'spec/**/*.js',
+                    specs: 'spec/**/*_spec.js',
                     keepRunner: true,
                     version: "2.0.1",
                     template: require('grunt-template-jasmine-requirejs'),

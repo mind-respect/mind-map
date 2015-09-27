@@ -21,6 +21,7 @@ define([
         });
 
         it("can tell if only one vertex is selected", function(){
+            SelectionHandler.removeAll();
             expect(
                 SelectionHandler.isOnlyASingleBubbleSelected()
             ).toBeFalsy();

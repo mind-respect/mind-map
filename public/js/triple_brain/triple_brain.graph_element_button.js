@@ -17,17 +17,17 @@ define([
     }
 
     Self.prototype.showOnlyIfApplicable = function (clickHandler, selected) {
-        if(this.isForMainMenu()){
+        if(this.isForWholeGraph()){
             return;
         }
         var canActionBePerformed = this.canActionBePerformedOnSelected(
             selected, clickHandler
         );
+        var onlyOneSelected = !Array.isArray(selected);
         this.html[
-            canActionBePerformed ?
+            !onlyOneSelected && canActionBePerformed ?
                 "removeClass" : "addClass"
             ]("hidden");
-        var onlyOneSelected = !Array.isArray(selected);
         if (onlyOneSelected) {
             selected.getSimilarButtonHtml(this)[
                 canActionBePerformed ?
@@ -35,7 +35,7 @@ define([
                 ]("hidden");
         }
         else {
-            this._hideMenuOfElements(selected);
+            this._hideMenuForGraphElements(selected);
         }
     };
     Self.prototype.canActionBePossiblyMade = function (clickHandler) {
@@ -60,8 +60,8 @@ define([
     Self.prototype.getHtml = function () {
         return this.html;
     };
-    Self.prototype.isForMainMenu = function () {
-        return this.html.hasClass("main-menu");
+    Self.prototype.isForWholeGraph = function () {
+        return this.html.hasClass("whole-graph-button");
     };
     Self.prototype.getAction = function () {
         return this.html.attr(
@@ -81,7 +81,7 @@ define([
             container
         );
     };
-    Self.prototype._hideMenuOfElements = function (elements) {
+    Self.prototype._hideMenuForGraphElements = function (elements) {
         $.each(elements, function () {
             var element = this;
             element.hideMenu();

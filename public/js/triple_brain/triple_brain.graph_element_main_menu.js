@@ -26,7 +26,7 @@ define([
         };
         api.reset = function () {
             initButtons();
-            getMenu().draggable({
+            api._getMenu().draggable({
                 stop: function () {
                     var menu = $(this);
                     var topOff = menu.offset().top - $(window).scrollTop();
@@ -57,15 +57,14 @@ define([
                         "click",
                         function (event) {
                             event.stopPropagation();
-                            var button = $(this);
-                            var method = button.attr("data-action");
-                            var selectedElements = 1 === SelectionHandler.getNbSelected() ?
-                                SelectionHandler.getSingleElement() : SelectionHandler.getSelectedElements();
-                            getCurrentClickHandler()[
-                                method
+                            var button = GraphElementButton.fromHtml(
+                                $(this)
+                            );
+                            api._getCurrentClickHandler(button)[
+                                button.getAction()
                                 ](
                                 event,
-                                selectedElements
+                                SelectionHandler.getOneOrArrayOfSelected()
                             );
                         }
                     );
@@ -101,9 +100,26 @@ define([
         EventBus.subscribe("/event/ui/selection/changed", selectionChangedHandler);
         EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function(){
             if(!MindMapInfo.isCenterBubbleUriDefinedInUrl()){
-                getMenu().addClass("hidden");
+                api._getMenu().addClass("hidden");
             }
         });
+
+        api._getCurrentClickHandler = function(button) {
+            if(button.isForWholeGraph()){
+                return GraphDisplayer.getGraphMenuHandler();
+            }
+            return api._getMenu().data(
+                "currentClickHandler"
+            );
+        };
+
+        api._getMenu = function(){
+            if (!_menu || _menu.length === 0) {
+                _menu = $("#graph-element-menu");
+            }
+            return _menu;
+        };
+
         return api;
 
         function selectionChangedHandler(event, selectionInfo) {
@@ -121,14 +137,7 @@ define([
         }
 
         function getButtonsHtml() {
-            return getMenu().find("> button");
-        }
-
-        function getMenu() {
-            if (!_menu) {
-                _menu = $("#graph-element-menu");
-            }
-            return _menu;
+            return api._getMenu().find("> button");
         }
 
         function updateCurrentClickHandler(selectedElements) {
@@ -160,15 +169,9 @@ define([
         }
 
         function setCurrentClickHandler(currentClickHandler) {
-            getMenu().data(
+            api._getMenu().data(
                 "currentClickHandler",
                 currentClickHandler
-            );
-        }
-
-        function getCurrentClickHandler() {
-            return getMenu().data(
-                "currentClickHandler"
             );
         }
     }
