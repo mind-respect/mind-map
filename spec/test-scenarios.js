@@ -29,7 +29,7 @@ define([
         "triple_brain.id_uri",
         "triple_brain.language_manager",
         "text!locales/en/translation.json",
-        "test/jasmine-jquery"
+        "test/vendor/jasmine-jquery"
     ],
     function ($, TestScenarioData, Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, TestUtils, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, EventBus, Suggestion, Identification, FriendlyResource, IdUri, LanguageManager, enTranslation) {
         "use strict";

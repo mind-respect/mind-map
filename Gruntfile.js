@@ -38,7 +38,10 @@ module.exports = function (grunt) {
                 src : [
                     'public/js/triple_brain/**',
                     'public/js/module/**/*.js',
-                    'spec/**'
+                    'spec/*.js',
+                    'spec/triple_brain/**',
+                    'spec/mock/**',
+                    'spec/module/**'
                 ]
             },
             options: {
