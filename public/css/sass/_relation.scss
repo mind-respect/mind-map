@@ -98,13 +98,25 @@
   border-color: red;
 }
 
-.property {
+.bubble.property {
   input.edge-label {
     background-color: #f5f5f5;
     font-size: 13px;
   }
   .relation-menu {
     left: 0;
+  }
+  .arrow{
+    width:60px;
+    left:-45px;
+    padding-top:10px;
+    padding-bottom:10px;
+    top:calc(50% - 5px);
+    &:before{
+      top:-50%;
+      position:absolute;
+      left:26px;
+    }
   }
 }
 

@@ -63,19 +63,20 @@
 .vertex.view-only { margin-top: 2em; margin-bottom: 2em; }
 
 /*BORDER*/
-.left-oriented.vertices-children-container .vertex-tree-container:first-child > .vertex-container .group-relation .arrow, .left-oriented .vertices-children-container .vertex-tree-container:first-child > .vertex-container .group-relation .arrow { border-top-left-radius: 0; border-top-right-radius: 25px; }
-.left-oriented.vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .group-relation .arrow, .left-oriented .vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .group-relation .arrow { border-top-right-radius: 0; border-top-left-radius: 0; }
-.left-oriented.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow, .left-oriented .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow { border-top: none; top: calc(50% - 1.2em); border-bottom: 3px solid #ff80ef; border-bottom-left-radius: 0; border-bottom-right-radius: 25px; }
+.left-oriented.vertices-children-container .vertex-tree-container:first-child > .vertex-container .property .arrow, .left-oriented.vertices-children-container .vertex-tree-container:first-child > .vertex-container .group-relation .arrow, .left-oriented .vertices-children-container .vertex-tree-container:first-child > .vertex-container .property .arrow, .left-oriented .vertices-children-container .vertex-tree-container:first-child > .vertex-container .group-relation .arrow { border-top-left-radius: 0; border-top-right-radius: 25px; }
+.left-oriented.vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .property .arrow, .left-oriented.vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .group-relation .arrow, .left-oriented .vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .property .arrow, .left-oriented .vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .group-relation .arrow { border-top-right-radius: 0; border-top-left-radius: 0; }
+.left-oriented.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow, .left-oriented.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow, .left-oriented .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow, .left-oriented .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow { border-top: none; top: calc(50% - 1.2em); border-bottom: 3px solid #ff80ef; border-bottom-left-radius: 0; border-bottom-right-radius: 25px; }
 
 .vertices-children-container .vertex-tree-container:first-child > .vertical-border-first { border-left: none; border-right: none; }
 .vertices-children-container .vertex-tree-container:first-child > .vertical-border-second { border-top-right-radius: 25px; border-top-left-radius: 25px; }
 .vertices-children-container .vertex-tree-container:first-child > .vertex-container .connector { border-radius: 25px; }
-.vertices-children-container .vertex-tree-container:first-child > .vertex-container .group-relation .arrow { border-top-left-radius: 25px; }
+.vertices-children-container .vertex-tree-container:first-child > .vertex-container .property .arrow, .vertices-children-container .vertex-tree-container:first-child > .vertex-container .group-relation .arrow { border-top-left-radius: 25px; }
 .vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .connector { border-radius: 0; }
-.vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .group-relation .arrow { border-radius: 0; }
+.vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .property .arrow, .vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .group-relation .arrow { border-radius: 0; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container > .vertex:before { border-left: none; border-right: none; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .connector { border-radius: 25px; border-bottom: 3px solid #ff80ef; border-top: none; top: -0.5em; }
-.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow { border-top: none; top: calc(50% - 1.2em); border-bottom: 3px solid #ff80ef; border-bottom-left-radius: 25px; }
+.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow, .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow { border-top: none; top: calc(50% - 1.2em); border-bottom: 3px solid #ff80ef; border-bottom-left-radius: 25px; }
+.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow:before { top: 50%; position: relative; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-first { border-bottom-right-radius: 25px; border-bottom-left-radius: 25px; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-second { border-left: none; border-right: none; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-third { border-left: none; border-right: none; }
@@ -98,7 +99,7 @@
 .left-oriented .bubble .arrow:before { content: url("images/icons/vertex/arrowhead_left.svg"); }
 .left-oriented .bubble.inverse .arrow:before { content: url("images/icons/vertex/arrowhead_right.svg"); }
 .left-oriented .bubble.view-only .arrow:before { left: 8px; }
-.left-oriented .bubble.group-relation .arrow, .left-oriented .bubble.property .arrow { right: -42px; }
+.left-oriented .bubble.group-relation .arrow, .left-oriented .bubble.property .arrow { left: auto; right: -46px; }
 .left-oriented .bubble .connector { left: auto; right: -22px; }
 .left-oriented .vertex-tree-container .vertical-border { border-left: none; border-right: 3px solid #ff80ef; }
 
@@ -218,8 +219,10 @@ button.add-button-in-list:hover { color: #00d100; }
 
 .relation.inverse input[type=text] { border-color: red; }
 
-.property input.edge-label { background-color: #f5f5f5; font-size: 13px; }
-.property .relation-menu { left: 0; }
+.bubble.property input.edge-label { background-color: #f5f5f5; font-size: 13px; }
+.bubble.property .relation-menu { left: 0; }
+.bubble.property .arrow { width: 60px; left: -45px; padding-top: 10px; padding-bottom: 10px; top: calc(50% - 5px); }
+.bubble.property .arrow:before { top: -50%; position: absolute; left: 26px; }
 
 .bubble.group-relation { white-space: nowrap; }
 .bubble.group-relation .arrow { height: 20px; }
@@ -260,7 +263,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .vertex { /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */ white-space: nowrap; }
 .vertex.suggestion .in-bubble-content { border: 3px dashed black; color: black; text-shadow: none; }
 .vertex.surround-indicator .in-bubble-content { box-shadow: -1px -2px 1px #ff80ef; }
-.vertex.public:after { font-family: FontAwesome; content: "\f09c"; position: absolute; font-size: 1.6em; }
+.vertex.public:after { font-family: FontAwesome; content: "\f09c"; position: absolute; font-size: 1.6em; top: -18px; right: -4px; }
 .vertex.public .in-bubble-content { box-shadow: -1px -2px 1px #ff80ef; }
 .vertex.edit .in-bubble-content { width: 325px; max-width: 325px; }
 .vertex.edit .in-bubble-content .in-bubble-note-button { display: none; }
