@@ -6,6 +6,9 @@
   z-index: 5;
   cursor: default;
   display: table;
+  &.dragged{
+    background-color:transparent;
+  }
   /*.label to override bootstrap*/
   > *, .label {
     display: table-cell;

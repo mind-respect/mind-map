@@ -138,7 +138,8 @@ define(
                     GraphDisplayer.getSchemaSelector().get() :
                     GraphDisplayer.getVertexSelector().withUri(centralVertexUri)[0];
                 centralVertex.setAsCentral();
-                $("#drawn_graph").removeDragScroll().dragScroll().on(
+                GraphUi.enableDragScroll();
+                GraphUi.getDrawnGraph().on(
                     "click",
                     function (event) {
                         if (event.ctrlKey) {

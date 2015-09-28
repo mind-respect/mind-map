@@ -80,5 +80,15 @@ define([
                 bubble2.getHiddenRelationsContainer()._getHtml()
             ).toHaveClass("hidden");
         });
+        it("hides arrow when dragging", function () {
+            var bubble2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
+            expect(
+                bubble2.getArrowHtml()
+            ).not.toHaveClass("hidden");
+            TestUtils.startDragging(bubble2);
+            expect(
+                bubble2.getArrowHtml()
+            ).toHaveClass("hidden");
+        });
     });
 });

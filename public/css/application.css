@@ -234,6 +234,7 @@ button.add-button-in-list:hover { color: #00d100; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .bubble { z-index: 5; cursor: default; display: table; /*.label to override bootstrap*/ white-space: nowrap; position: relative; min-width: 0; margin: 0 0 0 0; }
+.bubble.dragged { background-color: transparent; }
 .bubble > *, .bubble .label { display: table-cell; vertical-align: middle; }
 .bubble.view-only .arrow:before { left: 0; }
 .bubble .in-bubble-content { position: relative; z-index: 3; }
@@ -396,6 +397,8 @@ html { font-size: 93.8%; }
 
 @media screen and (min-width: 600px) { html { font-size: 100%; } }
 @media screen and (min-width: 800px) { html { font-size: 125%; } }
+[draggable] { cursor: move; }
+
 #mind_map { cursor: all-scroll; -moz-user-select: -moz-none; -webkit-user-select: none; -ms-user-select: none; user-select: none; }
 #mind_map h2, #mind_map h3 { line-height: inherit; }
 

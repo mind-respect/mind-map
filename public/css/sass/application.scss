@@ -82,6 +82,10 @@ body {
   }
 }
 
+[draggable]{
+  cursor:move;
+}
+
 #mind_map {
   cursor: all-scroll;
   -moz-user-select: -moz-none;

@@ -253,9 +253,8 @@ define([
 
         api.Self.prototype.isVisible = function () {
             return !this.html.closest(
-                ".vertex-container"
-            ).hasClass("hidden") &&
-                !this.html.closest(".vertex-tree-container").hasClass("hidden");
+                    ".vertex-container"
+                ).hasClass("hidden") && !this.html.closest(".vertex-tree-container").hasClass("hidden");
         };
 
         api.Self.prototype._removeHideOrShow = function (action, argument) {
@@ -405,6 +404,10 @@ define([
 
         api.Self.prototype.setText = function (text) {
             this.getLabel().text(text);
+        };
+
+        api.Self.prototype.getArrowHtml = function () {
+            return this.html.find(".arrow");
         };
 
         EventBus.subscribe(

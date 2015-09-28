@@ -44,7 +44,7 @@ define([
             );
         };
 
-        $.fn.removeDragScroll = function () {
+        $.fn.disableDragScroll = function () {
             return this.off(
                 "mousedown",
                 handleMouseDown

@@ -144,12 +144,24 @@ define([
             return vertexMenu;
         };
         VertexCreator.prototype._setupDragAndDrop = function () {
+            this.html.mousedown(function(){
+                GraphUi.disableDragScroll();
+            });
+            this.html.mouseleave(function(){
+                GraphUi.enableDragScroll();
+            });
             this.html.on("dragstart", function () {
+                GraphUi.disableDragScroll();
                 var vertex = BubbleFactory.fromHtml(
                     $(this)
                 );
                 vertex.hideMenu();
                 vertex.hideHiddenRelationsContainer();
+                vertex.getArrowHtml().addClass("hidden");
+                vertex.getHtml().addClass("dragged");
+            });
+            this.html.on("dragend", function () {
+                GraphUi.enableDragScroll();
             });
         };
         return api;

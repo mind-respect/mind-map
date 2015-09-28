@@ -30,6 +30,12 @@ define([
             _bubbleIdCounter++;
             return "bubble-ui-id-" + _bubbleIdCounter;
         };
+        api.disableDragScroll = function(){
+            api.getDrawnGraph().disableDragScroll();
+        };
+        api.enableDragScroll = function(){
+            api.getDrawnGraph().disableDragScroll().dragScroll();
+        };
         return api;
     }
 );

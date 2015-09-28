@@ -123,7 +123,7 @@ define([
         ).on(
             "click",
             activateSelectionOnMindMap
-        ).removeDragScroll();
+        ).disableDragScroll();
     };
 
     api.isOnlyASingleBubbleSelected = function () {
