@@ -272,13 +272,13 @@ define([
 
         api.Self.prototype.showHiddenRelationsContainer = function () {
             if (this.hasHiddenRelationsContainer()) {
-                this.getHiddenRelationsContainer().removeClass("hidden");
+                this.getHiddenRelationsContainer().show();
             }
         };
 
         api.Self.prototype.hideHiddenRelationsContainer = function () {
             if (this.hasHiddenRelationsContainer()) {
-                this.getHiddenRelationsContainer().addClass("hidden");
+                this.getHiddenRelationsContainer().hide();
             }
         };
 

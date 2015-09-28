@@ -149,6 +149,7 @@ define([
                     $(this)
                 );
                 vertex.hideMenu();
+                vertex.hideHiddenRelationsContainer();
             });
         };
         return api;

@@ -46,7 +46,6 @@ define([
                 );
             }
         });
-
         jasmine.getFixtures().fixturesPath = '../spec/fixtures';
         api.deepGraph = function () {
             this.getGraph = function () {

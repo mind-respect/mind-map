@@ -17,7 +17,7 @@ define([
             bubble1 = threeBubblesScenario.getBubble1();
             graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
         });
-        it("can build from server facade", function(){
+        it("can build from server facade", function () {
             var uiId = GraphUi.generateBubbleHtmlId();
             var vertexUi = VertexHtmlBuilder.withServerFacade(
                 bubble1
@@ -29,7 +29,7 @@ define([
                 vertexUi.getUri()
             ).toBe(bubble1.getUri());
         });
-        it("if no uiId is specified it generates one", function(){
+        it("if no uiId is specified it generates one", function () {
             var vertexUi = VertexHtmlBuilder.withServerFacade(
                 bubble1
             ).create();
@@ -37,7 +37,7 @@ define([
                 vertexUi.getId()
             ).toBeDefined();
         });
-        it("adds duplicate button if has duplicate", function(){
+        it("adds duplicate button if has duplicate", function () {
             var bubble1 = graphWithCircularityScenario.getBubble1InTree();
             expect(
                 bubble1.hasTheDuplicateButton()
@@ -57,7 +57,7 @@ define([
                 bubble1Duplicate.hasTheDuplicateButton()
             ).toBeTruthy();
         });
-        it("hides menu when dragging", function(){
+        it("hides menu when dragging", function () {
             var bubble2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
             SelectionHandler.setToSingleGraphElement(
                 bubble2
@@ -68,6 +68,16 @@ define([
             TestUtils.startDragging(bubble2);
             expect(
                 bubble2.getMenuHtml()
+            ).toHaveClass("hidden");
+        });
+        it("hides hidden properties container when dragging", function () {
+            var bubble2 = new Scenarios.getGraphWithHiddenSimilarRelations().getBubble2InTree();
+            expect(
+                bubble2.getHiddenRelationsContainer()._getHtml()
+            ).not.toHaveClass("hidden");
+            TestUtils.startDragging(bubble2);
+            expect(
+                bubble2.getHiddenRelationsContainer()._getHtml()
             ).toHaveClass("hidden");
         });
     });

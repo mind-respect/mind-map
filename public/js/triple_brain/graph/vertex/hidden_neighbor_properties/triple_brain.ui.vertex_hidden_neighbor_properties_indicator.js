@@ -10,51 +10,64 @@ define([
     ],
     function ($, MindMapTemplate, EventBus, GraphDisplayer) {
         "use strict";
-        return {
-            withVertex: function (bubble) {
-                return new HiddenNeighborPropertiesIndicator(bubble);
-            }
+        var api = {};
+        api.withVertex = function (bubble) {
+            return new HiddenNeighborPropertiesIndicator(bubble);
         };
         function HiddenNeighborPropertiesIndicator(bubble) {
-            var hiddenNeighborPropertiesContainer;
-            this.build = function () {
-                var isLeftOriented = bubble.isToTheLeft();
-                hiddenNeighborPropertiesContainer = $(
-                    MindMapTemplate[
-                        'hidden_property_container'
-                        ].merge()
-                ).data("vertex", bubble);
-                var imageUrl = "/css/images/icons/vertex/" +
-                    (isLeftOriented ? "left-" : "") +
-                    "more-leaf.svg";
-                var img = $("<img>").attr(
-                    "src",
-                    imageUrl
-                ).attr(
-                    "data-toggle", "tooltip"
-                ).attr(
-                    "title",
-                    $.i18n.translate("hidden_properties_tooltip")
-                );
-                hiddenNeighborPropertiesContainer.append(
-                    img
-                );
-                bubble.getHtml()[isLeftOriented ? "prepend" : "append"](
-                    hiddenNeighborPropertiesContainer
-                );
-                hiddenNeighborPropertiesContainer.tooltip({
-                    delay:{"show":0, "hide":0}
-                }).on(
-                    "click",
-                    handleHiddenPropertiesContainerClick
-                );
-            };
-            this.remove = function () {
-                hiddenNeighborPropertiesContainer.remove();
-            };
+            this.bubble = bubble;
         }
 
-        function handleHiddenPropertiesContainerClick(event) {
+        HiddenNeighborPropertiesIndicator.prototype.build = function(){
+            var isLeftOriented = this.bubble.isToTheLeft();
+            this.hiddenNeighborPropertiesContainer = $(
+                MindMapTemplate[
+                    'hidden_property_container'
+                    ].merge()
+            ).data("vertex", this.bubble);
+            var imageUrl = "/css/images/icons/vertex/" +
+                (isLeftOriented ? "left-" : "") +
+                "more-leaf.svg";
+            var img = $("<img>").attr(
+                "src",
+                imageUrl
+            ).attr(
+                "data-toggle", "tooltip"
+            ).attr(
+                "title",
+                $.i18n.translate("hidden_properties_tooltip")
+            );
+            this.hiddenNeighborPropertiesContainer.append(
+                img
+            );
+            this.bubble.getHtml()[isLeftOriented ? "prepend" : "append"](
+                this.hiddenNeighborPropertiesContainer
+            );
+            this.hiddenNeighborPropertiesContainer.tooltip({
+                delay:{"show":0, "hide":0}
+            }).on(
+                "click",
+                handleHiddenPropertiesContainerClick
+            );
+        };
+
+        HiddenNeighborPropertiesIndicator.prototype.remove = function(){
+            this.hiddenNeighborPropertiesContainer.remove();
+        };
+
+        HiddenNeighborPropertiesIndicator.prototype.hide = function(){
+            this.hiddenNeighborPropertiesContainer.addClass("hidden");
+        };
+
+        HiddenNeighborPropertiesIndicator.prototype.show = function(){
+            this.hiddenNeighborPropertiesContainer.removeClass("hidden");
+        };
+
+        HiddenNeighborPropertiesIndicator.prototype._getHtml = function(){
+            return this.hiddenNeighborPropertiesContainer;
+        };
+
+        function handleHiddenPropertiesContainerClick() {
             if (!GraphDisplayer.canAddChildTree()) {
                 return;
             }
@@ -62,5 +75,6 @@ define([
             var vertex = $this.data("vertex");
             vertex.addChildTree();
         }
+        return api;
     }
 );
