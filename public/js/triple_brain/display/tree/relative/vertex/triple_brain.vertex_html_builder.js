@@ -10,10 +10,11 @@ define([
         "triple_brain.vertex_html_builder_common",
         "triple_brain.graph_element_html_builder",
         "triple_brain.ui.graph",
+        "triple_brain.bubble_factory",
         "jquery-ui",
         "jquery.is-fully-on-screen",
         "jquery.center-on-screen"
-    ], function ($, EventBus, MindMapTemplate, RelativeTreeVertex, VertexHtmlCommon, GraphElementHtmlBuilder, GraphUi) {
+    ], function ($, EventBus, MindMapTemplate, RelativeTreeVertex, VertexHtmlCommon, GraphElementHtmlBuilder, GraphUi, BubbleFactory) {
         "use strict";
         var api = {};
         api.withServerFacade = function (serverFacade) {
@@ -55,6 +56,7 @@ define([
                 "uri",
                 serverFacade.getUri()
             );
+            this._setupDragAndDrop();
             VertexHtmlCommon.setUpClickBehavior(
                 this.html
             );
@@ -140,6 +142,14 @@ define([
                 vertexMenu
             );
             return vertexMenu;
+        };
+        VertexCreator.prototype._setupDragAndDrop = function () {
+            this.html.on("dragstart", function () {
+                var vertex = BubbleFactory.fromHtml(
+                    $(this)
+                );
+                vertex.hideMenu();
+            });
         };
         return api;
     }

@@ -4,9 +4,11 @@
 
 define([
     "test/test-scenarios",
+    "test/test-utils",
     "triple_brain.vertex_html_builder",
-    "triple_brain.ui.graph"
-], function (Scenarios, VertexHtmlBuilder, GraphUi) {
+    "triple_brain.ui.graph",
+    "triple_brain.selection_handler"
+], function (Scenarios, TestUtils, VertexHtmlBuilder, GraphUi, SelectionHandler) {
     "use strict";
     describe("vertex_html_builder", function () {
         var bubble1, graphWithCircularityScenario;
@@ -54,6 +56,19 @@ define([
             expect(
                 bubble1Duplicate.hasTheDuplicateButton()
             ).toBeTruthy();
+        });
+        it("hides menu when dragging", function(){
+            var bubble2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
+            SelectionHandler.setToSingleGraphElement(
+                bubble2
+            );
+            expect(
+                bubble2.getMenuHtml()
+            ).not.toHaveClass("hidden");
+            TestUtils.startDragging(bubble2);
+            expect(
+                bubble2.getMenuHtml()
+            ).toHaveClass("hidden");
         });
     });
 });

@@ -18,7 +18,7 @@ define([
         );
         t.add(
             'relative_vertex',
-            '<div class="vertex graph-element relative bubble"></div>'
+            '<div class="vertex graph-element relative bubble" draggable="true"></div>'
         );
         t.add(
             'vertex_label_container',

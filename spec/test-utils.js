@@ -119,6 +119,10 @@ define([
             )
         );
     };
+    api.startDragging = function(bubble){
+        var event = $.Event("dragstart");
+        bubble.getHtml().trigger(event);
+    };
     return api;
 
     function generateUuid() {

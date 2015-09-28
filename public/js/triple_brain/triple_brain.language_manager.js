@@ -245,6 +245,7 @@ define([
     }
 
     function getLocaleUsedForSiteTranslation() {
+        //return "fr";
         var currentUser = UserService.authenticatedUserInCache();
         return currentUser === undefined ?
             getFromBrowser() :

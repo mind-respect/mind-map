@@ -142,7 +142,7 @@ define([
     };
     api.getOneOrArrayOfSelected = function () {
         return 1 === api.getNbSelected() ?
-            api.getSingleElement() : api.getSelectedElements()
+            api.getSingleElement() : api.getSelectedElements();
     };
     api.getSelectedElements = function () {
         return selectionInfo.getSelectedElements();

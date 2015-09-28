@@ -213,6 +213,7 @@ define([
             var mergedSuggestions = existingSuggestions.concat(suggestions);
             this.setSuggestions(mergedSuggestions);
             GraphDisplayer.showSuggestions(this);
+            this.centerOnScreen();
         };
         api.Object.prototype.setSuggestions = function (suggestions) {
             this.html.data('suggestions', suggestions);
