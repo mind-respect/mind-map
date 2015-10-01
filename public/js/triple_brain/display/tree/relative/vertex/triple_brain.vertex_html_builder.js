@@ -11,10 +11,13 @@ define([
         "triple_brain.graph_element_html_builder",
         "triple_brain.ui.graph",
         "triple_brain.bubble_factory",
+        "triple_brain.graph_displayer",
+        "triple_brain.edge",
+        "triple_brain.vertex",
         "jquery-ui",
         "jquery.is-fully-on-screen",
         "jquery.center-on-screen"
-    ], function ($, EventBus, MindMapTemplate, RelativeTreeVertex, VertexHtmlCommon, GraphElementHtmlBuilder, GraphUi, BubbleFactory) {
+    ], function ($, EventBus, MindMapTemplate, RelativeTreeVertex, VertexHtmlCommon, GraphElementHtmlBuilder, GraphUi, BubbleFactory, GraphDisplayer, Edge, Vertex) {
         "use strict";
         var api = {};
         api.withServerFacade = function (serverFacade) {
@@ -144,25 +147,62 @@ define([
             return vertexMenu;
         };
         VertexCreator.prototype._setupDragAndDrop = function () {
-            this.html.mousedown(function(){
+            this.html.mousedown(function () {
                 GraphUi.disableDragScroll();
             });
-            this.html.mouseleave(function(){
+            this.html.mouseleave(function () {
                 GraphUi.enableDragScroll();
             });
             this.html.on("dragstart", function () {
-                GraphUi.disableDragScroll();
                 var vertex = BubbleFactory.fromHtml(
                     $(this)
                 );
+                RelativeTreeVertex.setDraggedVertex(
+                    vertex
+                );
+                GraphUi.disableDragScroll();
                 vertex.hideMenu();
                 vertex.hideHiddenRelationsContainer();
                 vertex.getArrowHtml().addClass("hidden");
-                vertex.getHtml().addClass("dragged");
-            });
-            this.html.on("dragend", function () {
-                GraphUi.enableDragScroll();
-            });
+                vertex.getHtml().addClass(
+                    "dragged"
+                ).data(
+                    "original-parent",
+                    vertex.getParentVertex()
+                );
+            }).on(
+                "dragend", function (event) {
+                    event.preventDefault();
+                    GraphUi.enableDragScroll();
+                }).on(
+                "dragover", function (event) {
+                    event.preventDefault();
+                    var vertex = BubbleFactory.fromHtml($(this));
+                    var shouldSetToDragOver = !vertex.hasDragOver() && RelativeTreeVertex.getDraggedVertex().getUri() !== vertex.getUri()
+                    if (!shouldSetToDragOver) {
+                        return;
+                    }
+                    vertex.enterDragOver();
+                }).on(
+                "dragleave", function (event) {
+                    event.preventDefault();
+                    var vertex = BubbleFactory.fromHtml(
+                        $(this)
+                    );
+                    vertex.leaveDragOver();
+                }).on(
+                "drop", function () {
+                    var draggedVertex = RelativeTreeVertex.getDraggedVertex();
+                    var parent = BubbleFactory.fromHtml(
+                        $(this)
+                    );
+                    draggedVertex.moveToParent(
+                        parent
+                    );
+                    parent.leaveDragOver();
+                }
+            );
+
         };
         return api;
     }

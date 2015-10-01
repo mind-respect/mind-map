@@ -17,6 +17,17 @@ define([
         "use strict";
         var api = {};
         VertexUi.buildCommonConstructors(api);
+        api.setDraggedVertex = function(vertex){
+            $("body").data(
+                "dragged-vertex",
+                vertex
+            );
+        };
+        api.getDraggedVertex = function(){
+            return $("body").data(
+                "dragged-vertex"
+            );
+        };
         api.createFromHtml = function (html) {
             var vertex = new api.Object().init(
                 html

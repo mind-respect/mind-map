@@ -6,6 +6,14 @@ $boxShadowWhenSurroundIndicator: -1px -2px 1px #ff80ef;
 .vertex {
   /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */
   white-space: nowrap;
+
+  &.drag-over{
+    .in-bubble-content {
+      border:3px dashed red;
+      border-radius:50px;
+    }
+  }
+
   &.suggestion {
     .in-bubble-content {
       border: $edgeSize dashed black;

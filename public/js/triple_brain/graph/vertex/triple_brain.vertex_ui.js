@@ -321,6 +321,18 @@ define([
                 self
             );
         };
+
+        api.Object.prototype.hasDragOver = function () {
+            return this.getHtml().hasClass("drag-over");
+        };
+
+        api.Object.prototype.enterDragOver = function () {
+            this.getHtml().addClass("drag-over");
+        };
+
+        api.Object.prototype.leaveDragOver = function () {
+            this.getHtml().removeClass("drag-over");
+        };
         api.buildCommonConstructors(api);
         return api;
     }

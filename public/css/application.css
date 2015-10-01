@@ -262,6 +262,7 @@ button.add-button-in-list:hover { color: #00d100; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .vertex { /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */ white-space: nowrap; }
+.vertex.drag-over .in-bubble-content { border: 3px dashed red; border-radius: 50px; }
 .vertex.suggestion .in-bubble-content { border: 3px dashed black; color: black; text-shadow: none; }
 .vertex.surround-indicator .in-bubble-content { box-shadow: -1px -2px 1px #ff80ef; }
 .vertex.public:after { font-family: FontAwesome; content: "\f09c"; position: absolute; font-size: 1.6em; top: -18px; right: -4px; }
