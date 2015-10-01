@@ -239,6 +239,17 @@ define([
                 bubble3.getNumberOfChild()
             ).toBe(1);
         });
+        it("also moves a vertex's parent relation when moving a vertex", function () {
+            var bubble3 = threeBubbleScenario.getBubble3InTree();
+            expect(
+                bubble3.getNumberOfChild()
+            ).toBe(0);
+            var bubble2 = threeBubbleScenario.getBubble2InTree();
+            bubble2.moveToParent(bubble3);
+            expect(
+                bubble3.getTopMostChildBubble().text()
+            ).toBe("r1");
+        });
         it("expands a closed group relation when moving a graph element to it", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
             var centerBubble = scenario.getCenterVertexInTree();

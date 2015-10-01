@@ -26,8 +26,12 @@ define([
         api.Self.prototype = new GraphElementUi.Self();
 
         api.Self.prototype.moveToParent = function (parent) {
+            if(this.isVertex()){
+                return this.getParentBubble().moveToParent(
+                    parent
+                );
+            }
             var isOriginalToTheLeft = this.isToTheLeft();
-
             var treeContainer = this.html.closest(".vertex-tree-container");
             var toMove = treeContainer.add(treeContainer.next(".clear-fix"));
             if (parent.isGroupRelation()) {
