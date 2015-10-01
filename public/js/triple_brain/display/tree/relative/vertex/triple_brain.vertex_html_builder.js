@@ -205,6 +205,7 @@ define([
                         parent
                     );
                     parent.leaveDragOver();
+                    GraphUi.enableDragScroll();
                 }
             );
 
