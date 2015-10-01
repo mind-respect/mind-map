@@ -173,6 +173,11 @@ define([
             }).on(
                 "dragend", function (event) {
                     event.preventDefault();
+                    BubbleFactory.fromHtml(
+                        $(this)
+                    ).getArrowHtml().removeClass(
+                        "hidden"
+                    );
                     GraphUi.enableDragScroll();
                 }).on(
                 "dragover", function (event) {

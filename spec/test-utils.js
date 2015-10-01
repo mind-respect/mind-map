@@ -123,6 +123,10 @@ define([
         var event = $.Event("dragstart");
         bubble.getHtml().trigger(event);
     };
+    api.endDragging = function(bubble){
+        var event = $.Event("dragend");
+        bubble.getHtml().trigger(event);
+    };
     return api;
 
     function generateUuid() {

@@ -90,5 +90,16 @@ define([
                 bubble2.getArrowHtml()
             ).toHaveClass("hidden");
         });
+        it("shows arrow back when stopping to drag", function () {
+            var bubble2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
+            TestUtils.startDragging(bubble2);
+            expect(
+                bubble2.getArrowHtml()
+            ).toHaveClass("hidden");
+            TestUtils.endDragging(bubble2);
+            expect(
+                bubble2.getArrowHtml()
+            ).not.toHaveClass("hidden");
+        });
     });
 });
