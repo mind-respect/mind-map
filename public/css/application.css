@@ -65,7 +65,7 @@
 /*BORDER*/
 .left-oriented.vertices-children-container .vertex-tree-container:first-child > .vertex-container .property .arrow, .left-oriented.vertices-children-container .vertex-tree-container:first-child > .vertex-container .group-relation .arrow, .left-oriented .vertices-children-container .vertex-tree-container:first-child > .vertex-container .property .arrow, .left-oriented .vertices-children-container .vertex-tree-container:first-child > .vertex-container .group-relation .arrow { border-top-left-radius: 0; border-top-right-radius: 25px; }
 .left-oriented.vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .property .arrow, .left-oriented.vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .group-relation .arrow, .left-oriented .vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .property .arrow, .left-oriented .vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .group-relation .arrow { border-top-right-radius: 0; border-top-left-radius: 0; }
-.left-oriented.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow, .left-oriented.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow, .left-oriented .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow, .left-oriented .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow { border-top: none; top: calc(50% - 1.2em); border-bottom: 3px solid #ff80ef; border-bottom-left-radius: 0; border-bottom-right-radius: 25px; }
+.left-oriented.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow, .left-oriented.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow, .left-oriented .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow, .left-oriented .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow { border-top: none; top: calc(50% - 1.4em); border-bottom: 3px solid #ff80ef; border-bottom-left-radius: 0; border-bottom-right-radius: 25px; }
 
 .vertices-children-container .vertex-tree-container:first-child > .vertical-border-first { border-left: none; border-right: none; }
 .vertices-children-container .vertex-tree-container:first-child > .vertical-border-second { border-top-right-radius: 25px; border-top-left-radius: 25px; }
@@ -74,8 +74,8 @@
 .vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .connector { border-radius: 0; }
 .vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .property .arrow, .vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .group-relation .arrow { border-radius: 0; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container > .vertex:before { border-left: none; border-right: none; }
-.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .connector { border-radius: 25px; border-bottom: 3px solid #ff80ef; border-top: none; top: calc(50% - 20px); }
-.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow, .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow { border-top: none; top: calc(50% - 1.2em); border-bottom: 3px solid #ff80ef; border-bottom-left-radius: 25px; }
+.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .connector { border-radius: 25px; border-bottom: 3px solid #ff80ef; border-top: none; top: calc(50% - 21px); }
+.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow, .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow { border-top: none; top: calc(50% - 1.4em); border-bottom: 3px solid #ff80ef; border-bottom-left-radius: 25px; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow:before { top: 50%; position: relative; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-first { border-bottom-right-radius: 25px; border-bottom-left-radius: 25px; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-second { border-left: none; border-right: none; }
@@ -248,7 +248,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .bubble .image_container { z-index: 3; position: relative; min-width: 60px; text-align: right; }
 .bubble .image_container:empty { min-width: 0; }
 .bubble .edge-label { display: inline; }
-.bubble .connector { position: absolute; height: 21px; border-top: 3px solid #ff80ef; top: 50%; width: 65px; left: -22px; z-index: -1; }
+.bubble .connector { position: absolute; height: 22px; border-top: 3px solid #ff80ef; top: 50%; width: 65px; left: -22px; z-index: -1; }
 .bubble .arrow { position: absolute; height: 1px; width: 47px; top: 50%; left: -42px; border-top: 3px solid #ff80ef; z-index: -1; }
 .bubble .arrow ~ { background-color: yellow; }
 .bubble .arrow ~ .in-bubble-note-button:not(hidden) { width: 100%; }
@@ -292,7 +292,7 @@ button.add-button-in-list:hover { color: #00d100; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 [data-zoom="0"] .vertex.edit .in-bubble-content { width: 70vw; max-width: 70vw; }
-[data-zoom="0"] .vertex .in-bubble-content { padding: calc(1em + 4vw); padding-bottom: calc(1em + 6vh); padding-top: calc(1em + 6vh); }
+[data-zoom="0"] .vertex .in-bubble-content { padding: calc(1em + 3.5vw); padding-bottom: calc(1em + 5.25vh); padding-top: calc(1em + 5.25vh); }
 [data-zoom="0"] .vertex .in-bubble-content button { width: calc(30px + 1.5vw); height: calc(30px + 1.5vw); font-size: calc(1em + 0.5vw); }
 [data-zoom="0"] .vertex .in-bubble-content button i { top: 50%; }
 [data-zoom="0"] .vertex .in-bubble-content .menu { width: calc(146px + 7.5vw); }
@@ -301,7 +301,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="0"] .bubble-label { font-size: calc(1em + 8vw); }
 
 [data-zoom="1"] .vertex.edit .in-bubble-content { width: 65vw; max-width: 65vw; }
-[data-zoom="1"] .vertex .in-bubble-content { padding: calc(1em + 2.9vw); padding-bottom: calc(1em + 4.35vh); padding-top: calc(1em + 4.35vh); }
+[data-zoom="1"] .vertex .in-bubble-content { padding: calc(1em + 2.4vw); padding-bottom: calc(1em + 3.6vh); padding-top: calc(1em + 3.6vh); }
 [data-zoom="1"] .vertex .in-bubble-content button { width: calc(30px + 1.2vw); height: calc(30px + 1.2vw); font-size: calc(1em + 0.4vw); }
 [data-zoom="1"] .vertex .in-bubble-content button i { top: 48%; }
 [data-zoom="1"] .vertex .in-bubble-content .menu { width: calc(146px + 6vw); }
@@ -310,7 +310,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="1"] .bubble-label { font-size: calc(1em + 7.16667vw); }
 
 [data-zoom="2"] .vertex.edit .in-bubble-content { width: 60vw; max-width: 60vw; }
-[data-zoom="2"] .vertex .in-bubble-content { padding: calc(1em + 1.8vw); padding-bottom: calc(1em + 2.7vh); padding-top: calc(1em + 2.7vh); }
+[data-zoom="2"] .vertex .in-bubble-content { padding: calc(1em + 1.3vw); padding-bottom: calc(1em + 1.95vh); padding-top: calc(1em + 1.95vh); }
 [data-zoom="2"] .vertex .in-bubble-content button { width: calc(30px + 0.9vw); height: calc(30px + 0.9vw); font-size: calc(1em + 0.3vw); }
 [data-zoom="2"] .vertex .in-bubble-content button i { top: 46%; }
 [data-zoom="2"] .vertex .in-bubble-content .menu { width: calc(146px + 4.5vw); }
@@ -426,6 +426,6 @@ li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-bu
 .main-panel { z-index: 12; background-color: transparent; opacity: 0.91; -moz-border-radius: 15px; border-radius: 15px; cursor: default; }
 
 .hidden-properties-container { z-index: 3; min-width: 25px; }
-.hidden-properties-container img { width: 145px; height: auto; }
+.hidden-properties-container img { width: 115px; height: auto; }
 
 .link-like-button { border-style: none; font-size: 0.7em; padding: 0 0 0 0; background-color: transparent; font-weight: normal; }

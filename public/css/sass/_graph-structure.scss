@@ -99,7 +99,7 @@ $connectorRadius: 25px;
           .property, .group-relation {
             .arrow {
               border-top:none;
-              top: calc(50% - 1.2em);
+              top: calc(50% - 1.4em);
               border-bottom:$edgeStyle;
               border-bottom-left-radius: 0;
               border-bottom-right-radius: $connectorRadius;
@@ -159,7 +159,7 @@ $connectorRadius: 25px;
       .property, .group-relation {
         .arrow {
           border-top:none;
-          top: calc(50% - 1.2em);
+          top: calc(50% - 1.4em);
           border-bottom:$edgeStyle;
           border-bottom-left-radius: $connectorRadius;
         }

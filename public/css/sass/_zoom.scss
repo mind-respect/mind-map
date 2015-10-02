@@ -9,7 +9,7 @@ $verticalPaddingRatio: 1.5;
 //$editWidth: 60; //rem;
 $editWidth: 70;
 //vw;
-$horizontalPaddingHighest: 4;
+$horizontalPaddingHighest: 3.5;
 
 @mixin zoom {
   @for $i from 0 through 10 {
