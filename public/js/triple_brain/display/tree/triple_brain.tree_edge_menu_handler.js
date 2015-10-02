@@ -7,8 +7,12 @@ define([
     "triple_brain.graph_element_menu_handler",
     "triple_brain.identification_menu",
     "triple_brain.edge_service",
-    "triple_brain.mind_map_info"
-], function ($, GraphElementMenuHandler, IdentificationMenu, EdgeService, MindMapInfo) {
+    "triple_brain.mind_map_info",
+    "triple_brain.identification",
+    "triple_brain.graph_displayer",
+    "triple_brain.vertex_service",
+    "triple_brain.group_relation_menu_handler"
+], function ($, GraphElementMenuHandler, IdentificationMenu, EdgeService, MindMapInfo, Identification, GraphDisplayer, VertexService, GroupRelationMenuHandler) {
     "use strict";
     var api = {},
         forSingle = {},
@@ -29,6 +33,30 @@ define([
     forSingleNotOwned.identify = forSingle.identify = function (event, edge) {
         forSingle.identifyAction(edge);
     };
+    forSingle.addChild = function(event, edge){
+        forSingle.addChildAction(edge);
+    };
+    forSingle.addChildAction = function(edge){
+        var edgeAsAnIdentification = Identification.fromFriendlyResource(
+            edge.getOriginalServerObject()
+        );
+        edgeAsAnIdentification.setLabel(
+            edge.text()
+        );
+        edgeAsAnIdentification.setComment(
+            edge.getNote()
+        );
+        var parentVertex = edge.getParentVertex();
+        var newGroupRelation = GraphDisplayer.addNewGroupRelation(
+            edgeAsAnIdentification,
+            parentVertex
+        );
+        GroupRelationMenuHandler.forSingle().addChildAction(
+            newGroupRelation
+        );
+        edge.moveToParent(newGroupRelation);
+    };
+
     forSingle.identifyAction = function(edge){
         IdentificationMenu.ofGraphElement(
             edge
