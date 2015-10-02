@@ -181,7 +181,7 @@ define([
                 "dragover", function (event) {
                     event.preventDefault();
                     var vertex = BubbleFactory.fromHtml($(this));
-                    var shouldSetToDragOver = !vertex.hasDragOver() && RelativeTreeVertex.getDraggedVertex().getUri() !== vertex.getUri()
+                    var shouldSetToDragOver = !vertex.hasDragOver() && RelativeTreeVertex.getDraggedVertex().getUri() !== vertex.getUri();
                     if (!shouldSetToDragOver) {
                         return;
                     }
