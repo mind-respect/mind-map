@@ -31,7 +31,7 @@
   .in-bubble-content {
     $fontSize: 1.05em;
     .bubble-label {
-      background-color: #3a87ad;
+      background-color: $edgeColor;
       font-family: helvetica;
       font-size: $fontSize;
       height: auto;
@@ -75,7 +75,7 @@
 .relation input {
   border-radius: 3px 3px 3px 3px;
   border-width: 0.2em;
-  border-color: #3A87AD;
+  border-color: $edgeColor;
   padding: 0;
   outline: none;
   font-family: courier new, monospace;
@@ -92,7 +92,7 @@
 }
 
 .relation.inverse .in-bubble-content .bubble-label {
-  background: mediumpurple;
+  background: $edgeInverseColor;
 }
 
 .relation.inverse input[type=text] {

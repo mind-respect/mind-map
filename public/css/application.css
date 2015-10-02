@@ -65,7 +65,7 @@
 /*BORDER*/
 .left-oriented.vertices-children-container .vertex-tree-container:first-child > .vertex-container .property .arrow, .left-oriented.vertices-children-container .vertex-tree-container:first-child > .vertex-container .group-relation .arrow, .left-oriented .vertices-children-container .vertex-tree-container:first-child > .vertex-container .property .arrow, .left-oriented .vertices-children-container .vertex-tree-container:first-child > .vertex-container .group-relation .arrow { border-top-left-radius: 0; border-top-right-radius: 25px; }
 .left-oriented.vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .property .arrow, .left-oriented.vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .group-relation .arrow, .left-oriented .vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .property .arrow, .left-oriented .vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .group-relation .arrow { border-top-right-radius: 0; border-top-left-radius: 0; }
-.left-oriented.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow, .left-oriented.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow, .left-oriented .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow, .left-oriented .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow { border-top: none; top: calc(50% - 1.4em); border-bottom: 3px solid #ff80ef; border-bottom-left-radius: 0; border-bottom-right-radius: 25px; }
+.left-oriented.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow, .left-oriented.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow, .left-oriented .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow, .left-oriented .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow { border-top: none; top: calc(50% - 1.4em); border-bottom: 3px solid #3a87ad; border-bottom-left-radius: 0; border-bottom-right-radius: 25px; }
 
 .vertices-children-container .vertex-tree-container:first-child > .vertical-border-first { border-left: none; border-right: none; }
 .vertices-children-container .vertex-tree-container:first-child > .vertical-border-second { border-top-right-radius: 25px; border-top-left-radius: 25px; }
@@ -74,14 +74,14 @@
 .vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .connector { border-radius: 0; }
 .vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .property .arrow, .vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .group-relation .arrow { border-radius: 0; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container > .vertex:before { border-left: none; border-right: none; }
-.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .connector { border-radius: 25px; border-bottom: 3px solid #ff80ef; border-top: none; top: calc(50% - 21px); }
-.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow, .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow { border-top: none; top: calc(50% - 1.4em); border-bottom: 3px solid #ff80ef; border-bottom-left-radius: 25px; }
-.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow:before { top: 50%; position: relative; }
+.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .connector { border-radius: 25px; border-bottom: 3px solid #3a87ad; border-top: none; top: calc(50% - 21px); }
+.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow, .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow { border-top: none; top: calc(50% - 1.4em); border-bottom: 3px solid #3a87ad; border-bottom-left-radius: 25px; }
+.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow:before { top: calc(50% + 1px); position: relative; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-first { border-bottom-right-radius: 25px; border-bottom-left-radius: 25px; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-second { border-left: none; border-right: none; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-third { border-left: none; border-right: none; }
 
-.vertical-border { display: table; height: 50%; border-left: 3px solid #ff80ef; padding-right: 40px; }
+.vertical-border { display: table; height: 50%; border-left: 3px solid #3a87ad; padding-right: 40px; }
 
 .vertical-border.small { padding-right: 20px; }
 
@@ -101,7 +101,7 @@
 .left-oriented .bubble.view-only .arrow:before { left: 8px; }
 .left-oriented .bubble.group-relation .arrow, .left-oriented .bubble.property .arrow { left: auto; right: -46px; }
 .left-oriented .bubble .connector { left: auto; right: -22px; }
-.left-oriented .vertex-tree-container .vertical-border { border-left: none; border-right: 3px solid #ff80ef; }
+.left-oriented .vertex-tree-container .vertical-border { border-left: none; border-right: 3px solid #3a87ad; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .frontier { position: fixed; background-color: transparent; z-index: 0; }
@@ -213,7 +213,7 @@ button.add-button-in-list:hover { color: #00d100; }
 
 .relation.selected .label { box-shadow: 4px 4px 4px black; }
 
-.relation input { border-radius: 3px 3px 3px 3px; border-width: 0.2em; border-color: #3A87AD; padding: 0; outline: none; font-family: courier new, monospace; font-size: 14px; vertical-align: middle; background-color: transparent; overflow: hidden; position: absolute; width: 100%; top: 0; left: 0; right: 0; z-index: 5; }
+.relation input { border-radius: 3px 3px 3px 3px; border-width: 0.2em; border-color: #3a87ad; padding: 0; outline: none; font-family: courier new, monospace; font-size: 14px; vertical-align: middle; background-color: transparent; overflow: hidden; position: absolute; width: 100%; top: 0; left: 0; right: 0; z-index: 5; }
 
 .relation.inverse .in-bubble-content .bubble-label { background: mediumpurple; }
 
@@ -248,8 +248,8 @@ button.add-button-in-list:hover { color: #00d100; }
 .bubble .image_container { z-index: 3; position: relative; min-width: 60px; text-align: right; }
 .bubble .image_container:empty { min-width: 0; }
 .bubble .edge-label { display: inline; }
-.bubble .connector { position: absolute; height: 22px; border-top: 3px solid #ff80ef; top: 50%; width: 65px; left: -22px; z-index: -1; }
-.bubble .arrow { position: absolute; height: 1px; width: 47px; top: 50%; left: -42px; border-top: 3px solid #ff80ef; z-index: -1; }
+.bubble .connector { position: absolute; height: 22px; border-top: 3px solid #3a87ad; top: 50%; width: 65px; left: -22px; z-index: -1; }
+.bubble .arrow { position: absolute; height: 1px; width: 47px; top: 50%; left: -42px; border-top: 3px solid #3a87ad; z-index: -1; }
 .bubble .arrow ~ { background-color: yellow; }
 .bubble .arrow ~ .in-bubble-note-button:not(hidden) { width: 100%; }
 .bubble .arrow:before { content: url("images/icons/vertex/arrowhead_right.svg"); position: relative; top: -11px; left: 20px; }

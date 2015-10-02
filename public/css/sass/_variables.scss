@@ -3,6 +3,8 @@
  */
 
 $edgeSize: 3px;
-$edgeStyle: $edgeSize solid #ff80ef;
+$edgeColor: #3a87ad;
+$edgeInverseColor: mediumpurple;
+$edgeStyle: $edgeSize solid $edgeColor;
 $linksColor:#00005a;
 $relationConnectorHeight:22px;
