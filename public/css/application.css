@@ -74,7 +74,7 @@
 .vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .connector { border-radius: 0; }
 .vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .property .arrow, .vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .group-relation .arrow { border-radius: 0; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container > .vertex:before { border-left: none; border-right: none; }
-.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .connector { border-radius: 25px; border-bottom: 3px solid #ff80ef; border-top: none; top: -0.5em; }
+.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .connector { border-radius: 25px; border-bottom: 3px solid #ff80ef; border-top: none; top: calc(50% - 20px); }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow, .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow { border-top: none; top: calc(50% - 1.2em); border-bottom: 3px solid #ff80ef; border-bottom-left-radius: 25px; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow:before { top: 50%; position: relative; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-first { border-bottom-right-radius: 25px; border-bottom-left-radius: 25px; }

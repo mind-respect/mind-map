@@ -154,7 +154,7 @@ $connectorRadius: 25px;
         border-radius: $connectorRadius;
         border-bottom: $edgeStyle;
         border-top: none;
-        top: -0.5em;
+        top: calc(50% - #{$relationConnectorHeight - 1})
       }
       .property, .group-relation {
         .arrow {

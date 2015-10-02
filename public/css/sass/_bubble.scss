@@ -74,7 +74,7 @@
   }
   .connector {
     position: absolute;
-    height: 21px;
+    height: $relationConnectorHeight;
     border-top: $edgeStyle;
     top: 50%;
     width: 65px;
