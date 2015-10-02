@@ -5,6 +5,7 @@
   position: relative;
   .label {
     border-radius: 0.80em;
+    padding-top:0.3em;
   }
   .menu {
     background-color: transparent;
@@ -28,7 +29,7 @@
     }
   }
   .in-bubble-content {
-    $fontSize: 1.2em;
+    $fontSize: 1.05em;
     .bubble-label {
       background-color: #3a87ad;
       font-family: helvetica;

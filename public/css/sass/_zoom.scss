@@ -67,7 +67,7 @@ $horizontalPaddingHighest: 4;
         }
       }
       .bubble-label {
-        $fontSizeExtra: max(0, 8 - $i);
+        $fontSizeExtra: max(0, 8 - $i / 1.20);
         font-size: calc(1em + #{$fontSizeExtra}vw);
       }
     }
