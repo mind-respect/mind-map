@@ -1,8 +1,8 @@
 /*
  * Copyright Vincent Blouin under the GPL License version 3
  */
-$boxShadowWhenSurroundIndicator: -10px 0 10px -10px #ff80ef, 10px 0 10px -10px #ff80ef;
-$boxShadowWhenSurroundIndicator: -1px -2px 1px #ff80ef;
+$boxShadowWhenSurroundIndicator: -10px 0 10px -10px midnightblue, 10px 0 10px -10px midnightblue;
+$boxShadowWhenSurroundIndicator: -1px -2px 1px midnightblue;
 .vertex {
   /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */
   white-space: nowrap;
