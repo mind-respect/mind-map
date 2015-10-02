@@ -99,6 +99,12 @@ define([
                 url: edge.getUri() + "/inverse"
             }).success(callback);
         };
+        api.changeSourceVertex = function(sourceVertex, edge, callback){
+            $.ajax({
+                type: 'PUT',
+                url: edge.getUri() + "/source-vertex/" + IdUri.elementIdFromUri(sourceVertex.getUri())
+            }).success(callback);
+        };
         return api;
         function edgesUrl() {
             return UserService.currentUserUri() + "/graph/edge";

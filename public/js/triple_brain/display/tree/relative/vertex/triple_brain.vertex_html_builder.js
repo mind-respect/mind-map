@@ -11,13 +11,11 @@ define([
         "triple_brain.graph_element_html_builder",
         "triple_brain.ui.graph",
         "triple_brain.bubble_factory",
-        "triple_brain.graph_displayer",
-        "triple_brain.edge",
-        "triple_brain.vertex",
+        "triple_brain.edge_service",
         "jquery-ui",
         "jquery.is-fully-on-screen",
         "jquery.center-on-screen"
-    ], function ($, EventBus, MindMapTemplate, RelativeTreeVertex, VertexHtmlCommon, GraphElementHtmlBuilder, GraphUi, BubbleFactory, GraphDisplayer, Edge, Vertex) {
+    ], function ($, EventBus, MindMapTemplate, RelativeTreeVertex, VertexHtmlCommon, GraphElementHtmlBuilder, GraphUi, BubbleFactory, EdgeService) {
         "use strict";
         var api = {};
         api.withServerFacade = function (serverFacade) {
@@ -201,11 +199,15 @@ define([
                     var parent = BubbleFactory.fromHtml(
                         $(this)
                     );
+                    GraphUi.enableDragScroll();
                     draggedVertex.moveToParent(
                         parent
                     );
                     parent.leaveDragOver();
-                    GraphUi.enableDragScroll();
+                    EdgeService.changeSourceVertex(
+                        parent,
+                        draggedVertex.getParentBubble()
+                    );
                 }
             );
 
