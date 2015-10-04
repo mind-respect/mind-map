@@ -10,6 +10,7 @@ requirejs.config({
         "test": '../../spec',
         "module": '../module',
         "md5" : "vendor/md5.min",
+        "wordcloud2": "vendor/wordcloud2",
         "polyk" : "vendor/polyk",
         "jquery": "jquery/jquery-2.1.1",
         "jquery-ui": "jquery/jquery-ui-11-4/jquery-ui.min",
@@ -138,6 +139,7 @@ requirejs.config({
     },
     shim: {
         "polyk": [],
+        "wordcloud2":[],
         "jquery-ui": ["jquery"],
         "jquery.url": ["jquery"],
         "jquery.nano": ["jquery"],
