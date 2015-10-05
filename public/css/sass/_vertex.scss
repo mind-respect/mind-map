@@ -24,10 +24,11 @@ $boxShadowWhenSurroundIndicator: -1px -2px 1px midnightblue;
   &.surround-indicator {
     .in-bubble-content {
       //box-shadow: -10px 0 10px -10px #d18798, 10px 0 10px -10px #d18798;
-      box-shadow: $boxShadowWhenSurroundIndicator;
+      //box-shadow: $boxShadowWhenSurroundIndicator;
     }
   }
   &.public {
+    .in-bubble-content{
       &:after {
         font-family: FontAwesome;
         content: "\f09c";
@@ -35,11 +36,12 @@ $boxShadowWhenSurroundIndicator: -1px -2px 1px midnightblue;
         //font-style: italic;
         position: absolute;
         font-size: 1.6em;
-        top: -18px;
-        right: -4px;
+        top: 0;
+        right: 14px;
         //right:-10%;
-
       }
+    }
+
     //.bubble-label {
     //  &:after {
     //    font-family: FontAwesome;
@@ -55,9 +57,9 @@ $boxShadowWhenSurroundIndicator: -1px -2px 1px midnightblue;
     //    top: 0;
     //  }
     //}
-    .in-bubble-content {
-      box-shadow: $boxShadowWhenSurroundIndicator;
-    }
+    //.in-bubble-content {
+    //  box-shadow: $boxShadowWhenSurroundIndicator;
+    //}
   }
   &.edit {
     .in-bubble-content {
@@ -120,6 +122,8 @@ $boxShadowWhenSurroundIndicator: -1px -2px 1px midnightblue;
     }
     .in-bubble-content {
       //box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.5);
+      box-shadow: $boxShadowWhenSurroundIndicator;
+      //border:3px solid midnightblue;
     }
     &.selected {
       .in-bubble-content {
@@ -179,8 +183,8 @@ $boxShadowWhenSurroundIndicator: -1px -2px 1px midnightblue;
       display: block;
     }
     .duplicate-button-container {
-      left: -17px;
-      top: -18px;
+      left: 3px;
+      top: 0;
     }
 
     //box-shadow: -10px 0 10px -10px #333, 10px 0 10px -10px #333;
