@@ -161,7 +161,7 @@ define([
     }
 
     function tabAction(selectedElement) {
-        if (MindMapInfo.isViewOnly() || selectedElement.isRelation() || selectedElement.isProperty()) {
+        if (MindMapInfo.isViewOnly() || selectedElement.isProperty()) {
             return;
         }
         selectedElement.getMenuHandler().forSingle().addChildAction(selectedElement);
