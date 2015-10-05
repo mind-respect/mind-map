@@ -1,8 +1,7 @@
 /*
  * Copyright Vincent Blouin under the GPL License version 3
  */
-$boxShadowWhenSurroundIndicator: -10px 0 10px -10px midnightblue, 10px 0 10px -10px midnightblue;
-$boxShadowWhenSurroundIndicator: -1px -2px 1px midnightblue;
+$centerVertexBorder: -1px -2px 1px midnightblue;
 .vertex {
   /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */
   white-space: nowrap;
@@ -19,12 +18,6 @@ $boxShadowWhenSurroundIndicator: -1px -2px 1px midnightblue;
       border: $edgeSize dashed black;
       color: black;
       text-shadow: none;
-    }
-  }
-  &.surround-indicator {
-    .in-bubble-content {
-      //box-shadow: -10px 0 10px -10px #d18798, 10px 0 10px -10px #d18798;
-      //box-shadow: $boxShadowWhenSurroundIndicator;
     }
   }
   &.public {
@@ -121,15 +114,7 @@ $boxShadowWhenSurroundIndicator: -1px -2px 1px midnightblue;
       left: 0;
     }
     .in-bubble-content {
-      //box-shadow: 0 0 1em hsla(30, 100%, 50%, 0.5);
-      box-shadow: $boxShadowWhenSurroundIndicator;
-      //border:3px solid midnightblue;
-    }
-    &.selected {
-      .in-bubble-content {
-        //box-shadow: 0px 0px 5px #3005bb, inset 0px 0px 2px #3005bb;
-        //border: solid red;
-      }
+      box-shadow: $centerVertexBorder;
     }
   }
   .included-graph-elements-flag {
