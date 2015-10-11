@@ -21,11 +21,12 @@ define(
         "triple_brain.anonymous_flow",
         "triple_brain.change_password",
         "triple_brain.login_handler",
+        "triple_brain.bubble_cloud_flow",
         "triple_brain.wikidata",
         "jquery.triple_brain.drag_scroll",
         "triple_brain.modules"
     ],
-    function ($, UserService, EventBus, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, SelectionHandler, GraphElementMainMenu, MindMapInfo, Header, ExternalPageLoader, IdUriUtils, AnonymousFlow, ChangePassword, LoginHandler) {
+    function ($, UserService, EventBus, SearchUi, GraphDisplayer, GraphDisplayerFactory, GraphUi, LanguageManager, SelectionHandler, GraphElementMainMenu, MindMapInfo, Header, ExternalPageLoader, IdUriUtils, AnonymousFlow, ChangePassword, LoginHandler, BubbleCloudFlow) {
         "use strict";
         var api = {
             start: function () {
@@ -56,26 +57,22 @@ define(
 
                 function setupMindMapForAuthenticatedUser() {
                     if (!MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
-                        UserService.authenticatedUser(function (user) {
-                            UserService.getDefaultVertexUri(
-                                user.user_name,
-                                function (uri) {
-                                    window.location = "?bubble=" + uri;
-                                }
-                            );
+                        UserService.authenticatedUser(function () {
+                            setupMindMap(false, true);
+                            BubbleCloudFlow.enter();
                         });
                         return;
                     }
-                    MindMapInfo.setIsAnonymous(false);
-                    setupMindMap(false);
+                    setupMindMap(false, false);
                 }
 
                 function setupMindMapForAnonymousUser() {
-                    MindMapInfo.setIsAnonymous(true);
-                    setupMindMap(true);
+                    setupMindMap(true, false);
                 }
 
-                function setupMindMap(isAnonymous) {
+                function setupMindMap(isAnonymous, isTagCloudFlow) {
+                    MindMapInfo.setIsAnonymous(isAnonymous);
+                    MindMapInfo.setIsTagCloudFlow(isTagCloudFlow);
                     startLoginFlowWhenForbiddenActionIsPerformed();
                     $("#app-presentation").addClass("hidden");
                     Header.earlyInit();
@@ -88,16 +85,21 @@ define(
                     if (isAnonymous) {
                         loadLocaleAndGraph();
                     } else {
-                        UserService.authenticatedUser(loadLocaleAndGraph);
+                        UserService.authenticatedUser(function(){
+                            MindMapInfo.defineIsViewOnlyIfUndefined();
+                            loadLocaleAndGraph();
+                        });
                     }
                     function loadLocaleAndGraph() {
                         LanguageManager.loadLocaleContent(function () {
-                            GraphDisplayer.displayForBubbleWithUri(
-                                MindMapInfo.getCenterBubbleUri(),
-                                handleGettingGraphError
-                            );
+                            if(!isTagCloudFlow){
+                                GraphDisplayer.displayForBubbleWithUri(
+                                    MindMapInfo.getCenterBubbleUri(),
+                                    handleGettingGraphError
+                                );
+                                GraphElementMainMenu.reset();
+                            }
                             translateText();
-                            GraphElementMainMenu.reset();
                         });
                     }
                 }

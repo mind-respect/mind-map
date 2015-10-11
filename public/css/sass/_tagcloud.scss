@@ -1,0 +1,21 @@
+/*
+ * Copyright Vincent Blouin under the GPL License version 3
+ */
+
+#word-cloud-container{
+  margin-top:13%;
+}
+#word-cloud {
+  text-align:center;
+  font-size:30px;
+  span.clouditem {
+    cursor:pointer;
+    padding-left: 0.15em;
+    padding-right: 0.15em;
+    line-height: 90%;
+    display:inline-block;
+    &:hover{
+      text-decoration:underline;
+    }
+  }
+}

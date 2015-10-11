@@ -6,9 +6,10 @@ define([
         "jquery",
         "triple_brain.user_service",
         "triple_brain.mind_map_info",
+        "triple_brain.bubble_cloud_flow",
         "bootstrap"
     ],
-    function ($, UserService, MindMapInfo) {
+    function ($, UserService, MindMapInfo, BubbleCloudFlow) {
         "use strict";
         var api = {};
         api.setupModal = function(){
@@ -36,18 +37,8 @@ define([
                 UserService.authenticate(
                     self.getFormData(),
                     function (user) {
-                        UserService.getDefaultVertexUri(
-                            user.user_name,
-                            function (uri) {
-                                if (MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
-                                    window.location.reload();
-                                } else {
-                                    window.location = MindMapInfo.htmlUrlForBubbleUri(
-                                        uri
-                                    );
-                                }
-                            }
-                        );
+                        UserService.setAuthenticatedUserInCache(user);
+                        BubbleCloudFlow.enter();
                     },
                     function () {
                         self.hideAllMessages();

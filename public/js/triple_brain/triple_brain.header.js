@@ -107,9 +107,13 @@ define([
 
         function createNewSchema(event) {
             event.preventDefault();
-            SchemaService.create(
-                GraphDisplayer.displayForSchemaWithUri
-            );
+            SchemaService.create(function(schemaUri){
+                if(MindMapInfo.isTagCloudFlow()){
+                    window.location = "?bubble=" + schemaUri;
+                    return;
+                }
+                GraphDisplayer.displayForSchemaWithUri(schemaUri);
+            });
         }
 
         function createNewConcept(event) {
@@ -118,6 +122,10 @@ define([
                 var serverFormatFacade = Vertex.fromServerFormat(
                     newVertex
                 );
+                if(MindMapInfo.isTagCloudFlow()){
+                    window.location = "?bubble=" + serverFormatFacade.getUri();
+                    return;
+                }
                 GraphDisplayer.displayUsingCentralVertexUri(
                     serverFormatFacade.getUri()
                 );

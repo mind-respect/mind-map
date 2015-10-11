@@ -23,6 +23,10 @@ define([
                 select: function (event, ui) {
                     var vertexUri = ui.item.uri,
                         input = $(this);
+                    if(MindMapInfo.isTagCloudFlow()){
+                        window.location = "?bubble=" + vertexUri;
+                        return;
+                    }
                     GraphDisplayer.displayForBubbleWithUri(
                         vertexUri
                     );

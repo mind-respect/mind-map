@@ -13,7 +13,8 @@ define([
         "use strict";
         var api = {},
             _isViewOnly,
-            _isAnonymous;
+            _isAnonymous,
+            _isTagCloudFlow = false;
         api.htmlUrlForBubbleUri = function (bubbleUri) {
             return window.location.origin + "?bubble=" + bubbleUri;
         };
@@ -34,7 +35,8 @@ define([
             if (_isViewOnly !== undefined) {
                 return;
             }
-            _isViewOnly = _isAnonymous || !IdUriUtils.isGraphElementUriOwnedByCurrentUser(
+            _isViewOnly = _isTagCloudFlow ?
+                false : _isAnonymous || !IdUriUtils.isGraphElementUriOwnedByCurrentUser(
                 api._getCenterVertexUriInUrl()
             );
             EventBus.publish(
@@ -42,6 +44,15 @@ define([
                 [_isViewOnly]
             );
         };
+
+        api.setIsTagCloudFlow = function (isTagCloudFlow) {
+            _isTagCloudFlow = isTagCloudFlow;
+        };
+
+        api.isTagCloudFlow = function () {
+            return _isTagCloudFlow;
+        };
+
         api.setIsAnonymous = function (isAnonymous) {
             _isAnonymous = isAnonymous;
         };
