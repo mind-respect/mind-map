@@ -136,7 +136,7 @@ define([
                 element.getLabel()
             ).click(function (event) {
                     event.preventDefault();
-                    window.location = "?bubble=" + $(this).data("uri")
+                    window.location = "?bubble=" + $(this).data("uri");
                 }).appendTo(_container);
         });
         _container.reattach();
