@@ -149,7 +149,11 @@ define(
                         }
                         SelectionHandler.removeAll();
                     }
-                );
+                ).mousedown(function(){
+                        if(!GraphUi.isDragScrollEnabled()){
+                            GraphUi.enableDragScroll();
+                        }
+                    });
                 GraphDisplayer.getVertexSelector().visitAllVertices(function (vertex) {
                     EventBus.publish(
                         '/event/ui/vertex/visit_after_graph_drawn',

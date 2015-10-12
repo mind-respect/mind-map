@@ -127,6 +127,10 @@ define([
         var event = $.Event("dragend");
         bubble.getHtml().trigger(event);
     };
+    api.drop = function(bubble){
+        var event = $.Event("drop");
+        bubble.getHtml().trigger(event);
+    };
     return api;
 
     function generateUuid() {

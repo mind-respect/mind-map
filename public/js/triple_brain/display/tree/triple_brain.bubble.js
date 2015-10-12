@@ -101,6 +101,12 @@ define([
             );
         };
 
+        api.Self.prototype.isBubbleAChild = function(bubble){
+            return this.getChildrenContainer().find(
+                "#" + bubble.getId()
+            ).length > 0;
+        };
+
         api.Self.prototype.getTopMostChildBubble = function () {
             var topMostBubbleHtml = this.getChildrenBubblesHtml().filter(
                 ":first"

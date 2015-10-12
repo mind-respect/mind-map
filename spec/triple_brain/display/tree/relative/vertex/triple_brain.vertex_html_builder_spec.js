@@ -101,5 +101,17 @@ define([
                 bubble2.getArrowHtml()
             ).not.toHaveClass("hidden");
         });
+        it("doesn't move to a parent bubble that is the child of the dragged one", function(){
+            var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            TestUtils.startDragging(bubble1);
+            var bubble2 = TestUtils.getChildWithLabel(
+                bubble1,
+                "r1"
+            ).getTopMostChildBubble();
+            TestUtils.drop(bubble2);
+            expect(
+                bubble1.getParentBubble().getUri() === bubble2.getParentBubble().getUri()
+            ).toBeFalsy();
+        });
     });
 });

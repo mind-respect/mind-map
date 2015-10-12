@@ -149,6 +149,9 @@ define([
                 GraphUi.disableDragScroll();
             });
             this.html.mouseleave(function () {
+                if(GraphUi.isDragScrollEnabled()){
+                    return;
+                }
                 GraphUi.enableDragScroll();
             });
             this.html.on("dragstart", function () {
@@ -200,10 +203,13 @@ define([
                         $(this)
                     );
                     GraphUi.enableDragScroll();
+                    parent.leaveDragOver();
+                    if(draggedVertex.isBubbleAChild(parent)){
+                        return;
+                    }
                     draggedVertex.moveToParent(
                         parent
                     );
-                    parent.leaveDragOver();
                     EdgeService.changeSourceVertex(
                         parent,
                         draggedVertex.getParentBubble()

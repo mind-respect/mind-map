@@ -10,7 +10,8 @@ define([
         var api = {},
             _drawnGraph,
             _topLayer,
-            _bubbleIdCounter = 0;
+            _bubbleIdCounter = 0,
+            _isDragScrollEnabled = false;
         api.addHtml = function (html) {
             api.getDrawnGraph().append(html);
         };
@@ -32,9 +33,14 @@ define([
         };
         api.disableDragScroll = function(){
             api.getDrawnGraph().disableDragScroll();
+            _isDragScrollEnabled = false;
         };
         api.enableDragScroll = function(){
             api.getDrawnGraph().disableDragScroll().dragScroll();
+            _isDragScrollEnabled = true;
+        };
+        api.isDragScrollEnabled = function(){
+            return _isDragScrollEnabled;
         };
         return api;
     }
