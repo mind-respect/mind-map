@@ -102,7 +102,7 @@
     "when-empty": "suggestion"
   },
   "schema": {
-    "when-empty": "suggestions group"
+    "when-empty": "suggestions name"
   },
   "vertex": {
     "default": "say it",
@@ -181,7 +181,7 @@
       "placeholder": "Search bubbles"
     },
     "context": {
-      "property": "Property",
+      "property": "Suggestion",
       "vertex": "Bubble",
       "relation": "Relation",
       "schema": "Suggestions"

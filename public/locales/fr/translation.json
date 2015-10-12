@@ -101,7 +101,7 @@
     "when-empty": "suggestion"
   },
   "schema": {
-    "when-empty": "groupe de suggestions"
+    "when-empty": "nom des suggestions"
   },
   "vertex": {
     "default": "dis le",
@@ -180,7 +180,7 @@
       "placeholder": "Chercher des bulles"
     },
     "context": {
-      "property": "Propriété",
+      "property": "Suggestion",
       "vertex": "Bulle",
       "relation": "Relation",
       "schema": "Suggestions"

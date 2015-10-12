@@ -3,10 +3,11 @@
  */
 
 define([
+    "jquery",
     "triple_brain.tree_edge",
     "triple_brain.graph_element_ui",
     "jquery.i18next"
-], function(TreeEdge, GraphElementUi){
+], function($, TreeEdge, GraphElementUi){
     "use strict";
     var api = {};
     TreeEdge.buildCommonConstructors(api);
