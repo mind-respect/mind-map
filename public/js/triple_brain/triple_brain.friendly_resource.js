@@ -29,6 +29,14 @@ define([
             comment: description
         };
     };
+    api.buildObjectWithUriLabelDescriptionAndImages = function (uri, label, description, images) {
+        return {
+            uri: uri,
+            label: label,
+            comment: description,
+            images: images
+        };
+    };
     api.withUri = function (uri) {
         return api.withUriAndLabel(
             uri,

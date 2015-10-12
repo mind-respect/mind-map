@@ -49,15 +49,14 @@ define([
                     )
                 ]
             };
+            var suggestion = api.fromServerFormat(serverFormat);
             if (schemaProperty.hasIdentifications()) {
                 var identification = schemaProperty.getIdentifications()[0];
-                serverFormat.type = FriendlyResource.buildObjectWithUriLabelAndDescription(
-                    identification.getExternalResourceUri(),
-                    identification.getLabel(),
-                    identification.getComment()
+                suggestion._setType(
+                    identification
                 );
             }
-            return api.fromServerFormat(serverFormat);
+            return suggestion;
         };
         api.formatAllForServer = function (suggestions) {
             var suggestionsFormatedForServer = {};

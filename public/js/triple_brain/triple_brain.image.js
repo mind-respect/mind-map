@@ -14,9 +14,9 @@ define([
                 imageAsServerJson.urlForBigger
             );
         };
-        api.arrayToServerJson = function(images){
+        api.arrayToServerJson = function (images) {
             var imagesJson = [];
-            $.each(images, function(){
+            $.each(images, function () {
                 imagesJson.push(
                     this.jsonFormat()
                 );
@@ -33,7 +33,7 @@ define([
             });
             return images;
         };
-        api.withBase64ForSmallAndUrlForBigger = function(base64ForSmall, urlForBigger){
+        api.withBase64ForSmallAndUrlForBigger = function (base64ForSmall, urlForBigger) {
             return new Image(
                 base64ForSmall,
                 urlForBigger
@@ -56,7 +56,7 @@ define([
             );
             return deferred.promise();
         };
-        api.srcUrlForBase64 = function(base64){
+        api.srcUrlForBase64 = function (base64) {
             return "data:application/octet-stream;base64," + base64;
         };
         return api;
@@ -75,8 +75,8 @@ define([
             var self = this;
             this.isUploadedByUser = function () {
                 return self.getUrlForBigger().indexOf(
-                    window.location.hostname
-                ) !== -1;
+                        window.location.hostname
+                    ) !== -1;
             };
             this.getBase64ForSmall = function () {
                 return api.srcUrlForBase64(base64ForSmall);
