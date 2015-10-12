@@ -66,7 +66,7 @@ define([
             $this.data("dragScrollMouseUp", false);
             $this.mousemove(moveHandler);
             function moveHandler(moveEvent) {
-                $this.off(moveEvent);
+                $this.off("mousemove");
                 var scrollAdjust = isThereSubScrollContainer ?
                     getScrollPosition() :
                     Point.fromCoordinates(
@@ -79,12 +79,17 @@ define([
                 );
                 scroll();
                 if (!$this.data("dragScrollMouseUp")) {
-                    $this.on("mousemove", moveHandler);
+                    $this.off(
+                        "mousemove"
+                    ).on(
+                        "mousemove",
+                        moveHandler
+                    );
                 }
             }
 
             scrollContainer.mouseup(function () {
-                $this.off("mousemove", moveHandler);
+                $this.off("mousemove");
                 $this.data("dragScrollMouseUp", true);
             });
             var lastPosition;

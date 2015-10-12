@@ -20,45 +20,30 @@ define(
                 return new Point(point.x, point.y);
             }
         };
-
         function Point(x, y) {
-            var point = this;
             this.x = x;
             this.y = y;
-            this.distanceWithPoint = function (pointToCompare) {
-                return Math.sqrt(
-                    Math.pow(pointToCompare.x - this.x, 2) +
-                    Math.pow(pointToCompare.y - this.y, 2)
-                );
-            };
-            this.cross = function (pointToCompare) {
-                return this.x * pointToCompare.y - pointToCompare.x * this.y;
-            };
-            this.clone = function () {
-                return api.fromCoordinates(this.x, this.y);
-            };
-            this.multiply = function (factor) {
-                this.x *= factor;
-                this.y *= factor;
-                return point;
-            };
-            this.invert = function () {
-                return point.multiply(-1);
-            };
         }
+        Point.prototype.cross = function (pointToCompare) {
+            return this.x * pointToCompare.y - pointToCompare.x * this.y;
+        };
+        Point.prototype.clone = function () {
+            return api.fromCoordinates(this.x, this.y);
+        };
+        Point.prototype.multiply = function (factor) {
+            this.x *= factor;
+            this.y *= factor;
+            return this;
+        };
+        Point.prototype.invert = function () {
+            return this.multiply(-1);
+        };
 
         function addTwoPoints(pointA, pointB) {
             var summedPoint = new Point(pointA.x, pointA.y);
             summedPoint.x += pointB.x;
             summedPoint.y += pointB.y;
             return summedPoint;
-        }
-
-        function subtractTwoPoints(leftTerm, rightTerm) {
-            var subtractedPoint = new Point(leftTerm.x, leftTerm.y);
-            subtractedPoint.x -= rightTerm.x;
-            subtractedPoint.y -= rightTerm.y;
-            return subtractedPoint;
         }
 
         Point.prototype.toString = function () {

@@ -7,8 +7,9 @@ define([
     "test/test-utils",
     "triple_brain.vertex_html_builder",
     "triple_brain.ui.graph",
-    "triple_brain.selection_handler"
-], function (Scenarios, TestUtils, VertexHtmlBuilder, GraphUi, SelectionHandler) {
+    "triple_brain.selection_handler",
+    "triple_brain.edge_service"
+], function (Scenarios, TestUtils, VertexHtmlBuilder, GraphUi, SelectionHandler, EdgeService) {
     "use strict";
     describe("vertex_html_builder", function () {
         var bubble1, graphWithCircularityScenario;
@@ -101,7 +102,18 @@ define([
                 bubble2.getArrowHtml()
             ).not.toHaveClass("hidden");
         });
-        it("doesn't move to a parent bubble that is the child of the dragged one", function(){
+        it("shows hidden relations container when stopping to drag", function () {
+            var bubble2 = new Scenarios.getGraphWithHiddenSimilarRelations().getBubble2InTree();
+            TestUtils.startDragging(bubble2);
+            expect(
+                bubble2.getHiddenRelationsContainer()._getHtml()
+            ).toHaveClass("hidden");
+            TestUtils.endDragging(bubble2);
+            expect(
+                bubble2.getHiddenRelationsContainer()._getHtml()
+            ).not.toHaveClass("hidden");
+        });
+        it("doesn't move to a parent bubble that is the child of the dragged one", function () {
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             TestUtils.startDragging(bubble1);
             var bubble2 = TestUtils.getChildWithLabel(
@@ -112,6 +124,28 @@ define([
             expect(
                 bubble1.getParentBubble().getUri() === bubble2.getParentBubble().getUri()
             ).toBeFalsy();
+        });
+        it("cant drag and drop a vertex onto itself", function () {
+            var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            var bubble2 = TestUtils.getChildWithLabel(
+                bubble1,
+                "r1"
+            ).getTopMostChildBubble();
+            var newVertex = TestUtils.addTriple(bubble2).destinationVertex();
+            TestUtils.startDragging(newVertex);
+            var changeSourceVertexSpy = spyOn(EdgeService, "changeSourceVertex");
+            expect(
+                changeSourceVertexSpy.calls.count()
+            ).toBe(0);
+            TestUtils.drop(bubble1);
+            expect(
+                changeSourceVertexSpy.calls.count()
+            ).toBe(1);
+            TestUtils.startDragging(newVertex);
+            TestUtils.drop(newVertex);
+            expect(
+                changeSourceVertexSpy.calls.count()
+            ).toBe(1);
         });
     });
 });

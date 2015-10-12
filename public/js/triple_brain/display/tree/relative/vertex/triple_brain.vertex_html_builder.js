@@ -174,17 +174,20 @@ define([
             }).on(
                 "dragend", function (event) {
                     event.preventDefault();
-                    BubbleFactory.fromHtml(
+                    var bubble = BubbleFactory.fromHtml(
                         $(this)
-                    ).getArrowHtml().removeClass(
+                    );
+                    bubble.getArrowHtml().removeClass(
                         "hidden"
                     );
+                    bubble.showHiddenRelationsContainer();
                     GraphUi.enableDragScroll();
                 }).on(
                 "dragover", function (event) {
                     event.preventDefault();
                     var vertex = BubbleFactory.fromHtml($(this));
-                    var shouldSetToDragOver = !vertex.hasDragOver() && RelativeTreeVertex.getDraggedVertex().getUri() !== vertex.getUri();
+                    var draggedVertex = RelativeTreeVertex.getDraggedVertex();
+                    var shouldSetToDragOver = !vertex.hasDragOver() && draggedVertex !== undefined && draggedVertex.getUri() !== vertex.getUri();
                     if (!shouldSetToDragOver) {
                         return;
                     }
@@ -198,13 +201,17 @@ define([
                     vertex.leaveDragOver();
                 }).on(
                 "drop", function () {
-                    var draggedVertex = RelativeTreeVertex.getDraggedVertex();
+                    GraphUi.enableDragScroll();
                     var parent = BubbleFactory.fromHtml(
                         $(this)
                     );
-                    GraphUi.enableDragScroll();
                     parent.leaveDragOver();
-                    if(draggedVertex.isBubbleAChild(parent)){
+                    var draggedVertex = RelativeTreeVertex.getDraggedVertex();
+                    if(draggedVertex === undefined){
+                        return;
+                    }
+                    var shouldMove = draggedVertex.getUri() !== parent.getUri() && !draggedVertex.isBubbleAChild(parent);
+                    if(!shouldMove){
                         return;
                     }
                     draggedVertex.moveToParent(
