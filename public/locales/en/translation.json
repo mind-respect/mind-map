@@ -66,7 +66,7 @@
     "create": {
       "title": "create",
       "bubble": "bubble",
-      "schema": "schema"
+      "schema": "suggestions"
     },
     "disconnect": "disconnect",
     "redraw": "redraw",
@@ -97,6 +97,12 @@
         "origin": "source"
       }
     }
+  },
+  "property": {
+    "when-empty": "suggestion"
+  },
+  "schema": {
+    "when-empty": "suggestions group"
   },
   "vertex": {
     "default": "say it",
@@ -178,7 +184,7 @@
       "property": "Property",
       "vertex": "Bubble",
       "relation": "Relation",
-      "schema": "Schema"
+      "schema": "Suggestions"
     }
   }
 }

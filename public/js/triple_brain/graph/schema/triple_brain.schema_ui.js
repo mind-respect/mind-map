@@ -6,7 +6,8 @@ define([
     "jquery",
     "triple_brain.relative_tree_vertex",
     "triple_brain.vertex_ui",
-    "triple_brain.graph_element_ui"
+    "triple_brain.graph_element_ui",
+    "jquery.i18next"
 ], function ($, RelativeTreeVertex, VertexUi, GraphElementUi) {
     "use strict";
     var api = {};
@@ -30,7 +31,7 @@ define([
         );
     };
     api.getWhenEmptyLabel = function(){
-        return "schema";
+        return $.t("schema.when-empty");
     };
     api.Self = function(html) {
         this.html = html;

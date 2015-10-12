@@ -4,7 +4,8 @@
 
 define([
     "triple_brain.tree_edge",
-    "triple_brain.graph_element_ui"
+    "triple_brain.graph_element_ui",
+    "jquery.i18next"
 ], function(TreeEdge, GraphElementUi){
     "use strict";
     var api = {};
@@ -22,7 +23,7 @@ define([
         });
     };
     api.getWhenEmptyLabel = function(){
-        return "property";
+        return $.t("property.when-empty");
     };
     api.Self = function(html){
         this.html = html;
