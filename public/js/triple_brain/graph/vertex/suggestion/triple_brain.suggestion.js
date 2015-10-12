@@ -51,9 +51,10 @@ define([
             };
             if (schemaProperty.hasIdentifications()) {
                 var identification = schemaProperty.getIdentifications()[0];
-                serverFormat.type = FriendlyResource.buildObjectWithUriAndLabel(
+                serverFormat.type = FriendlyResource.buildObjectWithUriLabelAndDescription(
                     identification.getExternalResourceUri(),
-                    identification.getLabel()
+                    identification.getLabel(),
+                    identification.getComment()
                 );
             }
             return api.fromServerFormat(serverFormat);
