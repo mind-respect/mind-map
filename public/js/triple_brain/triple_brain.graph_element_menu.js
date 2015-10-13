@@ -45,9 +45,7 @@ define([
             "html-content"
         ).i18n().dialog(
             options
-        ).prev(
-            ".ui-dialog-titlebar"
-        ).find("button").append("<i class='fa fa-times'></i>");
+        );
         menuContent.closest(".graph-element-menu").centerOnScreen();
         function getHorizontalPosition() {
             var positionDialogToRight = {
