@@ -23,6 +23,10 @@ $centerVertexBorder: -1px -2px 1px midnightblue;
   &.public {
     .in-bubble-content{
       &:after {
+        font-family: FontAwesome;
+        content: "\f09c";
+        position: absolute;
+        font-size: 1.6em;
         top: 0;
         right: 14px;
       }

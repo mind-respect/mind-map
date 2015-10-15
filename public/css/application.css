@@ -92,10 +92,10 @@
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .left-oriented [data-action=addChild] .fa-arrow-right { transform: rotate(180deg); }
 .left-oriented .vertex .in-bubble-content .in-bubble-note-button { margin: 0 5px 0 4px; }
-.left-oriented .relation.public .in-bubble-content:after { right: auto; left: -8px; }
+.left-oriented .relation.public .label-container:after { right: auto; left: 4px; }
 .left-oriented .relation .in-bubble-content .in-bubble-note-button { left: auto; right: -32px; }
 .left-oriented .relation .label-container { padding-left: 0; padding-right: 6px; }
-.left-oriented .property.public .in-bubble-content:after { right: auto; left: -16px; }
+.left-oriented .property.public .label-container:after { right: auto; left: -16px; }
 .left-oriented .group-relation .label { margin-right: 0; margin-left: 0.3em; }
 .left-oriented .bubble .arrow { left: auto; width: 47px; margin-left: -3px; }
 .left-oriented .bubble .arrow:before { content: url("images/icons/vertex/arrowhead_left.svg"); }
@@ -203,7 +203,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .relation .label { border-radius: 0.80em; padding-top: 0.3em; }
 .relation .menu { background-color: transparent; z-index: 11; margin-left: 5px; }
 .relation .label-container { display: table-cell; padding-left: 6px; position: relative; }
-.relation.public .in-bubble-content:after { top: -24px; right: -13px; }
+.relation.public .label-container:after { font-family: FontAwesome; content: "\f09c"; position: absolute; font-size: 1.6em; top: -24px; right: -13px; }
 .relation.suggestion .in-bubble-content { border: none; }
 .relation.suggestion .in-bubble-content .bubble-label { border: 3px dashed black; background-color: #E7EEF2; color: black; text-shadow: none; }
 .relation .in-bubble-content .bubble-label { background-color: #3a87ad; font-family: helvetica; font-size: 1.05em; height: auto; }
@@ -241,7 +241,6 @@ button.add-button-in-list:hover { color: #00d100; }
 .bubble.dragged { background-color: transparent; }
 .bubble > *, .bubble .label { display: table-cell; vertical-align: middle; }
 .bubble.view-only .arrow:before { left: 0; }
-.bubble.public .in-bubble-content:after { font-family: FontAwesome; content: "\f09c"; position: absolute; font-size: 1.6em; }
 .bubble .in-bubble-content { position: relative; z-index: 3; }
 .bubble .in-bubble-note-button { cursor: pointer; margin: 0 0.4em 0 0; display: block; }
 .bubble.edit { -moz-user-select: text; }
@@ -269,7 +268,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .vertex { /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */ white-space: nowrap; }
 .vertex.drag-over .in-bubble-content { border: 3px dashed red; border-radius: 50px; }
 .vertex.suggestion .in-bubble-content { border: 3px dashed black; color: black; text-shadow: none; }
-.vertex.public .in-bubble-content:after { top: 0; right: 14px; }
+.vertex.public .in-bubble-content:after { font-family: FontAwesome; content: "\f09c"; position: absolute; font-size: 1.6em; top: 0; right: 14px; }
 .vertex.edit .in-bubble-content { width: 325px; max-width: 325px; }
 .vertex.edit .in-bubble-content .in-bubble-note-button { display: none; }
 .vertex.edit .bubble-label { white-space: pre-wrap; }

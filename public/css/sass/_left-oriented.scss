@@ -14,10 +14,10 @@
   }
   .relation {
     &.public {
-      .in-bubble-content{
+      .label-container{
         &:after {;
           right: auto;
-          left:-8px;
+          left:4px;
         }
       }
     }
@@ -34,7 +34,7 @@
   }
   .property{
     &.public {
-      .in-bubble-content{
+      .label-container{
         &:after {
           right: auto;
           left:-16px;

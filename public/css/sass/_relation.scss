@@ -18,8 +18,12 @@
     position: relative;
   }
   &.public {
-    .in-bubble-content{
+    .label-container{
       &:after {
+        font-family: FontAwesome;
+        content: "\f09c";
+        position: absolute;
+        font-size: 1.6em;
         top: -24px;
         right: -13px;
       }
