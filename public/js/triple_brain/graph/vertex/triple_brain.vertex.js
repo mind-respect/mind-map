@@ -52,6 +52,7 @@ define([
     Self.prototype.getNumberOfConnectedEdges = function () {
         return this.vertexServerFormat.vertex.numberOfConnectedEdges;
     };
+
     Self.prototype.isPublic = function () {
         return this.vertexServerFormat.vertex.isPublic;
     };

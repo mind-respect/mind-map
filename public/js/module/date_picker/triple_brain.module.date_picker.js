@@ -11,9 +11,9 @@ define([
     function ($, EventBus, BubbleFactory) {
         "use strict";
         var urisToApply = [
-                "http://rdf.freebase.com/rdf/type/datetime",
-                "//www.wikidata.org/wiki/Q205892"
-            ];
+            "http://rdf.freebase.com/rdf/type/datetime",
+            "//www.wikidata.org/wiki/Q205892"
+        ];
         var api = {};
         api._handleFocus = function () {
             showDatePicker(
@@ -44,7 +44,7 @@ define([
         }
 
         function handleVertexCreated(event, vertex) {
-            if(isAppliedToBubble(vertex)){
+            if (isAppliedToBubble(vertex)) {
                 return;
             }
             $.each(vertex.getIdentifications(), function () {
@@ -56,14 +56,14 @@ define([
             });
         }
 
-        function handleSuggestionShown(event, suggestion){
+        function handleSuggestionShown(event, suggestion) {
             var isSameAsADate = isIdentificationADate(
                 suggestion._getServerFacade().getSameAs()
             );
             var isTypeADate = suggestion._getServerFacade().hasType() && isIdentificationADate(
                     suggestion._getServerFacade().getType()
                 );
-            if(isSameAsADate || isTypeADate){
+            if (isSameAsADate || isTypeADate) {
                 applyDatePickerToVertex(suggestion);
             }
         }
@@ -73,9 +73,15 @@ define([
             html.datepicker({
                 container: "body",
                 autoclose: false
-            }).datepicker(
-                "setDate",
+            });
+            var date = isTextADate(
                 graphElement.text()
+            ) ?
+                graphElement.text() :
+                new Date();
+            html.datepicker(
+                "setDate",
+                date
             );
             html.on("changeDate", function (event) {
                 var bubble = BubbleFactory.fromSubHtml(
@@ -85,14 +91,12 @@ define([
                     0, 10
                 );
                 var bubbleText = bubble.text();
-                var isBubbleTextADate = !isNaN(
-                    Date.parse(
-                        bubbleText
-                    )
+                var isBubbleTextADate = isTextADate(
+                    bubbleText
                 );
-                if(isBubbleTextADate || bubbleText === ""){
+                if (isBubbleTextADate || bubbleText === "") {
                     bubbleText = dateString;
-                }else{
+                } else {
                     bubbleText += " " + dateString;
                 }
                 bubble.getLabel().off(
@@ -150,7 +154,7 @@ define([
                 ) !== -1;
         }
 
-        function isAppliedToBubble(graphElement){
+        function isAppliedToBubble(graphElement) {
             return getDatePickerContainer(
                     graphElement
                 ).length > 0;
@@ -176,6 +180,13 @@ define([
             }
             hideDatePicker(
                 bubble
+            );
+        }
+        function isTextADate(text) {
+            return !isNaN(
+                Date.parse(
+                    text
+                )
             );
         }
     }

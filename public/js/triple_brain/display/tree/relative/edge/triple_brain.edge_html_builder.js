@@ -34,6 +34,10 @@ define([
                 "destination_vertex_id",
                 childUi.getId()
             );
+            var isPublic = parentVertexUi.isPublic() && childUi.isPublic();
+            if(isPublic){
+                edge.makePublic()
+            }
             if (isInverse) {
                 edge.inverse();
             }

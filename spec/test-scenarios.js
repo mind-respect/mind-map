@@ -183,6 +183,22 @@ define([
             }
         };
 
+        api.publicPrivate = function () {
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                return api._getTestData("publicPrivate");
+            };
+
+            this.getBubble1 = function () {
+                return treeBuilder.getBubbleWithLabelInTree("b1");
+            };
+
+            this.getCenterBubbleUri = function () {
+                return uriOfVertexWithLabel(this.getGraph(), "b1");
+            };
+            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
+        };
+
         api.threeBubblesGraph = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
@@ -479,7 +495,6 @@ define([
             };
             this.getAnySuggestionInTree = function () {
                 var eventBubble = this.getVertexUi();
-                GraphDisplayerAsRelativeTree.showSuggestions(eventBubble);
                 return eventBubble.getTopMostChildBubble().getTopMostChildBubble();
             };
             this.getOneSuggestion = function () {

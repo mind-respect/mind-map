@@ -24,7 +24,7 @@ requirejs.config({
         "jquery.is-fully-on-screen": "jquery/jquery.is-fully-on-screen",
         "jquery.i18next": "vendor/i18next.amd.withJQuery-1.6.3",
         "bootstrap": "vendor/bootstrap/3.3.4/bootstrap.min",
-        "bootstrap-datepicker": "vendor/bootstrap/bootstrap-datepicker.min",
+        "bootstrap-datepicker": "vendor/bootstrap/bootstrap-datepicker",
         "jquery.max_char": "triple_brain/jquery.max_char",
         "jquery.triple_brain.search": "triple_brain/search/jquery.triple_brain.search",
         "triple_brain.visited_elements_cloud": "triple_brain/triple_brain.visited_elements_cloud",

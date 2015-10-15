@@ -114,6 +114,12 @@ define([
         api.Object.prototype.isSelected = function () {
             return this.html.hasClass("selected");
         };
+        api.Object.prototype.makePrivate = function () {
+            this.html.removeClass("public");
+        };
+        api.Object.prototype.makePublic = function () {
+            this.html.addClass("public");
+        };
         return api;
     }
 );

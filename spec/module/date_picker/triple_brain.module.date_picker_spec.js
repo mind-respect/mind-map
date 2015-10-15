@@ -173,31 +173,41 @@ define([
             ).toBe(2013);
         });
         it("can apply datepicker to a suggestion", function(){
-            var suggestionUi = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
-            EventBus.publish(
-                "suggestion_ui_shown", suggestionUi
-            );
+            var eventBubble = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();
+            var personSuggestion = TestUtils.getChildWithLabel(
+                eventBubble,
+                "People involved"
+            ).getTopMostChildBubble();
             expect(isAppliedToBubble(
-                suggestionUi
+                personSuggestion
             )).toBeFalsy();
-            suggestionUi._getServerFacade()._setType(
-                dateIdentification()
-            );
-            EventBus.publish(
-                "suggestion_ui_shown", suggestionUi
-            );
+            var dateSuggestion = TestUtils.getChildWithLabel(
+                eventBubble,
+                "Start date"
+            ).getTopMostChildBubble();
             expect(isAppliedToBubble(
-                suggestionUi
+                dateSuggestion
             )).toBeTruthy();
         });
         it("wont fail if suggestion has no type", function(){
-            var suggestionUi = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
-            suggestionUi._getServerFacade()._setType(undefined);
+            var eventBubble = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();
+            var dateSuggestion = TestUtils.getChildWithLabel(
+                eventBubble,
+                "Start date"
+            ).getTopMostChildBubble();
+            expect(isAppliedToBubble(
+                dateSuggestion
+            )).toBeTruthy();
+            dateSuggestion._getServerFacade()._setType(undefined);
+            dateSuggestion.getHtml().datepicker("remove");
+            expect(isAppliedToBubble(
+                dateSuggestion
+            )).toBeFalsy();
             EventBus.publish(
-                "suggestion_ui_shown", suggestionUi
+                "suggestion_ui_shown", dateSuggestion
             );
             expect(isAppliedToBubble(
-                suggestionUi
+                dateSuggestion
             )).toBeFalsy();
         });
         it("date on suggestion is correct", function(){
