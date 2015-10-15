@@ -13,6 +13,14 @@
     }
   }
   .relation {
+    &.public {
+      .in-bubble-content{
+        &:after {;
+          right: auto;
+          left:-8px;
+        }
+      }
+    }
     .in-bubble-content{
       .in-bubble-note-button {
         left:auto;
@@ -22,6 +30,16 @@
     .label-container {
       padding-left: 0;
       padding-right: 6px;
+    }
+  }
+  .property{
+    &.public {
+      .in-bubble-content{
+        &:after {
+          right: auto;
+          left:-16px;
+        }
+      }
     }
   }
   .group-relation .label {

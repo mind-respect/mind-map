@@ -21,6 +21,16 @@
       }
     }
   }
+  &.public {
+    .in-bubble-content{
+      &:after {
+        font-family: FontAwesome;
+        content: "\f09c";
+        position: absolute;
+        font-size: 1.6em;
+      }
+    }
+  }
   .in-bubble-content{
     position: relative;
     z-index:3;

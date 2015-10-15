@@ -31,7 +31,7 @@ define([
     }
 
     Self.prototype.create = function () {
-        this.html = $("<div class='property relation bubble graph-element'>").data(
+        this.html = $("<div class='property relation bubble graph-element public'>").data(
             "uri",
             this.serverFacade.getUri()
         ).uniqueId();

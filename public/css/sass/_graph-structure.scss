@@ -2,34 +2,11 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
-$verticalBorderRadius: 25px;
+$verticalBorderRadius: 18px;
 $connectorRadius: 25px;
 
 .root-vertex-super-container {
   position: absolute;
-  //background:
-  //-webkit-linear-gradient(45deg, hsla(247, 98%, 45%, 1) 0%, hsla(247, 98%, 45%, 0) 70%),
-  //-webkit-linear-gradient(315deg, hsla(301, 95%, 44%, 1) 10%, hsla(301, 95%, 44%, 0) 80%),
-  //-webkit-linear-gradient(225deg, hsla(171, 91%, 41%, 1) 10%, hsla(171, 91%, 41%, 0) 80%),
-  //-webkit-linear-gradient(135deg, hsla(63, 99%, 44%, 1) 100%, hsla(63, 99%, 44%, 0) 70%);
-  //background:
-  //linear-gradient(45deg, hsla(247, 98%, 45%, 1) 0%, hsla(247, 98%, 45%, 0) 70%),
-  //linear-gradient(135deg, hsla(301, 95%, 44%, 1) 10%, hsla(301, 95%, 44%, 0) 80%),
-  //linear-gradient(225deg, hsla(171, 91%, 41%, 1) 10%, hsla(171, 91%, 41%, 0) 80%),
-  //linear-gradient(315deg, hsla(63, 99%, 44%, 1) 100%, hsla(63, 99%, 44%, 0) 70%);
-
-  //background: -webkit-linear-gradient(45deg, hsla(239, 91%, 48%, 1) 0%, hsla(239, 91%, 48%, 0) 70%),
-  //-webkit-linear-gradient(315deg, hsla(298, 91%, 47%, 1) 10%, hsla(298, 91%, 47%, 0) 80%),
-  //-webkit-linear-gradient(225deg, hsla(20, 97%, 43%, 1) 10%, hsla(20, 97%, 43%, 0) 80%),
-  //-webkit-linear-gradient(135deg, hsla(66, 92%, 50%, 1) 100%, hsla(66, 92%, 50%, 0) 70%);
-  //background: linear-gradient(45deg, hsla(239, 91%, 48%, 1) 0%, hsla(239, 91%, 48%, 0) 70%),
-  //linear-gradient(135deg, hsla(298, 91%, 47%, 1) 10%, hsla(298, 91%, 47%, 0) 80%),
-  //linear-gradient(225deg, hsla(20, 97%, 43%, 1) 10%, hsla(20, 97%, 43%, 0) 80%),
-  //linear-gradient(315deg, hsla(66, 92%, 50%, 1) 100%, hsla(66, 92%, 50%, 0) 70%);
-
-  //background:radial-gradient(circle farthest-corner at 45px 45px , #00FFFF 0%, rgba(0, 0, 255, 0) 50%, #0000FF 95%);
-
-  //background:radial-gradient(rgba(0, 0, 255, 0) 5%, #0000FF 100%);
   background: radial-gradient(rgba(0, 0, 255, 0) 5%, #0b46ff 100%);
 
 }
