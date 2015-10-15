@@ -182,6 +182,12 @@ define([
                 this
             );
         };
+        api.Object.prototype.applyToConnectedEdges = function (visitor) {
+            var connectedEdges = this.connectedEdges();
+            for (var i = 0; i < connectedEdges.length; i++) {
+                visitor(connectedEdges[i]);
+            }
+        };
         api.Object.prototype.text = function () {
             return this.getLabel().text();
         };
@@ -192,10 +198,9 @@ define([
         };
 
         api.Object.prototype.removeConnectedEdges = function () {
-            var connectedEdges = this.connectedEdges();
-            for (var i = 0; i < connectedEdges.length; i++) {
-                connectedEdges[i].remove();
-            }
+            this.applyToConnectedEdges(function(edge){
+                edge.remove();
+            });
         };
 
         api.Object.prototype.getSuggestions = function () {
@@ -273,14 +278,21 @@ define([
         api.Object.prototype.makePrivate = function () {
             this.html.removeClass("public");
             this.setIsPublic(false);
+            this.applyToConnectedEdges(function(edge){
+                edge.makePrivate();
+            });
         };
         api.Object.prototype.makePublic = function () {
             this.html.addClass("public");
             this.setIsPublic(true);
+            this.applyToConnectedEdges(function(edge){
+                edge.refreshIsPublicPrivate();
+            });
         };
         api.Object.prototype.isPublic = function () {
             return this.html.data("isPublic");
         };
+
         api.Object.prototype.deselect = function () {
             this.html.removeClass("selected");
             this.hideButtons();

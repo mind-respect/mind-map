@@ -192,7 +192,9 @@ define([
             this.getBubble1 = function () {
                 return treeBuilder.getBubbleWithLabelInTree("b1");
             };
-
+            this.getBubble2 = function () {
+                return treeBuilder.getBubbleWithLabelInTree("b2");
+            };
             this.getCenterBubbleUri = function () {
                 return uriOfVertexWithLabel(this.getGraph(), "b1");
             };

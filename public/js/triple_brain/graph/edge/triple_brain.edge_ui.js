@@ -120,6 +120,14 @@ define([
         api.Object.prototype.makePublic = function () {
             this.html.addClass("public");
         };
+        api.Object.prototype.refreshIsPublicPrivate = function () {
+            var isPublic = this.getParentVertex().isPublic() && this.getDestinationVertex().isPublic();
+            if(isPublic){
+                this.makePublic();
+            }else{
+                this.makePrivate();
+            }
+        };
         return api;
     }
 );

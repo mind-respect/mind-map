@@ -36,7 +36,7 @@ define([
             );
             var isPublic = parentVertexUi.isPublic() && childUi.isPublic();
             if(isPublic){
-                edge.makePublic()
+                edge.makePublic();
             }
             if (isInverse) {
                 edge.inverse();
