@@ -16,7 +16,7 @@ define([
             $("body").removeClass("hidden");
             var centerGraphElements = CenterGraphElements.fromServerFormat(elements);
             if(centerGraphElements.length === 0){
-                UserService.getDefaultVertexUri(function(uri){
+                UserService.getDefaultVertexUri(UserService.authenticatedUserInCache().user_name, function(uri){
                     window.location = "?bubble=" + uri;
                 });
                 return;
