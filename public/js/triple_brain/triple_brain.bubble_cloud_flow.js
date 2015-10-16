@@ -15,7 +15,7 @@ define([
         CenterGraphElementService.get(function (elements) {
             $("body").removeClass("hidden");
             var centerGraphElements = CenterGraphElements.fromServerFormat(elements);
-            if(centerGraphElements === 0){
+            if(centerGraphElements.length === 0){
                 UserService.getDefaultVertexUri(function(uri){
                     window.location = "?bubble=" + uri;
                 });
