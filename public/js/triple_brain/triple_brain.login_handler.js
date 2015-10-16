@@ -3,13 +3,12 @@
  */
 
 define([
+        "require",
         "jquery",
         "triple_brain.user_service",
-        "triple_brain.mind_map_info",
-        "triple_brain.bubble_cloud_flow",
         "bootstrap"
     ],
-    function ($, UserService, MindMapInfo, BubbleCloudFlow) {
+    function (require, $, UserService) {
         "use strict";
         var api = {};
         api.setupModal = function(){
@@ -37,8 +36,13 @@ define([
                 UserService.authenticate(
                     self.getFormData(),
                     function (user) {
-                        UserService.setAuthenticatedUserInCache(user);
-                        BubbleCloudFlow.enter();
+                        window.location.reload();
+                        //todo uncomment below eventually to avoid to have to reload page
+                        //UserService.setAuthenticatedUserInCache(user);
+                        //require(["triple_brain.mind_map_flow"], function(MindMapFlow){
+                        //    closeModal();
+                        //    MindMapFlow.enterBubbleCloud();
+                        //});
                     },
                     function () {
                         self.hideAllMessages();
@@ -183,6 +187,10 @@ define([
 
         function getModalSection() {
             return $("#login-page-modal");
+        }
+
+        function closeModal(){
+            getModalSection().modal("hide");
         }
 
         return api;

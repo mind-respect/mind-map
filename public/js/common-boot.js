@@ -27,6 +27,7 @@ requirejs.config({
         "bootstrap-datepicker": "vendor/bootstrap/bootstrap-datepicker",
         "jquery.max_char": "triple_brain/jquery.max_char",
         "jquery.triple_brain.search": "triple_brain/search/jquery.triple_brain.search",
+        "triple_brain.mind_map_flow": "triple_brain/triple_brain.mind_map_flow",
         "triple_brain.visited_elements_cloud": "triple_brain/triple_brain.visited_elements_cloud",
         "triple_brain.center_graph_elements": "triple_brain/triple_brain.center_graph_elements",
         "triple_brain.center_graph_element_service": "triple_brain/triple_brain.center_graph_element_service",
