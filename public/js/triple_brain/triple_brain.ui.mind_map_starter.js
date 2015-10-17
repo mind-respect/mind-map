@@ -12,7 +12,6 @@ define(
         "triple_brain.change_password",
         "triple_brain.login_handler",
         "triple_brain.wikidata",
-        "jquery.triple_brain.drag_scroll",
         "triple_brain.ui.search",
         "triple_brain.modules"
     ],

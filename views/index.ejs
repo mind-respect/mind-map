@@ -21,7 +21,7 @@
 
     <script src="/js/require.js"></script>
 </head>
-<body class='hidden' id="body">
+<body class='hidden dragscroll' id="body">
 <nav class="navbar navbar-default   navbar-fixed-top" role="navigation">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -43,9 +43,9 @@
                         <div class="input-group-addon">
                             <i class="fa fa-search search-icon"></i>
                         </div>
-                        <input type='text' id="landing-page-search" size=40 class='form-control input-lg hidden'
+                        <input type='text' id="landing-page-search" class='form-control input-lg hidden'
                                data-i18n="[placeholder]search.big.placeholder"/>
-                        <input id="vertex-search-input" size=40 data-i18n="[placeholder]left_menu.search"
+                        <input id="vertex-search-input" data-i18n="[placeholder]left_menu.search"
                                class='form-control input-lg hidden'>
                     </div>
                 </div>
@@ -166,9 +166,11 @@
 
     <div class="row hidden" id="welcome-content">
         <div class="col-lg-12 content text-center">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/mDfv3Tn6yYY"
-                    frameborder="0"
-                    allowfullscreen></iframe>
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/mDfv3Tn6yYY"
+                        frameborder="0"
+                        allowfullscreen></iframe>
+            </div>
         </div>
         <div class="row">
             <div class="col-lg-12 text-center">

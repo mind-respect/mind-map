@@ -118,7 +118,7 @@
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 /*one more than navigation bar dialog*/
-#header-search-form { margin-left: 21%; }
+#header-search-form { margin-left: 28%; }
 
 .ui-menu .ui-menu-item { border-bottom: 1px solid #d3d2d2; }
 .ui-menu .ui-menu-item .element-label { font-weight: bold; font-size: 14px; padding-right: 43px; }
@@ -276,6 +276,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .vertex.includes-vertices .in-bubble-content { padding-bottom: 2em; }
 .vertex.selected { z-index: 12; }
 .vertex.selected .in-bubble-content { box-shadow: 5px 5px 5px black; }
+.vertex.selected.center-vertex .in-bubble-content { box-shadow: 5px 5px 5px black; }
 .vertex.center-vertex .connector { height: 0; width: 0; }
 .vertex.center-vertex .arrow { height: 0; width: 0; top: 0; left: 0; border-top: none; }
 .vertex.center-vertex .arrow:before { content: ""; }

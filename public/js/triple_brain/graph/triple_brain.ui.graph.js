@@ -3,9 +3,10 @@
  */
 
 define([
-        "jquery"
+        "jquery",
+        "dragscroll"
     ],
-    function ($) {
+    function ($, DragScroll) {
         "use strict";
         var api = {},
             _drawnGraph,
@@ -32,11 +33,11 @@ define([
             return "bubble-ui-id-" + _bubbleIdCounter;
         };
         api.disableDragScroll = function(){
-            api.getDrawnGraph().disableDragScroll();
+            DragScroll.disable();
             _isDragScrollEnabled = false;
         };
         api.enableDragScroll = function(){
-            api.getDrawnGraph().disableDragScroll().dragScroll();
+            DragScroll.enable();
             _isDragScrollEnabled = true;
         };
         api.isDragScrollEnabled = function(){

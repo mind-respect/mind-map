@@ -7,8 +7,8 @@ define([
     "triple_brain.graph_element_menu",
     "triple_brain.ui.graph",
     "triple_brain.graph_displayer",
-    "jquery.triple_brain.drag_scroll"
-], function ($, GraphElementMenu, GraphUi, GraphDisplayer) {
+    "dragscroll"
+], function ($, GraphElementMenu, GraphUi, GraphDisplayer, DragScroll) {
     "use strict";
     var api = {};
     api.ofVertex = function (vertex) {
@@ -21,7 +21,7 @@ define([
         var self = this,
             html;
         this.create = function () {
-            html = $("<div class='included-vertices-container'>");
+            html = $("<div class='included-vertices-container dragscroll'>");
             addTitle();
             GraphUi.addHtml(html);
             var $body = $("body"),
@@ -32,15 +32,13 @@ define([
                     $body.css("height")
                 );
             html.append(layout);
-            layout.dragScroll({
-                scrollContainer: html
-            });
             var tree = addIncludedGraphElements();
             GraphElementMenu.makeForMenuContentAndGraphElement(
                 html,
                 vertex, {
                     height: 0.5914 * $(window).height(),
-                    width: 0.4 * $(window).width()
+                    width: 0.4 * $(window).width(),
+                    draggable: false
                 }
             );
             var centerVertexHtml = tree.find(".center-vertex:first");
@@ -51,6 +49,7 @@ define([
                     y: html.innerHeight()
                 }
             });
+            DragScroll.reset();
             return self;
         };
         function addTitle() {
