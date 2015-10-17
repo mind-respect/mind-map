@@ -3,19 +3,31 @@
  */
 
 #word-cloud-container{
-  margin-top:13%;
+  margin-top:5%;
 }
 #word-cloud {
   text-align:center;
   font-size:30px;
+  padding:1em;
+  border:3px solid dimgray;
+  border-bottom:none;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  //box-shadow: 0 0 3px $edgeColor;
   span.clouditem {
+    //border: 2px dashed #3a87ad;
+    box-shadow: $centerVertexBorder;
+    color:black !important;
     cursor:pointer;
-    padding-left: 0.15em;
-    padding-right: 0.15em;
+    //padding-left: 0.15em;
+    //padding-right: 0.15em;
+    padding:0.40em;
+    border-radius:50px;
     line-height: 90%;
+    margin:0.2em;
     display:inline-block;
-    &:hover{
-      text-decoration:underline;
-    }
+    //&:hover{
+    //  text-decoration:underline;
+    //}
   }
 }

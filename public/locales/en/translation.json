@@ -186,5 +186,8 @@
       "relation": "Relation",
       "schema": "Suggestions"
     }
+  },
+  "wordcloud":{
+    "title":"Your central bubbles"
   }
 }

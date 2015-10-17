@@ -185,5 +185,8 @@
       "relation": "Relation",
       "schema": "Suggestions"
     }
+  },
+  "wordcloud":{
+    "title":"Vos bulles centrales"
   }
 }

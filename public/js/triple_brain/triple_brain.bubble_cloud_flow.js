@@ -14,6 +14,7 @@ define([
     api.enter = function () {
         CenterGraphElementService.get(function (elements) {
             $("body").removeClass("hidden");
+            getSectionContainer().removeClass("hidden");
             var centerGraphElements = CenterGraphElements.fromServerFormat(elements);
             if(centerGraphElements.length === 0){
                 UserService.getDefaultVertexUri(UserService.authenticatedUserInCache().user_name, function(uri){
@@ -27,12 +28,15 @@ define([
             }
             VisitedElementsCloud.buildFromElementsInContainer(
                 centerGraphElements,
-                getContainer()
+                getWordsContainer()
             );
         });
     };
     return api;
-    function getContainer() {
+    function getSectionContainer(){
+        return $("#word-cloud-container");
+    }
+    function getWordsContainer() {
         return $("#word-cloud");
     }
 });
