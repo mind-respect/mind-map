@@ -11,6 +11,24 @@ define([
     function ($, Point, Segment, UiUtils) {
         "use strict";
         $.fn.dragScroll = function (options) {
+            if (this.data("disabled") !== undefined) {
+                this.data("disabled", false);
+                return;
+            }
+            this.data("dragScrollMouseUp", true);
+            setUp(this, options);
+        };
+
+        $.fn.disableDragScroll = function () {
+            console.log("disable dragscroll");
+            if (this.data("disabled") !== undefined) {
+                this.data("disabled", true);
+            }
+            return this;
+        };
+
+        function setUp($this, options) {
+            $this.data("dragScrollMouseUp", true);
             if (options === undefined) {
                 options = {};
             }
@@ -29,7 +47,8 @@ define([
                             UiUtils.getBrowserSafeScrollY()
                         );
                     };
-            return this.data(
+
+            $this.data(
                 "isThereSubScrollContainer",
                 isThereSubScrollContainer
             ).data(
@@ -41,32 +60,33 @@ define([
             ).on(
                 "mousedown",
                 handleMouseDown
-            );
-        };
-
-        $.fn.disableDragScroll = function () {
-            return this.off(
-                "mousedown",
-                handleMouseDown
-            ).off(
-                "mousemove"
-            ).off(
-                "mouseup"
-            );
-        };
-
-        function handleMouseDown(mouseDownEvent) {
-            mouseDownEvent.stopPropagation();
-            var $this = $(this),
-                mousePosition,
+            ).on(
+                "mousemove",
+                moveHandler
+            ).mouseup(function () {
+                    $this.data("dragScrollMouseUp", true);
+                });
+            var mousePosition,
                 scrollContainer = $this.data("scrollContainer"),
                 scrollContainerOffset = scrollContainer.offset(),
                 getScrollPosition = $this.data("scrollPositionGetter"),
                 isThereSubScrollContainer = $this.data("isThereSubScrollContainer");
-            $this.data("dragScrollMouseUp", false);
-            $this.mousemove(moveHandler);
+            var lastPosition;
+            return $this;
+            function handleMouseDown(mouseDownEvent) {
+                //mouseDownEvent.preventDefault();
+                mouseDownEvent.stopPropagation();
+                $this.data("dragScrollMouseUp", false);
+            }
+
             function moveHandler(moveEvent) {
-                $this.off("mousemove");
+                console.log("move is disabled" + $this.data("disabled"));
+                var disabledBefore = $this.data("disabled");
+                if (disabledBefore || $this.data("dragScrollMouseUp")) {
+                    return;
+                }
+                console.log("disabling in move");
+                $this.data("disabled", true);
                 var scrollAdjust = isThereSubScrollContainer ?
                     getScrollPosition() :
                     Point.fromCoordinates(
@@ -74,51 +94,37 @@ define([
                         0
                     );
                 mousePosition = Point.fromCoordinates(
-                        moveEvent.pageX - scrollContainerOffset.left + scrollAdjust.x,
-                        moveEvent.pageY - scrollContainerOffset.top + scrollAdjust.y
+                    moveEvent.pageX - scrollContainerOffset.left + scrollAdjust.x,
+                    moveEvent.pageY - scrollContainerOffset.top + scrollAdjust.y
                 );
                 scroll();
-                if (!$this.data("dragScrollMouseUp")) {
-                    $this.off(
-                        "mousemove"
-                    ).on(
-                        "mousemove",
-                        moveHandler
-                    );
-                }
-            }
-
-            scrollContainer.mouseup(function () {
-                $this.off("mousemove");
-                $this.data("dragScrollMouseUp", true);
-            });
-            var lastPosition;
-
-            function scroll() {
-                lastPosition = lastPosition === undefined ?
-                    Point.fromPoint(mousePosition) :
-                    lastPosition;
-                var movementSegment = Segment.withStartAndEndPoint(
-                    lastPosition,
-                    mousePosition
-                );
-                var distanceToScroll = getDistanceToScroll();
-                var scrollPosition = getScrollPosition();
-                var newScrollPosition = Point.sumOfPoints(
-                    distanceToScroll,
-                    scrollPosition
-                );
-                scrollContainer.scrollTop(newScrollPosition.y);
-                scrollContainer.scrollLeft(newScrollPosition.x);
-                lastPosition = Point.sumOfPoints(
-                    distanceToScroll,
-                    mousePosition
-                );
-                function getDistanceToScroll() {
-                    var distanceToScroll = movementSegment.length();
-                    distanceToScroll = distanceToScroll.invert();
-                    return distanceToScroll;
-                }
+                $this.data("disabled", false);
+                //function scroll() {
+                //    lastPosition = lastPosition === undefined ?
+                //        Point.fromPoint(mousePosition) :
+                //        lastPosition;
+                //    var movementSegment = Segment.withStartAndEndPoint(
+                //        lastPosition,
+                //        mousePosition
+                //    );
+                //    var distanceToScroll = getDistanceToScroll();
+                //    var scrollPosition = getScrollPosition();
+                //    var newScrollPosition = Point.sumOfPoints(
+                //        distanceToScroll,
+                //        scrollPosition
+                //    );
+                //    scrollContainer.scrollTop(newScrollPosition.y);
+                //    scrollContainer.scrollLeft(newScrollPosition.x);
+                //    lastPosition = Point.sumOfPoints(
+                //        distanceToScroll,
+                //        mousePosition
+                //    );
+                //    function getDistanceToScroll() {
+                //        var distanceToScroll = movementSegment.length();
+                //        distanceToScroll = distanceToScroll.invert();
+                //        return distanceToScroll;
+                //    }
+                //}
             }
         }
     }
