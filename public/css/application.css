@@ -183,7 +183,10 @@ button.add-button-in-list:hover { color: #00d100; }
 .graph-element-menu .identifications .description { margin-top: -7px; }
 .graph-element-menu .identifications ul { text-align: left; }
 .graph-element-menu .identifications ::-webkit-input-placeholder, .graph-element-menu .identifications :-moz-placeholder, .graph-element-menu .identifications ::-moz-placeholder, .graph-element-menu .identifications :-ms-input-placeholder { color: black; }
-.graph-element-menu .ui-dialog-titlebar-close { background: transparent; border: none; }
+.graph-element-menu .ui-dialog-titlebar-close { background: transparent; border: none; color: black; }
+.graph-element-menu .ui-dialog-titlebar-close .ui-button-icon-primary.ui-icon.ui-icon-closethick { display: none; }
+.graph-element-menu .ui-dialog-titlebar-close .ui-button-text { display: none; }
+.graph-element-menu .ui-dialog-titlebar-close:after { font-family: FontAwesome; content: "\f00d"; }
 
 .image-upload-wrapper .holder { border: 10px dashed #ccc; width: 150px; min-height: 150px; margin: 20px auto; }
 .image-upload-wrapper .holder.hover { border: 10px dashed #0c0; }

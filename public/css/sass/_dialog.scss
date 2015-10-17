@@ -97,6 +97,17 @@
   .ui-dialog-titlebar-close {
     background: transparent;
     border: none;
+    color:black;
+    .ui-button-icon-primary.ui-icon.ui-icon-closethick{
+      display:none;
+    }
+    .ui-button-text{
+      display:none;
+    }
+    &:after{
+      font-family: FontAwesome;
+      content:"\f00d";
+    }
   }
 }
 

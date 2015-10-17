@@ -29,7 +29,8 @@ define([
                 title: graphElement.getTextOrDefault(),
                 close: function () {
                     $(this).dialog("destroy").remove();
-                }
+                },
+                draggable:false
             };
         if (extraOptions !== undefined) {
             if (extraOptions.dialogClass !== undefined) {
