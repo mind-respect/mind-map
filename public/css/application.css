@@ -401,7 +401,7 @@ button.add-button-in-list:hover { color: #00d100; }
 /* Copyright Vincent Blouin under the GPL License version 3 */
 #word-cloud-container { margin-top: 5%; }
 
-#word-cloud { text-align: center; font-size: 30px; padding: 1em; border: 3px solid #3a87ad; border-bottom: none; border-top-left-radius: 25px; border-top-right-radius: 25px; }
+#word-cloud { text-align: center; font-size: 30px; padding: 1em; border: 3px solid dimgray; border-bottom: none; border-top-left-radius: 25px; border-top-right-radius: 25px; }
 #word-cloud span.clouditem { box-shadow: -1px -2px 1px midnightblue; color: black !important; cursor: pointer; padding: 0.40em; border-radius: 50px; line-height: 90%; margin: 0.2em; display: inline-block; }
 
 html { font-size: 93.8%; }
