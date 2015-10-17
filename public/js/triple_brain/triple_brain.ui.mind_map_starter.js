@@ -24,6 +24,7 @@ define(
                 setupMindMapForAuthenticatedUser,
                 callBackWhenNotAuthenticated
             );
+            setupLogoClick();
         };
         api.enterBubbleCloudFlow = function(){
             MindMapFlow.enterBubbleCloud();
@@ -57,6 +58,17 @@ define(
             $("html").ajaxError(function (e, jqxhr) {
                 if (403 === jqxhr.status) {
                     LoginHandler.showModal();
+                }
+            });
+        }
+
+        function setupLogoClick(){
+            $("#logo").click(function(event){
+                event.preventDefault();
+                if(MindMapInfo.isAnonymous()){
+                    window.location="http://about.bubl.guru";
+                }else{
+                    window.location="/";
                 }
             });
         }
