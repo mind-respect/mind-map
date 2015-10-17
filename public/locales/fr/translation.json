@@ -68,6 +68,7 @@
       "schema": "suggestions"
     },
     "disconnect": "déconnecter",
+    "history": "bulles centrales",
     "redraw": "redessiner",
     "selection": {
       "title": "sélectionner",

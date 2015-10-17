@@ -69,6 +69,7 @@
       "schema": "suggestions"
     },
     "disconnect": "disconnect",
+    "history": "central bubbles",
     "redraw": "redraw",
     "selection": {
       "title": "select",
