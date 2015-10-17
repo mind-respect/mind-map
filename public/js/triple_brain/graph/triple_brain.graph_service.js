@@ -18,7 +18,11 @@ define([
         };
         api.graphUriForCentralVertexUri = function (centerVertexUri) {
             if (!MindMapInfo.isAnonymous() && IdUriUtils.isGraphElementUriOwnedByCurrentUser(centerVertexUri)) {
-                return centerVertexUri + "/surround_graph";
+                var uri = centerVertexUri + "/surround_graph";
+                if(MindMapInfo.getCenterBubbleUri() === centerVertexUri){
+                    uri += "?center=true";
+                }
+                return uri;
             } else {
                 return IdUriUtils.convertVertexUriToNonOwnedUri(centerVertexUri);
             }
