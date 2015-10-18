@@ -3,10 +3,11 @@
  */
 
 define([
-    "jquery",
-    "triple_brain.graph_element_menu",
-    "triple_brain.ui.graph"
-],
+        "jquery",
+        "triple_brain.graph_element_menu",
+        "triple_brain.ui.graph",
+        "jquery.i18next"
+    ],
     function ($, GraphElementMenu, GraphUi) {
         "use strict";
         var api = {};
@@ -28,12 +29,14 @@ define([
                 );
                 GraphElementMenu.makeForMenuContentAndGraphElement(
                     html,
-                    vertex
+                    vertex,
+                    {},
+                    $.t("vertex.menu.delete.title_prefix")
                 );
                 return self;
             };
 
-            function title(){
+            function title() {
                 return $(
                     "<h2>"
                 ).attr(
@@ -52,7 +55,7 @@ define([
                     "margin-top",
                     "1.5em"
                 );
-                function confirmButton(){
+                function confirmButton() {
                     return $(
                         "<button>"
                     ).attr(
@@ -63,7 +66,7 @@ define([
                         vertex
                     ).on(
                         "click",
-                        function(event){
+                        function (event) {
                             event.stopPropagation();
                             var button = $(this);
                             deleteCallback(
@@ -78,7 +81,8 @@ define([
                         "1.5em"
                     ).button();
                 }
-                function cancelButton(){
+
+                function cancelButton() {
                     return $(
                         "<button>"
                     ).attr(
@@ -86,7 +90,7 @@ define([
                         "vertex.menu.delete.button.cancel"
                     ).on(
                         "click",
-                        function(){
+                        function () {
                             GraphElementMenu.fromContentComponent(
                                 $(this)
                             ).close();

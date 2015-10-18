@@ -141,6 +141,7 @@
         "title": "Bulles et relations comprises dans celle-ci"
       },
       "delete": {
+        "title_prefix": "Effacer ",
         "title": "Voulez-vous vraiment effacer cette bulle?",
         "button": {
           "confirm": "Oui",
