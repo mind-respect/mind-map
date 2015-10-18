@@ -46,7 +46,8 @@ define([
                 this.graphElement, {
                     height: 350,
                     width: 550
-                }
+                },
+                $.t("graph_element.menu.identification.title_prefix")
             );
             GraphElementMenu.setupAutoCompleteSuggestionZIndex(
                 this.identificationTextField

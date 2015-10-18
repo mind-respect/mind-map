@@ -15,7 +15,10 @@ define([
             input.closest(".ui-dialog").parent()
         );
     };
-    api.makeForMenuContentAndGraphElement = function (menuContent, graphElement, extraOptions) {
+    api.makeForMenuContentAndGraphElement = function (menuContent, graphElement, extraOptions, titlePrefix) {
+        if(titlePrefix === undefined){
+            titlePrefix = "";
+        }
         var dialogClass = "graph-element-menu",
             horizontalPosition = getHorizontalPosition(),
             options = {
@@ -26,7 +29,7 @@ define([
                     collision: 'none'
                 },
                 dialogClass: dialogClass,
-                title: graphElement.getTextOrDefault(),
+                title: titlePrefix + graphElement.getTextOrDefault(),
                 close: function () {
                     $(this).dialog("destroy").remove();
                 },
