@@ -7,7 +7,8 @@ define([
         "triple_brain.graph_element_menu",
         "triple_brain.ui.graph",
         "triple_brain.image",
-        "triple_brain.mind-map_template"
+        "triple_brain.mind-map_template",
+        "jquery.i18next"
     ],
     function ($, GraphElementMenu, GraphUi, Image, MindMapTemplate) {
         "use strict";
@@ -28,7 +29,8 @@ define([
                     html,
                     vertex, {
                         width: 400
-                    }
+                    },
+                    $.t("vertex.menu.image.title_prefix")
                 );
                 return self;
             };

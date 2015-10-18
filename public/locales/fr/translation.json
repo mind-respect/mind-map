@@ -94,7 +94,7 @@
         "placeholder": "Est un(e) ou la même \"chose\" que",
         "example":"exemple: Cette bulle est un fruit ou cette bulle est la même chose que Madonna la chanteuse.",
         "what_for": "À quoi ça sert?",
-        "why": "À avoir automatiquement une image, une description, à grouper les relations et à trouver toutes les autres bulles qui ont les mêmes identifiants.",
+        "why": "À avoir automatiquement une image, une description, des suggestions, à grouper les relations et à trouver toutes les autres bulles qui ont les mêmes identifiants.",
         "readMore": "plus",
         "readLess": "moins",
         "origin": "source"
@@ -118,6 +118,7 @@
     },
     "menu": {
       "image": {
+        "title_prefix": "Images de ",
         "title": "Cliquer sur l'aire pointillée pour sélectionner une image, ou glisser simplement le fichier dans l'aire pointillée",
         "progress": "Progression du téléversement"
       },
@@ -126,6 +127,7 @@
         "saving": "Sauvegarde"
       },
       "link_to_far_vertex": {
+        "title_prefix": "Relie ",
         "title": "Chercher une bulle pour la lier à celle-ci"
       },
       "suggestion": {

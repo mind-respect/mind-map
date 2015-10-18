@@ -35,7 +35,9 @@ define([
             var searchBox = addSearchBox();
             GraphElementMenu.makeForMenuContentAndGraphElement(
                 html,
-                vertex
+                vertex,
+                {},
+                $.t("vertex.menu.link_to_far_vertex.title_prefix")
             );
             GraphElementMenu.setupAutoCompleteSuggestionZIndex(
                 searchBox
