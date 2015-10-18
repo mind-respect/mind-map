@@ -55,6 +55,7 @@ define([
         };
 
         IdentificationMenu.prototype._buildMenu = function () {
+            this._addTitle();
             if (!MindMapInfo.isViewOnly()) {
                 this._addIdentificationTextField().focus();
             }
@@ -62,16 +63,43 @@ define([
             this._addIdentifications();
         };
 
-        IdentificationMenu.prototype._addInstructions = function () {
+        IdentificationMenu.prototype._addTitle = function () {
             this.html.append(
-                $(
-                    "<div class='instruction'>"
-                ).attr(
+                $("<h4>").attr(
+                    "data-i18n",
+                    "graph_element.menu.identification.title"
+                )
+            );
+        };
+
+        IdentificationMenu.prototype._addInstructions = function () {
+            var container = $("<div class='instruction'>");
+            container.append(
+                $("<div class='small'>").attr(
                     "data-i18n",
                     (
-                        "graph_element.menu.identification.instruction"
+                        "graph_element.menu.identification.example"
                     )
                 )
+            );
+            container.append(
+                $("<span class='label label-primary'>").attr(
+                    "data-i18n",
+                    (
+                        "graph_element.menu.identification.what_for"
+                    )
+                )
+            );
+            container.append(
+                $("<span style='margin-left:0.5em;'>").attr(
+                    "data-i18n",
+                    (
+                        "graph_element.menu.identification.why"
+                    )
+                )
+            );
+            this.html.append(
+                container
             );
         };
 

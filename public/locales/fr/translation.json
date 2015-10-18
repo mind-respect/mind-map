@@ -89,9 +89,11 @@
   "graph_element": {
     "menu": {
       "identification": {
-        "title": "Identifications",
-        "instruction": "Qu'est-ce c'est? Albert Einstein? Un lieu? Un animal?",
-        "placeholder": "Ajoutez un identifiant à cette bulle",
+        "title": "Dites ce qu'est cette bulle",
+        "placeholder": "Est un(e) ou la même \"chose\" que",
+        "example":"exemple: Cette bulle est un fruit ou cette bulle est la même chose que Madonna la chanteuse.",
+        "what_for": "À quoi ça sert?",
+        "why": "À avoir automatiquement une image, une description, à grouper les relations et à trouver toutes les autres bulles qui ont le même identifiant.",
         "readMore": "plus",
         "readLess": "moins",
         "origin": "source"

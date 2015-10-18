@@ -90,9 +90,11 @@
   "graph_element": {
     "menu": {
       "identification": {
-        "title": "Identifications",
-        "instruction": "What is it? Albert Einstein? A location? An animal?",
-        "placeholder": "Add an identification to this bubble",
+        "title": "Say what this bubble is.",
+        "placeholder": "This bubble Is a ... or is the Same as",
+        "example":"example: This bubble is a fruit or this bubble is the same as Madonna the singer.",
+        "what_for": "What for?",
+        "why": "To automaticaly have an image, a description, to group relations and to find all the other bubbles having the same identifiers.",
         "readMore": "more",
         "readLess": "less",
         "origin": "source"
