@@ -416,6 +416,8 @@ html { font-size: 93.8%; }
 #mind_map { cursor: all-scroll; -moz-user-select: -moz-none; -webkit-user-select: none; -ms-user-select: none; user-select: none; }
 #mind_map h2, #mind_map h3 { line-height: inherit; }
 
+#schema-instructions { position: fixed; top: 20%; width: 100%; }
+
 #welcome-content .content > *:not(:first-child) { margin-top: 30px; }
 
 .round-button { border-radius: 20px; }

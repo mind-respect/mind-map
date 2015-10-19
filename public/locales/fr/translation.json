@@ -65,7 +65,7 @@
     "create": {
       "title": "créer",
       "bubble": "bulle",
-      "schema": "suggestions"
+      "schema": "modèle"
     },
     "disconnect": "déconnecter",
     "history": "bulles centrales",
@@ -102,10 +102,14 @@
     }
   },
   "property": {
-    "when-empty": "suggestion"
+    "when-empty": "composant"
   },
   "schema": {
-    "when-empty": "nom des suggestions"
+    "when-empty": "modèle",
+    "instruction": "Construisez un modèle et identifier le à une bulle pour réutiliser ses composants."
+  },
+  "suggestion": {
+    "when-empty": "composant"
   },
   "vertex": {
     "default": "dis le",
@@ -187,10 +191,10 @@
       "placeholder": "Chercher des bulles"
     },
     "context": {
-      "property": "Suggestion",
+      "property": "Composant",
       "vertex": "Bulle",
       "relation": "Relation",
-      "schema": "Suggestions"
+      "schema": "Modèle"
     }
   },
   "wordcloud":{

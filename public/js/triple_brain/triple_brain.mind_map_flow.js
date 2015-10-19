@@ -36,6 +36,9 @@ define([
             var centralVertex = IdUriUtils.isSchemaUri(centralVertexUri) ?
                 GraphDisplayer.getSchemaSelector().get() :
                 GraphDisplayer.getVertexSelector().withUri(centralVertexUri)[0];
+            if(centralVertex.isVertex()){
+                GraphUi.hideSchemaInstructions();
+            }
             centralVertex.setAsCentral();
             GraphUi.enableDragScroll();
             GraphUi.getDrawnGraph().on(

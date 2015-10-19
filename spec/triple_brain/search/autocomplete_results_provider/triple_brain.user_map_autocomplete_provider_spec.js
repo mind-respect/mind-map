@@ -46,7 +46,7 @@ define([
             expect(
                 propertySearchResult.elementType
             ).toBe(
-                "Suggestion"
+                "Component"
             );
         });
         it("sets vertex context", function () {
@@ -117,7 +117,7 @@ define([
             expect(
                 topSearchResult.elementType
             ).toBe(
-                "Suggestions"
+                "Model"
             );
         });
         it("puts proprieties above relations in the list of formatted search results", function () {
@@ -141,7 +141,7 @@ define([
             expect(
                 topSearchResult.elementType
             ).toBe(
-                "Suggestion"
+                "Component"
             );
         });
     });

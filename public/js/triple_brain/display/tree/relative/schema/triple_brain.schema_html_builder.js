@@ -31,6 +31,7 @@ define([
             schema
         );
         schema.refreshImages();
+        GraphUi.showSchemaInstructions();
     };
     function Self(serverFacade){
         this.serverFacade = serverFacade;

@@ -43,6 +43,15 @@ define([
         api.isDragScrollEnabled = function(){
             return _isDragScrollEnabled;
         };
+        api.hideSchemaInstructions = function(){
+            getSchemaInstructions().addClass("hidden");
+        };
+        api.showSchemaInstructions = function(){
+            getSchemaInstructions().removeClass("hidden");
+        };
         return api;
+        function getSchemaInstructions(){
+            return $("#schema-instructions");
+        }
     }
 );

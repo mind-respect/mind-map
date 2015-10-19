@@ -10,7 +10,8 @@ define([
     "triple_brain.event_bus",
     "triple_brain.selection_handler",
     "triple_brain.vertex_html_builder",
-    "triple_brain.graph_element"
+    "triple_brain.graph_element",
+    "jquery.i18next"
 ], function ($, RelativeTreeVertex, GraphElementUi, VertexUi, EventBus, SelectionHandler, VertexHtmlBuilder, GraphElement) {
     "use strict";
     var api = {};
@@ -23,7 +24,7 @@ define([
         return suggestion;
     };
     api.getWhenEmptyLabel = function(){
-        return "suggestion";
+        return $.t("suggestion.when-empty");
     };
     api.Self = function(html) {
         this.html = html;
