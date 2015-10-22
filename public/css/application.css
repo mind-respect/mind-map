@@ -181,6 +181,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .graph-element-menu .identifications .remove-btn:focus { outline: none; }
 .graph-element-menu .identifications .remove-btn i { color: red; margin-top: 50%; }
 .graph-element-menu .identifications .description { margin-top: -7px; }
+.graph-element-menu .identifications .number-references-container { clear: both; float: left; margin-top: 0.7em; }
 .graph-element-menu .identifications ul { text-align: left; }
 .graph-element-menu .identifications ::-webkit-input-placeholder, .graph-element-menu .identifications :-moz-placeholder, .graph-element-menu .identifications ::-moz-placeholder, .graph-element-menu .identifications :-ms-input-placeholder { color: black; }
 .graph-element-menu .ui-dialog-titlebar-close { background: transparent; border: none; color: black; }

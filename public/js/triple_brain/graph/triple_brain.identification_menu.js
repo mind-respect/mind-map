@@ -134,7 +134,8 @@ define([
                 this._makeImage(identification),
                 title,
                 description,
-                this._makeOrigin(identification)
+                this._makeOrigin(identification),
+                this._makeNumberOfReferences(identification)
             );
             this._getListHtml().append(
                 li
@@ -237,6 +238,25 @@ define([
             );
         };
 
+        IdentificationMenu.prototype._makeNumberOfReferences = function (identification) {
+            var numberOfOtherReferences = identification.getNbReferences() - 1;
+            var content = numberOfOtherReferences > 0 ?
+                $("<a href='#'>").text(
+                    numberOfOtherReferences + " " +
+                    $.t(
+                        "graph_element.menu.identification.nb_references"
+                    )
+                ) :
+                $.t(
+                    "graph_element.menu.identification.no_other_references"
+                );
+            return $(
+                "<div class='number-references-container'>"
+            ).append(
+                content
+            );
+        };
+
         IdentificationMenu.prototype._addIdentificationTextField = function () {
             var identificationTextField = $(
                 MindMapTemplate[
@@ -312,11 +332,11 @@ define([
 
         IdentificationMenu.prototype._getServerIdentificationFctn = function () {
             var graphElement = this.graphElement;
-            return this.graphElement.isVertex() ? function (concept, identificationResource) {
-                graphElement.serverFacade().addGenericIdentification(concept, identificationResource);
+            return this.graphElement.isVertex() ? function (concept, identificationResource, callback) {
+                graphElement.serverFacade().addGenericIdentification(concept, identificationResource, callback);
                 graphElement.refreshImages();
-            } : function (concept, identificationResource) {
-                graphElement.serverFacade().addSameAs(concept, identificationResource);
+            } : function (concept, identificationResource, callback) {
+                graphElement.serverFacade().addSameAs(concept, identificationResource, callback);
                 graphElement.refreshImages();
             };
         };
@@ -364,11 +384,14 @@ define([
             var identificationResource = Identification.fromSearchResult(
                 searchResult
             );
+            var self = this;
             serverIdentificationFctn(
                 graphElement,
-                identificationResource
+                identificationResource,
+                function(graphElement, updatedIdentification){
+                    self._addIdentificationAsListElement(updatedIdentification)
+                }
             );
-            this._addIdentificationAsListElement(identificationResource);
         };
         return api;
     }

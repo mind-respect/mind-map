@@ -97,7 +97,9 @@
         "why": "À avoir automatiquement une image, une description, des suggestions, à grouper les relations et à trouver toutes les autres bulles qui ont les mêmes identifiants.",
         "readMore": "plus",
         "readLess": "moins",
-        "origin": "source"
+        "origin": "source",
+        "nb_references" : "autre bulle(s) ayant le même identifiant",
+        "no_other_references" : "Aucune autre bulle avec le même identifiant"
       }
     }
   },

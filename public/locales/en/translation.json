@@ -98,7 +98,9 @@
         "why": "To automaticaly have an image, a description, suggestions, group relations and find all the other bubbles that have the same identifiers.",
         "readMore": "more",
         "readLess": "less",
-        "origin": "source"
+        "origin": "source",
+        "nb_references" : "other bubble(s) having the same identifier",
+        "no_other_references" : "No other bubble with the same identifier"
       }
     }
   },

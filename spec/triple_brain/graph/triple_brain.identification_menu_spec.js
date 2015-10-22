@@ -35,8 +35,5 @@ define([
                 hasIntegratedIdentification
             ).toBeFalsy();
         });
-        it("does not fail if identification has no description", function () {
-
-        });
     });
 });

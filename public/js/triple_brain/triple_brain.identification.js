@@ -103,5 +103,13 @@ define([
                 return genericIdentificationAction;
         }
     };
+
+    api.Self.prototype.getNbReferences = function(){
+        if(this.identificationServerFormat.nbReferences === undefined){
+            return 0;
+        }
+        return this.identificationServerFormat.nbReferences;
+    };
+
     return api;
 });
