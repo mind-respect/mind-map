@@ -389,7 +389,7 @@ define([
                 graphElement,
                 identificationResource,
                 function(graphElement, updatedIdentification){
-                    self._addIdentificationAsListElement(updatedIdentification)
+                    self._addIdentificationAsListElement(updatedIdentification);
                 }
             );
         };

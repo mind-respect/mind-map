@@ -8,15 +8,15 @@ define([
 ], function ($, UserService) {
     "use strict";
     var api = {};
-    api.getForIdentification = function(identification){
+    api.getForIdentification = function(identification, callback){
         return $.ajax({
             type:'GET',
-            url: baseUri +
-            "details?uri=" + uri
+            url: getUri() + identification.getUri(),
+            callback:callback
         });
     };
     return api;
     function getUri(){
-        return UserService.currentUserUri() + "/identification";
+        return UserService.currentUserUri() + "/identification/";
     }
 });
