@@ -92,7 +92,7 @@
         "title_prefix": "Identifiants de ",
         "title": "Dites ce qu'est cette bulle",
         "placeholder": "Est un(e) ou la même \"chose\" que",
-        "example":"exemple: Cette bulle est un fruit ou cette bulle est la même chose que Madonna la chanteuse.",
+        "example":"ex: Cette bulle est un fruit ou cette bulle est la même chose que Madonna la chanteuse.",
         "what_for": "À quoi ça sert?",
         "why": "À avoir automatiquement une image, une description, des suggestions, à grouper les relations et à trouver toutes les autres bulles qui ont les mêmes identifiants.",
         "readMore": "plus",

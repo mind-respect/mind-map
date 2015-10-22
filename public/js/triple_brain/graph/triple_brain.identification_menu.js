@@ -84,15 +84,18 @@ define([
                 )
             );
             container.append(
-                $("<span class='label label-primary'>").attr(
+                $("<a href='#' class=''>").attr(
                     "data-i18n",
                     (
                         "graph_element.menu.identification.what_for"
                     )
-                )
+                ).click(function (event) {
+                        event.preventDefault();
+                        $(this).next('.why').toggleClass("hidden");
+                    })
             );
             container.append(
-                $("<span style='margin-left:0.5em;'>").attr(
+                $("<span style='margin-left:0.5em;' class='hidden why'>").attr(
                     "data-i18n",
                     (
                         "graph_element.menu.identification.why"
@@ -388,7 +391,7 @@ define([
             serverIdentificationFctn(
                 graphElement,
                 identificationResource,
-                function(graphElement, updatedIdentification){
+                function (graphElement, updatedIdentification) {
                     self._addIdentificationAsListElement(updatedIdentification);
                 }
             );
