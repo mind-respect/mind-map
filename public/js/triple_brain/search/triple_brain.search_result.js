@@ -13,6 +13,17 @@ define([
 ], function ($, GraphElement, Edge, Schema, Property, Vertex, GraphElementType) {
     "use strict";
     var api = {};
+    api.fromServerFormatArray = function (searchResultsServerFormat) {
+        var searchResults = [];
+        $.each(searchResultsServerFormat, function(){
+            searchResults.push(
+                api.fromServerFormat(
+                    this
+                )
+            );
+        });
+        return searchResults;
+    };
     api.fromServerFormat = function (searchResult) {
         switch (searchResult.type) {
             case "edge" :

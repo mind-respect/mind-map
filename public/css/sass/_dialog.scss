@@ -84,10 +84,14 @@
     .description{
       margin-top : -7px;
     }
-    .number-references-container{
+    .references-container{
       clear:both;
       float:left;
-      margin-top:0.7em;
+      margin-top:0.5em;
+      border-bottom:none;
+      li.clickable{
+        cursor:pointer;
+      }
     }
     ul {
       text-align: left;

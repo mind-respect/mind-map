@@ -1,8 +1,7 @@
-/*
- * http://stackoverflow.com/questions/13534601/re-attaching-jquery-detach
- */
-
 (function($){
+    /*
+     * http://stackoverflow.com/questions/13534601/re-attaching-jquery-detach
+     */
     $.fn.detachTemp = function() {
         this.data('dt_placeholder',$('<span />').insertAfter( this ));
         return this.detach();
@@ -18,4 +17,9 @@
                 + "because its placeholder is not available.");
         return this;
     };
+    $.fn.disableAnchor = function(){
+        return this.off("click").click(function(event){
+            event.preventDefault();
+        });
+    }
 })(jQuery);

@@ -120,16 +120,16 @@
 /*one more than navigation bar dialog*/
 #header-search-form { margin-left: 28%; }
 
-.ui-menu .ui-menu-item { border-bottom: 1px solid #d3d2d2; }
-.ui-menu .ui-menu-item .element-label { font-weight: bold; font-size: 14px; padding-right: 43px; }
-.ui-menu .ui-menu-item a { white-space: nowrap; }
-.ui-menu .ui-menu-item span { white-space: nowrap; }
-.ui-menu .ui-menu-item .info { font-size: 11px; }
-.ui-menu .ui-menu-item .info * { font-size: 11px; }
-.ui-menu .ui-menu-item .info a { color: #1919AC; display: inline; padding: 0; white-space: nowrap; }
-.ui-menu .ui-menu-item .info a:hover { color: #47A3FF; }
-.ui-menu .ui-menu-item .type { margin-top: -20px; float: right; }
-.ui-menu .ui-menu-item .distinction { margin-right: 1em; max-width: 428px; font-weight: normal; overflow: hidden; text-overflow: ellipsis; }
+.ui-menu .ui-menu-item, .ui-menu .references-container, .identifications .ui-menu-item, .identifications .references-container { border-bottom: 1px solid #d3d2d2; }
+.ui-menu .ui-menu-item .element-label, .ui-menu .references-container .element-label, .identifications .ui-menu-item .element-label, .identifications .references-container .element-label { font-weight: bold; font-size: 14px; padding-right: 43px; }
+.ui-menu .ui-menu-item a, .ui-menu .references-container a, .identifications .ui-menu-item a, .identifications .references-container a { white-space: nowrap; }
+.ui-menu .ui-menu-item span, .ui-menu .references-container span, .identifications .ui-menu-item span, .identifications .references-container span { white-space: nowrap; }
+.ui-menu .ui-menu-item .info, .ui-menu .references-container .info, .identifications .ui-menu-item .info, .identifications .references-container .info { font-size: 11px; }
+.ui-menu .ui-menu-item .info *, .ui-menu .references-container .info *, .identifications .ui-menu-item .info *, .identifications .references-container .info * { font-size: 11px; }
+.ui-menu .ui-menu-item .info a, .ui-menu .references-container .info a, .identifications .ui-menu-item .info a, .identifications .references-container .info a { color: #1919AC; display: inline; padding: 0; white-space: nowrap; }
+.ui-menu .ui-menu-item .info a:hover, .ui-menu .references-container .info a:hover, .identifications .ui-menu-item .info a:hover, .identifications .references-container .info a:hover { color: #47A3FF; }
+.ui-menu .ui-menu-item .type, .ui-menu .references-container .type, .identifications .ui-menu-item .type, .identifications .references-container .type { margin-top: -20px; float: right; }
+.ui-menu .ui-menu-item .distinction, .ui-menu .references-container .distinction, .identifications .ui-menu-item .distinction, .identifications .references-container .distinction { margin-right: 1em; max-width: 428px; font-weight: normal; overflow: hidden; text-overflow: ellipsis; }
 
 #big-search-box-container .input-group { margin: auto; }
 #big-search-box-container .search-icon { font-size: 1.7em; }
@@ -181,7 +181,8 @@ button.add-button-in-list:hover { color: #00d100; }
 .graph-element-menu .identifications .remove-btn:focus { outline: none; }
 .graph-element-menu .identifications .remove-btn i { color: red; margin-top: 50%; }
 .graph-element-menu .identifications .description { margin-top: -7px; }
-.graph-element-menu .identifications .number-references-container { clear: both; float: left; margin-top: 0.7em; }
+.graph-element-menu .identifications .references-container { clear: both; float: left; margin-top: 0.5em; border-bottom: none; }
+.graph-element-menu .identifications .references-container li.clickable { cursor: pointer; }
 .graph-element-menu .identifications ul { text-align: left; }
 .graph-element-menu .identifications ::-webkit-input-placeholder, .graph-element-menu .identifications :-moz-placeholder, .graph-element-menu .identifications ::-moz-placeholder, .graph-element-menu .identifications :-ms-input-placeholder { color: black; }
 .graph-element-menu .ui-dialog-titlebar-close { background: transparent; border: none; color: black; }

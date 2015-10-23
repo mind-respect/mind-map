@@ -17,17 +17,65 @@ define([
         "triple_brain.mind_map_info",
         "triple_brain.suggestion_service",
         "triple_brain.schema_suggestion",
+        "triple_brain.identified_to_service",
+        "triple_brain.graph_element_type",
         "jquery-ui",
         "jquery.triple_brain.search",
-        "jquery.i18next"
+        "jquery.i18next",
+        "jquery.performance"
     ],
-    function ($, Identification, MindMapTemplate, GraphUi, IdUri, WikidataAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu, SearchService, IdentificationContext, SearchResult, MindMapInfo, SuggestionService, SchemaSuggestion) {
+    function ($, Identification, MindMapTemplate, GraphUi, IdUri, WikidataAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu, SearchService, IdentificationContext, SearchResult, MindMapInfo, SuggestionService, SchemaSuggestion, IdentifiedToService, GraphElementType) {
         "use strict";
         var api = {},
             DESCRIPTION_MAX_CHAR = 155;
 
         api.ofGraphElement = function (graphElementUi) {
             return new IdentificationMenu(graphElementUi);
+        };
+        api._handleClickReferences = function (event) {
+            event.preventDefault();
+            var anchor = $(this).disableAnchor();
+            IdentifiedToService.getForIdentification(
+                anchor.data("identification"),
+                function (searchResults) {
+                    var container = anchor.next(".references");
+                    var originalGraphElement = anchor.data("graphElement");
+                    $.each(searchResults, function () {
+                        var searchResult = this;
+                        if (searchResult.getGraphElement().getUri() === originalGraphElement.getUri()) {
+                            return;
+                        }
+                        api._renderReference(
+                            container, searchResult
+                        );
+                    });
+                }
+            );
+        };
+
+        api._renderReference = function (container, reference) {
+            var graphElement = reference.getGraphElement();
+            var li = $("<li class='list-group-item clearfix'>").append(
+                $("<span class='element-label'>").text(
+                    graphElement.getLabel()
+                ),
+                $("<div class='info'>").append(
+                    $("<span class='type'>").text(
+                        reference.getGraphElementType()
+                    ),
+                    $("<div class='distinction'>").text(
+                        reference.getSomethingToDistinguish()
+                    )
+                )
+            );
+            if(reference.is(GraphElementType.Vertex) || reference.is(GraphElementType.Schema)){
+                li.addClass("clickable").data(
+                    "uri", graphElement.getUri()
+                ).click(function () {
+                        window.location = "?bubble=" + $(this).data("uri");
+                });
+            }
+            li.appendTo(container);
         };
         function IdentificationMenu(graphElement) {
             this.graphElement = graphElement;
@@ -138,7 +186,7 @@ define([
                 title,
                 description,
                 this._makeOrigin(identification),
-                this._makeNumberOfReferences(identification)
+                this._makeReferencesContainer(identification)
             );
             this._getListHtml().append(
                 li
@@ -241,23 +289,32 @@ define([
             );
         };
 
-        IdentificationMenu.prototype._makeNumberOfReferences = function (identification) {
+        IdentificationMenu.prototype._makeReferencesContainer = function (identification) {
             var numberOfOtherReferences = identification.getNbReferences() - 1;
-            var content = numberOfOtherReferences > 0 ?
-                $("<a href='#'>").text(
+            var container = $(
+                "<div class='references-container'>"
+            );
+            if (numberOfOtherReferences > 0) {
+                $("<a href='#'>").data(
+                    "identification", identification
+                ).data(
+                    "graphElement",
+                    this.graphElement
+                ).text(
                     numberOfOtherReferences + " " +
                     $.t(
                         "graph_element.menu.identification.nb_references"
                     )
-                ) :
-                $.t(
-                    "graph_element.menu.identification.no_other_references"
+                ).click(api._handleClickReferences).appendTo(container);
+                container.append("<ul class='references list list-group'>");
+            } else {
+                container.text(
+                    $.t(
+                        "graph_element.menu.identification.no_other_references"
+                    )
                 );
-            return $(
-                "<div class='number-references-container'>"
-            ).append(
-                content
-            );
+            }
+            return container;
         };
 
         IdentificationMenu.prototype._addIdentificationTextField = function () {

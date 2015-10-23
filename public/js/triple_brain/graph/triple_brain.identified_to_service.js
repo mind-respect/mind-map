@@ -4,19 +4,25 @@
 
 define([
     "jquery",
-    "triple_brain.user_service"
-], function ($, UserService) {
+    "triple_brain.user_service",
+    "triple_brain.search_result"
+], function ($, UserService, SearchResult) {
     "use strict";
     var api = {};
-    api.getForIdentification = function(identification, callback){
+    api.getForIdentification = function (identification, callback) {
         return $.ajax({
-            type:'GET',
-            url: getUri() + identification.getUri(),
-            callback:callback
+            type: 'GET',
+            url: getBaseUri() + encodeURIComponent(identification.getExternalResourceUri())
+        }).success(function(searchResultsServerFormat){
+            callback(
+                SearchResult.fromServerFormatArray(
+                    searchResultsServerFormat
+                )
+            );
         });
     };
     return api;
-    function getUri(){
+    function getBaseUri() {
         return UserService.currentUserUri() + "/identification/";
     }
 });

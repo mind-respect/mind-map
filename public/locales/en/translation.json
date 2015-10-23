@@ -99,7 +99,7 @@
         "readMore": "more",
         "readLess": "less",
         "origin": "source",
-        "nb_references" : "other bubble(s) having the same identifier",
+        "nb_references" : "other bubble(s) with the same identifier",
         "no_other_references" : "No other bubble with the same identifier"
       }
     }
