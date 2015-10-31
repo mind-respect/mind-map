@@ -76,13 +76,14 @@
         }
     };
 
-      
+    /*
+      bubl.guru always calls it manually
     if (_document.readyState == 'complete') {
         reset();
     } else {
         _window[addEventListener]('load', reset, 0);
     }
-
+    */
     exports.reset = reset;
     exports.enable = function(){
         _globalDisabled = false;

@@ -13,56 +13,50 @@ define([
             _topLayer,
             _bubbleIdCounter = 0,
             _isDragScrollEnabled = false;
-        api.initDragScroll = function(){
+        api.initDragScroll = function () {
             var $body = $('body');
-            var $html = $('html');
-            if($body.scrollLeft() > 0){
-                $body.addClass("dragscroll");
-                return;
-            }
-            if($html.scrollLeft() > 0){
-                $html.addClass("dragscroll");
-            }
+            var $toDragScroll = $body.scrollLeft() > 0 ? $body : $('html');
+            $toDragScroll.addClass("dragscroll");
             DragScroll.reset();
         };
         api.addHtml = function (html) {
             api.getDrawnGraph().append(html);
         };
-        api.getDrawnGraph = function(){
-            if(!_drawnGraph){
+        api.getDrawnGraph = function () {
+            if (!_drawnGraph) {
                 _drawnGraph = $("#drawn_graph");
             }
             return _drawnGraph;
         };
-        api.getTopLayer = function(){
-            if(!_topLayer){
+        api.getTopLayer = function () {
+            if (!_topLayer) {
                 _topLayer = $("body, html");
             }
             return _topLayer;
         };
-        api.generateBubbleHtmlId = function(){
+        api.generateBubbleHtmlId = function () {
             _bubbleIdCounter++;
             return "bubble-ui-id-" + _bubbleIdCounter;
         };
-        api.disableDragScroll = function(){
+        api.disableDragScroll = function () {
             DragScroll.disable();
             _isDragScrollEnabled = false;
         };
-        api.enableDragScroll = function(){
+        api.enableDragScroll = function () {
             DragScroll.enable();
             _isDragScrollEnabled = true;
         };
-        api.isDragScrollEnabled = function(){
+        api.isDragScrollEnabled = function () {
             return _isDragScrollEnabled;
         };
-        api.hideSchemaInstructions = function(){
+        api.hideSchemaInstructions = function () {
             getSchemaInstructions().addClass("hidden");
         };
-        api.showSchemaInstructions = function(){
+        api.showSchemaInstructions = function () {
             getSchemaInstructions().removeClass("hidden");
         };
         return api;
-        function getSchemaInstructions(){
+        function getSchemaInstructions() {
             return $("#schema-instructions");
         }
     }
