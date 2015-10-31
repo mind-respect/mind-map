@@ -411,6 +411,8 @@ button.add-button-in-list:hover { color: #00d100; }
 
 html { font-size: 93.8%; }
 
+body { overflow: hidden; }
+
 @media screen and (min-width: 600px) { html { font-size: 100%; } }
 @media screen and (min-width: 800px) { html { font-size: 125%; } }
 [draggable] { cursor: move; }

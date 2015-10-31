@@ -33,7 +33,6 @@
             _window[removeEventListener](mouseup, el.mu, 0);
             _window[removeEventListener](mousemove, el.mm, 0);
         }
-
         dragged = _document.getElementsByClassName('dragscroll');
         for (i = 0; i < dragged.length;) {
             (function(el, lastClientX, lastClientY, pushed){

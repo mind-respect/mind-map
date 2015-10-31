@@ -13,6 +13,18 @@ define([
             _topLayer,
             _bubbleIdCounter = 0,
             _isDragScrollEnabled = false;
+        api.initDragScroll = function(){
+            var $body = $('body');
+            var $html = $('html');
+            if($body.scrollLeft() > 0){
+                $body.addClass("dragscroll");
+                return;
+            }
+            if($html.scrollLeft() > 0){
+                $html.addClass("dragscroll");
+            }
+            DragScroll.reset();
+        };
         api.addHtml = function (html) {
             api.getDrawnGraph().append(html);
         };

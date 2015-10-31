@@ -40,7 +40,6 @@ define([
                 GraphUi.hideSchemaInstructions();
             }
             centralVertex.setAsCentral();
-            GraphUi.enableDragScroll();
             GraphUi.getDrawnGraph().on(
                 "click",
                 function (event) {
@@ -64,6 +63,8 @@ define([
             });
             $("body").removeClass("hidden");
             centralVertex.scrollTo();
+            GraphUi.initDragScroll();
+            GraphUi.enableDragScroll();
             SelectionHandler.setToSingleVertex(centralVertex);
             EventBus.publish('/event/ui/graph/drawn');
         }
