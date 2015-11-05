@@ -60,7 +60,7 @@ $horizontalPaddingHighest: 3.5;
 
       .in-bubble-note-button {
         $fontSizeExtra: max(0, 8 - $i) / 1.5;
-        font-size: calc(1em + #{$fontSizeExtra}vw);
+        font-size: calc(1.5em + #{$fontSizeExtra}vw);
         &:before {
           font-family: FontAwesome;
           content: "\f02d";

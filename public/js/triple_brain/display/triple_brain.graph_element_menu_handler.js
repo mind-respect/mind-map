@@ -6,64 +6,118 @@ define([
     "jquery",
     "triple_brain.vertex_service",
     "triple_brain.graph_displayer",
-    "triple_brain.graph_element_menu",
-    "triple_brain.mind_map_info"
-], function ($, VertexService, GraphDisplayer, GraphElementMenu, MindMapInfo) {
+    "triple_brain.mind_map_info",
+    "triple_brain.event_bus",
+    "triple_brain.ui.graph",
+    "bootstrap-wysiwyg",
+    "bootstrap"
+], function ($, VertexService, GraphDisplayer, MindMapInfo, EventBus, GraphUi) {
     "use strict";
     var api = {},
         forSingle = {};
-    api.forSingle = function(){
+    EventBus.subscribe(
+        '/event/ui/mind_map_info/is_view_only',
+        setUpSaveButton
+    );
+    api.forSingle = function () {
         return forSingle;
     };
-    forSingle.noteAction = function (vertex) {
-        var noteDialog = $(
-            "<div>"
-        ).attr(
-            "title", vertex.text()
-        ).append(
-            $("<textarea rows='' cols=''>").append(
-                vertex.getNote()
-            )
-        );
-        var menuExtraOptions = {
-            height: 350,
-            width: 500,
-            dialogClass: "vertex-note",
-            modal: false
-        };
-        if(!MindMapInfo.isViewOnly()){
-            menuExtraOptions.buttons = defineUpdateNoteButtonOptions(
-                vertex
-            );
-        }
-        GraphElementMenu.makeForMenuContentAndGraphElement(
-            noteDialog,
-            vertex,
-            menuExtraOptions
-        );
+    api._getBubbleNoteModal = function(){
+        return $("#bubble-note-modal");
     };
-    function defineUpdateNoteButtonOptions(vertex){
-        var buttonsOptions = {};
-        buttonsOptions[$.t("vertex.menu.note.update")] = function (event) {
-            var dialog = $(this);
-            var textContainer = $(event.currentTarget).find(".ui-button-text");
-            textContainer.text(
+    api._getContentEditor = function(){
+        return api._getBubbleNoteModal().find(".editor");
+    };
+    forSingle.noteAction = function (graphElement) {
+        var editor = api._getContentEditor().html(
+            $.parseHTML(graphElement.getNote())
+        );
+        api._getBubbleNoteModal().data(
+            "graphElement", graphElement
+        ).find(".bubble-label-in-title").text(
+            graphElement.text()
+        );
+        getSaveButton().text($.t("vertex.menu.note.update"));
+        api._getBubbleNoteModal().modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+        if(MindMapInfo.isViewOnly()){
+            api._getContentEditor().prop("content-editable", "false");
+        }
+        editor.wysiwyg({
+            hotKeys: {
+                'ctrl+b meta+b': 'bold',
+                'ctrl+i meta+i': 'italic',
+                'ctrl+u meta+u': 'underline',
+                'ctrl+z meta+z': 'undo',
+                'ctrl+y meta+y meta+shift+z': 'redo'
+            }
+        });
+        editor.cleanHtml();
+    };
+    setUpCancelButton();
+    initNoteModal();
+    function setUpSaveButton() {
+        if (MindMapInfo.isViewOnly()) {
+            getSaveButton().addClass("hidden");
+            return;
+        }
+        getSaveButton().click(function (event) {
+            event.preventDefault();
+            $(this).text(
                 $.t("vertex.menu.note.saving") + " ..."
             );
+            var graphElement = api._getBubbleNoteModal().data("graphElement");
             VertexService.updateNote(
-                vertex,
-                dialog.find("textarea").val(),
-                function (vertex) {
-                    vertex.getNoteButtonInBubbleContent()[
-                        vertex.hasNote() ?
-                            "removeClass":
+                graphElement,
+                api._getContentEditor().html(),
+                function (graphElement) {
+                    graphElement.getNoteButtonInBubbleContent()[
+                        graphElement.hasNote() ?
+                            "removeClass" :
                             "addClass"
                         ]("hidden");
-                    $(dialog).dialog("close");
+                    hideNoteModal();
                 }
             );
-        };
-        return buttonsOptions;
+        });
+    }
+
+    function setUpCancelButton() {
+        getCancelButton().click(function (event) {
+            event.preventDefault();
+            hideNoteModal();
+        });
+    }
+
+    function getSaveButton() {
+        return api._getBubbleNoteModal().find("button.save");
+    }
+
+    function getCancelButton() {
+        return api._getBubbleNoteModal().find("button.cancel");
+    }
+
+    function hideNoteModal(){
+        api._getBubbleNoteModal().modal("hide");
+    }
+
+    function initNoteModal(){
+        api._getBubbleNoteModal().on('show.bs.modal', function () {
+            GraphUi.disableDragScroll();
+        }).on('hide.bs.modal', function () {
+            GraphUi.enableDragScroll();
+        });
+        api._getBubbleNoteModal().find("input[data-edit=createLink]").click(function(event){
+            event.stopPropagation();
+        });
+    }
+
+    function filterHtml(html){
+        html.filter(function() {
+            return this.nodeType ===  Node.TEXT_NODE;
+        });
     }
     return api;
 });

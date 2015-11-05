@@ -108,7 +108,7 @@
   },
   "schema": {
     "when-empty": "modèle",
-    "instruction": "Construisez un modèle et identifier le à une bulle pour réutiliser ses composants."
+    "instruction": "Construisez un modèle et identifiez le à une autre bulle pour réutiliser ses composants."
   },
   "suggestion": {
     "when-empty": "composant"
@@ -129,8 +129,10 @@
         "progress": "Progression du téléversement"
       },
       "note": {
+        "title_prefix" : "Note pour ",
         "update": "Mettre à jour",
-        "saving": "Sauvegarde"
+        "saving": "Sauvegarde",
+        "cancel": "Annuler"
       },
       "link_to_far_vertex": {
         "title_prefix": "Relie ",

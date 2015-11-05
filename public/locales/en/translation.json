@@ -109,7 +109,7 @@
   },
   "schema": {
     "when-empty": "model",
-    "instruction": "Build a model and identify it to a bubble to reuse it's components."
+    "instruction": "Build a model and identify it to another bubble to reuse it's components."
   },
   "suggestion": {
     "when-empty": "component"
@@ -130,8 +130,10 @@
         "progress": "Upload progress"
       },
       "note": {
+        "title_prefix" : "Note for ",
         "update": "Update",
-        "saving": "Saving"
+        "saving": "Saving",
+        "cancel": "Cancel"
       },
       "link_to_far_vertex": {
         "title_prefix": "Relate ",

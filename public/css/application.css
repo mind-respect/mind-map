@@ -156,6 +156,8 @@ button.add-button-in-list:hover { color: #00d100; }
 
 #selection-box { min-width: 45px; min-height: 40px; z-index: 100; background: rgba(0, 203, 255, 0.1); border: solid black; position: absolute; }
 
+#editor { max-height: 250px; height: 250px; border-collapse: separate; border: 1px solid #cccccc; padding: 4px; box-sizing: content-box; box-shadow: rgba(0, 0, 0, 0.07451) 0 1px 1px 0 inset; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; border-top-left-radius: 3px; overflow: scroll; outline: none; }
+
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .ui-dialog-titlebar { text-align: center; }
 
@@ -305,7 +307,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="0"] .vertex .in-bubble-content button { width: calc(30px + 1.5vw); height: calc(30px + 1.5vw); font-size: calc(1em + 0.5vw); }
 [data-zoom="0"] .vertex .in-bubble-content button i { top: 50%; }
 [data-zoom="0"] .vertex .in-bubble-content .menu { width: calc(146px + 7.5vw); }
-[data-zoom="0"] .in-bubble-note-button { font-size: calc(1em + 5.33333vw); }
+[data-zoom="0"] .in-bubble-note-button { font-size: calc(1.5em + 5.33333vw); }
 [data-zoom="0"] .in-bubble-note-button:before { font-family: FontAwesome; content: "\f02d"; }
 [data-zoom="0"] .bubble-label { font-size: calc(1em + 8vw); }
 
@@ -314,7 +316,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="1"] .vertex .in-bubble-content button { width: calc(30px + 1.2vw); height: calc(30px + 1.2vw); font-size: calc(1em + 0.4vw); }
 [data-zoom="1"] .vertex .in-bubble-content button i { top: 48%; }
 [data-zoom="1"] .vertex .in-bubble-content .menu { width: calc(146px + 6vw); }
-[data-zoom="1"] .in-bubble-note-button { font-size: calc(1em + 4.66667vw); }
+[data-zoom="1"] .in-bubble-note-button { font-size: calc(1.5em + 4.66667vw); }
 [data-zoom="1"] .in-bubble-note-button:before { font-family: FontAwesome; content: "\f02d"; }
 [data-zoom="1"] .bubble-label { font-size: calc(1em + 7.16667vw); }
 
@@ -323,7 +325,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="2"] .vertex .in-bubble-content button { width: calc(30px + 0.9vw); height: calc(30px + 0.9vw); font-size: calc(1em + 0.3vw); }
 [data-zoom="2"] .vertex .in-bubble-content button i { top: 46%; }
 [data-zoom="2"] .vertex .in-bubble-content .menu { width: calc(146px + 4.5vw); }
-[data-zoom="2"] .in-bubble-note-button { font-size: calc(1em + 4vw); }
+[data-zoom="2"] .in-bubble-note-button { font-size: calc(1.5em + 4vw); }
 [data-zoom="2"] .in-bubble-note-button:before { font-family: FontAwesome; content: "\f02d"; }
 [data-zoom="2"] .bubble-label { font-size: calc(1em + 6.33333vw); }
 
@@ -332,7 +334,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="3"] .vertex .in-bubble-content button { width: calc(30px + 0.6vw); height: calc(30px + 0.6vw); font-size: calc(1em + 0.2vw); }
 [data-zoom="3"] .vertex .in-bubble-content button i { top: 44%; }
 [data-zoom="3"] .vertex .in-bubble-content .menu { width: calc(146px + 3.0vw); }
-[data-zoom="3"] .in-bubble-note-button { font-size: calc(1em + 3.33333vw); }
+[data-zoom="3"] .in-bubble-note-button { font-size: calc(1.5em + 3.33333vw); }
 [data-zoom="3"] .in-bubble-note-button:before { font-family: FontAwesome; content: "\f02d"; }
 [data-zoom="3"] .bubble-label { font-size: calc(1em + 5.5vw); }
 
@@ -341,7 +343,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="4"] .vertex .in-bubble-content button { width: calc(30px + 0.3vw); height: calc(30px + 0.3vw); font-size: calc(1em + 0.1vw); }
 [data-zoom="4"] .vertex .in-bubble-content button i { top: 42%; }
 [data-zoom="4"] .vertex .in-bubble-content .menu { width: calc(146px + 1.5vw); }
-[data-zoom="4"] .in-bubble-note-button { font-size: calc(1em + 2.66667vw); }
+[data-zoom="4"] .in-bubble-note-button { font-size: calc(1.5em + 2.66667vw); }
 [data-zoom="4"] .in-bubble-note-button:before { font-family: FontAwesome; content: "\f02d"; }
 [data-zoom="4"] .bubble-label { font-size: calc(1em + 4.66667vw); }
 
@@ -350,7 +352,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="5"] .vertex .in-bubble-content button { width: calc(30px + 0vw); height: calc(30px + 0vw); font-size: calc(1em + 0vw); }
 [data-zoom="5"] .vertex .in-bubble-content button i { top: 40%; }
 [data-zoom="5"] .vertex .in-bubble-content .menu { width: calc(146px + 0vw); }
-[data-zoom="5"] .in-bubble-note-button { font-size: calc(1em + 2vw); }
+[data-zoom="5"] .in-bubble-note-button { font-size: calc(1.5em + 2vw); }
 [data-zoom="5"] .in-bubble-note-button:before { font-family: FontAwesome; content: "\f02d"; }
 [data-zoom="5"] .bubble-label { font-size: calc(1em + 3.83333vw); }
 
@@ -359,7 +361,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="6"] .vertex .in-bubble-content button { width: calc(30px + 0vw); height: calc(30px + 0vw); font-size: calc(1em + 0vw); }
 [data-zoom="6"] .vertex .in-bubble-content button i { top: 38%; }
 [data-zoom="6"] .vertex .in-bubble-content .menu { width: calc(146px + 0vw); }
-[data-zoom="6"] .in-bubble-note-button { font-size: calc(1em + 1.33333vw); }
+[data-zoom="6"] .in-bubble-note-button { font-size: calc(1.5em + 1.33333vw); }
 [data-zoom="6"] .in-bubble-note-button:before { font-family: FontAwesome; content: "\f02d"; }
 [data-zoom="6"] .bubble-label { font-size: calc(1em + 3vw); }
 
@@ -368,7 +370,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="7"] .vertex .in-bubble-content button { width: calc(30px + 0vw); height: calc(30px + 0vw); font-size: calc(1em + 0vw); }
 [data-zoom="7"] .vertex .in-bubble-content button i { top: 36%; }
 [data-zoom="7"] .vertex .in-bubble-content .menu { width: calc(146px + 0vw); }
-[data-zoom="7"] .in-bubble-note-button { font-size: calc(1em + 0.66667vw); }
+[data-zoom="7"] .in-bubble-note-button { font-size: calc(1.5em + 0.66667vw); }
 [data-zoom="7"] .in-bubble-note-button:before { font-family: FontAwesome; content: "\f02d"; }
 [data-zoom="7"] .bubble-label { font-size: calc(1em + 2.16667vw); }
 
@@ -377,7 +379,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="8"] .vertex .in-bubble-content button { width: calc(30px + 0vw); height: calc(30px + 0vw); font-size: calc(1em + 0vw); }
 [data-zoom="8"] .vertex .in-bubble-content button i { top: 34%; }
 [data-zoom="8"] .vertex .in-bubble-content .menu { width: calc(146px + 0vw); }
-[data-zoom="8"] .in-bubble-note-button { font-size: calc(1em + 0vw); }
+[data-zoom="8"] .in-bubble-note-button { font-size: calc(1.5em + 0vw); }
 [data-zoom="8"] .in-bubble-note-button:before { font-family: FontAwesome; content: "\f02d"; }
 [data-zoom="8"] .bubble-label { font-size: calc(1em + 1.33333vw); }
 
@@ -386,7 +388,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="9"] .vertex .in-bubble-content button { width: calc(30px + 0vw); height: calc(30px + 0vw); font-size: calc(1em + 0vw); }
 [data-zoom="9"] .vertex .in-bubble-content button i { top: 32%; }
 [data-zoom="9"] .vertex .in-bubble-content .menu { width: calc(146px + 0vw); }
-[data-zoom="9"] .in-bubble-note-button { font-size: calc(1em + 0vw); }
+[data-zoom="9"] .in-bubble-note-button { font-size: calc(1.5em + 0vw); }
 [data-zoom="9"] .in-bubble-note-button:before { font-family: FontAwesome; content: "\f02d"; }
 [data-zoom="9"] .bubble-label { font-size: calc(1em + 0.5vw); }
 
@@ -395,7 +397,7 @@ button.add-button-in-list:hover { color: #00d100; }
 [data-zoom="10"] .vertex .in-bubble-content button { width: calc(30px + 0vw); height: calc(30px + 0vw); font-size: calc(1em + 0vw); }
 [data-zoom="10"] .vertex .in-bubble-content button i { top: 30%; }
 [data-zoom="10"] .vertex .in-bubble-content .menu { width: calc(146px + 0vw); }
-[data-zoom="10"] .in-bubble-note-button { font-size: calc(1em + 0vw); }
+[data-zoom="10"] .in-bubble-note-button { font-size: calc(1.5em + 0vw); }
 [data-zoom="10"] .in-bubble-note-button:before { font-family: FontAwesome; content: "\f02d"; }
 [data-zoom="10"] .bubble-label { font-size: calc(1em + 0vw); }
 
@@ -406,7 +408,7 @@ button.add-button-in-list:hover { color: #00d100; }
 /* Copyright Vincent Blouin under the GPL License version 3 */
 #word-cloud-container { margin-top: 5%; }
 
-#word-cloud { text-align: center; font-size: 30px; padding: 1em; border: 3px solid dimgray; border-bottom: none; border-top-left-radius: 25px; border-top-right-radius: 25px; }
+#word-cloud { text-align: center; font-size: 30px; padding: 1em; border: 2px solid dimgray; border-bottom: none; border-top-left-radius: 25px; border-top-right-radius: 25px; }
 #word-cloud span.clouditem { box-shadow: -1px -2px 1px midnightblue; color: black !important; cursor: pointer; padding: 0.40em; border-radius: 50px; line-height: 90%; margin: 0.2em; display: inline-block; }
 
 html { font-size: 93.8%; }
