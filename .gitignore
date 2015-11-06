@@ -1,6 +1,6 @@
 .grunt
 .idea
-bin
+/bin
 node_modules
 _SpecRunner.html
 mind-map.iml
