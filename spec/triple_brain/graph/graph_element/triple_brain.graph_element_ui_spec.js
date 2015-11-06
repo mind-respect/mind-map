@@ -48,5 +48,24 @@ define([
                 bubble1Duplicate.hasIdentifications()
             ).toBeTruthy();
         });
+        it("adds the identification to self if added identification external uri is self uri", function(){
+            var threeBubblesGraph = new Scenarios.threeBubblesGraph();
+            var bubble2 = threeBubblesGraph.getBubble2InTree();
+            expect(
+                bubble2.hasIdentifications()
+            ).toBeFalsy();
+            var bubble2AsAnIdentification = Identification.fromFriendlyResource(
+                bubble2.getOriginalServerObject()
+            );
+            bubble2AsAnIdentification.setType("generic");
+            GraphElementService._addIdentificationCallback(
+                threeBubblesGraph.getBubble3InTree(),
+                bubble2AsAnIdentification,
+                bubble2AsAnIdentification.getServerFormat()
+            );
+            expect(
+                bubble2.hasIdentifications()
+            ).toBeTruthy();
+        });
     });
 });

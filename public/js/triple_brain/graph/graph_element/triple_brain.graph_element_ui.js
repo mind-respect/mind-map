@@ -74,6 +74,24 @@ define([
             cacheWithUriAsKey[uri].push(vertex);
         }
     };
+    api.visitAll = function(visitor){
+        GraphDisplayer.getVertexSelector().visitAll(
+            visitor
+        );
+        GraphDisplayer.getEdgeSelector().visitAll(
+            visitor
+        );
+        GraphDisplayer.getGroupRelationSelector().visitAll(
+            visitor
+        );
+        GraphDisplayer.getSchemaSelector().visitAll(
+            visitor
+        );
+        GraphDisplayer.getPropertySelector().visitAll(
+            visitor
+        );
+    };
+
     api.Self = function () {
     };
     api.Self.prototype.setOriginalServerObject = function (serverJson) {
@@ -303,6 +321,16 @@ define([
                 otherInstance,
                 identification
             );
+        });
+
+        api.visitAll(function(visitedGraphElement){
+            if(visitedGraphElement.getUri() === identification.getExternalResourceUri()){
+                if(!visitedGraphElement.hasIdentification(identification)){
+                    visitedGraphElement.addGenericIdentification(
+                        identification
+                    );
+                }
+            }
         });
     }
 
