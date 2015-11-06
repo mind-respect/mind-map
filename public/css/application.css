@@ -158,6 +158,8 @@ button.add-button-in-list:hover { color: #00d100; }
 
 #editor { max-height: 250px; height: 250px; border-collapse: separate; border: 1px solid #cccccc; padding: 4px; box-sizing: content-box; box-shadow: rgba(0, 0, 0, 0.07451) 0 1px 1px 0 inset; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; border-top-left-radius: 3px; overflow: scroll; outline: none; }
 
+#bubble-note-modal .btn-default { text-shadow: none; }
+
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .ui-dialog-titlebar { text-align: center; }
 

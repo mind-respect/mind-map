@@ -30,7 +30,9 @@ define([
     };
     forSingle.noteAction = function (graphElement) {
         var editor = api._getContentEditor().html(
-            $.parseHTML(graphElement.getNote())
+            emptyHtmlIfHasMalicious(
+                graphElement.getNote()
+            )
         );
         api._getBubbleNoteModal().data(
             "graphElement", graphElement
@@ -114,10 +116,14 @@ define([
         });
     }
 
-    function filterHtml(html){
-        html.filter(function() {
-            return this.nodeType ===  Node.TEXT_NODE;
-        });
+    function emptyHtmlIfHasMalicious(html){
+        var $html = $("<div>").append(html);
+        var isMalicious = $html.find("script").length > 0 ||
+            $html.find("iframe").length > 0;
+        if(isMalicious){
+            return "";
+        }
+        return html
     }
     return api;
 });
