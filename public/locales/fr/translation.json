@@ -129,7 +129,7 @@
         "progress": "Progression du téléversement"
       },
       "note": {
-        "title_prefix" : "Note pour ",
+        "title_prefix" : "Description de ",
         "update": "Mettre à jour",
         "saving": "Sauvegarde",
         "cancel": "Annuler"

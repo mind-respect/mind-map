@@ -30,31 +30,19 @@ $horizontalPaddingHighest: 3.5;
           $buttonExtraSize: max(0, 1.5 - $i * 0.3);
           $buttonSize: calc(30px + #{$buttonExtraSize}vw);
           $fontSizeExtra: max(0, 0.5 - $i * 0.1);
-          button {
-            width: $buttonSize;
-            height: $buttonSize;
-            font-size: calc(1em + #{$fontSizeExtra}vw);
-            i {
-              $top: 0.25 + max(0, 0.25 - ($i * 0.02));
-              top: percentage($top);
-            }
-          }
-          .in-bubble-note-button {
-            //$width: 30 - $i * 3;
-            //width: #{$width}px;
-            //$height: $verticalPadding + $fontSizeExtra;
-            //$fontSizeExtra: max(0, 0.5 - $i * 0.1);
-            //font-size: calc(1em + #{$fontSizeExtra}vw);
-            //i {
-            //  $top: 0.25 + max(0, 0.25 - $i * 0.0025);
-            //  top: percentage($top);
-            //  //top:50%;
-            //}
-          }
-          .menu {
-            $menuWidthExtra: $buttonExtraSize * 5;
-            width: calc(146px + #{$menuWidthExtra}vw);
-          }
+          //button {
+          //  width: $buttonSize;
+          //  height: $buttonSize;
+          //  font-size: calc(1em + #{$fontSizeExtra}vw);
+          //  i {
+          //    $top: 0.25 + max(0, 0.25 - ($i * 0.02));
+          //    top: percentage($top);
+          //  }
+          //}
+          //.menu {
+          //  $menuWidthExtra: $buttonExtraSize * 5;
+          //  width: calc(260px + #{$menuWidthExtra}vw);
+          //}
         }
       }
 

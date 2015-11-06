@@ -4,7 +4,7 @@
   top: 100px;
   border: 1px solid $linksColor;
   border-radius: 9px;
-  max-width: 107px;
+  max-width: 180px;
   padding: 1em;
   padding-top: 2em;
   cursor: all-scroll;
@@ -12,12 +12,12 @@
   margin-left: 0;
   [data-action=select] {
     position: relative;
-    i{
+    i {
       position: absolute;
       top: 0;
       left: 0;
-      margin: 0.20em;
-      border: 1px dotted black;
+      margin: 0.24em;
+      border: 2px dotted black;
       width: 80%;
       height: 80%;
     }
@@ -25,8 +25,6 @@
 }
 
 button.graph-element-button {
-  width: 30px;
-  height: 30px;
   margin-bottom: 5px;
   margin-right: 3px;
   line-height: 20px;
@@ -44,6 +42,20 @@ button.graph-element-button {
   &:hover {
     background-image: linear-gradient(to bottom, #fff, #CDCDCD);
   }
+}
+
+$buttonSize: 40px;
+.graph-element-button{
+  width: $buttonSize;
+  height: $buttonSize;
+  font-size: 1.2em;
+  i {
+    top: 25%;
+  }
+}
+
+.menu {
+  width: 180px;
 }
 
 button {
@@ -70,7 +82,7 @@ button {
   position: absolute;
 }
 
-#editor{
+#editor {
   max-height: 250px;
   height: 250px;
   border-collapse: separate;
@@ -85,6 +97,7 @@ button {
   overflow: scroll;
   outline: none;
 }
-#bubble-note-modal .btn-default{
-  text-shadow:none;
+
+#bubble-note-modal .btn-default {
+  text-shadow: none;
 }

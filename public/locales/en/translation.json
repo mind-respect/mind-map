@@ -130,7 +130,7 @@
         "progress": "Upload progress"
       },
       "note": {
-        "title_prefix" : "Note for ",
+        "title_prefix" : "Description of ",
         "update": "Update",
         "saving": "Saving",
         "cancel": "Cancel"

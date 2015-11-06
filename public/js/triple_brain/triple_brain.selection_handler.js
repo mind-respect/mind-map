@@ -123,7 +123,8 @@ define([
         ).on(
             "click",
             activateSelectionOnMindMap
-        ).disableDragScroll();
+        );
+        GraphUi.disableDragScroll();
     };
 
     api.isOnlyASingleBubbleSelected = function () {
@@ -213,7 +214,7 @@ define([
                     });
                     removeSelectBoxIfExists();
                     reflectSelectionChange();
-                    mindMap.dragScroll();
+                    GraphUi.enableDragScroll();
                 }
             }
         );
