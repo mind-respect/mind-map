@@ -79,7 +79,7 @@ define([
             TestUtils.startDragging(bubble2);
             expect(
                 bubble2.getHiddenRelationsContainer()._getHtml()
-            ).toHaveClass("hidden");
+            ).toHaveCss({visibility: "hidden"});
         });
         it("hides arrow when dragging", function () {
             var bubble2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
@@ -107,11 +107,11 @@ define([
             TestUtils.startDragging(bubble2);
             expect(
                 bubble2.getHiddenRelationsContainer()._getHtml()
-            ).toHaveClass("hidden");
+            ).toHaveCss({visibility: "hidden"});
             TestUtils.endDragging(bubble2);
             expect(
                 bubble2.getHiddenRelationsContainer()._getHtml()
-            ).not.toHaveClass("hidden");
+            ).toHaveCss({visibility: "visible"});
         });
         it("doesn't move to a parent bubble that is the child of the dragged one", function () {
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
