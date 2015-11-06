@@ -57,7 +57,6 @@ define([
                 "uri",
                 serverFacade.getUri()
             );
-            this._setupDragAndDrop();
             VertexHtmlCommon.setUpClickBehavior(
                 this.html
             );
@@ -82,6 +81,7 @@ define([
                 RelativeTreeVertex,
                 this.serverFacade
             );
+            this._setupDragAndDrop();
             this.html.data(
                 "isPublic",
                 this.serverFacade.isPublic()
@@ -145,10 +145,9 @@ define([
             return vertexMenu;
         };
         VertexCreator.prototype._setupDragAndDrop = function () {
-            this.html.mousedown(function () {
+            this.html.find(".in-bubble-content-wrapper").mousedown(function () {
                 GraphUi.disableDragScroll();
-            });
-            this.html.mouseleave(function () {
+            }).mouseleave(function () {
                 if(GraphUi.isDragScrollEnabled()){
                     return;
                 }

@@ -56,11 +56,11 @@ define([
         };
 
         HiddenNeighborPropertiesIndicator.prototype.hide = function(){
-            this.hiddenNeighborPropertiesContainer.addClass("hidden");
+            this.hiddenNeighborPropertiesContainer.css("visibility","hidden");
         };
 
         HiddenNeighborPropertiesIndicator.prototype.show = function(){
-            this.hiddenNeighborPropertiesContainer.removeClass("hidden");
+            this.hiddenNeighborPropertiesContainer.css("visibility","visible");
         };
 
         HiddenNeighborPropertiesIndicator.prototype._getHtml = function(){
