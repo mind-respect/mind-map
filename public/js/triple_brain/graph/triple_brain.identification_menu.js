@@ -8,6 +8,8 @@ define([
         "triple_brain.mind-map_template",
         "triple_brain.ui.graph",
         "triple_brain.id_uri",
+        "triple_brain.wikidata_uri",
+        "triple_brain.wikidata",
         "triple_brain.wikidata_autocomplete_provider",
         "triple_brain.user_map_autocomplete_provider",
         "triple_brain.graph_element_menu",
@@ -24,7 +26,7 @@ define([
         "jquery.i18next",
         "jquery.performance"
     ],
-    function ($, Identification, MindMapTemplate, GraphUi, IdUri, WikidataAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu, SearchService, IdentificationContext, SearchResult, MindMapInfo, SuggestionService, SchemaSuggestion, IdentifiedToService, GraphElementType) {
+    function ($, Identification, MindMapTemplate, GraphUi, IdUri, WikidataUri, Wikidata, WikidataAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu, SearchService, IdentificationContext, SearchResult, MindMapInfo, SuggestionService, SchemaSuggestion, IdentifiedToService, GraphElementType) {
         "use strict";
         var api = {},
             DESCRIPTION_MAX_CHAR = 155;
@@ -68,12 +70,12 @@ define([
                     )
                 )
             );
-            if(reference.is(GraphElementType.Vertex) || reference.is(GraphElementType.Schema)){
+            if (reference.is(GraphElementType.Vertex) || reference.is(GraphElementType.Schema)) {
                 li.addClass("clickable").data(
                     "uri", graphElement.getUri()
                 ).click(function () {
                         window.location = "?bubble=" + $(this).data("uri");
-                });
+                    });
             }
             li.appendTo(container);
         };
@@ -179,18 +181,20 @@ define([
                 "identification",
                 identification
             );
-            var title = this._makeTitle(identification);
-            var description = this._makeDescription(identification);
-            li.append(
-                this._makeImage(identification),
-                title,
-                description,
-                this._makeOrigin(identification),
-                this._makeReferencesContainer(identification)
-            );
-            this._getListHtml().append(
-                li
-            );
+            var self = this;
+            this._makeTitle(identification).then(function (title) {
+                var description = self._makeDescription(identification);
+                li.append(
+                    self._makeImage(identification),
+                    title,
+                    description,
+                    self._makeOrigin(identification),
+                    self._makeReferencesContainer(identification)
+                );
+                self._getListHtml().append(
+                    li
+                );
+            });
         };
 
         IdentificationMenu.prototype._makeImage = function (identification) {
@@ -249,26 +253,42 @@ define([
         };
 
         IdentificationMenu.prototype._makeTitle = function (identification) {
+            var deferred = $.Deferred();
+            var self = this;
             var url = identification.getExternalResourceUri();
             if (IdUri.isUriOfAGraphElement(url)) {
                 url = MindMapInfo.htmlUrlForBubbleUri(
                     url
                 );
             }
-            var anchor = $("<a target=_blank>").prop(
-                "href",
-                url
-            ).append(
-                identification.isLabelEmpty() ?
-                    identification.getUri() :
-                    identification.getLabel()
-            );
-            return $(
-                "<h3 class='list-group-item-heading'>"
-            ).append(
-                anchor,
-                this._makeRemoveButton()
-            );
+            if (WikidataUri.isAWikidataUri(url)) {
+                Wikidata.getWikipediaUrlFromWikidataUri(url).then(function (wikipediaUrl) {
+                    deferred.resolve(
+                        buildTitleWithUrl(wikipediaUrl)
+                    );
+                });
+            } else {
+                deferred.resolve(
+                    buildTitleWithUrl(url)
+                );
+            }
+            return deferred.promise();
+            function buildTitleWithUrl(url) {
+                var anchor = $("<a target=_blank>").prop(
+                    "href",
+                    url
+                ).append(
+                    identification.isLabelEmpty() ?
+                        identification.getUri() :
+                        identification.getLabel()
+                );
+                return $(
+                    "<h3 class='list-group-item-heading'>"
+                ).append(
+                    anchor,
+                    self._makeRemoveButton()
+                );
+            }
         };
 
         IdentificationMenu.prototype._makeOrigin = function (identification) {

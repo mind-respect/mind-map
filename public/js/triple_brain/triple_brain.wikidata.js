@@ -9,7 +9,8 @@ define([
     "triple_brain.event_bus"
 ], function ($, WikidataUri, Image, EventBus) {
     "use strict";
-    var api = {};
+    var api = {},
+        wikipediaUrlProperty ="P373";
     api.getImageForWikidataUri = function (wikidataUri) {
         var deferred = $.Deferred();
         var wikidataId = WikidataUri.idInWikidataUri(
@@ -28,6 +29,47 @@ define([
         });
         return deferred.promise();
     };
+    api.getWikipediaUrlFromWikidataUri = function(wikidataUri){
+        var apiUrlToGetWikipediaUrl = WikidataUri.BASE_URL + "/w/api.php?action=wbgetclaims&entity=" + WikidataUri.idInWikidataUri(
+            wikidataUri
+        ) + "&property=" + wikipediaUrlProperty + "&format=json";
+        var deferred = $.Deferred();
+        $.ajax({
+            type: 'GET',
+            dataType: "jsonp",
+            url: apiUrlToGetWikipediaUrl
+        }).then(function (result) {
+            deferred.resolve(
+                WikidataUri.WIKIPEDIA_ARTICLE_BASE_URL + result.claims[wikipediaUrlProperty][0].mainsnak.datavalue.value
+            );
+        });
+        return deferred.promise();
+    };
+
+    api._beforeIdentificationAdded = function(graphElement, identification) {
+        var deferred = $.Deferred();
+        var isAWikidataIdentification = WikidataUri.isAWikidataUri(identification.getUri());
+        if (identification.hasImages() || !isAWikidataIdentification) {
+            deferred.resolve();
+            return deferred.promise();
+        }
+        api.getImageForWikidataUri(identification.getUri()).then(function (image) {
+            if(image === undefined) {
+                deferred.resolve();
+                return;
+            }
+            identification.addImage(image);
+            graphElement.addImages([image]);
+            graphElement.refreshImages();
+            deferred.resolve();
+        });
+        return deferred.promise();
+    };
+    EventBus.before(
+        '/event/ui/graph/before/identification/added',
+        api._beforeIdentificationAdded
+    );
+    return api;
     function imageFromSearchResult(result, wikidataId) {
         var deferred = $.Deferred();
         var claims = result.entities[wikidataId].claims;
@@ -54,29 +96,7 @@ define([
             });
         return deferred.promise();
     }
+    function wikipediaUrlFromQueryResult(){
 
-    api._beforeIdentificationAdded = function(graphElement, identification) {
-        var deferred = $.Deferred();
-        var isAWikidataIdentification = WikidataUri.isAWikidataUri(identification.getUri());
-        if (identification.hasImages() || !isAWikidataIdentification) {
-            deferred.resolve();
-            return deferred.promise();
-        }
-        api.getImageForWikidataUri(identification.getUri()).then(function (image) {
-            if(image === undefined) {
-                deferred.resolve();
-                return;
-            }
-            identification.addImage(image);
-            graphElement.addImages([image]);
-            graphElement.refreshImages();
-            deferred.resolve();
-        });
-        return deferred.promise();
-    };
-    EventBus.before(
-        '/event/ui/graph/before/identification/added',
-        api._beforeIdentificationAdded
-    );
-    return api;
+    }
 });

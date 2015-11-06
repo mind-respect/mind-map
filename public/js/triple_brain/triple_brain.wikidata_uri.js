@@ -6,6 +6,7 @@ define(["md5"], function (MD5) {
     "use strict";
     var api = {};
     api.BASE_URL = "//www.wikidata.org";
+    api.WIKIPEDIA_ARTICLE_BASE_URL = "//www.wikipedia.org/wiki/";
     api.idInWikidataUri = function (uri) {
         return uri.substr(
             uri.lastIndexOf("/") + 1
