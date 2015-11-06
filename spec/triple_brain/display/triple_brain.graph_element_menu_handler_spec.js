@@ -5,8 +5,9 @@
 define([
     "test/test-scenarios",
     "test/test-utils",
+    "jquery",
     "triple_brain.graph_element_menu_handler"
-], function (Scenarios, TestUtils, GraphElementMenuHandler) {
+], function (Scenarios, TestUtils, $, GraphElementMenuHandler) {
     "use strict";
     describe("graph_element_menu_handler", function () {
         it("displays the graph element note", function () {

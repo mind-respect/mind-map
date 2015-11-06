@@ -123,7 +123,7 @@ define([
         if(isMalicious){
             return "";
         }
-        return html
+        return html;
     }
     return api;
 });
