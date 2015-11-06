@@ -154,6 +154,8 @@ button.graph-element-button:hover { background-image: linear-gradient(to bottom,
 .graph-element-button { width: 40px; height: 40px; font-size: 1.2em; }
 .graph-element-button i { top: 25%; }
 
+.duplicate.graph-element-button { width: 30px; height: 30px; font-size: 1em; }
+
 .menu { width: 180px; }
 
 button.add-button-in-list { color: green; font-weight: bold; font-size: 2em; margin-bottom: 0.2em; float: left; border: none; background-color: transparent; }
