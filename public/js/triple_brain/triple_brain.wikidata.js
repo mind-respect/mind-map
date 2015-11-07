@@ -39,8 +39,15 @@ define([
             dataType: "jsonp",
             url: apiUrlToGetWikipediaUrl
         }).then(function (result) {
+            var path = result.claims[wikipediaUrlProperty];
+            if(path === undefined || path.length === 0){
+                deferred.resolve(
+                    wikidataUri
+                );
+                return;
+            }
             deferred.resolve(
-                WikidataUri.WIKIPEDIA_ARTICLE_BASE_URL + result.claims[wikipediaUrlProperty][0].mainsnak.datavalue.value
+                WikidataUri.WIKIPEDIA_ARTICLE_BASE_URL + path[0].mainsnak.datavalue.value
             );
         });
         return deferred.promise();
