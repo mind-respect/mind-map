@@ -115,7 +115,7 @@ define([
                     GraphElementType.Property
                 ) || formattedResult.nonFormattedSearchResult.is(
                     SearchResult.additionalTypes.identification
-                )
+                );
         }
 
         this.getMoreInfoForSearchResult = function (searchResult, callback) {
