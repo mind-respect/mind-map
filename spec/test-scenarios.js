@@ -643,6 +643,14 @@ define([
             };
         };
 
+        api.getSearchResultsForProjectAfterIdentificationAdded = function () {
+            this.get = function () {
+                return api._getTestData(
+                    "projectSchema.searchResultsForProjectAfterIdentificationAdded"
+                );
+            };
+        };
+
         api.graphWithARelationInTwoSimilarRelationsGroup = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {

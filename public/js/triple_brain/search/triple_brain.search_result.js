@@ -13,6 +13,10 @@ define([
 ], function ($, GraphElement, Edge, Schema, Property, Vertex, GraphElementType) {
     "use strict";
     var api = {};
+    api.additionalTypes = {
+        "Edge" : "edge",
+        "Identification" : "identification"
+    };
     api.fromServerFormatArray = function (searchResultsServerFormat) {
         var searchResults = [];
         $.each(searchResultsServerFormat, function(){
@@ -26,7 +30,7 @@ define([
     };
     api.fromServerFormat = function (searchResult) {
         switch (searchResult.type) {
-            case "edge" :
+            case api.additionalTypes.Edge :
                 var sourceVertex = Vertex.fromServerFormat(
                         searchResult.edge.sourceVertex
                     ),
@@ -63,6 +67,13 @@ define([
                 return new Self(
                     vertex,
                     GraphElementType.Vertex,
+                    api._buildVertexSomethingToDistinguish(searchResult)
+                );
+            case api.additionalTypes.Identification :
+                var graphElement = GraphElement.fromServerFormat(searchResult.graphElement);
+                return new Self(
+                    graphElement,
+                    api.additionalTypes.Identification,
                     api._buildVertexSomethingToDistinguish(searchResult)
                 );
         }

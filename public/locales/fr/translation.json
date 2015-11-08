@@ -198,7 +198,8 @@
       "property": "Composant",
       "vertex": "Bulle",
       "relation": "Relation",
-      "schema": "Modèle"
+      "schema": "Modèle",
+      "identification" : "Identifiant"
     }
   },
   "wordcloud":{

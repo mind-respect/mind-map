@@ -3,10 +3,11 @@
  */
 
 define([
+    'test/test-scenarios',
+    "jquery",
     'triple_brain.user_map_autocomplete_provider',
-    "triple_brain.graph_element_type",
-    'test/test-scenarios'
-], function (UserMapAutocompleteProvider, GraphElementType, Scenarios) {
+    "triple_brain.graph_element_type"
+], function (Scenarios, $, UserMapAutocompleteProvider, GraphElementType) {
     "use strict";
     describe("user_map_autocomplete_provider", function () {
         beforeEach(function () {
@@ -31,6 +32,20 @@ define([
             expect(
                 formattedSearchResults[0].nonFormattedSearchResult.getGraphElementType()
             ).toBe(GraphElementType.Schema);
+        });
+        it("includes identifications", function () {
+            var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),
+                formattedSearchResults = searchProvider.formatResults(
+                    new Scenarios.getSearchResultsForProjectAfterIdentificationAdded().get(),
+                    "project"
+                );
+            expect(
+                oneOfSearchResultIfOfType(
+                    formattedSearchResults,
+                    "identification"
+                )
+            ).toBeTruthy();
+
         });
         it("sets property context", function () {
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),
@@ -120,6 +135,28 @@ define([
                 "Model"
             );
         });
+        it("puts identifications above bubbles and under schemas", function () {
+            var serverResults = [];
+            serverResults = serverResults.concat(
+                new Scenarios.getSearchResultForB1().get()
+            );
+            serverResults = serverResults.concat(
+                new Scenarios.getSearchResultsForProjectAfterIdentificationAdded().get()
+            );
+            expect(
+                serverResults[0].type
+            ).toBe("vertex");
+            var searchResults = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas().formatResults(
+                serverResults,
+                ""
+            );
+            expect(
+                $.inArray(searchResults[0].elementType, ["Identifier", "Model"])
+            ).toBeTruthy();
+            expect(
+                $.inArray(searchResults[1].elementType, ["Identifier", "Model"])
+            ).toBeTruthy();
+        });
         it("puts proprieties above relations in the list of formatted search results", function () {
             var serverResults = [];
             serverResults = serverResults.concat(
@@ -154,5 +191,14 @@ define([
 
     function stringContains(string, toVerify) {
         return string.indexOf(toVerify) !== -1;
+    }
+    function oneOfSearchResultIfOfType(searchResults, type){
+        var isTrue = false;
+        $.each(searchResults, function(){
+            if(type === this.nonFormattedSearchResult.getGraphElementType()){
+                isTrue = true;
+            }
+        });
+        return isTrue;
     }
 });

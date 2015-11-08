@@ -199,7 +199,8 @@
       "property": "Component",
       "vertex": "Bubble",
       "relation": "Relation",
-      "schema": "Model"
+      "schema": "Model",
+      "identification" : "Identifier"
     }
   },
   "wordcloud":{
