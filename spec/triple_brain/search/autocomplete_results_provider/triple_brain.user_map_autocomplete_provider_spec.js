@@ -135,7 +135,7 @@ define([
                 "Model"
             );
         });
-        it("puts identifications above bubbles and under schemas", function () {
+        it("puts identifications above bubbles", function () {
             var serverResults = [];
             serverResults = serverResults.concat(
                 new Scenarios.getSearchResultForB1().get()
@@ -151,11 +151,11 @@ define([
                 ""
             );
             expect(
-                $.inArray(searchResults[0].elementType, ["Identifier", "Model"])
-            ).toBeTruthy();
+                ["Identifier", "Model"].indexOf(searchResults[0].elementType)
+            ).not.toBe(-1);
             expect(
-                $.inArray(searchResults[1].elementType, ["Identifier", "Model"])
-            ).toBeTruthy();
+                ["Identifier", "Model"].indexOf(searchResults[1].elementType)
+            ).not.toBe(-1);
         });
         it("puts proprieties above relations in the list of formatted search results", function () {
             var serverResults = [];
