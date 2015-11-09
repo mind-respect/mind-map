@@ -116,7 +116,7 @@ define([
             );
     };
     api._buildIdentifierSomethingToDistinguish = function(searchResult){
-        return Object.keys(searchResult.identifiedTo).length + referencesText;
+        return searchResult.nbReferences + referencesText;
     };
     api.forGraphElementAndItsType = function (graphElement, graphElementType) {
         return new Self(
