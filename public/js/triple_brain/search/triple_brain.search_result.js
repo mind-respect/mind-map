@@ -9,10 +9,13 @@ define([
     "triple_brain.schema",
     "triple_brain.property",
     "triple_brain.vertex",
-    "triple_brain.graph_element_type"
-], function ($, GraphElement, Edge, Schema, Property, Vertex, GraphElementType) {
+    "triple_brain.graph_element_type",
+    "triple_brain.event_bus",
+    "jquery.i18next"
+], function ($, GraphElement, Edge, Schema, Property, Vertex, GraphElementType, EventBus) {
     "use strict";
-    var api = {};
+    var api = {},
+        referencesText;
     api.additionalTypes = {
         "Edge" : "edge",
         "Identification" : "identification"
@@ -74,7 +77,7 @@ define([
                 return new Self(
                     graphElement,
                     api.additionalTypes.Identification,
-                    api._buildVertexSomethingToDistinguish(searchResult)
+                    api._buildIdentifierSomethingToDistinguish(searchResult)
                 );
         }
     };
@@ -111,6 +114,9 @@ define([
                     edgesName
                 )
             );
+    };
+    api._buildIdentifierSomethingToDistinguish = function(searchResult){
+        return Object.keys(searchResult.identifiedTo).length + referencesText;
     };
     api.forGraphElementAndItsType = function (graphElement, graphElementType) {
         return new Self(
@@ -149,5 +155,8 @@ define([
     Self.prototype.getSomethingToDistinguish = function () {
         return this.somethingToDistinguish;
     };
+    EventBus.subscribe("localized-text-loaded", function(){
+        referencesText = $.t("search.identifier.references");
+    });
     return api;
 });

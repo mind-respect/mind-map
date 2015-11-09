@@ -200,6 +200,9 @@
       "relation": "Relation",
       "schema": "Modèle",
       "identification" : "Identifiant"
+    },
+    "identifier":{
+      "references": " références"
     }
   },
   "wordcloud":{

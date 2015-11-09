@@ -105,6 +105,7 @@ define([
                 if (isPrioritySearchResult(b)) {
                     return 1;
                 }
+                return 0;
             });
         };
 
@@ -114,7 +115,7 @@ define([
                 ) || formattedResult.nonFormattedSearchResult.is(
                     GraphElementType.Property
                 ) || formattedResult.nonFormattedSearchResult.is(
-                    SearchResult.additionalTypes.identification
+                    SearchResult.additionalTypes.Identification
                 );
         }
 
