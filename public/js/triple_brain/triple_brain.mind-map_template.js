@@ -26,7 +26,7 @@ define([
         );
         t.add('vertex_menu', '<div class="menu"></div>');
         t.add('vertex_move_button', '<div class="move"></div>');
-        t.add('identification_existing_identities', '<ul class="list list-group"></ul>');
+        t.add('identification_existing_identities', '<ul class="list list-group main-list"></ul>');
         t.add(
             'identification_existing_identity',
                 '<h3 class="type-label identification" identification-uri="{identification_uri}">{type_label}' +

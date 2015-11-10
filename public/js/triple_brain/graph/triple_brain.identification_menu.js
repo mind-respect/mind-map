@@ -170,8 +170,8 @@ define([
             });
         };
 
-        IdentificationMenu.prototype._getListHtml = function () {
-            return this.html.find(".list");
+        IdentificationMenu.prototype._getMainListHtml = function () {
+            return this.html.find(".list.main-list");
         };
 
         IdentificationMenu.prototype._addIdentificationAsListElement = function (identification) {
@@ -191,7 +191,7 @@ define([
                     self._makeOrigin(identification),
                     self._makeReferencesContainer(identification)
                 );
-                self._getListHtml().append(
+                self._getMainListHtml().append(
                     li
                 );
             });
