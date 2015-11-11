@@ -3,10 +3,11 @@
  */
 
 define([
+    "jquery",
     "triple_brain.friendly_resource",
     "triple_brain.id_uri",
     "jquery.triple_brain.search"
-], function (FriendlyResource, IdUri, $Search) {
+], function ($, FriendlyResource, IdUri, $Search) {
     "use strict";
     var api = {};
     api.fromMultipleServerFormat = function(serverFormat, type){
