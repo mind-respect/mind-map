@@ -203,7 +203,7 @@
       "identification" : "Identifier"
     },
     "identifier":{
-      "references": " references"
+      "references": " reference(s)"
     }
   },
   "wordcloud":{

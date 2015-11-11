@@ -187,7 +187,6 @@ button.add-button-in-list:hover { color: #00d100; }
 .graph-element-menu .identifications .read-more a { font-weight: bold; }
 .graph-element-menu .identifications .instruction { margin-top: 7px; margin-bottom: 11px; text-align: left; }
 .graph-element-menu .identifications .img-container { float: left; margin-right: 15px; }
-.graph-element-menu .identifications .origin-container a { color: inherit; }
 .graph-element-menu .identifications .remove-btn { background-color: white; border: none; }
 .graph-element-menu .identifications .remove-btn:focus { outline: none; }
 .graph-element-menu .identifications .remove-btn i { color: red; margin-top: 50%; }

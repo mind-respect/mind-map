@@ -11,8 +11,9 @@ define([
     "triple_brain.vertex",
     "triple_brain.graph_element_type",
     "triple_brain.event_bus",
+    "triple_brain.wikidata_uri",
     "jquery.i18next"
-], function ($, GraphElement, Edge, Schema, Property, Vertex, GraphElementType, EventBus) {
+], function ($, GraphElement, Edge, Schema, Property, Vertex, GraphElementType, EventBus, WikiDataUri) {
     "use strict";
     var api = {},
         referencesText;
@@ -116,7 +117,10 @@ define([
             );
     };
     api._buildIdentifierSomethingToDistinguish = function(searchResult){
-        return searchResult.nbReferences + referencesText;
+        var source = WikiDataUri.isAWikidataUri(
+            searchResult.externalUri
+        ) ? "wikipedia.org" : "bubl.guru";
+        return searchResult.nbReferences + referencesText + ". source: " + source;
     };
     api.forGraphElementAndItsType = function (graphElement, graphElementType) {
         return new Self(
