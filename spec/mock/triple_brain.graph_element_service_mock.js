@@ -9,10 +9,12 @@ define([
     var api = {};
     api.addIdentificationMock = function () {
         return spyOn(GraphElementService, "addIdentification").and.callFake(function(graphElement, identification, callback){
-            GraphElementService._addIdentificationCallback(
+            var identifications = {};
+            identifications[identification.getExternalResourceUri()] = identification.getServerFormat();
+            GraphElementService._addIdentificationsCallback(
                 graphElement,
                 identification,
-                identification.getServerFormat(),
+                identifications,
                 callback
             );
         });

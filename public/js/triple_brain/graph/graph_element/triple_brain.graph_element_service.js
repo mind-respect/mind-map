@@ -34,45 +34,49 @@ define([
                 url: graphElement.getUri() + '/identification',
                 data: identification.getJsonFormat(),
                 contentType: 'application/json;charset=utf-8',
-                statusCode: {
-                    201: function (serverIdentification) {
-                        api._addIdentificationCallback(
-                            graphElement,
-                            identification,
-                            serverIdentification,
-                            callback
-                        );
-                    }
-                }
+            }).success(function(serverIdentifications){
+                api._addIdentificationsCallback(
+                    graphElement,
+                    identification,
+                    serverIdentifications,
+                    callback
+                );
             });
         }
     };
-    api._addIdentificationCallback = function (graphElement, identification, serverIdentification, callback) {
-        var updatedIdentification = Identification.fromServerFormat(
-            serverIdentification
+    api._addIdentificationsCallback = function (graphElement, identification, serverIdentifications, callback) {
+        var identifications = Identification.fromMultipleServerFormat(
+            serverIdentifications,
+            identification.getType()
         );
-        updatedIdentification.setType(identification.getType());
-        var addAction = updatedIdentification.rightActionForType(
-            graphElement.addType,
-            graphElement.addSameAs,
-            graphElement.addGenericIdentification
-        );
-        addAction.call(
-            graphElement,
-            updatedIdentification
-        );
+        $.each(identifications, function(){
+            var identification = this;
+            var addAction = identification.rightActionForType(
+                graphElement.addType,
+                graphElement.addSameAs,
+                graphElement.addGenericIdentification
+            );
+            addAction.call(
+                graphElement,
+                identification
+            );
+        });
 
         if (callback !== undefined) {
             callback.call(
                 this,
                 graphElement,
-                updatedIdentification
+                identifications
             );
         }
-        EventBus.publish(
-            identificationBaseEventBusKey + "added",
-            [graphElement, updatedIdentification]
-        );
+
+        $.each(identifications, function(){
+            var identification = this;
+            EventBus.publish(
+                identificationBaseEventBusKey + "added",
+                [graphElement, identification]
+            );
+        });
     };
     api.removeIdentification = function (graphElement, identification, callback) {
         $.ajax({

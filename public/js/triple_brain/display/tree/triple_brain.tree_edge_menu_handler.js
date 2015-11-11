@@ -37,18 +37,9 @@ define([
         forSingle.addChildAction(edge);
     };
     forSingle.addChildAction = function(edge){
-        var edgeAsAnIdentification = Identification.fromFriendlyResource(
-            edge.getOriginalServerObject()
-        );
-        edgeAsAnIdentification.setLabel(
-            edge.text()
-        );
-        edgeAsAnIdentification.setComment(
-            edge.getNote()
-        );
         var parentVertex = edge.getParentVertex();
         var newGroupRelation = GraphDisplayer.addNewGroupRelation(
-            edgeAsAnIdentification,
+            getAppropriateIdentificationForNewGroupRelation(edge),
             parentVertex
         );
         GroupRelationMenuHandler.forSingle().addChildAction(
@@ -104,4 +95,21 @@ define([
             forGroupNotOwned;
     };
     return api;
+    function getAppropriateIdentificationForNewGroupRelation(edge){
+        var identification;
+        if(edge.hasIdentifications()){
+            identification = edge.getIdentifications()[0];
+        }else{
+            identification = Identification.fromFriendlyResource(
+                edge.getOriginalServerObject()
+            );
+            identification.setLabel(
+                edge.text()
+            );
+            identification.setComment(
+                edge.getNote()
+            );
+        }
+        return identification;
+    }
 });

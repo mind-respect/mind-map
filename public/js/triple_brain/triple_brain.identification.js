@@ -9,6 +9,17 @@ define([
 ], function (FriendlyResource, IdUri, $Search) {
     "use strict";
     var api = {};
+    api.fromMultipleServerFormat = function(serverFormat, type){
+        var identifications = {};
+        $.each(serverFormat, function(externalUri, identificationServerFormat){
+            var identification = api.fromServerFormat(
+                identificationServerFormat
+            );
+            identification.setType(type);
+            identifications[externalUri] = identification;
+        });
+        return identifications;
+    };
     api.fromServerFormat = function (serverFormat) {
         return new api.Self(
             serverFormat

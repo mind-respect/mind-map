@@ -131,6 +131,13 @@ define([
         var event = $.Event("drop");
         bubble.getHtml().trigger(event);
     };
+
+    api.singleIdentificationToMultiple = function(identification){
+        var multiple = {};
+        multiple[identification.getExternalResourceUri()] = identification.getServerFormat();
+        return multiple;
+    };
+
     return api;
 
     function generateUuid() {

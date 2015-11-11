@@ -468,8 +468,10 @@ define([
             serverIdentificationFctn(
                 graphElement,
                 identificationResource,
-                function (graphElement, updatedIdentification) {
-                    self._addIdentificationAsListElement(updatedIdentification);
+                function (graphElement, identifications) {
+                    $.each(identifications, function(){
+                        self._addIdentificationAsListElement(this);
+                    });
                 }
             );
         };

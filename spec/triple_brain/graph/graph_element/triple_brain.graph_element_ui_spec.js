@@ -4,9 +4,10 @@
 
 define([
     "test/test-scenarios",
+    "test/test-utils",
     "triple_brain.identification",
     "triple_brain.graph_element_service"
-], function (Scenarios, Identification, GraphElementService) {
+], function (Scenarios, TestUtils, Identification, GraphElementService) {
     "use strict";
     describe("graph_element_ui", function () {
         var vertex, schema;
@@ -39,10 +40,10 @@ define([
                 bubble1Duplicate.hasIdentifications()
             ).toBeFalsy();
             karaokeIdentification.setType("generic");
-            GraphElementService._addIdentificationCallback(
+            GraphElementService._addIdentificationsCallback(
                 bubble1,
                 karaokeIdentification,
-                karaokeIdentification.getServerFormat()
+                TestUtils.singleIdentificationToMultiple(karaokeIdentification)
             );
             expect(
                 bubble1Duplicate.hasIdentifications()
@@ -58,10 +59,10 @@ define([
                 bubble2.getOriginalServerObject()
             );
             bubble2AsAnIdentification.setType("generic");
-            GraphElementService._addIdentificationCallback(
+            GraphElementService._addIdentificationsCallback(
                 threeBubblesGraph.getBubble3InTree(),
                 bubble2AsAnIdentification,
-                bubble2AsAnIdentification.getServerFormat()
+                TestUtils.singleIdentificationToMultiple(bubble2AsAnIdentification)
             );
             expect(
                 bubble2.hasIdentifications()

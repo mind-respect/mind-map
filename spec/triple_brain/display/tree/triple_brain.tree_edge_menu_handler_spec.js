@@ -40,6 +40,40 @@ define([
                 TestUtils.getChildWithLabel(bubble1, "r1").isGroupRelation()
             ).toBeTruthy();
         });
+
+        it("after adding a child, the new group relation has the original relation as an identifier", function () {
+            var threeBubblesScenario = new Scenarios.threeBubblesGraph();
+            var bubble1 = threeBubblesScenario.getBubble1InTree();
+            MindMapInfo._setIsViewOnly(false);
+            var relation1 = TestUtils.getChildWithLabel(bubble1, "r1");
+            var relation1Uri = relation1.getUri();
+            TreeEdgeMenuHandler.forSingle().addChildAction(
+                relation1
+            );
+            var newGroupRelation = TestUtils.getChildWithLabel(bubble1, "r1");
+            var identifierExternalResourceUri = newGroupRelation.getGroupRelation().getIdentification().getExternalResourceUri();
+            expect(
+                identifierExternalResourceUri
+            ).toBe(relation1Uri);
+        });
+
+        it("when a relation has an identifier adding a child changes to a group relation where the identifier is not the relation but the identifier", function () {
+            var threeBubblesScenario = new Scenarios.threeBubblesGraph();
+            var bubble1 = threeBubblesScenario.getBubble1InTree();
+            var relation1 = TestUtils.getChildWithLabel(bubble1, "r1");
+            var karaokeIdentification = new Scenarios.getKaraokeSchemaGraph().getSchemaAsIdentification();
+            relation1.addGenericIdentification(karaokeIdentification);
+            MindMapInfo._setIsViewOnly(false);
+            TreeEdgeMenuHandler.forSingle().addChildAction(
+                relation1
+            );
+            var newGroupRelation = TestUtils.getChildWithLabel(bubble1, "karaoke");
+            var identifierExternalResourceUri = newGroupRelation.getGroupRelation().getIdentification().getExternalResourceUri();
+            expect(
+                identifierExternalResourceUri
+            ).toBe(karaokeIdentification.getExternalResourceUri());
+        });
+
     });
 });
 

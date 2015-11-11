@@ -554,9 +554,7 @@ define([
             };
             this.getSchemaAsIdentification = function () {
                 return Identification.fromFriendlyResource(
-                    FriendlyResource.withUri(
-                        this.getSchema().getUri()
-                    )
+                    this.getSchema()
                 );
             };
             this.getProperties = function () {

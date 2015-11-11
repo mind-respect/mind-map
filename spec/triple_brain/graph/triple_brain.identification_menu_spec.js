@@ -6,8 +6,9 @@ define([
     'test/test-scenarios',
     "test/mock/triple_brain.graph_element_service_mock",
     'triple_brain.identification_menu',
-    'triple_brain.user_map_autocomplete_provider'
-], function (Scenarios, GraphElementServiceMock, IdentificationMenu, UserMapAutocompleteProvider) {
+    'triple_brain.user_map_autocomplete_provider',
+    'triple_brain.mind_map_info'
+], function (Scenarios, GraphElementServiceMock, IdentificationMenu, UserMapAutocompleteProvider, MindMapInfo) {
     "use strict";
     describe("identification_menu", function () {
         beforeEach(function () {
@@ -18,6 +19,7 @@ define([
             var projectSchemaSearchResult = searchProvider.formatResults(
                 new Scenarios.getSearchResultsForProject().get()
             )[0];
+            MindMapInfo._setIsViewOnly(false);
             var identificationMenu = IdentificationMenu.ofGraphElement(bubble1).create();
             GraphElementServiceMock.addIdentificationMock();
             var hasIntegratedIdentification = identificationMenu._handleSelectIdentification(
