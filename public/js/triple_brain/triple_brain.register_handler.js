@@ -11,8 +11,8 @@ define([
     function (require, $, UserService) {
         "use strict";
         var api = {};
-        api.setupModal = function () {
-            new LoginForm(
+        api.setupModal = function(){
+            new RegisterForm(
                 getModalSection()
             ).setup();
         };
@@ -20,42 +20,17 @@ define([
             getModalSection().modal();
         };
 
-        function LoginForm(container) {
+        function RegisterForm(container) {
             this.container = container;
         }
 
-        LoginForm.prototype.setup = function () {
-            this.handleLoginForm();
+        RegisterForm.prototype.setup = function () {
             this.handleSubmitButton();
-            this.handleForgotPassword();
+            this.submitWhenPressingEnter();
             getCancelButton().click(closeModal);
         };
-        LoginForm.prototype.handleLoginForm = function () {
-            var self = this;
-            this.submitWhenPressingEnter();
-            this.getLoginButton().click(function () {
-                UserService.authenticate(
-                    self.getFormData(),
-                    function (user) {
-                        window.location.reload();
-                        //todo uncomment below eventually to avoid to have to reload page
-                        //UserService.setAuthenticatedUserInCache(user);
-                        //require(["triple_brain.mind_map_flow"], function(MindMapFlow){
-                        //    closeModal();
-                        //    MindMapFlow.enterBubbleCloud();
-                        //});
-                    },
-                    function () {
-                        self.hideAllMessages();
-                        self.getLoginErrorMessage().removeClass("hidden");
-                    }
-                );
-            });
-            this.hideAllMessages();
-            this.getForm()[0].reset();
-        };
 
-        LoginForm.prototype.handleSubmitButton = function () {
+        RegisterForm.prototype.handleSubmitButton = function () {
             var self = this;
             this.getRegisterLink().on(
                 "click",
@@ -64,14 +39,14 @@ define([
                     UserService.register(
                         self.getFormData(),
                         handleRegistrationSuccess,
-                        function (errors) {
+                        function(errors){
                             self.handleRegistrationError.call(self, errors);
                         }
                     );
                 });
         };
 
-        LoginForm.prototype.handleForgotPassword = function () {
+        RegisterForm.prototype.handleForgotPassword = function () {
             var self = this;
             this.getForgotPasswordButton().click(function (event) {
                 event.preventDefault();
@@ -98,7 +73,7 @@ define([
             }
         };
 
-        LoginForm.prototype.submitWhenPressingEnter = function () {
+        RegisterForm.prototype.submitWhenPressingEnter = function () {
             var self = this;
             this.getForm().find("input").on(
                 "keyup",
@@ -120,7 +95,7 @@ define([
             );
         }
 
-        LoginForm.prototype.handleRegistrationError = function (errors) {
+        RegisterForm.prototype.handleRegistrationError = function (errors) {
             var self = this;
             this.getLoginErrorMessage().addClass("hidden");
             $.each(errors, function () {
@@ -131,73 +106,77 @@ define([
             });
         };
 
-        LoginForm.prototype.getFormData = function () {
+        RegisterForm.prototype.getFormData = function () {
             return {
+                user_name:this.getUsernameField().val(),
                 email: this.getEmailField().val(),
                 password: this.getPasswordField().val()
             };
         };
 
-        LoginForm.prototype.getLoginErrorMessage = function () {
+        RegisterForm.prototype.getLoginErrorMessage = function () {
             return this.container.find('.login-error');
         };
 
-        LoginForm.prototype.getLoginButton = function () {
+        RegisterForm.prototype.getLoginButton = function () {
             return this.container.find('.login-button');
         };
 
-        LoginForm.prototype.getEmailField = function () {
+        RegisterForm.prototype.getUsernameField = function () {
+            return this.container.find(".login-username");
+        };
+
+        RegisterForm.prototype.getEmailField = function () {
             return this.container.find(".login-email");
         };
 
-        LoginForm.prototype.getPasswordField = function () {
+        RegisterForm.prototype.getPasswordField = function () {
             return this.container.find(".login-password");
         };
 
-        LoginForm.prototype.getForm = function () {
+        RegisterForm.prototype.getForm = function () {
             return this.container.find('.login-form');
         };
 
-        LoginForm.prototype.getRegisterLink = function () {
+        RegisterForm.prototype.getRegisterLink = function() {
             return this.container.find(".register-link");
         };
 
-        LoginForm.prototype.getForgotPasswordButton = function () {
+        RegisterForm.prototype.getForgotPasswordButton = function() {
             return this.container.find(".forgot-password-link");
         };
 
-        LoginForm.prototype.getMandatoryEmailErrorMessage = function () {
+        RegisterForm.prototype.getMandatoryEmailErrorMessage = function(){
             return this._getErrorWithName("mandatory_email");
         };
 
-        LoginForm.prototype.hideAllMessages = function () {
+        RegisterForm.prototype.hideAllMessages = function () {
             this.getMessages().addClass("hidden");
         };
 
-        LoginForm.prototype.getMessages = function () {
+        RegisterForm.prototype.getMessages = function () {
             return this.container.find('.alert');
         };
 
-        LoginForm.prototype.getInexistentEmailErrorMessage = function () {
+        RegisterForm.prototype.getInexistentEmailErrorMessage = function () {
             return this._getErrorWithName("inexistent-email");
         };
 
-        LoginForm.prototype._getErrorWithName = function (errorName) {
+        RegisterForm.prototype._getErrorWithName = function (errorName) {
             return this.container.find("[data-error=" + errorName + "]");
         };
 
         function getModalSection() {
-            return $("#login-page-modal");
+            return $("#register-page-modal");
         }
 
-        function getCancelButton() {
+        function getCancelButton(){
             return getModalSection().find(".cancel");
         }
 
-        function closeModal() {
+        function closeModal(){
             getModalSection().modal("hide");
         }
-
         return api;
     }
 );

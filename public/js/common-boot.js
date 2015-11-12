@@ -50,6 +50,7 @@ requirejs.config({
         "triple_brain.ui.utils": "triple_brain/triple_brain.ui.utils",
         "triple_brain.user_service": "triple_brain/triple_brain.user_service",
         "triple_brain.login_handler": "triple_brain/triple_brain.login_handler",
+        "triple_brain.register_handler": "triple_brain/triple_brain.register_handler",
         "triple_brain.change_password": "triple_brain/triple_brain.change_password",
         "triple_brain.event_bus": "triple_brain/triple_brain.event_bus",
         "triple_brain.group_relation": "triple_brain/graph/triple_brain.group_relation",

@@ -1,10 +1,38 @@
 {
+  "cancel":"Cancel",
   "landing": {
-    "slogan": "your mind + graph power"
+    "slogan": "your mind and the power of the graph"
+  },
+  "register": {
+    "title": "Register",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "retype_password": "Retype Password",
+    "register": "Register",
+    "login": "I have an account, log me in !",
+    "language": {
+      "selected_languages": "Languages I understand in order of preference",
+      "more_languages": "Add language(s)",
+      "available_languages": "Available languages",
+      "filter": "Filter"
+    },
+    "error": {
+      "mandatory" : "Username is mandatory",
+      "invalid" : "Username is invalid, it can only contain letters, numbers, underscores and hyphens",
+      "too_long": "Username can't exceed 30 characters",
+      "taken": "This username is already taken",
+      "email_mandatory": "Email is mandatory",
+      "email_invalid": "This email is invalid",
+      "email_already_exists": "This email is already registered",
+      "password_mandatory": "Password is mandatory",
+      "password_too_short": "The password must have a minimum of 6 characters"
+    }
   },
   "login": {
-    "title": "Login / Register",
+    "title": "Login",
     "email": "Email",
+    "username": "username (public name)",
     "password": "Password",
     "login": "Login",
     "register": "Register",
@@ -26,30 +54,6 @@
       "match": "Passwords don't match",
       "too_short": "The password must have a minimum of 6 characters",
       "wrong": "You can't modify your password with this link anymore"
-    }
-  },
-  "register": {
-    "title": "Register",
-    "username": "Username",
-    "email": "Email",
-    "password": "Password",
-    "retype_password": "Retype Password",
-    "register": "Register",
-    "login": "I have an account, log me in !",
-    "language": {
-      "selected_languages": "Languages I understand in order of preference",
-      "more_languages": "Add language(s)",
-      "available_languages": "Available languages",
-      "filter": "Filter"
-    },
-    "error": {
-      "too_long": "Username can't exceed 50 characters",
-      "taken": "This username is already taken",
-      "email_mandatory": "Email is mandatory",
-      "email_invalid": "This email is invalid",
-      "email_already_exists": "This email is already registered",
-      "password_mandatory": "Password is mandatory",
-      "password_too_short": "The password must have a minimum of 6 characters"
     }
   },
   "not_allowed": {
@@ -76,7 +80,8 @@
       "bubbles": "bubbles",
       "relations": "relations"
     },
-    "login_register": "login/register"
+    "login": "login",
+    "register": "register"
   },
   "top_center_menu": {
     "select": "select"

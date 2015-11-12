@@ -52,7 +52,10 @@
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="#" id="login-register" data-i18n="top_menu.login_register"></a>
+                    <a href="#" id="login-button" data-i18n="top_menu.login"></a>
+                </li>
+                <li>
+                    <a href="#" id="register-button" data-i18n="top_menu.register"></a>
                 </li>
                 <li class="dropdown">
                     <a id="select-button" data-toggle="dropdown" data-i18n='top_menu.selection.title'></a>
@@ -248,11 +251,74 @@
             </div>
             <div class="modal-body">
                 <div class="login-error alert alert-danger hidden" role="alert" data-i18n="login.error"></div>
+                <div class="forgot-password-email-sent alert alert-success hidden"
+                     data-i18n="forgot_password.success" role="alert">
+                </div>
+                <form class="login-form security-form well" role="form">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">@</div>
+                            <label for="login-email-modal" class="sr-only" data-i18n="login.email"></label>
+                            <input id="login-email-modal" class="login-email form-control" name="email"
+                                   type="email"
+                                   data-i18n="[placeholder]login.email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></div>
+                            <label for="login-password-modal" class="sr-only" data-i18n="login.password"></label>
+                            <input id="login-password-modal" class="login-password form-control" name="password"
+                                   type="password"
+                                   data-i18n="[placeholder]login.password"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="col-lg-12 text-center">
+                    <button type="button" class="login-button btn btn-success"
+                            data-i18n="login.login"></button>
+                    <button type="button" class="forgot-password-link btn btn-primary"
+                            data-i18n="forgot_password.button"></button>
+                    <button type="button" class="cancel btn btn-danger"
+                            data-i18n="cancel"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="security-form-wrapper modal fade row" id="register-page-modal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span
+                            class="sr-only">Close</span></button>
+                <h4 class="modal-title" data-i18n="login.register"></h4>
+            </div>
+            <div class="modal-body">
+                <div data-error="mandatory_user_name"
+                     class="alert alert-danger hidden"
+                     data-i18n="register.error.mandatory" role="alert">
+                </div>
+                <div data-error="invalid_user_name"
+                     class="alert alert-danger hidden"
+                     data-i18n="register.error.invalid" role="alert">
+                </div>
+                <div data-error="user_name_too_long"
+                     class="alert alert-danger hidden"
+                     data-i18n="register.error.too_long" role="alert">
+                </div>
+                <div data-error="user_name_already_registered"
+                     class="alert alert-danger hidden"
+                     data-i18n="register.error.taken" role="alert">
+                </div>
                 <div data-error="mandatory_email"
                      class="alert alert-danger hidden"
                      data-i18n="register.error.email_mandatory" role="alert">
                 </div>
-
                 <div data-error="invalid_email"
                      class="alert alert-danger hidden"
                      data-i18n="register.error.email_mandatory" role="alert">
@@ -286,29 +352,41 @@
                 <form class="login-form security-form well" role="form">
                     <div class="form-group">
                         <div class="input-group">
+                            <div class="input-group-addon"><i class="glyphicon glyphicon-user"></i></div>
+                            <label for="register-username-modal" class="sr-only" data-i18n="login.email"></label>
+                            <input id="register-username-modal" class="login-username form-control" name="email"
+                                   type="email"
+                                   data-i18n="[placeholder]login.username">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
                             <div class="input-group-addon">@</div>
-                            <label for="login-email-modal" class="sr-only" data-i18n="login.email"></label>
-                            <input id="login-email-modal" class="login-email form-control" name="email"
+                            <label for="register-email-modal" class="sr-only" data-i18n="login.email"></label>
+                            <input id="register-email-modal" class="login-email form-control" name="email"
                                    type="email"
                                    data-i18n="[placeholder]login.email">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="login-password-modal" class="sr-only" data-i18n="login.password"></label>
-                        <input id="login-password-modal" class="login-password form-control" name="password"
-                               type="password"
-                               data-i18n="[placeholder]login.password"/>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></div>
+                            <label for="register-password-modal" class="sr-only" data-i18n="login.password"></label>
+                            <input id="register-password-modal" class="login-password form-control" name="password"
+                                   type="password"
+                                   data-i18n="[placeholder]login.password"/>
+                        </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <div class="col-lg-12 text-center">
-                    <button type="button" class="login-button btn btn-primary"
-                            data-i18n="login.login"></button>
-                    <button type="button" class="register-link btn btn-primary"
-                            data-i18n="login.register"></button>
-                    <button type="button" class="forgot-password-link btn btn-primary"
-                            data-i18n="forgot_password.button"></button>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <button type="button" class="register-link btn btn-success"
+                                data-i18n="login.register"></button>
+                        <button type="button" class="cancel btn btn-danger"
+                                data-i18n="cancel"></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -330,7 +408,8 @@
                     <div class="btn-toolbar" data-role="editor-toolbar"
                          data-target="#editor">
                         <div class="btn-group">
-                            <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
+                            <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Font Size"><i
+                                        class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a data-edit="fontSize 5" class="fs-Five">Huge</a></li>
                                 <li><a data-edit="fontSize 3" class="fs-Three">Normal</a></li>
@@ -338,37 +417,55 @@
                             </ul>
                         </div>
                         <div class="btn-group">
-                            <a class="btn btn-default" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="fa fa-bold"></i></a>
-                            <a class="btn btn-default" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="fa fa-italic"></i></a>
-                            <a class="btn btn-default" data-edit="strikethrough" title="Strikethrough"><i class="fa fa-strikethrough"></i></a>
-                            <a class="btn btn-default" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="fa fa-underline"></i></a>
+                            <a class="btn btn-default" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i
+                                        class="fa fa-bold"></i></a>
+                            <a class="btn btn-default" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i
+                                        class="fa fa-italic"></i></a>
+                            <a class="btn btn-default" data-edit="strikethrough" title="Strikethrough"><i
+                                        class="fa fa-strikethrough"></i></a>
+                            <a class="btn btn-default" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i
+                                        class="fa fa-underline"></i></a>
                         </div>
                         <div class="btn-group">
-                            <a class="btn btn-default" data-edit="insertunorderedlist" title="Bullet list"><i class="fa fa-list-ul"></i></a>
-                            <a class="btn btn-default" data-edit="insertorderedlist" title="Number list"><i class="fa fa-list-ol"></i></a>
-                            <a class="btn btn-default" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="fa fa-outdent"></i></a>
-                            <a class="btn btn-default" data-edit="indent" title="Indent (Tab)"><i class="fa fa-indent"></i></a>
+                            <a class="btn btn-default" data-edit="insertunorderedlist" title="Bullet list"><i
+                                        class="fa fa-list-ul"></i></a>
+                            <a class="btn btn-default" data-edit="insertorderedlist" title="Number list"><i
+                                        class="fa fa-list-ol"></i></a>
+                            <a class="btn btn-default" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i
+                                        class="fa fa-outdent"></i></a>
+                            <a class="btn btn-default" data-edit="indent" title="Indent (Tab)"><i
+                                        class="fa fa-indent"></i></a>
                         </div>
                         <div class="btn-group">
-                            <a class="btn btn-default" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="fa fa-align-left"></i></a>
-                            <a class="btn btn-default" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="fa fa-align-center"></i></a>
-                            <a class="btn btn-default" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="fa fa-align-right"></i></a>
-                            <a class="btn btn-default" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="fa fa-align-justify"></i></a>
+                            <a class="btn btn-default" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i
+                                        class="fa fa-align-left"></i></a>
+                            <a class="btn btn-default" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i
+                                        class="fa fa-align-center"></i></a>
+                            <a class="btn btn-default" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i
+                                        class="fa fa-align-right"></i></a>
+                            <a class="btn btn-default" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i
+                                        class="fa fa-align-justify"></i></a>
                         </div>
                         <div class="btn-group">
-                            <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="fa fa-link"></i></a>
+                            <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i
+                                        class="fa fa-link"></i></a>
+
                             <div class="dropdown-menu input-append">
-                                <input placeholder="URL" type="text" data-edit="createLink" />
+                                <input placeholder="URL" type="text" data-edit="createLink"/>
                                 <button class="btn" type="button">Add</button>
                             </div>
                         </div>
                         <div class="btn-group">
-                            <a class="btn btn-default" data-edit="unlink" title="Remove Hyperlink"><i class="fa fa-unlink"></i></a>
+                            <a class="btn btn-default" data-edit="unlink" title="Remove Hyperlink"><i
+                                        class="fa fa-unlink"></i></a>
                         </div>
                         <div class="btn-group">
-                            <a class="btn btn-default" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a>
-                            <a class="btn btn-default" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
-                            <a class="btn btn-default" data-edit="html" title="Clear Formatting"><i class='glyphicon glyphicon-pencil'></i></a>
+                            <a class="btn btn-default" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i
+                                        class="fa fa-undo"></i></a>
+                            <a class="btn btn-default" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i
+                                        class="fa fa-repeat"></i></a>
+                            <a class="btn btn-default" data-edit="html" title="Clear Formatting"><i
+                                        class='glyphicon glyphicon-pencil'></i></a>
                         </div>
                     </div>
                     <div id="editor" class="editor"></div>

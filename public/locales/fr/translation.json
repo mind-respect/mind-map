@@ -1,11 +1,39 @@
 {
+  "cancel":"Annuler",
   "landing": {
-    "slogan": "votre esprit + le pouvoir du graphe",
+    "slogan": "votre esprit et le pouvoir du graphe",
     "description": "Découpez, liez, schématisez, partagez et trouvez vos notes."
   },
-  "login": {
-    "title": "S'authentifier / S'enregistrer",
+  "register": {
+    "title": "S'enregistrer",
+    "username": "Nom d'utilisateur",
     "email": "Courriel",
+    "password": "Mot de passe",
+    "retype_password": "Retaper le mot de passe",
+    "register": "Enregistrer",
+    "login": "s'authentifier",
+    "language": {
+      "selected_languages": "Langues que je connais en ordre de préférence",
+      "more_languages": "Ajouter langue(s)",
+      "available_languages": "Langues disponibles",
+      "filter": "Trier"
+    },
+    "error": {
+      "mandatory" : "Le nom d'usager est obligatoire",
+      "invalid" : "Le nom d'usager est invalide, il peut contenir des lettres, des nombres, des soulignements (underscores) et des traits d'union",
+      "too_long" : "Le nom d'usager ne peut excéder 30 caractères",
+      "taken" : "Ce nom d'usager est déjà pris",
+      "email_mandatory": "Le courriel est obligatoire",
+      "email_invalid": "Ce courriel est invalide",
+      "email_already_exists": "Ce courriel est déjà enregistré",
+      "password_mandatory": "Le mot de passe est obligatoire",
+      "password_too_short": "Le mot de passe requiert un minimum de 6 caractères"
+    }
+  },
+  "login": {
+    "title": "S'authentifier",
+    "email": "Courriel",
+    "username": "Nom d'usager. C'est ce nom qui sera utilisé pour vous identifier auprès des autres utilisateurs",
     "password": "Mot de passe",
     "login": "Authentifier",
     "register": "S'enregistrer",
@@ -27,28 +55,6 @@
       "match": "Les mots de passe ne sont pas pareil",
       "too_short": "Le mot de passe requiert un minimum de 6 caractères",
       "wrong": "Vous ne pouvez plus modifier votre mot de passe à l'aide de ce lien"
-    }
-  },
-  "register": {
-    "title": "Enregistrement",
-    "username": "Nom d'utilisateur",
-    "email": "Courriel",
-    "password": "Mot de passe",
-    "retype_password": "Retaper le mot de passe",
-    "register": "Enregistrer",
-    "login": "s'authentifier",
-    "language": {
-      "selected_languages": "Langues que je connais en ordre de préférence",
-      "more_languages": "Ajouter langue(s)",
-      "available_languages": "Langues disponibles",
-      "filter": "Trier"
-    },
-    "error": {
-      "email_mandatory": "Le courriel est obligatoire",
-      "email_invalid": "Ce courriel est invalide",
-      "email_already_exists": "Ce courriel est déjà enregistré",
-      "password_mandatory": "Le mot de passe est obligatoire",
-      "password_too_short": "Le mot de passe requiert un minimum de 6 caractères"
     }
   },
   "not_allowed": {
@@ -75,7 +81,8 @@
       "bubbles": "les bulles",
       "relations": "les relations"
     },
-    "login_register": "s'authentifier/s'enregistrer"
+    "login": "s'authentifier",
+    "register": "s'enregistrer"
   },
   "top_center_menu": {
     "select": "sélection"
@@ -92,14 +99,14 @@
         "title_prefix": "Identifiants de ",
         "title": "Dites ce qu'est cette bulle",
         "placeholder": "Est un(e) ou la même \"chose\" que",
-        "example":"ex: Cette bulle est un fruit ou cette bulle est la même chose que Madonna la chanteuse.",
+        "example": "ex: Cette bulle est un fruit ou cette bulle est la même chose que Madonna la chanteuse.",
         "what_for": "À quoi ça sert?",
         "why": "À avoir automatiquement une image, une description, des suggestions, à grouper les relations et à trouver toutes les autres bulles qui ont les mêmes identifiants.",
         "readMore": "plus",
         "readLess": "moins",
         "origin": "source",
-        "nb_references" : "autre bulle(s) ayant le même identifiant",
-        "no_other_references" : "Aucune autre bulle avec le même identifiant"
+        "nb_references": "autre bulle(s) ayant le même identifiant",
+        "no_other_references": "Aucune autre bulle avec le même identifiant"
       }
     }
   },
@@ -129,7 +136,7 @@
         "progress": "Progression du téléversement"
       },
       "note": {
-        "title_prefix" : "Description de ",
+        "title_prefix": "Description de ",
         "update": "Mettre à jour",
         "saving": "Sauvegarde",
         "cancel": "Annuler"
@@ -199,13 +206,13 @@
       "vertex": "Bulle",
       "relation": "Relation",
       "schema": "Modèle",
-      "identification" : "Identifiant"
+      "identification": "Identifiant"
     },
-    "identifier":{
+    "identifier": {
       "references": " référence(s)"
     }
   },
-  "wordcloud":{
-    "title":"Vos bulles centrales"
+  "wordcloud": {
+    "title": "Vos bulles centrales"
   }
 }

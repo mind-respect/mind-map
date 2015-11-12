@@ -6,6 +6,7 @@ define([
         "jquery",
         "triple_brain.big_search_box",
         "triple_brain.login_handler",
+        "triple_brain.register_handler",
         "triple_brain.selection_handler",
         "triple_brain.user_service",
         "triple_brain.graph_displayer",
@@ -15,7 +16,7 @@ define([
         "triple_brain.event_bus",
         "triple_brain.schema_service"
     ],
-    function ($, BigSearchBox, LoginHandler, SelectionHandler, UserService, GraphDisplayer, Vertex, VertexService, MindMapInfo, EventBus, SchemaService) {
+    function ($, BigSearchBox, LoginHandler, RegisterHandler, SelectionHandler, UserService, GraphDisplayer, Vertex, VertexService, MindMapInfo, EventBus, SchemaService) {
         "use strict";
         var api = {};
         api.earlyInit = function () {
@@ -30,13 +31,14 @@ define([
                 getLandingPageSearchInput().removeClass("hidden");
                 getDisconnectButton().addClass("hidden");
                 getUserMenu().addClass("hidden");
-                handleLoginRegisterButton();
+                handleLoginRegisterButtons();
             } else {
                 getMyBubblesSearchInput().removeClass("hidden");
                 handleCreateNewConceptButton();
                 handleCreateNewSchemaButton();
                 handleDisconnectButton();
-                getLoginRegisterButton().addClass("hidden");
+                getLoginButton().addClass("hidden");
+                getRegisterButton().addClass("hidden");
             }
             if (!MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
                 getSelectButton().addClass("hidden");
@@ -97,11 +99,12 @@ define([
         }
 
 
-        function handleLoginRegisterButton() {
-            return getLoginRegisterButton().add(
-                getLoginRegisterButtonInPage()
-            ).click(
+        function handleLoginRegisterButtons() {
+            getLoginButton().click(
                 LoginHandler.showModal
+            );
+            getRegisterButton().click(
+                RegisterHandler.showModal
             );
         }
 
@@ -144,12 +147,12 @@ define([
             return $("#disconnect-btn");
         }
 
-        function getLoginRegisterButton() {
-            return $("#login-register");
+        function getLoginButton() {
+            return $("#login-button");
         }
 
-        function getLoginRegisterButtonInPage() {
-            return $("#login-register-in-page");
+        function getRegisterButton() {
+            return $("#register-button");
         }
 
         function getSelectButton() {
