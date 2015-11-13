@@ -559,7 +559,7 @@ define([
 
         function buildChildrenHtmlTreeRecursively(parentBubbleUi) {
             var serverParentVertex = parentBubbleUi.getOriginalServerObject();
-            $.each(serverParentVertex.similarRelations, function (key, groupRelation) {
+            $.each(sortSimilarRelationsByCreationDate(serverParentVertex.similarRelations), function (key, groupRelation) {
                 self.buildGroupRelation(
                     groupRelation,
                     parentBubbleUi

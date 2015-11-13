@@ -312,6 +312,34 @@ define([
             ).toBe("b7");
         });
 
+        it("sorts non center bubble children in order of creation date", function(){
+            var scenario = new Scenarios.creationDateScenario();
+            var b1 = scenario.getBubble1InTree();
+            var b7 = TestUtils.getChildWithLabel(
+                b1,
+                "r6"
+            ).getTopMostChildBubble();
+            scenario.expandBubble7(
+                b7
+            );
+            var childVertex = b7.getTopMostChildBubble().getTopMostChildBubble();
+            expect(
+                childVertex.text()
+            ).toBe("b71");
+            childVertex = childVertex.getBubbleUnder();
+            expect(
+                childVertex.text()
+            ).toBe("b72");
+            childVertex = childVertex.getBubbleUnder();
+            expect(
+                childVertex.text()
+            ).toBe("b73");
+            childVertex = childVertex.getBubbleUnder();
+            expect(
+                childVertex.text()
+            ).toBe("b74");
+        });
+
         function connectDistantVertexTest(callback) {
             var distantGraphScenario = new Scenarios.getDistantGraph();
             var graphWithHiddenSimilarRelationsScenario = new Scenarios.getGraphWithHiddenSimilarRelations();
