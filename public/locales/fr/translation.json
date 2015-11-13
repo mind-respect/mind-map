@@ -33,7 +33,7 @@
   "login": {
     "title": "S'authentifier",
     "email": "Courriel",
-    "username": "Nom d'usager. C'est ce nom qui sera utilisé pour vous identifier auprès des autres utilisateurs",
+    "username": "Nom d'usager (nom public)",
     "password": "Mot de passe",
     "login": "Authentifier",
     "register": "S'enregistrer",

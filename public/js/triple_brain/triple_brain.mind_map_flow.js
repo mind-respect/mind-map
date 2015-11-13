@@ -72,6 +72,7 @@ define([
     return api;
 
     function setupMindMap(isAnonymous, isTagCloudFlow) {
+        $("body").addClass("no-scroll");
         MindMapInfo.setIsAnonymous(isAnonymous);
         MindMapInfo.setIsTagCloudFlow(isTagCloudFlow);
         $("#app-presentation").add("#welcome-content").addClass("hidden");

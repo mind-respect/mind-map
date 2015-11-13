@@ -51,6 +51,13 @@ define([
                         image: image
                     }
                 );
+            }).fail(function(){
+                callback({
+                        conciseSearchResult: searchResult,
+                        title: searchResult.label,
+                        text: searchResult.somethingToDistinguish
+                    }
+                );
             });
         };
     }

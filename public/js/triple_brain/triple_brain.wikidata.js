@@ -26,6 +26,8 @@ define([
             return imageFromSearchResult(result, wikidataId);
         }).then(function (image) {
             deferred.resolve(image);
+        }).fail(function(){
+            deferred.reject();
         });
         return deferred.promise();
     };
@@ -60,7 +62,9 @@ define([
             deferred.resolve();
             return deferred.promise();
         }
-        api.getImageForWikidataUri(identification.getUri()).then(function (image) {
+        api.getImageForWikidataUri(
+            identification.getUri()
+        ).then(function (image) {
             if(image === undefined) {
                 deferred.resolve();
                 return;
@@ -68,6 +72,8 @@ define([
             identification.addImage(image);
             graphElement.addImages([image]);
             graphElement.refreshImages();
+            deferred.resolve();
+        }).fail(function(){
             deferred.resolve();
         });
         return deferred.promise();
@@ -100,10 +106,9 @@ define([
                         WikidataUri.rawImageUrlFromThumbUrl(thumbUrl)
                     )
                 );
+            }).fail(function(){
+                deferred.reject();
             });
         return deferred.promise();
-    }
-    function wikipediaUrlFromQueryResult(){
-
     }
 });

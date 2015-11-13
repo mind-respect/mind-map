@@ -50,7 +50,9 @@ define([
                         getBase64Image(this)
                     );
                 }
-            ).prop(
+            ).error(function(){
+                    deferred.reject();
+                }).prop(
                 "src",
                 url
             );
