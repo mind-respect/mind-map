@@ -89,6 +89,31 @@ define([
             };
         };
 
+        api.creationDateScenario = function () {
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                return api._getTestData("creationDate.surroundBubble1Graph");
+            };
+            this.getCenterBubbleUri = function () {
+                return uriOfVertexWithLabel(this.getGraph(), "b1");
+            };
+            this.getBubble1InTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("b1");
+            };
+            this.expandBubble7 = function (bubble7) {
+                return GraphDisplayerAsRelativeTree.addChildTreeUsingGraph(
+                    bubble7,
+                    getSurroundBubble7Graph()
+                );
+            };
+            function getSurroundBubble7Graph() {
+                return api._getTestData(
+                    "creationDate.surroundBubble7Graph"
+                );
+            }
+            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
+        };
+
         api.mergeBubbleGraph = function () {
             var treeBuilder = new TreeBuilder(this),
                 includedElementsTree,

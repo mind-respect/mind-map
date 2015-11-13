@@ -116,6 +116,9 @@ define([
     api.Self.prototype.getServerFormat = function () {
         return this.friendlyResourceServerFormat;
     };
+    api.Self.prototype.getCreationDate = function () {
+        return this.friendlyResourceServerFormat.creationDate;
+    };
     api.Self.prototype._buildImages = function () {
         return undefined === this.friendlyResourceServerFormat.images ?
             [] :

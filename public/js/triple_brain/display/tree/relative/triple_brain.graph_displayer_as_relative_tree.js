@@ -605,7 +605,7 @@ define([
                 if (self.rootBubble.hasSuggestions()) {
                     api.showSuggestions(self.rootBubble);
                 }
-                $.each(serverRootVertex.similarRelations, function (key, groupRelation) {
+                $.each(sortSimilarRelationsByCreationDate(serverRootVertex.similarRelations), function (key, groupRelation) {
                     if (groupRelation.hasMultipleVertices()) {
                         self.buildBubbleHtmlIntoContainer(
                             groupRelation,
@@ -645,6 +645,27 @@ define([
             function vertexWithId(vertexId) {
                 return vertices[vertexId];
             }
+        }
+        function sortSimilarRelationsByCreationDate(similarRelations){
+            var sortedKeys = Object.keys(similarRelations).sort(
+                function(a,b){
+                    var groupRelationA = similarRelations[a];
+                    var groupRelationB = similarRelations[b];
+                    var vertexA = groupRelationA.getAnyVertex();
+                    var vertexB = groupRelationB.getAnyVertex();
+                    if (vertexA.getCreationDate() === vertexB.getCreationDate()) {
+                        return 0;
+                    }
+                    if (vertexA.getCreationDate() > vertexB.getCreationDate()) {
+                        return 1;
+                    }
+                    return -1;
+                });
+            var sortedSimilarRelations = {};
+            $.each(sortedKeys, function(){
+                sortedSimilarRelations[this] = similarRelations[this];
+            });
+            return sortedSimilarRelations;
         }
     };
     return api;

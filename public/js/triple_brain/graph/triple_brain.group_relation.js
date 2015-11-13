@@ -23,6 +23,11 @@ define([
         Self.prototype.getVertices = function () {
             return this.vertices;
         };
+        Self.prototype.getAnyVertex = function(){
+            var verticesWithUri = this.getVertices();
+            var verticesWithId = verticesWithUri[Object.keys(verticesWithUri)[0]];
+            return verticesWithId[Object.keys(verticesWithId)[0]].vertex;
+        };
         Self.prototype.addVertex = function (vertex, edge) {
             if (this.vertices[vertex.getUri()] === undefined) {
                 this.vertices[vertex.getUri()] = {};

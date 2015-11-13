@@ -14,29 +14,10 @@ define([
 ], function (Scenarios, TestUtils, Mock, GraphDisplayerAsRelativeTree, CenterBubble, VertexHtmlBuilder, EdgeHtmlBuilder, GraphElement) {
     "use strict";
     describe("graph_displayer_as_relative_tree_spec", function () {
-        var threeBubblesGraph,
-            bubble1,
-            bubble2,
-            graphWithHiddenSimilarRelationsScenario,
-            groupRelation,
-            graphWithSimilarRelationsScenario,
-            mergeBubbleScenario,
-            karaokeSchemaScenario,
-            distantGraphScenario;
-        beforeEach(function () {
-            threeBubblesGraph = new Scenarios.threeBubblesGraph();
-            distantGraphScenario = new Scenarios.getDistantGraph();
-            bubble1 = threeBubblesGraph.getCenterBubbleInTree();
-            bubble2 = threeBubblesGraph.getBubble2InTree();
-            graphWithHiddenSimilarRelationsScenario = new Scenarios.getGraphWithHiddenSimilarRelations();
-            mergeBubbleScenario = new Scenarios.mergeBubbleGraph();
-            graphWithSimilarRelationsScenario = new Scenarios.GraphWithSimilarRelationsScenario();
-            groupRelation = graphWithSimilarRelationsScenario.getPossessionAsGroupRelationInTree();
-            karaokeSchemaScenario = new Scenarios.getKaraokeSchemaGraph();
-        });
-
         it("distributes triples evenly to the right and left", function () {
-            var centerBubble = CenterBubble.usingBubble(bubble1);
+            var centerBubble = CenterBubble.usingBubble(
+                    new Scenarios.threeBubblesGraph().getCenterBubbleInTree()
+            );
             expect(
                 centerBubble._getNumberOfImmediateBubblesToLeft()
             ).toBe(1);
@@ -46,6 +27,7 @@ define([
         });
 
         it("distributes new triples evenly to the right and left", function () {
+            var bubble1 = new Scenarios.threeBubblesGraph().getCenterBubbleInTree();
             var firstAddedEdge = TestUtils.addTriple(bubble1).edge(),
                 secondAddedEdge = TestUtils.addTriple(bubble1).edge();
             expect(
@@ -57,6 +39,7 @@ define([
         });
 
         it("appends to group relation when expanding", function () {
+            var groupRelation = new Scenarios.GraphWithSimilarRelationsScenario().getPossessionAsGroupRelationInTree();
             expect(
                 groupRelation.hasChildren()
             ).toBeFalsy();
@@ -69,6 +52,7 @@ define([
         });
 
         it("groups similar relations when they come out of an expanded bubble", function () {
+            var graphWithHiddenSimilarRelationsScenario = new Scenarios.getGraphWithHiddenSimilarRelations()
             var bubble2 = graphWithHiddenSimilarRelationsScenario.getBubble2InTree();
             expect(
                 bubble2.hasHiddenRelationsContainer()
@@ -85,6 +69,8 @@ define([
         });
 
         it("preserves direction with parent vertex for expanded group relations", function () {
+            var graphWithSimilarRelationsScenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var groupRelation = graphWithSimilarRelationsScenario.getPossessionAsGroupRelationInTree();
             GraphDisplayerAsRelativeTree.expandGroupRelation(
                 groupRelation
             );
@@ -96,6 +82,7 @@ define([
             ).toBeTruthy();
         });
         it("removes hidden properties indicator when expanding group relation", function () {
+            var groupRelation = new Scenarios.GraphWithSimilarRelationsScenario().getPossessionAsGroupRelationInTree();
             expect(
                 groupRelation.hasHiddenRelationsContainer()
             ).toBeTruthy();
@@ -107,6 +94,7 @@ define([
             ).toBeFalsy();
         });
         it("contains all connected elements for included graph elements view", function () {
+            var mergeBubbleScenario = new Scenarios.mergeBubbleGraph();
             expect(
                 mergeBubbleScenario.getBubble1()
             ).toBeDefined();
@@ -130,6 +118,8 @@ define([
             ).toBeDefined();
         });
         it("can show a bubble suggestions", function () {
+            var karaokeSchemaScenario = new Scenarios.getKaraokeSchemaGraph();
+            var bubble2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
             var locationSuggestion = karaokeSchemaScenario.getLocationPropertyAsSuggestion();
             bubble2.setSuggestions(
                 [
@@ -187,6 +177,7 @@ define([
         });
 
         it("does not duplicate the hidden relation image of a child bubble when creating a distant relationship", function () {
+            var graphWithHiddenSimilarRelationsScenario = new Scenarios.getGraphWithHiddenSimilarRelations();
             var bubble1 = graphWithHiddenSimilarRelationsScenario.getBubble1InTree();
             var bubble2 = TestUtils.getChildWithLabel(
                 bubble1, "r1"
@@ -291,7 +282,39 @@ define([
             ).toBeTruthy();
         });
 
+        it("sorts center bubble children in order of creation date", function(){
+            var scenario = new Scenarios.creationDateScenario();
+            var b1 = scenario.getBubble1InTree();
+            var centerBubble = CenterBubble.usingBubble(b1);
+            var toTheRightVertex = centerBubble.getToTheRightTopMostChild().getTopMostChildBubble();
+            expect(
+                toTheRightVertex.text()
+            ).toBe("b2");
+            var toTheLeftVertex = centerBubble.getToTheLeftTopMostChild().getTopMostChildBubble();
+            expect(
+                toTheLeftVertex.text()
+            ).toBe("b3");
+            toTheRightVertex = toTheRightVertex.getBubbleUnder();
+            expect(
+                toTheRightVertex.text()
+            ).toBe("b4");
+            toTheLeftVertex = toTheLeftVertex.getBubbleUnder();
+            expect(
+                toTheLeftVertex.text()
+            ).toBe("b5");
+            toTheRightVertex = toTheRightVertex.getBubbleUnder();
+            expect(
+                toTheRightVertex.text()
+            ).toBe("b6");
+            toTheLeftVertex = toTheLeftVertex.getBubbleUnder();
+            expect(
+                toTheLeftVertex.text()
+            ).toBe("b7");
+        });
+
         function connectDistantVertexTest(callback) {
+            var distantGraphScenario = new Scenarios.getDistantGraph();
+            var graphWithHiddenSimilarRelationsScenario = new Scenarios.getGraphWithHiddenSimilarRelations();
             connectBubbleToDistantBubbleWithUriAndGraphWhenConnected(
                 distantGraphScenario.getBubbleInTree(),
                 graphWithHiddenSimilarRelationsScenario.getBubble2().getUri(),
