@@ -559,7 +559,7 @@ define([
 
         function buildChildrenHtmlTreeRecursively(parentBubbleUi) {
             var serverParentVertex = parentBubbleUi.getOriginalServerObject();
-            $.each(sortSimilarRelationsByCreationDate(serverParentVertex.similarRelations), function (key, groupRelation) {
+            $.each(sortSimilarRelationsByIsGroupRelationOrCreationDate(serverParentVertex.similarRelations), function (key, groupRelation) {
                 self.buildGroupRelation(
                     groupRelation,
                     parentBubbleUi
@@ -605,7 +605,7 @@ define([
                 if (self.rootBubble.hasSuggestions()) {
                     api.showSuggestions(self.rootBubble);
                 }
-                $.each(sortSimilarRelationsByCreationDate(serverRootVertex.similarRelations), function (key, groupRelation) {
+                $.each(sortSimilarRelationsByIsGroupRelationOrCreationDate(serverRootVertex.similarRelations), function (key, groupRelation) {
                     if (groupRelation.hasMultipleVertices()) {
                         self.buildBubbleHtmlIntoContainer(
                             groupRelation,
@@ -646,11 +646,17 @@ define([
                 return vertices[vertexId];
             }
         }
-        function sortSimilarRelationsByCreationDate(similarRelations){
+        function sortSimilarRelationsByIsGroupRelationOrCreationDate(similarRelations){
             var sortedKeys = Object.keys(similarRelations).sort(
                 function(a,b){
                     var groupRelationA = similarRelations[a];
                     var groupRelationB = similarRelations[b];
+                    if(groupRelationA.hasMultipleVertices() && !groupRelationB.hasMultipleVertices()){
+                        return -1;
+                    }
+                    if(!groupRelationA.hasMultipleVertices() && groupRelationB.hasMultipleVertices()){
+                        return 1;
+                    }
                     var vertexA = groupRelationA.getAnyVertex();
                     var vertexB = groupRelationB.getAnyVertex();
                     if (vertexA.getCreationDate() === vertexB.getCreationDate()) {

@@ -52,7 +52,7 @@ define([
         });
 
         it("groups similar relations when they come out of an expanded bubble", function () {
-            var graphWithHiddenSimilarRelationsScenario = new Scenarios.getGraphWithHiddenSimilarRelations()
+            var graphWithHiddenSimilarRelationsScenario = new Scenarios.getGraphWithHiddenSimilarRelations();
             var bubble2 = graphWithHiddenSimilarRelationsScenario.getBubble2InTree();
             expect(
                 bubble2.hasHiddenRelationsContainer()
@@ -338,6 +338,19 @@ define([
             expect(
                 childVertex.text()
             ).toBe("b74");
+        });
+
+        it("sorts bubble children so that group relations are at the top", function(){
+            var me = new Scenarios.GraphWithSimilarRelationsScenario().getCenterVertexInTree();
+            var centerBubble = CenterBubble.usingBubble(me);
+            var toTheRightBubble = centerBubble.getToTheRightTopMostChild();
+            expect(
+                toTheRightBubble.isGroupRelation()
+            ).toBeTruthy();
+            var toTheLeftBubble = centerBubble.getToTheLeftTopMostChild();
+            expect(
+                toTheLeftBubble.isGroupRelation()
+            ).toBeTruthy();
         });
 
         function connectDistantVertexTest(callback) {
