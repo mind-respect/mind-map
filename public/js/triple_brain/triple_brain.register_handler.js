@@ -6,9 +6,12 @@ define([
         "require",
         "jquery",
         "triple_brain.user_service",
-        "bootstrap"
+        "triple_brain.friendly_resource",
+        "triple_brain.friendly_resource_service",
+        "bootstrap",
+        "jquery.i18next"
     ],
-    function (require, $, UserService) {
+    function (require, $, UserService, FriendlyResource, FriendlyResourceService) {
         "use strict";
         var api = {};
         api.setupModal = function(){
@@ -90,7 +93,14 @@ define([
             UserService.getDefaultVertexUri(
                 user.user_name,
                 function (uri) {
-                    window.location = "?bubble=" + uri;
+                    FriendlyResourceService.updateLabel(
+                        FriendlyResource.withUri(uri),
+                        user.user_name,
+                        function(){
+                            window.location = "?bubble=" + uri;
+                        }
+                    );
+
                 }
             );
         }
