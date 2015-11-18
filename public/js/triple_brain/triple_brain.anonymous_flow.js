@@ -19,6 +19,7 @@ define([
         });
         MindMapInfo.setIsAnonymous(true);
         MindMapInfo.defineIsViewOnlyIfUndefined();
+        $(".frontier").remove();
     };
     return api;
     function getWelcomeContent(){

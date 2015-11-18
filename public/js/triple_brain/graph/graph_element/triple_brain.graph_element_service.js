@@ -33,7 +33,7 @@ define([
                 type: 'POST',
                 url: graphElement.getUri() + '/identification',
                 data: identification.getJsonFormat(),
-                contentType: 'application/json;charset=utf-8',
+                contentType: 'application/json;charset=utf-8'
             }).success(function(serverIdentifications){
                 api._addIdentificationsCallback(
                     graphElement,

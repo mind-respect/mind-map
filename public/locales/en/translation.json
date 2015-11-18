@@ -2,7 +2,29 @@
   "cancel":"Cancel",
   "landing": {
     "slogan": "shape your mind",
-    "description": "Cut, link, schematise, share and find your thoughts."
+    "description": "Link, find, modelize and share your thoughts.",
+    "actions": {
+      "cut":{
+        "title": "Cut",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim, ligula vitae posuere iaculis, lorem purus vehicula nibh, sit amet consequat quam libero et nisi. Morbi vitae urna eu sapien congue commodo porta vehicula magna. Morbi ac viverra risus, quis finibus est."
+      },
+      "link":{
+        "title": "Link",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim, ligula vitae posuere iaculis, lorem purus vehicula nibh, sit amet consequat quam libero et nisi. Morbi vitae urna eu sapien congue commodo porta vehicula magna."
+      },
+      "model":{
+        "title": "Modelize",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim, ligula vitae posuere iaculis, lorem purus vehicula nibh, sit amet consequat quam libero et nisi. Morbi vitae urna eu sapien congue commodo porta vehicula magna. Morbi ac viverra risus, quis finibus est."
+      },
+      "share":{
+        "title": "Share",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim, ligula vitae posuere iaculis, lorem purus vehicula nibh, sit amet consequat quam libero et nisi. Morbi vitae urna eu sapien congue commodo porta vehicula magna. Morbi ac viverra risus, quis finibus est."
+      },
+      "find":{
+        "title": "Find",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim, ligula vitae posuere iaculis, lorem purus vehicula nibh, sit amet consequat quam libero et nisi. Morbi vitae urna eu sapien congue commodo porta vehicula magna. Morbi ac viverra risus, quis finibus est."
+      }
+    }
   },
   "register": {
     "title": "Register",

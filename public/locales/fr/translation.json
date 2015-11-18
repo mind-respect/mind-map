@@ -2,7 +2,29 @@
   "cancel":"Annuler",
   "landing": {
     "slogan": "façonner votre esprit",
-    "description": "Découpez, liez, schématisez, partagez et trouvez vos pensées."
+    "description": "Liez, trouvez, modélisez et partagez vos pensées.",
+    "actions": {
+      "cut":{
+        "title": "Découpez",
+        "description": ""
+      },
+      "link":{
+        "title": "Liez",
+        "description": ""
+      },
+      "model":{
+        "title": "Modélisez",
+        "description": ""
+      },
+      "share":{
+        "title": "Partagez",
+        "description": ""
+      },
+      "find":{
+        "title": "Trouvez",
+        "description": ""
+      }
+    }
   },
   "register": {
     "title": "S'enregistrer",

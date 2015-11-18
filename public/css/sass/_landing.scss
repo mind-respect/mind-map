@@ -29,8 +29,17 @@
     align-items: center;
     min-height:$height;
   }
+
 }
 
+#welcome-content{
+  img.example{
+    width:400px;
+  }
+  .action{
+    margin-bottom:100px;
+  }
+}
 //#app-presentation{
 //  height:300px;
 //  color:white;

@@ -1,6 +1,9 @@
 @charset "UTF-8";
 /* Copyright Vincent Blouin under the GPL License version 3 */
 /* Copyright Vincent Blouin under the GPL License version 3 */
+/* Copyright Vincent Blouin under the GPL License version 3 */
+.vertical-align { display: flex; align-items: center; }
+
 .navbar-default { border: none; background-image: none; background-color: rgba(0, 0, 0, 0.3); }
 .navbar-default .navbar-brand { color: white; }
 .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus { color: white; }
@@ -28,6 +31,9 @@
 #app-presentation .jumbotron { z-index: 1; display: flex; align-items: center; min-height: 454px; }
 #app-presentation .jumbotron * { z-index: 1; width: 100%; font-weight: bold; }
 #app-presentation .jumbotron p { box-sizing: border-box; padding-left: 20%; padding-right: 20%; }
+
+#welcome-content img.example { width: 400px; }
+#welcome-content .action { margin-bottom: 100px; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 #registration-page { overflow-y: scroll; max-height: 500px; }

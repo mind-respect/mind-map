@@ -1,0 +1,16 @@
+/*
+ * Copyright Vincent Blouin under the GPL License version 3
+ */
+
+.vertical-align {
+  display: flex;
+  align-items: center;
+}
+
+//.vertical-align > [class^="col-"],
+//.vertical-align > [class*=" col-"] {
+//  display: flex;
+//  align-items: center;     /* Align the flex-items vertically */
+//  justify-content: center; /* Optional, to align inner flex-items
+//                              horizontally within the column  */
+//}
