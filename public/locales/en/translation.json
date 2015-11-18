@@ -1,7 +1,8 @@
 {
   "cancel":"Cancel",
   "landing": {
-    "slogan": "your mind and the power of the graph"
+    "slogan": "shape your mind",
+    "description": "Cut, link, schematise, share and find your thoughts."
   },
   "register": {
     "title": "Register",
@@ -67,7 +68,7 @@
     "go_home": "Continue"
   },
   "top_menu": {
-    "share": "Share center bubble",
+    "share": "Share",
     "create": {
       "title": "create",
       "bubble": "bubble",

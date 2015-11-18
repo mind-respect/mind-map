@@ -1,8 +1,8 @@
 {
   "cancel":"Annuler",
   "landing": {
-    "slogan": "votre esprit et le pouvoir du graphe",
-    "description": "Découpez, liez, schématisez, partagez et trouvez vos notes."
+    "slogan": "façonner votre esprit",
+    "description": "Découpez, liez, schématisez, partagez et trouvez vos pensées."
   },
   "register": {
     "title": "S'enregistrer",
@@ -68,7 +68,7 @@
     "go_home": "Continuer"
   },
   "top_menu": {
-    "share": "Partager la bulle centrale",
+    "share": "Partager",
     "create": {
       "title": "créer",
       "bubble": "bulle",

@@ -21,6 +21,7 @@ define([
         var api = {};
         api.earlyInit = function () {
             handleTopMenuSelectButtons();
+            setUpShareLinkButton();
         };
         EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function (event, isViewOnly) {
             if (isViewOnly) {
@@ -141,6 +142,18 @@ define([
             });
         }
 
+        function setUpShareLinkButton(){
+            getShareLinkInput().val(
+                window.location.href
+            );
+            getShareLink().click(function(event){
+                event.preventDefault();
+                var shareLinkInput = getShareLinkInput();
+                shareLinkInput.toggleClass("hidden");
+                shareLinkInput[0].setSelectionRange(0, shareLinkInput.val().length)
+            });
+        }
+
         function getCreateBubbleButton() {
             return $("#create-concept");
         }
@@ -178,6 +191,9 @@ define([
         }
         function getShareLink(){
             return $("#share-link");
+        }
+        function getShareLinkInput(){
+            return $("#share-link-input");
         }
     }
 );
