@@ -150,7 +150,7 @@ define([
                 event.preventDefault();
                 var shareLinkInput = getShareLinkInput();
                 shareLinkInput.toggleClass("hidden");
-                shareLinkInput[0].setSelectionRange(0, shareLinkInput.val().length)
+                shareLinkInput[0].setSelectionRange(0, shareLinkInput.val().length);
             });
         }
 
