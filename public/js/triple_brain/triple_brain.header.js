@@ -44,7 +44,13 @@ define([
                 getSelectButton().addClass("hidden");
             }
         });
+        EventBus.subscribe('/event/ui/graph/drawn /event/ui/graph/vertex/privacy/updated', refreshShareLinkVisibility);
         return api;
+        function refreshShareLinkVisibility(){
+            getShareLink()[GraphDisplayer.getVertexSelector().centralVertex().isPublic() ? "removeClass" : "addClass"](
+                "invisible"
+            );
+        }
         function handleTopMenuSelectButtons() {
             $("#select-all-bubbles").click(function (event) {
                 event.preventDefault();
@@ -169,6 +175,9 @@ define([
 
         function getMyBubblesSearchInput() {
             return $("#vertex-search-input");
+        }
+        function getShareLink(){
+            return $("#share-link");
         }
     }
 );

@@ -67,6 +67,7 @@
     "go_home": "Continue"
   },
   "top_menu": {
+    "share": "Share center bubble",
     "create": {
       "title": "create",
       "bubble": "bubble",
@@ -114,7 +115,7 @@
   },
   "schema": {
     "when-empty": "model",
-    "instruction": "Build a model and identify it to another bubble to reuse it's components."
+    "instruction": "Identify a model to another bubble to use it's components."
   },
   "suggestion": {
     "when-empty": "component"

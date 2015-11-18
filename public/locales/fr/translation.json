@@ -68,6 +68,7 @@
     "go_home": "Continuer"
   },
   "top_menu": {
+    "share": "Partager la bulle centrale",
     "create": {
       "title": "créer",
       "bubble": "bulle",
@@ -115,7 +116,7 @@
   },
   "schema": {
     "when-empty": "modèle",
-    "instruction": "Construisez un modèle et identifiez le à une autre bulle pour réutiliser ses composants."
+    "instruction": "Identifier un modèle à une autre bulle pour utiliser ses composants."
   },
   "suggestion": {
     "when-empty": "composant"

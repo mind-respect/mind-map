@@ -189,6 +189,7 @@ define([
                     if (callback !== undefined) {
                         callback();
                     }
+                    publishVertexPrivacyUpdated(vertex);
                 }
             );
         };
@@ -201,6 +202,7 @@ define([
                     if (callback !== undefined) {
                         callback();
                     }
+                    publishVertexPrivacyUpdated(vertex);
                 }
             );
         };
@@ -267,6 +269,14 @@ define([
                 url: vertex.getUri() + '/public_access'
             }).success(callback);
         }
+
+        function publishVertexPrivacyUpdated(vertex){
+            EventBus.publish(
+                '/event/ui/graph/vertex/privacy/updated',
+                vertex
+            );
+        }
+
         function getVerticesUrl() {
             return UserService.currentUserUri() + "/graph/vertex";
         }
