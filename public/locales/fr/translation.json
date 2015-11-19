@@ -8,17 +8,17 @@
         "title": "Liez",
         "description": "Découpez vos idées en petits morceaux qui peuvent être réutilisés et associés de milles et une façon. Chaque bulle peut éventuellement être liée à une autre, peu importe où elle se situe dans votre esprit. Liez vos idées à celles des autres ou à l'encyclopédie Wikipédia et bénéficiez d'images, de descriptions et d'intelligence qui enrichiront vos idées et élimineront l'ambiguïté."
       },
+      "find":{
+        "title": "Trouvez",
+        "description": "Bénéficiez de l'auto-complétion pour trouvez vos idées de manière instantanné. Changez de perspective, chaque bulle peut devenir le centre à son tour. Prenez conscience des idées les plus importantes pour vous dans l'espace de l'historique de vos bulles centrales les plus visitées."
+      },
       "model":{
         "title": "Modélisez",
-        "description": ""
+        "description": "Identifiez les 'patterns' "
       },
       "share":{
         "title": "Partagez",
-        "description": ""
-      },
-      "find":{
-        "title": "Trouvez",
-        "description": ""
+        "description": "Vous pouvez choisir quelles parties "
       }
     }
   },
