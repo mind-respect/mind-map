@@ -3,6 +3,7 @@
  */
 
 #app-presentation {
+  border-bottom:none;
   $height:454px;
   margin-top:0;
   color:white;
@@ -29,7 +30,6 @@
     align-items: center;
     min-height:$height;
   }
-
 }
 
 #welcome-content{
@@ -37,7 +37,16 @@
     width:400px;
   }
   .action{
-    margin-bottom:100px;
+    margin-bottom:50px;
+    padding-bottom:50px;
+    border-bottom: 1px solid #eee;
+    font-size: 18px;
+    h2{
+      text-align:center;
+    }
+    img{
+      width:100%;
+    }
   }
 }
 //#app-presentation{

@@ -1,16 +1,12 @@
 {
   "cancel":"Annuler",
   "landing": {
-    "slogan": "façonner votre esprit",
+    "slogan": "Façonnez votre esprit",
     "description": "Liez, trouvez, modélisez et partagez vos pensées.",
     "actions": {
-      "cut":{
-        "title": "Découpez",
-        "description": ""
-      },
       "link":{
         "title": "Liez",
-        "description": ""
+        "description": "Découpez vos idées en petits morceaux qui peuvent être réutilisés et associés de milles et une façon. Chaque bulle peut éventuellement être liée à une autre, peu importe où elle se situe dans votre esprit. Liez vos idées à celles des autres ou à l'encyclopédie Wikipédia et bénéficiez d'images, de descriptions et d'intelligence qui enrichiront vos idées et élimineront l'ambiguïté."
       },
       "model":{
         "title": "Modélisez",
