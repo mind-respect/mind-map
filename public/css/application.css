@@ -36,6 +36,23 @@
 #welcome-content .action { margin-bottom: 50px; padding-bottom: 50px; border-bottom: 1px solid #eee; font-size: 18px; }
 #welcome-content .action h2 { text-align: center; }
 #welcome-content .action img { width: 100%; }
+#welcome-content .action ul { box-shadow: none; list-style-type: disc; }
+#welcome-content .action li { display: list-item; border: none; cursor: pointer; }
+#welcome-content .action li.active { background: none; color: inherit; text-shadow: none; font-weight: bold; }
+
+.carousel-inner .item { border: solid gray; }
+
+.carousel.carousel-fit.slide { overflow: visible; }
+
+.carousel-caption { color: inherit; text-shadow: none; font-weight: bold; padding-bottom: 15px; background-color: transparent; border-top: solid gray; position: relative; }
+.carousel-caption p { padding-top: 5px; padding-bottom: 5px; }
+
+.carousel-control.right, .carousel-control.left { background-image: none; color: black; }
+.carousel-control.right:hover, .carousel-control.left:hover { color: black; }
+
+.carousel-indicators { bottom: -10px; }
+.carousel-indicators li { background-color: gray; }
+.carousel-indicators li.active { background-color: #333; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 #registration-page { overflow-y: scroll; max-height: 500px; }

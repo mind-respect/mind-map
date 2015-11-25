@@ -188,7 +188,7 @@ define([
     api.loadLocaleContent = function (callback) {
         var locale = getLocaleUsedForSiteTranslation();
         $.i18n.init({
-            lng: 'fr',
+            lng: locale,
             useLocalStorage: false,
             debug: true,
             customLoad: function (lng, ns, options, loadComplete) {

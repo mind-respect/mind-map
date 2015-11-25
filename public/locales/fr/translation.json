@@ -2,23 +2,29 @@
   "cancel":"Annuler",
   "landing": {
     "slogan": "Façonnez votre esprit",
-    "description": "Liez, trouvez, modélisez et partagez vos pensées.",
+    "description": "Liez, trouvez et modélisez vos pensées.",
     "actions": {
       "link":{
         "title": "Liez",
-        "description": "Découpez vos idées en petits morceaux qui peuvent être réutilisés et associés de milles et une façon. Chaque bulle peut éventuellement être liée à une autre, peu importe où elle se situe dans votre esprit. Liez vos idées à celles des autres ou à l'encyclopédie Wikipédia et bénéficiez d'images, de descriptions et d'intelligence qui enrichiront vos idées et élimineront l'ambiguïté."
+        "desc2": "Chaque bulle peut éventuellement être liée à une autre, peu importe où elle se situe dans votre esprit.",
+        "desc3": "Liez vos idées à celles des autres ou à l'encyclopédie Wikipédia et bénéficiez d'images, de descriptions et d'intelligence qui enrichiront vos idées et élimineront l'ambiguïté.",
+        "cut": "Découpez vos idées en petits morceaux qui peuvent être réutilisés et associés de milles et une façon.",
+        "auto_wiki":"Autocompletion de Wikipédia",
+        "images":"Images and descriptions automatically added",
+        "article_wiki":"Wikipedia article linked to your idea",
+        "date_identifier":"Link to a calendar date and ...",
+        "use_calendar":"Get the right tool for your type of data"
       },
       "find":{
         "title": "Trouvez",
-        "description": "Bénéficiez de l'auto-complétion pour trouvez vos idées de manière instantanné. Changez de perspective, chaque bulle peut devenir le centre à son tour. Prenez conscience des idées les plus importantes pour vous dans l'espace de l'historique de vos bulles centrales les plus visitées."
+        "desc1": "Bénéficiez de l'auto-complétion pour trouvez vos idées de manière instantanné.",
+        "desc2": "Changez de perspective, chaque bulle peut devenir le centre à son tour.",
+        "desc3": "Prenez conscience des idées les plus importantes pour vous dans l'espace de l'historique de vos bulles centrales les plus visitées."
       },
       "model":{
         "title": "Modélisez",
-        "description": "Identifiez les 'patterns' "
-      },
-      "share":{
-        "title": "Partagez",
-        "description": "Vous pouvez choisir quelles parties "
+        "desc1": "Créer des modèles qui vous aideront à être plus cohérent et à compléter vos idées.",
+        "description": "Identifiez les redondances de votre esprit pour en créer des modèles qui vous aideront à être plus cohérent et à compléter vos idées."
       }
     }
   },

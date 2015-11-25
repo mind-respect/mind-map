@@ -47,6 +47,21 @@
     img{
       width:100%;
     }
+    ul{
+      box-shadow: none;
+      list-style-type: disc;
+    }
+    li {
+      display: list-item;
+      border: none;
+      cursor:pointer;
+      &.active{
+        background:none;
+        color: inherit;
+        text-shadow:none;
+        font-weight:bold;
+      }
+    }
   }
 }
 //#app-presentation{
@@ -68,3 +83,42 @@
 //    top:40%;
 //  }
 //}
+.carousel-inner{
+  .item{
+    border:solid gray;
+  }
+}
+.carousel.carousel-fit.slide{
+  overflow: visible;
+}
+.carousel-caption{
+  color:inherit;
+  text-shadow:none;
+  font-weight:bold;
+  padding-bottom:15px;
+  //background-color:rgba(255, 255,255,0.7);
+  background-color:transparent;
+  border-top:solid gray;
+  position:relative;
+  p{
+    padding-top:5px;
+    padding-bottom:5px;
+  }
+}
+.carousel-control.right, .carousel-control.left{
+  background-image:none;
+  color:black;
+  &:hover{
+    color:black;
+  }
+}
+.carousel-indicators{
+  li{
+    &.active{
+      background-color:#333;
+    }
+    background-color:gray;
+  }
+  bottom:-10px;
+}
+

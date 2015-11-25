@@ -25,6 +25,7 @@ requirejs.config({
         "jquery.i18next": "vendor/i18next.amd.withJQuery-1.6.3",
         "bootstrap": "vendor/bootstrap/3.3.4/bootstrap.min",
         "bootstrap-datepicker": "vendor/bootstrap/bootstrap-datepicker",
+        "bootstrap-modal-carousel" : "vendor/bootstrap/bootstrap-modal-carousel",
         "jquery.max_char": "triple_brain/jquery.max_char",
         "jquery.hotkeys": "jquery/jquery.hotkeys",
         "google-code-prettify":"bower_components/google-code-prettify/bin/prettify.min",
@@ -163,6 +164,7 @@ requirejs.config({
         "jquery.hotkeys":["jquery"],
         "bootstrap": ["jquery"],
         "bootstrap-datepicker": ["bootstrap"],
-        "bootstrap-wysiwyg":["jquery", "bootstrap", "jquery.hotkeys", "google-code-prettify"]
+        "bootstrap-wysiwyg":["jquery", "bootstrap", "jquery.hotkeys", "google-code-prettify"],
+        "bootstrap-modal-carousel" : ["jquery", "bootstrap"]
     }
 });

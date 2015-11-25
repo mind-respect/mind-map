@@ -2,27 +2,29 @@
   "cancel":"Cancel",
   "landing": {
     "slogan": "shape your mind",
-    "description": "Link, find, modelize and share your thoughts.",
+    "description": "Link, find and modelize your thoughts.",
     "actions": {
-      "cut":{
-        "title": "Cut",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim, ligula vitae posuere iaculis, lorem purus vehicula nibh, sit amet consequat quam libero et nisi. Morbi vitae urna eu sapien congue commodo porta vehicula magna. Morbi ac viverra risus, quis finibus est."
-      },
       "link":{
         "title": "Link",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim, ligula vitae posuere iaculis, lorem purus vehicula nibh, sit amet consequat quam libero et nisi. Morbi vitae urna eu sapien congue commodo porta vehicula magna."
-      },
-      "model":{
-        "title": "Modelize",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim, ligula vitae posuere iaculis, lorem purus vehicula nibh, sit amet consequat quam libero et nisi. Morbi vitae urna eu sapien congue commodo porta vehicula magna. Morbi ac viverra risus, quis finibus est."
-      },
-      "share":{
-        "title": "Share",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim, ligula vitae posuere iaculis, lorem purus vehicula nibh, sit amet consequat quam libero et nisi. Morbi vitae urna eu sapien congue commodo porta vehicula magna. Morbi ac viverra risus, quis finibus est."
+        "desc2": "Every bubble can eventually be linked to another where ever it's located in your mind.",
+        "desc3": "Liez vos idées à celles des autres ou à l'encyclopédie Wikipédia et bénéficiez d'images, de descriptions et d'intelligence qui enrichiront vos idées et élimineront l'ambiguïté.",
+        "cut": "Cut your ideas into reusable chunks and link them in a thousand ways",
+        "auto_wiki":"Autocompletion from Wikipedia",
+        "images":"Images and descriptions automatically added",
+        "article_wiki":"Wikipedia article linked to your idea",
+        "date_identifier":"Link to a calendar date and ...",
+        "use_calendar":"Get the right tool for your type of data"
       },
       "find":{
         "title": "Find",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim, ligula vitae posuere iaculis, lorem purus vehicula nibh, sit amet consequat quam libero et nisi. Morbi vitae urna eu sapien congue commodo porta vehicula magna. Morbi ac viverra risus, quis finibus est."
+        "desc1": "Bénéficiez de l'auto-complétion pour trouvez vos idées de manière instantanné.",
+        "desc2": "Changez de perspective, chaque bulle peut devenir le centre à son tour.",
+        "desc3": "Prenez conscience des idées les plus importantes pour vous dans l'espace de l'historique de vos bulles centrales les plus visitées."
+      },
+      "model":{
+        "title": "Modelize",
+        "desc1": "Créer des modèles qui vous aideront à être plus cohérent et à compléter vos idées.",
+        "description": "Identifiez les redondances de votre esprit pour en créer des modèles qui vous aideront à être plus cohérent et à compléter vos idées."
       }
     }
   },

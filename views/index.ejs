@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/css/twitter_bootstrap/3.3.4/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/twitter_bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
     <link rel="stylesheet" href="/css/twitter_bootstrap/3.3.4/css/bootstrap-datepicker3.min.css"/>
+    <link rel="stylesheet" href="/css/twitter_bootstrap/bootstrap-modal-carousel.min.css"/>
     <link rel="stylesheet" href="/css/jquery/jquery-ui-11-4/jquery-ui.min.css"/>
     <link rel="stylesheet" href="/css/jquery/colorbox/colorbox.css"/>
     <link rel="stylesheet" href="/css/application.css"/>
@@ -182,16 +183,84 @@
             <div class="row action">
                 <div class="col-md-6">
                     <h2 data-i18n="landing.actions.link.title"></h2>
-                    <p data-i18n="landing.actions.link.description"></p>
+                    <ul class="descriptions">
+                        <li class="list-group-item active" data-i18n="landing.actions.link.cut" data-target="#myCarousel" data-slide-to="0"></li>
+                        <li class="list-group-item" data-i18n="landing.actions.link.auto_wiki" data-target="#myCarousel" data-slide-to="1"></li>
+                        <li class="list-group-item" data-i18n="landing.actions.link.images" data-target="#myCarousel" data-slide-to="2"></li>
+                        <li class="list-group-item" data-i18n="landing.actions.link.article_wiki" data-target="#myCarousel" data-slide-to="3"></li>
+                        <li class="list-group-item" data-i18n="landing.actions.link.date_identifier" data-target="#myCarousel" data-slide-to="4"></li>
+                        <li class="list-group-item" data-i18n="landing.actions.link.use_calendar" data-target="#myCarousel" data-slide-to="5"></li>
+                    </ul>
                 </div>
                 <div class="col-md-6 text-center">
-                    <img class='example' src="https://git.reviewboard.kde.org/media/uploaded/files/2015/07/18/a70d8ab6-1bbf-4dcc-b11f-524c2f56b14a__picture_default_cover.jpg">
+                    <div id="myCarousel" class="carousel carousel-fit slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <!--<ol class="carousel-indicators">-->
+                            <!--<li data-target="#myCarousel" data-slide-to="0" class="active"></li>-->
+                            <!--<li data-target="#myCarousel" data-slide-to="1"></li>-->
+                            <!--<li data-target="#myCarousel" data-slide-to="2"></li>-->
+                            <!--<li data-target="#myCarousel" data-slide-to="3"></li>-->
+                            <!--<li data-target="#myCarousel" data-slide-to="4"></li>-->
+                        <!--</ol>-->
+
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img src="landing-images/link/en/idea-chunks.png" data-i18n="[alt]landing.actions.link.cut">
+                                <div class="carousel-caption">
+                                    <p data-i18n="landing.actions.link.cut"></p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="landing-images/link/en/autocomplete-wikipedia.png" data-i18n="[alt]landing.actions.link.auto_wiki">
+                                <div class="carousel-caption">
+                                    <p data-i18n="landing.actions.link.auto_wiki"></p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="landing-images/link/en/montreal-identifier.png" data-i18n="[alt]landing.actions.link.images">
+                                <div class="carousel-caption">
+                                    <p data-i18n="landing.actions.link.images"></p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="landing-images/link/en/wikipedia-article.png" data-i18n="[alt]landing.actions.link.article_wiki">
+                                <div class="carousel-caption">
+                                    <p data-i18n="landing.actions.link.article_wiki"></p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="landing-images/link/en/date-identifier.png" data-i18n="[alt]landing.actions.link.date_identifier">
+                                <div class="carousel-caption">
+                                    <p data-i18n="landing.actions.link.date_identifier"></p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="landing-images/link/en/calendar-tool.png" data-i18n="[alt]landing.actions.link.date_identifier">
+                                <div class="carousel-caption">
+                                    <p data-i18n="landing.actions.link.use_calendar"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="row action">
                 <div class="col-md-6 col-md-push-6">
                     <h2 data-i18n="landing.actions.find.title"></h2>
-                    <p data-i18n="landing.actions.find.description"></p>
+                    <ul class="list-group">
+                        <li class="list-group-item" data-i18n="landing.actions.find.desc1"></li>
+                        <li class="list-group-item" data-i18n="landing.actions.find.desc2"></li>
+                        <li class="list-group-item" data-i18n="landing.actions.find.desc3"></li>
+                    </ul>
                 </div>
                 <div class="col-md-6 text-center col-md-pull-6">
                     <img class='example' src="https://git.reviewboard.kde.org/media/uploaded/files/2015/07/18/a70d8ab6-1bbf-4dcc-b11f-524c2f56b14a__picture_default_cover.jpg">
@@ -200,18 +269,11 @@
             <div class="row action">
                 <div class="col-md-6">
                     <h2 data-i18n="landing.actions.model.title"></h2>
-                    <p data-i18n="landing.actions.model.description"></p>
+                    <ul class="list-group">
+                        <li class="list-group-item" data-i18n="landing.actions.model.desc1"></li>
+                    </ul>
                 </div>
                 <div class="col-md-6">
-                    <img class='example' src="https://git.reviewboard.kde.org/media/uploaded/files/2015/07/18/a70d8ab6-1bbf-4dcc-b11f-524c2f56b14a__picture_default_cover.jpg">
-                </div>
-            </div>
-            <div class="row action">
-                <div class="col-md-6 col-md-push-6">
-                    <h2 data-i18n="landing.actions.share.title"></h2>
-                    <p data-i18n="landing.actions.share.description"></p>
-                </div>
-                <div class="col-md-6 text-center col-md-pull-6">
                     <img class='example' src="https://git.reviewboard.kde.org/media/uploaded/files/2015/07/18/a70d8ab6-1bbf-4dcc-b11f-524c2f56b14a__picture_default_cover.jpg">
                 </div>
             </div>
