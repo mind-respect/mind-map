@@ -3,17 +3,20 @@
   "landing": {
     "slogan": "shape your mind",
     "description": "Link, find and modelize your thoughts.",
+    "video_instruction":"Set to HD quality and fullscreen",
     "actions": {
       "link":{
         "title": "Link",
         "desc2": "Every bubble can eventually be linked to another where ever it's located in your mind.",
         "desc3": "Liez vos idées à celles des autres ou à l'encyclopédie Wikipédia et bénéficiez d'images, de descriptions et d'intelligence qui enrichiront vos idées et élimineront l'ambiguïté.",
+        "video": "Link (demonstration video)",
         "cut": "Cut your ideas into reusable chunks and link them in a thousand ways",
         "auto_wiki":"Autocompletion from Wikipedia",
         "images":"Images and descriptions automatically added",
         "article_wiki":"Wikipedia article linked to your idea",
         "date_identifier":"Link to a calendar date and ...",
-        "use_calendar":"Get the right tool for your type of data"
+        "use_calendar":"Get the right tool for your type of data",
+        "far_link":"Eventually any bubble can be linked to another"
       },
       "find":{
         "title": "Find",

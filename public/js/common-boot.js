@@ -26,6 +26,7 @@ requirejs.config({
         "bootstrap": "vendor/bootstrap/3.3.4/bootstrap.min",
         "bootstrap-datepicker": "vendor/bootstrap/bootstrap-datepicker",
         "bootstrap-modal-carousel" : "vendor/bootstrap/bootstrap-modal-carousel",
+        "ekko-lightbox" : "vendor/bootstrap/ekko-lightbox",
         "jquery.max_char": "triple_brain/jquery.max_char",
         "jquery.hotkeys": "jquery/jquery.hotkeys",
         "google-code-prettify":"bower_components/google-code-prettify/bin/prettify.min",

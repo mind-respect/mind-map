@@ -7,7 +7,8 @@ define([
     "triple_brain.language_manager",
     "triple_brain.mind_map_info",
     "triple_brain.event_bus",
-    "bootstrap-modal-carousel"
+    "bootstrap-modal-carousel",
+    "ekko-lightbox"
 ], function ($, LanguageManager, MindMapInfo) {
     "use strict";
     var api = {};
@@ -29,6 +30,12 @@ define([
     }
 
     function setUpFeatures(){
+        $(".carousel-inner .item img[data-remote]").click(function(){
+            modalResource($(this));
+        });
+        $(".play-button").click(function(){
+            $(this).siblings("img").click();
+        });
         $(document).on("slide.bs.carousel", function(event){
             var $item = $(event.relatedTarget);
             var controls = $item.closest(".action").find("[data-slide-to]");
@@ -39,5 +46,24 @@ define([
                 "active"
             );
         });
+        $(".action .descriptions li").click(function(){
+            var $this = $(this);
+            var carouselSelector = $this.data("target");
+            var image = $(carouselSelector).find(".item:eq(" + $this.data("slideTo") +")").find("img");
+            modalResource(image);
+        });
+    }
+    function getBigImageModal(){
+        return $("#bigImageModal");
+    }
+
+    function modalResource(image){
+        image.ekkoLightbox({});
+        //var bigImageModal = getBigImageModal();
+        //bigImageModal.find("img").prop(
+        //    "src",
+        //    image.attr("data-big-src")
+        //);
+        //bigImageModal.modal();
     }
 });

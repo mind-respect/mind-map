@@ -3,67 +3,115 @@
  */
 
 #app-presentation {
-  border-bottom:none;
-  $height:454px;
-  margin-top:0;
-  color:white;
-  .background{
-    position:absolute;
+  border-bottom: none;
+  $height: 454px;
+  margin-top: 0;
+  color: white;
+  .background {
+    position: absolute;
     background-image: url("images/sky-cut.jpg");
-    left:0;
-    width:100%;
-    min-height:$height;
+    left: 0;
+    width: 100%;
+    min-height: $height;
   }
-  .jumbotron{
-    z-index:1;
-    *{
-      z-index:1;
-      width:100%;
-      font-weight:bold;
+  .jumbotron {
+    z-index: 1;
+    * {
+      z-index: 1;
+      width: 100%;
+      font-weight: bold;
     }
-    p{
+    p {
       box-sizing: border-box;
-      padding-left:20%;
-      padding-right:20%;
+      padding-left: 20%;
+      padding-right: 20%;
+    }
+    .fa{
+      //border-radius: 50%;
+      //border: 2px solid rgb(205, 209, 215);
+      //padding: 15px;
+      //width:auto;
+      font-size:125%;
+      margin-bottom:10px;
     }
     display: flex;
     align-items: center;
-    min-height:$height;
+    min-height: $height;
   }
 }
-
-#welcome-content{
-  img.example{
-    width:400px;
+#welcome-content {
+  img.example {
+    width: 400px;
   }
-  .action{
-    margin-bottom:50px;
-    padding-bottom:50px;
+  .action {
+    margin-bottom: 50px;
+    padding-bottom: 50px;
     border-bottom: 1px solid #eee;
     font-size: 18px;
-    h2{
-      text-align:center;
+    h2 {
+      text-align: center;
     }
-    img{
-      width:100%;
+    img {
+      width: 100%;
+      //border: solid gray;
+      &[data-remote]{
+        cursor: zoom-in;
+        &.video{
+          cursor:pointer;
+        }
+      }
     }
-    ul{
+    ul {
       box-shadow: none;
       list-style-type: disc;
     }
     li {
-      display: list-item;
+      $iconMargin: 0 19px 0 -34px;
+      display: block;
       border: none;
-      cursor:pointer;
-      &.active{
-        background:none;
+      cursor: pointer;
+      &:hover{
+        text-decoration:underline;
+      }
+      &.active {
+        background: none;
         color: inherit;
-        text-shadow:none;
-        font-weight:bold;
+        text-shadow: none;
+        font-weight: bold;
+      }
+      &.image{
+        &:before{
+          font-family: 'FontAwesome';
+          content: '\f03e';
+          margin:$iconMargin;
+          font-weight:normal !important;
+        }
+      }
+      &.video{
+        &:before{
+          font-family: 'FontAwesome';
+          content: '\f03d';
+          margin:$iconMargin;
+          font-weight:normal !important;
+        }
+      }
+    }
+    .image-wrapper {
+      height: 315px;
+      .play-button{
+        top: 50%;
+        left: 50%;
+        position: absolute;
+        margin-left: -25px;
+        margin-top: -30px;
+        font-size: 350%;
+        color: black;
+        cursor:pointer;
       }
     }
   }
 }
+
 //#app-presentation{
 //  height:300px;
 //  color:white;
@@ -83,42 +131,59 @@
 //    top:40%;
 //  }
 //}
-.carousel-inner{
-  .item{
-    border:solid gray;
+.carousel-inner {
+  .item {
+    background-color: transparent;
   }
-}
-.carousel.carousel-fit.slide{
-  overflow: visible;
-}
-.carousel-caption{
-  color:inherit;
-  text-shadow:none;
-  font-weight:bold;
-  padding-bottom:15px;
-  //background-color:rgba(255, 255,255,0.7);
-  background-color:transparent;
-  border-top:solid gray;
-  position:relative;
-  p{
-    padding-top:5px;
-    padding-bottom:5px;
-  }
-}
-.carousel-control.right, .carousel-control.left{
-  background-image:none;
-  color:black;
-  &:hover{
-    color:black;
-  }
-}
-.carousel-indicators{
-  li{
-    &.active{
-      background-color:#333;
-    }
-    background-color:gray;
-  }
-  bottom:-10px;
 }
 
+.carousel.carousel-fit.slide {
+  overflow: visible;
+}
+
+.carousel-caption {
+  color: inherit;
+  text-shadow: none;
+  font-weight: bold;
+  padding-bottom: 15px;
+  //border: solid gray;
+  //background-color:rgba(255, 255,255,0.7);
+  //background-color:#cad7ff;
+  background-color: transparent;
+  border-top: none;
+  //background-color:rgba(135, 206, 235, 0.5);
+  position: relative;
+  p {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+}
+
+.carousel-control.right, .carousel-control.left {
+  background-image: none;
+  color: black;
+  &:hover {
+    color: black;
+  }
+}
+
+.carousel-indicators {
+  li {
+    &.active {
+      background-color: #333;
+    }
+    background-color: gray;
+  }
+  bottom: -10px;
+}
+
+@media (min-width: 1202px) {
+  .modal-lg {
+    width: 1200px;
+  }
+}
+#bigImageModal{
+  img{
+    width:100%;
+  }
+}

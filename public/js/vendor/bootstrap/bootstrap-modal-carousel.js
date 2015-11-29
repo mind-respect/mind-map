@@ -136,6 +136,9 @@
         }
     }).on("hidden.bs.modal", ".modal", function() {
         var data = $(this).data("bs.modal");
+        if(data === undefined){
+            return;
+        }
         if (data.options.local) {
             data.replace();
         }

@@ -3,17 +3,20 @@
   "landing": {
     "slogan": "Façonnez votre esprit",
     "description": "Liez, trouvez et modélisez vos pensées.",
+    "video_instruction":"Mettre en qualité HD et en plein écran",
     "actions": {
       "link":{
         "title": "Liez",
         "desc2": "Chaque bulle peut éventuellement être liée à une autre, peu importe où elle se situe dans votre esprit.",
         "desc3": "Liez vos idées à celles des autres ou à l'encyclopédie Wikipédia et bénéficiez d'images, de descriptions et d'intelligence qui enrichiront vos idées et élimineront l'ambiguïté.",
+        "video": "Liez (vidéo de démonstration)",
         "cut": "Découpez vos idées en petits morceaux qui peuvent être réutilisés et associés de milles et une façon.",
         "auto_wiki":"Autocompletion de Wikipédia",
         "images":"Images and descriptions automatically added",
         "article_wiki":"Wikipedia article linked to your idea",
         "date_identifier":"Link to a calendar date and ...",
-        "use_calendar":"Get the right tool for your type of data"
+        "use_calendar":"Get the right tool for your type of data",
+        "far_link":"Éventuellement, chaque bulle peut être liée à une autre"
       },
       "find":{
         "title": "Trouvez",

@@ -31,20 +31,28 @@
 #app-presentation .jumbotron { z-index: 1; display: flex; align-items: center; min-height: 454px; }
 #app-presentation .jumbotron * { z-index: 1; width: 100%; font-weight: bold; }
 #app-presentation .jumbotron p { box-sizing: border-box; padding-left: 20%; padding-right: 20%; }
+#app-presentation .jumbotron .fa { font-size: 125%; margin-bottom: 10px; }
 
 #welcome-content img.example { width: 400px; }
 #welcome-content .action { margin-bottom: 50px; padding-bottom: 50px; border-bottom: 1px solid #eee; font-size: 18px; }
 #welcome-content .action h2 { text-align: center; }
 #welcome-content .action img { width: 100%; }
+#welcome-content .action img[data-remote] { cursor: zoom-in; }
+#welcome-content .action img[data-remote].video { cursor: pointer; }
 #welcome-content .action ul { box-shadow: none; list-style-type: disc; }
-#welcome-content .action li { display: list-item; border: none; cursor: pointer; }
+#welcome-content .action li { display: block; border: none; cursor: pointer; }
+#welcome-content .action li:hover { text-decoration: underline; }
 #welcome-content .action li.active { background: none; color: inherit; text-shadow: none; font-weight: bold; }
+#welcome-content .action li.image:before { font-family: 'FontAwesome'; content: '\f03e'; margin: 0 19px 0 -34px; font-weight: normal !important; }
+#welcome-content .action li.video:before { font-family: 'FontAwesome'; content: '\f03d'; margin: 0 19px 0 -34px; font-weight: normal !important; }
+#welcome-content .action .image-wrapper { height: 315px; }
+#welcome-content .action .image-wrapper .play-button { top: 50%; left: 50%; position: absolute; margin-left: -25px; margin-top: -30px; font-size: 350%; color: black; cursor: pointer; }
 
-.carousel-inner .item { border: solid gray; }
+.carousel-inner .item { background-color: transparent; }
 
 .carousel.carousel-fit.slide { overflow: visible; }
 
-.carousel-caption { color: inherit; text-shadow: none; font-weight: bold; padding-bottom: 15px; background-color: transparent; border-top: solid gray; position: relative; }
+.carousel-caption { color: inherit; text-shadow: none; font-weight: bold; padding-bottom: 15px; background-color: transparent; border-top: none; position: relative; }
 .carousel-caption p { padding-top: 5px; padding-bottom: 5px; }
 
 .carousel-control.right, .carousel-control.left { background-image: none; color: black; }
@@ -53,6 +61,9 @@
 .carousel-indicators { bottom: -10px; }
 .carousel-indicators li { background-color: gray; }
 .carousel-indicators li.active { background-color: #333; }
+
+@media (min-width: 1202px) { .modal-lg { width: 1200px; } }
+#bigImageModal img { width: 100%; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 #registration-page { overflow-y: scroll; max-height: 500px; }
