@@ -31,6 +31,9 @@
 #app-presentation .jumbotron { z-index: 1; display: flex; align-items: center; min-height: 454px; }
 #app-presentation .jumbotron * { z-index: 1; width: 100%; font-weight: bold; }
 #app-presentation .jumbotron p { box-sizing: border-box; padding-left: 20%; padding-right: 20%; }
+#app-presentation .jumbotron button { width: auto; text-transform: capitalize; }
+#app-presentation .jumbotron button:first-child { margin-right: 10px; }
+#app-presentation .jumbotron button:last-child { margin-left: 10px; }
 #app-presentation .jumbotron .fa { font-size: 125%; margin-bottom: 10px; }
 
 #welcome-content img.example { width: 400px; }

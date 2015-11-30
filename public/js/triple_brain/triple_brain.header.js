@@ -107,10 +107,14 @@ define([
 
 
         function handleLoginRegisterButtons() {
-            getLoginButton().click(
+            getLoginButton().add(
+                getLoginButtonInPage()
+            ).click(
                 LoginHandler.showModal
             );
-            getRegisterButton().click(
+            getRegisterButton().add(
+                getRegisterButtonInPage()
+            ).click(
                 RegisterHandler.showModal
             );
         }
@@ -168,6 +172,14 @@ define([
 
         function getLoginButton() {
             return $("#login-button");
+        }
+
+        function getLoginButtonInPage(){
+            return $("#login-button-in-page");
+        }
+
+        function getRegisterButtonInPage(){
+            return $("#register-button-in-page");
         }
 
         function getRegisterButton() {

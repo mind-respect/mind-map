@@ -26,6 +26,16 @@
       padding-left: 20%;
       padding-right: 20%;
     }
+    button{
+      width:auto;
+      text-transform: capitalize;
+      &:first-child{
+        margin-right:10px;
+      }
+      &:last-child{
+        margin-left:10px;
+      }
+    }
     .fa{
       //border-radius: 50%;
       //border: 2px solid rgb(205, 209, 215);
