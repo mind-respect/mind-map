@@ -61,10 +61,10 @@
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="#" id="login-button" data-i18n="top_menu.login"></a>
+                    <a href="#" id="register-button" data-i18n="top_menu.register"></a>
                 </li>
                 <li>
-                    <a href="#" id="register-button" data-i18n="top_menu.register"></a>
+                    <a href="#" id="login-button" data-i18n="top_menu.login"></a>
                 </li>
                 <li class="dropdown">
                     <a id="select-button" data-toggle="dropdown" data-i18n='top_menu.selection.title'></a>
@@ -324,11 +324,11 @@
                                     <p data-i18n="landing.actions.link.far_link"></p>
                                 </div>
                                 <div class="image-wrapper">
-                                    <img src="landing-images/link/en/calendar-tool.png"
+                                    <img src="landing-images/link/en/link-eventually.png"
                                          data-i18n="[alt]landing.actions.link.far_link;[data-title]landing.actions.link.far_link"
                                          data-gallery="link"
                                          data-parent="#linkCarousel" data-toggle="lightbox"
-                                         data-remote="landing-images/link/en/calendar-tool-big.png"
+                                         data-remote="landing-images/link/en/link-eventually-big.png"
                                             >
                                 </div>
                             </div>
@@ -347,27 +347,156 @@
             <div class="row action">
                 <div class="col-md-6 col-md-push-6">
                     <h2 data-i18n="landing.actions.find.title"></h2>
-                    <ul class="list-group">
-                        <li class="list-group-item" data-i18n="landing.actions.find.desc1"></li>
-                        <li class="list-group-item" data-i18n="landing.actions.find.desc2"></li>
-                        <li class="list-group-item" data-i18n="landing.actions.find.desc3"></li>
+                    <ul class="descriptions">
+                        <li class="list-group-item active video" data-i18n="landing.actions.find.video"
+                            data-target="#findCarousel" data-slide-to="0"></li>
+                        <li class="list-group-item image" data-i18n="landing.actions.find.search"
+                            data-target="#findCarousel" data-slide-to="1"></li>
+                        <li class="list-group-item image" data-i18n="landing.actions.find.center"
+                            data-target="#findCarousel" data-slide-to="2"></li>
+                        <li class="list-group-item image" data-i18n="landing.actions.find.history"
+                            data-target="#findCarousel" data-slide-to="3"></li>
                     </ul>
                 </div>
                 <div class="col-md-6 text-center col-md-pull-6">
-                    <img class='example'
-                         src="https://git.reviewboard.kde.org/media/uploaded/files/2015/07/18/a70d8ab6-1bbf-4dcc-b11f-524c2f56b14a__picture_default_cover.jpg">
+                    <div id="findCarousel" class="carousel carousel-fit slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <div class="carousel-caption">
+                                    <p data-i18n="landing.actions.find.video"></p>
+                                </div>
+                                <div class="image-wrapper">
+                                    <img class="video" src="landing-images/find/en/search.png"
+                                         data-remote="https://www.youtube.com/watch?v=3wz8Af4A7xE"
+                                         data-gallery="find"
+                                         data-parent="#findCarousel" data-toggle="lightbox"
+                                         data-i18n="[alt]landing.actions.find.video;[data-title]landing.actions.find.video;[data-footer]landing.video_instruction">
+                                    <i class="fa fa-play-circle-o play-button"></i>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="carousel-caption">
+                                    <p data-i18n="landing.actions.find.search"></p>
+                                </div>
+                                <div class="image-wrapper">
+                                    <img src="landing-images/find/en/search.png"
+                                         data-remote="landing-images/find/en/search-big.png"
+                                         data-gallery="find"
+                                         data-parent="#findCarousel" data-toggle="lightbox"
+                                         data-i18n="[alt]landing.actions.find.search;[data-title]landing.actions.find.search">
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="carousel-caption">
+                                    <p data-i18n="landing.actions.find.center"></p>
+                                </div>
+                                <div class="image-wrapper">
+                                    <img src="landing-images/find/en/center.png"
+                                         data-remote="landing-images/find/en/center-big.png"
+                                         data-gallery="find"
+                                         data-parent="#findCarousel" data-toggle="lightbox"
+                                         data-i18n="[alt]landing.actions.find.center;[data-title]landing.actions.find.center">
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="carousel-caption">
+                                    <p data-i18n="landing.actions.find.history"></p>
+                                </div>
+                                <div class="image-wrapper">
+                                    <img src="landing-images/find/en/history.png"
+                                         data-remote="landing-images/find/en/history-big.png"
+                                         data-gallery="find"
+                                         data-parent="#findCarousel" data-toggle="lightbox"
+                                         data-i18n="[alt]landing.actions.find.history;[data-title]landing.actions.find.history">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#findCarousel" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                        <a class="right carousel-control" href="#findCarousel" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="row action">
                 <div class="col-md-6">
                     <h2 data-i18n="landing.actions.model.title"></h2>
-                    <ul class="list-group">
-                        <li class="list-group-item" data-i18n="landing.actions.model.desc1"></li>
+                    <ul class="descriptions">
+                        <li class="list-group-item active video" data-i18n="landing.actions.model.video"
+                            data-target="#modelCarousel" data-slide-to="0"></li>
+                        <li class="list-group-item image" data-i18n="landing.actions.model.model"
+                            data-target="#modelCarousel" data-slide-to="1"></li>
+                        <li class="list-group-item image" data-i18n="landing.actions.model.suggestion"
+                            data-target="#modelCarousel" data-slide-to="2"></li>
+                        <li class="list-group-item image" data-i18n="landing.actions.model.group"
+                            data-target="#modelCarousel" data-slide-to="3"></li>
                     </ul>
                 </div>
                 <div class="col-md-6">
-                    <img class='example'
-                         src="https://git.reviewboard.kde.org/media/uploaded/files/2015/07/18/a70d8ab6-1bbf-4dcc-b11f-524c2f56b14a__picture_default_cover.jpg">
+                    <div id="modelCarousel" class="carousel carousel-fit slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <div class="carousel-caption">
+                                    <p data-i18n="landing.actions.model.video"></p>
+                                </div>
+                                <div class="image-wrapper">
+                                    <img class="video" src="landing-images/model/en/model.png"
+                                         data-remote="https://www.youtube.com/watch?v=3wz8Af4A7xE"
+                                         data-gallery="model"
+                                         data-parent="#modelCarousel" data-toggle="lightbox"
+                                         data-i18n="[alt]landing.actions.model.video;[data-title]landing.actions.model.video;[data-footer]landing.video_instruction">
+                                    <i class="fa fa-play-circle-o play-button"></i>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="carousel-caption">
+                                    <p data-i18n="landing.actions.model.model"></p>
+                                </div>
+                                <div class="image-wrapper">
+                                    <img src="landing-images/model/en/model.png"
+                                         data-remote="landing-images/model/en/model-big.png"
+                                         data-gallery="model"
+                                         data-parent="#modelCarousel" data-toggle="lightbox"
+                                         data-i18n="[alt]landing.actions.model.model;[data-title]landing.actions.model.model">
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="carousel-caption">
+                                    <p data-i18n="landing.actions.model.suggestion"></p>
+                                </div>
+                                <div class="image-wrapper">
+                                    <img src="landing-images/model/en/model.png"
+                                         data-remote="landing-images/model/en/model-big.png"
+                                         data-gallery="model"
+                                         data-parent="#modelCarousel" data-toggle="lightbox"
+                                         data-i18n="[alt]landing.actions.model.suggestion;[data-title]landing.actions.model.suggestion">
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="carousel-caption">
+                                    <p data-i18n="landing.actions.model.group"></p>
+                                </div>
+                                <div class="image-wrapper">
+                                    <img src="landing-images/model/en/model.png"
+                                         data-remote="landing-images/model/en/model-big.png"
+                                         data-gallery="model"
+                                         data-parent="#modelCarousel" data-toggle="lightbox"
+                                         data-i18n="[alt]landing.actions.model.group;[data-title]landing.actions.model.group">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#modelCarousel" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                        <a class="right carousel-control" href="#modelCarousel" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -12,22 +12,26 @@
         "video": "Liez (vidéo de démonstration)",
         "cut": "Découpez vos idées en petits morceaux qui peuvent être réutilisés et associés de milles et une façon.",
         "auto_wiki":"Autocompletion de Wikipédia",
-        "images":"Images and descriptions automatically added",
-        "article_wiki":"Wikipedia article linked to your idea",
-        "date_identifier":"Link to a calendar date and ...",
-        "use_calendar":"Get the right tool for your type of data",
-        "far_link":"Éventuellement, chaque bulle peut être liée à une autre"
+        "images":"Images et descriptions ajoutées automatiquement",
+        "article_wiki":"Article de Wikipédia lié à une idée",
+        "date_identifier":"Liez à une la date d'un candrier et ...",
+        "use_calendar":"Obtenez le bon outil pour votre type de donnée",
+        "far_link":"Chaque bulle peut être liée à une autre"
       },
       "find":{
         "title": "Trouvez",
-        "desc1": "Bénéficiez de l'auto-complétion pour trouvez vos idées de manière instantanné.",
-        "desc2": "Changez de perspective, chaque bulle peut devenir le centre à son tour.",
-        "desc3": "Prenez conscience des idées les plus importantes pour vous dans l'espace de l'historique de vos bulles centrales les plus visitées."
+        "video": "Trouvez (vidéo de démonstration)",
+        "search": "Trouvez vos idées de manière instantanée",
+        "center": "Chaque bulle peut devenir le centre",
+        "meaning": "Listez les bulles qui ont un sens commun",
+        "history": "Historique de vos bulles les plus visitées."
       },
       "model":{
         "title": "Modélisez",
-        "desc1": "Créer des modèles qui vous aideront à être plus cohérent et à compléter vos idées.",
-        "description": "Identifiez les redondances de votre esprit pour en créer des modèles qui vous aideront à être plus cohérent et à compléter vos idées."
+        "video": "Modélisez (vidéo de démonstration)",
+        "model": "Créez des modèles réutilisables",
+        "suggestion": "Ayez des suggestions de bulles enfants",
+        "group": "Groupez les bulles avec le même type de relation"
       }
     }
   },

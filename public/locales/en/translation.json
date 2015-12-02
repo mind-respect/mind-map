@@ -16,18 +16,22 @@
         "article_wiki":"Wikipedia article linked to your idea",
         "date_identifier":"Link to a calendar date and ...",
         "use_calendar":"Get the right tool for your type of data",
-        "far_link":"Eventually any bubble can be linked to another"
+        "far_link":"Any bubble can be linked to another"
       },
       "find":{
         "title": "Find",
-        "desc1": "Bénéficiez de l'auto-complétion pour trouvez vos idées de manière instantanné.",
-        "desc2": "Changez de perspective, chaque bulle peut devenir le centre à son tour.",
-        "desc3": "Prenez conscience des idées les plus importantes pour vous dans l'espace de l'historique de vos bulles centrales les plus visitées."
+        "video": "Find (demonstration video)",
+        "search": "Find your ideas instantly",
+        "center": "Any bubble can become the center",
+        "meaning": "List bubbles that share a common meaning",
+        "history": "History of your most visited bubbles"
       },
       "model":{
         "title": "Modelize",
-        "desc1": "Créer des modèles qui vous aideront à être plus cohérent et à compléter vos idées.",
-        "description": "Identifiez les redondances de votre esprit pour en créer des modèles qui vous aideront à être plus cohérent et à compléter vos idées."
+        "video": "Modelize (demonstration video)",
+        "model": "Create reusable models",
+        "suggestion": "Have suggestions of child bubbles",
+        "group": "Group bubbles with the same type of relation"
       }
     }
   },
