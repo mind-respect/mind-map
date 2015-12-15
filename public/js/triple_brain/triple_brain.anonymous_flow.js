@@ -7,7 +7,7 @@ define([
     "triple_brain.language_manager",
     "triple_brain.mind_map_info",
     "triple_brain.event_bus",
-    "bootstrap-modal-carousel",
+    //"bootstrap-modal-carousel",
     "ekko-lightbox"
 ], function ($, LanguageManager, MindMapInfo) {
     "use strict";

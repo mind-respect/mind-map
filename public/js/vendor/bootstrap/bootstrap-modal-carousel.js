@@ -1,7 +1,7 @@
 /*! bootstrap-modal-carousel 2014-03-07 */
 (function(factory) {
     "use strict";
-    if (typeof define === "function" && define.amd) {
+    if (false) {
         define([ "jquery", "bootstrap" ], factory);
     } else {
         factory(window.jQuery);
@@ -56,7 +56,7 @@
 
 (function(factory) {
     "use strict";
-    if (typeof define === "function" && define.amd) {
+    if (false) {
         define([ "jquery", "bootstrap" ], factory);
     } else {
         factory(window.jQuery);
@@ -102,7 +102,7 @@
 
 (function(factory) {
     "use strict";
-    if (typeof define === "function" && define.amd) {
+    if (false) {
         define([ "jquery", "bootstrap" ], factory);
     } else {
         factory(window.jQuery);
