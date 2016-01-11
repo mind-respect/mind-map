@@ -436,7 +436,7 @@ body.no-scroll { overflow: hidden; }
 @media screen and (min-width: 800px) { html { font-size: 125%; } }
 [draggable] { cursor: move; }
 
-#mind_map { cursor: all-scroll; -moz-user-select: -moz-none; -webkit-user-select: none; -ms-user-select: none; user-select: none; }
+#mind_map { -moz-user-select: -moz-none; -webkit-user-select: none; -ms-user-select: none; user-select: none; }
 #mind_map h2, #mind_map h3 { line-height: inherit; }
 
 #schema-instructions { position: fixed; top: 10%; width: 100%; }
