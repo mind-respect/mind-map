@@ -153,7 +153,10 @@ define([
                 }
                 GraphUi.enableDragScroll();
             });
-            this.html.on("dragstart", function () {
+            this.html.on("dragstart", function (event) {
+                if(event.originalEvent){
+                    event.originalEvent.dataTransfer.setData('Text', "dummy data for dragging to work in Firefox");
+                }
                 var vertex = BubbleFactory.fromHtml(
                     $(this)
                 );
@@ -199,7 +202,9 @@ define([
                     );
                     vertex.leaveDragOver();
                 }).on(
-                "drop", function () {
+                "drop", function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
                     GraphUi.enableDragScroll();
                     var parent = BubbleFactory.fromHtml(
                         $(this)

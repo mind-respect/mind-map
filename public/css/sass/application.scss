@@ -90,6 +90,7 @@ body {
 
 [draggable]{
   cursor:move;
+  -khtml-user-drag: element; //for safari http://stackoverflow.com/a/3977637
 }
 
 #mind_map {
