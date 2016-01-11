@@ -100,13 +100,13 @@
   },
   "top_menu": {
     "share": "Partager",
+    "central" : "toutes vos bulles",
     "create": {
       "title": "créer",
       "bubble": "bulle",
       "schema": "modèle"
     },
     "disconnect": "déconnecter",
-    "history": "bulles centrales",
     "redraw": "redessiner",
     "selection": {
       "title": "sélectionner",

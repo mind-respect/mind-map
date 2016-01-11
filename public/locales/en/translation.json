@@ -100,13 +100,13 @@
   },
   "top_menu": {
     "share": "Share",
+    "central" : "all your bubbles",
     "create": {
       "title": "create",
       "bubble": "bubble",
       "schema": "model"
     },
     "disconnect": "disconnect",
-    "history": "central bubbles",
     "redraw": "redraw",
     "selection": {
       "title": "select",
