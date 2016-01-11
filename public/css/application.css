@@ -303,6 +303,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .bubble.edit { user-select: text; cursor: text; }
 .bubble .duplicate-button-container { position: absolute; }
 .bubble .bubble-label { outline: 0 solid transparent; border: none; font-family: Helvetica; font-size: 14px; width: auto; display: table-cell; white-space: pre; }
+.bubble .bubble-label[contenteditable='true']:before { content: "\feff "; }
 .bubble .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); color: grey; font-style: italic; }
 .bubble.selected { z-index: 11; }
 .bubble.selected .in-bubble-content { z-index: 5; }

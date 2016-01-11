@@ -6,8 +6,8 @@
   z-index: 5;
   cursor: default;
   display: table;
-  &.dragged{
-    background-color:transparent;
+  &.dragged {
+    background-color: transparent;
   }
   /*.label to override bootstrap*/
   > *, .label {
@@ -21,24 +21,27 @@
       }
     }
   }
-  .in-bubble-content{
+  .in-bubble-content {
     position: relative;
-    z-index:3;
+    z-index: 3;
   }
-  .in-bubble-note-button{
+  .in-bubble-note-button {
     cursor: pointer;
-    margin:0 0.4em 0 0;
-    display:block;
+    margin: 0 0.4em 0 0;
+    display: block;
   }
-  &.edit{
-    user-select:text;
-    cursor:text;
+  &.edit {
+    user-select: text;
+    cursor: text;
   }
   .duplicate-button-container {
     position: absolute;
   }
   white-space: nowrap;
   .bubble-label {
+    &[contenteditable='true']:before {
+      content: "\feff "; //to prevent small height when edit in firefox http://stackoverflow.com/a/23530317
+    }
     outline: 0 solid transparent;
     border: none;
     font-family: Helvetica;
@@ -46,7 +49,7 @@
     width: auto;
     display: table-cell;
     white-space: pre;
-    &:empty:not(:focus):before{
+    &:empty:not(:focus):before {
       content: attr(data-placeholder);
       color: grey;
       font-style: italic;
@@ -56,7 +59,7 @@
   min-width: 0;
   margin: 0 0 0 0;
   &.selected {
-    z-index:11;
+    z-index: 11;
     .in-bubble-content {
       z-index: 5;
     }
@@ -65,7 +68,7 @@
     z-index: 3;
     position: relative;
     min-width: 60px;
-    text-align:right;
+    text-align: right;
     &:empty {
       min-width: 0;
     }
@@ -91,11 +94,11 @@
     left: -42px;
     border-top: $edgeStyle;
     z-index: -1;
-    ~{
-      background-color:yellow;
+    ~ {
+      background-color: yellow;
     }
-    ~ .in-bubble-note-button:not(hidden){
-      width:100%;
+    ~ .in-bubble-note-button:not(hidden) {
+      width: 100%;
     }
     &:before {
       content: url('images/icons/vertex/arrowhead_right.svg');
@@ -106,7 +109,7 @@
   }
 
   .menu {
-    z-index:3;
+    z-index: 3;
     margin-top: 5px;
     position: absolute;
     white-space: normal;
