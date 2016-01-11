@@ -32,6 +32,7 @@ define([
                 getLandingPageSearchInput().removeClass("hidden");
                 getDisconnectButton().addClass("hidden");
                 getUserMenu().addClass("hidden");
+                getAllYourBubblesButton().addClass("hidden");
                 handleLoginRegisterButtons();
             } else {
                 getMyBubblesSearchInput().removeClass("hidden");
@@ -39,6 +40,7 @@ define([
                 handleCreateNewSchemaButton();
                 handleDisconnectButton();
                 getLoginButton().addClass("hidden");
+                getAllYourBubblesButton().removeClass("hidden");
                 getRegisterButton().addClass("hidden");
             }
             if (!MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
@@ -47,11 +49,12 @@ define([
         });
         EventBus.subscribe('/event/ui/graph/drawn /event/ui/graph/vertex/privacy/updated', refreshShareLinkVisibility);
         return api;
-        function refreshShareLinkVisibility(){
+        function refreshShareLinkVisibility() {
             getShareLink()[GraphDisplayer.getVertexSelector().centralVertex().isPublic() ? "removeClass" : "addClass"](
                 "invisible"
             );
         }
+
         function handleTopMenuSelectButtons() {
             $("#select-all-bubbles").click(function (event) {
                 event.preventDefault();
@@ -121,8 +124,8 @@ define([
 
         function createNewSchema(event) {
             event.preventDefault();
-            SchemaService.create(function(schemaUri){
-                if(MindMapInfo.isTagCloudFlow()){
+            SchemaService.create(function (schemaUri) {
+                if (MindMapInfo.isTagCloudFlow()) {
                     window.location = "?bubble=" + schemaUri;
                     return;
                 }
@@ -136,7 +139,7 @@ define([
                 var serverFormatFacade = Vertex.fromServerFormat(
                     newVertex
                 );
-                if(MindMapInfo.isTagCloudFlow()){
+                if (MindMapInfo.isTagCloudFlow()) {
                     window.location = "?bubble=" + serverFormatFacade.getUri();
                     return;
                 }
@@ -146,11 +149,11 @@ define([
             });
         }
 
-        function setUpShareLinkButton(){
+        function setUpShareLinkButton() {
             getShareLinkInput().val(
                 window.location.href
             );
-            getShareLink().click(function(event){
+            getShareLink().click(function (event) {
                 event.preventDefault();
                 var shareLinkInput = getShareLinkInput();
                 shareLinkInput.toggleClass("hidden");
@@ -174,11 +177,11 @@ define([
             return $("#login-button");
         }
 
-        function getLoginButtonInPage(){
+        function getLoginButtonInPage() {
             return $("#login-button-in-page");
         }
 
-        function getRegisterButtonInPage(){
+        function getRegisterButtonInPage() {
             return $("#register-button-in-page");
         }
 
@@ -201,11 +204,17 @@ define([
         function getMyBubblesSearchInput() {
             return $("#vertex-search-input");
         }
-        function getShareLink(){
+
+        function getShareLink() {
             return $("#share-link");
         }
-        function getShareLinkInput(){
+
+        function getShareLinkInput() {
             return $("#share-link-input");
+        }
+
+        function getAllYourBubblesButton() {
+            return $("#all-your-bubbles-button");
         }
     }
 );
