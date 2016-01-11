@@ -244,7 +244,33 @@ define([
             "contenteditable",
             "true"
         );
-        this.getHtml().addClass("edit");
+        var $html = this.getHtml();
+        this.getHtml().data(
+            "previous_draggable_status",
+            $html.attr("draggable")
+        );
+        $html.addClass(
+            "edit"
+        ).removeAttr(
+            "draggable"
+        );
+    };
+    api.Self.prototype.leaveEditMode = function () {
+        var $label = this.getLabel();
+        $label.attr(
+            "contenteditable",
+            "false"
+        );
+        $label.closest(
+            ".graph-element"
+        ).removeClass(
+            "edit"
+        );
+        var $html = this.getHtml();
+        $html.attr(
+            "draggable",
+            $html.data("previous_draggable_status")
+        );
     };
     api.Self.prototype.isInEditMode = function () {
         return this.getHtml().hasClass("edit");

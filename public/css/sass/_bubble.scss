@@ -31,7 +31,8 @@
     display:block;
   }
   &.edit{
-    -moz-user-select: text;
+    user-select:text;
+    cursor:text;
   }
   .duplicate-button-container {
     position: absolute;

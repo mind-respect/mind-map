@@ -68,5 +68,43 @@ define([
                 bubble2.hasIdentifications()
             ).toBeTruthy();
         });
+        it("is no longer draggable when in edit mode", function(){
+            var threeBubblesGraph = new Scenarios.threeBubblesGraph();
+            var bubble2 = threeBubblesGraph.getBubble2InTree();
+            expect(
+                bubble2.getHtml()
+            ).toHaveAttr("draggable");
+            bubble2.editMode();
+            expect(
+                bubble2.getHtml()
+            ).not.toHaveAttr("draggable");
+        });
+        it("is draggable again when leaving edit mode", function(){
+            var threeBubblesGraph = new Scenarios.threeBubblesGraph();
+            var bubble2 = threeBubblesGraph.getBubble2InTree();
+            bubble2.editMode();
+            expect(
+                bubble2.getHtml()
+            ).not.toHaveAttr("draggable");
+            bubble2.leaveEditMode();
+            expect(
+                bubble2.getHtml()
+            ).toHaveAttr("draggable");
+        });
+        it("non draggable elements are not made draggable after leaving edit mode", function(){
+            var threeBubblesGraph = new Scenarios.threeBubblesGraph();
+            var aRelation =  threeBubblesGraph.getBubble1InTree().getTopMostChildBubble();
+            expect(
+                aRelation.getHtml()
+            ).not.toHaveAttr("draggable");
+            aRelation.editMode();
+            expect(
+                aRelation.getHtml()
+            ).not.toHaveAttr("draggable");
+            aRelation.leaveEditMode();
+            expect(
+                aRelation.getHtml()
+            ).not.toHaveAttr("draggable");
+        });
     });
 });

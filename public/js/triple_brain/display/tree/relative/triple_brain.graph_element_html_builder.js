@@ -18,7 +18,7 @@ define([
         label.blur(function () {
             var $input = $(this),
                 element = BubbleFactory.fromSubHtml($input);
-            nonEditMode($input);
+            element.leaveEditMode();
             $input.maxChar();
             element.getHtml().centerOnScreen();
             if (!element.hasTextChangedAfterModification()) {
@@ -45,12 +45,14 @@ define([
                     );
                 });
             }
+
             function updateLabel() {
                 FriendlyResourceService.updateLabel(
                     element,
                     $input.maxCharCleanText()
                 );
             }
+
             SelectionHandler.setToSingleGraphElement(element);
 
         }).keydown(function (event) {
@@ -103,7 +105,7 @@ define([
             return $("<div class='duplicate-button-container'>").append(
                 button
             ).tooltip({
-                    delay:{"show":0, "hide":0}
+                    delay: {"show": 0, "hide": 0}
                 });
         }
     };
@@ -116,7 +118,7 @@ define([
             graphElement.getNoteButtonInMenu().prop("title")
         ).click(clickHandler);
         noteButton.parent().tooltip({
-            delay:{"show":0, "hide":0}
+            delay: {"show": 0, "hide": 0}
         });
         noteButton[
             graphElement.hasNote() ?
@@ -171,13 +173,5 @@ define([
     );
 
     return api;
-
-    function nonEditMode(label) {
-        label.attr(
-            "contenteditable",
-            "false"
-        );
-        label.closest(".graph-element").removeClass("edit");
-    }
 
 });
