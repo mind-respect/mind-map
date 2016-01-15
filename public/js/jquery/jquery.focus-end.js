@@ -15,6 +15,9 @@ define([
                 this.val(initialVal);
                 return;
             }
+            if($this.text().length === 0){
+                return;
+            }
             //http://stackoverflow.com/questions/1181700/set-cursor-position-on-contenteditable-div
             var tmp = $('<span />').appendTo($this),
                 node = tmp.get(0),
