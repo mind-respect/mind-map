@@ -639,7 +639,7 @@ define([
                                 childHtmlFacade,
                                 vertices
                             );
-                            if (childHtmlFacade.isVertex() && childHtmlFacade.hasSuggestions()) {
+                            if (childHtmlFacade.isVertex() && childHtmlFacade.hasSuggestions() && !childHtmlFacade.hasHiddenRelations()) {
                                 api.showSuggestions(childHtmlFacade);
                             }
                         });

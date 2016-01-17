@@ -306,6 +306,18 @@ define([
             ).toBeTruthy();
         });
 
+        it("does not display child suggestions if child has hidden relations", function(){
+            var centerBubble = new Scenarios.bubbleWithAcceptedSuggestionGraphNotCentered().getCenterBubbleInTree();
+            var eventBubble = centerBubble.getTopMostChildBubble().getTopMostChildBubble();
+            expect(eventBubble.hasHiddenRelations());
+            expect(
+                eventBubble.getNumberOfChild()
+            ).toBe(0);
+            expect(
+                eventBubble.hasHiddenRelationsContainer()
+            ).toBeTruthy();
+        });
+
         it("sorts center bubble children in order of creation date", function(){
             var scenario = new Scenarios.creationDateScenario();
             var b1 = scenario.getBubble1InTree();

@@ -569,7 +569,7 @@ define([
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
                 return api._getTestData(
-                    "bubbleWithAcceptedSuggestion"
+                    "bubbleWithAcceptedSuggestion.original"
                 );
             };
             this.getCenterBubbleUri = function () {
@@ -578,6 +578,23 @@ define([
             this.getCenterBubbleInTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree(
                     "Event"
+                );
+            };
+            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
+        };
+        api.bubbleWithAcceptedSuggestionGraphNotCentered = function(){
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                return api._getTestData(
+                    "bubbleWithAcceptedSuggestion.not_centered"
+                );
+            };
+            this.getCenterBubbleUri = function () {
+                return uriOfVertexWithLabel(this.getGraph(), "center");
+            };
+            this.getCenterBubbleInTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree(
+                    "center"
                 );
             };
             Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
