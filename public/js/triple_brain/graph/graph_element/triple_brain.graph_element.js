@@ -120,5 +120,15 @@ define([
             }
         });
     };
+    api.Self.prototype.hasIdentification = function(identification){
+        var contains = false;
+        $.each(this.getIdentifications(), function(){
+            if(this.getExternalResourceUri() === identification.getExternalResourceUri()){
+                contains = true;
+                return false;
+            }
+        });
+        return contains;
+    };
     return api;
 });

@@ -58,6 +58,14 @@ define([
             ).getServerFormat()
         });
     };
+    api.withUri = function(uri){
+        return new api.Self({
+            externalResourceUri: uri,
+            friendlyResource: FriendlyResource.withUri(
+                uri
+            ).getServerFormat()
+        });
+    };
     api.fromSearchResult = function (searchResult) {
         var identification = api.withUriLabelAndDescription(
             searchResult.uri,

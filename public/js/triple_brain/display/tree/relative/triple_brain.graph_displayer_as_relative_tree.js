@@ -25,6 +25,7 @@ define([
     "triple_brain.graph_element_menu_handler",
     "triple_brain.keyboard_actions_handler",
     "triple_brain.edge",
+    "triple_brain.identification",
     "triple_brain.group_relation_html_builder",
     "triple_brain.group_relation_ui",
     "triple_brain.schema_service",
@@ -45,7 +46,7 @@ define([
     "triple_brain.center_bubble",
     "triple_brain.selection_handler",
     "triple_brain.group_relation"
-], function ($, GraphService, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, RelativeTreeVertexMenuHandler, GroupRelationMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler, KeyboardActionsHandler, Edge, GroupRelationHtmlBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaHtmlBuilder, SchemaUi, SchemaMenuHandler, PropertyHtmlBuilder, PropertyMenuHandler, PropertyUi, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SuggestionBubbleUi, SuggestionRelationUi, SuggestionBubbleMenuHandler, SuggestionRelationMenuHandler, TripleUi, CenterBubble, SelectionHandler, GroupRelation) {
+], function ($, GraphService, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, RelativeTreeVertexMenuHandler, GroupRelationMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler, KeyboardActionsHandler, Edge, Identification, GroupRelationHtmlBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaHtmlBuilder, SchemaUi, SchemaMenuHandler, PropertyHtmlBuilder, PropertyMenuHandler, PropertyUi, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SuggestionBubbleUi, SuggestionRelationUi, SuggestionBubbleMenuHandler, SuggestionRelationMenuHandler, TripleUi, CenterBubble, SelectionHandler, GroupRelation) {
     "use strict";
     KeyboardActionsHandler.init();
     var api = {};
@@ -181,12 +182,15 @@ define([
 
     api.showSuggestions = function (vertex) {
         $.each(vertex.getSuggestions(), function () {
-            var suggestion = this,
-                suggestionRelation = addEdge(
-                    suggestion,
-                    vertex,
-                    SuggestionRelationBuilder
-                );
+            var suggestion = this;
+            if(!suggestion.shouldDisplay()){
+                return;
+            }
+            var suggestionRelation = addEdge(
+                suggestion,
+                vertex,
+                SuggestionRelationBuilder
+            );
             var suggestionBubble = addVertex(
                 suggestion,
                 suggestionRelation,
@@ -417,6 +421,10 @@ define([
             return serverGraph;
         };
         this.buildBubbleHtmlIntoContainer = function (serverFormat, parentBubble, builder, htmlId) {
+            flagSuggestionsToNotDisplayGivenParentAndChildVertex(
+                parentBubble.getOriginalServerObject(),
+                serverFormat
+            );
             var childTreeContainer = RelativeTreeTemplates[
                     "vertex_tree_container"
                     ].merge(),
@@ -458,9 +466,6 @@ define([
                 childVertexHtmlFacade.getHtml()
             );
             self.addChildrenContainerToBubble(childVertexHtmlFacade, serverFormat.isLeftOriented);
-            if(childVertexHtmlFacade.isVertex() && childVertexHtmlFacade.hasSuggestions()){
-                api.showSuggestions(childVertexHtmlFacade);
-            }
             return childVertexHtmlFacade;
         };
         this.addChildrenContainerToBubble = function (vertexHtmlFacade, toLeft) {
@@ -602,9 +607,6 @@ define([
                     serverRootVertex,
                     verticesContainer
                 );
-                if (self.rootBubble.hasSuggestions()) {
-                    api.showSuggestions(self.rootBubble);
-                }
                 $.each(sortSimilarRelationsByIsGroupRelationOrCreationDate(serverRootVertex.similarRelations), function (key, groupRelation) {
                     if (groupRelation.hasMultipleVertices()) {
                         self.buildBubbleHtmlIntoContainer(
@@ -637,24 +639,46 @@ define([
                                 childHtmlFacade,
                                 vertices
                             );
+                            if (childHtmlFacade.isVertex() && childHtmlFacade.hasSuggestions()) {
+                                api.showSuggestions(childHtmlFacade);
+                            }
                         });
                     });
                 });
+                if (self.rootBubble.hasSuggestions()) {
+                    api.showSuggestions(self.rootBubble);
+                }
             }
 
             function vertexWithId(vertexId) {
                 return vertices[vertexId];
             }
         }
-        function sortSimilarRelationsByIsGroupRelationOrCreationDate(similarRelations){
+
+        function flagSuggestionsToNotDisplayGivenParentAndChildVertex(parentVertex, childVertex){
+            if(!parentVertex.getSuggestions || !childVertex.hasIdentification){
+                return;
+            }
+            $.each(parentVertex.getSuggestions(), function () {
+                var suggestion = this;
+                var suggestionAsIdentification = Identification.withUri(
+                    suggestion.getSameAs().getUri()
+                );
+                if(childVertex.hasIdentification(suggestionAsIdentification)){
+                    suggestion.shouldNotDisplay();
+                }
+            });
+        }
+
+        function sortSimilarRelationsByIsGroupRelationOrCreationDate(similarRelations) {
             var sortedKeys = Object.keys(similarRelations).sort(
-                function(a,b){
+                function (a, b) {
                     var groupRelationA = similarRelations[a];
                     var groupRelationB = similarRelations[b];
-                    if(groupRelationA.hasMultipleVertices() && !groupRelationB.hasMultipleVertices()){
+                    if (groupRelationA.hasMultipleVertices() && !groupRelationB.hasMultipleVertices()) {
                         return -1;
                     }
-                    if(!groupRelationA.hasMultipleVertices() && groupRelationB.hasMultipleVertices()){
+                    if (!groupRelationA.hasMultipleVertices() && groupRelationB.hasMultipleVertices()) {
                         return 1;
                     }
                     var vertexA = groupRelationA.getAnyVertex();
@@ -668,7 +692,7 @@ define([
                     return -1;
                 });
             var sortedSimilarRelations = {};
-            $.each(sortedKeys, function(){
+            $.each(sortedKeys, function () {
                 sortedSimilarRelations[this] = similarRelations[this];
             });
             return sortedSimilarRelations;

@@ -12,10 +12,11 @@ define([
         "triple_brain.ui.graph",
         "triple_brain.bubble_factory",
         "triple_brain.edge_service",
+        "triple_brain.graph_displayer",
         "jquery-ui",
         "jquery.is-fully-on-screen",
         "jquery.center-on-screen"
-    ], function ($, EventBus, MindMapTemplate, RelativeTreeVertex, VertexHtmlCommon, GraphElementHtmlBuilder, GraphUi, BubbleFactory, EdgeService) {
+    ], function ($, EventBus, MindMapTemplate, RelativeTreeVertex, VertexHtmlCommon, GraphElementHtmlBuilder, GraphUi, BubbleFactory, EdgeService, GraphDisplayer) {
         "use strict";
         var api = {};
         api.withServerFacade = function (serverFacade) {

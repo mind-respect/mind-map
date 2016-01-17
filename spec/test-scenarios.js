@@ -565,6 +565,23 @@ define([
             };
             Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
         };
+        api.bubbleWithAcceptedSuggestionGraph = function(){
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                return api._getTestData(
+                    "bubbleWithAcceptedSuggestion"
+                );
+            };
+            this.getCenterBubbleUri = function () {
+                return uriOfVertexWithLabel(this.getGraph(), "Event");
+            };
+            this.getCenterBubbleInTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree(
+                    "Event"
+                );
+            };
+            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
+        };
         api.getKaraokeSchemaGraph = function () {
             this.getGraph = function () {
                 return api._getTestData(

@@ -77,6 +77,7 @@ define([
         };
 
         function Suggestion(serverFormat) {
+            this._shouldDisplay = true;
             this.sameAs = Identification.fromFriendlyResourceServerFormat(
                 serverFormat.sameAs
             );
@@ -137,6 +138,12 @@ define([
                 );
             });
             return origins;
+        };
+        Suggestion.prototype.shouldDisplay = function(){
+            return this._shouldDisplay;
+        };
+        Suggestion.prototype.shouldNotDisplay = function(){
+            return this._shouldDisplay = false;
         };
         return api;
     }

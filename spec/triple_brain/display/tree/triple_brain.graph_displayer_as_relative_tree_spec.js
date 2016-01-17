@@ -136,6 +136,12 @@ define([
                 vertexSuggestion.getIdentifications()[0].getLabel()
             ).toBe("Location");
         });
+        it("does not show already accepted suggestions", function () {
+            var centerBubble = new Scenarios.bubbleWithAcceptedSuggestionGraph().getCenterBubbleInTree();
+            expect(
+                centerBubble.getNumberOfChild()
+            ).toBe(2);
+        });
         it("can make a vertex connect to a distant vertex", function () {
             connectDistantVertexTest(function (distantBubble) {
                 var connectedBubble = distantBubble.getTopMostChildBubble().getTopMostChildBubble();
