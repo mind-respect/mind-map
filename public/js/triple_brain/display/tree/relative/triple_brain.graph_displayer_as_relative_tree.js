@@ -116,7 +116,12 @@ define([
             if (childBubble.isGroupRelation()) {
                 GroupRelationHtmlBuilder.completeBuild(childBubble);
             }
+            flagSuggestionsToNotDisplayGivenParentAndChildVertex(
+                parentVertex,
+                childBubble.getOriginalServerObject()
+            );
         });
+        api.showSuggestions(parentVertex);
         function removeRelationWithGrandParentFromServerGraph() {
             var relationWithGrandParentUri = parentVertex.getRelationWithUiParent().getUri();
             var grandParentUri = parentVertex.getParentVertex().getUri();
@@ -655,27 +660,6 @@ define([
             }
         }
 
-        function flagSuggestionsToNotDisplayGivenParentAndChildVertex(parentVertex, childVertex) {
-            if (!parentVertex.getSuggestions) {
-                return;
-            }
-            $.each(parentVertex.getSuggestions(), function () {
-                var suggestion = this;
-                if (childVertex.getIdentification) {
-                    if (suggestion.isRelatedToIdentification(childVertex.getIdentification())) {
-                        suggestion.shouldNotDisplay();
-                    }
-                } else if (childVertex.hasIdentification) {
-                    var suggestionAsIdentification = Identification.withUri(
-                        suggestion.getSameAs().getUri()
-                    );
-                    if (childVertex.hasIdentification(suggestionAsIdentification)) {
-                        suggestion.shouldNotDisplay();
-                    }
-                }
-            });
-        }
-
         function sortSimilarRelationsByIsGroupRelationOrCreationDate(similarRelations) {
             var sortedKeys = Object.keys(similarRelations).sort(
                 function (a, b) {
@@ -705,4 +689,29 @@ define([
         }
     };
     return api;
+
+    function flagSuggestionsToNotDisplayGivenParentAndChildVertex(parentVertex, childVertex) {
+        if (!parentVertex.getSuggestions) {
+            return;
+        }
+        var hasFlagged = false;
+        $.each(parentVertex.getSuggestions(), function () {
+            var suggestion = this;
+            if (childVertex.getIdentification) {
+                if (suggestion.isRelatedToIdentification(childVertex.getIdentification())) {
+                    suggestion.shouldNotDisplay();
+                    hasFlagged = true;
+                }
+            } else if (childVertex.hasIdentification) {
+                var suggestionAsIdentification = Identification.withUri(
+                    suggestion.getSameAs().getUri()
+                );
+                if (childVertex.hasIdentification(suggestionAsIdentification)) {
+                    suggestion.shouldNotDisplay();
+                    hasFlagged = true;
+                }
+            }
+        });
+        return hasFlagged;
+    }
 });

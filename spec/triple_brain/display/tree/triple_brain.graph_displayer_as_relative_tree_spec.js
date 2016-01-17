@@ -6,12 +6,13 @@ define([
     'test/test-scenarios',
     'test/test-utils',
     'test/mock',
+    "test/mock/triple_brain.graph_service_mock",
     "triple_brain.graph_displayer_as_relative_tree",
     "triple_brain.center_bubble",
     "triple_brain.vertex_html_builder",
     "triple_brain.edge_html_builder",
     "triple_brain.graph_element"
-], function (Scenarios, TestUtils, Mock, GraphDisplayerAsRelativeTree, CenterBubble, VertexHtmlBuilder, EdgeHtmlBuilder, GraphElement) {
+], function (Scenarios, TestUtils, Mock, GraphServiceMock, GraphDisplayerAsRelativeTree, CenterBubble, VertexHtmlBuilder, EdgeHtmlBuilder, GraphElement) {
     "use strict";
     describe("graph_displayer_as_relative_tree_spec", function () {
         it("distributes triples evenly to the right and left", function () {
@@ -316,6 +317,49 @@ define([
             expect(
                 eventBubble.hasHiddenRelationsContainer()
             ).toBeTruthy();
+        });
+
+        it("displays child suggestions after expanding child tree", function(){
+            var centerBubble = new Scenarios.bubbleWithAcceptedSuggestionGraphNotCentered().getCenterBubbleInTree();
+            var eventBubble = centerBubble.getTopMostChildBubble().getTopMostChildBubble();
+            expect(
+                eventBubble.hasHiddenRelationsContainer()
+            ).toBeTruthy();
+            GraphServiceMock.getForCentralVertexUriMock(
+                new Scenarios.bubbleWithAcceptedSuggestionGraph().getGraph()
+            );
+            eventBubble.addChildTree();
+            expect(
+                TestUtils.hasChildWithLabel(
+                    eventBubble,
+                    "venue"
+                )
+            ).toBeTruthy();
+            var venueBubble = TestUtils.getChildWithLabel(
+                eventBubble,
+                "venue"
+            );
+            expect(
+                venueBubble.isRelationSuggestion()
+            ).toBeTruthy();
+        });
+
+        it("does not display already accepted suggestions after expanding child tree", function(){
+            var centerBubble = new Scenarios.bubbleWithAcceptedSuggestionGraphNotCentered().getCenterBubbleInTree();
+            var eventBubble = centerBubble.getTopMostChildBubble().getTopMostChildBubble();
+            expect(
+                eventBubble.hasHiddenRelationsContainer()
+            ).toBeTruthy();
+            GraphServiceMock.getForCentralVertexUriMock(
+                new Scenarios.bubbleWithAcceptedSuggestionGraph().getGraph()
+            );
+            expect(
+                eventBubble.getNumberOfChild()
+            ).toBe(0);
+            eventBubble.addChildTree();
+            expect(
+                eventBubble.getNumberOfChild()
+            ).toBe(3);
         });
 
         it("sorts center bubble children in order of creation date", function(){
