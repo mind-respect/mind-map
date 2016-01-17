@@ -140,7 +140,25 @@ define([
             var centerBubble = new Scenarios.bubbleWithAcceptedSuggestionGraph().getCenterBubbleInTree();
             expect(
                 centerBubble.getNumberOfChild()
-            ).toBe(2);
+            ).toBe(3);
+            expect(
+                TestUtils.hasChildWithLabel(
+                    centerBubble,
+                    "start date"
+                )
+            ).toBeTruthy();
+            expect(
+                TestUtils.hasChildWithLabel(
+                    centerBubble,
+                    "venue"
+                )
+            ).toBeTruthy();
+            expect(
+                TestUtils.hasChildWithLabel(
+                    centerBubble,
+                    "Person"
+                )
+            ).toBeTruthy();
         });
         it("can make a vertex connect to a distant vertex", function () {
             connectDistantVertexTest(function (distantBubble) {

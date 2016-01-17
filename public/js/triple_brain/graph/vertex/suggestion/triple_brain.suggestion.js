@@ -145,6 +145,10 @@ define([
         Suggestion.prototype.shouldNotDisplay = function(){
             return this._shouldDisplay = false;
         };
+        Suggestion.prototype.isRelatedToIdentification = function(identification){
+            return this.getSameAs().getUri() === identification.getExternalResourceUri() ||
+                this.getType().getUri() === identification.getExternalResourceUri()
+        };
         return api;
     }
 );

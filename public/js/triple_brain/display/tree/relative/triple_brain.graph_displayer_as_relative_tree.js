@@ -183,7 +183,7 @@ define([
     api.showSuggestions = function (vertex) {
         $.each(vertex.getSuggestions(), function () {
             var suggestion = this;
-            if(!suggestion.shouldDisplay()){
+            if (!suggestion.shouldDisplay()) {
                 return;
             }
             var suggestionRelation = addEdge(
@@ -655,17 +655,23 @@ define([
             }
         }
 
-        function flagSuggestionsToNotDisplayGivenParentAndChildVertex(parentVertex, childVertex){
-            if(!parentVertex.getSuggestions || !childVertex.hasIdentification){
+        function flagSuggestionsToNotDisplayGivenParentAndChildVertex(parentVertex, childVertex) {
+            if (!parentVertex.getSuggestions) {
                 return;
             }
             $.each(parentVertex.getSuggestions(), function () {
                 var suggestion = this;
-                var suggestionAsIdentification = Identification.withUri(
-                    suggestion.getSameAs().getUri()
-                );
-                if(childVertex.hasIdentification(suggestionAsIdentification)){
-                    suggestion.shouldNotDisplay();
+                if (childVertex.getIdentification) {
+                    if (suggestion.isRelatedToIdentification(childVertex.getIdentification())) {
+                        suggestion.shouldNotDisplay();
+                    }
+                } else if (childVertex.hasIdentification) {
+                    var suggestionAsIdentification = Identification.withUri(
+                        suggestion.getSameAs().getUri()
+                    );
+                    if (childVertex.hasIdentification(suggestionAsIdentification)) {
+                        suggestion.shouldNotDisplay();
+                    }
                 }
             });
         }
