@@ -147,7 +147,7 @@ define([
         };
         Suggestion.prototype.isRelatedToIdentification = function(identification){
             return this.getSameAs().getUri() === identification.getExternalResourceUri() ||
-                this.getType().getUri() === identification.getExternalResourceUri()
+                this.getType().getUri() === identification.getExternalResourceUri();
         };
         return api;
     }
