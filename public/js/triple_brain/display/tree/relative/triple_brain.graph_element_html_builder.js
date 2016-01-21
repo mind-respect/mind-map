@@ -8,8 +8,9 @@ define([
     "triple_brain.bubble_factory",
     "triple_brain.suggestion_service",
     "triple_brain.friendly_resource_service",
-    "triple_brain.selection_handler"
-], function ($, EventBus, BubbleFactory, SuggestionService, FriendlyResourceService, SelectionHandler) {
+    "triple_brain.selection_handler",
+    "triple_brain.ui.graph"
+], function ($, EventBus, BubbleFactory, SuggestionService, FriendlyResourceService, SelectionHandler, GraphUi) {
     "use strict";
     var enterKeyCode = 13,
         api = {},
@@ -57,8 +58,7 @@ define([
 
         }).keydown(function (event) {
             if (enterKeyCode === event.which) {
-                var hasSelectedFromAutocomplete = $("ul.ui-autocomplete:visible").find(".ui-state-focus").length > 0;
-                if (!hasSelectedFromAutocomplete) {
+                if (!GraphUi.hasSelectedFromAutocomplete()) {
                     event.preventDefault();
                     $(this).blur();
                 }

@@ -4,8 +4,9 @@
 
 define([
     "jquery",
+    "triple_brain.ui.graph",
     "jquery-ui"
-], function ($) {
+], function ($, GraphUi) {
     "use strict";
     var enterKeyCode = 13,
         api = {},
@@ -29,7 +30,9 @@ define([
             removeSearchFlyout
         ).on("keydown.autocomplete", function (event) {
                 if (enterKeyCode === event.keyCode) {
-                    $(this).trigger("autocompleteselect");
+                    if(GraphUi.hasSelectedFromAutocomplete()){
+                        $(this).trigger("autocompleteselect");
+                    }
                 }
             });
         return this;

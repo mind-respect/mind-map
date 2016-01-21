@@ -55,6 +55,9 @@ define([
         api.showSchemaInstructions = function () {
             getSchemaInstructions().removeClass("hidden");
         };
+        api.hasSelectedFromAutocomplete = function(){
+            return $("ul.ui-autocomplete:visible").find(".ui-state-focus").length > 0
+        };
         return api;
         function getSchemaInstructions() {
             return $("#schema-instructions");

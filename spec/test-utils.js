@@ -38,6 +38,13 @@ define([
             options
         );
     };
+    api.pressEnterInBubble = function(bubble){
+        api._pressKeyCodeInContainer(
+            13,
+            bubble.getLabel(),
+            {}
+        );
+    };
     api.pressKeyInBubble = function (char, bubble) {
         bubble.getLabel().append(char);
         api._pressKeyCodeInContainer(

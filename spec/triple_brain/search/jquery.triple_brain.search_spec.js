@@ -4,10 +4,11 @@
 
 define([
     'test/test-scenarios',
+    'test/test-utils',
     'triple_brain.user_map_autocomplete_provider',
     "jquery",
     "jquery.triple_brain.search"
-], function (Scenarios, UserMapAutocompleteProvider, $, $Search) {
+], function (Scenarios, TestUtils, UserMapAutocompleteProvider, $, $Search) {
     "use strict";
     describe("jquery.triple_brain.search", function () {
         it("doesn't fetch more info more than once", function () {
@@ -28,6 +29,20 @@ define([
             expect(getMoreInfoSpy.calls.count()).toBe(1);
             $Search._onFocusAction(searchResult, listHtml);
             expect(getMoreInfoSpy.calls.count()).toBe(1);
+        });
+        it("triggers autocompleteselect only if something is actually selected", function () {
+            var suggestion = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
+            var label = suggestion.getLabel();
+            label.focus();
+            TestUtils.pressKeyInBubble("a", suggestion);
+            var spyEvent = spyOnEvent(label, 'autocompleteselect');
+            TestUtils.pressEnterInBubble(suggestion);
+            expect(spyEvent).not.toHaveBeenTriggered();
+            loadFixtures('focus-autocomplete-list.html');
+            label.focus();
+            TestUtils.pressKeyInBubble("a", suggestion);
+            TestUtils.pressEnterInBubble(suggestion);
+            expect(spyEvent).toHaveBeenTriggered();
         });
     });
 });
