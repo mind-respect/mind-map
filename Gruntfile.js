@@ -55,7 +55,7 @@ module.exports = function (grunt) {
                 eqnull: true,
                 strict:true,
                 jasmine:true,
-                predef:["define", "crow", "crypto", "bubl_guru_force_refresh"],
+                predef:["define", "crow", "crypto", "bubl_guru_force_refresh", "spyOnEvent"],
                 browser:true,
                 funcscope:true,
                 validthis:true,
