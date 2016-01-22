@@ -34,6 +34,20 @@ define([
             var numberOfGroupedRelations = Object.keys(centerVertex.similarRelations);
             expect(numberOfGroupedRelations.length).toBe(3);
         });
+        it("creates only one group relation when different relations have multiple identifiers that are the same", function(){
+            var relationWithMultipleIdentifiersScenario = new Scenarios.relationWithMultipleIdentifiers();
+            var graph = relationWithMultipleIdentifiersScenario.getGraph();
+            var centerVertexUri = relationWithMultipleIdentifiersScenario.getCenterBubbleUri();
+            TreeDisplayerCommon.enhancedVerticesInfo(
+                graph,
+                centerVertexUri
+            );
+            var teamVertex = graph.vertices[centerVertexUri];
+            var numberOfSimilarRelations = Object.keys(teamVertex.similarRelations).length;
+            expect(
+                numberOfSimilarRelations
+            ).toBe(2);
+        });
         it("relations with no identifications are grouped by relation uri", function () {
             TreeDisplayerCommon.enhancedVerticesInfo(
                 graph,

@@ -84,7 +84,7 @@ define([
                     destinationVertex = vertexWithId(
                         edge.getDestinationVertex().getUri()
                     );
-                if(!sourceVertex.isInvolved && !destinationVertex.isInvolved){
+                if (!sourceVertex.isInvolved && !destinationVertex.isInvolved) {
                     nonEnhancedEdges[edge.getUri()] = edge;
                     return;
                 }
@@ -99,22 +99,14 @@ define([
                 sourceVertex.isInvolved = true;
                 destinationVertex.isInvolved = true;
                 var edgeIdentifications = edge.getIdentifications();
-                $.each(edgeIdentifications, function () {
-                    var identification = this,
-                        key = identification.getExternalResourceUri(),
-                        groupRelation = sourceVertex.similarRelations[key];
-                    if (groupRelation === undefined) {
-                        groupRelation = GroupRelation.usingIdentification(
-                            identification
-                        );
+                if (edgeIdentifications.length > 0) {
+                    setupGroupRelation(edgeIdentifications, true);
+                    if(edgeIdentifications.length > 1){
+                        $.each(edgeIdentifications, function(){
+                            setupGroupRelation(this, false);
+                        });
                     }
-                    groupRelation.addVertex(
-                        destinationVertex,
-                        edge
-                    );
-                    sourceVertex.similarRelations[key] = groupRelation;
-                });
-                if (edgeIdentifications.length === 0) {
+                } else {
                     var key = edge.getUri(),
                         groupRelation = sourceVertex.similarRelations[key];
                     if (undefined === groupRelation) {
@@ -132,10 +124,40 @@ define([
                 }
                 delete nonEnhancedEdges[edge.getUri()];
                 revisitNonEnhancedEdges();
+
+                function setupGroupRelation(identifiers, createIfUndefined){
+                    var key = getIdentifiersKey(identifiers),
+                        groupRelation = sourceVertex.similarRelations[key];
+                    if (groupRelation === undefined && createIfUndefined) {
+                        groupRelation = GroupRelation.usingIdentification(
+                            identifiers
+                        );
+                    }
+                    if(groupRelation !== undefined){
+                        groupRelation.addVertex(
+                            destinationVertex,
+                            edge
+                        );
+                        sourceVertex.similarRelations[key] = groupRelation;
+                    }
+                }
             }
 
-            function revisitNonEnhancedEdges(){
-                $.each(nonEnhancedEdges, function(){
+            function getIdentifiersKey(identifiers) {
+                var key = "";
+                if(Array.isArray(identifiers)){
+                    $.each(identifiers, function () {
+                        key += this.getExternalResourceUri();
+                    });
+                }
+                else{
+                    key = identifiers.getExternalResourceUri();
+                }
+                return key;
+            }
+
+            function revisitNonEnhancedEdges() {
+                $.each(nonEnhancedEdges, function () {
                     updateRelationsIdentification(this);
                 });
             }

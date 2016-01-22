@@ -11,7 +11,11 @@ define([
             return new GroupRelation(undefined);
         };
         api.usingIdentification = function (identification) {
-            return new GroupRelation([identification]);
+            if(Array.isArray(identification)){
+                return new GroupRelation(identification);
+            }else{
+                return new GroupRelation([identification]);
+            }
         };
         api.usingIdentifiers = function(identifications){
             return new GroupRelation(identifications);

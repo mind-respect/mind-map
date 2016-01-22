@@ -492,10 +492,10 @@ define([
                 );
             };
             this.getCenterBubble = function () {
-                return treeBuilder.getBubbleWithLabelInTree("team");
+                return treeBuilder.getBubbleWithLabelInTree("Team");
             };
             this.getCenterBubbleUri = function () {
-                return uriOfVertexWithLabel(this.getGraph(), "team");
+                return uriOfVertexWithLabel(this.getGraph(), "Team");
             };
             this.getComputerScientistRelation = function () {
                 return relationWithLabel(this.getGraph(), "computer scientist");
