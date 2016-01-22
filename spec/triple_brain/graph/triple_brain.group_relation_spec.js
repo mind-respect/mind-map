@@ -49,5 +49,14 @@ define([
                 groupRelation.getNumberOfVertices()
             ).toBe(2);
         });
+        it("can have multiple identifiers", function(){
+            var relationWithMultipleIdentifiers = new Scenarios.relationWithMultipleIdentifiers().getComputerScientistRelation();
+            var groupRelation = GroupRelation.usingIdentifiers(
+                relationWithMultipleIdentifiers.getIdentifications()
+            );
+            expect(
+                groupRelation.getIdentifiers().length
+            ).toBe(2);
+        });
     });
 });

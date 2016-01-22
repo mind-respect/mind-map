@@ -8,27 +8,33 @@ define([
         "use strict";
         var api = {};
         api.withoutAnIdentification = function () {
-            return new Self(undefined);
+            return new GroupRelation(undefined);
         };
         api.usingIdentification = function (identification) {
-            return new Self(identification);
+            return new GroupRelation([identification]);
         };
-        function Self(identification) {
-            this.identification = identification;
+        api.usingIdentifiers = function(identifications){
+            return new GroupRelation(identifications);
+        };
+        function GroupRelation(identifiers) {
+            this.identifiers = identifiers;
             this.vertices = {};
         }
-        Self.prototype.getIdentification = function () {
-            return this.identification;
+        GroupRelation.prototype.getIdentification = function () {
+            return this.identifiers[0];
         };
-        Self.prototype.getVertices = function () {
+        GroupRelation.prototype.getIdentifiers = function(){
+            return this.identifiers;
+        };
+        GroupRelation.prototype.getVertices = function () {
             return this.vertices;
         };
-        Self.prototype.getAnyVertex = function(){
+        GroupRelation.prototype.getAnyVertex = function(){
             var verticesWithUri = this.getVertices();
             var verticesWithId = verticesWithUri[Object.keys(verticesWithUri)[0]];
             return verticesWithId[Object.keys(verticesWithId)[0]].vertex;
         };
-        Self.prototype.addVertex = function (vertex, edge) {
+        GroupRelation.prototype.addVertex = function (vertex, edge) {
             if (this.vertices[vertex.getUri()] === undefined) {
                 this.vertices[vertex.getUri()] = {};
             }
@@ -41,10 +47,10 @@ define([
                 edge: edge
             };
         };
-        Self.prototype.hasMultipleVertices = function(){
+        GroupRelation.prototype.hasMultipleVertices = function(){
              return this.getNumberOfVertices() > 1;
         };
-        Self.prototype.getNumberOfVertices = function(){
+        GroupRelation.prototype.getNumberOfVertices = function(){
             return Object.keys(this.vertices).length;
         };
         return api;

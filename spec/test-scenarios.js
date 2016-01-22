@@ -484,6 +484,24 @@ define([
             };
             Mock.setCenterVertexUriInUrl(this.getCenterVertex().getUri());
         };
+        api.relationWithMultipleIdentifiers = function(){
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                return api._getTestData(
+                    "relationWithMultipleIdentifiers"
+                );
+            };
+            this.getCenterBubble = function () {
+                return treeBuilder.getBubbleWithLabelInTree("team");
+            };
+            this.getCenterBubbleUri = function () {
+                return uriOfVertexWithLabel(this.getGraph(), "team");
+            };
+            this.getComputerScientistRelation = function () {
+                return relationWithLabel(this.getGraph(), "computer scientist");
+            };
+            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
+        };
         api.groupRelationWithImage = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
@@ -565,11 +583,11 @@ define([
             };
             Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
         };
-        api.bubbleWithAcceptedSuggestionGraph = function(){
+        api.withAcceptedSuggestionGraph = function(){
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
                 return api._getTestData(
-                    "bubbleWithAcceptedSuggestion.original"
+                    "withAcceptedSuggestion.original"
                 );
             };
             this.getCenterBubbleUri = function () {
@@ -582,11 +600,11 @@ define([
             };
             Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
         };
-        api.bubbleWithAcceptedSuggestionGraphNotCentered = function(){
+        api.withAcceptedSuggestionGraphNotCentered = function(){
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
                 return api._getTestData(
-                    "bubbleWithAcceptedSuggestion.not_centered"
+                    "withAcceptedSuggestion.not_centered"
                 );
             };
             this.getCenterBubbleUri = function () {

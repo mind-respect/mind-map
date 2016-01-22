@@ -69,6 +69,10 @@ define([
             ).toBeTruthy();
         });
 
+        it("", function () {
+
+        });
+
         it("preserves direction with parent vertex for expanded group relations", function () {
             var graphWithSimilarRelationsScenario = new Scenarios.GraphWithSimilarRelationsScenario();
             var groupRelation = graphWithSimilarRelationsScenario.getPossessionAsGroupRelationInTree();
@@ -138,7 +142,7 @@ define([
             ).toBe("Location");
         });
         it("does not show already accepted suggestions", function () {
-            var centerBubble = new Scenarios.bubbleWithAcceptedSuggestionGraph().getCenterBubbleInTree();
+            var centerBubble = new Scenarios.withAcceptedSuggestionGraph().getCenterBubbleInTree();
             expect(
                 centerBubble.getNumberOfChild()
             ).toBe(3);
@@ -308,7 +312,7 @@ define([
         });
 
         it("does not display child suggestions if child has hidden relations", function(){
-            var centerBubble = new Scenarios.bubbleWithAcceptedSuggestionGraphNotCentered().getCenterBubbleInTree();
+            var centerBubble = new Scenarios.withAcceptedSuggestionGraphNotCentered().getCenterBubbleInTree();
             var eventBubble = centerBubble.getTopMostChildBubble().getTopMostChildBubble();
             expect(eventBubble.hasHiddenRelations());
             expect(
@@ -320,13 +324,13 @@ define([
         });
 
         it("displays child suggestions after expanding child tree", function(){
-            var centerBubble = new Scenarios.bubbleWithAcceptedSuggestionGraphNotCentered().getCenterBubbleInTree();
+            var centerBubble = new Scenarios.withAcceptedSuggestionGraphNotCentered().getCenterBubbleInTree();
             var eventBubble = centerBubble.getTopMostChildBubble().getTopMostChildBubble();
             expect(
                 eventBubble.hasHiddenRelationsContainer()
             ).toBeTruthy();
             GraphServiceMock.getForCentralVertexUriMock(
-                new Scenarios.bubbleWithAcceptedSuggestionGraph().getGraph()
+                new Scenarios.withAcceptedSuggestionGraph().getGraph()
             );
             eventBubble.addChildTree();
             expect(
@@ -345,13 +349,13 @@ define([
         });
 
         it("does not display already accepted suggestions after expanding child tree", function(){
-            var centerBubble = new Scenarios.bubbleWithAcceptedSuggestionGraphNotCentered().getCenterBubbleInTree();
+            var centerBubble = new Scenarios.withAcceptedSuggestionGraphNotCentered().getCenterBubbleInTree();
             var eventBubble = centerBubble.getTopMostChildBubble().getTopMostChildBubble();
             expect(
                 eventBubble.hasHiddenRelationsContainer()
             ).toBeTruthy();
             GraphServiceMock.getForCentralVertexUriMock(
-                new Scenarios.bubbleWithAcceptedSuggestionGraph().getGraph()
+                new Scenarios.withAcceptedSuggestionGraph().getGraph()
             );
             expect(
                 eventBubble.getNumberOfChild()
