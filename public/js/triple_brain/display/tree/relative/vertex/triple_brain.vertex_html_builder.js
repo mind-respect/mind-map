@@ -74,13 +74,25 @@ define([
             this.vertex.setTotalNumberOfEdges(
                 this.serverFacade.getNumberOfConnectedEdges()
             );
-            VertexHtmlCommon.buildLabelHtml(
+            var label = VertexHtmlCommon.buildLabelHtml(
                 this.vertex,
                 VertexHtmlCommon.buildInsideBubbleContainer(
                     this.html
                 ),
                 RelativeTreeVertex,
                 this.serverFacade
+            ).blur(function () {
+                    var $label = $(this);
+                    $label.html(
+                        linkify(
+                            $label.text()
+                        )
+                    );
+                });
+            label.html(
+                linkify(
+                    label.text()
+                )
             );
             this._setupDragAndDrop();
             this.html.data(
@@ -149,13 +161,13 @@ define([
             this.html.find(".in-bubble-content-wrapper").mousedown(function () {
                 GraphUi.disableDragScroll();
             }).mouseleave(function () {
-                if(GraphUi.isDragScrollEnabled()){
+                if (GraphUi.isDragScrollEnabled()) {
                     return;
                 }
                 GraphUi.enableDragScroll();
             });
             this.html.on("dragstart", function (event) {
-                if(event.originalEvent){
+                if (event.originalEvent) {
                     event.originalEvent.dataTransfer.setData('Text', "dummy data for dragging to work in Firefox");
                 }
                 var vertex = BubbleFactory.fromHtml(
@@ -212,11 +224,11 @@ define([
                     );
                     parent.leaveDragOver();
                     var draggedVertex = RelativeTreeVertex.getDraggedVertex();
-                    if(draggedVertex === undefined){
+                    if (draggedVertex === undefined) {
                         return;
                     }
                     var shouldMove = draggedVertex.getUri() !== parent.getUri() && !draggedVertex.isBubbleAChild(parent);
-                    if(!shouldMove){
+                    if (!shouldMove) {
                         return;
                     }
                     draggedVertex.moveToParent(
@@ -231,6 +243,14 @@ define([
 
         };
         return api;
+        function linkify(text) {
+            //http://stackoverflow.com/a/25821576/541493
+            var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+            return text.replace(urlRegex, function(url,b,c) {
+                var url2 = (c === 'www.') ?  'http://' +url : url;
+                return '<a href="' +url2+ '" target="_blank">' + url + '</a>';
+            });
+        }
     }
 );
 

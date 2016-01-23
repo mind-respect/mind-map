@@ -147,5 +147,29 @@ define([
                 changeSourceVertexSpy.calls.count()
             ).toBe(1);
         });
+        it("detects links and changes them to hyperlinks on blur", function(){
+            var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            expect(
+                bubble1.getLabel().find("a").length
+            ).toBe(0);
+            bubble1.getLabel().text(
+                "http://bubl.guru"
+            ).blur();
+            expect(
+                bubble1.getLabel().find("a").length
+            ).toBe(1);
+        });
+        it("detects links and changes them to hyperlinks when building vertex", function(){
+            var bubble1 = new Scenarios.threeBubblesGraph().getBubble1();
+            var bubble1Ui = VertexHtmlBuilder.withServerFacade(bubble1).create("123");
+            expect(
+                bubble1Ui.getLabel().find("a").length
+            ).toBe(0);
+            bubble1.setLabel("http://bubl.guru");
+            bubble1Ui = VertexHtmlBuilder.withServerFacade(bubble1).create("123");
+            expect(
+                bubble1Ui.getLabel().find("a").length
+            ).toBe(1);
+        });
     });
 });
