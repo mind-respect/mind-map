@@ -10,6 +10,7 @@ define([
     "triple_brain.graph_element_menu",
     "triple_brain.identification",
     "triple_brain.user_map_autocomplete_provider",
+    "triple_brain.wikidata_autocomplete_provider",
     "triple_brain.graph_element_main_menu",
     "triple_brain.mind_map_info",
     "triple_brain.selection_handler",
@@ -19,7 +20,7 @@ define([
     "jquery-ui",
     "jquery.triple_brain.search",
     "jquery.max_char"
-], function ($, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, GraphElementHtmlBuilder, BubbleFactory) {
+], function ($, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, WikidataAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, GraphElementHtmlBuilder, BubbleFactory) {
     "use strict";
     var api = {};
 
@@ -36,7 +37,8 @@ define([
             resultsProviders: [
                 UserMapAutocompleteProvider.toFetchCurrentUserVerticesAndPublicOnesForIdentification(
                     BubbleFactory.fromSubHtml(input)
-                )
+                ),
+                WikidataAutocompleteProvider.build()
             ]
         });
     };
