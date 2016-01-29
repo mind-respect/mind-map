@@ -27,7 +27,7 @@ define([
             ).data("vertex", this.bubble);
             var imageUrl = "/css/images/icons/vertex/" +
                 (isLeftOriented ? "left-" : "") +
-                "more-leaf.svg";
+                "floral-design.svg";
             var img = $("<img>").attr(
                 "src",
                 imageUrl
