@@ -7,6 +7,7 @@
     "actions": {
       "link":{
         "title": "Link",
+        "overview" : "Coherent mind from creating more links between your different ideas. The idea is simple: cut your ideas in reusable chunks.",
         "desc2": "Every bubble can eventually be linked to another where ever it's located in your mind.",
         "desc3": "Liez vos idées à celles des autres ou à l'encyclopédie Wikipédia et bénéficiez d'images, de descriptions et d'intelligence qui enrichiront vos idées et élimineront l'ambiguïté.",
         "video": "Link (demonstration video)",
@@ -20,6 +21,7 @@
       },
       "find":{
         "title": "Find",
+        "overview" : "Quickly picture the context of your thoughts.",
         "video": "Find (demonstration video)",
         "search": "Find your ideas instantly",
         "center": "Any bubble can become the center",
@@ -28,6 +30,7 @@
       },
       "model":{
         "title": "Modelize",
+        "overview" : "Discover the patterns of your mind.",
         "video": "Modelize (demonstration video)",
         "model": "Create reusable models",
         "suggestion": "Have suggestions of bubbles to add",

@@ -7,6 +7,7 @@
     "actions": {
       "link":{
         "title": "Liez",
+        "overview" : "Ayez un esprit plus cohérent en créant plus de liens entre vos différentes idées. L'idée est simple: découpez vos idées en petits morceaux qui peuvent être réutilisés et associés de milles et une façon.",
         "desc2": "Chaque bulle peut éventuellement être liée à une autre, peu importe où elle se situe dans votre esprit.",
         "desc3": "Liez vos idées à celles des autres ou à l'encyclopédie Wikipédia et bénéficiez d'images, de descriptions et d'intelligence qui enrichiront vos idées et élimineront l'ambiguïté.",
         "video": "Liez (vidéo de démonstration)",
@@ -20,6 +21,7 @@
       },
       "find":{
         "title": "Trouvez",
+        "overview" : "D'un coup d'oeil, saisisez le contexte de vos pensées.",
         "video": "Trouvez (vidéo de démonstration)",
         "search": "Trouvez vos idées de manière instantanée",
         "center": "Chaque bulle peut devenir le centre",
@@ -28,6 +30,7 @@
       },
       "model":{
         "title": "Modélisez",
+        "overview" : "Relevez les \"patterns\" de votre esprit.",
         "video": "Modélisez (vidéo de démonstration)",
         "model": "Créez des modèles réutilisables",
         "suggestion": "Ayez des suggestions de bulles à ajouter",
