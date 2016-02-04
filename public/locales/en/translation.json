@@ -2,12 +2,12 @@
   "cancel":"Cancel",
   "landing": {
     "slogan": "Shape your mind",
-    "description": "Link, find and modelize your thoughts.",
+    "description": "Link, find and modelize your notes.",
     "video_instruction":"Set to HD quality and fullscreen",
     "actions": {
       "link":{
         "title": "Link",
-        "overview" : "Coherent mind from creating more links between your different ideas. The idea is simple: cut your ideas in reusable chunks.",
+        "overview" : "Coherent mind by creating links between your different ideas. The idea is simple: cut your ideas in reusable chunks.",
         "desc2": "Every bubble can eventually be linked to another where ever it's located in your mind.",
         "desc3": "Liez vos idées à celles des autres ou à l'encyclopédie Wikipédia et bénéficiez d'images, de descriptions et d'intelligence qui enrichiront vos idées et élimineront l'ambiguïté.",
         "video": "Link (demonstration video)",
