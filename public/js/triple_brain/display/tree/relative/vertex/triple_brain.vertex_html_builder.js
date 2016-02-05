@@ -37,10 +37,16 @@ define([
             if (vertex.hasHiddenRelations()) {
                 vertex.buildHiddenNeighborPropertiesIndicator();
             }
+            api._setupChildrenContainerDragOverAndDrop(vertex);
             EventBus.publish(
                 '/event/ui/vertex/build_complete',
                 vertex
             );
+        };
+        api._setupChildrenContainerDragOverAndDrop = function(vertex){
+            //vertex.getChildrenContainer().on("dragover", function(){
+            //    console.log("poire");
+            //});
         };
         EventBus.subscribe(
             '/event/ui/vertex/visit_after_graph_drawn',
@@ -240,7 +246,6 @@ define([
                     );
                 }
             );
-
         };
         return api;
         function linkify(text) {
