@@ -91,6 +91,10 @@ define([
                     );
                 }
             ).appendTo(container);
+            labelHtml.attr(
+                "data-placeholder",
+                GroupRelationUi.getWhenEmptyLabel()
+            );
             this._setupDescriptionOnLabel(labelHtml);
         };
 

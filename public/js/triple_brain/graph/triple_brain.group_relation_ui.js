@@ -11,6 +11,9 @@ define([
     "use strict";
     var api = {};
     TreeEdge.buildCommonConstructors(api);
+    api.getWhenEmptyLabel = function () {
+        return $.t("group_relation.default");
+    };
     api.createFromHtml = function(html){
         var groupRelation = new api.Self(html);
         api.initCache(
@@ -37,9 +40,6 @@ define([
         return GraphElementUi.Types.GroupRelation;
     };
 
-    api.Self.prototype.getNumberOfRelationsToFlag = function () {
-        return this.getGroupRelation().getNumberOfVertices();
-    };
 
     api.Self.prototype.getGroupRelation = function () {
         return this.html.data(

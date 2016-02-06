@@ -21,7 +21,7 @@
       },
       "find":{
         "title": "Trouvez",
-        "overview" : "D'un coup d'oeil, saisisez le contexte de vos pensées.",
+        "overview" : "D'un coup d'oeil, saisisez le contexte de vos notes.",
         "video": "Trouvez (vidéo de démonstration)",
         "search": "Trouvez vos idées de manière instantanée",
         "center": "Chaque bulle peut devenir le centre",
@@ -199,6 +199,9 @@
         }
       }
     }
+  },
+  "group_relation": {
+    "default": "groupe"
   },
   "identification": {
     "context": {

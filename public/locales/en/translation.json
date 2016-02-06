@@ -21,7 +21,7 @@
       },
       "find":{
         "title": "Find",
-        "overview" : "Quickly picture the context of your thoughts.",
+        "overview" : "Quickly picture the context of your notes.",
         "video": "Find (demonstration video)",
         "search": "Find your ideas instantly",
         "center": "Any bubble can become the center",
@@ -199,6 +199,9 @@
         }
       }
     }
+  },
+  "group_relation": {
+    "default": "group"
   },
   "identification": {
     "context": {

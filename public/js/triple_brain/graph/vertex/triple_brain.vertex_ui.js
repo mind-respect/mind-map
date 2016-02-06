@@ -141,9 +141,7 @@ define([
                 totalNumberOfEdges
             );
         };
-        api.Object.prototype.getNumberOfRelationsToFlag = function () {
-            return this.getTotalNumberOfEdges() - 1;
-        };
+
         api.Object.prototype.getTotalNumberOfEdges = function () {
             return this.html.data(
                 "totalNumberOfEdges"
