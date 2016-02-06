@@ -3,11 +3,12 @@
  */
 
 define([
+    "jquery",
     "triple_brain.graph_displayer",
     "triple_brain.graph_element_ui",
     "triple_brain.tree_edge",
     "bootstrap"
-], function (GraphDisplayer, GraphElementUi, TreeEdge) {
+], function ($, GraphDisplayer, GraphElementUi, TreeEdge) {
     "use strict";
     var api = {};
     TreeEdge.buildCommonConstructors(api);
