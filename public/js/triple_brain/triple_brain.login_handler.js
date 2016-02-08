@@ -6,9 +6,10 @@ define([
         "require",
         "jquery",
         "triple_brain.user_service",
+        "triple_brain.id_uri",
         "bootstrap"
     ],
-    function (require, $, UserService) {
+    function (require, $, UserService, IdUri) {
         "use strict";
         var api = {};
         api.setupModal = function () {
@@ -115,7 +116,7 @@ define([
             UserService.getDefaultVertexUri(
                 user.user_name,
                 function (uri) {
-                    window.location = "?bubble=" + uri;
+                    window.location = "/user/" + IdUri.usernameFromUri(uri);
                 }
             );
         }

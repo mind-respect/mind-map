@@ -8,7 +8,7 @@ define([
         "triple_brain.mind_map_info",
         "triple_brain.id_uri"
     ],
-    function ($, EventBus, MindMapInfo, IdUriUtils) {
+    function ($, EventBus, MindMapInfo, IdUri) {
         "use strict";
         var _implementation,
             api = {};
@@ -30,15 +30,15 @@ define([
                 errorCallback
             );
         };
-        api.displayForSchemaWithUri = function(schemaUri, errorCallback){
+        api.displayForSchemaWithUri = function (schemaUri, errorCallback) {
             displayUsingBubbleUri(
                 schemaUri,
                 _implementation.displayForSchemaWithUri,
                 errorCallback
             );
         };
-        api.displayForBubbleWithUri = function(bubbleUri, errorCallback){
-            return IdUriUtils.isSchemaUri(bubbleUri) ?
+        api.displayForBubbleWithUri = function (bubbleUri, errorCallback) {
+            return IdUri.isSchemaUri(bubbleUri) ?
                 api.displayForSchemaWithUri(bubbleUri, errorCallback) :
                 api.displayUsingCentralVertexUri(bubbleUri, errorCallback);
         };
@@ -58,7 +58,7 @@ define([
             return _implementation.showSuggestions(vertex);
         };
 
-        api.addProperty = function(property, schema){
+        api.addProperty = function (property, schema) {
             return _implementation.addProperty(
                 property,
                 schema
@@ -144,10 +144,10 @@ define([
         api.getPropertyMenuHandler = function () {
             return _implementation.getPropertyMenuHandler();
         };
-        api.getVertexSuggestionMenuHandler = function(){
+        api.getVertexSuggestionMenuHandler = function () {
             return _implementation.getVertexSuggestionMenuHandler();
         };
-        api.getRelationSuggestionMenuHandler = function(){
+        api.getRelationSuggestionMenuHandler = function () {
             return _implementation.getRelationSuggestionMenuHandler();
         };
         api.getGraphElementMenuHandler = function () {
@@ -162,12 +162,12 @@ define([
         api.expandGroupRelation = function (groupRelation) {
             return _implementation.expandGroupRelation(groupRelation);
         };
-        api.reset = function(){
+        api.reset = function () {
             publishAboutToUpdate();
             publishResetGraph();
             $("#drawn_graph").empty();
         };
-        api.addNewGroupRelation = function(identification, parentBubble){
+        api.addNewGroupRelation = function (identification, parentBubble) {
             return _implementation.addNewGroupRelation(
                 identification,
                 parentBubble
@@ -204,7 +204,7 @@ define([
                 history.pushState(
                     {},
                     '',
-                        "?bubble=" + centralBubbleUri
+                    IdUri.htmlUrlForBubbleUri(centralBubbleUri)
                 );
             }
             displayer(

@@ -15,29 +15,26 @@ define([
             _isViewOnly,
             _isAnonymous,
             _isTagCloudFlow = false;
-        api.htmlUrlForBubbleUri = function (bubbleUri) {
-            return window.location.origin + "?bubble=" + bubbleUri;
-        };
         api.defaultVertexUri = function () {
             return UserService.currentUserUri() + '/graph/vertex/any';
         };
         api.isCenterBubbleUriDefinedInUrl = function () {
-            return api._getCenterVertexUriInUrl() !== undefined;
+            return IdUriUtils.getGraphElementUriInUrl() !== undefined;
         };
         api.getCenterBubbleUri = function () {
-            return api._getCenterVertexUriInUrl();
+            return IdUriUtils.getGraphElementUriInUrl();
         };
         api.isViewOnly = function () {
-            api.defineIsViewOnlyIfUndefined();
+            api.defineIsViewOnlyIfItsUndefined();
             return _isViewOnly;
         };
-        api.defineIsViewOnlyIfUndefined = function () {
+        api.defineIsViewOnlyIfItsUndefined = function () {
             if (_isViewOnly !== undefined) {
                 return;
             }
             _isViewOnly = _isTagCloudFlow ?
                 false : _isAnonymous || !IdUriUtils.isGraphElementUriOwnedByCurrentUser(
-                api._getCenterVertexUriInUrl()
+                IdUriUtils.getGraphElementUriInUrl()
             );
             EventBus.publish(
                 '/event/ui/mind_map_info/is_view_only',
@@ -64,11 +61,8 @@ define([
         };
         api.isSchemaMode = function () {
             return IdUriUtils.isSchemaUri(
-                api._getCenterVertexUriInUrl()
+                IdUriUtils.getGraphElementUriInUrl()
             );
-        };
-        api._getCenterVertexUriInUrl = function () {
-            return $.url().param("bubble");
         };
         return api;
     }

@@ -89,6 +89,11 @@ define([
                 "/non_owned/vertex/" + api.getVertexShortId(uri) +
                 "/surround_graph";
         };
+        api.getGraphElementShortIdFromUri = function(uri){
+            return api.isSchemaUri(uri) ?
+                api.getSchemaShortId(uri) :
+                api.getVertexShortId(uri);
+        };
         api.getVertexShortId = function (uri) {
             return uri.substring(
                 uri.indexOf("vertex/") + 7
@@ -108,8 +113,32 @@ define([
                 uri
             ).attr("host");
         };
-        api.isUriOfAGraphElement = function(uri){
+        api.isUriOfAGraphElement = function (uri) {
             return uri.indexOf("/service/users") === 0;
+        };
+        api.getGraphElementUriInUrl = function () {
+            if ("" === usernameForBublGuru || "" === graphElementShortIdForBublGuru) {
+                return undefined;
+            }
+
+            return "/service/users/" + usernameForBublGuru + "/graph/vertex/" + graphElementShortIdForBublGuru;
+        };
+        api.htmlUrlForBubbleUri = function (graphElementUri) {
+            if(api.isSchemaUri(graphElementUri)){
+                return api._urlForSchemaUri(
+                    graphElementUri
+                );
+            }
+            return "/user/" +
+                api.usernameFromUri(graphElementUri) +
+                "/graph/vertex/" +
+                api.getVertexShortId(graphElementUri);
+        };
+        api._urlForSchemaUri = function(vertexUri){
+            return "/user/" +
+                api.usernameFromUri(vertexUri) +
+                "/graph/schema/" +
+                api.getSchemaShortId(vertexUri);
         };
         return api;
     }

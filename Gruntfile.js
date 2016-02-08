@@ -28,14 +28,17 @@ module.exports = function (grunt) {
                     template: require('grunt-template-jasmine-requirejs'),
                     outfile: "public/_SpecRunner.html",
                     templateOptions: {
-                        requireConfigFile: 'public/js/common-boot.js'
+                        requireConfigFile: 'public/js/common-boot.js',
+                        requireConfig: {
+                            baseUrl: './js/'
+                        }
                     }
                 }
             }
         },
         jshint: {
-            all : {
-                src : [
+            all: {
+                src: [
                     'public/js/triple_brain/**',
                     'public/js/module/**/*.js',
                     'spec/*.js',
@@ -53,13 +56,13 @@ module.exports = function (grunt) {
                 undef: true,
                 boss: true,
                 eqnull: true,
-                strict:true,
-                jasmine:true,
-                predef:["define", "crow", "crypto", "bubl_guru_force_refresh", "spyOnEvent"],
-                browser:true,
-                funcscope:true,
-                validthis:true,
-                devel:true
+                strict: true,
+                jasmine: true,
+                predef: ["define", "crow", "crypto", "bubl_guru_force_refresh", "spyOnEvent", "usernameForBublGuru", "graphElementShortIdForBublGuru"],
+                browser: true,
+                funcscope: true,
+                validthis: true,
+                devel: true
             }
         },
         connect: {

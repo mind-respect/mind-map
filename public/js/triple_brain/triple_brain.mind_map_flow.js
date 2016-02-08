@@ -87,7 +87,7 @@ define([
             loadLocaleAndGraph();
         } else {
             UserService.authenticatedUser(function () {
-                MindMapInfo.defineIsViewOnlyIfUndefined();
+                MindMapInfo.defineIsViewOnlyIfItsUndefined();
                 loadLocaleAndGraph();
             });
         }

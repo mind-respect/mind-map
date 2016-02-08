@@ -14,9 +14,10 @@ define([
         "triple_brain.vertex_service",
         "triple_brain.mind_map_info",
         "triple_brain.event_bus",
-        "triple_brain.schema_service"
+        "triple_brain.schema_service",
+        "triple_brain.id_uri"
     ],
-    function ($, BigSearchBox, LoginHandler, RegisterHandler, SelectionHandler, UserService, GraphDisplayer, Vertex, VertexService, MindMapInfo, EventBus, SchemaService) {
+    function ($, BigSearchBox, LoginHandler, RegisterHandler, SelectionHandler, UserService, GraphDisplayer, Vertex, VertexService, MindMapInfo, EventBus, SchemaService, IdUri) {
         "use strict";
         var api = {};
         api.earlyInit = function () {
@@ -126,7 +127,7 @@ define([
             event.preventDefault();
             SchemaService.create(function (schemaUri) {
                 if (MindMapInfo.isTagCloudFlow()) {
-                    window.location = "?bubble=" + schemaUri;
+                    window.location = IdUri.htmlUrlForBubbleUri(schemaUri);
                     return;
                 }
                 GraphDisplayer.displayForSchemaWithUri(schemaUri);
@@ -140,7 +141,7 @@ define([
                     newVertex
                 );
                 if (MindMapInfo.isTagCloudFlow()) {
-                    window.location = "?bubble=" + serverFormatFacade.getUri();
+                    window.location = IdUri.htmlUrlForBubbleUri(serverFormatFacade.getUri());
                     return;
                 }
                 GraphDisplayer.displayUsingCentralVertexUri(

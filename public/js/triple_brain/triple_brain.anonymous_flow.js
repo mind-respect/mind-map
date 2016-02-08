@@ -20,7 +20,7 @@ define([
 
         });
         MindMapInfo.setIsAnonymous(true);
-        MindMapInfo.defineIsViewOnlyIfUndefined();
+        MindMapInfo.defineIsViewOnlyIfItsUndefined();
         setUpFeatures();
         $(".frontier").remove();
     };

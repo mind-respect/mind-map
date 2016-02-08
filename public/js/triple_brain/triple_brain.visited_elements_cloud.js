@@ -5,8 +5,9 @@
 
 define([
     "jquery",
+    "triple_brain.id_uri",
     "jquery.performance"
-], function ($) {
+], function ($, IdUri) {
     "use strict";
     var _elements,
         _container;
@@ -136,7 +137,9 @@ define([
                 element.getLabel()
             ).click(function (event) {
                     event.preventDefault();
-                    window.location = "?bubble=" + $(this).data("uri");
+                    window.location = IdUri.htmlUrlForBubbleUri(
+                        $(this).data("uri")
+                    );
                 }).appendTo(_container);
         });
         _container.reattach();

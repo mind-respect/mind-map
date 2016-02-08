@@ -3,8 +3,7 @@
  */
 
 requirejs.config({
-    baseUrl: 'js',
-    urlArgs: "bust=" + 12,
+    baseUrl: '/js',
     paths: {
         "locales": '../locales',
         "test": '../../spec',

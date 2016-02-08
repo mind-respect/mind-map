@@ -19,7 +19,7 @@ define(
     function ($, MindMapFlow, UserService, MindMapInfo, AnonymousFlow, ChangePassword, LoginHandler, RegisterHandler) {
         "use strict";
         var api = {};
-        api.start = function() {
+        api.start = function () {
             startLoginFlowWhenForbiddenActionIsPerformed();
             UserService.isAuthenticated(
                 setupMindMapForAuthenticatedUser,
@@ -27,20 +27,23 @@ define(
             );
             setupLogoClick();
         };
-        api.enterBubbleCloudFlow = function(){
+        api.enterBubbleCloudFlow = function () {
             MindMapFlow.enterBubbleCloud();
         };
 
         return api;
 
         function setupMindMapForAuthenticatedUser() {
-            if (!MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
-                UserService.authenticatedUser(function () {
-                    MindMapFlow.enterBubbleCloud();
-                });
+            if (MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
+                MindMapFlow.enterMindMapForAuthenticatedUser();
                 return;
             }
-            MindMapFlow.enterMindMapForAuthenticatedUser();
+            if(usernameForBublGuru !== ""){
+                window.location = "/user/" + usernameForBublGuru;
+            }
+            UserService.authenticatedUser(function () {
+                MindMapFlow.enterBubbleCloud();
+            });
         }
 
         function callBackWhenNotAuthenticated() {
@@ -64,13 +67,13 @@ define(
             });
         }
 
-        function setupLogoClick(){
-            $("#logo").click(function(event){
+        function setupLogoClick() {
+            $("#logo").click(function (event) {
                 event.preventDefault();
-                if(MindMapInfo.isAnonymous()){
-                    window.location="http://about.bubl.guru";
-                }else{
-                    window.location="/";
+                if (MindMapInfo.isAnonymous()) {
+                    window.location = "http://about.bubl.guru";
+                } else {
+                    window.location = "/";
                 }
             });
         }

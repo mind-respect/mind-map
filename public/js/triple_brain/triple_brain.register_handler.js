@@ -6,12 +6,13 @@ define([
         "require",
         "jquery",
         "triple_brain.user_service",
+        "triple_brain.id_uri",
         "triple_brain.friendly_resource",
         "triple_brain.friendly_resource_service",
         "bootstrap",
         "jquery.i18next"
     ],
-    function (require, $, UserService, FriendlyResource, FriendlyResourceService) {
+    function (require, $, UserService, IdUri, FriendlyResource, FriendlyResourceService) {
         "use strict";
         var api = {};
         api.setupModal = function(){
@@ -97,7 +98,7 @@ define([
                         FriendlyResource.withUri(uri),
                         user.user_name,
                         function(){
-                            window.location = "?bubble=" + uri;
+                            window.location = IdUri.htmlUrlForBubbleUri(uri);
                         }
                     );
 

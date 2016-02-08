@@ -12,11 +12,14 @@ define([
     "triple_brain.vertex_service",
     "triple_brain.friendly_resource_service",
     "triple_brain.edge_service",
-    "triple_brain.search"
-], function (TestUtils, UserService, MindMapInfo, SuggestionService, GraphService, SchemaService, VertexService, FriendlyResourceService, EdgeService, SearchService) {
+    "triple_brain.search",
+    "triple_brain.id_uri"
+], function (TestUtils, UserService, MindMapInfo, SuggestionService, GraphService, SchemaService, VertexService, FriendlyResourceService, EdgeService, SearchService, IdUri) {
     "use strict";
     var api = {};
     api.setCenterVertexUriInUrl = function(centerVertexUri){
+        window.usernameForBublGuru = IdUri.usernameFromUri(centerVertexUri);
+        window.graphElementShortIdForBublGuru = IdUri.getGraphElementShortIdFromUri(centerVertexUri);
         MindMapInfo._getCenterVertexUriInUrl = function(){
             return centerVertexUri;
         };

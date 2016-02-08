@@ -74,7 +74,9 @@ define([
                 li.addClass("clickable").data(
                     "uri", graphElement.getUri()
                 ).click(function () {
-                        window.location = "?bubble=" + $(this).data("uri");
+                        window.location = IdUri.htmlUrlForBubbleUri(
+                            $(this).data("uri")
+                        );
                     });
             }
             li.appendTo(container);
@@ -257,7 +259,7 @@ define([
             var self = this;
             var url = identification.getExternalResourceUri();
             if (IdUri.isUriOfAGraphElement(url)) {
-                url = MindMapInfo.htmlUrlForBubbleUri(
+                url = IdUri.htmlUrlForBubbleUri(
                     url
                 );
             }
