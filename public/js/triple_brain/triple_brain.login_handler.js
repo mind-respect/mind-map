@@ -38,13 +38,8 @@ define([
                 UserService.authenticate(
                     self.getFormData(),
                     function (user) {
-                        window.location.reload();
+                        window.location = "/user/" + IdUri.usernameFromUri(uri);
                         //todo uncomment below eventually to avoid to have to reload page
-                        //UserService.setAuthenticatedUserInCache(user);
-                        //require(["triple_brain.mind_map_flow"], function(MindMapFlow){
-                        //    closeModal();
-                        //    MindMapFlow.enterBubbleCloud();
-                        //});
                     },
                     function () {
                         self.hideAllMessages();
