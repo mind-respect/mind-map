@@ -38,8 +38,7 @@ define([
                 UserService.authenticate(
                     self.getFormData(),
                     function (user) {
-                        window.location = "/user/" + IdUri.usernameFromUri(uri);
-                        //todo uncomment below eventually to avoid to have to reload page
+                        window.location = "/user/" + user.user_name;
                     },
                     function () {
                         self.hideAllMessages();
