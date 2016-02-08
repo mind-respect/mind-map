@@ -19,8 +19,9 @@ define([
     var api = {};
     api.setCenterVertexUriInUrl = function(centerVertexUri){
         window.usernameForBublGuru = IdUri.usernameFromUri(centerVertexUri);
+        window.graphElementTypeForBublGuru = IdUri.isSchemaUri(centerVertexUri) ? "schema" : "vertex";
         window.graphElementShortIdForBublGuru = IdUri.getGraphElementShortIdFromUri(centerVertexUri);
-        MindMapInfo._getCenterVertexUriInUrl = function(){
+        IdUri.getGraphElementUriInUrl = function(){
             return centerVertexUri;
         };
     };

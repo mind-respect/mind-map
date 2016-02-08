@@ -9,20 +9,21 @@ define([
         "triple_brain.event_bus",
         "jquery.url"
     ],
-    function ($, IdUriUtils, UserService, EventBus) {
+    function ($, IdUri, UserService, EventBus) {
         "use strict";
         var api = {},
             _isViewOnly,
             _isAnonymous,
-            _isTagCloudFlow = false;
+            _isTagCloudFlow = false,
+            _isAuthenticatedLandingPageFlow = false;
         api.defaultVertexUri = function () {
             return UserService.currentUserUri() + '/graph/vertex/any';
         };
         api.isCenterBubbleUriDefinedInUrl = function () {
-            return IdUriUtils.getGraphElementUriInUrl() !== undefined;
+            return IdUri.getGraphElementUriInUrl() !== undefined;
         };
         api.getCenterBubbleUri = function () {
-            return IdUriUtils.getGraphElementUriInUrl();
+            return IdUri.getGraphElementUriInUrl();
         };
         api.isViewOnly = function () {
             api.defineIsViewOnlyIfItsUndefined();
@@ -32,9 +33,9 @@ define([
             if (_isViewOnly !== undefined) {
                 return;
             }
-            _isViewOnly = _isTagCloudFlow ?
-                false : _isAnonymous || !IdUriUtils.isGraphElementUriOwnedByCurrentUser(
-                IdUriUtils.getGraphElementUriInUrl()
+            _isViewOnly = _isTagCloudFlow || _isAuthenticatedLandingPageFlow ?
+                false : _isAnonymous || !IdUri.isGraphElementUriOwnedByCurrentUser(
+                IdUri.getGraphElementUriInUrl()
             );
             EventBus.publish(
                 '/event/ui/mind_map_info/is_view_only',
@@ -49,7 +50,12 @@ define([
         api.isTagCloudFlow = function () {
             return _isTagCloudFlow;
         };
-
+        api.setIsAuthenticatedLandingPageFlow = function(isAuthenticatedLandingPageFlow){
+            _isAuthenticatedLandingPageFlow = isAuthenticatedLandingPageFlow;
+        };
+        api.isAuthenticatedLandingPageFlow = function(){
+            return _isAuthenticatedLandingPageFlow;
+        };
         api.setIsAnonymous = function (isAnonymous) {
             _isAnonymous = isAnonymous;
         };
@@ -60,8 +66,8 @@ define([
             _isViewOnly = isViewOnly;
         };
         api.isSchemaMode = function () {
-            return IdUriUtils.isSchemaUri(
-                IdUriUtils.getGraphElementUriInUrl()
+            return IdUri.isSchemaUri(
+                IdUri.getGraphElementUriInUrl()
             );
         };
         return api;

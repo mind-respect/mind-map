@@ -42,6 +42,10 @@ define([
                 handleDisconnectButton();
                 getLoginButton().addClass("hidden");
                 getAllYourBubblesButton().removeClass("hidden");
+                getAllYourBubblesButton().prop(
+                    "href",
+                    "/user/" + UserService.authenticatedUserInCache().user_name
+                );
                 getRegisterButton().addClass("hidden");
             }
             if (!MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
@@ -126,7 +130,7 @@ define([
         function createNewSchema(event) {
             event.preventDefault();
             SchemaService.create(function (schemaUri) {
-                if (MindMapInfo.isTagCloudFlow()) {
+                if (MindMapInfo.isTagCloudFlow() || MindMapInfo.isAuthenticatedLandingPageFlow()) {
                     window.location = IdUri.htmlUrlForBubbleUri(schemaUri);
                     return;
                 }
@@ -140,7 +144,7 @@ define([
                 var serverFormatFacade = Vertex.fromServerFormat(
                     newVertex
                 );
-                if (MindMapInfo.isTagCloudFlow()) {
+                if (MindMapInfo.isTagCloudFlow() || MindMapInfo.isAuthenticatedLandingPageFlow()) {
                     window.location = IdUri.htmlUrlForBubbleUri(serverFormatFacade.getUri());
                     return;
                 }

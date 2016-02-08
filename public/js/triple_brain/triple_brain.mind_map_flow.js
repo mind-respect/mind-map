@@ -75,7 +75,6 @@ define([
         $("body").addClass("no-scroll");
         MindMapInfo.setIsAnonymous(isAnonymous);
         MindMapInfo.setIsTagCloudFlow(isTagCloudFlow);
-        $("#app-presentation").add("#welcome-content").addClass("hidden");
         Header.earlyInit();
         handleHistoryBrowse();
         GraphDisplayer.setImplementation(
@@ -83,6 +82,7 @@ define([
                 "relative_tree"
             )
         );
+        $("#app-presentation").add("#welcome-content").addClass("hidden");
         if (isAnonymous) {
             loadLocaleAndGraph();
         } else {

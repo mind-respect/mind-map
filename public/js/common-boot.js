@@ -144,7 +144,7 @@ requirejs.config({
         "triple_brain.suggestion_relation_ui" : "triple_brain/display/tree/relative/suggestion_bubble/triple_brain.suggestion_relation_ui",
         "triple_brain.suggestion_relation_menu_handler" : "triple_brain/display/tree/relative/suggestion_bubble/triple_brain.suggestion_relation_menu_handler",
         "triple_brain.graph_element_type" : "triple_brain/graph/triple_brain.graph_element_type",
-        "triple_brain.anonymous_flow": "triple_brain/triple_brain.anonymous_flow",
+        "triple_brain.landing_page_flow": "triple_brain/triple_brain.landing_page_flow",
         "triple_brain.modules": "triple_brain/triple_brain.modules",
         "triple_brain.module.date_picker": "module/date_picker/triple_brain.module.date_picker"
     },

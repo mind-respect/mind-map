@@ -116,12 +116,24 @@ define([
         api.isUriOfAGraphElement = function (uri) {
             return uri.indexOf("/service/users") === 0;
         };
+        api._getUsernameInUrl = function(){
+            return api._getUrlParamAtIndex(1);
+        };
+        api._getGraphElementShortIdFromUrl = function(){
+            return api._getUrlParamAtIndex(4);
+        };
+        api._hasUsernameInUrl = function(){
+            return api._hasParamAtIndex(1);
+        };
+        api._hasGraphElementShortIdInUrl = function(){
+            return api._hasParamAtIndex(4);
+        };
         api.getGraphElementUriInUrl = function () {
-            if ("" === usernameForBublGuru || "" === graphElementShortIdForBublGuru) {
+            if(!api._hasUsernameInUrl() || !api._hasGraphElementShortIdInUrl()){
                 return undefined;
             }
-
-            return "/service/users/" + usernameForBublGuru + "/graph/vertex/" + graphElementShortIdForBublGuru;
+            return "/service/users/" + api._getUsernameInUrl() +
+                "/graph/"+window.graphElementTypeForBublGuru+"/" + api._getGraphElementShortIdFromUrl();
         };
         api.htmlUrlForBubbleUri = function (graphElementUri) {
             if(api.isSchemaUri(graphElementUri)){
@@ -140,6 +152,13 @@ define([
                 "/graph/schema/" +
                 api.getSchemaShortId(vertexUri);
         };
+        api._hasParamAtIndex = function(index){
+            return window.location.pathname.split("/").length >= index + 1;
+        };
+        api._getUrlParamAtIndex = function(index){
+            return window.location.pathname.split("/")[index + 1];
+        };
         return api;
+
     }
 );

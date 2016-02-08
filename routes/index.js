@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var isDebug = 'development' === process.env.debug;
-/* GET home page. */
 router.get('/', function (req, res, next) {
     res
         .render(
@@ -10,11 +9,12 @@ router.get('/', function (req, res, next) {
             isDebug: isDebug,
             bust: process.env.bust,
             usernameForBublGuru : "",
+            graphElementTypeForBublGuru: "",
             graphElementShortIdForBublGuru : ""
         }
     );
 });
-router.get('/:username', function (req, res, next) {
+router.get('/user/:username', function (req, res, next) {
     res
         .render(
         'index',
@@ -22,11 +22,12 @@ router.get('/:username', function (req, res, next) {
             isDebug: isDebug,
             bust: process.env.bust,
             usernameForBublGuru : req.params.username,
+            graphElementTypeForBublGuru: "",
             graphElementShortIdForBublGuru : ""
         }
     );
 });
-router.get('/user/:username/graph/vertex/:graphElementShortId', function (req, res, next) {
+router.get('/user/:username/graph/:graphElementType/:graphElementShortId', function (req, res, next) {
     res
         .render(
         'index',
@@ -34,6 +35,7 @@ router.get('/user/:username/graph/vertex/:graphElementShortId', function (req, r
             isDebug: isDebug,
             bust: process.env.bust,
             usernameForBublGuru : req.params.username,
+            graphElementTypeForBublGuru : req.params.graphElementType,
             graphElementShortIdForBublGuru : req.params.graphElementShortId
         }
     );
