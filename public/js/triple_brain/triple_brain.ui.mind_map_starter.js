@@ -12,11 +12,12 @@ define(
         "triple_brain.change_password",
         "triple_brain.login_handler",
         "triple_brain.register_handler",
+        "triple_brain.external_page_loader",
         "triple_brain.wikidata",
         "triple_brain.ui.search",
         "triple_brain.modules"
     ],
-    function ($, MindMapFlow, UserService, MindMapInfo, LandingPageFlow, ChangePassword, LoginHandler, RegisterHandler) {
+    function ($, MindMapFlow, UserService, MindMapInfo, LandingPageFlow, ChangePassword, LoginHandler, RegisterHandler, ExternalPageLoader) {
         "use strict";
         var api = {};
         api.start = function () {
@@ -33,13 +34,13 @@ define(
 
         return api;
 
-        function callbackWhenUserAuthenticated(){
+        function callbackWhenUserAuthenticated() {
             if (MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
                 MindMapFlow.enterMindMapForAuthenticatedUser();
                 return;
             }
             UserService.authenticatedUser(function () {
-                if(usernameForBublGuru === "") {
+                if (usernameForBublGuru === "") {
                     LandingPageFlow.enterForAuthenticated();
                     return;
                 }
@@ -61,9 +62,20 @@ define(
         }
 
         function startLoginFlowWhenForbiddenActionIsPerformed() {
-            $("html").ajaxError(function (e, jqxhr) {
-                if (403 === jqxhr.status) {
-                    LoginHandler.showModal();
+            $.ajaxSetup({
+                error: function (xhr) {
+                    $("body").removeClass("hidden");
+                    if (403 === xhr.status) {
+                        ExternalPageLoader.showLinearFlowWithOptions({
+                            href: "/not-allowed.html",
+                            title: $.t("not_allowed.title")
+                        });
+                    } else if (404 === xhr.status) {
+                        ExternalPageLoader.showLinearFlowWithOptions({
+                            href: "/non-existent.html",
+                            title: $.t("non_existent.title")
+                        });
+                    }
                 }
             });
         }

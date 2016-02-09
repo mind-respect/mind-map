@@ -93,7 +93,7 @@
   },
   "not_allowed": {
     "title": "Accès refusé",
-    "about": "Vous n'avez pas les droits nécessaire pour consulter cette bulle.",
+    "about": "Vous n'avez pas les droits nécessaire pour consulter ou modifier cette bulle.",
     "go_home": "Continuer"
   },
   "non_existent": {

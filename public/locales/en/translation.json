@@ -93,7 +93,7 @@
   },
   "not_allowed": {
     "title": "Access denied",
-    "about": "You don't have the rights to read this bubble",
+    "about": "You don't have the rights to read or modify this bubble",
     "go_home": "Continue"
   },
   "non_existent": {

@@ -10,14 +10,13 @@ define([
     "triple_brain.selection_handler",
     "triple_brain.graph_displayer",
     "triple_brain.graph_displayer_factory",
-    "triple_brain.external_page_loader",
     "triple_brain.mind_map_info",
     "triple_brain.graph_element_main_menu",
     "triple_brain.ui.graph",
     "triple_brain.language_manager",
     "triple_brain.id_uri",
     "triple_brain.bubble_cloud_flow"
-], function ($, UserService, EventBus, Header, SelectionHandler, GraphDisplayer, GraphDisplayerFactory, ExternalPageLoader, MindMapInfo, GraphElementMainMenu, GraphUi, LanguageManager, IdUriUtils, BubbleCloudFlow) {
+], function ($, UserService, EventBus, Header, SelectionHandler, GraphDisplayer, GraphDisplayerFactory, MindMapInfo, GraphElementMainMenu, GraphUi, LanguageManager, IdUriUtils, BubbleCloudFlow) {
     "use strict";
     var api = {};
     api.enterBubbleCloud = function () {
@@ -99,25 +98,9 @@ define([
                     return;
                 }
                 GraphDisplayer.displayForBubbleWithUri(
-                    MindMapInfo.getCenterBubbleUri(),
-                    handleGettingGraphError
+                    MindMapInfo.getCenterBubbleUri()
                 );
                 GraphElementMainMenu.reset();
-            });
-        }
-    }
-
-    function handleGettingGraphError(xhr) {
-        $("body").removeClass("hidden");
-        if (403 === xhr.status) {
-            ExternalPageLoader.showLinearFlowWithOptions({
-                href: "not-allowed.html",
-                title: $.t("not_allowed.title")
-            });
-        } else if (404 === xhr.status) {
-            ExternalPageLoader.showLinearFlowWithOptions({
-                href: "non-existent.html",
-                title: $.t("non_existent.title")
             });
         }
     }
