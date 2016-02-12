@@ -147,6 +147,9 @@ define([
                 changeSourceVertexSpy.calls.count()
             ).toBe(1);
         });
+        it("disables drags and drops when for anonymous user", function(){
+
+        });
         it("detects links and changes them to hyperlinks on blur", function(){
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             expect(
