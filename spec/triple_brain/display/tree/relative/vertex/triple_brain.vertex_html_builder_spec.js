@@ -8,8 +8,9 @@ define([
     "triple_brain.vertex_html_builder",
     "triple_brain.ui.graph",
     "triple_brain.selection_handler",
-    "triple_brain.edge_service"
-], function (Scenarios, TestUtils, VertexHtmlBuilder, GraphUi, SelectionHandler, EdgeService) {
+    "triple_brain.edge_service",
+    "triple_brain.mind_map_info"
+], function (Scenarios, TestUtils, VertexHtmlBuilder, GraphUi, SelectionHandler, EdgeService, MindMapInfo) {
     "use strict";
     describe("vertex_html_builder", function () {
         var bubble1, graphWithCircularityScenario;
@@ -148,7 +149,23 @@ define([
             ).toBe(1);
         });
         it("disables drags and drops when for anonymous user", function(){
-
+            var scenario = new Scenarios.threeBubblesGraph();
+            MindMapInfo._setIsViewOnly(true);
+            var bubble1 = scenario.getBubble1InTree();
+            var bubble2 = TestUtils.getChildWithLabel(
+                bubble1,
+                "r1"
+            ).getTopMostChildBubble();
+            var newVertex = TestUtils.addTriple(bubble2).destinationVertex();
+            TestUtils.startDragging(newVertex);
+            var changeSourceVertexSpy = spyOn(EdgeService, "changeSourceVertex");
+            expect(
+                changeSourceVertexSpy.calls.count()
+            ).toBe(0);
+            TestUtils.drop(bubble1);
+            expect(
+                changeSourceVertexSpy.calls.count()
+            ).toBe(0);
         });
         it("detects links and changes them to hyperlinks on blur", function(){
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();

@@ -103,7 +103,8 @@
   },
   "top_menu": {
     "share": "Partager",
-    "central" : "toutes vos bulles",
+    "central" : "bulles centrales",
+    "save_as_image" : "sauvegarder en image",
     "create": {
       "title": "créer",
       "bubble": "bulle",

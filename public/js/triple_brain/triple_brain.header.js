@@ -25,6 +25,7 @@ define([
             setUpShareLinkButton();
         };
         EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function (event, isViewOnly) {
+            getSaveAsImageButton().removeClass("hidden");
             if (isViewOnly) {
                 getCreateMenu().addClass("hidden");
                 BigSearchBox.setup();
@@ -48,6 +49,7 @@ define([
                 );
                 getRegisterButton().addClass("hidden");
             }
+            //handleSaveAsImageButton();
             if (!MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
                 getSelectButton().addClass("hidden");
             }
@@ -86,6 +88,21 @@ define([
                 disconnect
             );
         }
+
+        //function handleSaveAsImageButton() {
+        //    getSaveAsImageButton().off(
+        //        "click",
+        //        saveAsImageHandle
+        //    ).on(
+        //        "click",
+        //        saveAsImageHandle
+        //    );
+        //}
+
+        //function saveAsImageHandle(event){
+        //    event.preventDefault();
+        //    ExportAsImage.download();
+        //}
 
         function disconnect() {
             UserService.logout(function () {
@@ -220,6 +237,10 @@ define([
 
         function getAllYourBubblesButton() {
             return $("#all-your-bubbles-button");
+        }
+
+        function getSaveAsImageButton(){
+            return $("#save-as-image-button");
         }
     }
 );

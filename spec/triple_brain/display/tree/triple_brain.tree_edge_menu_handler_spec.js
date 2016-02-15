@@ -19,6 +19,7 @@ define([
             var relation1 = bubble1.getTopMostChildBubble();
             Mock.mockRemoveEdge();
             MindMapInfo.setIsAnonymous(false);
+            MindMapInfo._setIsViewOnly(false);
             TreeEdgeMenuHandler.forSingle().removeAction(
                 relation1
             );
