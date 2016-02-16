@@ -33,10 +33,10 @@ define([
     forSingleNotOwned.identify = forSingle.identify = function (event, edge) {
         forSingle.identifyAction(edge);
     };
-    forSingle.addChild = function(event, edge){
+    forSingle.addChild = function (event, edge) {
         forSingle.addChildAction(edge);
     };
-    forSingle.addChildAction = function(edge){
+    forSingle.addChildAction = function (edge) {
         var parentVertex = edge.getParentVertex();
         var newGroupRelation = GraphDisplayer.addNewGroupRelation(
             getAppropriateIdentificationForNewGroupRelation(edge),
@@ -48,7 +48,7 @@ define([
         edge.moveToParent(newGroupRelation);
     };
 
-    forSingle.identifyAction = function(edge){
+    forSingle.identifyAction = function (edge) {
         IdentificationMenu.ofGraphElement(
             edge
         ).create();
@@ -62,7 +62,11 @@ define([
     forSingle.removeAction = function (edge) {
         EdgeService.remove(edge, function () {
             var childVertex = edge.getTopMostChildBubble();
-            childVertex.remove();
+            edge.applyToOtherInstances(function (otherInstance) {
+                var childVertex = otherInstance.getTopMostChildBubble();
+                childVertex.remove(false);
+            });
+            childVertex.remove(false);
         });
     };
     forSingle.reverseToRight = function (event, edge) {
@@ -95,11 +99,11 @@ define([
             forGroupNotOwned;
     };
     return api;
-    function getAppropriateIdentificationForNewGroupRelation(edge){
+    function getAppropriateIdentificationForNewGroupRelation(edge) {
         var identification;
-        if(edge.hasIdentifications()){
+        if (edge.hasIdentifications()) {
             identification = edge.getIdentifications()[0];
-        }else{
+        } else {
             identification = Identification.fromFriendlyResource(
                 edge.getOriginalServerObject()
             );

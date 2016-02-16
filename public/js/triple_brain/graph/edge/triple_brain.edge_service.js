@@ -29,34 +29,41 @@ define([
             );
         };
         api.remove = function (edge, callback) {
-            var edgeUri = edge.getUri();
             $.ajax({
                 type: 'DELETE',
-                url: edgeUri
+                url: edge.getUri()
             }).success(function () {
-                var sourceVertex = edge.getSourceVertex(),
-                    destinationVertex = edge.getDestinationVertex(),
-                    sourceVertexUri = sourceVertex.getUri(),
-                    destinationVertexUri = destinationVertex.getUri(),
-                    sourceVertexId = sourceVertex.getId(),
-                    destinationVertexId = destinationVertex.getId();
+                api._removeCallback(
+                    edge,
+                    callback
+                );
+            });
+        };
+        api._removeCallback = function (edge, callback) {
+            var sourceVertex = edge.getSourceVertex(),
+                destinationVertex = edge.getDestinationVertex(),
+                sourceVertexUri = sourceVertex.getUri(),
+                destinationVertexUri = destinationVertex.getUri(),
+                sourceVertexId = sourceVertex.getId(),
+                destinationVertexId = destinationVertex.getId();
+            if(undefined !== callback){
                 callback(
                     edge,
-                    edgeUri,
+                    edge.getUri(),
                     sourceVertexUri,
                     destinationVertexUri
                 );
-                EventBus.publish(
-                    '/event/ui/graph/relation/deleted', [
-                        edge,
-                        edgeUri,
-                        sourceVertexUri,
-                        destinationVertexUri,
-                        sourceVertexId,
-                        destinationVertexId
-                    ]
-                );
-            });
+            }
+            EventBus.publish(
+                '/event/ui/graph/relation/deleted', [
+                    edge,
+                    edge.getUri(),
+                    sourceVertexUri,
+                    destinationVertexUri,
+                    sourceVertexId,
+                    destinationVertexId
+                ]
+            );
         };
         api.updateLabel = function (edge, label, callback) {
             FriendlyResourceService.updateLabel(
@@ -99,7 +106,7 @@ define([
                 url: edge.getUri() + "/inverse"
             }).success(callback);
         };
-        api.changeSourceVertex = function(sourceVertex, edge, callback){
+        api.changeSourceVertex = function (sourceVertex, edge, callback) {
             $.ajax({
                 type: 'PUT',
                 url: edge.getUri() + "/source-vertex/" + IdUri.elementIdFromUri(sourceVertex.getUri())
@@ -116,8 +123,8 @@ define([
             var response = $.ajax({
                 type: 'POST',
                 url: edgesUrl() +
-                    '?sourceVertexId=' + sourceVertexUriFormatted +
-                    '&destinationVertexId=' + destinationVertexUriFormatted
+                '?sourceVertexId=' + sourceVertexUriFormatted +
+                '&destinationVertexId=' + destinationVertexUriFormatted
             }).success(function () {
                     var responseUri = IdUri.resourceUriFromAjaxResponse(
                         response

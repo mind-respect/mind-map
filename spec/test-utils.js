@@ -86,6 +86,7 @@ define([
         });
         return childWithLabel;
     };
+
     api.hasChildWithLabel = function (bubble, label) {
         var hasChild = false;
         bubble.visitAllChild(function (child) {

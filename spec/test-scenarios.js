@@ -848,6 +848,7 @@ define([
                     "b2"
                 );
             };
+            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
         };
         GraphDisplayer.setImplementation(
             GraphDisplayerFactory.getByName(

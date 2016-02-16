@@ -74,14 +74,19 @@ define([
                 }
             });
         };
-        api.Object.prototype.remove = function () {
+        api.Object.prototype.remove = function (applyToOthers) {
+            if(applyToOthers === undefined){
+                applyToOthers = true;
+            }
             if (this._hasBeenCalledToRemove() || this._isRemoved()) {
                 return;
             }
             this._setHasBeenCalledToRemove();
-            this.applyToOtherInstances(function (otherInstance) {
-                otherInstance.remove();
-            });
+            if(applyToOthers){
+                this.applyToOtherInstances(function (otherInstance) {
+                    otherInstance.remove();
+                });
+            }
             if (this._isRemoved()) {
                 return;
             }

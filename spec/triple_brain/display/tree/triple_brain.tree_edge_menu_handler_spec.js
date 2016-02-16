@@ -6,12 +6,14 @@ define([
     'test/test-scenarios',
     'test/test-utils',
     'test/mock',
+    "test/mock/triple_brain.edge_service_mock",
     'triple_brain.tree_edge_menu_handler',
     'triple_brain.mind_map_info'
-], function (Scenarios, TestUtils, Mock, TreeEdgeMenuHandler, MindMapInfo) {
+], function (Scenarios, TestUtils, Mock, EdgeServiceMock, TreeEdgeMenuHandler, MindMapInfo) {
     "use strict";
     describe("graph_displayer_as_tree_common", function () {
-        beforeEach(function () {});
+        beforeEach(function () {
+        });
         it("can remove edge", function () {
             var threeBubblesScenario = new Scenarios.threeBubblesGraph();
             var bubble1 = threeBubblesScenario.getBubble1InTree();
@@ -74,7 +76,95 @@ define([
                 identifierExternalResourceUri
             ).toBe(karaokeIdentification.getExternalResourceUri());
         });
-
+        it("removes only one relation when removing a relation to a duplicated bubble", function () {
+            var graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
+            var bubble1 = graphWithCircularityScenario.getBubble1InTree();
+            var bubble3 = TestUtils.getChildWithLabel(
+                bubble1,
+                "r3"
+            ).getTopMostChildBubble();
+            graphWithCircularityScenario.expandBubble3(bubble3);
+            var aRelationToSameBubble = bubble3.getTopMostChildBubble();
+            expect(
+                aRelationToSameBubble.text()
+            ).toBe("r2");
+            var anotherRelationToTheSameBubble = TestUtils.getChildWithLabel(
+                bubble1,
+                "r1"
+            );
+            expect(
+                TestUtils.isGraphElementUiRemoved(
+                    aRelationToSameBubble
+                )
+            ).toBeFalsy();
+            expect(
+                TestUtils.isGraphElementUiRemoved(
+                    anotherRelationToTheSameBubble
+                )
+            ).toBeFalsy();
+            MindMapInfo._setIsViewOnly(false);
+            EdgeServiceMock.removeMock();
+            TreeEdgeMenuHandler.forSingle().removeAction(
+                aRelationToSameBubble
+            );
+            expect(
+                TestUtils.isGraphElementUiRemoved(
+                    aRelationToSameBubble
+                )
+            ).toBeTruthy();
+            expect(
+                TestUtils.isGraphElementUiRemoved(
+                    anotherRelationToTheSameBubble
+                )
+            ).toBeFalsy();
+        });
+        it("removes other instances of duplicated relation when removing", function () {
+            var graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
+            var bubble1 = graphWithCircularityScenario.getBubble1InTree();
+            var aRelation = TestUtils.getChildWithLabel(
+                bubble1,
+                "r3"
+            );
+            var bubble2 =  TestUtils.getChildWithLabel(
+                bubble1,
+                "r1"
+            ).getTopMostChildBubble();
+            graphWithCircularityScenario.expandBubble2(bubble2);
+            var bubble3 = bubble2.getTopMostChildBubble().getTopMostChildBubble();
+            graphWithCircularityScenario.expandBubble3(bubble3);
+            var sameRelation = bubble3.getTopMostChildBubble();
+            expect(
+                aRelation.text()
+            ).toBe("r3");
+            expect(
+                sameRelation.text()
+            ).toBe("r3");
+            expect(
+                TestUtils.isGraphElementUiRemoved(
+                    aRelation
+                )
+            ).toBeFalsy();
+            expect(
+                TestUtils.isGraphElementUiRemoved(
+                    sameRelation
+                )
+            ).toBeFalsy();
+            MindMapInfo._setIsViewOnly(false);
+            EdgeServiceMock.removeMock();
+            TreeEdgeMenuHandler.forSingle().removeAction(
+                aRelation
+            );
+            expect(
+                TestUtils.isGraphElementUiRemoved(
+                    aRelation
+                )
+            ).toBeTruthy();
+            expect(
+                TestUtils.isGraphElementUiRemoved(
+                    sameRelation
+                )
+            ).toBeTruthy();
+        });
     });
 });
 

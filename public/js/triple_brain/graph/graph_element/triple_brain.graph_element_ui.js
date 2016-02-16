@@ -48,7 +48,7 @@ define([
                 visitor(this);
             });
         };
-        api.getNumber = function(){
+        api.getNumber = function () {
             return Object.keys(cacheWithIdAsKey).length;
         };
         api.removeFromCache = function (uri, id) {
@@ -74,7 +74,7 @@ define([
             cacheWithUriAsKey[uri].push(vertex);
         }
     };
-    api.visitAll = function(visitor){
+    api.visitAll = function (visitor) {
         GraphDisplayer.getVertexSelector().visitAll(
             visitor
         );
@@ -229,15 +229,15 @@ define([
         this.getLabel().maxCharCleanTextApply().focusEnd();
         this.getHtml().centerOnScreen();
     };
-    api.Self.prototype._setTextBeforeModification = function(){
+    api.Self.prototype._setTextBeforeModification = function () {
         this.getHtml().data(
             textBeforeModificationKey, this.text()
         );
     };
-    api.Self.prototype.hasTextChangedAfterModification = function(){
+    api.Self.prototype.hasTextChangedAfterModification = function () {
         return this.getHtml().data(
-            textBeforeModificationKey
-        ) !== this.text();
+                textBeforeModificationKey
+            ) !== this.text();
     };
     api.Self.prototype.editMode = function () {
         this.getLabel().attr(
@@ -349,9 +349,9 @@ define([
             );
         });
 
-        api.visitAll(function(visitedGraphElement){
-            if(visitedGraphElement.getUri() === identification.getExternalResourceUri()){
-                if(!visitedGraphElement.hasIdentification(identification)){
+        api.visitAll(function (visitedGraphElement) {
+            if (visitedGraphElement.getUri() === identification.getExternalResourceUri()) {
+                if (!visitedGraphElement.hasIdentification(identification)) {
                     visitedGraphElement.addGenericIdentification(
                         identification
                     );
