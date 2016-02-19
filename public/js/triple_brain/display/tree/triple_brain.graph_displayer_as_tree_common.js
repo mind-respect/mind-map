@@ -17,7 +17,8 @@ define([
                 originalEdges = serverGraph.edges,
                 centralVertex = vertexWithId(centralVertexUri),
                 edgesFacade = arrayOfEdgesHavingThoseRelatedToCenterVertexOnTop(),
-                nonEnhancedEdges = {};
+                nonEnhancedEdges = {},
+                joinIfMoreSimilarRelations = {};
             centralVertex.isInvolved = true;
             initRelationsOfVertex(
                 centralVertex
@@ -101,9 +102,12 @@ define([
                 var edgeIdentifications = edge.getIdentifications();
                 if (edgeIdentifications.length > 0) {
                     setupGroupRelation(edgeIdentifications, true);
-                    if(edgeIdentifications.length > 1){
-                        $.each(edgeIdentifications, function(){
-                            setupGroupRelation(this, false);
+                    if (edgeIdentifications.length > 1) {
+                        $.each(edgeIdentifications, function () {
+                            setupGroupRelation(
+                                this,
+                                false
+                            );
                         });
                     }
                 } else {
@@ -125,7 +129,7 @@ define([
                 delete nonEnhancedEdges[edge.getUri()];
                 revisitNonEnhancedEdges();
 
-                function setupGroupRelation(identifiers, createIfUndefined){
+                function setupGroupRelation(identifiers, createIfUndefined) {
                     var key = getIdentifiersKey(identifiers),
                         groupRelation = sourceVertex.similarRelations[key];
                     if (groupRelation === undefined && createIfUndefined) {
@@ -133,24 +137,42 @@ define([
                             identifiers
                         );
                     }
-                    if(groupRelation !== undefined){
+                    if (groupRelation === undefined) {
+                        if (joinIfMoreSimilarRelations[key] === undefined) {
+                            joinIfMoreSimilarRelations[key] = [];
+                        }
+                        joinIfMoreSimilarRelations[key].push({
+                            destinationVertex : destinationVertex,
+                            edge : edge
+                        });
+                    }
+                    else {
                         groupRelation.addVertex(
                             destinationVertex,
                             edge
                         );
                         sourceVertex.similarRelations[key] = groupRelation;
+                        if(joinIfMoreSimilarRelations[key] !== undefined){
+                            $.each(joinIfMoreSimilarRelations[key], function(){
+                                groupRelation.addVertex(
+                                    this.destinationVertex,
+                                    this.edge
+                                );
+                            });
+                            joinIfMoreSimilarRelations[key] = undefined;
+                        }
                     }
                 }
             }
 
             function getIdentifiersKey(identifiers) {
                 var key = "";
-                if(Array.isArray(identifiers)){
+                if (Array.isArray(identifiers)) {
                     $.each(identifiers, function () {
                         key += this.getExternalResourceUri();
                     });
                 }
-                else{
+                else {
                     key = identifiers.getExternalResourceUri();
                 }
                 return key;

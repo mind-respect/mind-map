@@ -4,23 +4,18 @@
 
 define([
     'test/test-scenarios',
-    'triple_brain.graph_displayer_as_tree_common'
-], function (Scenarios, TreeDisplayerCommon) {
+    'test/test-utils',
+    'triple_brain.graph_displayer_as_tree_common',
+    'triple_brain.graph_displayer_as_relative_tree'
+], function (Scenarios, TestUtils, TreeDisplayerCommon, GraphDisplayerAsRelativeTree) {
     "use strict";
     describe("graph_displayer_as_tree_common", function () {
         var similarRelationsScenario,
             graph,
             centerVertex,
-            possession,
-            deepGraphScenario;
-        beforeEach(function () {
-            similarRelationsScenario = new Scenarios.GraphWithSimilarRelationsScenario();
-            graph = similarRelationsScenario.getGraph();
-            centerVertex = similarRelationsScenario.getCenterVertex();
-            possession = similarRelationsScenario.getPossession();
-            deepGraphScenario = new Scenarios.deepGraph();
-        });
+            possession;
         it("groups similar relations", function () {
+            defineSimilarRelationsScenarioVariables();
             expect(centerVertex.similarRelations).toBeUndefined();
             TreeDisplayerCommon.enhancedVerticesInfo(
                 graph,
@@ -35,6 +30,7 @@ define([
             expect(numberOfGroupedRelations.length).toBe(3);
         });
         it("creates only one group relation when different relations have multiple identifiers that are the same", function(){
+            defineSimilarRelationsScenarioVariables();
             var relationWithMultipleIdentifiersScenario = new Scenarios.relationWithMultipleIdentifiers();
             var graph = relationWithMultipleIdentifiersScenario.getGraph();
             var centerVertexUri = relationWithMultipleIdentifiersScenario.getCenterBubbleUri();
@@ -49,6 +45,7 @@ define([
             ).toBe(2);
         });
         it("relations with no identifications are grouped by relation uri", function () {
+            defineSimilarRelationsScenarioVariables();
             TreeDisplayerCommon.enhancedVerticesInfo(
                 graph,
                 centerVertex.getUri()
@@ -70,6 +67,7 @@ define([
             expect(objectKeys.length).toBe(2);
         });
         it("relations are set even when graph is deep", function(){
+            var deepGraphScenario = new Scenarios.deepGraph();
             var graph = deepGraphScenario.getGraph(),
                 centerVertex = deepGraphScenario.getCenterVertex();
             TreeDisplayerCommon.enhancedVerticesInfo(
@@ -85,6 +83,7 @@ define([
             );
         });
         it("inverse relations are set even when graph is deep", function(){
+            var deepGraphScenario = new Scenarios.deepGraph();
             var graph = deepGraphScenario.getGraph();
             TreeDisplayerCommon.enhancedVerticesInfo(
                 graph,
@@ -100,6 +99,36 @@ define([
                 2
             );
         });
+        it("handles relations that are in 2 groups", function(){
+            var scenario = new Scenarios.graphWithARelationInTwoSimilarRelationsGroup();
+            var centerBubble = scenario.getSomeProjectInTree();
+            expect(
+                TestUtils.hasChildWithLabel(
+                    centerBubble,
+                    "impact 3"
+                )
+            ).toBeTruthy();
+            var groupRelation = TestUtils.getChildWithLabel(
+                centerBubble,
+                "Impact on society"
+            );
+            expect(
+                groupRelation.isGroupRelation()
+            ).toBeTruthy();
+            GraphDisplayerAsRelativeTree.expandGroupRelation(groupRelation);
+            expect(
+                TestUtils.hasChildWithLabel(
+                    groupRelation,
+                    "impact 3"
+                )
+            ).toBeTruthy();
+        });
+        function defineSimilarRelationsScenarioVariables(){
+            similarRelationsScenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            graph = similarRelationsScenario.getGraph();
+            centerVertex = similarRelationsScenario.getCenterVertex();
+            possession = similarRelationsScenario.getPossession();
+        }
     });
 });
 

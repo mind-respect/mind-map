@@ -33,18 +33,13 @@ define([
                 formattedSearchResults[0].nonFormattedSearchResult.getGraphElementType()
             ).toBe(GraphElementType.Schema);
         });
-        it("includes identifications", function () {
+        it("includes nb references", function () {
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),
                 formattedSearchResults = searchProvider.formatResults(
                     new Scenarios.getSearchResultsForProjectAfterIdentificationAdded().get(),
                     "project"
                 );
-            expect(
-                oneOfSearchResultIfOfType(
-                    formattedSearchResults,
-                    "identification"
-                )
-            ).toBeTruthy();
+            //todo
 
         });
         it("sets property context", function () {
@@ -135,27 +130,28 @@ define([
                 "Model"
             );
         });
-        it("puts identifications above bubbles", function () {
-            var serverResults = [];
-            serverResults = serverResults.concat(
-                new Scenarios.getSearchResultForB1().get()
-            );
-            serverResults = serverResults.concat(
-                new Scenarios.getSearchResultsForProjectAfterIdentificationAdded().get()
-            );
-            expect(
-                serverResults[0].type
-            ).toBe("vertex");
-            var searchResults = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas().formatResults(
-                serverResults,
-                ""
-            );
-            expect(
-                ["Identifier", "Model"].indexOf(searchResults[0].elementType)
-            ).not.toBe(-1);
-            expect(
-                ["Identifier", "Model"].indexOf(searchResults[1].elementType)
-            ).not.toBe(-1);
+        it("puts the element with the most references above", function () {
+            //todo
+            //var serverResults = [];
+            //serverResults = serverResults.concat(
+            //    new Scenarios.getSearchResultForB1().get()
+            //);
+            //serverResults = serverResults.concat(
+            //    new Scenarios.getSearchResultsForProjectAfterIdentificationAdded().get()
+            //);
+            //expect(
+            //    serverResults[0].type
+            //).toBe("vertex");
+            //var searchResults = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas().formatResults(
+            //    serverResults,
+            //    ""
+            //);
+            //expect(
+            //    ["Identifier", "Model"].indexOf(searchResults[0].elementType)
+            //).not.toBe(-1);
+            //expect(
+            //    ["Identifier", "Model"].indexOf(searchResults[1].elementType)
+            //).not.toBe(-1);
         });
         it("puts proprieties above relations in the list of formatted search results", function () {
             var serverResults = [];
