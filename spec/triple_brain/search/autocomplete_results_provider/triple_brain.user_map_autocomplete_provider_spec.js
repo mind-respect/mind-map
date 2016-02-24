@@ -42,7 +42,7 @@ define([
             expect(
                 propertySearchResult.somethingToDistinguish
             ).toBe(
-                "project"
+                "<- project"
             );
             expect(
                 propertySearchResult.elementType
