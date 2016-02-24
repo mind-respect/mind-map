@@ -88,7 +88,7 @@ define([
         }
     };
     api._buildPropertySomethingToDistinguish = function (property) {
-        return property.getSchema().getLabel();
+        return "<- " + property.getSchema().getLabel();
     };
     api._buildEdgeSomethingToDistinguish = function (sourceVertex, destinationVertex) {
         return sourceVertex.getLabel() + " -> " +destinationVertex.getLabel();
