@@ -60,5 +60,16 @@ define([
                 hasBeenIntoCallback
             ).toBeTruthy();
         });
+        it("includes number of references", function(){
+            //var searchProvider = UserMapAutocompleteProvider.toFetchRelationsForIdentification(),
+            //    formattedSearchResults = searchProvider.formatResults(
+            //        new Scenarios.getSearchResultsForImpact().get(),
+            //        "impact on society"
+            //    ),
+            //    hasBeenIntoCallback = false;
+            //Mock.getSearchResultDetailsToReturn(
+            //    new Scenarios.impactOnSocietyPropertySearchDetails().get()
+            //);
+        });
     });
 });

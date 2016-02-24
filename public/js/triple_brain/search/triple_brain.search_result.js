@@ -47,14 +47,16 @@ define([
                     api._buildEdgeSomethingToDistinguish(
                         sourceVertex,
                         destinationVertex
-                    )
+                    ),
+                    searchResult.nbReferences
                 );
             case GraphElementType.Schema :
                 var schema = Schema.fromSearchResult(searchResult);
                 return new Self(
                     schema,
                     GraphElementType.Schema,
-                    api._buildSchemaSomethingToDistinguish(schema)
+                    api._buildSchemaSomethingToDistinguish(schema),
+                    searchResult.nbReferences
                 );
             case GraphElementType.Property :
                 var property = Property.fromServerFormat(searchResult.graphElement);
@@ -64,21 +66,24 @@ define([
                 return new Self(
                     property,
                     GraphElementType.Property,
-                    api._buildPropertySomethingToDistinguish(property)
+                    api._buildPropertySomethingToDistinguish(property),
+                    searchResult.nbReferences
                 );
             case GraphElementType.Vertex :
                 var vertex = GraphElement.fromServerFormat(searchResult.graphElement);
                 return new Self(
                     vertex,
                     GraphElementType.Vertex,
-                    api._buildVertexSomethingToDistinguish(searchResult)
+                    api._buildVertexSomethingToDistinguish(searchResult),
+                    searchResult.nbReferences
                 );
             case api.additionalTypes.Identification :
                 var graphElement = GraphElement.fromServerFormat(searchResult.graphElement);
                 return new Self(
                     graphElement,
                     api.additionalTypes.Identification,
-                    api._buildIdentifierSomethingToDistinguish(searchResult)
+                    api._buildIdentifierSomethingToDistinguish(searchResult),
+                    searchResult.nbReferences
                 );
         }
     };
@@ -140,10 +145,11 @@ define([
         );
     };
 
-    function Self(graphElement, graphElementType, somethingToDistinguish) {
+    function Self(graphElement, graphElementType, somethingToDistinguish, numberOfReferences) {
         this.graphElement = graphElement;
         this.graphElementType = graphElementType;
         this.somethingToDistinguish = somethingToDistinguish;
+        this.numberOfReferences = numberOfReferences;
     }
 
     Self.prototype.getGraphElement = function () {
@@ -151,6 +157,10 @@ define([
     };
     Self.prototype.getGraphElementType = function () {
         return this.graphElementType;
+    };
+
+    Self.prototype.getNumberOfReferences = function () {
+        return this.numberOfReferences;
     };
 
     Self.prototype.is = function (graphElementType) {

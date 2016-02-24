@@ -72,6 +72,7 @@ define([
                     searchResult.getGraphElementType()
                 );
                 formatted.somethingToDistinguish = searchResult.getSomethingToDistinguish();
+                formatted.nbReferences = searchResult.getNumberOfReferences();
                 formattedResults.push(
                     formatted
                 );
@@ -98,16 +99,28 @@ define([
             formattedResults.sort(function (a, b) {
                 if (isPrioritySearchResult(a)) {
                     if (isPrioritySearchResult(b)) {
-                        return 0;
+                        return hasMoreReferences(a, b);
                     }
                     return -1;
                 }
                 if (isPrioritySearchResult(b)) {
                     return 1;
                 }
-                return 0;
+                return hasMoreReferences(a, b);
             });
         };
+
+        function hasMoreReferences(searchResultA, searchResultB) {
+            var aNumberOfReferences = searchResultA.nonFormattedSearchResult.getNumberOfReferences();
+            var bNumberOfReferences = searchResultB.nonFormattedSearchResult.getNumberOfReferences();
+            if (aNumberOfReferences > bNumberOfReferences) {
+                return -1;
+            }
+            if (bNumberOfReferences > aNumberOfReferences) {
+                return 1;
+            }
+            return 0;
+        }
 
         function isPrioritySearchResult(formattedResult) {
             return formattedResult.nonFormattedSearchResult.is(
@@ -135,7 +148,7 @@ define([
                             title: searchResult.label,
                             text: moreInfo,
                             image: image,
-                            comment:comment
+                            comment: comment
                         }
                     );
                 }

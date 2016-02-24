@@ -5,12 +5,14 @@
 define([
     "jquery",
     "triple_brain.ui.graph",
+    "triple_brain.event_bus",
     "jquery-ui"
-], function ($, GraphUi) {
+], function ($, GraphUi, EventBus) {
     "use strict";
     var enterKeyCode = 13,
         api = {},
-        detailsCache = {};
+        detailsCache = {},
+        referencesText;
     $.fn.tripleBrainAutocomplete = function (options) {
         var textInput = $(this);
         textInput.autocomplete(
@@ -117,6 +119,11 @@ define([
                     item.somethingToDistinguish
                 ).appendTo(moreInfoContainer);
             }
+            if(item.nbReferences !== undefined && item.nbReferences > 0){
+                $("<div class='nb-references'>").append(
+                    item.nbReferences + referencesText
+                ).appendTo(moreInfoContainer);
+            }
             $("<a>").append(
                 labelContainer,
                 moreInfoContainer
@@ -211,6 +218,11 @@ define([
     api.getCachedDetailsOfSearchResult = function (searchResult) {
         return detailsCache[searchResult.uri];
     };
+
+    EventBus.subscribe("localized-text-loaded", function(){
+        referencesText = $.t("search.references");
+    });
+
     return api;
     function removeSearchFlyout() {
         $(".autocomplete-flyout").remove();

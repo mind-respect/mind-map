@@ -249,7 +249,8 @@
     },
     "identifier": {
       "references": " référence(s)"
-    }
+    },
+    "references": " référence(s)"
   },
   "wordcloud": {
     "title": "Vos bulles centrales"

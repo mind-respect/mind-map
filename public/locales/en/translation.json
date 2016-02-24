@@ -249,7 +249,8 @@
     },
     "identifier":{
       "references": " reference(s)"
-    }
+    },
+    "references": " reference(s)"
   },
   "wordcloud":{
     "title":"Your central bubbles"

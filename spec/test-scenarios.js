@@ -726,6 +726,12 @@ define([
             };
         };
 
+        api.withRelationsAsIdentifier = function(){
+            this.getRelationsSearchResultForSome = function () {
+                return api._getTestData("relationsAsIdentifier");
+            };
+        };
+
         api.graphWithARelationInTwoSimilarRelationsGroup = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
