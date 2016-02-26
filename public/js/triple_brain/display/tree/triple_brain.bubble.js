@@ -420,6 +420,10 @@ define([
             return this.html.find(".arrow");
         };
 
+        api.Self.prototype.centerOnScreenWithAnimation = function () {
+            this.getHtml().centerOnScreenWithAnimation();
+        };
+
         EventBus.subscribe(
             '/event/ui/graph/vertex_and_relation/added/',
             function (event, triple, sourceBubble) {
