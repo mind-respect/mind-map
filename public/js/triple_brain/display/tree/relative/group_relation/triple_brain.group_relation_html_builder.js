@@ -17,7 +17,8 @@ define([
     ],
     function ($, RelativeTreeTemplates, PropertiesIndicator, GroupRelationUi, GroupRelation, SelectionHandler, GraphElementMainMenu, GraphDisplayer, EventBus, Identification) {
         "use strict";
-        var api = {};
+        var api = {},
+            NUMBER_OF_SIBLINGS_UNDER_WHICH_YOU_SHOULD_EXPAND = 4;
         api.withServerFacade = function (serverFacade) {
             return new Self(serverFacade);
         };
@@ -33,6 +34,12 @@ define([
             );
             groupRelationUi.refreshImages();
             indicator.build();
+            var shouldExpand = groupRelationUi.getParentBubble().getNumberOfChild() < NUMBER_OF_SIBLINGS_UNDER_WHICH_YOU_SHOULD_EXPAND;
+            if(shouldExpand){
+                GraphDisplayer.expandGroupRelation(
+                    groupRelationUi
+                );
+            }
         };
 
         function Self(serverFacade) {

@@ -726,10 +726,29 @@ define([
             };
         };
 
-        api.withRelationsAsIdentifier = function(){
-            this.getRelationsSearchResultForSome = function () {
-                return api._getTestData("relationsAsIdentifier");
+        api.withRelationsAsIdentifierSearchSome = function(){
+            this.get = function () {
+                return api._getTestData("relationsAsIdentifier.searchSome");
             };
+        };
+
+        api.withRelationsAsIdentifierGraph = function(){
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                return api._getTestData("relationsAsIdentifier.graph");
+            };
+            this.getCenterBubbleUri = function () {
+                return uriOfVertexWithLabel(
+                    this.getGraph(),
+                    "center"
+                );
+            };
+            this.getCenterInTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("center");
+            };
+            Mock.setCenterVertexUriInUrl(
+                this.getCenterBubbleUri()
+            );
         };
 
         api.graphWithARelationInTwoSimilarRelationsGroup = function () {

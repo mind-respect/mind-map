@@ -25,9 +25,9 @@ define([
             expect(centerVertex.similarRelations).toBeDefined();
             expect(centerVertex.similarRelations[possession.getExternalResourceUri()]).toBeDefined();
             var numberOfRelations = Object.keys(graph.edges);
-            expect(numberOfRelations.length).toBe(6);
+            expect(numberOfRelations.length).toBe(7);
             var numberOfGroupedRelations = Object.keys(centerVertex.similarRelations);
-            expect(numberOfGroupedRelations.length).toBe(3);
+            expect(numberOfGroupedRelations.length).toBe(4);
         });
         it("creates only one group relation when different relations have multiple identifiers that are the same", function(){
             defineSimilarRelationsScenarioVariables();

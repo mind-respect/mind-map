@@ -42,7 +42,7 @@ define([
             var centerBubble = scenario.getCenterVertexInTree();
             expect(
                 centerBubble.getNumberOfChild()
-            ).toBe(3);
+            ).toBe(4);
             var possessionGroupRelation = TestUtils.getChildWithLabel(
                 centerBubble,
                 "Possession"
@@ -66,7 +66,7 @@ define([
 
             expect(
                 centerBubble.getNumberOfChild()
-            ).toBe(3);
+            ).toBe(4);
             expect(
                 possessionGroupRelation.getNumberOfChild()
             ).toBe(3);
@@ -77,7 +77,7 @@ define([
             );
             expect(
                 centerBubble.getNumberOfChild()
-            ).toBe(2);
+            ).toBe(3);
             expect(
                 possessionGroupRelation.getNumberOfChild()
             ).toBe(4);
@@ -88,7 +88,7 @@ define([
             var centerBubble = scenario.getCenterVertexInTree();
             expect(
                 centerBubble.getNumberOfChild()
-            ).toBe(3);
+            ).toBe(4);
             var possessionGroupRelation = TestUtils.getChildWithLabel(
                 centerBubble,
                 "Possession"
@@ -115,7 +115,7 @@ define([
             );
             expect(
                 centerBubble.getNumberOfChild()
-            ).toBe(3);
+            ).toBe(4);
             expect(
                 possessionGroupRelation.getNumberOfChild()
             ).toBe(3);
@@ -126,7 +126,7 @@ define([
             );
             expect(
                 centerBubble.getNumberOfChild()
-            ).toBe(4);
+            ).toBe(5);
             expect(
                 possessionGroupRelation.getNumberOfChild()
             ).toBe(2);
@@ -275,6 +275,36 @@ define([
             expect(
                 groupRelation.getNumberOfChild()
             ).toBe(4);
+        });
+        it("expands the group relation if there's 3 or less siblings", function(){
+            var centerInPossessionsScenario = new Scenarios.GraphWithSimilarRelationsScenario().getCenterVertexInTree();
+            expect(
+                centerInPossessionsScenario.getNumberOfChild()
+            ).toBeGreaterThan(3);
+            var groupRelationInPossessionsScenario = TestUtils.getChildWithLabel(
+                centerInPossessionsScenario,
+                "Possession"
+            );
+            expect(
+                groupRelationInPossessionsScenario.isGroupRelation()
+            ).toBeTruthy();
+            expect(
+                groupRelationInPossessionsScenario.isExpanded()
+            ).toBeFalsy();
+            var centerWithLessRelations = new Scenarios.withRelationsAsIdentifierGraph().getCenterInTree();
+            expect(
+                centerWithLessRelations.getNumberOfChild()
+            ).toBeLessThan(3);
+            var groupRelationInFewRelationsContext = TestUtils.getChildWithLabel(
+                centerWithLessRelations,
+                "some relation"
+            );
+            expect(
+                groupRelationInFewRelationsContext.isGroupRelation()
+            ).toBeTruthy();
+            expect(
+                groupRelationInFewRelationsContext.isExpanded()
+            ).toBeTruthy();
         });
     });
 });

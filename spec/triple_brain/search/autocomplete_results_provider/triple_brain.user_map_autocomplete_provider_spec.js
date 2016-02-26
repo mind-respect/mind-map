@@ -124,7 +124,7 @@ define([
         it("puts the element with the most references above", function () {
             var serverResults = [];
             serverResults = serverResults.concat(
-                new Scenarios.withRelationsAsIdentifier().getRelationsSearchResultForSome()
+                new Scenarios.withRelationsAsIdentifierSearchSome().get()
             );
             expect(
                 serverResults.length
