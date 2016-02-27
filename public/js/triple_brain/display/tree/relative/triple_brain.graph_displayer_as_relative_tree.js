@@ -122,11 +122,7 @@ define([
             );
         });
         api.showSuggestions(parentVertex);
-       /*
-            parentVertex.centerOnScreenWithAnimation();
-            for small screen there is a bug where it doesn't position correctly on the horizontal axis
-            so commenting for now.
-        */
+        parentVertex.centerOnScreenWithAnimation();
         function removeRelationWithGrandParentFromServerGraph() {
             var relationWithGrandParentUri = parentVertex.getRelationWithUiParent().getUri();
             var grandParentUri = parentVertex.getParentVertex().getUri();

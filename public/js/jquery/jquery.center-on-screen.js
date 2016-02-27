@@ -3,12 +3,12 @@
  */
 
 define([
-    "jquery"
-],
+        "jquery"
+    ],
     function ($) {
         var BUFFER_FOR_HEADER_SIZE = 75;
         $.fn.centerOnScreen = function (options) {
-            if(options === undefined){
+            if (options === undefined) {
                 options = {};
             }
             var container = containerFromOptions(options);
@@ -17,8 +17,8 @@ define([
             var elementOffset = element.offset();
             var containerOffset = container.offset();
             var position = {
-                top : elementOffset.top  - containerOffset.top,
-                left : elementOffset.left  - containerOffset.left
+                top: elementOffset.top - containerOffset.top,
+                left: elementOffset.left - containerOffset.left
             };
             container.scrollLeft(
                 scrollLeftFromPosition(position, element, visibleSize)
@@ -29,13 +29,15 @@ define([
             return this;
         };
         $.fn.centerOnScreenWithAnimation = function (options) {
-            if(options === undefined){
+            if (options === undefined) {
                 options = {};
             }
             var container = containerFromOptions(options);
             var element = this;
             var position = element.offset();
             var visibleSize = visibleSizeFromOptions(options);
+            console.log("scroll left " + scrollLeftFromPosition(position, element, visibleSize));
+            console.log("screen width " + screen.width);
             container.stop().animate({
                 scrollLeft: scrollLeftFromPosition(position, element, visibleSize),
                 scrollTop: scrollTopFromPosition(position, element, visibleSize)
@@ -43,23 +45,24 @@ define([
             return this;
         };
 
-        function containerFromOptions(options){
+        function containerFromOptions(options) {
             return options.container === undefined ?
-                $('html, body') : options.container;
+                $('body') : options.container;
         }
 
-        function scrollTopFromPosition(position, element, visibleSize){
+        function scrollTopFromPosition(position, element, visibleSize) {
             return position.top - visibleSize.y / 4 + element.height() / 2 - BUFFER_FOR_HEADER_SIZE;
         }
-        function scrollLeftFromPosition(position, element, visibleSize){
+
+        function scrollLeftFromPosition(position, element, visibleSize) {
             return position.left - visibleSize.x / 2 + element.width() / 2;
         }
 
-        function visibleSizeFromOptions(options){
+        function visibleSizeFromOptions(options) {
             return options.containerVisibleSize === undefined ?
             {
-                x : screen.width,
-                y : screen.height
+                x: $(window).width(),
+                y: screen.height
             } :
                 options.containerVisibleSize;
         }
