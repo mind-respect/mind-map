@@ -160,7 +160,7 @@
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 /*one more than navigation bar dialog*/
-#header-search-form { margin-left: 15%; }
+#header-search-form { margin-left: 11%; }
 
 .ui-menu .ui-menu-item, .ui-menu .references-container, .identifications .ui-menu-item, .identifications .references-container { border-bottom: 1px solid #d3d2d2; }
 .ui-menu .ui-menu-item .element-label, .ui-menu .references-container .element-label, .identifications .ui-menu-item .element-label, .identifications .references-container .element-label { font-weight: bold; font-size: 14px; padding-right: 43px; }
