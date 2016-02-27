@@ -47,7 +47,7 @@ define([
 
         function containerFromOptions(options) {
             return options.container === undefined ?
-                $('html','body') : options.container;
+                $('html, body') : options.container;
         }
 
         function scrollTopFromPosition(position, element, visibleSize) {
