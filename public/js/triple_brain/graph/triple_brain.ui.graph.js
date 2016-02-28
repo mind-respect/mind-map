@@ -28,6 +28,24 @@ define([
             }
             return _drawnGraph;
         };
+        api.getZoom = function(){
+            return parseFloat(
+                $(".root-vertex-super-container").attr("data-zoom")
+            );
+        };
+        api.zoom = function(zoomDifference){
+            var currentZoom = api.getZoom();
+            var newZoom = currentZoom + zoomDifference;
+            if(newZoom < 0.1){
+                newZoom = 0.1;
+            }
+            $(".root-vertex-super-container").attr(
+                "data-zoom", newZoom
+            ).css(
+                "transform",
+                "scale(" + newZoom + "," + newZoom + ")"
+            );
+        };
         api.getTopLayer = function () {
             if (!_topLayer) {
                 _topLayer = $("body, html");

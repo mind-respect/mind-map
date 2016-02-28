@@ -4,8 +4,9 @@
 
 define([
     "triple_brain.selection_handler",
-    "triple_brain.mind_map_info"
-], function(SelectionHandler, MindMapInfo){
+    "triple_brain.mind_map_info",
+    "triple_brain.ui.graph"
+], function(SelectionHandler, MindMapInfo, GraphUi){
     "use strict";
     var api = {};
     api.select = function(){
@@ -13,6 +14,16 @@ define([
     };
     api.selectCanDo = function(){
         return !MindMapInfo.isSchemaMode();
+    };
+    api.zoomIn = function(){
+        GraphUi.zoom(
+            0.1
+        );
+    };
+    api.zoomOut = function(){
+        GraphUi.zoom(
+            -0.1
+        );
     };
     return api;
 });

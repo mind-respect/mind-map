@@ -11,7 +11,7 @@ define([
         var t = Template.withTemplateGroup(api);
         t.add(
             'root_vertex_super_container',
-                "<div class='root-vertex-super-container'></div>"
+                "<div class='root-vertex-super-container' data-zoom='1'></div>"
         );
         t.add(
             'vertices_children_container',

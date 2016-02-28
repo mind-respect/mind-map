@@ -36,12 +36,10 @@ define([
             var element = this;
             var position = element.offset();
             var visibleSize = visibleSizeFromOptions(options);
-            console.log("scroll left " + scrollLeftFromPosition(position, element, visibleSize));
-            console.log("screen width " + screen.width);
             container.stop().animate({
                 scrollLeft: scrollLeftFromPosition(position, element, visibleSize),
                 scrollTop: scrollTopFromPosition(position, element, visibleSize)
-            }, 500);
+            }, 750);
             return this;
         };
 
