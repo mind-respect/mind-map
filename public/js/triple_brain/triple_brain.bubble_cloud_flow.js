@@ -8,12 +8,14 @@ define([
     "triple_brain.center_graph_element_service",
     "triple_brain.center_graph_elements",
     "triple_brain.visited_elements_cloud",
-    "triple_brain.user_service"
-], function ($, IdUri, CenterGraphElementService, CenterGraphElements, VisitedElementsCloud, UserService) {
+    "triple_brain.user_service",
+    "triple_brain.ui.graph"
+], function ($, IdUri, CenterGraphElementService, CenterGraphElements, VisitedElementsCloud, UserService, GraphUi) {
     "use strict";
     var api = {};
     api.enter = function () {
         CenterGraphElementService.get(function (elements) {
+            GraphUi.getDrawnGraph().addClass("hidden");
             $("body").removeClass("hidden");
             getSectionContainer().removeClass("hidden");
             var centerGraphElements = CenterGraphElements.fromServerFormat(elements);
