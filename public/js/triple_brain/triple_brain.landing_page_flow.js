@@ -9,8 +9,9 @@ define([
     "triple_brain.graph_displayer",
     "triple_brain.graph_displayer_factory",
     "triple_brain.graph_element_main_menu",
+    "triple_brain.ui.graph",
     "ekko-lightbox"
-], function ($, LanguageManager, MindMapInfo, GraphDisplayer, GraphDisplayerFactory, GraphElementMainMenu) {
+], function ($, LanguageManager, MindMapInfo, GraphDisplayer, GraphDisplayerFactory, GraphElementMainMenu, GraphUi) {
     "use strict";
     var api = {};
     api.enterForAuthenticated = function () {
@@ -27,6 +28,7 @@ define([
         api.enterForAuthenticatedOrNot(false);
     };
     api.enterForAuthenticatedOrNot = function (isAuthenticated) {
+        GraphUi.getDrawnGraph().addClass("hidden");
         LanguageManager.loadLocaleContent(function () {
             $("html").i18n();
             getWelcomeContent().removeClass("hidden");
