@@ -233,7 +233,9 @@
     "makePublic": "Make public",
     "remove": "Delete (del)",
     "accept": "Accept",
-    "addSibling": "Add sibling (enter)"
+    "addSibling": "Add sibling (enter)",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out"
   },
   "hidden_properties_tooltip": "Expand (ctrl+e)",
   "search": {

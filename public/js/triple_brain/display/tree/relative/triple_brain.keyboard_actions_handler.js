@@ -136,6 +136,7 @@ define([
         }
         if (selectedElement.hasHiddenRelationsContainer()) {
             selectedElement.addChildTree();
+            selectedElement.centerOnScreenWithAnimation();
         }
     }
 

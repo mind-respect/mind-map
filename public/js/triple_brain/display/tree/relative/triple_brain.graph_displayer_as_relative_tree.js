@@ -122,7 +122,6 @@ define([
             );
         });
         api.showSuggestions(parentVertex);
-        parentVertex.centerOnScreenWithAnimation();
         function removeRelationWithGrandParentFromServerGraph() {
             var relationWithGrandParentUri = parentVertex.getRelationWithUiParent().getUri();
             var grandParentUri = parentVertex.getParentVertex().getUri();

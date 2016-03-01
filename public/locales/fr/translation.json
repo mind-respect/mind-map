@@ -233,7 +233,9 @@
     "makePublic": "Rendre public",
     "remove": "Effacer (suppr)",
     "accept": "Accepter",
-    "addSibling": "Ajouter une bulle soeur (enter)"
+    "addSibling": "Ajouter une bulle soeur (enter)",
+    "zoomIn": "Zoom intérieur",
+    "zoomOut": "Zoom extérieur"
   },
   "hidden_properties_tooltip": "Expandre (ctrl+e)",
   "search": {

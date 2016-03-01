@@ -187,7 +187,7 @@
 .ui-dialog { opacity: 0.9; }
 
 #graph-element-menu { position: fixed; right: 10px; top: 100px; border: 1px solid #00005a; border-radius: 9px; max-width: 180px; padding: 1em; cursor: all-scroll; margin-right: 0; margin-left: 0; }
-#graph-element-menu .whole-graph-button { background: none; border: none; text-shadow: none; box-shadow: none; font-size: 25px; color: #393232; margin-top: -10px; }
+#graph-element-menu .whole-graph-button { background: none; border: none; text-shadow: none; box-shadow: none; font-size: 22px; text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); color: #474747; margin-top: -10px; }
 
 button.graph-element-button { margin-bottom: 5px; margin-right: 3px; line-height: 20px; color: #333; text-align: center; text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); background-image: linear-gradient(to bottom, #ffffff, #e6e6e6); background-repeat: repeat-x; border-bottom-color: #b3b3b3; border: 1px solid #ccc; border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25); -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); }
 button.graph-element-button:hover { background-image: linear-gradient(to bottom, #ffffff, #cdcdcd); }
