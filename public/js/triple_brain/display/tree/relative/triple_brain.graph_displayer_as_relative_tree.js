@@ -77,7 +77,7 @@ define([
     api.canAddChildTree = function () {
         return true;
     };
-    api.addChildTree = function (parentVertex) {
+    api.addChildTree = function (parentVertex, callback) {
         GraphService.getForCentralVertexUri(
             parentVertex.getUri(),
             function (serverGraph) {
@@ -85,6 +85,9 @@ define([
                     parentVertex,
                     serverGraph
                 );
+                if(callback !== undefined){
+                    callback();
+                }
             }
         );
     };

@@ -57,10 +57,11 @@ define([
     api.Self.prototype.getHtml = function () {
         return this.html;
     };
-    api.Self.prototype.addChildTree = function () {
+    api.Self.prototype.addChildTree = function (callback) {
         GraphDisplayer.expandGroupRelation(
             this
         );
+        callback();
     };
     api.Self.prototype.select = function () {
         this.html.addClass("selected");

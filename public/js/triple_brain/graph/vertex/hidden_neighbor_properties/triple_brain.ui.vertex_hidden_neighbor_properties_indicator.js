@@ -73,8 +73,9 @@ define([
             }
             var $this = $(this);
             var vertex = $this.data("vertex");
-            vertex.addChildTree();
-            vertex.centerOnScreenWithAnimation();
+            vertex.addChildTree(function(){
+                vertex.centerOnScreenWithAnimation();
+            });
         }
         return api;
     }

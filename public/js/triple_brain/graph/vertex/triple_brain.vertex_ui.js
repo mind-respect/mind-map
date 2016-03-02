@@ -325,10 +325,11 @@ define([
         api.Object.prototype.getMenuHtml = function () {
             return this.html.find('.menu');
         };
-        api.Object.prototype.addChildTree = function () {
+        api.Object.prototype.addChildTree = function (callback) {
             var self = this;
             GraphDisplayer.addChildTree(
-                self
+                self,
+                callback
             );
         };
 
