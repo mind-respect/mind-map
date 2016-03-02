@@ -61,7 +61,9 @@ define([
         GraphDisplayer.expandGroupRelation(
             this
         );
-        callback();
+        if(callback !== undefined){
+            callback();
+        }
     };
     api.Self.prototype.select = function () {
         this.html.addClass("selected");
