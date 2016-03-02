@@ -58,7 +58,7 @@ define([
         return api;
         function refreshShareLinkVisibility() {
             getShareLink()[GraphDisplayer.getVertexSelector().centralVertex().isPublic() ? "removeClass" : "addClass"](
-                "invisible"
+                "hidden"
             );
         }
 
