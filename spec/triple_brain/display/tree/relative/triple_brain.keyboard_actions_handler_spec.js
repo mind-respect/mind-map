@@ -88,5 +88,20 @@ define([
             ).toBe(numberOfChild + 1);
         });
 
+        it("prevents bubble content editing when in view only", function(){
+            var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            SelectionHandler.setToSingleGraphElement(bubble1);
+            bubble1.leaveEditMode();
+            TestUtils.pressKey("a");
+            expect(
+                bubble1.isInEditMode()
+            ).toBeTruthy();
+            MindMapInfo._setIsViewOnly(true);
+            bubble1.leaveEditMode();
+            TestUtils.pressKey("a");
+            expect(
+                bubble1.isInEditMode()
+            ).toBeFalsy();
+        });
     });
 });

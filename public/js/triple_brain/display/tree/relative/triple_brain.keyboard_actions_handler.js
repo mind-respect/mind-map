@@ -67,7 +67,7 @@ define([
         var selectedElement = SelectionHandler.getSingleElement();
         var feature = actionSet[event.which];
         if(feature === undefined){
-            if(event.which !== ctrlKeyNumber){
+            if(event.which !== ctrlKeyNumber && !MindMapInfo.isViewOnly()){
                 selectedElement.focus();
             }
             return;
