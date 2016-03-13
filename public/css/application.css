@@ -133,7 +133,7 @@
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .left-oriented [data-action=addChild] .fa-arrow-right { transform: rotate(180deg); }
-.left-oriented .vertex .in-bubble-content .in-label-buttons { margin-left: auto; margin-right: -32px; }
+.left-oriented .vertex .in-bubble-content .in-label-buttons { margin-right: -32px; margin-left: auto; }
 .left-oriented .relation.public .label-container:after { right: auto; left: 4px; }
 .left-oriented .relation .in-bubble-content .in-bubble-note-button { left: auto; right: -32px; }
 .left-oriented .relation .label-container { padding-left: 0; padding-right: 6px; }
@@ -259,7 +259,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .relation.bubble .label-container { display: table-cell; padding-left: 6px; position: relative; }
 .relation.bubble.public .label-container:after { font-family: FontAwesome; content: "\f09c"; color: #c1c1c1; position: absolute; font-size: 1.6em; top: -24px; right: -13px; }
 .relation.bubble.suggestion .in-bubble-content { border: none; }
-.relation.bubble.suggestion .in-bubble-content .bubble-label { border: 3px dashed black; background-color: #E7EEF2; color: black; text-shadow: none; }
+.relation.bubble.suggestion .in-bubble-content .label-info { border: 3px dashed black; background-color: #E7EEF2; color: black; text-shadow: none; }
 .relation.bubble .in-bubble-content .label-info { background-color: #3a87ad; height: auto; font-size: 1.05em; }
 .relation.bubble .in-bubble-content .bubble-label { display: inline-block; font-family: helvetica; font-size: 1.05em; }
 .relation.bubble .in-bubble-content .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); font-style: italic; color: white; }
@@ -275,7 +275,7 @@ button.add-button-in-list:hover { color: #00d100; }
 
 .relation input { border-radius: 3px 3px 3px 3px; border-width: 0.2em; border-color: #3a87ad; padding: 0; outline: none; font-family: courier new, monospace; font-size: 14px; vertical-align: middle; background-color: transparent; overflow: hidden; position: absolute; width: 100%; top: 0; left: 0; right: 0; z-index: 5; }
 
-.relation.inverse .in-bubble-content .bubble-label { background: darkslateblue; }
+.relation.inverse .in-bubble-content .label-info { background: darkslateblue; }
 
 .relation.inverse input[type=text] { border-color: red; }
 
@@ -333,7 +333,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .vertex.edit .bubble-label { white-space: pre-wrap; }
 .vertex.absolute { white-space: nowrap; position: absolute !important; min-width: 120px; }
 .vertex.includes-vertices .in-bubble-content { padding-bottom: 2em; }
-.vertex .in-bubble-content .in-label-buttons { margin-left: -32px; }
+.vertex .in-bubble-content .in-label-buttons { margin-left: -24px; }
 .vertex.selected { z-index: 12; }
 .vertex.selected .in-bubble-content { box-shadow: 5px 5px 5px black; }
 .vertex.selected.center-vertex .in-bubble-content { box-shadow: 5px 5px 5px black; }

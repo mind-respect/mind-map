@@ -33,7 +33,7 @@
   &.suggestion {
     .in-bubble-content {
       border: none;
-      .bubble-label {
+      .label-info {
         border: $edgeSize dashed black;
         background-color: #E7EEF2;
         color: black;
@@ -114,7 +114,7 @@
   z-index: 5;
 }
 
-.relation.inverse .in-bubble-content .bubble-label {
+.relation.inverse .in-bubble-content .label-info{
   background: $edgeInverseColor;
 }
 

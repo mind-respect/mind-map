@@ -150,41 +150,12 @@ define([
             });
         }
     };
-
     EventBus.subscribe(
         'localized-text-loaded',
         function () {
             goToSameBubbleText = $.t("vertex.same_bubble");
         }
     );
-
-    api._buildNoteButton = function (graphElement) {
-        var noteButton = $(
-            "<div class='in-bubble-note-button'>"
-        ).prop(
-            "title",
-            graphElement.getNoteButtonInMenu().prop("title")
-        ).click(clickHandler);
-        noteButton.parent().tooltip({
-            delay: {"show": 0, "hide": 0}
-        });
-        noteButton[
-            graphElement.hasNote() ?
-                "removeClass" :
-                "addClass"
-            ]("hidden");
-        return noteButton;
-        function clickHandler(event) {
-            var element = BubbleFactory.fromSubHtml(
-                $(this)
-            );
-            element.getMenuHandler().forSingle().note(
-                event,
-                element
-            );
-        }
-    };
-
     return api;
 
 });
