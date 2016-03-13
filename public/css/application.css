@@ -133,7 +133,7 @@
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .left-oriented [data-action=addChild] .fa-arrow-right { transform: rotate(180deg); }
-.left-oriented .vertex .in-bubble-content .in-bubble-note-button { margin: 0 5px 0 4px; }
+.left-oriented .vertex .in-bubble-content .in-label-buttons { margin-left: auto; margin-right: -32px; }
 .left-oriented .relation.public .label-container:after { right: auto; left: 4px; }
 .left-oriented .relation .in-bubble-content .in-bubble-note-button { left: auto; right: -32px; }
 .left-oriented .relation .label-container { padding-left: 0; padding-right: 6px; }
@@ -185,7 +185,7 @@
 .ui-dialog { opacity: 0.9; }
 
 #graph-element-menu { position: fixed; right: 10px; top: 100px; border: 1px solid #00005a; border-radius: 9px; max-width: 180px; padding: 1em; cursor: all-scroll; margin-right: 0; margin-left: 0; }
-#graph-element-menu button { background: none; border: none; text-shadow: none; box-shadow: none; font-size: 22px; text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); color: #474747; margin-top: -10px; }
+#graph-element-menu button { background: none; border: none; box-shadow: none; font-size: 22px; text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); color: #474747; margin-top: -10px; }
 
 button.graph-element-button { margin-bottom: 5px; margin-right: 3px; line-height: 20px; color: #333; text-align: center; text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); background-image: linear-gradient(to bottom, #ffffff, #e6e6e6); background-repeat: repeat-x; border-bottom-color: #b3b3b3; border: 1px solid #ccc; border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25); -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); }
 button.graph-element-button:hover { background-image: linear-gradient(to bottom, #ffffff, #cdcdcd); }
@@ -253,18 +253,21 @@ button.add-button-in-list:hover { color: #00d100; }
 .ui-dialog-content a:hover { color: #47A3FF; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
-.relation { position: relative; }
-.relation .label { border-radius: 0.80em; padding-top: 0.3em; }
-.relation .menu { background-color: transparent; z-index: 11; margin-left: 5px; }
-.relation .label-container { display: table-cell; padding-left: 6px; position: relative; }
-.relation.public .label-container:after { font-family: FontAwesome; content: "\f09c"; color: #c1c1c1; position: absolute; font-size: 1.6em; top: -24px; right: -13px; }
-.relation.suggestion .in-bubble-content { border: none; }
-.relation.suggestion .in-bubble-content .bubble-label { border: 3px dashed black; background-color: #E7EEF2; color: black; text-shadow: none; }
-.relation .in-bubble-content .bubble-label { background-color: #3a87ad; font-family: helvetica; font-size: 1.05em; height: auto; }
-.relation .in-bubble-content .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); font-style: italic; color: white; }
-.relation .in-bubble-content .in-bubble-note-button { font-size: calc(1em + 0.6vw); position: absolute; left: -20px; top: 0; }
-.relation .ui-button { width: 1.7em; height: 1.8em; margin: 0; }
-.relation .duplicate-button-container { left: -20px; top: -23px; }
+.relation.bubble { position: relative; }
+.relation.bubble .label { border-radius: 0.80em; padding-top: 0.3em; }
+.relation.bubble .menu { background-color: transparent; z-index: 11; margin-left: 5px; }
+.relation.bubble .label-container { display: table-cell; padding-left: 6px; position: relative; }
+.relation.bubble.public .label-container:after { font-family: FontAwesome; content: "\f09c"; color: #c1c1c1; position: absolute; font-size: 1.6em; top: -24px; right: -13px; }
+.relation.bubble.suggestion .in-bubble-content { border: none; }
+.relation.bubble.suggestion .in-bubble-content .bubble-label { border: 3px dashed black; background-color: #E7EEF2; color: black; text-shadow: none; }
+.relation.bubble .in-bubble-content .label-info { background-color: #3a87ad; height: auto; font-size: 1.05em; }
+.relation.bubble .in-bubble-content .bubble-label { display: inline-block; font-family: helvetica; font-size: 1.05em; }
+.relation.bubble .in-bubble-content .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); font-style: italic; color: white; }
+.relation.bubble .in-bubble-content .in-label-buttons { display: inline-block; }
+.relation.bubble .in-bubble-content .in-label-buttons button { font-size: 18px; margin-top: -13px; margin-bottom: -13px; }
+.relation.bubble .in-bubble-content .in-label-buttons button i { text-shadow: 0 1px 1px rgba(0, 0, 0, 0.75); color: white; }
+.relation.bubble .ui-button { width: 1.7em; height: 1.8em; margin: 0; }
+.relation.bubble .duplicate-button-container { left: -20px; top: -23px; }
 
 .relation { padding: 0; margin-top: 0; margin-right: 0; margin-left: 0; vertical-align: middle; }
 
@@ -296,7 +299,8 @@ button.add-button-in-list:hover { color: #00d100; }
 .bubble > *, .bubble .label { display: table-cell; vertical-align: middle; }
 .bubble.view-only .arrow:before { left: 0; }
 .bubble .in-bubble-content { position: relative; z-index: 3; }
-.bubble .in-bubble-note-button { cursor: pointer; margin: 0 0.4em 0 0; display: block; }
+.bubble .in-bubble-content .in-label-buttons { display: inline-block; white-space: nowrap; }
+.bubble .in-bubble-content .in-label-buttons button { display: inline-block; background: none; border: none; box-shadow: none; font-size: 20px; margin: -6px; }
 .bubble.edit { user-select: text; cursor: text; }
 .bubble .duplicate-button-container { position: absolute; }
 .bubble .bubble-label { outline: 0 solid transparent; border: none; font-family: Helvetica; font-size: 14px; width: auto; display: table-cell; white-space: pre; }
@@ -329,6 +333,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .vertex.edit .bubble-label { white-space: pre-wrap; }
 .vertex.absolute { white-space: nowrap; position: absolute !important; min-width: 120px; }
 .vertex.includes-vertices .in-bubble-content { padding-bottom: 2em; }
+.vertex .in-bubble-content .in-label-buttons { margin-left: -32px; }
 .vertex.selected { z-index: 12; }
 .vertex.selected .in-bubble-content { box-shadow: 5px 5px 5px black; }
 .vertex.selected.center-vertex .in-bubble-content { box-shadow: 5px 5px 5px black; }
@@ -465,6 +470,6 @@ li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-bu
 .main-panel { z-index: 12; background-color: transparent; opacity: 0.91; -moz-border-radius: 15px; border-radius: 15px; cursor: default; }
 
 .hidden-properties-container { z-index: 3; min-width: 25px; }
-.hidden-properties-container img { width: 115px; height: auto; }
+.hidden-properties-container img { width: 95px; height: auto; }
 
 .link-like-button { border-style: none; font-size: 0.7em; padding: 0 0 0 0; background-color: transparent; font-weight: normal; }

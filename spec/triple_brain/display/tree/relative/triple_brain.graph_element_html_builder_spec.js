@@ -125,6 +125,7 @@ define([
             );
         });
         it("shows note button only if element has a note", function () {
+            loadFixtures('graph-element-menu.html');
             var threeBubblesGraph = new Scenarios.threeBubblesGraph();
             var bubble1InTree = threeBubblesGraph.getBubble1InTree();
             expect(

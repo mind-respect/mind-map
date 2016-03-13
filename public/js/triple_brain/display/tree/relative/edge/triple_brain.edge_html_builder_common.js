@@ -19,8 +19,8 @@ define([
     var api = {};
     api.moveNoteButtonIfIsToTheLeft = function(edge){
         if (edge.isToTheLeft()) {
-            var noteButton = edge.getNoteButtonInBubbleContent();
-            edge.getInBubbleContainer().append(noteButton);
+            var noteButton = edge.getInLabelButtonsContainer();
+            edge.getLabelAndButtonsContainer().append(noteButton);
         }
     };
     api.buildLabel = function (edgeHtml, text, whenEmptyLabel) {
@@ -28,8 +28,11 @@ define([
         var labelContainer = $(
             "<div class='label-container'>"
         ).appendTo(bubbleContentContainer);
+        var labelAndButtons = $(
+            "<div class='label label-info label-and-buttons'>"
+        );
         var label = $(
-            "<div class='bubble-label label label-info'>"
+            "<div class='bubble-label'>"
         ).text(
             text
         ).attr(
@@ -53,7 +56,7 @@ define([
                 }
             }
         ).appendTo(
-            labelContainer
+            labelAndButtons
         ).tripleBrainAutocomplete({
                 select: function (event, ui) {
                     var edge = BubbleFactory.fromSubHtml(
@@ -82,6 +85,7 @@ define([
                 ]
             }
         );
+        labelAndButtons.appendTo(labelContainer);
         if (!MindMapInfo.isViewOnly()) {
             label.on(
                 "dblclick",
@@ -99,12 +103,10 @@ define([
         GraphElementHtmlBuilder.setUpLabel(label);
         return label;
     };
-    api.buildNoteButton = function(edge){
-        var noteButton = GraphElementHtmlBuilder.buildNoteButton(
-            edge
-        );
-        edge.getInBubbleContainer().prepend(
-            noteButton
+    api.buildInLabelButtons = function(edge){
+        var inLabelButtons = GraphElementHtmlBuilder.buildInLabelButtons();
+        edge.getLabelAndButtonsContainer().prepend(
+            inLabelButtons
         );
     };
     return api;

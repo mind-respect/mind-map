@@ -50,7 +50,7 @@ define([
             this.serverFacade.getComment()
         );
         this._buildMenu(this.html.find(".label-container")).hide();
-        EdgeHtmlBuilderCommon.buildNoteButton(
+        EdgeHtmlBuilderCommon.buildInLabelButtons(
             property
         );
         this.html.append(

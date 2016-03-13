@@ -75,6 +75,11 @@ define([
                 ]("inverse");
             this.inverseAbstract();
         };
+        api.Self.prototype.getLabelAndButtonsContainer = function () {
+            return this.html.find(
+                ".label-and-buttons"
+            );
+        };
         return api;
     }
 );

@@ -9,8 +9,9 @@ define([
     "triple_brain.suggestion_service",
     "triple_brain.friendly_resource_service",
     "triple_brain.selection_handler",
-    "triple_brain.ui.graph"
-], function ($, EventBus, BubbleFactory, SuggestionService, FriendlyResourceService, SelectionHandler, GraphUi) {
+    "triple_brain.ui.graph",
+    "triple_brain.graph_element_main_menu"
+], function ($, EventBus, BubbleFactory, SuggestionService, FriendlyResourceService, SelectionHandler, GraphUi, GraphElementMainMenu) {
     "use strict";
     var enterKeyCode = 13,
         api = {},
@@ -110,31 +111,16 @@ define([
         }
     };
 
-    api.buildNoteButton = function (graphElement) {
-        var noteButton = $(
-            "<div class='in-bubble-note-button'>"
-        ).prop(
-            "title",
-            graphElement.getNoteButtonInMenu().prop("title")
-        ).click(clickHandler);
-        noteButton.parent().tooltip({
-            delay: {"show": 0, "hide": 0}
+    api.buildInLabelButtons = function () {
+        var container = $(
+            "<div class='in-label-buttons'>"
+        );
+        GraphElementMainMenu.visitButtons(function (button) {
+            if (button.canBeInLabel()) {
+                button.cloneInto(container);
+            }
         });
-        noteButton[
-            graphElement.hasNote() ?
-                "removeClass" :
-                "addClass"
-            ]("hidden");
-        return noteButton;
-        function clickHandler(event) {
-            var element = BubbleFactory.fromSubHtml(
-                $(this)
-            );
-            element.getMenuHandler().forSingle().note(
-                event,
-                element
-            );
-        }
+        return container;
     };
 
     api.setUpIdentifications = function (serverFormat, graphElement) {
@@ -171,6 +157,33 @@ define([
             goToSameBubbleText = $.t("vertex.same_bubble");
         }
     );
+
+    api._buildNoteButton = function (graphElement) {
+        var noteButton = $(
+            "<div class='in-bubble-note-button'>"
+        ).prop(
+            "title",
+            graphElement.getNoteButtonInMenu().prop("title")
+        ).click(clickHandler);
+        noteButton.parent().tooltip({
+            delay: {"show": 0, "hide": 0}
+        });
+        noteButton[
+            graphElement.hasNote() ?
+                "removeClass" :
+                "addClass"
+            ]("hidden");
+        return noteButton;
+        function clickHandler(event) {
+            var element = BubbleFactory.fromSubHtml(
+                $(this)
+            );
+            element.getMenuHandler().forSingle().note(
+                event,
+                element
+            );
+        }
+    };
 
     return api;
 

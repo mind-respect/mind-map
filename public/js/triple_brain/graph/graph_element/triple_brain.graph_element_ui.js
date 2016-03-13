@@ -6,11 +6,12 @@ define([
     "jquery",
     "triple_brain.graph_displayer",
     "triple_brain.graph_element_main_menu",
+    "triple_brain.graph_element_button",
     "triple_brain.graph_element_type",
     "triple_brain.event_bus",
     "jquery.focus-end",
     "jquery.center-on-screen"
-], function ($, GraphDisplayer, GraphElementMainMenu, GraphElementType, EventBus) {
+], function ($, GraphDisplayer, GraphElementMainMenu, GraphElementButton, GraphElementType, EventBus) {
     "use strict";
     var api = {},
         otherInstancesKey = "otherInstances",
@@ -324,9 +325,24 @@ define([
     api.Self.prototype.hasNote = function () {
         return this.getNote().trim().length > 0;
     };
-    api.Self.prototype.getNoteButtonInBubbleContent = function () {
+    api.Self.prototype.getInLabelButtonsContainer = function () {
         return this.getHtml().find(
-            ".in-bubble-note-button"
+            ".in-label-buttons"
+        );
+    };
+    api.Self.prototype.reviewInLabelButtonsVisibility = function(){
+        var graphElementUi = this;
+        this.getInLabelButtonsContainer().find("button").each(function(){
+            var button = GraphElementButton.fromHtml($(this));
+            button.getHtml()[button.shouldBeVisibleInGraphElementLabel(graphElementUi) ?
+                "removeClass" :
+                "addClass"
+                ]("hidden");
+        });
+    };
+    api.Self.prototype.getNoteButtonInBubbleContent = function () {
+        return this.getInLabelButtonsContainer().find(
+            "[data-action=note]"
         );
     };
     api.Self.prototype.getNoteButtonInMenu = function () {
@@ -358,6 +374,7 @@ define([
                 }
             }
         });
+        graphElement.reviewInLabelButtonsVisibility();
     }
 
     EventBus.subscribe(
@@ -376,6 +393,7 @@ define([
                 identification
             );
         });
+        graphElement.reviewInLabelButtonsVisibility();
     }
 
     return api;

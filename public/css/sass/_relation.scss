@@ -1,7 +1,7 @@
 /*
  * Copyright Vincent Blouin under the GPL License version 3
  */
-.relation {
+.relation.bubble {
   position: relative;
   .label {
     border-radius: 0.80em;
@@ -43,22 +43,32 @@
   }
   .in-bubble-content {
     $fontSize: 1.05em;
-    .bubble-label {
+    .label-info{
       background-color: $edgeColor;
+      height: auto;
+      font-size: $fontSize;
+    }
+    .bubble-label {
+      display:inline-block;
       font-family: helvetica;
       font-size: $fontSize;
-      height: auto;
       &:empty:not(:focus):before {
         content: attr(data-placeholder);
         font-style: italic;
         color: white;
       }
     }
-    .in-bubble-note-button {
-      font-size: calc(1em + 0.6vw);
-      position: absolute;
-      left: -20px;
-      top: 0;
+    .in-label-buttons{
+      display:inline-block;
+      button{
+        font-size:18px;
+        margin-top:-13px;
+        margin-bottom:-13px;
+        i{
+          text-shadow: 0 1px 1px rgba(0, 0, 0, 0.75);
+          color: white;
+        }
+      }
     }
   }
   .ui-button {

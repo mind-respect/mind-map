@@ -37,6 +37,7 @@ define([
             if (vertex.hasHiddenRelations()) {
                 vertex.buildHiddenNeighborPropertiesIndicator();
             }
+            vertex.reviewInLabelButtonsVisibility();
             api._setupChildrenContainerDragOverAndDrop(vertex);
             EventBus.publish(
                 '/event/ui/vertex/build_complete',
@@ -120,7 +121,7 @@ define([
                 this.serverFacade.getComment()
             );
             this._createMenu();
-            VertexHtmlCommon.buildNoteButton(
+            VertexHtmlCommon.buildInLabelButtons(
                 this.vertex
             );
             this.vertex.setSuggestions(

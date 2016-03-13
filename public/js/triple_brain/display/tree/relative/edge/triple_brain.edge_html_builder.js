@@ -50,6 +50,7 @@ define([
                 edge
             );
             edge.refreshImages();
+            edge.reviewInLabelButtonsVisibility();
             EventBus.publish(
                 '/event/ui/html/edge/created/',
                 edge
@@ -86,7 +87,7 @@ define([
                 this.edgeServer.getComment()
             );
             buildMenu(edge);
-            EdgeHtmlBuilderCommon.buildNoteButton(
+            EdgeHtmlBuilderCommon.buildInLabelButtons(
                 edge
             );
             edge.hideMenu();

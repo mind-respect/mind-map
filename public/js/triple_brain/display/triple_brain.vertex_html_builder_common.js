@@ -107,17 +107,15 @@ define([
             );
         }
     };
-    api.buildNoteButton = function (vertex) {
-        var noteButton = GraphElementHtmlBuilder.buildNoteButton(
-            vertex
-        );
+    api.buildInLabelButtons = function (vertex) {
+        var inLabelButtons = GraphElementHtmlBuilder.buildInLabelButtons();
         vertex.getLabel().before(
-            noteButton
+            inLabelButtons
         );
     };
     api.moveNoteButtonIfIsToTheLeft = function (vertex) {
         if (vertex.isToTheLeft()) {
-            var noteButton = vertex.getNoteButtonInBubbleContent();
+            var noteButton = vertex.getInLabelButtonsContainer();
             noteButton.next(".bubble-label").after(noteButton);
         }
     };

@@ -24,11 +24,18 @@
   .in-bubble-content {
     position: relative;
     z-index: 3;
-  }
-  .in-bubble-note-button {
-    cursor: pointer;
-    margin: 0 0.4em 0 0;
-    display: block;
+    .in-label-buttons {
+      display: inline-block;
+      white-space: nowrap;
+      button{
+        display: inline-block;
+        background:none;
+        border:none;
+        box-shadow:none;
+        font-size:20px;
+        margin:-6px;
+      }
+    }
   }
   &.edit {
     user-select: text;

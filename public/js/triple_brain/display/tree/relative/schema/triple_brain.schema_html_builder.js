@@ -73,7 +73,7 @@ define([
         schema.setNote(
             this.serverFacade.getComment()
         );
-        VertexHtmlCommon.buildNoteButton(
+        VertexHtmlCommon.buildInLabelButtons(
             schema
         );
         return schema;

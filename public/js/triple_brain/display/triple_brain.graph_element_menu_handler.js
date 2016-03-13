@@ -75,11 +75,7 @@ define([
                 graphElement,
                 api._getContentEditor().html(),
                 function (graphElement) {
-                    graphElement.getNoteButtonInBubbleContent()[
-                        graphElement.hasNote() ?
-                            "removeClass" :
-                            "addClass"
-                        ]("hidden");
+                    graphElement.reviewInLabelButtonsVisibility();
                     hideNoteModal();
                 }
             );

@@ -54,11 +54,7 @@ define([
                 vertex,
                 dialog.find("textarea").val(),
                 function (vertex) {
-                    vertex.getNoteButtonInBubbleContent()[
-                        vertex.hasNote() ?
-                            "removeClass":
-                            "addClass"
-                        ]("hidden");
+                    vertex.reviewInLabelButtonsVisibility();
                     $(dialog).dialog("close");
                 }
             );
