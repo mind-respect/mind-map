@@ -91,6 +91,7 @@ define([
         switch(this.getAction()){
             case "note": return graphElement.hasNote();
             case "identify": return graphElement.hasIdentifications();
+            case "visitOtherInstances": return graphElement.hasOtherInstances();
             default:return false;
         }
     };

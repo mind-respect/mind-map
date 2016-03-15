@@ -30,6 +30,8 @@ define([
 
     forSingleNotOwned.noteAction = forSingle.noteAction = GraphElementMenuHandler.forSingle().noteAction;
 
+    forSingle.visitOtherInstances = forSingleNotOwned.visitOtherInstances = GraphElementMenuHandler.forSingle().visitOtherInstances;
+
     forSingleNotOwned.identify = forSingle.identify = function (event, edge) {
         forSingle.identifyAction(edge);
     };

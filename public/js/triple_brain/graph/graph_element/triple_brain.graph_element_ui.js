@@ -115,6 +115,10 @@ define([
             ).length > 0;
     };
 
+    api.Self.prototype.hasOtherInstances = function () {
+        return this.getOtherInstances().length > 0;
+    };
+
     api.Self.prototype.getOtherInstances = function () {
         if (this.html.data(otherInstancesKey) === undefined) {
             this._defineSameInstances();
@@ -330,14 +334,20 @@ define([
             ".in-label-buttons"
         );
     };
-    api.Self.prototype.reviewInLabelButtonsVisibility = function(){
+    api.Self.prototype.reviewInLabelButtonsVisibility = function (applyToOtherInstances) {
         var graphElementUi = this;
-        this.getInLabelButtonsContainer().find("button").each(function(){
+        this.getInLabelButtonsContainer().find("button").each(function () {
             var button = GraphElementButton.fromHtml($(this));
             button.getHtml()[button.shouldBeVisibleInGraphElementLabel(graphElementUi) ?
                 "removeClass" :
                 "addClass"
                 ]("hidden");
+        });
+        if (applyToOtherInstances !== undefined && !applyToOtherInstances) {
+            return;
+        }
+        this.applyToOtherInstances(function (otherInstance) {
+            otherInstance.reviewInLabelButtonsVisibility(false);
         });
     };
     api.Self.prototype.getNoteButtonInBubbleContent = function () {

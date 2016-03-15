@@ -158,7 +158,6 @@
   },
   "vertex": {
     "default": "say it",
-    "same_bubble": "Visit the same bubble but in another context",
     "search": {
       "user": "user",
       "source": "source",
@@ -235,7 +234,8 @@
     "accept": "Accept",
     "addSibling": "Add sibling (enter)",
     "zoomIn": "Zoom in",
-    "zoomOut": "Zoom out"
+    "zoomOut": "Zoom out",
+    "visitOtherInstances": "Visit the same bubble but in another context"
   },
   "hidden_properties_tooltip": "Expand (ctrl+e)",
   "search": {

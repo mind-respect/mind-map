@@ -58,6 +58,11 @@ define([
         });
         editor.cleanHtml();
     };
+    forSingle.visitOtherInstances = function(event, bubble){
+        $(
+            bubble.getOtherInstances()[0].getHtml()
+        ).centerOnScreenWithAnimation();
+    };
     setUpCancelButton();
     initNoteModal();
     function setUpSaveButton() {

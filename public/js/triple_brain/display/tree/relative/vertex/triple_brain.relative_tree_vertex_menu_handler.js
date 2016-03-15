@@ -104,6 +104,9 @@ define([
     forSingleNotOwned.noteCanDo = function (vertex) {
         return vertex.hasNote();
     };
+
+    forSingle.visitOtherInstances = forSingleNotOwned.visitOtherInstances = GraphElementMenuHandler.forSingle().visitOtherInstances;
+
     forSingle.images = function (event, vertex) {
         ImageMenu.ofVertex(
             vertex

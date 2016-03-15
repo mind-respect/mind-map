@@ -158,7 +158,6 @@
   },
   "vertex": {
     "default": "dis le",
-    "same_bubble": "Visiter la même bulle mais dans un autre contexte",
     "search": {
       "user": "usager",
       "source": "source",
@@ -235,7 +234,8 @@
     "accept": "Accepter",
     "addSibling": "Ajouter une bulle soeur (enter)",
     "zoomIn": "Zoom intérieur",
-    "zoomOut": "Zoom extérieur"
+    "zoomOut": "Zoom extérieur",
+    "visitOtherInstances": "Visiter la même bulle mais dans un autre contexte"
   },
   "hidden_properties_tooltip": "Expandre (ctrl+e)",
   "search": {
