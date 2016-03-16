@@ -174,7 +174,7 @@ define([
             this.html.find(".in-bubble-content-wrapper").mousedown(function () {
                 GraphUi.disableDragScroll();
             }).mouseleave(function () {
-                if (GraphUi.isDragScrollEnabled()) {
+                if (!GraphUi.isDraggingBubble() || GraphUi.isDragScrollEnabled()) {
                     return;
                 }
                 GraphUi.enableDragScroll();
@@ -189,6 +189,7 @@ define([
                 RelativeTreeVertex.setDraggedVertex(
                     vertex
                 );
+                GraphUi.setIsDraggingBubble(true);
                 GraphUi.disableDragScroll();
                 vertex.hideMenu();
                 vertex.hideHiddenRelationsContainer();
@@ -202,6 +203,7 @@ define([
             }).on(
                 "dragend", function (event) {
                     event.preventDefault();
+                    GraphUi.setIsDraggingBubble(false);
                     var bubble = BubbleFactory.fromHtml(
                         $(this)
                     );
@@ -232,6 +234,7 @@ define([
                     event.preventDefault();
                     event.stopPropagation();
                     GraphUi.enableDragScroll();
+                    GraphUi.setIsDraggingBubble(false);
                     var parent = BubbleFactory.fromHtml(
                         $(this)
                     );

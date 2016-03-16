@@ -5,8 +5,9 @@
 define([
     "jquery",
     "triple_brain.graph_displayer",
+    "triple_brain.ui.graph",
     "jquery-ui"
-], function ($, GraphDisplayer) {
+], function ($, GraphDisplayer, GraphUi) {
     "use strict";
     var api = {};
     api.setupAutoCompleteSuggestionZIndex = function (input) {
@@ -16,7 +17,7 @@ define([
         );
     };
     api.makeForMenuContentAndGraphElement = function (menuContent, graphElement, extraOptions, titlePrefix) {
-        if(titlePrefix === undefined){
+        if (titlePrefix === undefined) {
             titlePrefix = "";
         }
         var dialogClass = "graph-element-menu",
@@ -33,7 +34,7 @@ define([
                 close: function () {
                     $(this).dialog("destroy").remove();
                 },
-                draggable:false
+                draggable: false
             };
         if (extraOptions !== undefined) {
             if (extraOptions.dialogClass !== undefined) {
@@ -49,7 +50,10 @@ define([
             "html-content"
         ).i18n().dialog(
             options
-        );
+        ).on("dialogclose", function(){
+                GraphUi.enableDragScroll();
+            });
+        GraphUi.disableDragScroll();
         menuContent.closest(".graph-element-menu").centerOnScreen();
         function getHorizontalPosition() {
             var positionDialogToRight = {

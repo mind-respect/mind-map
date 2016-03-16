@@ -76,6 +76,13 @@ define([
         api.hasSelectedFromAutocomplete = function(){
             return $("ul.ui-autocomplete:visible").find(".ui-state-focus").length > 0;
         };
+        api.isDraggingBubble = function(){
+            return _drawnGraph.data("isDraggingBubble") !== undefined &&
+            _drawnGraph.data("isDraggingBubble");
+        };
+        api.setIsDraggingBubble = function(isDragging){
+            return api.getDrawnGraph().data("isDraggingBubble", isDragging);
+        };
         return api;
         function getSchemaInstructions() {
             return $("#schema-instructions");
