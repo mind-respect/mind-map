@@ -17,7 +17,7 @@ define([
         return new Self(serverFacade);
     };
     api.completeBuild = function (property) {
-        EdgeHtmlBuilderCommon.moveNoteButtonIfIsToTheLeft(
+        EdgeHtmlBuilderCommon.moveInLabelButtonsContainerIfIsToTheLeft(
             property
         );
         GraphElementHtmlBuilder.setUpIdentifications(

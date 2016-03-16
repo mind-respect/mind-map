@@ -40,6 +40,7 @@ define([
             ).toBeDefined();
         });
         it("adds duplicate button if has duplicate", function () {
+            loadFixtures('graph-element-menu.html');
             var bubble1 = graphWithCircularityScenario.getBubble1InTree();
             expect(
                 bubble1.hasTheDuplicateButton()

@@ -17,7 +17,7 @@ define([
 ], function ($, MindMapInfo, FriendlyResourceService, SelectionHandler, RelativeTreeTemplates, Identification, UserMapAutocompleteProvider, GraphElementService, SuggestionService, GraphElementHtmlBuilder, BubbleFactory) {
     "use strict";
     var api = {};
-    api.moveNoteButtonIfIsToTheLeft = function(edge){
+    api.moveInLabelButtonsContainerIfIsToTheLeft = function(edge){
         if (edge.isToTheLeft()) {
             var noteButton = edge.getInLabelButtonsContainer();
             edge.getLabelAndButtonsContainer().append(noteButton);

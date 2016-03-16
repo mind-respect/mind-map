@@ -193,8 +193,6 @@ button.graph-element-button:hover { background-image: linear-gradient(to bottom,
 .graph-element-button { width: 40px; height: 40px; font-size: 1.2em; }
 .graph-element-button i { top: 25%; }
 
-.duplicate.graph-element-button { width: 30px; height: 30px; font-size: 1em; }
-
 .menu { width: 180px; }
 
 button.add-button-in-list { color: green; font-weight: bold; font-size: 2em; margin-bottom: 0.2em; float: left; border: none; background-color: transparent; }
@@ -267,7 +265,6 @@ button.add-button-in-list:hover { color: #00d100; }
 .relation.bubble .in-bubble-content .in-label-buttons button { font-size: 18px; margin-top: -13px; margin-bottom: -13px; }
 .relation.bubble .in-bubble-content .in-label-buttons button i { text-shadow: 0 1px 1px rgba(0, 0, 0, 0.75); color: white; }
 .relation.bubble .ui-button { width: 1.7em; height: 1.8em; margin: 0; }
-.relation.bubble .duplicate-button-container { left: -20px; top: -23px; }
 
 .relation { padding: 0; margin-top: 0; margin-right: 0; margin-left: 0; vertical-align: middle; }
 
@@ -302,7 +299,6 @@ button.add-button-in-list:hover { color: #00d100; }
 .bubble .in-bubble-content .in-label-buttons { display: inline-block; white-space: nowrap; }
 .bubble .in-bubble-content .in-label-buttons button { display: inline-block; background: none; border: none; box-shadow: none; font-size: 20px; margin: -6px; }
 .bubble.edit { user-select: text; cursor: text; }
-.bubble .duplicate-button-container { position: absolute; }
 .bubble .bubble-label { outline: 0 solid transparent; border: none; font-family: Helvetica; font-size: 14px; width: auto; display: table-cell; white-space: pre; }
 .bubble .bubble-label[contenteditable='true']:before { content: "\feff "; }
 .bubble .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); color: grey; font-style: italic; }
@@ -348,7 +344,6 @@ button.add-button-in-list:hover { color: #00d100; }
 .vertex .in-bubble-content > * { display: table-cell; }
 .vertex .in-bubble-content .bubble-label { padding: 0; }
 .vertex .in-bubble-content .in-bubble-note-button { display: block; }
-.vertex .in-bubble-content .duplicate-button-container { left: 3px; top: 0; }
 .vertex .move { background-image: url("images/icons/vertex/move.png"); min-width: 25px; min-height: 25px; margin-right: 5px; margin-left: 8px; float: left; }
 .vertex .ui-button { width: 1.7em; height: 1.8em; margin-right: 0; font-size: 1.1em; padding: 0; }
 

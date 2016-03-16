@@ -106,6 +106,7 @@ define([
     };
 
     forSingle.visitOtherInstances = forSingleNotOwned.visitOtherInstances = GraphElementMenuHandler.forSingle().visitOtherInstances;
+    forSingle.visitOtherInstancesCanDo = forSingleNotOwned.visitOtherInstancesCanDo = GraphElementMenuHandler.forSingle().visitOtherInstancesCanDo;
 
     forSingle.images = function (event, vertex) {
         ImageMenu.ofVertex(

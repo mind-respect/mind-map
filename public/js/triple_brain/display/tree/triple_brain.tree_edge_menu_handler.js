@@ -31,7 +31,8 @@ define([
     forSingleNotOwned.noteAction = forSingle.noteAction = GraphElementMenuHandler.forSingle().noteAction;
 
     forSingle.visitOtherInstances = forSingleNotOwned.visitOtherInstances = GraphElementMenuHandler.forSingle().visitOtherInstances;
-
+    forSingle.visitOtherInstancesCanDo = forSingleNotOwned.visitOtherInstancesCanDo = GraphElementMenuHandler.forSingle().visitOtherInstancesCanDo;
+    
     forSingleNotOwned.identify = forSingle.identify = function (event, edge) {
         forSingle.identifyAction(edge);
     };

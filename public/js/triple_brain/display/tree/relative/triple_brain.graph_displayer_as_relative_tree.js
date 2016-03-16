@@ -114,7 +114,6 @@ define([
             );
         }
         parentVertex.removeHiddenRelationsContainer();
-        parentVertex.visitVerticesChildren(VertexHtmlBuilder.completeBuild);
         parentVertex.visitAllChild(function (childBubble) {
             if (childBubble.isGroupRelation()) {
                 GroupRelationHtmlBuilder.completeBuild(childBubble);
@@ -123,6 +122,17 @@ define([
                 parentVertex,
                 childBubble.getOriginalServerObject()
             );
+            if (childBubble.isRelation()) {
+                childBubble.resetOtherInstances();
+                childBubble.reviewInLabelButtonsVisibility();
+                childBubble.visitAllChild(function(childVertex){
+                    VertexHtmlBuilder.completeBuild(
+                        childVertex
+                    );
+                    childVertex.resetOtherInstances();
+                    childVertex.reviewInLabelButtonsVisibility();
+                });
+            }
         });
         api.showSuggestions(parentVertex);
         function removeRelationWithGrandParentFromServerGraph() {

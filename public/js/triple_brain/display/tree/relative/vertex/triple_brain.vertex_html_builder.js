@@ -28,10 +28,7 @@ define([
                 vertex
             );
             vertex.refreshImages();
-            GraphElementHtmlBuilder.addDuplicateElementButtonIfApplicable(
-                vertex
-            );
-            VertexHtmlCommon.moveNoteButtonIfIsToTheLeft(
+            VertexHtmlCommon.moveInLabelButtonsContainerIfIsToTheLeft(
                 vertex
             );
             if (vertex.hasHiddenRelations()) {

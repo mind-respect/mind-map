@@ -113,7 +113,7 @@ define([
             inLabelButtons
         );
     };
-    api.moveNoteButtonIfIsToTheLeft = function (vertex) {
+    api.moveInLabelButtonsContainerIfIsToTheLeft = function (vertex) {
         if (vertex.isToTheLeft()) {
             var noteButton = vertex.getInLabelButtonsContainer();
             noteButton.next(".bubble-label").after(noteButton);

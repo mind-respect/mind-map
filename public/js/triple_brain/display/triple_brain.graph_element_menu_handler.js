@@ -63,6 +63,9 @@ define([
             bubble.getOtherInstances()[0].getHtml()
         ).centerOnScreenWithAnimation();
     };
+    forSingle.visitOtherInstancesCanDo = function(graphElement){
+        return graphElement.hasOtherInstances();
+    };
     setUpCancelButton();
     initNoteModal();
     function setUpSaveButton() {

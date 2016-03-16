@@ -41,15 +41,15 @@ define([
             if (isInverse) {
                 edge.inverse();
             }
-            GraphElementHtmlBuilder.addDuplicateElementButtonIfApplicable(edge);
             GraphElementHtmlBuilder.setUpIdentifications(
                 edgeServer,
                 edge
             );
-            EdgeHtmlBuilderCommon.moveNoteButtonIfIsToTheLeft(
+            EdgeHtmlBuilderCommon.moveInLabelButtonsContainerIfIsToTheLeft(
                 edge
             );
             edge.refreshImages();
+            edge.resetOtherInstances();
             edge.reviewInLabelButtonsVisibility();
             EventBus.publish(
                 '/event/ui/html/edge/created/',

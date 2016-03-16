@@ -41,9 +41,6 @@
     user-select: text;
     cursor: text;
   }
-  .duplicate-button-container {
-    position: absolute;
-  }
   white-space: nowrap;
   .bubble-label {
     &[contenteditable='true']:before {

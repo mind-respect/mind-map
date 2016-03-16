@@ -9,6 +9,7 @@ define([
     "use strict";
     describe("edge_html_builder", function () {
         it("adds duplicate button if has duplicate", function () {
+            loadFixtures('graph-element-menu.html');
             var duplicateRelationsScenario = new Scenarios.graphWithARelationInTwoSimilarRelationsGroup();
             var impact3InSocietyContext = duplicateRelationsScenario.getImpact3RelationInTheImpactOnSocietyContext();
             expect(

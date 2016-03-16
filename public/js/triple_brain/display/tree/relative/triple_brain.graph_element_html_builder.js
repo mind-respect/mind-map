@@ -14,8 +14,7 @@ define([
 ], function ($, EventBus, BubbleFactory, SuggestionService, FriendlyResourceService, SelectionHandler, GraphUi, GraphElementMainMenu) {
     "use strict";
     var enterKeyCode = 13,
-        api = {},
-        goToSameBubbleText;
+        api = {};
     api.setUpLabel = function (label) {
         label.blur(function () {
             var $input = $(this),
@@ -66,50 +65,6 @@ define([
             }
         });
     };
-    api.addDuplicateElementButtonIfApplicable = function (element) {
-        var otherInstances = element.getOtherInstances();
-        if (otherInstances.length === 0) {
-            return;
-        }
-        addDuplicateButton(element);
-        $.each(otherInstances, function () {
-            var otherInstance = this;
-            otherInstance.resetOtherInstances();
-            if (!otherInstance.hasTheDuplicateButton()) {
-                addDuplicateButton(otherInstance);
-            }
-        });
-        function addDuplicateButton(element) {
-            element.getInBubbleContainer().prepend(
-                buildDuplicateButton()
-            );
-        }
-
-        function buildDuplicateButton() {
-            var button = $(
-                "<button class='duplicate graph-element-button round-button' data-toggle='tooltip' data-placement='top'>"
-            ).prop(
-                "title",
-                goToSameBubbleText
-            ).append(
-                $("<i class='fa fa-link'>")
-            ).on(
-                "click",
-                function (event) {
-                    event.stopPropagation();
-                    var bubble = BubbleFactory.fromSubHtml($(this));
-                    $(
-                        bubble.getOtherInstances()[0].getHtml()
-                    ).centerOnScreenWithAnimation();
-                }
-            );
-            return $("<div class='duplicate-button-container'>").append(
-                button
-            ).tooltip({
-                    delay: {"show": 0, "hide": 0}
-                });
-        }
-    };
 
     api.buildInLabelButtons = function () {
         var container = $(
@@ -150,12 +105,6 @@ define([
             });
         }
     };
-    EventBus.subscribe(
-        'localized-text-loaded',
-        function () {
-            goToSameBubbleText = $.t("vertex.same_bubble");
-        }
-    );
     return api;
 
 });

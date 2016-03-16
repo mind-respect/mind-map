@@ -110,9 +110,9 @@ define([
         return this.getHtml().attr("id");
     };
     api.Self.prototype.hasTheDuplicateButton = function () {
-        return this.getInBubbleContainer().find(
-                "button.duplicate"
-            ).length > 0;
+        return !this.getOtherInstanceButton().hasClass(
+            "hidden"
+        );
     };
 
     api.Self.prototype.hasOtherInstances = function () {
@@ -154,8 +154,16 @@ define([
     };
 
     api.Self.prototype.resetOtherInstances = function () {
+        this._resetOtherInstancesNonDeep();
+        this.applyToOtherInstances(function(otherInstance){
+            otherInstance._resetOtherInstancesNonDeep();
+        });
+    };
+
+    api.Self.prototype._resetOtherInstancesNonDeep = function () {
         this.html.removeData(otherInstancesKey);
     };
+
     api.Self.prototype.isVertex = function () {
         return this.getGraphElementType() === api.Types.Vertex;
     };
@@ -338,7 +346,8 @@ define([
         var graphElementUi = this;
         this.getInLabelButtonsContainer().find("button").each(function () {
             var button = GraphElementButton.fromHtml($(this));
-            button.getHtml()[button.shouldBeVisibleInGraphElementLabel(graphElementUi) ?
+            var shouldDisplay = button.shouldBeVisibleInGraphElementLabel(graphElementUi);
+            button.getHtml()[shouldDisplay ?
                 "removeClass" :
                 "addClass"
                 ]("hidden");
@@ -350,14 +359,19 @@ define([
             otherInstance.reviewInLabelButtonsVisibility(false);
         });
     };
+
+    api.Self.prototype.getOtherInstanceButton = function () {
+        return this.getInLabelButtonsContainer().find(
+            "[data-action=visitOtherInstances]"
+        );
+    };
+
     api.Self.prototype.getNoteButtonInBubbleContent = function () {
         return this.getInLabelButtonsContainer().find(
             "[data-action=note]"
         );
     };
-    api.Self.prototype.getNoteButtonInMenu = function () {
-        return this.getMenuHtml().find("> .note-button");
-    };
+
     EventBus.subscribe(
         '/event/ui/graph/identification/added',
         identificationAddedHandler

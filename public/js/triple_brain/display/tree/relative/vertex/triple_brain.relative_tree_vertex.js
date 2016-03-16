@@ -146,11 +146,12 @@ define([
                 return;
             }
             triple.destinationVertex().resetOtherInstances();
-            sourceBubble.applyToOtherInstances(function (vertex) {
+            sourceBubble.applyToOtherInstances(function (otherInstance) {
                 TripleUiBuilder.createUsingServerTriple(
-                    vertex,
+                    otherInstance,
                     tripleServerFormat
                 );
+                otherInstance.resetOtherInstances();
             });
         }
 
