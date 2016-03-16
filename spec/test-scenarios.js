@@ -875,6 +875,28 @@ define([
             };
             Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
         };
+
+        api.centerWith2RelationsToSameChildScenario = function () {
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                return api._getTestData(
+                    "bubbleWith2RelationsToSameBubble"
+                );
+            };
+            this.getCenterBubbleUri = function () {
+                return uriOfVertexWithLabel(
+                    this.getGraph(),
+                    "center"
+                );
+            };
+            this.getCenterInTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree(
+                    "center"
+                );
+            };
+            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
+        };
+
         GraphDisplayer.setImplementation(
             GraphDisplayerFactory.getByName(
                 "relative_tree"

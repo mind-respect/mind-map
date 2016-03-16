@@ -332,6 +332,9 @@ define([
         this.html.data("note", note);
     };
     api.Self.prototype.getNote = function () {
+        if(this.html.data("note") === undefined){
+            this.html.data("note", "");
+        }
         return this.html.data("note");
     };
     api.Self.prototype.hasNote = function () {

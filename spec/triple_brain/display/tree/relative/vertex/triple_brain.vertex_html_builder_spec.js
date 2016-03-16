@@ -192,5 +192,38 @@ define([
                 bubble1Ui.getLabel().find("a").length
             ).toBe(1);
         });
+        it("doesn't build the hidden neighbor properties indicator when the bubble has a duplicate bubble that is already expanded", function(){
+            var graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
+            var bubble1 = graphWithCircularityScenario.getBubble1InTree();
+            var bubble2 = TestUtils.getChildWithLabel(
+                bubble1,
+                "r1"
+            ).getTopMostChildBubble();
+            graphWithCircularityScenario.expandBubble2(
+                bubble2
+            );
+            var bubble3 = bubble2.getTopMostChildBubble().getTopMostChildBubble();
+            graphWithCircularityScenario.expandBubble3(bubble3);
+            var bubble2AsChildOfB3 = TestUtils.getChildWithLabel(
+                bubble3,
+                "r2"
+            ).getTopMostChildBubble();
+            expect(
+                bubble2AsChildOfB3.hasHiddenRelationsContainer()
+            ).toBeFalsy();
+        });
+        it("displays hidden properties container if bubble has a duplicate that is also not expanded", function(){
+            var center = new Scenarios.centerWith2RelationsToSameChildScenario().getCenterInTree();
+            expect(
+                center.getNumberOfChild()
+            ).toBe(2);
+            var child = center.getTopMostChildBubble().getTopMostChildBubble();
+            expect(
+                child.hasOtherInstances()
+            ).toBeTruthy();
+            expect(
+                child.hasHiddenRelationsContainer()
+            ).toBeTruthy();
+        });
     });
 });

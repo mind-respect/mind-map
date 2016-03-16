@@ -31,7 +31,14 @@ define([
             VertexHtmlCommon.moveInLabelButtonsContainerIfIsToTheLeft(
                 vertex
             );
-            if (vertex.hasHiddenRelations()) {
+            var hasAnExpandedOtherInstance = false;
+            vertex.applyToOtherInstances(function(otherInstance){
+                if(otherInstance.getNumberOfChild() > 0){
+                    hasAnExpandedOtherInstance = true;
+                    return -1;
+                }
+            });
+            if (vertex.hasHiddenRelations() && !hasAnExpandedOtherInstance) {
                 vertex.buildHiddenNeighborPropertiesIndicator();
             }
             vertex.reviewInLabelButtonsVisibility();
