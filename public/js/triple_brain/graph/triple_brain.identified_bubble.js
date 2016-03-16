@@ -36,6 +36,9 @@ define([
     };
 
     api.Object.prototype.getTypes = function () {
+        if(this.html.data('types') === undefined){
+            this.html.data('types', []);
+        }
         return this.html.data('types');
     };
     api.Object.prototype.getIdentifications = function () {
@@ -51,6 +54,9 @@ define([
         );
     };
     api.Object.prototype.getGenericIdentifications = function () {
+        if(this.html.data('genericIdentifications') === undefined){
+            this.html.data('genericIdentifications', []);
+        }
         return this.html.data(
             'genericIdentifications'
         );
@@ -95,6 +101,9 @@ define([
         this.html.data('sameAs', sameAsCollection);
     };
     api.Object.prototype.getSameAs = function () {
+        if(this.html.data('sameAs') === undefined){
+            this.html.data('sameAs', []);
+        }
         return this.html.data('sameAs');
     };
     api.Object.prototype.removeSameAs = function (sameAsToRemove) {
