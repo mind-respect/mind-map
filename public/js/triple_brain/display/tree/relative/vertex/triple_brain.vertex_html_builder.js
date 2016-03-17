@@ -173,6 +173,8 @@ define([
         VertexCreator.prototype._setupDragAndDrop = function () {
             this.html.find(".in-bubble-content-wrapper").mousedown(function () {
                 GraphUi.disableDragScroll();
+            }).click(function(){
+                GraphUi.enableDragScroll();
             }).mouseleave(function () {
                 if (!GraphUi.isDraggingBubble() || GraphUi.isDragScrollEnabled()) {
                     return;
