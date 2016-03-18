@@ -13,9 +13,10 @@ define([
         "triple_brain.graph_displayer",
         "triple_brain.event_bus",
         "triple_brain.identification",
+        "triple_brain.graph_element_html_builder",
         "jquery-ui"
     ],
-    function ($, RelativeTreeTemplates, PropertiesIndicator, GroupRelationUi, GroupRelation, SelectionHandler, GraphElementMainMenu, GraphDisplayer, EventBus, Identification) {
+    function ($, RelativeTreeTemplates, PropertiesIndicator, GroupRelationUi, GroupRelation, SelectionHandler, GraphElementMainMenu, GraphDisplayer, EventBus, Identification, GraphElementHtmlBuilder) {
         "use strict";
         var api = {},
             NUMBER_OF_SIBLINGS_UNDER_WHICH_YOU_SHOULD_EXPAND = 4;
@@ -59,11 +60,18 @@ define([
             this._addLabel();
             this._addArrow();
             this._createMenu();
-            var groupRelation = GroupRelationUi.createFromHtml(
+            var groupRelationUi = GroupRelationUi.createFromHtml(
                 this.html
             );
-            groupRelation.hideButtons();
-            return groupRelation;
+            groupRelationUi.setUri(
+                /*
+                 * todo should not set the uri to the first identifier but it's just
+                 * to make the update group relation label work. Should think of a better solution
+                 */
+                this.serverFacade.getIdentifiers()[0].getUri()
+            );
+            groupRelationUi.hideButtons();
+            return groupRelationUi;
         };
 
         Self.prototype._createMenu = function () {
@@ -102,6 +110,7 @@ define([
                 "data-placeholder",
                 GroupRelationUi.getWhenEmptyLabel()
             );
+            GraphElementHtmlBuilder.setUpLabel(labelHtml);
             this._setupDescriptionOnLabel(labelHtml);
         };
 
