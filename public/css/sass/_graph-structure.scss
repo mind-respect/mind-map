@@ -24,7 +24,8 @@ $connectorRadius: 25px;
   display: table;
   margin-left: 0;
   height: 1em;
-  margin-top:-1px; /* margin-top:-1px so that both borders touch to make a continuous line */
+  margin-top:-1px; /* margin top and bottom -1px so that both borders touch to make a continuous line */
+  margin-bottom:-1px;
 }
 
 .clear-fix {
