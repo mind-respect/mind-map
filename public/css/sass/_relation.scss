@@ -17,19 +17,6 @@
     padding-left: 6px;
     position: relative;
   }
-  &.public {
-    .label-container{
-      &:after {
-        font-family: FontAwesome;
-        content: "\f09c";
-        color:$surroundLockColor;
-        position: absolute;
-        font-size: 1.6em;
-        top: -24px;
-        right: -13px;
-      }
-    }
-  }
   &.suggestion {
     .in-bubble-content {
       border: none;

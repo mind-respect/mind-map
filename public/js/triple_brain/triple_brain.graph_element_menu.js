@@ -53,6 +53,7 @@ define([
         ).on("dialogclose", function(){
                 GraphUi.enableDragScroll();
             });
+        console.log("disable drag scroll");
         GraphUi.disableDragScroll();
         menuContent.closest(".graph-element-menu").centerOnScreen();
         function getHorizontalPosition() {

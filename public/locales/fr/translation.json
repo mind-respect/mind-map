@@ -118,7 +118,8 @@
       "relations": "les relations"
     },
     "login": "s'authentifier",
-    "register": "s'enregistrer"
+    "register": "s'enregistrer",
+    "language": "langue"
   },
   "top_center_menu": {
     "select": "sélection"

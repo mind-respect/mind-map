@@ -408,6 +408,12 @@ define([
         '/event/ui/graph/identification/removed',
         identificationRemovedHandler
     );
+    EventBus.subscribe(
+        '/event/ui/graph/vertex/privacy/updated',
+        function(event, graphElement){
+            graphElement.reviewInLabelButtonsVisibility();
+        }
+    );
     function identificationRemovedHandler(event, graphElement, identification) {
         graphElement.applyToOtherInstances(function (vertex) {
             var removeAction = identification.rightActionForType(

@@ -19,19 +19,6 @@
       text-shadow: none;
     }
   }
-  &.public {
-    .in-bubble-content{
-      &:after {
-        font-family: FontAwesome;
-        content: "\f09c";
-        color:$surroundLockColor;
-        position: absolute;
-        font-size: 1.6em;
-        top: 0;
-        right: 14px;
-      }
-    }
-  }
   &.edit {
     .in-bubble-content {
       width: 325px;

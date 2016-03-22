@@ -118,7 +118,8 @@
       "relations": "relations"
     },
     "login": "login",
-    "register": "register"
+    "register": "register",
+    "language": "language"
   },
   "top_center_menu": {
     "select": "select"

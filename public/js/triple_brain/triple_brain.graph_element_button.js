@@ -4,8 +4,9 @@
 
 define([
     "jquery",
-    "triple_brain.bubble_factory"
-], function ($, BubbleFactory) {
+    "triple_brain.bubble_factory",
+    "triple_brain.mind_map_info"
+], function ($, BubbleFactory, MindMapInfo) {
     "use strict";
     var api = {};
     api.fromHtml = function (html) {
@@ -92,6 +93,9 @@ define([
             case "note": return graphElement.hasNote();
             case "identify": return graphElement.hasIdentifications();
             case "visitOtherInstances": return graphElement.hasOtherInstances();
+            case "makePrivate": return graphElement.isVertex() && graphElement.isPublic() && !MindMapInfo.isViewOnly();
+            case "makePublic": return graphElement.isVertex() && !graphElement.isPublic() && !MindMapInfo.isViewOnly();
+            case "isPublic": return !graphElement.isVertex() && graphElement.isPublic() && !MindMapInfo.isViewOnly();
             default:return false;
         }
     };

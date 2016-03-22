@@ -99,9 +99,29 @@
                         </li>
                     </ul>
                 </li>
+                <li id="language-selector-container">
+                    <a data-toggle="dropdown">
+                        <span data-i18n='top_menu.language'></span>
+                        <i class="fa fa-language"></i>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <li>
+                            <a href="" data-lang="en" role="menuitem">
+                                English
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" data-lang="fr" role="menuitem">
+                                Français
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="dropdown" id="user-menu">
-                    <a href="" role="menuitem" id="disconnect-btn"
-                       data-i18n='top_menu.disconnect'></a>
+                    <a href="" role="menuitem" id="disconnect-btn">
+                        <span data-i18n='top_menu.disconnect'></span>
+                        <i class="fa fa-sign-out"></i>
+                    </a>
                 </li>
                 <li>
                     <a href="http://about.bubl.guru" data-i18n="login.about"></a>
@@ -570,8 +590,9 @@
                     class="suggestion graph-element-button"></button>
             <button data-action="images" data-icon="fa-picture-o" class="graph-element-button"></button>
             <button data-action="note" data-icon="fa-book" class="note-button graph-element-button in-label-button"></button>
-            <button data-action="makePublic" data-icon="fa-unlock" class="graph-element-button"></button>
-            <button data-action="makePrivate" data-icon="fa-lock" class="graph-element-button"></button>
+            <button data-action="isPublic" data-icon="fa-unlock" class="graph-element-button in-label-button" disabled></button>
+            <button data-action="makePublic" data-icon="fa-lock" class="graph-element-button in-label-button"></button>
+            <button data-action="makePrivate" data-icon="fa-unlock" class="graph-element-button in-label-button"></button>
             <button data-action="remove" data-icon="fa-trash-o" class="graph-element-button"></button>
             <button data-action="visitOtherInstances" data-icon="fa fa-link" class="graph-element-button in-label-button"></button>
         </div>

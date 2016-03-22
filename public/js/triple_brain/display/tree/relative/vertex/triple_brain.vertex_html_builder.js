@@ -176,7 +176,7 @@ define([
             }).click(function(){
                 GraphUi.enableDragScroll();
             }).mouseleave(function () {
-                if (!GraphUi.isDraggingBubble() || GraphUi.isDragScrollEnabled()) {
+                if(GraphUi.isThereAnOpenModal() || GraphUi.isDragScrollEnabled()){
                     return;
                 }
                 GraphUi.enableDragScroll();

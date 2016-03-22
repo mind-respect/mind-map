@@ -43,6 +43,10 @@ define([
         api._getBubbleNoteModal().modal({
             backdrop: 'static',
             keyboard: false
+        }).on('shown.bs.modal', function(){
+            GraphUi.disableDragScroll();
+        }).on('hidden.bs.modal', function(){
+            GraphUi.enableDragScroll();
         });
         if(MindMapInfo.isViewOnly()){
             api._getContentEditor().prop("content-editable", "false");

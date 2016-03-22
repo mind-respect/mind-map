@@ -255,7 +255,6 @@ button.add-button-in-list:hover { color: #00d100; }
 .relation.bubble .label { border-radius: 0.80em; padding-top: 0.3em; }
 .relation.bubble .menu { background-color: transparent; z-index: 11; margin-left: 5px; }
 .relation.bubble .label-container { display: table-cell; padding-left: 6px; position: relative; }
-.relation.bubble.public .label-container:after { font-family: FontAwesome; content: "\f09c"; color: #c1c1c1; position: absolute; font-size: 1.6em; top: -24px; right: -13px; }
 .relation.bubble.suggestion .in-bubble-content { border: none; }
 .relation.bubble.suggestion .in-bubble-content .label-info { border: 3px dashed black; background-color: #E7EEF2; color: black; text-shadow: none; }
 .relation.bubble .in-bubble-content .label-info { background-color: #3a87ad; height: auto; font-size: 1.05em; }
@@ -323,7 +322,6 @@ button.add-button-in-list:hover { color: #00d100; }
 .vertex { /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */ white-space: nowrap; }
 .vertex.drag-over .in-bubble-content { border: 3px dashed red; border-radius: 50px; }
 .vertex.suggestion .in-bubble-content { border: 3px dashed black; color: black; text-shadow: none; }
-.vertex.public .in-bubble-content:after { font-family: FontAwesome; content: "\f09c"; color: #c1c1c1; position: absolute; font-size: 1.6em; top: 0; right: 14px; }
 .vertex.edit .in-bubble-content { width: 325px; max-width: 325px; }
 .vertex.edit .in-bubble-content .in-bubble-note-button { display: none; }
 .vertex.edit .bubble-label { white-space: pre-wrap; }
@@ -439,6 +437,8 @@ body.no-scroll { overflow: hidden; }
 
 #mind_map { -moz-user-select: -moz-none; -webkit-user-select: none; -ms-user-select: none; user-select: none; }
 #mind_map h2, #mind_map h3 { line-height: inherit; }
+
+#language-selector-container a.current { background-color: #e8e8e8; background-image: linear-gradient(to bottom, #f5f5f5 0%, #e8e8e8 100%); background-repeat: repeat-x; color: #262626; text-decoration: none; }
 
 #schema-instructions { position: fixed; top: 10%; width: 100%; }
 

@@ -28,22 +28,22 @@ define([
             ).toBeFalsy();
             var relation1 = TestUtils.getChildWithLabel(bubble1, "r1");
             expect(
-                relation1.getHtml()
-            ).not.toHaveClass("public");
+                relation1.isPublic()
+            ).toBeFalsy();
         });
         it("sets to public if both source and destination vertex are public", function () {
             var bubble1 = new Scenarios.publicPrivate().getBubble1();
             var relation1 = TestUtils.getChildWithLabel(bubble1, "r1");
             expect(
-                relation1.getHtml()
-            ).toHaveClass("public");
+                relation1.isPublic()
+            ).toBeTruthy();
         });
         it("sets to private if source or destination vertex is private", function () {
             var bubble1 = new Scenarios.publicPrivate().getBubble1();
             var relation2 = TestUtils.getChildWithLabel(bubble1, "r2");
             expect(
-                relation2.getHtml()
-            ).not.toHaveClass("public");
+                relation2.isPublic()
+            ).toBeFalsy();
         });
     });
 });

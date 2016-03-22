@@ -114,20 +114,20 @@ define([
         api.Object.prototype.isSelected = function () {
             return this.html.hasClass("selected");
         };
-        api.Object.prototype.makePrivate = function () {
-            this.html.removeClass("public");
+        
+        api.Object.prototype.isPublic = function () {
+            return this.getParentVertex().isPublic() && this.getDestinationVertex().isPublic();
         };
-        api.Object.prototype.makePublic = function () {
-            this.html.addClass("public");
-        };
-        api.Object.prototype.refreshIsPublicPrivate = function () {
-            var isPublic = this.getParentVertex().isPublic() && this.getDestinationVertex().isPublic();
-            if(isPublic){
-                this.makePublic();
-            }else{
-                this.makePrivate();
+
+        EventBus.subscribe(
+            '/event/ui/graph/vertex/privacy/updated',
+            function(event, graphElement){
+                graphElement.applyToConnectedEdges(function(edge){
+                    edge.reviewInLabelButtonsVisibility();
+                });
             }
-        };
+        );
+
         return api;
     }
 );

@@ -15,9 +15,10 @@ define([
         "triple_brain.mind_map_info",
         "triple_brain.event_bus",
         "triple_brain.schema_service",
-        "triple_brain.id_uri"
+        "triple_brain.id_uri",
+        "triple_brain.language_manager"
     ],
-    function ($, BigSearchBox, LoginHandler, RegisterHandler, SelectionHandler, UserService, GraphDisplayer, Vertex, VertexService, MindMapInfo, EventBus, SchemaService, IdUri) {
+    function ($, BigSearchBox, LoginHandler, RegisterHandler, SelectionHandler, UserService, GraphDisplayer, Vertex, VertexService, MindMapInfo, EventBus, SchemaService, IdUri, LanguageManager) {
         "use strict";
         var api = {};
         api.earlyInit = function () {
@@ -25,6 +26,7 @@ define([
             setUpShareLinkButton();
         };
         EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function (event, isViewOnly) {
+            setupLanguagePicker();
             getSaveAsImageButton().removeClass("hidden");
             if (isViewOnly) {
                 getCreateMenu().addClass("hidden");
@@ -183,6 +185,18 @@ define([
             });
         }
 
+        function setupLanguagePicker(){
+            getLanguagePickerContainer().find(
+                "a[data-lang=" + LanguageManager.getBrowserLocale() + "]"
+            ).addClass("current");
+            getLanguagePickerContainer().find("li a").click(function(event){
+                event.preventDefault();
+                LanguageManager.changeLanguage(
+                    $(this).data("lang")
+                );
+            });
+        }
+
         function getCreateBubbleButton() {
             return $("#create-concept");
         }
@@ -241,6 +255,9 @@ define([
 
         function getSaveAsImageButton(){
             return $("#save-as-image-button");
+        }
+        function getLanguagePickerContainer(){
+            return $("#language-selector-container");
         }
     }
 );

@@ -83,6 +83,10 @@ define([
         api.setIsDraggingBubble = function(isDragging){
             return api.getDrawnGraph().data("isDraggingBubble", isDragging);
         };
+        api.isThereAnOpenModal = function(){
+            return $(".modal:visible").length > 0 ||
+                $(".ui-dialog").length > 0;
+        };
         return api;
         function getSchemaInstructions() {
             return $("#schema-instructions");

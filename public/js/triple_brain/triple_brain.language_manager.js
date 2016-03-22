@@ -210,6 +210,14 @@ define([
             }
         }, callback);
     };
+    api.changeLanguage = function(language){
+        if(api.getBrowserLocale() === language){
+            return;
+        }
+        $.i18n.setLng(language, function(t) {
+            window.location.reload();
+        });
+    };
     return api;
 
     function isLocaleFrench(locale) {
@@ -244,26 +252,28 @@ define([
         return formattedLanguages;
     }
 
+
+
     function getLocaleUsedForSiteTranslation() {
-        //return "fr";
-        var currentUser = UserService.authenticatedUserInCache();
-        return currentUser === undefined ?
-            getFromBrowser() :
-            getFromUser();
-        function getFromUser() {
-            var localeUsedForSiteTranslation = "en";
-            $.each(currentUser.preferred_locales, function () {
-                var locale = this;
-                if (isLocaleEnglish(locale)) {
-                    return false;
-                }
-                if (isLocaleFrench(locale)) {
-                    localeUsedForSiteTranslation = "fr";
-                    return false;
-                }
-            });
-            return localeUsedForSiteTranslation;
-        }
+        return getFromBrowser();
+        //var currentUser = UserService.authenticatedUserInCache();
+        //return currentUser === undefined ?
+        //    getFromBrowser() :
+        //    getFromUser();
+        //function getFromUser() {
+        //    var localeUsedForSiteTranslation = "en";
+        //    $.each(currentUser.preferred_locales, function () {
+        //        var locale = this;
+        //        if (isLocaleEnglish(locale)) {
+        //            return false;
+        //        }
+        //        if (isLocaleFrench(locale)) {
+        //            localeUsedForSiteTranslation = "fr";
+        //            return false;
+        //        }
+        //    });
+        //    return localeUsedForSiteTranslation;
+        //}
 
         function getFromBrowser() {
             return isLocaleFrench(api.getBrowserLocale()) ?

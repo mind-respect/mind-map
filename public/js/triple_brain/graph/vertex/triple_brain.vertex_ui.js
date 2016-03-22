@@ -274,18 +274,10 @@ define([
             }
         };
         api.Object.prototype.makePrivate = function () {
-            this.html.removeClass("public");
             this.setIsPublic(false);
-            this.applyToConnectedEdges(function(edge){
-                edge.makePrivate();
-            });
         };
         api.Object.prototype.makePublic = function () {
-            this.html.addClass("public");
             this.setIsPublic(true);
-            this.applyToConnectedEdges(function(edge){
-                edge.refreshIsPublicPrivate();
-            });
         };
         api.Object.prototype.isPublic = function () {
             return this.html.data("isPublic");
