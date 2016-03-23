@@ -10,7 +10,10 @@ define([
     ],
     function ($, MindMapTemplate, EventBus, GraphDisplayer) {
         "use strict";
-        var api = {};
+        var api = {},
+            imageBasePath = "/css/images/icons/vertex/",
+            rightSideImagePath = imageBasePath + "floral-design.svg",
+            leftSideImagePath = imageBasePath + "left-floral-design.svg";
         api.withVertex = function (bubble) {
             return new HiddenNeighborPropertiesIndicator(bubble);
         };
@@ -25,9 +28,7 @@ define([
                     'hidden_property_container'
                     ].merge()
             ).data("vertex", this.bubble);
-            var imageUrl = "/css/images/icons/vertex/" +
-                (isLeftOriented ? "left-" : "") +
-                "floral-design.svg";
+            var imageUrl = isLeftOriented ? leftSideImagePath : rightSideImagePath;
             var img = $("<img>").attr(
                 "src",
                 imageUrl
@@ -63,8 +64,28 @@ define([
             this.hiddenNeighborPropertiesContainer.css("visibility","visible");
         };
 
-        HiddenNeighborPropertiesIndicator.prototype._getHtml = function(){
+        HiddenNeighborPropertiesIndicator.prototype.getHtml = function(){
             return this.hiddenNeighborPropertiesContainer;
+        };
+
+        HiddenNeighborPropertiesIndicator.prototype.convertToLeft = function(){
+            this.getHtml().prependTo(
+                this.bubble.getHtml()
+            );
+            this.getHtml().find("img").attr(
+                "src",
+                leftSideImagePath
+            );
+        };
+
+        HiddenNeighborPropertiesIndicator.prototype.convertToRight = function(){
+            this.getHtml().appendTo(
+                this.bubble.getHtml()
+            );
+            this.getHtml().find("img").attr(
+                "src",
+                rightSideImagePath
+            );
         };
 
         function handleHiddenPropertiesContainerClick() {

@@ -26,7 +26,7 @@ define([
         api.Self.prototype = new GraphElementUi.Self();
 
         api.Self.prototype.moveToParent = function (parent) {
-            if(this.isVertex()){
+            if (this.isVertex()) {
                 return this.getParentBubble().moveToParent(
                     parent
                 );
@@ -51,6 +51,7 @@ define([
             );
             this._resetIsToTheLeft();
             SelectionHandler.setToSingleGraphElement(this);
+
             if (isOriginalToTheLeft === this.isToTheLeft()) {
                 return;
             }
@@ -58,8 +59,12 @@ define([
                 treeContainer.find("> .vertices-children-container").find(".vertex-tree-container")
             );
             if (this.isToTheLeft()) {
+                this.getDestinationVertex().convertToLeft();
+                this.convertToLeft();
                 $.each(treeContainers, convertTreeStructureToLeft);
             } else {
+                this.getDestinationVertex().convertToRight();
+                this.convertToRight();
                 $.each(treeContainers, convertTreeStructureToRight);
             }
         };
@@ -75,6 +80,23 @@ define([
             treeContainer.find("> .vertices-children-container").appendTo(treeContainer);
         }
 
+        api.Self.prototype.convertToLeft = function () {
+            this.getInLabelButtonsContainer().insertAfter(
+                this.getLabel()
+            );
+            if (this.hasHiddenRelationsContainer()) {
+                this.getHiddenRelationsContainer().convertToLeft();
+            }
+        };
+
+        api.Self.prototype.convertToRight = function () {
+            this.getInLabelButtonsContainer().insertBefore(
+                this.getLabel()
+            );
+            if (this.hasHiddenRelationsContainer()) {
+                this.getHiddenRelationsContainer().convertToRight();
+            }
+        };
 
         api.Self.prototype.getParentBubble = function () {
             if (this.isCenterBubble()) {
@@ -101,10 +123,10 @@ define([
             );
         };
 
-        api.Self.prototype.isBubbleAChild = function(bubble){
+        api.Self.prototype.isBubbleAChild = function (bubble) {
             return this.getChildrenContainer().find(
-                "#" + bubble.getId()
-            ).length > 0;
+                    "#" + bubble.getId()
+                ).length > 0;
         };
 
         api.Self.prototype.getTopMostChildBubble = function () {
