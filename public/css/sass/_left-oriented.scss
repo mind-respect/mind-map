@@ -10,6 +10,8 @@
       .in-label-buttons{
         margin-right:-32px;
         margin-left:auto;
+        padding-right:0;
+        padding-left:$inLabelButtonsPadding;
       }
     }
   }

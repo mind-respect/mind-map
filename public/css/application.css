@@ -133,7 +133,7 @@
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .left-oriented [data-action=addChild] .fa-arrow-right { transform: rotate(180deg); }
-.left-oriented .vertex .in-bubble-content .in-label-buttons { margin-right: -32px; margin-left: auto; }
+.left-oriented .vertex .in-bubble-content .in-label-buttons { margin-right: -32px; margin-left: auto; padding-right: 0; padding-left: 8px; }
 .left-oriented .relation.public .label-container:after { right: auto; left: 4px; }
 .left-oriented .relation .in-bubble-content .in-bubble-note-button { left: auto; right: -32px; }
 .left-oriented .relation .label-container { padding-left: 0; padding-right: 6px; }
@@ -327,7 +327,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .vertex.edit .bubble-label { white-space: pre-wrap; }
 .vertex.absolute { white-space: nowrap; position: absolute !important; min-width: 120px; }
 .vertex.includes-vertices .in-bubble-content { padding-bottom: 2em; }
-.vertex .in-bubble-content .in-label-buttons { margin-left: -24px; }
+.vertex .in-bubble-content .in-label-buttons { margin-left: -24px; padding-left: 0; padding-right: 8px; }
 .vertex.selected { z-index: 12; }
 .vertex.selected .in-bubble-content { box-shadow: 5px 5px 5px black; }
 .vertex.selected.center-vertex .in-bubble-content { box-shadow: 5px 5px 5px black; }

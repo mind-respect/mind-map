@@ -267,6 +267,7 @@ define([
         ).removeAttr(
             "draggable"
         );
+        this.getInLabelButtonsContainer().addClass("hidden");
     };
     api.Self.prototype.leaveEditMode = function () {
         var $label = this.getLabel();
@@ -284,6 +285,7 @@ define([
             "draggable",
             $html.data("previous_draggable_status")
         );
+        this.getInLabelButtonsContainer().removeClass("hidden");
     };
     api.Self.prototype.isInEditMode = function () {
         return this.getHtml().hasClass("edit");

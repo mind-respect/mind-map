@@ -45,6 +45,8 @@
   .in-bubble-content {
     .in-label-buttons{
       margin-left:-24px;
+      padding-left:0;
+      padding-right:$inLabelButtonsPadding;
     }
     //box-shadow: inset 0px 1px 200px 1rem #E3E300 !important;
     //-webkit-box-shadow: inset 0px 1px 100px -1px #E3E300;
