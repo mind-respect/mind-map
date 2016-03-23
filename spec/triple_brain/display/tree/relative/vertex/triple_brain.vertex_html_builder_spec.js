@@ -76,11 +76,11 @@ define([
         it("hides hidden properties container when dragging", function () {
             var bubble2 = new Scenarios.getGraphWithHiddenSimilarRelations().getBubble2InTree();
             expect(
-                bubble2.getHiddenRelationsContainer()._getHtml()
+                bubble2.getHiddenRelationsContainer().getHtml()
             ).not.toHaveClass("hidden");
             TestUtils.startDragging(bubble2);
             expect(
-                bubble2.getHiddenRelationsContainer()._getHtml()
+                bubble2.getHiddenRelationsContainer().getHtml()
             ).toHaveCss({visibility: "hidden"});
         });
         it("hides arrow when dragging", function () {
@@ -108,11 +108,11 @@ define([
             var bubble2 = new Scenarios.getGraphWithHiddenSimilarRelations().getBubble2InTree();
             TestUtils.startDragging(bubble2);
             expect(
-                bubble2.getHiddenRelationsContainer()._getHtml()
+                bubble2.getHiddenRelationsContainer().getHtml()
             ).toHaveCss({visibility: "hidden"});
             TestUtils.endDragging(bubble2);
             expect(
-                bubble2.getHiddenRelationsContainer()._getHtml()
+                bubble2.getHiddenRelationsContainer().getHtml()
             ).toHaveCss({visibility: "visible"});
         });
         it("doesn't move to a parent bubble that is the child of the dragged one", function () {
