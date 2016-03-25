@@ -51,7 +51,6 @@ define([
             );
             this._resetIsToTheLeft();
             SelectionHandler.setToSingleGraphElement(this);
-
             if (isOriginalToTheLeft === this.isToTheLeft()) {
                 return;
             }
@@ -426,6 +425,7 @@ define([
 
         api.Self.prototype._resetIsToTheLeft = function () {
             this._isToTheLeft = undefined;
+            this.getOriginalServerObject().isLeftOriented = this.isToTheLeft();
         };
 
         api.Self.prototype.isToTheLeft = function () {
