@@ -31,6 +31,7 @@ define([
             schema
         );
         schema.refreshImages();
+        schema.reviewInLabelButtonsVisibility();
         GraphUi.showSchemaInstructions();
     };
     function Self(serverFacade){

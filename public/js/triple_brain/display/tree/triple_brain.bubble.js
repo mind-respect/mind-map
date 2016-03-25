@@ -59,7 +59,6 @@ define([
                 treeContainer.find("> .vertices-children-container").find(".vertex-tree-container")
             );
             if (this.isToTheLeft()) {
-                this.getDestinationVertex().convertToLeft();
                 this.convertToLeft();
                 $.each(treeContainers, convertTreeStructureToLeft);
             } else {
@@ -81,21 +80,31 @@ define([
         }
 
         api.Self.prototype.convertToLeft = function () {
+            this._resetIsToTheLeft();
+            this.getOriginalServerObject().leftOriented = true;
             this.getInLabelButtonsContainer().insertAfter(
                 this.getLabel()
             );
             if (this.hasHiddenRelationsContainer()) {
                 this.getHiddenRelationsContainer().convertToLeft();
             }
+            this.visitAllChild(function(child){
+                child.convertToLeft();
+            });
         };
 
         api.Self.prototype.convertToRight = function () {
+            this._resetIsToTheLeft();
+            this.getOriginalServerObject().leftOriented = false;
             this.getInLabelButtonsContainer().insertBefore(
                 this.getLabel()
             );
             if (this.hasHiddenRelationsContainer()) {
                 this.getHiddenRelationsContainer().convertToRight();
             }
+            this.visitAllChild(function(child){
+                child.convertToRight();
+            });
         };
 
         api.Self.prototype.getParentBubble = function () {

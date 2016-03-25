@@ -116,6 +116,9 @@ define([
         };
         
         api.Object.prototype.isPublic = function () {
+            if(this.isProperty()){
+                return true;
+            }
             return this.getParentVertex().isPublic() && this.getDestinationVertex().isPublic();
         };
 

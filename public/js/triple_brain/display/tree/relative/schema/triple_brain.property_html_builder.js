@@ -25,6 +25,7 @@ define([
             property
         );
         property.refreshImages();
+        property.reviewInLabelButtonsVisibility();
     };
     function Self(serverFacade) {
         this.serverFacade = serverFacade;
