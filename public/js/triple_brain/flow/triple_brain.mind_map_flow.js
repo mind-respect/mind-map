@@ -15,8 +15,9 @@ define([
     "triple_brain.ui.graph",
     "triple_brain.language_manager",
     "triple_brain.id_uri",
-    "triple_brain.bubble_cloud_flow"
-], function ($, UserService, EventBus, Header, SelectionHandler, GraphDisplayer, GraphDisplayerFactory, MindMapInfo, GraphElementMainMenu, GraphUi, LanguageManager, IdUriUtils, BubbleCloudFlow) {
+    "triple_brain.bubble_cloud_flow",
+    "triple_brain.flow"
+], function ($, UserService, EventBus, Header, SelectionHandler, GraphDisplayer, GraphDisplayerFactory, MindMapInfo, GraphElementMainMenu, GraphUi, LanguageManager, IdUriUtils, BubbleCloudFlow, Flow) {
     "use strict";
     var api = {};
     api.enterBubbleCloud = function () {
@@ -84,7 +85,6 @@ define([
                 "relative_tree"
             )
         );
-        $("#app-presentation").add("#welcome-content").addClass("hidden");
         if (isAnonymous) {
             loadLocaleAndGraph();
         } else {
@@ -95,14 +95,17 @@ define([
         }
         function loadLocaleAndGraph() {
             LanguageManager.loadLocaleContent(function () {
+                Header.commonSetupForAuthenticated();
                 translateText();
                 if (isTagCloudFlow) {
                     BubbleCloudFlow.enter();
                     return;
                 }
+                Flow.showOnlyFlow("mindMap");
                 GraphDisplayer.displayForBubbleWithUri(
                     MindMapInfo.getCenterBubbleUri()
                 );
+                GraphElementMainMenu._getMenu().removeClass("hidden");
                 GraphElementMainMenu.reset();
             });
         }

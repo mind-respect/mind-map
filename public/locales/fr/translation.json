@@ -104,6 +104,7 @@
   "top_menu": {
     "share": "Partager",
     "central" : "bulles centrales",
+    "schemas" : "schémas",
     "save_as_image" : "sauvegarder en image",
     "create": {
       "title": "créer",

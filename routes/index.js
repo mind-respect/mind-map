@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var isDebug = 'development' === process.env.debug;
+var bublGuruFlow = "";
 //var webshot = require('webshot');
 //var uuid = require("node-uuid");
 router.get('/', function (req, res, next) {
@@ -12,7 +13,8 @@ router.get('/', function (req, res, next) {
             bust: process.env.bust,
             usernameForBublGuru : "",
             graphElementTypeForBublGuru: "",
-            graphElementShortIdForBublGuru : ""
+            graphElementShortIdForBublGuru : "",
+            bublGuruFlow: "landing"
         }
     );
 });
@@ -25,7 +27,8 @@ router.get('/user/:username', function (req, res, next) {
             bust: process.env.bust,
             usernameForBublGuru : req.params.username,
             graphElementTypeForBublGuru: "",
-            graphElementShortIdForBublGuru : ""
+            graphElementShortIdForBublGuru : "",
+            bublGuruFlow: bublGuruFlow
         }
     );
 });
@@ -38,7 +41,23 @@ router.get('/user/:username/graph/:graphElementType/:graphElementShortId', funct
             bust: process.env.bust,
             usernameForBublGuru : req.params.username,
             graphElementTypeForBublGuru : req.params.graphElementType,
-            graphElementShortIdForBublGuru : req.params.graphElementShortId
+            graphElementShortIdForBublGuru : req.params.graphElementShortId,
+            bublGuruFlow: bublGuruFlow
+        }
+    );
+});
+
+router.get('/schemas', function (req, res, next) {
+    res
+        .render(
+        'index',
+        {
+            isDebug: isDebug,
+            bust: process.env.bust,
+            usernameForBublGuru : "",
+            graphElementTypeForBublGuru : "",
+            graphElementShortIdForBublGuru : "",
+            bublGuruFlow: "schemaList"
         }
     );
 });

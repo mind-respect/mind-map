@@ -58,7 +58,7 @@ module.exports = function (grunt) {
                 eqnull: true,
                 strict: true,
                 jasmine: true,
-                predef: ["define", "crow", "crypto", "bubl_guru_force_refresh", "spyOnEvent", "usernameForBublGuru", "graphElementShortIdForBublGuru"],
+                predef: ["define", "crow", "crypto", "bubl_guru_force_refresh", "spyOnEvent", "usernameForBublGuru", "graphElementShortIdForBublGuru", "bublGuruFlow"],
                 browser: true,
                 funcscope: true,
                 validthis: true,

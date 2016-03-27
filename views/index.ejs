@@ -70,11 +70,14 @@
                 <li class="dropdown">
                     <a href="/" id="all-your-bubbles-button" data-i18n='top_menu.central'></a>
                 </li>
+                <li class="dropdown">
+                    <a href="/schemas" data-i18n='top_menu.schemas'></a>
+                </li>
                 <!--<li class="dropdown">-->
                 <!--<a href="#" id="save-as-image-button" data-i18n='top_menu.save_as_image' class="hidden"></a>-->
                 <!--</li>-->
                 <li class="dropdown">
-                    <a id="select-button" data-toggle="dropdown" data-i18n='top_menu.selection.title'></a>
+                    <a id="select-button" class="hidden" data-toggle="dropdown" data-i18n='top_menu.selection.title'></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                         <li>
                             <a href="" id="select-all-bubbles" role="menuitem"
@@ -133,7 +136,7 @@
     <!-- /.container -->
 </nav>
 <div class="container">
-    <div class="page-header" id="app-presentation">
+    <div class="page-header hidden" id="app-presentation" data-flow="landing">
         <div class="background"></div>
         <div class="jumbotron text-center">
             <div class="container">
@@ -221,7 +224,7 @@
         </div>
     </div>
 
-    <div class="row hidden" id="welcome-content">
+    <div class="row hidden" id="welcome-content" data-flow="landing">
         <div class="container-fluid">
             <div class="row action">
                 <div class="row jumbotron">
@@ -568,8 +571,8 @@
         <div class="col-md-4"></div>
     </div>
     <div>
-        <div id="drawn_graph" data-zoom="9"></div>
-        <div id="graph-element-menu" class="main-panel hidden-sm hidden-xs">
+        <div id="drawn_graph" data-zoom="9" data-flow="mindMap" class="hidden"></div>
+        <div id="graph-element-menu" class="main-panel hidden-sm hidden-xs hidden" data-flow="mindMap">
             <button data-action="accept" data-icon="fa-check" class="graph-element-button"></button>
             <button data-action="zoomIn" data-icon="fa-search-plus"
                     class="graph-element-button whole-graph-button"></button>
@@ -607,6 +610,12 @@
             <div id="word-cloud"></div>
         </div>
         <div class="col-md-2"></div>
+    </div>
+</div>
+
+<div class="row hidden" data-flow="schemaList" id="schemas-container">
+    <div class="col-md-12">
+        <ul></ul>
     </div>
 </div>
 
@@ -879,6 +888,7 @@
     var usernameForBublGuru = "<%=usernameForBublGuru%>";
     var graphElementTypeForBublGuru = "<%=graphElementTypeForBublGuru%>";
     var graphElementShortIdForBublGuru = "<%=graphElementShortIdForBublGuru%>";
+    var bublGuruFlow = "<%=bublGuruFlow%>";
 </script>
 <% if(isDebug){ %>
 <script src="/js/common-boot.js"></script>

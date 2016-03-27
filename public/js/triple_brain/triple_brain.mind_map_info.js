@@ -22,6 +22,12 @@ define([
         api.isCenterBubbleUriDefinedInUrl = function () {
             return IdUri.getGraphElementUriInUrl() !== undefined;
         };
+        api.isLandingPageFlow = function(){
+            return "landing" === bublGuruFlow;
+        };
+        api.isSchemaListFlow = function(){
+            return "schemaList" === bublGuruFlow;
+        };
         api.getCenterBubbleUri = function () {
             return IdUri.getGraphElementUriInUrl();
         };
@@ -42,7 +48,7 @@ define([
                 [_isViewOnly]
             );
         };
-
+        
         api.setIsTagCloudFlow = function (isTagCloudFlow) {
             _isTagCloudFlow = isTagCloudFlow;
         };

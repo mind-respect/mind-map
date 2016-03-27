@@ -104,6 +104,7 @@
   "top_menu": {
     "share": "Share",
     "central" : "central bubbles",
+    "schemas" : "schemas",
     "save_as_image" : "save as image",
     "create": {
       "title": "create",

@@ -9,9 +9,9 @@ define([
     "triple_brain.graph_displayer",
     "triple_brain.graph_displayer_factory",
     "triple_brain.graph_element_main_menu",
-    "triple_brain.ui.graph",
+    "triple_brain.flow",
     "ekko-lightbox"
-], function ($, LanguageManager, MindMapInfo, GraphDisplayer, GraphDisplayerFactory, GraphElementMainMenu, GraphUi) {
+], function ($, LanguageManager, MindMapInfo, GraphDisplayer, GraphDisplayerFactory, GraphElementMainMenu, Flow) {
     "use strict";
     var api = {};
     api.enterForAuthenticated = function () {
@@ -22,27 +22,18 @@ define([
             )
         );
         GraphElementMainMenu.reset();
-        api.enterForAuthenticatedOrNot(true);
+        api.enter();
     };
     api.enter = function () {
-        api.enterForAuthenticatedOrNot(false);
-    };
-    api.enterForAuthenticatedOrNot = function (isAuthenticated) {
-        GraphUi.getDrawnGraph().addClass("hidden");
         LanguageManager.loadLocaleContent(function () {
             $("html").i18n();
-            getWelcomeContent().removeClass("hidden");
+            Flow.showOnlyFlow("landing");
             $("body").removeClass("hidden");
         });
-        MindMapInfo.setIsAnonymous(!isAuthenticated);
-        MindMapInfo.defineIsViewOnlyIfItsUndefined();
         setUpFeatures();
         $(".frontier").remove();
     };
     return api;
-    function getWelcomeContent() {
-        return $("#welcome-content");
-    }
 
     function setUpFeatures() {
         $(".carousel-inner .item img[data-remote]").click(function () {

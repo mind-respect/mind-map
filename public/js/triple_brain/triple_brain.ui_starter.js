@@ -9,15 +9,17 @@ define(
         "triple_brain.user_service",
         "triple_brain.mind_map_info",
         "triple_brain.landing_page_flow",
+        "triple_brain.schema_list_flow",
         "triple_brain.change_password",
         "triple_brain.login_handler",
         "triple_brain.register_handler",
         "triple_brain.external_page_loader",
+        "triple_brain.header",
         "triple_brain.wikidata",
         "triple_brain.ui.search",
         "triple_brain.modules"
     ],
-    function ($, MindMapFlow, UserService, MindMapInfo, LandingPageFlow, ChangePassword, LoginHandler, RegisterHandler, ExternalPageLoader) {
+    function ($, MindMapFlow, UserService, MindMapInfo, LandingPageFlow, SchemaListFlow, ChangePassword, LoginHandler, RegisterHandler, ExternalPageLoader, Header) {
         "use strict";
         var api = {};
         api.start = function () {
@@ -40,8 +42,13 @@ define(
                 return;
             }
             UserService.authenticatedUser(function () {
-                if (usernameForBublGuru === "") {
+                Header.commonSetupForAuthenticated();
+                if (MindMapInfo.isLandingPageFlow()) {
                     LandingPageFlow.enterForAuthenticated();
+                    return;
+                }
+                if(MindMapInfo.isSchemaListFlow()){
+                    SchemaListFlow.enter();
                     return;
                 }
                 MindMapFlow.enterBubbleCloud();
@@ -49,15 +56,20 @@ define(
         }
 
         function callBackWhenNotAuthenticated() {
+            Header.commonSetupForAnonymous();
             LoginHandler.setupModal();
             RegisterHandler.setupModal();
             if (ChangePassword.isChangePasswordFlow()) {
                 ChangePassword.enterFlow();
             }
-            if (MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
-                MindMapFlow.enterMindMapForAnonymousUser();
-            } else {
+            if (MindMapInfo.isLandingPageFlow()) {
                 LandingPageFlow.enter();
+            }
+            else if(MindMapInfo.isSchemaListFlow()){
+                SchemaListFlow.enter();
+            }
+            else {
+                MindMapFlow.enterMindMapForAnonymousUser();
             }
         }
 

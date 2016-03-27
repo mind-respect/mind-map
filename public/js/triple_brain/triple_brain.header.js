@@ -26,38 +26,55 @@ define([
             setUpShareLinkButton();
         };
         EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function (event, isViewOnly) {
+            mindMapSpecificSetup(isViewOnly);
+            getSelectButton().removeClass("hidden");
+        });
+        EventBus.subscribe(
+            '/event/ui/flow/schemaList',
+            function (event) {
+
+
+            }
+        );
+        EventBus.subscribe('/event/ui/graph/drawn /event/ui/graph/vertex/privacy/updated', refreshShareLinkVisibility);
+
+        api.commonSetupForAuthenticated = function(){
+            getMyBubblesSearchInput().removeClass("hidden");
+            handleCreateNewConceptButton();
+            handleCreateNewSchemaButton();
+            handleDisconnectButton();
+            getLoginButton().addClass("hidden");
+            getAllYourBubblesButton().removeClass("hidden");
+            getAllYourBubblesButton().prop(
+                "href",
+                "/user/" + UserService.authenticatedUserInCache().user_name
+            );
+            getRegisterButton().addClass("hidden");
+            getCreateMenu().removeClass("hidden");
+        };
+
+        api.commonSetupForAnonymous = function(){
+            getCreateMenu().addClass("hidden");
+            getLandingPageSearchInput().removeClass("hidden");
+            getDisconnectButton().addClass("hidden");
+            getUserMenu().addClass("hidden");
+            getAllYourBubblesButton().addClass("hidden");
+            handleLoginRegisterButtons();
+        };
+        api._commonSetup = function(){
             setupLanguagePicker();
             getSaveAsImageButton().removeClass("hidden");
+        };
+        return api;
+
+        function mindMapSpecificSetup(isViewOnly){
             if (isViewOnly) {
-                getCreateMenu().addClass("hidden");
                 BigSearchBox.setup();
             }
-            if (MindMapInfo.isAnonymous()) {
-                getLandingPageSearchInput().removeClass("hidden");
-                getDisconnectButton().addClass("hidden");
-                getUserMenu().addClass("hidden");
-                getAllYourBubblesButton().addClass("hidden");
-                handleLoginRegisterButtons();
-            } else {
-                getMyBubblesSearchInput().removeClass("hidden");
-                handleCreateNewConceptButton();
-                handleCreateNewSchemaButton();
-                handleDisconnectButton();
-                getLoginButton().addClass("hidden");
-                getAllYourBubblesButton().removeClass("hidden");
-                getAllYourBubblesButton().prop(
-                    "href",
-                    "/user/" + UserService.authenticatedUserInCache().user_name
-                );
-                getRegisterButton().addClass("hidden");
-            }
             //handleSaveAsImageButton();
-            if (!MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
-                getSelectButton().addClass("hidden");
-            }
-        });
-        EventBus.subscribe('/event/ui/graph/drawn /event/ui/graph/vertex/privacy/updated', refreshShareLinkVisibility);
-        return api;
+        }
+
+
         function refreshShareLinkVisibility() {
             getShareLink()[GraphDisplayer.getVertexSelector().centralVertex().isPublic() ? "removeClass" : "addClass"](
                 "hidden"
