@@ -15,14 +15,21 @@ define(
         "triple_brain.register_handler",
         "triple_brain.external_page_loader",
         "triple_brain.header",
+        "triple_brain.graph_displayer",
+        "triple_brain.graph_displayer_factory",
         "triple_brain.wikidata",
         "triple_brain.ui.search",
         "triple_brain.modules"
     ],
-    function ($, MindMapFlow, UserService, MindMapInfo, LandingPageFlow, SchemaListFlow, ChangePassword, LoginHandler, RegisterHandler, ExternalPageLoader, Header) {
+    function ($, MindMapFlow, UserService, MindMapInfo, LandingPageFlow, SchemaListFlow, ChangePassword, LoginHandler, RegisterHandler, ExternalPageLoader, Header, GraphDisplayer, GraphDisplayerFactory) {
         "use strict";
         var api = {};
         api.start = function () {
+            GraphDisplayer.setImplementation(
+                GraphDisplayerFactory.getByName(
+                    "relative_tree"
+                )
+            );
             startLoginFlowWhenForbiddenActionIsPerformed();
             UserService.isAuthenticated(
                 callbackWhenUserAuthenticated,
@@ -47,7 +54,7 @@ define(
                     LandingPageFlow.enterForAuthenticated();
                     return;
                 }
-                if(MindMapInfo.isSchemaListFlow()){
+                if (MindMapInfo.isSchemaListFlow()) {
                     SchemaListFlow.enter();
                     return;
                 }
@@ -65,7 +72,7 @@ define(
             if (MindMapInfo.isLandingPageFlow()) {
                 LandingPageFlow.enter();
             }
-            else if(MindMapInfo.isSchemaListFlow()){
+            else if (MindMapInfo.isSchemaListFlow()) {
                 SchemaListFlow.enter();
             }
             else {
@@ -103,4 +110,5 @@ define(
             });
         }
     }
-);
+)
+;

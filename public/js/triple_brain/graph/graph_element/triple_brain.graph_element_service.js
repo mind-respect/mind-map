@@ -12,37 +12,43 @@ define([
         identificationBaseEventBusKey = "/event/ui/graph/identification/";
     api.addSameAs = function (graphElement, sameAs, callback) {
         sameAs.setType("same_as");
-        api.addIdentification(graphElement, sameAs, callback);
+        return api.addIdentification(graphElement, sameAs, callback);
     };
     api.addType = function (graphElement, type, callback) {
         type.setType("type");
-        api.addIdentification(graphElement, type, callback);
+        return api.addIdentification(graphElement, type, callback);
     };
     api.addGenericIdentification = function (graphElement, genericIdentification, callback) {
         genericIdentification.setType("generic");
-        api.addIdentification(graphElement, genericIdentification, callback);
+        return api.addIdentification(graphElement, genericIdentification, callback);
     };
     api.addIdentification = function (graphElement, identification, callback) {
-        EventBus.executeAfterForEvent(
+        return EventBus.executeAfterForEvent(
             '/event/ui/graph/before/identification/added',
             add,
             [graphElement, identification]
         );
         function add() {
-            $.ajax({
-                type: 'POST',
-                url: graphElement.getUri() + '/identification',
-                data: identification.getJsonFormat(),
-                contentType: 'application/json;charset=utf-8'
-            }).success(function(serverIdentifications){
-                api._addIdentificationsCallback(
-                    graphElement,
-                    identification,
-                    serverIdentifications,
-                    callback
-                );
-            });
+           return api.addIdentificationAjax(
+               graphElement,
+               identification
+           ).success(function(serverIdentifications){
+               api._addIdentificationsCallback(
+                   graphElement,
+                   identification,
+                   serverIdentifications,
+                   callback
+               );
+           });
         }
+    };
+    api.addIdentificationAjax = function(graphElement, identification){
+        return $.ajax({
+            type: 'POST',
+            url: graphElement.getUri() + '/identification',
+            data: identification.getJsonFormat(),
+            contentType: 'application/json;charset=utf-8'
+        });
     };
     api._addIdentificationsCallback = function (graphElement, identification, serverIdentifications, callback) {
         var identifications = Identification.fromMultipleServerFormat(
@@ -56,6 +62,9 @@ define([
                 graphElement.addSameAs,
                 graphElement.addGenericIdentification
             );
+            if(addAction === undefined){
+                return;
+            }
             addAction.call(
                 graphElement,
                 identification

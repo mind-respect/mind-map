@@ -234,6 +234,7 @@ define([
                 return suggestionVertexAction;
             case api.Types.RelationSuggestion :
                 return suggestionRelationAction;
+            default:return function(){};
         }
     };
     api.Self.prototype.focus = function () {

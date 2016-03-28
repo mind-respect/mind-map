@@ -16,11 +16,6 @@ define([
     var api = {};
     api.enterForAuthenticated = function () {
         MindMapInfo.setIsAuthenticatedLandingPageFlow(true);
-        GraphDisplayer.setImplementation(
-            GraphDisplayerFactory.getByName(
-                "relative_tree"
-            )
-        );
         GraphElementMainMenu.reset();
         api.enter();
     };

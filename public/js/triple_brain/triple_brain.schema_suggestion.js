@@ -13,30 +13,31 @@ define([
 ], function ($, IdUri, GraphElementType, Suggestion, VertexService, SchemaService, Schema) {
     "use strict";
     var api = {};
-    api.addSchemaSuggestionsIfApplicable = function (vertex, searchResult) {
+    api.addSchemaSuggestionsIfApplicable = function (vertex, resourceUri) {
         var deferred = $.Deferred();
         var suggestions = [];
-        if (!IdUri.isSchemaUri(searchResult.uri)) {
+        if (!IdUri.isSchemaUri(resourceUri)){
             deferred.resolve(suggestions);
             return deferred.promise();
         }
-        SchemaService.get(searchResult.uri, function(serverFormat){
+        SchemaService.get(resourceUri, function(serverFormat){
             var schema = Schema.fromServerFormat(serverFormat);
             $.each(schema.getProperties(), function () {
                 suggestions.push(
                     Suggestion.fromSchemaPropertyAndOriginUri(
                         this,
-                        searchResult.uri
+                        resourceUri
                     )
                 );
             });
             VertexService.addSuggestions(
                 vertex,
                 suggestions
-            );
-            deferred.resolve(
-                suggestions
-            );
+            ).then(function(){
+                deferred.resolve(
+                    suggestions
+                );
+            });
         });
         return deferred;
     };

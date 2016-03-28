@@ -28,8 +28,7 @@ define([
             },
             executeAfterForEvent: function(event, afterPromises, params){
                 if(undefined === promises[event]){
-                    afterPromises();
-                    return;
+                    return afterPromises();
                 }
                 var built = [],
                     hasMultipleParams = params instanceof Array;
@@ -40,7 +39,7 @@ define([
                             this(params)
                     );
                 });
-                $.when.apply($,built).done(afterPromises);
+                return $.when.apply($,built).done(afterPromises);
             },
             reset: function(){
                 promises = {};

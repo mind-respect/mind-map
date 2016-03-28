@@ -80,11 +80,6 @@ define([
         MindMapInfo.setIsTagCloudFlow(isTagCloudFlow);
         Header.earlyInit();
         handleHistoryBrowse();
-        GraphDisplayer.setImplementation(
-            GraphDisplayerFactory.getByName(
-                "relative_tree"
-            )
-        );
         if (isAnonymous) {
             loadLocaleAndGraph();
         } else {

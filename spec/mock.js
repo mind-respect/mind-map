@@ -3,6 +3,7 @@
  */
 
 define([
+    "jquery",
     'test/test-utils',
     "triple_brain.user_service",
     "triple_brain.mind_map_info",
@@ -14,7 +15,7 @@ define([
     "triple_brain.edge_service",
     "triple_brain.search",
     "triple_brain.id_uri"
-], function (TestUtils, UserService, MindMapInfo, SuggestionService, GraphService, SchemaService, VertexService, FriendlyResourceService, EdgeService, SearchService, IdUri) {
+], function ($, TestUtils, UserService, MindMapInfo, SuggestionService, GraphService, SchemaService, VertexService, FriendlyResourceService, EdgeService, SearchService, IdUri) {
     "use strict";
     var api = {};
     api.setCenterVertexUriInUrl = function(centerVertexUri){
@@ -72,6 +73,8 @@ define([
             user_name : "foo"
         };
     };
-    VertexService.addSuggestions = function(){};
+    VertexService.addSuggestions = function(){
+        return $.Deferred().resolve();
+    };
     return api;
 });

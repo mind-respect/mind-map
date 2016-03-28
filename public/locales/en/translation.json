@@ -258,5 +258,8 @@
   },
   "wordcloud":{
     "title":"Your central bubbles"
+  },
+  "schemaList": {
+    "title": "Schemas"
   }
 }

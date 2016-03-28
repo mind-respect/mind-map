@@ -18,8 +18,12 @@ define([
     "triple_brain.link_to_far_vertex_menu",
     "triple_brain.included_graph_elements_menu",
     "triple_brain.vertex_ui",
-    "triple_brain.mind_map_info"
-], function ($, VertexService, SelectionHandler, RelativeTreeVertex, UiUtils, TripleUi, IdentificationMenu, GraphDisplayer, GraphElementMenuHandler, DeleteMenu, EdgeUi, ImageMenu, LinkToFarVertexMenu, IncludedGraphElementsMenu, VertexUi, MindMapInfo) {
+    "triple_brain.mind_map_info",
+    "triple_brain.vertex",
+    "triple_brain.identification",
+    "triple_brain.graph_element_service",
+    "triple_brain.schema_suggestion"
+], function ($, VertexService, SelectionHandler, RelativeTreeVertex, UiUtils, TripleUi, IdentificationMenu, GraphDisplayer, GraphElementMenuHandler, DeleteMenu, EdgeUi, ImageMenu, LinkToFarVertexMenu, IncludedGraphElementsMenu, VertexUi, MindMapInfo, Vertex, Identification, GraphElementService, SchemaSuggestion) {
     "use strict";
     var api = {},
         forSingle = {},
@@ -30,6 +34,9 @@ define([
         return MindMapInfo.isViewOnly() ?
             forSingleNotOwned :
             forSingle;
+    };
+    api.forSingleOwned = function(){
+        return forSingle;
     };
     forSingle.addChild = function (event, sourceVertex) {
         forSingle.addChildAction(sourceVertex);
@@ -169,6 +176,40 @@ define([
         return vertex.hasSuggestions();
     };
 
+    forSingle.createVertexFromSchemaAction = function(schema){
+        var newVertex;
+        var deferred = $.Deferred();
+        VertexService.createVertex().done(
+            addIdentification
+        ).done(
+            addSuggestions
+        ).done(function(){
+            deferred.resolve(
+                newVertex
+            );
+        });
+        return deferred;
+        function addIdentification(newVertexServerFormat){
+            newVertex = Vertex.fromServerFormat(
+                newVertexServerFormat
+            );
+            var identification = Identification.fromFriendlyResource(
+                schema
+            );
+            identification.setType("generic");
+            return GraphElementService.addIdentificationAjax(
+                newVertex,
+                identification
+            );
+        }
+        function addSuggestions(){
+            return SchemaSuggestion.addSchemaSuggestionsIfApplicable(
+                newVertex,
+                schema.getUri()
+            );
+        }
+    };
+
     api.forGroup = function () {
         return MindMapInfo.isViewOnly() ?
             forGroupNotOwned :
@@ -211,5 +252,6 @@ define([
             GraphDisplayer.displayUsingCentralVertexUri
         );
     };
+
     return api;
 });

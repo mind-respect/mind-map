@@ -22,7 +22,7 @@ define([
             }).success(callback);
         };
         api.createVertex = function (callback) {
-            $.ajax({
+            return $.ajax({
                 type: 'POST',
                 url: getVerticesUrl(),
                 dataType: 'json'
@@ -167,17 +167,22 @@ define([
             });
         };
         api.addSuggestions = function (vertex, suggestions) {
-            $.ajax({
-                type: 'POST',
-                url: vertex.getUri() + '/suggestions',
-                data: Suggestion.formatAllForServer(suggestions),
-                contentType: 'application/json;charset=utf-8'
-            }).success(function () {
+            return api.addSuggestionsAjax(
+                vertex, suggestions
+            ).success(function () {
                 vertex.addSuggestions(suggestions);
                 EventBus.publish(
                     '/event/ui/graph/vertex/suggestions/updated',
                     [vertex, suggestions]
                 );
+            });
+        };
+        api.addSuggestionsAjax = function(vertex, suggestions){
+            return $.ajax({
+                type: 'POST',
+                url: vertex.getUri() + '/suggestions',
+                data: Suggestion.formatAllForServer(suggestions),
+                contentType: 'application/json;charset=utf-8'
             });
         };
         api.makePrivate = function (vertex, callback) {

@@ -77,7 +77,8 @@
                 <!--<a href="#" id="save-as-image-button" data-i18n='top_menu.save_as_image' class="hidden"></a>-->
                 <!--</li>-->
                 <li class="dropdown">
-                    <a id="select-button" class="hidden" data-toggle="dropdown" data-i18n='top_menu.selection.title'></a>
+                    <a id="select-button" class="hidden" data-toggle="dropdown"
+                       data-i18n='top_menu.selection.title'></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                         <li>
                             <a href="" id="select-all-bubbles" role="menuitem"
@@ -158,11 +159,11 @@
                     <button id="register-button-in-page" type="button" class="btn btn-primary" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false"
                             data-i18n="top_menu.register"
-                            ></button>
+                    ></button>
                     <button id="login-button-in-page" type="button" class="btn btn-success" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false"
                             data-i18n="top_menu.login"
-                            ></button>
+                    ></button>
                 </div>
             </div>
         </div>
@@ -295,7 +296,7 @@
                                          data-gallery="link"
                                          data-parent="#linkCarousel" data-toggle="lightbox"
                                          data-remote="/landing-images/link/en/autocomplete-wikipedia-big.png"
-                                            >
+                                    >
                                 </div>
                             </div>
                             <div class="item">
@@ -308,7 +309,7 @@
                                          data-gallery="link"
                                          data-parent="#linkCarousel" data-toggle="lightbox"
                                          data-remote="/landing-images/link/en/montreal-identifier-big.png"
-                                            >
+                                    >
                                 </div>
                             </div>
                             <div class="item">
@@ -321,7 +322,7 @@
                                          data-gallery="link"
                                          data-parent="#linkCarousel" data-toggle="lightbox"
                                          data-remote="/landing-images/link/en/wikipedia-article-big.png"
-                                            >
+                                    >
                                 </div>
                             </div>
                             <div class="item">
@@ -334,7 +335,7 @@
                                          data-gallery="link"
                                          data-parent="#linkCarousel" data-toggle="lightbox"
                                          data-remote="/landing-images/link/en/date-identifier-big.png"
-                                            >
+                                    >
                                 </div>
                             </div>
                             <div class="item">
@@ -347,7 +348,7 @@
                                          data-gallery="link"
                                          data-parent="#linkCarousel" data-toggle="lightbox"
                                          data-remote="/landing-images/link/en/calendar-tool-big.png"
-                                            >
+                                    >
                                 </div>
                             </div>
                             <div class="item">
@@ -360,7 +361,7 @@
                                          data-gallery="link"
                                          data-parent="#linkCarousel" data-toggle="lightbox"
                                          data-remote="/landing-images/link/en/link-eventually-big.png"
-                                            >
+                                    >
                                 </div>
                             </div>
                         </div>
@@ -588,16 +589,21 @@
             <button data-action="reverseToRight" data-icon="fa-share" class="graph-element-button"></button>
             <button data-action="reverseToLeft" data-icon="fa-reply" class="graph-element-button"></button>
             <button data-action="center" data-icon="fa-bullseye" class="graph-element-button"></button>
-            <button data-action="identify" data-icon="fa-info-circle" class="graph-element-button in-label-button"></button>
+            <button data-action="identify" data-icon="fa-info-circle"
+                    class="graph-element-button in-label-button"></button>
             <button data-action="suggestions" data-icon="fa-lightbulb-o"
                     class="suggestion graph-element-button"></button>
             <button data-action="images" data-icon="fa-picture-o" class="graph-element-button"></button>
-            <button data-action="note" data-icon="fa-book" class="note-button graph-element-button in-label-button"></button>
-            <button data-action="isPublic" data-icon="fa-unlock" class="graph-element-button in-label-button" disabled></button>
+            <button data-action="note" data-icon="fa-book"
+                    class="note-button graph-element-button in-label-button"></button>
+            <button data-action="isPublic" data-icon="fa-unlock" class="graph-element-button in-label-button"
+                    disabled></button>
             <button data-action="makePublic" data-icon="fa-lock" class="graph-element-button in-label-button"></button>
-            <button data-action="makePrivate" data-icon="fa-unlock" class="graph-element-button in-label-button"></button>
+            <button data-action="makePrivate" data-icon="fa-unlock"
+                    class="graph-element-button in-label-button"></button>
             <button data-action="remove" data-icon="fa-trash-o" class="graph-element-button"></button>
-            <button data-action="visitOtherInstances" data-icon="fa fa-link" class="graph-element-button in-label-button"></button>
+            <button data-action="visitOtherInstances" data-icon="fa fa-link"
+                    class="graph-element-button in-label-button"></button>
         </div>
     </div>
 </div>
@@ -606,7 +612,6 @@
         <div class="col-md-2"></div>
         <div class="col-md-8">
             <h2 data-i18n="wordcloud.title" class="text-center"></h2>
-
             <div id="word-cloud"></div>
         </div>
         <div class="col-md-2"></div>
@@ -614,9 +619,12 @@
 </div>
 
 <div class="row hidden" data-flow="schemaList" id="schemas-container">
-    <div class="col-md-12">
-        <ul></ul>
+    <div class="col-md-2"></div>
+    <div class="col-md-8 well">
+        <h2 data-i18n="schemaList.title"></h2>
+        <ul class="list-group"></ul>
     </div>
+    <div class="col-md-2"></div>
 </div>
 
 <div class='frontier left-frontier'></div>
@@ -884,11 +892,11 @@
     </div>
 </div>
 <script>
-    var bubl_guru_force_refresh = "<%=bust%>";
-    var usernameForBublGuru = "<%=usernameForBublGuru%>";
-    var graphElementTypeForBublGuru = "<%=graphElementTypeForBublGuru%>";
-    var graphElementShortIdForBublGuru = "<%=graphElementShortIdForBublGuru%>";
-    var bublGuruFlow = "<%=bublGuruFlow%>";
+    var bubl_guru_force_refresh = "<%= bust %>";
+    var usernameForBublGuru = "<%= usernameForBublGuru %>";
+    var graphElementTypeForBublGuru = "<%= graphElementTypeForBublGuru %>";
+    var graphElementShortIdForBublGuru = "<%= graphElementShortIdForBublGuru %>";
+    var bublGuruFlow = "<%= bublGuruFlow %>";
 </script>
 <% if(isDebug){ %>
 <script src="/js/common-boot.js"></script>

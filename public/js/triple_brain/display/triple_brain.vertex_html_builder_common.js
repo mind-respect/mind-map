@@ -55,7 +55,7 @@ define([
         function handle(bubble){
             SchemaSuggestion.addSchemaSuggestionsIfApplicable(
                 bubble,
-                searchResult
+                searchResult.uri
             );
             VertexService.addGenericIdentification(
                 bubble,

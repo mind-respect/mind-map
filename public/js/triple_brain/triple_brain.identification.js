@@ -119,8 +119,10 @@ define([
                 return typeAction;
             case "same_as"  :
                 return sameAsAction;
-            default :
+            case "generic"  :
                 return genericIdentificationAction;
+            default :
+                return function(){};
         }
     };
 

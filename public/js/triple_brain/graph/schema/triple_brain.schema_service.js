@@ -29,6 +29,12 @@ define([
             url: adaptSchemaUri(uri)
         }).success(callback);
     };
+    api.list = function(callback){
+        return $.ajax({
+            type: 'GET',
+            url: "/service/schemas"
+        }).success(callback);
+    };
     api.createProperty = function(schema, callback){
         var response = $.ajax({
             type: 'POST',

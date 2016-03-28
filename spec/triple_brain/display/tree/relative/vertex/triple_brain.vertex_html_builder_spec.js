@@ -61,6 +61,7 @@ define([
             ).toBeTruthy();
         });
         it("hides menu when dragging", function () {
+            MindMapInfo._setIsViewOnly(false);
             var bubble2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
             SelectionHandler.setToSingleGraphElement(
                 bubble2

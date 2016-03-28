@@ -377,7 +377,7 @@ define([
             var self = this;
             SchemaSuggestion.addSchemaSuggestionsIfApplicable(
                 graphElement,
-                searchResult
+                searchResult.uri
             );
             if (graphElement.isSuggestion()) {
                 var vertexSuggestion = graphElement.isRelationSuggestion() ?

@@ -10,17 +10,26 @@ define([
     "use strict";
     var api = {};
     api.fromServerFormat = function (serverFormat) {
-        return new Self(
+        return new Schema(
             serverFormat
         );
     };
     api.fromSearchResult = function(searchResult){
         searchResult.friendlyResource = searchResult.graphElement.friendlyResource;
-        return new Self(
+        return new Schema(
             searchResult
         );
     };
-    function Self(schemaServerFormat){
+    api.fromServerList = function(serverFormatList){
+        var schemas = [];
+        $.each(serverFormatList, function(){
+            schemas.push(
+                new Schema(this)
+            );
+        });
+        return schemas;
+    };
+    function Schema(schemaServerFormat){
         this.schemaServerFormat = schemaServerFormat;
         this._properties = this._buildProperties();
         GraphElement.Self.apply(
@@ -30,11 +39,11 @@ define([
             schemaServerFormat.graphElement
         );
     }
-    Self.prototype = new GraphElement.Self();
-    Self.prototype.getProperties = function(){
+    Schema.prototype = new GraphElement.Self();
+    Schema.prototype.getProperties = function(){
         return this._properties;
     };
-    Self.prototype._buildProperties = function(){
+    Schema.prototype._buildProperties = function(){
         var properties = {};
         if(!this.schemaServerFormat.properties){
             return properties;
@@ -45,14 +54,14 @@ define([
         });
         return properties;
     };
-    Self.prototype.getPropertiesName = function () {
+    Schema.prototype.getPropertiesName = function () {
         var propertiesName = [];
         $.each(this.getProperties(), function(){
             propertiesName.push(this.getLabel());
         });
         return propertiesName;
     };
-    Self.prototype.hasProperties = function(){
+    Schema.prototype.hasProperties = function(){
         return this.getProperties().length > 0;
     };
     return api;

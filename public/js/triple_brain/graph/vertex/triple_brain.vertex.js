@@ -92,5 +92,10 @@ define([
             this.vertexServerFormat.vertex.suggestions
         );
     };
+    Self.prototype.addSuggestions = function(suggestions){
+        this._suggestions = this._suggestions.concat(
+            suggestions
+        );
+    };
     return api;
 });

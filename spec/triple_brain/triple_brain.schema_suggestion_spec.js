@@ -24,7 +24,7 @@ define([
             var hasExecuted = false;
             SchemaSuggestion.addSchemaSuggestionsIfApplicable(
                 undefined,
-                formattedSearchResults[0]
+                formattedSearchResults[0].uri
             ).then(function (suggestions) {
                     expect(
                         suggestions.length
@@ -45,7 +45,7 @@ define([
             var hasExecuted = false;
             SchemaSuggestion.addSchemaSuggestionsIfApplicable(
                 undefined,
-                formattedSearchResults[0]
+                formattedSearchResults[0].uri
             ).then(function(suggestions){
                     expect(
                         suggestions.length
@@ -63,7 +63,7 @@ define([
             var hasExecuted = false;
             SchemaSuggestion.addSchemaSuggestionsIfApplicable(
                 undefined,
-                formattedSearchResults[0]
+                formattedSearchResults[0].uri
             ).then(function (suggestions) {
                     expect(
                         suggestions.length

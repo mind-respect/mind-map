@@ -258,5 +258,8 @@
   },
   "wordcloud": {
     "title": "Vos bulles centrales"
+  },
+  "schemaList": {
+    "title": "Schémas"
   }
 }
