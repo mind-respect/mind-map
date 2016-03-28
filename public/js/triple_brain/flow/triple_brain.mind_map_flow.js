@@ -90,7 +90,11 @@ define([
         }
         function loadLocaleAndGraph() {
             LanguageManager.loadLocaleContent(function () {
-                Header.commonSetupForAuthenticated();
+                if(isAnonymous){
+                    Header.commonSetupForAnonymous();
+                }else{
+                    Header.commonSetupForAuthenticated();
+                }
                 translateText();
                 if (isTagCloudFlow) {
                     BubbleCloudFlow.enter();
