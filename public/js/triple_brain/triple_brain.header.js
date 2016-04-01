@@ -25,17 +25,10 @@ define([
             handleTopMenuSelectButtons();
             setUpShareLinkButton();
         };
-        EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function (event, isViewOnly) {
-            mindMapSpecificSetup(isViewOnly);
+        EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function () {
             getSelectButton().removeClass("hidden");
         });
-        EventBus.subscribe(
-            '/event/ui/flow/schemaList',
-            function (event) {
 
-
-            }
-        );
         EventBus.subscribe('/event/ui/graph/drawn /event/ui/graph/vertex/privacy/updated', refreshShareLinkVisibility);
 
         api.commonSetupForAuthenticated = function(){
@@ -70,17 +63,12 @@ define([
         };
         api._commonSetup = function(){
             setupLanguagePicker();
-            getSaveAsImageButton().removeClass("hidden");
-        };
-        return api;
-
-        function mindMapSpecificSetup(isViewOnly){
-            if (isViewOnly) {
+            if(!MindMapInfo.isCenterBubbleUriDefinedInUrl()){
                 BigSearchBox.setup();
             }
-            //handleSaveAsImageButton();
-        }
-
+            // getSaveAsImageButton().removeClass("hidden");
+        };
+        return api;
 
         function refreshShareLinkVisibility() {
             getShareLink()[GraphDisplayer.getVertexSelector().centralVertex().isPublic() ? "removeClass" : "addClass"](
