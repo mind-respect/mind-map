@@ -19,6 +19,9 @@ define([
             }
             init();
         });
+        EventBus.subscribe('/event/ui/flow/landing', function(){
+            init();
+        });
         function init(){
             getInput().empty().tripleBrainAutocomplete({
                 select: function (event, ui) {

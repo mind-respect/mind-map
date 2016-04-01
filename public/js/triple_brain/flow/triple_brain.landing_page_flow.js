@@ -27,6 +27,7 @@ define([
         });
         setUpFeatures();
         $(".frontier").remove();
+        Flow.publishFlow("landing");
     };
     return api;
 
