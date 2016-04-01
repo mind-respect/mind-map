@@ -103,14 +103,13 @@
   },
   "top_menu": {
     "share": "Partager",
-    "central" : "bulles centrales",
-    "schemas" : "schémas",
+    "central" : "toutes les centrales",
+    "schemas" : "tous les schémas",
     "save_as_image" : "sauvegarder en image",
-    "create": {
-      "title": "créer",
-      "bubble": "bulle",
-      "schema": "modèle"
-    },
+    "bubble": "bulle",
+    "create": "créer",
+    "schema": "modèle",
+    "select": "sélectionner",
     "disconnect": "déconnecter",
     "redraw": "redessiner",
     "selection": {

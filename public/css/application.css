@@ -8,7 +8,7 @@
 .navbar-default .navbar-brand { color: white; }
 .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus { color: white; }
 .navbar-default .navbar-text { color: white; }
-.navbar-default .navbar-nav > li > a { font-size: 1.1em; color: white; }
+.navbar-default .navbar-nav > li > a { font-size: 1.2em; color: white; }
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus { color: white; text-decoration: underline; }
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus { color: white; background-color: rgba(18, 29, 70, 0.4); }
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus { background-image: none; color: white; background-color: rgba(18, 29, 70, 0.4); }
@@ -24,6 +24,11 @@
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus { color: white; background-color: rgba(18, 29, 70, 0.4); } }
 #share-link { font-size: 1.2em; }
 #share-link i { text-shadow: none; }
+
+.navbar-nav .dropdown-menu a { font-size: 1.2em; }
+.navbar-nav .dropdown-menu a.icon:before { font-family: FontAwesome; margin-right: 5px; }
+.navbar-nav .dropdown-menu a.view:before { content: "\f06e"; /*eye*/ }
+.navbar-nav .dropdown-menu a.create:before { content: "\f067"; /*plus*/ }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 #app-presentation { border-bottom: none; margin-top: 0; color: white; }

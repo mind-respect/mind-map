@@ -21,7 +21,7 @@ $dropDown       : false;
   .navbar-nav {
     > li {
       > a {
-        font-size:1.1em;
+        font-size:1.2em;
         color: $colDefault;
         &:hover,  &:focus {
           color: $colHighlight;
@@ -77,5 +77,25 @@ $dropDown       : false;
   font-size:1.2em;
   i{
     text-shadow:none;
+  }
+}
+
+.navbar-nav .dropdown-menu a {
+  font-size:1.2em;
+  &.icon{
+    &:before {
+      font-family: FontAwesome;
+      margin-right: 5px;
+    }
+  }
+  &.view{
+    &:before{
+      content:"\f06e"; /*eye*/
+    }
+  }
+  &.create{
+    &:before{
+      content:"\f067"; /*plus*/
+    }
   }
 }

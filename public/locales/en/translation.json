@@ -103,19 +103,17 @@
   },
   "top_menu": {
     "share": "Share",
-    "central" : "central bubbles",
-    "schemas" : "schemas",
+    "central" : "all central",
+    "schemas" : "all schemas",
     "save_as_image" : "save as image",
-    "create": {
-      "title": "create",
-      "bubble": "bubble",
-      "schema": "model"
-    },
+    "schema": "model",
+    "bubble": "bubble",
+    "create": "create",
+    "select": "select",
     "disconnect": "disconnect",
     "redraw": "redraw",
     "selection": {
       "title": "select",
-      "bubbles": "bubbles",
       "relations": "relations"
     },
     "login": "login",

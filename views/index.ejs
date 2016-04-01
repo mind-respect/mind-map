@@ -67,42 +67,72 @@
                 <li>
                     <a href="#" id="login-button" data-i18n="top_menu.login"></a>
                 </li>
-                <li class="dropdown">
-                    <a href="/" id="all-your-bubbles-button" data-i18n='top_menu.central'></a>
-                </li>
-                <li class="dropdown">
-                    <a href="/schemas" data-i18n='top_menu.schemas'></a>
-                </li>
+                <!--<li class="dropdown">-->
+                    <!--<a href="/" id="all-your-bubbles-button" data-i18n='top_menu.central'></a>-->
+                <!--</li>-->
+                <!--<li class="dropdown">-->
+                    <!--<a href="/schemas" data-i18n='top_menu.schemas'></a>-->
+                <!--</li>-->
                 <!--<li class="dropdown">-->
                 <!--<a href="#" id="save-as-image-button" data-i18n='top_menu.save_as_image' class="hidden"></a>-->
                 <!--</li>-->
-                <li class="dropdown">
-                    <a id="select-button" class="hidden" data-toggle="dropdown"
-                       data-i18n='top_menu.selection.title'></a>
+                <!--<li class="dropdown">-->
+                    <!--<a id="select-button" class="hidden" data-toggle="dropdown"-->
+                       <!--data-i18n='top_menu.selection.title'></a>-->
+                    <!--<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">-->
+                        <!--<li>-->
+                            <!--<a href="" id="select-all-bubbles" role="menuitem">-->
+                                <!--<span data-i18n='top_menu.selection.bubbles'></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="" id="select-all-relations" role="menuitem"-->
+                               <!--data-i18n='top_menu.selection.relations'></a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <li class="dropdown" id="bubble-menu">
+                    <a data-toggle="dropdown" data-i18n='top_menu.bubble'></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <li>
-                            <a href="" id="select-all-bubbles" role="menuitem"
-                               data-i18n='top_menu.selection.bubbles'></a>
+                        <li class="dropdown">
+                            <a href="/" id="all-your-bubbles-button" class="view icon" data-i18n='top_menu.central'></a>
                         </li>
                         <li>
-                            <a href="" id="select-all-relations" role="menuitem"
-                               data-i18n='top_menu.selection.relations'></a>
+                            <a href="" id="create-concept" class="create icon" role="menuitem"
+                               data-i18n='top_menu.create'></a>
+                        </li>
+                        <li>
+                            <a href="" id="select-all-bubbles" role="menuitem">
+                                <span data-i18n='top_menu.select'></span>
+                            </a>
                         </li>
                     </ul>
                 </li>
-                <li class="dropdown" id="create-menu">
-                    <a data-toggle="dropdown" data-i18n='top_menu.create.title'></a>
+                <li class="dropdown" id="schema-menu">
+                    <a data-toggle="dropdown" data-i18n='top_menu.schema'></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                         <li>
-                            <a href="" id="create-concept" role="menuitem"
-                               data-i18n='top_menu.create.bubble'></a>
+                            <a href="/schemas" class="view icon" data-i18n='top_menu.schemas'></a>
                         </li>
                         <li>
-                            <a href="" id="create-schema" role="menuitem"
-                               data-i18n='top_menu.create.schema'></a>
+                            <a href="" id="create-schema" class="create icon" role="menuitem"
+                               data-i18n='top_menu.create'></a>
                         </li>
                     </ul>
                 </li>
+                <!--<li class="dropdown" id="create-menu">-->
+                    <!--<a data-toggle="dropdown" data-i18n='top_menu.create.title'></a>-->
+                    <!--<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">-->
+                        <!--<li>-->
+                            <!--<a href="" id="create-concept" role="menuitem"-->
+                               <!--data-i18n='top_menu.create.bubble'></a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="" id="create-schema" role="menuitem"-->
+                               <!--data-i18n='top_menu.create.schema'></a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
                 <li id="language-selector-container">
                     <a data-toggle="dropdown">
                         <span data-i18n='top_menu.language'></span>
@@ -128,7 +158,10 @@
                     </a>
                 </li>
                 <li>
-                    <a href="http://about.bubl.guru" data-i18n="login.about"></a>
+                    <a href="http://about.bubl.guru">
+                        <span data-i18n="login.about"></span>
+                        <i class="fa fa-info-circle"></i>
+                    </a>
                 </li>
             </ul>
         </div>
