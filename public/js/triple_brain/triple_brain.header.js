@@ -39,6 +39,7 @@ define([
         EventBus.subscribe('/event/ui/graph/drawn /event/ui/graph/vertex/privacy/updated', refreshShareLinkVisibility);
 
         api.commonSetupForAuthenticated = function(){
+            api._commonSetup();
             getMyBubblesSearchInput().removeClass("hidden");
             handleCreateNewConceptButton();
             handleCreateNewSchemaButton();
@@ -50,11 +51,17 @@ define([
                 "/user/" + UserService.authenticatedUserInCache().user_name
             );
             getRegisterButton().addClass("hidden");
-            getCreateMenu().removeClass("hidden");
+            getBubbleMenu().removeClass("hidden");
+            getCreateSchemaButton().removeClass("hidden");
+            if(MindMapInfo.isLandingPageFlow()){
+                getSelectButton().addClass("hidden");
+            }
         };
 
         api.commonSetupForAnonymous = function(){
-            getCreateMenu().addClass("hidden");
+            api._commonSetup();
+            getBubbleMenu().addClass("hidden");
+            getCreateSchemaButton().addClass("hidden");
             getLandingPageSearchInput().removeClass("hidden");
             getDisconnectButton().addClass("hidden");
             getUserMenu().addClass("hidden");
@@ -94,8 +101,12 @@ define([
             });
         }
 
-        function getCreateMenu() {
-            return $("#create-menu");
+        function getBubbleMenu() {
+            return $("#bubble-menu");
+        }
+
+        function getSchemaMenu() {
+            return $("#schema-menu");
         }
 
         function handleDisconnectButton() {

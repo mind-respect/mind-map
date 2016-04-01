@@ -103,8 +103,8 @@
   },
   "top_menu": {
     "share": "Partager",
-    "central" : "toutes les centrales",
-    "schemas" : "tous les schémas",
+    "central" : "toutes vos centrales",
+    "schemas" : "tous les modèles",
     "save_as_image" : "sauvegarder en image",
     "bubble": "bulle",
     "create": "créer",
