@@ -15,6 +15,8 @@
     font-size:2.5em;
   }
   .schema-container{
+    float: left;
+    padding:20px;
     &:hover{
       .button{
         display:block;
@@ -29,7 +31,7 @@
   .button-container{
     position:absolute;
     top:50%;
-    left:42%;
+    left:25%;
     z-index:2;
   }
   .button{

@@ -10,8 +10,9 @@ define([
     "triple_brain.schema",
     "triple_brain.id_uri",
     "triple_brain.relative_tree_vertex_menu_handler",
-    "triple_brain.event_bus"
-], function ($, Flow, LanguageManager, SchemaService, Schema, IdUri, RelativeTreeVertexMenuHandler, EventBus) {
+    "triple_brain.event_bus",
+    "masonry"
+], function ($, Flow, LanguageManager, SchemaService, Schema, IdUri, RelativeTreeVertexMenuHandler, EventBus, Masonry) {
     "use strict";
     var api = {},
         linkTooltip,
@@ -23,13 +24,17 @@ define([
             getContainer().removeClass("hidden");
             $("body").removeClass("hidden");
         });
+        var list = getList();
         SchemaService.list(function (serverList) {
-            var list = getList();
             $.each(Schema.fromServerList(serverList), function () {
                 list.append(
                     buildSchemaContainer(this)
                 );
             });
+            var msnry = new Masonry('#schemas-container .list', {
+                "itemSelector": '.schema-container'
+            });
+            msnry.layout();
         });
     };
     EventBus.subscribe("localized-text-loaded", function(){
@@ -39,7 +44,7 @@ define([
     return api;
 
     function buildSchemaContainer(schema) {
-        var schemaContainer = $("<div class='col-md-3 schema-container'>").data(
+        var schemaContainer = $("<div class='schema-container'>").data(
             "schema-url",
             IdUri.htmlUrlForBubbleUri(
                 schema.getUri()
@@ -50,7 +55,7 @@ define([
         ).append(
             $("<div class='overlay'>"),
             buildButtons(),
-            $("<div class='row'>").append(
+            $("<div class=''>").append(
                 $(
                     "<div class='row'>"
                 ).append(

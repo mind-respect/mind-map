@@ -22,6 +22,7 @@ requirejs.config({
         "jquery.center-on-screen": "jquery/jquery.center-on-screen",
         "jquery.is-fully-on-screen": "jquery/jquery.is-fully-on-screen",
         "jquery.i18next": "vendor/i18next.amd.withJQuery-1.6.3",
+        "masonry": "vendor/masonry.pkgd.min",
         "bootstrap": "vendor/bootstrap/3.3.4/bootstrap.min",
         "bootstrap-datepicker": "vendor/bootstrap/bootstrap-datepicker",
         //"bootstrap-modal-carousel" : "vendor/bootstrap/bootstrap-modal-carousel",
