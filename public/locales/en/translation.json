@@ -258,6 +258,8 @@
     "title":"Your central bubbles"
   },
   "schemaList": {
-    "title": "Schemas"
+    "title": "Schemas",
+    "linkButton":"Visit this model",
+    "createButton": "Create a bubble from this model"
   }
 }

@@ -10,10 +10,12 @@ define([
     "triple_brain.schema",
     "triple_brain.id_uri",
     "triple_brain.relative_tree_vertex_menu_handler",
-    "triple_brain.graph_displayer"
-], function ($, Flow, LanguageManager, SchemaService, Schema, IdUri, RelativeTreeVertexMenuHandler, GraphDisplayer) {
+    "triple_brain.event_bus"
+], function ($, Flow, LanguageManager, SchemaService, Schema, IdUri, RelativeTreeVertexMenuHandler, EventBus) {
     "use strict";
-    var api = {};
+    var api = {},
+        linkTooltip,
+        createTooltip;
     api.enter = function () {
         Flow.hideAllFlowSpecificHtml();
         LanguageManager.loadLocaleContent(function () {
@@ -24,45 +26,120 @@ define([
         SchemaService.list(function (serverList) {
             var list = getList();
             $.each(Schema.fromServerList(serverList), function () {
-                var schema = this;
-                var anchor = $("<a>").text(
-                    schema.getLabel()
-                ).attr(
-                    "href",
-                    IdUri.htmlUrlForBubbleUri(
-                        schema.getUri()
-                    )
-                );
-                var createBubbleButton = $("<button class='create link-like-button'>").text(
-                    "create bubble using schema"
-                ).click(createBubbleUsingSchemaClickHandler);
                 list.append(
-                    $("<li class='list-group-item'>").append(
-                        anchor,
-                        createBubbleButton
-                    ).data(
-                        "schema", schema
-                    )
+                    buildSchemaContainer(this)
                 );
             });
         });
     };
+    EventBus.subscribe("localized-text-loaded", function(){
+        linkTooltip = $.i18n.t("schemaList.linkButton");
+        createTooltip = $.i18n.t("schemaList.createButton");
+    });
     return api;
-    function createBubbleUsingSchemaClickHandler(){
-        var schema = $(this).closest("li").data("schema");
-        RelativeTreeVertexMenuHandler.forSingleOwned().createVertexFromSchemaAction(
+
+    function buildSchemaContainer(schema) {
+        var schemaContainer = $("<div class='col-md-3 schema-container'>").data(
+            "schema-url",
+            IdUri.htmlUrlForBubbleUri(
+                schema.getUri()
+            )
+        ).data(
+            "schema",
             schema
-        ).done(function(newVertex){
-            window.location = IdUri.htmlUrlForBubbleUri(
-                newVertex.getUri()
+        ).append(
+            $("<div class='overlay'>"),
+            buildButtons(),
+            $("<div class='row'>").append(
+                $(
+                    "<div class='row'>"
+                ).append(
+                    $("<div class='col-md-6 text-right' data-index='1'>"),
+                    $("<div class='col-md-6 text-left' data-index='4'>")
+                ),
+                $("<div class='row schema-label'>").append(
+                    $("<div class='col-md-12 text-center'>").text(
+                        schema.getLabel()
+                    )
+                ),
+                $(
+                    "<div class='row'>"
+                ).append(
+                    $("<div class='col-md-6 text-right' data-index='2'>"),
+                    $("<div class='col-md-6 text-left' data-index='3'>")
+                )
+            )
+        );
+        var containerIndex = 4;
+        $.each(schema.getProperties(), function () {
+            var property = this;
+            containerIndex = containerIndex === 4 ? 1 : containerIndex + 1;
+            schemaContainer.find(
+                "[data-index=" + containerIndex + "]"
+            ).append(
+                $("<div>").text(
+                    property.getLabel()
+                )
             );
         });
+        return schemaContainer;
     }
+
     function getContainer() {
         return $("#schemas-container");
     }
 
     function getList() {
-        return getContainer().find("ul");
+        return getContainer().find(".list");
+    }
+
+    function buildButtons() {
+        return $("<div class='button-container'>").append(
+            buildLinkButton(),
+            buildCreateButton()
+        ).mouseover(function () {
+            $(this).siblings(".overlay").addClass(
+                "hover"
+            );
+        }).mouseleave(function () {
+            $(this).siblings(".overlay").removeClass(
+                "hover"
+            );
+        });
+    }
+
+    function buildLinkButton() {
+        return $("<i class='link button fa fa-link'>").attr(
+            "title",
+            linkTooltip
+        ).click(function () {
+            window.location = $(this).closest(
+                ".schema-container"
+            ).data("schema-url");
+        }).tooltip({
+            delay: {"show": 0, "hide": 0}
+        });
+    }
+
+    function buildCreateButton() {
+        return $("<i class='create button fa fa-plus'>").attr(
+            "title",
+            createTooltip
+        ).click(
+            createBubbleUsingSchemaClickHandler
+        ).tooltip({
+            delay: {"show": 0, "hide": 0}
+        });
+    }
+
+    function createBubbleUsingSchemaClickHandler() {
+        var schema = $(this).closest(".schema-container").data("schema");
+        RelativeTreeVertexMenuHandler.forSingleOwned().createVertexFromSchemaAction(
+            schema
+        ).done(function (newVertex) {
+            window.location = IdUri.htmlUrlForBubbleUri(
+                newVertex.getUri()
+            );
+        });
     }
 });

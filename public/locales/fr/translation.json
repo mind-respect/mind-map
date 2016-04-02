@@ -259,6 +259,8 @@
     "title": "Vos bulles centrales"
   },
   "schemaList": {
-    "title": "Schémas"
+    "title": "Modèles",
+    "linkButton":"Visiter le modèle",
+    "createButton": "Créer une bulle à partir de ce modèle"
   }
 }

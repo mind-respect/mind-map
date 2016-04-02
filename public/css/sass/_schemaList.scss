@@ -11,4 +11,49 @@
       font-size:0.65em;
     }
   }
+  .schema-label{
+    font-size:2.5em;
+  }
+  .schema-container{
+    &:hover{
+      .button{
+        display:block;
+      }
+    }
+    &:not(:hover){
+      .button{
+        display:none;
+      }
+    }
+  }
+  .button-container{
+    position:absolute;
+    top:50%;
+    left:42%;
+    z-index:2;
+  }
+  .button{
+    cursor:pointer;
+    padding:5px;
+    margin-right:15px;
+    border-radius:10px;
+    font-size:1.4em;
+    //&:first-child{
+    //  margin-right:5px;
+    //}
+    //&:not(:first-child){
+    //  margin-left:5px;
+    //}
+    background-color:white;
+    float:left;
+  }
+  .overlay{
+    position:absolute;
+    z-index:1;
+    width:100%;
+    height:100%;
+    &:hover, &.hover{
+      background-color:rgba(255,255,255,0.75);
+    }
+  }
 }

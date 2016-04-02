@@ -179,11 +179,11 @@ define([
     forSingle.createVertexFromSchemaAction = function(schema){
         var newVertex;
         var deferred = $.Deferred();
-        VertexService.createVertex().done(
+        VertexService.createVertex().then(
             addIdentification
-        ).done(
+        ).then(
             addSuggestions
-        ).done(function(){
+        ).then(function(){
             deferred.resolve(
                 newVertex
             );
