@@ -11,8 +11,9 @@ define([
     "triple_brain.id_uri",
     "triple_brain.relative_tree_vertex_menu_handler",
     "triple_brain.event_bus",
+    "triple_brain.user_service",
     "masonry"
-], function ($, Flow, LanguageManager, SchemaService, Schema, IdUri, RelativeTreeVertexMenuHandler, EventBus, Masonry) {
+], function ($, Flow, LanguageManager, SchemaService, Schema, IdUri, RelativeTreeVertexMenuHandler, EventBus, UserService, Masonry) {
     "use strict";
     var api = {},
         linkTooltip,
@@ -37,31 +38,25 @@ define([
             msnry.layout();
         });
     };
-    EventBus.subscribe("localized-text-loaded", function(){
+    EventBus.subscribe("localized-text-loaded", function () {
         linkTooltip = $.i18n.t("schemaList.linkButton");
         createTooltip = $.i18n.t("schemaList.createButton");
     });
     return api;
 
     function buildSchemaContainer(schema) {
+        var schemaUrl = IdUri.htmlUrlForBubbleUri(
+            schema.getUri()
+        );
         var schemaContainer = $("<div class='schema-container'>").data(
             "schema-url",
-            IdUri.htmlUrlForBubbleUri(
-                schema.getUri()
-            )
+            schemaUrl
         ).data(
             "schema",
             schema
         ).append(
             $("<div class='overlay'>"),
-            buildButtons(),
             $("<div class=''>").append(
-                $(
-                    "<div class='row'>"
-                ).append(
-                    $("<div class='col-md-6 text-right' data-index='1'>"),
-                    $("<div class='col-md-6 text-left' data-index='4'>")
-                ),
                 $("<div class='row schema-label'>").append(
                     $("<div class='col-md-12 text-center'>").text(
                         schema.getLabel()
@@ -70,15 +65,27 @@ define([
                 $(
                     "<div class='row'>"
                 ).append(
-                    $("<div class='col-md-6 text-right' data-index='2'>"),
-                    $("<div class='col-md-6 text-left' data-index='3'>")
+                    $("<div class='col-md-6 text-right' data-index='1'>"),
+                    $("<div class='col-md-6 text-left' data-index='2'>")
                 )
+                // $(
+                //     "<div class='row'>"
+                // ).append(
+                //     $("<div class='col-md-6 text-right' data-index='2'>"),
+                //     $("<div class='col-md-6 text-left' data-index='3'>")
+                // )
             )
         );
-        var containerIndex = 4;
+        if (UserService.hasCurrentUser()) {
+            schemaContainer.append(
+                buildButtons(schemaUrl)
+            );
+        }
+
+        var containerIndex = 2;
         $.each(schema.getProperties(), function () {
             var property = this;
-            containerIndex = containerIndex === 4 ? 1 : containerIndex + 1;
+            containerIndex = containerIndex === 2 ? 1 : containerIndex + 1;
             schemaContainer.find(
                 "[data-index=" + containerIndex + "]"
             ).append(
@@ -87,7 +94,16 @@ define([
                 )
             );
         });
-        return schemaContainer;
+        if (UserService.hasCurrentUser()) {
+            return schemaContainer;
+        } else {
+            return $("<a>").attr(
+                "href",
+                schemaUrl
+            ).append(
+                schemaContainer
+            );
+        }
     }
 
     function getContainer() {
@@ -98,9 +114,9 @@ define([
         return getContainer().find(".list");
     }
 
-    function buildButtons() {
-        return $("<div class='button-container'>").append(
-            buildLinkButton(),
+    function buildButtons(schemaUrl) {
+        return $("<div class='button-container text-center'>").append(
+            buildLinkButton(schemaUrl),
             buildCreateButton()
         ).mouseover(function () {
             $(this).siblings(".overlay").addClass(
@@ -113,17 +129,18 @@ define([
         });
     }
 
-    function buildLinkButton() {
-        return $("<i class='link button fa fa-link'>").attr(
-            "title",
-            linkTooltip
-        ).click(function () {
-            window.location = $(this).closest(
-                ".schema-container"
-            ).data("schema-url");
-        }).tooltip({
-            delay: {"show": 0, "hide": 0}
-        });
+    function buildLinkButton(schemaUrl) {
+        return $("<a>").attr(
+            "href",
+            schemaUrl
+        ).append(
+            $("<i class='link button fa fa-link'>").attr(
+                "title",
+                linkTooltip
+            ).tooltip({
+                delay: {"show": 0, "hide": 0}
+            })
+        );
     }
 
     function buildCreateButton() {

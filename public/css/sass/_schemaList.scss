@@ -15,6 +15,7 @@
     font-size:2.5em;
   }
   .schema-container{
+    color:black;
     float: left;
     padding:20px;
     &:hover{
@@ -31,7 +32,9 @@
   .button-container{
     position:absolute;
     top:50%;
-    left:25%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
     z-index:2;
   }
   .button{
