@@ -307,11 +307,11 @@ define([
                 var edge = EdgeHtmlBuilder.withServerFacade(
                     this.getRelation1()
                 ).create();
-                EdgeHtmlBuilder.afterChildBuilt(
-                    edge,
-                    this.getBubble1Ui(),
-                    this.getBubble2Ui()
-                );
+                // EdgeHtmlBuilder.afterChildBuilt(
+                //     edge,
+                //     this.getBubble1Ui(),
+                //     this.getBubble2Ui()
+                // );
                 return edge;
             };
             this.getRelation2 = function () {

@@ -11,7 +11,7 @@ define([
         var api = {};
         api.buildCommonConstructors = EdgeUi.buildCommonConstructors;
         EdgeUi.buildCommonConstructors(api);
-        api.createFromHtmlAndUri = function(html, uri){
+        api.createFromHtmlAndUri = function (html, uri) {
             var edge = new api.Self().init(
                 html
             );
@@ -32,9 +32,10 @@ define([
                 edge.getHtml()
             );
         };
-        api.Self = function() {};
+        api.Self = function () {
+        };
         api.Self.prototype = new EdgeUi.Object();
-        api.Self.prototype.init = function(html){
+        api.Self.prototype.init = function (html) {
             this.html = html;
             EdgeUi.Object.apply(this, [html]);
             return this;
@@ -79,6 +80,13 @@ define([
             return this.html.find(
                 ".label-and-buttons"
             );
+        };
+        api.Self.prototype.reviewEditButtonDisplay = function () {
+            var parentBubble = this.getParentBubble();
+            if (!parentBubble.isGroupRelation() || parentBubble.text() !== this.text()) {
+                return;
+            }
+            this.getHtml().addClass("same-as-group-relation");
         };
         return api;
     }

@@ -51,6 +51,9 @@ define([
             );
             this._resetIsToTheLeft();
             SelectionHandler.setToSingleGraphElement(this);
+            if(this.isRelation()){
+                this.reviewEditButtonDisplay();
+            }
             if (isOriginalToTheLeft === this.isToTheLeft()) {
                 return;
             }

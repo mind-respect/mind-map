@@ -2,7 +2,20 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 .relation.bubble {
+  .edit-relation-button{
+    font-size:1.50em;
+    cursor:pointer;
+    display:none;
+  }
   position: relative;
+  &.same-as-group-relation{
+    .label-container {
+      display:none;
+    }
+    .edit-relation-button{
+      display:block;
+    }
+  }
   .label {
     border-radius: 0.80em;
     padding-top:0.3em;

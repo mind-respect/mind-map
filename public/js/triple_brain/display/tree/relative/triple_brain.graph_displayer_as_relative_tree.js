@@ -608,7 +608,7 @@ define([
             self.rightChildrenContainer = self.addChildrenContainerToBubble(
                 self.rootBubble,
                 false
-            );
+            ).addClass("right-oriented");
         }
 
         function makeInContainerUsingServerGraphAndCentralVertexUri(serverGraph, rootVertexUri, verticesContainer) {

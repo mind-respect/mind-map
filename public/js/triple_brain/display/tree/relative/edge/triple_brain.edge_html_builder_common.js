@@ -84,7 +84,11 @@ define([
                     )
                 ]
             }
-        );
+        ).blur(function(){
+            BubbleFactory.fromSubHtml(
+                $(this)
+            ).reviewEditButtonDisplay();
+        });
         labelAndButtons.appendTo(labelContainer);
         if (!MindMapInfo.isViewOnly()) {
             label.on(

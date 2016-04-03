@@ -39,6 +39,7 @@ define([
                         identification.getLabel(),
                         function (edge) {
                             edge.setText(identification.getLabel());
+                            triple.edge().reviewEditButtonDisplay();
                         }
                     );
                 }

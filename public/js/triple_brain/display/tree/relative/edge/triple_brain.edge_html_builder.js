@@ -11,9 +11,11 @@ define([
         "triple_brain.graph_displayer",
         "triple_brain.graph_element_main_menu",
         "triple_brain.edge_html_builder_common",
-        "triple_brain.graph_element_html_builder"
+        "triple_brain.graph_element_html_builder",
+        "triple_brain.bubble_factory",
+        "triple_brain.mind_map_info"
     ],
-    function ($, TreeEdge, EdgeUi, EventBus, RelativeTreeVertex, GraphDisplayer, GraphElementMainMenu, EdgeHtmlBuilderCommon, GraphElementHtmlBuilder) {
+    function ($, TreeEdge, EdgeUi, EventBus, RelativeTreeVertex, GraphDisplayer, GraphElementMainMenu, EdgeHtmlBuilderCommon, GraphElementHtmlBuilder, BubbleFactory, MindMapInfo) {
         "use strict";
         var api = {};
         api.withServerFacade = function (edgeServer) {
@@ -54,6 +56,7 @@ define([
             edge.getHtml().closest(
                 ".vertex-tree-container"
             ).find("> .vertical-border").addClass("small");
+            edge.reviewEditButtonDisplay();
         };
         function EdgeCreator(edgeServer) {
             this.edgeServer = edgeServer;
@@ -90,8 +93,22 @@ define([
             edge.addImages(
                 this.edgeServer.getImages()
             );
+            if(!MindMapInfo.isViewOnly()){
+                addEditButton(
+                    edge
+                );
+            }
             return edge;
         };
+        function addEditButton(edge){
+            edge.getHtml().prepend("<i class='fa fa-pencil edit-relation-button'>").click(function () {
+                var edge = BubbleFactory.fromSubHtml(
+                    $(this)
+                );
+                edge.getHtml().removeClass("same-as-group-relation");
+                edge.focus();
+            });
+        }
         function buildMenu(edge) {
             var edgeHtml = edge.getHtml(),
                 menu = $("<span class='relation-menu menu'>");
