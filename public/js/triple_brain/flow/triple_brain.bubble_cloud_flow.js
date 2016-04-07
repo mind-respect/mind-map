@@ -14,27 +14,38 @@ define([
     "use strict";
     var api = {};
     api.enter = function () {
-        CenterGraphElementService.get(function (elements) {
-            GraphUi.getDrawnGraph().addClass("hidden");
-            $("body").removeClass("hidden");
-            getSectionContainer().removeClass("hidden");
-            var centerGraphElements = CenterGraphElements.fromServerFormat(elements);
-            if(centerGraphElements.length === 0){
-                UserService.getDefaultVertexUri(UserService.authenticatedUserInCache().user_name, function(uri){
-                    window.location = IdUri.htmlUrlForBubbleUri(uri);
-                });
-                return;
-            }
-            if(centerGraphElements.length === 1){
-                window.location = IdUri.htmlUrlForBubbleUri(centerGraphElements[0].getUri());
-                return;
-            }
-            VisitedElementsCloud.buildFromElementsInContainer(
-                centerGraphElements,
-                getWordsContainer()
+        if(usernameForBublGuru === UserService.authenticatedUserInCache().user_name){
+            CenterGraphElementService.getPublicAndPrivate(
+                setupCenterGraphElements
             );
-        });
+        }else{
+            CenterGraphElementService.getPublicOnlyForUsername(
+                usernameForBublGuru,
+                setupCenterGraphElements
+            );
+        }
     };
+
+    function setupCenterGraphElements(elements){
+        GraphUi.getDrawnGraph().addClass("hidden");
+        $("body").removeClass("hidden");
+        getSectionContainer().removeClass("hidden");
+        var centerGraphElements = CenterGraphElements.fromServerFormat(elements);
+        if(centerGraphElements.length === 0){
+            UserService.getDefaultVertexUri(UserService.authenticatedUserInCache().user_name, function(uri){
+                window.location = IdUri.htmlUrlForBubbleUri(uri);
+            });
+            return;
+        }
+        if(centerGraphElements.length === 1){
+            window.location = IdUri.htmlUrlForBubbleUri(centerGraphElements[0].getUri());
+            return;
+        }
+        VisitedElementsCloud.buildFromElementsInContainer(
+            centerGraphElements,
+            getWordsContainer()
+        );
+    }
     return api;
     function getSectionContainer(){
         return $("#word-cloud-container");
