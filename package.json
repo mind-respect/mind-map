@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "connect": "*",
-    "grunt-cli": "*",
+    "grunt-cli": "0.4.0",
     "grunt-contrib-connect": "*",
     "grunt-contrib-jasmine": "~0.8.2",
     "grunt-contrib-jshint": "^0.11.2",
