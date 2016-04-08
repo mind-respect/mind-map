@@ -8,6 +8,9 @@ define([
 ], function ($, EventBus) {
     "use strict";
     var api = {};
+    api.isBubbleCloudFlow = function(){
+        return "centersCloud" === bublGuruFlow;
+    };
     api.publishFlow = function(flow){
         EventBus.publish(
             '/event/ui/flow/' + flow

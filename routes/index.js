@@ -28,7 +28,7 @@ router.get('/user/:username', function (req, res, next) {
             usernameForBublGuru : req.params.username,
             graphElementTypeForBublGuru: "",
             graphElementShortIdForBublGuru : "",
-            bublGuruFlow: bublGuruFlow
+            bublGuruFlow: "centersCloud"
         }
     );
 });

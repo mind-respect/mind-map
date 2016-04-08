@@ -17,11 +17,13 @@ define(
         "triple_brain.header",
         "triple_brain.graph_displayer",
         "triple_brain.graph_displayer_factory",
+        "triple_brain.flow",
+        "triple_brain.bubble_cloud_flow",
         "triple_brain.wikidata",
         "triple_brain.ui.search",
         "triple_brain.modules"
     ],
-    function ($, MindMapFlow, UserService, MindMapInfo, LandingPageFlow, SchemaListFlow, ChangePassword, LoginHandler, RegisterHandler, ExternalPageLoader, Header, GraphDisplayer, GraphDisplayerFactory) {
+    function ($, MindMapFlow, UserService, MindMapInfo, LandingPageFlow, SchemaListFlow, ChangePassword, LoginHandler, RegisterHandler, ExternalPageLoader, Header, GraphDisplayer, GraphDisplayerFactory, Flow, BubbleCloudFlow) {
         "use strict";
         var api = {};
         api.start = function () {
@@ -74,6 +76,8 @@ define(
             }
             else if (MindMapInfo.isSchemaListFlow()) {
                 SchemaListFlow.enter();
+            }else if(Flow.isBubbleCloudFlow()){
+                BubbleCloudFlow.enter();
             }
             else {
                 MindMapFlow.enterMindMapForAnonymousUser();

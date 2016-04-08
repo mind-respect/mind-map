@@ -9,12 +9,18 @@ define([
     "triple_brain.center_graph_elements",
     "triple_brain.visited_elements_cloud",
     "triple_brain.user_service",
-    "triple_brain.ui.graph"
-], function ($, IdUri, CenterGraphElementService, CenterGraphElements, VisitedElementsCloud, UserService, GraphUi) {
+    "triple_brain.ui.graph",
+    "triple_brain.language_manager"
+], function ($, IdUri, CenterGraphElementService, CenterGraphElements, VisitedElementsCloud, UserService, GraphUi, LanguageManager) {
     "use strict";
     var api = {};
     api.enter = function () {
-        if(usernameForBublGuru === UserService.authenticatedUserInCache().user_name){
+        LanguageManager.loadLocaleContent(function () {
+            $("html").i18n();
+            $("body").removeClass("hidden");
+        });
+        var canGetPublicAndPrivate = UserService.hasCurrentUser() && usernameForBublGuru === UserService.authenticatedUserInCache().user_name;
+        if(canGetPublicAndPrivate){
             CenterGraphElementService.getPublicAndPrivate(
                 setupCenterGraphElements
             );
