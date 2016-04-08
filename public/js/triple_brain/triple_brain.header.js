@@ -237,7 +237,7 @@ define([
         }
 
         function getConnectMenuButton(){
-            return $("#connect-menu-button")
+            return $("#connect-menu-button");
         }
         
         function getRegisterButton() {
