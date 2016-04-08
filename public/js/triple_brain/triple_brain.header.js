@@ -37,13 +37,12 @@ define([
             handleCreateNewConceptButton();
             handleCreateNewSchemaButton();
             handleDisconnectButton();
-            getLoginButton().addClass("hidden");
+            getConnectMenuButton().addClass("hidden");
             getAllYourBubblesButton().removeClass("hidden");
             getAllYourBubblesButton().prop(
                 "href",
                 "/user/" + UserService.authenticatedUserInCache().user_name
             );
-            getRegisterButton().addClass("hidden");
             getBubbleMenu().removeClass("hidden");
             getCreateSchemaButton().removeClass("hidden");
             if(MindMapInfo.isLandingPageFlow()){
@@ -237,6 +236,10 @@ define([
             return $("#register-button-in-page");
         }
 
+        function getConnectMenuButton(){
+            return $("#connect-menu-button")
+        }
+        
         function getRegisterButton() {
             return $("#register-button");
         }

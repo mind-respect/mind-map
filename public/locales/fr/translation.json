@@ -102,7 +102,7 @@
     "go_home": "Continuer"
   },
   "top_menu": {
-    "share": "Partager",
+    "share": "partager",
     "central" : "toutes vos centrales",
     "schemas" : "tous les modèles",
     "save_as_image" : "sauvegarder en image",
@@ -117,6 +117,7 @@
       "bubbles": "les bulles",
       "relations": "les relations"
     },
+    "connect": "connexion",
     "login": "s'authentifier",
     "register": "s'enregistrer",
     "language": "langue"

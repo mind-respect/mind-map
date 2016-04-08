@@ -102,7 +102,7 @@
     "go_home": "Continue"
   },
   "top_menu": {
-    "share": "Share",
+    "share": "share",
     "central" : "all your central",
     "schemas" : "all schemas",
     "save_as_image" : "save as image",
@@ -116,6 +116,7 @@
       "title": "select",
       "relations": "relations"
     },
+    "connect": "connection",
     "login": "login",
     "register": "register",
     "language": "language"

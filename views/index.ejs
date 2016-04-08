@@ -38,13 +38,6 @@
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-left">
-                <li>
-                    <a class="hidden" id="share-link" href="#" target="_blank"><i class="fa fa-share-alt"></i> <span
-                                data-i18n="top_menu.share"></span></a>
-                    <input type="text" class="hidden form-control input-lg" id="share-link-input">
-                </li>
-            </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <form class="navbar-form navbar-left" role="search" id="header-search-form">
@@ -61,11 +54,16 @@
                         </div>
                     </form>
                 </li>
-                <li>
-                    <a href="#" id="register-button" data-i18n="top_menu.register"></a>
-                </li>
-                <li>
-                    <a href="#" id="login-button" data-i18n="top_menu.login"></a>
+                <li class="dropdown">
+                    <a data-toggle="dropdown" data-i18n='top_menu.connect' id="connect-menu-button"></a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <li>
+                            <a href="#" id="register-button" data-i18n="top_menu.register"></a>
+                        </li>
+                        <li>
+                            <a href="#" id="login-button" data-i18n="top_menu.login"></a>
+                        </li>
+                    </ul>
                 </li>
                 <!--<li class="dropdown">-->
                     <!--<a href="/" id="all-your-bubbles-button" data-i18n='top_menu.central'></a>-->
@@ -162,6 +160,13 @@
                         <span data-i18n="login.about"></span>
                         <i class="fa fa-info-circle"></i>
                     </a>
+                </li>
+                <li>
+                    <a class="hidden" id="share-link" href="#" target="_blank">
+                        <span data-i18n="top_menu.share"></span>
+                        <i class="fa fa-share-alt"></i>
+                    </a>
+                    <input type="text" class="hidden form-control input-lg" id="share-link-input">
                 </li>
             </ul>
         </div>
