@@ -37,7 +37,6 @@ define(
                 callbackWhenUserAuthenticated,
                 callBackWhenNotAuthenticated
             );
-            setupLogoClick();
         };
         api.enterBubbleCloudFlow = function () {
             MindMapFlow.enterBubbleCloud();
@@ -76,7 +75,7 @@ define(
             }
             else if (MindMapInfo.isSchemaListFlow()) {
                 SchemaListFlow.enter();
-            }else if(Flow.isBubbleCloudFlow()){
+            } else if (Flow.isBubbleCloudFlow()) {
                 BubbleCloudFlow.enter();
             }
             else {
@@ -99,17 +98,6 @@ define(
                             title: $.t("non_existent.title")
                         });
                     }
-                }
-            });
-        }
-
-        function setupLogoClick() {
-            $("#logo").click(function (event) {
-                event.preventDefault();
-                if (MindMapInfo.isAnonymous()) {
-                    window.location = "http://about.bubl.guru";
-                } else {
-                    window.location = "/";
                 }
             });
         }
