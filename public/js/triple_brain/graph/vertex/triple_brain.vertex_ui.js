@@ -67,9 +67,9 @@ define([
 
         api.Object.prototype.areSuggestionsShown = function () {
             var areShown = false;
-            this.visitAllChild(function(child){
-                if(child.isSuggestion()){
-                    areShown = child.isVisible() ;
+            this.visitAllChild(function (child) {
+                if (child.isSuggestion()) {
+                    areShown = child.isVisible();
                     return false;
                 }
             });
@@ -196,7 +196,7 @@ define([
         };
 
         api.Object.prototype.removeConnectedEdges = function () {
-            this.applyToConnectedEdges(function(edge){
+            this.applyToConnectedEdges(function (edge) {
                 edge.remove();
             });
         };

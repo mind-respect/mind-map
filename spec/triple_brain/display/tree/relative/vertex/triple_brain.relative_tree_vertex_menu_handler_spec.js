@@ -6,9 +6,10 @@ define([
     'test/test-scenarios',
     "test/mock/triple_brain.vertex_service_mock",
     'triple_brain.relative_tree_vertex_menu_handler',
+    "triple_brain.selection_handler",
     'triple_brain.vertex_service',
     'triple_brain.mind_map_info'
-], function (Scenarios, VertexServiceMock, RelativeTreeVertexMenuHandler, VertexService, MindMapInfo) {
+], function (Scenarios, VertexServiceMock, RelativeTreeVertexMenuHandler, SelectionHandler, VertexService, MindMapInfo) {
     "use strict";
     describe("relative_tree_vertex_menu_handler", function () {
         var threeBubbles;
@@ -74,6 +75,47 @@ define([
             expect(
                 eventBubble.getTopMostChildBubble().isVisible()
             ).toBeFalsy();
+        });
+        it("changes in label privacy button when changing privacy of a collection of vertices", function () {
+            loadFixtures('graph-element-menu.html');
+            MindMapInfo._setIsViewOnly(false);
+            var scenario = new Scenarios.threeBubblesGraph();
+            var bubble1 = scenario.getBubble1InTree();
+            bubble1.reviewInLabelButtonsVisibility();
+            expect(
+                bubble1.getMakePrivateButtonInBubbleContent()
+            ).toHaveClass("hidden");
+            expect(
+                bubble1.getMakePublicButtonInBubbleContent()
+            ).not.toHaveClass("hidden");
+            VertexServiceMock.makeCollectionPublic();
+            RelativeTreeVertexMenuHandler.forGroup().makePublic(
+                {},
+                [
+                    bubble1,
+                    scenario.getBubble2InTree()
+                ]
+            );
+            expect(
+                bubble1.getMakePrivateButtonInBubbleContent()
+            ).not.toHaveClass("hidden");
+            expect(
+                bubble1.getMakePublicButtonInBubbleContent()
+            ).toHaveClass("hidden");
+            VertexServiceMock.makeCollectionPrivate();
+            RelativeTreeVertexMenuHandler.forGroup().makePrivate(
+                {},
+                [
+                    bubble1,
+                    scenario.getBubble2InTree()
+                ]
+            );
+            expect(
+                bubble1.getMakePrivateButtonInBubbleContent()
+            ).toHaveClass("hidden");
+            expect(
+                bubble1.getMakePublicButtonInBubbleContent()
+            ).not.toHaveClass("hidden");
         });
     });
 });

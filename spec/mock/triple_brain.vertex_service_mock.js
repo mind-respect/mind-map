@@ -36,6 +36,22 @@ define([
             );
         });
     };
+    api.makeCollectionPrivate = function(){
+        return spyOn(VertexService, "makeCollectionPrivate").and.callFake(function(vertices, callback){
+            VertexService._makeCollectionPrivateCallback(
+                vertices,
+                callback
+            );
+        });
+    };
+    api.makeCollectionPublic = function(){
+        return spyOn(VertexService, "makeCollectionPublic").and.callFake(function(vertices, callback){
+            VertexService._makeCollectionPublicCallback(
+                vertices,
+                callback
+            );
+        });
+    };
     return api;
 })
 ;

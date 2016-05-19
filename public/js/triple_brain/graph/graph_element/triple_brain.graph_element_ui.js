@@ -378,6 +378,18 @@ define([
         );
     };
 
+    api.Self.prototype.getMakePublicButtonInBubbleContent = function () {
+        return this.getInLabelButtonsContainer().find(
+            "[data-action=makePublic]"
+        );
+    };
+
+    api.Self.prototype.getMakePrivateButtonInBubbleContent = function () {
+        return this.getInLabelButtonsContainer().find(
+            "[data-action=makePrivate]"
+        );
+    };
+
     EventBus.subscribe(
         '/event/ui/graph/identification/added',
         identificationAddedHandler

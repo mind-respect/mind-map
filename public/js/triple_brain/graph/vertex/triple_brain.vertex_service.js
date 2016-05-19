@@ -41,7 +41,7 @@ define([
                 );
             });
         };
-        api._addRelationAndVertexToVertexCallback = function(tripleJson, sourceBubble, callback){
+        api._addRelationAndVertexToVertexCallback = function (tripleJson, sourceBubble, callback) {
             var triple = TripleUiBuilder.createIntoSourceBubble(
                 sourceBubble,
                 tripleJson
@@ -65,7 +65,7 @@ define([
                 );
             });
         };
-        api._removeVertexCallback = function(vertex, callback){
+        api._removeVertexCallback = function (vertex, callback) {
             var uri = vertex.getUri(),
                 id = vertex.getId();
             callback(vertex);
@@ -177,7 +177,7 @@ define([
                 );
             });
         };
-        api.addSuggestionsAjax = function(vertex, suggestions){
+        api.addSuggestionsAjax = function (vertex, suggestions) {
             return $.ajax({
                 type: 'POST',
                 url: vertex.getUri() + '/suggestions',
@@ -213,25 +213,39 @@ define([
         };
         api.makeCollectionPrivate = function (vertices, callback) {
             setCollectionPrivacy(false, vertices, function () {
-                $.each(vertices, function () {
-                    var vertex = this;
-                    vertex.makePrivate();
-                });
-                if (callback !== undefined) {
-                    callback();
-                }
+                api._makeCollectionPrivateCallback(
+                    vertices,
+                    callback
+                );
             });
+        };
+        api._makeCollectionPrivateCallback = function (vertices, callback) {
+            $.each(vertices, function () {
+                var vertex = this;
+                vertex.makePrivate();
+                publishVertexPrivacyUpdated(vertex);
+            });
+            if (callback !== undefined) {
+                callback();
+            }
         };
         api.makeCollectionPublic = function (vertices, callback) {
             setCollectionPrivacy(true, vertices, function () {
-                $.each(vertices, function () {
-                    var vertex = this;
-                    vertex.makePublic();
-                });
-                if (callback !== undefined) {
-                    callback();
-                }
+                api._makeCollectionPublicCallback(
+                    vertices,
+                    callback
+                );
             });
+        };
+        api._makeCollectionPublicCallback = function (vertices, callback) {
+            $.each(vertices, function () {
+                var vertex = this;
+                vertex.makePublic();
+                publishVertexPrivacyUpdated(vertex);
+            });
+            if (callback !== undefined) {
+                callback();
+            }
         };
         api.group = function (graphElementsUris, callback) {
             var response = $.ajax({
@@ -275,7 +289,7 @@ define([
             }).success(callback);
         }
 
-        function publishVertexPrivacyUpdated(vertex){
+        function publishVertexPrivacyUpdated(vertex) {
             EventBus.publish(
                 '/event/ui/graph/vertex/privacy/updated',
                 vertex
