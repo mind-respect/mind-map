@@ -115,10 +115,15 @@ body {
   }
 }
 
-#schema-instructions{
+#schema-instructions, #other-user-menu{
   position:fixed;
   top:10%;
   width:100%;
+}
+
+#other-user-menu {
+  font-size:1.2em;
+  z-index:12;
 }
 
 #welcome-content {

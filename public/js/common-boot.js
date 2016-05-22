@@ -36,6 +36,8 @@ requirejs.config({
         "triple_brain.identified_to_service": "triple_brain/graph/triple_brain.identified_to_service",
         "triple_brain.flow": "triple_brain/flow/triple_brain.flow",
         "triple_brain.mind_map_flow": "triple_brain/flow/triple_brain.mind_map_flow",
+        "triple_brain.other_user_flow": "triple_brain/flow/triple_brain.other_user_flow",
+        "triple_brain.fork_service": "triple_brain/graph/triple_brain.fork_service",
         "triple_brain.visited_elements_cloud": "triple_brain/triple_brain.visited_elements_cloud",
         "triple_brain.center_graph_elements": "triple_brain/triple_brain.center_graph_elements",
         "triple_brain.center_graph_element_service": "triple_brain/triple_brain.center_graph_element_service",

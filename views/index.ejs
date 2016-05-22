@@ -66,28 +66,28 @@
                     </ul>
                 </li>
                 <!--<li class="dropdown">-->
-                    <!--<a href="/" id="all-your-bubbles-button" data-i18n='top_menu.central'></a>-->
+                <!--<a href="/" id="all-your-bubbles-button" data-i18n='top_menu.central'></a>-->
                 <!--</li>-->
                 <!--<li class="dropdown">-->
-                    <!--<a href="/schemas" data-i18n='top_menu.schemas'></a>-->
+                <!--<a href="/schemas" data-i18n='top_menu.schemas'></a>-->
                 <!--</li>-->
                 <!--<li class="dropdown">-->
                 <!--<a href="#" id="save-as-image-button" data-i18n='top_menu.save_as_image' class="hidden"></a>-->
                 <!--</li>-->
                 <!--<li class="dropdown">-->
-                    <!--<a id="select-button" class="hidden" data-toggle="dropdown"-->
-                       <!--data-i18n='top_menu.selection.title'></a>-->
-                    <!--<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">-->
-                        <!--<li>-->
-                            <!--<a href="" id="select-all-bubbles" role="menuitem">-->
-                                <!--<span data-i18n='top_menu.selection.bubbles'></span>-->
-                            <!--</a>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<a href="" id="select-all-relations" role="menuitem"-->
-                               <!--data-i18n='top_menu.selection.relations'></a>-->
-                        <!--</li>-->
-                    <!--</ul>-->
+                <!--<a id="select-button" class="hidden" data-toggle="dropdown"-->
+                <!--data-i18n='top_menu.selection.title'></a>-->
+                <!--<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">-->
+                <!--<li>-->
+                <!--<a href="" id="select-all-bubbles" role="menuitem">-->
+                <!--<span data-i18n='top_menu.selection.bubbles'></span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="" id="select-all-relations" role="menuitem"-->
+                <!--data-i18n='top_menu.selection.relations'></a>-->
+                <!--</li>-->
+                <!--</ul>-->
                 <!--</li>-->
                 <li class="dropdown" id="bubble-menu">
                     <a data-toggle="dropdown" data-i18n='top_menu.bubble'></a>
@@ -119,17 +119,17 @@
                     </ul>
                 </li>
                 <!--<li class="dropdown" id="create-menu">-->
-                    <!--<a data-toggle="dropdown" data-i18n='top_menu.create.title'></a>-->
-                    <!--<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">-->
-                        <!--<li>-->
-                            <!--<a href="" id="create-concept" role="menuitem"-->
-                               <!--data-i18n='top_menu.create.bubble'></a>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<a href="" id="create-schema" role="menuitem"-->
-                               <!--data-i18n='top_menu.create.schema'></a>-->
-                        <!--</li>-->
-                    <!--</ul>-->
+                <!--<a data-toggle="dropdown" data-i18n='top_menu.create.title'></a>-->
+                <!--<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">-->
+                <!--<li>-->
+                <!--<a href="" id="create-concept" role="menuitem"-->
+                <!--data-i18n='top_menu.create.bubble'></a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="" id="create-schema" role="menuitem"-->
+                <!--data-i18n='top_menu.create.schema'></a>-->
+                <!--</li>-->
+                <!--</ul>-->
                 <!--</li>-->
                 <li id="language-selector-container">
                     <a data-toggle="dropdown">
@@ -609,6 +609,20 @@
         </div>
         <div class="col-md-4"></div>
     </div>
+    <div id="other-user-menu" class="row hidden">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 text-center">
+            <h3>
+                <span data-i18n="otherUser.1"></span>
+                <a href="#" class="username"></a>
+            </h3>
+            <p>
+                <a href="#" class="copy" data-i18n="otherUser.2"></a>
+                <span data-i18n="otherUser.3"></span>
+            </p>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
     <div>
         <div id="drawn_graph" data-zoom="9" data-flow="mindMap" class="hidden"></div>
         <div id="graph-element-menu" class="main-panel hidden-sm hidden-xs hidden" data-flow="mindMap">
@@ -634,7 +648,8 @@
             <button data-action="images" data-icon="fa-picture-o" class="graph-element-button"></button>
             <button data-action="note" data-icon="fa-book"
                     class="note-button graph-element-button in-label-button"></button>
-            <button data-action="makePublic" data-icon="fa-unlock" class="graph-element-button in-label-button"></button>
+            <button data-action="makePublic" data-icon="fa-unlock"
+                    class="graph-element-button in-label-button"></button>
             <button data-action="makePrivate" data-icon="fa-lock"
                     class="graph-element-button in-label-button"></button>
             <button data-action="remove" data-icon="fa-trash-o" class="graph-element-button"></button>

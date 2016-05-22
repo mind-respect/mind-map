@@ -263,5 +263,10 @@
     "title": "Modèles",
     "linkButton":"Visiter le modèle",
     "createButton": "Créer une bulle à partir de ce modèle"
+  },
+  "otherUser": {
+    "1": "bulles de",
+    "2": "les copier",
+    "3": "pour les conserver ou les utiliser"
   }
 }

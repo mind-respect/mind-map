@@ -16,7 +16,8 @@ define([
     "triple_brain.language_manager",
     "triple_brain.id_uri",
     "triple_brain.bubble_cloud_flow",
-    "triple_brain.flow"
+    "triple_brain.flow",
+    "triple_brain.other_user_flow"
 ], function ($, UserService, EventBus, Header, SelectionHandler, GraphDisplayer, GraphDisplayerFactory, MindMapInfo, GraphElementMainMenu, GraphUi, LanguageManager, IdUriUtils, BubbleCloudFlow, Flow) {
     "use strict";
     var api = {};
