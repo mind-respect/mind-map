@@ -9,17 +9,19 @@ define([
 ], function ($, UserService, SearchResult) {
     "use strict";
     var api = {};
-    api.getForIdentification = function (identification, callback) {
-        return $.ajax({
+    api.getForIdentification = function (identification) {
+        var deferred = $.Deferred();
+        $.ajax({
             type: 'GET',
             url: getBaseUri() + encodeURIComponent(identification.getExternalResourceUri())
         }).success(function(searchResultsServerFormat){
-            callback(
+            deferred.resolve(
                 SearchResult.fromServerFormatArray(
                     searchResultsServerFormat
                 )
             );
         });
+        return deferred.promise();
     };
     return api;
     function getBaseUri() {

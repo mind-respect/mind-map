@@ -9,10 +9,10 @@ define([
     "use strict";
     var api = {};
     api.fork = function(subGraph, callback){
-        $.ajax({
+        return $.ajax({
             type: 'POST',
             data: JSON.stringify(subGraph),
-            url: UserService.getUsersResourceUrl() + "fork",
+            url: UserService.currentUserUri() + "/fork",
             contentType: 'application/json'
         }).success(callback);
     };

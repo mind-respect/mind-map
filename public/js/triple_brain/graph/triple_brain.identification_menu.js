@@ -38,21 +38,20 @@ define([
             event.preventDefault();
             var anchor = $(this).disableAnchor();
             IdentifiedToService.getForIdentification(
-                anchor.data("identification"),
-                function (searchResults) {
-                    var container = anchor.next(".references");
-                    var originalGraphElement = anchor.data("graphElement");
-                    $.each(searchResults, function () {
-                        var searchResult = this;
-                        if (searchResult.getGraphElement().getUri() === originalGraphElement.getUri()) {
-                            return;
-                        }
-                        api._renderReference(
-                            container, searchResult
-                        );
-                    });
-                }
-            );
+                anchor.data("identification")
+            ).then(function (searchResults) {
+                var container = anchor.next(".references");
+                var originalGraphElement = anchor.data("graphElement");
+                $.each(searchResults, function () {
+                    var searchResult = this;
+                    if (searchResult.getGraphElement().getUri() === originalGraphElement.getUri()) {
+                        return;
+                    }
+                    api._renderReference(
+                        container, searchResult
+                    );
+                });
+            });
         };
 
         api._renderReference = function (container, reference) {
@@ -74,10 +73,10 @@ define([
                 li.addClass("clickable").data(
                     "uri", graphElement.getUri()
                 ).click(function () {
-                        window.location = IdUri.htmlUrlForBubbleUri(
-                            $(this).data("uri")
-                        );
-                    });
+                    window.location = IdUri.htmlUrlForBubbleUri(
+                        $(this).data("uri")
+                    );
+                });
             }
             li.appendTo(container);
         };
@@ -142,9 +141,9 @@ define([
                         "graph_element.menu.identification.what_for"
                     )
                 ).click(function (event) {
-                        event.preventDefault();
-                        $(this).next('.why').toggleClass("hidden");
-                    })
+                    event.preventDefault();
+                    $(this).next('.why').toggleClass("hidden");
+                })
             );
             container.append(
                 $("<span style='margin-left:0.5em;' class='hidden why'>").attr(
@@ -356,7 +355,7 @@ define([
             identificationTextField.tripleBrainAutocomplete({
                 select: function (event, ui) {
                     var semanticMenu = $(this).closest(
-                            '.identifications'
+                        '.identifications'
                         ),
                         searchResult = ui.item;
                     self._handleSelectIdentification(
@@ -433,7 +432,7 @@ define([
                 function (event) {
                     event.stopPropagation();
                     var identificationListElement = $(this).closest(
-                            'li'
+                        'li'
                         ),
                         identification = identificationListElement.data(
                             "identification"
@@ -471,7 +470,7 @@ define([
                 graphElement,
                 identificationResource,
                 function (graphElement, identifications) {
-                    $.each(identifications, function(){
+                    $.each(identifications, function () {
                         self._addIdentificationAsListElement(this);
                     });
                 }
