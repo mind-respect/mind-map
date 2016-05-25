@@ -33,5 +33,17 @@ define([
                 graphElement.getTypes().length
             ).toBe(0);
         });
+        it("includes identifications when building server format from ui", function(){
+            var eventBubble = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();
+            var serverFormat = GraphElement.buildServerFormatFromUi(
+                eventBubble
+            );
+            var graphElement = GraphElement.fromServerFormat(
+                serverFormat
+            );
+            expect(
+                graphElement.getIdentifications().length
+            ).toBeGreaterThan(0);
+        });
     });
 });

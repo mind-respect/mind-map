@@ -27,6 +27,20 @@ define([
             }
         };
     };
+    api.buildServerFormatFromUi = function (vertexUi) {
+        return {
+            vertex:{
+                graphElement: GraphElement.buildServerFormatFromUi(
+                    vertexUi
+                ),
+                includedEdges:{},
+                includedVertices:{},
+                isPublic:vertexUi.isPublic(),
+                numberOfConnectedEdges: vertexUi.connectedEdges().length,
+                suggestions:{}
+            }
+        };
+    };
     function Self(vertexServerFormat) {
         this.vertexServerFormat = vertexServerFormat;
         this._includedVertices = this._buildIncludedVertices();

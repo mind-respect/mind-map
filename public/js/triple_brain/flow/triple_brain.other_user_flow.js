@@ -10,10 +10,9 @@ define([
     "triple_brain.graph_displayer",
     "triple_brain.fork_service",
     "triple_brain.identified_to_service",
-    "triple_brain.identification",
-    "triple_brain.vertex",
-    "triple_brain.edge"
-], function ($, EventBus, MindMapInfo, IdUri, GraphDisplayer, ForkService, IdentifiedTo, Identification, Vertex, Edge) {
+    "triple_brain.sub_graph",
+    "triple_brain.identification"
+], function ($, EventBus, MindMapInfo, IdUri, GraphDisplayer, ForkService, IdentifiedTo, SubGraph, Identification) {
     "use strict";
     var api = {},
         otherUserMenu;
@@ -47,7 +46,8 @@ define([
 
     function setupCopyLink() {
         getCopyLink().click(handleClick);
-        function handleClick(){
+        function handleClick(event){
+            event.preventDefault();
             $(this).off("click",handleClick);
             var centralVertexAsIdentifier = Identification.withUri(
                 GraphDisplayer.getVertexSelector().centralVertex().getUri()
@@ -92,7 +92,7 @@ define([
 
         function fork() {
             return ForkService.fork(
-                buildServerFormatGraphFromVisibleBubbles()
+                SubGraph.buildServerFormat()
             );
         }
     }
@@ -115,27 +115,5 @@ define([
             ".copy"
         );
     }
-
-    function buildServerFormatGraphFromVisibleBubbles() {
-        var edges = {},
-            vertices = {};
-        GraphDisplayer.getEdgeSelector().visitAllEdges(function (edge) {
-            edges[edge.getUri()] = Edge.buildObjectWithUriOfSelfSourceAndDestinationVertex(
-                edge.getUri(),
-                edge.getSourceVertex().getUri(),
-                edge.getDestinationVertex().getUri()
-            );
-        });
-        GraphDisplayer.getVertexSelector().visitAllVertices(function (vertex) {
-            vertices[vertex.getUri()] = Vertex.buildServerFormatFromUri(
-                vertex.getUri()
-            );
-        });
-        return {
-            edges: edges,
-            vertices: vertices
-        };
-    }
-
     return api;
 });

@@ -48,8 +48,12 @@ define([
         });
         jasmine.getFixtures().fixturesPath = '../spec/fixtures';
         api.deepGraph = function () {
+            var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
                 return api._getTestData("deepGraph");
+            };
+            this.getCenterBubbleUri = function () {
+                return uriOfVertexWithLabel(this.getGraph(), "b1");
             };
             this.getCenterVertex = function () {
                 var graph = this.getGraph();
@@ -65,6 +69,10 @@ define([
                         ]
                 );
             };
+            this.getBubble2InTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("b2");
+            };
+            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
         };
 
         api.deepGraphWithCircularity = function () {
@@ -87,6 +95,7 @@ define([
             this.getBubble4InTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("b4");
             };
+            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
         };
 
         api.creationDateScenario = function () {
@@ -99,6 +108,9 @@ define([
             };
             this.getBubble1InTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("b1");
+            };
+            this.getBubble7InTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("b7");
             };
             this.expandBubble7 = function (bubble7) {
                 return GraphDisplayerAsRelativeTree.addChildTreeUsingGraph(

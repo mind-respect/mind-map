@@ -25,6 +25,19 @@ define([
             )
         };
     };
+    api.buildServerFormatFromUi = function (edgeUi) {
+        return {
+            graphElement: GraphElement.buildServerFormatFromUi(
+                edgeUi
+            ),
+            sourceVertex: VertexServerFormatBuilder.buildWithUri(
+                edgeUi.getSourceVertex().getUri()
+            ),
+            destinationVertex: VertexServerFormatBuilder.buildWithUri(
+                edgeUi.getDestinationVertex().getUri()
+            )
+        };
+    };
     api.Self = function () {
     };
 

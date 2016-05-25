@@ -14,6 +14,20 @@ define([
             serverFormat
         );
     };
+    api.buildServerFormatFromUi = function (graphElementUi) {
+        var identifications = {};
+        $.each(graphElementUi.getIdentifications(), function () {
+            identifications[
+                this.getExternalResourceUri()
+                ] = this.getServerFormat();
+        });
+        return {
+            friendlyResource: FriendlyResource.buildServerFormatFromUi(
+                graphElementUi
+            ),
+            identifications: identifications
+        };
+    };
     api.fromSuggestionAndElementUri = function (suggestion, elementUri) {
         var serverFormat = api.buildObjectWithUri(
             elementUri
@@ -24,7 +38,7 @@ define([
         serverFormat.identifications.push(
             sameAs.getServerFormat()
         );
-        if(suggestion.hasType()){
+        if (suggestion.hasType()) {
             var type = suggestion.getType();
             type.setType("type");
             serverFormat.identifications.push(
@@ -35,30 +49,31 @@ define([
             serverFormat
         );
     };
-    api.withUri = function(uri){
+    api.withUri = function (uri) {
         return api.fromServerFormat(
             api.buildObjectWithUri(
                 uri
             )
         );
     };
-    api.buildObjectWithUri = function(uri){
+    api.buildObjectWithUri = function (uri) {
         return {
-            friendlyResource : FriendlyResource.buildObjectWithUri(
+            friendlyResource: FriendlyResource.buildObjectWithUri(
                 uri
             )
         };
     };
-    api.fromDetailedSearchResult = function(detailedSearchResult){
+    api.fromDetailedSearchResult = function (detailedSearchResult) {
         return api.fromServerFormat(
             detailedSearchResult.graphElement
         );
     };
-    api.Self = function () {};
+    api.Self = function () {
+    };
 
     api.Self.prototype = new FriendlyResource.Self();
 
-    api.Self.prototype.init = function(graphElementServerFormat){
+    api.Self.prototype.init = function (graphElementServerFormat) {
         this.graphElementServerFormat = graphElementServerFormat;
         this._buildIdentifications();
         FriendlyResource.Self.apply(
@@ -96,7 +111,7 @@ define([
         return this._identifications;
     };
 
-    api.Self.prototype._buildIdentifications = function(){
+    api.Self.prototype._buildIdentifications = function () {
         this._types = [];
         this._sameAs = [];
         this._genericIdentifications = [];
@@ -108,7 +123,7 @@ define([
             var identification = Identification.fromServerFormat(
                 this
             );
-            switch(identification.getType()){
+            switch (identification.getType()) {
                 case "generic" :
                     self._genericIdentifications.push(identification);
                     return;
@@ -120,10 +135,10 @@ define([
             }
         });
     };
-    api.Self.prototype.hasIdentification = function(identification){
+    api.Self.prototype.hasIdentification = function (identification) {
         var contains = false;
-        $.each(this.getIdentifications(), function(){
-            if(this.getExternalResourceUri() === identification.getExternalResourceUri()){
+        $.each(this.getIdentifications(), function () {
+            if (this.getExternalResourceUri() === identification.getExternalResourceUri()) {
                 contains = true;
                 return false;
             }

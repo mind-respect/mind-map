@@ -16,6 +16,13 @@ define([
             label: ""
         };
     };
+        api.buildServerFormatFromUi = function(friendlyResourceUi){
+        return {
+            uri: friendlyResourceUi.getUri(),
+            label: friendlyResourceUi.text(),
+            comment:friendlyResourceUi.getNote()
+        };
+    };
     api.buildObjectWithUriAndLabel = function (uri, label) {
         return {
             uri: uri,

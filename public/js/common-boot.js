@@ -106,6 +106,7 @@ requirejs.config({
         "triple_brain.template": "triple_brain/triple_brain.template",
         "triple_brain.image": "triple_brain/triple_brain.image",
         "triple_brain.graph_service": "triple_brain/graph/triple_brain.graph_service",
+        "triple_brain.sub_graph": "triple_brain/graph/triple_brain.sub_graph",
         "triple_brain.graph_displayer": "triple_brain/display/triple_brain.graph_displayer",
         "triple_brain.graph_displayer_factory": "triple_brain/display/triple_brain.graph_displayer_factory",
         "triple_brain.vertex_html_builder_common": "triple_brain/display/triple_brain.vertex_html_builder_common",
