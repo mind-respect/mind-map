@@ -27,9 +27,11 @@ define([
                 );
             }
         });
-        $.when.apply(addChildTreeActions).done(function(){
+        $.when.apply($, addChildTreeActions).done(function(){
             GroupRelationUi.visitAllGroupRelations(function (groupRelationUi) {
-                groupRelationUi.addChildTree();
+                if(groupRelationUi.hasHiddenRelationsContainer()){
+                    groupRelationUi.addChildTree();
+                }
             });
             VertexUi.centralVertex().centerOnScreenWithAnimation();
         });
