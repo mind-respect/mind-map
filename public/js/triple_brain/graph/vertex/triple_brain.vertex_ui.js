@@ -319,7 +319,7 @@ define([
         };
         api.Object.prototype.addChildTree = function (callback) {
             var self = this;
-            GraphDisplayer.addChildTree(
+            return GraphDisplayer.addChildTree(
                 self,
                 callback
             );

@@ -3,24 +3,43 @@
  */
 
 define([
+    "jquery",
     "triple_brain.selection_handler",
     "triple_brain.mind_map_info",
-    "triple_brain.ui.graph"
-], function(SelectionHandler, MindMapInfo, GraphUi){
+    "triple_brain.ui.graph",
+    "triple_brain.vertex_ui",
+    "triple_brain.group_relation_ui"
+], function ($, SelectionHandler, MindMapInfo, GraphUi, VertexUi, GroupRelationUi) {
     "use strict";
     var api = {};
-    api.select = function(){
+    api.select = function () {
         SelectionHandler.handleButtonClick();
     };
-    api.selectCanDo = function(){
+    api.selectCanDo = function () {
         return !MindMapInfo.isSchemaMode();
     };
-    api.zoomIn = function(){
+    api.expandAll = function () {
+        var addChildTreeActions = [];
+        VertexUi.visitAllVertices(function (vertexUi) {
+            if (vertexUi.hasHiddenRelations()) {
+                addChildTreeActions.push(
+                    vertexUi.addChildTree()
+                );
+            }
+        });
+        $.when.apply(addChildTreeActions).done(function(){
+            GroupRelationUi.visitAllGroupRelations(function (groupRelationUi) {
+                groupRelationUi.addChildTree();
+            });
+            VertexUi.centralVertex().centerOnScreenWithAnimation();
+        });
+    };
+    api.zoomIn = function () {
         GraphUi.zoom(
             0.1
         );
     };
-    api.zoomOut = function(){
+    api.zoomOut = function () {
         GraphUi.zoom(
             -0.1
         );

@@ -21,7 +21,7 @@ define([
             this.bubble = bubble;
         }
 
-        HiddenNeighborPropertiesIndicator.prototype.build = function(){
+        HiddenNeighborPropertiesIndicator.prototype.build = function () {
             var isLeftOriented = this.bubble.isToTheLeft();
             this.hiddenNeighborPropertiesContainer = $(
                 MindMapTemplate[
@@ -45,30 +45,30 @@ define([
                 this.hiddenNeighborPropertiesContainer
             );
             this.hiddenNeighborPropertiesContainer.tooltip({
-                delay:{"show":0, "hide":0}
+                delay: {"show": 0, "hide": 0}
             }).on(
                 "click",
                 handleHiddenPropertiesContainerClick
             );
         };
 
-        HiddenNeighborPropertiesIndicator.prototype.remove = function(){
+        HiddenNeighborPropertiesIndicator.prototype.remove = function () {
             this.hiddenNeighborPropertiesContainer.remove();
         };
 
-        HiddenNeighborPropertiesIndicator.prototype.hide = function(){
-            this.hiddenNeighborPropertiesContainer.css("visibility","hidden");
+        HiddenNeighborPropertiesIndicator.prototype.hide = function () {
+            this.hiddenNeighborPropertiesContainer.css("visibility", "hidden");
         };
 
-        HiddenNeighborPropertiesIndicator.prototype.show = function(){
-            this.hiddenNeighborPropertiesContainer.css("visibility","visible");
+        HiddenNeighborPropertiesIndicator.prototype.show = function () {
+            this.hiddenNeighborPropertiesContainer.css("visibility", "visible");
         };
 
-        HiddenNeighborPropertiesIndicator.prototype.getHtml = function(){
+        HiddenNeighborPropertiesIndicator.prototype.getHtml = function () {
             return this.hiddenNeighborPropertiesContainer;
         };
 
-        HiddenNeighborPropertiesIndicator.prototype.convertToLeft = function(){
+        HiddenNeighborPropertiesIndicator.prototype.convertToLeft = function () {
             this.getHtml().prependTo(
                 this.bubble.getHtml()
             );
@@ -78,7 +78,7 @@ define([
             );
         };
 
-        HiddenNeighborPropertiesIndicator.prototype.convertToRight = function(){
+        HiddenNeighborPropertiesIndicator.prototype.convertToRight = function () {
             this.getHtml().appendTo(
                 this.bubble.getHtml()
             );
@@ -94,7 +94,7 @@ define([
             }
             var $this = $(this);
             var vertex = $this.data("vertex");
-            vertex.addChildTree(function(){
+            vertex.addChildTree().done(function () {
                 vertex.centerOnScreenWithAnimation();
             });
         }

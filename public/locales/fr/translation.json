@@ -237,6 +237,7 @@
     "addSibling": "Ajouter une bulle soeur (enter)",
     "zoomIn": "Zoom intérieur",
     "zoomOut": "Zoom extérieur",
+    "expandAll": "Expandre tout",
     "visitOtherInstances": "Visiter la même bulle mais dans un autre contexte"
   },
   "hidden_properties_tooltip": "Expandre (ctrl+e)",

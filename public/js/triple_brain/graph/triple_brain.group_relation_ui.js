@@ -60,13 +60,11 @@ define([
     api.GroupRelationUi.prototype.getHtml = function () {
         return this.html;
     };
-    api.GroupRelationUi.prototype.addChildTree = function (callback) {
+    api.GroupRelationUi.prototype.addChildTree = function () {
         GraphDisplayer.expandGroupRelation(
             this
         );
-        if(callback !== undefined){
-            callback();
-        }
+        return new $.Deferred().resolve();
     };
     api.GroupRelationUi.prototype.select = function () {
         this.html.addClass("selected");

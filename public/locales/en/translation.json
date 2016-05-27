@@ -236,6 +236,7 @@
     "addSibling": "Add sibling (enter)",
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom out",
+    "expandAll": "Expand all",
     "visitOtherInstances": "Visit the same bubble but in another context"
   },
   "hidden_properties_tooltip": "Expand (ctrl+e)",
