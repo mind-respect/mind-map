@@ -99,6 +99,7 @@ define([
                 );
             });
         };
+
         api.onlyShowButtonsIfApplicable = function (clickHandler, graphElement) {
             api.visitButtons(function (button) {
                 button.showOnlyIfApplicable(

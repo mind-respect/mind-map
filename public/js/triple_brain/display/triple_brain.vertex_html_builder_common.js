@@ -108,7 +108,7 @@ define([
         }
     };
     api.buildInLabelButtons = function (vertex) {
-        var inLabelButtons = GraphElementHtmlBuilder.buildInLabelButtons();
+        var inLabelButtons = GraphElementHtmlBuilder.buildInLabelButtons(vertex);
         vertex.getLabel().before(
             inLabelButtons
         );

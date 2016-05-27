@@ -108,7 +108,7 @@ define([
         return label;
     };
     api.buildInLabelButtons = function(edge){
-        var inLabelButtons = GraphElementHtmlBuilder.buildInLabelButtons();
+        var inLabelButtons = GraphElementHtmlBuilder.buildInLabelButtons(edge);
         edge.getLabelAndButtonsContainer().prepend(
             inLabelButtons
         );

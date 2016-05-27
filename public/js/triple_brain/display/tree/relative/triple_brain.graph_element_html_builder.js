@@ -66,13 +66,22 @@ define([
         });
     };
 
-    api.buildInLabelButtons = function () {
+    api.buildInLabelButtons = function (graphElement) {
         var container = $(
             "<div class='in-label-buttons'>"
         );
         GraphElementMainMenu.visitButtons(function (button) {
             if (button.canBeInLabel()) {
-                button.cloneInto(container);
+                var cloneHtml = button.cloneInto(container);
+                if("note" === cloneHtml.data("action")){
+                    var noteWithoutHtml = $("<div/>").html(
+                        graphElement.getNote()
+                    ).text();
+                    cloneHtml.attr(
+                        "title",
+                        noteWithoutHtml
+                    );
+                }
             }
         });
         return container;
