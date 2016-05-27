@@ -390,6 +390,16 @@ define([
         );
     };
 
+    api.Self.prototype.updateInLabelNoteButtonHoverText = function () {
+        var noteWithoutHtml = $("<div/>").html(
+            this.getNote()
+        ).text();
+        this.getNoteButtonInBubbleContent().attr(
+            "title",
+            noteWithoutHtml
+        );
+    };
+
     EventBus.subscribe(
         '/event/ui/graph/identification/added',
         identificationAddedHandler
@@ -427,6 +437,12 @@ define([
         '/event/ui/graph/vertex/privacy/updated',
         function(event, graphElement){
             graphElement.reviewInLabelButtonsVisibility();
+        }
+    );
+    EventBus.subscribe(
+        '/event/ui/graph/vertex/note/updated',
+        function(event, graphElement){
+            graphElement.updateInLabelNoteButtonHoverText();
         }
     );
     function identificationRemovedHandler(event, graphElement, identification) {

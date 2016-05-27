@@ -115,5 +115,4 @@ define([
         }
     };
     return api;
-
 });

@@ -89,11 +89,11 @@ define([
                 data: note,
                 contentType: "text/plain"
             }).success(function () {
+                vertex.setNote(note);
                 EventBus.publish(
                     '/event/ui/graph/vertex/note/updated',
                     vertex
                 );
-                vertex.setNote(note);
                 if (callback !== undefined) {
                     callback(vertex);
                 }
