@@ -40,9 +40,6 @@ define([
             EdgeUi.Object.apply(this, [html]);
             return this;
         };
-        api.Self.prototype.setText = function (text) {
-            this.getLabel().text(text);
-        };
         api.Self.prototype.text = function () {
             return this.getLabel().text();
         };

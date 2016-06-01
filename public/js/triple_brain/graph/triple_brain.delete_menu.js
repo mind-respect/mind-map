@@ -5,7 +5,7 @@
 define([
         "jquery",
         "triple_brain.graph_element_menu",
-        "triple_brain.ui.graph",
+        "triple_brain.graph_ui",
         "jquery.i18next"
     ],
     function ($, GraphElementMenu, GraphUi) {

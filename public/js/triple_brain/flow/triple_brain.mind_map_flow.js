@@ -12,7 +12,7 @@ define([
     "triple_brain.graph_displayer_factory",
     "triple_brain.mind_map_info",
     "triple_brain.graph_element_main_menu",
-    "triple_brain.ui.graph",
+    "triple_brain.graph_ui",
     "triple_brain.language_manager",
     "triple_brain.id_uri",
     "triple_brain.bubble_cloud_flow",
@@ -107,6 +107,7 @@ define([
                 );
                 GraphElementMainMenu._getMenu().removeClass("hidden");
                 GraphElementMainMenu.reset();
+                // EventBus.publish("while-fetching-graph");
             });
         }
     }

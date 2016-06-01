@@ -5,7 +5,7 @@
 define([
         "jquery",
         "triple_brain.graph_element_menu",
-        "triple_brain.ui.graph",
+        "triple_brain.graph_ui",
         "triple_brain.image",
         "triple_brain.mind-map_template",
         "jquery.i18next"

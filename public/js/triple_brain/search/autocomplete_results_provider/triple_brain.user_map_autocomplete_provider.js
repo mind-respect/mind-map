@@ -30,10 +30,10 @@ define([
             vertexToIgnore
         );
     };
-    api.toFetchCurrentUserVerticesAndPublicOnesForIdentification = function (vertexToIdentify) {
+    api.toFetchPublicAndUserVerticesExcept = function (vertexToIgnore) {
         return new UserMapAutoCompleteProvider(
             SearchService.searchForOwnVerticesAndPublicOnesAjaxCall,
-            vertexToIdentify
+            vertexToIgnore
         );
     };
     api.toFetchRelationsForIdentification = function (edgeToIdentify) {

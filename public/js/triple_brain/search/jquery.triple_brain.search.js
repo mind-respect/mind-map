@@ -4,7 +4,7 @@
 
 define([
     "jquery",
-    "triple_brain.ui.graph",
+    "triple_brain.graph_ui",
     "triple_brain.event_bus",
     "jquery-ui"
 ], function ($, GraphUi, EventBus) {

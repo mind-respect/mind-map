@@ -5,7 +5,7 @@
 define([
     "jquery",
     "triple_brain.graph_displayer",
-    "triple_brain.ui.graph",
+    "triple_brain.graph_ui",
     "jquery-ui"
 ], function ($, GraphDisplayer, GraphUi) {
     "use strict";
@@ -53,7 +53,6 @@ define([
         ).on("dialogclose", function(){
                 GraphUi.enableDragScroll();
             });
-        console.log("disable drag scroll");
         GraphUi.disableDragScroll();
         menuContent.closest(".graph-element-menu").centerOnScreen();
         function getHorizontalPosition() {

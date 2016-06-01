@@ -83,5 +83,15 @@ define([
                 relation2.isPublic()
             ).toBeTruthy();
         });
+        it("can return it's deepest child distance", function(){
+                var deepGraphB1 = new Scenarios.deepGraph().getBubble1InTree();
+                expect(
+                    deepGraphB1.getDeepestChildDistance()
+                ).toBe(2);
+                var centerInTree = new Scenarios.threeBubblesGraph().getBubble1InTree();
+                expect(
+                    centerInTree.getDeepestChildDistance()
+                ).toBe(1);
+        });
     });
 });

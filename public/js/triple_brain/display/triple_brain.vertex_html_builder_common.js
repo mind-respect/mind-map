@@ -35,7 +35,7 @@ define([
                 );
             },
             resultsProviders: [
-                UserMapAutocompleteProvider.toFetchCurrentUserVerticesAndPublicOnesForIdentification(
+                UserMapAutocompleteProvider.toFetchPublicAndUserVerticesExcept(
                     BubbleFactory.fromSubHtml(input)
                 ),
                 WikidataAutocompleteProvider.build()

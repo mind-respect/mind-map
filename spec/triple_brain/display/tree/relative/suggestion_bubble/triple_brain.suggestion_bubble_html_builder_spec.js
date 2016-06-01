@@ -6,7 +6,7 @@ define([
     "test/test-scenarios",
     "triple_brain.suggestion_bubble_html_builder",
     "triple_brain.bubble",
-    "triple_brain.ui.graph",
+    "triple_brain.graph_ui",
     "triple_brain.event_bus"
 ], function (Scenarios, SuggestionBubbleHtmlBuilder, Bubble, GraphUi, EventBus) {
     "use strict";

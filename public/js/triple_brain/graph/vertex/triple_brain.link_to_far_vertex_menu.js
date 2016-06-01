@@ -5,7 +5,7 @@
 define([
     "jquery",
     "triple_brain.mind-map_template",
-    "triple_brain.ui.graph",
+    "triple_brain.graph_ui",
     "triple_brain.user_map_autocomplete_provider",
     "triple_brain.edge_service",
     "triple_brain.edge_ui",

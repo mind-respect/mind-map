@@ -155,7 +155,7 @@ define([
 
     api.Self.prototype.resetOtherInstances = function () {
         this._resetOtherInstancesNonDeep();
-        this.applyToOtherInstances(function(otherInstance){
+        this.applyToOtherInstances(function (otherInstance) {
             otherInstance._resetOtherInstancesNonDeep();
         });
     };
@@ -234,7 +234,9 @@ define([
                 return suggestionVertexAction;
             case api.Types.RelationSuggestion :
                 return suggestionRelationAction;
-            default:return function(){};
+            default:
+                return function () {
+                };
         }
     };
     api.Self.prototype.focus = function () {
@@ -247,6 +249,9 @@ define([
         this.getHtml().data(
             textBeforeModificationKey, this.text()
         );
+    };
+    api.Self.prototype.setText = function (text) {
+        return this.getLabel().html(text);
     };
     api.Self.prototype.hasTextChangedAfterModification = function () {
         return this.getHtml().data(
@@ -335,7 +340,7 @@ define([
         this.html.data("note", note);
     };
     api.Self.prototype.getNote = function () {
-        if(this.html.data("note") === undefined){
+        if (this.html.data("note") === undefined) {
             this.html.data("note", "");
         }
         return this.html.data("note");
@@ -435,13 +440,13 @@ define([
     );
     EventBus.subscribe(
         '/event/ui/graph/vertex/privacy/updated',
-        function(event, graphElement){
+        function (event, graphElement) {
             graphElement.reviewInLabelButtonsVisibility();
         }
     );
     EventBus.subscribe(
         '/event/ui/graph/vertex/note/updated',
-        function(event, graphElement){
+        function (event, graphElement) {
             graphElement.updateInLabelNoteButtonHoverText();
         }
     );

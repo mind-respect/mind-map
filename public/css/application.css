@@ -169,7 +169,6 @@
 .bottom-frontier { width: 100%; min-height: 2em; bottom: 0; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
-/*one more than navigation bar dialog*/
 .ui-menu .ui-menu-item, .ui-menu .references-container, .identifications .ui-menu-item, .identifications .references-container { border-bottom: 1px solid #d3d2d2; }
 .ui-menu .ui-menu-item .element-label, .ui-menu .references-container .element-label, .identifications .ui-menu-item .element-label, .identifications .references-container .element-label { font-weight: bold; font-size: 14px; padding-right: 43px; }
 .ui-menu .ui-menu-item a, .ui-menu .references-container a, .identifications .ui-menu-item a, .identifications .references-container a { white-space: nowrap; }
@@ -184,13 +183,13 @@
 #big-search-box-container .input-group { margin: auto; }
 #big-search-box-container .search-icon { font-size: 1.7em; }
 
-.autocomplete-flyout { position: absolute; width: 300px; background-color: white; z-index: 1031; text-align: center; border-radius: 20px; }
+.autocomplete-flyout { position: absolute; width: 300px; background-color: white; z-index: 2000; text-align: center; border-radius: 20px; }
 .autocomplete-flyout img { float: left; margin-left: 0.7em; margin-top: 0.7em; margin-bottom: 0.7em; }
 .autocomplete-flyout .title { font-weight: bold; margin: 0.7em; margin-left: 0.5em; }
 .autocomplete-flyout .source { font-weight: lighter; font-size: 85%; margin: 0.7em; margin-left: 0.5em; }
 .autocomplete-flyout .description { margin: 0.7em; margin-top: 0; margin-left: 0.5em; text-align: center; }
 
-.ui-autocomplete { height: 200px; overflow-y: scroll; z-index: 1031; }
+.ui-autocomplete { height: 200px; overflow-y: scroll; z-index: 2000; }
 
 .ui-dialog { opacity: 0.9; }
 
@@ -273,6 +272,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .relation.bubble .in-bubble-content .label-info { background-color: #3a87ad; height: auto; font-size: 1.05em; }
 .relation.bubble .in-bubble-content .bubble-label { display: inline-block; font-family: helvetica; font-size: 1.05em; }
 .relation.bubble .in-bubble-content .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); font-style: italic; color: white; }
+.relation.bubble .in-bubble-content del, .relation.bubble .in-bubble-content ins { color: black; }
 .relation.bubble .in-bubble-content .in-label-buttons { display: inline-block; }
 .relation.bubble .in-bubble-content .in-label-buttons button { font-size: 18px; margin-top: -13px; margin-bottom: -13px; }
 .relation.bubble .in-bubble-content .in-label-buttons button i { text-shadow: 0 1px 1px rgba(0, 0, 0, 0.75); color: white; }
@@ -454,6 +454,12 @@ button.add-button-in-list:hover { color: #00d100; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 body.print nav.navbar { display: none; }
+
+/*!
+ * Copyright Vincent Blouin under the GPL License version 3
+ */
+#compare-loading { font-size: 200%; }
+#compare-loading h5 { font-size: 100%; font-weight: bold; margin-bottom: 10px; }
 
 html { font-size: 93.8%; }
 

@@ -8,7 +8,7 @@ define([
     "triple_brain.graph_displayer_as_tree_common",
     "triple_brain.vertex_html_builder",
     "triple_brain.vertex_html_builder_view_only",
-    "triple_brain.ui.graph",
+    "triple_brain.graph_ui",
     "triple_brain.relative_tree_displayer_templates",
     "triple_brain.edge_ui",
     "triple_brain.event_bus",

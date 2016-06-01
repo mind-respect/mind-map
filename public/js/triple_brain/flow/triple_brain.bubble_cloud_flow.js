@@ -9,7 +9,7 @@ define([
     "triple_brain.center_graph_elements",
     "triple_brain.visited_elements_cloud",
     "triple_brain.user_service",
-    "triple_brain.ui.graph",
+    "triple_brain.graph_ui",
     "triple_brain.language_manager"
 ], function ($, IdUri, CenterGraphElementService, CenterGraphElements, VisitedElementsCloud, UserService, GraphUi, LanguageManager) {
     "use strict";

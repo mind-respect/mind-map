@@ -6,10 +6,11 @@ define([
     "jquery",
     "triple_brain.selection_handler",
     "triple_brain.mind_map_info",
-    "triple_brain.ui.graph",
+    "triple_brain.graph_ui",
     "triple_brain.vertex_ui",
-    "triple_brain.group_relation_ui"
-], function ($, SelectionHandler, MindMapInfo, GraphUi, VertexUi, GroupRelationUi) {
+    "triple_brain.group_relation_ui",
+    "triple_brain.compare_menu"
+], function ($, SelectionHandler, MindMapInfo, GraphUi, VertexUi, GroupRelationUi, CompareMenu) {
     "use strict";
     var api = {};
     api.select = function () {
@@ -35,6 +36,9 @@ define([
             });
             VertexUi.centralVertex().centerOnScreenWithAnimation();
         });
+    };
+    api.compare = function(){
+        CompareMenu.enter();
     };
     api.zoomIn = function () {
         GraphUi.zoom(

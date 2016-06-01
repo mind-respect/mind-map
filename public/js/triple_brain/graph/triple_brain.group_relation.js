@@ -3,7 +3,7 @@
  */
 
 define([
-        "triple_brain.ui.graph"
+        "triple_brain.graph_ui"
     ], function (GraphUi) {
         "use strict";
         var api = {};

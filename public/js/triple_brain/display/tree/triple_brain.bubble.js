@@ -447,7 +447,7 @@ define([
         };
 
         api.Self.prototype.setText = function (text) {
-            this.getLabel().text(text);
+            this.getLabel().html(text);
         };
 
         api.Self.prototype.getArrowHtml = function () {

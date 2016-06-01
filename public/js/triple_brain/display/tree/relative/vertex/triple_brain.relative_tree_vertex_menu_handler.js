@@ -175,7 +175,7 @@ define([
     forSingle.suggestionsCanDo = function (vertex) {
         return vertex.hasSuggestions();
     };
-
+    
     forSingle.createVertexFromSchemaAction = function(schema){
         var newVertex;
         var deferred = $.Deferred();

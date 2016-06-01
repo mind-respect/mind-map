@@ -5,7 +5,7 @@
 define([
     "test/test-scenarios",
     "triple_brain.schema_html_builder",
-    "triple_brain.ui.graph"
+    "triple_brain.graph_ui"
 ], function (Scenarios, SchemaHtmlBuilder, GraphUi) {
     "use strict";
     describe("schema_html_builder", function () {

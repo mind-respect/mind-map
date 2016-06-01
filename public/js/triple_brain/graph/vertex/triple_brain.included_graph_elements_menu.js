@@ -5,7 +5,7 @@
 define([
     "jquery",
     "triple_brain.graph_element_menu",
-    "triple_brain.ui.graph",
+    "triple_brain.graph_ui",
     "triple_brain.graph_displayer",
     "dragscroll"
 ], function ($, GraphElementMenu, GraphUi, GraphDisplayer, DragScroll) {

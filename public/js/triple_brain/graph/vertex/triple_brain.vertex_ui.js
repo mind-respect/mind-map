@@ -189,12 +189,7 @@ define([
         api.Object.prototype.text = function () {
             return this.getLabel().text();
         };
-        api.Object.prototype.setText = function (label) {
-            return this.getLabel().text(
-                label
-            );
-        };
-
+        
         api.Object.prototype.removeConnectedEdges = function () {
             this.applyToConnectedEdges(function (edge) {
                 edge.remove();
@@ -335,6 +330,22 @@ define([
 
         api.Object.prototype.leaveDragOver = function () {
             this.getHtml().removeClass("drag-over");
+        };
+        api.Object.prototype.getDeepestChildDistance = function () {
+            var depth = -1;
+            var childContainer = this.getHtml().parent().parent().find(
+                "> .vertices-children-container"
+            );
+            do{
+                depth++;
+                childContainer = childContainer.find(
+                    "> .vertex-tree-container"
+                ).find(
+                    "> .vertices-children-container"
+                );
+            }while(childContainer.length !== 0);
+            // divided by 2 because of the edges
+            return depth / 2;
         };
         api.buildCommonConstructors(api);
         return api;

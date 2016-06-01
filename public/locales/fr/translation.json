@@ -1,4 +1,12 @@
 {
+  "modal":{
+    "close": "Fermer"
+  },
+  "compare_menu":{
+    "title":"Comparer toute la carte",
+    "placeholder":"chercher une bulle pour comparer",
+    "loading":"Comparaison en cours..."
+  },
   "cancel":"Annuler",
   "landing": {
     "slogan": "Façonnez votre esprit",
@@ -222,6 +230,7 @@
     "group": "Créer une bulle à partir de celles sélectionnés",
     "addChild": "Ajouter un enfant (tab)",
     "identify": "Identifications (ctrl+i)",
+    "compare": "Comparer avec un autre usager",
     "reverseToRight": "Inverser la relation (ctrl+r)",
     "reverseToLeft": "Inverser la relation (ctrl+r)",
     "suggestions": "Suggestions (ctrl+s)",

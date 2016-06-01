@@ -1,4 +1,12 @@
 {
+  "modal":{
+    "close": "Close"
+  },
+  "compare_menu":{
+    "title":"Compare whole map",
+    "placeholder":"search a bubble to compare with",
+    "loading":"Comparison in progress..."
+  },
   "cancel":"Cancel",
   "landing": {
     "slogan": "Shape your mind",
@@ -221,6 +229,7 @@
     "group": "Merge bubbles into one",
     "addChild": "Add a child (tab)",
     "identify": "Identifications (ctrl+i)",
+    "compare": "Compare with another user",
     "reverseToRight": "Inverse relation (ctrl+r)",
     "reverseToLeft": "Inverse relation (ctrl+r)",
     "suggestions": "Suggestions (ctrl+s)",

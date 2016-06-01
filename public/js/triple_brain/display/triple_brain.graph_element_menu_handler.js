@@ -8,10 +8,11 @@ define([
     "triple_brain.graph_displayer",
     "triple_brain.mind_map_info",
     "triple_brain.event_bus",
-    "triple_brain.ui.graph",
+    "triple_brain.graph_ui",
+    "triple_brain.graph_modal_menu",
     "bootstrap-wysiwyg",
     "bootstrap"
-], function ($, VertexService, GraphDisplayer, MindMapInfo, EventBus, GraphUi) {
+], function ($, VertexService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, GraphModalMenu) {
     "use strict";
     var api = {},
         forSingle = {};

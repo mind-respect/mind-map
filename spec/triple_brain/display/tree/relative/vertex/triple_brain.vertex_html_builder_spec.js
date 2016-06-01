@@ -6,7 +6,7 @@ define([
     "test/test-scenarios",
     "test/test-utils",
     "triple_brain.vertex_html_builder",
-    "triple_brain.ui.graph",
+    "triple_brain.graph_ui",
     "triple_brain.selection_handler",
     "triple_brain.edge_service",
     "triple_brain.mind_map_info"

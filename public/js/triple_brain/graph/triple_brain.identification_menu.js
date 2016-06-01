@@ -6,7 +6,7 @@ define([
         "jquery",
         "triple_brain.identification",
         "triple_brain.mind-map_template",
-        "triple_brain.ui.graph",
+        "triple_brain.graph_ui",
         "triple_brain.id_uri",
         "triple_brain.wikidata_uri",
         "triple_brain.wikidata",
@@ -89,7 +89,6 @@ define([
             this.html = $(
                 "<div class='identifications col-md-12'>"
             ).appendTo(row);
-            GraphUi.addHtml(row);
             this._buildMenu();
             this.html.data("graphElement", this.graphElement);
             GraphElementMenu.makeForMenuContentAndGraphElement(
@@ -400,7 +399,7 @@ define([
 
         IdentificationMenu.prototype._getResultsProvidersForVertex = function () {
             return [
-                UserMapAutocompleteProvider.toFetchCurrentUserVerticesAndPublicOnesForIdentification(this.graphElement),
+                UserMapAutocompleteProvider.toFetchPublicAndUserVerticesExcept(this.graphElement),
                 WikidataAutocompleteProvider.build()
             ];
         };

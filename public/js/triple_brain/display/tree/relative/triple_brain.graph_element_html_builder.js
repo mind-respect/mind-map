@@ -9,7 +9,7 @@ define([
     "triple_brain.suggestion_service",
     "triple_brain.friendly_resource_service",
     "triple_brain.selection_handler",
-    "triple_brain.ui.graph",
+    "triple_brain.graph_ui",
     "triple_brain.graph_element_main_menu"
 ], function ($, EventBus, BubbleFactory, SuggestionService, FriendlyResourceService, SelectionHandler, GraphUi, GraphElementMainMenu) {
     "use strict";

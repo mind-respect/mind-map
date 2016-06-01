@@ -10,7 +10,7 @@ define([
     "triple_brain.suggestion_bubble_ui",
     "triple_brain.graph_element_main_menu",
     "triple_brain.suggestion_bubble_menu_handler",
-    "triple_brain.ui.graph",
+    "triple_brain.graph_ui",
     "triple_brain.identification",
     "triple_brain.event_bus"
 ], function ($, VertexHtmlCommon, GraphElementHtmlBuilder, RelativeTreeVertex, SuggestionBubbleUi, GraphElementMainMenu, SuggestionBubbleMenuHandler, GraphUi, Identification, EventBus) {

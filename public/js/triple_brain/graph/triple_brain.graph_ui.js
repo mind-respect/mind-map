@@ -28,15 +28,15 @@ define([
             }
             return _drawnGraph;
         };
-        api.getZoom = function(){
+        api.getZoom = function () {
             return parseFloat(
                 $(".root-vertex-super-container").attr("data-zoom")
             );
         };
-        api.zoom = function(zoomDifference){
+        api.zoom = function (zoomDifference) {
             var currentZoom = api.getZoom();
             var newZoom = currentZoom + zoomDifference;
-            if(newZoom < 0.1){
+            if (newZoom < 0.1) {
                 newZoom = 0.1;
             }
             $(".root-vertex-super-container").attr(
@@ -73,17 +73,17 @@ define([
         api.showSchemaInstructions = function () {
             getSchemaInstructions().removeClass("hidden");
         };
-        api.hasSelectedFromAutocomplete = function(){
+        api.hasSelectedFromAutocomplete = function () {
             return $("ul.ui-autocomplete:visible").find(".ui-state-focus").length > 0;
         };
-        api.isDraggingBubble = function(){
+        api.isDraggingBubble = function () {
             return _drawnGraph.data("isDraggingBubble") !== undefined &&
-            _drawnGraph.data("isDraggingBubble");
+                _drawnGraph.data("isDraggingBubble");
         };
-        api.setIsDraggingBubble = function(isDragging){
+        api.setIsDraggingBubble = function (isDragging) {
             return api.getDrawnGraph().data("isDraggingBubble", isDragging);
         };
-        api.isThereAnOpenModal = function(){
+        api.isThereAnOpenModal = function () {
             return $(".modal:visible").length > 0 ||
                 $(".ui-dialog").length > 0;
         };

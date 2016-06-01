@@ -11,7 +11,7 @@ define([
     "triple_brain.graph_element_main_menu",
     "triple_brain.schema_menu_handler",
     "triple_brain.relative_tree_vertex",
-    "triple_brain.ui.graph",
+    "triple_brain.graph_ui",
     "triple_brain.event_bus"
 ], function($, SchemaUi, MindMapInfo, VertexHtmlCommon, GraphElementHtmlBuilder, GraphElementMainMenu, SchemaMenuHandler, RelativeTreeVertex, GraphUi, EventBus){
     "use strict";
