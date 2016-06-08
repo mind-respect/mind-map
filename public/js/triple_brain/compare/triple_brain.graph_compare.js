@@ -45,6 +45,9 @@ define([
         });
     };
     GraphCompare.prototype.compareLabel = function (originalUi, compared) {
+        originalUi.setComparedWith(
+            compared
+        );
         var difference = this.diffMatchPatch.diff_main(
             originalUi.text(),
             compared.getLabel()
@@ -53,6 +56,7 @@ define([
         this.diffMatchPatch.diff_cleanupEfficiency(difference);
         var textHtml = this.diffMatchPatch.diff_prettyHtml(difference);
         originalUi.setText(textHtml);
+        originalUi.reviewInLabelButtonsVisibility();
     };
     return api;
 });

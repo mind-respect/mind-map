@@ -403,6 +403,19 @@ define([
         );
     };
 
+    api.Self.prototype.isDisplayingComparison = function () {
+        return this.getLabel().find(
+                "del,ins"
+            ).length > 0;
+    };
+
+    api.Self.prototype.setComparedWith = function (comparedWith) {
+        this.comparedWith = comparedWith;
+    };
+    api.Self.prototype.getComparedWith = function () {
+        return this.comparedWith;
+    };
+
     EventBus.subscribe(
         '/event/ui/graph/identification/added',
         identificationAddedHandler

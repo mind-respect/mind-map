@@ -96,6 +96,7 @@ define([
             case "makePrivate": return graphElement.isVertex() && graphElement.isPublic() && !MindMapInfo.isViewOnly();
             case "makePublic": return graphElement.isVertex() && !graphElement.isPublic() && !MindMapInfo.isViewOnly();
             case "isPublic": return !graphElement.isVertex() && graphElement.isPublic() && !MindMapInfo.isViewOnly();
+            case "accept": return graphElement.isDisplayingComparison();
             default:return false;
         }
     };

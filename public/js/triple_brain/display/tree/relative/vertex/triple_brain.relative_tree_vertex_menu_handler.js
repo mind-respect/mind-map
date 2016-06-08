@@ -209,7 +209,20 @@ define([
             );
         }
     };
-
+    forSingle.accept = function(event, vertexUi){
+        var comparedWithLabel = vertexUi.getComparedWith().getLabel();
+        VertexService.updateLabel(
+            vertexUi,
+            comparedWithLabel,
+            function(){
+                vertexUi.setText(comparedWithLabel);
+                vertexUi.reviewInLabelButtonsVisibility();
+            }
+        );
+    };
+    forSingle.acceptCanDo = function(){
+        return false;   
+    };
     api.forGroup = function () {
         return MindMapInfo.isViewOnly() ?
             forGroupNotOwned :
