@@ -40,15 +40,15 @@ define([
             username
         ).attr(
             "href",
-            "/user/" + username
+            IdUri.allCentralUrlForUsername(username)
         );
     }
 
     function setupCopyLink() {
         getCopyLink().click(handleClick);
-        function handleClick(event){
+        function handleClick(event) {
             event.preventDefault();
-            $(this).off("click",handleClick);
+            $(this).off("click", handleClick);
             var centralVertexAsIdentifier = Identification.withUri(
                 GraphDisplayer.getVertexSelector().centralVertex().getUri()
             );
@@ -56,6 +56,7 @@ define([
                 centralVertexAsIdentifier
             ).then(function (isForked, forkUri) {
                 if (isForked) {
+                    //todo eventually change window.location to GraphDisplayer.displayUsingCentralVertexUri(
                     window.location = IdUri.htmlUrlForBubbleUri(
                         forkUri
                     );
@@ -67,11 +68,13 @@ define([
                     centralVertexAsIdentifier
                 );
             }).then(function (results) {
+                //todo eventually change window.location to GraphDisplayer.displayUsingCentralVertexUri(
                 window.location = IdUri.htmlUrlForBubbleUri(
                     results[0].getGraphElement().getUri()
                 );
             });
         }
+
         function checkIfAlreadyForked(centralVertexAsIdentifier) {
             var deferred = $.Deferred();
             IdentifiedTo.getForIdentification(
@@ -79,7 +82,7 @@ define([
             ).then(function (results) {
                 var isForked = results.length > 0;
                 var forkUri;
-                if(isForked){
+                if (isForked) {
                     forkUri = results[0].getGraphElement().getUri();
                 }
                 deferred.resolve(
@@ -115,5 +118,6 @@ define([
             ".copy"
         );
     }
+
     return api;
 });

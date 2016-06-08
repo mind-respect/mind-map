@@ -24,6 +24,9 @@ define([
             var segments = $.url(uri).segment();
             return segments[2];
         };
+        api.allCentralUrlForUsername = function(username){
+            return "/user/" + username;
+        };
         api.encodedUriFromGraphElementId = function (id) {
             return encodeURIComponent(
                 api.uriFromGraphElementId(id)

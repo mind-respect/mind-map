@@ -53,6 +53,12 @@ define([
         );
     };
 
+    SubGraph.prototype.getAnyUri = function(){
+        return Object.keys(
+            this.vertices
+        )[0];
+    };
+
     SubGraph.prototype._buildEdges = function () {
         this.edges = {};
         var self = this;

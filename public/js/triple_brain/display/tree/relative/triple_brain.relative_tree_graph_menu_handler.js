@@ -9,8 +9,8 @@ define([
     "triple_brain.graph_ui",
     "triple_brain.vertex_ui",
     "triple_brain.group_relation_ui",
-    "triple_brain.compare_menu"
-], function ($, SelectionHandler, MindMapInfo, GraphUi, VertexUi, GroupRelationUi, CompareMenu) {
+    "triple_brain.compare_flow"
+], function ($, SelectionHandler, MindMapInfo, GraphUi, VertexUi, GroupRelationUi, CompareFlow) {
     "use strict";
     var api = {};
     api.select = function () {
@@ -38,7 +38,7 @@ define([
         });
     };
     api.compare = function(){
-        CompareMenu.enter();
+        CompareFlow.enter();
     };
     api.zoomIn = function () {
         GraphUi.zoom(

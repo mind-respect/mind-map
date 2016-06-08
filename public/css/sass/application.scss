@@ -116,13 +116,13 @@ body {
   }
 }
 
-#schema-instructions, #other-user-menu{
+.top-fixed{
   position:fixed;
   top:10%;
   width:100%;
 }
 
-#other-user-menu {
+#other-user-menu, #compare-flow-warning{
   font-size:1.2em;
   z-index:12;
 }

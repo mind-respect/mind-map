@@ -10,7 +10,8 @@ define([
     "triple_brain.graph_element_type",
     "triple_brain.event_bus",
     "jquery.focus-end",
-    "jquery.center-on-screen"
+    "jquery.center-on-screen",
+    "jquery.safer-html"
 ], function ($, GraphDisplayer, GraphElementMainMenu, GraphElementButton, GraphElementType, EventBus) {
     "use strict";
     var api = {},
@@ -249,9 +250,6 @@ define([
         this.getHtml().data(
             textBeforeModificationKey, this.text()
         );
-    };
-    api.Self.prototype.setText = function (text) {
-        return this.getLabel().html(text);
     };
     api.Self.prototype.hasTextChangedAfterModification = function () {
         return this.getHtml().data(

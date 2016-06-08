@@ -51,7 +51,7 @@ define([
             );
             this._resetIsToTheLeft();
             SelectionHandler.setToSingleGraphElement(this);
-            if(this.isRelation()){
+            if (this.isRelation()) {
                 this.reviewEditButtonDisplay();
             }
             if (isOriginalToTheLeft === this.isToTheLeft()) {
@@ -90,7 +90,7 @@ define([
             if (this.hasHiddenRelationsContainer()) {
                 this.getHiddenRelationsContainer().convertToLeft();
             }
-            this.visitAllChild(function(child){
+            this.visitAllChild(function (child) {
                 child.convertToLeft();
             });
         };
@@ -104,7 +104,7 @@ define([
             if (this.hasHiddenRelationsContainer()) {
                 this.getHiddenRelationsContainer().convertToRight();
             }
-            this.visitAllChild(function(child){
+            this.visitAllChild(function (child) {
                 child.convertToRight();
             });
         };
@@ -242,8 +242,7 @@ define([
                 ".vertex-tree-container"
             ).prevAll(
                 ".vertex-tree-container:first"
-            ).
-                find("> .vertex-container >.bubble");
+            ).find("> .vertex-container >.bubble");
         };
 
         api.Self.prototype.hasChildren = function () {
@@ -447,7 +446,7 @@ define([
         };
 
         api.Self.prototype.setText = function (text) {
-            this.getLabel().html(text);
+            return this.getLabel().saferHtml(text);
         };
 
         api.Self.prototype.getArrowHtml = function () {

@@ -1,44 +1,50 @@
 {
-  "modal":{
+  "modal": {
     "close": "Fermer"
   },
-  "compare_menu":{
-    "title":"Comparer toute la carte",
-    "placeholder":"chercher une bulle pour comparer",
-    "loading":"Comparaison en cours..."
+  "compare_flow": {
+    "title": "Mode comparaison",
+    "with_user": "avec",
+    "quit": "Quitter"
   },
-  "cancel":"Annuler",
+  "compare_menu": {
+    "title": "Comparer toute la carte",
+    "placeholder": "chercher une bulle pour comparer",
+    "loading": "Comparaison en cours...",
+    "no-difference": "Pas de différence"
+  },
+  "cancel": "Annuler",
   "landing": {
     "slogan": "Façonnez votre esprit",
     "description": "Liez, trouvez et modélisez vos notes.",
-    "video_instruction":"Mettre en qualité HD et en plein écran",
+    "video_instruction": "Mettre en qualité HD et en plein écran",
     "actions": {
-      "link":{
+      "link": {
         "title": "Liez",
-        "overview" : "Ayez un esprit cohérent en créant des liens entre vos différentes idées. L'idée est simple: découpez vos idées en petits morceaux qui peuvent être réutilisés et associés de milles et une façon.",
+        "overview": "Ayez un esprit cohérent en créant des liens entre vos différentes idées. L'idée est simple: découpez vos idées en petits morceaux qui peuvent être réutilisés et associés de milles et une façon.",
         "desc2": "Chaque bulle peut éventuellement être liée à une autre, peu importe où elle se situe dans votre esprit.",
         "desc3": "Liez vos idées à celles des autres ou à l'encyclopédie Wikipédia et bénéficiez d'images, de descriptions et d'intelligence qui enrichiront vos idées et élimineront l'ambiguïté.",
         "video": "Liez (vidéo de démonstration)",
         "cut": "Découpez vos idées en petits morceaux qui peuvent être réutilisés et associés de milles et une façon.",
-        "auto_wiki":"Autocompletion de Wikipédia",
-        "images":"Images et descriptions ajoutées automatiquement",
-        "article_wiki":"Article de Wikipédia lié à une idée",
-        "date_identifier":"Liez à une la date d'un calendrier et ...",
-        "use_calendar":"Obtenez le bon outil pour votre type de donnée",
-        "far_link":"Chaque bulle peut être liée à une autre"
+        "auto_wiki": "Autocompletion de Wikipédia",
+        "images": "Images et descriptions ajoutées automatiquement",
+        "article_wiki": "Article de Wikipédia lié à une idée",
+        "date_identifier": "Liez à une la date d'un calendrier et ...",
+        "use_calendar": "Obtenez le bon outil pour votre type de donnée",
+        "far_link": "Chaque bulle peut être liée à une autre"
       },
-      "find":{
+      "find": {
         "title": "Trouvez",
-        "overview" : "D'un coup d'oeil, saisisez le contexte de vos notes.",
+        "overview": "D'un coup d'oeil, saisisez le contexte de vos notes.",
         "video": "Trouvez (vidéo de démonstration)",
         "search": "Trouvez vos idées de manière instantanée",
         "center": "Chaque bulle peut devenir le centre",
         "meaning": "Listez les bulles qui ont un sens commun",
         "history": "Historique de vos bulles les plus visitées."
       },
-      "model":{
+      "model": {
         "title": "Modélisez",
-        "overview" : "Formulaires faciles pour vos notes. Accélérez votre prise de notes en utilisant des modèles déja bien réfléchis.",
+        "overview": "Formulaires faciles pour vos notes. Accélérez votre prise de notes en utilisant des modèles déja bien réfléchis.",
         "video": "Modélisez (vidéo de démonstration)",
         "model": "Créez des modèles réutilisables",
         "suggestion": "Ayez des suggestions de bulles à ajouter",
@@ -61,10 +67,10 @@
       "filter": "Trier"
     },
     "error": {
-      "mandatory" : "Le nom d'usager est obligatoire",
-      "invalid" : "Le nom d'usager est invalide, il peut contenir des lettres, des nombres, des soulignements (underscores) et des traits d'union",
-      "too_long" : "Le nom d'usager ne peut excéder 30 caractères",
-      "taken" : "Ce nom d'usager est déjà pris",
+      "mandatory": "Le nom d'usager est obligatoire",
+      "invalid": "Le nom d'usager est invalide, il peut contenir des lettres, des nombres, des soulignements (underscores) et des traits d'union",
+      "too_long": "Le nom d'usager ne peut excéder 30 caractères",
+      "taken": "Ce nom d'usager est déjà pris",
       "email_mandatory": "Le courriel est obligatoire",
       "email_invalid": "Ce courriel est invalide",
       "email_already_exists": "Ce courriel est déjà enregistré",
@@ -111,9 +117,9 @@
   },
   "top_menu": {
     "share": "partager",
-    "central" : "toutes vos centrales",
-    "schemas" : "tous les modèles",
-    "save_as_image" : "sauvegarder en image",
+    "central": "toutes vos centrales",
+    "schemas": "tous les modèles",
+    "save_as_image": "sauvegarder en image",
     "bubble": "bulle",
     "create": "créer",
     "schema": "modèle",
@@ -271,7 +277,7 @@
   },
   "schemaList": {
     "title": "Modèles",
-    "linkButton":"Visiter le modèle",
+    "linkButton": "Visiter le modèle",
     "createButton": "Créer une bulle à partir de ce modèle"
   },
   "otherUser": {

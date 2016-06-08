@@ -19,7 +19,8 @@ define([
     "triple_brain.bubble_factory",
     "jquery-ui",
     "jquery.triple_brain.search",
-    "jquery.max_char"
+    "jquery.max_char",
+    "jquery.safer-html"
 ], function ($, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, WikidataAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, GraphElementHtmlBuilder, BubbleFactory) {
     "use strict";
     var api = {};
@@ -73,7 +74,7 @@ define([
     api.buildLabelHtml = function (vertex, inContentContainer, uiSelector, serverFacade) {
         var label = $(
             "<div class='bubble-label'>"
-        ).text(
+        ).saferHtml(
             serverFacade.getLabel().trim()
         ).attr(
             "data-placeholder",

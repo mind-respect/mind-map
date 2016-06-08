@@ -2,10 +2,16 @@
   "modal":{
     "close": "Close"
   },
+  "compare_flow": {
+    "title": "Comparison mode",
+    "with_user": "with",
+    "quit": "Quit"
+  },
   "compare_menu":{
     "title":"Compare whole map",
     "placeholder":"search a bubble to compare with",
-    "loading":"Comparison in progress..."
+    "loading":"Comparison in progress...",
+    "no-difference": "No difference"
   },
   "cancel":"Cancel",
   "landing": {

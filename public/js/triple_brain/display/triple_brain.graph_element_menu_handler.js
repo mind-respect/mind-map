@@ -11,7 +11,8 @@ define([
     "triple_brain.graph_ui",
     "triple_brain.graph_modal_menu",
     "bootstrap-wysiwyg",
-    "bootstrap"
+    "bootstrap",
+    "jquery.safer-html"
 ], function ($, VertexService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, GraphModalMenu) {
     "use strict";
     var api = {},
@@ -23,17 +24,15 @@ define([
     api.forSingle = function () {
         return forSingle;
     };
-    api._getBubbleNoteModal = function(){
+    api._getBubbleNoteModal = function () {
         return $("#bubble-note-modal");
     };
-    api._getContentEditor = function(){
+    api._getContentEditor = function () {
         return api._getBubbleNoteModal().find(".editor");
     };
     forSingle.noteAction = function (graphElement) {
-        var editor = api._getContentEditor().html(
-            emptyHtmlIfHasMalicious(
-                graphElement.getNote()
-            )
+        var editor = api._getContentEditor().saferHtml(
+            graphElement.getNote()
         );
         api._getBubbleNoteModal().data(
             "graphElement", graphElement
@@ -44,12 +43,12 @@ define([
         api._getBubbleNoteModal().modal({
             backdrop: 'static',
             keyboard: false
-        }).on('shown.bs.modal', function(){
+        }).on('shown.bs.modal', function () {
             GraphUi.disableDragScroll();
-        }).on('hidden.bs.modal', function(){
+        }).on('hidden.bs.modal', function () {
             GraphUi.enableDragScroll();
         });
-        if(MindMapInfo.isViewOnly()){
+        if (MindMapInfo.isViewOnly()) {
             api._getContentEditor().prop("content-editable", "false");
         }
         editor.wysiwyg({
@@ -63,12 +62,12 @@ define([
         });
         editor.cleanHtml();
     };
-    forSingle.visitOtherInstances = function(event, bubble){
+    forSingle.visitOtherInstances = function (event, bubble) {
         $(
             bubble.getOtherInstances()[0].getHtml()
         ).centerOnScreenWithAnimation();
     };
-    forSingle.visitOtherInstancesCanDo = function(graphElement){
+    forSingle.visitOtherInstancesCanDo = function (graphElement) {
         return graphElement.hasOtherInstances();
     };
     setUpCancelButton();
@@ -110,29 +109,20 @@ define([
         return api._getBubbleNoteModal().find("button.cancel");
     }
 
-    function hideNoteModal(){
+    function hideNoteModal() {
         api._getBubbleNoteModal().modal("hide");
     }
 
-    function initNoteModal(){
+    function initNoteModal() {
         api._getBubbleNoteModal().on('show.bs.modal', function () {
             GraphUi.disableDragScroll();
         }).on('hide.bs.modal', function () {
             GraphUi.enableDragScroll();
         });
-        api._getBubbleNoteModal().find("input[data-edit=createLink]").click(function(event){
+        api._getBubbleNoteModal().find("input[data-edit=createLink]").click(function (event) {
             event.stopPropagation();
         });
     }
 
-    function emptyHtmlIfHasMalicious(html){
-        var $html = $("<div>").append(html);
-        var isMalicious = $html.find("script").length > 0 ||
-            $html.find("iframe").length > 0;
-        if(isMalicious){
-            return "";
-        }
-        return html;
-    }
     return api;
 });

@@ -474,9 +474,9 @@ body.no-scroll { overflow: hidden; }
 
 #language-selector-container a.current { background-color: #e8e8e8; background-image: linear-gradient(to bottom, #f5f5f5 0%, #e8e8e8 100%); background-repeat: repeat-x; color: #262626; text-decoration: none; }
 
-#schema-instructions, #other-user-menu { position: fixed; top: 10%; width: 100%; }
+.top-fixed { position: fixed; top: 10%; width: 100%; }
 
-#other-user-menu { font-size: 1.2em; z-index: 12; }
+#other-user-menu, #compare-flow-warning { font-size: 1.2em; z-index: 12; }
 
 #welcome-content .content > *:not(:first-child) { margin-top: 30px; }
 

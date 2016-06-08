@@ -106,5 +106,19 @@ define([
                 aRelation.getHtml()
             ).not.toHaveAttr("draggable");
         });
+        it("prevents iframe injection", function () {
+            var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            bubble1.setText("<iframe></iframe>");
+            expect(
+                bubble1.getLabel().html()
+            ).toBe("");
+        });
+        it("prevents script injection", function () {
+            var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            bubble1.setText("<script>alert('yo')</script>");
+            expect(
+                bubble1.getLabel().html()
+            ).toBe("");
+        });
     });
 });
