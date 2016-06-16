@@ -35,7 +35,7 @@ define([
             forSingleNotOwned :
             forSingle;
     };
-    api.forSingleOwned = function(){
+    api.forSingleOwned = function () {
         return forSingle;
     };
     forSingle.addChild = function (event, sourceVertex) {
@@ -158,38 +158,32 @@ define([
         );
     };
     forSingle.suggestionsAction = function (vertex) {
-        if(vertex.areSuggestionsShown()){
-            vertex.visitAllChild(function(child){
-                if(child.isSuggestion()){
-                    child.hide();
-                }
-            });
-        }else{
-            vertex.visitAllChild(function(child){
-                if(child.isSuggestion()){
-                    child.show();
-                }
-            });
-        }
+        var suggestionMethod = vertex.areSuggestionsShown() ?
+            "hide" : "show";
+        vertex.visitAllChild(function (child) {
+            if (child.isSuggestion()) {
+                child[suggestionMethod]();
+            }
+        });
     };
     forSingle.suggestionsCanDo = function (vertex) {
         return vertex.hasSuggestions();
     };
-    
-    forSingle.createVertexFromSchemaAction = function(schema){
+
+    forSingle.createVertexFromSchemaAction = function (schema) {
         var newVertex;
         var deferred = $.Deferred();
         VertexService.createVertex().then(
             addIdentification
         ).then(
             addSuggestions
-        ).then(function(){
+        ).then(function () {
             deferred.resolve(
                 newVertex
             );
         });
         return deferred;
-        function addIdentification(newVertexServerFormat){
+        function addIdentification(newVertexServerFormat) {
             newVertex = Vertex.fromServerFormat(
                 newVertexServerFormat
             );
@@ -202,26 +196,27 @@ define([
                 identification
             );
         }
-        function addSuggestions(){
+
+        function addSuggestions() {
             return SchemaSuggestion.addSchemaSuggestionsIfApplicable(
                 newVertex,
                 schema.getUri()
             );
         }
     };
-    forSingle.accept = function(event, vertexUi){
+    forSingle.accept = function (event, vertexUi) {
         var comparedWithLabel = vertexUi.getComparedWith().getLabel();
         VertexService.updateLabel(
             vertexUi,
             comparedWithLabel,
-            function(){
+            function () {
                 vertexUi.setText(comparedWithLabel);
                 vertexUi.reviewInLabelButtonsVisibility();
             }
         );
     };
-    forSingle.acceptCanDo = function(){
-        return false;   
+    forSingle.acceptCanDo = function () {
+        return false;
     };
     api.forGroup = function () {
         return MindMapInfo.isViewOnly() ?

@@ -14,7 +14,7 @@ define([
         );
     };
     api.afterChildBuilt = function (edge, parentUi, childUi) {
-        var edgeServer = edge.getOriginalServerObject(),
+        var edgeServer = edge.getModel(),
             parentVertexUi = parentUi.isVertex() ?
                 parentUi :
                 parentUi.getParentVertex(),

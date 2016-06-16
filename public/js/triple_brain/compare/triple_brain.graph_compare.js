@@ -16,7 +16,6 @@ define([
 
     function GraphCompare(otherGraph) {
         this.otherGraph = otherGraph;
-        this.diffMatchPatch = new diff_match_patch();
     }
 
     GraphCompare.prototype.show = function () {
@@ -48,15 +47,7 @@ define([
         originalUi.setComparedWith(
             compared
         );
-        var difference = this.diffMatchPatch.diff_main(
-            originalUi.text(),
-            compared.getLabel()
-        );
-        this.diffMatchPatch.diff_cleanupSemantic(difference);
-        this.diffMatchPatch.diff_cleanupEfficiency(difference);
-        var textHtml = this.diffMatchPatch.diff_prettyHtml(difference);
-        originalUi.setText(textHtml);
-        originalUi.reviewInLabelButtonsVisibility();
+        originalUi.refreshComparison();
     };
     return api;
 });

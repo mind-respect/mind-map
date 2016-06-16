@@ -34,7 +34,7 @@ define([
             var bubbleContent = $("<div class='in-bubble-content'>").appendTo(html);
             createLabel(bubbleContent);
             html.append("<span class='arrow'>");
-            vertex.setOriginalServerObject(
+            vertex.setModel(
                 serverFormatFacade
             );
             return vertex;

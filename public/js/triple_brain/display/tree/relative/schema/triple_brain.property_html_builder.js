@@ -21,7 +21,7 @@ define([
             property
         );
         GraphElementHtmlBuilder.setUpIdentifications(
-            property.getOriginalServerObject(),
+            property.getModel(),
             property
         );
         property.refreshImages();

@@ -5,8 +5,9 @@
 define([
     "jquery",
     "triple_brain.friendly_resource",
-    "triple_brain.identification"
-], function ($, FriendlyResource, Identification) {
+    "triple_brain.identification",
+    "triple_brain.event_bus"
+], function ($, FriendlyResource, Identification, EventBus) {
     "use strict";
     var api = {};
     api.fromServerFormat = function (serverFormat) {
@@ -110,7 +111,7 @@ define([
         }
         return this._identifications;
     };
-
+    
     api.Self.prototype._buildIdentifications = function () {
         this._types = [];
         this._sameAs = [];

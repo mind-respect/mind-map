@@ -9,10 +9,13 @@ define([
     "triple_brain.graph_element_button",
     "triple_brain.graph_element_type",
     "triple_brain.event_bus",
+    "triple_brain.mind_map_info",
+    "triple_brain.selection_handler",
     "jquery.focus-end",
     "jquery.center-on-screen",
-    "jquery.safer-html"
-], function ($, GraphDisplayer, GraphElementMainMenu, GraphElementButton, GraphElementType, EventBus) {
+    "jquery.safer-html",
+    "jquery.max_char"
+], function ($, GraphDisplayer, GraphElementMainMenu, GraphElementButton, GraphElementType, EventBus, MindMapInfo, SelectionHandler) {
     "use strict";
     var api = {},
         otherInstancesKey = "otherInstances",
@@ -96,16 +99,11 @@ define([
 
     api.Self = function () {
     };
-    api.Self.prototype.setOriginalServerObject = function (serverJson) {
-        this.html.data(
-            "originalServerObject",
-            serverJson
-        );
+    api.Self.prototype.setModel = function (serverJson) {
+        this.model = serverJson;
     };
-    api.Self.prototype.getOriginalServerObject = function () {
-        return this.html.data(
-            "originalServerObject"
-        );
+    api.Self.prototype.getModel = function () {
+        return this.model;
     };
     api.Self.prototype.getId = function () {
         return this.getHtml().attr("id");
@@ -416,6 +414,45 @@ define([
         return this.comparedWith;
     };
 
+    api.Self.prototype.refreshComparison = function () {
+        var diffMatchPatch = new diff_match_patch();
+        var difference = diffMatchPatch.diff_main(
+            this.text(),
+            this.getComparedWith().getLabel()
+        );
+        diffMatchPatch.diff_cleanupSemantic(difference);
+        diffMatchPatch.diff_cleanupEfficiency(difference);
+        var textHtml = diffMatchPatch.diff_prettyHtml(difference);
+        this.setText(textHtml);
+        this.reviewInLabelButtonsVisibility();
+    };
+
+    api.Self.prototype.labelUpdateHandle = function () {
+        this.leaveEditMode();
+        this.getLabel().maxChar();
+        this.getHtml().centerOnScreen();
+        // if(MindMapInfo.isInCompareMode()){
+        //
+        // }
+        if (!this.hasTextChangedAfterModification()) {
+            return;
+        }
+        if (!this.isSuggestion()) {
+            this._updateLabelsOfElementsWithSameUri();
+        }
+        SelectionHandler.setToSingleGraphElement(this);
+    };
+
+    api.Self.prototype._updateLabelsOfElementsWithSameUri = function () {
+        var text = this.text();
+        $.each(this.getOtherInstances(), function () {
+            var sameElement = this;
+            sameElement.setText(
+                text
+            );
+        });
+    };
+
     EventBus.subscribe(
         '/event/ui/graph/identification/added',
         identificationAddedHandler
@@ -461,6 +498,7 @@ define([
             graphElement.updateInLabelNoteButtonHoverText();
         }
     );
+
     function identificationRemovedHandler(event, graphElement, identification) {
         graphElement.applyToOtherInstances(function (vertex) {
             var removeAction = identification.rightActionForType(

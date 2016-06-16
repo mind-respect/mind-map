@@ -7,7 +7,7 @@ define([
 ], function ($) {
     "use strict";
     var api = {};
-    api.updateLabel = function(friendlyResource, label, callback){
+    api.updateLabel = function (friendlyResource, label, callback) {
         $.ajax({
             type: 'POST',
             url: friendlyResource.getUri() + '/label',
@@ -19,7 +19,7 @@ define([
             }
         });
     };
-    api.remove = function(friendlyResource, callback){
+    api.remove = function (friendlyResource, callback) {
         $.ajax({
             type: 'DELETE',
             url: friendlyResource.getUri()

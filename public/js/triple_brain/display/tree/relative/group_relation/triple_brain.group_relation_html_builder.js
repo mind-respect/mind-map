@@ -31,7 +31,7 @@ define([
                 indicator
             );
             groupRelationUi.integrateIdentification(
-                groupRelationUi.getOriginalServerObject().getIdentification()
+                groupRelationUi.getModel().getIdentification()
             );
             groupRelationUi.refreshImages();
             indicator.build();
@@ -158,7 +158,7 @@ define([
                     }
                     if(child.isRelation() && !child.isSameBubble(graphElement)){
                         var childAsAnIdentification = Identification.fromFriendlyResource(
-                            child.getOriginalServerObject()
+                            child.getModel()
                         );
                         var isIdentifiedToRelation = graphElement.hasIdentification(
                             childAsAnIdentification

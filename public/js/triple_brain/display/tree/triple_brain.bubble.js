@@ -83,7 +83,7 @@ define([
 
         api.Self.prototype.convertToLeft = function () {
             this._resetIsToTheLeft();
-            this.getOriginalServerObject().leftOriented = true;
+            this.getModel().leftOriented = true;
             this.getInLabelButtonsContainer().insertAfter(
                 this.getLabel()
             );
@@ -97,7 +97,7 @@ define([
 
         api.Self.prototype.convertToRight = function () {
             this._resetIsToTheLeft();
-            this.getOriginalServerObject().leftOriented = false;
+            this.getModel().leftOriented = false;
             this.getInLabelButtonsContainer().insertBefore(
                 this.getLabel()
             );
@@ -427,7 +427,7 @@ define([
 
         api.Self.prototype._resetIsToTheLeft = function () {
             this._isToTheLeft = undefined;
-            this.getOriginalServerObject().isLeftOriented = this.isToTheLeft();
+            this.getModel().isLeftOriented = this.isToTheLeft();
         };
 
         api.Self.prototype.isToTheLeft = function () {
@@ -446,7 +446,7 @@ define([
         };
 
         api.Self.prototype.setText = function (text) {
-            return this.getLabel().saferHtml(text);
+            return this.getLabel().saferHtml(text).maxChar();
         };
 
         api.Self.prototype.getArrowHtml = function () {

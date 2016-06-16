@@ -24,7 +24,7 @@ define([
         };
         api.completeBuild = function (vertex) {
             GraphElementHtmlBuilder.setUpIdentifications(
-                vertex.getOriginalServerObject(),
+                vertex.getModel(),
                 vertex
             );
             vertex.refreshImages();

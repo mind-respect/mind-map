@@ -200,7 +200,7 @@ define([
                 r2ChildOfCenterBubble.isGroupRelation()
             ).toBeFalsy();
             var identificationToRelation2 = Identification.fromFriendlyResource(
-                r2ChildOfCenterBubble.getOriginalServerObject()
+                r2ChildOfCenterBubble.getModel()
             );
             var relation1 = TestUtils.getChildWithLabel(centerBubble, "r1");
             relation1.addSameAs(
@@ -237,7 +237,7 @@ define([
             newRelation.setText("new relation");
             newRelation.setNote("some comment");
             var identificationToNewRelation = Identification.fromFriendlyResource(
-                newRelation.getOriginalServerObject()
+                newRelation.getModel()
             );
             var relation1 = TestUtils.getChildWithLabel(centerBubble, "r1");
             relation1.addSameAs(

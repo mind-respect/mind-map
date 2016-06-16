@@ -101,7 +101,7 @@ define([
         );
         var parentVertexServerFormat = serverGraph.vertices[parentUri];
         parentVertexServerFormat.isLeftOriented = parentVertex.isToTheLeft();
-        parentVertex.setOriginalServerObject(parentVertexServerFormat);
+        parentVertex.setModel(parentVertexServerFormat);
         if (nbRelationsWithGrandParent >= 1) {
             treeMaker.buildChildrenHtmlTreeRecursivelyEvenIfGrandParentAndIncludingDuplicates(
                 parentVertex,
@@ -120,7 +120,7 @@ define([
             }
             flagSuggestionsToNotDisplayGivenParentAndChildVertex(
                 parentVertex,
-                childBubble.getOriginalServerObject()
+                childBubble.getModel()
             );
             if (childBubble.isRelation()) {
                 childBubble.resetOtherInstances();
@@ -422,7 +422,7 @@ define([
             TreeDisplayerCommon.enhancedVerticesInfo(serverGraph, parentVertex.getUri());
             var serverVertex = serverGraph.vertices[parentVertex.getUri()];
             serverVertex.isLeftOriented = parentVertex.isToTheLeft();
-            parentVertex.setOriginalServerObject(serverVertex);
+            parentVertex.setModel(serverVertex);
             self.buildChildrenHtmlTreeRecursively(parentVertex, serverGraph.vertices);
             parentVertex.visitVerticesChildren(function (vertex) {
                 var wasAlreadyShownInGraph = serverGraph.vertices[vertex.getUri()] === undefined;
@@ -440,7 +440,7 @@ define([
         };
         this.buildBubbleHtmlIntoContainer = function (serverFormat, parentBubble, builder, htmlId) {
             flagSuggestionsToNotDisplayGivenParentAndChildVertex(
-                parentBubble.getOriginalServerObject(),
+                parentBubble.getModel(),
                 serverFormat
             );
             var childTreeContainer = RelativeTreeTemplates[
@@ -458,12 +458,12 @@ define([
                 }
             } else {
                 container = self.childContainer(parentBubble);
-                serverFormat.isLeftOriented = parentBubble.getOriginalServerObject().isLeftOriented;
+                serverFormat.isLeftOriented = parentBubble.getModel().isLeftOriented;
             }
             var childVertexHtmlFacade = builder.withServerFacade(
                 serverFormat
             ).create(htmlId);
-            childVertexHtmlFacade.setOriginalServerObject(serverFormat);
+            childVertexHtmlFacade.setModel(serverFormat);
             container.append(
                 childTreeContainer
             ).append("<span class='clear-fix'>");
@@ -581,7 +581,7 @@ define([
         }
 
         function buildChildrenHtmlTreeRecursively(parentBubbleUi) {
-            var serverParentVertex = parentBubbleUi.getOriginalServerObject();
+            var serverParentVertex = parentBubbleUi.getModel();
             $.each(sortSimilarRelationsByIsGroupRelationOrCreationDate(serverParentVertex.similarRelations), function (key, groupRelation) {
                 self.buildGroupRelation(
                     groupRelation,
@@ -594,7 +594,7 @@ define([
             self.rootBubble = _htmlBuilder.withServerFacade(
                 serverFacade
             ).create(GraphUi.generateBubbleHtmlId());
-            self.rootBubble.setOriginalServerObject(serverFacade);
+            self.rootBubble.setModel(serverFacade);
             self.rootBubble.getHtml().addClass("center-vertex");
             var bubbleContainer = $(
                 RelativeTreeTemplates["vertex_container"].merge()

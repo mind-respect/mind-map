@@ -18,44 +18,28 @@ define([
     api.setUpLabel = function (label) {
         label.blur(function () {
             var $input = $(this),
-                element = BubbleFactory.fromSubHtml($input);
-            element.leaveEditMode();
-            $input.maxChar();
-            element.getHtml().centerOnScreen();
-            if (!element.hasTextChangedAfterModification()) {
+                elementUi = BubbleFactory.fromSubHtml($input);
+            elementUi.getModel().setLabel(elementUi.text());
+            elementUi.labelUpdateHandle();
+            if (!elementUi.hasTextChangedAfterModification()) {
                 return;
             }
-            if (element.isSuggestion()) {
-                var vertexSuggestion = element.isRelationSuggestion() ?
-                    element.getTopMostChildBubble() : element;
+            if (elementUi.isSuggestion()) {
+                var vertexSuggestion = elementUi.isRelationSuggestion() ?
+                    elementUi.getTopMostChildBubble() : elementUi;
                 SuggestionService.accept(
                     vertexSuggestion,
-                    updateLabel
+                    updateLabelToService
                 );
-                return;
             } else {
-                updateLabel();
+                updateLabelToService();
             }
-            updateLabelsOfElementsWithSameUri();
-            function updateLabelsOfElementsWithSameUri() {
-                var text = element.text();
-                $.each(element.getOtherInstances(), function () {
-                    var sameElement = this;
-                    sameElement.setText(
-                        text
-                    );
-                });
-            }
-
-            function updateLabel() {
+            function updateLabelToService() {
                 FriendlyResourceService.updateLabel(
-                    element,
-                    $input.maxCharCleanText()
+                    elementUi,
+                    elementUi.getModel().getLabel()
                 );
             }
-
-            SelectionHandler.setToSingleGraphElement(element);
-
         }).keydown(function (event) {
             if (enterKeyCode === event.which) {
                 if (!GraphUi.hasSelectedFromAutocomplete()) {
@@ -73,7 +57,7 @@ define([
         GraphElementMainMenu.visitButtons(function (button) {
             if (button.canBeInLabel()) {
                 var cloneHtml = button.cloneInto(container);
-                if("note" === cloneHtml.data("action")){
+                if ("note" === cloneHtml.data("action")) {
                     var noteWithoutHtml = $("<div/>").html(
                         graphElement.getNote()
                     ).text();

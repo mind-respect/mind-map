@@ -43,7 +43,7 @@ define([
         var suggestionUi = SuggestionBubbleUi.createFromHtml(
             this.html
         );
-        suggestionUi.setOriginalServerObject(
+        suggestionUi.setModel(
             this.serverFacade
         );
         suggestionUi.setSuggestions([]);
@@ -84,7 +84,7 @@ define([
         suggestionUi.setTypes([]);
         suggestionUi.setSameAs([]);
         suggestionUi.setGenericIdentifications([]);
-        var serverFormat = suggestionUi.getOriginalServerObject();
+        var serverFormat = suggestionUi.getModel();
         if (serverFormat.hasType()) {
             suggestionUi.addType(serverFormat.getType());
         }

@@ -70,7 +70,6 @@ define([
     Self.prototype.isPublic = function () {
         return this.vertexServerFormat.vertex.isPublic;
     };
-
     Self.prototype._buildIncludedEdges = function () {
         var includedEdges = {};
         if (this.vertexServerFormat.vertex.includedEdges === undefined) {

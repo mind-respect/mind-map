@@ -15,7 +15,8 @@ define([
         "triple_brain.graph_element_ui",
         "triple_brain.bubble",
         "triple_brain.suggestion_service",
-        "jquery.center-on-screen"
+        "jquery.center-on-screen",
+        "jquery.max_char"
     ],
     function ($, GraphDisplayer, VertexService, Point, Error, VertexSegments, EdgeUi, EventBus, IdentifiedBubble, GraphElementUi, Bubble, SuggestionService) {
         "use strict";
@@ -187,9 +188,9 @@ define([
             }
         };
         api.Object.prototype.text = function () {
-            return this.getLabel().text();
+            return this.getLabel().maxCharCleanText();
         };
-        
+
         api.Object.prototype.removeConnectedEdges = function () {
             this.applyToConnectedEdges(function (edge) {
                 edge.remove();

@@ -27,7 +27,7 @@ define([
         }
         var schema = SchemaUi.get();
         GraphElementHtmlBuilder.setUpIdentifications(
-            schema.getOriginalServerObject(),
+            schema.getModel(),
             schema
         );
         schema.refreshImages();

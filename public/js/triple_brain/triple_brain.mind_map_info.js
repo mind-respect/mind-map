@@ -22,10 +22,10 @@ define([
         api.isCenterBubbleUriDefinedInUrl = function () {
             return IdUri.getGraphElementUriInUrl() !== undefined;
         };
-        api.isLandingPageFlow = function(){
+        api.isLandingPageFlow = function () {
             return "landing" === bublGuruFlow;
         };
-        api.isSchemaListFlow = function(){
+        api.isSchemaListFlow = function () {
             return "schemaList" === bublGuruFlow;
         };
         api.getCenterBubbleUri = function () {
@@ -48,7 +48,7 @@ define([
                 [_isViewOnly]
             );
         };
-        
+
         api.setIsTagCloudFlow = function (isTagCloudFlow) {
             _isTagCloudFlow = isTagCloudFlow;
         };
@@ -56,10 +56,10 @@ define([
         api.isTagCloudFlow = function () {
             return _isTagCloudFlow;
         };
-        api.setIsAuthenticatedLandingPageFlow = function(isAuthenticatedLandingPageFlow){
+        api.setIsAuthenticatedLandingPageFlow = function (isAuthenticatedLandingPageFlow) {
             _isAuthenticatedLandingPageFlow = isAuthenticatedLandingPageFlow;
         };
-        api.isAuthenticatedLandingPageFlow = function(){
+        api.isAuthenticatedLandingPageFlow = function () {
             return _isAuthenticatedLandingPageFlow;
         };
         api.setIsAnonymous = function (isAnonymous) {
@@ -74,6 +74,13 @@ define([
         api.isSchemaMode = function () {
             return IdUri.isSchemaUri(
                 IdUri.getGraphElementUriInUrl()
+            );
+        };
+        api.isInCompareMode = function () {
+            return $(
+                "#compare-flow-warning"
+            ).hasClass(
+                "hidden"
             );
         };
         return api;

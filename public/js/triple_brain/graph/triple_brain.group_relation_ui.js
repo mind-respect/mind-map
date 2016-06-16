@@ -108,7 +108,7 @@ define([
         return this.getLabel().attr("data-content");
     };
 
-    api.GroupRelationUi.prototype.getOriginalServerObject = api.GroupRelationUi.prototype.getGroupRelation;
+    api.GroupRelationUi.prototype.getModel = api.GroupRelationUi.prototype.getGroupRelation;
 
     return api;
 });

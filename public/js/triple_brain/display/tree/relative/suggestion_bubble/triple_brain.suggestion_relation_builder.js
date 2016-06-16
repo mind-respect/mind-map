@@ -17,7 +17,7 @@ define([
 
     api.afterChildBuilt = function(suggestionRelationUi){
         suggestionRelationUi.setTypes([]);
-        var serverFacade = suggestionRelationUi.getOriginalServerObject();
+        var serverFacade = suggestionRelationUi.getModel();
         suggestionRelationUi.setSameAs([
             Identification.withUriLabelAndDescription(
                 serverFacade.getSameAs().getUri(),
@@ -56,7 +56,7 @@ define([
             this.html,
             this.serverFacade.getUri()
         );
-        edge.setOriginalServerObject(this.serverFacade);
+        edge.setModel(this.serverFacade);
         this._buildMenu();
         edge.hideMenu();
         return edge;

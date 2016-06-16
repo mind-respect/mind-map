@@ -69,9 +69,6 @@ define([
         this.html.data(
             "uri",
             newVertexUri
-        ).data(
-            "originalServerObject",
-            originalServerObject
         ).removeClass(
             "suggestion"
         );
@@ -80,6 +77,9 @@ define([
         );
         var vertex = RelativeTreeVertex.createFromHtml(
             this.html
+        );
+        vertex.setModel(
+            originalServerObject
         );
         vertex.rebuildMenuButtons();
         SelectionHandler.setToSingleGraphElement(vertex);

@@ -24,7 +24,7 @@ define([
             );
         };
         api.afterChildBuilt = function (edge, parentUi, childUi) {
-            var edgeServer = edge.getOriginalServerObject(),
+            var edgeServer = edge.getModel(),
                 parentVertexUi = parentUi.isVertex() ?
                     parentUi :
                     parentUi.getParentVertex(),
@@ -79,7 +79,7 @@ define([
                 this.html,
                 this.uri
             );
-            edge.setOriginalServerObject(
+            edge.setModel(
                 this.edgeServer
             );
             edge.setNote(

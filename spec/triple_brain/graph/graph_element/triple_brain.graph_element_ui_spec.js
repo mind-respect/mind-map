@@ -56,7 +56,7 @@ define([
                 bubble2.hasIdentifications()
             ).toBeFalsy();
             var bubble2AsAnIdentification = Identification.fromFriendlyResource(
-                bubble2.getOriginalServerObject()
+                bubble2.getModel()
             );
             bubble2AsAnIdentification.setType("generic");
             GraphElementService._addIdentificationsCallback(

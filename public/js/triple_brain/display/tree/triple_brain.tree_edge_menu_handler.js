@@ -108,7 +108,7 @@ define([
             identification = edge.getIdentifications()[0];
         } else {
             identification = Identification.fromFriendlyResource(
-                edge.getOriginalServerObject()
+                edge.getModel()
             );
             identification.setLabel(
                 edge.text()
