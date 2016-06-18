@@ -12,8 +12,9 @@ define([
     "triple_brain.graph_compare",
     "triple_brain.id_uri",
     "triple_brain.sub_graph",
+    "triple_brain.graph_element_ui",
     "jquery.triple_brain.search"
-], function ($, GraphModalMenu, EventBus, GraphDisplayer, UserMapAutocompleteProvider, GraphService, GraphCompare, IdUri, SubGraph) {
+], function ($, GraphModalMenu, EventBus, GraphDisplayer, UserMapAutocompleteProvider, GraphService, GraphCompare, IdUri, SubGraph, GraphElementUi) {
     "use strict";
     var api = {};
     var compareModal;
@@ -42,7 +43,13 @@ define([
         );
         getQuitFlowButton().click(function (event) {
             event.preventDefault();
-            getCompareFlowWarning().addClass("hidden");
+            api._quit();
+        });
+    };
+    api._quit = function(){
+        getCompareFlowWarning().addClass("hidden");
+        GraphElementUi.visitAll(function(graphElementUi){
+            graphElementUi.quitComparison();
         });
     };
     EventBus.subscribe("/event/ui/graph/drawn", setupSearch);

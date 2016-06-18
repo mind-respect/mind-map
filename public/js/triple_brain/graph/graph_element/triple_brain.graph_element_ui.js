@@ -427,6 +427,12 @@ define([
         this.reviewInLabelButtonsVisibility();
     };
 
+    api.Self.prototype.quitComparison = function () {
+        this.setText(
+            this.getModel().getLabel()
+        );
+        this.setComparedWith(undefined);
+    };
     api.Self.prototype.labelUpdateHandle = function () {
         this.leaveEditMode();
         this.getLabel().maxChar();
