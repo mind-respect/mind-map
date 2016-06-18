@@ -6,8 +6,9 @@ define([
     "test/test-scenarios",
     "test/test-utils",
     "triple_brain.identification",
-    "triple_brain.graph_element_service"
-], function (Scenarios, TestUtils, Identification, GraphElementService) {
+    "triple_brain.graph_element_service",
+    "triple_brain.sub_graph"
+], function (Scenarios, TestUtils, Identification, GraphElementService, SubGraph) {
     "use strict";
     describe("graph_element_ui", function () {
         var vertex, schema;
@@ -15,7 +16,7 @@ define([
             vertex = new Scenarios.threeBubblesGraph().getBubble1Ui();
             schema = new Scenarios.getKaraokeSchemaGraph().getSchemaUi();
         });
-        it("can tell the difference between vertex and schema", function(){
+        it("can tell the difference between vertex and schema", function () {
             expect(
                 vertex.isVertex()
             ).toBeTruthy();
@@ -29,7 +30,7 @@ define([
                 schema.isSchema()
             ).toBeTruthy();
         });
-        it("adds the same identification to other instances of the element", function(){
+        it("adds the same identification to other instances of the element", function () {
             var graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
             var bubble1 = graphWithCircularityScenario.getBubble1InTree();
             var bubble1Duplicate = graphWithCircularityScenario.getBubble1Duplicate();
@@ -49,7 +50,7 @@ define([
                 bubble1Duplicate.hasIdentifications()
             ).toBeTruthy();
         });
-        it("adds the identification to self if added identification external uri is self uri", function(){
+        it("adds the identification to self if added identification external uri is self uri", function () {
             var threeBubblesGraph = new Scenarios.threeBubblesGraph();
             var bubble2 = threeBubblesGraph.getBubble2InTree();
             expect(
@@ -68,7 +69,7 @@ define([
                 bubble2.hasIdentifications()
             ).toBeTruthy();
         });
-        it("is no longer draggable when in edit mode", function(){
+        it("is no longer draggable when in edit mode", function () {
             var threeBubblesGraph = new Scenarios.threeBubblesGraph();
             var bubble2 = threeBubblesGraph.getBubble2InTree();
             expect(
@@ -79,7 +80,7 @@ define([
                 bubble2.getHtml()
             ).not.toHaveAttr("draggable");
         });
-        it("is draggable again when leaving edit mode", function(){
+        it("is draggable again when leaving edit mode", function () {
             var threeBubblesGraph = new Scenarios.threeBubblesGraph();
             var bubble2 = threeBubblesGraph.getBubble2InTree();
             bubble2.editMode();
@@ -91,9 +92,9 @@ define([
                 bubble2.getHtml()
             ).toHaveAttr("draggable");
         });
-        it("non draggable elements are not made draggable after leaving edit mode", function(){
+        it("non draggable elements are not made draggable after leaving edit mode", function () {
             var threeBubblesGraph = new Scenarios.threeBubblesGraph();
-            var aRelation =  threeBubblesGraph.getBubble1InTree().getTopMostChildBubble();
+            var aRelation = threeBubblesGraph.getBubble1InTree().getTopMostChildBubble();
             expect(
                 aRelation.getHtml()
             ).not.toHaveAttr("draggable");
@@ -119,6 +120,96 @@ define([
             expect(
                 bubble1.getLabel().html()
             ).toBe("");
+        });
+
+        it("changes label of duplicate relations", function () {
+            var duplicateRelationsScenario = new Scenarios.graphWithARelationInTwoSimilarRelationsGroup(),
+                impact3InTheIndividualContext = duplicateRelationsScenario.getImpact3RelationInTheImpactOnTheIndividualContext(),
+                impact3InSocietyContext = duplicateRelationsScenario.getImpact3RelationInTheImpactOnSocietyContext();
+
+            impact3InTheIndividualContext.focus();
+            impact3InTheIndividualContext.getLabel().append(" new text");
+            impact3InTheIndividualContext.getLabel().blur();
+            expect(
+                impact3InTheIndividualContext.text()
+            ).toBe(
+                "impact 3 new text"
+            );
+            expect(
+                impact3InSocietyContext.text()
+            ).toBe(
+                "impact 3 new text"
+            );
+        });
+        it("changes label of duplicate vertices", function () {
+            var graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
+            var bubble1 = graphWithCircularityScenario.getBubble1InTree();
+            var bubble1Duplicate = graphWithCircularityScenario.getBubble1Duplicate();
+            bubble1.focus();
+            bubble1.getLabel().append(" new text");
+            bubble1.getLabel().blur();
+            expect(
+                bubble1.text()
+            ).toBe(
+                "b1 new text"
+            );
+            expect(
+                bubble1Duplicate.text()
+            ).toBe(
+                "b1 new text"
+            );
+        });
+        it("comparing label sets html markup", function () {
+            var scenario = new Scenarios.threeBubblesGraph();
+            var bubble1 = scenario.getBubble1InTree();
+            bubble1.addGenericIdentification(
+                Identification.fromFriendlyResource(
+                    bubble1.getModel()
+                )
+            );
+            bubble1.setText("banana");
+            bubble1.getModel().setLabel("banana");
+            expect(
+                bubble1.getLabel()
+            ).not.toContainElement(
+                "del"
+            );
+            TestUtils.enterCompareFlowWithGraph(
+                SubGraph.fromServerFormat(
+                    scenario.getGraph()
+                )
+            );
+            expect(
+                bubble1.getLabel()
+            ).toContainElement(
+                "del"
+            );
+        });
+        it("re-compares label after label change in comparison mode", function () {
+            var scenario = new Scenarios.threeBubblesGraph();
+            var bubble1 = scenario.getBubble1InTree();
+            bubble1.addGenericIdentification(
+                Identification.fromFriendlyResource(
+                    bubble1.getModel()
+                )
+            );
+            TestUtils.enterCompareFlowWithGraph(
+                SubGraph.fromServerFormat(
+                    scenario.getGraph()
+                )
+            );
+            expect(
+                bubble1.getLabel()
+            ).not.toContainElement(
+                "del"
+            );
+            bubble1.setText("banana");
+            bubble1.getLabel().blur();
+            expect(
+                bubble1.getLabel()
+            ).toContainElement(
+                "del"
+            );
         });
     });
 });

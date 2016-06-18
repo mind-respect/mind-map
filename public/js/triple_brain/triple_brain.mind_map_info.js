@@ -77,9 +77,10 @@ define([
             );
         };
         api.isInCompareMode = function () {
-            return $(
+            var $compareFlowWarning = $(
                 "#compare-flow-warning"
-            ).hasClass(
+            );
+            return $compareFlowWarning.length > 0  && !$compareFlowWarning.hasClass(
                 "hidden"
             );
         };

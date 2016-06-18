@@ -446,7 +446,7 @@ define([
         };
 
         api.Self.prototype.setText = function (text) {
-            return this.getLabel().saferHtml(text).maxChar();
+            return this.getLabel().saferHtml(text);
         };
 
         api.Self.prototype.getArrowHtml = function () {

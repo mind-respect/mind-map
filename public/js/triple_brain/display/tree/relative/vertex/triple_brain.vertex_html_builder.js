@@ -96,13 +96,13 @@ define([
                     var $label = $(this);
                     $label.html(
                         linkify(
-                            $label.text()
+                            $label.html()
                         )
                     );
                 });
             label.html(
                 linkify(
-                    label.text()
+                    label.html()
                 )
             );
             if(!MindMapInfo.isViewOnly()){

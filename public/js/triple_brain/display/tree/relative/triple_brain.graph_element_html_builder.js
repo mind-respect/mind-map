@@ -16,7 +16,7 @@ define([
     var enterKeyCode = 13,
         api = {};
     api.setUpLabel = function (label) {
-        label.blur(function () {
+        label.blur(function (event) {
             var $input = $(this),
                 elementUi = BubbleFactory.fromSubHtml($input);
             elementUi.getModel().setLabel(elementUi.text());

@@ -23,29 +23,7 @@ define([
         ).show();
         getSearchInput().empty();
     };
-    EventBus.subscribe("/event/ui/graph/drawn", setupSearch);
-    function setupSearch() {
-        getSearchInput().tripleBrainAutocomplete({
-            select: function (event, ui) {
-                GraphService.getForCentralVertexUriAtDepth(
-                    ui.item.uri,
-                    GraphDisplayer.getVertexSelector().centralVertex().getDeepestChildDistance()
-                ).then(function(otherGraph){
-                    enterComparisonWithGraph(
-                        SubGraph.fromServerFormat(otherGraph)
-                    );
-                });
-                getLoadingSection().removeClass("hidden");
-            },
-            resultsProviders: [
-                UserMapAutocompleteProvider.toFetchPublicAndUserVerticesExcept(
-                    GraphDisplayer.getVertexSelector().centralVertex()
-                )
-            ]
-        });
-    }
-
-    function enterComparisonWithGraph(graph){
+    api._enterComparisonWithGraph = function (graph) {
         var comparison = GraphCompare.withOtherGraph(
             graph
         );
@@ -62,9 +40,30 @@ define([
             "href",
             IdUri.allCentralUrlForUsername(username)
         );
-        getQuitFlowButton().click(function(event){
+        getQuitFlowButton().click(function (event) {
             event.preventDefault();
             getCompareFlowWarning().addClass("hidden");
+        });
+    };
+    EventBus.subscribe("/event/ui/graph/drawn", setupSearch);
+    function setupSearch() {
+        getSearchInput().tripleBrainAutocomplete({
+            select: function (event, ui) {
+                GraphService.getForCentralVertexUriAtDepth(
+                    ui.item.uri,
+                    GraphDisplayer.getVertexSelector().centralVertex().getDeepestChildDistance()
+                ).then(function (otherGraph) {
+                    api._enterComparisonWithGraph(
+                        SubGraph.fromServerFormat(otherGraph)
+                    );
+                });
+                getLoadingSection().removeClass("hidden");
+            },
+            resultsProviders: [
+                UserMapAutocompleteProvider.toFetchPublicAndUserVerticesExcept(
+                    GraphDisplayer.getVertexSelector().centralVertex()
+                )
+            ]
         });
     }
 
@@ -75,20 +74,22 @@ define([
     function getSearchInput() {
         return $("#compare-search-input");
     }
-    
-    function getCompareFlowWarning(){
+
+    function getCompareFlowWarning() {
         return $("#compare-flow-warning");
     }
 
-    function getUserAllCentralAnchor(){
+    function getUserAllCentralAnchor() {
         return getCompareFlowWarning().find(
             ".user"
         );
     }
-    function getQuitFlowButton(){
+
+    function getQuitFlowButton() {
         return getCompareFlowWarning().find(
             ".quit-flow"
         );
     }
+
     return api;
 });

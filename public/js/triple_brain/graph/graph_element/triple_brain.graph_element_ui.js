@@ -417,7 +417,7 @@ define([
     api.Self.prototype.refreshComparison = function () {
         var diffMatchPatch = new diff_match_patch();
         var difference = diffMatchPatch.diff_main(
-            this.text(),
+            this.getModel().getLabel(),
             this.getComparedWith().getLabel()
         );
         diffMatchPatch.diff_cleanupSemantic(difference);
@@ -431,9 +431,9 @@ define([
         this.leaveEditMode();
         this.getLabel().maxChar();
         this.getHtml().centerOnScreen();
-        // if(MindMapInfo.isInCompareMode()){
-        //
-        // }
+        if(MindMapInfo.isInCompareMode()){
+            this.refreshComparison();
+        }
         if (!this.hasTextChangedAfterModification()) {
             return;
         }

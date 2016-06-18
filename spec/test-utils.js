@@ -7,8 +7,9 @@ define([
     "triple_brain.vertex_server_format_builder",
     'triple_brain.vertex',
     'triple_brain.edge',
-    "triple_brain.graph_displayer"
-], function ($, VertexServerFormatBuilder, Vertex, Edge, GraphDisplayer) {
+    "triple_brain.graph_displayer",
+    "triple_brain.compare_flow"
+], function ($, VertexServerFormatBuilder, Vertex, Edge, GraphDisplayer, CompareFlow) {
     "use strict";
     var api = {};
     api.generateVertexUri = function () {
@@ -38,7 +39,7 @@ define([
             options
         );
     };
-    api.pressEnterInBubble = function(bubble){
+    api.pressEnterInBubble = function (bubble) {
         api._pressKeyCodeInContainer(
             13,
             bubble.getLabel(),
@@ -127,23 +128,31 @@ define([
             )
         );
     };
-    api.startDragging = function(bubble){
+    api.startDragging = function (bubble) {
         var event = $.Event("dragstart");
         bubble.getHtml().trigger(event);
     };
-    api.endDragging = function(bubble){
+    api.endDragging = function (bubble) {
         var event = $.Event("dragend");
         bubble.getHtml().trigger(event);
     };
-    api.drop = function(bubble){
+    api.drop = function (bubble) {
         var event = $.Event("drop");
         bubble.getHtml().trigger(event);
     };
 
-    api.singleIdentificationToMultiple = function(identification){
+    api.singleIdentificationToMultiple = function (identification) {
         var multiple = {};
         multiple[identification.getExternalResourceUri()] = identification.getServerFormat();
         return multiple;
+    };
+
+    api.enterCompareFlowWithGraph = function (graph) {
+        loadFixtures('compare-flow.html');
+        CompareFlow.enter();
+        CompareFlow._enterComparisonWithGraph(
+            graph
+        );
     };
 
     return api;
