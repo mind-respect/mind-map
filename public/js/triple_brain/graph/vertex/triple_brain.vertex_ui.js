@@ -9,7 +9,6 @@ define([
         "triple_brain.point",
         "triple_brain.error",
         "triple_brain.ui.vertex_segments",
-        "triple_brain.edge_ui",
         "triple_brain.event_bus",
         "triple_brain.identified_bubble",
         "triple_brain.graph_element_ui",
@@ -18,7 +17,7 @@ define([
         "jquery.center-on-screen",
         "jquery.max_char"
     ],
-    function ($, GraphDisplayer, VertexService, Point, Error, VertexSegments, EdgeUi, EventBus, IdentifiedBubble, GraphElementUi, Bubble, SuggestionService) {
+    function ($, GraphDisplayer, VertexService, Point, Error, VertexSegments, EventBus, IdentifiedBubble, GraphElementUi, Bubble, SuggestionService) {
         "use strict";
         var api = {};
         api.getWhenEmptyLabel = function () {
@@ -98,6 +97,13 @@ define([
         api.Object.prototype.getGraphElementType = function () {
             return GraphElementUi.Types.Vertex;
         };
+
+        api.Object.prototype.refreshComparison = function () {
+            GraphElementUi.Self.prototype.refreshComparison.call(
+                this
+            );
+        };
+
         api.Object.prototype.position = function () {
             return Point.fromCoordinates(
                 this.html.offset().left,
@@ -177,9 +183,31 @@ define([
             this.centerButton().removeClass("hidden");
         };
         api.Object.prototype.connectedEdges = function () {
-            return EdgeUi.connectedToVertex(
-                this
-            );
+            var edgesConnectedToVertex = [];
+            this.visitConnectedEdges(function(edge){
+                edgesConnectedToVertex.push(edge);
+            });
+            return edgesConnectedToVertex;
+        };
+        api.Object.prototype.isConnectedToEdge = function (edge) {
+            var isConnected = false;
+            this.visitConnectedEdges(function(connected){
+                if(edge.getUri() === connected.getUri()){
+                    isConnected =true;
+                    return false;
+                }
+            });
+            return isConnected;
+        };
+        api.Object.prototype.isConnectedToEdgeWithFirstGraphIdentifier = function (edge) {
+            
+        };
+        api.Object.prototype.visitConnectedEdges = function (visitor) {
+            this.visitAllConnected(function(connected){
+                if(connected.isRelation()){
+                    visitor(connected);
+                }
+            });
         };
         api.Object.prototype.applyToConnectedEdges = function (visitor) {
             var connectedEdges = this.connectedEdges();

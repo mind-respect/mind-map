@@ -30,25 +30,7 @@ define([
             };
         };
         api.buildCommonConstructors(api);
-        api.connectedToVertex = function (vertex) {
-            var edgesConnectedToVertex = [];
-            var vertexId = vertex.getId();
-            api.visitAllEdges(function (edge) {
-                var sourceVertexId = $(edge.getHtml()).data(
-                    "source_vertex_id"
-                );
-                var destinationVertexId = $(edge.getHtml()).data(
-                    "destination_vertex_id"
-                );
-                if (vertexId === sourceVertexId || vertexId === destinationVertexId) {
-                    edgesConnectedToVertex.push(
-                        edge
-                    );
-                }
-            });
-            return edgesConnectedToVertex;
-        };
-
+        
         api.Object = function (html) {
             this.html = html;
             IdentifiedBubble.Object.apply(this, [html]);

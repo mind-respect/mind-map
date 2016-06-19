@@ -111,7 +111,7 @@ define([
         }
         return this._identifications;
     };
-    
+
     api.Self.prototype._buildIdentifications = function () {
         this._types = [];
         this._sameAs = [];
@@ -146,5 +146,15 @@ define([
         });
         return contains;
     };
+
+    api.Self.prototype.isRelatedToIdentification = function (identification) {
+        return identification.getExternalResourceUri() === this.getUri() ||
+            this.hasIdentification(identification);
+    };
+
+    api.Self.prototype.addGenericIdentification = function (identification) {
+        this._genericIdentifications.push(identification);
+    };
+
     return api;
 });

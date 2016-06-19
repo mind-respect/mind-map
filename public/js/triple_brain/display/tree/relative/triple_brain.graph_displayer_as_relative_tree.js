@@ -56,9 +56,9 @@ define([
             function (graph) {
                 new api.TreeMaker()
                     .makeForCenterVertex(
-                    graph,
-                    centralVertexUri
-                );
+                        graph,
+                        centralVertexUri
+                    );
                 callback();
             },
             errorCallback
@@ -125,7 +125,7 @@ define([
             if (childBubble.isRelation()) {
                 childBubble.resetOtherInstances();
                 childBubble.reviewInLabelButtonsVisibility();
-                childBubble.visitAllChild(function(childVertex){
+                childBubble.visitAllChild(function (childVertex) {
                     VertexHtmlBuilder.completeBuild(
                         childVertex
                     );
@@ -235,8 +235,8 @@ define([
 
     api.addEdgeAndVertex = function (sourceBubbleUi, edge, destinationVertex) {
         var edgeUi = addEdge(
-                edge,
-                sourceBubbleUi
+            edge,
+            sourceBubbleUi
             ),
             destinationVertexUi = addVertex(
                 destinationVertex,
@@ -251,7 +251,20 @@ define([
         VertexHtmlBuilder.completeBuild(destinationVertexUi);
         var parentVertexUi = sourceBubbleUi.isGroupRelation() ?
             sourceBubbleUi.getParentVertex() : sourceBubbleUi;
-
+        return new TripleUi.Self(
+            parentVertexUi,
+            edgeUi,
+            destinationVertexUi
+        );
+    };
+    api.addEdgeAndVertexSuggestionToSourceVertex = function (edge, vertex, parentVertexUi) {
+        var treeMaker = new api.TreeMaker();
+        var edgeUi = treeMaker.buildBubbleHtmlIntoContainer(
+            edge, parentVertexUi, SuggestionRelationBuilder
+        );
+        var destinationVertexUi = treeMaker.buildBubbleHtmlIntoContainer(
+            vertex, edgeUi, SuggestionBubbleHtmlBuilder
+        );
         return new TripleUi.Self(
             parentVertexUi,
             edgeUi,

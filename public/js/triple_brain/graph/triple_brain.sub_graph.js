@@ -53,7 +53,15 @@ define([
         );
     };
 
-    SubGraph.prototype.getAnyUri = function(){
+    SubGraph.prototype.visitEdgesRelatedToVertex = function (vertex, visitor) {
+        $.each(this.edges, function () {
+            if (this.isRelatedToVertex(vertex)) {
+                visitor(this);
+            }
+        });
+    };
+
+    SubGraph.prototype.getAnyUri = function () {
         return Object.keys(
             this.vertices
         )[0];
@@ -68,6 +76,10 @@ define([
         });
     };
 
+    SubGraph.prototype.getVertexWithUri = function (uri) {
+        return this.vertices[uri];
+    };
+
     SubGraph.prototype._buildVertices = function () {
         this.vertices = {};
         var self = this;
@@ -80,9 +92,7 @@ define([
         var related = false;
         $.each(graphElements, function () {
             var graphElement = this;
-            var isRelated = identification.getExternalResourceUri() === graphElement.getUri() ||
-                graphElement.hasIdentification(identification);
-            if (isRelated) {
+            if (graphElement.isRelatedToIdentification(identification)) {
                 related = graphElement;
                 return false;
             }

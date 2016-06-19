@@ -5,8 +5,9 @@
 define([
     "jquery",
     "triple_brain.graph_displayer",
-    "triple_brain.bubble"
-], function ($, GraphDisplayer, Bubble) {
+    "triple_brain.bubble",
+    "triple_brain.id_uri"
+], function ($, GraphDisplayer, Bubble, IdUri) {
     "use strict";
     var api = {};
     api.Object = function (html) {
@@ -36,7 +37,7 @@ define([
     };
 
     api.Object.prototype.getTypes = function () {
-        if(this.html.data('types') === undefined){
+        if (this.html.data('types') === undefined) {
             this.html.data('types', []);
         }
         return this.html.data('types');
@@ -47,6 +48,16 @@ define([
             this.getGenericIdentifications()
         );
     };
+    api.Object.prototype.getFirstIdentificationToAGraphElement = function () {
+        var identification = false;
+        $.each(this.getIdentifications(), function () {
+            if (IdUri.isUriOfAGraphElement(this.getExternalResourceUri())) {
+                identification = this;
+                return false;
+            }
+        });
+        return identification;
+    };
     api.Object.prototype.setGenericIdentifications = function (genericIdentifications) {
         this.html.data(
             'genericIdentifications',
@@ -54,7 +65,7 @@ define([
         );
     };
     api.Object.prototype.getGenericIdentifications = function () {
-        if(this.html.data('genericIdentifications') === undefined){
+        if (this.html.data('genericIdentifications') === undefined) {
             this.html.data('genericIdentifications', []);
         }
         return this.html.data(
@@ -101,7 +112,7 @@ define([
         this.html.data('sameAs', sameAsCollection);
     };
     api.Object.prototype.getSameAs = function () {
-        if(this.html.data('sameAs') === undefined){
+        if (this.html.data('sameAs') === undefined) {
             this.html.data('sameAs', []);
         }
         return this.html.data('sameAs');
@@ -114,24 +125,24 @@ define([
         this.html.data("sameAs", sameAs);
         this.impactOnRemovedIdentification(sameAsToRemove);
     };
-    api.Object.prototype.hasIdentifications = function(){
+    api.Object.prototype.hasIdentifications = function () {
         return this.getIdentifications().length > 0;
     };
-    api.Object.prototype.hasIdentification = function(identification){
+    api.Object.prototype.hasIdentification = function (identification) {
         var contains = false;
-        $.each(this.getIdentifications(), function(){
-            if(this.getExternalResourceUri() === identification.getExternalResourceUri()){
+        $.each(this.getIdentifications(), function () {
+            if (this.getExternalResourceUri() === identification.getExternalResourceUri()) {
                 contains = true;
                 return false;
             }
         });
         return contains;
     };
-    api.Object.prototype.hasSearchResultAsIdentification = function(searchResult){
+    api.Object.prototype.hasSearchResultAsIdentification = function (searchResult) {
         var hasIdentification = false;
-        $.each(this.getIdentifications(), function(){
+        $.each(this.getIdentifications(), function () {
             var identification = this;
-            if(searchResult.uri === identification.getExternalResourceUri()){
+            if (searchResult.uri === identification.getExternalResourceUri()) {
                 hasIdentification = true;
                 return false;
             }

@@ -152,6 +152,17 @@ define([
             );
         };
 
+        api.Self.prototype.visitAllConnected = function (visitor) {
+            $.each(this.getChildrenBubblesHtml(), function () {
+                return visitor(BubbleFactory.fromHtml(
+                    $(this)
+                ));
+            });
+            visitor(
+                this.getParentBubble()
+            );
+        };
+
         api.Self.prototype.visitAllChild = function (visitor) {
             $.each(this.getChildrenBubblesHtml(), function () {
                 return visitor(BubbleFactory.fromHtml(

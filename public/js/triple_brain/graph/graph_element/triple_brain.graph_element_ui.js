@@ -415,6 +415,10 @@ define([
     };
 
     api.Self.prototype.refreshComparison = function () {
+        this.refreshLabelComparison();
+    };
+
+    api.Self.prototype.refreshLabelComparison = function () {
         var diffMatchPatch = new diff_match_patch();
         var difference = diffMatchPatch.diff_main(
             this.getModel().getLabel(),
@@ -427,6 +431,12 @@ define([
         this.reviewInLabelButtonsVisibility();
     };
 
+    api.Self.prototype.setAsComparisonSuggestion = function () {
+        this.getHtml().addClass(
+            "compare-add"
+        );
+    };
+    
     api.Self.prototype.quitComparison = function () {
         this.setText(
             this.getModel().getLabel()
@@ -437,8 +447,8 @@ define([
         this.leaveEditMode();
         this.getLabel().maxChar();
         this.getHtml().centerOnScreen();
-        if(MindMapInfo.isInCompareMode()){
-            this.refreshComparison();
+        if (MindMapInfo.isInCompareMode()) {
+            this.refreshLabelComparison();
         }
         if (!this.hasTextChangedAfterModification()) {
             return;

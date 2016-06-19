@@ -335,6 +335,22 @@ define([
             Mock.setCenterVertexUriInUrl(this.getBubble2().getUri());
         };
 
+        api.threeBubblesGraphFork = function () {
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                return api._getTestData(
+                    "threeBubblesGraph.forkedGraph"
+                );
+            };
+            this.getCenterBubbleUri = function () {
+                return uriOfVertexWithLabel(this.getGraph(), "b1");
+            };
+            this.getBubble1InTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("b1");
+            };
+            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
+        };
+
         api.getGraphWithHiddenSimilarRelations = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {

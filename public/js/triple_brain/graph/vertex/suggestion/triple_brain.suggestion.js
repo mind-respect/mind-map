@@ -31,6 +31,14 @@ define([
             });
             return suggestions;
         };
+
+        api.fromFriendlyResource = function (friendlyResource) {
+            return api.fromSchemaPropertyAndOriginUri(
+                friendlyResource,
+                friendlyResource.getUri()
+            );
+        };
+
         api.fromSchemaPropertyAndOriginUri = function (schemaProperty, originUri) {
             var suggestionUri = api.generateUri();
             var serverFormat = {

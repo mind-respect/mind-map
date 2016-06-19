@@ -70,6 +70,13 @@ define([
     api.Self.prototype.getDestinationVertex = function () {
         return this.destinationVertex;
     };
-
+    api.Self.prototype.isRelatedToVertex = function (vertex) {
+        return this.getSourceVertex().getUri() === vertex.getUri() ||
+            this.getDestinationVertex().getUri() === vertex.getUri();
+    };
+    api.Self.prototype.getOtherVertex = function (vertex) {
+        return this.getSourceVertex().getUri() === vertex.getUri() ?
+            this.getDestinationVertex() : this.getSourceVertex();
+    };
     return api;
 });
