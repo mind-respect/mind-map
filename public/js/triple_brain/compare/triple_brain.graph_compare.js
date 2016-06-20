@@ -5,8 +5,9 @@
 define([
     "triple_brain.graph_displayer",
     "triple_brain.suggestion",
+    "triple_brain.triple",
     "diff_match_patch"
-], function (GraphDisplayer, Suggestion) {
+], function (GraphDisplayer, Suggestion, Triple) {
     "use strict";
     var api = {};
     api.withOtherGraph = function (otherGraph) {
@@ -60,9 +61,14 @@ define([
                     vertexToAdd.addGenericIdentification(
                         identification
                     );
-                    var tripleUi = GraphDisplayer.addEdgeAndVertexSuggestionToSourceVertex(
-                        Suggestion.fromFriendlyResource(edge),
-                        Suggestion.fromFriendlyResource(vertexToAdd),
+                    var tripleUi = GraphDisplayer.addSuggestionToSourceVertex(
+                        Suggestion.fromTriple(
+                            Triple.fromEdgeAndSourceAndDestinationVertex(
+                                edge,
+                                vertexUi.getModel(),
+                                vertexToAdd
+                            )
+                        ),
                         vertexUi
                     );
                     var newEdge = tripleUi.edge();

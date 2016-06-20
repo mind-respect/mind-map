@@ -37,8 +37,8 @@ define([
     };
     api.remove = function(suggestionsUri, vertex, callback){
         $.ajax({
-            type: 'POST',
-            url: vertex.getUri()+ '/suggestions/delete',
+            type: 'DELETE',
+            url: vertex.getUri()+ '/suggestions',
             data: JSON.stringify(suggestionsUri),
             contentType: 'application/json;charset=utf-8'
         }).success(function(){

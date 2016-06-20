@@ -13,7 +13,8 @@ define([
     function ($, FriendlyResource, Identification, IdUri, UserService, SuggestionOrigin) {
         "use strict";
         var api = {
-            IDENTIFICATION_PREFIX: "identification_"
+            IDENTIFICATION_PREFIX: "identification_",
+            COMPARISON_PREFIX: "comparison_"
         };
         api.fromServerFormat = function (serverFormat) {
             return new Suggestion(
@@ -32,10 +33,24 @@ define([
             return suggestions;
         };
 
-        api.fromFriendlyResource = function (friendlyResource) {
-            return api.fromSchemaPropertyAndOriginUri(
-                friendlyResource,
-                friendlyResource.getUri()
+        api.fromTriple = function (triple) {
+            var suggestionUri = api.generateUri();
+            var builtServerFormat = {
+                friendlyResource: FriendlyResource.buildObjectWithUriAndLabel(
+                    suggestionUri,
+                    triple.getEdge().getLabel()
+                ),
+                sameAs: triple.getEdge().getServerFormat(),
+                type:triple.getDestinationVertex().getServerFormat(),
+                origins: [
+                    SuggestionOrigin.buildObjectWithUriAndOrigin(
+                        api.generateOriginUriFromSuggestionUri(suggestionUri),
+                        api.COMPARISON_PREFIX + triple.getSourceVertex().getUri()
+                    )
+                ]
+            };
+            return api.fromServerFormat(
+                builtServerFormat
             );
         };
 

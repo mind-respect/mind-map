@@ -106,6 +106,7 @@ requirejs.config({
         "triple_brain.wikidata_uri": "triple_brain/triple_brain.wikidata_uri",
         "triple_brain.transform_matrix_2d": "triple_brain/triple_brain.transform_matrix_2d",
         "triple_brain.error": "triple_brain/triple_brain.error",
+        "triple_brain.triple": "triple_brain/graph/triple_brain.triple",
         "triple_brain.triple_ui": "triple_brain/graph/triple_brain.triple_ui",
         "triple_brain.triple_ui_builder": "triple_brain/graph/triple_brain.triple_ui_builder",
         "triple_brain.template": "triple_brain/triple_brain.template",

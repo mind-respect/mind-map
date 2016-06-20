@@ -257,18 +257,18 @@ define([
             destinationVertexUi
         );
     };
-    api.addEdgeAndVertexSuggestionToSourceVertex = function (edge, vertex, parentVertexUi) {
+    api.addSuggestionToSourceVertex = function (suggestion, parentVertexUi) {
         var treeMaker = new api.TreeMaker();
-        var edgeUi = treeMaker.buildBubbleHtmlIntoContainer(
-            edge, parentVertexUi, SuggestionRelationBuilder
+        var relationSuggestionUi = treeMaker.buildBubbleHtmlIntoContainer(
+            suggestion, parentVertexUi, SuggestionRelationBuilder
         );
-        var destinationVertexUi = treeMaker.buildBubbleHtmlIntoContainer(
-            vertex, edgeUi, SuggestionBubbleHtmlBuilder
+        var destinationSuggestionUi = treeMaker.buildBubbleHtmlIntoContainer(
+            suggestion, relationSuggestionUi, SuggestionBubbleHtmlBuilder
         );
         return new TripleUi.Self(
             parentVertexUi,
-            edgeUi,
-            destinationVertexUi
+            relationSuggestionUi,
+            destinationSuggestionUi
         );
     };
     api.getEdgeSelector = function () {

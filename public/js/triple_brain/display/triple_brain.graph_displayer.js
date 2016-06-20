@@ -78,9 +78,9 @@ define([
                 destinationVertex
             );
         };
-        api.addEdgeAndVertexSuggestionToSourceVertex = function (edge, vertex, parentVertexUi) {
-            return _implementation.addEdgeAndVertexSuggestionToSourceVertex(
-                edge, vertex, parentVertexUi
+        api.addSuggestionToSourceVertex = function (suggestion, parentVertexUi) {
+            return _implementation.addSuggestionToSourceVertex(
+                suggestion, parentVertexUi
             );
         };
         api.addEdgeBetweenExistingVertices = function (newEdge) {
