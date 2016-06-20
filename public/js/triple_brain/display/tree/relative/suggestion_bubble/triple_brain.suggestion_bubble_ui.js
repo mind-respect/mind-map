@@ -36,12 +36,6 @@ define([
     api.Self.prototype.getGraphElementType = function () {
         return GraphElementUi.Types.VertexSuggestion;
     };
-    api.Self.prototype.getServerFormat = function () {
-        return this._getServerFacade().getServerFormat();
-    };
-    api.Self.prototype._getServerFacade = function(){
-        return this.html.data("suggestionFacade");
-    };
 
     api.Self.prototype.integrateUsingNewVertexAndEdgeUri = function(newVertexUri, newEdgeUri){
         var vertexUi = this.integrate(newVertexUri);
@@ -56,13 +50,21 @@ define([
         return this.integrationDeferrer.promise();
     };
 
+    api.Self.prototype.getModel = function(){
+        return this.model.getType();
+    };
+
+    api.Self.prototype.getSuggestion = function(){
+        return this.model;
+    };
+
     api.Self.prototype.integrate = function (newVertexUri) {
         api.removeFromCache(
             this.getUri(),
             this.getId()
         );
         var originalServerObject = GraphElement.fromSuggestionAndElementUri(
-            this._getServerFacade(),
+            this.getSuggestion(),
             newVertexUri
         );
         originalServerObject.isLeftOriented = this.isToTheLeft();

@@ -58,10 +58,10 @@ define([
 
         function handleSuggestionShown(event, suggestion) {
             var isSameAsADate = isIdentificationADate(
-                suggestion._getServerFacade().getSameAs()
+                suggestion.getSuggestion().getSameAs()
             );
-            var isTypeADate = suggestion._getServerFacade().hasType() && isIdentificationADate(
-                    suggestion._getServerFacade().getType()
+            var isTypeADate = suggestion.getSuggestion().hasType() && isIdentificationADate(
+                    suggestion.getSuggestion().getType()
                 );
             if (isSameAsADate || isTypeADate) {
                 applyDatePickerToVertex(suggestion);

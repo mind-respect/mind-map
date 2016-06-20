@@ -9,7 +9,7 @@ define([
     var api = {};
     api.accept = function(suggestionUi, callback){
         var vertex = suggestionUi.getParentVertex(),
-            serverFormat = suggestionUi.getServerFormat();
+            serverFormat = suggestionUi.getSuggestion().getServerFormat();
         $.ajax({
             type: 'POST',
             url: vertex.getUri()+ '/suggestions/accept',

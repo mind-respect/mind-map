@@ -17,7 +17,7 @@ define([
 
     api.afterChildBuilt = function(suggestionRelationUi){
         suggestionRelationUi.setTypes([]);
-        var serverFacade = suggestionRelationUi.getModel();
+        var serverFacade = suggestionRelationUi.getSuggestion();
         suggestionRelationUi.setSameAs([
             Identification.withUriLabelAndDescription(
                 serverFacade.getSameAs().getUri(),

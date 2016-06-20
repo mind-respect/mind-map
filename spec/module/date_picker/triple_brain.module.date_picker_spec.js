@@ -198,7 +198,7 @@ define([
             expect(isAppliedToBubble(
                 dateSuggestion
             )).toBeTruthy();
-            dateSuggestion._getServerFacade()._setType(undefined);
+            dateSuggestion.getSuggestion()._setType(undefined);
             dateSuggestion.getHtml().datepicker("remove");
             expect(isAppliedToBubble(
                 dateSuggestion
@@ -212,7 +212,7 @@ define([
         });
         it("date on suggestion is correct", function(){
             var suggestionUi = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
-            suggestionUi._getServerFacade()._setType(
+            suggestionUi.getSuggestion()._setType(
                 dateIdentification()
             );
             EventBus.publish(

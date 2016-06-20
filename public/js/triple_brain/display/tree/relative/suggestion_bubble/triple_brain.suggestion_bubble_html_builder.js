@@ -24,8 +24,8 @@ define([
             suggestionUi
         );
     };
-    function Self(serverFacade) {
-        this.serverFacade = serverFacade;
+    function Self(model) {
+        this.serverFacade = model;
     }
 
     Self.prototype.create = function (htmlId) {
@@ -37,9 +37,7 @@ define([
         ).data(
             "uri",
             this.serverFacade.getUri()
-        ).attr('id', htmlId).data(
-            "suggestionFacade", this.serverFacade
-        );
+        ).attr('id', htmlId);
         var suggestionUi = SuggestionBubbleUi.createFromHtml(
             this.html
         );
@@ -84,7 +82,7 @@ define([
         suggestionUi.setTypes([]);
         suggestionUi.setSameAs([]);
         suggestionUi.setGenericIdentifications([]);
-        var serverFormat = suggestionUi.getModel();
+        var serverFormat = suggestionUi.getSuggestion();
         if (serverFormat.hasType()) {
             suggestionUi.addType(serverFormat.getType());
         }

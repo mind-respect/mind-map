@@ -12,7 +12,7 @@ define([
         it("takes the type and same as of a suggestion and sets them as identifications", function(){
             var vertexSuggestionInTree = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
             var graphElement = GraphElement.fromSuggestionAndElementUri(
-                vertexSuggestionInTree._getServerFacade(),
+                vertexSuggestionInTree.getSuggestion(),
                 TestUtils.generateVertexUri()
             );
             expect(
@@ -24,9 +24,9 @@ define([
         });
         it("does not fail if suggestion has no type", function(){
             var vertexSuggestionInTree = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
-            vertexSuggestionInTree._getServerFacade()._setType(undefined);
+            vertexSuggestionInTree.getSuggestion()._setType(undefined);
             var graphElement = GraphElement.fromSuggestionAndElementUri(
-                vertexSuggestionInTree._getServerFacade(),
+                vertexSuggestionInTree.getSuggestion(),
                 TestUtils.generateVertexUri()
             );
             expect(

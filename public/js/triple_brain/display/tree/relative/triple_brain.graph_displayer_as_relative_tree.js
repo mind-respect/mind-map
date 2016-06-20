@@ -262,6 +262,10 @@ define([
         var relationSuggestionUi = treeMaker.buildBubbleHtmlIntoContainer(
             suggestion, parentVertexUi, SuggestionRelationBuilder
         );
+        // var vertexSuggestion = suggestion.clone();
+        // vertexSuggestion.setLabel(
+        //     suggestion.getType().getLabel()
+        // );
         var destinationSuggestionUi = treeMaker.buildBubbleHtmlIntoContainer(
             suggestion, relationSuggestionUi, SuggestionBubbleHtmlBuilder
         );

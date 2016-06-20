@@ -29,6 +29,15 @@ define([
     api.Self.prototype.getGraphElementType = function () {
         return GraphElementUi.Types.RelationSuggestion;
     };
+
+    api.Self.prototype.getModel = function(){
+        return this.model.getSameAs();
+    };
+
+    api.Self.prototype.getSuggestion = function(){
+        return this.model;
+    };
+    
     api.Self.prototype.integrate = function (newRelationUri, destinationVertex) {
         api.removeFromCache(
             this.getUri(),
