@@ -76,6 +76,9 @@ define([
                     var newVertex = tripleUi.destinationVertex();
                     newEdge.setAsComparisonSuggestion();
                     newVertex.setAsComparisonSuggestion();
+                    newVertex.getModel().setLabel(
+                        vertexToAdd.getLabel()
+                    );
                     newVertex.setText(
                         vertexToAdd.getLabel()
                     );
