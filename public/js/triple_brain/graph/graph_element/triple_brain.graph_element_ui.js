@@ -434,9 +434,15 @@ define([
         this.reviewInLabelButtonsVisibility();
     };
 
-    api.Self.prototype.setAsComparisonSuggestion = function () {
+    api.Self.prototype.setAsComparisonSuggestionToAdd = function () {
         this.getHtml().addClass(
             "compare-add"
+        );
+    };
+
+    api.Self.prototype.setAsComparisonSuggestionToRemove = function () {
+        this.getHtml().addClass(
+            "compare-remove"
         );
     };
 

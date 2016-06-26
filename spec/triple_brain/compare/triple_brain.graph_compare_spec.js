@@ -7,8 +7,9 @@ define([
     "test/test-utils",
     "triple_brain.compare_flow",
     "triple_brain.identification",
-    "triple_brain.sub_graph"
-], function (Scenarios, TestUtils, CompareFlow, Identification, SubGraph) {
+    "triple_brain.sub_graph",
+    "triple_brain.graph_displayer_as_relative_tree"
+], function (Scenarios, TestUtils, CompareFlow, Identification, SubGraph, GraphDisplayerAsRelativeTree) {
     "use strict";
     describe("graph_compare", function () {
         it("adds a bubble and it's child for a missing triple", function () {
@@ -46,9 +47,8 @@ define([
             );
             expect(
                 r2.getHtml()
-            ).not.toHaveData(
-                "comparison",
-                "add"
+            ).not.toHaveClass(
+                "comparison-add"
             );
             r2.remove();
             TestUtils.enterCompareFlowWithGraph(
@@ -70,6 +70,51 @@ define([
                 b3.getHtml()
             ).toHaveClass(
                 "compare-add"
+            );
+        });
+        it("indicates extra bubbles in your graph", function () {
+            var scenario = new Scenarios.threeBubblesGraphFork();
+            var b1Fork = scenario.getBubble1InTree();
+            var destinationVertex = TestUtils.generateVertex();
+            destinationVertex.setLabel("new vertex");
+            var edge = TestUtils.generateEdge(
+                b1Fork.getUri(),
+                destinationVertex.getUri()
+            );
+            edge.setLabel("new relation");
+            GraphDisplayerAsRelativeTree.addEdgeAndVertex(
+                b1Fork,
+                edge,
+                destinationVertex
+            );
+            var newRelation = TestUtils.getChildWithLabel(
+                b1Fork,
+                "new relation"
+            );
+            expect(
+                newRelation.getHtml()
+            ).not.toHaveClass(
+                "comparison-remove"
+            );
+            TestUtils.enterCompareFlowWithGraph(
+                SubGraph.fromServerFormat(
+                    new Scenarios.threeBubblesGraph().getGraph()
+                )
+            );
+            newRelation = TestUtils.getChildWithLabel(
+                b1Fork,
+                "new relation"
+            );
+            expect(
+                newRelation.getHtml()
+            ).toHaveClass(
+                "compare-remove"
+            );
+            var newVertex = newRelation.getTopMostChildBubble();
+            expect(
+                newVertex.getHtml()
+            ).toHaveClass(
+                "compare-remove"
             );
         });
     });

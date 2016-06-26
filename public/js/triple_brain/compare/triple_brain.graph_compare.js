@@ -30,12 +30,14 @@ define([
         GraphDisplayer.getVertexSelector().visitAllVertices(function (vertexUi) {
             var identification = vertexUi.getFirstIdentificationToAGraphElement();
             if (!identification) {
+                vertexUi.setAsComparisonSuggestionToRemove();
                 return;
             }
             var related = self.otherGraph.getVertexRelatedToIdentification(
                 identification
             );
             if (!related) {
+                vertexUi.setAsComparisonSuggestionToRemove();
                 return;
             }
             self.compareLabel(vertexUi, related);
@@ -74,8 +76,8 @@ define([
                     var newEdge = tripleUi.edge();
                     self.compareLabel(newEdge, edge);
                     var newVertex = tripleUi.destinationVertex();
-                    newEdge.setAsComparisonSuggestion();
-                    newVertex.setAsComparisonSuggestion();
+                    newEdge.setAsComparisonSuggestionToAdd();
+                    newVertex.setAsComparisonSuggestionToAdd();
                     newVertex.getModel().setLabel(
                         vertexToAdd.getLabel()
                     );
@@ -93,12 +95,14 @@ define([
         GraphDisplayer.getEdgeSelector().visitAllEdges(function (edgeUi) {
             var identification = edgeUi.getFirstIdentificationToAGraphElement();
             if (!identification) {
+                edgeUi.setAsComparisonSuggestionToRemove();
                 return;
             }
             var related = self.otherGraph.getEdgeRelatedToIdentification(
                 identification
             );
             if (!related) {
+                edgeUi.setAsComparisonSuggestionToRemove();
                 return;
             }
             self.compareLabel(edgeUi, related);
