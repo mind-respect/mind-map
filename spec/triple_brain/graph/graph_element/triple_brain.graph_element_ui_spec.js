@@ -7,8 +7,9 @@ define([
     "test/test-utils",
     "triple_brain.identification",
     "triple_brain.graph_element_service",
-    "triple_brain.sub_graph"
-], function (Scenarios, TestUtils, Identification, GraphElementService, SubGraph) {
+    "triple_brain.sub_graph",
+    "triple_brain.graph_displayer_as_relative_tree"
+], function (Scenarios, TestUtils, Identification, GraphElementService, SubGraph, GraphDisplayerAsRelativeTree) {
     "use strict";
     describe("graph_element_ui", function () {
         var vertex, schema;
@@ -208,6 +209,48 @@ define([
             expect(
                 bubble1.getLabel()
             ).toContainElement(
+                "del"
+            );
+        });
+        it("does not compare label when changing text when a comparison suggestion to remove", function () {
+            var scenario = new Scenarios.threeBubblesGraphFork();
+            var b1Fork = scenario.getBubble1InTree();
+            var destinationVertex = TestUtils.generateVertex();
+            destinationVertex.setLabel("new vertex");
+            var edge = TestUtils.generateEdge(
+                b1Fork.getUri(),
+                destinationVertex.getUri()
+            );
+            edge.setLabel("new relation");
+            GraphDisplayerAsRelativeTree.addEdgeAndVertex(
+                b1Fork,
+                edge,
+                destinationVertex
+            );
+            var newRelation = TestUtils.getChildWithLabel(
+                b1Fork,
+                "new relation"
+            );
+            expect(
+                newRelation.isAComparisonSuggestionToRemove()
+            ).toBeFalsy();
+            TestUtils.enterCompareFlowWithGraph(
+                SubGraph.fromServerFormat(
+                    new Scenarios.threeBubblesGraph().getGraph()
+                )
+            );
+            newRelation = TestUtils.getChildWithLabel(
+                b1Fork,
+                "new relation"
+            );
+            expect(
+                newRelation.isAComparisonSuggestionToRemove()
+            ).toBeTruthy();
+            newRelation.setText("banana");
+            newRelation.getLabel().blur();
+            expect(
+                newRelation.getLabel()
+            ).not.toContainElement(
                 "del"
             );
         });

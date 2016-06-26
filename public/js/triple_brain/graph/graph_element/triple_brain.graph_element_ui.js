@@ -415,10 +415,14 @@ define([
     };
 
     api.Self.prototype.refreshComparison = function () {
-        if (!MindMapInfo.isInCompareMode()) {
+        if (!this.shouldCompare()) {
             return;
         }
         this.refreshLabelComparison();
+    };
+
+    api.Self.prototype.shouldCompare = function () {
+        return MindMapInfo.isInCompareMode() && !this.isAComparisonSuggestionToRemove();
     };
 
     api.Self.prototype.refreshLabelComparison = function () {
@@ -446,6 +450,12 @@ define([
         );
     };
 
+    api.Self.prototype.isAComparisonSuggestionToRemove = function () {
+        return this.getHtml().hasClass(
+            "compare-remove"
+        );
+    };
+
     api.Self.prototype.quitComparison = function () {
         this.setText(
             this.getModel().getLabel()
@@ -457,7 +467,7 @@ define([
         this.leaveEditMode();
         this.getLabel().maxChar();
         this.getHtml().centerOnScreen();
-        if (MindMapInfo.isInCompareMode()) {
+        if (this.shouldCompare()) {
             this.refreshLabelComparison();
         }
         if (!this.hasTextChangedAfterModification()) {

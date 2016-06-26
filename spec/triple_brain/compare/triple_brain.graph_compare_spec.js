@@ -92,10 +92,8 @@ define([
                 "new relation"
             );
             expect(
-                newRelation.getHtml()
-            ).not.toHaveClass(
-                "comparison-remove"
-            );
+                newRelation.isAComparisonSuggestionToRemove()
+            ).toBeFalsy();
             TestUtils.enterCompareFlowWithGraph(
                 SubGraph.fromServerFormat(
                     new Scenarios.threeBubblesGraph().getGraph()
@@ -106,16 +104,44 @@ define([
                 "new relation"
             );
             expect(
-                newRelation.getHtml()
-            ).toHaveClass(
-                "compare-remove"
-            );
+                newRelation.isAComparisonSuggestionToRemove()
+            ).toBeTruthy();
             var newVertex = newRelation.getTopMostChildBubble();
             expect(
-                newVertex.getHtml()
-            ).toHaveClass(
-                "compare-remove"
+                newVertex.isAComparisonSuggestionToRemove()
+            ).toBeTruthy();
+        });
+        it("sets as suggestions to remove new bubbles added while in comparison mode", function () {
+            var scenario = new Scenarios.threeBubblesGraphFork();
+            var b1Fork = scenario.getBubble1InTree();
+            TestUtils.enterCompareFlowWithGraph(
+                SubGraph.fromServerFormat(
+                    new Scenarios.threeBubblesGraph().getGraph()
+                )
             );
+            var destinationVertex = TestUtils.generateVertex();
+            destinationVertex.setLabel("new vertex");
+            var edge = TestUtils.generateEdge(
+                b1Fork.getUri(),
+                destinationVertex.getUri()
+            );
+            edge.setLabel("new relation");
+            GraphDisplayerAsRelativeTree.addEdgeAndVertex(
+                b1Fork,
+                edge,
+                destinationVertex
+            );
+            var newRelation = TestUtils.getChildWithLabel(
+                b1Fork,
+                "new relation"
+            );
+            expect(
+                newRelation.isAComparisonSuggestionToRemove()
+            ).toBeTruthy();
+            var newVertex = newRelation.getTopMostChildBubble();
+            expect(
+                newVertex.isAComparisonSuggestionToRemove()
+            ).toBeTruthy();
         });
     });
 });
