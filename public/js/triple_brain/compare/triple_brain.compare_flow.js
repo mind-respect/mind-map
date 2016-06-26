@@ -25,13 +25,13 @@ define([
         getSearchInput().empty();
     };
     api._enterComparisonWithGraph = function (graph) {
+        getCompareFlowWarning().removeClass("hidden");
+        getLoadingSection().addClass("hidden");
         var comparison = GraphCompare.withOtherGraph(
             graph
         );
         comparison.show();
         compareModal.hide();
-        getLoadingSection().addClass("hidden");
-        getCompareFlowWarning().removeClass("hidden");
         var username = IdUri.usernameFromUri(
             graph.getAnyUri()
         );

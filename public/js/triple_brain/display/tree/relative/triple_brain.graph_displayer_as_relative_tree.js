@@ -262,12 +262,16 @@ define([
         var relationSuggestionUi = treeMaker.buildBubbleHtmlIntoContainer(
             suggestion, parentVertexUi, SuggestionRelationBuilder
         );
-        // var vertexSuggestion = suggestion.clone();
-        // vertexSuggestion.setLabel(
-        //     suggestion.getType().getLabel()
-        // );
+        relationSuggestionUi.getModel().isLeftOriented = relationSuggestionUi.getSuggestion().isLeftOriented;
         var destinationSuggestionUi = treeMaker.buildBubbleHtmlIntoContainer(
             suggestion, relationSuggestionUi, SuggestionBubbleHtmlBuilder
+        );
+        destinationSuggestionUi.getModel().isLeftOriented = destinationSuggestionUi.getSuggestion().isLeftOriented;
+        SuggestionBubbleHtmlBuilder.completeBuild(
+            destinationSuggestionUi
+        );
+        SuggestionRelationBuilder.afterChildBuilt(
+            relationSuggestionUi
         );
         return new TripleUi.Self(
             parentVertexUi,

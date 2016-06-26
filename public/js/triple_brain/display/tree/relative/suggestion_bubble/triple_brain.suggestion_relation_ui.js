@@ -11,7 +11,7 @@ define([
     "use strict";
     var api = {};
     TreeEdge.buildCommonConstructors(api);
-    api.createFromHtmlAndUri = function(html, uri){
+    api.createFromHtmlAndUri = function (html, uri) {
         var relationSuggestion = new api.Self(html);
         relationSuggestion.setUri(uri);
         api.initCache(relationSuggestion);
@@ -20,7 +20,7 @@ define([
     api.getWhenEmptyLabel = function () {
         return "suggestion";
     };
-    api.Self = function(html){
+    api.Self = function (html) {
         this.html = html;
         TreeEdge.Self.apply(this);
         this.init(html);
@@ -30,14 +30,14 @@ define([
         return GraphElementUi.Types.RelationSuggestion;
     };
 
-    api.Self.prototype.getModel = function(){
+    api.Self.prototype.getModel = function () {
         return this.model.getSameAs();
     };
 
-    api.Self.prototype.getSuggestion = function(){
+    api.Self.prototype.getSuggestion = function () {
         return this.model;
     };
-    
+
     api.Self.prototype.integrate = function (newRelationUri, destinationVertex) {
         api.removeFromCache(
             this.getUri(),
@@ -45,6 +45,10 @@ define([
         );
         this.html.removeClass(
             "suggestion"
+        ).removeClass(
+            "compare-add"
+        ).removeClass(
+            "compare-remove"
         ).data(
             "source_vertex_id",
             this.getParentBubble().getId()
@@ -59,7 +63,14 @@ define([
             this.html,
             newRelationUri
         );
+        edge.setModel(
+            this.getModel()
+        );
         edge.rebuildMenuButtons();
+        edge.setComparedWith(
+            this.getComparedWith()
+        );
+        edge.refreshComparison();
         EventBus.publish(
             '/event/ui/html/edge/created/',
             edge

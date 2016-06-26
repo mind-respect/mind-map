@@ -261,7 +261,7 @@ button.add-button-in-list:hover { color: #00d100; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .relation.bubble { position: relative; }
-.relation.bubble.compare-add .in-bubble-content .label-info, .relation.bubble.compare-add.inverse .in-bubble-content .label-info { background-color: #e6ffe6; color: black; }
+.relation.bubble.compare-add .in-bubble-content .label-info, .relation.bubble.compare-add.inverse .in-bubble-content .label-info, .relation.bubble.compare-add.suggestion .in-bubble-content .label-info { background-color: #e6ffe6; color: black; }
 .relation.bubble .edit-relation-button { font-size: 1.50em; cursor: pointer; display: none; }
 .relation.bubble.same-as-group-relation .label-container { display: none; }
 .relation.bubble.same-as-group-relation .edit-relation-button { display: block; }

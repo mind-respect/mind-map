@@ -2,7 +2,7 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 .relation.bubble {
-  &.compare-add, &.compare-add.inverse{
+  &.compare-add, &.compare-add.inverse, &.compare-add.suggestion{
     .in-bubble-content .label-info{
       background-color: $compareBubbleAddBackgroundColor;
       color:black;

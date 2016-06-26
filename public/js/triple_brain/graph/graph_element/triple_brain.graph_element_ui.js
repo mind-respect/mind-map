@@ -415,6 +415,9 @@ define([
     };
 
     api.Self.prototype.refreshComparison = function () {
+        if (!MindMapInfo.isInCompareMode()) {
+            return;
+        }
         this.refreshLabelComparison();
     };
 
@@ -436,12 +439,13 @@ define([
             "compare-add"
         );
     };
-    
+
     api.Self.prototype.quitComparison = function () {
         this.setText(
             this.getModel().getLabel()
         );
         this.setComparedWith(undefined);
+        this.reviewInLabelButtonsVisibility();
     };
     api.Self.prototype.labelUpdateHandle = function () {
         this.leaveEditMode();

@@ -16,17 +16,17 @@ define([
     "use strict";
     var api = {};
     RelativeTreeVertex.buildCommonConstructors(api);
-    api.createFromHtml = function(html){
+    api.createFromHtml = function (html) {
         var suggestion = new api.Self(
             html
         );
         api.initCache(suggestion);
         return suggestion;
     };
-    api.getWhenEmptyLabel = function(){
+    api.getWhenEmptyLabel = function () {
         return $.t("suggestion.when-empty");
     };
-    api.Self = function(html) {
+    api.Self = function (html) {
         this.html = html;
         this.integrationDeferrer = $.Deferred();
         RelativeTreeVertex.Object.apply(this);
@@ -37,7 +37,7 @@ define([
         return GraphElementUi.Types.VertexSuggestion;
     };
 
-    api.Self.prototype.integrateUsingNewVertexAndEdgeUri = function(newVertexUri, newEdgeUri){
+    api.Self.prototype.integrateUsingNewVertexAndEdgeUri = function (newVertexUri, newEdgeUri) {
         var vertexUi = this.integrate(newVertexUri);
         this.getRelationWithUiParent().integrate(
             newEdgeUri,
@@ -46,15 +46,15 @@ define([
         return vertexUi;
     };
 
-    api.Self.prototype.whenItIntegrates = function(){
+    api.Self.prototype.whenItIntegrates = function () {
         return this.integrationDeferrer.promise();
     };
 
-    api.Self.prototype.getModel = function(){
+    api.Self.prototype.getModel = function () {
         return this.model.getType();
     };
 
-    api.Self.prototype.getSuggestion = function(){
+    api.Self.prototype.getSuggestion = function () {
         return this.model;
     };
 
@@ -73,6 +73,10 @@ define([
             newVertexUri
         ).removeClass(
             "suggestion"
+        ).removeClass(
+            "compare-add"
+        ).removeClass(
+            "compare-remove"
         );
         this.getLabel().attr(
             "placeholder", RelativeTreeVertex.getWhenEmptyLabel()
@@ -84,6 +88,10 @@ define([
             originalServerObject
         );
         vertex.rebuildMenuButtons();
+        vertex.setComparedWith(
+            this.getComparedWith()
+        );
+        vertex.refreshComparison();
         SelectionHandler.setToSingleGraphElement(vertex);
         EventBus.publish(
             '/event/ui/html/vertex/created/',

@@ -11,13 +11,14 @@ define([
     "triple_brain.center_bubble",
     "triple_brain.vertex_html_builder",
     "triple_brain.edge_html_builder",
-    "triple_brain.graph_element"
-], function (Scenarios, TestUtils, Mock, GraphServiceMock, GraphDisplayerAsRelativeTree, CenterBubble, VertexHtmlBuilder, EdgeHtmlBuilder, GraphElement) {
+    "triple_brain.graph_element",
+    "triple_brain.sub_graph"
+], function (Scenarios, TestUtils, Mock, GraphServiceMock, GraphDisplayerAsRelativeTree, CenterBubble, VertexHtmlBuilder, EdgeHtmlBuilder, GraphElement, SubGraph) {
     "use strict";
     describe("graph_displayer_as_relative_tree_spec", function () {
         it("distributes triples evenly to the right and left", function () {
             var centerBubble = CenterBubble.usingBubble(
-                    new Scenarios.threeBubblesGraph().getCenterBubbleInTree()
+                new Scenarios.threeBubblesGraph().getCenterBubbleInTree()
             );
             expect(
                 centerBubble._getNumberOfImmediateBubblesToLeft()
@@ -297,21 +298,21 @@ define([
             ).toBe(0);
         });
 
-        it("displays suggestions by default", function(){
+        it("displays suggestions by default", function () {
             var centerBubble = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();
             expect(
                 centerBubble.getNumberOfChild() > 0
             ).toBeTruthy();
         });
 
-        it("also displays suggestions by default for children", function(){
+        it("also displays suggestions by default for children", function () {
             var eventBubble = new Scenarios.oneBubbleHavingSuggestionsGraphNotCentered().getEventBubbleInTree();
             expect(
                 eventBubble.getNumberOfChild() > 0
             ).toBeTruthy();
         });
 
-        it("does not display child suggestions if child has hidden relations", function(){
+        it("does not display child suggestions if child has hidden relations", function () {
             var centerBubble = new Scenarios.withAcceptedSuggestionGraphNotCentered().getCenterBubbleInTree();
             var eventBubble = centerBubble.getTopMostChildBubble().getTopMostChildBubble();
             expect(eventBubble.hasHiddenRelations());
@@ -323,7 +324,7 @@ define([
             ).toBeTruthy();
         });
 
-        it("displays child suggestions after expanding child tree", function(){
+        it("displays child suggestions after expanding child tree", function () {
             var centerBubble = new Scenarios.withAcceptedSuggestionGraphNotCentered().getCenterBubbleInTree();
             var eventBubble = centerBubble.getTopMostChildBubble().getTopMostChildBubble();
             expect(
@@ -348,7 +349,7 @@ define([
             ).toBeTruthy();
         });
 
-        it("does not display already accepted suggestions after expanding child tree", function(){
+        it("does not display already accepted suggestions after expanding child tree", function () {
             var centerBubble = new Scenarios.withAcceptedSuggestionGraphNotCentered().getCenterBubbleInTree();
             var eventBubble = centerBubble.getTopMostChildBubble().getTopMostChildBubble();
             expect(
@@ -366,7 +367,7 @@ define([
             ).toBe(3);
         });
 
-        it("sorts center bubble children in order of creation date", function(){
+        it("sorts center bubble children in order of creation date", function () {
             var scenario = new Scenarios.creationDateScenario();
             var b1 = scenario.getBubble1InTree();
             var centerBubble = CenterBubble.usingBubble(b1);
@@ -396,7 +397,7 @@ define([
             ).toBe("b7");
         });
 
-        it("sorts non center bubble children in order of creation date", function(){
+        it("sorts non center bubble children in order of creation date", function () {
             var scenario = new Scenarios.creationDateScenario();
             var b1 = scenario.getBubble1InTree();
             var b7 = TestUtils.getChildWithLabel(
@@ -424,7 +425,7 @@ define([
             ).toBe("b74");
         });
 
-        it("sorts bubble children so that group relations are at the top", function(){
+        it("sorts bubble children so that group relations are at the top", function () {
             var me = new Scenarios.GraphWithSimilarRelationsScenario().getCenterVertexInTree();
             var centerBubble = CenterBubble.usingBubble(me);
             var toTheRightBubble = centerBubble.getToTheRightTopMostChild();
@@ -435,6 +436,36 @@ define([
             expect(
                 toTheLeftBubble.isGroupRelation()
             ).toBeTruthy();
+        });
+
+        it("setups to the left html correctly when adding new suggestion to vertex", function () {
+            var scenario = new Scenarios.threeBubblesGraphFork();
+            var b1Fork = scenario.getBubble1InTree();
+            var r1 = TestUtils.getChildWithLabel(
+                b1Fork,
+                "r1"
+            );
+            expect(
+                r1.isToTheLeft()
+            ).toBeTruthy();
+            r1.remove();
+            TestUtils.enterCompareFlowWithGraph(
+                SubGraph.fromServerFormat(
+                    new Scenarios.threeBubblesGraph().getGraph()
+                )
+            );
+            var b1 = TestUtils.getChildWithLabel(
+                b1Fork,
+                "r1"
+            ).getTopMostChildBubble();
+            expect(
+                b1.isToTheLeft()
+            ).toBeTruthy();
+            expect(
+                b1.getHtml().closest(".vertex-container").next(
+                    ".vertical-border"
+                ).length
+            ).toBeGreaterThan(0);
         });
 
         function connectDistantVertexTest(callback) {
