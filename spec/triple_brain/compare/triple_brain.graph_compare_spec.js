@@ -8,11 +8,8 @@ define([
     "triple_brain.compare_flow",
     "triple_brain.identification",
     "triple_brain.sub_graph",
-    "triple_brain.graph_displayer_as_relative_tree",
-    "test/mock/triple_brain.vertex_service_mock",
-    "triple_brain.relative_tree_vertex_menu_handler",
-    "triple_brain.mind_map_info"
-], function (Scenarios, TestUtils, CompareFlow, Identification, SubGraph, GraphDisplayerAsRelativeTree, VertexServiceMock, RelativeTreeVertexMenuHandler, MindMapInfo) {
+    "triple_brain.graph_displayer_as_relative_tree"
+], function (Scenarios, TestUtils, CompareFlow, Identification, SubGraph, GraphDisplayerAsRelativeTree) {
     "use strict";
     describe("graph_compare", function () {
         it("adds a bubble and it's child for a missing triple", function () {
@@ -49,10 +46,8 @@ define([
                 "r2"
             );
             expect(
-                r2.getHtml()
-            ).not.toHaveClass(
-                "comparison-add"
-            );
+                r2.isAComparisonSuggestionToAdd()
+            ).toBeFalsy();
             r2.remove();
             TestUtils.enterCompareFlowWithGraph(
                 SubGraph.fromServerFormat(
@@ -64,16 +59,15 @@ define([
                 "r2"
             );
             expect(
-                r2.getHtml()
-            ).toHaveClass(
-                "compare-add"
-            );
+                r2.isAComparisonSuggestionToAdd()
+            ).toBeTruthy();
             var b3 = r2.getTopMostChildBubble();
             expect(
-                b3.getHtml()
-            ).toHaveClass(
-                "compare-add"
-            );
+                b3.isAComparisonSuggestionToAdd()
+            ).toBeTruthy();
+        });
+        it("shows comparison suggestions even when there are already suggestions from identification", function () {
+
         });
         it("indicates extra bubbles in your graph", function () {
             var scenario = new Scenarios.threeBubblesGraphFork();
@@ -105,29 +99,6 @@ define([
             newRelation = TestUtils.getChildWithLabel(
                 b1Fork,
                 "new relation"
-            );
-            expect(
-                newRelation.isAComparisonSuggestionToRemove()
-            ).toBeTruthy();
-            var newVertex = newRelation.getTopMostChildBubble();
-            expect(
-                newVertex.isAComparisonSuggestionToRemove()
-            ).toBeTruthy();
-        });
-        it("sets as suggestions to remove new bubbles added while in comparison mode", function () {
-            var scenario = new Scenarios.threeBubblesGraphFork();
-            var b1Fork = scenario.getBubble1InTree();
-            TestUtils.enterCompareFlowWithGraph(
-                SubGraph.fromServerFormat(
-                    new Scenarios.threeBubblesGraph().getGraph()
-                )
-            );
-            VertexServiceMock.addRelationAndVertexToVertexMock();
-            MindMapInfo._setIsViewOnly(false);
-            RelativeTreeVertexMenuHandler.forSingle().addChildAction(b1Fork);
-            var newRelation = TestUtils.getChildWithLabel(
-                b1Fork,
-                ""
             );
             expect(
                 newRelation.isAComparisonSuggestionToRemove()

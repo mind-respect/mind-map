@@ -70,10 +70,6 @@ define([
             ).toBeTruthy();
         });
 
-        it("", function () {
-
-        });
-
         it("preserves direction with parent vertex for expanded group relations", function () {
             var graphWithSimilarRelationsScenario = new Scenarios.GraphWithSimilarRelationsScenario();
             var groupRelation = graphWithSimilarRelationsScenario.getPossessionAsGroupRelationInTree();
@@ -441,28 +437,31 @@ define([
         it("setups to the left html correctly when adding new suggestion to vertex", function () {
             var scenario = new Scenarios.threeBubblesGraphFork();
             var b1Fork = scenario.getBubble1InTree();
-            var r1 = TestUtils.getChildWithLabel(
-                b1Fork,
-                "r1"
-            );
+            var relation = CenterBubble.usingBubble(
+                b1Fork
+            ).getToTheLeftTopMostChild();
             expect(
-                r1.isToTheLeft()
+                relation.isRelation()
             ).toBeTruthy();
-            r1.remove();
+            expect(
+                relation.isToTheLeft()
+            ).toBeTruthy();
+            var relationText = relation.text();
+            relation.remove();
             TestUtils.enterCompareFlowWithGraph(
                 SubGraph.fromServerFormat(
                     new Scenarios.threeBubblesGraph().getGraph()
                 )
             );
-            var b1 = TestUtils.getChildWithLabel(
+            var bubbleToTheLeft = TestUtils.getChildWithLabel(
                 b1Fork,
-                "r1"
+                relationText
             ).getTopMostChildBubble();
             expect(
-                b1.isToTheLeft()
+                bubbleToTheLeft.isToTheLeft()
             ).toBeTruthy();
             expect(
-                b1.getHtml().closest(".vertex-container").next(
+                bubbleToTheLeft.getHtml().closest(".vertex-container").next(
                     ".vertical-border"
                 ).length
             ).toBeGreaterThan(0);
@@ -472,7 +471,7 @@ define([
             var centerVertex = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();
             var suggestionVertex = TestUtils.getChildWithLabel(
                 centerVertex,
-                "Start date"
+                "Person"
             ).getTopMostChildBubble();
             expect(
                 suggestionVertex.isToTheLeft()

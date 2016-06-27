@@ -24,8 +24,15 @@ $connectorRadius: 25px;
   display: table;
   margin-left: 0;
   height: 1em;
-  margin-top:-1px; /* margin top and bottom -1px so that both borders touch to make a continuous line */
-  margin-bottom:-1px;
+  margin-top: -1px; /* margin top and bottom -1px so that both borders touch to make a continuous line */
+  margin-bottom: -1px;
+  border-radius: 26px;
+  &.compare-add {
+    background-color: $compareBubbleAddBackgroundColor;
+  }
+  &.compare-remove {
+    background-color: $compareBubbleRemoveBackgroundColor;
+  }
 }
 
 .clear-fix {
@@ -61,8 +68,8 @@ $connectorRadius: 25px;
               border-top-right-radius: $connectorRadius;
             }
           }
-          .relation .connector{
-            border-top-left-radius:0;
+          .relation .connector {
+            border-top-left-radius: 0;
           }
         }
         &:last-of-type {
@@ -80,16 +87,16 @@ $connectorRadius: 25px;
         > .vertex-container {
           .property, .group-relation {
             .arrow {
-              border-top:none;
+              border-top: none;
               top: calc(50% - 1.4em);
-              border-bottom:$edgeStyle;
+              border-bottom: $edgeStyle;
               border-bottom-left-radius: 0;
               border-bottom-right-radius: $connectorRadius;
             }
           }
-          .relation{
-            .connector{
-              border-bottom-left-radius:0;
+          .relation {
+            .connector {
+              border-bottom-left-radius: 0;
             }
           }
         }
@@ -97,6 +104,7 @@ $connectorRadius: 25px;
     }
   }
 }
+
 .right-oriented {
   &.vertices-children-container, .vertices-children-container {
     .vertex-tree-container {
@@ -147,7 +155,7 @@ $connectorRadius: 25px;
         }
         .property, .group-relation {
           .arrow {
-            border-radius:0;
+            border-radius: 0;
           }
         }
       }
@@ -167,17 +175,17 @@ $connectorRadius: 25px;
       }
       .property, .group-relation {
         .arrow {
-          border-top:none;
+          border-top: none;
           top: calc(50% - 1.4em);
-          border-bottom:$edgeStyle;
+          border-bottom: $edgeStyle;
           border-bottom-left-radius: $connectorRadius;
         }
       }
-      .property{
-        .arrow{
-          &:before{
+      .property {
+        .arrow {
+          &:before {
             top: calc(50% + 1px);
-            position:relative;
+            position: relative;
           }
         }
       }

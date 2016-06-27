@@ -438,20 +438,26 @@ define([
         this.reviewInLabelButtonsVisibility();
     };
 
+    api.Self.prototype.isAComparisonSuggestionToAdd = function () {
+        return this.getTreeContainer().hasClass(
+            "compare-add"
+        );
+    };
+
     api.Self.prototype.setAsComparisonSuggestionToAdd = function () {
-        this.getHtml().addClass(
+        this.getTreeContainer().addClass(
             "compare-add"
         );
     };
 
     api.Self.prototype.setAsComparisonSuggestionToRemove = function () {
-        this.getHtml().addClass(
+        this.getTreeContainer().addClass(
             "compare-remove"
         );
     };
 
     api.Self.prototype.isAComparisonSuggestionToRemove = function () {
-        return this.getHtml().hasClass(
+        return this.getTreeContainer().hasClass(
             "compare-remove"
         );
     };

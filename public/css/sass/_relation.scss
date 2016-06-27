@@ -4,7 +4,6 @@
 .relation.bubble {
   &.compare-add, &.compare-add.inverse, &.compare-add.suggestion {
     .in-bubble-content .label-info {
-      background-color: $compareBubbleAddBackgroundColor;
       color: black;
       .bubble-label {
         color: black;
@@ -16,7 +15,6 @@
   }
   &.compare-remove, &.compare-remove.inverse, &.compare-remove.suggestion {
     .in-bubble-content .label-info {
-      background-color: $compareBubbleRemoveBackgroundColor;
       .bubble-label {
         color: black;
         &:empty:not(:focus):before {

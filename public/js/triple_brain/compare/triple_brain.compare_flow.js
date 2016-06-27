@@ -13,8 +13,9 @@ define([
     "triple_brain.id_uri",
     "triple_brain.sub_graph",
     "triple_brain.graph_element_ui",
+    "triple_brain.mind_map_info",
     "jquery.triple_brain.search"
-], function ($, GraphModalMenu, EventBus, GraphDisplayer, UserMapAutocompleteProvider, GraphService, GraphCompare, IdUri, SubGraph, GraphElementUi) {
+], function ($, GraphModalMenu, EventBus, GraphDisplayer, UserMapAutocompleteProvider, GraphService, GraphCompare, IdUri, SubGraph, GraphElementUi, MindMapInfo) {
     "use strict";
     var api = {};
     var compareModal;
@@ -56,6 +57,9 @@ define([
     EventBus.subscribe(
         '/event/ui/graph/vertex_and_relation/added/',
         function(event, triple){
+            if(!MindMapInfo.isInCompareMode()){
+                return;
+            }
             triple.edge().setAsComparisonSuggestionToRemove();
             triple.destinationVertex().setAsComparisonSuggestionToRemove();
         }

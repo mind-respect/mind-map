@@ -7,8 +7,11 @@ define([
     "test/test-utils",
     "triple_brain.compare_flow",
     "triple_brain.identification",
-    "triple_brain.sub_graph"
-], function (Scenarios, TestUtils, CompareFlow, Identification, SubGraph) {
+    "triple_brain.sub_graph",
+    "test/mock/triple_brain.vertex_service_mock",
+    "triple_brain.relative_tree_vertex_menu_handler",
+    "triple_brain.mind_map_info"
+], function (Scenarios, TestUtils, CompareFlow, Identification, SubGraph, VertexServiceMock, RelativeTreeVertexMenuHandler, MindMapInfo) {
     "use strict";
     describe("compare_flow", function () {
         it("resets graph elements label when quitting compare mode", function () {
@@ -37,6 +40,32 @@ define([
             ).toBe(
                 "banana"
             );
+        });
+        it("sets as suggestions to remove new bubbles added while in comparison mode", function () {
+            var scenario = new Scenarios.threeBubblesGraphFork();
+            var b1Fork = scenario.getBubble1InTree();
+            TestUtils.enterCompareFlowWithGraph(
+                SubGraph.fromServerFormat(
+                    new Scenarios.threeBubblesGraph().getGraph()
+                )
+            );
+            VertexServiceMock.addRelationAndVertexToVertexMock();
+            MindMapInfo._setIsViewOnly(false);
+            RelativeTreeVertexMenuHandler.forSingle().addChildAction(b1Fork);
+            var newRelation = TestUtils.getChildWithLabel(
+                b1Fork,
+                ""
+            );
+            expect(
+                newRelation.isAComparisonSuggestionToRemove()
+            ).toBeTruthy();
+            var newVertex = newRelation.getTopMostChildBubble();
+            expect(
+                newVertex.isAComparisonSuggestionToRemove()
+            ).toBeTruthy();
+        });
+        it("removes suggestion of comparison origin only when quitting comparison mode", function () {
+            
         });
     });
 });

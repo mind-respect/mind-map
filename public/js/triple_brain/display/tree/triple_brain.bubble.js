@@ -240,6 +240,11 @@ define([
                 api._getBubbleHtmlUnder
             );
         };
+
+        api.Self.prototype.getTreeContainer = function () {
+            return this.html.closest(".vertex-tree-container");
+        };
+
         api._getBubbleHtmlUnder = function (html) {
             return html.closest(
                 ".vertex-tree-container"
