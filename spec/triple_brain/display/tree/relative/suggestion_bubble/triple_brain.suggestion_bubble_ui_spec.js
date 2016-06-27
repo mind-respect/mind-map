@@ -106,5 +106,16 @@ define([
                 hasCompletedBuild
             ).toBeTruthy();
         });
+        it("can handle label update when it has no type", function(){
+            var vertexSuggestionInTree = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
+            vertexSuggestionInTree.getSuggestion()._setType(undefined);
+            vertexSuggestionInTree.setText("bingo");
+            vertexSuggestionInTree.getLabel().blur();
+            expect(
+                vertexSuggestionInTree.getModel().getLabel()
+            ).toBe(
+                "bingo"
+            );
+        });
     });
 });

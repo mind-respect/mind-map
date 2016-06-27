@@ -51,7 +51,8 @@ define([
     };
 
     api.Self.prototype.getModel = function () {
-        return this.model.getType();
+        return this.getSuggestion().getOrigin().isFromComparison() ?
+            this.model.getType() : this.getSuggestion();
     };
 
     api.Self.prototype.getSuggestion = function () {

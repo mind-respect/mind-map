@@ -12,10 +12,7 @@ define([
     ],
     function ($, FriendlyResource, Identification, IdUri, UserService, SuggestionOrigin) {
         "use strict";
-        var api = {
-            IDENTIFICATION_PREFIX: "identification_",
-            COMPARISON_PREFIX: "comparison_"
-        };
+        var api = {};
         api.fromServerFormat = function (serverFormat) {
             return new Suggestion(
                 serverFormat
@@ -45,7 +42,7 @@ define([
                 origins: [
                     SuggestionOrigin.buildObjectWithUriAndOrigin(
                         api.generateOriginUriFromSuggestionUri(suggestionUri),
-                        api.COMPARISON_PREFIX + triple.getSourceVertex().getUri()
+                        SuggestionOrigin.COMPARISON_PREFIX + triple.getSourceVertex().getUri()
                     )
                 ]
             };
@@ -68,7 +65,7 @@ define([
                 origins: [
                     SuggestionOrigin.buildObjectWithUriAndOrigin(
                         api.generateOriginUriFromSuggestionUri(suggestionUri),
-                        api.IDENTIFICATION_PREFIX + originUri
+                        SuggestionOrigin.IDENTIFICATION_PREFIX + originUri
                     )
                 ]
             };
@@ -138,7 +135,7 @@ define([
             return this.origins[0];
         };
         Suggestion.prototype.hasIdentificationForOrigin = function (identification) {
-            return (api.IDENTIFICATION_PREFIX + identification.getExternalResourceUri()) ===
+            return (SuggestionOrigin.IDENTIFICATION_PREFIX + identification.getExternalResourceUri()) ===
                 this.getOrigin().getOrigin();
         };
         Suggestion.prototype.getServerFormat = function () {
