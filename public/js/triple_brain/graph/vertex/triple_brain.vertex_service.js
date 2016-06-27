@@ -29,7 +29,7 @@ define([
             }).success(callback);
         };
         api.addRelationAndVertexToVertex = function (vertex, sourceBubble, callback) {
-            $.ajax({
+            return $.ajax({
                 type: 'POST',
                 url: vertex.getUri(),
                 dataType: 'json'

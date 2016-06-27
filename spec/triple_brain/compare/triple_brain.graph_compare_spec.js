@@ -8,8 +8,11 @@ define([
     "triple_brain.compare_flow",
     "triple_brain.identification",
     "triple_brain.sub_graph",
-    "triple_brain.graph_displayer_as_relative_tree"
-], function (Scenarios, TestUtils, CompareFlow, Identification, SubGraph, GraphDisplayerAsRelativeTree) {
+    "triple_brain.graph_displayer_as_relative_tree",
+    "test/mock/triple_brain.vertex_service_mock",
+    "triple_brain.relative_tree_vertex_menu_handler",
+    "triple_brain.mind_map_info"
+], function (Scenarios, TestUtils, CompareFlow, Identification, SubGraph, GraphDisplayerAsRelativeTree, VertexServiceMock, RelativeTreeVertexMenuHandler, MindMapInfo) {
     "use strict";
     describe("graph_compare", function () {
         it("adds a bubble and it's child for a missing triple", function () {
@@ -119,21 +122,12 @@ define([
                     new Scenarios.threeBubblesGraph().getGraph()
                 )
             );
-            var destinationVertex = TestUtils.generateVertex();
-            destinationVertex.setLabel("new vertex");
-            var edge = TestUtils.generateEdge(
-                b1Fork.getUri(),
-                destinationVertex.getUri()
-            );
-            edge.setLabel("new relation");
-            GraphDisplayerAsRelativeTree.addEdgeAndVertex(
-                b1Fork,
-                edge,
-                destinationVertex
-            );
+            VertexServiceMock.addRelationAndVertexToVertexMock();
+            MindMapInfo._setIsViewOnly(false);
+            RelativeTreeVertexMenuHandler.forSingle().addChildAction(b1Fork);
             var newRelation = TestUtils.getChildWithLabel(
                 b1Fork,
-                "new relation"
+                ""
             );
             expect(
                 newRelation.isAComparisonSuggestionToRemove()

@@ -53,6 +53,13 @@ define([
         });
     };
     EventBus.subscribe("/event/ui/graph/drawn", setupSearch);
+    EventBus.subscribe(
+        '/event/ui/graph/vertex_and_relation/added/',
+        function(event, triple){
+            triple.edge().setAsComparisonSuggestionToRemove();
+            triple.destinationVertex().setAsComparisonSuggestionToRemove();
+        }
+    );
     function setupSearch() {
         getSearchInput().tripleBrainAutocomplete({
             select: function (event, ui) {

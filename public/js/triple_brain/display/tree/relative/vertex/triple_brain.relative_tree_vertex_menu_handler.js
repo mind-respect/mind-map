@@ -42,7 +42,7 @@ define([
         forSingle.addChildAction(sourceVertex);
     };
     forSingle.addChildAction = function (sourceVertex) {
-        VertexService.addRelationAndVertexToVertex(
+        return VertexService.addRelationAndVertexToVertex(
             sourceVertex,
             sourceVertex,
             function (triple) {

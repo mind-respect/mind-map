@@ -2,35 +2,46 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 .relation.bubble {
-  &.compare-add, &.compare-add.inverse, &.compare-add.suggestion{
-    .in-bubble-content .label-info{
+  &.compare-add, &.compare-add.inverse, &.compare-add.suggestion {
+    .in-bubble-content .label-info {
       background-color: $compareBubbleAddBackgroundColor;
-      color:black;
+      color: black;
+      .bubble-label {
+        color: black;
+        &:empty:not(:focus):before {
+          color: grey;
+        }
+      }
     }
   }
-  &.compare-remove, &.compare-remove.inverse, &.compare-remove.suggestion{
-    .in-bubble-content .label-info{
+  &.compare-remove, &.compare-remove.inverse, &.compare-remove.suggestion {
+    .in-bubble-content .label-info {
       background-color: $compareBubbleRemoveBackgroundColor;
-      color:black;
+      .bubble-label {
+        color: black;
+        &:empty:not(:focus):before {
+          color: grey;
+        }
+      }
     }
   }
-  .edit-relation-button{
-    font-size:1.50em;
-    cursor:pointer;
-    display:none;
+  .edit-relation-button {
+    font-size: 1.50em;
+    cursor: pointer;
+    display: none;
   }
   position: relative;
-  &.same-as-group-relation{
+  &.same-as-group-relation {
     .label-container {
-      display:none;
+      display: none;
     }
-    .edit-relation-button{
-      display:block;
+    .edit-relation-button {
+      display: block;
     }
   }
   .label {
     border-radius: 0.80em;
-    padding-top:0.3em;
+    padding-top: 0.3em;
   }
   .menu {
     background-color: transparent;
@@ -55,13 +66,13 @@
   }
   .in-bubble-content {
     $fontSize: 1.05em;
-    .label-info{
+    .label-info {
       background-color: $edgeColor;
       height: auto;
       font-size: $fontSize;
     }
     .bubble-label {
-      display:inline-block;
+      display: inline-block;
       font-family: helvetica;
       font-size: $fontSize;
       &:empty:not(:focus):before {
@@ -70,16 +81,16 @@
         color: white;
       }
     }
-    del, ins{
-      color:black;
+    del, ins {
+      color: black;
     }
-    .in-label-buttons{
-      display:inline-block;
-      button{
-        font-size:18px;
-        margin-top:-13px;
-        margin-bottom:-13px;
-        i{
+    .in-label-buttons {
+      display: inline-block;
+      button {
+        font-size: 18px;
+        margin-top: -13px;
+        margin-bottom: -13px;
+        i {
           text-shadow: 0 1px 1px rgba(0, 0, 0, 0.75);
           color: white;
         }
@@ -125,7 +136,7 @@
   z-index: 5;
 }
 
-.relation.inverse .in-bubble-content .label-info{
+.relation.inverse .in-bubble-content .label-info {
   background: $edgeInverseColor;
 }
 
@@ -134,8 +145,8 @@
 }
 
 .bubble.property {
-  margin-top:1em;
-  margin-bottom:1em;
+  margin-top: 1em;
+  margin-bottom: 1em;
   input.edge-label {
     background-color: #f5f5f5;
     font-size: 13px;
@@ -143,26 +154,26 @@
   .relation-menu {
     left: 0;
   }
-  .arrow{
-    width:60px;
-    left:-45px;
-    padding-top:10px;
-    padding-bottom:10px;
-    top:calc(50% - 5px);
-    &:before{
-      top:-50%;
-      position:absolute;
-      left:26px;
+  .arrow {
+    width: 60px;
+    left: -45px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    top: calc(50% - 5px);
+    &:before {
+      top: -50%;
+      position: absolute;
+      left: 26px;
     }
   }
 }
 
 .bubble.group-relation {
   white-space: nowrap;
-  .arrow{
-    height:20px;
-    &:before{
-      content:none;
+  .arrow {
+    height: 20px;
+    &:before {
+      content: none;
     }
   }
   &.selected {
