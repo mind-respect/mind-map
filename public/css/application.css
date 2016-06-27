@@ -262,6 +262,7 @@ button.add-button-in-list:hover { color: #00d100; }
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .relation.bubble { position: relative; }
 .relation.bubble.compare-add .in-bubble-content .label-info, .relation.bubble.compare-add.inverse .in-bubble-content .label-info, .relation.bubble.compare-add.suggestion .in-bubble-content .label-info { background-color: #e6ffe6; color: black; }
+.relation.bubble.compare-remove .in-bubble-content .label-info, .relation.bubble.compare-remove.inverse .in-bubble-content .label-info, .relation.bubble.compare-remove.suggestion .in-bubble-content .label-info { background-color: #ffe6e6; color: black; }
 .relation.bubble .edit-relation-button { font-size: 1.50em; cursor: pointer; display: none; }
 .relation.bubble.same-as-group-relation .label-container { display: none; }
 .relation.bubble.same-as-group-relation .edit-relation-button { display: block; }
@@ -315,6 +316,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .bubble .in-bubble-content .in-label-buttons button[data-action=makePrivate] i:before { content: "\f09c"; }
 .bubble.edit { user-select: text; cursor: text; }
 .bubble .bubble-label { outline: 0 solid transparent; border: none; font-family: Helvetica; font-size: 14px; width: auto; display: table-cell; white-space: pre; }
+.bubble .bubble-label del { text-decoration: none; }
 .bubble .bubble-label[contenteditable='true']:before { content: "\feff "; }
 .bubble .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); color: grey; font-style: italic; }
 .bubble.selected { z-index: 11; }
@@ -337,6 +339,7 @@ button.add-button-in-list:hover { color: #00d100; }
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .vertex { /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */ white-space: nowrap; }
 .vertex.compare-add .in-bubble-content { background-color: #e6ffe6; }
+.vertex.compare-remove .in-bubble-content { background-color: #ffe6e6; }
 .vertex.drag-over .in-bubble-content { border: 3px dashed red; border-radius: 50px; }
 .vertex.suggestion .in-bubble-content { border: 3px dashed black; color: black; text-shadow: none; }
 .vertex.edit .in-bubble-content { width: 325px; max-width: 325px; }

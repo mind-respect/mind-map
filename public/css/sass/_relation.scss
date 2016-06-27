@@ -8,6 +8,12 @@
       color:black;
     }
   }
+  &.compare-remove, &.compare-remove.inverse, &.compare-remove.suggestion{
+    .in-bubble-content .label-info{
+      background-color: $compareBubbleRemoveBackgroundColor;
+      color:black;
+    }
+  }
   .edit-relation-button{
     font-size:1.50em;
     cursor:pointer;

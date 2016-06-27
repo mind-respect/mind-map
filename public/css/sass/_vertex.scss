@@ -10,6 +10,11 @@
       background-color: $compareBubbleAddBackgroundColor;
     }
   }
+  &.compare-remove{
+    .in-bubble-content{
+      background-color: $compareBubbleRemoveBackgroundColor;
+    }
+  }
 
   &.drag-over{
     .in-bubble-content {
