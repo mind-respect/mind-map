@@ -209,11 +209,13 @@ define([
                 vertex,
                 SuggestionRelationBuilder
             );
+            suggestionRelation.getModel().isLeftOriented = suggestionRelation.getSuggestion().isLeftOriented;
             var suggestionBubble = addVertex(
                 suggestion,
                 suggestionRelation,
                 SuggestionBubbleHtmlBuilder
             );
+            suggestionBubble.getModel().isLeftOriented = suggestionBubble.getSuggestion().isLeftOriented;
             SuggestionBubbleHtmlBuilder.completeBuild(
                 suggestionBubble
             );

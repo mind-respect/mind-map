@@ -468,6 +468,22 @@ define([
             ).toBeGreaterThan(0);
         });
 
+        it("setups to the left html correctly for vertex suggestions", function () {
+            var centerVertex = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();
+            var suggestionVertex = TestUtils.getChildWithLabel(
+                centerVertex,
+                "Start date"
+            ).getTopMostChildBubble();
+            expect(
+                suggestionVertex.isToTheLeft()
+            ).toBeTruthy();
+            expect(
+                suggestionVertex.getHtml().closest(".vertex-container").next(
+                    ".vertical-border"
+                ).length
+            ).toBeGreaterThan(0);
+        });
+
         function connectDistantVertexTest(callback) {
             var distantGraphScenario = new Scenarios.getDistantGraph();
             var graphWithHiddenSimilarRelationsScenario = new Scenarios.getGraphWithHiddenSimilarRelations();
