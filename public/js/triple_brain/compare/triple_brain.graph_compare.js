@@ -85,6 +85,9 @@ define([
                         vertexToAdd.getLabel()
                     );
                     self.compareLabel(newVertex, vertexToAdd);
+                    if(vertexToAdd.getNumberOfConnectedEdges() > 1){
+                        newVertex.buildHiddenNeighborPropertiesIndicator()
+                    }
                 }
             });
         });

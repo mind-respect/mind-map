@@ -82,9 +82,6 @@ define([
             this.vertex = RelativeTreeVertex.createFromHtml(
                 this.html
             );
-            this.vertex.setTotalNumberOfEdges(
-                this.serverFacade.getNumberOfConnectedEdges()
-            );
             var label = VertexHtmlCommon.buildLabelHtml(
                 this.vertex,
                 VertexHtmlCommon.buildInsideBubbleContainer(

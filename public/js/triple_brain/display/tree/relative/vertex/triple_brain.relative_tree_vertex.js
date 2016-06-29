@@ -17,13 +17,13 @@ define([
         "use strict";
         var api = {};
         VertexUi.buildCommonConstructors(api);
-        api.setDraggedVertex = function(vertex){
+        api.setDraggedVertex = function (vertex) {
             $("body").data(
                 "dragged-vertex",
                 vertex
             );
         };
-        api.getDraggedVertex = function(){
+        api.getDraggedVertex = function () {
             return $("body").data(
                 "dragged-vertex"
             );
@@ -75,14 +75,14 @@ define([
             });
         };
         api.Object.prototype.remove = function (applyToOthers) {
-            if(applyToOthers === undefined){
+            if (applyToOthers === undefined) {
                 applyToOthers = true;
             }
             if (this._hasBeenCalledToRemove() || this._isRemoved()) {
                 return;
             }
             this._setHasBeenCalledToRemove();
-            if(applyToOthers){
+            if (applyToOthers) {
                 this.applyToOtherInstances(function (otherInstance) {
                     otherInstance.remove();
                 });
@@ -134,7 +134,7 @@ define([
             propertiesIndicator.build();
         };
         api.Object.prototype.hasHiddenRelations = function () {
-            return this.isALeaf() && this.getTotalNumberOfEdges() > 1;
+            return this.isALeaf() && this.getModel().getNumberOfConnectedEdges() > 1;
         };
         EventBus.subscribe(
             '/event/ui/graph/vertex_and_relation/added/',

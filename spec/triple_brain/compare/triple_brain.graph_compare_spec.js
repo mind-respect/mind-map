@@ -108,5 +108,29 @@ define([
                 newVertex.isAComparisonSuggestionToRemove()
             ).toBeTruthy();
         });
+        it("shows hidden relations flag for suggestions to add that have children", function () {
+            var scenario = new Scenarios.threeBubblesGraphFork();
+            var b1Fork = scenario.getBubble1InTree();
+            var r2 = TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            );
+            r2.remove();
+            TestUtils.enterCompareFlowWithGraph(
+                SubGraph.fromServerFormat(
+                    new Scenarios.threeBubblesGraph().getGraph()
+                )
+            );
+            var b3 = TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            ).getTopMostChildBubble();
+            expect(
+                b3.isAComparisonSuggestionToAdd()
+            ).toBeTruthy();
+            expect(
+                b3.hasHiddenRelationsContainer()
+            ).toBeTruthy();
+        });
     });
 });

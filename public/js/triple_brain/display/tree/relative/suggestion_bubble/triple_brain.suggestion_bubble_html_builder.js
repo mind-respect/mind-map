@@ -16,8 +16,8 @@ define([
 ], function ($, VertexHtmlCommon, GraphElementHtmlBuilder, RelativeTreeVertex, SuggestionBubbleUi, GraphElementMainMenu, SuggestionBubbleMenuHandler, GraphUi, Identification, EventBus) {
     "use strict";
     var api = {};
-    api.withServerFacade = function (serverFacade) {
-        return new Self(serverFacade);
+    api.withServerFacade = function (suggestion) {
+        return new Self(suggestion);
     };
     api.completeBuild = function(suggestionUi){
         setupIdentifications(
@@ -25,7 +25,7 @@ define([
         );
     };
     function Self(model) {
-        this.serverFacade = model;
+        this.suggestion = model;
     }
 
     Self.prototype.create = function (htmlId) {
@@ -36,13 +36,13 @@ define([
             "<div class='suggestion vertex graph-element relative bubble'>"
         ).data(
             "uri",
-            this.serverFacade.getUri()
+            this.suggestion.getUri()
         ).attr('id', htmlId);
         var suggestionUi = SuggestionBubbleUi.createFromHtml(
             this.html
         );
         suggestionUi.setModel(
-            this.serverFacade
+            this.suggestion
         );
         suggestionUi.setSuggestions([]);
         suggestionUi.setIncludedVertices([]);
@@ -56,7 +56,7 @@ define([
                 this.html
             ),
             SuggestionBubbleUi,
-            this.serverFacade
+            this.suggestion
         );
         suggestionUi.setText("");
         GraphElementMainMenu.addRelevantButtonsInMenu(

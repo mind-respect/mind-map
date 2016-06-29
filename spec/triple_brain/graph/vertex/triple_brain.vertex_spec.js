@@ -23,7 +23,7 @@ define([
                 bubble7.connectedEdges().length
             ).toBe(1);
             expect(
-                bubble7.getTotalNumberOfEdges()
+                bubble7.getModel().getNumberOfConnectedEdges()
             ).toBe(5);
             var serverFormat = Vertex.buildServerFormatFromUi(bubble7);
             var facade = Vertex.fromServerFormat(serverFormat);

@@ -142,19 +142,7 @@ define([
             this.html.addClass('center-vertex');
             this.hideCenterButton();
         };
-        api.Object.prototype.setTotalNumberOfEdges = function (totalNumberOfEdges) {
-            this.html.data(
-                "totalNumberOfEdges",
-                totalNumberOfEdges
-            );
-        };
-
-        api.Object.prototype.getTotalNumberOfEdges = function () {
-            return this.html.data(
-                "totalNumberOfEdges"
-            );
-        };
-
+        
         api.Object.prototype.width = function () {
             return this.html.width();
         };
