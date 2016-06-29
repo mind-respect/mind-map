@@ -468,6 +468,14 @@ define([
         );
         this.setComparedWith(undefined);
         this.reviewInLabelButtonsVisibility();
+        this.quitCompareAddOrRemoveMode();
+    };
+    api.Self.prototype.quitCompareAddOrRemoveMode = function () {
+        this.getTreeContainer().removeClass(
+            "compare-add"
+        ).removeClass(
+            "compare-remove"
+        );
     };
     api.Self.prototype.labelUpdateHandle = function () {
         this.leaveEditMode();

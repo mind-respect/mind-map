@@ -15,6 +15,13 @@ define([
             serverFormat
         );
     };
+    api.withUri = function (uri) {
+        return new Self(
+            api.buildServerFormatFromUri(
+                uri
+            )
+        );
+    };
     api.buildServerFormatFromUri = function(uri){
         return {
             vertex:{

@@ -52,7 +52,7 @@ define([
     Self.prototype._getOriginPrefix = function () {
         return this.originServerFormat.origin.substring(
             0,
-            this.originServerFormat.origin.indexOf("_")
+            this.originServerFormat.origin.indexOf("_") + 1
         );
     };
     Self.prototype.getServerFormat = function () {

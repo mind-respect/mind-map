@@ -37,8 +37,8 @@ define([
                     suggestionUri,
                     triple.getEdge().getLabel()
                 ),
-                sameAs: triple.getEdge().getServerFormat(),
-                type:triple.getDestinationVertex().getServerFormat(),
+                sameAs: $.extend(true, {}, triple.getEdge().getServerFormat()),
+                type: $.extend(true, {}, triple.getDestinationVertex().getServerFormat()),
                 origins: [
                     SuggestionOrigin.buildObjectWithUriAndOrigin(
                         api.generateOriginUriFromSuggestionUri(suggestionUri),
@@ -117,6 +117,7 @@ define([
                 serverFormat.friendlyResource
             );
         }
+
         Suggestion.prototype = new FriendlyResource.Self();
 
         Suggestion.prototype.getSameAs = function () {
@@ -159,13 +160,13 @@ define([
             });
             return origins;
         };
-        Suggestion.prototype.shouldDisplay = function(){
+        Suggestion.prototype.shouldDisplay = function () {
             return this._shouldDisplay;
         };
-        Suggestion.prototype.shouldNotDisplay = function(){
+        Suggestion.prototype.shouldNotDisplay = function () {
             return this._shouldDisplay = false;
         };
-        Suggestion.prototype.isRelatedToIdentification = function(identification){
+        Suggestion.prototype.isRelatedToIdentification = function (identification) {
             return this.getSameAs().getUri() === identification.getExternalResourceUri() ||
                 (this.hasType() && this.getType().getUri() === identification.getExternalResourceUri());
         };

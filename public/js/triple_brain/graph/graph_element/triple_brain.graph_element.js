@@ -5,9 +5,8 @@
 define([
     "jquery",
     "triple_brain.friendly_resource",
-    "triple_brain.identification",
-    "triple_brain.event_bus"
-], function ($, FriendlyResource, Identification, EventBus) {
+    "triple_brain.identification"
+], function ($, FriendlyResource, Identification) {
     "use strict";
     var api = {};
     api.fromServerFormat = function (serverFormat) {
@@ -154,6 +153,13 @@ define([
 
     api.Self.prototype.addGenericIdentification = function (identification) {
         this._genericIdentifications.push(identification);
+    };
+
+    api.Self.prototype.addSameAs = function (identification) {
+        this._sameAs.push(identification);
+    };
+    api.Self.prototype.addType = function (identification) {
+        this._types.push(identification);
     };
 
     return api;

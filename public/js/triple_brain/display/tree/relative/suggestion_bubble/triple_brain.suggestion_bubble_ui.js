@@ -7,12 +7,13 @@ define([
     "triple_brain.relative_tree_vertex",
     "triple_brain.graph_element_ui",
     "triple_brain.vertex_ui",
+    "triple_brain.vertex",
     "triple_brain.event_bus",
     "triple_brain.selection_handler",
     "triple_brain.vertex_html_builder",
     "triple_brain.graph_element",
     "jquery.i18next"
-], function ($, RelativeTreeVertex, GraphElementUi, VertexUi, EventBus, SelectionHandler, VertexHtmlBuilder, GraphElement) {
+], function ($, RelativeTreeVertex, GraphElementUi, VertexUi, Vertex, EventBus, SelectionHandler, VertexHtmlBuilder, GraphElement) {
     "use strict";
     var api = {};
     RelativeTreeVertex.buildCommonConstructors(api);
@@ -64,43 +65,56 @@ define([
             this.getUri(),
             this.getId()
         );
-        var originalServerObject = GraphElement.fromSuggestionAndElementUri(
-            this.getSuggestion(),
+        var vertex = Vertex.withUri(
             newVertexUri
         );
-        originalServerObject.isLeftOriented = this.isToTheLeft();
+        vertex.setLabel(
+            this.text()
+        );
+        if(this.getSuggestion().getOrigin().isFromComparison()){
+            vertex.addGenericIdentification(
+                this.getSuggestion().getType()
+            );
+        }else{
+            vertex.addType(
+                this.getSuggestion().getSameAs()
+            );
+            if(this.getSuggestion().hasType()){
+                vertex.addType(
+                    this.getSuggestion().getType()
+                );
+            }
+        }
+        vertex.isLeftOriented = this.isToTheLeft();
         this.html.data(
             "uri",
             newVertexUri
         ).removeClass(
             "suggestion"
-        ).removeClass(
-            "compare-add"
-        ).removeClass(
-            "compare-remove"
         );
         this.getLabel().attr(
             "placeholder", RelativeTreeVertex.getWhenEmptyLabel()
         );
-        var vertex = RelativeTreeVertex.createFromHtml(
+        var vertexUi = RelativeTreeVertex.createFromHtml(
             this.html
         );
-        vertex.setModel(
-            originalServerObject
-        );
-        vertex.rebuildMenuButtons();
-        vertex.setComparedWith(
-            this.getComparedWith()
-        );
-        vertex.refreshComparison();
-        SelectionHandler.setToSingleGraphElement(vertex);
-        EventBus.publish(
-            '/event/ui/html/vertex/created/',
+        vertexUi.setModel(
             vertex
         );
-        VertexHtmlBuilder.completeBuild(vertex);
-        this.integrationDeferrer.resolve(vertex);
-        return vertex;
+        vertexUi.rebuildMenuButtons();
+        vertexUi.setComparedWith(
+            this.getComparedWith()
+        );
+        vertexUi.quitCompareAddOrRemoveMode();
+        vertexUi.refreshComparison();
+        SelectionHandler.setToSingleGraphElement(vertexUi);
+        EventBus.publish(
+            '/event/ui/html/vertex/created/',
+            vertexUi
+        );
+        VertexHtmlBuilder.completeBuild(vertexUi);
+        this.integrationDeferrer.resolve(vertexUi);
+        return vertexUi;
     };
     return api;
 });

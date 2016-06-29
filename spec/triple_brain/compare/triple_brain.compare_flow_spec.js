@@ -65,7 +65,27 @@ define([
             ).toBeTruthy();
         });
         it("removes suggestion of comparison origin only when quitting comparison mode", function () {
-            
+            var scenario = new Scenarios.threeBubblesGraphFork();
+            var b1Fork = scenario.getBubble1InTree();
+            TestUtils.enterCompareFlowWithGraph(
+                SubGraph.fromServerFormat(
+                    new Scenarios.threeBubblesGraph().getGraph()
+                )
+            );
+            VertexServiceMock.addRelationAndVertexToVertexMock();
+            MindMapInfo._setIsViewOnly(false);
+            RelativeTreeVertexMenuHandler.forSingle().addChildAction(b1Fork);
+            var newRelation = TestUtils.getChildWithLabel(
+                b1Fork,
+                ""
+            );
+            expect(
+                newRelation.isAComparisonSuggestionToRemove()
+            ).toBeTruthy();
+            CompareFlow._quit();
+            expect(
+                newRelation.isAComparisonSuggestionToRemove()
+            ).toBeFalsy();
         });
     });
 });
