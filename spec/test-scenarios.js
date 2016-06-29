@@ -255,23 +255,17 @@ define([
             this.expandBubble3 = function (bubble3) {
                 return GraphDisplayerAsRelativeTree.addChildTreeUsingGraph(
                     bubble3,
-                    getSurroundBubble3Graph()
+                    this.getSurroundBubble3Graph()
                 );
             };
             this.getBubble4InTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("b4");
             };
-            function getSurroundBubble3Graph() {
-                /*
-                 b3<-r2-b1
-                 b3-r3>-b4
-                 b3-r4->b5
-                 b4 has hidden relations
-                 */
+            this.getSurroundBubble3Graph = function() {
                 return api._getTestData(
                     "threeBubblesGraph.getSurroundBubble3Graph"
                 );
-            }
+            };
 
             this.getCenterBubbleUri = function () {
                 return uriOfVertexWithLabel(this.getGraph(), "b1");

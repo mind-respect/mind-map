@@ -11,12 +11,12 @@ define([
     "use strict";
     var api = {};
     api.fromServerFormat = function (serverFormat) {
-        return new Self(
+        return new Vertex(
             serverFormat
         );
     };
     api.withUri = function (uri) {
-        return new Self(
+        return new Vertex(
             api.buildServerFormatFromUri(
                 uri
             )
@@ -48,7 +48,7 @@ define([
             }
         };
     };
-    function Self(vertexServerFormat) {
+    function Vertex(vertexServerFormat) {
         this.vertexServerFormat = vertexServerFormat;
         this._includedVertices = this._buildIncludedVertices();
         this._includedEdges = this._buildIncludedEdges();
@@ -59,25 +59,25 @@ define([
         this.init(vertexServerFormat.vertex.graphElement);
     }
 
-    Self.prototype = new GraphElement.Self();
+    Vertex.prototype = new GraphElement.Self();
 
-    Self.prototype.getIncludedVertices = function () {
+    Vertex.prototype.getIncludedVertices = function () {
         return this._includedVertices;
     };
-    Self.prototype.getIncludedEdges = function () {
+    Vertex.prototype.getIncludedEdges = function () {
         return this._includedEdges;
     };
-    Self.prototype.getSuggestions = function () {
+    Vertex.prototype.getSuggestions = function () {
         return this._suggestions;
     };
-    Self.prototype.getNumberOfConnectedEdges = function () {
+    Vertex.prototype.getNumberOfConnectedEdges = function () {
         return this.vertexServerFormat.vertex.numberOfConnectedEdges;
     };
 
-    Self.prototype.isPublic = function () {
+    Vertex.prototype.isPublic = function () {
         return this.vertexServerFormat.vertex.isPublic;
     };
-    Self.prototype._buildIncludedEdges = function () {
+    Vertex.prototype._buildIncludedEdges = function () {
         var includedEdges = {};
         if (this.vertexServerFormat.vertex.includedEdges === undefined) {
             return includedEdges;
@@ -90,7 +90,7 @@ define([
         return includedEdges;
     };
 
-    Self.prototype._buildIncludedVertices = function () {
+    Vertex.prototype._buildIncludedVertices = function () {
         var includedVertices = {};
         if (this.vertexServerFormat.vertex.includedVertices === undefined) {
             return includedVertices;
@@ -103,7 +103,7 @@ define([
         return includedVertices;
     };
 
-    Self.prototype._buildSuggestions = function () {
+    Vertex.prototype._buildSuggestions = function () {
         var suggestions = [];
         if (this.vertexServerFormat.vertex.suggestions === undefined) {
             return suggestions;
@@ -112,7 +112,7 @@ define([
             this.vertexServerFormat.vertex.suggestions
         );
     };
-    Self.prototype.addSuggestions = function(suggestions){
+    Vertex.prototype.addSuggestions = function(suggestions){
         this._suggestions = this._suggestions.concat(
             suggestions
         );

@@ -87,24 +87,28 @@ define([
             function (serverGraph) {
                 api.addChildTreeUsingGraph(
                     parentVertex,
-                    serverGraph
+                    serverGraph,
+                    uriToFetch
                 );
                 deferred.resolve();
             }
         );
         return deferred.promise();
     };
-    api.addChildTreeUsingGraph = function (parentVertex, serverGraph) {
+    api.addChildTreeUsingGraph = function (parentVertex, serverGraph, differentParentUri) {
+        var parentUri = parentVertex.getUri();
+        if (differentParentUri !== undefined) {
+            parentUri = differentParentUri;
+        }
         var treeMaker = new api.TreeMaker(VertexHtmlBuilder),
-            nbRelationsWithGrandParent = removeRelationWithGrandParentFromServerGraph(),
-            parentUri = parentVertex.getUri();
+            nbRelationsWithGrandParent = removeRelationWithGrandParentFromServerGraph();
         TreeDisplayerCommon.enhancedVerticesInfo(
             serverGraph,
             parentUri
         );
         var parentVertexServerFormat = serverGraph.vertices[parentUri];
-        parentVertexServerFormat.isLeftOriented = parentVertex.isToTheLeft();
-        parentVertex.setModel(parentVertexServerFormat);
+        parentVertex.getModel().isLeftOriented = parentVertex.isToTheLeft();
+        parentVertex.getModel().similarRelations = parentVertexServerFormat.similarRelations;
         if (nbRelationsWithGrandParent >= 1) {
             treeMaker.buildChildrenHtmlTreeRecursivelyEvenIfGrandParentAndIncludingDuplicates(
                 parentVertex,
@@ -139,12 +143,18 @@ define([
         });
         api.showSuggestions(parentVertex);
         function removeRelationWithGrandParentFromServerGraph() {
-            var relationWithGrandParentUri = parentVertex.getRelationWithUiParent().getUri();
-            var grandParentUri = parentVertex.getParentVertex().getUri();
+            var parentRelation = parentVertex.getRelationWithUiParent();
+            var relationWithGrandParentUri = parentVertex.isVertexSuggestion() ?
+                parentRelation.getFirstIdentificationToAGraphElement().getExternalResourceUri() :
+                parentRelation.getUri();
+            var grandParent = parentVertex.getParentVertex();
+            var grandParentUriToCompare = parentVertex.isVertexSuggestion() ?
+                grandParent.getFirstIdentificationToAGraphElement().getExternalResourceUri() :
+                grandParent.getUri();
             var nbRelationsWithGrandParent = 0;
             serverGraph.edges = getFilteredEdges();
             if (1 === nbRelationsWithGrandParent) {
-                delete serverGraph.vertices[grandParentUri];
+                delete serverGraph.vertices[grandParentUriToCompare];
             }
             return nbRelationsWithGrandParent - 1;
 
@@ -160,7 +170,7 @@ define([
                         edgeFacade.getDestinationVertex().getUri()
                     ];
                     if ($.inArray(
-                            grandParentUri,
+                            grandParentUriToCompare,
                             sourceAndDestinationId
                         ) !== -1) {
                         nbRelationsWithGrandParent++;
