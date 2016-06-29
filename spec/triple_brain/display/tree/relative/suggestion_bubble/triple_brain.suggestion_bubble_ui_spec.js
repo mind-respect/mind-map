@@ -94,9 +94,7 @@ define([
                 SelectionHandler.getSingleElement().isVertex()
             ).toBeTruthy();
         });
-        it("updates selection handler to new vertex after integration", function () {
 
-        });
         it("publishes throught event bus that the vertex build is completed after integration", function () {
             var vertexSuggestionInTree = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
             var hasCompletedBuild = false;

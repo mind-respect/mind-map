@@ -45,10 +45,6 @@ define([
         );
         this.html.removeClass(
             "suggestion"
-        ).removeClass(
-            "compare-add"
-        ).removeClass(
-            "compare-remove"
         ).data(
             "source_vertex_id",
             this.getParentBubble().getId()
@@ -70,6 +66,7 @@ define([
         edge.setComparedWith(
             this.getComparedWith()
         );
+        edge.quitCompareAddOrRemoveMode();
         edge.refreshComparison();
         EventBus.publish(
             '/event/ui/html/edge/created/',
