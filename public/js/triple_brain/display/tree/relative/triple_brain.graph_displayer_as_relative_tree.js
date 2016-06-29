@@ -79,8 +79,11 @@ define([
     };
     api.addChildTree = function (parentVertex) {
         var deferred = $.Deferred();
+        var uriToFetch = parentVertex.isVertexSuggestion() ?
+            parentVertex.getModel().getExternalResourceUri() :
+            parentVertex.getUri();
         GraphService.getForCentralVertexUri(
-            parentVertex.getUri(),
+            uriToFetch,
             function (serverGraph) {
                 api.addChildTreeUsingGraph(
                     parentVertex,

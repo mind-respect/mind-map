@@ -12,8 +12,9 @@ define([
     "triple_brain.vertex_html_builder",
     "triple_brain.edge_html_builder",
     "triple_brain.graph_element",
-    "triple_brain.sub_graph"
-], function (Scenarios, TestUtils, Mock, GraphServiceMock, GraphDisplayerAsRelativeTree, CenterBubble, VertexHtmlBuilder, EdgeHtmlBuilder, GraphElement, SubGraph) {
+    "triple_brain.sub_graph",
+    "triple_brain.graph_service"
+], function (Scenarios, TestUtils, Mock, GraphServiceMock, GraphDisplayerAsRelativeTree, CenterBubble, VertexHtmlBuilder, EdgeHtmlBuilder, GraphElement, SubGraph, GraphService) {
     "use strict";
     describe("graph_displayer_as_relative_tree_spec", function () {
         it("distributes triples evenly to the right and left", function () {
@@ -481,6 +482,41 @@ define([
                     ".vertical-border"
                 ).length
             ).toBeGreaterThan(0);
+        });
+
+        it("fetches children of type external uri when adding child tree of a suggestion", function () {
+            var calledUri;
+            spyOn(
+                GraphService,
+                "getForCentralVertexUri"
+            ).and.callFake(function (uri) {
+                calledUri = uri;
+            });
+            var scenario = new Scenarios.threeBubblesGraphFork();
+            var b1Fork = scenario.getBubble1InTree();
+            var r2 = TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            );
+            var b3 = r2.getTopMostChildBubble();
+            var b3ComparedWithUri = b3.getFirstIdentificationToAGraphElement().getExternalResourceUri();
+            r2.remove();
+            TestUtils.enterCompareFlowWithGraph(
+                SubGraph.fromServerFormat(
+                    new Scenarios.threeBubblesGraph().getGraph()
+                )
+            );
+            b3 = TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            ).getTopMostChildBubble();
+            expect(
+                calledUri
+            ).not.toBe(b3ComparedWithUri);
+            b3.addChildTree();
+            expect(
+                calledUri
+            ).toBe(b3ComparedWithUri);
         });
 
         function connectDistantVertexTest(callback) {
