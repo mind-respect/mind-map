@@ -91,15 +91,9 @@ define([
         );
         return deferred.promise();
     };
-    api.addChildTreeUsingGraph = function (parentVertex, serverGraph, differentParentUri) {
+    api.addChildTreeUsingGraph = function (parentVertex, serverGraph) {
         var parentUri = parentVertex.getUri();
-        if (differentParentUri !== undefined) {
-            parentUri = differentParentUri;
-        }
-        var builder = differentParentUri === undefined ?
-            VertexHtmlBuilder :
-            SuggestionBubbleHtmlBuilder;
-        var treeMaker = new api.TreeMaker(builder),
+        var treeMaker = new api.TreeMaker(VertexHtmlBuilder),
             nbRelationsWithGrandParent = removeRelationWithGrandParentFromServerGraph();
         TreeDisplayerCommon.enhancedVerticesInfo(
             serverGraph,
@@ -146,13 +140,9 @@ define([
         );
         function removeRelationWithGrandParentFromServerGraph() {
             var parentRelation = parentVertex.getRelationWithUiParent();
-            var relationWithGrandParentUri = parentVertex.isVertexSuggestion() ?
-                parentRelation.getFirstIdentificationToAGraphElement().getExternalResourceUri() :
-                parentRelation.getUri();
+            var relationWithGrandParentUri = parentRelation.getUri();
             var grandParent = parentVertex.getParentVertex();
-            var grandParentUriToCompare = parentVertex.isVertexSuggestion() ?
-                grandParent.getFirstIdentificationToAGraphElement().getExternalResourceUri() :
-                grandParent.getUri();
+            var grandParentUriToCompare = grandParent.getUri();
             var nbRelationsWithGrandParent = 0;
             serverGraph.edges = getFilteredEdges();
             if (1 === nbRelationsWithGrandParent) {
