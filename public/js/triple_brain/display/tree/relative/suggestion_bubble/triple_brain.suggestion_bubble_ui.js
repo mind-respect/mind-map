@@ -160,6 +160,9 @@ define([
                     triple.destinationVertex().setComparedWith(
                         destinationVertex
                     );
+                    if(destinationVertex.getNumberOfConnectedEdges() > 1){
+                        triple.destinationVertex().buildHiddenNeighborPropertiesIndicator();
+                    }
                 });
                 deferred.resolve();
             }

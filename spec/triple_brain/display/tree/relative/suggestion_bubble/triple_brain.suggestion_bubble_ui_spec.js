@@ -9,8 +9,10 @@ define([
     "triple_brain.graph_displayer_as_relative_tree",
     "triple_brain.selection_handler",
     "triple_brain.event_bus",
-    "triple_brain.sub_graph"
-], function (Scenarios, TestUtils, SuggestionService, GraphDisplayerAsRelativeTree, SelectionHandler, EventBus, SubGraph) {
+    "triple_brain.sub_graph",
+    "triple_brain.graph_service",
+    "test/mock/triple_brain.graph_service_mock"
+], function (Scenarios, TestUtils, SuggestionService, GraphDisplayerAsRelativeTree, SelectionHandler, EventBus, SubGraph, GraphService, GraphServiceMock) {
     "use strict";
     describe("suggestion_bubble_ui", function () {
         var oneSuggestionScenario;
@@ -191,6 +193,192 @@ define([
             expect(
                 b3.getLabel().find("del").text()
             ).toBe("anana");
+        });
+        it("fetches children of type external uri when adding child tree of a suggestion", function () {
+            var calledUri;
+            spyOn(
+                GraphService,
+                "getForCentralVertexUri"
+            ).and.callFake(function (uri) {
+                calledUri = uri;
+            });
+            var scenario = new Scenarios.threeBubblesGraphFork();
+            var b1Fork = scenario.getBubble1InTree();
+            var r2 = TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            );
+            var b3 = r2.getTopMostChildBubble();
+            var b3ComparedWithUri = b3.getFirstIdentificationToAGraphElement().getExternalResourceUri();
+            r2.remove();
+            TestUtils.enterCompareFlowWithGraph(
+                SubGraph.fromServerFormat(
+                    new Scenarios.threeBubblesGraph().getGraph()
+                )
+            );
+            b3 = TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            ).getTopMostChildBubble();
+            expect(
+                calledUri
+            ).not.toBe(b3ComparedWithUri);
+            b3.addChildTree();
+            expect(
+                calledUri
+            ).toBe(b3ComparedWithUri);
+        });
+
+        it("can expand a suggestion children", function () {
+            var scenario = new Scenarios.threeBubblesGraphFork();
+            var b1Fork = scenario.getBubble1InTree();
+            TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            ).remove();
+            TestUtils.enterCompareFlowWithGraph(
+                SubGraph.fromServerFormat(
+                    new Scenarios.threeBubblesGraph().getGraph()
+                )
+            );
+            var b3 = TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            ).getTopMostChildBubble();
+            expect(
+                b3.getNumberOfChild()
+            ).toBe(0);
+            GraphServiceMock.getForCentralVertexUriMock(
+                new Scenarios.threeBubblesGraph().getSurroundBubble3Graph()
+            );
+            b3.addChildTree();
+            expect(
+                b3.getNumberOfChild()
+            ).toBe(2);
+        });
+
+        it("makes expanded suggestion children as suggestions too", function () {
+            var scenario = new Scenarios.threeBubblesGraphFork();
+            var b1Fork = scenario.getBubble1InTree();
+            TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            ).remove();
+            TestUtils.enterCompareFlowWithGraph(
+                SubGraph.fromServerFormat(
+                    new Scenarios.threeBubblesGraph().getGraph()
+                )
+            );
+            var b3 = TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            ).getTopMostChildBubble();
+            expect(
+                b3.getNumberOfChild()
+            ).toBe(0);
+            GraphServiceMock.getForCentralVertexUriMock(
+                new Scenarios.threeBubblesGraph().getSurroundBubble3Graph()
+            );
+            b3.addChildTree();
+            var suggestionChild = b3.getTopMostChildBubble();
+            expect(
+                suggestionChild.isRelationSuggestion()
+            ).toBeTruthy();
+        });
+
+        it("sets the label to expanded suggestions vertex", function () {
+            var scenario = new Scenarios.threeBubblesGraphFork();
+            var b1Fork = scenario.getBubble1InTree();
+            TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            ).remove();
+            TestUtils.enterCompareFlowWithGraph(
+                SubGraph.fromServerFormat(
+                    new Scenarios.threeBubblesGraph().getGraph()
+                )
+            );
+            var b3 = TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            ).getTopMostChildBubble();
+            expect(
+                b3.getNumberOfChild()
+            ).toBe(0);
+            GraphServiceMock.getForCentralVertexUriMock(
+                new Scenarios.threeBubblesGraph().getSurroundBubble3Graph()
+            );
+            b3.addChildTree();
+            var b5 = TestUtils.getChildWithLabel(
+                b3,
+                "r4"
+            ).getTopMostChildBubble();
+            expect(
+                b5.text()
+            ).toBe("b5");
+        });
+
+        it("removes the hidden child flag after it expands", function () {
+            var scenario = new Scenarios.threeBubblesGraphFork();
+            var b1Fork = scenario.getBubble1InTree();
+            TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            ).remove();
+            TestUtils.enterCompareFlowWithGraph(
+                SubGraph.fromServerFormat(
+                    new Scenarios.threeBubblesGraph().getGraph()
+                )
+            );
+            var b3 = TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            ).getTopMostChildBubble();
+            expect(
+                b3.hasHiddenRelationsContainer()
+            ).toBeTruthy();
+            GraphServiceMock.getForCentralVertexUriMock(
+                new Scenarios.threeBubblesGraph().getSurroundBubble3Graph()
+            );
+            b3.addChildTree();
+            expect(
+                b3.hasHiddenRelationsContainer()
+            ).toBeFalsy();
+        });
+        it("shows the hidden child flag of expanded suggestions if applicable", function () {
+            var scenario = new Scenarios.threeBubblesGraphFork();
+            var b1Fork = scenario.getBubble1InTree();
+            TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            ).remove();
+            TestUtils.enterCompareFlowWithGraph(
+                SubGraph.fromServerFormat(
+                    new Scenarios.threeBubblesGraph().getGraph()
+                )
+            );
+            var b3 = TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            ).getTopMostChildBubble();
+            GraphServiceMock.getForCentralVertexUriMock(
+                new Scenarios.threeBubblesGraph().getSurroundBubble3Graph()
+            );
+            b3.addChildTree();
+            var b5 = TestUtils.getChildWithLabel(
+                b3,
+                "r4"
+            ).getTopMostChildBubble();
+            expect(
+                b5.hasHiddenRelationsContainer()
+            ).toBeFalsy();
+            var b4 = TestUtils.getChildWithLabel(
+                b3,
+                "r3"
+            ).getTopMostChildBubble();
+            expect(
+                b4.hasHiddenRelationsContainer()
+            ).toBeTruthy();
         });
     });
 });

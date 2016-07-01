@@ -23,6 +23,7 @@ define([
         setupIdentifications(
             suggestionUi
         );
+        
     };
     function Self(model) {
         this.suggestion = model;
