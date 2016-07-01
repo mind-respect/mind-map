@@ -122,6 +122,7 @@ define([
     };
     api.Self.prototype.addChildTree = function () {
         var deferred = $.Deferred();
+        this.removeHiddenRelationsContainer();
         var uriToFetch = this.getModel().getExternalResourceUri();
         var self = this;
         var parentEdgeUri = this.getParentBubble().getFirstIdentificationToAGraphElement().getExternalResourceUri();

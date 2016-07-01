@@ -611,6 +611,34 @@ define([
             ).toBe("b5");
         });
 
+        it("removes the hidden child flag after it expands", function () {
+            var scenario = new Scenarios.threeBubblesGraphFork();
+            var b1Fork = scenario.getBubble1InTree();
+            TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            ).remove();
+            TestUtils.enterCompareFlowWithGraph(
+                SubGraph.fromServerFormat(
+                    new Scenarios.threeBubblesGraph().getGraph()
+                )
+            );
+            var b3 = TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            ).getTopMostChildBubble();
+            expect(
+                b3.hasHiddenRelationsContainer()
+            ).toBeTruthy();
+            GraphServiceMock.getForCentralVertexUriMock(
+                new Scenarios.threeBubblesGraph().getSurroundBubble3Graph()
+            );
+            b3.addChildTree();
+            expect(
+                b3.hasHiddenRelationsContainer()
+            ).toBeFalsy();
+        });
+
         function connectDistantVertexTest(callback) {
             var distantGraphScenario = new Scenarios.getDistantGraph();
             var graphWithHiddenSimilarRelationsScenario = new Scenarios.getGraphWithHiddenSimilarRelations();
