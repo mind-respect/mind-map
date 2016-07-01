@@ -124,12 +124,15 @@ define([
             var karaokeSchemaScenario = new Scenarios.getKaraokeSchemaGraph();
             var bubble2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
             var locationSuggestion = karaokeSchemaScenario.getLocationPropertyAsSuggestion();
-            bubble2.setSuggestions(
+            bubble2.getModel().setSuggestions(
                 [
                     locationSuggestion
                 ]
             );
-            GraphDisplayerAsRelativeTree.showSuggestions(bubble2);
+            GraphDisplayerAsRelativeTree.addSuggestionsToVertex(
+                bubble2.getModel().getSuggestions(),
+                bubble2
+            );
             var relationSuggestion = bubble2.getTopMostChildBubble(),
                 vertexSuggestion = relationSuggestion.getTopMostChildBubble();
             expect(
@@ -520,7 +523,6 @@ define([
         });
 
         it("can expand a suggestion children", function () {
-            var calledUri;
             var scenario = new Scenarios.threeBubblesGraphFork();
             var b1Fork = scenario.getBubble1InTree();
             TestUtils.getChildWithLabel(
@@ -546,6 +548,35 @@ define([
             expect(
                 b3.getNumberOfChild()
             ).toBe(2);
+        });
+
+        it("makes expanded suggestion children as suggestions too", function () {
+            var scenario = new Scenarios.threeBubblesGraphFork();
+            var b1Fork = scenario.getBubble1InTree();
+            TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            ).remove();
+            TestUtils.enterCompareFlowWithGraph(
+                SubGraph.fromServerFormat(
+                    new Scenarios.threeBubblesGraph().getGraph()
+                )
+            );
+            var b3 = TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            ).getTopMostChildBubble();
+            expect(
+                b3.getNumberOfChild()
+            ).toBe(0);
+            GraphServiceMock.getForCentralVertexUriMock(
+                new Scenarios.threeBubblesGraph().getSurroundBubble3Graph()
+            );
+            b3.addChildTree();
+            var suggestionChild = b3.getTopMostChildBubble();
+            expect(
+                suggestionChild.isRelationSuggestion()
+            ).toBeTruthy();
         });
 
         function connectDistantVertexTest(callback) {

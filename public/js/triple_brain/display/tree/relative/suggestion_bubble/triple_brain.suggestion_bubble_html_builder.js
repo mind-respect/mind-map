@@ -44,7 +44,6 @@ define([
         suggestionUi.setModel(
             this.suggestion
         );
-        suggestionUi.setSuggestions([]);
         suggestionUi.setIncludedVertices([]);
         suggestionUi.setIncludedEdges([]);
         VertexHtmlCommon.setUpClickBehavior(

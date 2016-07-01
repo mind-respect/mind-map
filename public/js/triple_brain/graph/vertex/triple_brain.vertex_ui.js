@@ -214,24 +214,27 @@ define([
         };
 
         api.Object.prototype.getSuggestions = function () {
-            return this.html.data('suggestions');
+            return this.getModel().getSuggestions();
         };
         api.Object.prototype.hasSuggestions = function () {
-            var suggestions = this.getSuggestions();
+            var suggestions = this.getModel().getSuggestions();
             return suggestions !== undefined && suggestions.length > 0;
         };
         api.Object.prototype.addSuggestions = function (suggestions) {
-            var existingSuggestions = this.html.data('suggestions');
+            var existingSuggestions = this.getModel().getSuggestions();
             existingSuggestions = existingSuggestions === undefined ?
                 [] :
                 existingSuggestions;
             var mergedSuggestions = existingSuggestions.concat(suggestions);
-            this.setSuggestions(mergedSuggestions);
-            GraphDisplayer.showSuggestions(this);
+            this.getModel().setSuggestions(mergedSuggestions);
+            GraphDisplayer.addSuggestionsToVertex(
+                this.getModel().getSuggestions(),
+                this
+            );
             this.centerOnScreen();
         };
         api.Object.prototype.setSuggestions = function (suggestions) {
-            this.html.data('suggestions', suggestions);
+            this.getModel().setSuggestions(suggestions);
         };
 
         api.Object.prototype.serverFacade = function () {
@@ -329,11 +332,10 @@ define([
         api.Object.prototype.getMenuHtml = function () {
             return this.html.find('.menu');
         };
-        api.Object.prototype.addChildTree = function (callback) {
+        api.Object.prototype.addChildTree = function () {
             var self = this;
             return GraphDisplayer.addChildTree(
-                self,
-                callback
+                self
             );
         };
 

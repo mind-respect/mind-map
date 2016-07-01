@@ -125,9 +125,6 @@ define([
             VertexHtmlCommon.buildInLabelButtons(
                 this.vertex
             );
-            this.vertex.setSuggestions(
-                this.serverFacade.getSuggestions()
-            );
             this.vertex.hideMenu();
             this.vertex.addImages(
                 this.serverFacade.getImages()

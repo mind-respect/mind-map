@@ -35,7 +35,10 @@ define([
         it("does not accept suggestion if label has not changed", function () {
             var oneBubbleHavingSuggestionsGraph = new Scenarios.oneBubbleHavingSuggestionsGraph();
             var eventBubble = oneBubbleHavingSuggestionsGraph.getVertexUi();
-            GraphDisplayerAsRelativeTree.showSuggestions(eventBubble);
+            GraphDisplayerAsRelativeTree.addSuggestionsToVertex(
+                eventBubble.getModel().getSuggestions(),
+                eventBubble
+            );
             var vertexSuggestionInTree = eventBubble.getTopMostChildBubble().getTopMostChildBubble();
             Mock.mockAcceptSuggestion();
             expect(
@@ -60,7 +63,10 @@ define([
         it("accepts relation and vertex suggestion if relation label is changed", function () {
             var oneBubbleHavingSuggestionsGraph = new Scenarios.oneBubbleHavingSuggestionsGraph();
             var eventBubble = oneBubbleHavingSuggestionsGraph.getVertexUi();
-            GraphDisplayerAsRelativeTree.showSuggestions(eventBubble);
+            GraphDisplayerAsRelativeTree.addSuggestionsToVertex(
+                eventBubble.getModel().getSuggestions(),
+                eventBubble
+            );
             var relationSuggestion = eventBubble.getTopMostChildBubble();
             var vertexSuggestionInTree = relationSuggestion.getTopMostChildBubble();
             Mock.mockAcceptSuggestion();

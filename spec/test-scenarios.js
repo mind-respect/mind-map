@@ -488,6 +488,11 @@ define([
                         ]
                 );
             };
+            this.getBook1InTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree(
+                    "book 1"
+                );
+            };
             this.getBook2 = function () {
                 return Vertex.fromServerFormat(graph.vertices[
                         uriOfVertexWithLabel(graph, "book 2")

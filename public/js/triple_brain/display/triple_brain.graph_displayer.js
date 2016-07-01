@@ -50,12 +50,8 @@ define([
             );
         };
 
-        api.addVertex = function (newVertex, parentVertex) {
-            return _implementation.addVertex(newVertex, parentVertex);
-        };
-
-        api.showSuggestions = function (vertex) {
-            return _implementation.showSuggestions(vertex);
+        api.addSuggestionsToVertex = function (suggestions, vertex) {
+            return _implementation.addSuggestionsToVertex(suggestions, vertex);
         };
 
         api.addProperty = function (property, schema) {
@@ -64,13 +60,7 @@ define([
                 schema
             );
         };
-        api.addEdge = function (newEdge, sourceVertex, destinationVertex) {
-            return _implementation.addEdge(
-                newEdge,
-                sourceVertex,
-                destinationVertex
-            );
-        };
+
         api.addEdgeAndVertex = function (sourceBubbleUi, edge, destinationVertex) {
             return _implementation.addEdgeAndVertex(
                 sourceBubbleUi,
@@ -122,10 +112,9 @@ define([
         api.canAddChildTree = function () {
             return _implementation.canAddChildTree();
         };
-        api.addChildTree = function (parentVertex, callback) {
+        api.addChildTree = function (parentVertex) {
             return _implementation.addChildTree(
-                parentVertex,
-                callback
+                parentVertex
             );
         };
         api.buildIncludedGraphElementsView = function (vertex, container) {

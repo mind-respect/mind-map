@@ -79,16 +79,12 @@ define([
     };
     api.addChildTree = function (parentVertex) {
         var deferred = $.Deferred();
-        var uriToFetch = parentVertex.isVertexSuggestion() ?
-            parentVertex.getModel().getExternalResourceUri() :
-            parentVertex.getUri();
         GraphService.getForCentralVertexUri(
-            uriToFetch,
+            parentVertex.getUri(),
             function (serverGraph) {
                 api.addChildTreeUsingGraph(
                     parentVertex,
-                    serverGraph,
-                    uriToFetch
+                    serverGraph
                 );
                 deferred.resolve();
             }
@@ -100,7 +96,10 @@ define([
         if (differentParentUri !== undefined) {
             parentUri = differentParentUri;
         }
-        var treeMaker = new api.TreeMaker(VertexHtmlBuilder),
+        var builder = differentParentUri === undefined ?
+            VertexHtmlBuilder :
+            SuggestionBubbleHtmlBuilder;
+        var treeMaker = new api.TreeMaker(builder),
             nbRelationsWithGrandParent = removeRelationWithGrandParentFromServerGraph();
         TreeDisplayerCommon.enhancedVerticesInfo(
             serverGraph,
@@ -141,7 +140,10 @@ define([
                 });
             }
         });
-        api.showSuggestions(parentVertex);
+        api.addSuggestionsToVertex(
+            parentVertex.getModel().getSuggestions(),
+            parentVertex
+        );
         function removeRelationWithGrandParentFromServerGraph() {
             var parentRelation = parentVertex.getRelationWithUiParent();
             var relationWithGrandParentUri = parentVertex.isVertexSuggestion() ?
@@ -211,8 +213,8 @@ define([
         return "relative_tree";
     };
 
-    api.showSuggestions = function (vertex) {
-        $.each(vertex.getSuggestions(), function () {
+    api.addSuggestionsToVertex = function (suggestions, vertex) {
+        $.each(suggestions, function () {
             var suggestion = this;
             if (!suggestion.shouldDisplay()) {
                 return;
@@ -379,18 +381,18 @@ define([
         return newGroupRelation;
     };
 
-    function addVertex(newVertex, parentBubble, vertexHtmlBuilder) {
-        if (vertexHtmlBuilder === undefined) {
-            vertexHtmlBuilder = VertexHtmlBuilder;
+    function addVertex(newVertex, parentBubble, htmlBuilder) {
+        if (htmlBuilder === undefined) {
+            htmlBuilder = VertexHtmlBuilder;
         }
         var treeMaker = new api.TreeMaker(
-            vertexHtmlBuilder
+            htmlBuilder
         );
         newVertex.similarRelations = {};
         return treeMaker.buildBubbleHtmlIntoContainer(
             newVertex,
             parentBubble,
-            treeMaker.getVertexHtmlBuilder(),
+            htmlBuilder,
             GraphUi.generateBubbleHtmlId()
         );
     }
@@ -694,13 +696,19 @@ define([
                                 vertices
                             );
                             if (childHtmlFacade.isVertex() && childHtmlFacade.hasSuggestions() && !childHtmlFacade.hasHiddenRelations()) {
-                                api.showSuggestions(childHtmlFacade);
+                                api.addSuggestionsToVertex(
+                                    childHtmlFacade.getSuggestions(),
+                                    childHtmlFacade
+                                );
                             }
                         });
                     });
                 });
                 if (self.rootBubble.hasSuggestions()) {
-                    api.showSuggestions(self.rootBubble);
+                    api.addSuggestionsToVertex(
+                        self.rootBubble.getModel().getSuggestions(),
+                        self.rootBubble
+                    );
                 }
             }
 

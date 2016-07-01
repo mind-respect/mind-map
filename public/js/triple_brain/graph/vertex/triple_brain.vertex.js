@@ -67,6 +67,9 @@ define([
     Vertex.prototype.getIncludedEdges = function () {
         return this._includedEdges;
     };
+    Vertex.prototype.setSuggestions = function (suggestions) {
+        return this._suggestions = suggestions;
+    };
     Vertex.prototype.getSuggestions = function () {
         return this._suggestions;
     };

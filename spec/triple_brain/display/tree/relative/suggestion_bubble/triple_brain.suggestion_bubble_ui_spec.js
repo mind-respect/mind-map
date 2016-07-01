@@ -33,7 +33,10 @@ define([
         it("can remove newly accepted suggestion", function () {
             var oneBubbleHavingSuggestionsGraph = new Scenarios.oneBubbleHavingSuggestionsGraph();
             var eventBubble = oneBubbleHavingSuggestionsGraph.getVertexUi();
-            GraphDisplayerAsRelativeTree.showSuggestions(eventBubble);
+            GraphDisplayerAsRelativeTree.addSuggestionsToVertex(
+                eventBubble.getModel().getSuggestions(),
+                eventBubble
+            );
             var vertexSuggestionInTree = eventBubble.getTopMostChildBubble().getTopMostChildBubble();
             vertexSuggestionInTree.integrateUsingNewVertexAndEdgeUri(
                 TestUtils.generateVertexUri(),
