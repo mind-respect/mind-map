@@ -7,12 +7,12 @@ define([
     function () {
         "use strict";
         var api = {};
-        api.Self = function (sourceVertexUi, edgeUi, destinationVertexUi) {
-            this.sourceVertex = function () {
-                return sourceVertexUi;
-            };
+        api.TripleUi = function (edgeUi, sourceVertexUi, destinationVertexUi) {
             this.edge = function () {
                 return edgeUi;
+            };
+            this.sourceVertex = function () {
+                return sourceVertexUi;
             };
             this.destinationVertex = function () {
                 return destinationVertexUi;

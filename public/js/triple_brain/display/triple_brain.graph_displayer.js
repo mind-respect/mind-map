@@ -54,6 +54,10 @@ define([
             return _implementation.addSuggestionsToVertex(suggestions, vertex);
         };
 
+        api.addSuggestionToVertex = function (suggestion, vertex) {
+            return _implementation.addSuggestionToVertex(suggestion, vertex);
+        };
+
         api.addProperty = function (property, schema) {
             return _implementation.addProperty(
                 property,

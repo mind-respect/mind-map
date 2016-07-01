@@ -132,25 +132,34 @@ define([
                 var centerVertex = subGraph.getVertexWithUri(
                     self.getModel().getExternalResourceUri()
                 );
-                var suggestions = [];
                 subGraph.visitEdgesRelatedToVertex(centerVertex, function (edge) {
-                    if(edge.getUri() === parentEdgeUri){
+                    if (edge.getUri() === parentEdgeUri) {
                         return;
                     }
-                    suggestions.push(
+                    var destinationVertex = edge.getOtherVertex(centerVertex);
+                    destinationVertex = subGraph.getVertexWithUri(
+                        destinationVertex.getUri()
+                    );
+                    var triple = GraphDisplayer.addSuggestionToVertex(
                         Suggestion.fromTriple(
                             Triple.fromEdgeAndSourceAndDestinationVertex(
                                 edge,
                                 centerVertex,
-                                edge.getOtherVertex(centerVertex)
+                                destinationVertex
                             )
-                        )
+                        ),
+                        self
+                    );
+                    triple.edge().setComparedWith(
+                        edge
+                    );
+                    triple.destinationVertex().setText(
+                        destinationVertex.getLabel()
+                    );
+                    triple.destinationVertex().setComparedWith(
+                        destinationVertex
                     );
                 });
-                GraphDisplayer.addSuggestionsToVertex(
-                    suggestions,
-                    self
-                );
                 deferred.resolve();
             }
         );

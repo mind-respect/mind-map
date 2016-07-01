@@ -579,6 +579,38 @@ define([
             ).toBeTruthy();
         });
 
+        it("sets the label to expanded suggestions vertex", function () {
+            var scenario = new Scenarios.threeBubblesGraphFork();
+            var b1Fork = scenario.getBubble1InTree();
+            TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            ).remove();
+            TestUtils.enterCompareFlowWithGraph(
+                SubGraph.fromServerFormat(
+                    new Scenarios.threeBubblesGraph().getGraph()
+                )
+            );
+            var b3 = TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            ).getTopMostChildBubble();
+            expect(
+                b3.getNumberOfChild()
+            ).toBe(0);
+            GraphServiceMock.getForCentralVertexUriMock(
+                new Scenarios.threeBubblesGraph().getSurroundBubble3Graph()
+            );
+            b3.addChildTree();
+            var b5 = TestUtils.getChildWithLabel(
+                b3,
+                "r4"
+            ).getTopMostChildBubble();
+            expect(
+                b5.text()
+            ).toBe("b5");
+        });
+
         function connectDistantVertexTest(callback) {
             var distantGraphScenario = new Scenarios.getDistantGraph();
             var graphWithHiddenSimilarRelationsScenario = new Scenarios.getGraphWithHiddenSimilarRelations();

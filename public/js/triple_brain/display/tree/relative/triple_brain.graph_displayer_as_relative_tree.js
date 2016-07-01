@@ -215,27 +215,37 @@ define([
 
     api.addSuggestionsToVertex = function (suggestions, vertex) {
         $.each(suggestions, function () {
-            var suggestion = this;
-            if (!suggestion.shouldDisplay()) {
-                return;
-            }
-            var suggestionRelation = addEdge(
-                suggestion,
-                vertex,
-                SuggestionRelationBuilder
+            api.addSuggestionToVertex(
+                this,
+                vertex
             );
-            suggestionRelation.getModel().isLeftOriented = suggestionRelation.getSuggestion().isLeftOriented;
-            var suggestionBubble = addVertex(
-                suggestion,
-                suggestionRelation,
-                SuggestionBubbleHtmlBuilder
-            );
-            suggestionBubble.getModel().isLeftOriented = suggestionBubble.getSuggestion().isLeftOriented;
-            SuggestionBubbleHtmlBuilder.completeBuild(
-                suggestionBubble
-            );
-            SuggestionRelationBuilder.afterChildBuilt(suggestionRelation);
         });
+    };
+    api.addSuggestionToVertex = function (suggestion, vertex) {
+        if (!suggestion.shouldDisplay()) {
+            return;
+        }
+        var suggestionRelation = addEdge(
+            suggestion,
+            vertex,
+            SuggestionRelationBuilder
+        );
+        suggestionRelation.getModel().isLeftOriented = suggestionRelation.getSuggestion().isLeftOriented;
+        var suggestionBubble = addVertex(
+            suggestion,
+            suggestionRelation,
+            SuggestionBubbleHtmlBuilder
+        );
+        suggestionBubble.getModel().isLeftOriented = suggestionBubble.getSuggestion().isLeftOriented;
+        SuggestionBubbleHtmlBuilder.completeBuild(
+            suggestionBubble
+        );
+        SuggestionRelationBuilder.afterChildBuilt(suggestionRelation);
+        return new TripleUi.TripleUi(
+            suggestionRelation,
+            vertex,
+            suggestionBubble
+        );
     };
     api.addProperty = function (property, schema) {
         var propertyUi = addEdge(
@@ -268,9 +278,9 @@ define([
         VertexHtmlBuilder.completeBuild(destinationVertexUi);
         var parentVertexUi = sourceBubbleUi.isGroupRelation() ?
             sourceBubbleUi.getParentVertex() : sourceBubbleUi;
-        return new TripleUi.Self(
-            parentVertexUi,
+        return new TripleUi.TripleUi(
             edgeUi,
+            parentVertexUi,
             destinationVertexUi
         );
     };
@@ -290,9 +300,9 @@ define([
         SuggestionRelationBuilder.afterChildBuilt(
             relationSuggestionUi
         );
-        return new TripleUi.Self(
-            parentVertexUi,
+        return new TripleUi.TripleUi(
             relationSuggestionUi,
+            parentVertexUi,
             destinationSuggestionUi
         );
     };

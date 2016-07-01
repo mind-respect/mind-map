@@ -12,7 +12,6 @@ define([], function () {
             edge,
             source,
             destination
-
         );
     };
     function Triple(edge, source, destination) {
