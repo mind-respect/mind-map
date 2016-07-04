@@ -27,7 +27,10 @@ define([
         return api._getBubbleNoteModal().find(".editor");
     };
     api.Self = GraphElementController;
-    function GraphElementController() {
+    function GraphElementController(graphElements) {
+        if (graphElements) {
+            this.init(graphElements);
+        }
     }
 
     GraphElementController.prototype.init = function (graphElements) {
@@ -77,7 +80,7 @@ define([
     };
 
     GraphElementController.prototype.visitOtherInstancesCanDo = function () {
-        return this.graphElements.hasOtherInstances();
+        return this.isSingle() && this.graphElements.hasOtherInstances();
     };
 
     GraphElementController.prototype.visitOtherInstances = function () {

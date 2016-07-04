@@ -19,7 +19,7 @@ define([
     }
 
     GraphElementButton.prototype.showOnlyIfApplicable = function (controller) {
-        if(controller.getElements === undefined){
+        if(this.isForWholeGraph()){
             return;
         }
         var selected = controller.getElements();

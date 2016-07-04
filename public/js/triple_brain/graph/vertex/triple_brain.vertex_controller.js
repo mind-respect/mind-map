@@ -50,6 +50,10 @@ define([
         );
     };
 
+    VertexController.prototype.removeCanDo = function(){
+        return this.isSingleAndOwned();
+    };
+
     VertexController.prototype.remove = function (skipConfirmation) {
         if (skipConfirmation) {
             deleteAfterConfirmationBehavior(this.vertices);
@@ -66,16 +70,28 @@ define([
         }
     };
 
+    VertexController.prototype.centerCanDo = function () {
+        return this.isSingle();
+    };
+
     VertexController.prototype.center = function () {
         GraphDisplayer.displayUsingCentralVertex(
             this.vertices
         );
     };
 
+    VertexController.prototype.imagesCanDo = function () {
+        return this.isSingle();
+    };
+
     VertexController.prototype.images = function () {
         ImageMenu.ofVertex(
             this.vertices
         ).build();
+    };
+
+    VertexController.prototype.connectToCanDo = function () {
+        return this.isSingleAndOwned();
     };
 
     VertexController.prototype.connectTo = function () {
@@ -117,7 +133,7 @@ define([
     };
 
     VertexController.prototype.subElementsCanDo = function () {
-        return this.vertices.hasIncludedGraphElements();
+        return this.isSingle() && this.vertices.hasIncludedGraphElements();
     };
 
     VertexController.prototype.subElements = function () {

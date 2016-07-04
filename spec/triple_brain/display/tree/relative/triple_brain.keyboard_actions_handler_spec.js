@@ -17,6 +17,7 @@ define([
             KeyBoardActionsHandler._handleKeyboardActions();
         });
         it("adds a child when pressing tab key", function () {
+            MindMapInfo._setIsViewOnly(false);
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             SelectionHandler.setToSingleGraphElement(bubble1);
             var numberOfChild = bubble1.getNumberOfChild();
@@ -29,6 +30,7 @@ define([
             );
         });
         it("adds a child to a relation when pressing tab key", function () {
+            MindMapInfo._setIsViewOnly(false);
             var relation1 = new Scenarios.threeBubblesGraph().getRelation1InTree();
             expect(
                 relation1.getParentBubble().isGroupRelation()
@@ -41,6 +43,7 @@ define([
             ).toBeTruthy();
         });
         it("focuses on bubble label of a selected bubble when user types", function () {
+            MindMapInfo._setIsViewOnly(false);
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             SelectionHandler.setToSingleGraphElement(bubble1);
             expect(

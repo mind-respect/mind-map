@@ -50,6 +50,9 @@ define([
             -0.1
         );
     };
+    api.getElements = function(){
+        return [];
+    };
     return api;
 });
  

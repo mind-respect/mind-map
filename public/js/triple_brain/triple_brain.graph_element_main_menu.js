@@ -125,12 +125,10 @@ define([
         });
 
         api._getCurrentClickHandler = function (button) {
-            if (button.isForWholeGraph()) {
+            if (button !== undefined && button.isForWholeGraph()) {
                 return GraphDisplayer.getGraphMenuHandler();
             }
-            return api._getMenu().data(
-                "currentClickHandler"
-            );
+            return api._currentClickHandler;
         };
 
         api._getMenu = function () {
@@ -145,9 +143,6 @@ define([
         function reviewButtonsVisibility() {
             var selectionInfo = SelectionHandler.getSelectionInfo();
             var clickHandler = updateCurrentClickHandler(selectionInfo);
-            if (undefined === clickHandler) {
-                return;
-            }
             var selected = 1 === selectionInfo.getNbSelected() ?
                 selectionInfo.getSingleElement() :
                 selectionInfo.getSelectedElements();
@@ -163,12 +158,11 @@ define([
 
         function updateCurrentClickHandler(selectionInfo) {
             var nbSelectedGraphElements = selectionInfo.getNbSelected(),
-                currentClickHandler,
-                vertexMenuHandler = GraphDisplayer.getVertexMenuHandler(),
-                relationMenuHandler = GraphDisplayer.getRelationMenuHandler();
+                currentClickHandler;
             if (0 === nbSelectedGraphElements) {
                 currentClickHandler = GraphDisplayer.getGraphMenuHandler();
             }
+
             else if (1 === nbSelectedGraphElements) {
                 currentClickHandler = selectionInfo.getSingleElement().getController();
             } else {
@@ -176,11 +170,20 @@ define([
                     nbSelectedRelations = selectionInfo.getNbSelectedRelations(),
                     nbSelectedGroupRelations = selectionInfo.getNbSelectedGroupRelations();
                 if (0 === nbSelectedVertices && 0 === nbSelectedGroupRelations) {
-                    currentClickHandler = relationMenuHandler.forGroup();
+                    var object = GraphDisplayer.getRelationMenuHandler();
+                    currentClickHandler = new object.Self(
+                        selectionInfo.getSelectedElements()
+                    );
                 } else if (0 === nbSelectedRelations && 0 === nbSelectedGroupRelations) {
-                    currentClickHandler = vertexMenuHandler.forGroup();
+                    var object = GraphDisplayer.getVertexMenuHandler();
+                    currentClickHandler = new object.Self(
+                        selectionInfo.getSelectedElements()
+                    );
                 } else {
-                    currentClickHandler = GraphDisplayer.getGraphElementMenuHandler();
+                    var object = GraphDisplayer.getGraphElementMenuHandler();
+                    currentClickHandler = new object.Self(
+                        selectionInfo.getSelectedElements()
+                    );
                 }
             }
             setCurrentClickHandler(
@@ -190,10 +193,7 @@ define([
         }
 
         function setCurrentClickHandler(currentClickHandler) {
-            api._getMenu().data(
-                "currentClickHandler",
-                currentClickHandler
-            );
+            api._currentClickHandler = currentClickHandler;
         }
     }
 );
