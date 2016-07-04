@@ -59,10 +59,10 @@ define([
             this.html.uniqueId();
             this._addLabel();
             this._addArrow();
-            this._createMenu();
             var groupRelationUi = GroupRelationUi.createFromHtml(
                 this.html
             );
+            this._createMenu(groupRelationUi);
             groupRelationUi.setUri(
                 /*
                  * todo should not set the uri to the first identifier but it's just
@@ -74,11 +74,11 @@ define([
             return groupRelationUi;
         };
 
-        Self.prototype._createMenu = function () {
+        Self.prototype._createMenu = function (groupRelationUi) {
             var menu = $("<div class='menu'>");
             GraphElementMainMenu.addRelevantButtonsInMenu(
                 menu,
-                GraphDisplayer.getGroupRelationMenuHandler().forSingle()
+                groupRelationUi.getController()
             );
             this.html.find(".label-container")[
                 this.serverFacade.isLeftOriented ?

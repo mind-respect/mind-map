@@ -82,15 +82,15 @@ define([
 
     function executeFeature(feature, selectedElement){
         if(typeof feature === "string"){
-            var handler = selectedElement.getMenuHandler().forSingle();
-            if(handler[feature] === undefined){
+            var controller = selectedElement.getController();
+            if(controller[feature] === undefined){
                 return;
             }
-            var canDoValidator = handler[feature + "CanDo"];
-            if(canDoValidator !== undefined && !canDoValidator(selectedElement)){
+            var canDoValidator = controller[feature + "CanDo"];
+            if(canDoValidator !== undefined && !canDoValidator.call(controller)){
                 return;
             }
-            handler[feature + "Action"](selectedElement);
+            controller[feature]();
             return;
         }
         feature(selectedElement);
@@ -122,9 +122,7 @@ define([
         if (MindMapInfo.isViewOnly() || selectedElement.isGroupRelation()) {
             return;
         }
-        selectedElement.getMenuHandler().forSingle().identifyAction(
-            selectedElement
-        );
+        selectedElement.getController().identify();
     }
 
     function eKeyAction(selectedElement) {
@@ -145,9 +143,9 @@ define([
         if (!selectedElement.isVertex()) {
             return;
         }
-        var handler = selectedElement.getMenuHandler().forSingle();
+        var handler = selectedElement.getController();
         if (handler.suggestionsCanDo(selectedElement)) {
-            handler.suggestionsAction(
+            handler.suggestions(
                 selectedElement
             );
         }
@@ -157,16 +155,14 @@ define([
         if (!selectedElement.isRelation()) {
             return;
         }
-        selectedElement.getMenuHandler().forSingle().reverse(
-            selectedElement
-        );
+        selectedElement.getController().reverse();
     }
 
     function tabAction(selectedElement) {
         if (MindMapInfo.isViewOnly() || selectedElement.isProperty()) {
             return;
         }
-        selectedElement.getMenuHandler().forSingle().addChildAction(selectedElement);
+        selectedElement.getController().addChild();
     }
 
     function leftAction(selectedElement) {
@@ -227,8 +223,6 @@ define([
         if (MindMapInfo.isViewOnly()) {
             return;
         }
-        selectedElement.getMenuHandler().forSingle().removeAction(
-            selectedElement
-        );
+        selectedElement.getController().remove();
     }
 });

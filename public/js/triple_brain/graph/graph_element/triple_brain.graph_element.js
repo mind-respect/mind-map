@@ -70,7 +70,7 @@ define([
     };
     api.Self = function () {
     };
-
+    
     api.Self.prototype = new FriendlyResource.Self();
 
     api.Self.prototype.init = function (graphElementServerFormat) {

@@ -1,4 +1,4 @@
- /*
+/*
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
@@ -27,10 +27,7 @@ define([
             if (elementUi.isSuggestion()) {
                 var vertexSuggestion = elementUi.isRelationSuggestion() ?
                     elementUi.getTopMostChildBubble() : elementUi;
-                SuggestionService.accept(
-                    vertexSuggestion,
-                    updateLabelToService
-                );
+                vertexSuggestion.getController().accept().then(updateLabelToService);
             } else {
                 updateLabelToService();
             }

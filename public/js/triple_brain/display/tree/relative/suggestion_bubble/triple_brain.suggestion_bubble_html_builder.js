@@ -9,11 +9,11 @@ define([
     "triple_brain.relative_tree_vertex",
     "triple_brain.suggestion_bubble_ui",
     "triple_brain.graph_element_main_menu",
-    "triple_brain.suggestion_bubble_menu_handler",
+    "triple_brain.suggestion_vertex_controller",
     "triple_brain.graph_ui",
     "triple_brain.identification",
     "triple_brain.event_bus"
-], function ($, VertexHtmlCommon, GraphElementHtmlBuilder, RelativeTreeVertex, SuggestionBubbleUi, GraphElementMainMenu, SuggestionBubbleMenuHandler, GraphUi, Identification, EventBus) {
+], function ($, VertexHtmlCommon, GraphElementHtmlBuilder, RelativeTreeVertex, SuggestionBubbleUi, GraphElementMainMenu, SuggestionVertexController, GraphUi, Identification, EventBus) {
     "use strict";
     var api = {};
     api.withServerFacade = function (suggestion) {
@@ -61,7 +61,7 @@ define([
         suggestionUi.setText("");
         GraphElementMainMenu.addRelevantButtonsInMenu(
             this._addMenu(),
-            SuggestionBubbleMenuHandler.forSingle()
+            suggestionUi.getController()
         );
         suggestionUi.hideMenu();
         suggestionUi.getLabel().on("change", function () {

@@ -18,11 +18,11 @@ define([
     "triple_brain.edge_html_builder_view_only",
     "triple_brain.tree_edge",
     "triple_brain.point",
-    "triple_brain.relative_tree_vertex_menu_handler",
-    "triple_brain.group_relation_menu_handler",
-    "triple_brain.tree_edge_menu_handler",
+    "triple_brain.vertex_controller",
+    "triple_brain.group_relation_controller",
+    "triple_brain.edge_controller",
     "triple_brain.relative_tree_graph_menu_handler",
-    "triple_brain.graph_element_menu_handler",
+    "triple_brain.graph_element_controller",
     "triple_brain.keyboard_actions_handler",
     "triple_brain.edge",
     "triple_brain.identification",
@@ -32,21 +32,21 @@ define([
     "triple_brain.schema",
     "triple_brain.schema_html_builder",
     "triple_brain.schema_ui",
-    "triple_brain.schema_menu_handler",
+    "triple_brain.schema_controller",
     "triple_brain.property_html_builder",
-    "triple_brain.property_menu_handler",
+    "triple_brain.property_controller",
     "triple_brain.property_ui",
     "triple_brain.suggestion_bubble_html_builder",
     "triple_brain.suggestion_relation_builder",
     "triple_brain.suggestion_bubble_ui",
     "triple_brain.suggestion_relation_ui",
-    "triple_brain.suggestion_bubble_menu_handler",
-    "triple_brain.suggestion_relation_menu_handler",
+    "triple_brain.suggestion_vertex_controller",
+    "triple_brain.suggestion_relation_controller",
     "triple_brain.triple_ui",
     "triple_brain.center_bubble",
     "triple_brain.selection_handler",
     "triple_brain.group_relation"
-], function ($, GraphService, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, RelativeTreeVertexMenuHandler, GroupRelationMenuHandler, TreeEdgeMenuHandler, RelativeTreeGraphMenuHandler, GraphElementMenuHandler, KeyboardActionsHandler, Edge, Identification, GroupRelationHtmlBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaHtmlBuilder, SchemaUi, SchemaMenuHandler, PropertyHtmlBuilder, PropertyMenuHandler, PropertyUi, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SuggestionBubbleUi, SuggestionRelationUi, SuggestionBubbleMenuHandler, SuggestionRelationMenuHandler, TripleUi, CenterBubble, SelectionHandler, GroupRelation) {
+], function ($, GraphService, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, VertexController, GroupRelationController, EdgeController, RelativeTreeGraphMenuHandler, GraphElementController, KeyboardActionsHandler, Edge, Identification, GroupRelationHtmlBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaHtmlBuilder, SchemaUi, SchemaController, PropertyHtmlBuilder, PropertyController, PropertyUi, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SuggestionBubbleUi, SuggestionRelationUi, SuggestionVertexController, SuggestionRelationController, TripleUi, CenterBubble, SelectionHandler, GroupRelation) {
     "use strict";
     KeyboardActionsHandler.init();
     var api = {};
@@ -312,31 +312,31 @@ define([
         return GroupRelationUi;
     };
     api.getVertexMenuHandler = function () {
-        return RelativeTreeVertexMenuHandler;
+        return VertexController;
     };
     api.getRelationMenuHandler = function () {
-        return TreeEdgeMenuHandler;
+        return EdgeController;
     };
     api.getGroupRelationMenuHandler = function () {
-        return GroupRelationMenuHandler;
+        return GroupRelationController;
     };
     api.getSchemaMenuHandler = function () {
-        return SchemaMenuHandler;
+        return SchemaController;
     };
     api.getPropertyMenuHandler = function () {
-        return PropertyMenuHandler;
+        return PropertyController;
     };
     api.getGraphElementMenuHandler = function () {
-        return GraphElementMenuHandler;
+        return GraphElementController;
     };
     api.getGraphMenuHandler = function () {
         return RelativeTreeGraphMenuHandler;
     };
-    api.getVertexSuggestionMenuHandler = function () {
-        return SuggestionBubbleMenuHandler;
+    api.getVertexSuggestionController = function () {
+        return SuggestionVertexController;
     };
     api.getRelationSuggestionMenuHandler = function () {
-        return SuggestionRelationMenuHandler;
+        return SuggestionRelationController;
     };
     api.getVertexSuggestionSelector = function () {
         return SuggestionBubbleUi;

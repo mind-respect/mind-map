@@ -66,7 +66,7 @@ define([
         this.html.find(".label-container").append(menu);
         GraphElementMainMenu.addRelevantButtonsInMenu(
             menu,
-            this.edge.getMenuHandler().forSingle()
+            this.edge.getController()
         );
     };
     return api;

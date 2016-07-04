@@ -7,33 +7,15 @@ define([
 ], function ($) {
     "use strict";
     var api = {};
-    api.accept = function(suggestionUi, callback){
+    api.accept = function(suggestionUi){
         var vertex = suggestionUi.getParentVertex(),
             serverFormat = suggestionUi.getSuggestion().getServerFormat();
-        $.ajax({
+        return $.ajax({
             type: 'POST',
             url: vertex.getUri()+ '/suggestions/accept',
             data: JSON.stringify(serverFormat),
             contentType: 'application/json;charset=utf-8'
-        }).success(function(xhr){
-            api.acceptCallback(
-                xhr.vertex_uri,
-                xhr.edge_uri,
-                suggestionUi,
-                callback
-            );
         });
-    };
-    api.acceptCallback = function(vertexUri, edgeUri, suggestionUi, callback){
-        var newVertexUi = suggestionUi.integrateUsingNewVertexAndEdgeUri(
-            vertexUri,
-            edgeUri
-        );
-        if(callback !== undefined){
-            callback(
-                newVertexUi
-            );
-        }
     };
     api.remove = function(suggestionsUri, vertex, callback){
         $.ajax({

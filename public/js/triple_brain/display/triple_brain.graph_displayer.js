@@ -142,8 +142,8 @@ define([
         api.getPropertyMenuHandler = function () {
             return _implementation.getPropertyMenuHandler();
         };
-        api.getVertexSuggestionMenuHandler = function () {
-            return _implementation.getVertexSuggestionMenuHandler();
+        api.getVertexSuggestionController = function () {
+            return _implementation.getVertexSuggestionController();
         };
         api.getRelationSuggestionMenuHandler = function () {
             return _implementation.getRelationSuggestionMenuHandler();

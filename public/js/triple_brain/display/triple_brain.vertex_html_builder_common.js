@@ -65,10 +65,10 @@ define([
         }
     };
 
-    api.addRelevantButtonsInMenu = function (menuContainer) {
+    api.addRelevantButtonsInMenu = function (menuContainer, vertex) {
         GraphElementMainMenu.addRelevantButtonsInMenu(
             menuContainer,
-            GraphDisplayer.getVertexMenuHandler().forSingle()
+            vertex.getController()
         );
     };
     api.buildLabelHtml = function (vertex, inContentContainer, uiSelector, serverFacade) {

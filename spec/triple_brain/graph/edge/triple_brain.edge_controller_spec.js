@@ -7,13 +7,11 @@ define([
     'test/test-utils',
     'test/mock',
     "test/mock/triple_brain.edge_service_mock",
-    'triple_brain.tree_edge_menu_handler',
+    'triple_brain.edge_controller',
     'triple_brain.mind_map_info'
-], function (Scenarios, TestUtils, Mock, EdgeServiceMock, TreeEdgeMenuHandler, MindMapInfo) {
+], function (Scenarios, TestUtils, Mock, EdgeServiceMock, EdgeController, MindMapInfo) {
     "use strict";
-    describe("graph_displayer_as_tree_common", function () {
-        beforeEach(function () {
-        });
+    describe("edge_controller", function () {
         it("can remove edge", function () {
             var threeBubblesScenario = new Scenarios.threeBubblesGraph();
             var bubble1 = threeBubblesScenario.getBubble1InTree();
@@ -22,9 +20,9 @@ define([
             Mock.mockRemoveEdge();
             MindMapInfo.setIsAnonymous(false);
             MindMapInfo._setIsViewOnly(false);
-            TreeEdgeMenuHandler.forSingle().removeAction(
+            new EdgeController.Self(
                 relation1
-            );
+            ).remove();
             expect(
                 bubble1.getNumberOfChild()
             ).toBe(numberOfChild - 1);
@@ -36,9 +34,9 @@ define([
                 TestUtils.getChildWithLabel(bubble1, "r1").isGroupRelation()
             ).toBeFalsy();
             MindMapInfo._setIsViewOnly(false);
-            TreeEdgeMenuHandler.forSingle().addChildAction(
+            new EdgeController.Self(
                 TestUtils.getChildWithLabel(bubble1, "r1")
-            );
+            ).addChild();
             expect(
                 TestUtils.getChildWithLabel(bubble1, "r1").isGroupRelation()
             ).toBeTruthy();
@@ -50,9 +48,9 @@ define([
             MindMapInfo._setIsViewOnly(false);
             var relation1 = TestUtils.getChildWithLabel(bubble1, "r1");
             var relation1Uri = relation1.getUri();
-            TreeEdgeMenuHandler.forSingle().addChildAction(
+            new EdgeController.Self(
                 relation1
-            );
+            ).addChild();
             var newGroupRelation = TestUtils.getChildWithLabel(bubble1, "r1");
             var identifierExternalResourceUri = newGroupRelation.getGroupRelation().getIdentification().getExternalResourceUri();
             expect(
@@ -67,9 +65,9 @@ define([
             var karaokeIdentification = new Scenarios.getKaraokeSchemaGraph().getSchemaAsIdentification();
             relation1.addGenericIdentification(karaokeIdentification);
             MindMapInfo._setIsViewOnly(false);
-            TreeEdgeMenuHandler.forSingle().addChildAction(
+            new EdgeController.Self(
                 relation1
-            );
+            ).addChild();
             var newGroupRelation = TestUtils.getChildWithLabel(bubble1, "karaoke");
             var identifierExternalResourceUri = newGroupRelation.getGroupRelation().getIdentification().getExternalResourceUri();
             expect(
@@ -104,9 +102,9 @@ define([
             ).toBeFalsy();
             MindMapInfo._setIsViewOnly(false);
             EdgeServiceMock.removeMock();
-            TreeEdgeMenuHandler.forSingle().removeAction(
+            new EdgeController.Self(
                 aRelationToSameBubble
-            );
+            ).remove();
             expect(
                 TestUtils.isGraphElementUiRemoved(
                     aRelationToSameBubble
@@ -125,7 +123,7 @@ define([
                 bubble1,
                 "r3"
             );
-            var bubble2 =  TestUtils.getChildWithLabel(
+            var bubble2 = TestUtils.getChildWithLabel(
                 bubble1,
                 "r1"
             ).getTopMostChildBubble();
@@ -151,9 +149,9 @@ define([
             ).toBeFalsy();
             MindMapInfo._setIsViewOnly(false);
             EdgeServiceMock.removeMock();
-            TreeEdgeMenuHandler.forSingle().removeAction(
+            new EdgeController.Self(
                 aRelation
-            );
+            ).remove();
             expect(
                 TestUtils.isGraphElementUiRemoved(
                     aRelation

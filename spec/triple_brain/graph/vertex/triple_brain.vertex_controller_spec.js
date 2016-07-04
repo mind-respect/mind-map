@@ -5,13 +5,13 @@
 define([
     'test/test-scenarios',
     "test/mock/triple_brain.vertex_service_mock",
-    'triple_brain.relative_tree_vertex_menu_handler',
+    "triple_brain.vertex_controller",
     "triple_brain.selection_handler",
     'triple_brain.vertex_service',
     'triple_brain.mind_map_info'
-], function (Scenarios, VertexServiceMock, RelativeTreeVertexMenuHandler, SelectionHandler, VertexService, MindMapInfo) {
+], function (Scenarios, VertexServiceMock, VertexController, SelectionHandler, VertexService, MindMapInfo) {
     "use strict";
-    describe("relative_tree_vertex_menu_handler", function () {
+    describe("vertex_controller", function () {
         var threeBubbles;
         beforeEach(function () {
             threeBubbles = new Scenarios.threeBubblesGraph();
@@ -25,7 +25,7 @@ define([
                 bubble1.getNumberOfChild()
             ).toBe(2);
             var bubble2 = r1.getTopMostChildBubble();
-            RelativeTreeVertexMenuHandler.forSingle().removeAction(bubble2, true);
+            bubble2.getController().remove(true);
             expect(
                 bubble1.getNumberOfChild()
             ).toBe(1);
@@ -33,15 +33,12 @@ define([
         it("cannot add sibling if center bubble", function () {
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             var someChild = bubble1.getTopMostChildBubble().getTopMostChildBubble();
+            MindMapInfo._setIsViewOnly(false);
             expect(
-                RelativeTreeVertexMenuHandler.forSingle().addSiblingCanDo(
-                    someChild
-                )
+                someChild.getController().addSiblingCanDo()
             ).toBeTruthy();
             expect(
-                RelativeTreeVertexMenuHandler.forSingle().addSiblingCanDo(
-                    bubble1
-                )
+                bubble1.getController().addSiblingCanDo()
             ).toBeFalsy();
         });
         it("can add sibling", function () {
@@ -49,7 +46,7 @@ define([
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             var numberOfChild = bubble1.getNumberOfChild();
             var someChild = bubble1.getTopMostChildBubble().getTopMostChildBubble();
-            RelativeTreeVertexMenuHandler.forSingle().addSiblingAction(someChild);
+            someChild.getController().addSibling();
             expect(
                 bubble1.getNumberOfChild()
             ).toBe(numberOfChild + 1);
@@ -57,7 +54,7 @@ define([
         it("adding bubble and relation selects new bubble", function () {
             VertexServiceMock.addRelationAndVertexToVertexMock();
             var bubble = new Scenarios.threeBubblesGraph().getBubble2InTree();
-            RelativeTreeVertexMenuHandler.forSingle().addChildAction(bubble);
+            bubble.getController().addChild();
             var newBubble = bubble.getTopMostChildBubble().getTopMostChildBubble();
             expect(
                 newBubble.isSelected()
@@ -69,9 +66,7 @@ define([
             expect(
                 eventBubble.getTopMostChildBubble().isVisible()
             ).toBeTruthy();
-            RelativeTreeVertexMenuHandler.forSingle().suggestionsAction(
-                eventBubble
-            );
+            eventBubble.getController().suggestions();
             expect(
                 eventBubble.getTopMostChildBubble().isVisible()
             ).toBeFalsy();
@@ -89,13 +84,12 @@ define([
                 bubble1.getMakePublicButtonInBubbleContent()
             ).not.toHaveClass("hidden");
             VertexServiceMock.makeCollectionPublic();
-            RelativeTreeVertexMenuHandler.forGroup().makePublic(
-                {},
+            new VertexController.Self(
                 [
                     bubble1,
                     scenario.getBubble2InTree()
                 ]
-            );
+            ).makePublic();
             expect(
                 bubble1.getMakePrivateButtonInBubbleContent()
             ).not.toHaveClass("hidden");
@@ -103,13 +97,12 @@ define([
                 bubble1.getMakePublicButtonInBubbleContent()
             ).toHaveClass("hidden");
             VertexServiceMock.makeCollectionPrivate();
-            RelativeTreeVertexMenuHandler.forGroup().makePrivate(
-                {},
+            new VertexController.Self(
                 [
                     bubble1,
                     scenario.getBubble2InTree()
                 ]
-            );
+            ).makePrivate();
             expect(
                 bubble1.getMakePrivateButtonInBubbleContent()
             ).toHaveClass("hidden");

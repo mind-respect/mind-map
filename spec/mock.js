@@ -18,62 +18,61 @@ define([
 ], function ($, TestUtils, UserService, MindMapInfo, SuggestionService, GraphService, SchemaService, VertexService, FriendlyResourceService, EdgeService, SearchService, IdUri) {
     "use strict";
     var api = {};
-    api.setCenterVertexUriInUrl = function(centerVertexUri){
+    api.setCenterVertexUriInUrl = function (centerVertexUri) {
         window.usernameForBublGuru = IdUri.usernameFromUri(centerVertexUri);
         window.graphElementTypeForBublGuru = IdUri.isSchemaUri(centerVertexUri) ? "schema" : "vertex";
         window.graphElementShortIdForBublGuru = IdUri.getGraphElementShortIdFromUri(centerVertexUri);
-        IdUri.getGraphElementUriInUrl = function(){
+        IdUri.getGraphElementUriInUrl = function () {
             return centerVertexUri;
         };
     };
-    api.setGetGraphFromService = function(graph){
-        GraphService.getForCentralVertexUri = function(centerVertexUri, callback){
+    api.setGetGraphFromService = function (graph) {
+        GraphService.getForCentralVertexUri = function (centerVertexUri, callback) {
             callback(
                 graph
             );
         };
     };
-    api.setGetSchemaFromService = function(schema){
-        SchemaService.get = function(schemaUri, callback){
+    api.setGetSchemaFromService = function (schema) {
+        SchemaService.get = function (schemaUri, callback) {
             callback(
                 schema
             );
         };
     };
-    api.getSearchResultDetailsToReturn = function(toReturn){
-        SearchService.getSearchResultDetails = function(uri, callback){
+    api.getSearchResultDetailsToReturn = function (toReturn) {
+        SearchService.getSearchResultDetails = function (uri, callback) {
             callback(toReturn);
         };
     };
 
-    api.mockUpdateLabel = function(){
-        return spyOn(FriendlyResourceService, "updateLabel").and.callFake(function(friendlyResource, label, callback){
+    api.mockUpdateLabel = function () {
+        return spyOn(FriendlyResourceService, "updateLabel").and.callFake(function (friendlyResource, label, callback) {
             if (callback !== undefined) {
                 callback(friendlyResource);
             }
         });
     };
-    api.mockAcceptSuggestion = function(){
-        return spyOn(SuggestionService, "accept").and.callFake(function(suggestionUi, callback){
-            SuggestionService.acceptCallback(
-                TestUtils.generateVertexUri(),
-                TestUtils.generateEdgeUri(),
-                suggestionUi,
-                callback
-            );
+    api.mockAcceptSuggestion = function () {
+        return spyOn(SuggestionService, "accept").and.callFake(function () {
+            var deferred = $.Deferred();
+            return deferred.resolve({
+                vertex_uri: TestUtils.generateVertexUri(),
+                edge_uri: TestUtils.generateEdgeUri()
+            });
         });
     };
-    api.mockRemoveEdge = function(){
-        return spyOn(EdgeService, "remove").and.callFake(function(edge, callback){
+    api.mockRemoveEdge = function () {
+        return spyOn(EdgeService, "remove").and.callFake(function (edge, callback) {
             callback(edge);
         });
     };
-    UserService.authenticatedUserInCache = function(){
+    UserService.authenticatedUserInCache = function () {
         return {
-            user_name : "foo"
+            user_name: "foo"
         };
     };
-    VertexService.addSuggestions = function(){
+    VertexService.addSuggestions = function () {
         return $.Deferred().resolve();
     };
     return api;

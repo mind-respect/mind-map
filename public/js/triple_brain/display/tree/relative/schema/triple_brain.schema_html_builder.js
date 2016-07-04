@@ -9,11 +9,11 @@ define([
     "triple_brain.vertex_html_builder_common",
     "triple_brain.graph_element_html_builder",
     "triple_brain.graph_element_main_menu",
-    "triple_brain.schema_menu_handler",
+    "triple_brain.schema_controller",
     "triple_brain.relative_tree_vertex",
     "triple_brain.graph_ui",
     "triple_brain.event_bus"
-], function($, SchemaUi, MindMapInfo, VertexHtmlCommon, GraphElementHtmlBuilder, GraphElementMainMenu, SchemaMenuHandler, RelativeTreeVertex, GraphUi, EventBus){
+], function($, SchemaUi, MindMapInfo, VertexHtmlCommon, GraphElementHtmlBuilder, GraphElementMainMenu, SchemaController, RelativeTreeVertex, GraphUi, EventBus){
     "use strict";
     var api = {};
     api.withServerFacade = function(serverFacade){
@@ -51,11 +51,11 @@ define([
             htmlId = GraphUi.generateBubbleHtmlId();
         }
         this.html.attr('id', htmlId);
-        var schema = SchemaUi.createFromHtml(
+        var schemaUi = SchemaUi.createFromHtml(
             this.html
         );
         VertexHtmlCommon.buildLabelHtml(
-            schema,
+            schemaUi,
             VertexHtmlCommon.buildInsideBubbleContainer(
                 this.html
             ),
@@ -64,20 +64,20 @@ define([
         );
         GraphElementMainMenu.addRelevantButtonsInMenu(
             this._addMenu(),
-            SchemaMenuHandler.forSingle()
+            schemaUi.getController()
         );
-        schema.addImages(
+        schemaUi.addImages(
             this.serverFacade.getImages()
         );
-        schema.hideMenu();
-        schema.makePublic();
-        schema.setNote(
+        schemaUi.hideMenu();
+        schemaUi.makePublic();
+        schemaUi.setNote(
             this.serverFacade.getComment()
         );
         VertexHtmlCommon.buildInLabelButtons(
-            schema
+            schemaUi
         );
-        return schema;
+        return schemaUi;
     };
     Self.prototype._addMenu = function(){
         return $("<div class='menu'>").appendTo(

@@ -8,9 +8,9 @@ define([
     "test/mock/triple_brain.vertex_service_mock",
     "triple_brain.keyboard_actions_handler",
     "triple_brain.selection_handler",
-    "triple_brain.relative_tree_vertex_menu_handler",
+    "triple_brain.vertex_controller",
     'triple_brain.mind_map_info'
-], function (Scenarios, TestUtils, VertexServiceMock, KeyBoardActionsHandler, SelectionHandler, RelativeTreeVertexMenuHandler, MindMapInfo) {
+], function (Scenarios, TestUtils, VertexServiceMock, KeyBoardActionsHandler, SelectionHandler, VertexController, MindMapInfo) {
     "use strict";
     describe("keyboard_action_handler", function () {
         beforeEach(function () {
@@ -52,11 +52,11 @@ define([
             ).toBeTruthy();
         });
 
-        it("calls identification action when pressing ctrl+i", function(){
+        it("calls identification method when pressing ctrl+i", function(){
             MindMapInfo._setIsViewOnly(false);
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             SelectionHandler.setToSingleGraphElement(bubble1);
-            var actionSpy = spyOn(RelativeTreeVertexMenuHandler.forSingle(), "identifyAction");
+            var actionSpy = spyOn(VertexController.Self.prototype, "identify");
             expect(
                 actionSpy
             ).not.toHaveBeenCalled();
@@ -77,6 +77,7 @@ define([
 
         it("adds a sibling when pressing enter", function(){
             VertexServiceMock.addRelationAndVertexToVertexMock();
+            MindMapInfo._setIsViewOnly(false);
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             var numberOfChild = bubble1.getNumberOfChild();
             var someChild = bubble1.getTopMostChildBubble().getTopMostChildBubble();

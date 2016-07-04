@@ -21,7 +21,7 @@ define([
         otherInstancesKey = "otherInstances",
         textBeforeModificationKey = "textBeforeModification";
     api.Types = GraphElementType;
-    var menuHandlerGetters = {},
+    var controllerGetters = {},
         selectors = {};
     initMenuHandlerGetters();
     initSelectors();
@@ -200,11 +200,13 @@ define([
             "[data-action=" + action + "]"
         );
     };
-    api.Self.prototype.getMenuHandler = function () {
-        return menuHandlerGetters[
+    api.Self.prototype.getController = function () {
+        var controller = controllerGetters[
             this.getGraphElementType()
             ]();
+        return new controller.Self(this);
     };
+
     api.Self.prototype.getTextOrDefault = function () {
         var text = this.text();
         return "" === text.trim() ?
@@ -308,13 +310,13 @@ define([
         var container = this.getMenuHtml().empty();
         GraphElementMainMenu.addRelevantButtonsInMenu(
             container,
-            this.getMenuHandler().forSingle()
+            this.getController()
         );
         this.onlyShowButtonsIfApplicable();
     };
     api.Self.prototype.onlyShowButtonsIfApplicable = function () {
         GraphElementMainMenu.onlyShowButtonsIfApplicable(
-            this.getMenuHandler().forSingle(),
+            this.getController(),
             this
         );
     };
@@ -566,13 +568,13 @@ define([
 
     return api;
     function initMenuHandlerGetters() {
-        menuHandlerGetters[api.Types.Vertex] = GraphDisplayer.getVertexMenuHandler;
-        menuHandlerGetters[api.Types.Relation] = GraphDisplayer.getRelationMenuHandler;
-        menuHandlerGetters[api.Types.GroupRelation] = GraphDisplayer.getGroupRelationMenuHandler;
-        menuHandlerGetters[api.Types.Schema] = GraphDisplayer.getSchemaMenuHandler;
-        menuHandlerGetters[api.Types.Property] = GraphDisplayer.getPropertyMenuHandler;
-        menuHandlerGetters[api.Types.VertexSuggestion] = GraphDisplayer.getVertexSuggestionMenuHandler;
-        menuHandlerGetters[api.Types.RelationSuggestion] = GraphDisplayer.getRelationSuggestionMenuHandler;
+        controllerGetters[api.Types.Vertex] = GraphDisplayer.getVertexMenuHandler;
+        controllerGetters[api.Types.Relation] = GraphDisplayer.getRelationMenuHandler;
+        controllerGetters[api.Types.GroupRelation] = GraphDisplayer.getGroupRelationMenuHandler;
+        controllerGetters[api.Types.Schema] = GraphDisplayer.getSchemaMenuHandler;
+        controllerGetters[api.Types.Property] = GraphDisplayer.getPropertyMenuHandler;
+        controllerGetters[api.Types.VertexSuggestion] = GraphDisplayer.getVertexSuggestionController;
+        controllerGetters[api.Types.RelationSuggestion] = GraphDisplayer.getRelationSuggestionMenuHandler;
     }
 
     function initSelectors() {

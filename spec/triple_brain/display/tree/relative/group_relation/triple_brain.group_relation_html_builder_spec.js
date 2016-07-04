@@ -9,11 +9,10 @@ define([
     "test/mock/triple_brain.graph_element_service_mock",
     "triple_brain.mind_map_info",
     "triple_brain.group_relation_html_builder",
-    "triple_brain.group_relation_menu_handler",
+    "triple_brain.group_relation_controller",
     "triple_brain.identification",
-    "triple_brain.relative_tree_vertex_menu_handler",
     "triple_brain.event_bus"
-], function (Scenarios, TestUtils, VertexServiceMock, GraphElementServiceMock, MindMapInfo, GroupRelationHtmlBuilder, GroupRelationMenuHandler, Identification, RelativeTreeVertexMenuHandler, EventBus) {
+], function (Scenarios, TestUtils, VertexServiceMock, GraphElementServiceMock, MindMapInfo, GroupRelationHtmlBuilder, GroupRelationController, Identification, EventBus) {
     "use strict";
     describe("group_relation_html_builder", function () {
         var groupRelation;
@@ -232,7 +231,7 @@ define([
             VertexServiceMock.addRelationAndVertexToVertexMock();
             MindMapInfo._setIsViewOnly(false);
             var centerBubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
-            RelativeTreeVertexMenuHandler.forSingle().addChildAction(centerBubble);
+            centerBubble.getController().addChild();
             var newRelation = TestUtils.getChildWithLabel(centerBubble, "");
             newRelation.setText("new relation");
             newRelation.setNote("some comment");
@@ -271,12 +270,12 @@ define([
             VertexServiceMock.addRelationAndVertexToVertexMock();
             GraphElementServiceMock.addIdentificationMock();
             MindMapInfo._setIsViewOnly(false);
-            GroupRelationMenuHandler.forSingle().addChildAction(groupRelation);
+            groupRelation.getController().addChild();
             expect(
                 groupRelation.getNumberOfChild()
             ).toBe(4);
         });
-        it("expands the group relation if there's 3 or less siblings", function(){
+        it("expands the group relation if there's 3 or less siblings", function () {
             var centerInPossessionsScenario = new Scenarios.GraphWithSimilarRelationsScenario().getCenterVertexInTree();
             expect(
                 centerInPossessionsScenario.getNumberOfChild()

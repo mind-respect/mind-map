@@ -39,7 +39,7 @@ define([
         $("<div class='in-bubble-content'>").appendTo(
             this.html
         );
-        var property = PropertyUi.createFromHtml(
+        var propertyUi = PropertyUi.createFromHtml(
             this.html
         );
         EdgeHtmlBuilderCommon.buildLabel(
@@ -47,28 +47,31 @@ define([
             this.serverFacade.getLabel(),
             PropertyUi.getWhenEmptyLabel()
         );
-        property.setNote(
+        propertyUi.setNote(
             this.serverFacade.getComment()
         );
-        this._buildMenu(this.html.find(".label-container")).hide();
+        this._buildMenu(
+            this.html.find(".label-container"),
+            propertyUi
+        ).hide();
         EdgeHtmlBuilderCommon.buildInLabelButtons(
-            property
+            propertyUi
         );
         this.html.append(
             $("<span class='arrow'>")
         );
-        property.addImages(
+        propertyUi.addImages(
             this.serverFacade.getImages()
         );
-        return property;
+        return propertyUi;
     };
-    Self.prototype._buildMenu = function (container) {
+    Self.prototype._buildMenu = function (container, propertyUi) {
         var menu = $("<div class='relation-menu menu'>").appendTo(
             container
         );
         GraphElementMainMenu.addRelevantButtonsInMenu(
             menu,
-            GraphDisplayer.getPropertyMenuHandler().forSingle()
+            propertyUi.getController()
         );
         return menu;
     };

@@ -9,9 +9,8 @@ define([
     "triple_brain.identification",
     "triple_brain.sub_graph",
     "test/mock/triple_brain.vertex_service_mock",
-    "triple_brain.relative_tree_vertex_menu_handler",
     "triple_brain.mind_map_info"
-], function (Scenarios, TestUtils, CompareFlow, Identification, SubGraph, VertexServiceMock, RelativeTreeVertexMenuHandler, MindMapInfo) {
+], function (Scenarios, TestUtils, CompareFlow, Identification, SubGraph, VertexServiceMock, MindMapInfo) {
     "use strict";
     describe("compare_flow", function () {
         it("resets graph elements label when quitting compare mode", function () {
@@ -51,7 +50,7 @@ define([
             );
             VertexServiceMock.addRelationAndVertexToVertexMock();
             MindMapInfo._setIsViewOnly(false);
-            RelativeTreeVertexMenuHandler.forSingle().addChildAction(b1Fork);
+            b1Fork.getController().addChild();
             var newRelation = TestUtils.getChildWithLabel(
                 b1Fork,
                 ""
@@ -74,7 +73,7 @@ define([
             );
             VertexServiceMock.addRelationAndVertexToVertexMock();
             MindMapInfo._setIsViewOnly(false);
-            RelativeTreeVertexMenuHandler.forSingle().addChildAction(b1Fork);
+            b1Fork.getController().addChild();
             var newRelation = TestUtils.getChildWithLabel(
                 b1Fork,
                 ""

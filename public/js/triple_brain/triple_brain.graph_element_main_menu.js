@@ -16,9 +16,9 @@ define([
         "use strict";
         var api = {},
             _menu;
-        api.addRelevantButtonsInMenu = function (menuContainer, clickHandler) {
+        api.addRelevantButtonsInMenu = function (menuContainer, controller) {
             api.visitButtons(function (button) {
-                if (!button.canActionBePossiblyMade(clickHandler)) {
+                if (!button.canActionBePossiblyMade(controller)) {
                     return;
                 }
                 button.cloneInto(menuContainer);
@@ -65,17 +65,25 @@ define([
                                 button.getParentBubble() :
                                 SelectionHandler.getOneOrArrayOfSelected();
 
-                            var clickHandler = isInBubble ?
-                                getMenuHandlerForSingleGraphElement(
-                                    graphElements
-                                ) :
+                            var controller = isInBubble ?
+                                graphElements.getController() :
                                 api._getCurrentClickHandler(button);
-                            clickHandler[
-                                button.getAction()
-                                ](
-                                event,
-                                graphElements
-                            );
+                            var clickHandler = controller[
+                            button.getAction() + "BtnClick"
+                                ];
+                            if (clickHandler) {
+                                clickHandler.call(
+                                    controller,
+                                    event,
+                                    graphElements
+                                );
+                            } else {
+                                controller[
+                                    button.getAction()
+                                    ](
+                                    graphElements
+                                );
+                            }
                         }
                     );
                 }
@@ -100,10 +108,10 @@ define([
             });
         };
 
-        api.onlyShowButtonsIfApplicable = function (clickHandler, graphElement) {
+        api.onlyShowButtonsIfApplicable = function (controller, graphElement) {
             api.visitButtons(function (button) {
                 button.showOnlyIfApplicable(
-                    clickHandler,
+                    controller,
                     graphElement
                 );
             });
@@ -162,9 +170,7 @@ define([
                 currentClickHandler = GraphDisplayer.getGraphMenuHandler();
             }
             else if (1 === nbSelectedGraphElements) {
-                currentClickHandler = getMenuHandlerForSingleGraphElement(
-                    selectionInfo.getSingleElement()
-                );
+                currentClickHandler = selectionInfo.getSingleElement().getController();
             } else {
                 var nbSelectedVertices = selectionInfo.getNbSelectedVertices(),
                     nbSelectedRelations = selectionInfo.getNbSelectedRelations(),
@@ -188,10 +194,6 @@ define([
                 "currentClickHandler",
                 currentClickHandler
             );
-        }
-
-        function getMenuHandlerForSingleGraphElement(graphElement) {
-            return graphElement.getMenuHandler().forSingle();
         }
     }
 );

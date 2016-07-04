@@ -380,8 +380,7 @@ define([
             if (graphElement.isSuggestion()) {
                 var vertexSuggestion = graphElement.isRelationSuggestion() ?
                     graphElement.childVertexInDisplay() : graphElement;
-                SuggestionService.accept(
-                    vertexSuggestion,
+                vertexSuggestion.getController().accept(vertexSuggestion).then(
                     identify
                 );
             } else {

@@ -9,11 +9,11 @@ define([
     "triple_brain.schema_service",
     "triple_brain.schema",
     "triple_brain.id_uri",
-    "triple_brain.relative_tree_vertex_menu_handler",
+    "triple_brain.vertex_controller",
     "triple_brain.event_bus",
     "triple_brain.user_service",
     "masonry"
-], function ($, Flow, LanguageManager, SchemaService, Schema, IdUri, RelativeTreeVertexMenuHandler, EventBus, UserService, Masonry) {
+], function ($, Flow, LanguageManager, SchemaService, Schema, IdUri, VertexController, EventBus, UserService, Masonry) {
     "use strict";
     var api = {},
         linkTooltip,
@@ -156,9 +156,7 @@ define([
 
     function createBubbleUsingSchemaClickHandler() {
         var schema = $(this).closest(".schema-container").data("schema");
-        RelativeTreeVertexMenuHandler.forSingleOwned().createVertexFromSchemaAction(
-            schema
-        ).done(function (newVertex) {
+        schema.getController().createVertexFromSchema().done(function (newVertex) {
             window.location = IdUri.htmlUrlForBubbleUri(
                 newVertex.getUri()
             );

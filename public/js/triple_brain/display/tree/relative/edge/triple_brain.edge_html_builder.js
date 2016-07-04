@@ -115,7 +115,7 @@ define([
             edgeHtml.find(".label-container").append(menu);
             GraphElementMainMenu.addRelevantButtonsInMenu(
                 menu,
-                GraphDisplayer.getRelationMenuHandler().forSingle()
+                edge.getController()
             );
         }
         return api;

@@ -79,11 +79,11 @@ define([
                 htmlId = GraphUi.generateBubbleHtmlId();
             }
             this.html.attr('id', htmlId);
-            this.vertex = RelativeTreeVertex.createFromHtml(
+            this.vertexUi = RelativeTreeVertex.createFromHtml(
                 this.html
             );
             var label = VertexHtmlCommon.buildLabelHtml(
-                this.vertex,
+                this.vertexUi,
                 VertexHtmlCommon.buildInsideBubbleContainer(
                     this.html
                 ),
@@ -109,39 +109,39 @@ define([
                 "isPublic",
                 this.serverFacade.isPublic()
             );
-            this.vertex.setIncludedVertices(
+            this.vertexUi.setIncludedVertices(
                 this.serverFacade.getIncludedVertices()
             );
-            this.vertex.setIncludedEdges(
+            this.vertexUi.setIncludedEdges(
                 this.serverFacade.getIncludedEdges()
             );
-            if (this.vertex.hasIncludedGraphElements()) {
+            if (this.vertexUi.hasIncludedGraphElements()) {
                 this._showItHasIncludedGraphElements();
             }
-            this.vertex.setNote(
+            this.vertexUi.setNote(
                 this.serverFacade.getComment()
             );
             this._createMenu();
             VertexHtmlCommon.buildInLabelButtons(
-                this.vertex
+                this.vertexUi
             );
-            this.vertex.hideMenu();
-            this.vertex.addImages(
+            this.vertexUi.hideMenu();
+            this.vertexUi.addImages(
                 this.serverFacade.getImages()
             );
-            this.vertex.getHtml().append(
+            this.vertexUi.getHtml().append(
                 $("<span class='arrow'>")
             );
-            if (this.vertex.isPublic()) {
-                this.vertex.makePublic();
+            if (this.vertexUi.isPublic()) {
+                this.vertexUi.makePublic();
             } else {
-                this.vertex.makePrivate();
+                this.vertexUi.makePrivate();
             }
             EventBus.publish(
                 '/event/ui/html/vertex/created/',
-                this.vertex
+                this.vertexUi
             );
-            return this.vertex;
+            return this.vertexUi;
         };
 
         VertexCreator.prototype._showItHasIncludedGraphElements = function () {
@@ -160,7 +160,8 @@ define([
                 ".in-bubble-content"
             ).append(vertexMenu);
             VertexHtmlCommon.addRelevantButtonsInMenu(
-                vertexMenu
+                vertexMenu,
+                this.vertexUi
             );
             return vertexMenu;
         };

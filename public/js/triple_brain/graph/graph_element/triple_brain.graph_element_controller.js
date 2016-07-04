@@ -9,35 +9,48 @@ define([
     "triple_brain.mind_map_info",
     "triple_brain.event_bus",
     "triple_brain.graph_ui",
-    "triple_brain.graph_modal_menu",
+    "triple_brain.identification_menu",
     "bootstrap-wysiwyg",
     "bootstrap",
     "jquery.safer-html"
-], function ($, VertexService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, GraphModalMenu) {
+], function ($, VertexService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu) {
     "use strict";
-    var api = {},
-        forSingle = {};
+    var api = {};
     EventBus.subscribe(
         '/event/ui/mind_map_info/is_view_only',
         setUpSaveButton
     );
-    api.forSingle = function () {
-        return forSingle;
-    };
     api._getBubbleNoteModal = function () {
         return $("#bubble-note-modal");
     };
     api._getContentEditor = function () {
         return api._getBubbleNoteModal().find(".editor");
     };
-    forSingle.noteAction = function (graphElement) {
+    api.Self = GraphElementController;
+    function GraphElementController() {
+    }
+
+    GraphElementController.prototype.init = function (graphElements) {
+        this.graphElements = graphElements;
+    };
+    GraphElementController.prototype.getElements = function () {
+        return this.graphElements;
+    };
+
+    GraphElementController.prototype.noteCanDo = function () {
+        return this.isSingle() && (
+                this.isOwned() || this.graphElements.hasNote()
+            );
+    };
+
+    GraphElementController.prototype.note = function () {
         var editor = api._getContentEditor().saferHtml(
-            graphElement.getNote()
+            this.graphElements.getNote()
         );
         api._getBubbleNoteModal().data(
-            "graphElement", graphElement
+            "graphElement", this.graphElements
         ).find(".bubble-label-in-title").text(
-            graphElement.text()
+            this.graphElements.text()
         );
         getSaveButton().text($.t("vertex.menu.note.update"));
         api._getBubbleNoteModal().modal({
@@ -62,14 +75,49 @@ define([
         });
         editor.cleanHtml();
     };
-    forSingle.visitOtherInstances = function (event, bubble) {
+
+    GraphElementController.prototype.visitOtherInstancesCanDo = function () {
+        return this.graphElements.hasOtherInstances();
+    };
+
+    GraphElementController.prototype.visitOtherInstances = function () {
         $(
-            bubble.getOtherInstances()[0].getHtml()
+            this.graphElements.getOtherInstances()[0].getHtml()
         ).centerOnScreenWithAnimation();
     };
-    forSingle.visitOtherInstancesCanDo = function (graphElement) {
-        return graphElement.hasOtherInstances();
+
+    GraphElementController.prototype.identifyCanDo = function () {
+        return this.isSingle() && (
+                this.isOwned() || this.graphElements.hasIdentifications()
+            );
     };
+
+    GraphElementController.prototype.identify = function () {
+        IdentificationMenu.ofGraphElement(
+            this.graphElements
+        ).create();
+    };
+
+    GraphElementController.prototype.identifyBtnClick = function (event) {
+        event.stopPropagation();
+        this.identify();
+    };
+
+    GraphElementController.prototype.isSingleAndOwned = function () {
+        return this.isSingle() && this.isOwned();
+    };
+
+    GraphElementController.prototype.isGroupAndOwned = function () {
+        return !this.isSingle() && this.isOwned();
+    };
+
+    GraphElementController.prototype.isSingle = function () {
+        return !(this.graphElements instanceof Array);
+    };
+    GraphElementController.prototype.isOwned = function () {
+        return !MindMapInfo.isViewOnly();
+    };
+
     setUpCancelButton();
     initNoteModal();
     function setUpSaveButton() {
