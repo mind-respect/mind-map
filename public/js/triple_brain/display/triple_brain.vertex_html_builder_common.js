@@ -38,8 +38,8 @@ define([
             resultsProviders: [
                 UserMapAutocompleteProvider.toFetchPublicAndUserVerticesExcept(
                     BubbleFactory.fromSubHtml(input)
-                )
-                // WikidataAutocompleteProvider.build()
+                ),
+                WikidataAutocompleteProvider.build()
             ]
         });
     };

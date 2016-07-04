@@ -80,9 +80,7 @@ define([
                             } else {
                                 controller[
                                     button.getAction()
-                                    ](
-                                    graphElements
-                                );
+                                    ]();
                             }
                         }
                     );
@@ -158,7 +156,8 @@ define([
 
         function updateCurrentClickHandler(selectionInfo) {
             var nbSelectedGraphElements = selectionInfo.getNbSelected(),
-                currentClickHandler;
+                currentClickHandler,
+                object;
             if (0 === nbSelectedGraphElements) {
                 currentClickHandler = GraphDisplayer.getGraphMenuHandler();
             }
@@ -170,17 +169,17 @@ define([
                     nbSelectedRelations = selectionInfo.getNbSelectedRelations(),
                     nbSelectedGroupRelations = selectionInfo.getNbSelectedGroupRelations();
                 if (0 === nbSelectedVertices && 0 === nbSelectedGroupRelations) {
-                    var object = GraphDisplayer.getRelationMenuHandler();
+                    object = GraphDisplayer.getRelationMenuHandler();
                     currentClickHandler = new object.Self(
                         selectionInfo.getSelectedElements()
                     );
                 } else if (0 === nbSelectedRelations && 0 === nbSelectedGroupRelations) {
-                    var object = GraphDisplayer.getVertexMenuHandler();
+                    object = GraphDisplayer.getVertexMenuHandler();
                     currentClickHandler = new object.Self(
                         selectionInfo.getSelectedElements()
                     );
                 } else {
-                    var object = GraphDisplayer.getGraphElementMenuHandler();
+                    object = GraphDisplayer.getGraphElementMenuHandler();
                     currentClickHandler = new object.Self(
                         selectionInfo.getSelectedElements()
                     );
