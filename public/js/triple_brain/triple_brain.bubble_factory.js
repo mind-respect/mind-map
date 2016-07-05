@@ -30,6 +30,11 @@ define([
         }
         var uiFacade = uiSelector.withHtml(html);
         if(undefined === uiFacade){
+            /*
+            todo this case should not happen but it did using npm test only somehow
+            should review the cache system
+            also the builder *html_builder system
+             */
             uiFacade = uiSelector.createFromHtmlAndUri(html, html.data("uri"));
         }
         return uiFacade;
