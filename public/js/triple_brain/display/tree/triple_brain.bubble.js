@@ -8,10 +8,11 @@ define([
         "triple_brain.ui.utils",
         "triple_brain.image_displayer",
         "triple_brain.graph_element_ui",
+        "triple_brain.graph_element_type",
         "triple_brain.bubble_factory",
         "triple_brain.selection_handler",
         "triple_brain.center_bubble"
-    ], function ($, EventBus, UiUtils, ImageDisplayer, GraphElementUi, BubbleFactory, SelectionHandler, CenterBubble) {
+    ], function ($, EventBus, UiUtils, ImageDisplayer, GraphElementUi, GraphElementType, BubbleFactory, SelectionHandler, CenterBubble) {
         "use strict";
         var api = {};
 
@@ -119,14 +120,27 @@ define([
             );
         };
         api.Self.prototype.getParentVertex = function () {
+            return this._getClosestParentOfType(
+                GraphElementType.Vertex
+            );
+        };
+        api.Self.prototype.getParentSuggestionVertex = function () {
+            return this._getClosestParentOfType(
+                GraphElementType.VertexSuggestion
+            );
+        };
+        api.Self.prototype._getClosestParentOfType = function (type) {
             var parentBubble = this.getParentBubble();
             if (this.isSameBubble(parentBubble)) {
                 return this;
             }
-            if (parentBubble.isVertex()) {
+            if (type === parentBubble.getGraphElementType()) {
                 return parentBubble;
             }
-            return parentBubble.getParentVertex();
+            var ancestor = parentBubble._getClosestParentOfType(type);
+            return type === ancestor.getGraphElementType() ?
+                ancestor :
+                this;
         };
         api.Self.prototype.getChildrenContainer = function () {
             return this.html.closest(".vertex-container").siblings(
@@ -485,4 +499,5 @@ define([
         );
         return api;
     }
-);
+)
+;

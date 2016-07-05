@@ -27,18 +27,30 @@ define([
     SuggestionVertexController.prototype.accept = function () {
         var deferred = $.Deferred();
         var self = this;
-        SuggestionService.accept(
-            self.suggestionsUi
-        ).then(function (xhr) {
-            var newVertexUi = self.suggestionsUi.integrateUsingNewVertexAndEdgeUri(
-                xhr.vertex_uri,
-                xhr.edge_uri
+        var suggestionVertex = this.getElements();
+        var parentSuggestionVertex = suggestionVertex.getParentSuggestionVertex();
+        var hasParentSuggestionVertex = !parentSuggestionVertex.isSameBubble(
+            suggestionVertex
+        );
+        if (hasParentSuggestionVertex) {
+            return parentSuggestionVertex.getController().accept().then(
+                acceptCurrent
             );
-            deferred.resolve(
-                newVertexUi
-            );
-        });
-        return deferred.promise();
+        }
+        return acceptCurrent();
+        function acceptCurrent() {
+            return SuggestionService.accept(
+                self.getElements()
+            ).then(function (xhr) {
+                var newVertexUi = self.getElements().integrateUsingNewVertexAndEdgeUri(
+                    xhr.vertex_uri,
+                    xhr.edge_uri
+                );
+                return deferred.resolve(
+                    newVertexUi
+                );
+            });
+        }
     };
 
     SuggestionVertexController.prototype.addChildCanDo = function () {
