@@ -5,10 +5,11 @@
 define([
     'test/test-scenarios',
     'test/test-utils',
-    'triple_brain.relative_tree_vertex'
-], function (Scenarios, TestUtils, RelativeTreeVertex) {
+    'triple_brain.relative_tree_vertex',
+    'triple_brain.mind_map_info'
+], function (Scenarios, TestUtils, RelativeTreeVertex, MindMapInfo) {
     "use strict";
-    describe("bubble", function () {
+    describe("relative_tree_vertex", function () {
         var bubble1,
             bubble2,
             bubble3,
@@ -53,6 +54,7 @@ define([
             expect(numberOfVisitedVertices).toBe(0);
         });
         it("can remove a vertex even if it has duplicates", function () {
+            MindMapInfo._setIsViewOnly(false);
             var graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
             var bubble1 = graphWithCircularityScenario.getBubble1InTree();
             var bubble1Duplicate = graphWithCircularityScenario.getBubble1Duplicate();

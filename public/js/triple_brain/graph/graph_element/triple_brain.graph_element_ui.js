@@ -33,9 +33,9 @@ define([
             updateUriCache(graphElement.getUri(), graphElement);
         };
         api.withHtml = function (html) {
-            return cacheWithIdAsKey[
+            return api.withId(
                 html.prop('id')
-                ];
+            );
         };
         api.withId = function (id) {
             return cacheWithIdAsKey[id];
@@ -174,6 +174,9 @@ define([
     };
     api.Self.prototype.isRelation = function () {
         return this.getGraphElementType() === api.Types.Relation;
+    };
+    api.Self.prototype.isEdge = function () {
+        return this.isRelation() || this.isRelationSuggestion || this.isProperty();
     };
     api.Self.prototype.isGroupRelation = function () {
         return this.getGraphElementType() === api.Types.GroupRelation;
@@ -465,6 +468,11 @@ define([
     };
 
     api.Self.prototype.quitComparison = function () {
+        if (this.isVertexSuggestion()) {
+            if (this.getSuggestion().getOrigin().isFromComparison()) {
+                this.remove();
+            }
+        }
         this.setText(
             this.getModel().getLabel()
         );

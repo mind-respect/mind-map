@@ -48,10 +48,10 @@ define([
         });
     };
     api._quit = function(){
-        getCompareFlowWarning().addClass("hidden");
         GraphElementUi.visitAll(function(graphElementUi){
             graphElementUi.quitComparison();
         });
+        getCompareFlowWarning().addClass("hidden");
     };
     EventBus.subscribe("/event/ui/graph/drawn", setupSearch);
     EventBus.subscribe(

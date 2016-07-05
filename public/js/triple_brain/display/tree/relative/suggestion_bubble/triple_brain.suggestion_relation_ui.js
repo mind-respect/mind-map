@@ -15,6 +15,12 @@ define([
         var relationSuggestion = new api.Self(html);
         relationSuggestion.setUri(uri);
         api.initCache(relationSuggestion);
+        TreeEdge.initCache(
+            relationSuggestion
+        );
+        EdgeUi.initCache(
+            relationSuggestion
+        );
         return relationSuggestion;
     };
     api.getWhenEmptyLabel = function () {
@@ -38,11 +44,23 @@ define([
         return this.model;
     };
 
-    api.Self.prototype.integrate = function (newRelationUri, destinationVertex) {
+    api.Self.prototype.removeFromCache = function () {
         api.removeFromCache(
             this.getUri(),
             this.getId()
         );
+        TreeEdge.removeFromCache(
+            this.getUri(),
+            this.getId()
+        );
+        EdgeUi.removeFromCache(
+            this.getUri(),
+            this.getId()
+        );
+    };
+
+    api.Self.prototype.integrate = function (newRelationUri, destinationVertex) {
+        this.removeFromCache();
         this.html.removeClass(
             "suggestion"
         ).data(

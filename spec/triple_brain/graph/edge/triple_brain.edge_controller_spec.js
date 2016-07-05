@@ -101,7 +101,7 @@ define([
                 )
             ).toBeFalsy();
             MindMapInfo._setIsViewOnly(false);
-            EdgeServiceMock.removeMock();
+            EdgeServiceMock.remove();
             new EdgeController.Self(
                 aRelationToSameBubble
             ).remove();
@@ -148,7 +148,7 @@ define([
                 )
             ).toBeFalsy();
             MindMapInfo._setIsViewOnly(false);
-            EdgeServiceMock.removeMock();
+            EdgeServiceMock.remove();
             new EdgeController.Self(
                 aRelation
             ).remove();

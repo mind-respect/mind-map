@@ -7,7 +7,7 @@ define([
 ], function (EdgeService) {
     "use strict";
     var api = {};
-    api.removeMock = function(){
+    api.remove = function(){
         return spyOn(EdgeService, "remove").and.callFake(function(edge, callback){
             EdgeService._removeCallback(
                 edge,

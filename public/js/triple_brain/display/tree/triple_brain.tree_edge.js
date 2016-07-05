@@ -73,6 +73,16 @@ define([
                 ]("inverse");
             this.inverseAbstract();
         };
+        api.Self.prototype.removeFromCache = function () {
+            api.removeFromCache(
+                this.getUri(),
+                this.getId()
+            );
+            EdgeUi.removeFromCache(
+                this.getUri(),
+                this.getId()
+            );
+        };
         api.Self.prototype.getLabelAndButtonsContainer = function () {
             return this.html.find(
                 ".label-and-buttons"

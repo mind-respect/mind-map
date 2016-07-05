@@ -7,13 +7,14 @@ define([
     "test/test-utils",
     'test/mock',
     "triple_brain.suggestion_service",
+    "triple_brain.graph_element_ui",
     "triple_brain.graph_displayer_as_relative_tree",
     "triple_brain.selection_handler",
     "triple_brain.event_bus",
     "triple_brain.sub_graph",
     "triple_brain.graph_service",
     "test/mock/triple_brain.graph_service_mock"
-], function (Scenarios, TestUtils, Mock, SuggestionService, GraphDisplayerAsRelativeTree, SelectionHandler, EventBus, SubGraph, GraphService, GraphServiceMock) {
+], function (Scenarios, TestUtils, Mock, SuggestionService, GraphElementUi, GraphDisplayerAsRelativeTree, SelectionHandler, EventBus, SubGraph, GraphService, GraphServiceMock) {
     "use strict";
     describe("suggestion_bubble_ui", function () {
         var oneSuggestionScenario;
@@ -379,6 +380,20 @@ define([
             ).getTopMostChildBubble();
             expect(
                 b4.hasHiddenRelationsContainer()
+            ).toBeTruthy();
+        });
+        it("can be accessible by visiting all graph elements", function () {
+            var oneBubbleHavingSuggestionsGraph = new Scenarios.oneBubbleHavingSuggestionsGraph();
+            var eventBubble = oneBubbleHavingSuggestionsGraph.getVertexUi();
+            var vertexSuggestionInTree = eventBubble.getTopMostChildBubble().getTopMostChildBubble();
+            var isIncluded = false;
+            GraphElementUi.visitAll(function(element){
+                if(element.getId() === vertexSuggestionInTree.getId()){
+                    isIncluded = true;
+                }
+            });
+            expect(
+                isIncluded
             ).toBeTruthy();
         });
     });

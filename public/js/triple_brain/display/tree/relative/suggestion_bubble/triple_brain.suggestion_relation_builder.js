@@ -44,6 +44,10 @@ define([
         ).uniqueId().append(
             "<span class='connector'>"
         ).append("<div class='in-bubble-content'>");
+        var edge = this.edge = SuggestionRelationUi.createFromHtmlAndUri(
+            this.html,
+            this.serverFacade.getUri()
+        );
         var label = this.serverFacade.isLabelEmpty() ?
             this.serverFacade.getSameAs().getUri() :
             this.serverFacade.getLabel();
@@ -52,10 +56,6 @@ define([
             label,
             SuggestionRelationUi.getWhenEmptyLabel()
         ).css("visibility", "visible");
-        var edge = this.edge = SuggestionRelationUi.createFromHtmlAndUri(
-            this.html,
-            this.serverFacade.getUri()
-        );
         edge.setModel(this.serverFacade);
         this._buildMenu();
         edge.hideMenu();

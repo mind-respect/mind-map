@@ -54,16 +54,6 @@ define([
                     destinationVertexUri
                 );
             }
-            EventBus.publish(
-                '/event/ui/graph/relation/deleted', [
-                    edge,
-                    edge.getUri(),
-                    sourceVertexUri,
-                    destinationVertexUri,
-                    sourceVertexId,
-                    destinationVertexId
-                ]
-            );
         };
         api.updateLabel = function (edge, label, callback) {
             FriendlyResourceService.updateLabel(

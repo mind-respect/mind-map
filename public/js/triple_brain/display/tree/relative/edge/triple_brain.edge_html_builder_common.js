@@ -79,7 +79,7 @@ define([
                 resultsProviders: [
                     UserMapAutocompleteProvider.toFetchRelationsForIdentification(
                         BubbleFactory.fromHtml(
-                            edgeHtml.closest(".bubble")
+                            edgeHtml
                         )
                     )
                 ]

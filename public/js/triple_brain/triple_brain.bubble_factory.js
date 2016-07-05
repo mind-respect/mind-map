@@ -8,27 +8,31 @@ define([
     "use strict";
     var api = {};
     api.fromHtml = function(html){
-        var uiFacade;
+        var uiSelector;
         if(html.hasClass("vertex")){
             if(html.hasClass("suggestion")){
-                uiFacade = GraphDisplayer.getVertexSuggestionSelector();
+                uiSelector = GraphDisplayer.getVertexSuggestionSelector();
             }else if(html.hasClass("schema")){
-                uiFacade = GraphDisplayer.getSchemaSelector();
+                uiSelector = GraphDisplayer.getSchemaSelector();
             }else{
-                uiFacade = GraphDisplayer.getVertexSelector();
+                uiSelector = GraphDisplayer.getVertexSelector();
             }
         }else if(html.hasClass("relation")){
             if(html.hasClass("suggestion")){
-                uiFacade = GraphDisplayer.getRelationSuggestionSelector();
+                uiSelector = GraphDisplayer.getRelationSuggestionSelector();
             }else if(html.hasClass("property")){
-                uiFacade = GraphDisplayer.getPropertySelector();
+                uiSelector = GraphDisplayer.getPropertySelector();
             }else if(html.hasClass("group-relation")){
-                uiFacade = GraphDisplayer.getGroupRelationSelector();
+                uiSelector = GraphDisplayer.getGroupRelationSelector();
             }else{
-                uiFacade = GraphDisplayer.getEdgeSelector();
+                uiSelector = GraphDisplayer.getEdgeSelector();
             }
         }
-        return uiFacade.withHtml(html);
+        var uiFacade = uiSelector.withHtml(html);
+        if(undefined === uiFacade){
+            uiFacade = uiSelector.createFromHtmlAndUri(html, html.data("uri"));
+        }
+        return uiFacade;
     };
     api.fromSubHtml = function(html){
         return api.fromHtml(

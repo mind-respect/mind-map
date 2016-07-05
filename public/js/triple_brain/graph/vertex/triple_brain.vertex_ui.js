@@ -48,10 +48,6 @@ define([
         };
 
         api.Object.prototype.remove = function () {
-            api.removeFromCache(
-                this.getUri(),
-                this.getId()
-            );
             this.removeConnectedEdges();
             Bubble.Self.prototype.remove.call(
                 this
@@ -192,7 +188,7 @@ define([
         };
         api.Object.prototype.visitConnectedEdges = function (visitor) {
             this.visitAllConnected(function(connected){
-                if(connected.isRelation()){
+                if(connected.isRelation() || connected.isRelationSuggestion()){
                     visitor(connected);
                 }
             });
@@ -209,6 +205,7 @@ define([
 
         api.Object.prototype.removeConnectedEdges = function () {
             this.applyToConnectedEdges(function (edge) {
+                edge.removeFromCache();
                 edge.remove();
             });
         };

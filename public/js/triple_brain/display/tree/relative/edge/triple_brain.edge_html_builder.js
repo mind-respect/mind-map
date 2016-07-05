@@ -67,6 +67,10 @@ define([
         }
         EdgeCreator.prototype.create = function () {
             this.html.uniqueId();
+            var edge = TreeEdge.createFromHtmlAndUri(
+                this.html,
+                this.uri
+            );
             EdgeHtmlBuilderCommon.buildLabel(
                 this.html,
                 this.edgeServer.getLabel(),
@@ -74,10 +78,6 @@ define([
             );
             this.html.append(
                 "<span class='connector'>"
-            );
-            var edge = TreeEdge.createFromHtmlAndUri(
-                this.html,
-                this.uri
             );
             edge.setModel(
                 this.edgeServer

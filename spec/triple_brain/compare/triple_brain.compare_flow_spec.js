@@ -9,8 +9,9 @@ define([
     "triple_brain.identification",
     "triple_brain.sub_graph",
     "test/mock/triple_brain.vertex_service_mock",
+    "test/mock/triple_brain.edge_service_mock",
     "triple_brain.mind_map_info"
-], function (Scenarios, TestUtils, CompareFlow, Identification, SubGraph, VertexServiceMock, MindMapInfo) {
+], function (Scenarios, TestUtils, CompareFlow, Identification, SubGraph, VertexServiceMock, EdgeServiceMock, MindMapInfo) {
     "use strict";
     describe("compare_flow", function () {
         it("resets graph elements label when quitting compare mode", function () {
@@ -63,7 +64,7 @@ define([
                 newVertex.isAComparisonSuggestionToRemove()
             ).toBeTruthy();
         });
-        it("removes suggestion of comparison origin only when quitting comparison mode", function () {
+        it("removes suggestion to remove having 'comparison' as origin when quitting comparison mode", function () {
             var scenario = new Scenarios.threeBubblesGraphFork();
             var b1Fork = scenario.getBubble1InTree();
             TestUtils.enterCompareFlowWithGraph(
@@ -84,6 +85,42 @@ define([
             CompareFlow._quit();
             expect(
                 newRelation.isAComparisonSuggestionToRemove()
+            ).toBeFalsy();
+        });
+        it("removes suggestion to add having 'comparison' as origin when quitting comparison mode", function () {
+            MindMapInfo._setIsViewOnly(false);
+            var scenario = new Scenarios.threeBubblesGraphFork();
+            var b1Fork = scenario.getBubble1InTree();
+            EdgeServiceMock.remove();
+            var r2 = TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            );
+            r2.getController().remove();
+            TestUtils.enterCompareFlowWithGraph(
+                SubGraph.fromServerFormat(
+                    new Scenarios.threeBubblesGraph().getGraph()
+                )
+            );
+            expect(
+                TestUtils.hasChildWithLabel(
+                    b1Fork,
+                    "r2"
+                )
+            ).toBeTruthy();
+            r2 = TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            );
+            expect(
+                r2.isRelationSuggestion()
+            ).toBeTruthy();
+            CompareFlow._quit();
+            expect(
+                TestUtils.hasChildWithLabel(
+                    b1Fork,
+                    "r2"
+                )
             ).toBeFalsy();
         });
     });

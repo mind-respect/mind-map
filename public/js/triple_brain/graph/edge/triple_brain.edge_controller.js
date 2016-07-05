@@ -62,9 +62,9 @@ define([
 
     EdgeController.prototype.remove = function () {
         var self = this;
-        EdgeService.remove(this.edges, function () {
-            var childVertex = self.edges.getTopMostChildBubble();
-            self.edges.applyToOtherInstances(function (otherInstance) {
+        EdgeService.remove(this.getElements(), function () {
+            var childVertex = self.getElements().getTopMostChildBubble();
+            self.getElements().applyToOtherInstances(function (otherInstance) {
                 var childVertex = otherInstance.getTopMostChildBubble();
                 childVertex.remove(false);
             });

@@ -22,11 +22,17 @@ define([
     var api = {};
     RelativeTreeVertex.buildCommonConstructors(api);
     api.createFromHtml = function (html) {
-        var suggestion = new api.Self(
+        var suggestionUi = new api.Self(
             html
         );
-        api.initCache(suggestion);
-        return suggestion;
+        api.initCache(suggestionUi);
+        RelativeTreeVertex.initCache(
+            suggestionUi
+        );
+        VertexUi.initCache(
+            suggestionUi
+        );
+        return suggestionUi;
     };
     api.getWhenEmptyLabel = function () {
         return $.t("suggestion.when-empty");
@@ -64,11 +70,23 @@ define([
         return this.model;
     };
 
-    api.Self.prototype.integrate = function (newVertexUri) {
+    api.Self.prototype.removeFromCache = function () {
         api.removeFromCache(
             this.getUri(),
             this.getId()
         );
+        RelativeTreeVertex.removeFromCache(
+            this.getUri(),
+            this.getId()
+        );
+        VertexUi.removeFromCache(
+            this.getUri(),
+            this.getId()
+        );
+    };
+
+    api.Self.prototype.integrate = function (newVertexUri) {
+        this.removeFromCache();
         var vertex = Vertex.withUri(
             newVertexUri
         );

@@ -96,10 +96,7 @@ define([
             if (this._isRemoved()) {
                 return;
             }
-            api.removeFromCache(
-                this.getUri(),
-                this.getId()
-            );
+            this.removeFromCache();
             VertexUi.Object.prototype.remove.call(
                 this
             );
@@ -112,6 +109,16 @@ define([
         };
         api.Object.prototype._hasBeenCalledToRemove = function () {
             return this.getHtml().data("hasBeenCalledToRemove") === true;
+        };
+        api.Object.prototype.removeFromCache = function () {
+            api.removeFromCache(
+                this.getUri(),
+                this.getId()
+            );
+            VertexUi.removeFromCache(
+                this.getUri(),
+                this.getId()
+            );
         };
         api.Object.prototype._isRemoved = function () {
             return $.isEmptyObject(
