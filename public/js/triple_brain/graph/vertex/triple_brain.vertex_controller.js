@@ -50,7 +50,7 @@ define([
         );
     };
 
-    VertexController.prototype.removeCanDo = function(){
+    VertexController.prototype.removeCanDo = function () {
         return this.isSingleAndOwned();
     };
 
@@ -81,7 +81,7 @@ define([
     };
 
     VertexController.prototype.imagesCanDo = function () {
-        return this.isSingle();
+        return this.isSingleAndOwned();
     };
 
     VertexController.prototype.images = function () {
@@ -101,15 +101,17 @@ define([
     };
 
     VertexController.prototype.makePrivateCanDo = function () {
-        return !this.isSingle() || this.vertices.isPublic();
+        return this.isOwned() && (
+                !this.isSingle() || this.vertices.isPublic()
+            );
     };
 
     VertexController.prototype.makePrivate = function () {
         if (this.isSingle()) {
             var self = this;
-            VertexService.makePrivate(this.vertices, function () {
-                self.vertices.getMakePrivateButton().addClass("hidden");
-                self.vertices.getMakePublicButton().removeClass("hidden");
+            VertexService.makePrivate(this.getElements(), function () {
+                self.getElements().getMakePrivateButton().addClass("hidden");
+                self.getElements().getMakePublicButton().removeClass("hidden");
             });
         } else {
             VertexService.makeCollectionPrivate(this.vertices);
@@ -117,7 +119,9 @@ define([
     };
 
     VertexController.prototype.makePublicCanDo = function () {
-        return !this.isSingle() || !this.vertices.isPublic();
+        return this.isOwned() && (
+                !this.isSingle() || !this.vertices.isPublic()
+            );
     };
 
     VertexController.prototype.makePublic = function () {
