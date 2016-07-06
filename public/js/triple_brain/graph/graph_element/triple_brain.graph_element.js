@@ -5,8 +5,9 @@
 define([
     "jquery",
     "triple_brain.friendly_resource",
-    "triple_brain.identification"
-], function ($, FriendlyResource, Identification) {
+    "triple_brain.identification",
+    "triple_brain.id_uri"
+], function ($, FriendlyResource, Identification, IdUri) {
     "use strict";
     var api = {};
     api.fromServerFormat = function (serverFormat) {
@@ -145,7 +146,7 @@ define([
         });
         return contains;
     };
-
+    
     api.Self.prototype.isRelatedToIdentification = function (identification) {
         return identification.getExternalResourceUri() === this.getUri() ||
             this.hasIdentification(identification);

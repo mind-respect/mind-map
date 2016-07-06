@@ -25,7 +25,19 @@ define([
         ).show();
         getSearchInput().empty();
     };
-    api._enterComparisonWithGraph = function (graph) {
+    api._enterComparisonWithBubbleUri = function (uri) {
+        GraphService.getForCentralVertexUriAtDepth(
+            uri,
+            GraphDisplayer.getVertexSelector().centralVertex().getDeepestChildDistance()
+        ).then(function (otherGraph) {
+            api._enterComparisonWithGraphAndCenterUri(
+                SubGraph.fromServerFormat(otherGraph),
+                uri
+            );
+        });
+        getLoadingSection().removeClass("hidden");
+    };
+    api._enterComparisonWithGraphAndCenterUri = function (graph, centerUri) {
         getCompareFlowWarning().removeClass("hidden");
         getLoadingSection().addClass("hidden");
         var comparison = GraphCompare.withOtherGraph(
@@ -36,7 +48,13 @@ define([
         var username = IdUri.usernameFromUri(
             graph.getAnyUri()
         );
-        getUserAllCentralAnchor().text(
+        getOtherUserBubbleLink().attr(
+            "href",
+            IdUri.htmlUrlForBubbleUri(
+                centerUri
+            )
+        );
+        getUserProfileLink().text(
             username
         ).attr(
             "href",
@@ -47,35 +65,57 @@ define([
             api._quit();
         });
     };
-    api._quit = function(){
-        GraphElementUi.visitAll(function(graphElementUi){
+    api._quit = function () {
+        GraphElementUi.visitAll(function (graphElementUi) {
             graphElementUi.quitComparison();
         });
         getCompareFlowWarning().addClass("hidden");
     };
-    EventBus.subscribe("/event/ui/graph/drawn", setupSearch);
+    EventBus.subscribe("/event/ui/graph/drawn", setup);
     EventBus.subscribe(
         '/event/ui/graph/vertex_and_relation/added/',
-        function(event, triple){
-            if(!MindMapInfo.isInCompareMode()){
+        function (event, triple) {
+            if (!MindMapInfo.isInCompareMode()) {
                 return;
             }
             triple.edge().setAsComparisonSuggestionToRemove();
             triple.destinationVertex().setAsComparisonSuggestionToRemove();
         }
     );
+    function setup() {
+        setupDefaultCompare();
+        setupSearch();
+    }
+
+    function setupDefaultCompare() {
+        var centerVertex = GraphDisplayer.getVertexSelector().centralVertex();
+        var centerVertexGraphElementIdentifier = centerVertex.getFirstIdentificationToAGraphElement();
+        if (!centerVertexGraphElementIdentifier) {
+            return;
+        }
+        getCompareWithDefaultButton().click(function (event) {
+            event.preventDefault();
+            api._enterComparisonWithBubbleUri(
+                centerVertexGraphElementIdentifier.getExternalResourceUri()
+            );
+        });
+        getDefaultCompareUserContainer().text(
+            IdUri.usernameFromUri(
+                centerVertexGraphElementIdentifier.getExternalResourceUri()
+            )
+        );
+        getDefaultLabelContainer().text(
+            centerVertexGraphElementIdentifier.getLabel()
+        );
+        getCompareWithDefaultSection().removeClass(
+            "hidden"
+        );
+    }
+
     function setupSearch() {
         getSearchInput().tripleBrainAutocomplete({
             select: function (event, ui) {
-                GraphService.getForCentralVertexUriAtDepth(
-                    ui.item.uri,
-                    GraphDisplayer.getVertexSelector().centralVertex().getDeepestChildDistance()
-                ).then(function (otherGraph) {
-                    api._enterComparisonWithGraph(
-                        SubGraph.fromServerFormat(otherGraph)
-                    );
-                });
-                getLoadingSection().removeClass("hidden");
+                api._enterComparisonWithBubbleUri(ui.item.uri);
             },
             resultsProviders: [
                 UserMapAutocompleteProvider.toFetchPublicAndUserVerticesExcept(
@@ -83,6 +123,10 @@ define([
                 )
             ]
         });
+    }
+
+    function getCompareWithDefaultSection() {
+        return $("#compare-with-default-section");
     }
 
     function getLoadingSection() {
@@ -97,9 +141,15 @@ define([
         return $("#compare-flow-warning");
     }
 
-    function getUserAllCentralAnchor() {
+    function getUserProfileLink() {
         return getCompareFlowWarning().find(
             ".user"
+        );
+    }
+
+    function getOtherUserBubbleLink() {
+        return getCompareFlowWarning().find(
+            ".other-user-bubble"
         );
     }
 
@@ -108,6 +158,23 @@ define([
             ".quit-flow"
         );
     }
+
+    function getCompareWithDefaultButton() {
+        return getCompareWithDefaultSection().find("> a");
+    }
+
+    function getDefaultLabelContainer() {
+        return getCompareWithDefaultSection().find(
+            ".default-compare-label"
+        );
+    }
+
+    function getDefaultCompareUserContainer() {
+        return getCompareWithDefaultSection().find(
+            ".default-compare-user"
+        );
+    }
+
 
     return api;
 });

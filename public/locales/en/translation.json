@@ -1,50 +1,55 @@
 {
-  "modal":{
+  "modal": {
     "close": "Close"
   },
   "compare_flow": {
     "title": "Comparison mode",
     "with_user": "with",
+    "original": "other user's bubble",
     "quit": "Quit"
   },
-  "compare_menu":{
-    "title":"Compare whole map",
-    "placeholder":"search a bubble to compare with",
-    "loading":"Comparison in progress...",
+  "compare_menu": {
+    "title": "Compare whole map",
+    "default_compare": {
+      "with": "Compare with bubble",
+      "user": "of"
+    },
+    "placeholder": "search another bubble to compare",
+    "loading": "Comparison in progress...",
     "no-difference": "No difference"
   },
-  "cancel":"Cancel",
+  "cancel": "Cancel",
   "landing": {
     "slogan": "Shape your mind",
     "description": "Link, find and modelize your notes.",
-    "video_instruction":"Set to HD quality and fullscreen",
+    "video_instruction": "Set to HD quality and fullscreen",
     "actions": {
-      "link":{
+      "link": {
         "title": "Link",
-        "overview" : "Coherent mind by creating links between your different ideas. The idea is simple: cut your ideas in reusable chunks.",
+        "overview": "Coherent mind by creating links between your different ideas. The idea is simple: cut your ideas in reusable chunks.",
         "desc2": "Every bubble can eventually be linked to another where ever it's located in your mind.",
         "desc3": "Liez vos idées à celles des autres ou à l'encyclopédie Wikipédia et bénéficiez d'images, de descriptions et d'intelligence qui enrichiront vos idées et élimineront l'ambiguïté.",
         "video": "Link (demonstration video)",
         "cut": "Cut your ideas into reusable chunks and link them in a thousand ways",
-        "auto_wiki":"Autocompletion from Wikipedia",
-        "images":"Images and descriptions automatically added",
-        "article_wiki":"Wikipedia article linked to your idea",
-        "date_identifier":"Link to a calendar date and ...",
-        "use_calendar":"Get the right tool for your type of data",
-        "far_link":"Any bubble can be linked to another"
+        "auto_wiki": "Autocompletion from Wikipedia",
+        "images": "Images and descriptions automatically added",
+        "article_wiki": "Wikipedia article linked to your idea",
+        "date_identifier": "Link to a calendar date and ...",
+        "use_calendar": "Get the right tool for your type of data",
+        "far_link": "Any bubble can be linked to another"
       },
-      "find":{
+      "find": {
         "title": "Find",
-        "overview" : "Quickly picture the context of your notes.",
+        "overview": "Quickly picture the context of your notes.",
         "video": "Find (demonstration video)",
         "search": "Find your ideas instantly",
         "center": "Any bubble can become the center",
         "meaning": "List bubbles that share a common meaning",
         "history": "History of your most visited bubbles"
       },
-      "model":{
+      "model": {
         "title": "Modelize",
-        "overview" : "Easy forms for your notes. Accelerate your notes taking by using already well thought models.",
+        "overview": "Easy forms for your notes. Accelerate your notes taking by using already well thought models.",
         "video": "Modelize (demonstration video)",
         "model": "Create reusable models",
         "suggestion": "Have suggestions of bubbles to add",
@@ -67,8 +72,8 @@
       "filter": "Filter"
     },
     "error": {
-      "mandatory" : "Username is mandatory",
-      "invalid" : "Username is invalid, it can only contain letters, numbers, underscores and hyphens",
+      "mandatory": "Username is mandatory",
+      "invalid": "Username is invalid, it can only contain letters, numbers, underscores and hyphens",
       "too_long": "Username can't exceed 30 characters",
       "taken": "This username is already taken",
       "email_mandatory": "Email is mandatory",
@@ -117,9 +122,9 @@
   },
   "top_menu": {
     "share": "share",
-    "central" : "all your central",
-    "schemas" : "all schemas",
-    "save_as_image" : "save as image",
+    "central": "all your central",
+    "schemas": "all schemas",
+    "save_as_image": "save as image",
     "schema": "model",
     "bubble": "bubble",
     "create": "create",
@@ -150,14 +155,14 @@
         "title_prefix": "Identifiers of ",
         "title": "Say what this bubble is.",
         "placeholder": "This bubble Is a ... or is the Same as",
-        "example":"ex: This bubble is a fruit or this bubble is the same as Madonna the singer.",
+        "example": "ex: This bubble is a fruit or this bubble is the same as Madonna the singer.",
         "what_for": "What for?",
         "why": "To automaticaly have an image, a description, suggestions, group relations and find all the other bubbles that have the same identifiers.",
         "readMore": "more",
         "readLess": "less",
         "origin": "source",
-        "nb_references" : "other bubble(s) with the same identifier",
-        "no_other_references" : "No other bubble with the same identifier"
+        "nb_references": "other bubble(s) with the same identifier",
+        "no_other_references": "No other bubble with the same identifier"
       }
     }
   },
@@ -186,7 +191,7 @@
         "progress": "Upload progress"
       },
       "note": {
-        "title_prefix" : "Description of ",
+        "title_prefix": "Description of ",
         "update": "Update",
         "saving": "Saving",
         "cancel": "Cancel"
@@ -264,19 +269,19 @@
       "vertex": "Bubble",
       "relation": "Relation",
       "schema": "Model",
-      "identification" : "Identifier"
+      "identification": "Identifier"
     },
-    "identifier":{
+    "identifier": {
       "references": " reference(s)"
     },
     "references": " reference(s)"
   },
-  "wordcloud":{
-    "title":"Central bubbles"
+  "wordcloud": {
+    "title": "Central bubbles"
   },
   "schemaList": {
     "title": "Schemas",
-    "linkButton":"Visit this model",
+    "linkButton": "Visit this model",
     "createButton": "Create a bubble from this model"
   },
   "otherUser": {

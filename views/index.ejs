@@ -631,6 +631,9 @@
                 <span data-i18n="compare_flow.with_user"></span>
                 <a href="#" class="user" target="_blank"></a>
             </h3>
+            <h4>
+                <a href="#" class="other-user-bubble" data-i18n="compare_flow.original" target="_blank"></a>
+            </h4>
             <a href="#" class="quit-flow">
                 <h4 data-i18n="compare_flow.quit"></h4>
             </a>
@@ -867,6 +870,14 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
+                        <h3 id="compare-with-default-section" class="hidden well">
+                            <a href="#">
+                                <span data-i18n="compare_menu.default_compare.with"></span>
+                                <span class="default-compare-label"></span>
+                                <span data-i18n="compare_menu.default_compare.user"></span>
+                                <span class="default-compare-user"></span>.
+                            </a>
+                        </h3>
                         <input id="compare-search-input" class="form-control" data-autofocus="true" type="text"
                                data-i18n="[placeholder]compare_menu.placeholder"/>
                         <div id="compare-loading" class="hidden text-center">

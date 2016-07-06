@@ -150,8 +150,9 @@ define([
     api.enterCompareFlowWithGraph = function (graph) {
         loadFixtures('compare-flow.html');
         CompareFlow.enter();
-        CompareFlow._enterComparisonWithGraph(
-            graph
+        CompareFlow._enterComparisonWithGraphAndCenterUri(
+            graph,
+            graph.getAnyUri()
         );
     };
 

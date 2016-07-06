@@ -48,6 +48,7 @@ define([
             this.getGenericIdentifications()
         );
     };
+    
     api.Object.prototype.getFirstIdentificationToAGraphElement = function () {
         var identification = false;
         $.each(this.getIdentifications(), function () {

@@ -5,11 +5,16 @@
   "compare_flow": {
     "title": "Mode comparaison",
     "with_user": "avec",
+    "original": "bulle de l'autre usager",
     "quit": "Quitter"
   },
   "compare_menu": {
     "title": "Comparer toute la carte",
-    "placeholder": "chercher une bulle pour comparer",
+    "default_compare":{
+      "with":"Comparez avec la bulle",
+      "user":"de"
+    },
+    "placeholder": "chercher une autre bulle à comparer",
     "loading": "Comparaison en cours...",
     "no-difference": "Pas de différence"
   },
