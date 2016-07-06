@@ -45,23 +45,7 @@ define([
             callback(toReturn);
         };
     };
-
-    api.mockUpdateLabel = function () {
-        return spyOn(FriendlyResourceService, "updateLabel").and.callFake(function (friendlyResource, label, callback) {
-            if (callback !== undefined) {
-                callback(friendlyResource);
-            }
-        });
-    };
-    api.mockAcceptSuggestion = function () {
-        return spyOn(SuggestionService, "accept").and.callFake(function () {
-            var deferred = $.Deferred();
-            return deferred.resolve({
-                vertex_uri: TestUtils.generateVertexUri(),
-                edge_uri: TestUtils.generateEdgeUri()
-            });
-        });
-    };
+    
     api.mockRemoveEdge = function () {
         return spyOn(EdgeService, "remove").and.callFake(function (edge, callback) {
             callback(edge);

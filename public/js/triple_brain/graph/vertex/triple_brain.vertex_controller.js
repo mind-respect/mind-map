@@ -194,23 +194,7 @@ define([
             );
         }
     };
-
-    VertexController.prototype.acceptCanDo = function () {
-        return false;
-    };
-
-    VertexController.prototype.accept = function () {
-        var self = this;
-        var comparedWithLabel = this.vertices.getComparedWith().getLabel();
-        VertexService.updateLabel(
-            this.vertices,
-            comparedWithLabel,
-            function () {
-                self.vertices.setText(comparedWithLabel);
-                self.vertices.reviewInLabelButtonsVisibility();
-            }
-        );
-    };
+    
     VertexController.prototype.groupCanDo = function () {
         return this.isGroupAndOwned();
     };

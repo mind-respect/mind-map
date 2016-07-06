@@ -6,8 +6,9 @@ define([
     "triple_brain.tree_edge",
     "triple_brain.edge_ui",
     "triple_brain.graph_element_ui",
-    "triple_brain.event_bus"
-], function (TreeEdge, EdgeUi, GraphElementUi, EventBus) {
+    "triple_brain.event_bus",
+    "triple_brain.mind_map_info"
+], function (TreeEdge, EdgeUi, GraphElementUi, EventBus, MindMapInfo) {
     "use strict";
     var api = {};
     TreeEdge.buildCommonConstructors(api);
@@ -73,6 +74,7 @@ define([
         this.getLabel().attr(
             "placeholder", TreeEdge.getWhenEmptyLabel()
         );
+        var isFromComparison = this.getSuggestion().getOrigin().isFromComparison();
         var edge = TreeEdge.createFromHtmlAndUri(
             this.html,
             newRelationUri
@@ -81,11 +83,15 @@ define([
             this.getModel()
         );
         edge.rebuildMenuButtons();
-        edge.setComparedWith(
-            this.getComparedWith()
-        );
-        edge.quitCompareAddOrRemoveMode();
-        edge.refreshComparison();
+        if(isFromComparison){
+            edge.setComparedWith(
+                this.getComparedWith()
+            );
+            edge.quitCompareAddOrRemoveMode();
+            edge.refreshComparison();
+        }else if(MindMapInfo.isInCompareMode()){
+            edge.setAsComparisonSuggestionToRemove();
+        }
         EventBus.publish(
             '/event/ui/html/edge/created/',
             edge

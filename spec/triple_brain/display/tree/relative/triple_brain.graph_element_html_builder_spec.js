@@ -4,16 +4,17 @@
 
 define([
     "test/test-scenarios",
-    "test/mock",
+    "test/mock/triple_brain.suggestion_service_mock",
+    "test/mock/triple_brain.friendly_resource_service_mock",
     "triple_brain.graph_displayer_as_relative_tree"
-], function (Scenarios, Mock, GraphDisplayerAsRelativeTree) {
+], function (Scenarios, SuggestionServiceMock, FriendlyResourceServiceMock, GraphDisplayerAsRelativeTree) {
     "use strict";
     describe("graph_element_html_builder", function () {
         it("does not update label to service if label has not changed", function () {
             var threeBubblesScenario = new Scenarios.threeBubblesGraph();
             var bubble1 = threeBubblesScenario.getBubble1InTree();
             var bubble1Label = bubble1.getLabel();
-            var updateLabelInServiceSpy = Mock.mockUpdateLabel();
+            var updateLabelInServiceSpy = FriendlyResourceServiceMock.updateLabel();
             expect(
                 updateLabelInServiceSpy
             ).not.toHaveBeenCalled();
@@ -40,7 +41,7 @@ define([
                 eventBubble
             );
             var vertexSuggestionInTree = eventBubble.getTopMostChildBubble().getTopMostChildBubble();
-            Mock.mockAcceptSuggestion();
+            SuggestionServiceMock.acceptSuggestion();
             expect(
                 vertexSuggestionInTree.isVertexSuggestion()
             ).toBeTruthy();
@@ -69,7 +70,7 @@ define([
             );
             var relationSuggestion = eventBubble.getTopMostChildBubble();
             var vertexSuggestionInTree = relationSuggestion.getTopMostChildBubble();
-            Mock.mockAcceptSuggestion();
+            SuggestionServiceMock.acceptSuggestion();
             expect(
                 relationSuggestion.isRelationSuggestion()
             ).toBeTruthy();

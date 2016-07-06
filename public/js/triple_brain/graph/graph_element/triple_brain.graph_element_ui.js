@@ -427,7 +427,8 @@ define([
     };
 
     api.Self.prototype.shouldCompare = function () {
-        return MindMapInfo.isInCompareMode() && !this.isAComparisonSuggestionToRemove();
+        return MindMapInfo.isInCompareMode() && !this.isAComparisonSuggestionToRemove() && !this.thisIsAModelSuggestion();
+
     };
 
     api.Self.prototype.refreshLabelComparison = function () {
@@ -453,6 +454,10 @@ define([
         this.getTreeContainer().addClass(
             "compare-add"
         );
+    };
+
+    api.Self.prototype.thisIsAModelSuggestion = function () {
+        return this.isSuggestion() && !this.getSuggestion().getOrigin().isFromComparison();
     };
 
     api.Self.prototype.setAsComparisonSuggestionToRemove = function () {
@@ -488,6 +493,12 @@ define([
         );
     };
     api.Self.prototype.labelUpdateHandle = function () {
+        var isLabelDifferentThanModel = this.text() !== this.getModel().getLabel();
+        if (isLabelDifferentThanModel) {
+            this.setText(
+                this.getModel().getLabel()
+            );
+        }
         this.leaveEditMode();
         this.getLabel().maxChar();
         this.getHtml().centerOnScreen();
@@ -553,7 +564,7 @@ define([
         }
     );
     EventBus.subscribe(
-        '/event/ui/graph/vertex/note/updated',
+        '/event/ui/graph/element/note/updated',
         function (event, graphElement) {
             graphElement.updateInLabelNoteButtonHoverText();
         }

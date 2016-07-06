@@ -3,11 +3,13 @@
  */
 
 define([
+    "jquery",
     "test/test-scenarios",
     "test/test-utils",
-    "jquery",
-    "triple_brain.graph_element_controller"
-], function (Scenarios, TestUtils, $, GraphElementController) {
+    "test/mock/triple_brain.friendly_resource_service_mock",
+    "triple_brain.graph_element_controller",
+    "triple_brain.sub_graph"
+], function ($, Scenarios, TestUtils, FriendlyResourceServiceMock, GraphElementController, SubGraph) {
     "use strict";
     describe("graph_element_controller", function () {
         it("displays the graph element note", function () {
@@ -50,6 +52,28 @@ define([
             expect(
                 GraphElementController._getContentEditor().html()
             ).toBe("<div>&lt;script&gt;alert('yo')&lt;/script&gt;</div>");
+        });
+        it("can have script tag as text", function () {
+
+        });
+        it("updates model label when accepting comparison", function(){
+            FriendlyResourceServiceMock.updateLabel();
+            var scenario = new Scenarios.threeBubblesGraphFork();
+            var b1Fork = scenario.getBubble1InTree();
+            TestUtils.enterCompareFlowWithGraph(
+                SubGraph.fromServerFormat(
+                    new Scenarios.threeBubblesGraph().getGraph()
+                )
+            );
+            b1Fork.setText("potatoe");
+            b1Fork.getLabel().blur();
+            expect(
+                b1Fork.getModel().getLabel()
+            ).toBe("potatoe");
+            b1Fork.getController().accept();
+            expect(
+                b1Fork.getModel().getLabel()
+            ).toBe("b1");
         });
     });
 });

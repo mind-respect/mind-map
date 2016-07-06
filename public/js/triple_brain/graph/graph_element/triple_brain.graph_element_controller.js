@@ -4,7 +4,8 @@
 
 define([
     "jquery",
-    "triple_brain.vertex_service",
+    "triple_brain.graph_element_service",
+    "triple_brain.friendly_resource_service",
     "triple_brain.graph_displayer",
     "triple_brain.mind_map_info",
     "triple_brain.event_bus",
@@ -13,7 +14,7 @@ define([
     "bootstrap-wysiwyg",
     "bootstrap",
     "jquery.safer-html"
-], function ($, VertexService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu) {
+], function ($, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu) {
     "use strict";
     var api = {};
     EventBus.subscribe(
@@ -106,6 +107,23 @@ define([
         this.identify();
     };
 
+    GraphElementController.prototype.acceptCanDo = function () {
+        return false;
+    };
+
+    GraphElementController.prototype.accept = function () {
+        var self = this;
+        var comparedWithLabel = this.getElements().getComparedWith().getLabel();
+        FriendlyResourceService.updateLabel(
+            this.getElements(),
+            comparedWithLabel,
+            function () {
+                self.getElements().getModel().setLabel(comparedWithLabel);
+                self.getElements().labelUpdateHandle();
+            }
+        );
+    };
+
     GraphElementController.prototype.isSingleAndOwned = function () {
         return this.isSingle() && this.isOwned();
     };
@@ -134,7 +152,7 @@ define([
                 $.t("vertex.menu.note.saving") + " ..."
             );
             var graphElement = api._getBubbleNoteModal().data("graphElement");
-            VertexService.updateNote(
+            GraphElementService.updateNote(
                 graphElement,
                 api._getContentEditor().html(),
                 function (graphElement) {

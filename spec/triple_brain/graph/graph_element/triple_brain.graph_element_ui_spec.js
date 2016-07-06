@@ -5,11 +5,12 @@
 define([
     "test/test-scenarios",
     "test/test-utils",
+    "test/mock/triple_brain.suggestion_service_mock",
     "triple_brain.identification",
     "triple_brain.graph_element_service",
     "triple_brain.sub_graph",
     "triple_brain.graph_displayer_as_relative_tree"
-], function (Scenarios, TestUtils, Identification, GraphElementService, SubGraph, GraphDisplayerAsRelativeTree) {
+], function (Scenarios, TestUtils, SuggestionServiceMock, Identification, GraphElementService, SubGraph, GraphDisplayerAsRelativeTree) {
     "use strict";
     describe("graph_element_ui", function () {
         var vertex, schema;
@@ -253,6 +254,31 @@ define([
             ).not.toContainElement(
                 "del"
             );
+        });
+        it("updates input label if model text is different than input text in label update", function () {
+            var b1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            b1.getModel().setLabel("pine apple");
+            expect(
+                b1.getLabel().text()
+            ).not.toBe("pine apple");
+            b1.labelUpdateHandle();
+            expect(
+                b1.getLabel().text()
+            ).toBe("pine apple");
+        });
+        it("can update model suggestion label in comparison mode", function () {
+            var suggestionUi = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
+            TestUtils.enterCompareFlowWithGraph(
+                SubGraph.fromServerFormat(
+                    new Scenarios.threeBubblesGraph().getGraph()
+                )
+            );
+            SuggestionServiceMock.acceptSuggestion();
+            suggestionUi.setText("something");
+            suggestionUi.getLabel().blur();
+            expect(
+                suggestionUi.text()
+            ).toBe("something");
         });
     });
 });

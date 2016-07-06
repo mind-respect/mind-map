@@ -12,11 +12,8 @@ define([
 ], function (Scenarios, VertexServiceMock, VertexController, SelectionHandler, VertexService, MindMapInfo) {
     "use strict";
     describe("vertex_controller", function () {
-        var threeBubbles;
-        beforeEach(function () {
-            threeBubbles = new Scenarios.threeBubblesGraph();
-        });
         it("removes connected edges when removing a vertex", function () {
+            var threeBubbles = new Scenarios.threeBubblesGraph();
             VertexServiceMock.removeVertex();
             MindMapInfo._setIsViewOnly(false);
             var bubble1 = threeBubbles.getBubble1InTree(),

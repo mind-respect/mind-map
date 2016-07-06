@@ -82,23 +82,7 @@ define([
                 callback
             );
         };
-        api.updateNote = function (vertex, note, callback) {
-            $.ajax({
-                type: 'POST',
-                url: vertex.getUri() + '/comment',
-                data: note,
-                contentType: "text/plain"
-            }).success(function () {
-                vertex.setNote(note);
-                EventBus.publish(
-                    '/event/ui/graph/vertex/note/updated',
-                    vertex
-                );
-                if (callback !== undefined) {
-                    callback(vertex);
-                }
-            });
-        };
+
         api.addType = function (vertex, type, callback) {
             GraphElementService.addType(
                 vertex,

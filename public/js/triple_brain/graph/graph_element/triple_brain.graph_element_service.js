@@ -114,5 +114,22 @@ define([
             );
         });
     };
+    api.updateNote = function (graphElement, note, callback) {
+        $.ajax({
+            type: 'POST',
+            url: graphElement.getUri() + '/comment',
+            data: note,
+            contentType: "text/plain"
+        }).success(function () {
+            graphElement.setNote(note);
+            EventBus.publish(
+                '/event/ui/graph/element/note/updated',
+                graphElement
+            );
+            if (callback !== undefined) {
+                callback(graphElement);
+            }
+        });
+    };
     return api;
 });

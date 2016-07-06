@@ -16,8 +16,9 @@ define([
     "triple_brain.sub_graph",
     "triple_brain.triple",
     "triple_brain.suggestion",
+    "triple_brain.mind_map_info",
     "jquery.i18next"
-], function ($, RelativeTreeVertex, GraphElementUi, VertexUi, Vertex, EventBus, SelectionHandler, VertexHtmlBuilder, GraphDisplayer, GraphService, SubGraph, Triple, Suggestion) {
+], function ($, RelativeTreeVertex, GraphElementUi, VertexUi, Vertex, EventBus, SelectionHandler, VertexHtmlBuilder, GraphDisplayer, GraphService, SubGraph, Triple, Suggestion, MindMapInfo) {
     "use strict";
     var api = {};
     RelativeTreeVertex.buildCommonConstructors(api);
@@ -93,7 +94,8 @@ define([
         vertex.setLabel(
             this.text()
         );
-        if (this.getSuggestion().getOrigin().isFromComparison()) {
+        var isFromComparison = this.getSuggestion().getOrigin().isFromComparison();
+        if (isFromComparison) {
             vertex.addGenericIdentification(
                 this.getSuggestion().getType()
             );
@@ -124,11 +126,16 @@ define([
             vertex
         );
         vertexUi.rebuildMenuButtons();
-        vertexUi.setComparedWith(
-            this.getComparedWith()
-        );
-        vertexUi.quitCompareAddOrRemoveMode();
-        vertexUi.refreshComparison();
+        if(isFromComparison){
+            vertexUi.setComparedWith(
+                this.getComparedWith()
+            );
+            vertexUi.quitCompareAddOrRemoveMode();
+            vertexUi.refreshComparison();
+        }else if(MindMapInfo.isInCompareMode()){
+            vertexUi.setAsComparisonSuggestionToRemove();
+        }
+
         SelectionHandler.setToSingleGraphElement(vertexUi);
         EventBus.publish(
             '/event/ui/html/vertex/created/',
