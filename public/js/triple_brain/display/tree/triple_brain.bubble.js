@@ -172,9 +172,11 @@ define([
                     $(this)
                 ));
             });
-            visitor(
-                this.getParentBubble()
-            );
+            if (!this.isCenterBubble()) {
+                visitor(
+                    this.getParentBubble()
+                );
+            }
         };
 
         api.Self.prototype.visitAllChild = function (visitor) {

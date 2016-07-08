@@ -138,7 +138,7 @@ define([
             this.html.addClass('center-vertex');
             this.hideCenterButton();
         };
-        
+
         api.Object.prototype.width = function () {
             return this.html.width();
         };
@@ -168,27 +168,27 @@ define([
         };
         api.Object.prototype.connectedEdges = function () {
             var edgesConnectedToVertex = [];
-            this.visitConnectedEdges(function(edge){
+            this.visitConnectedEdges(function (edge) {
                 edgesConnectedToVertex.push(edge);
             });
             return edgesConnectedToVertex;
         };
         api.Object.prototype.isConnectedToEdge = function (edge) {
             var isConnected = false;
-            this.visitConnectedEdges(function(connected){
-                if(edge.getUri() === connected.getUri()){
-                    isConnected =true;
+            this.visitConnectedEdges(function (connected) {
+                if (edge.getUri() === connected.getUri()) {
+                    isConnected = true;
                     return false;
                 }
             });
             return isConnected;
         };
         api.Object.prototype.isConnectedToEdgeWithFirstGraphIdentifier = function (edge) {
-            
+
         };
         api.Object.prototype.visitConnectedEdges = function (visitor) {
-            this.visitAllConnected(function(connected){
-                if(connected.isRelation() || connected.isRelationSuggestion()){
+            this.visitAllConnected(function (connected) {
+                if (connected.isRelation() || connected.isRelationSuggestion()) {
                     visitor(connected);
                 }
             });
@@ -208,6 +208,19 @@ define([
                 edge.removeFromCache();
                 edge.remove();
             });
+        };
+
+        api.Object.prototype.isConnectedToAVertexWithUri = function (uri) {
+            var isConnected = false;
+            this.visitAllConnected(function (edge) {
+                var isConnectedToSource = uri === edge.getSourceVertex().getUri();
+                var isConnectedToDestination = uri === edge.getDestinationVertex().getUri();
+                if (isConnectedToSource || isConnectedToDestination) {
+                    isConnected = true;
+                    return false;
+                }
+            });
+            return isConnected;
         };
 
         api.Object.prototype.getSuggestions = function () {
@@ -352,14 +365,14 @@ define([
             var childContainer = this.getHtml().parent().parent().find(
                 "> .vertices-children-container"
             );
-            do{
+            do {
                 depth++;
                 childContainer = childContainer.find(
                     "> .vertex-tree-container"
                 ).find(
                     "> .vertices-children-container"
                 );
-            }while(childContainer.length !== 0);
+            } while (childContainer.length !== 0);
             // divided by 2 because of the edges
             return depth / 2;
         };
