@@ -13,8 +13,8 @@ define([
     "triple_brain.edge_html_builder",
     "triple_brain.graph_element",
     "triple_brain.sub_graph",
-    "triple_brain.graph_service"
-], function (Scenarios, TestUtils, Mock, GraphServiceMock, GraphDisplayerAsRelativeTree, CenterBubble, VertexHtmlBuilder, EdgeHtmlBuilder, GraphElement, SubGraph, GraphService) {
+    "triple_brain.mind_map_info"
+], function (Scenarios, TestUtils, Mock, GraphServiceMock, GraphDisplayerAsRelativeTree, CenterBubble, VertexHtmlBuilder, EdgeHtmlBuilder, GraphElement, SubGraph, MindMapInfo) {
     "use strict";
     describe("graph_displayer_as_relative_tree_spec", function () {
         it("distributes triples evenly to the right and left", function () {
@@ -485,6 +485,32 @@ define([
                     ".vertical-border"
                 ).length
             ).toBeGreaterThan(0);
+        });
+
+        it("does not change the side of a relation if addding a child to it", function () {
+            var centerVertex = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            var r3 = TestUtils.getChildWithLabel(
+                centerVertex,
+                "r2"
+            );
+            var isR3ToTheLeft = r3.isToTheLeft();
+            MindMapInfo._setIsViewOnly(
+                false
+            );
+            expect(
+                r3.isGroupRelation()
+            ).toBeFalsy();
+            r3.getController().addChild();
+            r3 = TestUtils.getChildWithLabel(
+                centerVertex,
+                "r2"
+            );
+            expect(
+                r3.isGroupRelation()
+            ).toBeTruthy();
+            expect(
+                r3.isToTheLeft()
+            ).toBe(isR3ToTheLeft);
         });
         
         function connectDistantVertexTest(callback) {

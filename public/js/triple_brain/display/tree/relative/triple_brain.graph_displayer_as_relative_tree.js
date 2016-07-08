@@ -371,8 +371,12 @@ define([
         groupRelationUi.removeHiddenRelationsContainer();
     };
 
-    api.addNewGroupRelation = function (identification, parentBubble) {
-        var newGroupRelation = new api.TreeMaker().buildBubbleHtmlIntoContainer(
+    api.addNewGroupRelation = function (identification, parentBubble, addToLeft) {
+        var treeMaker = new api.TreeMaker();
+        treeMaker.setDirectionAroundCenter(
+            addToLeft
+        );
+        var newGroupRelation = treeMaker.buildBubbleHtmlIntoContainer(
             GroupRelation.usingIdentification(identification),
             parentBubble,
             GroupRelationHtmlBuilder
@@ -412,6 +416,9 @@ define([
     api.TreeMaker = function (_htmlBuilder) {
         var self = this;
         this.edgeBuilder = EdgeBuilder;
+        this.setDirectionAroundCenter = function (isToTheLeft) {
+            this.forceToTheLeft = isToTheLeft;
+        };
         this.makeForSchema = function (schema) {
             _htmlBuilder = SchemaHtmlBuilder;
             var container = buildRootBubbleContainer();
@@ -487,13 +494,13 @@ define([
                 container;
             if (parentBubble.isCenterBubble()) {
                 var centerBubble = CenterBubble.usingBubble(parentBubble);
-                if (centerBubble.shouldAddLeft()) {
-                    container = centerBubble.getLeftContainer();
-                    serverFormat.isLeftOriented = true;
-                } else {
-                    container = centerBubble.getRightContainer();
-                    serverFormat.isLeftOriented = false;
-                }
+                var addLeft = undefined === this.forceToTheLeft ?
+                    centerBubble.shouldAddLeft() :
+                    this.forceToTheLeft;
+                container = addLeft ?
+                    centerBubble.getLeftContainer() :
+                    centerBubble.getRightContainer();
+                serverFormat.isLeftOriented = addLeft;
             } else {
                 container = self.childContainer(parentBubble);
                 serverFormat.isLeftOriented = parentBubble.getModel().isLeftOriented;

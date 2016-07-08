@@ -33,27 +33,29 @@ define([
         var parentVertex = this.edges.getParentVertex();
         var newGroupRelation = GraphDisplayer.addNewGroupRelation(
             this._getAppropriateIdentificationForNewGroupRelation(),
-            parentVertex
+            parentVertex,
+            this.getElements().isToTheLeft()
         );
         newGroupRelation.getController().addChild();
-        this.edges.moveToParent(newGroupRelation);
+        this.getElements().moveToParent(
+            newGroupRelation
+        );
     };
     EdgeController.prototype._getAppropriateIdentificationForNewGroupRelation = function () {
-        var identification;
-        if (this.edges.hasIdentifications()) {
-            identification = this.edges.getIdentifications()[0];
+        if (this.getElements().hasIdentifications()) {
+            return this.getElements().getIdentifications()[0];
         } else {
-            identification = Identification.fromFriendlyResource(
-                this.edges.getModel()
+            var identification = Identification.fromFriendlyResource(
+                this.getElements().getModel()
             );
             identification.setLabel(
-                this.edges.text()
+                this.getElements().text()
             );
             identification.setComment(
-                this.edges.getNote()
+                this.getElements().getNote()
             );
+            return identification;
         }
-        return identification;
     };
 
     EdgeController.prototype.removeCanDo = function () {

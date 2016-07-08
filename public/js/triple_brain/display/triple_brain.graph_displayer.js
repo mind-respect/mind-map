@@ -165,10 +165,11 @@ define([
             publishResetGraph();
             $("#drawn_graph").empty();
         };
-        api.addNewGroupRelation = function (identification, parentBubble) {
+        api.addNewGroupRelation = function (identification, parentBubble, addToLeft) {
             return _implementation.addNewGroupRelation(
                 identification,
-                parentBubble
+                parentBubble,
+                addToLeft
             );
         };
         return api;
