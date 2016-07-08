@@ -67,6 +67,7 @@ define([
             GraphUi.initDragScroll();
             GraphUi.enableDragScroll();
             SelectionHandler.setToSingleVertex(centralVertex);
+            GraphDisplayer.getGraphMenuHandler().zoomOut();
             EventBus.publish('/event/ui/graph/drawn');
             //if (window.callPhantom === 'function') {
             //    window.callPhantom('takeShot');
