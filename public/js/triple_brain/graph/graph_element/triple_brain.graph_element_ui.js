@@ -244,6 +244,7 @@ define([
         }
     };
     api.Self.prototype.focus = function () {
+        this.hideMenu();
         this.editMode();
         this._setTextBeforeModification();
         this.getLabel().maxCharCleanTextApply().focusEnd();
