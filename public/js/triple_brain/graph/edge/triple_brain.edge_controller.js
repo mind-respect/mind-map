@@ -65,12 +65,14 @@ define([
     EdgeController.prototype.remove = function () {
         var self = this;
         EdgeService.remove(this.getElements(), function () {
+            var parentBubble = self.getElements().getParentBubble();
             var childVertex = self.getElements().getTopMostChildBubble();
             self.getElements().applyToOtherInstances(function (otherInstance) {
                 var childVertex = otherInstance.getTopMostChildBubble();
                 childVertex.remove(false);
             });
             childVertex.remove(false);
+            parentBubble.centerOnScreenWithAnimation();
         });
     };
     EdgeController.prototype.reverseToRightCanDo = function () {

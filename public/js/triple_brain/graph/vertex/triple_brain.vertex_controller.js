@@ -65,7 +65,9 @@ define([
         ).build();
         function deleteAfterConfirmationBehavior(vertex) {
             VertexService.remove(vertex, function (vertex) {
+                var parentVertex = vertex.getParentVertex();
                 vertex.remove();
+                parentVertex.centerOnScreenWithAnimation();
             });
         }
     };
