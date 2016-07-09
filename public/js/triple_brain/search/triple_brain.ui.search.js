@@ -13,36 +13,30 @@ define([
     ],
     function ($, IdUri, GraphDisplayer, UserMapAutocompleteProvider, EventBus, MindMapInfo) {
         "use strict";
-        EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function(){
-            if(MindMapInfo.isAnonymous()){
+        EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function () {
+            if (MindMapInfo.isAnonymous()) {
                 return;
             }
             init();
         });
-        EventBus.subscribe('/event/ui/flow/landing', function(){
+        EventBus.subscribe('/event/ui/flow/landing', function () {
             init();
         });
-        function init(){
+        function init() {
             getInput().empty().tripleBrainAutocomplete({
                 select: function (event, ui) {
-                    var vertexUri = ui.item.uri,
-                        input = $(this);
-                    if(MindMapInfo.isTagCloudFlow()){
-                        window.location = IdUri.htmlUrlForBubbleUri(vertexUri);
-                        return;
-                    }
-                    GraphDisplayer.displayForBubbleWithUri(
-                        vertexUri
+                    var elementUri = ui.item.uri;
+                    window.location = IdUri.htmlUrlForBubbleUri(
+                        elementUri
                     );
-                    input.val("").blur();
-                    event.preventDefault();
                 },
                 resultsProviders: [
                     UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas()
                 ]
             });
         }
-        function getInput(){
+
+        function getInput() {
             return $("#vertex-search-input");
         }
     }

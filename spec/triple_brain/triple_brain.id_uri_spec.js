@@ -58,7 +58,7 @@ define([
                 "/service/users/oasivdj/graph/schema/d15066c1-b438-42fe-a340-e939560be6ae"
             );
         });
-        it("can tell if a uri is a schema uri", function(){
+        it("can tell if a uri is a schema uri", function () {
             var schemaScenario = new Scenarios.getKaraokeSchemaGraph();
             expect(
                 IdUri.isSchemaUri(
@@ -76,6 +76,24 @@ define([
                     threeBubblesScenario.getBubble1().getUri()
                 )
             ).toBeFalsy();
+        });
+        it("sets a correct url for a property uri", function () {
+            var schemaScenario = new Scenarios.getKaraokeSchemaGraph();
+            var schemaShortId = IdUri.getSchemaShortId(
+                schemaScenario.getSchema().getUri()
+            );
+            var propertyUri = schemaScenario.getLocationProperty().getUri();
+            var propertyShortId = IdUri.getPropertyShortId(
+                propertyUri
+            );
+            expect(
+                IdUri.htmlUrlForBubbleUri(propertyUri)
+            ).toBe(
+                "/user/b/graph/schema/" +
+                schemaShortId +
+                "/property/" +
+                propertyShortId
+            );
         });
     });
 });
