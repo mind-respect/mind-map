@@ -7,7 +7,7 @@ define([
 ], function (GraphService) {
     "use strict";
     var api = {};
-    api.getForCentralVertexUriMock = function(serverGraphToReturn){
+    api.getForCentralVertexUri = function(serverGraphToReturn){
         return spyOn(GraphService, "getForCentralVertexUri").and.callFake(function(centerUri, callback){
             callback(serverGraphToReturn);
         });

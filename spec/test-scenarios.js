@@ -345,7 +345,7 @@ define([
             Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
         };
 
-        api.getGraphWithHiddenSimilarRelations = function () {
+        api.graphWithHiddenSimilarRelations = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
                 return api._getTestData(

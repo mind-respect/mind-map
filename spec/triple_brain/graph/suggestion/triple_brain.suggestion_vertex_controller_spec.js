@@ -35,7 +35,7 @@ define([
                 r2.isRelation()
             ).toBeFalsy();
             var b3 = r2.getTopMostChildBubble();
-            GraphServiceMock.getForCentralVertexUriMock(
+            GraphServiceMock.getForCentralVertexUri(
                 new Scenarios.threeBubblesGraph().getSurroundBubble3Graph()
             );
             b3.addChildTree();

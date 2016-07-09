@@ -15,14 +15,14 @@ define([
         "use strict";
         var api = {};
         api.add = function (sourceVertex, destinationVertex, callback) {
-            add(
+            api._add(
                 sourceVertex.getUri(),
                 destinationVertex.getUri(),
                 callback
             );
         };
         api.addToFarVertex = function (sourceVertex, destinationVertexUri, callback) {
-            add(
+            api._add(
                 sourceVertex.getUri(),
                 destinationVertexUri,
                 callback
@@ -46,7 +46,7 @@ define([
                 destinationVertexUri = destinationVertex.getUri(),
                 sourceVertexId = sourceVertex.getId(),
                 destinationVertexId = destinationVertex.getId();
-            if(undefined !== callback){
+            if (undefined !== callback) {
                 callback(
                     edge,
                     edge.getUri(),
@@ -102,12 +102,7 @@ define([
                 url: edge.getUri() + "/source-vertex/" + IdUri.elementIdFromUri(sourceVertex.getUri())
             }).success(callback);
         };
-        return api;
-        function edgesUrl() {
-            return UserService.currentUserUri() + "/graph/edge";
-        }
-
-        function add(sourceVertexUri, destinationVertexUri, callback) {
+        api._add = function (sourceVertexUri, destinationVertexUri, callback) {
             var sourceVertexUriFormatted = IdUri.encodeUri(sourceVertexUri);
             var destinationVertexUriFormatted = IdUri.encodeUri(destinationVertexUri);
             var response = $.ajax({
@@ -116,18 +111,30 @@ define([
                 '?sourceVertexId=' + sourceVertexUriFormatted +
                 '&destinationVertexId=' + destinationVertexUriFormatted
             }).success(function () {
-                    var responseUri = IdUri.resourceUriFromAjaxResponse(
+                    var newEdgeUri = IdUri.resourceUriFromAjaxResponse(
                         response
                     );
-                    callback(
-                        Edge.buildObjectWithUriOfSelfSourceAndDestinationVertex(
-                            responseUri,
-                            sourceVertexUri,
-                            destinationVertexUri
-                        )
+                    api._addCallback(
+                        newEdgeUri,
+                        sourceVertexUri,
+                        destinationVertexUri,
+                        callback
                     );
                 }
             );
+        };
+        api._addCallback = function (newEdgeUri, sourceVertexUri, destinationVertexUri, callback) {
+            callback(
+                Edge.buildObjectWithUriOfSelfSourceAndDestinationVertex(
+                    newEdgeUri,
+                    sourceVertexUri,
+                    destinationVertexUri
+                )
+            );
+        };
+        return api;
+        function edgesUrl() {
+            return UserService.currentUserUri() + "/graph/edge";
         }
     }
 );

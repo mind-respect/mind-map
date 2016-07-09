@@ -249,7 +249,7 @@ define([
             expect(
                 b3.getNumberOfChild()
             ).toBe(0);
-            GraphServiceMock.getForCentralVertexUriMock(
+            GraphServiceMock.getForCentralVertexUri(
                 new Scenarios.threeBubblesGraph().getSurroundBubble3Graph()
             );
             b3.addChildTree();
@@ -277,7 +277,7 @@ define([
             expect(
                 b3.getNumberOfChild()
             ).toBe(0);
-            GraphServiceMock.getForCentralVertexUriMock(
+            GraphServiceMock.getForCentralVertexUri(
                 new Scenarios.threeBubblesGraph().getSurroundBubble3Graph()
             );
             b3.addChildTree();
@@ -306,7 +306,7 @@ define([
             expect(
                 b3.getNumberOfChild()
             ).toBe(0);
-            GraphServiceMock.getForCentralVertexUriMock(
+            GraphServiceMock.getForCentralVertexUri(
                 new Scenarios.threeBubblesGraph().getSurroundBubble3Graph()
             );
             b3.addChildTree();
@@ -338,7 +338,7 @@ define([
             expect(
                 b3.hasHiddenRelationsContainer()
             ).toBeTruthy();
-            GraphServiceMock.getForCentralVertexUriMock(
+            GraphServiceMock.getForCentralVertexUri(
                 new Scenarios.threeBubblesGraph().getSurroundBubble3Graph()
             );
             b3.addChildTree();
@@ -362,7 +362,7 @@ define([
                 b1Fork,
                 "r2"
             ).getTopMostChildBubble();
-            GraphServiceMock.getForCentralVertexUriMock(
+            GraphServiceMock.getForCentralVertexUri(
                 new Scenarios.threeBubblesGraph().getSurroundBubble3Graph()
             );
             b3.addChildTree();

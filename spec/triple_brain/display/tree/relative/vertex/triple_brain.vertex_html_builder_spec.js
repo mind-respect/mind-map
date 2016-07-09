@@ -75,7 +75,7 @@ define([
             ).toHaveClass("hidden");
         });
         it("hides hidden properties container when dragging", function () {
-            var bubble2 = new Scenarios.getGraphWithHiddenSimilarRelations().getBubble2InTree();
+            var bubble2 = new Scenarios.graphWithHiddenSimilarRelations().getBubble2InTree();
             expect(
                 bubble2.getHiddenRelationsContainer().getHtml()
             ).not.toHaveClass("hidden");
@@ -106,7 +106,7 @@ define([
             ).not.toHaveClass("hidden");
         });
         it("shows hidden relations container when stopping to drag", function () {
-            var bubble2 = new Scenarios.getGraphWithHiddenSimilarRelations().getBubble2InTree();
+            var bubble2 = new Scenarios.graphWithHiddenSimilarRelations().getBubble2InTree();
             TestUtils.startDragging(bubble2);
             expect(
                 bubble2.getHiddenRelationsContainer().getHtml()

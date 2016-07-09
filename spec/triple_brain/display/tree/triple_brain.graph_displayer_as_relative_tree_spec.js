@@ -55,7 +55,7 @@ define([
         });
 
         it("groups similar relations when they come out of an expanded bubble", function () {
-            var graphWithHiddenSimilarRelationsScenario = new Scenarios.getGraphWithHiddenSimilarRelations();
+            var graphWithHiddenSimilarRelationsScenario = new Scenarios.graphWithHiddenSimilarRelations();
             var bubble2 = graphWithHiddenSimilarRelationsScenario.getBubble2InTree();
             expect(
                 bubble2.hasHiddenRelationsContainer()
@@ -207,7 +207,7 @@ define([
         });
 
         it("does not duplicate the hidden relation image of a child bubble when creating a distant relationship", function () {
-            var graphWithHiddenSimilarRelationsScenario = new Scenarios.getGraphWithHiddenSimilarRelations();
+            var graphWithHiddenSimilarRelationsScenario = new Scenarios.graphWithHiddenSimilarRelations();
             var bubble1 = graphWithHiddenSimilarRelationsScenario.getBubble1InTree();
             var bubble2 = TestUtils.getChildWithLabel(
                 bubble1, "r1"
@@ -330,7 +330,7 @@ define([
             expect(
                 eventBubble.hasHiddenRelationsContainer()
             ).toBeTruthy();
-            GraphServiceMock.getForCentralVertexUriMock(
+            GraphServiceMock.getForCentralVertexUri(
                 new Scenarios.withAcceptedSuggestionGraph().getGraph()
             );
             eventBubble.addChildTree();
@@ -355,7 +355,7 @@ define([
             expect(
                 eventBubble.hasHiddenRelationsContainer()
             ).toBeTruthy();
-            GraphServiceMock.getForCentralVertexUriMock(
+            GraphServiceMock.getForCentralVertexUri(
                 new Scenarios.withAcceptedSuggestionGraph().getGraph()
             );
             expect(
@@ -515,7 +515,7 @@ define([
         
         function connectDistantVertexTest(callback) {
             var distantGraphScenario = new Scenarios.getDistantGraph();
-            var graphWithHiddenSimilarRelationsScenario = new Scenarios.getGraphWithHiddenSimilarRelations();
+            var graphWithHiddenSimilarRelationsScenario = new Scenarios.graphWithHiddenSimilarRelations();
             connectBubbleToDistantBubbleWithUriAndGraphWhenConnected(
                 distantGraphScenario.getBubbleInTree(),
                 graphWithHiddenSimilarRelationsScenario.getBubble2().getUri(),

@@ -94,6 +94,7 @@ define([
             }
             var $this = $(this);
             var vertex = $this.data("vertex");
+            $this.remove();
             vertex.addChildTree().done(function () {
                 vertex.centerOnScreenWithAnimation();
             });
