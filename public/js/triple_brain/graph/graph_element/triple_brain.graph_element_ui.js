@@ -57,7 +57,11 @@ define([
             return Object.keys(cacheWithIdAsKey).length;
         };
         api.removeFromCache = function (uri, id) {
-            var len = cacheWithUriAsKey[uri].length;
+            var cache = cacheWithUriAsKey[uri];
+            if(undefined === cache){
+                return;
+            }
+            var len = cache.length;
             while (len--) {
                 var vertex = cacheWithUriAsKey[uri][len];
                 if (vertex.getId() === uri) {

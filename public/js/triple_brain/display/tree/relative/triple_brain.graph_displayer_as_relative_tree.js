@@ -192,6 +192,7 @@ define([
                     ),
                     relation = farVertex.getParentBubble();
                 SelectionHandler.setToSingleRelation(relation);
+                relation.centerOnScreenWithAnimation();
                 farVertex.visitVerticesChildren(VertexHtmlBuilder.completeBuild);
                 if (callback !== undefined) {
                     callback(drawnTree, farVertex);
