@@ -15,7 +15,7 @@ define([
     api.getWhenEmptyLabel = function () {
         return $.t("group_relation.default");
     };
-    api.createFromHtml = function(html){
+    api.createFromHtml = function (html) {
         var groupRelation = new api.GroupRelationUi(html);
         api.initCache(
             groupRelation
@@ -23,27 +23,26 @@ define([
         return groupRelation;
     };
     api.visitAllGroupRelations = function (visitor) {
-        api.visitAll(function(element){
-            if(element.isGroupRelation()){
+        api.visitAll(function (element) {
+            if (element.isGroupRelation()) {
                 visitor(element);
             }
         });
     };
-    api.GroupRelationUi = function(html) {
+    api.GroupRelationUi = function (html) {
         this.html = html;
         TreeEdge.Self.prototype.init.call(
             this,
             html
         );
     };
-    api.withUri = function(){
+    api.withUri = function () {
         return [];
     };
     api.GroupRelationUi.prototype = new TreeEdge.Self();
     api.GroupRelationUi.prototype.getGraphElementType = function () {
         return GraphElementUi.Types.GroupRelation;
     };
-
 
     api.GroupRelationUi.prototype.getGroupRelation = function () {
         return this.html.data(
@@ -80,11 +79,11 @@ define([
         this._showDescription();
     };
 
-    api.GroupRelationUi.prototype.showButtons = function(){
+    api.GroupRelationUi.prototype.showButtons = function () {
         this.getMenuHtml().show();
     };
 
-    api.GroupRelationUi.prototype.hideButtons = function(){
+    api.GroupRelationUi.prototype.hideButtons = function () {
         this.getMenuHtml().hide();
     };
 

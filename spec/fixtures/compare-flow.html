@@ -12,3 +12,37 @@
     </div>
     <div class="col-md-4"></div>
 </div>
+<div class="modal fade row" id="compare-modal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span
+                        aria-hidden="true">&times;</span><span
+                        class="sr-only" data-i18n="modal.close"></span></button>
+                <h4 class="modal-title" data-i18n="compare_menu.title"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 id="compare-with-default-section" class="hidden well">
+                            <a href="#">
+                                <span data-i18n="compare_menu.default_compare.with"></span>
+                                <span class="default-compare-label"></span>
+                                <span data-i18n="compare_menu.default_compare.user"></span>
+                                <span class="default-compare-user"></span>.
+                            </a>
+                        </h3>
+                        <input id="compare-search-input" class="form-control" data-autofocus="true" type="text"
+                               data-i18n="[placeholder]compare_menu.placeholder"/>
+                        <div id="compare-loading" class="hidden text-center">
+                            <h5 data-i18n="compare_menu.loading"></h5>
+                            <div class="animation">
+                                <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

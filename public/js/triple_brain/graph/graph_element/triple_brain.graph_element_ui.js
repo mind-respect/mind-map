@@ -11,20 +11,38 @@ define([
     "triple_brain.event_bus",
     "triple_brain.mind_map_info",
     "triple_brain.selection_handler",
+    "triple_brain.bubble_factory",
     "jquery.focus-end",
     "jquery.center-on-screen",
     "jquery.safer-html",
     "jquery.max_char"
-], function ($, GraphDisplayer, GraphElementMainMenu, GraphElementButton, GraphElementType, EventBus, MindMapInfo, SelectionHandler) {
+], function ($, GraphDisplayer, GraphElementMainMenu, GraphElementButton, GraphElementType, EventBus, MindMapInfo, SelectionHandler, BubbleFactory) {
     "use strict";
     var api = {},
         otherInstancesKey = "otherInstances",
-        textBeforeModificationKey = "textBeforeModification";
+        textBeforeModificationKey = "textBeforeModification",
+        _centralBubble;
     api.Types = GraphElementType;
     var controllerGetters = {},
         selectors = {};
     initMenuHandlerGetters();
     initSelectors();
+    api.hasCenterBubble = function () {
+        return undefined !== _centralBubble;
+    };
+    api.getCenterBubble = function () {
+        return _centralBubble;
+    };
+    api.isCenterVertex = function () {
+        return _centralBubble;
+    };
+    api.getCenterVertexOrSchema = function () {
+        var centerBubble = api.getCenterBubble();
+        if (centerBubble.isCenterVertexOrSchema()) {
+            return centerBubble;
+        }
+        return centerBubble.getParentBubble();
+    };
     api.buildCommonConstructors = function (api) {
         var cacheWithIdAsKey = {},
             cacheWithUriAsKey = {};
@@ -58,7 +76,7 @@ define([
         };
         api.removeFromCache = function (uri, id) {
             var cache = cacheWithUriAsKey[uri];
-            if(undefined === cache){
+            if (undefined === cache) {
                 return;
             }
             var len = cache.length;
@@ -149,6 +167,34 @@ define([
             otherInstances
         );
     };
+
+    api.Self.prototype.setAsCentral = function () {
+        if (api.hasCenterBubble()) {
+            api.getCenterBubble().setAsNonCentral();
+        }
+        _centralBubble = this;
+        this.html.addClass('center-vertex');
+        this.hideCenterButton();
+    };
+
+    api.Self.prototype.setAsNonCentral = function () {
+        this.html.removeClass('center-vertex');
+        this.showCenterButton();
+    };
+
+    api.Self.prototype.showCenterButton = function () {
+        this.centerButton().addClass("hidden");
+    };
+    api.Self.prototype.hideCenterButton = function () {
+        this.centerButton().removeClass("hidden");
+    };
+
+    api.Self.prototype.centerButton = function () {
+        return this.html.find('.center');
+    };
+    api.Self.prototype.scrollTo = function () {
+        this.html.centerOnScreen();
+    };
     api.Self.prototype.applyToOtherInstances = function (apply) {
         $.each(this.getOtherInstances(), function () {
             var element = this;
@@ -172,6 +218,11 @@ define([
     };
     api.Self.prototype.isCenterBubble = function () {
         return this.html.hasClass("center-vertex");
+    };
+    api.Self.prototype.isCenterVertexOrSchema = function () {
+        return (
+                this.isVertex() || this.isSchema()
+            ) && this.isCenterBubble();
     };
     api.Self.prototype.isSchema = function () {
         return this.getGraphElementType() === api.Types.Schema;
@@ -398,6 +449,12 @@ define([
     api.Self.prototype.getMakePrivateButtonInBubbleContent = function () {
         return this.getInLabelButtonsContainer().find(
             "[data-action=makePrivate]"
+        );
+    };
+
+    api.Self.prototype.getIdentifyButtonInLabel = function () {
+        return this.getInLabelButtonsContainer().find(
+            "[data-action=identify]"
         );
     };
 

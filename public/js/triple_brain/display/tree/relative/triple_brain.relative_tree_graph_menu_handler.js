@@ -34,7 +34,7 @@ define([
                     groupRelationUi.addChildTree();
                 }
             });
-            VertexUi.centralVertex().centerOnScreenWithAnimation();
+            VertexUi.centralBubble().centerOnScreenWithAnimation();
         });
     };
     api.compare = function(){

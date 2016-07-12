@@ -23,5 +23,12 @@ define([
                 hideDescriptionSpy
             ).toHaveBeenCalled();
         });
+        it("can identify", function(){
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
+            expect(
+                possessionInTree.getController().identifyCanDo()
+            ).toBeTruthy();
+        });
     });
 });

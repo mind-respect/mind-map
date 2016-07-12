@@ -28,7 +28,7 @@ define([
     api._enterComparisonWithBubbleUri = function (uri) {
         GraphService.getForCentralVertexUriAtDepth(
             uri,
-            GraphDisplayer.getVertexSelector().centralVertex().getDeepestChildDistance()
+            GraphElementUi.getCenterBubble().getDeepestChildDistance()
         ).then(function (otherGraph) {
             api._enterComparisonWithGraphAndCenterUri(
                 SubGraph.fromServerFormat(otherGraph),
@@ -88,7 +88,7 @@ define([
     }
 
     function setupDefaultCompare() {
-        var centerVertex = GraphDisplayer.getVertexSelector().centralVertex();
+        var centerVertex = GraphElementUi.getCenterVertexOrSchema();
         var centerVertexGraphElementIdentifier = centerVertex.getFirstIdentificationToAGraphElement();
         if (!centerVertexGraphElementIdentifier) {
             return;
@@ -119,7 +119,7 @@ define([
             },
             resultsProviders: [
                 UserMapAutocompleteProvider.toFetchPublicAndUserVerticesExcept(
-                    GraphDisplayer.getVertexSelector().centralVertex()
+                    GraphElementUi.getCenterVertexOrSchema()
                 )
             ]
         });

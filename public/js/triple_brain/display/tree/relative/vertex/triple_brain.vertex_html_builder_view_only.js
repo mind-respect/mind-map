@@ -61,7 +61,7 @@ define([
             );
         }
         function handleClickToDisplayVertexAsCentralVertex(){
-            GraphDisplayer.displayUsingCentralVertex(
+            GraphDisplayer.displayUsingCentralBubble(
                 vertexOfSubHtmlComponent($(this))
             );
             $(".ui-dialog-content").dialog("close").remove();

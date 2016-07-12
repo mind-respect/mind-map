@@ -29,9 +29,10 @@ define([
         "triple_brain.id_uri",
         "triple_brain.language_manager",
         "text!locales/en/translation.json",
+        "triple_brain.mind_map_flow",
         "test/vendor/jasmine-jquery"
     ],
-    function ($, TestScenarioData, Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, TestUtils, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, EventBus, Suggestion, Identification, FriendlyResource, IdUri, LanguageManager, enTranslation) {
+    function ($, TestScenarioData, Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, TestUtils, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, EventBus, Suggestion, Identification, FriendlyResource, IdUri, LanguageManager, enTranslation, MindMapFlow) {
         "use strict";
         var api = {},
             testData = JSON.parse(TestScenarioData);
@@ -47,6 +48,7 @@ define([
             }
         });
         jasmine.getFixtures().fixturesPath = '../spec/fixtures';
+        loadFixtures('compare-flow.html');
         api.deepGraph = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
@@ -75,7 +77,7 @@ define([
             this.getBubble2InTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("b2");
             };
-            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
+            Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
         };
 
         api.deepGraphWithCircularity = function () {
@@ -98,7 +100,7 @@ define([
             this.getBubble4InTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("b4");
             };
-            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
+            Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
         };
 
         api.creationDateScenario = function () {
@@ -126,7 +128,7 @@ define([
                     "creationDate.surroundBubble7Graph"
                 );
             }
-            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
+            Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
         };
 
         api.mergeBubbleGraph = function () {
@@ -205,7 +207,7 @@ define([
             this.getMergeBubbleInTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("merge");
             };
-            Mock.setCenterVertexUriInUrl(this.getMergeBubble().getUri());
+            Mock.setCenterBubbleUriInUrl(this.getMergeBubble().getUri());
             function buildIncludedGraphElementsOfBubble(bubble) {
                 return GraphDisplayerAsRelativeTree.buildIncludedGraphElementsView(
                     bubble,
@@ -238,7 +240,7 @@ define([
             this.getCenterBubbleUri = function () {
                 return uriOfVertexWithLabel(this.getGraph(), "b1");
             };
-            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
+            Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
         };
 
         api.threeBubblesGraph = function () {
@@ -269,6 +271,10 @@ define([
 
             this.getCenterBubbleUri = function () {
                 return uriOfVertexWithLabel(this.getGraph(), "b1");
+            };
+
+            this.getR1Uri = function(){
+                return uriOfEdgeWithLabel(this.getGraph(), "r1");
             };
             this.getBubble1 = function () {
                 return Vertex.fromServerFormat(this.getGraph().vertices[
@@ -326,7 +332,7 @@ define([
             this.getRelation2 = function () {
                 return relationWithLabel(this.getGraph(), "r2");
             };
-            Mock.setCenterVertexUriInUrl(this.getBubble2().getUri());
+            Mock.setCenterBubbleUriInUrl(this.getBubble2().getUri());
         };
 
         api.threeBubblesGraphFork = function () {
@@ -342,7 +348,7 @@ define([
             this.getBubble1InTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("b1");
             };
-            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
+            Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
         };
 
         api.graphWithHiddenSimilarRelations = function () {
@@ -396,7 +402,7 @@ define([
             this.getBubble2InTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("b2");
             };
-            Mock.setCenterVertexUriInUrl(this.getBubble1().getUri());
+            Mock.setCenterBubbleUriInUrl(this.getBubble1().getUri());
         };
 
         api.getDistantGraph = function () {
@@ -418,7 +424,7 @@ define([
             this.getCenterBubbleUri = function () {
                 return this.getBubble().getUri();
             };
-            Mock.setCenterVertexUriInUrl(this.getBubble().getUri());
+            Mock.setCenterBubbleUriInUrl(this.getBubble().getUri());
         };
 
         api.GraphWithAnInverseRelationScenario = function () {
@@ -512,7 +518,7 @@ define([
             this.getOtherRelation = function () {
                 return relationWithLabel(graph, "other relation");
             };
-            Mock.setCenterVertexUriInUrl(this.getCenterVertex().getUri());
+            Mock.setCenterBubbleUriInUrl(this.getCenterVertex().getUri());
         };
         api.relationWithMultipleIdentifiers = function(){
             var treeBuilder = new TreeBuilder(this);
@@ -530,7 +536,7 @@ define([
             this.getComputerScientistRelation = function () {
                 return relationWithLabel(this.getGraph(), "computer scientist");
             };
-            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
+            Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
         };
         api.groupRelationWithImage = function () {
             var treeBuilder = new TreeBuilder(this);
@@ -549,7 +555,7 @@ define([
             this.getCenterBubbleUri = function () {
                 return uriOfVertexWithLabel(this.getGraph(), "some project");
             };
-            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
+            Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
         };
         api.oneBubbleHavingSuggestionsGraph = function () {
             var treeBuilder = new TreeBuilder(this);
@@ -588,7 +594,7 @@ define([
             this.getCenterBubbleUri = function () {
                 return this.getVertex().getUri();
             };
-            Mock.setCenterVertexUriInUrl(this.getVertex().getUri());
+            Mock.setCenterBubbleUriInUrl(this.getVertex().getUri());
         };
         api.oneBubbleHavingSuggestionsGraphNotCentered = function () {
             var treeBuilder = new TreeBuilder(this);
@@ -611,7 +617,7 @@ define([
                     "center"
                 );
             };
-            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
+            Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
         };
         api.withAcceptedSuggestionGraph = function(){
             var treeBuilder = new TreeBuilder(this);
@@ -628,7 +634,7 @@ define([
                     "Event"
                 );
             };
-            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
+            Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
         };
         api.withAcceptedSuggestionGraphNotCentered = function(){
             var treeBuilder = new TreeBuilder(this);
@@ -645,7 +651,7 @@ define([
                     "center"
                 );
             };
-            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
+            Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
         };
         api.getKaraokeSchemaGraph = function () {
             this.getGraph = function () {
@@ -701,7 +707,7 @@ define([
                     "invitees"
                 );
             };
-            Mock.setCenterVertexUriInUrl(
+            Mock.setCenterBubbleUriInUrl(
                 this.getSchema().getUri()
             );
         };
@@ -776,7 +782,7 @@ define([
             this.getCenterInTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("center");
             };
-            Mock.setCenterVertexUriInUrl(
+            Mock.setCenterBubbleUriInUrl(
                 this.getCenterBubbleUri()
             );
         };
@@ -815,7 +821,7 @@ define([
                 });
                 return theRelation;
             };
-            Mock.setCenterVertexUriInUrl(
+            Mock.setCenterBubbleUriInUrl(
                 this.getCenterBubbleUri()
             );
         };
@@ -903,7 +909,7 @@ define([
                     "b2"
                 );
             };
-            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
+            Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
         };
 
         api.centerWith2RelationsToSameChildScenario = function () {
@@ -924,7 +930,7 @@ define([
                     "center"
                 );
             };
-            Mock.setCenterVertexUriInUrl(this.getCenterBubbleUri());
+            Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
         };
 
         GraphDisplayer.setImplementation(
@@ -971,6 +977,17 @@ define([
                 var vertex = Vertex.fromServerFormat(value);
                 if (vertex.getLabel() === label) {
                     uri = vertex.getUri();
+                    return -1;
+                }
+            });
+            return uri;
+        }
+        function uriOfEdgeWithLabel(graph, label) {
+            var uri;
+            $.each(graph.edges, function (key, value) {
+                var edge = Edge.fromServerFormat(value);
+                if (edge.getLabel() === label) {
+                    uri = edge.getUri();
                     return -1;
                 }
             });
@@ -1030,6 +1047,9 @@ define([
                     centerBubbleUri
                 );
             GraphDisplayer.getVertexSelector().visitAllVertices(function (vertex) {
+                if(vertex.getUri() === centerBubbleUri){
+                    vertex.setAsCentral();
+                }
                 EventBus.publish(
                     '/event/ui/vertex/visit_after_graph_drawn',
                     vertex

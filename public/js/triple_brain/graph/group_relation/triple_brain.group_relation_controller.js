@@ -24,6 +24,9 @@ define([
         GroupRelationController.prototype.addChildCanDo = function () {
             return this.isSingleAndOwned();
         };
+        GroupRelationController.prototype.centerCanDo = function () {
+            return false;
+        };
         GroupRelationController.prototype.addChild = function () {
             this.groupRelationsUi.hideDescription();
             var self = this;

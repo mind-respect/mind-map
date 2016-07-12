@@ -111,7 +111,7 @@ define([
         };
 
         api.Self.prototype.getParentBubble = function () {
-            if (this.isCenterBubble()) {
+            if (this.isCenterVertexOrSchema()) {
                 return this;
             }
             return BubbleFactory.fromHtml(

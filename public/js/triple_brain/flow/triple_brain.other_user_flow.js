@@ -11,8 +11,9 @@ define([
     "triple_brain.fork_service",
     "triple_brain.identified_to_service",
     "triple_brain.sub_graph",
-    "triple_brain.identification"
-], function ($, EventBus, MindMapInfo, IdUri, GraphDisplayer, ForkService, IdentifiedTo, SubGraph, Identification) {
+    "triple_brain.identification",
+    "triple_brain.graph_element_ui"
+], function ($, EventBus, MindMapInfo, IdUri, GraphDisplayer, ForkService, IdentifiedTo, SubGraph, Identification, GraphElementUi) {
     "use strict";
     var api = {},
         otherUserMenu;
@@ -50,13 +51,13 @@ define([
             event.preventDefault();
             $(this).off("click", handleClick);
             var centralVertexAsIdentifier = Identification.withUri(
-                GraphDisplayer.getVertexSelector().centralVertex().getUri()
+                GraphElementUi.getCenterVertexOrSchema().getUri()
             );
             checkIfAlreadyForked(
                 centralVertexAsIdentifier
             ).then(function (isForked, forkUri) {
                 if (isForked) {
-                    //todo eventually change window.location to GraphDisplayer.displayUsingCentralVertexUri(
+                    //todo eventually change window.location to GraphDisplayer.displayUsingCentralBubbleUri(
                     window.location = IdUri.htmlUrlForBubbleUri(
                         forkUri
                     );
@@ -68,7 +69,7 @@ define([
                     centralVertexAsIdentifier
                 );
             }).then(function (results) {
-                //todo eventually change window.location to GraphDisplayer.displayUsingCentralVertexUri(
+                //todo eventually change window.location to GraphDisplayer.displayUsingCentralBubbleUri(
                 window.location = IdUri.htmlUrlForBubbleUri(
                     results[0].getGraphElement().getUri()
                 );

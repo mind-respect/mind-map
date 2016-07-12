@@ -18,15 +18,15 @@ define([
         api.name = function () {
             return _implementation.name();
         };
-        api.displayUsingCentralVertex = function (centralVertex) {
-            api.displayUsingCentralVertexUri(
-                centralVertex.getUri()
+        api.displayUsingCentralBubble = function (centralBubble) {
+            api.displayUsingCentralBubbleUri(
+                centralBubble.getUri()
             );
         };
-        api.displayUsingCentralVertexUri = function (centralVertexUri, errorCallback) {
+        api.displayUsingCentralBubbleUri = function (centralVertexUri, errorCallback) {
             displayUsingBubbleUri(
                 centralVertexUri,
-                _implementation.displayForVertexWithUri,
+                _implementation.displayForBubbleWithUri,
                 errorCallback
             );
         };
@@ -40,7 +40,7 @@ define([
         api.displayForBubbleWithUri = function (bubbleUri, errorCallback) {
             return IdUri.isSchemaUri(bubbleUri) ?
                 api.displayForSchemaWithUri(bubbleUri, errorCallback) :
-                api.displayUsingCentralVertexUri(bubbleUri, errorCallback);
+                api.displayUsingCentralBubbleUri(bubbleUri, errorCallback);
         };
         api.connectVertexToVertexWithUri = function (parentVertex, destinationVertexUri, callback) {
             _implementation.connectVertexToVertexWithUri(

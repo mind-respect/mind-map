@@ -18,16 +18,22 @@ define([
 ], function ($, TestUtils, UserService, MindMapInfo, SuggestionService, GraphService, SchemaService, VertexService, FriendlyResourceService, EdgeService, SearchService, IdUri) {
     "use strict";
     var api = {};
-    api.setCenterVertexUriInUrl = function (centerVertexUri) {
-        window.usernameForBublGuru = IdUri.usernameFromUri(centerVertexUri);
-        window.graphElementTypeForBublGuru = IdUri.isSchemaUri(centerVertexUri) ? "schema" : "vertex";
-        window.graphElementShortIdForBublGuru = IdUri.getGraphElementShortIdFromUri(centerVertexUri);
+    api.setCenterBubbleUriInUrl = function (centerVertexUri) {
+        window.usernameForBublGuru = IdUri.usernameFromUri(
+            centerVertexUri
+        );
+        window.graphElementTypeForBublGuru = IdUri.getGraphElementTypeFromUri(
+            centerVertexUri
+        );
+        window.graphElementShortIdForBublGuru = IdUri.getGraphElementShortIdFromUri(
+            centerVertexUri
+        );
         IdUri.getGraphElementUriInUrl = function () {
             return centerVertexUri;
         };
     };
     api.setGetGraphFromService = function (graph) {
-        GraphService.getForCentralVertexUri = function (centerVertexUri, callback) {
+        GraphService.getForCentralBubbleUri = function (centerVertexUri, callback) {
             callback(
                 graph
             );
@@ -45,7 +51,7 @@ define([
             callback(toReturn);
         };
     };
-    
+
     api.mockRemoveEdge = function () {
         return spyOn(EdgeService, "remove").and.callFake(function (edge, callback) {
             callback(edge);

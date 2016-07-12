@@ -16,9 +16,10 @@ define([
         "triple_brain.event_bus",
         "triple_brain.schema_service",
         "triple_brain.id_uri",
-        "triple_brain.language_manager"
+        "triple_brain.language_manager",
+        "triple_brain.graph_element_ui"
     ],
-    function ($, BigSearchBox, LoginHandler, RegisterHandler, SelectionHandler, UserService, GraphDisplayer, Vertex, VertexService, MindMapInfo, EventBus, SchemaService, IdUri, LanguageManager) {
+    function ($, BigSearchBox, LoginHandler, RegisterHandler, SelectionHandler, UserService, GraphDisplayer, Vertex, VertexService, MindMapInfo, EventBus, SchemaService, IdUri, LanguageManager, GraphElementUi) {
         "use strict";
         var api = {};
         api.earlyInit = function () {
@@ -31,7 +32,7 @@ define([
 
         EventBus.subscribe('/event/ui/graph/drawn /event/ui/graph/vertex/privacy/updated', refreshShareLinkVisibility);
 
-        api.commonSetupForAuthenticated = function(){
+        api.commonSetupForAuthenticated = function () {
             api._commonSetup();
             getMyBubblesSearchInput().removeClass("hidden");
             handleCreateNewConceptButton();
@@ -45,12 +46,12 @@ define([
             );
             getBubbleMenu().removeClass("hidden");
             getCreateSchemaButton().removeClass("hidden");
-            if(MindMapInfo.isLandingPageFlow()){
+            if (MindMapInfo.isLandingPageFlow()) {
                 getSelectButton().addClass("hidden");
             }
         };
 
-        api.commonSetupForAnonymous = function(){
+        api.commonSetupForAnonymous = function () {
             api._commonSetup();
             getBubbleMenu().addClass("hidden");
             getCreateSchemaButton().addClass("hidden");
@@ -60,9 +61,9 @@ define([
             getAllYourBubblesButton().addClass("hidden");
             handleLoginRegisterButtons();
         };
-        api._commonSetup = function(){
+        api._commonSetup = function () {
             setupLanguagePicker();
-            if(!MindMapInfo.isCenterBubbleUriDefinedInUrl()){
+            if (!MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
                 BigSearchBox.setup();
             }
             // getSaveAsImageButton().removeClass("hidden");
@@ -70,7 +71,7 @@ define([
         return api;
 
         function refreshShareLinkVisibility() {
-            getShareLink()[GraphDisplayer.getVertexSelector().centralVertex().isPublic() ? "removeClass" : "addClass"](
+            getShareLink()[GraphElementUi.getCenterBubble().isPublic() ? "removeClass" : "addClass"](
                 "hidden"
             );
         }
@@ -182,7 +183,7 @@ define([
                     window.location = IdUri.htmlUrlForBubbleUri(serverFormatFacade.getUri());
                     return;
                 }
-                GraphDisplayer.displayUsingCentralVertexUri(
+                GraphDisplayer.displayUsingCentralBubbleUri(
                     serverFormatFacade.getUri()
                 );
             });
@@ -200,11 +201,11 @@ define([
             });
         }
 
-        function setupLanguagePicker(){
+        function setupLanguagePicker() {
             getLanguagePickerContainer().find(
                 "a[data-lang=" + LanguageManager.getBrowserLocale() + "]"
             ).addClass("current");
-            getLanguagePickerContainer().find("li a").click(function(event){
+            getLanguagePickerContainer().find("li a").click(function (event) {
                 event.preventDefault();
                 LanguageManager.changeLanguage(
                     $(this).data("lang")
@@ -236,10 +237,10 @@ define([
             return $("#register-button-in-page");
         }
 
-        function getConnectMenuButton(){
+        function getConnectMenuButton() {
             return $("#connect-menu-button");
         }
-        
+
         function getRegisterButton() {
             return $("#register-button");
         }
@@ -272,10 +273,11 @@ define([
             return $("#all-your-bubbles-button");
         }
 
-        function getSaveAsImageButton(){
+        function getSaveAsImageButton() {
             return $("#save-as-image-button");
         }
-        function getLanguagePickerContainer(){
+
+        function getLanguagePickerContainer() {
             return $("#language-selector-container");
         }
     }

@@ -80,6 +80,16 @@ define([
         editor.cleanHtml();
     };
 
+    GraphElementController.prototype.centerCanDo = function () {
+        return this.isSingle();
+    };
+
+    GraphElementController.prototype.center = function () {
+        GraphDisplayer.displayUsingCentralBubble(
+            this.getElements()
+        );
+    };
+
     GraphElementController.prototype.visitOtherInstancesCanDo = function () {
         return this.isSingle() && this.graphElements.hasOtherInstances();
     };
@@ -92,7 +102,7 @@ define([
 
     GraphElementController.prototype.identifyCanDo = function () {
         return this.isSingle() && (
-                this.isOwned() || this.graphElements.hasIdentifications()
+                this.isOwned() || this.getElements().hasIdentifications()
             );
     };
 

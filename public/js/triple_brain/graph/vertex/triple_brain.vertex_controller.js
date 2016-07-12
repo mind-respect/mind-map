@@ -71,17 +71,7 @@ define([
             });
         }
     };
-
-    VertexController.prototype.centerCanDo = function () {
-        return this.isSingle();
-    };
-
-    VertexController.prototype.center = function () {
-        GraphDisplayer.displayUsingCentralVertex(
-            this.vertices
-        );
-    };
-
+    
     VertexController.prototype.imagesCanDo = function () {
         return this.isSingleAndOwned();
     };
@@ -228,7 +218,7 @@ define([
         });
         VertexService.group(
             selectedGraphElements,
-            GraphDisplayer.displayUsingCentralVertexUri
+            GraphDisplayer.displayUsingCentralBubbleUri
         );
     };
     api.Self = VertexController;

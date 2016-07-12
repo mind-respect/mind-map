@@ -4,8 +4,9 @@
 
 define([
     'test/test-scenarios',
-    "triple_brain.id_uri"
-], function (Scenarios, IdUri) {
+    "triple_brain.id_uri",
+    "triple_brain.graph_element_type"
+], function (Scenarios, IdUri, GraphElementType) {
     "use strict";
     describe("id_uri", function () {
         it("can tell if vertex uri is owned by current user", function () {
@@ -35,14 +36,14 @@ define([
         });
         it("can give schema short id from uri", function () {
             expect(
-                IdUri.getSchemaShortId(
+                IdUri.getGraphElementShortIdFromUri(
                     "/service/users/foo/graph/schema/40e520f2-be43-4de8-8843-cf9c2e6dff92"
                 )
             ).toBe("40e520f2-be43-4de8-8843-cf9c2e6dff92");
         });
         it("can convert schema id to not owned schema uri", function () {
             expect(
-                IdUri.convertSchemaUriToNonOwnedUri(
+                IdUri.convertGraphElementUriToNonOwnedUri(
                     "/service/users/foo/graph/schema/40e520f2-be43-4de8-8843-cf9c2e6dff92"
                 )
             ).toBe(
@@ -77,13 +78,13 @@ define([
                 )
             ).toBeFalsy();
         });
-        it("sets a correct url for a property uri", function () {
+        it("sets the right url for a property uri", function () {
             var schemaScenario = new Scenarios.getKaraokeSchemaGraph();
-            var schemaShortId = IdUri.getSchemaShortId(
+            var schemaShortId = IdUri.getGraphElementShortIdFromUri(
                 schemaScenario.getSchema().getUri()
             );
             var propertyUri = schemaScenario.getLocationProperty().getUri();
-            var propertyShortId = IdUri.getPropertyShortId(
+            var propertyShortId = IdUri.getGraphElementShortIdFromUri(
                 propertyUri
             );
             expect(
@@ -94,6 +95,30 @@ define([
                 "/property/" +
                 propertyShortId
             );
+        });
+        it("can return the graph element type from it's uri", function () {
+            var bubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            expect(
+                IdUri.getGraphElementTypeFromUri(
+                    bubble.getUri()
+                )
+            ).toBe(GraphElementType.Vertex);
+            expect(
+                IdUri.getGraphElementTypeFromUri(
+                    bubble.getTopMostChildBubble().getUri()
+                )
+            ).toBe(GraphElementType.Relation);
+            var schema = new Scenarios.getProjectSchema().getSchemaInTree();
+            expect(
+                IdUri.getGraphElementTypeFromUri(
+                    schema.getUri()
+                )
+            ).toBe(GraphElementType.Schema);
+            expect(
+                IdUri.getGraphElementTypeFromUri(
+                    schema.getTopMostChildBubble().getUri()
+                )
+            ).toBe(GraphElementType.Property);
         });
     });
 });

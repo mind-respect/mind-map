@@ -15,13 +15,13 @@ define([
         api.enhancedVerticesInfo = function (serverGraph, centralVertexUri) {
             var vertices = serverGraph.vertices,
                 originalEdges = serverGraph.edges,
-                centralVertex = vertexWithId(centralVertexUri),
+                centralBubble = vertexWithId(centralVertexUri),
                 edgesFacade = arrayOfEdgesHavingThoseRelatedToCenterVertexOnTop(),
                 nonEnhancedEdges = {},
                 joinIfMoreSimilarRelations = {};
-            centralVertex.isInvolved = true;
+            centralBubble.isInvolved = true;
             initRelationsOfVertex(
-                centralVertex
+                centralBubble
             );
             $.each(edgesFacade, function () {
                     updateVerticesChildrenWithEdge(

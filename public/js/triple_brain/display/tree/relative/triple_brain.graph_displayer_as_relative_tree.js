@@ -46,18 +46,28 @@ define([
     "triple_brain.center_bubble",
     "triple_brain.selection_handler",
     "triple_brain.group_relation"
-], function ($, GraphService, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUriUtils, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, VertexController, GroupRelationController, EdgeController, RelativeTreeGraphMenuHandler, GraphElementController, KeyboardActionsHandler, Edge, Identification, GroupRelationHtmlBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaHtmlBuilder, SchemaUi, SchemaController, PropertyHtmlBuilder, PropertyController, PropertyUi, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SuggestionBubbleUi, SuggestionRelationUi, SuggestionVertexController, SuggestionRelationController, TripleUi, CenterBubble, SelectionHandler, GroupRelation) {
+], function ($, GraphService, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUri, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, VertexController, GroupRelationController, EdgeController, RelativeTreeGraphMenuHandler, GraphElementController, KeyboardActionsHandler, Edge, Identification, GroupRelationHtmlBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaHtmlBuilder, SchemaUi, SchemaController, PropertyHtmlBuilder, PropertyController, PropertyUi, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SuggestionBubbleUi, SuggestionRelationUi, SuggestionVertexController, SuggestionRelationController, TripleUi, CenterBubble, SelectionHandler, GroupRelation) {
     "use strict";
     KeyboardActionsHandler.init();
     var api = {};
-    api.displayForVertexWithUri = function (centralVertexUri, callback, errorCallback) {
-        GraphService.getForCentralVertexUri(
-            centralVertexUri,
+    api.displayForBubbleWithUri = function (centralBubbleUri, callback, errorCallback) {
+        GraphService.getForCentralBubbleUri(
+            centralBubbleUri,
             function (graph) {
+                if (
+                    IdUri.isEdgeUri(
+                        centralBubbleUri
+                    )
+                ) {
+                    var centerEdge = Edge.fromServerFormat(
+                        graph.edges[centralBubbleUri]
+                    );
+                    centralBubbleUri = centerEdge.getSourceVertex().getUri();
+                }
                 new api.TreeMaker()
                     .makeForCenterVertex(
                         graph,
-                        centralVertexUri
+                        centralBubbleUri
                     );
                 callback();
             },
@@ -79,7 +89,7 @@ define([
     };
     api.addChildTree = function (parentVertex) {
         var deferred = $.Deferred();
-        GraphService.getForCentralVertexUri(
+        GraphService.getForCentralBubbleUri(
             parentVertex.getUri(),
             function (serverGraph) {
                 api.addChildTreeUsingGraph(
@@ -178,7 +188,7 @@ define([
         }
     };
     api.connectVertexToVertexWithUri = function (parentVertex, destinationVertexUri, callback) {
-        GraphService.getForCentralVertexUri(
+        GraphService.getForCentralBubbleUri(
             destinationVertexUri,
             function (serverGraph) {
                 var treeMaker = new api.TreeMaker(),

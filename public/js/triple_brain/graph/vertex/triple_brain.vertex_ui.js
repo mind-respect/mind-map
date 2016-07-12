@@ -33,11 +33,6 @@ define([
                 });
             };
         };
-        api.centralVertex = function () {
-            return GraphDisplayer.getVertexSelector().withHtml(
-                $('.center-vertex')
-            );
-        };
         api.Object = function (html) {
             this.html = html;
         };
@@ -71,11 +66,7 @@ define([
             });
             return areShown;
         };
-
-        api.Object.prototype.centerButton = function () {
-            return this.html.find('.center');
-        };
-
+        
         api.Object.prototype.getMakePrivateButton = function () {
             return this.getMenuHtml().find("button[data-action=makePrivate]");
         };
@@ -126,19 +117,7 @@ define([
             }
             return this.getSegments().intersectionPointWithSegment(segmentToCompare);
         };
-        api.Object.prototype.setAsNonCentral = function () {
-            this.html.removeClass('center-vertex');
-            this.showCenterButton();
-        };
-        api.Object.prototype.setAsCentral = function () {
-            var previousCentralVertex = api.centralVertex();
-            if (previousCentralVertex !== undefined) {
-                previousCentralVertex.setAsNonCentral();
-            }
-            this.html.addClass('center-vertex');
-            this.hideCenterButton();
-        };
-
+        
         api.Object.prototype.width = function () {
             return this.html.width();
         };
@@ -159,12 +138,6 @@ define([
         };
         api.Object.prototype.showMenu = function () {
             this.getMenuHtml().removeClass("hidden");
-        };
-        api.Object.prototype.showCenterButton = function () {
-            this.centerButton().addClass("hidden");
-        };
-        api.Object.prototype.hideCenterButton = function () {
-            this.centerButton().removeClass("hidden");
         };
         api.Object.prototype.connectedEdges = function () {
             var edgesConnectedToVertex = [];
@@ -276,9 +249,6 @@ define([
         };
         api.Object.prototype.getLabel = function () {
             return this.html.find(".bubble-label");
-        };
-        api.Object.prototype.scrollTo = function () {
-            this.html.centerOnScreen();
         };
         api.Object.prototype.serverFormat = function () {
             return {

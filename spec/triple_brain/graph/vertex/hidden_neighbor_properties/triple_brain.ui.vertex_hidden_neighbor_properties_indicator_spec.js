@@ -12,7 +12,7 @@ define([
             var threeBubblesScenario = new Scenarios.threeBubblesGraph();
             var b3 = threeBubblesScenario.getBubble3InTree();
             var flagHtml = b3.getHiddenRelationsContainer().getHtml();
-            GraphService.getForCentralVertexUri = function(){
+            GraphService.getForCentralBubbleUri = function(){
                 //disable callback to be able to test
             };
             expect(

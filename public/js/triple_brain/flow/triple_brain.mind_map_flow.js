@@ -17,8 +17,9 @@ define([
     "triple_brain.id_uri",
     "triple_brain.bubble_cloud_flow",
     "triple_brain.flow",
+    "triple_brain.bubble_factory",
     "triple_brain.other_user_flow"
-], function ($, UserService, EventBus, Header, SelectionHandler, GraphDisplayer, GraphDisplayerFactory, MindMapInfo, GraphElementMainMenu, GraphUi, LanguageManager, IdUriUtils, BubbleCloudFlow, Flow) {
+], function ($, UserService, EventBus, Header, SelectionHandler, GraphDisplayer, GraphDisplayerFactory, MindMapInfo, GraphElementMainMenu, GraphUi, LanguageManager, IdUriUtils, BubbleCloudFlow, Flow, BubbleFactory) {
     "use strict";
     var api = {};
     api.enterBubbleCloud = function () {
@@ -32,24 +33,8 @@ define([
     };
     EventBus.subscribe(
         '/event/ui/graph/drawing_info/updated/',
-        function (event, centralVertexUri) {
+        function (event, centralBubbleUri) {
             SelectionHandler.removeAll();
-            var centralVertex = IdUriUtils.isSchemaUri(centralVertexUri) ?
-                GraphDisplayer.getSchemaSelector().get() :
-                GraphDisplayer.getVertexSelector().withUri(centralVertexUri)[0];
-            if(centralVertex.isVertex()){
-                GraphUi.hideSchemaInstructions();
-            }
-            centralVertex.setAsCentral();
-            GraphUi.getDrawnGraph().on(
-                "click",
-                function (event) {
-                    if (event.ctrlKey) {
-                        return;
-                    }
-                    SelectionHandler.removeAll();
-                }
-            );
             GraphDisplayer.getVertexSelector().visitAllVertices(function (vertex) {
                 EventBus.publish(
                     '/event/ui/vertex/visit_after_graph_drawn',
@@ -62,11 +47,29 @@ define([
                     groupRelationUi
                 );
             });
+            var centralBubble = BubbleFactory.getGraphElementFromUri(
+                centralBubbleUri
+            );
+            if (centralBubble.isSchema()) {
+                GraphUi.showSchemaInstructions();
+            } else {
+                GraphUi.hideSchemaInstructions();
+            }
+            centralBubble.setAsCentral();
+            GraphUi.getDrawnGraph().on(
+                "click",
+                function (event) {
+                    if (event.ctrlKey) {
+                        return;
+                    }
+                    SelectionHandler.removeAll();
+                }
+            );
             $("body").removeClass("hidden");
-            centralVertex.scrollTo();
+            centralBubble.scrollTo();
             GraphUi.initDragScroll();
             GraphUi.enableDragScroll();
-            SelectionHandler.setToSingleVertex(centralVertex);
+            SelectionHandler.setToSingleVertex(centralBubble);
             GraphDisplayer.getGraphMenuHandler().zoomOut();
             EventBus.publish('/event/ui/graph/drawn');
             //if (window.callPhantom === 'function') {
@@ -92,9 +95,9 @@ define([
         }
         function loadLocaleAndGraph() {
             LanguageManager.loadLocaleContent(function () {
-                if(isAnonymous){
+                if (isAnonymous) {
                     Header.commonSetupForAnonymous();
-                }else{
+                } else {
                     Header.commonSetupForAuthenticated();
                 }
                 translateText();

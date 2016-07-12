@@ -8,13 +8,17 @@ define([
     'test/mock',
     "test/mock/triple_brain.graph_service_mock",
     "triple_brain.graph_displayer_as_relative_tree",
+    "triple_brain.graph_displayer",
     "triple_brain.center_bubble",
     "triple_brain.vertex_html_builder",
     "triple_brain.edge_html_builder",
     "triple_brain.graph_element",
     "triple_brain.sub_graph",
-    "triple_brain.mind_map_info"
-], function (Scenarios, TestUtils, Mock, GraphServiceMock, GraphDisplayerAsRelativeTree, CenterBubble, VertexHtmlBuilder, EdgeHtmlBuilder, GraphElement, SubGraph, MindMapInfo) {
+    "triple_brain.mind_map_info",
+    "triple_brain.bubble_factory",
+    "triple_brain.graph_element_type",
+    "triple_brain.id_uri"
+], function (Scenarios, TestUtils, Mock, GraphServiceMock, GraphDisplayerAsRelativeTree, GraphDisplayer, CenterBubble, VertexHtmlBuilder, EdgeHtmlBuilder, GraphElement, SubGraph, MindMapInfo, BubbleFactory, GraphElementType, IdUri) {
     "use strict";
     describe("graph_displayer_as_relative_tree_spec", function () {
         it("distributes triples evenly to the right and left", function () {
@@ -330,7 +334,7 @@ define([
             expect(
                 eventBubble.hasHiddenRelationsContainer()
             ).toBeTruthy();
-            GraphServiceMock.getForCentralVertexUri(
+            GraphServiceMock.getForCentralBubbleUri(
                 new Scenarios.withAcceptedSuggestionGraph().getGraph()
             );
             eventBubble.addChildTree();
@@ -355,7 +359,7 @@ define([
             expect(
                 eventBubble.hasHiddenRelationsContainer()
             ).toBeTruthy();
-            GraphServiceMock.getForCentralVertexUri(
+            GraphServiceMock.getForCentralBubbleUri(
                 new Scenarios.withAcceptedSuggestionGraph().getGraph()
             );
             expect(
@@ -512,7 +516,62 @@ define([
                 r3.isToTheLeft()
             ).toBe(isR3ToTheLeft);
         });
-        
+
+        it("can display graph around an edge", function () {
+            loadFixtures('compare-flow.html');
+            var threeBubblesScenario = new Scenarios.threeBubblesGraph();
+            GraphServiceMock.getForCentralBubbleUri(
+                threeBubblesScenario.getGraph()
+            );
+            Mock.setCenterBubbleUriInUrl(
+                threeBubblesScenario.getR1Uri()
+            );
+            GraphDisplayer.displayUsingCentralBubbleUri(
+                threeBubblesScenario.getR1Uri()
+            );
+            var edgeUi = BubbleFactory.getGraphElementFromUri(
+                threeBubblesScenario.getR1Uri()
+            );
+            expect(
+                edgeUi.getParentBubble().text()
+            ).toBe("b1");
+        });
+
+        it("can display graph around an edge under a group relation", function () {
+            loadFixtures('compare-flow.html');
+            var relationsAsIdentifierScenario = new Scenarios.withRelationsAsIdentifierGraph();
+            var center = relationsAsIdentifierScenario.getCenterInTree();
+            var groupRelation = TestUtils.getChildWithLabel(
+                center,
+                "some relation"
+            );
+            expect(
+                groupRelation.isGroupRelation()
+            ).toBeTruthy();
+            var identification = groupRelation.getGroupRelation().getIdentification();
+            var edgeUri = identification.getExternalResourceUri();
+            expect(
+                IdUri.getGraphElementTypeFromUri(
+                    edgeUri
+                )
+            ).toBe(GraphElementType.Relation);
+            GraphServiceMock.getForCentralBubbleUri(
+                relationsAsIdentifierScenario.getGraph()
+            );
+            Mock.setCenterBubbleUriInUrl(
+                edgeUri
+            );
+            GraphDisplayer.displayUsingCentralBubbleUri(
+                edgeUri
+            );
+            var edgeUi = BubbleFactory.getGraphElementFromUri(
+                edgeUri
+            );
+            expect(
+                edgeUi.getParentBubble().isGroupRelation()
+            ).toBeTruthy();
+        });
+
         function connectDistantVertexTest(callback) {
             var distantGraphScenario = new Scenarios.getDistantGraph();
             var graphWithHiddenSimilarRelationsScenario = new Scenarios.graphWithHiddenSimilarRelations();

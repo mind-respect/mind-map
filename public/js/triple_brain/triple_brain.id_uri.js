@@ -5,9 +5,10 @@
 define([
         "jquery",
         "triple_brain.user_service",
+        "triple_brain.graph_element_type",
         "jquery.url"
     ],
-    function ($, UserService) {
+    function ($, UserService, GraphElementType) {
         "use strict";
         var api = {};
         api.encodeUri = function (uri) {
@@ -38,6 +39,11 @@ define([
         };
         api.isPropertyUri = function (uri) {
             return uri.indexOf("/property") !== -1;
+        };
+        api.isEdgeUri = function (uri) {
+            return GraphElementType.Relation === api.getGraphElementTypeFromUri(
+                    uri
+                );
         };
         api.schemaUriOfProperty = function (propertyUri) {
             return propertyUri.substr(
@@ -87,35 +93,34 @@ define([
                 uri.indexOf("/graph")
             );
         };
-        api.convertVertexUriToNonOwnedUri = function (uri) {
-            return "/service/users/" + api.getOwnerFromUri(uri) +
-                "/non_owned/vertex/" + api.getVertexShortId(uri) +
-                "/surround_graph";
+        api.convertGraphElementUriToNonOwnedUri = function (uri) {
+            var end = "schema" === api.getGraphElementTypeFromUri(uri) ?
+                "" : "/surround_graph";
+            return "/service/users/" +
+                api.getOwnerFromUri(uri) +
+                "/non_owned/" +
+                api.getGraphElementTypeFromUri(uri) + "/" +
+                api.getGraphElementShortIdFromUri(uri) +
+                end;
+        };
+        api.getGraphElementTypeFromUri = function (uri) {
+            uri = uri.substr(
+                0, uri.lastIndexOf("/")
+            );
+            var type = uri.substr(
+                uri.lastIndexOf("/") + 1
+            );
+            if ("edge" === type) {
+                type = GraphElementType.Relation;
+            }
+            return type;
         };
         api.getGraphElementShortIdFromUri = function (uri) {
-            return api.isSchemaUri(uri) ?
-                api.getSchemaShortId(uri) :
-                api.getVertexShortId(uri);
-        };
-        api.getVertexShortId = function (uri) {
             return uri.substring(
-                uri.indexOf("vertex/") + 7
+                uri.lastIndexOf("/") + 1
             );
         };
-        api.getSchemaShortId = function (uri) {
-            return uri.substring(
-                uri.indexOf("schema/") + 7
-            );
-        };
-        api.getPropertyShortId = function (uri) {
-            return uri.substring(
-                uri.indexOf("property/") + 9
-            );
-        };
-        api.convertSchemaUriToNonOwnedUri = function (uri) {
-            return UserService.currentUserUri() + "/non_owned/schema/" +
-                api.getSchemaShortId(uri);
-        };
+
         api.hostNameOfUri = function (uri) {
             return $.url(
                 uri

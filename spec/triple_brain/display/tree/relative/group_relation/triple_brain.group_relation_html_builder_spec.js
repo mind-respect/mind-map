@@ -305,5 +305,30 @@ define([
                 groupRelationInFewRelationsContext.isExpanded()
             ).toBeTruthy();
         });
+        it("shows in label buttons", function () {
+            loadFixtures("graph-element-menu.html");
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
+            expect(
+                possessionInTree.getInLabelButtonsContainer().find(
+                    "button"
+                ).length
+            ).toBeGreaterThan(0);
+        });
+        it("sets identifications", function () {
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
+            expect(
+                possessionInTree.hasIdentifications()
+            ).toBeTruthy();
+        });
+        it("shows identify button in label", function () {
+            loadFixtures("graph-element-menu.html");
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
+            expect(
+                possessionInTree.getIdentifyButtonInLabel()
+            ).not.toHaveClass("hidden");
+        });
     });
 });

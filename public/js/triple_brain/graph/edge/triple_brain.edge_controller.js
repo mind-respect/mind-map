@@ -76,7 +76,7 @@ define([
         });
     };
     EdgeController.prototype.reverseToRightCanDo = function () {
-        if (!this.isSingle()) {
+        if (!this.isSingleAndOwned()) {
             return false;
         }
         var isToTheLeft = this.edges.isToTheLeft();
@@ -90,7 +90,7 @@ define([
     };
 
     EdgeController.prototype.reverseToLeftCanDo = function () {
-        if (!this.isSingle()) {
+        if (!this.isSingleAndOwned()) {
             return false;
         }
         return !this.reverseToRightCanDo();

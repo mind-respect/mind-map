@@ -10,19 +10,19 @@ define([
     function ($, IdUriUtils, MindMapInfo) {
         "use strict";
         var api = {};
-        api.getForCentralVertexUri = function (centralVertexUri, callback, errorCallback) {
+        api.getForCentralBubbleUri = function (centralVertexUri, callback, errorCallback) {
             $.ajax({
                 type: 'GET',
-                url: api.graphUriForCentralVertexUri(centralVertexUri)
+                url: api.graphUriForCentralBubbleUri(centralVertexUri)
             }).success(callback).error(errorCallback);
         };
         api.getForCentralVertexUriAtDepth = function (centralVertexUri, depth) {
             return $.ajax({
                 type: 'GET',
-                url: api.graphUriForCentralVertexUri(centralVertexUri) + "?depth=" + depth
+                url: api.graphUriForCentralBubbleUri(centralVertexUri) + "?depth=" + depth
             });
         };
-        api.graphUriForCentralVertexUri = function (centerVertexUri) {
+        api.graphUriForCentralBubbleUri = function (centerVertexUri) {
             if (!MindMapInfo.isAnonymous() && IdUriUtils.isGraphElementUriOwnedByCurrentUser(centerVertexUri)) {
                 var uri = centerVertexUri + "/surround_graph";
                 if (MindMapInfo.getCenterBubbleUri() === centerVertexUri) {
@@ -30,7 +30,7 @@ define([
                 }
                 return uri;
             } else {
-                return IdUriUtils.convertVertexUriToNonOwnedUri(centerVertexUri);
+                return IdUriUtils.convertGraphElementUriToNonOwnedUri(centerVertexUri);
             }
         };
         return api;

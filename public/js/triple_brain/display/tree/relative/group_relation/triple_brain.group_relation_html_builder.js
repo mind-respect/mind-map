@@ -14,16 +14,17 @@ define([
         "triple_brain.event_bus",
         "triple_brain.identification",
         "triple_brain.graph_element_html_builder",
+        "triple_brain.edge_html_builder_common",
         "jquery-ui"
     ],
-    function ($, RelativeTreeTemplates, PropertiesIndicator, GroupRelationUi, GroupRelation, SelectionHandler, GraphElementMainMenu, GraphDisplayer, EventBus, Identification, GraphElementHtmlBuilder) {
+    function ($, RelativeTreeTemplates, PropertiesIndicator, GroupRelationUi, GroupRelation, SelectionHandler, GraphElementMainMenu, GraphDisplayer, EventBus, Identification, GraphElementHtmlBuilder, EdgeHtmlBuilderCommon) {
         "use strict";
         var api = {},
             NUMBER_OF_SIBLINGS_UNDER_WHICH_YOU_SHOULD_EXPAND = 4;
         api.withServerFacade = function (serverFacade) {
             return new Self(serverFacade);
         };
-        api.completeBuild = function(groupRelationUi){
+        api.completeBuild = function (groupRelationUi) {
             var indicator = PropertiesIndicator.withVertex(
                 groupRelationUi
             );
@@ -36,11 +37,12 @@ define([
             groupRelationUi.refreshImages();
             indicator.build();
             var shouldExpand = groupRelationUi.getParentBubble().getNumberOfChild() < NUMBER_OF_SIBLINGS_UNDER_WHICH_YOU_SHOULD_EXPAND;
-            if(shouldExpand){
+            if (shouldExpand) {
                 GraphDisplayer.expandGroupRelation(
                     groupRelationUi
                 );
             }
+            groupRelationUi.reviewInLabelButtonsVisibility();
         };
 
         function Self(serverFacade) {
@@ -70,6 +72,12 @@ define([
                  */
                 this.serverFacade.getIdentifiers()[0].getUri()
             );
+            groupRelationUi.setGenericIdentifications(
+                groupRelationUi.getModel().getIdentifiers()
+            );
+            EdgeHtmlBuilderCommon.buildInLabelButtons(
+                groupRelationUi
+            );
             groupRelationUi.hideButtons();
             return groupRelationUi;
         };
@@ -93,8 +101,11 @@ define([
             var container = $("<div class='label-container'>").appendTo(
                 this.html.find(".in-bubble-content")
             );
+            var labelAndButtons = $(
+                "<div class='label label-info label-and-buttons'>"
+            );
             var labelHtml = $(
-                "<div class='bubble-label label label-info'>"
+                "<div class='bubble-label'>"
             ).text(
                 this.serverFacade.getIdentification().getLabel()
             ).click(function (event) {
@@ -105,13 +116,14 @@ define([
                         )
                     );
                 }
-            ).appendTo(container);
+            ).appendTo(labelAndButtons);
             labelHtml.attr(
                 "data-placeholder",
                 GroupRelationUi.getWhenEmptyLabel()
             );
+            labelAndButtons.appendTo(container);
             GraphElementHtmlBuilder.setUpLabel(labelHtml);
-            this._setupDescriptionOnLabel(labelHtml);
+            this._setupDescriptionOnLabel(labelAndButtons);
         };
 
         Self.prototype._setupDescriptionOnLabel = function (labelHtml) {
@@ -141,29 +153,29 @@ define([
         );
         EventBus.subscribe(
             "/event/ui/graph/identification/added",
-            function(event, graphElement, identification){
+            function (event, graphElement, identification) {
                 var parentBubble = graphElement.getParentBubble();
-                if(parentBubble.isGroupRelation()){
+                if (parentBubble.isGroupRelation()) {
                     return;
                 }
-                parentBubble.visitAllChild(function(child){
-                    if(child.isGroupRelation()){
+                parentBubble.visitAllChild(function (child) {
+                    if (child.isGroupRelation()) {
                         var isSameIdentification =
                             child.getGroupRelation().getIdentification().getExternalResourceUri() ===
                             identification.getExternalResourceUri();
-                        if(isSameIdentification){
+                        if (isSameIdentification) {
                             graphElement.moveToParent(child);
                             return false;
                         }
                     }
-                    if(child.isRelation() && !child.isSameBubble(graphElement)){
+                    if (child.isRelation() && !child.isSameBubble(graphElement)) {
                         var childAsAnIdentification = Identification.fromFriendlyResource(
                             child.getModel()
                         );
                         var isIdentifiedToRelation = graphElement.hasIdentification(
                             childAsAnIdentification
                         );
-                        if(isIdentifiedToRelation){
+                        if (isIdentifiedToRelation) {
                             childAsAnIdentification.setLabel(
                                 child.text()
                             );
@@ -178,9 +190,9 @@ define([
                             graphElement.moveToParent(newGroupRelation);
                             return;
                         }
-                        $.each(child.getIdentifications(), function(){
+                        $.each(child.getIdentifications(), function () {
                             var identification = this;
-                            if(graphElement.hasIdentification(identification)){
+                            if (graphElement.hasIdentification(identification)) {
                                 var newGroupRelation = GraphDisplayer.addNewGroupRelation(
                                     identification,
                                     parentBubble
@@ -196,9 +208,9 @@ define([
         );
         EventBus.subscribe(
             "/event/ui/graph/identification/removed",
-            function(event, graphElement){
+            function (event, graphElement) {
                 var parentBubble = graphElement.getParentBubble();
-                if(!parentBubble.isGroupRelation()){
+                if (!parentBubble.isGroupRelation()) {
                     return;
                 }
                 graphElement.moveToParent(

@@ -151,7 +151,7 @@ define([
         var uriToFetch = this.getModel().getExternalResourceUri();
         var self = this;
         var parentEdgeUri = this.getParentBubble().getFirstIdentificationToAGraphElement().getExternalResourceUri();
-        GraphService.getForCentralVertexUri(
+        GraphService.getForCentralBubbleUri(
             uriToFetch,
             function (serverGraph) {
                 var subGraph = SubGraph.fromServerFormat(serverGraph);

@@ -56,10 +56,7 @@ define([
     }
     function adaptSchemaUri(uri){
         if (MindMapInfo.isAnonymous() || !IdUri.isGraphElementUriOwnedByCurrentUser(uri)) {
-            return "/service/users/" +
-                IdUri.getOwnerFromUri(uri) +
-                "/non_owned/schema/" +
-                IdUri.getSchemaShortId(uri);
+            return IdUri.convertGraphElementUriToNonOwnedUri(uri);
         }
         return uri;
     }
