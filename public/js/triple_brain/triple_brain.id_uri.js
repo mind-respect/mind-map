@@ -45,6 +45,11 @@ define([
                     uri
                 );
         };
+        api.isPropertyUri = function (uri) {
+            return GraphElementType.Property === api.getGraphElementTypeFromUri(
+                    uri
+                );
+        };
         api.schemaUriOfProperty = function (propertyUri) {
             return propertyUri.substr(
                 0,
@@ -149,6 +154,9 @@ define([
                 "/graph/" + window.graphElementTypeForBublGuru + "/" + api._getGraphElementShortIdFromUrl();
         };
         api.htmlUrlForBubbleUri = function (graphElementUri) {
+            if(api.isPropertyUri(graphElementUri)){
+                graphElementUri = api.schemaUriOfProperty(graphElementUri);
+            }
             return graphElementUri.replace(
                 "/service/users",
                 "/user"

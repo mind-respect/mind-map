@@ -78,24 +78,6 @@ define([
                 )
             ).toBeFalsy();
         });
-        it("sets the right url for a property uri", function () {
-            var schemaScenario = new Scenarios.getKaraokeSchemaGraph();
-            var schemaShortId = IdUri.getGraphElementShortIdFromUri(
-                schemaScenario.getSchema().getUri()
-            );
-            var propertyUri = schemaScenario.getLocationProperty().getUri();
-            var propertyShortId = IdUri.getGraphElementShortIdFromUri(
-                propertyUri
-            );
-            expect(
-                IdUri.htmlUrlForBubbleUri(propertyUri)
-            ).toBe(
-                "/user/b/graph/schema/" +
-                schemaShortId +
-                "/property/" +
-                propertyShortId
-            );
-        });
         it("can return the graph element type from it's uri", function () {
             var bubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
             expect(
@@ -119,6 +101,15 @@ define([
                     schema.getTopMostChildBubble().getUri()
                 )
             ).toBe(GraphElementType.Property);
+        });
+        it("returns the schema url for when getting the html url of a property", function () {
+            expect(
+                IdUri.htmlUrlForBubbleUri(
+                    "/service/users/b/graph/schema/58365a48-db89-4dfc-9255-3a229f34fefb/property/6995642f-a8b0-4b9f-b183-68c6f32c80ea"
+                )
+            ).toBe(
+                "/user/b/graph/schema/58365a48-db89-4dfc-9255-3a229f34fefb"
+            );
         });
     });
 });

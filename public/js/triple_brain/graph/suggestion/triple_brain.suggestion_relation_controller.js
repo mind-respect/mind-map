@@ -17,5 +17,10 @@ define([
     }
 
     SuggestionRelationController.prototype = new GraphElementController.Self();
+
+    SuggestionRelationController.prototype.centerCanDo = function () {
+        return false;
+    };
+    
     return api;
 });

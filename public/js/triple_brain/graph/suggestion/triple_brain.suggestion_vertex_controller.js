@@ -62,6 +62,9 @@ define([
             newVertex.getController().addChild();
         });
     };
+    SuggestionVertexController.prototype.centerCanDo = function () {
+        return false;
+    };
     api.Self = SuggestionVertexController;
     return api;
 });
