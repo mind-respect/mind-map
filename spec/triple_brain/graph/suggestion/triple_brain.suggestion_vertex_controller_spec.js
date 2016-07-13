@@ -36,7 +36,7 @@ define([
             ).toBeFalsy();
             var b3 = r2.getTopMostChildBubble();
             GraphServiceMock.getForCentralBubbleUri(
-                new Scenarios.threeBubblesGraph().getSurroundBubble3Graph()
+                new Scenarios.threeBubblesGraph().getSubGraphForB3()
             );
             b3.addChildTree();
             expect(

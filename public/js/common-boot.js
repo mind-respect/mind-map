@@ -119,7 +119,7 @@ requirejs.config({
         "triple_brain.group_relation_controller" : "triple_brain/graph/group_relation/triple_brain.group_relation_controller",
         "triple_brain.graph_displayer_as_relative_tree": "triple_brain/display/tree/relative/triple_brain.graph_displayer_as_relative_tree",
         "triple_brain.keyboard_actions_handler": "triple_brain/display/tree/relative/triple_brain.keyboard_actions_handler",
-        "triple_brain.relative_tree_graph_menu_handler": "triple_brain/display/tree/relative/triple_brain.relative_tree_graph_menu_handler",
+        "triple_brain.graph_controller": "triple_brain/graph/triple_brain.graph_controller",
         "triple_brain.graph_element_controller": "triple_brain/graph/graph_element/triple_brain.graph_element_controller",
         "triple_brain.edge_html_builder": "triple_brain/display/tree/relative/edge/triple_brain.edge_html_builder",
         "triple_brain.edge_html_builder_common": "triple_brain/display/tree/relative/edge/triple_brain.edge_html_builder_common",

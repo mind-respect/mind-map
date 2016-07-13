@@ -165,11 +165,12 @@ define([
         });
 
         it("shows hidden relation container when has some", function () {
+            var b2 = new Scenarios.publicPrivate().getBubble2();
             expect(
-                bubble2.hasHiddenRelations()
+                b2.hasHiddenRelations()
             ).toBeFalsy();
             expect(
-                bubble2.hasHiddenRelationsContainer()
+                b2.hasHiddenRelationsContainer()
             ).toBeFalsy();
             expect(
                 bubble3.hasHiddenRelations()

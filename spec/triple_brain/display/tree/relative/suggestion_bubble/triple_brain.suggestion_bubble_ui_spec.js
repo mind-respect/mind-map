@@ -250,7 +250,7 @@ define([
                 b3.getNumberOfChild()
             ).toBe(0);
             GraphServiceMock.getForCentralBubbleUri(
-                new Scenarios.threeBubblesGraph().getSurroundBubble3Graph()
+                new Scenarios.threeBubblesGraph().getSubGraphForB3()
             );
             b3.addChildTree();
             expect(
@@ -278,7 +278,7 @@ define([
                 b3.getNumberOfChild()
             ).toBe(0);
             GraphServiceMock.getForCentralBubbleUri(
-                new Scenarios.threeBubblesGraph().getSurroundBubble3Graph()
+                new Scenarios.threeBubblesGraph().getSubGraphForB3()
             );
             b3.addChildTree();
             var suggestionChild = b3.getTopMostChildBubble();
@@ -307,7 +307,7 @@ define([
                 b3.getNumberOfChild()
             ).toBe(0);
             GraphServiceMock.getForCentralBubbleUri(
-                new Scenarios.threeBubblesGraph().getSurroundBubble3Graph()
+                new Scenarios.threeBubblesGraph().getSubGraphForB3()
             );
             b3.addChildTree();
             var b5 = TestUtils.getChildWithLabel(
@@ -339,7 +339,7 @@ define([
                 b3.hasHiddenRelationsContainer()
             ).toBeTruthy();
             GraphServiceMock.getForCentralBubbleUri(
-                new Scenarios.threeBubblesGraph().getSurroundBubble3Graph()
+                new Scenarios.threeBubblesGraph().getSubGraphForB3()
             );
             b3.addChildTree();
             expect(
@@ -363,7 +363,7 @@ define([
                 "r2"
             ).getTopMostChildBubble();
             GraphServiceMock.getForCentralBubbleUri(
-                new Scenarios.threeBubblesGraph().getSurroundBubble3Graph()
+                new Scenarios.threeBubblesGraph().getSubGraphForB3()
             );
             b3.addChildTree();
             var b5 = TestUtils.getChildWithLabel(

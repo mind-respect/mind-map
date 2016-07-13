@@ -257,15 +257,20 @@ define([
             this.expandBubble3 = function (bubble3) {
                 return GraphDisplayerAsRelativeTree.addChildTreeUsingGraph(
                     bubble3,
-                    this.getSurroundBubble3Graph()
+                    this.getSubGraphForB3()
                 );
             };
             this.getBubble4InTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("b4");
             };
-            this.getSurroundBubble3Graph = function() {
+            this.getSubGraphForB2 = function() {
                 return api._getTestData(
-                    "threeBubblesGraph.getSurroundBubble3Graph"
+                    "threeBubblesGraph.subGraphForB2"
+                );
+            };
+            this.getSubGraphForB3 = function() {
+                return api._getTestData(
+                    "threeBubblesGraph.subGraphForB3"
                 );
             };
 
@@ -361,12 +366,15 @@ define([
             this.getCenterBubbleUri = function () {
                 return this.getBubble1().getUri();
             };
+            this.getB2SurroundGraph = function(){
+                return api._getTestData(
+                    "graphWithHiddenSimilarRelations.b2Graph"
+                );
+            };
             this.expandBubble2 = function (bubble2) {
                 return GraphDisplayerAsRelativeTree.addChildTreeUsingGraph(
                     bubble2,
-                    api._getTestData(
-                        "graphWithHiddenSimilarRelations.b2Graph"
-                    )
+                    this.getB2SurroundGraph()
                 );
             };
             this.getB2GraphWhenConnectedToDistantBubble = function () {

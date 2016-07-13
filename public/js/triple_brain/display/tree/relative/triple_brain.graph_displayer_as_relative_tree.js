@@ -21,7 +21,7 @@ define([
     "triple_brain.vertex_controller",
     "triple_brain.group_relation_controller",
     "triple_brain.edge_controller",
-    "triple_brain.relative_tree_graph_menu_handler",
+    "triple_brain.graph_controller",
     "triple_brain.graph_element_controller",
     "triple_brain.keyboard_actions_handler",
     "triple_brain.edge",
@@ -46,7 +46,7 @@ define([
     "triple_brain.center_bubble",
     "triple_brain.selection_handler",
     "triple_brain.group_relation"
-], function ($, GraphService, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUri, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, VertexController, GroupRelationController, EdgeController, RelativeTreeGraphMenuHandler, GraphElementController, KeyboardActionsHandler, Edge, Identification, GroupRelationHtmlBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaHtmlBuilder, SchemaUi, SchemaController, PropertyHtmlBuilder, PropertyController, PropertyUi, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SuggestionBubbleUi, SuggestionRelationUi, SuggestionVertexController, SuggestionRelationController, TripleUi, CenterBubble, SelectionHandler, GroupRelation) {
+], function ($, GraphService, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUri, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, VertexController, GroupRelationController, EdgeController, GraphController, GraphElementController, KeyboardActionsHandler, Edge, Identification, GroupRelationHtmlBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaHtmlBuilder, SchemaUi, SchemaController, PropertyHtmlBuilder, PropertyController, PropertyUi, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SuggestionBubbleUi, SuggestionRelationUi, SuggestionVertexController, SuggestionRelationController, TripleUi, CenterBubble, SelectionHandler, GroupRelation) {
     "use strict";
     KeyboardActionsHandler.init();
     var api = {};
@@ -97,6 +97,7 @@ define([
                     serverGraph
                 );
                 deferred.resolve();
+                return parentVertex;
             }
         );
         return deferred.promise();
@@ -341,7 +342,7 @@ define([
         return GraphElementController;
     };
     api.getGraphMenuHandler = function () {
-        return RelativeTreeGraphMenuHandler;
+        return GraphController;
     };
     api.getVertexSuggestionController = function () {
         return SuggestionVertexController;
