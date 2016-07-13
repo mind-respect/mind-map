@@ -85,6 +85,9 @@ define([
                 return api.srcUrlForBase64(base64ForSmall);
             };
             this.getUrlForBigger = function () {
+                return urlForBigger;
+            };
+            this.getUrlFor600pxOrBig = function(){
                 if (WikidataUri.isAWikidataImageUrl(urlForBigger)) {
                     return WikidataUri.get600pxUrlFromRawUrl(
                         urlForBigger

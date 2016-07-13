@@ -36,7 +36,7 @@ define(
                 }
                 images = imagesInOrderThatPrioritizeUserUploadedImages(images);
                 var featuredImage = images[0];
-                var featuredImageBigUri = featuredImage.getUrlForBigger();
+                var featuredImageBigUri = featuredImage.getUrlFor600pxOrBig();
                 var featuredImageHtml = $(MindMapTemplate["image_container_image"].merge({
                         src: featuredImage.getBase64ForSmall()
                     }
@@ -46,7 +46,7 @@ define(
                 html.empty();
                 for (var i = 0; i < images.length; i++) {
                     var image = images[i];
-                    var urlForBigger = image.getUrlForBigger();
+                    var urlForBigger = image.getUrlFor600pxOrBig();
                     var bigImageAnchor = $("<a>").attr(
                         'rel', bubbleId
                     ).prop(
