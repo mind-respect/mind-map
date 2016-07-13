@@ -83,6 +83,7 @@ define(
                     rel: anchor.attr("rel"),
                     href: anchor.prop("href"),
                     photo: true,
+                    scalePhotos:true,
                     onOpen: function () {
                         $.colorbox.next();
                     }

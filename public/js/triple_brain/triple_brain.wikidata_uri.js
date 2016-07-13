@@ -15,7 +15,16 @@ define(["md5"], function (MD5) {
     api.isAWikidataUri = function (uri) {
         return uri.indexOf("wikidata.org") !== -1;
     };
+    api.isAWikidataImageUrl = function (uri) {
+        return uri.indexOf("wikimedia.org") !== -1;
+    };
     api.thumbUrlForImageName = function (imageName) {
+        return api._getImageUrlAtSizeInPixelsFromImageName(
+            60,
+            imageName
+        );
+    };
+    api._getImageUrlAtSizeInPixelsFromImageName = function (size, imageName) {
         imageName = replaceWhiteSpace(imageName);
         var md5 = MD5(imageName);
         var firstChar = md5[0];
@@ -26,10 +35,24 @@ define(["md5"], function (MD5) {
             )
         );
         return "//upload.wikimedia.org/wikipedia/commons/thumb/" + firstChar + "/" + firstAndSecondChar + "/" +
-            imageName + "/60px-" +
+            imageName + "/" +
+            size + "px-" +
             imageName;
     };
-    api.rawImageUrlFromThumbUrl = function(thumbUrl){
+    api.get600pxUrlFromRawUrl = function (rawImageUrl) {
+        return api._getImageUrlAtSizeInPixelsFromImageName(
+            600,
+            api._getImageNameFromRawUrl(
+                rawImageUrl
+            )
+        );
+    };
+    api._getImageNameFromRawUrl = function (rawImageUrl) {
+        return rawImageUrl.substr(
+            rawImageUrl.lastIndexOf("/") + 1
+        );
+    };
+    api.rawImageUrlFromThumbUrl = function (thumbUrl) {
         thumbUrl = thumbUrl.replace("thumb/", "");
         return thumbUrl.substr(0, thumbUrl.lastIndexOf("/"));
     };

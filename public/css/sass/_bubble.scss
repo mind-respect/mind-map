@@ -2,6 +2,11 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
+.cboxPhoto {
+  max-width: 600px;
+  height: auto !important;
+}
+
 .bubble {
   z-index: 5;
   cursor: default;

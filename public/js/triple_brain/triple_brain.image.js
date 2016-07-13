@@ -3,9 +3,10 @@
  */
 
 define([
-        "jquery"
+        "jquery",
+        "triple_brain.wikidata_uri"
     ],
-    function ($) {
+    function ($, WikidataUri) {
         "use strict";
         var api = {};
         api.fromServerJson = function (imageAsServerJson) {
@@ -43,19 +44,19 @@ define([
             var deferred = $.Deferred();
             var img = $("<img>")
                 .attr(
-                "crossOrigin",
-                "Anonymous"
-            ).appendTo("body").load(function () {
-                    deferred.resolve(
-                        getBase64Image(this)
-                    );
-                }
-            ).error(function(){
+                    "crossOrigin",
+                    "Anonymous"
+                ).appendTo("body").load(function () {
+                        deferred.resolve(
+                            getBase64Image(this)
+                        );
+                    }
+                ).error(function () {
                     deferred.reject();
                 }).prop(
-                "src",
-                url
-            );
+                    "src",
+                    url
+                );
             return deferred.promise();
         };
         api.srcUrlForBase64 = function (base64) {
@@ -84,6 +85,11 @@ define([
                 return api.srcUrlForBase64(base64ForSmall);
             };
             this.getUrlForBigger = function () {
+                if (WikidataUri.isAWikidataImageUrl(urlForBigger)) {
+                    return WikidataUri.get600pxUrlFromRawUrl(
+                        urlForBigger
+                    );
+                }
                 return urlForBigger;
             };
             this.serverFormat = function () {
