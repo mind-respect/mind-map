@@ -37,7 +37,9 @@ define([
     };
 
     VertexController.prototype.addChild = function () {
-        api.addChildToParent(this.vertices);
+        return api.addChildToParent(
+            this.getElements()
+        );
     };
 
     VertexController.prototype.addSiblingCanDo = function () {
@@ -71,7 +73,7 @@ define([
             });
         }
     };
-    
+
     VertexController.prototype.imagesCanDo = function () {
         return this.isSingleAndOwned();
     };
@@ -186,7 +188,7 @@ define([
             );
         }
     };
-    
+
     VertexController.prototype.groupCanDo = function () {
         return this.isGroupAndOwned();
     };
@@ -223,15 +225,25 @@ define([
     };
     api.Self = VertexController;
     api.addChildToParent = function (parentUi) {
-        return VertexService.addRelationAndVertexToVertex(
-            parentUi,
-            parentUi,
-            function (triple) {
-                SelectionHandler.setToSingleGraphElement(
-                    triple.destinationVertex()
-                );
-            }
-        );
+        if (parentUi.hasHiddenRelations()) {
+            return parentUi.addChildTree().then(doIt);
+        } else {
+            return doIt();
+        }
+        function doIt() {
+            var deferred = $.Deferred();
+            VertexService.addRelationAndVertexToVertex(
+                parentUi,
+                parentUi,
+                function (triple) {
+                    SelectionHandler.setToSingleGraphElement(
+                        triple.destinationVertex()
+                    );
+                    return deferred.resolve(triple);
+                }
+            );
+            return deferred.promise();
+        }
     };
     return api;
 });

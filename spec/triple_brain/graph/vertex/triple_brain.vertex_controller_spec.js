@@ -4,12 +4,14 @@
 
 define([
     'test/test-scenarios',
+    'test/test-utils',
     "test/mock/triple_brain.vertex_service_mock",
+    "test/mock/triple_brain.graph_service_mock",
     "triple_brain.vertex_controller",
     "triple_brain.selection_handler",
     'triple_brain.vertex_service',
     'triple_brain.mind_map_info'
-], function (Scenarios, VertexServiceMock, VertexController, SelectionHandler, VertexService, MindMapInfo) {
+], function (Scenarios, TestUtils, VertexServiceMock, GraphServiceMock, VertexController, SelectionHandler, VertexService, MindMapInfo) {
     "use strict";
     describe("vertex_controller", function () {
         it("removes connected edges when removing a vertex", function () {
@@ -50,12 +52,22 @@ define([
         });
         it("adding bubble and relation selects new bubble", function () {
             VertexServiceMock.addRelationAndVertexToVertexMock();
-            var bubble = new Scenarios.threeBubblesGraph().getBubble2InTree();
-            bubble.getController().addChild();
-            var newBubble = bubble.getTopMostChildBubble().getTopMostChildBubble();
+            var scenario = new Scenarios.threeBubblesGraph();
+            var b2 = scenario.getBubble2InTree();
+            GraphServiceMock.getForCentralBubbleUri(
+                scenario.getSubGraphForB2()
+            );
+            var hasVisited = false;
+            b2.getController().addChild().done(function (triple) {
+                hasVisited = true;
+                expect(
+                    triple.destinationVertex().isSelected()
+                ).toBeTruthy();
+            });
             expect(
-                newBubble.isSelected()
+                hasVisited
             ).toBeTruthy();
+
         });
         it("hides suggestions when calling the suggestions action when they are already visible", function () {
             var eventBubble = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();
@@ -106,6 +118,21 @@ define([
             expect(
                 bubble1.getMakePublicButtonInBubbleContent()
             ).not.toHaveClass("hidden");
+        });
+        it("expands the bubble when adding child", function () {
+            var scenario = new Scenarios.threeBubblesGraph();
+            var b3 = scenario.getBubble3InTree();
+            expect(
+                b3.getNumberOfChild()
+            ).toBe(0);
+            VertexServiceMock.addRelationAndVertexToVertexMock();
+            GraphServiceMock.getForCentralBubbleUri(
+                scenario.getSubGraphForB3()
+            );
+            b3.getController().addChild();
+            expect(
+                b3.getNumberOfChild()
+            ).toBe(3);
         });
     });
 });
