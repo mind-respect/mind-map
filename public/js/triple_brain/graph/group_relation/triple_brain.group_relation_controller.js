@@ -3,11 +3,12 @@
  */
 
 define([
+        "jquery",
         "triple_brain.vertex_service",
         "triple_brain.edge_service",
         "triple_brain.graph_element_controller"
     ],
-    function (VertexService, EdgeService, GraphElementController) {
+    function ($, VertexService, EdgeService, GraphElementController) {
         "use strict";
         var api = {};
         api.Self = GroupRelationController;
@@ -28,6 +29,7 @@ define([
             return false;
         };
         GroupRelationController.prototype.addChild = function () {
+            var deferred = $.Deferred();
             this.groupRelationsUi.hideDescription();
             var self = this;
             VertexService.addRelationAndVertexToVertex(
@@ -50,8 +52,10 @@ define([
                             triple.edge().reviewEditButtonDisplay();
                         }
                     );
+                    deferred.resolve(triple);
                 }
             );
+            return deferred.promise();
         };
         return api;
     }

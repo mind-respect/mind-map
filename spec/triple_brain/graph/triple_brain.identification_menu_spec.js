@@ -21,7 +21,7 @@ define([
             )[0];
             MindMapInfo._setIsViewOnly(false);
             var identificationMenu = IdentificationMenu.ofGraphElement(bubble1).create();
-            GraphElementServiceMock.addIdentificationMock();
+            GraphElementServiceMock.addIdentification();
             var hasIntegratedIdentification = identificationMenu._handleSelectIdentification(
                 projectSchemaSearchResult,
                 bubble1

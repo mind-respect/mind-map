@@ -19,7 +19,7 @@ define([
                     new Scenarios.getSearchResultsForProject().get(),
                     "project"
                 )[0];
-            GraphElementServiceMock.addIdentificationMock();
+            GraphElementServiceMock.addIdentification();
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             expect(
                 bubble1.hasIdentifications()

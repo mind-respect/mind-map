@@ -5,13 +5,15 @@
 define([
     'test/test-scenarios',
     'test/test-utils',
+    "test/mock/triple_brain.friendly_resource_service_mock",
+    "test/mock/triple_brain.graph_element_service_mock",
     "test/mock/triple_brain.vertex_service_mock",
     "test/mock/triple_brain.graph_service_mock",
     "triple_brain.vertex_controller",
     "triple_brain.selection_handler",
     'triple_brain.vertex_service',
     'triple_brain.mind_map_info'
-], function (Scenarios, TestUtils, VertexServiceMock, GraphServiceMock, VertexController, SelectionHandler, VertexService, MindMapInfo) {
+], function (Scenarios, TestUtils, FriendlyResourceServiceMock, GraphElementServiceMock, VertexServiceMock, GraphServiceMock, VertexController, SelectionHandler, VertexService, MindMapInfo) {
     "use strict";
     describe("vertex_controller", function () {
         it("removes connected edges when removing a vertex", function () {
@@ -133,6 +135,50 @@ define([
             expect(
                 b3.getNumberOfChild()
             ).toBe(3);
+        });
+        it("puts the new bubble under the group relation when adding a sibling to the child of group relation", function () {
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+            expect(
+                groupRelation.isGroupRelation()
+            ).toBeTruthy();
+            groupRelation.addChildTree();
+            var childBubble = groupRelation.getTopMostChildBubble().getTopMostChildBubble();
+            expect(
+                childBubble.isVertex()
+            ).toBeTruthy();
+            var numberOfChild = groupRelation.getNumberOfChild();
+            VertexServiceMock.addRelationAndVertexToVertexMock();
+            childBubble.getController().addSibling();
+            expect(
+                groupRelation.getNumberOfChild()
+            ).toBe(numberOfChild + 1);
+        });
+        it("sets identification to the new relation when adding a sibling to the child of group relation", function () {
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+            expect(
+                groupRelation.isGroupRelation()
+            ).toBeTruthy();
+            groupRelation.addChildTree();
+            var childBubble = groupRelation.getTopMostChildBubble().getTopMostChildBubble();
+            expect(
+                childBubble.isVertex()
+            ).toBeTruthy();
+            VertexServiceMock.addRelationAndVertexToVertexMock();
+            GraphElementServiceMock.addIdentification();
+            FriendlyResourceServiceMock.updateLabel();
+            var hasVisited = false;
+            childBubble.getController().addSibling().then(function(triple){
+                hasVisited = true;
+                var relation = triple.destinationVertex().getParentBubble();
+                expect(
+                    relation.hasIdentifications()
+                ).toBeTruthy();
+            });
+            expect(
+                hasVisited
+            ).toBeTruthy();
         });
     });
 });

@@ -7,7 +7,7 @@ define([
 ], function (GraphElementService) {
     "use strict";
     var api = {};
-    api.addIdentificationMock = function () {
+    api.addIdentification = function () {
         return spyOn(GraphElementService, "addIdentification").and.callFake(function(graphElement, identification, callback){
             var identifications = {};
             identifications[identification.getExternalResourceUri()] = identification.getServerFormat();
@@ -20,5 +20,4 @@ define([
         });
     };
     return api;
-})
-;
+});

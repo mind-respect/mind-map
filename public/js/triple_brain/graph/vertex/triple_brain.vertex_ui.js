@@ -319,6 +319,10 @@ define([
             );
         };
 
+        api.Object.prototype.isImmediateChildOfGroupRelation = function () {
+            return this.getParentBubble().getParentBubble().isGroupRelation();
+        };
+
         api.Object.prototype.hasDragOver = function () {
             return this.getHtml().hasClass("drag-over");
         };

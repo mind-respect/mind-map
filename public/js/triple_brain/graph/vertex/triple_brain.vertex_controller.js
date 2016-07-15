@@ -37,7 +37,7 @@ define([
     };
 
     VertexController.prototype.addChild = function () {
-        return api.addChildToParent(
+        return api.addChildToRealAndUiParent(
             this.getElements()
         );
     };
@@ -47,8 +47,13 @@ define([
     };
 
     VertexController.prototype.addSibling = function () {
-        return api.addChildToParent(
-            this.vertices.getParentVertex()
+        if(this.getElements().isImmediateChildOfGroupRelation()){
+            var groupRelation = this.getElements().getParentBubble().getParentBubble();
+            return groupRelation.getController().addChild();
+        }
+        return api.addChildToRealAndUiParent(
+            this.getElements().getParentVertex(),
+            this.getElements().getParentBubble().getParentBubble()
         );
     };
 
@@ -224,17 +229,20 @@ define([
         );
     };
     api.Self = VertexController;
-    api.addChildToParent = function (parentUi) {
-        if (parentUi.hasHiddenRelations()) {
-            return parentUi.addChildTree().then(doIt);
+    api.addChildToRealAndUiParent = function (realParent, uiParent) {
+        if(uiParent === undefined){
+            uiParent = realParent;
+        }
+        if (uiParent.hasHiddenRelationsContainer()) {
+            return uiParent.addChildTree().then(doIt);
         } else {
             return doIt();
         }
         function doIt() {
             var deferred = $.Deferred();
             VertexService.addRelationAndVertexToVertex(
-                parentUi,
-                parentUi,
+                realParent,
+                uiParent,
                 function (triple) {
                     SelectionHandler.setToSingleGraphElement(
                         triple.destinationVertex()

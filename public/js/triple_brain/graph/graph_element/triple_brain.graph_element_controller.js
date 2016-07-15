@@ -49,12 +49,12 @@ define([
 
     GraphElementController.prototype.note = function () {
         var editor = api._getContentEditor().saferHtml(
-            this.graphElements.getNote()
+            this.getElements().getNote()
         );
         api._getBubbleNoteModal().data(
             "graphElement", this.graphElements
         ).find(".bubble-label-in-title").text(
-            this.graphElements.text()
+            this.getElements().text()
         );
         getSaveButton().text($.t("vertex.menu.note.update"));
         api._getBubbleNoteModal().modal({
@@ -77,7 +77,6 @@ define([
                 'ctrl+y meta+y meta+shift+z': 'redo'
             }
         });
-        editor.cleanHtml();
     };
 
     GraphElementController.prototype.centerCanDo = function () {

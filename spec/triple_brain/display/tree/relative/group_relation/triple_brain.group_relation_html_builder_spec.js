@@ -268,7 +268,7 @@ define([
                 groupRelation.getNumberOfChild()
             ).toBe(3);
             VertexServiceMock.addRelationAndVertexToVertexMock();
-            GraphElementServiceMock.addIdentificationMock();
+            GraphElementServiceMock.addIdentification();
             MindMapInfo._setIsViewOnly(false);
             groupRelation.getController().addChild();
             expect(
