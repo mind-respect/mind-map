@@ -526,6 +526,11 @@ define([
             this.getOtherRelation = function () {
                 return relationWithLabel(graph, "other relation");
             };
+            this.getOtherRelationInTree = function () {
+                return treeBuilder.getRelationWithLabelInTree(
+                    "other relation"
+                );
+            };
             Mock.setCenterBubbleUriInUrl(this.getCenterVertex().getUri());
         };
         api.relationWithMultipleIdentifiers = function(){

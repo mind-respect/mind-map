@@ -32,8 +32,8 @@ define([
                 vertex
             );
             var hasAnExpandedOtherInstance = false;
-            vertex.applyToOtherInstances(function(otherInstance){
-                if(otherInstance.getNumberOfChild() > 0){
+            vertex.applyToOtherInstances(function (otherInstance) {
+                if (otherInstance.getNumberOfChild() > 0) {
                     hasAnExpandedOtherInstance = true;
                     return -1;
                 }
@@ -48,7 +48,7 @@ define([
                 vertex
             );
         };
-        api._setupChildrenContainerDragOverAndDrop = function(vertex){
+        api._setupChildrenContainerDragOverAndDrop = function (vertex) {
             //vertex.getChildrenContainer().on("dragover", function(){
             //    console.log("poire");
             //});
@@ -90,21 +90,21 @@ define([
                 RelativeTreeVertex,
                 this.serverFacade
             ).blur(function () {
-                    var $label = $(this);
-                    $label.html(
-                        linkify(
-                            $label.html()
-                        )
-                    );
-                });
+                var $label = $(this);
+                $label.html(
+                    linkify(
+                        $label.html()
+                    )
+                );
+            });
             label.html(
                 linkify(
                     label.html()
                 )
             );
-            if(!MindMapInfo.isViewOnly()){
-                this._setupDragAndDrop();
-            }
+            GraphElementHtmlBuilder.setupDragAndDrop(
+                this.vertexUi
+            );
             this.html.data(
                 "isPublic",
                 this.serverFacade.isPublic()
@@ -165,102 +165,13 @@ define([
             );
             return vertexMenu;
         };
-        VertexCreator.prototype._setupDragAndDrop = function () {
-            this.html.find(".in-bubble-content-wrapper").mousedown(function () {
-                GraphUi.disableDragScroll();
-            }).click(function(){
-                GraphUi.enableDragScroll();
-            }).mouseleave(function () {
-                if(GraphUi.isThereAnOpenModal() || GraphUi.isDragScrollEnabled()){
-                    return;
-                }
-                GraphUi.enableDragScroll();
-            });
-            this.html.on("dragstart", function (event) {
-                if (event.originalEvent) {
-                    event.originalEvent.dataTransfer.setData('Text', "dummy data for dragging to work in Firefox");
-                }
-                var vertex = BubbleFactory.fromHtml(
-                    $(this)
-                );
-                RelativeTreeVertex.setDraggedVertex(
-                    vertex
-                );
-                GraphUi.setIsDraggingBubble(true);
-                GraphUi.disableDragScroll();
-                vertex.hideMenu();
-                vertex.hideHiddenRelationsContainer();
-                vertex.getArrowHtml().addClass("hidden");
-                vertex.getHtml().addClass(
-                    "dragged"
-                ).data(
-                    "original-parent",
-                    vertex.getParentVertex()
-                );
-            }).on(
-                "dragend", function (event) {
-                    event.preventDefault();
-                    GraphUi.setIsDraggingBubble(false);
-                    var bubble = BubbleFactory.fromHtml(
-                        $(this)
-                    );
-                    bubble.getArrowHtml().removeClass(
-                        "hidden"
-                    );
-                    bubble.showHiddenRelationsContainer();
-                    GraphUi.enableDragScroll();
-                }).on(
-                "dragover", function (event) {
-                    event.preventDefault();
-                    var vertex = BubbleFactory.fromHtml($(this));
-                    var draggedVertex = RelativeTreeVertex.getDraggedVertex();
-                    var shouldSetToDragOver = !vertex.hasDragOver() && draggedVertex !== undefined && draggedVertex.getUri() !== vertex.getUri();
-                    if (!shouldSetToDragOver) {
-                        return;
-                    }
-                    vertex.enterDragOver();
-                }).on(
-                "dragleave", function (event) {
-                    event.preventDefault();
-                    var vertex = BubbleFactory.fromHtml(
-                        $(this)
-                    );
-                    vertex.leaveDragOver();
-                }).on(
-                "drop", function (event) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    GraphUi.enableDragScroll();
-                    GraphUi.setIsDraggingBubble(false);
-                    var parent = BubbleFactory.fromHtml(
-                        $(this)
-                    );
-                    parent.leaveDragOver();
-                    var draggedVertex = RelativeTreeVertex.getDraggedVertex();
-                    if (draggedVertex === undefined) {
-                        return;
-                    }
-                    var shouldMove = draggedVertex.getUri() !== parent.getUri() && !draggedVertex.isBubbleAChild(parent);
-                    if (!shouldMove) {
-                        return;
-                    }
-                    draggedVertex.moveToParent(
-                        parent
-                    );
-                    EdgeService.changeSourceVertex(
-                        parent,
-                        draggedVertex.getParentBubble()
-                    );
-                }
-            );
-        };
         return api;
         function linkify(text) {
             //http://stackoverflow.com/a/25821576/541493
             var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
-            return text.replace(urlRegex, function(url,b,c) {
-                var url2 = (c === 'www.') ?  'http://' +url : url;
-                return '<a href="' +url2+ '" target="_blank">' + url + '</a>';
+            return text.replace(urlRegex, function (url, b, c) {
+                var url2 = (c === 'www.') ? 'http://' + url : url;
+                return '<a href="' + url2 + '" target="_blank">' + url + '</a>';
             });
         }
     }

@@ -11,6 +11,14 @@
   z-index: 5;
   cursor: default;
   display: table;
+
+  &.drag-over{
+    .in-bubble-content {
+      border:3px dashed red;
+      border-radius:50px;
+    }
+  }
+
   &.dragged {
     background-color: transparent;
   }

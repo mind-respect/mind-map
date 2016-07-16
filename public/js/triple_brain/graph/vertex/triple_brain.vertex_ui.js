@@ -322,18 +322,7 @@ define([
         api.Object.prototype.isImmediateChildOfGroupRelation = function () {
             return this.getParentBubble().getParentBubble().isGroupRelation();
         };
-
-        api.Object.prototype.hasDragOver = function () {
-            return this.getHtml().hasClass("drag-over");
-        };
-
-        api.Object.prototype.enterDragOver = function () {
-            this.getHtml().addClass("drag-over");
-        };
-
-        api.Object.prototype.leaveDragOver = function () {
-            this.getHtml().removeClass("drag-over");
-        };
+        
         api.Object.prototype.getDeepestChildDistance = function () {
             var depth = -1;
             var childContainer = this.getHtml().parent().parent().find(

@@ -79,6 +79,9 @@ define([
                 groupRelationUi
             );
             groupRelationUi.hideButtons();
+            GraphElementHtmlBuilder.setupDragAndDrop(
+                groupRelationUi
+            );
             return groupRelationUi;
         };
 

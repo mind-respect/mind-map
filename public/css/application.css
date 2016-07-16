@@ -313,6 +313,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .cboxPhoto { max-width: 600px; height: auto !important; }
 
 .bubble { z-index: 5; cursor: default; display: table; /*.label to override bootstrap*/ white-space: nowrap; position: relative; min-width: 0; margin: 0 0 0 0; }
+.bubble.drag-over .in-bubble-content { border: 3px dashed red; border-radius: 50px; }
 .bubble.dragged { background-color: transparent; }
 .bubble > *, .bubble .label { display: table-cell; vertical-align: middle; }
 .bubble.view-only .arrow:before { left: 0; }
@@ -345,7 +346,6 @@ button.add-button-in-list:hover { color: #00d100; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .vertex { /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */ white-space: nowrap; }
-.vertex.drag-over .in-bubble-content { border: 3px dashed red; border-radius: 50px; }
 .vertex.suggestion .in-bubble-content { border: 3px dashed black; color: black; text-shadow: none; }
 .vertex.edit .in-bubble-content { width: 325px; max-width: 325px; }
 .vertex.edit .in-bubble-content .in-bubble-note-button { display: none; }

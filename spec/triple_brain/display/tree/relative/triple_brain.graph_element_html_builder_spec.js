@@ -4,10 +4,13 @@
 
 define([
     "test/test-scenarios",
+    "test/test-utils",
     "test/mock/triple_brain.suggestion_service_mock",
     "test/mock/triple_brain.friendly_resource_service_mock",
-    "triple_brain.graph_displayer_as_relative_tree"
-], function (Scenarios, SuggestionServiceMock, FriendlyResourceServiceMock, GraphDisplayerAsRelativeTree) {
+    "test/mock/triple_brain.graph_element_service_mock",
+    "triple_brain.graph_displayer_as_relative_tree",
+    "triple_brain.mind_map_info"
+], function (Scenarios, TestUtils, SuggestionServiceMock, FriendlyResourceServiceMock, GraphElementServiceMock, GraphDisplayerAsRelativeTree, MindMapInfo) {
     "use strict";
     describe("graph_element_html_builder", function () {
         it("does not update label to service if label has not changed", function () {
@@ -108,6 +111,31 @@ define([
             expect(
                 bubble3InTree.getNoteButtonInBubbleContent().hasClass("hidden")
             ).toBeFalsy();
+        });
+        it("identifies edge to group relation when dropped on group relation", function () {
+            MindMapInfo._setIsViewOnly(
+                false
+            );
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var groupRelationUi = scenario.getPossessionAsGroupRelationInTree();
+            var otherRelation = scenario.getOtherRelationInTree();
+            var groupRelationIdentification = groupRelationUi.getModel().getIdentification();
+            expect(
+                otherRelation.hasIdentification(
+                    groupRelationIdentification
+                )
+            ).toBeFalsy();
+            var otherBubble = otherRelation.getTopMostChildBubble();
+            GraphElementServiceMock.addIdentification();
+            TestUtils.startDragging(
+                otherBubble
+            );
+            TestUtils.drop(groupRelationUi);
+            expect(
+                otherRelation.hasIdentification(
+                    groupRelationIdentification
+                )
+            ).toBeTruthy();
         });
     });
 });

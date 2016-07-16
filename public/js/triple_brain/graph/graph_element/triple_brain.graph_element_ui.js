@@ -27,6 +27,17 @@ define([
         selectors = {};
     initMenuHandlerGetters();
     initSelectors();
+    api.setDraggedElement = function (vertex) {
+        $("body").data(
+            "dragged-vertex",
+            vertex
+        );
+    };
+    api.getDraggedElement = function () {
+        return $("body").data(
+            "dragged-vertex"
+        );
+    };
     api.hasCenterBubble = function () {
         return undefined !== _centralBubble;
     };
@@ -258,6 +269,19 @@ define([
             "[data-action=" + action + "]"
         );
     };
+
+    api.Self.prototype.hasDragOver = function () {
+        return this.getHtml().hasClass("drag-over");
+    };
+
+    api.Self.prototype.enterDragOver = function () {
+        this.getHtml().addClass("drag-over");
+    };
+
+    api.Self.prototype.leaveDragOver = function () {
+        this.getHtml().removeClass("drag-over");
+    };
+
     api.Self.prototype.getController = function () {
         var controller = controllerGetters[
             this.getGraphElementType()
