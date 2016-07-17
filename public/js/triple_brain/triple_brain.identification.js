@@ -33,10 +33,17 @@ define([
     };
 
     api.fromFriendlyResource = function (friendlyResource) {
-        return new api.Self({
+        var identification = new api.Self({
             externalResourceUri: friendlyResource.getUri(),
             friendlyResource: friendlyResource.getServerFormat()
         });
+        identification.setLabel(
+            friendlyResource.getLabel()
+        );
+        identification.setComment(
+            friendlyResource.getComment()
+        );
+        return identification;
     };
 
     api.withUriLabelAndDescription = function (uri, label, description) {

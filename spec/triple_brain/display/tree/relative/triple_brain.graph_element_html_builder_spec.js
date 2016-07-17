@@ -137,5 +137,69 @@ define([
                 )
             ).toBeTruthy();
         });
+        it("makes a relation a group relation when dropping on it", function () {
+            MindMapInfo._setIsViewOnly(false);
+            var scenario = new Scenarios.threeBubblesGraph();
+            var b1 = scenario.getBubble1InTree();
+            expect(
+                TestUtils.getChildWithLabel(
+                    b1,
+                    "r1"
+                ).isGroupRelation()
+            ).toBeFalsy();
+            var b3 = scenario.getBubble3InTree();
+            var r1 = scenario.getRelation1InTree();
+            TestUtils.startDragging(
+                b3
+            );
+            TestUtils.drop(
+                r1
+            );
+            expect(
+                TestUtils.getChildWithLabel(
+                    b1,
+                    "r1"
+                ).isGroupRelation()
+            ).toBeTruthy();
+        });
+        it("removes the identification when dragging out of a group relation", function () {
+            MindMapInfo._setIsViewOnly(
+                false
+            );
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var groupRelationUi = scenario.getPossessionAsGroupRelationInTree();
+            groupRelationUi.addChildTree();
+            var relation = TestUtils.getChildWithLabel(
+                groupRelationUi,
+                "Possession of book 1"
+            );
+            expect(
+                relation.isRelation()
+            ).toBeTruthy();
+            var identification = groupRelationUi.getModel().getIdentification();
+            expect(
+                relation.hasIdentification(
+                    identification
+                )
+            ).toBeTruthy();
+            GraphElementServiceMock.removeIdentification();
+            TestUtils.startDragging(
+                relation
+            );
+            var otherBubble = scenario.getOtherRelationInTree().getTopMostChildBubble();
+            TestUtils.drop(otherBubble);
+            relation = TestUtils.getChildWithLabel(
+                otherBubble,
+                "Possession of book 1"
+            );
+            expect(
+                relation.isRelation()
+            ).toBeTruthy();
+            expect(
+                relation.hasIdentification(
+                    identification
+                )
+            ).toBeFalsy();
+        });
     });
 });

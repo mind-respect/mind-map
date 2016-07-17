@@ -49,6 +49,9 @@ define([
             edge.refreshImages();
             edge.resetOtherInstances();
             edge.reviewInLabelButtonsVisibility();
+            GraphElementHtmlBuilder.setupDragAndDrop(
+                edge
+            );
             EventBus.publish(
                 '/event/ui/html/edge/created/',
                 edge
@@ -62,7 +65,7 @@ define([
             this.edgeServer = edgeServer;
             this.uri = edgeServer.getUri();
             this.html = $(
-                "<div class='relation graph-element bubble'>"
+                "<div class='relation graph-element bubble' draggable='true'>"
             ).append("<div class='in-bubble-content'>");
         }
         EdgeCreator.prototype.create = function () {

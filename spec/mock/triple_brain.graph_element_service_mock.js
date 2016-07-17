@@ -19,5 +19,14 @@ define([
             );
         });
     };
+    api.removeIdentification = function () {
+        return spyOn(GraphElementService, "removeIdentification").and.callFake(function(graphElement, identification, callback){
+            GraphElementService._removeIdentificationCallback(
+                graphElement,
+                identification,
+                callback
+            );
+        });
+    };
     return api;
 });

@@ -161,9 +161,11 @@ define([
                 $.t("vertex.menu.note.saving") + " ..."
             );
             var graphElement = api._getBubbleNoteModal().data("graphElement");
+            var note = api._getContentEditor().html();
+            graphElement.getModel().setNote(note);
             GraphElementService.updateNote(
                 graphElement,
-                api._getContentEditor().html(),
+                note,
                 function (graphElement) {
                     graphElement.reviewInLabelButtonsVisibility();
                     hideNoteModal();

@@ -8,13 +8,16 @@ define([
     "triple_brain.bubble_factory",
     "triple_brain.suggestion_service",
     "triple_brain.friendly_resource_service",
+    "triple_brain.graph_element_service",
     "triple_brain.selection_handler",
     "triple_brain.graph_ui",
     "triple_brain.graph_element_main_menu",
     "triple_brain.graph_element_ui",
     "triple_brain.edge_service",
-    "triple_brain.mind_map_info"
-], function ($, EventBus, BubbleFactory, SuggestionService, FriendlyResourceService, SelectionHandler, GraphUi, GraphElementMainMenu, GraphElementUi, EdgeService, MindMapInfo) {
+    "triple_brain.mind_map_info",
+    "triple_brain.graph_displayer",
+    "triple_brain.identification"
+], function ($, EventBus, BubbleFactory, SuggestionService, FriendlyResourceService, GraphElementService, SelectionHandler, GraphUi, GraphElementMainMenu, GraphElementUi, EdgeService, MindMapInfo, GraphDisplayer, Identification) {
     "use strict";
     var enterKeyCode = 13,
         api = {};
@@ -99,15 +102,15 @@ define([
         }
     };
     api.setupDragAndDrop = function (graphElementUi) {
-        if(MindMapInfo.isViewOnly()){
+        if (MindMapInfo.isViewOnly()) {
             return;
         }
         graphElementUi.getHtml().find(".in-bubble-content-wrapper").mousedown(function () {
             GraphUi.disableDragScroll();
-        }).click(function(){
+        }).click(function () {
             GraphUi.enableDragScroll();
         }).mouseleave(function () {
-            if(GraphUi.isThereAnOpenModal() || GraphUi.isDragScrollEnabled()){
+            if (GraphUi.isThereAnOpenModal() || GraphUi.isDragScrollEnabled()) {
                 return;
             }
             GraphUi.enableDragScroll();
@@ -148,24 +151,24 @@ define([
             }).on(
             "dragover", function (event) {
                 event.preventDefault();
-                var vertex = BubbleFactory.fromHtml(
+                var draggedOver = BubbleFactory.fromHtml(
                     $(this)
                 );
-                var draggedVertex = GraphElementUi.getDraggedElement();
-                var shouldSetToDragOver = !vertex.hasDragOver() &&
-                    draggedVertex !== undefined &&
-                    draggedVertex.getUri() !== vertex.getUri();
+                var dragged = GraphElementUi.getDraggedElement();
+                var shouldSetToDragOver = !draggedOver.hasDragOver() &&
+                    dragged !== undefined &&
+                    dragged.getUri() !== draggedOver.getUri();
                 if (!shouldSetToDragOver) {
                     return;
                 }
-                vertex.enterDragOver();
+                draggedOver.enterDragOver();
             }).on(
             "dragleave", function (event) {
                 event.preventDefault();
-                var vertex = BubbleFactory.fromHtml(
+                var draggedOver = BubbleFactory.fromHtml(
                     $(this)
                 );
-                vertex.leaveDragOver();
+                draggedOver.leaveDragOver();
             }).on(
             "drop", function (event) {
                 event.preventDefault();
@@ -184,16 +187,29 @@ define([
                 if (!shouldMove) {
                     return;
                 }
-                dragged.moveToParent(
-                    parent
-                );
+
+                if (parent.isRelation()) {
+                    var newGroupRelation = GraphDisplayer.addNewGroupRelation(
+                        Identification.fromFriendlyResource(
+                            parent.getModel()
+                        ),
+                        parent.getParentBubble(),
+                        parent.isToTheLeft()
+                    );
+                    parent.moveToParent(newGroupRelation);
+                    parent = newGroupRelation;
+                }
                 var newSourceVertex = parent.isVertex() ?
                     parent :
                     parent.getParentVertex();
                 var movedEdge = dragged.isRelation() ?
-                    dragged:
+                    dragged :
                     dragged.getParentBubble();
-                if(parent.isGroupRelation()){
+                var previousParentGroupRelation = movedEdge.getParentBubble();
+                dragged.moveToParent(
+                    parent
+                );
+                if (parent.isGroupRelation()) {
                     var identification = parent.getGroupRelation().getIdentification();
                     EdgeService.addSameAs(
                         movedEdge,
@@ -204,6 +220,14 @@ define([
                     newSourceVertex,
                     movedEdge
                 );
+                if (previousParentGroupRelation.isGroupRelation()) {
+                    GraphElementService.removeIdentification(
+                        movedEdge,
+                        movedEdge.getIdentificationWithExternalUri(
+                            previousParentGroupRelation.getModel().getIdentification().getExternalResourceUri()
+                        )
+                    );
+                }
             }
         );
     };

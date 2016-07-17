@@ -139,6 +139,16 @@ define([
         });
         return contains;
     };
+    api.Object.prototype.getIdentificationWithExternalUri = function (externalUri) {
+        var identification = false;
+        $.each(this.getIdentifications(), function () {
+            if (this.getExternalResourceUri() === externalUri) {
+                identification = this;
+                return false;
+            }
+        });
+        return identification;
+    };
     api.Object.prototype.hasSearchResultAsIdentification = function (searchResult) {
         var hasIdentification = false;
         $.each(this.getIdentifications(), function () {

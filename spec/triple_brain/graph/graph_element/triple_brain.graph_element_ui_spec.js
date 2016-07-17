@@ -99,21 +99,21 @@ define([
                 bubble2.getHtml()
             ).toHaveAttr("draggable");
         });
-        it("non draggable elements are not made draggable after leaving edit mode", function () {
-            var threeBubblesGraph = new Scenarios.threeBubblesGraph();
-            var aRelation = threeBubblesGraph.getBubble1InTree().getTopMostChildBubble();
-            expect(
-                aRelation.getHtml()
-            ).not.toHaveAttr("draggable");
-            aRelation.editMode();
-            expect(
-                aRelation.getHtml()
-            ).not.toHaveAttr("draggable");
-            aRelation.leaveEditMode();
-            expect(
-                aRelation.getHtml()
-            ).not.toHaveAttr("draggable");
-        });
+        // it("non draggable elements are not made draggable after leaving edit mode", function () {
+        //     var threeBubblesGraph = new Scenarios.threeBubblesGraph();
+        //     var aRelation = threeBubblesGraph.getBubble1InTree().getTopMostChildBubble();
+        //     expect(
+        //         aRelation.getHtml()
+        //     ).not.toHaveAttr("draggable");
+        //     aRelation.editMode();
+        //     expect(
+        //         aRelation.getHtml()
+        //     ).not.toHaveAttr("draggable");
+        //     aRelation.leaveEditMode();
+        //     expect(
+        //         aRelation.getHtml()
+        //     ).not.toHaveAttr("draggable");
+        // });
         it("prevents iframe injection", function () {
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             bubble1.setText("<iframe></iframe>");

@@ -92,27 +92,34 @@ define([
             type: 'DELETE',
             url: graphElement.getUri() + '/identification?uri=' + identification.getUri()
         }).success(function () {
-            var removeAction = identification.rightActionForType(
-                graphElement.removeType,
-                graphElement.removeSameAs,
-                graphElement.removeGenericIdentification
+            api._removeIdentificationCallback(
+                graphElement,
+                identification,
+                callback
             );
-            removeAction.call(
+        });
+    };
+    api._removeIdentificationCallback = function(graphElement, identification, callback){
+        var removeAction = identification.rightActionForType(
+            graphElement.removeType,
+            graphElement.removeSameAs,
+            graphElement.removeGenericIdentification
+        );
+        removeAction.call(
+            graphElement,
+            identification
+        );
+        if (callback !== undefined) {
+            callback(
                 graphElement,
                 identification
             );
-            if (callback !== undefined) {
-                callback(
-                    graphElement,
-                    identification
-                );
-            }
-            var eventBusKey = identificationBaseEventBusKey + "removed";
-            EventBus.publish(
-                eventBusKey,
-                [graphElement, identification]
-            );
-        });
+        }
+        var eventBusKey = identificationBaseEventBusKey + "removed";
+        EventBus.publish(
+            eventBusKey,
+            [graphElement, identification]
+        );
     };
     api.updateNote = function (graphElement, note, callback) {
         $.ajax({

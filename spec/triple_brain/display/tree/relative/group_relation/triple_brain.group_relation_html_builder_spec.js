@@ -234,7 +234,8 @@ define([
             centerBubble.getController().addChild();
             var newRelation = TestUtils.getChildWithLabel(centerBubble, "");
             newRelation.setText("new relation");
-            newRelation.setNote("some comment");
+            newRelation.getLabel().blur();
+            newRelation.getModel().setComment("some comment");
             var identificationToNewRelation = Identification.fromFriendlyResource(
                 newRelation.getModel()
             );
@@ -247,7 +248,10 @@ define([
                 [relation1, identificationToNewRelation]
             );
             expect(
-                TestUtils.hasChildWithLabel(centerBubble, "new relation")
+                TestUtils.hasChildWithLabel(
+                    centerBubble,
+                    "new relation"
+                )
             ).toBeTruthy();
             var newGroupRelation = TestUtils.getChildWithLabel(
                 centerBubble,

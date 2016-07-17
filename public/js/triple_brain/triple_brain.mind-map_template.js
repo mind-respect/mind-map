@@ -63,18 +63,7 @@ define([
         t.add('image_container_image', "<img src='{src}'>");
 
         t.add('hidden_property_container', '<div class="hidden-properties-container"></div>');
-
-        //edge html elements
-        t.add(
-            'edge',
-            '<div class="edge relation graph-element" id="{id}" style="left:{label_position.x};top:{label_position.y}"></div>'
-        );
-        t.add(
-            'edge_label',
-            '<input type="text" value="{label}">'
-        );
-        t.add('edge_remove_button', '<input type="button" class="remove" value="x" >');
-
+        
         t.add('auto_complete_suggestion_list', '<ul class="auto-complete-suggestion"></ul>');
         t.add('auto_complete_suggestion_list_element', '<li>{name}</li>');
         t.add(
