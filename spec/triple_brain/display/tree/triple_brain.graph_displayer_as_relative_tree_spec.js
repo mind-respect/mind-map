@@ -402,7 +402,7 @@ define([
         });
 
         it("sorts children of group relation in order of creation date", function () {
-            var groupRelation = new Scenarios.GraphWithSimilarRelationsScenario().getPossessionAsGroupRelationInTree()
+            var groupRelation = new Scenarios.GraphWithSimilarRelationsScenario().getPossessionAsGroupRelationInTree();
             expect(
                 groupRelation.isGroupRelation()
             ).toBeTruthy();

@@ -3,8 +3,9 @@
  */
 
 define([
+        "jquery",
         "triple_brain.graph_ui"
-    ], function (GraphUi) {
+    ], function ($, GraphUi) {
         "use strict";
         var api = {};
         api.withoutAnIdentification = function () {
