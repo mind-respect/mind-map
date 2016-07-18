@@ -373,7 +373,7 @@ define([
             groupRelation,
             groupRelationUi
         );
-        $.each(groupRelation.getVertices(), function (key, verticesWithSameUri) {
+        $.each(groupRelation.getSortedVertices(), function (key, verticesWithSameUri) {
             $.each(verticesWithSameUri, function (vertexHtmlId) {
                 VertexHtmlBuilder.completeBuild(
                     RelativeTreeVertex.withId(vertexHtmlId)
@@ -596,7 +596,7 @@ define([
                 );
                 return;
             }
-            $.each(groupRelation.getVertices(), function (key, verticesWithSameUri) {
+            $.each(groupRelation.getSortedVertices(), function (key, verticesWithSameUri) {
                 $.each(verticesWithSameUri, function (vertexHtmlId, vertexAndEdge) {
                     var vertex = vertexAndEdge.vertex,
                         edge = vertexAndEdge.edge;
@@ -749,13 +749,10 @@ define([
                     }
                     var vertexA = groupRelationA.getAnyVertex();
                     var vertexB = groupRelationB.getAnyVertex();
-                    if (vertexA.getCreationDate() === vertexB.getCreationDate()) {
-                        return 0;
-                    }
-                    if (vertexA.getCreationDate() > vertexB.getCreationDate()) {
-                        return 1;
-                    }
-                    return -1;
+                    return compareVertices(
+                        vertexA,
+                        vertexB
+                    );
                 });
             var sortedSimilarRelations = {};
             $.each(sortedKeys, function () {
@@ -764,6 +761,15 @@ define([
             return sortedSimilarRelations;
         }
     };
+    function compareVertices(vertexA, vertexB){
+        if (vertexA.getCreationDate() === vertexB.getCreationDate()) {
+            return 0;
+        }
+        if (vertexA.getCreationDate() > vertexB.getCreationDate()) {
+            return 1;
+        }
+        return -1;
+    }
     return api;
 
     function flagSuggestionsToNotDisplayGivenParentAndChildVertex(parentVertex, childVertex) {

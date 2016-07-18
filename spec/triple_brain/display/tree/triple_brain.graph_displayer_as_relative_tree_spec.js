@@ -401,6 +401,26 @@ define([
             ).toBe("b7");
         });
 
+        it("sorts children of group relation in order of creation date", function () {
+            var groupRelation = new Scenarios.GraphWithSimilarRelationsScenario().getPossessionAsGroupRelationInTree()
+            expect(
+                groupRelation.isGroupRelation()
+            ).toBeTruthy();
+            groupRelation.addChildTree();
+            var book1 = groupRelation.getTopMostChildBubble().getTopMostChildBubble();
+            expect(
+                book1.text()
+            ).toBe("book 1");
+            var book2 = book1.getBubbleUnder();
+            expect(
+                book2.text()
+            ).toBe("book 2");
+            var book3 = book2.getBubbleUnder();
+            expect(
+                book3.text()
+            ).toBe("book 3");
+        });
+
         it("sorts non center bubble children in order of creation date", function () {
             var scenario = new Scenarios.creationDateScenario();
             var b1 = scenario.getBubble1InTree();
