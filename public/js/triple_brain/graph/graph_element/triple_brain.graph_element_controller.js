@@ -162,7 +162,7 @@ define([
             );
             var graphElement = api._getBubbleNoteModal().data("graphElement");
             var note = api._getContentEditor().html();
-            graphElement.getModel().setNote(note);
+            graphElement.getModel().setComment(note);
             GraphElementService.updateNote(
                 graphElement,
                 note,

@@ -16,11 +16,11 @@ define([
             label: ""
         };
     };
-        api.buildServerFormatFromUi = function(friendlyResourceUi){
+    api.buildServerFormatFromUi = function (friendlyResourceUi) {
         return {
             uri: friendlyResourceUi.getUri(),
             label: friendlyResourceUi.text(),
-            comment:friendlyResourceUi.getNote()
+            comment: friendlyResourceUi.getNote()
         };
     };
     api.buildObjectWithUriAndLabel = function (uri, label) {
@@ -60,7 +60,8 @@ define([
             api.buildObjectWithUriLabelAndDescription(uri, label, description)
         );
     };
-    api.Self = function () {    };
+    api.Self = function () {
+    };
 
     api.Self.prototype.init = function (friendlyResourceServerFormat) {
         this.friendlyResourceServerFormat = friendlyResourceServerFormat;
@@ -106,7 +107,9 @@ define([
         this.friendlyResourceServerFormat.uri = uri;
     };
     api.Self.prototype.getUri = function () {
-        return this.friendlyResourceServerFormat.uri;
+        return decodeURIComponent(
+            this.friendlyResourceServerFormat.uri
+        );
     };
     api.Self.prototype.getJsonFormat = function () {
         var serverFormat = this.getServerFormat();
@@ -115,7 +118,7 @@ define([
             serverFormat
         );
     };
-    api.Self.prototype.getImagesServerFormat = function(){
+    api.Self.prototype.getImagesServerFormat = function () {
         return Image.arrayToServerJson(
             this._images
         );

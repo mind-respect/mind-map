@@ -14,7 +14,7 @@ define([
             $.ajax({
                 type: 'GET',
                 url: api.graphUriForCentralBubbleUri(centralVertexUri)
-            }).success(callback).error(errorCallback);
+            }).done(callback).fail(errorCallback);
         };
         api.getForCentralVertexUriAtDepth = function (centralVertexUri, depth) {
             return $.ajax({

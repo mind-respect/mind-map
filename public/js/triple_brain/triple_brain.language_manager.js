@@ -199,7 +199,7 @@ define([
                 $.ajax({
                     url: url,
                     dataType: 'json'
-                }).success(function (data) {
+                }).done(function (data) {
                     loadComplete(
                         null,
                         data

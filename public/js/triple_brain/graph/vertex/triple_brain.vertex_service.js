@@ -33,7 +33,7 @@ define([
                 type: 'POST',
                 url: vertex.getUri(),
                 dataType: 'json'
-            }).success(function (tripleJson) {
+            }).done(function (tripleJson) {
                 api._addRelationAndVertexToVertexCallback(
                     tripleJson,
                     sourceBubble,

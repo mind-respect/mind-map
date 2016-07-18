@@ -154,7 +154,7 @@ define([
                 "/graph/" + window.graphElementTypeForBublGuru + "/" + api._getGraphElementShortIdFromUrl();
         };
         api.htmlUrlForBubbleUri = function (graphElementUri) {
-            if(api.isPropertyUri(graphElementUri)){
+            if (api.isPropertyUri(graphElementUri)) {
                 graphElementUri = api.schemaUriOfProperty(graphElementUri);
             }
             return graphElementUri.replace(
@@ -163,10 +163,14 @@ define([
             );
         };
         api._hasParamAtIndex = function (index) {
-            return window.location.pathname.split("/").length >= index + 1;
+            return decodeURIComponent(
+                    window.location.pathname
+                ).split("/").length >= index + 1;
         };
         api._getUrlParamAtIndex = function (index) {
-            return window.location.pathname.split("/")[index + 1];
+            return decodeURIComponent(
+                window.location.pathname
+            ).split("/")[index + 1];
         };
         return api;
 

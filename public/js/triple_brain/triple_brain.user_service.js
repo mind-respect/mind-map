@@ -27,7 +27,7 @@ define([
             return $.ajax({
                 type: 'GET',
                 url: usersResourceUrl + username + "/graph/vertex/any"
-            }).success(callback);
+            }).done(callback);
         };
 
         api.currentUserUri = function () {
@@ -42,8 +42,8 @@ define([
                 data: JSON.stringify(loginInfo),
                 url: sessionResourceUrl,
                 contentType: 'application/json'
-            }).success(callback)
-                .error(errorCallback);
+            }).done(callback)
+                .fail(errorCallback);
         };
         api.register = function (userObject, successCallback, errorCallback) {
             $.ajax({
@@ -51,8 +51,8 @@ define([
                 url: usersResourceUrl,
                 data: JSON.stringify(userObject),
                 contentType: 'application/json;charset=utf-8'
-            }).success(successCallback)
-                .error(function (xhr) {
+            }).done(successCallback)
+                .fail(function (xhr) {
                     errorCallback(
                         JSON.parse(xhr.responseText)
                     );
@@ -62,7 +62,7 @@ define([
             $.ajax({
                 type: 'GET',
                 url: sessionResourceUrl
-            }).success(function (authenticatedUser) {
+            }).done(function (authenticatedUser) {
                 authenticatedUser.preferred_locales = JSON.parse(
                     authenticatedUser.preferred_locales
                 );
@@ -74,7 +74,7 @@ define([
                     '/event/ui/user/get_authenticated/success',
                     authenticatedUser
                 );
-            }).error(function () {
+            }).fail(function () {
                 EventBus.publish(
                     '/event/ui/users/get_authenticated/errors'
                 );
@@ -84,19 +84,19 @@ define([
             $.ajax({
                 type: 'GET',
                 url: usersResourceUrl + "is_authenticated"
-            }).success(function (isAuthenticated) {
+            }).done(function (isAuthenticated) {
                 if (isAuthenticated.is_authenticated) {
                     isAuthenticatedCallBack();
                     return;
                 }
                 isNotAuthenticatedCallBack();
-            }).error(isNotAuthenticatedCallBack);
+            }).fail(isNotAuthenticatedCallBack);
         };
         api.logout = function (successCallBack) {
             $.ajax({
                 type: 'DELETE',
                 url: sessionResourceUrl
-            }).success(successCallBack);
+            }).done(successCallBack);
         };
         api.resetPassword = function (email, callback, errorCallback) {
             $.ajax({
@@ -104,7 +104,7 @@ define([
                 url: "/service/reset-password",
                 contentType: 'application/json',
                 data: JSON.stringify({email: email})
-            }).success(callback).error(errorCallback);
+            }).done(callback).fail(errorCallback);
         };
         api.changePassword = function (password, email, token, callback, errorCallback) {
             $.ajax({
@@ -116,7 +116,7 @@ define([
                     password: password,
                     token: token
                 })
-            }).success(callback).error(errorCallback);
+            }).done(callback).fail(errorCallback);
         };
         return api;
     }

@@ -101,7 +101,9 @@ define([
     };
     api.Self.prototype = new FriendlyResource.Self();
     api.Self.prototype.getExternalResourceUri = function () {
-        return this.identificationServerFormat.externalResourceUri;
+        return decodeURIComponent(
+            this.identificationServerFormat.externalResourceUri
+        );
     };
     api.Self.prototype.getServerFormat = function () {
         return this.identificationServerFormat;
