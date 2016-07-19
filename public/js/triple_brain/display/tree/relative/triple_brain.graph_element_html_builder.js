@@ -101,6 +101,17 @@ define([
             });
         }
     };
+    api._setupChildrenContainerDragOverAndDrop = function (graphElementUi) {
+        graphElementUi.getTreeContainer().on("drop", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            var bubble = BubbleFactory.fromHtml(
+                $(this).find(".bubble:first")
+            );
+            var dragged = GraphElementUi.getDraggedElement();
+            
+        });
+    };
     api.setupDragAndDrop = function (graphElementUi) {
         if (MindMapInfo.isViewOnly()) {
             return;
@@ -148,10 +159,11 @@ define([
                 );
                 bubble.showHiddenRelationsContainer();
                 GraphUi.enableDragScroll();
-            }).on(
+            });
+        graphElementUi.getLabel().on(
             "dragover", function (event) {
                 event.preventDefault();
-                var draggedOver = BubbleFactory.fromHtml(
+                var draggedOver = BubbleFactory.fromSubHtml(
                     $(this)
                 );
                 var dragged = GraphElementUi.getDraggedElement();
@@ -165,7 +177,7 @@ define([
             }).on(
             "dragleave", function (event) {
                 event.preventDefault();
-                var draggedOver = BubbleFactory.fromHtml(
+                var draggedOver = BubbleFactory.fromSubHtml(
                     $(this)
                 );
                 draggedOver.leaveDragOver();
@@ -175,7 +187,7 @@ define([
                 event.stopPropagation();
                 GraphUi.enableDragScroll();
                 GraphUi.setIsDraggingBubble(false);
-                var parent = BubbleFactory.fromHtml(
+                var parent = BubbleFactory.fromSubHtml(
                     $(this)
                 );
                 parent.leaveDragOver();

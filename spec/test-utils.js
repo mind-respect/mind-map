@@ -138,7 +138,7 @@ define([
     };
     api.drop = function (bubble) {
         var event = $.Event("drop");
-        bubble.getHtml().trigger(event);
+        bubble.getLabel().trigger(event);
     };
 
     api.singleIdentificationToMultiple = function (identification) {

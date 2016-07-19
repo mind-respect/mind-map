@@ -9,6 +9,7 @@ define([
         "triple_brain.relative_tree_vertex",
         "triple_brain.vertex_html_builder_common",
         "triple_brain.graph_element_html_builder",
+        "triple_brain.graph_element_ui",
         "triple_brain.graph_ui",
         "triple_brain.bubble_factory",
         "triple_brain.edge_service",
@@ -16,7 +17,7 @@ define([
         "jquery-ui",
         "jquery.is-fully-on-screen",
         "jquery.center-on-screen"
-    ], function ($, EventBus, MindMapTemplate, RelativeTreeVertex, VertexHtmlCommon, GraphElementHtmlBuilder, GraphUi, BubbleFactory, EdgeService, MindMapInfo) {
+    ], function ($, EventBus, MindMapTemplate, RelativeTreeVertex, VertexHtmlCommon, GraphElementHtmlBuilder, GraphElementUi, GraphUi, BubbleFactory, EdgeService, MindMapInfo) {
         "use strict";
         var api = {};
         api.withServerFacade = function (serverFacade) {
@@ -42,16 +43,11 @@ define([
                 vertex.buildHiddenNeighborPropertiesIndicator();
             }
             vertex.reviewInLabelButtonsVisibility();
-            api._setupChildrenContainerDragOverAndDrop(vertex);
+            GraphElementHtmlBuilder._setupChildrenContainerDragOverAndDrop(vertex);
             EventBus.publish(
                 '/event/ui/vertex/build_complete',
                 vertex
             );
-        };
-        api._setupChildrenContainerDragOverAndDrop = function (vertex) {
-            //vertex.getChildrenContainer().on("dragover", function(){
-            //    console.log("poire");
-            //});
         };
         EventBus.subscribe(
             '/event/ui/vertex/visit_after_graph_drawn',

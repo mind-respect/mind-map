@@ -15,6 +15,11 @@ define([
     ], function ($, EventBus, UiUtils, ImageDisplayer, GraphElementUi, GraphElementType, BubbleFactory, SelectionHandler, CenterBubble) {
         "use strict";
         var api = {};
+        var MoveRelation = {
+            "Parent": "parent",
+            "After": "after",
+            "Before": "before"
+        };
 
         api.withHtml = function (html) {
             return new api.Self(html);
@@ -26,30 +31,46 @@ define([
 
         api.Self.prototype = new GraphElementUi.Self();
 
-        api.Self.prototype.moveToParent = function (parent) {
+        api.Self.prototype.moveTo = function (otherBubble, relation) {
             if (this.isVertex()) {
-                return this.getParentBubble().moveToParent(
-                    parent
+                return this.getParentBubble().moveTo(
+                    otherBubble,
+                    relation
                 );
             }
             var isOriginalToTheLeft = this.isToTheLeft();
-            var treeContainer = this.html.closest(".vertex-tree-container");
+            var treeContainer = this.getTreeContainer();
             var toMove = treeContainer.add(treeContainer.next(".clear-fix"));
-            if (parent.isGroupRelation()) {
-                if (!parent.isExpanded()) {
-                    parent.addChildTree();
-                }
-                var identification = parent.getGroupRelation().getIdentification();
-                if (this.hasIdentification(identification)) {
-                    this.revertIdentificationIntegration(identification);
+            if (MoveRelation.Parent === relation) {
+                if (otherBubble.isGroupRelation()) {
+                    if (!otherBubble.isExpanded()) {
+                        otherBubble.addChildTree();
+                    }
+                    var identification = otherBubble.getGroupRelation().getIdentification();
+                    if (this.hasIdentification(identification)) {
+                        this.revertIdentificationIntegration(identification);
+                    }
                 }
             }
-            var newContainer = parent.isCenterBubble() ?
-                CenterBubble.usingBubble(parent).getContainerItShouldNextAddTo() :
-                parent.getHtml().closest(".vertex-container").siblings(".vertices-children-container");
-            newContainer.append(
-                toMove
-            );
+            if (MoveRelation.Parent === relation) {
+                var newContainer;
+                newContainer = otherBubble.isCenterBubble() ?
+                    CenterBubble.usingBubble(otherBubble).getContainerItShouldNextAddTo() :
+                    otherBubble.getHtml().closest(".vertex-container").siblings(".vertices-children-container");
+                newContainer.append(
+                    toMove
+                );
+            } else {
+                if (MoveRelation.Before === relation) {
+                    otherBubble.getTreeContainer().before(
+                        toMove
+                    );
+                } else {
+                    otherBubble.getTreeContainer().next(".clear-fix").after(
+                        toMove
+                    );
+                }
+            }
             this._resetIsToTheLeft();
             SelectionHandler.setToSingleGraphElement(this);
             if (this.isRelation()) {
@@ -69,6 +90,25 @@ define([
                 this.convertToRight();
                 $.each(treeContainers, convertTreeStructureToRight);
             }
+        };
+
+        api.Self.prototype.moveToParent = function (parent) {
+            return this.moveTo(
+                parent,
+                MoveRelation.Parent
+            );
+        };
+        api.Self.prototype.moveAbove = function (newSibling) {
+            return this.moveTo(
+                newSibling,
+                MoveRelation.Before
+            );
+        };
+        api.Self.prototype.moveUnder = function (newSibling) {
+            return this.moveTo(
+                newSibling,
+                MoveRelation.After
+            );
         };
         function convertTreeStructureToLeft() {
             var treeContainer = $(this);
@@ -328,7 +368,7 @@ define([
         api.Self.prototype.isVisible = function () {
             return !this.html.closest(
                     ".vertex-container"
-                ).hasClass("hidden") && !this.html.closest(".vertex-tree-container").hasClass("hidden");
+                ).hasClass("hidden") && !this.getTreeContainer().hasClass("hidden");
         };
 
         api.Self.prototype._removeHideOrShow = function (action, argument) {
@@ -336,7 +376,7 @@ define([
             if (this.isCenterBubble()) {
                 this.html.closest(".vertex-container")[action](argument);
             } else {
-                var treeContainer = this.html.closest(".vertex-tree-container"),
+                var treeContainer = this.getTreeContainer(),
                     clearFix = treeContainer.next(".clear-fix");
                 clearFix[action](argument);
                 treeContainer[action](argument);

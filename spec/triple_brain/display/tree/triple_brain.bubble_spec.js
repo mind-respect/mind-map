@@ -231,7 +231,7 @@ define([
             expect(
                 bubble3.getNumberOfChild()
             ).toBe(0);
-            var relation1  = threeBubbleScenario.getRelation1InTree();
+            var relation1 = threeBubbleScenario.getRelation1InTree();
             relation1.moveToParent(bubble3);
             expect(
                 centerBubble.getNumberOfChild()
@@ -273,7 +273,7 @@ define([
             ).toBeTruthy();
         });
         it("selects the moved bubble after it moved", function () {
-            var relation1  = threeBubbleScenario.getRelation1InTree();
+            var relation1 = threeBubbleScenario.getRelation1InTree();
             var bubble3 = threeBubbleScenario.getBubble3InTree();
             expect(
                 SelectionHandler.getNbSelected()
@@ -322,6 +322,74 @@ define([
             expect(
                 centerBubble.getNumberOfChild()
             ).toBe(centerBubbleNumberOfChild + 1);
+        });
+        it("can move a bubble above another", function () {
+            var scenario = new Scenarios.creationDateScenario();
+            var b1 = scenario.getBubble1InTree();
+            var b7 = TestUtils.getChildWithLabel(
+                b1,
+                "r6"
+            ).getTopMostChildBubble();
+            scenario.expandBubble7(
+                b7
+            );
+            var b73 = TestUtils.getChildWithLabel(
+                b7,
+                "r73"
+            ).getTopMostChildBubble();
+            var b72 = TestUtils.getChildWithLabel(
+                b7,
+                "r72"
+            ).getTopMostChildBubble();
+            expect(
+                b73.getBubbleAbove().text()
+            ).not.toBe("b71");
+            expect(
+                b73.getBubbleUnder().text()
+            ).not.toBe("b72");
+            b73.moveAbove(
+                b72
+            );
+            expect(
+                b73.getBubbleAbove().text()
+            ).toBe("b71");
+            expect(
+                b73.getBubbleUnder().text()
+            ).toBe("b72");
+        });
+        it("can move a bubble under another", function () {
+            var scenario = new Scenarios.creationDateScenario();
+            var b1 = scenario.getBubble1InTree();
+            var b7 = TestUtils.getChildWithLabel(
+                b1,
+                "r6"
+            ).getTopMostChildBubble();
+            scenario.expandBubble7(
+                b7
+            );
+            var b72 = TestUtils.getChildWithLabel(
+                b7,
+                "r72"
+            ).getTopMostChildBubble();
+            var b73 = TestUtils.getChildWithLabel(
+                b7,
+                "r73"
+            ).getTopMostChildBubble();
+            expect(
+                b72.getBubbleAbove().text()
+            ).not.toBe("b73");
+            expect(
+                b72.getBubbleUnder().text()
+            ).not.toBe("b74");
+            b72.moveUnder(
+                b73
+            );
+            expect(
+                b72.getBubbleAbove().text()
+            ).toBe("b73");
+            expect(
+                b72.getBubbleUnder().text()
+            ).toBe("b74");
         });
     });
 });

@@ -52,6 +52,7 @@ define([
             GraphElementHtmlBuilder.setupDragAndDrop(
                 edge
             );
+            GraphElementHtmlBuilder._setupChildrenContainerDragOverAndDrop(edge);
             EventBus.publish(
                 '/event/ui/html/edge/created/',
                 edge
