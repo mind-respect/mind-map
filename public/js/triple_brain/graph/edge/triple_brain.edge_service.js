@@ -97,7 +97,7 @@ define([
             }).success(callback);
         };
         api.changeSourceVertex = function (sourceVertex, edge, callback) {
-            $.ajax({
+            return $.ajax({
                 type: 'PUT',
                 url: edge.getUri() + "/source-vertex/" + IdUri.elementIdFromUri(sourceVertex.getUri())
             }).success(callback);

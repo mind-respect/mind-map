@@ -23,6 +23,7 @@ define([
     "triple_brain.edge_controller",
     "triple_brain.graph_controller",
     "triple_brain.graph_element_controller",
+    "triple_brain.graph_element",
     "triple_brain.keyboard_actions_handler",
     "triple_brain.edge",
     "triple_brain.identification",
@@ -46,7 +47,7 @@ define([
     "triple_brain.center_bubble",
     "triple_brain.selection_handler",
     "triple_brain.group_relation"
-], function ($, GraphService, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUri, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, VertexController, GroupRelationController, EdgeController, GraphController, GraphElementController, KeyboardActionsHandler, Edge, Identification, GroupRelationHtmlBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaHtmlBuilder, SchemaUi, SchemaController, PropertyHtmlBuilder, PropertyController, PropertyUi, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SuggestionBubbleUi, SuggestionRelationUi, SuggestionVertexController, SuggestionRelationController, TripleUi, CenterBubble, SelectionHandler, GroupRelation) {
+], function ($, GraphService, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUri, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, VertexController, GroupRelationController, EdgeController, GraphController, GraphElementController, GraphElement, KeyboardActionsHandler, Edge, Identification, GroupRelationHtmlBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaHtmlBuilder, SchemaUi, SchemaController, PropertyHtmlBuilder, PropertyController, PropertyUi, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SuggestionBubbleUi, SuggestionRelationUi, SuggestionVertexController, SuggestionRelationController, TripleUi, CenterBubble, SelectionHandler, GroupRelation) {
     "use strict";
     KeyboardActionsHandler.init();
     var api = {};
@@ -749,7 +750,7 @@ define([
                     }
                     var vertexA = groupRelationA.getAnyVertex();
                     var vertexB = groupRelationB.getAnyVertex();
-                    return compareVertices(
+                    return GraphElement.sortCompare(
                         vertexA,
                         vertexB
                     );

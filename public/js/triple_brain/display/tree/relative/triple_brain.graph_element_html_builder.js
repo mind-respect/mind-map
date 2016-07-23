@@ -105,11 +105,50 @@ define([
         graphElementUi.getTreeContainer().on("drop", function (event) {
             event.preventDefault();
             event.stopPropagation();
+            var $this = $(this);
+            $this.parents(".vertex-tree-container:first").removeClass("drag-over");
+            var firstOrLast = $this.parents(".left-oriented").length > 0 ?
+                "last" : "first";
+            var edge = BubbleFactory.fromHtml(
+                $this.find(".bubble:" + firstOrLast)
+            );
+            if(edge.isVertex()){
+                edge = edge.getParentBubble();
+            }
+            var dragged = GraphElementUi.getDraggedElement();
+            if(dragged.getId() === edge.getId()){
+                return;
+            }
+            var mouseY = event.pageY;
+            var bubbleTop = edge.getLabel().offset().top;
+            if(mouseY > bubbleTop){
+                dragged.getController().moveUnder(
+                    edge
+                );
+            }else{
+                dragged.getController().moveAbove(
+                    edge
+                );
+            }
+        }).on("dragover",function(event){
+            event.preventDefault();
+            event.stopPropagation();
             var bubble = BubbleFactory.fromHtml(
                 $(this).find(".bubble:first")
             );
+            if(bubble.isVertex()){
+                bubble = bubble.getParentBubble();
+            }
+            var bubbleChild = bubble.getTopMostChildBubble();
             var dragged = GraphElementUi.getDraggedElement();
-            
+            if(dragged.getId() === bubble.getId() || dragged.getId() === bubbleChild.getId()){
+                return;
+            }
+            $(this).parents('.vertex-tree-container:first').addClass("drag-over");
+        }).on("dragleave", function(event){
+            event.preventDefault();
+            event.stopPropagation();
+            $(this).parents(".vertex-tree-container:first").removeClass("drag-over");
         });
     };
     api.setupDragAndDrop = function (graphElementUi) {
@@ -163,9 +202,11 @@ define([
         graphElementUi.getLabel().on(
             "dragover", function (event) {
                 event.preventDefault();
+                event.stopPropagation();
                 var draggedOver = BubbleFactory.fromSubHtml(
                     $(this)
                 );
+                draggedOver.getHtml().parents(".vertex-tree-container").removeClass("drag-over");
                 var dragged = GraphElementUi.getDraggedElement();
                 var shouldSetToDragOver = !draggedOver.hasDragOver() &&
                     dragged !== undefined &&
@@ -191,6 +232,7 @@ define([
                     $(this)
                 );
                 parent.leaveDragOver();
+                parent.getHtml().parents(".vertex-tree-container").removeClass("drag-over");
                 var dragged = GraphElementUi.getDraggedElement();
                 if (dragged === undefined) {
                     return;

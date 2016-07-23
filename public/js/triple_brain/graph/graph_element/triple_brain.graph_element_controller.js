@@ -11,10 +11,11 @@ define([
     "triple_brain.event_bus",
     "triple_brain.graph_ui",
     "triple_brain.identification_menu",
+    "triple_brain.edge_service",
     "bootstrap-wysiwyg",
     "bootstrap",
     "jquery.safer-html"
-], function ($, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu) {
+], function ($, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu, EdgeService) {
     "use strict";
     var api = {};
     EventBus.subscribe(
@@ -131,6 +132,51 @@ define([
                 self.getElements().labelUpdateHandle();
             }
         );
+    };
+
+    GraphElementController.prototype.moveUnder = function (otherEdge) {
+        var previousParentVertex = this.getElements().getParentVertex();
+        this.getElements().moveUnder(otherEdge);
+        this._moveTo(
+            otherEdge,
+            false,
+            previousParentVertex
+        );
+    };
+
+    GraphElementController.prototype.moveAbove = function (otherEdge) {
+        var previousParentVertex = this.getElements().getParentVertex();
+        this.getElements().moveAbove(otherEdge);
+        this._moveTo(
+            otherEdge,
+            true,
+            previousParentVertex
+        );
+    };
+
+    GraphElementController.prototype._moveTo = function (otherEdge, isAbove, previousParentVertex) {
+        var movedEdge = this.getElements().isVertex() ?
+            this.getElements().getParentBubble() :
+            this.getElements();
+        var movedVertex = movedEdge.getTopMostChildBubble();
+        var otherVertex = otherEdge.getTopMostChildBubble();
+        movedVertex.getModel().setSortDate(
+            new Date(
+                otherVertex.getModel().getSortDate().getTime() + (isAbove ? -10 : 10)
+            )
+        );
+        if (previousParentVertex.getUri() !== otherEdge.getParentVertex().getUri()) {
+            return EdgeService.changeSourceVertex(
+                otherEdge.getParentVertex(),
+                movedEdge
+            ).then(changeSortDate);
+        }
+        return changeSortDate();
+        function changeSortDate() {
+            return GraphElementService.changeSortDate(
+                movedVertex.getModel()
+            );
+        }
     };
 
     GraphElementController.prototype.isSingleAndOwned = function () {

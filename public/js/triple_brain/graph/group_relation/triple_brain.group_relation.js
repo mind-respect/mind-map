@@ -4,8 +4,9 @@
 
 define([
         "jquery",
-        "triple_brain.graph_ui"
-    ], function ($, GraphUi) {
+        "triple_brain.graph_ui",
+        "triple_brain.graph_element"
+    ], function ($, GraphUi, GraphElement) {
         "use strict";
         var api = {};
         api.withoutAnIdentification = function () {
@@ -47,13 +48,10 @@ define([
                     var vertexB = vertexBUiInstances[
                         Object.keys(vertexBUiInstances)
                         ].vertex;
-                    if (vertexA.getCreationDate() === vertexB.getCreationDate()) {
-                        return 0;
-                    }
-                    if (vertexA.getCreationDate() > vertexB.getCreationDate()) {
-                        return 1;
-                    }
-                    return -1;
+                    return GraphElement.sortCompare(
+                        vertexA,
+                        vertexB
+                    );
                 });
             var sorted = {};
             $.each(sortedKeys, function () {

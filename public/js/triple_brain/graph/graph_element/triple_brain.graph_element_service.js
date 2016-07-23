@@ -138,5 +138,16 @@ define([
             }
         });
     };
+    api.changeSortDate = function (graphElement) {
+        return $.ajax({
+            type: 'PUT',
+            url: graphElement.getUri() + "/sort",
+            data: JSON.stringify({
+                sortDate : graphElement.getSortDate().getTime(),
+                moveDate : graphElement.getMoveDate().getTime()
+            }),
+            contentType: 'application/json;charset=utf-8'
+        });
+    };
     return api;
 });

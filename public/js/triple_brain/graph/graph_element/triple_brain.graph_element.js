@@ -5,11 +5,25 @@
 define([
     "jquery",
     "triple_brain.friendly_resource",
-    "triple_brain.identification",
-    "triple_brain.id_uri"
-], function ($, FriendlyResource, Identification, IdUri) {
+    "triple_brain.identification"
+], function ($, FriendlyResource, Identification) {
     "use strict";
     var api = {};
+    api.sortCompare = function (a, b) {
+        if (a.getSortDate() === b.getSortDate()) {
+            if (a.getMoveDate() === b.getMoveDate()) {
+                return 0;
+            }
+            if (a.getMoveDate() > b.getMoveDate()) {
+                return -1;
+            }
+            return 1;
+        }
+        if (a.getSortDate() > b.getSortDate()) {
+            return 1;
+        }
+        return -1;
+    };
     api.fromServerFormat = function (serverFormat) {
         return new api.Self().init(
             serverFormat
@@ -71,7 +85,7 @@ define([
     };
     api.Self = function () {
     };
-    
+
     api.Self.prototype = new FriendlyResource.Self();
 
     api.Self.prototype.init = function (graphElementServerFormat) {
@@ -146,7 +160,7 @@ define([
         });
         return contains;
     };
-    
+
     api.Self.prototype.isRelatedToIdentification = function (identification) {
         return identification.getExternalResourceUri() === this.getUri() ||
             this.hasIdentification(identification);
@@ -161,6 +175,29 @@ define([
     };
     api.Self.prototype.addType = function (identification) {
         this._types.push(identification);
+    };
+
+    api.Self.prototype.setSortDate = function (sortDate) {
+        this.graphElementServerFormat.sortDate = sortDate.getTime();
+        this.graphElementServerFormat.moveDate = new Date().getTime();
+    };
+
+    api.Self.prototype.getSortDate = function () {
+        if (undefined === this.graphElementServerFormat.sortDate) {
+            return this.getCreationDate();
+        }
+        return new Date(
+            this.graphElementServerFormat.sortDate
+        );
+    };
+
+    api.Self.prototype.getMoveDate = function () {
+        if (undefined === this.graphElementServerFormat.moveDate) {
+            return this.getCreationDate();
+        }
+        return new Date(
+            this.graphElementServerFormat.moveDate
+        );
     };
 
     return api;

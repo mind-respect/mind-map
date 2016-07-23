@@ -33,6 +33,11 @@ $connectorRadius: 25px;
   &.compare-remove {
     background-color: $compareBubbleRemoveBackgroundColor;
   }
+  &.drag-over {
+    border-top: dashed red 3px;
+    border-bottom: dashed red 3px;
+    border-radius: 0;
+  }
 }
 
 .clear-fix {

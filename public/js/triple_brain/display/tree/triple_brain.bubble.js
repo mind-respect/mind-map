@@ -513,6 +513,10 @@ define([
             return this.getId() === bubble.getId();
         };
 
+        api.Self.prototype.isSameUri = function (bubble) {
+            return this.getUri() === bubble.getUri();
+        };
+
         api.Self.prototype.isSelected = function () {
             return this.html.hasClass("selected");
         };
