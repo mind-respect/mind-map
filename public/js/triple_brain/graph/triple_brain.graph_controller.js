@@ -20,6 +20,16 @@ define([
     api.selectCanDo = function () {
         return !MindMapInfo.isSchemaMode();
     };
+    api.expandAllCanDo = function () {
+        var canDo = false;
+        GraphElementUi.visitAll(function(graphElementUi){
+            if(graphElementUi.hasHiddenRelationsContainer()){
+                canDo = true;
+                return false;
+            }
+        });
+        return canDo;
+    };
     api.expandAll = function () {
         var addChildTreeActions = [];
         VertexUi.visitAllVertices(function (vertexUi) {

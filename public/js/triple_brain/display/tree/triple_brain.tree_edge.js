@@ -90,7 +90,10 @@ define([
         };
         api.Self.prototype.reviewEditButtonDisplay = function () {
             var parentBubble = this.getParentBubble();
-            if (!parentBubble.isGroupRelation() || parentBubble.text() !== this.text()) {
+            if(!parentBubble.isGroupRelation()){
+                return;
+            }
+            if (parentBubble.text() !== this.text() && "" !== this.text().trim()) {
                 return;
             }
             this.getHtml().addClass("same-as-group-relation");
