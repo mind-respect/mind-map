@@ -120,8 +120,7 @@ define([
                 return;
             }
             var mouseY = event.pageY;
-            var bubbleTop = edge.getLabel().offset().top;
-            if(mouseY > bubbleTop){
+            if(mouseY > edge.getYPosition()){
                 dragged.getController().moveUnder(
                     edge
                 );

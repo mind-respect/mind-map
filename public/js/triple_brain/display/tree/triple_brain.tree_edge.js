@@ -96,7 +96,7 @@ define([
             if (parentBubble.text() !== this.text() && "" !== this.text().trim()) {
                 return;
             }
-            this.getHtml().addClass("same-as-group-relation");
+            this.setAsSameAsGroupRelation();
         };
         return api;
     }

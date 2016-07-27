@@ -109,7 +109,7 @@ define([
                 var edge = BubbleFactory.fromSubHtml(
                     $(this)
                 );
-                edge.getHtml().removeClass("same-as-group-relation");
+                edge.setAsNotSameAsGroupRelation();
                 edge.focus();
             });
         }

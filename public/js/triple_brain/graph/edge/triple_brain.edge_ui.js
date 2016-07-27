@@ -104,6 +104,36 @@ define([
             return this.getParentVertex().isPublic() && this.getDestinationVertex().isPublic();
         };
 
+        api.Object.prototype.isSetAsSameAsGroupRelation = function () {
+            return this.getHtml().hasClass(
+                "same-as-group-relation"
+            );
+        };
+
+        api.Object.prototype.setAsNotSameAsGroupRelation = function () {
+            return this.getHtml().removeClass(
+                "same-as-group-relation"
+            );
+        };
+
+        api.Object.prototype.setAsSameAsGroupRelation = function () {
+            return this.getHtml().addClass(
+                "same-as-group-relation"
+            );
+        };
+
+        api.Object.prototype.getYPosition = function () {
+            var edgeIsSetAsSameAsGroupRelation = this.isSetAsSameAsGroupRelation();
+            if(edgeIsSetAsSameAsGroupRelation){
+                this.setAsNotSameAsGroupRelation();
+            }
+            var y = this.getLabel().offset().top;
+            if(edgeIsSetAsSameAsGroupRelation){
+                this.setAsSameAsGroupRelation();
+            }
+            return y;
+        };
+
         EventBus.subscribe(
             '/event/ui/graph/vertex/privacy/updated',
             function(event, graphElement){

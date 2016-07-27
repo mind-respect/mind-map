@@ -93,7 +93,7 @@ define([
                 vertexSuggestionInTree.isVertexSuggestion()
             ).toBeFalsy();
         });
-        
+
         it("shows note button only if element has a note", function () {
             loadFixtures('graph-element-menu.html');
             var threeBubblesGraph = new Scenarios.threeBubblesGraph();
@@ -200,6 +200,80 @@ define([
                     identification
                 )
             ).toBeFalsy();
+        });
+        it("can change position of bubble under group relation", function () {
+            MindMapInfo._setIsViewOnly(false);
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var center = scenario.getCenterVertexInTree();
+            var groupRelation = TestUtils.getChildWithLabel(
+                center,
+                "Possession"
+            );
+            expect(
+                groupRelation.isGroupRelation()
+            ).toBeTruthy();
+            groupRelation.addChildTree();
+            var book2 = TestUtils.getChildWithLabel(
+                groupRelation,
+                "Possessed by book 2"
+            ).getTopMostChildBubble();
+            expect(
+                book2.getBubbleAbove().text()
+            ).toBe("book 1");
+            var book3 = TestUtils.getChildWithLabel(
+                groupRelation,
+                "Possession of book 3"
+            ).getTopMostChildBubble();
+            TestUtils.moveAbove(
+                book3,
+                book2
+            );
+            expect(
+                book2.getBubbleAbove().text()
+            ).toBe("book 3");
+        });
+        it("can change position of bubble under group relation even if relations are hidden for having the same label as the group relation", function () {
+            MindMapInfo._setIsViewOnly(false);
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var center = scenario.getCenterVertexInTree();
+            var groupRelation = TestUtils.getChildWithLabel(
+                center,
+                "Possession"
+            );
+            expect(
+                groupRelation.isGroupRelation()
+            ).toBeTruthy();
+            groupRelation.addChildTree();
+            var book2Relation = TestUtils.getChildWithLabel(
+                groupRelation,
+                "Possessed by book 2"
+            );
+            book2Relation.setText("Possession");
+            book2Relation.getLabel().blur();
+            expect(
+                book2Relation.getHtml()
+            ).toHaveClass("same-as-group-relation");
+            var book2 = book2Relation.getTopMostChildBubble();
+            expect(
+                book2.getBubbleAbove().text()
+            ).toBe("book 1");
+            var book3Relation = TestUtils.getChildWithLabel(
+                groupRelation,
+                "Possession of book 3"
+            );
+            book3Relation.setText("Possession");
+            book3Relation.getLabel().blur();
+            expect(
+                book3Relation.getHtml()
+            ).toHaveClass("same-as-group-relation");
+            var book3 = book3Relation.getTopMostChildBubble();
+            TestUtils.moveAbove(
+                book3,
+                book2
+            );
+            expect(
+                book2.getBubbleAbove().text()
+            ).toBe("book 3");
         });
     });
 });

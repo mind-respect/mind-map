@@ -137,8 +137,20 @@ define([
         bubble.getHtml().trigger(event);
     };
     api.drop = function (bubble) {
+        api._dropHtml(bubble.getLabel());
+    };
+
+    api._dropHtml = function (html) {
         var event = $.Event("drop");
-        bubble.getLabel().trigger(event);
+        html.trigger(event);
+    };
+
+    api.moveAbove = function (moving, above) {
+        api.startDragging(moving);
+        api._dropHtml(
+            above.getTreeContainer()
+        );
+        api.endDragging(moving);
     };
 
     api.singleIdentificationToMultiple = function (identification) {
