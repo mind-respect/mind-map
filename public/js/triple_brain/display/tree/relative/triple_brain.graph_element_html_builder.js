@@ -270,10 +270,7 @@ define([
                         identification
                     );
                 }
-                EdgeService.changeSourceVertex(
-                    newSourceVertex,
-                    movedEdge
-                );
+                movedEdge.getController().changeSourceVertex(newSourceVertex);
                 if (previousParentGroupRelation.isGroupRelation()) {
                     GraphElementService.removeIdentification(
                         movedEdge,

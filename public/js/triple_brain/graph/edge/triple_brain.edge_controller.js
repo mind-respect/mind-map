@@ -109,5 +109,19 @@ define([
             }
         );
     };
+    EdgeController.prototype.changeSourceVertex = function (sourceVertex) {
+        var self = this;
+        if (sourceVertex.hasHiddenRelationsContainer()) {
+            return sourceVertex.addChildTree().then(doIt);
+        } else {
+            return doIt();
+        }
+        function doIt() {
+            return EdgeService.changeSourceVertex(
+                sourceVertex,
+                self.getElements()
+            );
+        }
+    };
     return api;
 });

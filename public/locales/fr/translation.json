@@ -21,11 +21,11 @@
   "cancel": "Annuler",
   "landing": {
     "slogan": "Façonnez votre esprit",
-    "description": "Liez, trouvez et modélisez vos notes.",
+    "description": "Reliez, trouvez et modélisez vos notes pour vous connaître vous même, bien apprendre vite et planifier.",
     "video_instruction": "Mettre en qualité HD et en plein écran",
     "actions": {
       "link": {
-        "title": "Liez",
+        "title": "Reliez vos notes",
         "overview": "Ayez un esprit cohérent en créant des liens entre vos différentes idées. L'idée est simple: découpez vos idées en petits morceaux qui peuvent être réutilisés et associés de milles et une façon.",
         "desc2": "Chaque bulle peut éventuellement être liée à une autre, peu importe où elle se situe dans votre esprit.",
         "desc3": "Liez vos idées à celles des autres ou à l'encyclopédie Wikipédia et bénéficiez d'images, de descriptions et d'intelligence qui enrichiront vos idées et élimineront l'ambiguïté.",
@@ -39,7 +39,7 @@
         "far_link": "Chaque bulle peut être liée à une autre"
       },
       "find": {
-        "title": "Trouvez",
+        "title": "Trouvez vos notes",
         "overview": "D'un coup d'oeil, saisisez le contexte de vos notes.",
         "video": "Trouvez (vidéo de démonstration)",
         "search": "Trouvez vos idées de manière instantanée",
@@ -48,7 +48,7 @@
         "history": "Historique de vos bulles les plus visitées."
       },
       "model": {
-        "title": "Modélisez",
+        "title": "Modélisez vos notes",
         "overview": "Formulaires faciles pour vos notes. Accélérez votre prise de notes en utilisant des modèles déja bien réfléchis.",
         "video": "Modélisez (vidéo de démonstration)",
         "model": "Créez des modèles réutilisables",

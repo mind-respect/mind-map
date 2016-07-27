@@ -166,9 +166,8 @@ define([
             )
         );
         if (previousParentVertex.getUri() !== otherEdge.getParentVertex().getUri()) {
-            return EdgeService.changeSourceVertex(
-                otherEdge.getParentVertex(),
-                movedEdge
+            return movedEdge.getController().changeSourceVertex(
+                otherEdge.getParentVertex()
             ).then(changeSortDate);
         }
         return changeSortDate();

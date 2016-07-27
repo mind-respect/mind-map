@@ -82,6 +82,9 @@ define([
             GraphElementHtmlBuilder.setupDragAndDrop(
                 groupRelationUi
             );
+            GraphElementHtmlBuilder._setupChildrenContainerDragOverAndDrop(
+                groupRelationUi
+            );
             return groupRelationUi;
         };
 
