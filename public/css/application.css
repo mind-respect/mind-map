@@ -305,7 +305,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .bubble.group-relation { white-space: nowrap; }
 .bubble.group-relation .arrow { height: 20px; }
 .bubble.group-relation .arrow:before { content: none; }
-.bubble.group-relation.selected .in-bubble-content .bubble-label { box-shadow: 5px 5px 5px black; }
+.bubble.group-relation.selected .in-bubble-content .label { box-shadow: 5px 5px 5px black; }
 .bubble.group-relation .in-bubble-content .bubble-label { margin-right: 0.3em; z-index: 1; }
 
 .edge-label { position: absolute; width: 100%; left: 0; right: 0; }
