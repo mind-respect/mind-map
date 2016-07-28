@@ -100,7 +100,7 @@ define([
     };
 
     api.GroupRelationUi.prototype.getLabel = function () {
-        return this.html.find('.label');
+        return this.html.find('.bubble-label');
     };
 
     api.GroupRelationUi.prototype.getNote = function () {

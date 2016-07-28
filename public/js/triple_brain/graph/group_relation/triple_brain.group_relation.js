@@ -5,8 +5,9 @@
 define([
         "jquery",
         "triple_brain.graph_ui",
-        "triple_brain.graph_element"
-    ], function ($, GraphUi, GraphElement) {
+        "triple_brain.graph_element",
+        "triple_brain.identification"
+    ], function ($, GraphUi, GraphElement, Identification) {
         "use strict";
         var api = {};
         api.withoutAnIdentification = function () {
@@ -25,7 +26,15 @@ define([
         function GroupRelation(identifiers) {
             this.identifiers = identifiers;
             this.vertices = {};
+            Identification.Self.apply(
+                this
+            );
+            this.init(
+                this.getIdentification().getServerFormat()
+            );
         }
+
+        GroupRelation.prototype = new Identification.Self();
 
         GroupRelation.prototype.getIdentification = function () {
             return this.identifiers[0];

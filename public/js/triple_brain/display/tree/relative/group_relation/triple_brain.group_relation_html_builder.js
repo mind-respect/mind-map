@@ -15,9 +15,11 @@ define([
         "triple_brain.identification",
         "triple_brain.graph_element_html_builder",
         "triple_brain.edge_html_builder_common",
+        "triple_brain.mind_map_info",
+        "triple_brain.bubble_factory",
         "jquery-ui"
     ],
-    function ($, RelativeTreeTemplates, PropertiesIndicator, GroupRelationUi, GroupRelation, SelectionHandler, GraphElementMainMenu, GraphDisplayer, EventBus, Identification, GraphElementHtmlBuilder, EdgeHtmlBuilderCommon) {
+    function ($, RelativeTreeTemplates, PropertiesIndicator, GroupRelationUi, GroupRelation, SelectionHandler, GraphElementMainMenu, GraphDisplayer, EventBus, Identification, GraphElementHtmlBuilder, EdgeHtmlBuilderCommon, MindMapInfo, BubbleFactory) {
         "use strict";
         var api = {},
             NUMBER_OF_SIBLINGS_UNDER_WHICH_YOU_SHOULD_EXPAND = 4;
@@ -127,9 +129,23 @@ define([
                 "data-placeholder",
                 GroupRelationUi.getWhenEmptyLabel()
             );
+            if (!MindMapInfo.isViewOnly()) {
+                labelHtml.on(
+                    "dblclick",
+                    function (event) {
+                        event.stopPropagation();
+                        var groupRelation = BubbleFactory.fromSubHtml(
+                            $(this)
+                        );
+                        groupRelation.deselect();
+                        groupRelation.hideMenu();
+                        groupRelation.focus();
+                    }
+                );
+            }
             labelAndButtons.appendTo(container);
             GraphElementHtmlBuilder.setUpLabel(labelHtml);
-            this._setupDescriptionOnLabel(labelAndButtons);
+            this._setupDescriptionOnLabel(labelHtml);
         };
 
         Self.prototype._setupDescriptionOnLabel = function (labelHtml) {
