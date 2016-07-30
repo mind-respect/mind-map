@@ -26,7 +26,7 @@ define([
     var api = {};
 
     api.applyAutoCompleteIdentificationToLabelInput = function (input) {
-        input.tripleBrainAutocomplete(  {
+        input.tripleBrainAutocomplete({
             select: function (event, ui) {
                 api._labelAutocompleteSelectHandler(
                     BubbleFactory.fromSubHtml(
@@ -38,22 +38,22 @@ define([
             resultsProviders: [
                 UserMapAutocompleteProvider.toFetchPublicAndUserVerticesExcept(
                     BubbleFactory.fromSubHtml(input)
-                )
-                // WikidataAutocompleteProvider.build()
+                ),
+                WikidataAutocompleteProvider.build()
             ]
         });
     };
 
-    api._labelAutocompleteSelectHandler = function(bubble, searchResult){
+    api._labelAutocompleteSelectHandler = function (bubble, searchResult) {
         var identificationResource = Identification.fromSearchResult(
             searchResult
         );
-        if(bubble.isSuggestion()){
+        if (bubble.isSuggestion()) {
             bubble.whenItIntegrates().then(handle);
-        }else{
+        } else {
             handle(bubble);
         }
-        function handle(bubble){
+        function handle(bubble) {
             SchemaSuggestion.addSchemaSuggestionsIfApplicable(
                 bubble,
                 searchResult.uri
@@ -88,7 +88,7 @@ define([
     };
     api.buildInsideBubbleContainer = function (html) {
         var wrapper = $(
-                "<div class='in-bubble-content-wrapper'>"
+            "<div class='in-bubble-content-wrapper'>"
             ),
             container = $(
                 "<div class='in-bubble-content'>"

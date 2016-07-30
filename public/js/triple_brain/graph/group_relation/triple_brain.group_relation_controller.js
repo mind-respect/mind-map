@@ -6,9 +6,10 @@ define([
         "jquery",
         "triple_brain.vertex_service",
         "triple_brain.edge_service",
-        "triple_brain.graph_element_controller"
+        "triple_brain.graph_element_controller",
+        "triple_brain.selection_handler"
     ],
-    function ($, VertexService, EdgeService, GraphElementController) {
+    function ($, VertexService, EdgeService, GraphElementController, SelectionHandler) {
         "use strict";
         var api = {};
         api.Self = GroupRelationController;
@@ -51,6 +52,9 @@ define([
                             edge.setText(identification.getLabel());
                             triple.edge().reviewEditButtonDisplay();
                         }
+                    );
+                    SelectionHandler.setToSingleVertex(
+                        triple.destinationVertex()
                     );
                     deferred.resolve(triple);
                 }
