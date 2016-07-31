@@ -151,8 +151,8 @@ define([
             parentVertex.getModel().getSuggestions(),
             parentVertex
         );
-        GraphElementMainMenu.getExpandAllButton().showOnlyIfApplicable(
-            api.getGraphMenuHandler()
+        GraphElementMainMenu.showWholeGraphButtonOnlyIfApplicable(
+            GraphElementMainMenu.getExpandAllButton()
         );
         function removeRelationWithGrandParentFromServerGraph() {
             var parentRelation = parentVertex.getRelationWithUiParent();
@@ -386,6 +386,9 @@ define([
             });
         });
         groupRelationUi.removeHiddenRelationsContainer();
+        GraphElementMainMenu.showWholeGraphButtonOnlyIfApplicable(
+            GraphElementMainMenu.getExpandAllButton()
+        );
     };
 
     api.addNewGroupRelation = function (identification, parentBubble, addToLeft) {

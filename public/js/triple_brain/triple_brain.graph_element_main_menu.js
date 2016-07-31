@@ -120,13 +120,24 @@ define([
 
         api.onlyShowButtonsIfApplicable = function (controller, graphElement) {
             api.visitButtons(function (button) {
+                if(button.isForWholeGraph()){
+                    api.showWholeGraphButtonOnlyIfApplicable(
+                      button
+                    );
+                    return;
+                }
                 button.showOnlyIfApplicable(
-                    button.isForWholeGraph() ? GraphDisplayer.getGraphMenuHandler() : controller,
+                    controller,
                     graphElement
                 );
             });
         };
 
+        api.showWholeGraphButtonOnlyIfApplicable = function(button){
+            button.showOnlyIfApplicable(
+                GraphDisplayer.getGraphMenuHandler()
+            )
+        };
         EventBus.subscribe("/event/ui/selection/changed", reviewButtonsVisibility);
         EventBus.subscribe('/event/ui/graph/vertex/suggestions/updated', reviewButtonsVisibility);
         EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function () {
