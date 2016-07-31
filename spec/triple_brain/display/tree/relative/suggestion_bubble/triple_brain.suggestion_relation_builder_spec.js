@@ -28,15 +28,15 @@ define([
                 locationRelationSuggestion.text()
             ).toBe("location");
         });
-        it('has "same as" uri as label if suggestion label is empty', function () {
-            locationSuggestion.setLabel("");
-            locationRelationSuggestion = SuggestionRelationBuilder.withServerFacade(
-                locationSuggestion
-            ).create();
-            expect(
-                locationRelationSuggestion.text()
-            ).toBe(locationSuggestion.getSameAs().getUri());
-        });
+        // it('has "same as" uri as label if suggestion label is empty', function () {
+        //     locationSuggestion.setLabel("");
+        //     locationRelationSuggestion = SuggestionRelationBuilder.withServerFacade(
+        //         locationSuggestion
+        //     ).create();
+        //     expect(
+        //         locationRelationSuggestion.text()
+        //     ).toBe(locationSuggestion.getSameAs().getUri());
+        // });
         it('has the suggestion "same as" has a "same as" identification', function () {
             expect(
                 locationRelationSuggestion.getSameAs().length

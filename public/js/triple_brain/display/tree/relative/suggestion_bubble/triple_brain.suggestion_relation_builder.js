@@ -48,12 +48,9 @@ define([
             this.html,
             this.serverFacade.getUri()
         );
-        var label = this.serverFacade.isLabelEmpty() ?
-            this.serverFacade.getSameAs().getUri() :
-            this.serverFacade.getLabel();
         EdgeHtmlBuilderCommon.buildLabel(
             this.html,
-            label,
+            this.serverFacade.getLabel(),
             SuggestionRelationUi.getWhenEmptyLabel()
         ).css("visibility", "visible");
         edge.setModel(this.serverFacade);

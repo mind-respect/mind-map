@@ -96,6 +96,18 @@ define([
                 }
             }
         };
+        api.getExpandAllButton = function () {
+            return api._getButtonHavingAction(
+                "expandAll"
+            );
+        };
+        api._getButtonHavingAction = function (action) {
+            return GraphElementButton.fromHtml(
+                api._getMenu().find(
+                    "button[data-action=" + action + "]"
+                )
+            );
+        };
         api.visitButtons = function (visitor) {
             $.each(getButtonsHtml(), function () {
                 visitor(
@@ -109,11 +121,12 @@ define([
         api.onlyShowButtonsIfApplicable = function (controller, graphElement) {
             api.visitButtons(function (button) {
                 button.showOnlyIfApplicable(
-                    controller,
+                    button.isForWholeGraph() ? GraphDisplayer.getGraphMenuHandler() : controller,
                     graphElement
                 );
             });
         };
+
         EventBus.subscribe("/event/ui/selection/changed", reviewButtonsVisibility);
         EventBus.subscribe('/event/ui/graph/vertex/suggestions/updated', reviewButtonsVisibility);
         EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function () {
@@ -140,12 +153,12 @@ define([
 
         function reviewButtonsVisibility() {
             var selectionInfo = SelectionHandler.getSelectionInfo();
-            var clickHandler = updateCurrentClickHandler(selectionInfo);
+            var controller = updateCurrentClickHandler(selectionInfo);
             var selected = 1 === selectionInfo.getNbSelected() ?
                 selectionInfo.getSingleElement() :
                 selectionInfo.getSelectedElements();
             api.onlyShowButtonsIfApplicable(
-                clickHandler,
+                controller,
                 selected
             );
         }

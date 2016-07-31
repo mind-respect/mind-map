@@ -46,8 +46,9 @@ define([
     "triple_brain.triple_ui",
     "triple_brain.center_bubble",
     "triple_brain.selection_handler",
-    "triple_brain.group_relation"
-], function ($, GraphService, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUri, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, VertexController, GroupRelationController, EdgeController, GraphController, GraphElementController, GraphElement, KeyboardActionsHandler, Edge, Identification, GroupRelationHtmlBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaHtmlBuilder, SchemaUi, SchemaController, PropertyHtmlBuilder, PropertyController, PropertyUi, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SuggestionBubbleUi, SuggestionRelationUi, SuggestionVertexController, SuggestionRelationController, TripleUi, CenterBubble, SelectionHandler, GroupRelation) {
+    "triple_brain.group_relation",
+    "triple_brain.graph_element_main_menu"
+], function ($, GraphService, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUri, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, VertexController, GroupRelationController, EdgeController, GraphController, GraphElementController, GraphElement, KeyboardActionsHandler, Edge, Identification, GroupRelationHtmlBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaHtmlBuilder, SchemaUi, SchemaController, PropertyHtmlBuilder, PropertyController, PropertyUi, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SuggestionBubbleUi, SuggestionRelationUi, SuggestionVertexController, SuggestionRelationController, TripleUi, CenterBubble, SelectionHandler, GroupRelation, GraphElementMainMenu) {
     "use strict";
     KeyboardActionsHandler.init();
     var api = {};
@@ -149,6 +150,9 @@ define([
         api.addSuggestionsToVertex(
             parentVertex.getModel().getSuggestions(),
             parentVertex
+        );
+        GraphElementMainMenu.getExpandAllButton().showOnlyIfApplicable(
+            api.getGraphMenuHandler()
         );
         function removeRelationWithGrandParentFromServerGraph() {
             var parentRelation = parentVertex.getRelationWithUiParent();
@@ -762,7 +766,7 @@ define([
             return sortedSimilarRelations;
         }
     };
-    function compareVertices(vertexA, vertexB){
+    function compareVertices(vertexA, vertexB) {
         if (vertexA.getCreationDate() === vertexB.getCreationDate()) {
             return 0;
         }
@@ -771,6 +775,7 @@ define([
         }
         return -1;
     }
+
     return api;
 
     function flagSuggestionsToNotDisplayGivenParentAndChildVertex(parentVertex, childVertex) {

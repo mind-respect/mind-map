@@ -277,6 +277,7 @@ button.add-button-in-list:hover { color: #00d100; }
 .relation.bubble .label-container { display: table-cell; padding-left: 6px; position: relative; }
 .relation.bubble.suggestion .in-bubble-content { border: none; }
 .relation.bubble.suggestion .in-bubble-content .label-info { border: 3px dashed black; background-color: #E7EEF2; color: black; text-shadow: none; }
+.relation.bubble.suggestion .in-bubble-content .bubble-label:empty:not(:focus):before { color: black; }
 .relation.bubble .in-bubble-content .label-info { background-color: #3a87ad; height: auto; font-size: 1.05em; }
 .relation.bubble .in-bubble-content .bubble-label { display: inline-block; font-family: helvetica; font-size: 1.05em; }
 .relation.bubble .in-bubble-content .bubble-label:empty:not(:focus):before { content: attr(data-placeholder); font-style: italic; color: white; }

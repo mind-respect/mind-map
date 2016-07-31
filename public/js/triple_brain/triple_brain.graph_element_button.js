@@ -19,27 +19,22 @@ define([
     }
 
     GraphElementButton.prototype.showOnlyIfApplicable = function (controller) {
-        if(this.isForWholeGraph()){
-            return;
-        }
         var selected = controller.getElements();
         var canActionBePerformed = this.canActionBePerformedWithController(
             controller
         );
+        var buttonHtml = this.getHtml();
         var onlyOneSelected = !Array.isArray(selected);
-        this.html[
-            !onlyOneSelected && canActionBePerformed ?
-                "removeClass" : "addClass"
-            ]("hidden");
         if (onlyOneSelected) {
-            selected.getSimilarButtonHtml(this)[
-                canActionBePerformed ?
-                    "removeClass" : "addClass"
-                ]("hidden");
+            buttonHtml = selected.getSimilarButtonHtml(this);
         }
-        else {
+        else if (!this.isForWholeGraph()) {
             this._hideMenuForGraphElements(selected);
         }
+        buttonHtml[
+            canActionBePerformed ?
+                "removeClass" : "addClass"
+            ]("hidden");
     };
     GraphElementButton.prototype.canActionBePossiblyMade = function (controller) {
         return controller[

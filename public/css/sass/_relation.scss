@@ -60,6 +60,11 @@
         color: black;
         text-shadow: none;
       }
+      .bubble-label {
+        &:empty:not(:focus):before {
+          color: black;
+        }
+      }
     }
   }
   .in-bubble-content {

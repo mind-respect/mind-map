@@ -7,8 +7,9 @@ define([
     'triple_brain.graph_element_button',
     'triple_brain.graph_element_main_menu',
     'triple_brain.vertex_controller',
-    'triple_brain.mind_map_info'
-], function (Scenarios, GraphElementButton, GraphElementMainMenu, VertexController, MindMapInfo) {
+    'triple_brain.mind_map_info',
+    "triple_brain.selection_handler"
+], function (Scenarios, GraphElementButton, GraphElementMainMenu, VertexController, MindMapInfo, SelectionHandler) {
     "use strict";
     describe("graph_element_button", function () {
         it("main menu button remains hidden if only one bubble is selected", function () {
@@ -17,8 +18,8 @@ define([
             var scenario = new Scenarios.threeBubblesGraph();
             var bubble1 = scenario.getBubble1InTree();
             GraphElementMainMenu.reset();
-            var makePublicButton = GraphElementButton.fromHtml(
-                getButtonHtmlHavingAction("makePublic")
+            var makePublicButton = GraphElementMainMenu._getButtonHavingAction(
+                "makePublic"
             );
             makePublicButton.showOnlyIfApplicable(
                 bubble1.getController(),
@@ -37,10 +38,26 @@ define([
                 makePublicButton.getHtml()
             ).not.toHaveClass("hidden");
         });
+        /*could not make the test pass even though it works in reality*/
+        // it("expand all button is hidden if there's nothing to expand", function () {
+        //     loadFixtures('graph-element-menu.html');
+        //     MindMapInfo._setIsViewOnly(false);
+        //     GraphElementMainMenu.reset();
+        //     var expandAllButton = GraphElementButton.fromHtml(
+        //         getButtonHtmlHavingAction("expandAll")
+        //     );
+        //     var scenario = new Scenarios.graphWithHiddenSimilarRelations();
+        //     SelectionHandler.removeAll();
+        //     expect(
+        //         expandAllButton.getHtml()
+        //     ).not.toHaveClass("hidden");
+        //     scenario.expandBubble2(
+        //         scenario.getBubble2InTree()
+        //     );
+        //     SelectionHandler.removeAll();
+        //     expect(
+        //         expandAllButton.getHtml()
+        //     ).toHaveClass("hidden");
+        // });
     });
-    function getButtonHtmlHavingAction(action) {
-        return GraphElementMainMenu._getMenu().find(
-            "button[data-action=" + action + "]"
-        );
-    }
 });
