@@ -120,9 +120,9 @@ define([
 
         api.onlyShowButtonsIfApplicable = function (controller, graphElement) {
             api.visitButtons(function (button) {
-                if(button.isForWholeGraph()){
+                if (button.isForWholeGraph()) {
                     api.showWholeGraphButtonOnlyIfApplicable(
-                      button
+                        button
                     );
                     return;
                 }
@@ -133,10 +133,10 @@ define([
             });
         };
 
-        api.showWholeGraphButtonOnlyIfApplicable = function(button){
+        api.showWholeGraphButtonOnlyIfApplicable = function (button) {
             button.showOnlyIfApplicable(
                 GraphDisplayer.getGraphMenuHandler()
-            )
+            );
         };
         EventBus.subscribe("/event/ui/selection/changed", reviewButtonsVisibility);
         EventBus.subscribe('/event/ui/graph/vertex/suggestions/updated', reviewButtonsVisibility);

@@ -178,6 +178,9 @@ define([
             function (event, graphElement, identification) {
                 var parentBubble = graphElement.getParentBubble();
                 if (parentBubble.isGroupRelation()) {
+                    parentBubble.setUri(
+                        identification.getUri()
+                    );
                     return;
                 }
                 parentBubble.visitAllChild(function (child) {
@@ -202,6 +205,9 @@ define([
                                 childAsAnIdentification,
                                 parentBubble
                             );
+                            newGroupRelation.setUri(
+                                identification.getUri()
+                            );
                             child.moveToParent(newGroupRelation);
                             graphElement.moveToParent(newGroupRelation);
                             return;
@@ -212,6 +218,9 @@ define([
                                 var newGroupRelation = GraphDisplayer.addNewGroupRelation(
                                     identification,
                                     parentBubble
+                                );
+                                newGroupRelation.setUri(
+                                    identification.getUri()
                                 );
                                 child.moveToParent(newGroupRelation);
                                 graphElement.moveToParent(newGroupRelation);

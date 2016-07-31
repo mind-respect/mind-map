@@ -3,13 +3,19 @@
  */
 
 define([
-    "triple_brain.graph_element_service"
-], function (GraphElementService) {
+    "test/test-utils",
+    "triple_brain.graph_element_service",
+    "triple_brain.identification"
+], function (TestUtils, GraphElementService, Identification) {
     "use strict";
     var api = {};
     api.addIdentification = function () {
         return spyOn(GraphElementService, "addIdentification").and.callFake(function(graphElement, identification, callback){
             var identifications = {};
+            // var serverIdentification = Identification.fromFriendlyResource(identification);
+            identification.setUri(
+                TestUtils.generateIdentificationUri()
+            );
             identifications[identification.getExternalResourceUri()] = identification.getServerFormat();
             GraphElementService._addIdentificationsCallback(
                 graphElement,

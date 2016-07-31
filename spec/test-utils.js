@@ -18,6 +18,9 @@ define([
     api.generateEdgeUri = function () {
         return "\/service\/users\/foo\/graph\/edge\/" + generateUuid();
     };
+    api.generateIdentificationUri = function () {
+        return "\/service\/users\/foo\/graph\/identification\/" + generateUuid();
+    };
     api.isGraphElementUiRemoved = function (element) {
         return element.getHtml().parents(".root-vertex-super-container").length === 0;
     };

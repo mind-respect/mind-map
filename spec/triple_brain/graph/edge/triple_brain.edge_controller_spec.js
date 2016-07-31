@@ -9,7 +9,7 @@ define([
     "test/mock/triple_brain.edge_service_mock",
     'triple_brain.edge_controller',
     'triple_brain.mind_map_info'
-], function (Scenarios, TestUtils, Mock, EdgeServiceMock, EdgeController, MindMapInfo) {
+], function (Scenarios, TestUtils, Mock, EdgeServiceMock, EdgeController, MindMapInfo, IdUri) {
     "use strict";
     describe("edge_controller", function () {
         it("can remove edge", function () {

@@ -11,8 +11,10 @@ define([
     "triple_brain.group_relation_html_builder",
     "triple_brain.group_relation_controller",
     "triple_brain.identification",
-    "triple_brain.event_bus"
-], function (Scenarios, TestUtils, VertexServiceMock, GraphElementServiceMock, MindMapInfo, GroupRelationHtmlBuilder, GroupRelationController, Identification, EventBus) {
+    "triple_brain.event_bus",
+    "triple_brain.id_uri",
+    "triple_brain.graph_element_service"
+], function (Scenarios, TestUtils, VertexServiceMock, GraphElementServiceMock, MindMapInfo, GroupRelationHtmlBuilder, GroupRelationController, Identification, EventBus, IdUri, GraphElementService) {
     "use strict";
     describe("group_relation_html_builder", function () {
         var groupRelation;
@@ -227,6 +229,28 @@ define([
                 "r2"
             )).toBeTruthy();
         });
+        it("sets the uri of the new group relation with the edge identifier and not the edge uri itself", function () {
+            var centerBubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            var r2ChildOfCenterBubble = TestUtils.getChildWithLabel(
+                centerBubble,
+                "r2"
+            );
+            var identificationToRelation2 = Identification.fromFriendlyResource(
+                r2ChildOfCenterBubble.getModel()
+            );
+            var relation1 = TestUtils.getChildWithLabel(centerBubble, "r1");
+            GraphElementServiceMock.addIdentification();
+            GraphElementService.addSameAs(relation1, identificationToRelation2);
+            r2ChildOfCenterBubble = TestUtils.getChildWithLabel(centerBubble, "r2");
+            expect(
+                r2ChildOfCenterBubble.isGroupRelation()
+            ).toBeTruthy();
+            expect(
+                IdUri.getGraphElementTypeFromUri(
+                    r2ChildOfCenterBubble.getUri()
+                )
+            ).toBe("identification");
+        });
         it("sets the group relation label and comment correctly when identifying a relation to a new relation that exists at the same level", function () {
             VertexServiceMock.addRelationAndVertexToVertexMock();
             MindMapInfo._setIsViewOnly(false);
@@ -264,6 +288,7 @@ define([
                 newGroupRelation.getNote()
             ).toBe("some comment");
         });
+
         it("doesn't create a group-relation when adding to a relation an identification that exists at the same level if its already under group relation", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
             groupRelation = scenario.getPossessionAsGroupRelationInTree();
