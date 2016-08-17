@@ -5,11 +5,12 @@
 define([
     'test/test-scenarios',
     'test/test-utils',
+    "test/mock/triple_brain.graph_service_mock",
     "triple_brain.graph_displayer",
     "triple_brain.edge",
     "triple_brain.vertex",
     "triple_brain.selection_handler"
-], function (Scenarios, TestUtils, GraphDisplayer, Edge, Vertex, SelectionHandler) {
+], function (Scenarios, TestUtils, GraphServiceMock, GraphDisplayer, Edge, Vertex, SelectionHandler) {
     "use strict";
     describe("bubble", function () {
         var centerBubble,
@@ -50,7 +51,7 @@ define([
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
             var centerBubble = scenario.getCenterVertexInTree();
             var groupRelation = scenario.getPossessionAsGroupRelationInTree();
-            groupRelation.addChildTree();
+            groupRelation.expand();
             var bubbleUnderGroupRelation = groupRelation.getTopMostChildBubble().getTopMostChildBubble();
             expect(
                 bubbleUnderGroupRelation.getParentVertex().getUri()
@@ -170,25 +171,25 @@ define([
                 b2.hasHiddenRelations()
             ).toBeFalsy();
             expect(
-                b2.hasHiddenRelationsContainer()
+                b2.hasVisibleHiddenRelationsContainer()
             ).toBeFalsy();
             expect(
                 bubble3.hasHiddenRelations()
             ).toBeTruthy();
             expect(
-                bubble3.hasHiddenRelationsContainer()
+                bubble3.hasVisibleHiddenRelationsContainer()
             ).toBeTruthy();
         });
 
         it("hides hidden relations container after expand", function () {
             expect(
-                bubble3.hasHiddenRelationsContainer()
+                bubble3.hasVisibleHiddenRelationsContainer()
             ).toBeTruthy();
             threeBubbleScenario.expandBubble3(
                 bubble3
             );
             expect(
-                bubble3.hasHiddenRelationsContainer()
+                bubble3.hasVisibleHiddenRelationsContainer()
             ).toBeFalsy();
         });
 
@@ -212,7 +213,7 @@ define([
             expect(
                 idea.hasImages()
             ).toBeTruthy();
-            idea.addChildTree();
+            idea.getController().expand();
             var ideaFor1 = TestUtils.getChildWithLabel(idea, "idea for 1");
             var ideaFor2 = TestUtils.getChildWithLabel(idea, "idea for 2");
             expect(
@@ -315,7 +316,7 @@ define([
                 centerBubble,
                 "Possession"
             );
-            possessionGroupRelation.addChildTree();
+            possessionGroupRelation.expand();
             var possessionRelation = possessionGroupRelation.getTopMostChildBubble();
             var centerBubbleNumberOfChild = centerBubble.getNumberOfChild();
             possessionRelation.moveToParent(centerBubble);
@@ -391,5 +392,121 @@ define([
                 b72.getBubbleUnder().text()
             ).toBe("b74");
         });
+        it("can tell if one it has descendants with hidden relations", function () {
+            var scenario = new Scenarios.threeBubblesGraph();
+            var b1 = scenario.getBubble1InTree();
+            expect(
+                b1.hasDescendantsWithHiddenRelations()
+            ).toBeTruthy();
+            scenario.expandBubble2(
+                TestUtils.getChildWithLabel(
+                    b1,
+                    "r1"
+                ).getTopMostChildBubble()
+            );
+            var b3 = TestUtils.getChildWithLabel(
+                b1,
+                "r2"
+            ).getTopMostChildBubble();
+            scenario.expandBubble3(
+                b3
+            );
+            expect(
+                b1.hasDescendantsWithHiddenRelations()
+            ).toBeTruthy();
+            var b4 = TestUtils.getChildWithLabel(
+                b3,
+                "r3"
+            ).getTopMostChildBubble();
+            b4.remove();
+            expect(
+                b1.hasDescendantsWithHiddenRelations()
+            ).toBeFalsy();
+        });
+        it("displays the hidden relations container after collapse", function () {
+            var scenario = new Scenarios.threeBubblesGraph();
+            var b2 = scenario.getBubble2InTree();
+            expect(
+                b2.getHiddenRelationsContainer().isVisible()
+            ).toBeTruthy();
+            GraphServiceMock.getForCentralBubbleUri(
+                scenario.getSubGraphForB2()
+            );
+            b2.getHiddenRelationsContainer().getHtml().click();
+            expect(
+                b2.getHiddenRelationsContainer().isVisible()
+            ).toBeFalsy();
+            b2.collapse();
+            expect(
+                b2.getHiddenRelationsContainer().isVisible()
+            ).toBeTruthy();
+        });
+        it("hides the collapse button right away after collapse and shows the expand button", function () {
+            loadFixtures('graph-element-menu.html');
+            var scenario = new Scenarios.threeBubblesGraph();
+            var b2 = scenario.getBubble2InTree();
+            scenario.expandBubble2(b2);
+            SelectionHandler.setToSingleVertex(b2);
+            var collapseButton = b2.getButtonHtmlHavingAction("collapse");
+            expect(
+                collapseButton
+            ).not.toHaveClass("hidden");
+            var expandButton = b2.getButtonHtmlHavingAction("expand");
+            expect(
+                expandButton
+            ).toHaveClass("hidden");
+            b2.collapse();
+            collapseButton = b2.getButtonHtmlHavingAction("collapse");
+            expect(
+                collapseButton
+            ).toHaveClass("hidden");
+            expandButton = b2.getButtonHtmlHavingAction("expand");
+            expect(
+                expandButton
+            ).not.toHaveClass("hidden");
+        });
+        it("hides the hidden relation container after expand", function () {
+            var scenario = new Scenarios.threeBubblesGraph();
+            var b2 = scenario.getBubble2InTree();
+            scenario.expandBubble2(b2);
+            b2.collapse();
+            expect(
+                b2.getHiddenRelationsContainer().isVisible()
+            ).toBeTruthy();
+            b2.expand();
+            expect(
+                b2.getHiddenRelationsContainer().isVisible()
+            ).toBeFalsy();
+        });
+        it("hides the expand button right away after expand and shows the collapse button", function () {
+            loadFixtures('graph-element-menu.html');
+            var scenario = new Scenarios.threeBubblesGraph();
+            var b2 = scenario.getBubble2InTree();
+            scenario.expandBubble2(b2);
+            SelectionHandler.setToSingleVertex(b2);
+            var collapseButton = b2.getButtonHtmlHavingAction("collapse");
+            var expandButton = b2.getButtonHtmlHavingAction("expand");
+            b2.collapse();
+            expect(
+                collapseButton
+            ).toHaveClass("hidden");
+            expect(
+                expandButton
+            ).not.toHaveClass("hidden");
+            b2.expand();
+            collapseButton = b2.getButtonHtmlHavingAction("collapse");
+            expect(
+                collapseButton
+            ).not.toHaveClass("hidden");
+            expandButton = b2.getButtonHtmlHavingAction("expand");
+            expect(
+                expandButton
+            ).toHaveClass("hidden");
+        });
+        // it("displays the hidden relations container after collapse", function () {
+        //     var scenario = new Scenarios.threeBubblesGraph();
+        //     var b2 = scenario.getBubble2InTree();
+        //
+        // });
     });
 });

@@ -7,9 +7,10 @@ define([
         "triple_brain.vertex_service",
         "triple_brain.edge_service",
         "triple_brain.graph_element_controller",
-        "triple_brain.selection_handler"
+        "triple_brain.selection_handler",
+        "triple_brain.graph_displayer"
     ],
-    function ($, VertexService, EdgeService, GraphElementController, SelectionHandler) {
+    function ($, VertexService, EdgeService, GraphElementController, SelectionHandler, GraphDisplayer) {
         "use strict";
         var api = {};
         api.Self = GroupRelationController;
@@ -23,12 +24,15 @@ define([
         }
 
         GroupRelationController.prototype = new GraphElementController.Self();
+
         GroupRelationController.prototype.addChildCanDo = function () {
             return this.isSingleAndOwned();
         };
+
         GroupRelationController.prototype.centerCanDo = function () {
             return false;
         };
+
         GroupRelationController.prototype.addChild = function () {
             var deferred = $.Deferred();
             this.getElements().hideDescription();
@@ -37,8 +41,8 @@ define([
                 this.getElements().getParentVertex(),
                 this.getElements(),
                 function (triple) {
-                    if (self.getElements().hasHiddenRelationsContainer()) {
-                        self.getElements().addChildTree();
+                    if (self.getElements().hasVisibleHiddenRelationsContainer()) {
+                        self.expand();
                     }
                     var identification = self.getElements().getGroupRelation().getIdentification();
                     EdgeService.addSameAs(

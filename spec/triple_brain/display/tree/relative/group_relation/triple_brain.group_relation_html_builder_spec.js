@@ -48,7 +48,7 @@ define([
                 centerBubble,
                 "Possession"
             );
-            possessionGroupRelation.addChildTree();
+            possessionGroupRelation.expand();
             expect(
                 possessionGroupRelation.getNumberOfChild()
             ).toBe(3);
@@ -94,7 +94,7 @@ define([
                 centerBubble,
                 "Possession"
             );
-            possessionGroupRelation.addChildTree();
+            possessionGroupRelation.expand();
             expect(
                 possessionGroupRelation.getNumberOfChild()
             ).toBe(3);
@@ -219,7 +219,7 @@ define([
                 centerBubble,
                 "r1"
             )).toBeFalsy();
-            r2ChildOfCenterBubble.addChildTree();
+            r2ChildOfCenterBubble.expand();
             expect(TestUtils.hasChildWithLabel(
                 r2ChildOfCenterBubble,
                 "r1"
@@ -292,7 +292,7 @@ define([
         it("doesn't create a group-relation when adding to a relation an identification that exists at the same level if its already under group relation", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
             groupRelation = scenario.getPossessionAsGroupRelationInTree();
-            groupRelation.addChildTree();
+            groupRelation.expand();
             expect(
                 groupRelation.getNumberOfChild()
             ).toBe(3);

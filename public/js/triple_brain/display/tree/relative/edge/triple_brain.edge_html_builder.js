@@ -49,6 +49,8 @@ define([
             edge.refreshImages();
             edge.resetOtherInstances();
             edge.reviewInLabelButtonsVisibility();
+            var propertiesIndicator = edge.buildHiddenNeighborPropertiesIndicator();
+            propertiesIndicator.hide();
             GraphElementHtmlBuilder.setupDragAndDrop(
                 edge
             );

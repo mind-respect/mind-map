@@ -12,6 +12,13 @@ define([
             callback(serverGraphToReturn);
         });
     };
+    api.getForCentralBubbleUriMultiple = function(multiple){
+        return spyOn(GraphService, "getForCentralBubbleUri").and.callFake(function(centerUri, callback){
+            callback(
+                multiple[centerUri]
+            );
+        });
+    };
     return api;
 })
 ;

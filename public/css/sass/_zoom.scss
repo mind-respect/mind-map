@@ -24,9 +24,9 @@ $horizontalPaddingHighest: 3.5;
         }
         .in-bubble-content {
           $verticalPadding: $horizontalPadding * $verticalPaddingRatio;
-          padding: calc(1em + #{$horizontalPadding}vw);
-          padding-bottom: calc(1em + #{$verticalPadding}vh);
-          padding-top: calc(1em + #{$verticalPadding}vh);
+          padding: calc(0.5em + #{$horizontalPadding}vw);
+          padding-bottom: calc(0.5em + #{$verticalPadding}vh);
+          padding-top: calc(0.5em + #{$verticalPadding}vh);
           $buttonExtraSize: max(0, 1.5 - $i * 0.3);
           $buttonSize: calc(30px + #{$buttonExtraSize}vw);
           $fontSizeExtra: max(0, 0.5 - $i * 0.1);

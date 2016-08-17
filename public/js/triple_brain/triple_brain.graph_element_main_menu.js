@@ -101,6 +101,7 @@ define([
                 "expandAll"
             );
         };
+
         api._getButtonHavingAction = function (action) {
             return GraphElementButton.fromHtml(
                 api._getMenu().find(
@@ -138,13 +139,18 @@ define([
                 GraphDisplayer.getGraphMenuHandler()
             );
         };
-        EventBus.subscribe("/event/ui/selection/changed", reviewButtonsVisibility);
-        EventBus.subscribe('/event/ui/graph/vertex/suggestions/updated', reviewButtonsVisibility);
-        EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function () {
-            if (!MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
-                api._getMenu().addClass("hidden");
-            }
-        });
+
+        api.reviewButtonsVisibility = function () {
+            var selectionInfo = SelectionHandler.getSelectionInfo();
+            var controller = updateCurrentClickHandler(selectionInfo);
+            var selected = 1 === selectionInfo.getNbSelected() ?
+                selectionInfo.getSingleElement() :
+                selectionInfo.getSelectedElements();
+            api.onlyShowButtonsIfApplicable(
+                controller,
+                selected
+            );
+        };
 
         api._getCurrentClickHandler = function (button) {
             if (button !== undefined && button.isForWholeGraph()) {
@@ -160,19 +166,15 @@ define([
             return _menu;
         };
 
-        return api;
+        EventBus.subscribe("/event/ui/selection/changed", api.reviewButtonsVisibility);
+        EventBus.subscribe('/event/ui/graph/vertex/suggestions/updated', api.reviewButtonsVisibility);
+        EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function () {
+            if (!MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
+                api._getMenu().addClass("hidden");
+            }
+        });
 
-        function reviewButtonsVisibility() {
-            var selectionInfo = SelectionHandler.getSelectionInfo();
-            var controller = updateCurrentClickHandler(selectionInfo);
-            var selected = 1 === selectionInfo.getNbSelected() ?
-                selectionInfo.getSingleElement() :
-                selectionInfo.getSelectedElements();
-            api.onlyShowButtonsIfApplicable(
-                controller,
-                selected
-            );
-        }
+        return api;
 
         function getButtonsHtml() {
             return api._getMenu().find("> button");

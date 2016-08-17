@@ -22,7 +22,7 @@ define([
         return identifications;
     };
     api.fromServerFormat = function (serverFormat) {
-        return new api.Self().init(serverFormat);
+        return new api.Identification().init(serverFormat);
     };
     api.fromFriendlyResourceServerFormat = function (serverFormat) {
         return api.fromFriendlyResource(
@@ -31,7 +31,7 @@ define([
     };
 
     api.fromFriendlyResource = function (friendlyResource) {
-        var identification = new api.Self().init({
+        var identification = new api.Identification().init({
             externalResourceUri: friendlyResource.getUri(),
             friendlyResource: friendlyResource.getServerFormat()
         });
@@ -45,7 +45,7 @@ define([
     };
 
     api.withUriLabelAndDescription = function (uri, label, description) {
-        return new api.Self().init({
+        return new api.Identification().init({
             externalResourceUri: uri,
             friendlyResource: FriendlyResource.withUriLabelAndDescription(
                 uri,
@@ -55,7 +55,7 @@ define([
         });
     };
     api.withUriAndLabel = function (uri, label) {
-        return new api.Self().init({
+        return new api.Identification().init({
             externalResourceUri: uri,
             friendlyResource: FriendlyResource.withUriAndLabel(
                 uri,
@@ -64,7 +64,7 @@ define([
         });
     };
     api.withUri = function (uri) {
-        return new api.Self().init({
+        return new api.Identification().init({
             externalResourceUri: uri,
             friendlyResource: FriendlyResource.withUri(
                 uri
@@ -88,12 +88,12 @@ define([
         }
         return identification;
     };
-    api.Self = function () {
+    api.Identification = function () {
     };
 
-    api.Self.prototype = new FriendlyResource.Self();
+    api.Identification.prototype = new FriendlyResource.Self();
 
-    api.Self.prototype.init = function (serverFormat) {
+    api.Identification.prototype.init = function (serverFormat) {
         this.identificationServerFormat = serverFormat;
         FriendlyResource.Self.apply(
             this
@@ -105,21 +105,21 @@ define([
         return this;
     };
 
-    api.Self.prototype.getExternalResourceUri = function () {
+    api.Identification.prototype.getExternalResourceUri = function () {
         return decodeURIComponent(
             this.identificationServerFormat.externalResourceUri
         );
     };
-    api.Self.prototype.getServerFormat = function () {
+    api.Identification.prototype.getServerFormat = function () {
         return this.identificationServerFormat;
     };
-    api.Self.prototype.setType = function (type) {
+    api.Identification.prototype.setType = function (type) {
         this.identificationServerFormat.identificationType = type;
     };
-    api.Self.prototype.getType = function () {
+    api.Identification.prototype.getType = function () {
         return this.identificationServerFormat.identificationType;
     };
-    api.Self.prototype.getJsonFormat = function () {
+    api.Identification.prototype.getJsonFormat = function () {
         var serverFormat = this.getServerFormat();
         serverFormat.friendlyResource.images = this.getImagesServerFormat();
         return JSON.stringify(
@@ -127,7 +127,7 @@ define([
         );
     };
 
-    api.Self.prototype.rightActionForType = function (typeAction, sameAsAction, genericIdentificationAction) {
+    api.Identification.prototype.rightActionForType = function (typeAction, sameAsAction, genericIdentificationAction) {
         switch (this.getType()) {
             case "type" :
                 return typeAction;
@@ -141,7 +141,7 @@ define([
         }
     };
 
-    api.Self.prototype.getNbReferences = function () {
+    api.Identification.prototype.getNbReferences = function () {
         if (this.identificationServerFormat.nbReferences === undefined) {
             return 0;
         }

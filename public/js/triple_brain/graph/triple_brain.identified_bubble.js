@@ -13,7 +13,7 @@ define([
     api.Object = function (html) {
         this.html = html;
     };
-    api.Object.prototype = new Bubble.Self();
+    api.Object.prototype = new Bubble.Bubble();
     api.Object.prototype.removeType = function (type) {
         var types = this.removeIdentificationInArray(
             type,

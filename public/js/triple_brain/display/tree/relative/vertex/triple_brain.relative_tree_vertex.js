@@ -10,15 +10,14 @@ define([
         "triple_brain.object_utils",
         "triple_brain.triple_ui_builder",
         "triple_brain.selection_handler",
-        "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
         "triple_brain.bubble_factory"
     ],
-    function ($, VertexUi, EventBus, TreeEdge, ObjectUtils, TripleUiBuilder, SelectionHandler, PropertiesIndicator, BubbleFactory) {
+    function ($, VertexUi, EventBus, TreeEdge, ObjectUtils, TripleUiBuilder, SelectionHandler, BubbleFactory) {
         "use strict";
         var api = {};
         VertexUi.buildCommonConstructors(api);
         api.createFromHtml = function (html) {
-            var vertex = new api.Object().init(
+            var vertex = new api.RelativeTreeVertex().init(
                 html
             );
             api.initCache(
@@ -38,20 +37,20 @@ define([
             api,
             VertexUi
         );
-        api.Object = function () {
+        api.RelativeTreeVertex = function () {
         };
 
-        api.Object.prototype = new VertexUi.Object();
+        api.RelativeTreeVertex.prototype = new VertexUi.VertexUi();
 
-        api.Object.prototype.init = function (html) {
+        api.RelativeTreeVertex.prototype.init = function (html) {
             this.html = html;
-            VertexUi.Object.apply(this, [html]);
-            VertexUi.Object.prototype.init.call(
+            VertexUi.VertexUi.apply(this, [html]);
+            VertexUi.VertexUi.prototype.init.call(
                 this
             );
             return this;
         };
-        api.Object.prototype.visitVerticesChildren = function (visitor) {
+        api.RelativeTreeVertex.prototype.visitVerticesChildren = function (visitor) {
             var children = this.getChildrenBubblesHtml();
             $.each(children, function () {
                 var bubble = BubbleFactory.fromHtml($(this));
@@ -63,7 +62,7 @@ define([
                 }
             });
         };
-        api.Object.prototype.remove = function (applyToOthers) {
+        api.RelativeTreeVertex.prototype.remove = function (applyToOthers) {
             if (applyToOthers === undefined) {
                 applyToOthers = true;
             }
@@ -86,20 +85,20 @@ define([
                 return;
             }
             this.removeFromCache();
-            VertexUi.Object.prototype.remove.call(
+            VertexUi.VertexUi.prototype.remove.call(
                 this
             );
         };
-        api.Object.prototype._setHasBeenCalledToRemove = function () {
+        api.RelativeTreeVertex.prototype._setHasBeenCalledToRemove = function () {
             this.getHtml().data(
                 "hasBeenCalledToRemove",
                 true
             );
         };
-        api.Object.prototype._hasBeenCalledToRemove = function () {
+        api.RelativeTreeVertex.prototype._hasBeenCalledToRemove = function () {
             return this.getHtml().data("hasBeenCalledToRemove") === true;
         };
-        api.Object.prototype.removeFromCache = function () {
+        api.RelativeTreeVertex.prototype.removeFromCache = function () {
             api.removeFromCache(
                 this.getUri(),
                 this.getId()
@@ -109,27 +108,19 @@ define([
                 this.getId()
             );
         };
-        api.Object.prototype._isRemoved = function () {
+        api.RelativeTreeVertex.prototype._isRemoved = function () {
             return $.isEmptyObject(
                 this.getHtml().data()
             );
         };
-        api.Object.prototype.getRelationWithUiParent = function () {
+        api.RelativeTreeVertex.prototype.getRelationWithUiParent = function () {
             return this.getParentBubble();
         };
-        api.Object.prototype.isALeaf = function () {
+        api.RelativeTreeVertex.prototype.isALeaf = function () {
             return !this.hasChildren();
         };
-        api.Object.prototype.buildHiddenNeighborPropertiesIndicator = function () {
-            var propertiesIndicator = PropertiesIndicator.withVertex(
-                this
-            );
-            this.setHiddenRelationsContainer(
-                propertiesIndicator
-            );
-            propertiesIndicator.build();
-        };
-        api.Object.prototype.hasHiddenRelations = function () {
+
+        api.RelativeTreeVertex.prototype.hasHiddenRelations = function () {
             return this.isALeaf() && this.getModel().getNumberOfConnectedEdges() > 1;
         };
         EventBus.subscribe(

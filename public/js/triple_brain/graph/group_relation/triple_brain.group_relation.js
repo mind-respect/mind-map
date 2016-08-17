@@ -26,7 +26,7 @@ define([
         function GroupRelation(identifiers) {
             this.identifiers = identifiers;
             this.vertices = {};
-            Identification.Self.apply(
+            Identification.Identification.apply(
                 this
             );
             this.init(
@@ -34,7 +34,7 @@ define([
             );
         }
 
-        GroupRelation.prototype = new Identification.Self();
+        GroupRelation.prototype = new Identification.Identification();
 
         GroupRelation.prototype.getIdentification = function () {
             return this.identifiers[0];

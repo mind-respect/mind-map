@@ -35,10 +35,10 @@ define([
     };
     api.Self = function(html) {
         this.html = html;
-        RelativeTreeVertex.Object.apply(this);
+        RelativeTreeVertex.RelativeTreeVertex.apply(this);
         this.init(html);
     };
-    api.Self.prototype = new RelativeTreeVertex.Object();
+    api.Self.prototype = new RelativeTreeVertex.RelativeTreeVertex();
     api.Self.prototype.getGraphElementType = function () {
         return GraphElementUi.Types.Schema;
     };

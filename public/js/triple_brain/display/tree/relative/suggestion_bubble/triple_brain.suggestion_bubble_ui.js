@@ -11,19 +11,15 @@ define([
     "triple_brain.event_bus",
     "triple_brain.selection_handler",
     "triple_brain.vertex_html_builder",
-    "triple_brain.graph_displayer",
-    "triple_brain.graph_service",
-    "triple_brain.sub_graph",
-    "triple_brain.triple",
     "triple_brain.suggestion",
     "triple_brain.mind_map_info",
     "jquery.i18next"
-], function ($, RelativeTreeVertex, GraphElementUi, VertexUi, Vertex, EventBus, SelectionHandler, VertexHtmlBuilder, GraphDisplayer, GraphService, SubGraph, Triple, Suggestion, MindMapInfo) {
+], function ($, RelativeTreeVertex, GraphElementUi, VertexUi, Vertex, EventBus, SelectionHandler, VertexHtmlBuilder, Suggestion, MindMapInfo) {
     "use strict";
     var api = {};
     RelativeTreeVertex.buildCommonConstructors(api);
     api.createFromHtml = function (html) {
-        var suggestionUi = new api.Self(
+        var suggestionUi = new api.SuggestionBubbleUi(
             html
         );
         api.initCache(suggestionUi);
@@ -38,18 +34,18 @@ define([
     api.getWhenEmptyLabel = function () {
         return $.t("suggestion.when-empty");
     };
-    api.Self = function (html) {
+    api.SuggestionBubbleUi = function (html) {
         this.html = html;
         this.integrationDeferrer = $.Deferred();
-        RelativeTreeVertex.Object.apply(this);
+        RelativeTreeVertex.RelativeTreeVertex.apply(this);
         this.init(html);
     };
-    api.Self.prototype = new RelativeTreeVertex.Object();
-    api.Self.prototype.getGraphElementType = function () {
+    api.SuggestionBubbleUi.prototype = new RelativeTreeVertex.RelativeTreeVertex();
+    api.SuggestionBubbleUi.prototype.getGraphElementType = function () {
         return GraphElementUi.Types.VertexSuggestion;
     };
 
-    api.Self.prototype.integrateUsingNewVertexAndEdgeUri = function (newVertexUri, newEdgeUri) {
+    api.SuggestionBubbleUi.prototype.integrateUsingNewVertexAndEdgeUri = function (newVertexUri, newEdgeUri) {
         var vertexUi = this.integrate(newVertexUri);
         this.getRelationWithUiParent().integrate(
             newEdgeUri,
@@ -58,20 +54,20 @@ define([
         return vertexUi;
     };
 
-    api.Self.prototype.whenItIntegrates = function () {
+    api.SuggestionBubbleUi.prototype.whenItIntegrates = function () {
         return this.integrationDeferrer.promise();
     };
 
-    api.Self.prototype.getModel = function () {
+    api.SuggestionBubbleUi.prototype.getModel = function () {
         return this.getSuggestion().getOrigin().isFromComparison() ?
             this.model.getType() : this.getSuggestion();
     };
 
-    api.Self.prototype.getSuggestion = function () {
+    api.SuggestionBubbleUi.prototype.getSuggestion = function () {
         return this.model;
     };
 
-    api.Self.prototype.removeFromCache = function () {
+    api.SuggestionBubbleUi.prototype.removeFromCache = function () {
         api.removeFromCache(
             this.getUri(),
             this.getId()
@@ -86,7 +82,7 @@ define([
         );
     };
 
-    api.Self.prototype.integrate = function (newVertexUri) {
+    api.SuggestionBubbleUi.prototype.integrate = function (newVertexUri) {
         this.removeFromCache();
         var vertex = Vertex.withUri(
             newVertexUri
@@ -144,55 +140,6 @@ define([
         VertexHtmlBuilder.completeBuild(vertexUi);
         this.integrationDeferrer.resolve(vertexUi);
         return vertexUi;
-    };
-    api.Self.prototype.addChildTree = function () {
-        var deferred = $.Deferred();
-        this.removeHiddenRelationsContainer();
-        var uriToFetch = this.getModel().getExternalResourceUri();
-        var self = this;
-        var parentEdgeUri = this.getParentBubble().getFirstIdentificationToAGraphElement().getExternalResourceUri();
-        GraphService.getForCentralBubbleUri(
-            uriToFetch,
-            function (serverGraph) {
-                var subGraph = SubGraph.fromServerFormat(serverGraph);
-                var centerVertex = subGraph.getVertexWithUri(
-                    self.getModel().getExternalResourceUri()
-                );
-                subGraph.visitEdgesRelatedToVertex(centerVertex, function (edge) {
-                    if (edge.getUri() === parentEdgeUri) {
-                        return;
-                    }
-                    var destinationVertex = edge.getOtherVertex(centerVertex);
-                    destinationVertex = subGraph.getVertexWithUri(
-                        destinationVertex.getUri()
-                    );
-                    var triple = GraphDisplayer.addSuggestionToVertex(
-                        Suggestion.fromTriple(
-                            Triple.fromEdgeAndSourceAndDestinationVertex(
-                                edge,
-                                centerVertex,
-                                destinationVertex
-                            )
-                        ),
-                        self
-                    );
-                    triple.edge().setComparedWith(
-                        edge
-                    );
-                    triple.destinationVertex().setText(
-                        destinationVertex.getLabel()
-                    );
-                    triple.destinationVertex().setComparedWith(
-                        destinationVertex
-                    );
-                    if(destinationVertex.getNumberOfConnectedEdges() > 1){
-                        triple.destinationVertex().buildHiddenNeighborPropertiesIndicator();
-                    }
-                });
-                deferred.resolve();
-            }
-        );
-        return deferred.promise();
     };
     return api;
 });

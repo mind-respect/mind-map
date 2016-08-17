@@ -36,11 +36,12 @@ define([
             vertex.applyToOtherInstances(function (otherInstance) {
                 if (otherInstance.getNumberOfChild() > 0) {
                     hasAnExpandedOtherInstance = true;
-                    return -1;
+                    return false;
                 }
             });
-            if (vertex.hasHiddenRelations() && !hasAnExpandedOtherInstance) {
-                vertex.buildHiddenNeighborPropertiesIndicator();
+            vertex.buildHiddenNeighborPropertiesIndicator();
+            if (!vertex.hasHiddenRelations() || hasAnExpandedOtherInstance) {
+                vertex.getHiddenRelationsContainer().hide();
             }
             vertex.reviewInLabelButtonsVisibility();
             GraphElementHtmlBuilder._setupChildrenContainerDragOverAndDrop(vertex);

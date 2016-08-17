@@ -23,7 +23,7 @@ define([
     api.expandAllCanDo = function () {
         var canDo = false;
         GraphElementUi.visitAll(function(graphElementUi){
-            if(graphElementUi.hasHiddenRelationsContainer()){
+            if(graphElementUi.getController().expandCanDo()){
                 canDo = true;
                 return false;
             }
@@ -31,22 +31,7 @@ define([
         return canDo;
     };
     api.expandAll = function () {
-        var addChildTreeActions = [];
-        VertexUi.visitAllVertices(function (vertexUi) {
-            if (vertexUi.hasHiddenRelations()) {
-                addChildTreeActions.push(
-                    vertexUi.addChildTree()
-                );
-            }
-        });
-        $.when.apply($, addChildTreeActions).done(function () {
-            GroupRelationUi.visitAllGroupRelations(function (groupRelationUi) {
-                if (groupRelationUi.hasHiddenRelationsContainer()) {
-                    groupRelationUi.addChildTree();
-                }
-            });
-            GraphElementUi.getCenterBubble().centerOnScreenWithAnimation();
-        });
+        GraphElementUi.getCenterBubble().getController().expand();
     };
     api.compare = function () {
         CompareFlow.enter();

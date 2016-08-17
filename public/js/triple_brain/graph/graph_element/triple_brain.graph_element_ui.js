@@ -11,12 +11,11 @@ define([
     "triple_brain.event_bus",
     "triple_brain.mind_map_info",
     "triple_brain.selection_handler",
-    "triple_brain.bubble_factory",
     "jquery.focus-end",
     "jquery.center-on-screen",
     "jquery.safer-html",
     "jquery.max_char"
-], function ($, GraphDisplayer, GraphElementMainMenu, GraphElementButton, GraphElementType, EventBus, MindMapInfo, SelectionHandler, BubbleFactory) {
+], function ($, GraphDisplayer, GraphElementMainMenu, GraphElementButton, GraphElementType, EventBus, MindMapInfo, SelectionHandler) {
     "use strict";
     var api = {},
         otherInstancesKey = "otherInstances",
@@ -130,35 +129,35 @@ define([
         );
     };
 
-    api.Self = function () {
+    api.GraphElementUi = function () {
     };
-    api.Self.prototype.setModel = function (serverJson) {
+    api.GraphElementUi.prototype.setModel = function (serverJson) {
         this.model = serverJson;
     };
-    api.Self.prototype.getModel = function () {
+    api.GraphElementUi.prototype.getModel = function () {
         return this.model;
     };
-    api.Self.prototype.getId = function () {
+    api.GraphElementUi.prototype.getId = function () {
         return this.getHtml().attr("id");
     };
-    api.Self.prototype.hasTheDuplicateButton = function () {
+    api.GraphElementUi.prototype.hasTheDuplicateButton = function () {
         return !this.getOtherInstanceButton().hasClass(
             "hidden"
         );
     };
 
-    api.Self.prototype.hasOtherInstances = function () {
+    api.GraphElementUi.prototype.hasOtherInstances = function () {
         return this.getOtherInstances().length > 0;
     };
 
-    api.Self.prototype.getOtherInstances = function () {
+    api.GraphElementUi.prototype.getOtherInstances = function () {
         if (this.html.data(otherInstancesKey) === undefined) {
             this._defineSameInstances();
         }
         return this.html.data(otherInstancesKey);
     };
 
-    api.Self.prototype._defineSameInstances = function () {
+    api.GraphElementUi.prototype._defineSameInstances = function () {
         var elementsWithSameUri = this.getSelector().withUri(
             this.getUri()
         );
@@ -179,7 +178,7 @@ define([
         );
     };
 
-    api.Self.prototype.setAsCentral = function () {
+    api.GraphElementUi.prototype.setAsCentral = function () {
         if (api.hasCenterBubble()) {
             api.getCenterBubble().setAsNonCentral();
         }
@@ -188,120 +187,152 @@ define([
         this.hideCenterButton();
     };
 
-    api.Self.prototype.setAsNonCentral = function () {
+    api.GraphElementUi.prototype.setAsNonCentral = function () {
         this.html.removeClass('center-vertex');
         this.showCenterButton();
     };
 
-    api.Self.prototype.showCenterButton = function () {
+    api.GraphElementUi.prototype.showCenterButton = function () {
         this.centerButton().addClass("hidden");
     };
-    api.Self.prototype.hideCenterButton = function () {
+    api.GraphElementUi.prototype.hideCenterButton = function () {
         this.centerButton().removeClass("hidden");
     };
 
-    api.Self.prototype.centerButton = function () {
+    api.GraphElementUi.prototype.centerButton = function () {
         return this.html.find('.center');
     };
-    api.Self.prototype.scrollTo = function () {
+    api.GraphElementUi.prototype.scrollTo = function () {
         this.html.centerOnScreen();
     };
-    api.Self.prototype.applyToOtherInstances = function (apply) {
+    api.GraphElementUi.prototype.applyToOtherInstances = function (apply) {
         $.each(this.getOtherInstances(), function () {
             var element = this;
             apply(element);
         });
     };
 
-    api.Self.prototype.resetOtherInstances = function () {
+    api.GraphElementUi.prototype.resetOtherInstances = function () {
         this._resetOtherInstancesNonDeep();
         this.applyToOtherInstances(function (otherInstance) {
             otherInstance._resetOtherInstancesNonDeep();
         });
     };
 
-    api.Self.prototype._resetOtherInstancesNonDeep = function () {
+    api.GraphElementUi.prototype._resetOtherInstancesNonDeep = function () {
         this.html.removeData(otherInstancesKey);
     };
 
-    api.Self.prototype.isVertex = function () {
+    api.GraphElementUi.prototype.isVertex = function () {
         return this.getGraphElementType() === api.Types.Vertex;
     };
-    api.Self.prototype.isCenterBubble = function () {
+    api.GraphElementUi.prototype.isCenterBubble = function () {
         return this.html.hasClass("center-vertex");
     };
-    api.Self.prototype.isCenterVertexOrSchema = function () {
+    api.GraphElementUi.prototype.isCenterVertexOrSchema = function () {
         return (
                 this.isVertex() || this.isSchema()
             ) && this.isCenterBubble();
     };
-    api.Self.prototype.isSchema = function () {
+    api.GraphElementUi.prototype.isSchema = function () {
         return this.getGraphElementType() === api.Types.Schema;
     };
-    api.Self.prototype.isRelation = function () {
+    api.GraphElementUi.prototype.isRelation = function () {
         return this.getGraphElementType() === api.Types.Relation;
     };
-    api.Self.prototype.isEdge = function () {
+    api.GraphElementUi.prototype.isEdge = function () {
         return this.isRelation() || this.isRelationSuggestion || this.isProperty();
     };
-    api.Self.prototype.isGroupRelation = function () {
+    api.GraphElementUi.prototype.isGroupRelation = function () {
         return this.getGraphElementType() === api.Types.GroupRelation;
     };
-    api.Self.prototype.isProperty = function () {
+    api.GraphElementUi.prototype.isProperty = function () {
         return this.getGraphElementType() === api.Types.Property;
     };
-    api.Self.prototype.isVertexSuggestion = function () {
+    api.GraphElementUi.prototype.isVertexSuggestion = function () {
         return this.getGraphElementType() === api.Types.VertexSuggestion;
     };
-    api.Self.prototype.isRelationSuggestion = function () {
+    api.GraphElementUi.prototype.isRelationSuggestion = function () {
         return this.getGraphElementType() === api.Types.RelationSuggestion;
     };
-    api.Self.prototype.isInTheRelationFamily = function () {
+    api.GraphElementUi.prototype.isInTheRelationFamily = function () {
         return this.getHtml().hasClass("relation");
     };
-    api.Self.prototype.getSimilarButtonHtml = function (button) {
+    api.GraphElementUi.prototype.getSimilarButtonHtml = function (button) {
         return this.getButtonHtmlHavingAction(
             button.getAction()
         );
     };
-    api.Self.prototype.getButtonHtmlHavingAction = function (action) {
+    api.GraphElementUi.prototype.getExpandButton = function () {
+        return this.getButtonHtmlHavingAction(
+            "expand"
+        );
+    };
+    api.GraphElementUi.prototype.getCollapseButton = function () {
+        return this.getButtonHtmlHavingAction(
+            "collapse"
+        );
+    };
+    api.GraphElementUi.prototype.getButtonHtmlHavingAction = function (action) {
         return this.getMenuHtml().find(
             "[data-action=" + action + "]"
         );
     };
 
-    api.Self.prototype.hasDragOver = function () {
+    api.GraphElementUi.prototype.reviewMenuButtonsVisibility = function () {
+        var self = this;
+        this.visitMenuButtons(function (button) {
+            button.showOnlyIfApplicable(
+                self.getController(),
+                self
+            );
+        });
+    };
+
+    api.GraphElementUi.prototype.visitMenuButtons = function (visitor) {
+        this.getMenuHtml().find(
+            "button"
+        ).each(function () {
+            visitor(
+                GraphElementButton.fromHtml(
+                    $(this)
+                )
+            );
+        });
+    };
+
+    api.GraphElementUi.prototype.hasDragOver = function () {
         return this.getHtml().hasClass("drag-over");
     };
 
-    api.Self.prototype.enterDragOver = function () {
+    api.GraphElementUi.prototype.enterDragOver = function () {
         this.getHtml().addClass("drag-over");
     };
 
-    api.Self.prototype.leaveDragOver = function () {
+    api.GraphElementUi.prototype.leaveDragOver = function () {
         this.getHtml().removeClass("drag-over");
     };
 
-    api.Self.prototype.getController = function () {
+    api.GraphElementUi.prototype.getController = function () {
         var controller = controllerGetters[
             this.getGraphElementType()
             ]();
         return new controller.Self(this);
     };
 
-    api.Self.prototype.getTextOrDefault = function () {
+    api.GraphElementUi.prototype.getTextOrDefault = function () {
         var text = this.text();
         return "" === text.trim() ?
             this.getSelector().getWhenEmptyLabel() :
             text;
     };
-    api.Self.prototype.getSelector = function () {
+    api.GraphElementUi.prototype.getSelector = function () {
         return selectors[
             this.getGraphElementType()
             ]();
     };
 
-    api.Self.prototype.rightActionForType = function (vertexAction, edgeAction, groupRelationAction, schemaAction, propertyAction, suggestionVertexAction, suggestionRelationAction) {
+    api.GraphElementUi.prototype.rightActionForType = function (vertexAction, edgeAction, groupRelationAction, schemaAction, propertyAction, suggestionVertexAction, suggestionRelationAction) {
         switch (this.getGraphElementType()) {
             case api.Types.Vertex :
                 return vertexAction;
@@ -322,24 +353,24 @@ define([
                 };
         }
     };
-    api.Self.prototype.focus = function () {
+    api.GraphElementUi.prototype.focus = function () {
         this.hideMenu();
         this.editMode();
         this._setTextBeforeModification();
         this.getLabel().maxCharCleanTextApply().focusEnd();
         this.getHtml().centerOnScreen();
     };
-    api.Self.prototype._setTextBeforeModification = function () {
+    api.GraphElementUi.prototype._setTextBeforeModification = function () {
         this.getHtml().data(
             textBeforeModificationKey, this.text()
         );
     };
-    api.Self.prototype.hasTextChangedAfterModification = function () {
+    api.GraphElementUi.prototype.hasTextChangedAfterModification = function () {
         return this.getHtml().data(
                 textBeforeModificationKey
             ) !== this.text();
     };
-    api.Self.prototype.editMode = function () {
+    api.GraphElementUi.prototype.editMode = function () {
         this.getLabel().attr(
             "contenteditable",
             "true"
@@ -356,7 +387,7 @@ define([
         );
         this.getInLabelButtonsContainer().addClass("hidden");
     };
-    api.Self.prototype.leaveEditMode = function () {
+    api.GraphElementUi.prototype.leaveEditMode = function () {
         var $label = this.getLabel();
         $label.attr(
             "contenteditable",
@@ -374,22 +405,22 @@ define([
         );
         this.getInLabelButtonsContainer().removeClass("hidden");
     };
-    api.Self.prototype.isInEditMode = function () {
+    api.GraphElementUi.prototype.isInEditMode = function () {
         return this.getHtml().hasClass("edit");
     };
-    api.Self.prototype.centerOnScreen = function () {
+    api.GraphElementUi.prototype.centerOnScreen = function () {
         this.getHtml().centerOnScreen();
     };
-    api.Self.prototype.isInTypes = function (types) {
+    api.GraphElementUi.prototype.isInTypes = function (types) {
         return $.inArray(
                 this.getGraphElementType(),
                 types
             ) !== -1;
     };
-    api.Self.prototype.getHtml = function () {
+    api.GraphElementUi.prototype.getHtml = function () {
         return this.html;
     };
-    api.Self.prototype.rebuildMenuButtons = function () {
+    api.GraphElementUi.prototype.rebuildMenuButtons = function () {
         var container = this.getMenuHtml().empty();
         GraphElementMainMenu.addRelevantButtonsInMenu(
             container,
@@ -397,44 +428,44 @@ define([
         );
         this.onlyShowButtonsIfApplicable();
     };
-    api.Self.prototype.onlyShowButtonsIfApplicable = function () {
+    api.GraphElementUi.prototype.onlyShowButtonsIfApplicable = function () {
         GraphElementMainMenu.onlyShowButtonsIfApplicable(
             this.getController(),
             this
         );
     };
-    api.Self.prototype.isSuggestion = function () {
+    api.GraphElementUi.prototype.isSuggestion = function () {
         return this.isVertexSuggestion() || this.isRelationSuggestion();
     };
-    api.Self.prototype.setUri = function (uri) {
+    api.GraphElementUi.prototype.setUri = function (uri) {
         this.html.data(
             "uri",
             uri
         );
     };
-    api.Self.prototype.getUri = function () {
+    api.GraphElementUi.prototype.getUri = function () {
         return this.html.data(
             "uri"
         );
     };
-    api.Self.prototype.setNote = function (note) {
+    api.GraphElementUi.prototype.setNote = function (note) {
         this.html.data("note", note);
     };
-    api.Self.prototype.getNote = function () {
+    api.GraphElementUi.prototype.getNote = function () {
         if (this.html.data("note") === undefined) {
             this.html.data("note", "");
         }
         return this.html.data("note");
     };
-    api.Self.prototype.hasNote = function () {
+    api.GraphElementUi.prototype.hasNote = function () {
         return this.getNote().trim().length > 0;
     };
-    api.Self.prototype.getInLabelButtonsContainer = function () {
+    api.GraphElementUi.prototype.getInLabelButtonsContainer = function () {
         return this.getHtml().find(
             ".in-label-buttons"
         );
     };
-    api.Self.prototype.reviewInLabelButtonsVisibility = function (applyToOtherInstances) {
+    api.GraphElementUi.prototype.reviewInLabelButtonsVisibility = function (applyToOtherInstances) {
         var graphElementUi = this;
         this.getInLabelButtonsContainer().find("button").each(function () {
             var button = GraphElementButton.fromHtml($(this));
@@ -452,37 +483,37 @@ define([
         });
     };
 
-    api.Self.prototype.getOtherInstanceButton = function () {
+    api.GraphElementUi.prototype.getOtherInstanceButton = function () {
         return this.getInLabelButtonsContainer().find(
             "[data-action=visitOtherInstances]"
         );
     };
 
-    api.Self.prototype.getNoteButtonInBubbleContent = function () {
+    api.GraphElementUi.prototype.getNoteButtonInBubbleContent = function () {
         return this.getInLabelButtonsContainer().find(
             "[data-action=note]"
         );
     };
 
-    api.Self.prototype.getMakePublicButtonInBubbleContent = function () {
+    api.GraphElementUi.prototype.getMakePublicButtonInBubbleContent = function () {
         return this.getInLabelButtonsContainer().find(
             "[data-action=makePublic]"
         );
     };
 
-    api.Self.prototype.getMakePrivateButtonInBubbleContent = function () {
+    api.GraphElementUi.prototype.getMakePrivateButtonInBubbleContent = function () {
         return this.getInLabelButtonsContainer().find(
             "[data-action=makePrivate]"
         );
     };
 
-    api.Self.prototype.getIdentifyButtonInLabel = function () {
+    api.GraphElementUi.prototype.getIdentifyButtonInLabel = function () {
         return this.getInLabelButtonsContainer().find(
             "[data-action=identify]"
         );
     };
 
-    api.Self.prototype.updateInLabelNoteButtonHoverText = function () {
+    api.GraphElementUi.prototype.updateInLabelNoteButtonHoverText = function () {
         var noteWithoutHtml = $("<div/>").html(
             this.getNote()
         ).text();
@@ -492,32 +523,32 @@ define([
         );
     };
 
-    api.Self.prototype.isDisplayingComparison = function () {
+    api.GraphElementUi.prototype.isDisplayingComparison = function () {
         return this.getLabel().find(
                 "del,ins"
             ).length > 0;
     };
 
-    api.Self.prototype.setComparedWith = function (comparedWith) {
+    api.GraphElementUi.prototype.setComparedWith = function (comparedWith) {
         this.comparedWith = comparedWith;
     };
-    api.Self.prototype.getComparedWith = function () {
+    api.GraphElementUi.prototype.getComparedWith = function () {
         return this.comparedWith;
     };
 
-    api.Self.prototype.refreshComparison = function () {
+    api.GraphElementUi.prototype.refreshComparison = function () {
         if (!this.shouldCompare()) {
             return;
         }
         this.refreshLabelComparison();
     };
 
-    api.Self.prototype.shouldCompare = function () {
+    api.GraphElementUi.prototype.shouldCompare = function () {
         return MindMapInfo.isInCompareMode() && !this.isAComparisonSuggestionToRemove() && !this.thisIsAModelSuggestion();
 
     };
 
-    api.Self.prototype.refreshLabelComparison = function () {
+    api.GraphElementUi.prototype.refreshLabelComparison = function () {
         var diffMatchPatch = new diff_match_patch();
         var difference = diffMatchPatch.diff_main(
             this.getModel().getLabel(),
@@ -530,35 +561,35 @@ define([
         this.reviewInLabelButtonsVisibility();
     };
 
-    api.Self.prototype.isAComparisonSuggestionToAdd = function () {
+    api.GraphElementUi.prototype.isAComparisonSuggestionToAdd = function () {
         return this.getTreeContainer().hasClass(
             "compare-add"
         );
     };
 
-    api.Self.prototype.setAsComparisonSuggestionToAdd = function () {
+    api.GraphElementUi.prototype.setAsComparisonSuggestionToAdd = function () {
         this.getTreeContainer().addClass(
             "compare-add"
         );
     };
 
-    api.Self.prototype.thisIsAModelSuggestion = function () {
+    api.GraphElementUi.prototype.thisIsAModelSuggestion = function () {
         return this.isSuggestion() && !this.getSuggestion().getOrigin().isFromComparison();
     };
 
-    api.Self.prototype.setAsComparisonSuggestionToRemove = function () {
+    api.GraphElementUi.prototype.setAsComparisonSuggestionToRemove = function () {
         this.getTreeContainer().addClass(
             "compare-remove"
         );
     };
 
-    api.Self.prototype.isAComparisonSuggestionToRemove = function () {
+    api.GraphElementUi.prototype.isAComparisonSuggestionToRemove = function () {
         return this.getTreeContainer().hasClass(
             "compare-remove"
         );
     };
 
-    api.Self.prototype.quitComparison = function () {
+    api.GraphElementUi.prototype.quitComparison = function () {
         if (this.isVertexSuggestion()) {
             if (this.getSuggestion().getOrigin().isFromComparison()) {
                 this.remove();
@@ -571,14 +602,14 @@ define([
         this.reviewInLabelButtonsVisibility();
         this.quitCompareAddOrRemoveMode();
     };
-    api.Self.prototype.quitCompareAddOrRemoveMode = function () {
+    api.GraphElementUi.prototype.quitCompareAddOrRemoveMode = function () {
         this.getTreeContainer().removeClass(
             "compare-add"
         ).removeClass(
             "compare-remove"
         );
     };
-    api.Self.prototype.labelUpdateHandle = function () {
+    api.GraphElementUi.prototype.labelUpdateHandle = function () {
         var isLabelDifferentThanModel = this.text() !== this.getModel().getLabel();
         if (isLabelDifferentThanModel) {
             this.setText(
@@ -600,7 +631,7 @@ define([
         SelectionHandler.setToSingleGraphElement(this);
     };
 
-    api.Self.prototype._updateLabelsOfElementsWithSameUri = function () {
+    api.GraphElementUi.prototype._updateLabelsOfElementsWithSameUri = function () {
         var text = this.text();
         $.each(this.getOtherInstances(), function () {
             var sameElement = this;

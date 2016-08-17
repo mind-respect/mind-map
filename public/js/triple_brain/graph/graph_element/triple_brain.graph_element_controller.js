@@ -11,11 +11,10 @@ define([
     "triple_brain.event_bus",
     "triple_brain.graph_ui",
     "triple_brain.identification_menu",
-    "triple_brain.edge_service",
     "bootstrap-wysiwyg",
     "bootstrap",
     "jquery.safer-html"
-], function ($, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu, EdgeService) {
+], function ($, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu) {
     "use strict";
     var api = {};
     EventBus.subscribe(
@@ -132,6 +131,29 @@ define([
                 self.getElements().labelUpdateHandle();
             }
         );
+    };
+
+    GraphElementController.prototype.expandCanDo = function () {
+        return this.isSingle() && (
+                this.getElements().hasVisibleHiddenRelationsContainer() ||
+                this.getElements().hasDescendantsWithHiddenRelations() ||
+                this.getElements().isCollapsed()
+            );
+    };
+
+    GraphElementController.prototype.expand = function () {
+        this.getElements().expand();
+        return $.Deferred().resolve();
+    };
+
+    GraphElementController.prototype.collapseCanDo = function () {
+        return this.isSingle() && (
+                !this.getElements().isALeaf() && !this.getElements().isCollapsed()
+            );
+    };
+
+    GraphElementController.prototype.collapse = function () {
+        this.getElements().collapse();
     };
 
     GraphElementController.prototype.moveUnder = function (otherEdge) {

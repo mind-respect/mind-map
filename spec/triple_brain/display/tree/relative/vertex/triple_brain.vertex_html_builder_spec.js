@@ -75,14 +75,15 @@ define([
             ).toHaveClass("hidden");
         });
         it("hides hidden properties container when dragging", function () {
+            MindMapInfo._setIsViewOnly(false);
             var bubble2 = new Scenarios.graphWithHiddenSimilarRelations().getBubble2InTree();
             expect(
-                bubble2.getHiddenRelationsContainer().getHtml()
-            ).not.toHaveClass("hidden");
+                bubble2.getHiddenRelationsContainer().isVisible()
+            ).toBeTruthy();
             TestUtils.startDragging(bubble2);
             expect(
-                bubble2.getHiddenRelationsContainer().getHtml()
-            ).toHaveCss({visibility: "hidden"});
+                bubble2.getHiddenRelationsContainer().isVisible()
+            ).toBeFalsy();
         });
         it("hides arrow when dragging", function () {
             var bubble2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
@@ -106,15 +107,16 @@ define([
             ).not.toHaveClass("hidden");
         });
         it("shows hidden relations container when stopping to drag", function () {
+            MindMapInfo._setIsViewOnly(false);
             var bubble2 = new Scenarios.graphWithHiddenSimilarRelations().getBubble2InTree();
             TestUtils.startDragging(bubble2);
             expect(
-                bubble2.getHiddenRelationsContainer().getHtml()
-            ).toHaveCss({visibility: "hidden"});
+                bubble2.getHiddenRelationsContainer().isVisible()
+            ).toBeFalsy();
             TestUtils.endDragging(bubble2);
             expect(
                 bubble2.getHiddenRelationsContainer().getHtml()
-            ).toHaveCss({visibility: "visible"});
+            ).toBeTruthy();
         });
         it("doesn't move to a parent bubble that is the child of the dragged one", function () {
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
@@ -129,6 +131,7 @@ define([
             ).toBeFalsy();
         });
         it("cant drag and drop a vertex onto itself", function () {
+            MindMapInfo._setIsViewOnly(false);
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             var bubble2 = TestUtils.getChildWithLabel(
                 bubble1,
@@ -193,7 +196,7 @@ define([
                 bubble1Ui.getLabel().find("a").length
             ).toBe(1);
         });
-        it("doesn't build the hidden neighbor properties indicator when the bubble has a duplicate bubble that is already expanded", function(){
+        it("hides the hidden neighbor properties indicator when the bubble has a duplicate bubble that is already expanded", function(){
             var graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
             var bubble1 = graphWithCircularityScenario.getBubble1InTree();
             var bubble2 = TestUtils.getChildWithLabel(
@@ -210,7 +213,7 @@ define([
                 "r2"
             ).getTopMostChildBubble();
             expect(
-                bubble2AsChildOfB3.hasHiddenRelationsContainer()
+                bubble2AsChildOfB3.hasVisibleHiddenRelationsContainer()
             ).toBeFalsy();
         });
         it("displays hidden properties container if bubble has a duplicate that is also not expanded", function(){

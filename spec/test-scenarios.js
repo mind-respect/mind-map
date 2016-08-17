@@ -254,6 +254,12 @@ define([
             this.reset = function () {
                 treeBuilder = new TreeBuilder(this);
             };
+            this.expandBubble2 = function (bubble2) {
+                return GraphDisplayerAsRelativeTree.addChildTreeUsingGraph(
+                    bubble2,
+                    this.getSubGraphForB2()
+                );
+            };
             this.expandBubble3 = function (bubble3) {
                 return GraphDisplayerAsRelativeTree.addChildTreeUsingGraph(
                     bubble3,

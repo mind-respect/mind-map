@@ -142,7 +142,7 @@ define([
             expect(
                 groupRelation.isGroupRelation()
             ).toBeTruthy();
-            groupRelation.addChildTree();
+            groupRelation.expand();
             var childBubble = groupRelation.getTopMostChildBubble().getTopMostChildBubble();
             expect(
                 childBubble.isVertex()
@@ -160,7 +160,7 @@ define([
             expect(
                 groupRelation.isGroupRelation()
             ).toBeTruthy();
-            groupRelation.addChildTree();
+            groupRelation.expand();
             var childBubble = groupRelation.getTopMostChildBubble().getTopMostChildBubble();
             expect(
                 childBubble.isVertex()
@@ -169,7 +169,7 @@ define([
             GraphElementServiceMock.addIdentification();
             FriendlyResourceServiceMock.updateLabel();
             var hasVisited = false;
-            childBubble.getController().addSibling().then(function(triple){
+            childBubble.getController().addSibling().then(function (triple) {
                 hasVisited = true;
                 var relation = triple.destinationVertex().getParentBubble();
                 expect(
@@ -178,6 +178,69 @@ define([
             });
             expect(
                 hasVisited
+            ).toBeTruthy();
+        });
+        it("does not load the surround graph when expanding a collapsed vertex", function () {
+            var scenario = new Scenarios.threeBubblesGraph();
+            var b2 = scenario.getBubble2InTree();
+            scenario.expandBubble2(b2);
+            b2.collapse();
+            var getGraphMock = GraphServiceMock.getForCentralBubbleUri(
+                scenario.getSubGraphForB2()
+            );
+            b2.getController().expand();
+            expect(
+                getGraphMock.calls.count()
+            ).toBe(0);
+        });
+        it("does not add child tree again when twice expanding a bubble", function () {
+            var scenario = new Scenarios.threeBubblesGraph();
+            var b2 = scenario.getBubble2InTree();
+            GraphServiceMock.getForCentralBubbleUri(
+                scenario.getSubGraphForB2()
+            );
+            b2.getController().expand();
+            expect(
+                b2.getNumberOfChild()
+            ).toBe(2);
+            b2.getController().expand();
+            expect(
+                b2.getNumberOfChild()
+            ).toBe(2);
+        });
+        it("expands expandable descendants when expanding already expanded bubble", function () {
+            var scenario = new Scenarios.threeBubblesGraph();
+            var multipleGraphReturn = {};
+            multipleGraphReturn[
+                scenario.getBubble2InTree().getUri()
+                ] = scenario.getSubGraphForB2();
+            multipleGraphReturn[
+                scenario.getBubble3InTree().getUri()
+                ] = scenario.getSubGraphForB3();
+            GraphServiceMock.getForCentralBubbleUriMultiple(
+                multipleGraphReturn
+            );
+            var b1 = scenario.getCenterBubbleInTree();
+            var b2 = TestUtils.getChildWithLabel(
+                b1,
+                "r1"
+            ).getTopMostChildBubble();
+            expect(
+                b2.isExpanded()
+            ).toBeFalsy();
+            var b3 = TestUtils.getChildWithLabel(
+                b1,
+                "r1"
+            ).getTopMostChildBubble();
+            expect(
+                b3.isExpanded()
+            ).toBeFalsy();
+            b1.getController().expand();
+            expect(
+                b2.isExpanded()
+            ).toBeTruthy();
+            expect(
+                b3.isExpanded()
             ).toBeTruthy();
         });
     });

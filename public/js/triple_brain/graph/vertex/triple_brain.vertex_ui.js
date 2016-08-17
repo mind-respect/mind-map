@@ -33,30 +33,30 @@ define([
                 });
             };
         };
-        api.Object = function (html) {
+        api.VertexUi = function (html) {
             this.html = html;
         };
-        api.Object.prototype = new IdentifiedBubble.Object();
-        api.Object.prototype.init = function () {
+        api.VertexUi.prototype = new IdentifiedBubble.Object();
+        api.VertexUi.prototype.init = function () {
             IdentifiedBubble.Object.apply(this, [this.html]);
             return this;
         };
 
-        api.Object.prototype.remove = function () {
+        api.VertexUi.prototype.remove = function () {
             this.removeConnectedEdges();
-            Bubble.Self.prototype.remove.call(
+            Bubble.Bubble.prototype.remove.call(
                 this
             );
         };
 
-        api.Object.prototype.setIsPublic = function (isPublic) {
+        api.VertexUi.prototype.setIsPublic = function (isPublic) {
             this.html.data(
                 "isPublic",
                 isPublic
             );
         };
 
-        api.Object.prototype.areSuggestionsShown = function () {
+        api.VertexUi.prototype.areSuggestionsShown = function () {
             var areShown = false;
             this.visitAllChild(function (child) {
                 if (child.isSuggestion()) {
@@ -67,47 +67,47 @@ define([
             return areShown;
         };
         
-        api.Object.prototype.getMakePrivateButton = function () {
-            return this.getMenuHtml().find("button[data-action=makePrivate]");
+        api.VertexUi.prototype.getMakePrivateButton = function () {
+            return this.getButtonHtmlHavingAction("makePrivate");
         };
 
-        api.Object.prototype.getMakePublicButton = function () {
-            return this.getMenuHtml().find("button[data-action=makePublic]");
+        api.VertexUi.prototype.getMakePublicButton = function () {
+            return this.getButtonHtmlHavingAction("makePublic");
         };
 
-        api.Object.prototype.getSegments = function () {
+        api.VertexUi.prototype.getSegments = function () {
             return VertexSegments.withHtmlVertex(
                 this.getInBubbleContainer()
             );
         };
 
-        api.Object.prototype.getGraphElementType = function () {
+        api.VertexUi.prototype.getGraphElementType = function () {
             return GraphElementUi.Types.Vertex;
         };
 
-        api.Object.prototype.refreshComparison = function () {
-            GraphElementUi.Self.prototype.refreshComparison.call(
+        api.VertexUi.prototype.refreshComparison = function () {
+            GraphElementUi.GraphElementUi.prototype.refreshComparison.call(
                 this
             );
         };
 
-        api.Object.prototype.position = function () {
+        api.VertexUi.prototype.position = function () {
             return Point.fromCoordinates(
                 this.html.offset().left,
                 this.html.offset().top
             );
         };
-        api.Object.prototype.intersectsWithSegment = function (segment) {
+        api.VertexUi.prototype.intersectsWithSegment = function (segment) {
             return this.getSegments().intersectsWithSegment(
                 segment
             );
         };
-        api.Object.prototype.closestPointToSegment = function (segment) {
+        api.VertexUi.prototype.closestPointToSegment = function (segment) {
             return this.getSegments().closestPointToSegment(
                 segment
             );
         };
-        api.Object.prototype.intersectionPointWithSegment = function (segmentToCompare) {
+        api.VertexUi.prototype.intersectionPointWithSegment = function (segmentToCompare) {
             if (!this.intersectsWithSegment(segmentToCompare)) {
                 throw(
                     Error.withName(
@@ -118,35 +118,35 @@ define([
             return this.getSegments().intersectionPointWithSegment(segmentToCompare);
         };
         
-        api.Object.prototype.width = function () {
+        api.VertexUi.prototype.width = function () {
             return this.html.width();
         };
-        api.Object.prototype.height = function () {
+        api.VertexUi.prototype.height = function () {
             return this.html.height();
         };
-        api.Object.prototype.getHtml = function () {
+        api.VertexUi.prototype.getHtml = function () {
             return this.html;
         };
-        api.Object.prototype.hideButtons = function () {
+        api.VertexUi.prototype.hideButtons = function () {
             this.hideMenu();
         };
-        api.Object.prototype.showButtons = function () {
+        api.VertexUi.prototype.showButtons = function () {
             this.showMenu();
         };
-        api.Object.prototype.hideMenu = function () {
+        api.VertexUi.prototype.hideMenu = function () {
             this.getMenuHtml().addClass("hidden");
         };
-        api.Object.prototype.showMenu = function () {
+        api.VertexUi.prototype.showMenu = function () {
             this.getMenuHtml().removeClass("hidden");
         };
-        api.Object.prototype.connectedEdges = function () {
+        api.VertexUi.prototype.connectedEdges = function () {
             var edgesConnectedToVertex = [];
             this.visitConnectedEdges(function (edge) {
                 edgesConnectedToVertex.push(edge);
             });
             return edgesConnectedToVertex;
         };
-        api.Object.prototype.isConnectedToEdge = function (edge) {
+        api.VertexUi.prototype.isConnectedToEdge = function (edge) {
             var isConnected = false;
             this.visitConnectedEdges(function (connected) {
                 if (edge.getUri() === connected.getUri()) {
@@ -156,34 +156,32 @@ define([
             });
             return isConnected;
         };
-        api.Object.prototype.isConnectedToEdgeWithFirstGraphIdentifier = function (edge) {
 
-        };
-        api.Object.prototype.visitConnectedEdges = function (visitor) {
+        api.VertexUi.prototype.visitConnectedEdges = function (visitor) {
             this.visitAllConnected(function (connected) {
                 if (connected.isRelation() || connected.isRelationSuggestion()) {
                     visitor(connected);
                 }
             });
         };
-        api.Object.prototype.applyToConnectedEdges = function (visitor) {
+        api.VertexUi.prototype.applyToConnectedEdges = function (visitor) {
             var connectedEdges = this.connectedEdges();
             for (var i = 0; i < connectedEdges.length; i++) {
                 visitor(connectedEdges[i]);
             }
         };
-        api.Object.prototype.text = function () {
+        api.VertexUi.prototype.text = function () {
             return this.getLabel().maxCharCleanText();
         };
 
-        api.Object.prototype.removeConnectedEdges = function () {
+        api.VertexUi.prototype.removeConnectedEdges = function () {
             this.applyToConnectedEdges(function (edge) {
                 edge.removeFromCache();
                 edge.remove();
             });
         };
 
-        api.Object.prototype.isConnectedToAVertexWithUri = function (uri) {
+        api.VertexUi.prototype.isConnectedToAVertexWithUri = function (uri) {
             var isConnected = false;
             this.visitAllConnected(function (edge) {
                 var isConnectedToSource = uri === edge.getSourceVertex().getUri();
@@ -196,14 +194,14 @@ define([
             return isConnected;
         };
 
-        api.Object.prototype.getSuggestions = function () {
+        api.VertexUi.prototype.getSuggestions = function () {
             return this.getModel().getSuggestions();
         };
-        api.Object.prototype.hasSuggestions = function () {
+        api.VertexUi.prototype.hasSuggestions = function () {
             var suggestions = this.getModel().getSuggestions();
             return suggestions !== undefined && suggestions.length > 0;
         };
-        api.Object.prototype.addSuggestions = function (suggestions) {
+        api.VertexUi.prototype.addSuggestions = function (suggestions) {
             var existingSuggestions = this.getModel().getSuggestions();
             existingSuggestions = existingSuggestions === undefined ?
                 [] :
@@ -216,16 +214,16 @@ define([
             );
             this.centerOnScreen();
         };
-        api.Object.prototype.setSuggestions = function (suggestions) {
+        api.VertexUi.prototype.setSuggestions = function (suggestions) {
             this.getModel().setSuggestions(suggestions);
         };
 
-        api.Object.prototype.serverFacade = function () {
+        api.VertexUi.prototype.serverFacade = function () {
             return VertexService;
         };
 
-        api.Object.prototype.impactOnRemovedIdentification = function (identification) {
-            Bubble.Self.prototype.impactOnRemovedIdentification.call(
+        api.VertexUi.prototype.impactOnRemovedIdentification = function (identification) {
+            Bubble.Bubble.prototype.impactOnRemovedIdentification.call(
                 this,
                 identification
             );
@@ -247,10 +245,10 @@ define([
             );
             this.setSuggestions(suggestions);
         };
-        api.Object.prototype.getLabel = function () {
+        api.VertexUi.prototype.getLabel = function () {
             return this.html.find(".bubble-label");
         };
-        api.Object.prototype.serverFormat = function () {
+        api.VertexUi.prototype.serverFormat = function () {
             return {
                 label: this.text(),
                 getSuggestions: this.getSuggestions(),
@@ -268,62 +266,56 @@ define([
                 return serverFormat;
             }
         };
-        api.Object.prototype.makePrivate = function () {
+        api.VertexUi.prototype.makePrivate = function () {
             this.setIsPublic(false);
         };
-        api.Object.prototype.makePublic = function () {
+        api.VertexUi.prototype.makePublic = function () {
             this.setIsPublic(true);
         };
-        api.Object.prototype.isPublic = function () {
+        api.VertexUi.prototype.isPublic = function () {
             return this.html.data("isPublic");
         };
 
-        api.Object.prototype.deselect = function () {
+        api.VertexUi.prototype.deselect = function () {
             this.html.removeClass("selected");
             this.hideButtons();
         };
-        api.Object.prototype.select = function () {
+        api.VertexUi.prototype.select = function () {
             this.html.addClass("selected");
         };
-        api.Object.prototype.makeSingleSelected = function () {
+        api.VertexUi.prototype.makeSingleSelected = function () {
             this.showButtons();
         };
-        api.Object.prototype.setIncludedVertices = function (includedVertices) {
+        api.VertexUi.prototype.setIncludedVertices = function (includedVertices) {
             this.html.data(
                 "includedVertices",
                 includedVertices
             );
         };
-        api.Object.prototype.hasIncludedGraphElements = function () {
+        api.VertexUi.prototype.hasIncludedGraphElements = function () {
             return Object.keys(this.getIncludedVertices()).length > 0;
         };
-        api.Object.prototype.getIncludedVertices = function () {
+        api.VertexUi.prototype.getIncludedVertices = function () {
             return this.html.data("includedVertices");
         };
-        api.Object.prototype.setIncludedEdges = function (includedEdges) {
+        api.VertexUi.prototype.setIncludedEdges = function (includedEdges) {
             this.html.data(
                 "includedEdges",
                 includedEdges
             );
         };
-        api.Object.prototype.getIncludedEdges = function () {
+        api.VertexUi.prototype.getIncludedEdges = function () {
             return this.html.data("includedEdges");
         };
-        api.Object.prototype.getMenuHtml = function () {
+        api.VertexUi.prototype.getMenuHtml = function () {
             return this.html.find('.menu');
         };
-        api.Object.prototype.addChildTree = function () {
-            var self = this;
-            return GraphDisplayer.addChildTree(
-                self
-            );
-        };
 
-        api.Object.prototype.isImmediateChildOfGroupRelation = function () {
+        api.VertexUi.prototype.isImmediateChildOfGroupRelation = function () {
             return this.getParentBubble().getParentBubble().isGroupRelation();
         };
         
-        api.Object.prototype.getDeepestChildDistance = function () {
+        api.VertexUi.prototype.getDeepestChildDistance = function () {
             var depth = -1;
             var childContainer = this.getHtml().parent().parent().find(
                 "> .vertices-children-container"

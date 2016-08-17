@@ -26,6 +26,8 @@ define([
             )
         ]);
         suggestionRelationUi.setGenericIdentifications([]);
+        var propertiesIndicator = suggestionRelationUi.buildHiddenNeighborPropertiesIndicator();
+        propertiesIndicator.hide();
         suggestionRelationUi.getHtml().closest(
             ".vertex-tree-container"
         ).find("> .vertical-border").addClass("small");

@@ -24,7 +24,7 @@ define([
             locationBubbleSuggestion = SuggestionBubbleHtmlBuilder.withServerFacade(
                 locationSuggestion
             ).create();
-            spyOn(Bubble.Self.prototype, "integrateIdentification").and.callFake(function(){});
+            spyOn(Bubble.Bubble.prototype, "integrateIdentification").and.callFake(function(){});
             SuggestionBubbleHtmlBuilder.completeBuild(locationBubbleSuggestion);
         });
         it("can build from server facade", function () {

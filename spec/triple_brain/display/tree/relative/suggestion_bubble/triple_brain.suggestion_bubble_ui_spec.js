@@ -224,7 +224,7 @@ define([
             expect(
                 calledUri
             ).not.toBe(b3ComparedWithUri);
-            b3.addChildTree();
+            b3.getController().expand();
             expect(
                 calledUri
             ).toBe(b3ComparedWithUri);
@@ -252,7 +252,7 @@ define([
             GraphServiceMock.getForCentralBubbleUri(
                 new Scenarios.threeBubblesGraph().getSubGraphForB3()
             );
-            b3.addChildTree();
+            b3.getController().expand();
             expect(
                 b3.getNumberOfChild()
             ).toBe(2);
@@ -280,7 +280,7 @@ define([
             GraphServiceMock.getForCentralBubbleUri(
                 new Scenarios.threeBubblesGraph().getSubGraphForB3()
             );
-            b3.addChildTree();
+            b3.getController().expand();
             var suggestionChild = b3.getTopMostChildBubble();
             expect(
                 suggestionChild.isRelationSuggestion()
@@ -309,7 +309,7 @@ define([
             GraphServiceMock.getForCentralBubbleUri(
                 new Scenarios.threeBubblesGraph().getSubGraphForB3()
             );
-            b3.addChildTree();
+            b3.getController().expand();
             var b5 = TestUtils.getChildWithLabel(
                 b3,
                 "r4"
@@ -336,14 +336,14 @@ define([
                 "r2"
             ).getTopMostChildBubble();
             expect(
-                b3.hasHiddenRelationsContainer()
+                b3.hasVisibleHiddenRelationsContainer()
             ).toBeTruthy();
             GraphServiceMock.getForCentralBubbleUri(
                 new Scenarios.threeBubblesGraph().getSubGraphForB3()
             );
-            b3.addChildTree();
+            b3.getController().expand();
             expect(
-                b3.hasHiddenRelationsContainer()
+                b3.hasVisibleHiddenRelationsContainer()
             ).toBeFalsy();
         });
         it("shows the hidden child flag of expanded suggestions if applicable", function () {
@@ -365,7 +365,7 @@ define([
             GraphServiceMock.getForCentralBubbleUri(
                 new Scenarios.threeBubblesGraph().getSubGraphForB3()
             );
-            b3.addChildTree();
+            b3.getController().expand();
             var b5 = TestUtils.getChildWithLabel(
                 b3,
                 "r4"

@@ -75,5 +75,55 @@ define([
                 b1Fork.getModel().getLabel()
             ).toBe("b1");
         });
+        it("does not show collapse button to leaves", function(){
+            var scenario = new Scenarios.creationDateScenario();
+            var b1 = scenario.getBubble1InTree();
+            expect(
+                b1.getController().collapseCanDo()
+            ).toBeTruthy();
+            var b2 = TestUtils.getChildWithLabel(
+                b1,
+                "r2"
+            ).getTopMostChildBubble();
+            expect(
+                b2.getController().collapseCanDo()
+            ).toBeFalsy();
+        });
+        it("shows the expand button to bubbles having hidden relations", function(){
+            var scenario = new Scenarios.threeBubblesGraph();
+            var b2 = scenario.getBubble2InTree();
+            expect(
+                b2.getController().expandCanDo()
+            ).toBeTruthy();
+        });
+        it("does does not show the expand bubbles button when there are no descendants to expand", function(){
+            var scenario = new Scenarios.threeBubblesGraph();
+            var b2 = scenario.getBubble2InTree();
+            scenario.expandBubble2(
+                b2
+            );
+            expect(
+                b2.getController().expandCanDo()
+            ).toBeFalsy();
+        });
+        it("does not show the collapse button to bubbles having the hidden relations container", function(){
+            var scenario = new Scenarios.threeBubblesGraph();
+            var b2 = scenario.getBubble2InTree();
+            expect(
+                b2.hasVisibleHiddenRelationsContainer()
+            ).toBeTruthy();
+            expect(
+                b2.getController().collapseCanDo()
+            ).toBeFalsy();
+            scenario.expandBubble2(
+                b2
+            );
+            expect(
+                b2.hasVisibleHiddenRelationsContainer()
+            ).toBeFalsy();
+            expect(
+                b2.getController().collapseCanDo()
+            ).toBeTruthy();
+        });
     });
 });

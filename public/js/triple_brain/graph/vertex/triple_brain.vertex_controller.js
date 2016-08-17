@@ -47,7 +47,7 @@ define([
     };
 
     VertexController.prototype.addSibling = function () {
-        if(this.getElements().isImmediateChildOfGroupRelation()){
+        if (this.getElements().isImmediateChildOfGroupRelation()) {
             var groupRelation = this.getElements().getParentBubble().getParentBubble();
             return groupRelation.getController().addChild();
         }
@@ -228,13 +228,37 @@ define([
             GraphDisplayer.displayUsingCentralBubbleUri
         );
     };
+    VertexController.prototype.expand = function () {
+        var deferred = $.Deferred().resolve();
+        var self = this;
+        if (this.getElements().hasVisibleHiddenRelationsContainer()) {
+            if (!this.getElements().isCollapsed()) {
+                deferred = GraphDisplayer.addChildTree(
+                    this.getElements()
+                ).then(function () {
+                    self.getElements().expand();
+                });
+            }
+        } else if (this.getElements().hasDescendantsWithHiddenRelations()) {
+            var addChildTreeActions = [];
+            this.getElements().visitExpandableDescendants(function (expandableLeaf) {
+                addChildTreeActions.push(
+                    expandableLeaf.getController().expand()
+                );
+            });
+            deferred = $.when.apply($, addChildTreeActions);
+        }
+        return deferred.done(function () {
+            self.getElements().expand();
+        });
+    };
     api.Self = VertexController;
     api.addChildToRealAndUiParent = function (realParent, uiParent) {
-        if(uiParent === undefined){
+        if (uiParent === undefined) {
             uiParent = realParent;
         }
-        if (uiParent.hasHiddenRelationsContainer()) {
-            return uiParent.addChildTree().then(doIt);
+        if (!uiParent.isExpanded()) {
+            return uiParent.getController().expand().then(doIt);
         } else {
             return doIt();
         }

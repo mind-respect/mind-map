@@ -4,24 +4,40 @@
 
 define([
     "test/test-scenarios",
+    "test/mock/triple_brain.graph_service_mock",
     "triple_brain.graph_service"
-], function (Scenarios, GraphService) {
+], function (Scenarios, GraphServiceMock, GraphService) {
     "use strict";
     describe("vertex hidden neighbor properties indicator", function () {
-        it("removes the flag instantly on click in order to avoid to handle the click twice", function(){
+        it("hides the flag instantly on click in order to avoid to handle the click twice", function(){
             var threeBubblesScenario = new Scenarios.threeBubblesGraph();
             var b3 = threeBubblesScenario.getBubble3InTree();
-            var flagHtml = b3.getHiddenRelationsContainer().getHtml();
+            b3.getHiddenRelationsContainer();
             GraphService.getForCentralBubbleUri = function(){
                 //disable callback to be able to test
             };
             expect(
-                flagHtml.parent().length
-            ).not.toBe(0);
-            flagHtml.click();
+                b3.getHiddenRelationsContainer().isVisible()
+            ).toBeTruthy();
+            b3.getHiddenRelationsContainer().getHtml().click();
             expect(
-                flagHtml.parent().length
+                b3.getHiddenRelationsContainer().isVisible()
+            ).toBeFalsy();
+        });
+        it("shows child tree when clicking", function(){
+            var threeBubblesScenario = new Scenarios.threeBubblesGraph();
+            var b3 = threeBubblesScenario.getBubble3InTree();
+            b3.getHiddenRelationsContainer();
+            GraphServiceMock.getForCentralBubbleUri(
+                threeBubblesScenario.getSubGraphForB3()
+            );
+            expect(
+                b3.getNumberOfChild()
             ).toBe(0);
+            b3.getHiddenRelationsContainer().getHtml().click();
+            expect(
+                b3.getNumberOfChild()
+            ).toBe(2);
         });
     });
 });

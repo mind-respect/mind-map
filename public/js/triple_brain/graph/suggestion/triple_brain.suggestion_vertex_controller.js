@@ -5,8 +5,13 @@
 define([
     "jquery",
     "triple_brain.graph_element_controller",
-    "triple_brain.suggestion_service"
-], function ($, GraphElementController, SuggestionService) {
+    "triple_brain.suggestion_service",
+    "triple_brain.graph_service",
+    "triple_brain.sub_graph",
+    "triple_brain.suggestion",
+    "triple_brain.triple",
+    "triple_brain.graph_displayer"
+], function ($, GraphElementController, SuggestionService, GraphService, SubGraph, Suggestion, Triple, GraphDisplayer) {
     "use strict";
     var api = {};
 
@@ -64,6 +69,59 @@ define([
     };
     SuggestionVertexController.prototype.centerCanDo = function () {
         return false;
+    };
+    SuggestionVertexController.prototype.expand = function () {
+        var deferred = $.Deferred();
+        if (this.getElements().isCollapsed()) {
+            this.getElements().expand();
+            return deferred.resolve();
+        }
+        this.getElements().hideHiddenRelationsContainer();
+        var uriToFetch = this.getElements().getModel().getExternalResourceUri();
+        var suggestionUi = this.getElements();
+        var parentEdgeUri = this.getElements().getParentBubble().getFirstIdentificationToAGraphElement().getExternalResourceUri();
+        GraphService.getForCentralBubbleUri(
+            uriToFetch,
+            function (serverGraph) {
+                var subGraph = SubGraph.fromServerFormat(serverGraph);
+                var centerVertex = subGraph.getVertexWithUri(
+                    suggestionUi.getModel().getExternalResourceUri()
+                );
+                subGraph.visitEdgesRelatedToVertex(centerVertex, function (edge) {
+                    if (edge.getUri() === parentEdgeUri) {
+                        return;
+                    }
+                    var destinationVertex = edge.getOtherVertex(centerVertex);
+                    destinationVertex = subGraph.getVertexWithUri(
+                        destinationVertex.getUri()
+                    );
+                    var triple = GraphDisplayer.addSuggestionToVertex(
+                        Suggestion.fromTriple(
+                            Triple.fromEdgeAndSourceAndDestinationVertex(
+                                edge,
+                                centerVertex,
+                                destinationVertex
+                            )
+                        ),
+                        suggestionUi
+                    );
+                    triple.edge().setComparedWith(
+                        edge
+                    );
+                    triple.destinationVertex().setText(
+                        destinationVertex.getLabel()
+                    );
+                    triple.destinationVertex().setComparedWith(
+                        destinationVertex
+                    );
+                    if (destinationVertex.getNumberOfConnectedEdges() > 1) {
+                        triple.destinationVertex().buildHiddenNeighborPropertiesIndicator();
+                    }
+                });
+                deferred.resolve();
+            }
+        );
+        return deferred.promise();
     };
     api.Self = SuggestionVertexController;
     return api;

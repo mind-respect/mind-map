@@ -38,7 +38,7 @@ define([
             GraphServiceMock.getForCentralBubbleUri(
                 new Scenarios.threeBubblesGraph().getSubGraphForB3()
             );
-            b3.addChildTree();
+            b3.getController().expand();
             expect(
                 b3.isVertex()
             ).toBeFalsy();
@@ -66,6 +66,37 @@ define([
             expect(
                 r2.isRelation()
             ).toBeTruthy();
+        });
+        it("can expand when simply collapsed", function () {
+            MindMapInfo._setIsViewOnly(false);
+            var scenario = new Scenarios.threeBubblesGraphFork();
+            var b1Fork = scenario.getBubble1InTree();
+            TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            ).remove();
+            TestUtils.enterCompareFlowWithGraph(
+                SubGraph.fromServerFormat(
+                    new Scenarios.threeBubblesGraph().getGraph()
+                )
+            );
+            var r2 = TestUtils.getChildWithLabel(
+                b1Fork,
+                "r2"
+            );
+            var b3 = r2.getTopMostChildBubble();
+            GraphServiceMock.getForCentralBubbleUri(
+                new Scenarios.threeBubblesGraph().getSubGraphForB3()
+            );
+            b3.getController().expand();
+            b3.collapse();
+            expect(
+                b3.isCollapsed()
+            ).toBeTruthy();
+            b3.getController().expand();
+            expect(
+                b3.isCollapsed()
+            ).toBeFalsy();
         });
     });
 });

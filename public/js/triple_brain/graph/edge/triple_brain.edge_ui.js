@@ -31,33 +31,33 @@ define([
         };
         api.buildCommonConstructors(api);
         
-        api.Object = function (html) {
+        api.EdgeUi = function (html) {
             this.html = html;
             IdentifiedBubble.Object.apply(this, [html]);
         };
 
-        api.Object.prototype = new IdentifiedBubble.Object();
+        api.EdgeUi.prototype = new IdentifiedBubble.Object();
 
-        api.Object.prototype.getMenuHtml = function () {
+        api.EdgeUi.prototype.getMenuHtml = function () {
             return this.html.find('.relation-menu');
         };
-        api.Object.prototype.getGraphElementType = function () {
+        api.EdgeUi.prototype.getGraphElementType = function () {
             return GraphElementUi.Types.Relation;
         };
-        api.Object.prototype.serverFacade = function () {
+        api.EdgeUi.prototype.serverFacade = function () {
             return EdgeService;
         };
-        api.Object.prototype.getDestinationVertex = function () {
+        api.EdgeUi.prototype.getDestinationVertex = function () {
             return GraphDisplayer.getVertexSelector().withId(
                 this.html.data('destination_vertex_id')
             );
         };
-        api.Object.prototype.getSourceVertex = function () {
+        api.EdgeUi.prototype.getSourceVertex = function () {
             return GraphDisplayer.getVertexSelector().withId(
                 this.html.data("source_vertex_id")
             );
         };
-        api.Object.prototype.inverseAbstract = function () {
+        api.EdgeUi.prototype.inverseAbstract = function () {
             var sourceVertexUri = this.html.data("source_vertex_id");
             var destinationVertexUri = this.html.data("destination_vertex_id");
             this.html.data(
@@ -69,60 +69,64 @@ define([
                 sourceVertexUri
             );
         };
-        api.Object.prototype.serverFacade = function () {
+        api.EdgeUi.prototype.serverFacade = function () {
             return EdgeService;
         };
 
-        api.Object.prototype.showMenu = function () {
+        api.EdgeUi.prototype.showMenu = function () {
             this.getMenuHtml().show();
         };
-        api.Object.prototype.hideMenu = function () {
+        api.EdgeUi.prototype.hideMenu = function () {
             this.getMenuHtml().hide();
         };
-        api.Object.prototype.getHtml = function () {
+        api.EdgeUi.prototype.getHtml = function () {
             return this.html;
         };
 
-        api.Object.prototype.select = function () {
+        api.EdgeUi.prototype.select = function () {
             this.html.addClass("selected");
         };
-        api.Object.prototype.makeSingleSelected = function () {
+        api.EdgeUi.prototype.makeSingleSelected = function () {
             this.showMenu();
         };
-        api.Object.prototype.deselect = function () {
+        api.EdgeUi.prototype.deselect = function () {
             this.html.removeClass("selected");
             this.hideMenu();
         };
-        api.Object.prototype.isSelected = function () {
+        api.EdgeUi.prototype.isSelected = function () {
             return this.html.hasClass("selected");
         };
         
-        api.Object.prototype.isPublic = function () {
+        api.EdgeUi.prototype.isPublic = function () {
             if(this.isProperty()){
                 return true;
             }
             return this.getParentVertex().isPublic() && this.getDestinationVertex().isPublic();
         };
 
-        api.Object.prototype.isSetAsSameAsGroupRelation = function () {
+        api.EdgeUi.prototype.isSetAsSameAsGroupRelation = function () {
             return this.getHtml().hasClass(
                 "same-as-group-relation"
             );
         };
 
-        api.Object.prototype.setAsNotSameAsGroupRelation = function () {
+        api.EdgeUi.prototype.setAsNotSameAsGroupRelation = function () {
             return this.getHtml().removeClass(
                 "same-as-group-relation"
             );
         };
 
-        api.Object.prototype.setAsSameAsGroupRelation = function () {
+        api.EdgeUi.prototype.setAsSameAsGroupRelation = function () {
             return this.getHtml().addClass(
                 "same-as-group-relation"
             );
         };
 
-        api.Object.prototype.getYPosition = function () {
+        api.EdgeUi.prototype.hasHiddenRelations = function () {
+            return false;
+        };
+
+        api.EdgeUi.prototype.getYPosition = function () {
             var edgeIsSetAsSameAsGroupRelation = this.isSetAsSameAsGroupRelation();
             if(edgeIsSetAsSameAsGroupRelation){
                 this.setAsNotSameAsGroupRelation();

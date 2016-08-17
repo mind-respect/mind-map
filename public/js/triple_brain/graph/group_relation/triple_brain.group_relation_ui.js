@@ -31,7 +31,7 @@ define([
     };
     api.GroupRelationUi = function (html) {
         this.html = html;
-        TreeEdge.Self.prototype.init.call(
+        TreeEdge.TreeEdge.prototype.init.call(
             this,
             html
         );
@@ -39,7 +39,7 @@ define([
     api.withUri = function () {
         return [];
     };
-    api.GroupRelationUi.prototype = new TreeEdge.Self();
+    api.GroupRelationUi.prototype = new TreeEdge.TreeEdge();
     api.GroupRelationUi.prototype.getGraphElementType = function () {
         return GraphElementUi.Types.GroupRelation;
     };
@@ -59,12 +59,7 @@ define([
     api.GroupRelationUi.prototype.getHtml = function () {
         return this.html;
     };
-    api.GroupRelationUi.prototype.addChildTree = function () {
-        GraphDisplayer.expandGroupRelation(
-            this
-        );
-        return new $.Deferred().resolve();
-    };
+
     api.GroupRelationUi.prototype.select = function () {
         this.html.addClass("selected");
     };
@@ -105,6 +100,21 @@ define([
 
     api.GroupRelationUi.prototype.getNote = function () {
         return this.getLabel().attr("data-content");
+    };
+
+    api.GroupRelationUi.prototype.expand = function () {
+        if(!this.isCollapsed()){
+            GraphDisplayer.expandGroupRelation(
+                this
+            );
+        }
+        TreeEdge.TreeEdge.prototype.expand.apply(
+            this
+        );
+    };
+
+    api.GroupRelationUi.prototype.hasHiddenRelations = function () {
+        return true;
     };
 
     api.GroupRelationUi.prototype.getModel = api.GroupRelationUi.prototype.getGroupRelation;

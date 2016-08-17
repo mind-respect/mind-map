@@ -111,8 +111,8 @@ define([
     };
     EdgeController.prototype.changeSourceVertex = function (sourceVertex) {
         var self = this;
-        if (sourceVertex.hasHiddenRelationsContainer()) {
-            return sourceVertex.addChildTree().then(doIt);
+        if (!sourceVertex.isExpanded()) {
+            return sourceVertex.getController().expand().then(doIt);
         } else {
             return doIt();
         }

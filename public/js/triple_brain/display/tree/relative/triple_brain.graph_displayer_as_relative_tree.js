@@ -126,7 +126,7 @@ define([
                 serverGraph.vertices
             );
         }
-        parentVertex.removeHiddenRelationsContainer();
+        parentVertex.hideHiddenRelationsContainer();
         parentVertex.visitAllChild(function (childBubble) {
             if (childBubble.isGroupRelation()) {
                 GroupRelationHtmlBuilder.completeBuild(childBubble);
@@ -385,7 +385,7 @@ define([
                 );
             });
         });
-        groupRelationUi.removeHiddenRelationsContainer();
+        groupRelationUi.hideHiddenRelationsContainer();
         GraphElementMainMenu.showWholeGraphButtonOnlyIfApplicable(
             GraphElementMainMenu.getExpandAllButton()
         );

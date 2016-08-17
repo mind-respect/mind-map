@@ -12,7 +12,7 @@ define([
         api.buildCommonConstructors = EdgeUi.buildCommonConstructors;
         EdgeUi.buildCommonConstructors(api);
         api.createFromHtmlAndUri = function (html, uri) {
-            var edge = new api.Self().init(
+            var edge = new api.TreeEdge().init(
                 html
             );
             edge.setUri(uri);
@@ -32,34 +32,34 @@ define([
                 edge.getHtml()
             );
         };
-        api.Self = function () {
+        api.TreeEdge = function () {
         };
-        api.Self.prototype = new EdgeUi.Object();
-        api.Self.prototype.init = function (html) {
+        api.TreeEdge.prototype = new EdgeUi.EdgeUi();
+        api.TreeEdge.prototype.init = function (html) {
             this.html = html;
-            EdgeUi.Object.apply(this, [html]);
+            EdgeUi.EdgeUi.apply(this, [html]);
             return this;
         };
-        api.Self.prototype.text = function () {
+        api.TreeEdge.prototype.text = function () {
             return this.getLabel().text();
         };
-        api.Self.prototype.childVertexInDisplay = function () {
+        api.TreeEdge.prototype.childVertexInDisplay = function () {
             return this.getTopMostChildBubble();
         };
-        api.Self.prototype.isInverse = function () {
+        api.TreeEdge.prototype.isInverse = function () {
             return this.html.hasClass("inverse");
         };
-        api.Self.prototype.serverFormat = function () {
+        api.TreeEdge.prototype.serverFormat = function () {
             return {
                 label: this.text(),
                 source_vertex_id: this.getSourceVertex().getId(),
                 destination_vertex_id: this.getDestinationVertex().getId()
             };
         };
-        api.Self.prototype.getLabel = function () {
+        api.TreeEdge.prototype.getLabel = function () {
             return this.html.find(".bubble-label");
         };
-        api.Self.prototype.inverse = function () {
+        api.TreeEdge.prototype.inverse = function () {
             this.html[
                 this.html.hasClass("inverse") ?
                     "removeClass" :
@@ -73,7 +73,7 @@ define([
                 ]("inverse");
             this.inverseAbstract();
         };
-        api.Self.prototype.removeFromCache = function () {
+        api.TreeEdge.prototype.removeFromCache = function () {
             api.removeFromCache(
                 this.getUri(),
                 this.getId()
@@ -83,12 +83,12 @@ define([
                 this.getId()
             );
         };
-        api.Self.prototype.getLabelAndButtonsContainer = function () {
+        api.TreeEdge.prototype.getLabelAndButtonsContainer = function () {
             return this.html.find(
                 ".label-and-buttons"
             );
         };
-        api.Self.prototype.reviewEditButtonDisplay = function () {
+        api.TreeEdge.prototype.reviewEditButtonDisplay = function () {
             var parentBubble = this.getParentBubble();
             if(!parentBubble.isGroupRelation()){
                 return;

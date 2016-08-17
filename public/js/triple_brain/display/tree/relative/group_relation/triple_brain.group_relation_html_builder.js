@@ -27,17 +27,11 @@ define([
             return new Self(serverFacade);
         };
         api.completeBuild = function (groupRelationUi) {
-            var indicator = PropertiesIndicator.withVertex(
-                groupRelationUi
-            );
-            groupRelationUi.setHiddenRelationsContainer(
-                indicator
-            );
+            groupRelationUi.buildHiddenNeighborPropertiesIndicator();
             groupRelationUi.integrateIdentification(
                 groupRelationUi.getModel().getIdentification()
             );
             groupRelationUi.refreshImages();
-            indicator.build();
             var shouldExpand = groupRelationUi.getParentBubble().getNumberOfChild() < NUMBER_OF_SIBLINGS_UNDER_WHICH_YOU_SHOULD_EXPAND;
             if (shouldExpand) {
                 GraphDisplayer.expandGroupRelation(

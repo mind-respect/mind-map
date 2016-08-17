@@ -168,7 +168,7 @@ define([
             );
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
             var groupRelationUi = scenario.getPossessionAsGroupRelationInTree();
-            groupRelationUi.addChildTree();
+            groupRelationUi.expand();
             var relation = TestUtils.getChildWithLabel(
                 groupRelationUi,
                 "Possession of book 1"
@@ -212,7 +212,7 @@ define([
             expect(
                 groupRelation.isGroupRelation()
             ).toBeTruthy();
-            groupRelation.addChildTree();
+            groupRelation.expand();
             var book2 = TestUtils.getChildWithLabel(
                 groupRelation,
                 "Possessed by book 2"
@@ -243,7 +243,7 @@ define([
             expect(
                 groupRelation.isGroupRelation()
             ).toBeTruthy();
-            groupRelation.addChildTree();
+            groupRelation.expand();
             var book2Relation = TestUtils.getChildWithLabel(
                 groupRelation,
                 "Possessed by book 2"

@@ -20,7 +20,7 @@ define([
             locationRelationSuggestion = SuggestionRelationBuilder.withServerFacade(
                 locationSuggestion
             ).create();
-            spyOn(Bubble.Self.prototype, "integrateIdentification").and.callFake(function(){});
+            spyOn(Bubble.Bubble.prototype, "integrateIdentification").and.callFake(function(){});
             SuggestionRelationBuilder.afterChildBuilt(locationRelationSuggestion);
         });
         it("has the suggestion label", function () {

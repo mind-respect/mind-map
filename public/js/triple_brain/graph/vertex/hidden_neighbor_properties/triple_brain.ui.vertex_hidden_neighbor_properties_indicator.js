@@ -6,16 +6,24 @@ define([
         "jquery",
         "triple_brain.mind-map_template",
         "triple_brain.event_bus",
-        "triple_brain.graph_displayer"
+        "triple_brain.graph_displayer",
+        "triple_brain.bubble_factory"
     ],
-    function ($, MindMapTemplate, EventBus, GraphDisplayer) {
+    function ($, MindMapTemplate, EventBus, GraphDisplayer, BubbleFactory) {
         "use strict";
         var api = {},
             imageBasePath = "/css/images/icons/vertex/",
             rightSideImagePath = imageBasePath + "floral-design.svg",
             leftSideImagePath = imageBasePath + "left-floral-design.svg";
-        api.withVertex = function (bubble) {
+        api.withBubble = function (bubble) {
             return new HiddenNeighborPropertiesIndicator(bubble);
+        };
+        api.fromHtml = function (html) {
+            var hiddenNeighborPropertiesIndicator = new HiddenNeighborPropertiesIndicator(
+                BubbleFactory.fromSubHtml(html)
+            );
+            hiddenNeighborPropertiesIndicator.hiddenNeighborPropertiesContainer = html;
+            return hiddenNeighborPropertiesIndicator;
         };
         function HiddenNeighborPropertiesIndicator(bubble) {
             this.bubble = bubble;
@@ -57,11 +65,15 @@ define([
         };
 
         HiddenNeighborPropertiesIndicator.prototype.hide = function () {
-            this.hiddenNeighborPropertiesContainer.css("visibility", "hidden");
+            this.hiddenNeighborPropertiesContainer.addClass("hidden");
         };
 
         HiddenNeighborPropertiesIndicator.prototype.show = function () {
-            this.hiddenNeighborPropertiesContainer.css("visibility", "visible");
+            this.hiddenNeighborPropertiesContainer.removeClass("hidden");
+        };
+
+        HiddenNeighborPropertiesIndicator.prototype.isVisible = function () {
+            return !this.getHtml().hasClass("hidden");
         };
 
         HiddenNeighborPropertiesIndicator.prototype.getHtml = function () {
@@ -88,17 +100,22 @@ define([
             );
         };
 
-        function handleHiddenPropertiesContainerClick() {
+        HiddenNeighborPropertiesIndicator.prototype.getBubble = function () {
+            return this.bubble;
+        };
+
+        function handleHiddenPropertiesContainerClick(event) {
+            event.stopPropagation();
             if (!GraphDisplayer.canAddChildTree()) {
                 return;
             }
-            var $this = $(this);
-            var vertex = $this.data("vertex");
-            $this.remove();
-            vertex.addChildTree().done(function () {
-                vertex.centerOnScreenWithAnimation();
-            });
+            var hiddenPropertiesContainer = api.fromHtml(
+                $(this)
+            );
+            hiddenPropertiesContainer.getBubble().getController().expand();
+            hiddenPropertiesContainer.hide();
         }
+
         return api;
     }
 );

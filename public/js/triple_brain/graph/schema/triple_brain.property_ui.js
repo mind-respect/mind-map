@@ -28,10 +28,10 @@ define([
     };
     api.Self = function(html){
         this.html = html;
-        TreeEdge.Self.apply(this);
+        TreeEdge.TreeEdge.apply(this);
         this.init(this.html);
     };
-    api.Self.prototype = new TreeEdge.Self();
+    api.Self.prototype = new TreeEdge.TreeEdge();
     api.Self.prototype.getGraphElementType = function(){
         return GraphElementUi.Types.Property;
     };

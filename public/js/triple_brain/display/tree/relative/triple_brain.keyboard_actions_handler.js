@@ -133,7 +133,7 @@ define([
             return;
         }
         if (selectedElement.hasHiddenRelationsContainer()) {
-            selectedElement.addChildTree().done(function(){
+            selectedElement.getController().expand().done(function(){
                 selectedElement.centerOnScreenWithAnimation();
             });
         }

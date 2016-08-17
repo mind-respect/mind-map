@@ -62,13 +62,13 @@ define([
             var graphWithHiddenSimilarRelationsScenario = new Scenarios.graphWithHiddenSimilarRelations();
             var bubble2 = graphWithHiddenSimilarRelationsScenario.getBubble2InTree();
             expect(
-                bubble2.hasHiddenRelationsContainer()
+                bubble2.hasVisibleHiddenRelationsContainer()
             ).toBeTruthy();
             graphWithHiddenSimilarRelationsScenario.expandBubble2(
                 bubble2
             );
             expect(
-                bubble2.hasHiddenRelationsContainer()
+                bubble2.hasVisibleHiddenRelationsContainer()
             ).toBeFalsy();
             expect(
                 bubble2.getTopMostChildBubble().isGroupRelation()
@@ -91,13 +91,13 @@ define([
         it("removes hidden properties indicator when expanding group relation", function () {
             var groupRelation = new Scenarios.GraphWithSimilarRelationsScenario().getPossessionAsGroupRelationInTree();
             expect(
-                groupRelation.hasHiddenRelationsContainer()
+                groupRelation.hasVisibleHiddenRelationsContainer()
             ).toBeTruthy();
             GraphDisplayerAsRelativeTree.expandGroupRelation(
                 groupRelation
             );
             expect(
-                groupRelation.hasHiddenRelationsContainer()
+                groupRelation.hasVisibleHiddenRelationsContainer()
             ).toBeFalsy();
         });
         it("contains all connected elements for included graph elements view", function () {
@@ -337,7 +337,7 @@ define([
             GraphServiceMock.getForCentralBubbleUri(
                 new Scenarios.withAcceptedSuggestionGraph().getGraph()
             );
-            eventBubble.addChildTree();
+            eventBubble.getController().expand();
             expect(
                 TestUtils.hasChildWithLabel(
                     eventBubble,
@@ -365,7 +365,7 @@ define([
             expect(
                 eventBubble.getNumberOfChild()
             ).toBe(0);
-            eventBubble.addChildTree();
+            eventBubble.getController().expand();
             expect(
                 eventBubble.getNumberOfChild()
             ).toBe(3);
@@ -406,7 +406,7 @@ define([
             expect(
                 groupRelation.isGroupRelation()
             ).toBeTruthy();
-            groupRelation.addChildTree();
+            groupRelation.expand();
             var book1 = groupRelation.getTopMostChildBubble().getTopMostChildBubble();
             expect(
                 book1.text()
