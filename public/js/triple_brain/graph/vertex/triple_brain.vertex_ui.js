@@ -43,9 +43,13 @@ define([
         };
 
         api.VertexUi.prototype.remove = function () {
+            var parentVertex = this.isCenterBubble() ?
+                undefined :
+                this.getParentVertex();
             this.removeConnectedEdges();
             Bubble.Bubble.prototype.remove.call(
-                this
+                this,
+                parentVertex
             );
         };
 
@@ -66,7 +70,7 @@ define([
             });
             return areShown;
         };
-        
+
         api.VertexUi.prototype.getMakePrivateButton = function () {
             return this.getButtonHtmlHavingAction("makePrivate");
         };
@@ -117,7 +121,7 @@ define([
             }
             return this.getSegments().intersectionPointWithSegment(segmentToCompare);
         };
-        
+
         api.VertexUi.prototype.width = function () {
             return this.html.width();
         };
@@ -177,7 +181,7 @@ define([
         api.VertexUi.prototype.removeConnectedEdges = function () {
             this.applyToConnectedEdges(function (edge) {
                 edge.removeFromCache();
-                edge.remove();
+                edge.collateralRemove();
             });
         };
 
@@ -314,7 +318,7 @@ define([
         api.VertexUi.prototype.isImmediateChildOfGroupRelation = function () {
             return this.getParentBubble().getParentBubble().isGroupRelation();
         };
-        
+
         api.VertexUi.prototype.getDeepestChildDistance = function () {
             var depth = -1;
             var childContainer = this.getHtml().parent().parent().find(

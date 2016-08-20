@@ -70,11 +70,11 @@ define([
             this.vertices,
             deleteAfterConfirmationBehavior
         ).build();
-        function deleteAfterConfirmationBehavior(vertex) {
-            VertexService.remove(vertex, function (vertex) {
-                var parentVertex = vertex.getParentVertex();
-                vertex.remove();
-                parentVertex.centerOnScreenWithAnimation();
+        function deleteAfterConfirmationBehavior(vertexUi) {
+            VertexService.remove(
+                vertexUi
+            ).then(function () {
+                vertexUi.remove();
             });
         }
     };
@@ -239,14 +239,8 @@ define([
                     self.getElements().expand();
                 });
             }
-        } else if (this.getElements().hasDescendantsWithHiddenRelations()) {
-            var addChildTreeActions = [];
-            this.getElements().visitExpandableDescendants(function (expandableLeaf) {
-                addChildTreeActions.push(
-                    expandableLeaf.getController().expand()
-                );
-            });
-            deferred = $.when.apply($, addChildTreeActions);
+        }else{
+            this.expandDescendantsIfApplicable();
         }
         return deferred.done(function () {
             self.getElements().expand();

@@ -3,11 +3,12 @@
  */
 
 define([
+    "jquery",
     "triple_brain.vertex_service",
     "triple_brain.edge",
     "triple_brain.vertex",
     "test/test-utils"
-], function (VertexService, Edge, Vertex, TestUtils) {
+], function ($, VertexService, Edge, Vertex, TestUtils) {
     "use strict";
     var api = {};
     api.addRelationAndVertexToVertexMock = function () {
@@ -29,11 +30,8 @@ define([
         });
     };
     api.removeVertex = function(){
-        return spyOn(VertexService, "remove").and.callFake(function(vertex, callback){
-            VertexService._removeVertexCallback(
-                vertex,
-                callback
-            );
+        return spyOn(VertexService, "remove").and.callFake(function(vertexUi){
+            return $.Deferred().resolve(vertexUi);
         });
     };
     api.makeCollectionPrivate = function(){

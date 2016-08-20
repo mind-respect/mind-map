@@ -361,9 +361,15 @@ define([
             );
         };
 
-        api.Bubble.prototype.remove = function () {
+        api.Bubble.prototype.remove = function (parentVertex) {
             this._removeHideOrShow("remove");
             this.removeHiddenRelationsContainer();
+            if (parentVertex) {
+                SelectionHandler.setToSingleVertex(
+                    parentVertex
+                );
+                parentVertex.centerOnScreenWithAnimation();
+            }
         };
 
         api.Bubble.prototype.show = function () {

@@ -10,9 +10,9 @@
   },
   "compare_menu": {
     "title": "Comparer toute la carte",
-    "default_compare":{
-      "with":"Comparez avec la bulle",
-      "user":"de"
+    "default_compare": {
+      "with": "Comparez avec la bulle",
+      "user": "de"
     },
     "placeholder": "chercher une autre bulle à comparer",
     "loading": "Comparaison en cours...",
@@ -258,7 +258,9 @@
     "zoomIn": "Zoom intérieur",
     "zoomOut": "Zoom extérieur",
     "expandAll": "Expandre tout",
-    "visitOtherInstances": "Visiter la même bulle mais dans un autre contexte"
+    "visitOtherInstances": "Visiter la même bulle mais dans un autre contexte",
+    "collapse": "Cacher l'arbre",
+    "expand": "Expandre"
   },
   "hidden_properties_tooltip": "Expandre (ctrl+e)",
   "search": {

@@ -3,10 +3,12 @@
  */
 
 define([
-    'test/test-scenarios'
-], function (Scenarios) {
+    'test/test-scenarios',
+    "test/test-utils",
+    "triple_brain.selection_handler"
+], function (Scenarios, TestUtils, SelectionHandler) {
     "use strict";
-    describe("bubble", function(){
+    describe("bubble", function () {
         var edge1,
             child1,
             centerBubble;
@@ -16,7 +18,7 @@ define([
             child1 = scenario.getBubble2();
             centerBubble = scenario.getCenterBubbleInTree();
         });
-        it("can inverse", function(){
+        it("can inverse", function () {
             expect(
                 edge1.isInverse()
             ).toBeFalsy();
@@ -37,24 +39,39 @@ define([
                 edge1.getDestinationVertex().getUri()
             ).toBe(centerBubble.getUri());
         });
-        it("can get child vertex in display", function(){
+        it("can get child vertex in display", function () {
             expect(
                 edge1.childVertexInDisplay().getUri()
             ).toBe(child1.getUri());
         });
 
-        it("can get child vertex in display even if inverse", function(){
+        it("can get child vertex in display even if inverse", function () {
             edge1.inverse();
             expect(
                 edge1.childVertexInDisplay().getUri()
             ).toBe(child1.getUri());
         });
 
-        it("can get child vertex in display even if inverse", function(){
+        it("can get child vertex in display even if inverse", function () {
             edge1.inverse();
             expect(
                 edge1.childVertexInDisplay().getUri()
             ).toBe(child1.getUri());
+        });
+        it("selects the parent vertex when removed", function () {
+            var b1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            var r1 = TestUtils.getChildWithLabel(
+                b1,
+                "r1"
+            );
+            SelectionHandler.setToSingleVertex(r1);
+            expect(
+                b1.isSelected()
+            ).toBeFalsy();
+            r1.remove();
+            expect(
+                b1.isSelected()
+            ).toBeTruthy();
         });
     });
 });

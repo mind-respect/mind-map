@@ -4,8 +4,9 @@
 
 define([
     'test/test-scenarios',
+    'test/test-utils',
     'triple_brain.selection_handler'
-], function (Scenarios, SelectionHandler) {
+], function (Scenarios, TestUtils, SelectionHandler) {
     "use strict";
     describe("group_relation_ui", function () {
         it("shows description upon selection", function () {
@@ -46,6 +47,21 @@ define([
             expect(
                 possessionInTree.isCollapsed()
             ).toBeFalsy();
+        });
+        it("does not duplicate children when expanding while already expanded", function () {
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
+            possessionInTree.getController().expand();
+            expect(
+                possessionInTree.hasDescendantsWithHiddenRelations()
+            ).toBeTruthy();
+            expect(
+                possessionInTree.getNumberOfChild()
+            ).toBe(3);
+            possessionInTree.expand();
+            expect(
+                possessionInTree.getNumberOfChild()
+            ).toBe(3);
         });
     });
 });

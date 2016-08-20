@@ -257,7 +257,9 @@
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom out",
     "expandAll": "Expand all",
-    "visitOtherInstances": "Visit the same bubble but in another context"
+    "visitOtherInstances": "Visit the same bubble but in another context",
+    "collapse": "Hide tree",
+    "expand": "Expand"
   },
   "hidden_properties_tooltip": "Expand (ctrl+e)",
   "search": {

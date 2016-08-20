@@ -142,8 +142,26 @@ define([
     };
 
     GraphElementController.prototype.expand = function () {
-        this.getElements().expand();
-        return $.Deferred().resolve();
+        var deferred = $.Deferred().resolve();
+        var self = this;
+        this.expandDescendantsIfApplicable();
+        return deferred.done(function () {
+            self.getElements().expand();
+        });
+    };
+
+    GraphElementController.prototype.expandDescendantsIfApplicable = function () {
+        var deferred = $.Deferred();
+        if (this.getElements().hasDescendantsWithHiddenRelations()) {
+            var addChildTreeActions = [];
+            this.getElements().visitExpandableDescendants(function (expandableLeaf) {
+                addChildTreeActions.push(
+                    expandableLeaf.getController().expand()
+                );
+            });
+            deferred = $.when.apply($, addChildTreeActions);
+        }
+        return deferred;
     };
 
     GraphElementController.prototype.collapseCanDo = function () {

@@ -103,7 +103,7 @@ define([
     };
 
     api.GroupRelationUi.prototype.expand = function () {
-        if(!this.isCollapsed()){
+        if(!this.isCollapsed() && !this.isExpanded()){
             GraphDisplayer.expandGroupRelation(
                 this
             );

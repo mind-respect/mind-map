@@ -54,19 +54,11 @@ define([
                 [triple, sourceBubble]
             );
         };
-        api.remove = function (vertex, callback) {
-            $.ajax({
+        api.remove = function (vertex) {
+            return $.ajax({
                 type: 'DELETE',
                 url: vertex.getUri()
-            }).success(function () {
-                api._removeVertexCallback(
-                    vertex,
-                    callback
-                );
             });
-        };
-        api._removeVertexCallback = function (vertex, callback) {
-            callback(vertex);
         };
         api.updateLabel = function (vertex, label, callback) {
             FriendlyResourceService.updateLabel(

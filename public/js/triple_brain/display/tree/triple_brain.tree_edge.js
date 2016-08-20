@@ -4,9 +4,10 @@
 
 define([
         "jquery",
-        "triple_brain.edge_ui"
+        "triple_brain.edge_ui",
+        "triple_brain.bubble"
     ],
-    function ($, EdgeUi) {
+    function ($, EdgeUi, Bubble) {
         "use strict";
         var api = {};
         api.buildCommonConstructors = EdgeUi.buildCommonConstructors;
@@ -90,7 +91,7 @@ define([
         };
         api.TreeEdge.prototype.reviewEditButtonDisplay = function () {
             var parentBubble = this.getParentBubble();
-            if(!parentBubble.isGroupRelation()){
+            if (!parentBubble.isGroupRelation()) {
                 return;
             }
             if (parentBubble.text() !== this.text() && "" !== this.text().trim()) {
@@ -98,6 +99,20 @@ define([
             }
             this.setAsSameAsGroupRelation();
         };
+
+        api.TreeEdge.prototype.remove = function () {
+            Bubble.Bubble.prototype.remove.call(
+                this,
+                this.getParentVertex()
+            );
+        };
+
+        api.TreeEdge.prototype.collateralRemove = function () {
+            Bubble.Bubble.prototype.remove.call(
+                this
+            );
+        };
+
         return api;
     }
 );
