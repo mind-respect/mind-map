@@ -39,16 +39,13 @@ define([
             handleCreateNewSchemaButton();
             handleDisconnectButton();
             getConnectMenuButton().addClass("hidden");
-            getAllYourBubblesButton().removeClass("hidden");
-            getAllYourBubblesButton().prop(
-                "href",
-                "/user/" + UserService.authenticatedUserInCache().user_name
-            );
+            handleYourCentralButtons();
             getBubbleMenu().removeClass("hidden");
             getCreateSchemaButton().removeClass("hidden");
             if (MindMapInfo.isLandingPageFlow()) {
                 getSelectButton().addClass("hidden");
             }
+            getYourCentralButtonOnPage().removeClass("hidden");
         };
 
         api.commonSetupForAnonymous = function () {
@@ -60,6 +57,7 @@ define([
             getUserMenu().addClass("hidden");
             getAllYourBubblesButton().addClass("hidden");
             handleLoginRegisterButtons();
+            getYourCentralButtonOnPage().addClass("hidden");
         };
         api._commonSetup = function () {
             setupLanguagePicker();
@@ -150,16 +148,36 @@ define([
 
 
         function handleLoginRegisterButtons() {
+            getLoginButtonOnPage().add(
+                getRegisterButtonOnPage()
+            ).removeClass("hidden");
             getLoginButton().add(
-                getLoginButtonInPage()
+                getLoginButtonOnPage()
             ).click(
                 LoginHandler.showModal
             );
             getRegisterButton().add(
-                getRegisterButtonInPage()
+                getRegisterButtonOnPage()
             ).click(
                 RegisterHandler.showModal
             );
+        }
+
+        function handleYourCentralButtons() {
+            getAllYourBubblesButton().add(
+                getYourCentralButtonOnPage()
+            ).removeClass("hidden");
+            getAllYourBubblesButton().add(
+                getYourCentralButtonOnPage()
+            ).prop(
+                "href",
+                IdUri.allCentralUrlForUsername(
+                    UserService.authenticatedUserInCache().user_name
+                )
+            );
+            getYourCentralButtonOnPage().find("button").click(function () {
+                window.location = $(this).closest("a").prop("href");
+            });
         }
 
         function createNewSchema(event) {
@@ -229,12 +247,16 @@ define([
             return $("#login-button");
         }
 
-        function getLoginButtonInPage() {
-            return $("#login-button-in-page");
+        function getLoginButtonOnPage() {
+            return $("#login-button-on-page");
         }
 
-        function getRegisterButtonInPage() {
-            return $("#register-button-in-page");
+        function getRegisterButtonOnPage() {
+            return $("#register-button-on-page");
+        }
+
+        function getYourCentralButtonOnPage() {
+            return $("#central-button-on-page");
         }
 
         function getConnectMenuButton() {
