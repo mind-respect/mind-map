@@ -25,6 +25,7 @@ define([
         enterKeyCode = 13,
         dKeyNumber = 68,
         eKeyNumber = 69,
+        hKeyNumber = 72,
         sKeyNumber = 83,
         zeroKeyNumber = 48,
         rKeyNumber = 82,
@@ -66,8 +67,8 @@ define([
             nonCtrlPlusActions;
         var selectedElement = SelectionHandler.getSingleElement();
         var feature = actionSet[event.which];
-        if(feature === undefined){
-            if(event.which !== ctrlKeyNumber && !MindMapInfo.isViewOnly()){
+        if (feature === undefined) {
+            if (event.which !== ctrlKeyNumber && !MindMapInfo.isViewOnly()) {
                 selectedElement.focus();
             }
             return;
@@ -76,18 +77,18 @@ define([
         event.stopPropagation();
         executeFeature(feature, selectedElement);
         function isThereASpecialKeyPressed() {
-            return event.altKey ||  event.metaKey;
+            return event.altKey || event.metaKey;
         }
     }
 
-    function executeFeature(feature, selectedElement){
-        if(typeof feature === "string"){
+    function executeFeature(feature, selectedElement) {
+        if (typeof feature === "string") {
             var controller = selectedElement.getController();
-            if(controller[feature] === undefined){
+            if (controller[feature] === undefined) {
                 return;
             }
             var canDoValidator = controller[feature + "CanDo"];
-            if(canDoValidator !== undefined && !canDoValidator.call(controller)){
+            if (canDoValidator !== undefined && !canDoValidator.call(controller)) {
                 return;
             }
             controller[feature]();
@@ -107,14 +108,16 @@ define([
         actions[enterKeyCode] = "addSibling";
         return actions;
     }
+
     function defineCtrlPlusKeysAndTheirActions() {
         var actions = {};
         actions[iArrowKeyNumber] = iAction;
-        actions[eKeyNumber] = eKeyAction;
+        actions[eKeyNumber] = "expand";
         actions[sKeyNumber] = sKeyAction;
         actions[rKeyNumber] = rKeyAction;
         actions[dKeyNumber] = "note";
         actions[zeroKeyNumber] = "center";
+        actions[hKeyNumber] = "collapse";
         return actions;
     }
 
@@ -123,20 +126,6 @@ define([
             return;
         }
         selectedElement.getController().identify();
-    }
-
-    function eKeyAction(selectedElement) {
-        if (!selectedElement.isInTypes([
-                GraphElementUi.Types.GroupRelation,
-                GraphElementUi.Types.Vertex
-            ])) {
-            return;
-        }
-        if (selectedElement.hasHiddenRelationsContainer()) {
-            selectedElement.getController().expand().done(function(){
-                selectedElement.centerOnScreenWithAnimation();
-            });
-        }
     }
 
     function sKeyAction(selectedElement) {

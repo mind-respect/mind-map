@@ -260,8 +260,8 @@
     "zoomOut": "Zoom extérieur",
     "expandAll": "Expandre tout",
     "visitOtherInstances": "Visiter la même bulle mais dans un autre contexte",
-    "collapse": "Cacher l'arbre",
-    "expand": "Expandre"
+    "collapse": "Cacher l'arbre (ctrl+h)",
+    "expand": "Expandre (ctrl+e)"
   },
   "hidden_properties_tooltip": "Expandre (ctrl+e)",
   "search": {
