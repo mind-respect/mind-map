@@ -99,8 +99,8 @@ define([
 
     function defineNonCtrlPlusKeysAndTheirActions() {
         var actions = {};
-        actions[tabKeyNumber] = tabAction;
-        actions[deleteKeyNumber] = deleteKeyAction;
+        actions[tabKeyNumber] = "addChild";
+        actions[deleteKeyNumber] = "remove";
         actions[leftArrowKeyNumber] = leftAction;
         actions[rightArrowKeyNumber] = rightAction;
         actions[upArrowKeyNumber] = upAction;
@@ -111,47 +111,14 @@ define([
 
     function defineCtrlPlusKeysAndTheirActions() {
         var actions = {};
-        actions[iArrowKeyNumber] = iAction;
+        actions[iArrowKeyNumber] = "identify";
         actions[eKeyNumber] = "expand";
-        actions[sKeyNumber] = sKeyAction;
-        actions[rKeyNumber] = rKeyAction;
+        actions[sKeyNumber] = "suggestions";
+        actions[rKeyNumber] = "reverse";
         actions[dKeyNumber] = "note";
         actions[zeroKeyNumber] = "center";
         actions[hKeyNumber] = "collapse";
         return actions;
-    }
-
-    function iAction(selectedElement) {
-        if (MindMapInfo.isViewOnly() || selectedElement.isGroupRelation()) {
-            return;
-        }
-        selectedElement.getController().identify();
-    }
-
-    function sKeyAction(selectedElement) {
-        if (!selectedElement.isVertex()) {
-            return;
-        }
-        var handler = selectedElement.getController();
-        if (handler.suggestionsCanDo(selectedElement)) {
-            handler.suggestions(
-                selectedElement
-            );
-        }
-    }
-
-    function rKeyAction(selectedElement) {
-        if (!selectedElement.isRelation()) {
-            return;
-        }
-        selectedElement.getController().reverse();
-    }
-
-    function tabAction(selectedElement) {
-        if (MindMapInfo.isViewOnly() || selectedElement.isProperty()) {
-            return;
-        }
-        selectedElement.getController().addChild();
     }
 
     function leftAction(selectedElement) {
@@ -208,10 +175,4 @@ define([
         SelectionHandler.setToSingleGraphElement(newSelectedElement);
     }
 
-    function deleteKeyAction(selectedElement) {
-        if (MindMapInfo.isViewOnly()) {
-            return;
-        }
-        selectedElement.getController().remove();
-    }
 });
