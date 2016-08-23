@@ -4,15 +4,13 @@
 
 define([
     "test/test-utils",
-    "triple_brain.graph_element_service",
-    "triple_brain.identification"
-], function (TestUtils, GraphElementService, Identification) {
+    "triple_brain.graph_element_service"
+], function (TestUtils, GraphElementService) {
     "use strict";
     var api = {};
     api.addIdentification = function () {
         return spyOn(GraphElementService, "addIdentification").and.callFake(function(graphElement, identification, callback){
             var identifications = {};
-            // var serverIdentification = Identification.fromFriendlyResource(identification);
             identification.setUri(
                 TestUtils.generateIdentificationUri()
             );

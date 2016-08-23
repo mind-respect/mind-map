@@ -11,10 +11,11 @@ define([
     "triple_brain.event_bus",
     "triple_brain.graph_ui",
     "triple_brain.identification_menu",
+    "triple_brain.edge_service",
     "bootstrap-wysiwyg",
     "bootstrap",
     "jquery.safer-html"
-], function ($, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu) {
+], function ($, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu, EdgeService) {
     "use strict";
     var api = {};
     EventBus.subscribe(
@@ -205,6 +206,14 @@ define([
                 otherVertex.getModel().getSortDate().getTime() + (isAbove ? -10 : 10)
             )
         );
+        var parentBubble = otherEdge.getParentBubble();
+        if (parentBubble.isGroupRelation()) {
+            var identification = parentBubble.getGroupRelation().getIdentification();
+            EdgeService.addSameAs(
+                movedEdge,
+                identification
+            );
+        }
         if (previousParentVertex.getUri() !== otherEdge.getParentVertex().getUri()) {
             return movedEdge.getController().changeSourceVertex(
                 otherEdge.getParentVertex()

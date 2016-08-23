@@ -7,9 +7,10 @@ define([
     "test/test-scenarios",
     "test/test-utils",
     "test/mock/triple_brain.friendly_resource_service_mock",
+    "test/mock/triple_brain.graph_element_service_mock",
     "triple_brain.graph_element_controller",
     "triple_brain.sub_graph"
-], function ($, Scenarios, TestUtils, FriendlyResourceServiceMock, GraphElementController, SubGraph) {
+], function ($, Scenarios, TestUtils, FriendlyResourceServiceMock, GraphElementServiceMock, GraphElementController, SubGraph) {
     "use strict";
     describe("graph_element_controller", function () {
         it("displays the graph element note", function () {
@@ -138,6 +139,24 @@ define([
                 grandParent.isSameUri(
                     scenario.getCenterVertexInTree()
                 )
+            ).toBeTruthy();
+        });
+        it("adds the group relation identifier to a vertex moving around another vertex that is under a group relation", function () {
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var otherBubbleEdge = scenario.getOtherRelationInTree();
+            var otherBubble = otherBubbleEdge.getTopMostChildBubble();
+            var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+            groupRelation.expand();
+            var groupRelationChild = groupRelation.getTopMostChildBubble();
+            expect(
+                otherBubbleEdge.hasIdentifications()
+            ).toBeFalsy();
+            GraphElementServiceMock.addIdentification();
+            otherBubble.getController().moveAbove(
+                groupRelationChild
+            );
+            expect(
+                otherBubbleEdge.hasIdentifications()
             ).toBeTruthy();
         });
     });

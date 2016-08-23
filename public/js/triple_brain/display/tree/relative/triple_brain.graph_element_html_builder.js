@@ -240,7 +240,6 @@ define([
                 if (!shouldMove) {
                     return;
                 }
-
                 if (parent.isRelation()) {
                     var newGroupRelation = GraphDisplayer.addNewGroupRelation(
                         Identification.fromFriendlyResource(
