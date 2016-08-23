@@ -153,7 +153,7 @@ define([
                 changeSourceVertexSpy.calls.count()
             ).toBe(1);
         });
-        it("disables drags and drops when for anonymous user", function(){
+        it("disables drags and drops when for anonymous user", function () {
             var scenario = new Scenarios.threeBubblesGraph();
             MindMapInfo._setIsViewOnly(true);
             var bubble1 = scenario.getBubble1InTree();
@@ -172,7 +172,7 @@ define([
                 changeSourceVertexSpy.calls.count()
             ).toBe(0);
         });
-        it("detects links and changes them to hyperlinks on blur", function(){
+        it("detects links and changes them to hyperlinks on blur", function () {
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             expect(
                 bubble1.getLabel().find("a").length
@@ -184,7 +184,7 @@ define([
                 bubble1.getLabel().find("a").length
             ).toBe(1);
         });
-        it("detects links and changes them to hyperlinks when building vertex", function(){
+        it("detects links and changes them to hyperlinks when building vertex", function () {
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1();
             var bubble1Ui = VertexHtmlBuilder.withServerFacade(bubble1).create("123");
             expect(
@@ -196,7 +196,18 @@ define([
                 bubble1Ui.getLabel().find("a").length
             ).toBe(1);
         });
-        it("hides the hidden neighbor properties indicator when the bubble has a duplicate bubble that is already expanded", function(){
+        it("builds long hyperlink correctly", function () {
+            var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            bubble1.setText("https://bubl.guru/user/vince/graph/vertex/9d73e974-80c1-4a7c-8736-f0ec6178226d");
+            bubble1.getLabel().blur();
+            var link = bubble1.getLabel().find("a");
+            expect(
+                link.prop("href")
+            ).toBe(
+                "https://bubl.guru/user/vince/graph/vertex/9d73e974-80c1-4a7c-8736-f0ec6178226d"
+            );
+        });
+        it("hides the hidden neighbor properties indicator when the bubble has a duplicate bubble that is already expanded", function () {
             var graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
             var bubble1 = graphWithCircularityScenario.getBubble1InTree();
             var bubble2 = TestUtils.getChildWithLabel(
@@ -216,7 +227,7 @@ define([
                 bubble2AsChildOfB3.hasVisibleHiddenRelationsContainer()
             ).toBeFalsy();
         });
-        it("displays hidden properties container if bubble has a duplicate that is also not expanded", function(){
+        it("displays hidden properties container if bubble has a duplicate that is also not expanded", function () {
             var center = new Scenarios.centerWith2RelationsToSameChildScenario().getCenterInTree();
             expect(
                 center.getNumberOfChild()
