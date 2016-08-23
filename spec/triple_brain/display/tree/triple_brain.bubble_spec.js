@@ -392,6 +392,19 @@ define([
                 b72.getBubbleUnder().text()
             ).toBe("b74");
         });
+        it("can move a vertex above a group relation", function () {
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var otherBubble = scenario.getOtherRelationInTree().getTopMostChildBubble();
+            var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+            groupRelation.expand();
+            otherBubble.moveAbove(groupRelation);
+            var grandParent = otherBubble.getParentBubble().getParentBubble();
+            expect(
+                grandParent.isSameUri(
+                    scenario.getCenterVertexInTree()
+                )
+            ).toBeTruthy();
+        });
         it("can tell if one it has descendants with hidden relations", function () {
             var scenario = new Scenarios.threeBubblesGraph();
             var b1 = scenario.getBubble1InTree();

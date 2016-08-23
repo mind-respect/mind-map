@@ -7,10 +7,9 @@ define([
         "triple_brain.vertex_service",
         "triple_brain.edge_service",
         "triple_brain.graph_element_controller",
-        "triple_brain.selection_handler",
-        "triple_brain.graph_displayer"
+        "triple_brain.selection_handler"
     ],
-    function ($, VertexService, EdgeService, GraphElementController, SelectionHandler, GraphDisplayer) {
+    function ($, VertexService, EdgeService, GraphElementController, SelectionHandler) {
         "use strict";
         var api = {};
         api.Self = GroupRelationController;

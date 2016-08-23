@@ -56,7 +56,7 @@ define([
         it("can have script tag as text", function () {
 
         });
-        it("updates model label when accepting comparison", function(){
+        it("updates model label when accepting comparison", function () {
             FriendlyResourceServiceMock.updateLabel();
             var scenario = new Scenarios.threeBubblesGraphFork();
             var b1Fork = scenario.getBubble1InTree();
@@ -75,7 +75,7 @@ define([
                 b1Fork.getModel().getLabel()
             ).toBe("b1");
         });
-        it("does not show collapse button to leaves", function(){
+        it("does not show collapse button to leaves", function () {
             var scenario = new Scenarios.creationDateScenario();
             var b1 = scenario.getBubble1InTree();
             expect(
@@ -89,14 +89,14 @@ define([
                 b2.getController().collapseCanDo()
             ).toBeFalsy();
         });
-        it("shows the expand button to bubbles having hidden relations", function(){
+        it("shows the expand button to bubbles having hidden relations", function () {
             var scenario = new Scenarios.threeBubblesGraph();
             var b2 = scenario.getBubble2InTree();
             expect(
                 b2.getController().expandCanDo()
             ).toBeTruthy();
         });
-        it("does does not show the expand bubbles button when there are no descendants to expand", function(){
+        it("does does not show the expand bubbles button when there are no descendants to expand", function () {
             var scenario = new Scenarios.threeBubblesGraph();
             var b2 = scenario.getBubble2InTree();
             scenario.expandBubble2(
@@ -106,7 +106,7 @@ define([
                 b2.getController().expandCanDo()
             ).toBeFalsy();
         });
-        it("does not show the collapse button to bubbles having the hidden relations container", function(){
+        it("does not show the collapse button to bubbles having the hidden relations container", function () {
             var scenario = new Scenarios.threeBubblesGraph();
             var b2 = scenario.getBubble2InTree();
             expect(
@@ -123,6 +123,21 @@ define([
             ).toBeFalsy();
             expect(
                 b2.getController().collapseCanDo()
+            ).toBeTruthy();
+        });
+        it("can move a vertex above a group relation", function () {
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var otherBubble = scenario.getOtherRelationInTree().getTopMostChildBubble();
+            var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+            groupRelation.expand();
+            otherBubble.moveAbove(
+                groupRelation
+            );
+            var grandParent = otherBubble.getParentBubble().getParentBubble();
+            expect(
+                grandParent.isSameUri(
+                    scenario.getCenterVertexInTree()
+                )
             ).toBeTruthy();
         });
     });

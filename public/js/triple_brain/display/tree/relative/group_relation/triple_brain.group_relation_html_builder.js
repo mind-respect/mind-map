@@ -38,6 +38,9 @@ define([
                     groupRelationUi
                 );
             }
+            GraphElementHtmlBuilder._setupChildrenContainerDragOverAndDrop(
+                groupRelationUi
+            );
             groupRelationUi.reviewInLabelButtonsVisibility();
         };
 
@@ -76,9 +79,6 @@ define([
             );
             groupRelationUi.hideButtons();
             GraphElementHtmlBuilder.setupDragAndDrop(
-                groupRelationUi
-            );
-            GraphElementHtmlBuilder._setupChildrenContainerDragOverAndDrop(
                 groupRelationUi
             );
             return groupRelationUi;

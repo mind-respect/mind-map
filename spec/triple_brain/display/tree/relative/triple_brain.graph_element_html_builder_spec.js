@@ -275,5 +275,22 @@ define([
                 book2.getBubbleAbove().text()
             ).toBe("book 3");
         });
+        it("can move a vertex above a group relation", function () {
+            MindMapInfo._setIsViewOnly(false);
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var otherBubble = scenario.getOtherRelationInTree().getTopMostChildBubble();
+            var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+            groupRelation.expand();
+            TestUtils.moveAbove(
+                otherBubble,
+                groupRelation
+            );
+            var grandParent = otherBubble.getParentBubble().getParentBubble();
+            expect(
+                grandParent.isSameUri(
+                    scenario.getCenterVertexInTree()
+                )
+            ).toBeTruthy();
+        });
     });
 });
