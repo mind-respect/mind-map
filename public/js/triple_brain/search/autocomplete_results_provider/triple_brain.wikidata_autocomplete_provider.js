@@ -19,6 +19,7 @@ define([
         this.getFetchMethod = function (searchTerm) {
             var url = WikidataUri.BASE_URL + "/w/api.php?action=wbsearchentities&language=" +
                 LanguageManager.getBrowserLocale() +
+                "&uselang=" + LanguageManager.getBrowserLocale() +
                 "&format=json&search=" +
                 searchTerm;
             return $.ajax({
@@ -32,8 +33,8 @@ define([
                 var format = {
                     nonFormattedSearchResult: searchResult,
                     comment: searchResult.description,
-                    label: searchResult.label,
-                    value: searchResult.label,
+                    label: searchResult.match.text,
+                    value: searchResult.match.text,
                     source: "Wikidata.org",
                     uri: searchResult.url,
                     provider: self
