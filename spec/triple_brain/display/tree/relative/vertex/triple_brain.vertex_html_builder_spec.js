@@ -5,12 +5,13 @@
 define([
     "test/test-scenarios",
     "test/test-utils",
+    "test/mock/triple_brain.vertex_service_mock",
     "triple_brain.vertex_html_builder",
     "triple_brain.graph_ui",
     "triple_brain.selection_handler",
     "triple_brain.edge_service",
     "triple_brain.mind_map_info"
-], function (Scenarios, TestUtils, VertexHtmlBuilder, GraphUi, SelectionHandler, EdgeService, MindMapInfo) {
+], function (Scenarios, TestUtils, VertexServiceMock, VertexHtmlBuilder, GraphUi, SelectionHandler, EdgeService, MindMapInfo) {
     "use strict";
     describe("vertex_html_builder", function () {
         var bubble1, graphWithCircularityScenario;
@@ -239,6 +240,20 @@ define([
             expect(
                 child.hasHiddenRelationsContainer()
             ).toBeTruthy();
+        });
+        it("sets the direction of the 'add child arrow' of the center vertex correctly each time a vertex is added", function () {
+            loadFixtures('graph-element-menu.html');
+            var scenario = new Scenarios.threeBubblesGraph();
+            var centerBubble = scenario.getCenterBubbleInTree();
+            VertexServiceMock.addRelationAndVertexToVertexMock();
+            MindMapInfo._setIsViewOnly(false);
+            expect(
+                centerBubble.getAddChildButton()
+            ).not.toHaveClass("left");
+            centerBubble.getController().addChild();
+            expect(
+                centerBubble.getAddChildButton()
+            ).toHaveClass("left");
         });
     });
 });

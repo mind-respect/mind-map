@@ -218,6 +218,8 @@ button.add-button-in-list:hover { color: #00d100; }
 
 .fa.fa-strike:after { content: ""; position: absolute; width: 3px; height: 141.421356%; top: -20.710678%; display: block; background: rgba(255, 0, 0, 0.6); opacity: 0.5; left: 50%; transform: translate(-50%, 0) rotate(-45deg); }
 
+[data-action=addChild].left .fa-arrow-right { transform: rotate(180deg); }
+
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .ui-dialog-titlebar { text-align: center; }
 

@@ -263,14 +263,9 @@ define([
             button.getAction()
         );
     };
-    api.GraphElementUi.prototype.getExpandButton = function () {
+    api.GraphElementUi.prototype.getAddChildButton = function () {
         return this.getButtonHtmlHavingAction(
-            "expand"
-        );
-    };
-    api.GraphElementUi.prototype.getCollapseButton = function () {
-        return this.getButtonHtmlHavingAction(
-            "collapse"
+            "addChild"
         );
     };
     api.GraphElementUi.prototype.getButtonHtmlHavingAction = function (action) {

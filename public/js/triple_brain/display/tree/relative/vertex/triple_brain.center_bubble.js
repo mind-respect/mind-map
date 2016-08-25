@@ -9,55 +9,55 @@ define([
         "use strict";
         var api = {};
         api.usingBubble = function (bubble) {
-            return new Self(
+            return new CenterBubble(
                 bubble
             );
         };
-        function Self(bubble) {
+        function CenterBubble(bubble) {
             this.bubble = bubble;
         }
 
-        Self.prototype.hasChildToLeft = function () {
+        CenterBubble.prototype.hasChildToLeft = function () {
             return this._getTopMostChildToLeftContainer().length > 0;
         };
-        Self.prototype.hasChildToRight = function () {
+        CenterBubble.prototype.hasChildToRight = function () {
             return this._getTopMostChildToRightContainer().length > 0;
         };
-        Self.prototype.getToTheLeftTopMostChild = function () {
+        CenterBubble.prototype.getToTheLeftTopMostChild = function () {
             return this.bubble.getSelectorFromContainer(
                 this._getTopMostChildToLeftContainer()
             );
         };
-        Self.prototype.getToTheRightTopMostChild = function () {
+        CenterBubble.prototype.getToTheRightTopMostChild = function () {
             return this.bubble.getSelectorFromContainer(
                 this._getTopMostChildToRightContainer()
             );
         };
 
-        Self.prototype.getContainerItShouldNextAddTo = function () {
+        CenterBubble.prototype.getContainerItShouldNextAddTo = function () {
             return this.shouldAddLeft() ?
                 this.getLeftContainer() :
                 this.getRightContainer();
         };
 
-        Self.prototype.shouldAddLeft = function () {
+        CenterBubble.prototype.shouldAddLeft = function () {
             return this._getNumberOfImmediateBubblesToLeft() <
                 this._getNumberOfImmediateBubblesToRight();
         };
 
-        Self.prototype._getNumberOfImmediateBubblesToLeft = function () {
+        CenterBubble.prototype._getNumberOfImmediateBubblesToLeft = function () {
             return this.getLeftContainer().children(
                 ".vertex-tree-container"
             ).length;
         };
 
-        Self.prototype._getNumberOfImmediateBubblesToRight = function () {
+        CenterBubble.prototype._getNumberOfImmediateBubblesToRight = function () {
             return this.getRightContainer().children(
                 ".vertex-tree-container"
             ).length;
         };
 
-        Self.prototype.getLeftContainer = function () {
+        CenterBubble.prototype.getLeftContainer = function () {
             if (this._leftContainer === undefined) {
                 this._leftContainer = this.bubble.getHtml().closest(
                     ".vertex-container"
@@ -68,7 +68,7 @@ define([
             return this._leftContainer;
         };
 
-        Self.prototype.getRightContainer = function () {
+        CenterBubble.prototype.getRightContainer = function () {
             if (this._rightContainer === undefined) {
                 this._rightContainer = this.bubble.getHtml().closest(
                     ".vertex-container"
@@ -79,12 +79,29 @@ define([
             return this._rightContainer;
         };
 
-        Self.prototype._getTopMostChildToRightContainer = function () {
+        CenterBubble.prototype.reviewAddBubbleButtonDirection = function () {
+            return this.shouldAddLeft() ?
+                this.makeAddChildButtonPointLeft() :
+                this.makeAddChildButtonPointRight();
+        };
+
+        CenterBubble.prototype.makeAddChildButtonPointLeft = function () {
+            this.bubble.getAddChildButton().addClass(
+                "left"
+            );
+        };
+        CenterBubble.prototype.makeAddChildButtonPointRight = function () {
+            this.bubble.getAddChildButton().removeClass(
+                "left"
+            );
+        };
+
+        CenterBubble.prototype._getTopMostChildToRightContainer = function () {
             return this.getRightContainer().find(
                 ">.vertex-tree-container:first >.vertex-container"
             );
         };
-        Self.prototype._getTopMostChildToLeftContainer = function () {
+        CenterBubble.prototype._getTopMostChildToLeftContainer = function () {
             return this.getLeftContainer().find(
                 ">.vertex-tree-container:first >.vertex-container"
             );

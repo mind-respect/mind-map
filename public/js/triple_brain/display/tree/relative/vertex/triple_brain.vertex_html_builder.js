@@ -11,13 +11,11 @@ define([
         "triple_brain.graph_element_html_builder",
         "triple_brain.graph_element_ui",
         "triple_brain.graph_ui",
-        "triple_brain.bubble_factory",
-        "triple_brain.edge_service",
-        "triple_brain.mind_map_info",
+        "triple_brain.center_bubble",
         "jquery-ui",
         "jquery.is-fully-on-screen",
         "jquery.center-on-screen"
-    ], function ($, EventBus, MindMapTemplate, RelativeTreeVertex, VertexHtmlCommon, GraphElementHtmlBuilder, GraphElementUi, GraphUi, BubbleFactory, EdgeService, MindMapInfo) {
+    ], function ($, EventBus, MindMapTemplate, RelativeTreeVertex, VertexHtmlCommon, GraphElementHtmlBuilder, GraphElementUi, GraphUi, CenterBubble) {
         "use strict";
         var api = {};
         api.withServerFacade = function (serverFacade) {
@@ -45,6 +43,12 @@ define([
             }
             vertex.reviewInLabelButtonsVisibility();
             GraphElementHtmlBuilder._setupChildrenContainerDragOverAndDrop(vertex);
+            var parentVertex = vertex.getParentVertex();
+            if (parentVertex.isCenterBubble()) {
+                CenterBubble.usingBubble(
+                    parentVertex
+                ).reviewAddBubbleButtonDirection();
+            }
             EventBus.publish(
                 '/event/ui/vertex/build_complete',
                 vertex
