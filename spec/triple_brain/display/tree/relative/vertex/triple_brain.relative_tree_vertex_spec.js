@@ -80,5 +80,24 @@ define([
                 )
             ).toBeTruthy();
         });
+        it("does not have hidden relations if non owner and bubble does not have public neighbors", function () {
+            MindMapInfo._setIsViewOnly(false);
+            var scenario  = new Scenarios.threeBubblesGraph();
+            var b2 = scenario.getBubble2InTree();
+            var b3 = scenario.getBubble3InTree();
+            expect(
+                b2.hasHiddenRelations()
+            ).toBeTruthy();
+            expect(
+                b3.hasHiddenRelations()
+            ).toBeTruthy();
+            MindMapInfo._setIsViewOnly(true);
+            expect(
+                b2.hasHiddenRelations()
+            ).toBeFalsy();
+            expect(
+                b3.hasHiddenRelations()
+            ).toBeTruthy();
+        });
     });
 });

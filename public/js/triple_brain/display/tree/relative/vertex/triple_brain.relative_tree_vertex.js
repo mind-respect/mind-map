@@ -10,9 +10,10 @@ define([
         "triple_brain.object_utils",
         "triple_brain.triple_ui_builder",
         "triple_brain.selection_handler",
-        "triple_brain.bubble_factory"
+        "triple_brain.bubble_factory",
+        "triple_brain.mind_map_info"
     ],
-    function ($, VertexUi, EventBus, TreeEdge, ObjectUtils, TripleUiBuilder, SelectionHandler, BubbleFactory) {
+    function ($, VertexUi, EventBus, TreeEdge, ObjectUtils, TripleUiBuilder, SelectionHandler, BubbleFactory, MindMapInfo) {
         "use strict";
         var api = {};
         VertexUi.buildCommonConstructors(api);
@@ -121,7 +122,16 @@ define([
         };
 
         api.RelativeTreeVertex.prototype.hasHiddenRelations = function () {
-            return this.isALeaf() && this.getModel().getNumberOfConnectedEdges() > 1;
+            return this.isALeaf() && (
+                    MindMapInfo.isViewOnly() ?
+                        this._hasPublicHiddenRelations() :
+                    this.getModel().getNumberOfConnectedEdges() > 1
+                );
+        };
+        api.RelativeTreeVertex.prototype._hasPublicHiddenRelations = function () {
+            return this.getModel().getNbPublicNeighbors() > (
+                    this.getParentVertex().isPublic() ? 1 : 0
+                );
         };
         EventBus.subscribe(
             '/event/ui/graph/vertex_and_relation/added/',

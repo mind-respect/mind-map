@@ -41,7 +41,7 @@ define([
         it("empties html if has img", function () {
             // var alertSpy = spyOn(window, "alert");
             var $div = $("<div>").saferHtml(
-                "<img src='a' onerror=\"alert.log('test')\">"
+                "<img src='a' onerror=\"alert\">"
             );
             expect(
                 $div.html()

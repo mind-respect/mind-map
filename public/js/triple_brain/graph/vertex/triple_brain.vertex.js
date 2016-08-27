@@ -77,6 +77,10 @@ define([
         return this.vertexServerFormat.vertex.numberOfConnectedEdges;
     };
 
+    Vertex.prototype.getNbPublicNeighbors = function () {
+        return this.vertexServerFormat.vertex.nbPublicNeighbors;
+    };
+
     Vertex.prototype.isPublic = function () {
         return this.vertexServerFormat.vertex.isPublic;
     };
