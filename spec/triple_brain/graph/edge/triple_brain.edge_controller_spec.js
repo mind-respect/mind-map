@@ -7,9 +7,10 @@ define([
     'test/test-utils',
     'test/mock',
     "test/mock/triple_brain.edge_service_mock",
+    'triple_brain.edge_service',
     'triple_brain.edge_controller',
     'triple_brain.mind_map_info'
-], function (Scenarios, TestUtils, Mock, EdgeServiceMock, EdgeController, MindMapInfo, IdUri) {
+], function (Scenarios, TestUtils, Mock, EdgeServiceMock, EdgeService, EdgeController, MindMapInfo) {
     "use strict";
     describe("edge_controller", function () {
         it("can remove edge", function () {
@@ -162,6 +163,48 @@ define([
                     sameRelation
                 )
             ).toBeTruthy();
+        });
+        it("changes destination vertex if relation is inverse when changing end vertex", function () {
+            var changeSourceVertexSpy = spyOn(
+                EdgeService,
+                "changeSourceVertex"
+            );
+            var changeDestinationVertexSpy = spyOn(
+                EdgeService,
+                "changeDestinationVertex"
+            );
+            var scenario = new Scenarios.threeBubblesGraph();
+            var b1 = scenario.getBubble1InTree();
+            var r1 = TestUtils.getChildWithLabel(
+                b1,
+                "r1"
+            );
+            var b2 = r1.getTopMostChildBubble();
+            var r2 = TestUtils.getChildWithLabel(
+                b1,
+                "r2"
+            );
+            scenario.expandBubble2(b2);
+            r2.getController().changeEndVertex(
+                b2
+            );
+            expect(
+                changeSourceVertexSpy.calls.count()
+            ).toBe(1);
+            expect(
+                changeDestinationVertexSpy.calls.count()
+            ).toBe(0);
+            EdgeServiceMock.inverse();
+            r2.getController().reverse();
+            r2.getController().changeEndVertex(
+                b1
+            );
+            expect(
+                changeSourceVertexSpy.calls.count()
+            ).toBe(1);
+            expect(
+                changeDestinationVertexSpy.calls.count()
+            ).toBe(1);
         });
     });
 });

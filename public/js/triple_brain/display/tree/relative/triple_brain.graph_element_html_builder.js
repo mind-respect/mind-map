@@ -268,7 +268,7 @@ define([
                         identification
                     );
                 }
-                movedEdge.getController().changeSourceVertex(newSourceVertex);
+                movedEdge.getController().changeEndVertex(newSourceVertex);
                 if (previousParentGroupRelation.isGroupRelation()) {
                     GraphElementService.removeIdentification(
                         movedEdge,

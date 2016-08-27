@@ -215,7 +215,7 @@ define([
             );
         }
         if (previousParentVertex.getUri() !== otherEdge.getParentVertex().getUri()) {
-            return movedEdge.getController().changeSourceVertex(
+            return movedEdge.getController().changeEndVertex(
                 otherEdge.getParentVertex()
             ).then(changeSortDate);
         }

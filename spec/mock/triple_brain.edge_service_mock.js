@@ -3,9 +3,10 @@
  */
 
 define([
+    "jquery",
     "test/test-utils",
     "triple_brain.edge_service"
-], function (TestUtils, EdgeService) {
+], function ($, TestUtils, EdgeService) {
     "use strict";
     var api = {};
     api.remove = function () {
@@ -24,6 +25,14 @@ define([
                 destinationVertexUri,
                 callback
             );
+        });
+    };
+    api.inverse = function () {
+        spyOn(
+            EdgeService,
+            "inverse"
+        ).and.callFake(function () {
+            return $.Deferred().resolve();
         });
     };
     return api;

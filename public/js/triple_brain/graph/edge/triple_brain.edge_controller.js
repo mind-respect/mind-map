@@ -103,22 +103,27 @@ define([
     EdgeController.prototype.reverse = function () {
         var self = this;
         EdgeService.inverse(
-            this.edges,
-            function () {
-                self.edges.inverse();
-            }
-        );
+            this.getElements()
+        ).then(function(){
+            self.getElements().inverse();
+        });
     };
-    EdgeController.prototype.changeSourceVertex = function (sourceVertex) {
+    EdgeController.prototype.changeEndVertex = function (endVertex) {
         var self = this;
-        if (!sourceVertex.isExpanded()) {
-            return sourceVertex.getController().expand().then(doIt);
+        if (!endVertex.isExpanded()) {
+            return endVertex.getController().expand().then(doIt);
         } else {
             return doIt();
         }
         function doIt() {
+            if(self.getElements().isInverse()){
+                return EdgeService.changeDestinationVertex(
+                    endVertex,
+                    self.getElements()
+                );
+            }
             return EdgeService.changeSourceVertex(
-                sourceVertex,
+                endVertex,
                 self.getElements()
             );
         }

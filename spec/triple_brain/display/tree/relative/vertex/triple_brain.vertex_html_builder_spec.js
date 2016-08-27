@@ -10,8 +10,9 @@ define([
     "triple_brain.graph_ui",
     "triple_brain.selection_handler",
     "triple_brain.edge_service",
+    "triple_brain.edge_controller",
     "triple_brain.mind_map_info"
-], function (Scenarios, TestUtils, VertexServiceMock, VertexHtmlBuilder, GraphUi, SelectionHandler, EdgeService, MindMapInfo) {
+], function (Scenarios, TestUtils, VertexServiceMock, VertexHtmlBuilder, GraphUi, SelectionHandler, EdgeService, EdgeController, MindMapInfo) {
     "use strict";
     describe("vertex_html_builder", function () {
         var bubble1, graphWithCircularityScenario;
@@ -140,18 +141,18 @@ define([
             ).getTopMostChildBubble();
             var newVertex = TestUtils.addTriple(bubble2).destinationVertex();
             TestUtils.startDragging(newVertex);
-            var changeSourceVertexSpy = spyOn(EdgeService, "changeSourceVertex");
+            var changeEndVertexSpy = spyOn(EdgeController.Self.prototype, "changeEndVertex");
             expect(
-                changeSourceVertexSpy.calls.count()
+                changeEndVertexSpy.calls.count()
             ).toBe(0);
             TestUtils.drop(bubble1);
             expect(
-                changeSourceVertexSpy.calls.count()
+                changeEndVertexSpy.calls.count()
             ).toBe(1);
             TestUtils.startDragging(newVertex);
             TestUtils.drop(newVertex);
             expect(
-                changeSourceVertexSpy.calls.count()
+                changeEndVertexSpy.calls.count()
             ).toBe(1);
         });
         it("disables drags and drops when for anonymous user", function () {

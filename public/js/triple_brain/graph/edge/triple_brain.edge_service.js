@@ -90,16 +90,22 @@ define([
                 callback
             );
         };
-        api.inverse = function (edge, callback) {
-            $.ajax({
+        api.inverse = function (edge) {
+            return $.ajax({
                 type: 'PUT',
                 url: edge.getUri() + "/inverse"
-            }).success(callback);
+            });
         };
         api.changeSourceVertex = function (sourceVertex, edge, callback) {
             return $.ajax({
                 type: 'PUT',
                 url: edge.getUri() + "/source-vertex/" + IdUri.elementIdFromUri(sourceVertex.getUri())
+            }).success(callback);
+        };
+        api.changeDestinationVertex = function (destinationVertex, edge, callback) {
+            return $.ajax({
+                type: 'PUT',
+                url: edge.getUri() + "/destination-vertex/" + IdUri.elementIdFromUri(destinationVertex.getUri())
             }).success(callback);
         };
         api._add = function (sourceVertexUri, destinationVertexUri, callback) {
