@@ -49,6 +49,11 @@ define([
             edge.refreshImages();
             edge.resetOtherInstances();
             edge.reviewInLabelButtonsVisibility();
+            if(MindMapInfo.isViewOnly() && "" === edge.text()){
+                edge.getHtml().find(
+                    ".label-container"
+                ).addClass("hidden");
+            }
             var propertiesIndicator = edge.buildHiddenNeighborPropertiesIndicator();
             propertiesIndicator.hide();
             GraphElementHtmlBuilder.setupDragAndDrop(
