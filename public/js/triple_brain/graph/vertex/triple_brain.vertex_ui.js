@@ -53,13 +53,6 @@ define([
             );
         };
 
-        api.VertexUi.prototype.setIsPublic = function (isPublic) {
-            this.html.data(
-                "isPublic",
-                isPublic
-            );
-        };
-
         api.VertexUi.prototype.areSuggestionsShown = function () {
             var areShown = false;
             this.visitAllChild(function (child) {
@@ -271,13 +264,12 @@ define([
             }
         };
         api.VertexUi.prototype.makePrivate = function () {
-            this.setIsPublic(false);
+            this.getMakePrivateButton().addClass("hidden");
+            this.getMakePublicButton().removeClass("hidden");
         };
         api.VertexUi.prototype.makePublic = function () {
-            this.setIsPublic(true);
-        };
-        api.VertexUi.prototype.isPublic = function () {
-            return this.html.data("isPublic");
+            this.getMakePrivateButton().removeClass("hidden");
+            this.getMakePublicButton().addClass("hidden");
         };
 
         api.VertexUi.prototype.deselect = function () {

@@ -25,7 +25,7 @@ define([
         return -1;
     };
     api.fromServerFormat = function (serverFormat) {
-        return new api.Self().init(
+        return new api.GraphElement().init(
             serverFormat
         );
     };
@@ -83,37 +83,37 @@ define([
             detailedSearchResult.graphElement
         );
     };
-    api.Self = function () {
+    api.GraphElement = function () {
     };
 
-    api.Self.prototype = new FriendlyResource.Self();
+    api.GraphElement.prototype = new FriendlyResource.FriendlyResource();
 
-    api.Self.prototype.init = function (graphElementServerFormat) {
+    api.GraphElement.prototype.init = function (graphElementServerFormat) {
         this.graphElementServerFormat = graphElementServerFormat;
         this._buildIdentifications();
-        FriendlyResource.Self.apply(
+        FriendlyResource.FriendlyResource.apply(
             this
         );
-        FriendlyResource.Self.prototype.init.call(
+        FriendlyResource.FriendlyResource.prototype.init.call(
             this,
             graphElementServerFormat.friendlyResource
         );
         return this;
     };
 
-    api.Self.prototype.getTypes = function () {
+    api.GraphElement.prototype.getTypes = function () {
         return this._types;
     };
-    api.Self.prototype.getSameAs = function () {
+    api.GraphElement.prototype.getSameAs = function () {
         return this._sameAs;
     };
-    api.Self.prototype.getGenericIdentifications = function () {
+    api.GraphElement.prototype.getGenericIdentifications = function () {
         return this._genericIdentifications;
     };
-    api.Self.prototype.hasIdentifications = function () {
+    api.GraphElement.prototype.hasIdentifications = function () {
         return this.getIdentifications().length > 0;
     };
-    api.Self.prototype.getIdentifications = function () {
+    api.GraphElement.prototype.getIdentifications = function () {
         if (undefined === this._identifications) {
             this._identifications = [].concat(
                 this._types
@@ -126,7 +126,7 @@ define([
         return this._identifications;
     };
 
-    api.Self.prototype._buildIdentifications = function () {
+    api.GraphElement.prototype._buildIdentifications = function () {
         this._types = [];
         this._sameAs = [];
         this._genericIdentifications = [];
@@ -150,7 +150,7 @@ define([
             }
         });
     };
-    api.Self.prototype.hasIdentification = function (identification) {
+    api.GraphElement.prototype.hasIdentification = function (identification) {
         var contains = false;
         $.each(this.getIdentifications(), function () {
             if (this.getExternalResourceUri() === identification.getExternalResourceUri()) {
@@ -161,28 +161,28 @@ define([
         return contains;
     };
 
-    api.Self.prototype.isRelatedToIdentification = function (identification) {
+    api.GraphElement.prototype.isRelatedToIdentification = function (identification) {
         return identification.getExternalResourceUri() === this.getUri() ||
             this.hasIdentification(identification);
     };
 
-    api.Self.prototype.addGenericIdentification = function (identification) {
+    api.GraphElement.prototype.addGenericIdentification = function (identification) {
         this._genericIdentifications.push(identification);
     };
 
-    api.Self.prototype.addSameAs = function (identification) {
+    api.GraphElement.prototype.addSameAs = function (identification) {
         this._sameAs.push(identification);
     };
-    api.Self.prototype.addType = function (identification) {
+    api.GraphElement.prototype.addType = function (identification) {
         this._types.push(identification);
     };
 
-    api.Self.prototype.setSortDate = function (sortDate) {
+    api.GraphElement.prototype.setSortDate = function (sortDate) {
         this.graphElementServerFormat.sortDate = sortDate.getTime();
         this.graphElementServerFormat.moveDate = new Date().getTime();
     };
 
-    api.Self.prototype.getSortDate = function () {
+    api.GraphElement.prototype.getSortDate = function () {
         if (undefined === this.graphElementServerFormat.sortDate) {
             return this.getCreationDate();
         }
@@ -191,7 +191,7 @@ define([
         );
     };
 
-    api.Self.prototype.getMoveDate = function () {
+    api.GraphElement.prototype.getMoveDate = function () {
         if (undefined === this.graphElementServerFormat.moveDate) {
             return this.getCreationDate();
         }

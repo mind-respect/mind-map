@@ -8,25 +8,28 @@ define([
     "use strict";
     var api = {};
     api.fromServerFormat = function (serverFormat) {
-        return new Self(
+        return new Property(
             serverFormat
         );
     };
-    function Self(propertyServerFormat){
-        GraphElement.Self.apply(
+    function Property(propertyServerFormat){
+        GraphElement.GraphElement.apply(
             this
         );
         this.init(
             propertyServerFormat
         );
     }
-    Self.prototype = new GraphElement.Self();
+    Property.prototype = new GraphElement.GraphElement();
 
-    Self.prototype.setSchema = function (schema) {
+    Property.prototype.setSchema = function (schema) {
         this.schema = schema;
     };
-    Self.prototype.getSchema = function(){
+    Property.prototype.getSchema = function(){
         return this.schema;
+    };
+    Property.prototype.isPublic = function(){
+        return true;
     };
     return api;
 });

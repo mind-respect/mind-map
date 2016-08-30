@@ -32,7 +32,7 @@ define([
     SuggestionVertexController.prototype.accept = function () {
         var deferred = $.Deferred();
         var self = this;
-        var suggestionVertex = this.getElements();
+        var suggestionVertex = this.getUi();
         var parentSuggestionVertex = suggestionVertex.getParentSuggestionVertex();
         var hasParentSuggestionVertex = !parentSuggestionVertex.isSameBubble(
             suggestionVertex
@@ -45,9 +45,9 @@ define([
         return acceptCurrent();
         function acceptCurrent() {
             return SuggestionService.accept(
-                self.getElements()
+                self.getUi()
             ).then(function (xhr) {
-                var newVertexUi = self.getElements().integrateUsingNewVertexAndEdgeUri(
+                var newVertexUi = self.getUi().integrateUsingNewVertexAndEdgeUri(
                     xhr.vertex_uri,
                     xhr.edge_uri
                 );
@@ -72,14 +72,14 @@ define([
     };
     SuggestionVertexController.prototype.expand = function () {
         var deferred = $.Deferred();
-        if (this.getElements().isCollapsed()) {
-            this.getElements().expand();
+        if (this.getUi().isCollapsed()) {
+            this.getUi().expand();
             return deferred.resolve();
         }
-        this.getElements().hideHiddenRelationsContainer();
-        var uriToFetch = this.getElements().getModel().getExternalResourceUri();
-        var suggestionUi = this.getElements();
-        var parentEdgeUri = this.getElements().getParentBubble().getFirstIdentificationToAGraphElement().getExternalResourceUri();
+        this.getUi().hideHiddenRelationsContainer();
+        var uriToFetch = this.getUi().getModel().getExternalResourceUri();
+        var suggestionUi = this.getUi();
+        var parentEdgeUri = this.getUi().getParentBubble().getFirstIdentificationToAGraphElement().getExternalResourceUri();
         GraphService.getForCentralBubbleUri(
             uriToFetch,
             function (serverGraph) {

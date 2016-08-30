@@ -106,10 +106,6 @@ define([
             GraphElementHtmlBuilder.setupDragAndDrop(
                 this.vertexUi
             );
-            this.html.data(
-                "isPublic",
-                this.serverFacade.isPublic()
-            );
             this.vertexUi.setIncludedVertices(
                 this.serverFacade.getIncludedVertices()
             );
@@ -133,11 +129,6 @@ define([
             this.vertexUi.getHtml().append(
                 $("<span class='arrow'>")
             );
-            if (this.vertexUi.isPublic()) {
-                this.vertexUi.makePublic();
-            } else {
-                this.vertexUi.makePrivate();
-            }
             EventBus.publish(
                 '/event/ui/html/vertex/created/',
                 this.vertexUi

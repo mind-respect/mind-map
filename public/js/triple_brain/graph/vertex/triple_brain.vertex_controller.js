@@ -17,8 +17,9 @@ define([
     "triple_brain.vertex",
     "triple_brain.identification",
     "triple_brain.graph_element_service",
-    "triple_brain.schema_suggestion"
-], function ($, VertexService, SelectionHandler, GraphDisplayer, GraphElementController, DeleteMenu, EdgeUi, ImageMenu, LinkToFarVertexMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion) {
+    "triple_brain.schema_suggestion",
+    "triple_brain.event_bus"
+], function ($, VertexService, SelectionHandler, GraphDisplayer, GraphElementController, DeleteMenu, EdgeUi, ImageMenu, LinkToFarVertexMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, EventBus) {
     "use strict";
     var api = {};
 
@@ -38,7 +39,7 @@ define([
 
     VertexController.prototype.addChild = function () {
         return api.addChildToRealAndUiParent(
-            this.getElements()
+            this.getUi()
         );
     };
 
@@ -47,13 +48,13 @@ define([
     };
 
     VertexController.prototype.addSibling = function () {
-        if (this.getElements().isImmediateChildOfGroupRelation()) {
-            var groupRelation = this.getElements().getParentBubble().getParentBubble();
+        if (this.getUi().isImmediateChildOfGroupRelation()) {
+            var groupRelation = this.getUi().getParentBubble().getParentBubble();
             return groupRelation.getController().addChild();
         }
         return api.addChildToRealAndUiParent(
-            this.getElements().getParentVertex(),
-            this.getElements().getParentBubble().getParentBubble()
+            this.getUi().getParentVertex(),
+            this.getUi().getParentBubble().getParentBubble()
         );
     };
 
@@ -101,39 +102,90 @@ define([
 
     VertexController.prototype.makePrivateCanDo = function () {
         return this.isOwned() && (
-                !this.isSingle() || this.vertices.isPublic()
+                !this.isSingle() || this.getUi().getModel().isPublic()
             );
     };
 
     VertexController.prototype.makePrivate = function () {
+        var self = this;
         if (this.isSingle()) {
-            var self = this;
-            VertexService.makePrivate(this.getElements(), function () {
-                self.getElements().getMakePrivateButton().addClass("hidden");
-                self.getElements().getMakePublicButton().removeClass("hidden");
+            VertexService.makePrivate(this.getUi(), function () {
+                self.getModel().makePrivate();
+                self.getUi().makePrivate();
+                publishVertexPrivacyUpdated(
+                    self.getUi()
+                );
             });
         } else {
-            VertexService.makeCollectionPrivate(this.vertices);
+            var publicVertices = [];
+            $.each(self.getUi(), function(){
+                var vertex = this;
+                if(this.getModel().isPublic()){
+                    publicVertices.push(
+                        vertex
+                    );
+                }
+            });
+            VertexService.makeCollectionPrivate(
+                publicVertices
+            ).then(function () {
+                $.each(publicVertices, function () {
+                    var ui = this;
+                    ui.getModel().makePrivate();
+                    ui.makePrivate();
+                    publishVertexPrivacyUpdated(ui);
+                });
+            });
         }
     };
 
     VertexController.prototype.makePublicCanDo = function () {
         return this.isOwned() && (
-                !this.isSingle() || !this.vertices.isPublic()
+                !this.isSingle() || !this.getUi().getModel().isPublic()
             );
     };
 
     VertexController.prototype.makePublic = function () {
+        var self = this;
         if (this.isSingle()) {
-            var self = this;
-            VertexService.makePublic(this.vertices, function () {
-                self.vertices.getMakePrivateButton().removeClass("hidden");
-                self.vertices.getMakePublicButton().addClass("hidden");
+            VertexService.makePublic(
+                this.getUi()
+            ).then(function () {
+                self.getModel().makePublic();
+                self.getUi().makePublic();
+                publishVertexPrivacyUpdated(
+                    self.getUi()
+                );
             });
         } else {
-            VertexService.makeCollectionPublic(this.vertices);
+            var privateVertices = [];
+            $.each(self.getUi(), function(){
+                var vertex = this;
+                if(!this.getModel().isPublic()){
+                    privateVertices.push(
+                        vertex
+                    );
+                }
+            });
+            VertexService.makeCollectionPublic(
+                privateVertices
+            ).then(function(){
+                $.each(privateVertices, function () {
+                    var ui = this;
+                    ui.getModel().makePublic();
+                    ui.makePublic();
+                    publishVertexPrivacyUpdated(ui);
+                });
+            });
         }
     };
+
+    function publishVertexPrivacyUpdated(ui) {
+        EventBus.publish(
+            '/event/ui/graph/vertex/privacy/updated',
+            ui
+        );
+    }
 
     VertexController.prototype.subElementsCanDo = function () {
         return this.isSingle() && this.vertices.hasIncludedGraphElements();
@@ -231,19 +283,19 @@ define([
     VertexController.prototype.expand = function () {
         var deferred = $.Deferred().resolve();
         var self = this;
-        if (this.getElements().hasVisibleHiddenRelationsContainer()) {
-            if (!this.getElements().isCollapsed()) {
+        if (this.getUi().hasVisibleHiddenRelationsContainer()) {
+            if (!this.getUi().isCollapsed()) {
                 deferred = GraphDisplayer.addChildTree(
-                    this.getElements()
+                    this.getUi()
                 ).then(function () {
-                    self.getElements().expand();
+                    self.getUi().expand();
                 });
             }
-        }else{
+        } else {
             this.expandDescendantsIfApplicable();
         }
         return deferred.done(function () {
-            self.getElements().expand();
+            self.getUi().expand();
         });
     };
     api.Self = VertexController;

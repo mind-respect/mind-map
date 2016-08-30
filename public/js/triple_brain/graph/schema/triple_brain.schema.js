@@ -32,14 +32,14 @@ define([
     function Schema(schemaServerFormat){
         this.schemaServerFormat = schemaServerFormat;
         this._properties = this._buildProperties();
-        GraphElement.Self.apply(
+        GraphElement.GraphElement.apply(
             this
         );
         this.init(
             schemaServerFormat.graphElement
         );
     }
-    Schema.prototype = new GraphElement.Self();
+    Schema.prototype = new GraphElement.GraphElement();
     Schema.prototype.getProperties = function(){
         return this._properties;
     };

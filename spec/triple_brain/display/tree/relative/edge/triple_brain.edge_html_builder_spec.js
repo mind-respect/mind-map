@@ -17,35 +17,6 @@ define([
                 impact3InSocietyContext.hasTheDuplicateButton()
             ).toBeTruthy();
         });
-        it("sets to private if both source and destination vertex are private", function () {
-            var threeBubblesGraph = new Scenarios.threeBubblesGraph();
-            var bubble1 = threeBubblesGraph.getBubble1InTree();
-            var bubble2 = threeBubblesGraph.getBubble2InTree();
-            expect(
-                bubble1.isPublic()
-            ).toBeFalsy();
-            expect(
-                bubble2.isPublic()
-            ).toBeFalsy();
-            var relation1 = TestUtils.getChildWithLabel(bubble1, "r1");
-            expect(
-                relation1.isPublic()
-            ).toBeFalsy();
-        });
-        it("sets to public if both source and destination vertex are public", function () {
-            var bubble1 = new Scenarios.publicPrivate().getBubble1();
-            var relation1 = TestUtils.getChildWithLabel(bubble1, "r1");
-            expect(
-                relation1.isPublic()
-            ).toBeTruthy();
-        });
-        it("sets to private if source or destination vertex is private", function () {
-            var bubble1 = new Scenarios.publicPrivate().getBubble1();
-            var relation2 = TestUtils.getChildWithLabel(bubble1, "r2");
-            expect(
-                relation2.isPublic()
-            ).toBeFalsy();
-        });
         it("makes edge movable with drag and drop", function () {
             MindMapInfo._setIsViewOnly(false);
             var scenario = new Scenarios.threeBubblesGraph();

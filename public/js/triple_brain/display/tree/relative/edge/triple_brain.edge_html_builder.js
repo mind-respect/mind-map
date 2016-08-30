@@ -23,13 +23,13 @@ define([
                 edgeServer
             );
         };
-        api.afterChildBuilt = function (edge, parentUi, childUi) {
-            var edgeServer = edge.getModel(),
+        api.afterChildBuilt = function (ui, parentUi, childUi) {
+            var model = ui.getModel(),
                 parentVertexUi = parentUi.isVertex() ?
                     parentUi :
                     parentUi.getParentVertex(),
-                isInverse = edgeServer.getSourceVertex().getUri() !== parentVertexUi.getUri();
-            edge.getHtml().data(
+                isInverse = model.getSourceVertex().getUri() !== parentVertexUi.getUri();
+            ui.getHtml().data(
                 "source_vertex_id",
                 parentVertexUi.getId()
             ).data(
@@ -37,36 +37,46 @@ define([
                 childUi.getId()
             );
             if (isInverse) {
-                edge.inverse();
+                ui.inverse();
             }
+            model.setSourceVertex(
+                isInverse ?
+                    childUi.getModel() :
+                    parentVertexUi.getModel()
+            );
+            model.setDestinationVertex(
+                isInverse ?
+                    parentVertexUi.getModel() :
+                    childUi.getModel()
+            );
             GraphElementHtmlBuilder.setUpIdentifications(
-                edgeServer,
-                edge
+                model,
+                ui
             );
             EdgeHtmlBuilderCommon.moveInLabelButtonsContainerIfIsToTheLeft(
-                edge
+                ui
             );
-            edge.refreshImages();
-            edge.resetOtherInstances();
-            edge.reviewInLabelButtonsVisibility();
-            if(MindMapInfo.isViewOnly() && "" === edge.text()){
-                edge.getHtml().find(
+            ui.refreshImages();
+            ui.resetOtherInstances();
+            ui.reviewInLabelButtonsVisibility();
+            if (MindMapInfo.isViewOnly() && "" === ui.text()) {
+                ui.getHtml().find(
                     ".label-container"
                 ).addClass("hidden");
             }
-            var propertiesIndicator = edge.buildHiddenNeighborPropertiesIndicator();
+            var propertiesIndicator = ui.buildHiddenNeighborPropertiesIndicator();
             propertiesIndicator.hide();
             GraphElementHtmlBuilder.setupDragAndDrop(
-                edge
+                ui
             );
             EventBus.publish(
                 '/event/ui/html/edge/created/',
-                edge
+                ui
             );
-            edge.getHtml().closest(
+            ui.getHtml().closest(
                 ".vertex-tree-container"
             ).find("> .vertical-border").addClass("small");
-            edge.reviewEditButtonDisplay();
+            ui.reviewEditButtonDisplay();
         };
         function EdgeCreator(edgeServer) {
             this.edgeServer = edgeServer;
@@ -75,6 +85,7 @@ define([
                 "<div class='relation graph-element bubble' draggable='true'>"
             ).append("<div class='in-bubble-content'>");
         }
+
         EdgeCreator.prototype.create = function () {
             this.html.uniqueId();
             var edge = TreeEdge.createFromHtmlAndUri(
@@ -103,14 +114,14 @@ define([
             edge.addImages(
                 this.edgeServer.getImages()
             );
-            if(!MindMapInfo.isViewOnly()){
+            if (!MindMapInfo.isViewOnly()) {
                 addEditButton(
                     edge
                 );
             }
             return edge;
         };
-        function addEditButton(edge){
+        function addEditButton(edge) {
             edge.getHtml().prepend("<i class='fa fa-pencil edit-relation-button'>").click(function () {
                 var edge = BubbleFactory.fromSubHtml(
                     $(this)
@@ -119,6 +130,7 @@ define([
                 edge.focus();
             });
         }
+
         function buildMenu(edge) {
             var edgeHtml = edge.getHtml(),
                 menu = $("<span class='relation-menu menu'>");
@@ -128,6 +140,7 @@ define([
                 edge.getController()
             );
         }
+
         return api;
     }
 );

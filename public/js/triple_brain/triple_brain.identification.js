@@ -91,14 +91,14 @@ define([
     api.Identification = function () {
     };
 
-    api.Identification.prototype = new FriendlyResource.Self();
+    api.Identification.prototype = new FriendlyResource.FriendlyResource();
 
     api.Identification.prototype.init = function (serverFormat) {
         this.identificationServerFormat = serverFormat;
-        FriendlyResource.Self.apply(
+        FriendlyResource.FriendlyResource.apply(
             this
         );
-        FriendlyResource.Self.prototype.init.call(
+        FriendlyResource.FriendlyResource.prototype.init.call(
             this,
             serverFormat.friendlyResource
         );

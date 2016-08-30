@@ -34,25 +34,25 @@ define([
         var newGroupRelation = GraphDisplayer.addNewGroupRelation(
             this._getAppropriateIdentificationForNewGroupRelation(),
             parentVertex,
-            this.getElements().isToTheLeft()
+            this.getUi().isToTheLeft()
         );
         newGroupRelation.getController().addChild();
-        this.getElements().moveToParent(
+        this.getUi().moveToParent(
             newGroupRelation
         );
     };
     EdgeController.prototype._getAppropriateIdentificationForNewGroupRelation = function () {
-        if (this.getElements().hasIdentifications()) {
-            return this.getElements().getIdentifications()[0];
+        if (this.getUi().hasIdentifications()) {
+            return this.getUi().getIdentifications()[0];
         } else {
             var identification = Identification.fromFriendlyResource(
-                this.getElements().getModel()
+                this.getUi().getModel()
             );
             identification.setLabel(
-                this.getElements().text()
+                this.getUi().text()
             );
             identification.setComment(
-                this.getElements().getNote()
+                this.getUi().getNote()
             );
             return identification;
         }
@@ -64,10 +64,10 @@ define([
 
     EdgeController.prototype.remove = function () {
         var self = this;
-        EdgeService.remove(this.getElements(), function () {
-            var parentBubble = self.getElements().getParentBubble();
-            var childVertex = self.getElements().getTopMostChildBubble();
-            self.getElements().applyToOtherInstances(function (otherInstance) {
+        EdgeService.remove(this.getUi(), function () {
+            var parentBubble = self.getUi().getParentBubble();
+            var childVertex = self.getUi().getTopMostChildBubble();
+            self.getUi().applyToOtherInstances(function (otherInstance) {
                 var childVertex = otherInstance.getTopMostChildBubble();
                 childVertex.remove(false);
             });
@@ -103,9 +103,9 @@ define([
     EdgeController.prototype.reverse = function () {
         var self = this;
         EdgeService.inverse(
-            this.getElements()
+            this.getUi()
         ).then(function(){
-            self.getElements().inverse();
+            self.getUi().inverse();
         });
     };
     EdgeController.prototype.changeEndVertex = function (endVertex) {
@@ -116,15 +116,15 @@ define([
             return doIt();
         }
         function doIt() {
-            if(self.getElements().isInverse()){
+            if(self.getUi().isInverse()){
                 return EdgeService.changeDestinationVertex(
                     endVertex,
-                    self.getElements()
+                    self.getUi()
                 );
             }
             return EdgeService.changeSourceVertex(
                 endVertex,
-                self.getElements()
+                self.getUi()
             );
         }
     };

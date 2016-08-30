@@ -12,7 +12,7 @@ define([
         COMPARISON_PREFIX: "comparison_"
     };
     api.fromServerFormat = function (serverFormat) {
-        return new Self(serverFormat);
+        return new SuggestionOrigin(serverFormat);
     };
     api.fromServerArray = function (serverArray) {
         var origins = [];
@@ -31,33 +31,33 @@ define([
             origin: origin
         };
     };
-    function Self(serverFormat) {
+    function SuggestionOrigin(serverFormat) {
         this.originServerFormat = serverFormat;
-        FriendlyResource.Self.apply(
+        FriendlyResource.FriendlyResource.apply(
             this
         );
-        FriendlyResource.Self.prototype.init.call(
+        FriendlyResource.FriendlyResource.prototype.init.call(
             this,
             serverFormat.friendlyResource
         );
     }
 
-    Self.prototype = new FriendlyResource.Self();
-    Self.prototype.getOrigin = function () {
+    SuggestionOrigin.prototype = new FriendlyResource.FriendlyResource();
+    SuggestionOrigin.prototype.getOrigin = function () {
         return this.originServerFormat.origin;
     };
-    Self.prototype.isFromComparison = function () {
+    SuggestionOrigin.prototype.isFromComparison = function () {
         return api.COMPARISON_PREFIX === this._getOriginPrefix();
     };
-    Self.prototype._getOriginPrefix = function () {
+    SuggestionOrigin.prototype._getOriginPrefix = function () {
         return this.originServerFormat.origin.substring(
             0,
             this.originServerFormat.origin.indexOf("_") + 1
         );
     };
-    Self.prototype.getServerFormat = function () {
+    SuggestionOrigin.prototype.getServerFormat = function () {
         return {
-            friendlyResource: FriendlyResource.Self.prototype.getServerFormat.call(this),
+            friendlyResource: FriendlyResource.FriendlyResource.prototype.getServerFormat.call(this),
             origin: this.getOrigin()
         };
     };

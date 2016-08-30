@@ -96,13 +96,6 @@ define([
         api.EdgeUi.prototype.isSelected = function () {
             return this.html.hasClass("selected");
         };
-        
-        api.EdgeUi.prototype.isPublic = function () {
-            if(this.isProperty()){
-                return true;
-            }
-            return this.getParentVertex().isPublic() && this.getDestinationVertex().isPublic();
-        };
 
         api.EdgeUi.prototype.isSetAsSameAsGroupRelation = function () {
             return this.getHtml().hasClass(

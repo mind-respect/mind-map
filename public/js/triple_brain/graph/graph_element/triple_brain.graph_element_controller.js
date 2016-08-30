@@ -38,10 +38,12 @@ define([
     GraphElementController.prototype.init = function (graphElements) {
         this.graphElements = graphElements;
     };
-    GraphElementController.prototype.getElements = function () {
+    GraphElementController.prototype.getUi = function () {
         return this.graphElements;
     };
-
+    GraphElementController.prototype.getModel = function () {
+        return this.getUi().getModel();
+    };
     GraphElementController.prototype.noteCanDo = function () {
         return this.isSingle() && (
                 this.isOwned() || this.graphElements.hasNote()
@@ -50,12 +52,12 @@ define([
 
     GraphElementController.prototype.note = function () {
         var editor = api._getContentEditor().saferHtml(
-            this.getElements().getNote()
+            this.getUi().getNote()
         );
         api._getBubbleNoteModal().data(
             "graphElement", this.graphElements
         ).find(".bubble-label-in-title").text(
-            this.getElements().text()
+            this.getUi().text()
         );
         getSaveButton().text($.t("vertex.menu.note.update"));
         api._getBubbleNoteModal().modal({
@@ -86,7 +88,7 @@ define([
 
     GraphElementController.prototype.center = function () {
         GraphDisplayer.displayUsingCentralBubble(
-            this.getElements()
+            this.getUi()
         );
     };
 
@@ -102,7 +104,7 @@ define([
 
     GraphElementController.prototype.identifyCanDo = function () {
         return this.isSingle() && (
-                this.isOwned() || this.getElements().hasIdentifications()
+                this.isOwned() || this.getUi().hasIdentifications()
             );
     };
 
@@ -123,22 +125,22 @@ define([
 
     GraphElementController.prototype.accept = function () {
         var self = this;
-        var comparedWithLabel = this.getElements().getComparedWith().getLabel();
+        var comparedWithLabel = this.getUi().getComparedWith().getLabel();
         FriendlyResourceService.updateLabel(
-            this.getElements(),
+            this.getUi(),
             comparedWithLabel,
             function () {
-                self.getElements().getModel().setLabel(comparedWithLabel);
-                self.getElements().labelUpdateHandle();
+                self.getUi().getModel().setLabel(comparedWithLabel);
+                self.getUi().labelUpdateHandle();
             }
         );
     };
 
     GraphElementController.prototype.expandCanDo = function () {
         return this.isSingle() && (
-                this.getElements().hasVisibleHiddenRelationsContainer() ||
-                this.getElements().hasDescendantsWithHiddenRelations() ||
-                this.getElements().isCollapsed()
+                this.getUi().hasVisibleHiddenRelationsContainer() ||
+                this.getUi().hasDescendantsWithHiddenRelations() ||
+                this.getUi().isCollapsed()
             );
     };
 
@@ -147,15 +149,15 @@ define([
         var self = this;
         this.expandDescendantsIfApplicable();
         return deferred.done(function () {
-            self.getElements().expand();
+            self.getUi().expand();
         });
     };
 
     GraphElementController.prototype.expandDescendantsIfApplicable = function () {
         var deferred = $.Deferred();
-        if (this.getElements().hasDescendantsWithHiddenRelations()) {
+        if (this.getUi().hasDescendantsWithHiddenRelations()) {
             var addChildTreeActions = [];
-            this.getElements().visitExpandableDescendants(function (expandableLeaf) {
+            this.getUi().visitExpandableDescendants(function (expandableLeaf) {
                 addChildTreeActions.push(
                     expandableLeaf.getController().expand()
                 );
@@ -167,17 +169,17 @@ define([
 
     GraphElementController.prototype.collapseCanDo = function () {
         return this.isSingle() && (
-                !this.getElements().isALeaf() && !this.getElements().isCollapsed()
+                !this.getUi().isALeaf() && !this.getUi().isCollapsed()
             );
     };
 
     GraphElementController.prototype.collapse = function () {
-        this.getElements().collapse();
+        this.getUi().collapse();
     };
 
     GraphElementController.prototype.moveUnder = function (otherEdge) {
-        var previousParentVertex = this.getElements().getParentVertex();
-        this.getElements().moveUnder(otherEdge);
+        var previousParentVertex = this.getUi().getParentVertex();
+        this.getUi().moveUnder(otherEdge);
         this._moveTo(
             otherEdge,
             false,
@@ -186,8 +188,8 @@ define([
     };
 
     GraphElementController.prototype.moveAbove = function (otherEdge) {
-        var previousParentVertex = this.getElements().getParentVertex();
-        this.getElements().moveAbove(otherEdge);
+        var previousParentVertex = this.getUi().getParentVertex();
+        this.getUi().moveAbove(otherEdge);
         this._moveTo(
             otherEdge,
             true,
@@ -196,9 +198,9 @@ define([
     };
 
     GraphElementController.prototype._moveTo = function (otherEdge, isAbove, previousParentVertex) {
-        var movedEdge = this.getElements().isVertex() ?
-            this.getElements().getParentBubble() :
-            this.getElements();
+        var movedEdge = this.getUi().isVertex() ?
+            this.getUi().getParentBubble() :
+            this.getUi();
         var movedVertex = movedEdge.getTopMostChildBubble();
         var otherVertex = otherEdge.getTopMostChildBubble();
         movedVertex.getModel().setSortDate(

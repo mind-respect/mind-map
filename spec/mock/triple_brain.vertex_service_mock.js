@@ -35,19 +35,13 @@ define([
         });
     };
     api.makeCollectionPrivate = function(){
-        return spyOn(VertexService, "makeCollectionPrivate").and.callFake(function(vertices, callback){
-            VertexService._makeCollectionPrivateCallback(
-                vertices,
-                callback
-            );
+        return spyOn(VertexService, "makeCollectionPrivate").and.callFake(function(){
+            return $.Deferred().resolve();
         });
     };
     api.makeCollectionPublic = function(){
-        return spyOn(VertexService, "makeCollectionPublic").and.callFake(function(vertices, callback){
-            VertexService._makeCollectionPublicCallback(
-                vertices,
-                callback
-            );
+        return spyOn(VertexService, "makeCollectionPublic").and.callFake(function(){
+            return $.Deferred().resolve();
         });
     };
     return api;

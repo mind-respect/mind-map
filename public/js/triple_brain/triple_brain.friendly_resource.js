@@ -8,7 +8,7 @@ define([
     "use strict";
     var api = {};
     api.fromServerFormat = function (serverFormat) {
-        return new api.Self().init(serverFormat);
+        return new api.FriendlyResource().init(serverFormat);
     };
     api.buildObjectWithUri = function (uri) {
         return {
@@ -60,10 +60,10 @@ define([
             api.buildObjectWithUriLabelAndDescription(uri, label, description)
         );
     };
-    api.Self = function () {
+    api.FriendlyResource = function () {
     };
 
-    api.Self.prototype.init = function (friendlyResourceServerFormat) {
+    api.FriendlyResource.prototype.init = function (friendlyResourceServerFormat) {
         this.friendlyResourceServerFormat = friendlyResourceServerFormat;
         this._images = this._buildImages();
         if (friendlyResourceServerFormat.comment === undefined) {
@@ -75,63 +75,63 @@ define([
         return this;
     };
 
-    api.Self.prototype.setLabel = function (label) {
+    api.FriendlyResource.prototype.setLabel = function (label) {
         this.friendlyResourceServerFormat.label = label;
     };
 
-    api.Self.prototype.getLabel = function () {
+    api.FriendlyResource.prototype.getLabel = function () {
         return this.friendlyResourceServerFormat.label;
     };
-    api.Self.prototype.isLabelEmpty = function () {
+    api.FriendlyResource.prototype.isLabelEmpty = function () {
         return this.getLabel().trim() === "";
     };
-    api.Self.prototype.getComment = function () {
+    api.FriendlyResource.prototype.getComment = function () {
         return this.friendlyResourceServerFormat.comment;
     };
-    api.Self.prototype.setComment = function (comment) {
+    api.FriendlyResource.prototype.setComment = function (comment) {
         return this.friendlyResourceServerFormat.comment = comment;
     };
-    api.Self.prototype.hasComment = function () {
+    api.FriendlyResource.prototype.hasComment = function () {
         return this.friendlyResourceServerFormat.comment.length > 0;
     };
-    api.Self.prototype.addImage = function (image) {
+    api.FriendlyResource.prototype.addImage = function (image) {
         this._images.push(image);
     };
-    api.Self.prototype.getImages = function () {
+    api.FriendlyResource.prototype.getImages = function () {
         return this._images;
     };
-    api.Self.prototype.hasImages = function () {
+    api.FriendlyResource.prototype.hasImages = function () {
         return this._images.length > 0;
     };
-    api.Self.prototype.setUri = function (uri) {
+    api.FriendlyResource.prototype.setUri = function (uri) {
         this.friendlyResourceServerFormat.uri = uri;
     };
-    api.Self.prototype.getUri = function () {
+    api.FriendlyResource.prototype.getUri = function () {
         return decodeURIComponent(
             this.friendlyResourceServerFormat.uri
         );
     };
-    api.Self.prototype.getJsonFormat = function () {
+    api.FriendlyResource.prototype.getJsonFormat = function () {
         var serverFormat = this.getServerFormat();
         serverFormat.images = this.getImagesServerFormat();
         return JSON.stringify(
             serverFormat
         );
     };
-    api.Self.prototype.getImagesServerFormat = function () {
+    api.FriendlyResource.prototype.getImagesServerFormat = function () {
         return Image.arrayToServerJson(
             this._images
         );
     };
-    api.Self.prototype.getServerFormat = function () {
+    api.FriendlyResource.prototype.getServerFormat = function () {
         return this.friendlyResourceServerFormat;
     };
-    api.Self.prototype.getCreationDate = function () {
+    api.FriendlyResource.prototype.getCreationDate = function () {
         return new Date(
             this.friendlyResourceServerFormat.creationDate
         );
     };
-    api.Self.prototype._buildImages = function () {
+    api.FriendlyResource.prototype._buildImages = function () {
         return undefined === this.friendlyResourceServerFormat.images ?
             [] :
             Image.arrayFromServerJson(

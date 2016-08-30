@@ -154,67 +154,29 @@ define([
                 contentType: 'application/json;charset=utf-8'
             });
         };
-        api.makePrivate = function (vertex, callback) {
-            setPrivacy(
+        api.makePrivate = function (vertexUi) {
+            return setPrivacy(
                 false,
-                vertex,
-                function () {
-                    vertex.makePrivate();
-                    if (callback !== undefined) {
-                        callback();
-                    }
-                    publishVertexPrivacyUpdated(vertex);
-                }
+                vertexUi
             );
         };
-        api.makePublic = function (vertex, callback) {
-            setPrivacy(
+        api.makePublic = function (vertexUi) {
+            return setPrivacy(
                 true,
-                vertex,
-                function () {
-                    vertex.makePublic();
-                    if (callback !== undefined) {
-                        callback();
-                    }
-                    publishVertexPrivacyUpdated(vertex);
-                }
+                vertexUi
             );
         };
-        api.makeCollectionPrivate = function (vertices, callback) {
-            setCollectionPrivacy(false, vertices, function () {
-                api._makeCollectionPrivateCallback(
-                    vertices,
-                    callback
-                );
-            });
+        api.makeCollectionPrivate = function (vertices) {
+            return setCollectionPrivacy(
+                false,
+                vertices
+            );
         };
-        api._makeCollectionPrivateCallback = function (vertices, callback) {
-            $.each(vertices, function () {
-                var vertex = this;
-                vertex.makePrivate();
-                publishVertexPrivacyUpdated(vertex);
-            });
-            if (callback !== undefined) {
-                callback();
-            }
-        };
-        api.makeCollectionPublic = function (vertices, callback) {
-            setCollectionPrivacy(true, vertices, function () {
-                api._makeCollectionPublicCallback(
-                    vertices,
-                    callback
-                );
-            });
-        };
-        api._makeCollectionPublicCallback = function (vertices, callback) {
-            $.each(vertices, function () {
-                var vertex = this;
-                vertex.makePublic();
-                publishVertexPrivacyUpdated(vertex);
-            });
-            if (callback !== undefined) {
-                callback();
-            }
+        api.makeCollectionPublic = function (vertices) {
+            return setCollectionPrivacy(
+                true,
+                vertices
+            );
         };
         api.group = function (graphElementsUris, callback) {
             var response = $.ajax({
@@ -234,7 +196,7 @@ define([
             );
         };
         return api;
-        function setCollectionPrivacy(isPublic, vertices, callback) {
+        function setCollectionPrivacy(isPublic, vertices) {
             var typeQueryParam = isPublic ? "public" : "private";
             var verticesUri = [];
             $.each(vertices, function () {
@@ -243,26 +205,19 @@ define([
                     vertex.getUri()
                 );
             });
-            $.ajax({
+            return $.ajax({
                 type: 'POST',
                 data: JSON.stringify(verticesUri),
                 contentType: 'application/json;charset=utf-8',
                 url: getVerticesUrl() + '/collection/public_access?type=' + typeQueryParam
-            }).success(callback);
+            });
         }
 
-        function setPrivacy(isPublic, vertex, callback) {
-            $.ajax({
+        function setPrivacy(isPublic, vertex) {
+            return $.ajax({
                 type: isPublic ? 'POST' : 'DELETE',
                 url: vertex.getUri() + '/public_access'
-            }).success(callback);
-        }
-
-        function publishVertexPrivacyUpdated(vertex) {
-            EventBus.publish(
-                '/event/ui/graph/vertex/privacy/updated',
-                vertex
-            );
+            });
         }
 
         function getVerticesUrl() {

@@ -22,13 +22,13 @@ define([
     function Self() {
     }
 
-    Self.prototype = new FriendlyResource.Self();
+    Self.prototype = new FriendlyResource.FriendlyResource();
     Self.prototype.init = function (serverFormat) {
         this.centerGraphElementServerFormat = serverFormat;
-        FriendlyResource.Self.apply(
+        FriendlyResource.FriendlyResource.apply(
             this.centerGraphElementServerFormat.graphElement.friendlyResource
         );
-        FriendlyResource.Self.prototype.init.call(
+        FriendlyResource.FriendlyResource.prototype.init.call(
             this,
             this.centerGraphElementServerFormat.graphElement.friendlyResource
         );

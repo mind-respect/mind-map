@@ -42,7 +42,7 @@ define([
                 ),
                 includedEdges:{},
                 includedVertices:{},
-                isPublic:vertexUi.isPublic(),
+                isPublic:vertexUi.getModel().isPublic(),
                 numberOfConnectedEdges: vertexUi.connectedEdges().length,
                 suggestions:{}
             }
@@ -53,13 +53,13 @@ define([
         this._includedVertices = this._buildIncludedVertices();
         this._includedEdges = this._buildIncludedEdges();
         this._suggestions = this._buildSuggestions();
-        GraphElement.Self.apply(
+        GraphElement.GraphElement.apply(
             this
         );
         this.init(vertexServerFormat.vertex.graphElement);
     }
 
-    Vertex.prototype = new GraphElement.Self();
+    Vertex.prototype = new GraphElement.GraphElement();
 
     Vertex.prototype.getIncludedVertices = function () {
         return this._includedVertices;
@@ -84,6 +84,15 @@ define([
     Vertex.prototype.isPublic = function () {
         return this.vertexServerFormat.vertex.isPublic;
     };
+
+    Vertex.prototype.makePrivate = function () {
+        return this.vertexServerFormat.vertex.isPublic = false;
+    };
+
+    Vertex.prototype.makePublic = function () {
+        return this.vertexServerFormat.vertex.isPublic = true;
+    };
+
     Vertex.prototype._buildIncludedEdges = function () {
         var includedEdges = {};
         if (this.vertexServerFormat.vertex.includedEdges === undefined) {

@@ -10,7 +10,7 @@ define([
     "use strict";
     var api = {};
     api.fromServerFormat = function (serverFormat) {
-        return new api.Self().init(serverFormat);
+        return new api.Edge().init(serverFormat);
     };
     api.buildObjectWithUriOfSelfSourceAndDestinationVertex = function (uri, sourceVertexUri, destinationVertexUri) {
         return {
@@ -38,12 +38,12 @@ define([
             )
         };
     };
-    api.Self = function () {
+    api.Edge = function () {
     };
 
-    api.Self.prototype = new GraphElement.Self();
+    api.Edge.prototype = new GraphElement.GraphElement();
 
-    api.Self.prototype.init = function (edgeServerFormat) {
+    api.Edge.prototype.init = function (edgeServerFormat) {
         this.sourceVertex = FriendlyResource.fromServerFormat(
             VertexServerFormatBuilder.getFriendlyResourceServerObject(
                 edgeServerFormat.sourceVertex
@@ -54,27 +54,38 @@ define([
                 edgeServerFormat.destinationVertex
             )
         );
-        GraphElement.Self.apply(
+        GraphElement.GraphElement.apply(
             this
         );
-        GraphElement.Self.prototype.init.call(
+        GraphElement.GraphElement.prototype.init.call(
             this,
             edgeServerFormat.graphElement
         );
         return this;
     };
 
-    api.Self.prototype.getSourceVertex = function () {
+    api.Edge.prototype.setSourceVertex = function (sourceVertex) {
+        return this.sourceVertex = sourceVertex;
+    };
+    api.Edge.prototype.setDestinationVertex = function (destinationVertex) {
+        return this.destinationVertex = destinationVertex;
+    };
+
+    api.Edge.prototype.getSourceVertex = function () {
         return this.sourceVertex;
     };
-    api.Self.prototype.getDestinationVertex = function () {
+    api.Edge.prototype.getDestinationVertex = function () {
         return this.destinationVertex;
     };
-    api.Self.prototype.isRelatedToVertex = function (vertex) {
+    api.Edge.prototype.isPublic = function () {
+        return this.getSourceVertex().isPublic() &&
+            this.getDestinationVertex().isPublic();
+    };
+    api.Edge.prototype.isRelatedToVertex = function (vertex) {
         return this.getSourceVertex().getUri() === vertex.getUri() ||
             this.getDestinationVertex().getUri() === vertex.getUri();
     };
-    api.Self.prototype.getOtherVertex = function (vertex) {
+    api.Edge.prototype.getOtherVertex = function (vertex) {
         return this.getSourceVertex().getUri() === vertex.getUri() ?
             this.getDestinationVertex() : this.getSourceVertex();
     };

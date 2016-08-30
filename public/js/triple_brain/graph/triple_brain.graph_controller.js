@@ -46,7 +46,7 @@ define([
             -0.1
         );
     };
-    api.getElements = function () {
+    api.getUi = function () {
         return [];
     };
     return api;

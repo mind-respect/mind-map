@@ -19,7 +19,7 @@ define([
     }
 
     GraphElementButton.prototype.showOnlyIfApplicable = function (controller) {
-        var selected = controller.getElements();
+        var selected = controller.getUi();
         var canActionBePerformed = this.canActionBePerformedWithController(
             controller
         );
@@ -93,11 +93,11 @@ define([
             case "visitOtherInstances":
                 return graphElement.hasOtherInstances();
             case "makePrivate":
-                return graphElement.isVertex() && graphElement.isPublic() && !MindMapInfo.isViewOnly();
+                return graphElement.isVertex() && graphElement.getModel().isPublic() && !MindMapInfo.isViewOnly();
             case "makePublic":
-                return graphElement.isVertex() && !graphElement.isPublic() && !MindMapInfo.isViewOnly();
+                return graphElement.isVertex() && !graphElement.getModel().isPublic() && !MindMapInfo.isViewOnly();
             case "isPublic":
-                return !graphElement.isVertex() && graphElement.isPublic() && !MindMapInfo.isViewOnly();
+                return !graphElement.isVertex() && graphElement.getModel().isPublic() && !MindMapInfo.isViewOnly();
             case "accept":
                 return graphElement.isDisplayingComparison();
             default:

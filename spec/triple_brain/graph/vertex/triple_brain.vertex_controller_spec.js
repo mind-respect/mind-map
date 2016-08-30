@@ -3,6 +3,7 @@
  */
 
 define([
+    "jquery",
     'test/test-scenarios',
     'test/test-utils',
     "test/mock/triple_brain.friendly_resource_service_mock",
@@ -13,7 +14,7 @@ define([
     "triple_brain.selection_handler",
     'triple_brain.vertex_service',
     'triple_brain.mind_map_info'
-], function (Scenarios, TestUtils, FriendlyResourceServiceMock, GraphElementServiceMock, VertexServiceMock, GraphServiceMock, VertexController, SelectionHandler, VertexService, MindMapInfo) {
+], function ($, Scenarios, TestUtils, FriendlyResourceServiceMock, GraphElementServiceMock, VertexServiceMock, GraphServiceMock, VertexController, SelectionHandler, VertexService, MindMapInfo) {
     "use strict";
     describe("vertex_controller", function () {
         it("removes connected edges when removing a vertex", function () {
@@ -242,6 +243,54 @@ define([
             expect(
                 b3.isExpanded()
             ).toBeTruthy();
+        });
+        it("does not make public already public vertices when making a collection public", function () {
+            var scenario = new Scenarios.threeBubblesGraph();
+            var b2 = scenario.getBubble2InTree();
+            b2.getModel().makePublic();
+            var hasCalledService = false;
+            var nbVerticesToMakePublic = 0;
+            spyOn(VertexService, "makeCollectionPublic").and.callFake(function (vertices) {
+                hasCalledService = true;
+                nbVerticesToMakePublic = vertices.length;
+                return $.Deferred().resolve();
+            });
+            new VertexController.Self([
+                scenario.getBubble1InTree(),
+                b2,
+                scenario.getBubble3InTree()
+            ]).makePublic();
+            expect(
+                hasCalledService
+            ).toBeTruthy();
+            expect(
+                nbVerticesToMakePublic
+            ).toBe(2);
+        });
+        it("does not make private already private vertices when making a collection private", function () {
+            var scenario = new Scenarios.threeBubblesGraph();
+            var b1 = scenario.getBubble1InTree();
+            b1.getModel().makePublic();
+            var b3 = scenario.getBubble3InTree();
+            b3.getModel().makePublic();
+            var hasCalledService = false;
+            var nbVerticesToMakePrivate = 0;
+            spyOn(VertexService, "makeCollectionPrivate").and.callFake(function (vertices) {
+                hasCalledService = true;
+                nbVerticesToMakePrivate = vertices.length;
+                return $.Deferred().resolve();
+            });
+            new VertexController.Self([
+                b1,
+                scenario.getBubble2InTree(),
+                b3
+            ]).makePrivate();
+            expect(
+                hasCalledService
+            ).toBeTruthy();
+            expect(
+                nbVerticesToMakePrivate
+            ).toBe(2);
         });
     });
 });

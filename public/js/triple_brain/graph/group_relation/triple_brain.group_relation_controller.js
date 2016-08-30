@@ -34,16 +34,16 @@ define([
 
         GroupRelationController.prototype.addChild = function () {
             var deferred = $.Deferred();
-            this.getElements().hideDescription();
+            this.getUi().hideDescription();
             var self = this;
             VertexService.addRelationAndVertexToVertex(
-                this.getElements().getParentVertex(),
-                this.getElements(),
+                this.getUi().getParentVertex(),
+                this.getUi(),
                 function (triple) {
-                    if (self.getElements().hasVisibleHiddenRelationsContainer()) {
+                    if (self.getUi().hasVisibleHiddenRelationsContainer()) {
                         self.expand();
                     }
-                    var identification = self.getElements().getGroupRelation().getIdentification();
+                    var identification = self.getUi().getGroupRelation().getIdentification();
                     EdgeService.addSameAs(
                         triple.edge(),
                         identification

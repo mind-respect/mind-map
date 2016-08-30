@@ -69,7 +69,7 @@ define([
         return api;
 
         function refreshShareLinkVisibility() {
-            getShareLink()[GraphElementUi.getCenterBubble().isPublic() ? "removeClass" : "addClass"](
+            getShareLink()[GraphElementUi.getCenterBubble().getModel().isPublic() ? "removeClass" : "addClass"](
                 "hidden"
             );
         }

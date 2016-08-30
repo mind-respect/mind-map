@@ -130,7 +130,7 @@ define([
         };
         api.RelativeTreeVertex.prototype._hasPublicHiddenRelations = function () {
             return this.getModel().getNbPublicNeighbors() > (
-                    this.getParentVertex().isPublic() ? 1 : 0
+                    this.getParentVertex().getModel().isPublic() ? 1 : 0
                 );
         };
         EventBus.subscribe(

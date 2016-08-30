@@ -109,16 +109,16 @@ define([
             this.origins = SuggestionOrigin.fromServerArray(
                 serverFormat.origins
             );
-            FriendlyResource.Self.apply(
+            FriendlyResource.FriendlyResource.apply(
                 this
             );
-            FriendlyResource.Self.prototype.init.call(
+            FriendlyResource.FriendlyResource.prototype.init.call(
                 this,
                 serverFormat.friendlyResource
             );
         }
 
-        Suggestion.prototype = new FriendlyResource.Self();
+        Suggestion.prototype = new FriendlyResource.FriendlyResource();
 
         Suggestion.prototype.getSameAs = function () {
             return this.sameAs;
@@ -140,7 +140,7 @@ define([
                 this.getOrigin().getOrigin();
         };
         Suggestion.prototype.getServerFormat = function () {
-            var serverFormatGetter = FriendlyResource.Self.prototype.getServerFormat;
+            var serverFormatGetter = FriendlyResource.FriendlyResource.prototype.getServerFormat;
             return {
                 friendlyResource: serverFormatGetter.call(
                     this
