@@ -583,7 +583,7 @@ define([
             );
         };
 
-        api.Bubble.prototype.expand = function () {
+        api.Bubble.prototype.expand = function (avoidScreenCenter) {
             this.getChildrenContainer().removeClass(
                 "hidden"
             );
@@ -591,7 +591,9 @@ define([
                 this.getHiddenRelationsContainer().hide();
             }
             this.reviewMenuButtonsVisibility();
-            this.centerOnScreenWithAnimation();
+            if(avoidScreenCenter === undefined || !avoidScreenCenter){
+                this.centerOnScreenWithAnimation();
+            }
         };
 
         api.Bubble.prototype.buildHiddenNeighborPropertiesIndicator = function () {

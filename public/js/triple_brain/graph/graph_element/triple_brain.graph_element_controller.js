@@ -144,12 +144,12 @@ define([
             );
     };
 
-    GraphElementController.prototype.expand = function () {
+    GraphElementController.prototype.expand = function (avoidCenter) {
         var deferred = $.Deferred().resolve();
         var self = this;
         this.expandDescendantsIfApplicable();
         return deferred.done(function () {
-            self.getUi().expand();
+            self.getUi().expand(avoidCenter);
         });
     };
 
@@ -157,9 +157,10 @@ define([
         var deferred = $.Deferred();
         if (this.getUi().hasDescendantsWithHiddenRelations()) {
             var addChildTreeActions = [];
+            var avoidCenter = true;
             this.getUi().visitExpandableDescendants(function (expandableLeaf) {
                 addChildTreeActions.push(
-                    expandableLeaf.getController().expand()
+                    expandableLeaf.getController().expand(avoidCenter)
                 );
             });
             deferred = $.when.apply($, addChildTreeActions);

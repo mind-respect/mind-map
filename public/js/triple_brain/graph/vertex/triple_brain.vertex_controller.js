@@ -280,22 +280,20 @@ define([
             GraphDisplayer.displayUsingCentralBubbleUri
         );
     };
-    VertexController.prototype.expand = function () {
+    VertexController.prototype.expand = function (avoidCenter) {
         var deferred = $.Deferred().resolve();
         var self = this;
         if (this.getUi().hasVisibleHiddenRelationsContainer()) {
             if (!this.getUi().isCollapsed()) {
                 deferred = GraphDisplayer.addChildTree(
                     this.getUi()
-                ).then(function () {
-                    self.getUi().expand();
-                });
+                );
             }
         } else {
-            this.expandDescendantsIfApplicable();
+            deferred = this.expandDescendantsIfApplicable();
         }
         return deferred.done(function () {
-            self.getUi().expand();
+            self.getUi().expand(avoidCenter);
         });
     };
     api.Self = VertexController;
