@@ -9,43 +9,38 @@ define([
     "triple_brain.graph_displayer",
     "triple_brain.edge",
     "triple_brain.vertex",
-    "triple_brain.selection_handler"
-], function (Scenarios, TestUtils, GraphServiceMock, GraphDisplayer, Edge, Vertex, SelectionHandler) {
+    "triple_brain.selection_handler",
+    "triple_brain.mind_map_info"
+], function (Scenarios, TestUtils, GraphServiceMock, GraphDisplayer, Edge, Vertex, SelectionHandler, MindMapInfo) {
     "use strict";
     describe("bubble", function () {
-        var centerBubble,
-            bubble2,
-            bubble3,
-            threeBubbleScenario;
-        beforeEach(function () {
-            threeBubbleScenario = new Scenarios.threeBubblesGraph();
-            bubble2 = threeBubbleScenario.getBubble2InTree();
-            bubble3 = threeBubbleScenario.getBubble3InTree();
-            centerBubble = threeBubbleScenario.getCenterBubbleInTree();
-        });
         it("can return parent bubble", function () {
-            var parentBubble = bubble2.getParentBubble();
+            var b2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
+            var parentBubble = b2.getParentBubble();
             expect(
                 parentBubble.text()
             ).toBe("r1");
         });
         it("returns center when getting parent bubble of center vertex", function () {
+            var centerBubble = new Scenarios.threeBubblesGraph().getCenterBubbleInTree();
             var parentBubble = centerBubble.getParentBubble();
             expect(
                 parentBubble.getUri()
             ).toBe(centerBubble.getUri());
         });
         it("can return parent vertex", function () {
-            var parentVertex = bubble2.getParentVertex();
+            var b2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
+            var parentVertex = b2.getParentVertex();
             expect(
                 parentVertex.text()
             ).toBe("b1");
         });
         it("returns grand parent if parent is not a vertex", function () {
-            var newVertex = TestUtils.addTriple(bubble2).destinationVertex();
+            var b2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
+            var newVertex = TestUtils.addTriple(b2).destinationVertex();
             expect(
                 newVertex.getParentVertex().getUri()
-            ).toBe(bubble2.getUri());
+            ).toBe(b2.getUri());
         });
         it("can get parent vertex of a vertex under a group relation", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
@@ -58,32 +53,36 @@ define([
             ).toBe(centerBubble.getUri());
         });
         it("can return top most child bubble", function () {
+            var b2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
             var newEdge = TestUtils.addTriple(
-                bubble2
+                b2
             ).edge();
             expect(
-                bubble2.getTopMostChildBubble().getUri()
+                b2.getTopMostChildBubble().getUri()
             ).toBe(newEdge.getUri());
         });
 
         it("returns self when getting child of leaf", function () {
+            var b2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
             expect(
-                bubble2.getTopMostChildBubble().getUri()
-            ).toBe(bubble2.getUri());
+                b2.getTopMostChildBubble().getUri()
+            ).toBe(b2.getUri());
         });
 
         it("can get bubble above an edge", function () {
-            var newEdge1 = TestUtils.addTriple(bubble2).edge(),
-                newEdge2 = TestUtils.addTriple(bubble2).edge();
+            var b2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
+            var newEdge1 = TestUtils.addTriple(b2).edge(),
+                newEdge2 = TestUtils.addTriple(b2).edge();
             expect(
                 newEdge2.getBubbleAbove().getId()
             ).toBe(newEdge1.getId());
         });
 
         it("can get bubble above a vertex", function () {
-            var newVertex1 = TestUtils.addTriple(bubble2).destinationVertex(),
+            var b2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
+            var newVertex1 = TestUtils.addTriple(b2).destinationVertex(),
                 newVertex2 = TestUtils.addTriple(
-                    bubble2
+                    b2
                 ).destinationVertex();
             expect(
                 newVertex2.getBubbleAbove().getId()
@@ -91,29 +90,33 @@ define([
         });
 
         it("returns itself when getting bubble above center vertex", function () {
+            var centerBubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
             expect(
                 centerBubble.getBubbleAbove().getId()
             ).toBe(centerBubble.getId());
         });
 
         it("returns itself when no bubble above", function () {
+            var b2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
             expect(
-                bubble2.getBubbleAbove().getId()
-            ).toBe(bubble2.getId());
+                b2.getBubbleAbove().getId()
+            ).toBe(b2.getId());
         });
 
         it("can get bubble below", function () {
-            var newEdge1 = TestUtils.addTriple(bubble2).edge(),
-                newEdge2 = TestUtils.addTriple(bubble2).edge();
+            var b2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
+            var newEdge1 = TestUtils.addTriple(b2).edge(),
+                newEdge2 = TestUtils.addTriple(b2).edge();
             expect(
                 newEdge1.getBubbleUnder().getId()
             ).toBe(newEdge2.getId());
         });
 
         it("can get bubble below even if both bubbles only share grand-parent", function () {
-            var newVertex1 = TestUtils.addTriple(bubble2).destinationVertex(),
+            var b2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
+            var newVertex1 = TestUtils.addTriple(b2).destinationVertex(),
                 newVertex2 = TestUtils.addTriple(
-                    bubble2
+                    b2
                 ).destinationVertex();
             expect(
                 newVertex1.getBubbleUnder().getId()
@@ -121,9 +124,10 @@ define([
         });
 
         it("can get closest bubble below even if common parent is further away than grand-parent", function () {
-            var newVertex1 = TestUtils.addTriple(bubble2).destinationVertex(),
+            var b2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
+            var newVertex1 = TestUtils.addTriple(b2).destinationVertex(),
                 newVertex2 = TestUtils.addTriple(
-                    bubble2
+                    b2
                 ).destinationVertex(),
                 childOfNewVertex1 = TestUtils.addTriple(
                     newVertex1
@@ -133,9 +137,10 @@ define([
             ).toBe(newVertex2.getId());
         });
         it("returns bubbles below and not it's child when it has one", function () {
-            var newVertex1 = TestUtils.addTriple(bubble2).destinationVertex(),
+            var b2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
+            var newVertex1 = TestUtils.addTriple(b2).destinationVertex(),
                 newVertex2 = TestUtils.addTriple(
-                    bubble2
+                    b2
                 ).destinationVertex();
             TestUtils.addTriple(
                 newVertex2
@@ -145,28 +150,34 @@ define([
             ).toBe(newVertex2.getId());
         });
         it("returns itself when getting bubble under center vertex", function () {
+            var centerBubble = new Scenarios.threeBubblesGraph().getCenterBubbleInTree();
             expect(
                 centerBubble.getBubbleUnder().getId()
             ).toBe(centerBubble.getId());
         });
 
         it("returns itself when no bubble under", function () {
+            var b2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
             expect(
-                bubble2.getBubbleUnder().getId()
-            ).toBe(bubble2.getId());
+                b2.getBubbleUnder().getId()
+            ).toBe(b2.getId());
         });
 
         it("can tell if it has children", function () {
+            var scenario = new Scenarios.threeBubblesGraph();
+            var centerBubble = scenario.getCenterBubbleInTree();
+            var b2 = scenario.getBubble2InTree();
             expect(
                 centerBubble.hasChildren()
             ).toBeTruthy();
             expect(
-                bubble2.hasChildren()
+                b2.hasChildren()
             ).toBeFalsy();
         });
 
         it("shows hidden relation container when has some", function () {
             var b2 = new Scenarios.publicPrivate().getBubble2();
+            var bubble3 = new Scenarios.threeBubblesGraph().getBubble3InTree();
             expect(
                 b2.hasHiddenRelations()
             ).toBeFalsy();
@@ -182,22 +193,26 @@ define([
         });
 
         it("hides hidden relations container after expand", function () {
+            var scenario = new Scenarios.threeBubblesGraph();
+            var b3 = scenario.getBubble3InTree();
             expect(
-                bubble3.hasVisibleHiddenRelationsContainer()
+                b3.hasVisibleHiddenRelationsContainer()
             ).toBeTruthy();
-            threeBubbleScenario.expandBubble3(
-                bubble3
+            scenario.expandBubble3(
+                b3
             );
             expect(
-                bubble3.hasVisibleHiddenRelationsContainer()
+                b3.hasVisibleHiddenRelationsContainer()
             ).toBeFalsy();
         });
 
         it("shows hidden relations container of bubbles from expanded bubble", function () {
-            threeBubbleScenario.expandBubble3(
-                bubble3
+            MindMapInfo._setIsViewOnly(false);
+            var scenario = new Scenarios.threeBubblesGraph();
+            scenario.expandBubble3(
+                scenario.getBubble3InTree()
             );
-            var bubble4 = threeBubbleScenario.getBubble4InTree();
+            var bubble4 = scenario.getBubble4InTree();
             expect(
                 bubble4.hasHiddenRelations()
             ).toBeTruthy();
@@ -224,15 +239,16 @@ define([
             ).toBeFalsy();
         });
         it("can move to another parent", function () {
-            var centerBubble = threeBubbleScenario.getBubble1InTree();
+            var scenario = new Scenarios.threeBubblesGraph();
+            var centerBubble = scenario.getBubble1InTree();
             expect(
                 centerBubble.getNumberOfChild()
             ).toBe(2);
-            var bubble3 = threeBubbleScenario.getBubble3InTree();
+            var bubble3 = scenario.getBubble3InTree();
             expect(
                 bubble3.getNumberOfChild()
             ).toBe(0);
-            var relation1 = threeBubbleScenario.getRelation1InTree();
+            var relation1 = scenario.getRelation1InTree();
             relation1.moveToParent(bubble3);
             expect(
                 centerBubble.getNumberOfChild()
@@ -242,11 +258,12 @@ define([
             ).toBe(1);
         });
         it("also moves a vertex's parent relation when moving a vertex", function () {
-            var bubble3 = threeBubbleScenario.getBubble3InTree();
+            var scenario = new Scenarios.threeBubblesGraph();
+            var bubble3 = scenario.getBubble3InTree();
             expect(
                 bubble3.getNumberOfChild()
             ).toBe(0);
-            var bubble2 = threeBubbleScenario.getBubble2InTree();
+            var bubble2 = scenario.getBubble2InTree();
             bubble2.moveToParent(bubble3);
             expect(
                 bubble3.getTopMostChildBubble().text()
@@ -274,8 +291,9 @@ define([
             ).toBeTruthy();
         });
         it("selects the moved bubble after it moved", function () {
-            var relation1 = threeBubbleScenario.getRelation1InTree();
-            var bubble3 = threeBubbleScenario.getBubble3InTree();
+            var scenario = new Scenarios.threeBubblesGraph();
+            var relation1 = scenario.getRelation1InTree();
+            var bubble3 = scenario.getBubble3InTree();
             expect(
                 SelectionHandler.getNbSelected()
             ).toBe(0);
@@ -406,6 +424,7 @@ define([
             ).toBeTruthy();
         });
         it("can tell if one it has descendants with hidden relations", function () {
+            MindMapInfo._setIsViewOnly(false);
             var scenario = new Scenarios.threeBubblesGraph();
             var b1 = scenario.getBubble1InTree();
             expect(
