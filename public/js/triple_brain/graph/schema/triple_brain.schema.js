@@ -64,5 +64,8 @@ define([
     Schema.prototype.hasProperties = function(){
         return this.getProperties().length > 0;
     };
+    Schema.prototype.isPublic = function () {
+        return true;
+    };
     return api;
 });

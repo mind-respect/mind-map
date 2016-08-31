@@ -6,9 +6,10 @@ define([
         "triple_brain.schema_service",
         "triple_brain.graph_displayer",
         "triple_brain.graph_element",
-        "triple_brain.graph_element_controller"
+        "triple_brain.graph_element_controller",
+        "triple_brain.selection_handler"
     ],
-    function (SchemaService, GraphDisplayer, GraphElement, GraphElementController) {
+    function (SchemaService, GraphDisplayer, GraphElement, GraphElementController, SelectionHandler) {
         "use strict";
         var api = {};
         api.Self = SchemaController;
@@ -31,11 +32,14 @@ define([
             SchemaService.createProperty(
                 this.schemasUi,
                 function (propertyUri) {
-                    GraphDisplayer.addProperty(
+                    var propertyUi = GraphDisplayer.addProperty(
                         GraphElement.withUri(
                             propertyUri
                         ),
                         self.schemasUi
+                    );
+                    SelectionHandler.setToSingleGraphElement(
+                        propertyUi
                     );
                 }
             );

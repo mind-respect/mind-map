@@ -763,6 +763,9 @@ define([
             this.getSchemaInTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("project");
             };
+            Mock.setCenterBubbleUriInUrl(
+                this.getCenterBubbleUri()
+            );
         };
 
         api.getSearchResultsForProject = function () {
