@@ -176,6 +176,7 @@ define([
         });
 
         it("shows hidden relation container when has some", function () {
+            MindMapInfo._setIsViewOnly(false);
             var b2 = new Scenarios.publicPrivate().getBubble2();
             var bubble3 = new Scenarios.threeBubblesGraph().getBubble3InTree();
             expect(

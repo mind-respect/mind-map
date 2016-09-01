@@ -13,8 +13,9 @@ define([
     "triple_brain.event_bus",
     "triple_brain.sub_graph",
     "triple_brain.graph_service",
-    "test/mock/triple_brain.graph_service_mock"
-], function (Scenarios, TestUtils, SuggestionServiceMock, SuggestionService, GraphElementUi, GraphDisplayerAsRelativeTree, SelectionHandler, EventBus, SubGraph, GraphService, GraphServiceMock) {
+    "test/mock/triple_brain.graph_service_mock",
+    "triple_brain.mind_map_info"
+], function (Scenarios, TestUtils, SuggestionServiceMock, SuggestionService, GraphElementUi, GraphDisplayerAsRelativeTree, SelectionHandler, EventBus, SubGraph, GraphService, GraphServiceMock, MindMapInfo) {
     "use strict";
     describe("suggestion_bubble_ui", function () {
         var oneSuggestionScenario;
@@ -120,7 +121,7 @@ define([
             vertexSuggestionInTree.setText("bingo");
             vertexSuggestionInTree.getLabel().blur();
             expect(
-                vertexSuggestionInTree.getModel().getLabel()
+                SelectionHandler.getSingleElement().getModel().getLabel()
             ).toBe(
                 "bingo"
             );

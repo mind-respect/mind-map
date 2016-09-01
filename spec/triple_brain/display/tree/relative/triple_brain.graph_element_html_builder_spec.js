@@ -339,5 +339,33 @@ define([
                 SelectionHandler.getSingleElement().isVertex()
             ).toBeTruthy();
         });
+        it("updates the selection to the new relation when accepting suggestion from label update", function () {
+            MindMapInfo._setIsViewOnly(false);
+            var oneBubbleHavingSuggestionsGraph = new Scenarios.oneBubbleHavingSuggestionsGraph();
+            var eventBubble = oneBubbleHavingSuggestionsGraph.getVertexUi();
+            GraphDisplayerAsRelativeTree.addSuggestionsToVertex(
+                eventBubble.getModel().getSuggestions(),
+                eventBubble
+            );
+            var relationSuggestionInTree = eventBubble.getTopMostChildBubble();
+            SuggestionServiceMock.accept();
+            relationSuggestionInTree.setText("potatoe");
+            relationSuggestionInTree.getLabel().blur();
+            expect(
+                SelectionHandler.getSingleElement().isRelation()
+            ).toBeTruthy();
+        });
+        it("leaves edit mode when label was not changed", function () {
+            MindMapInfo._setIsViewOnly(false);
+            var b1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            b1.focus();
+            expect(
+                b1.isInEditMode()
+            ).toBeTruthy();
+            b1.getLabel().blur();
+            expect(
+                b1.isInEditMode()
+            ).toBeFalsy();
+        });
     });
 });

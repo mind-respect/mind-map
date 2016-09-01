@@ -25,22 +25,25 @@ define([
         label.blur(function () {
             var $input = $(this),
                 elementUi = BubbleFactory.fromSubHtml($input);
-            if (!elementUi.hasTextChangedAfterModification()) {
-                return;
-            }
-            if (elementUi.isSuggestion()) {
-                var vertexSuggestion = elementUi.isRelationSuggestion() ?
+            if (elementUi.isSuggestion() && elementUi.hasTextChangedAfterModification()) {
+                var isRelationSuggestion = elementUi.isRelationSuggestion();
+                var vertexSuggestion = isRelationSuggestion ?
                     elementUi.getTopMostChildBubble() : elementUi;
-                vertexSuggestion.getController().accept().then(function(newElementUi){
-                    elementUi = newElementUi;
+                vertexSuggestion.getController().accept().then(function (newElementUi) {
+                    elementUi = isRelationSuggestion ?
+                        newElementUi.getParentBubble() :
+                        newElementUi;
                     doIt();
                 });
             } else {
                 doIt();
             }
-            function doIt(){
+            function doIt() {
                 elementUi.getModel().setLabel(elementUi.text());
                 elementUi.labelUpdateHandle();
+                if (!elementUi.hasTextChangedAfterModification()) {
+                    return;
+                }
                 FriendlyResourceService.updateLabel(
                     elementUi,
                     elementUi.getModel().getLabel()
@@ -115,39 +118,39 @@ define([
             var edge = BubbleFactory.fromHtml(
                 $this.find(".bubble:" + firstOrLast)
             );
-            if(edge.isVertex()){
+            if (edge.isVertex()) {
                 edge = edge.getParentBubble();
             }
             var dragged = GraphElementUi.getDraggedElement();
-            if(dragged.getId() === edge.getId()){
+            if (dragged.getId() === edge.getId()) {
                 return;
             }
             var mouseY = event.pageY;
-            if(mouseY > edge.getYPosition()){
+            if (mouseY > edge.getYPosition()) {
                 dragged.getController().moveUnder(
                     edge
                 );
-            }else{
+            } else {
                 dragged.getController().moveAbove(
                     edge
                 );
             }
-        }).on("dragover",function(event){
+        }).on("dragover", function (event) {
             event.preventDefault();
             event.stopPropagation();
             var bubble = BubbleFactory.fromHtml(
                 $(this).find(".bubble:first")
             );
-            if(bubble.isVertex()){
+            if (bubble.isVertex()) {
                 bubble = bubble.getParentBubble();
             }
             var bubbleChild = bubble.getTopMostChildBubble();
             var dragged = GraphElementUi.getDraggedElement();
-            if(dragged.getId() === bubble.getId() || dragged.getId() === bubbleChild.getId()){
+            if (dragged.getId() === bubble.getId() || dragged.getId() === bubbleChild.getId()) {
                 return;
             }
             $(this).closest(".vertex-tree-container").addClass("drag-over");
-        }).on("dragleave", function(event){
+        }).on("dragleave", function (event) {
             event.preventDefault();
             event.stopPropagation();
             $(this).closest(".vertex-tree-container").removeClass("drag-over");
