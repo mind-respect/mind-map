@@ -9,7 +9,7 @@ define([
 ], function ($, TestUtils, SuggestionService) {
     "use strict";
     var api = {};
-    api.acceptSuggestion = function () {
+    api.accept = function () {
         return spyOn(SuggestionService, "accept").and.callFake(function () {
             var deferred = $.Deferred();
             return deferred.resolve({

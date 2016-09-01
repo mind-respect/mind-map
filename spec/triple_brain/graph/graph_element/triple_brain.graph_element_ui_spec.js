@@ -278,7 +278,7 @@ define([
                     new Scenarios.threeBubblesGraph().getGraph()
                 )
             );
-            SuggestionServiceMock.acceptSuggestion();
+            SuggestionServiceMock.accept();
             suggestionUi.setText("something");
             suggestionUi.getLabel().blur();
             expect(

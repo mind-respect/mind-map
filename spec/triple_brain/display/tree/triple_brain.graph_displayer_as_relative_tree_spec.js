@@ -59,6 +59,7 @@ define([
         });
 
         it("groups similar relations when they come out of an expanded bubble", function () {
+            MindMapInfo._setIsViewOnly(false);
             var graphWithHiddenSimilarRelationsScenario = new Scenarios.graphWithHiddenSimilarRelations();
             var bubble2 = graphWithHiddenSimilarRelationsScenario.getBubble2InTree();
             expect(

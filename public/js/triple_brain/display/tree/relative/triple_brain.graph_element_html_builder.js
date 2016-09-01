@@ -25,19 +25,22 @@ define([
         label.blur(function () {
             var $input = $(this),
                 elementUi = BubbleFactory.fromSubHtml($input);
-            elementUi.getModel().setLabel(elementUi.text());
-            elementUi.labelUpdateHandle();
             if (!elementUi.hasTextChangedAfterModification()) {
                 return;
             }
             if (elementUi.isSuggestion()) {
                 var vertexSuggestion = elementUi.isRelationSuggestion() ?
                     elementUi.getTopMostChildBubble() : elementUi;
-                vertexSuggestion.getController().accept().then(updateLabelToService);
+                vertexSuggestion.getController().accept().then(function(newElementUi){
+                    elementUi = newElementUi;
+                    doIt();
+                });
             } else {
-                updateLabelToService();
+                doIt();
             }
-            function updateLabelToService() {
+            function doIt(){
+                elementUi.getModel().setLabel(elementUi.text());
+                elementUi.labelUpdateHandle();
                 FriendlyResourceService.updateLabel(
                     elementUi,
                     elementUi.getModel().getLabel()

@@ -14,7 +14,7 @@ define([
     "use strict";
     describe("suggestion_vertex_controller", function () {
         it("also accepts all parent suggestions when a suggestion is accepted", function () {
-            SuggestionServiceMock.acceptSuggestion();
+            SuggestionServiceMock.accept();
             MindMapInfo._setIsViewOnly(false);
             var scenario = new Scenarios.threeBubblesGraphFork();
             var b1Fork = scenario.getBubble1InTree();

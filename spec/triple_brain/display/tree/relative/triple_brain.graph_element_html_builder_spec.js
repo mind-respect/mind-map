@@ -3,14 +3,17 @@
  */
 
 define([
+    "jquery",
     "test/test-scenarios",
     "test/test-utils",
     "test/mock/triple_brain.suggestion_service_mock",
     "test/mock/triple_brain.friendly_resource_service_mock",
     "test/mock/triple_brain.graph_element_service_mock",
+    "triple_brain.suggestion_service",
     "triple_brain.graph_displayer_as_relative_tree",
+    "triple_brain.selection_handler",
     "triple_brain.mind_map_info"
-], function (Scenarios, TestUtils, SuggestionServiceMock, FriendlyResourceServiceMock, GraphElementServiceMock, GraphDisplayerAsRelativeTree, MindMapInfo) {
+], function ($, Scenarios, TestUtils, SuggestionServiceMock, FriendlyResourceServiceMock, GraphElementServiceMock, SuggestionService, GraphDisplayerAsRelativeTree, SelectionHandler, MindMapInfo) {
     "use strict";
     describe("graph_element_html_builder", function () {
         it("does not update label to service if label has not changed", function () {
@@ -44,7 +47,7 @@ define([
                 eventBubble
             );
             var vertexSuggestionInTree = eventBubble.getTopMostChildBubble().getTopMostChildBubble();
-            SuggestionServiceMock.acceptSuggestion();
+            SuggestionServiceMock.accept();
             expect(
                 vertexSuggestionInTree.isVertexSuggestion()
             ).toBeTruthy();
@@ -73,7 +76,7 @@ define([
             );
             var relationSuggestion = eventBubble.getTopMostChildBubble();
             var vertexSuggestionInTree = relationSuggestion.getTopMostChildBubble();
-            SuggestionServiceMock.acceptSuggestion();
+            SuggestionServiceMock.accept();
             expect(
                 relationSuggestion.isRelationSuggestion()
             ).toBeTruthy();
@@ -290,6 +293,50 @@ define([
                 grandParent.isSameUri(
                     scenario.getCenterVertexInTree()
                 )
+            ).toBeTruthy();
+        });
+        it("send the original suggestion label to the server when accepting a suggestion by changing label", function () {
+            MindMapInfo._setIsViewOnly(false);
+            var oneBubbleHavingSuggestionsGraph = new Scenarios.oneBubbleHavingSuggestionsGraph();
+            var eventBubble = oneBubbleHavingSuggestionsGraph.getVertexUi();
+            GraphDisplayerAsRelativeTree.addSuggestionsToVertex(
+                eventBubble.getModel().getSuggestions(),
+                eventBubble
+            );
+            var hasCalledService = false;
+            var vertexSuggestionInTree = eventBubble.getTopMostChildBubble().getTopMostChildBubble();
+            var suggestionLabel = vertexSuggestionInTree.getModel().getLabel();
+            spyOn(SuggestionService, "accept").and.callFake(function (suggestionUi) {
+                hasCalledService = true;
+                expect(
+                    suggestionUi.getSuggestion().getLabel()
+                ).toBe(suggestionLabel);
+                var deferred = $.Deferred();
+                return deferred.resolve({
+                    vertex_uri: TestUtils.generateVertexUri(),
+                    edge_uri: TestUtils.generateEdgeUri()
+                });
+            });
+            vertexSuggestionInTree.setText("potatoe");
+            vertexSuggestionInTree.getLabel().blur();
+            expect(
+                hasCalledService
+            ).toBeTruthy();
+        });
+        it("updates the selection to the new vertex when accepting suggestion from label update", function () {
+            MindMapInfo._setIsViewOnly(false);
+            var oneBubbleHavingSuggestionsGraph = new Scenarios.oneBubbleHavingSuggestionsGraph();
+            var eventBubble = oneBubbleHavingSuggestionsGraph.getVertexUi();
+            GraphDisplayerAsRelativeTree.addSuggestionsToVertex(
+                eventBubble.getModel().getSuggestions(),
+                eventBubble
+            );
+            var vertexSuggestionInTree = eventBubble.getTopMostChildBubble().getTopMostChildBubble();
+            SuggestionServiceMock.accept();
+            vertexSuggestionInTree.setText("potatoe");
+            vertexSuggestionInTree.getLabel().blur();
+            expect(
+                SelectionHandler.getSingleElement().isVertex()
             ).toBeTruthy();
         });
     });
