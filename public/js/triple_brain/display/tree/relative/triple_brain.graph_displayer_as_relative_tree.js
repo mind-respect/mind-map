@@ -47,8 +47,9 @@ define([
     "triple_brain.center_bubble",
     "triple_brain.selection_handler",
     "triple_brain.group_relation",
-    "triple_brain.graph_element_main_menu"
-], function ($, GraphService, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUri, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, VertexController, GroupRelationController, EdgeController, GraphController, GraphElementController, GraphElement, KeyboardActionsHandler, Edge, Identification, GroupRelationHtmlBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaHtmlBuilder, SchemaUi, SchemaController, PropertyHtmlBuilder, PropertyController, PropertyUi, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SuggestionBubbleUi, SuggestionRelationUi, SuggestionVertexController, SuggestionRelationController, TripleUi, CenterBubble, SelectionHandler, GroupRelation, GraphElementMainMenu) {
+    "triple_brain.graph_element_main_menu",
+    "triple_brain.mind_map_info"
+], function ($, GraphService, TreeDisplayerCommon, VertexHtmlBuilder, ViewOnlyVertexHtmlBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUri, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, VertexController, GroupRelationController, EdgeController, GraphController, GraphElementController, GraphElement, KeyboardActionsHandler, Edge, Identification, GroupRelationHtmlBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaHtmlBuilder, SchemaUi, SchemaController, PropertyHtmlBuilder, PropertyController, PropertyUi, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SuggestionBubbleUi, SuggestionRelationUi, SuggestionVertexController, SuggestionRelationController, TripleUi, CenterBubble, SelectionHandler, GroupRelation, GraphElementMainMenu, MindMapInfo) {
     "use strict";
     KeyboardActionsHandler.init();
     var api = {};
@@ -221,6 +222,9 @@ define([
     };
 
     api.addSuggestionsToVertex = function (suggestions, vertex) {
+        if(MindMapInfo.isViewOnly()){
+            return;
+        }
         $.each(suggestions, function () {
             api.addSuggestionToVertex(
                 this,
@@ -229,7 +233,7 @@ define([
         });
     };
     api.addSuggestionToVertex = function (suggestion, vertex) {
-        if (!suggestion.shouldDisplay()) {
+        if (MindMapInfo.isViewOnly() || !suggestion.shouldDisplay()) {
             return;
         }
         var suggestionRelation = addEdge(

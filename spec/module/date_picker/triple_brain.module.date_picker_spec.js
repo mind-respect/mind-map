@@ -8,8 +8,9 @@ define([
     'triple_brain.identification',
     'triple_brain.event_bus',
     'triple_brain.selection_handler',
-    'triple_brain.module.date_picker'
-], function (Scenarios, TestUtils, Identification, EventBus, SelectionHandler, ModuleDatePicker) {
+    'triple_brain.module.date_picker',
+    "triple_brain.mind_map_info"
+], function (Scenarios, TestUtils, Identification, EventBus, SelectionHandler, ModuleDatePicker, MindMapInfo) {
     "use strict";
     describe("module.date_picker", function () {
         it("applies date picker for some specific identifications", function () {
@@ -173,6 +174,7 @@ define([
             ).toBe(2013);
         });
         it("can apply datepicker to a suggestion", function(){
+            MindMapInfo._setIsViewOnly(false);
             var eventBubble = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();
             var personSuggestion = TestUtils.getChildWithLabel(
                 eventBubble,
@@ -190,6 +192,7 @@ define([
             )).toBeTruthy();
         });
         it("wont fail if suggestion has no type", function(){
+            MindMapInfo._setIsViewOnly(false);
             var eventBubble = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();
             var dateSuggestion = TestUtils.getChildWithLabel(
                 eventBubble,
@@ -211,6 +214,7 @@ define([
             )).toBeFalsy();
         });
         it("date on suggestion is correct", function(){
+            MindMapInfo._setIsViewOnly(false);
             var suggestionUi = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
             suggestionUi.getSuggestion()._setType(
                 dateIdentification()

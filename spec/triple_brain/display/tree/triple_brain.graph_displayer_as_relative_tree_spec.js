@@ -622,6 +622,14 @@ define([
             ).toBeTruthy();
         }
 
+        it("does not add suggestions if its view only", function () {
+            MindMapInfo._setIsViewOnly(true);
+            var centerBubble = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();
+            expect(
+                centerBubble.hasChildren()
+            ).toBeFalsy();
+        });
+
         function getNumberOfHiddenPropertiesContainer(bubble) {
             return bubble.getHtml().find(
                 ".hidden-properties-container"

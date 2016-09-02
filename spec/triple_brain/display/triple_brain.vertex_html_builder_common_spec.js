@@ -9,11 +9,13 @@ define([
     "test/mock/triple_brain.schema_service_mock",
     "triple_brain.vertex_service",
     "triple_brain.user_map_autocomplete_provider",
-    "triple_brain.vertex_html_builder_common"
-], function (Scenarios, TestUtils, GraphElementServiceMock, SchemaServiceMock, VertexService, UserMapAutocompleteProvider, VertexHtmlBuilderCommon) {
+    "triple_brain.vertex_html_builder_common",
+    "triple_brain.mind_map_info"
+], function (Scenarios, TestUtils, GraphElementServiceMock, SchemaServiceMock, VertexService, UserMapAutocompleteProvider, VertexHtmlBuilderCommon, MindMapInfo) {
     "use strict";
     describe("vertex_html_builder_common", function () {
         it("waits for suggestion to be integrated before handling autocomplete select", function () {
+            MindMapInfo._setIsViewOnly(false);
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),
                 projectSearchResult = searchProvider.formatResults(
                     new Scenarios.getSearchResultsForProject().get(),

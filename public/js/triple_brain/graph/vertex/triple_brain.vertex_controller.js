@@ -224,7 +224,7 @@ define([
     };
 
     VertexController.prototype.suggestionsCanDo = function () {
-        return this.isSingle() && this.vertices.hasSuggestions();
+        return this.isSingleAndOwned() && this.vertices.hasSuggestions();
     };
 
     VertexController.prototype.suggestions = function () {
