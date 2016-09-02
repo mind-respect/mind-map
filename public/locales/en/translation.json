@@ -249,6 +249,8 @@
     "center": "Center bubble (ctrl+0)",
     "note": "Description (ctrl+d)",
     "images": "Add images",
+    "cut": "Cut (ctrl+x)",
+    "paste": "Paste (ctrl+v)",
     "connectTo": "Connect to existing bubble",
     "makePrivate": "Make private",
     "makePublic": "Make public",

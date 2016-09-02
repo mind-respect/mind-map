@@ -250,6 +250,8 @@
     "center": "Centrer la bulle (ctrl + 0)",
     "note": "Description (ctrl+d)",
     "images": "Ajouter des images",
+    "cut": "Couper (ctrl+x)",
+    "paste": "Coller (ctrl+v)",
     "connectTo": "Relier à une bulle existante",
     "makePrivate": "Rendre privé",
     "makePublic": "Rendre public",

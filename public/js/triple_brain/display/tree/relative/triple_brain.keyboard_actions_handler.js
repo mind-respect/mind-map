@@ -30,6 +30,8 @@ define([
         zeroKeyNumber = 48,
         rKeyNumber = 82,
         ctrlKeyNumber = 17,
+        xKeyNumber = 88,
+        vKeyNumber = 86,
         nonCtrlPlusActions = defineNonCtrlPlusKeysAndTheirActions(),
         ctrlPlusActions = defineCtrlPlusKeysAndTheirActions();
     api.init = function () {
@@ -48,6 +50,7 @@ define([
     return api;
 
     function keyDownHandler(event) {
+        // console.log(event.which);
         var target = $(event.target),
             isWorkingOnSomething = !target.is("body");
         if (isWorkingOnSomething) {
@@ -118,6 +121,8 @@ define([
         actions[dKeyNumber] = "note";
         actions[zeroKeyNumber] = "center";
         actions[hKeyNumber] = "collapse";
+        actions[xKeyNumber] = "cut";
+        actions[vKeyNumber] = "paste";
         return actions;
     }
 
