@@ -556,6 +556,18 @@ define([
                 ).length > 0;
         };
 
+        api.Bubble.prototype.visitDescendants = function (visitor) {
+            return this.getChildrenContainer().find(
+                ".bubble"
+            ).each(function () {
+                visitor(
+                    BubbleFactory.fromSubHtml(
+                        $(this)
+                    )
+                );
+            });
+        };
+
         api.Bubble.prototype.visitExpandableDescendants = function (visitor) {
             return this.getChildrenContainer().find(
                 ".hidden-properties-container:not(.hidden)"
@@ -591,7 +603,7 @@ define([
                 this.getHiddenRelationsContainer().hide();
             }
             this.reviewMenuButtonsVisibility();
-            if(avoidScreenCenter === undefined || !avoidScreenCenter){
+            if (avoidScreenCenter === undefined || !avoidScreenCenter) {
                 this.centerOnScreenWithAnimation();
             }
         };

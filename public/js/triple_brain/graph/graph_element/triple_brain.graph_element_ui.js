@@ -354,6 +354,16 @@ define([
     api.GraphElementUi.prototype.paste = function () {
         this.reviewMenuButtonsVisibility();
     };
+    api.GraphElementUi.prototype.selectTree = function () {
+        SelectionHandler.setToSingleGraphElement(
+            this
+        );
+        this.visitDescendants(function (bubble) {
+            SelectionHandler.addGraphElement(
+                bubble
+            );
+        });
+    };
     api.GraphElementUi.prototype.focus = function () {
         this.hideMenu();
         this.editMode();

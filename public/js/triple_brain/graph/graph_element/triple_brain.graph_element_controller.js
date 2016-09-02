@@ -181,9 +181,8 @@ define([
     };
 
     GraphElementController.prototype.cutCanDo = function () {
-        return !this.getUi().isCenterBubble() && (
-                undefined === cut ||
-                !this.getUi().isSameBubble(
+        return this.isSingleAndOwned() && !this.getUi().isCenterBubble() && (
+                undefined === cut || !this.getUi().isSameBubble(
                     cut
                 )
             );
@@ -195,7 +194,7 @@ define([
     };
 
     GraphElementController.prototype.pasteCanDo = function () {
-        return cut !== undefined &&
+        return this.isSingleAndOwned() && cut !== undefined &&
             cut.getController()._canMoveAfter(
                 this.getUi()
             );
@@ -307,6 +306,14 @@ define([
                 movedVertex.getModel()
             );
         }
+    };
+
+    GraphElementController.prototype.selectTreeCanDo = function () {
+        return this.isSingle() && this.getUi().hasChildren();
+    };
+
+    GraphElementController.prototype.selectTree = function () {
+        this.getUi().selectTree();
     };
 
     GraphElementController.prototype.isSingleAndOwned = function () {

@@ -252,6 +252,7 @@
     "images": "Ajouter des images",
     "cut": "Couper (ctrl+x)",
     "paste": "Coller (ctrl+v)",
+    "selectTree": "Sélectionner l'arbre",
     "connectTo": "Relier à une bulle existante",
     "makePrivate": "Rendre privé",
     "makePublic": "Rendre public",

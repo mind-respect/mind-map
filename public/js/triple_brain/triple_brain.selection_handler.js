@@ -74,6 +74,19 @@ define([
         reflectSelectionChange();
     };
 
+    api.addGraphElement = function (graphElement) {
+        var adder = graphElement.rightActionForType(
+            api.addVertex,
+            api.addRelation,
+            api.addGroupRelation,
+            api.addVertex,
+            api.addRelation,
+            api.addVertex,
+            api.addRelation
+        );
+        adder(graphElement);
+    };
+
     api.addGroupRelation = function (groupRelation) {
         groupRelation.select();
         selectionInfo.addGroupRelation(groupRelation);
