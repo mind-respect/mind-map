@@ -102,7 +102,9 @@ define([
 
     VertexController.prototype.makePrivateCanDo = function () {
         return this.isOwned() && (
-                !this.isSingle() || this.getUi().getModel().isPublic()
+                (this.isMultiple() && !this._areAllElementsPrivate()) || (
+                    this.isSingle() && this.getUi().getModel().isPublic()
+                )
             );
     };
 
@@ -118,9 +120,9 @@ define([
             });
         } else {
             var publicVertices = [];
-            $.each(self.getUi(), function(){
+            $.each(self.getUi(), function () {
                 var vertex = this;
-                if(this.getModel().isPublic()){
+                if (this.getModel().isPublic()) {
                     publicVertices.push(
                         vertex
                     );
@@ -141,8 +143,32 @@ define([
 
     VertexController.prototype.makePublicCanDo = function () {
         return this.isOwned() && (
-                !this.isSingle() || !this.getUi().getModel().isPublic()
+                (this.isMultiple() && !this._areAllElementsPublic()) || (
+                    this.isSingle() && !this.getUi().getModel().isPublic()
+                )
             );
+    };
+
+    VertexController.prototype._areAllElementsPublic = function () {
+        var allPublic = true;
+        $.each(this.getUi(), function () {
+            if (!this.getModel().isPublic()) {
+                allPublic = false;
+                return false;
+            }
+        });
+        return allPublic;
+    };
+
+    VertexController.prototype._areAllElementsPrivate = function () {
+        var allPrivate = true;
+        $.each(this.getUi(), function () {
+            if (this.getModel().isPublic()) {
+                allPrivate = false;
+                return false;
+            }
+        });
+        return allPrivate;
     };
 
     VertexController.prototype.makePublic = function () {
@@ -159,9 +185,9 @@ define([
             });
         } else {
             var privateVertices = [];
-            $.each(self.getUi(), function(){
+            $.each(self.getUi(), function () {
                 var vertex = this;
-                if(!this.getModel().isPublic()){
+                if (!this.getModel().isPublic()) {
                     privateVertices.push(
                         vertex
                     );
@@ -169,7 +195,7 @@ define([
             });
             VertexService.makeCollectionPublic(
                 privateVertices
-            ).then(function(){
+            ).then(function () {
                 $.each(privateVertices, function () {
                     var ui = this;
                     ui.getModel().makePublic();

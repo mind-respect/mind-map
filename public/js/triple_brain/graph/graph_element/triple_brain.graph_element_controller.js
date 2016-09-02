@@ -327,6 +327,9 @@ define([
     GraphElementController.prototype.isSingle = function () {
         return !(this.graphElements instanceof Array);
     };
+    GraphElementController.prototype.isMultiple = function () {
+        return !this.isSingle();
+    };
     GraphElementController.prototype.isOwned = function () {
         return !MindMapInfo.isViewOnly();
     };
