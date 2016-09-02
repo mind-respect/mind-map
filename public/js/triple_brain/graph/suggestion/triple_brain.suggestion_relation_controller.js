@@ -21,6 +21,10 @@ define([
     SuggestionRelationController.prototype.centerCanDo = function () {
         return false;
     };
-    
+
+    SuggestionRelationController.prototype.cutCanDo = function () {
+        return false;
+    };
+
     return api;
 });

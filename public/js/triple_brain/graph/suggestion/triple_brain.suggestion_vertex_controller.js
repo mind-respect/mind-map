@@ -29,6 +29,10 @@ define([
         return this.isSingleAndOwned();
     };
 
+    SuggestionVertexController.prototype.cutCanDo = function () {
+        return false;
+    };
+
     SuggestionVertexController.prototype.accept = function () {
         var deferred = $.Deferred();
         var self = this;

@@ -12,12 +12,14 @@ define([
     "triple_brain.graph_ui",
     "triple_brain.identification_menu",
     "triple_brain.edge_service",
+    "triple_brain.identification",
     "bootstrap-wysiwyg",
     "bootstrap",
     "jquery.safer-html"
-], function ($, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu, EdgeService) {
+], function ($, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu, EdgeService, Identification) {
     "use strict";
-    var api = {};
+    var api = {},
+        cut;
     EventBus.subscribe(
         '/event/ui/mind_map_info/is_view_only',
         setUpSaveButton
@@ -178,6 +180,35 @@ define([
         this.getUi().collapse();
     };
 
+    GraphElementController.prototype.cutCanDo = function () {
+        return !this.getUi().isCenterBubble() && (
+                undefined === cut ||
+                !this.getUi().isSameBubble(
+                    cut
+                )
+            );
+    };
+
+    GraphElementController.prototype.cut = function () {
+        cut = this.getUi();
+        this.getUi().cut();
+    };
+
+    GraphElementController.prototype.pasteCanDo = function () {
+        return cut !== undefined &&
+            cut.getController()._canMoveAfter(
+                this.getUi()
+            );
+    };
+
+    GraphElementController.prototype.paste = function () {
+        cut.getController().moveAfter(
+            this.getUi()
+        );
+        cut = undefined;
+        this.getUi().paste();
+    };
+
     GraphElementController.prototype.moveUnder = function (otherEdge) {
         var previousParentVertex = this.getUi().getParentVertex();
         this.getUi().moveUnder(otherEdge);
@@ -196,6 +227,54 @@ define([
             true,
             previousParentVertex
         );
+    };
+
+    GraphElementController.prototype._canMoveAfter = function (parent) {
+        return this.getUi().getUri() !== parent.getUri() && !this.getUi().isBubbleAChild(parent);
+    };
+
+    GraphElementController.prototype.moveAfter = function (parent) {
+        var ui = this.getUi();
+        if (!this._canMoveAfter(parent)) {
+            return;
+        }
+        if (parent.isRelation()) {
+            var newGroupRelation = GraphDisplayer.addNewGroupRelation(
+                Identification.fromFriendlyResource(
+                    parent.getModel()
+                ),
+                parent.getParentBubble(),
+                parent.isToTheLeft()
+            );
+            parent.moveToParent(newGroupRelation);
+            parent = newGroupRelation;
+        }
+        var newSourceVertex = parent.isVertex() ?
+            parent :
+            parent.getParentVertex();
+        var movedEdge = ui.isRelation() ?
+            ui :
+            ui.getParentBubble();
+        var previousParentGroupRelation = movedEdge.getParentBubble();
+        ui.moveToParent(
+            parent
+        );
+        if (parent.isGroupRelation()) {
+            var identification = parent.getGroupRelation().getIdentification();
+            EdgeService.addSameAs(
+                movedEdge,
+                identification
+            );
+        }
+        movedEdge.getController().changeEndVertex(newSourceVertex);
+        if (previousParentGroupRelation.isGroupRelation()) {
+            GraphElementService.removeIdentification(
+                movedEdge,
+                movedEdge.getIdentificationWithExternalUri(
+                    previousParentGroupRelation.getModel().getIdentification().getExternalResourceUri()
+                )
+            );
+        }
     };
 
     GraphElementController.prototype._moveTo = function (otherEdge, isAbove, previousParentVertex) {

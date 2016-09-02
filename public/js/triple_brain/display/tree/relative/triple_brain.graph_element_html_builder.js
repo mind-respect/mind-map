@@ -14,10 +14,8 @@ define([
     "triple_brain.graph_element_main_menu",
     "triple_brain.graph_element_ui",
     "triple_brain.edge_service",
-    "triple_brain.mind_map_info",
-    "triple_brain.graph_displayer",
-    "triple_brain.identification"
-], function ($, EventBus, BubbleFactory, SuggestionService, FriendlyResourceService, GraphElementService, SelectionHandler, GraphUi, GraphElementMainMenu, GraphElementUi, EdgeService, MindMapInfo, GraphDisplayer, Identification) {
+    "triple_brain.mind_map_info"
+], function ($, EventBus, BubbleFactory, SuggestionService, FriendlyResourceService, GraphElementService, SelectionHandler, GraphUi, GraphElementMainMenu, GraphElementUi, EdgeService, MindMapInfo) {
     "use strict";
     var enterKeyCode = 13,
         api = {};
@@ -237,52 +235,18 @@ define([
                     $(this)
                 );
                 parent.leaveDragOver();
-                parent.getHtml().parents(".vertex-tree-container").removeClass("drag-over");
+                parent.getHtml().parents(
+                    ".vertex-tree-container"
+                ).removeClass(
+                    "drag-over"
+                );
                 var dragged = GraphElementUi.getDraggedElement();
                 if (dragged === undefined) {
                     return;
                 }
-                var shouldMove = dragged.getUri() !== parent.getUri() && !dragged.isBubbleAChild(parent);
-                if (!shouldMove) {
-                    return;
-                }
-                if (parent.isRelation()) {
-                    var newGroupRelation = GraphDisplayer.addNewGroupRelation(
-                        Identification.fromFriendlyResource(
-                            parent.getModel()
-                        ),
-                        parent.getParentBubble(),
-                        parent.isToTheLeft()
-                    );
-                    parent.moveToParent(newGroupRelation);
-                    parent = newGroupRelation;
-                }
-                var newSourceVertex = parent.isVertex() ?
-                    parent :
-                    parent.getParentVertex();
-                var movedEdge = dragged.isRelation() ?
-                    dragged :
-                    dragged.getParentBubble();
-                var previousParentGroupRelation = movedEdge.getParentBubble();
-                dragged.moveToParent(
+                dragged.getController().moveAfter(
                     parent
                 );
-                if (parent.isGroupRelation()) {
-                    var identification = parent.getGroupRelation().getIdentification();
-                    EdgeService.addSameAs(
-                        movedEdge,
-                        identification
-                    );
-                }
-                movedEdge.getController().changeEndVertex(newSourceVertex);
-                if (previousParentGroupRelation.isGroupRelation()) {
-                    GraphElementService.removeIdentification(
-                        movedEdge,
-                        movedEdge.getIdentificationWithExternalUri(
-                            previousParentGroupRelation.getModel().getIdentification().getExternalResourceUri()
-                        )
-                    );
-                }
             }
         );
     };

@@ -24,6 +24,10 @@ define([
 
         GroupRelationController.prototype = new GraphElementController.Self();
 
+        GroupRelationController.prototype.cutCanDo = function () {
+            return false;
+        };
+
         GroupRelationController.prototype.addChildCanDo = function () {
             return this.isSingleAndOwned();
         };

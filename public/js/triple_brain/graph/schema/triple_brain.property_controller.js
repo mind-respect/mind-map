@@ -25,6 +25,10 @@ define([
         return this.isSingleAndOwned();
     };
 
+    PropertyControler.prototype.cutCanDo = function () {
+        return false;
+    };
+
     PropertyControler.prototype.remove = function () {
         var self = this;
         FriendlyResourceService.remove(this.propertiesUi, function () {

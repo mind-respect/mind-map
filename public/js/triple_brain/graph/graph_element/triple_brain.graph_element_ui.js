@@ -348,6 +348,12 @@ define([
                 };
         }
     };
+    api.GraphElementUi.prototype.cut = function () {
+        this.reviewMenuButtonsVisibility();
+    };
+    api.GraphElementUi.prototype.paste = function () {
+        this.reviewMenuButtonsVisibility();
+    };
     api.GraphElementUi.prototype.focus = function () {
         this.hideMenu();
         this.editMode();
