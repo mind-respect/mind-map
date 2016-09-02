@@ -133,6 +133,18 @@ define([
                     this.getParentVertex().getModel().isPublic() ? 1 : 0
                 );
         };
+        api.RelativeTreeVertex.prototype.selectTree = function () {
+            SelectionHandler.setToSingleVertex(
+                this
+            );
+            this.visitDescendants(function (bubble) {
+                if (bubble.isVertex()) {
+                    SelectionHandler.addVertex(
+                        bubble
+                    );
+                }
+            });
+        };
         EventBus.subscribe(
             '/event/ui/graph/vertex_and_relation/added/',
             vertexAndRelationAddedHandler
