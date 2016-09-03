@@ -292,5 +292,18 @@ define([
                 nbVerticesToMakePrivate
             ).toBe(2);
         });
+        it("makes model be private when making private", function () {
+            var b1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            b1.getModel().makePublic();
+            expect(
+                b1.getModel().isPublic()
+            ).toBeTruthy();
+            VertexServiceMock.makePrivate();
+            b1.getController().makePrivate();
+            expect(
+                b1.getModel().isPublic()
+            ).toBeFalsy();
+        });
+
     });
 });

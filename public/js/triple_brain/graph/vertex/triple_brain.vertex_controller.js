@@ -111,7 +111,9 @@ define([
     VertexController.prototype.makePrivate = function () {
         var self = this;
         if (this.isSingle()) {
-            VertexService.makePrivate(this.getUi(), function () {
+            VertexService.makePrivate(
+                this.getUi()
+            ).then(function () {
                 self.getModel().makePrivate();
                 self.getUi().makePrivate();
                 publishVertexPrivacyUpdated(

@@ -29,18 +29,23 @@ define([
             );
         });
     };
-    api.removeVertex = function(){
-        return spyOn(VertexService, "remove").and.callFake(function(vertexUi){
+    api.removeVertex = function () {
+        return spyOn(VertexService, "remove").and.callFake(function (vertexUi) {
             return $.Deferred().resolve(vertexUi);
         });
     };
-    api.makeCollectionPrivate = function(){
-        return spyOn(VertexService, "makeCollectionPrivate").and.callFake(function(){
+    api.makeCollectionPrivate = function () {
+        return spyOn(VertexService, "makeCollectionPrivate").and.callFake(function () {
             return $.Deferred().resolve();
         });
     };
-    api.makeCollectionPublic = function(){
-        return spyOn(VertexService, "makeCollectionPublic").and.callFake(function(){
+    api.makeCollectionPublic = function () {
+        return spyOn(VertexService, "makeCollectionPublic").and.callFake(function () {
+            return $.Deferred().resolve();
+        });
+    };
+    api.makePrivate = function () {
+        return spyOn(VertexService, "makePrivate").and.callFake(function () {
             return $.Deferred().resolve();
         });
     };
