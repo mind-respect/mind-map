@@ -44,6 +44,11 @@ define([
                 }
             );
         };
+
+        SchemaController.prototype.selectTreeCanDo= function () {
+            return false;
+        };
+
         return api;
     }
 );

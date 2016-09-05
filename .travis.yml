@@ -8,7 +8,7 @@ branches:
     - built-files
 
 addons:
-  ssh_known_hosts: bubl.guru
+  ssh_known_hosts: mindrespect.com
 
 before_install:
     - openssl aes-256-cbc -K $encrypted_bff8767fc6c0_key -iv $encrypted_bff8767fc6c0_iv -in .travis/id_rsa.enc -out id_rsa -d
@@ -17,4 +17,4 @@ after_success:
     - chmod 600 id_rsa
     - eval $(ssh-agent)
     - ssh-add id_rsa
-    - scp public/js/mind-map-built* continuous_integration@bubl.guru:builds
+    - scp public/js/mind-map-built* continuous_integration@mindrespect.com:builds

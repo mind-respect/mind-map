@@ -85,7 +85,7 @@ define([
     };
 
     GraphElementController.prototype.centerCanDo = function () {
-        return this.isSingle();
+        return this.isSingle() && !this.getUi().isCenterBubble();
     };
 
     GraphElementController.prototype.center = function () {
@@ -171,7 +171,7 @@ define([
     };
 
     GraphElementController.prototype.collapseCanDo = function () {
-        return this.isSingle() && (
+        return this.isSingle() && !this.getUi().isCenterBubble() && (
                 !this.getUi().isALeaf() && !this.getUi().isCollapsed()
             );
     };
@@ -309,7 +309,7 @@ define([
     };
 
     GraphElementController.prototype.selectTreeCanDo = function () {
-        return this.isSingle() && this.getUi().hasChildren();
+        return this.isSingleAndOwned() && this.getUi().hasChildren();
     };
 
     GraphElementController.prototype.selectTree = function () {

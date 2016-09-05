@@ -79,16 +79,17 @@ define([
         it("does not show collapse button to leaves", function () {
             var scenario = new Scenarios.creationDateScenario();
             var b1 = scenario.getBubble1InTree();
-            expect(
-                b1.getController().collapseCanDo()
-            ).toBeTruthy();
-            var b2 = TestUtils.getChildWithLabel(
+            var b7 = TestUtils.getChildWithLabel(
                 b1,
-                "r2"
+                "r6"
             ).getTopMostChildBubble();
             expect(
-                b2.getController().collapseCanDo()
+                b7.getController().collapseCanDo()
             ).toBeFalsy();
+            scenario.expandBubble7(b7);
+            expect(
+                b7.getController().collapseCanDo()
+            ).toBeTruthy();
         });
         it("shows the expand button to bubbles having hidden relations", function () {
             var scenario = new Scenarios.threeBubblesGraph();

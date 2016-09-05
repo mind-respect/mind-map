@@ -50,7 +50,7 @@ define([
             var centralBubble = BubbleFactory.getGraphElementFromUri(
                 centralBubbleUri
             );
-            if (centralBubble.isSchema()) {
+            if (centralBubble.isSchema() && !MindMapInfo.isViewOnly()) {
                 GraphUi.showSchemaInstructions();
             } else {
                 GraphUi.hideSchemaInstructions();

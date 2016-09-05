@@ -31,12 +31,12 @@ define([
             "blur",
             removeSearchFlyout
         ).on("keydown.autocomplete", function (event) {
-                if (enterKeyCode === event.keyCode) {
-                    if(GraphUi.hasSelectedFromAutocomplete()){
-                        $(this).trigger("autocompleteselect");
-                    }
+            if (enterKeyCode === event.keyCode) {
+                if (GraphUi.hasSelectedFromAutocomplete()) {
+                    $(this).trigger("autocompleteselect");
                 }
-            });
+            }
+        });
         return this;
         function getAutocompleteOptions() {
             return {
@@ -46,19 +46,19 @@ define([
                         var singleResultsProvider = options.resultsProviders[0];
                         $.when(
                             singleResultsProvider.getFetchMethod(searchTerm)
-                        ).done(function (results) {
-                                response(
-                                    singleResultsProvider.formatResults(
-                                        results,
-                                        searchTerm
-                                    )
-                                );
-                            });
+                        ).then(function (results) {
+                            response(
+                                singleResultsProvider.formatResults(
+                                    results,
+                                    searchTerm
+                                )
+                            );
+                        });
                     } else {
                         $.when.apply(
                             $,
                             makeFetchMethodsArray()
-                        ).done(gatherAndReturnResults);
+                        ).then(gatherAndReturnResults);
                     }
                     function gatherAndReturnResults() {
                         var allResults = [],
@@ -119,7 +119,7 @@ define([
                     item.somethingToDistinguish
                 ).appendTo(moreInfoContainer);
             }
-            if(item.nbReferences !== undefined && item.nbReferences > 0){
+            if (item.nbReferences !== undefined && item.nbReferences > 0) {
                 $("<div class='nb-references'>").append(
                     item.nbReferences + referencesText
                 ).appendTo(moreInfoContainer);
@@ -149,7 +149,7 @@ define([
         );
         function displayDescriptionPanel(description) {
             removeSearchFlyout();
-            if(!resultsList.is(":visible")){
+            if (!resultsList.is(":visible")) {
                 return;
             }
             var moreInfoPanel = $("<div class='hidden'>");
@@ -219,7 +219,7 @@ define([
         return detailsCache[searchResult.uri];
     };
 
-    EventBus.subscribe("localized-text-loaded", function(){
+    EventBus.subscribe("localized-text-loaded", function () {
         referencesText = $.t("search.references");
     });
 

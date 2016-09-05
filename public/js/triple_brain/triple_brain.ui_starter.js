@@ -92,12 +92,13 @@ define(
                             href: "/not-allowed.html",
                             title: $.t("not_allowed.title")
                         });
-                    } else if (404 === xhr.status) {
-                        ExternalPageLoader.showLinearFlowWithOptions({
-                            href: "/non-existent.html",
-                            title: $.t("non_existent.title")
-                        });
                     }
+                    // else if (404 === xhr.status) {
+                    //     ExternalPageLoader.showLinearFlowWithOptions({
+                    //         href: "/non-existent.html",
+                    //         title: $.t("non_existent.title")
+                    //     });
+                    // }
                 }
             });
         }

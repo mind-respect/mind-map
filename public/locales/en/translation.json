@@ -20,8 +20,9 @@
   },
   "cancel": "Cancel",
   "landing": {
-    "slogan": "Shape your mind",
-    "description": "Improve self knowledge, learning and planning.",
+    "title": "Mind Respect",
+    "slogan": "Respect Your Mind",
+    "description": "... give it a place to stay and improve learning, planning and self knowledge.",
     "central": "Your central bubbles",
     "video_instruction": "Set to HD quality and fullscreen",
     "actions": {
@@ -138,7 +139,7 @@
     },
     "connect": "connection",
     "login": "login",
-    "register": "register",
+    "register": "try it",
     "language": "language"
   },
   "top_center_menu": {

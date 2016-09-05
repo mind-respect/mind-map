@@ -21,7 +21,9 @@ define([
         '/event/ui/graph/drawing_info/updated/',
         function () {
             var shouldDisplay = !MindMapInfo.isAnonymous() &&
-                MindMapInfo.isViewOnly() && MindMapInfo.isCenterBubbleUriDefinedInUrl();
+                MindMapInfo.isViewOnly() &&
+                MindMapInfo.isCenterBubbleUriDefinedInUrl() &&
+                !MindMapInfo.isSchemaMode();
             if (shouldDisplay) {
                 setup();
                 getOtherUserMenu().removeClass("hidden");

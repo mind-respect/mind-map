@@ -32,7 +32,9 @@ define([
         );
         schema.refreshImages();
         schema.reviewInLabelButtonsVisibility();
-        GraphUi.showSchemaInstructions();
+        if(!MindMapInfo.isViewOnly()){
+            GraphUi.showSchemaInstructions();
+        }
     };
     function Self(serverFacade){
         this.serverFacade = serverFacade;

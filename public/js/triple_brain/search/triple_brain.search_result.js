@@ -124,7 +124,7 @@ define([
     api._buildIdentifierSomethingToDistinguish = function(searchResult){
         var source = WikiDataUri.isAWikidataUri(
             searchResult.externalUri
-        ) ? "wikipedia.org" : "bubl.guru";
+        ) ? "wikipedia.org" : "mindrespect.com";
         return searchResult.nbReferences + referencesText + ". source: " + source;
     };
     api.forGraphElementAndItsType = function (graphElement, graphElementType) {
