@@ -22,7 +22,7 @@
   "landing": {
     "title": "Respect de l'esprit",
     "slogan": "Respectez votre esprit",
-    "description": "... donnez lui un endroit où loger et améliorez votre apprentissage, planification et connaissance propre.",
+    "description": "... donnez lui un endroit où loger et améliorez votre apprentissage, planification et connaissance de soi.",
     "central": "Vos bulles centrales",
     "video_instruction": "Mettre en qualité HD et en plein écran",
     "actions": {
@@ -140,7 +140,7 @@
     },
     "connect": "connexion",
     "login": "connexion",
-    "register": "essayez le",
+    "register": "essayez",
     "language": "langue"
   },
   "top_center_menu": {

@@ -175,40 +175,46 @@
     <!-- /.container -->
 </nav>
 <div class="container">
-    <div class="page-header hidden" id="app-presentation" data-flow="landing">
+    <div class="page-header hidden row" id="app-presentation" data-flow="landing">
         <div class="background"></div>
-        <div class="jumbotron text-center">
-            <div class="container">
-                <h2 class="text-center">
-                    <span data-i18n="landing.slogan"></span>
-                </h2>
-                <p data-i18n="landing.description"></p>
-                <div>
-                    <!--<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-                    <!--Use it <span class="caret"></span>-->
-                    <!--</button>-->
-                    <!--<ul class="dropdown-menu">-->
-                    <!--<li><a href="#" id="register-button-in-page" data-i18n="top_menu.register"></a></li>-->
-                    <!--<li><a href="#" id="login-button-in-page" data-i18n="top_menu.login"></a>-->
-                    <!--</li>-->
-                    <!--</ul>-->
-                    <button id="register-button-on-page" type="button" class="btn btn-primary hidden" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false"
-                            data-i18n="top_menu.register"
-                    ></button>
-                    <button id="login-button-on-page" type="button" class="btn btn-success hidden" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false"
-                            data-i18n="top_menu.login"
-                    ></button>
-                    <a id="central-button-on-page" href="" class="hidden">
-                        <button type="button" class="btn btn-danger" data-toggle="dropdown"
+        <div class="col-md-3"></div>
+        <div class="jumbotron text-center col-md-6">
+            <div class="row">
+                <div class="col-md-12 content">
+                    <h2 class="text-center">
+                        <span data-i18n="landing.slogan"></span>
+                    </h2>
+                    <p data-i18n="landing.description"></p>
+                    <div>
+                        <!--<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                        <!--Use it <span class="caret"></span>-->
+                        <!--</button>-->
+                        <!--<ul class="dropdown-menu">-->
+                        <!--<li><a href="#" id="register-button-in-page" data-i18n="top_menu.register"></a></li>-->
+                        <!--<li><a href="#" id="login-button-in-page" data-i18n="top_menu.login"></a>-->
+                        <!--</li>-->
+                        <!--</ul>-->
+                        <button id="register-button-on-page" type="button" class="btn btn-primary hidden"
+                                data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false"
-                                data-i18n="landing.central"
+                                data-i18n="top_menu.register"
                         ></button>
-                    </a>
+                        <button id="login-button-on-page" type="button" class="btn btn-success hidden"
+                                data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false"
+                                data-i18n="top_menu.login"
+                        ></button>
+                        <a id="central-button-on-page" href="" class="hidden">
+                            <button type="button" class="btn btn-danger" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"
+                                    data-i18n="landing.central"
+                            ></button>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="col-md-3"></div>
     </div>
     <div class="hidden row" id="change-password-page">
         <div class="col-lg-4">
@@ -236,7 +242,8 @@
                 </div>
                 <form id="change-password-form" class="security-form" role="form">
                     <div class="form-group">
-                        <label for="change-password-input" class="sr-only" data-i18n="change_password.input"></label>
+                        <label for="change-password-input" class="sr-only"
+                               data-i18n="change_password.input"></label>
                         <input id="change-password-input" class="form-control" type="password"
                                data-i18n="[placeholder]change_password.input">
                     </div>

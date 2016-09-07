@@ -31,11 +31,11 @@
 .navbar-nav .dropdown-menu a.create:before { content: "\f067"; /*plus*/ }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
-#app-presentation { border-bottom: none; margin-top: 0; color: white; }
-#app-presentation .background { position: absolute; background-image: url("images/sky-cut.jpg"); left: 0; width: 100%; min-height: 454px; }
-#app-presentation .jumbotron { z-index: 1; display: flex; align-items: center; min-height: 454px; }
-#app-presentation .jumbotron * { z-index: 1; width: 100%; font-weight: bold; }
-#app-presentation .jumbotron p { box-sizing: border-box; padding-left: 20%; padding-right: 20%; }
+#app-presentation { border-bottom: none; margin-top: 0; color: black; }
+#app-presentation .background { position: absolute; background-image: url("images/neurons-440660-white3.jpg"); left: 0; width: 100%; min-height: 454px; }
+#app-presentation .jumbotron { z-index: 1; background: none; display: flex; align-items: center; min-height: 454px; }
+#app-presentation .jumbotron * { z-index: 1; font-weight: bold; }
+#app-presentation .jumbotron h2, #app-presentation .jumbotron p { padding: 10px; background-color: rgba(245, 245, 245, 0.75); }
 #app-presentation .jumbotron button { width: auto; text-transform: capitalize; }
 #app-presentation .jumbotron button:first-child { margin-right: 10px; }
 #app-presentation .jumbotron button:last-child { margin-left: 10px; }
