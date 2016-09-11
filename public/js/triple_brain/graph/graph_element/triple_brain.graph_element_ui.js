@@ -653,39 +653,6 @@ define([
     };
 
     EventBus.subscribe(
-        '/event/ui/graph/identification/added',
-        identificationAddedHandler
-    );
-    function identificationAddedHandler(event, graphElement, identification) {
-        graphElement.applyToOtherInstances(function (otherInstance) {
-            var addAction = identification.rightActionForType(
-                graphElement.addType,
-                graphElement.addSameAs,
-                graphElement.addGenericIdentification
-            );
-            addAction.call(
-                otherInstance,
-                identification
-            );
-        });
-
-        api.visitAll(function (visitedGraphElement) {
-            if (visitedGraphElement.getUri() === identification.getExternalResourceUri()) {
-                if (!visitedGraphElement.hasIdentification(identification)) {
-                    visitedGraphElement.addGenericIdentification(
-                        identification
-                    );
-                }
-            }
-        });
-        graphElement.reviewInLabelButtonsVisibility();
-    }
-
-    EventBus.subscribe(
-        '/event/ui/graph/identification/removed',
-        identificationRemovedHandler
-    );
-    EventBus.subscribe(
         '/event/ui/graph/vertex/privacy/updated',
         function (event, graphElement) {
             graphElement.reviewInLabelButtonsVisibility();
@@ -697,21 +664,6 @@ define([
             graphElement.updateInLabelNoteButtonHoverText();
         }
     );
-
-    function identificationRemovedHandler(event, graphElement, identification) {
-        graphElement.applyToOtherInstances(function (vertex) {
-            var removeAction = identification.rightActionForType(
-                graphElement.removeType,
-                graphElement.removeSameAs,
-                graphElement.removeGenericIdentification
-            );
-            removeAction.call(
-                vertex,
-                identification
-            );
-        });
-        graphElement.reviewInLabelButtonsVisibility();
-    }
 
     return api;
     function initMenuHandlerGetters() {

@@ -7,13 +7,13 @@ define([
         "triple_brain.graph_ui",
         "triple_brain.event_bus",
         "triple_brain.graph_displayer",
-        "triple_brain.identified_bubble",
         "triple_brain.edge_service",
         "triple_brain.graph_element_button",
         "triple_brain.selection_handler",
-        "triple_brain.graph_element_ui"
+        "triple_brain.graph_element_ui",
+        "triple_brain.bubble"
     ],
-    function ($, GraphUi, EventBus, GraphDisplayer, IdentifiedBubble, EdgeService, GraphElementButton, SelectionHandler, GraphElementUi) {
+    function ($, GraphUi, EventBus, GraphDisplayer, EdgeService, GraphElementButton, SelectionHandler, GraphElementUi, Bubble) {
         "use strict";
         var api = {};
         api.getWhenEmptyLabel = function () {
@@ -33,10 +33,10 @@ define([
         
         api.EdgeUi = function (html) {
             this.html = html;
-            IdentifiedBubble.Object.apply(this, [html]);
+            Bubble.Bubble.apply(this, [html]);
         };
 
-        api.EdgeUi.prototype = new IdentifiedBubble.Object();
+        api.EdgeUi.prototype = new Bubble.Bubble();
 
         api.EdgeUi.prototype.getMenuHtml = function () {
             return this.html.find('.relation-menu');

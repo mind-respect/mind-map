@@ -26,7 +26,7 @@ define([
                     promise
                 );
             },
-            executeAfterForEvent: function(event, afterPromises, params){
+            executeAfterEvent: function(event, afterPromises, params){
                 if(undefined === promises[event]){
                     return afterPromises();
                 }
@@ -39,7 +39,7 @@ define([
                             this(params)
                     );
                 });
-                return $.when.apply($,built).done(afterPromises);
+                return $.when.apply($,built).then(afterPromises);
             },
             reset: function(){
                 promises = {};

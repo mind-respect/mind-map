@@ -21,6 +21,15 @@ define([
         });
         return identifications;
     };
+    api.getServerFormatArrayFromFacadeArray = function (identifications) {
+        var serverFormat = [];
+        $.each(identifications, function(){
+            serverFormat.push(
+                this.getServerFormat()
+            );
+        });
+        return serverFormat;
+    };
     api.fromServerFormat = function (serverFormat) {
         return new api.Identification().init(serverFormat);
     };
@@ -33,7 +42,7 @@ define([
     api.fromFriendlyResource = function (friendlyResource) {
         var identification = new api.Identification().init({
             externalResourceUri: friendlyResource.getUri(),
-            friendlyResource: friendlyResource.getServerFormat()
+            friendlyResource: FriendlyResource.clone(friendlyResource).getServerFormat()
         });
         identification.setLabel(
             friendlyResource.getLabel()
@@ -116,8 +125,27 @@ define([
     api.Identification.prototype.setType = function (type) {
         this.identificationServerFormat.identificationType = type;
     };
+    api.Identification.prototype.makeGeneric = function () {
+        this.setType(
+            "generic"
+        );
+        return this;
+    };
+    api.Identification.prototype.makeSameAs = function () {
+        this.setType(
+            "same_as"
+        );
+        return this;
+    };
+    api.Identification.prototype.getFirstIdentificationToAGraphElement = function () {
+        return IdUri.isUriOfAGraphElement(this.getExternalResourceUri()) ?
+            this : false;
+    };
     api.Identification.prototype.getType = function () {
         return this.identificationServerFormat.identificationType;
+    };
+    api.Identification.prototype.hasType = function () {
+        return undefined !== this.getType();
     };
     api.Identification.prototype.getJsonFormat = function () {
         var serverFormat = this.getServerFormat();

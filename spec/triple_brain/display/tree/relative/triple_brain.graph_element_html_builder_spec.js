@@ -124,7 +124,7 @@ define([
             var otherRelation = scenario.getOtherRelationInTree();
             var groupRelationIdentification = groupRelationUi.getModel().getIdentification();
             expect(
-                otherRelation.hasIdentification(
+                otherRelation.getModel().hasIdentification(
                     groupRelationIdentification
                 )
             ).toBeFalsy();
@@ -135,7 +135,7 @@ define([
             );
             TestUtils.drop(groupRelationUi);
             expect(
-                otherRelation.hasIdentification(
+                otherRelation.getModel().hasIdentification(
                     groupRelationIdentification
                 )
             ).toBeTruthy();
@@ -181,7 +181,7 @@ define([
             ).toBeTruthy();
             var identification = groupRelationUi.getModel().getIdentification();
             expect(
-                relation.hasIdentification(
+                relation.getModel().hasIdentification(
                     identification
                 )
             ).toBeTruthy();
@@ -199,7 +199,7 @@ define([
                 relation.isRelation()
             ).toBeTruthy();
             expect(
-                relation.hasIdentification(
+                relation.getModel().hasIdentification(
                     identification
                 )
             ).toBeFalsy();

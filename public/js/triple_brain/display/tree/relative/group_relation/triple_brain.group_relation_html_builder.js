@@ -28,7 +28,7 @@ define([
         };
         api.completeBuild = function (groupRelationUi) {
             groupRelationUi.buildHiddenNeighborPropertiesIndicator();
-            groupRelationUi.integrateIdentification(
+            groupRelationUi.addIdentification(
                 groupRelationUi.getModel().getIdentification()
             );
             groupRelationUi.refreshImages();
@@ -70,9 +70,6 @@ define([
                  * to make the update group relation label work. Should think of a better solution
                  */
                 this.serverFacade.getIdentifiers()[0].getUri()
-            );
-            groupRelationUi.setGenericIdentifications(
-                groupRelationUi.getModel().getIdentifiers()
             );
             EdgeHtmlBuilderCommon.buildInLabelButtons(
                 groupRelationUi
@@ -191,7 +188,7 @@ define([
                         var childAsAnIdentification = Identification.fromFriendlyResource(
                             child.getModel()
                         );
-                        var isIdentifiedToRelation = graphElement.hasIdentification(
+                        var isIdentifiedToRelation = graphElement.getModel().hasIdentification(
                             childAsAnIdentification
                         );
                         if (isIdentifiedToRelation) {
@@ -206,9 +203,9 @@ define([
                             graphElement.moveToParent(newGroupRelation);
                             return;
                         }
-                        $.each(child.getIdentifications(), function () {
+                        $.each(child.getModel().getIdentifications(), function () {
                             var identification = this;
-                            if (graphElement.hasIdentification(identification)) {
+                            if (graphElement.getModel().hasIdentification(identification)) {
                                 var newGroupRelation = GraphDisplayer.addNewGroupRelation(
                                     identification,
                                     parentBubble

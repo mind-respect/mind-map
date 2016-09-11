@@ -10,6 +10,13 @@ define([
     api.fromServerFormat = function (serverFormat) {
         return new api.FriendlyResource().init(serverFormat);
     };
+    api.clone = function (friendlyResource) {
+        return api.fromServerFormat({
+            uri: friendlyResource.getUri(),
+            label: friendlyResource.getLabel(),
+            comment: friendlyResource.getComment()
+        });
+    };
     api.buildObjectWithUri = function (uri) {
         return {
             uri: uri,

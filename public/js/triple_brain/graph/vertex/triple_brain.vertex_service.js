@@ -67,56 +67,6 @@ define([
                 callback
             );
         };
-
-        api.addType = function (vertex, type, callback) {
-            GraphElementService.addType(
-                vertex,
-                type,
-                callback
-            );
-        };
-        api.removeIdentification = function (vertex, identification, callback) {
-            GraphElementService.removeIdentification(
-                vertex,
-                identification,
-                callback
-            );
-        };
-        api.removeType = function (vertex, typeToRemove, callback) {
-            GraphElementService.removeIdentification(
-                vertex,
-                typeToRemove,
-                callback
-            );
-        };
-        api.addSameAs = function (vertex, sameAs, callback) {
-            GraphElementService.addSameAs(
-                vertex,
-                sameAs,
-                callback
-            );
-        };
-        api.removeSameAs = function (vertex, sameAs, callback) {
-            GraphElementService.removeIdentification(
-                vertex,
-                sameAs,
-                callback
-            );
-        };
-        api.removeGenericIdentification = function (vertex, genericIdentification, callback) {
-            GraphElementService.removeIdentification(
-                vertex,
-                genericIdentification,
-                callback
-            );
-        };
-        api.addGenericIdentification = function (vertex, identification, callback) {
-            GraphElementService.addGenericIdentification(
-                vertex,
-                identification,
-                callback
-            );
-        };
         api.getSuggestions = function (vertex) {
             $.ajax({
                 type: 'GET',

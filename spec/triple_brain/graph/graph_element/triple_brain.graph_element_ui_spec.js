@@ -6,6 +6,7 @@ define([
     "test/test-scenarios",
     "test/test-utils",
     "test/mock/triple_brain.graph_service_mock",
+    "test/mock/triple_brain.graph_element_service_mock",
     "test/mock/triple_brain.suggestion_service_mock",
     "test/mock/triple_brain.edge_service_mock",
     "test/mock/triple_brain.vertex_service_mock",
@@ -15,7 +16,7 @@ define([
     "triple_brain.sub_graph",
     "triple_brain.graph_displayer_as_relative_tree",
     "triple_brain.mind_map_info"
-], function (Scenarios, TestUtils, GraphServiceMock, SuggestionServiceMock, EdgeServiceMock, VertexServiceMock, LinkToFarVertexMenu, Identification, GraphElementService, SubGraph, GraphDisplayerAsRelativeTree, MindMapInfo) {
+], function (Scenarios, TestUtils, GraphServiceMock, GraphElementServiceMock, SuggestionServiceMock, EdgeServiceMock, VertexServiceMock, LinkToFarVertexMenu, Identification, GraphElementService, SubGraph, GraphDisplayerAsRelativeTree, MindMapInfo) {
     "use strict";
     describe("graph_element_ui", function () {
         var vertex, schema;
@@ -45,35 +46,15 @@ define([
                 new Scenarios.getKaraokeSchemaGraph().getSchema()
             );
             expect(
-                bubble1Duplicate.hasIdentifications()
+                bubble1Duplicate.getModel().hasIdentifications()
             ).toBeFalsy();
             karaokeIdentification.setType("generic");
-            GraphElementService._addIdentificationsCallback(
-                bubble1,
-                karaokeIdentification,
-                TestUtils.singleIdentificationToMultiple(karaokeIdentification)
+            GraphElementServiceMock.addIdentification();
+            bubble1.getController().addIdentification(
+                karaokeIdentification
             );
             expect(
-                bubble1Duplicate.hasIdentifications()
-            ).toBeTruthy();
-        });
-        it("adds the identification to self if added identification external uri is self uri", function () {
-            var threeBubblesGraph = new Scenarios.threeBubblesGraph();
-            var bubble2 = threeBubblesGraph.getBubble2InTree();
-            expect(
-                bubble2.hasIdentifications()
-            ).toBeFalsy();
-            var bubble2AsAnIdentification = Identification.fromFriendlyResource(
-                bubble2.getModel()
-            );
-            bubble2AsAnIdentification.setType("generic");
-            GraphElementService._addIdentificationsCallback(
-                threeBubblesGraph.getBubble3InTree(),
-                bubble2AsAnIdentification,
-                TestUtils.singleIdentificationToMultiple(bubble2AsAnIdentification)
-            );
-            expect(
-                bubble2.hasIdentifications()
+                bubble1Duplicate.getModel().hasIdentifications()
             ).toBeTruthy();
         });
         it("is no longer draggable when in edit mode", function () {
@@ -169,7 +150,7 @@ define([
         it("comparing label sets html markup", function () {
             var scenario = new Scenarios.threeBubblesGraph();
             var bubble1 = scenario.getBubble1InTree();
-            bubble1.addGenericIdentification(
+            bubble1.getModel().addGenericIdentification(
                 Identification.fromFriendlyResource(
                     bubble1.getModel()
                 )
@@ -195,7 +176,7 @@ define([
         it("re-compares label after label change in comparison mode", function () {
             var scenario = new Scenarios.threeBubblesGraph();
             var bubble1 = scenario.getBubble1InTree();
-            bubble1.addGenericIdentification(
+            bubble1.getModel().addGenericIdentification(
                 Identification.fromFriendlyResource(
                     bubble1.getModel()
                 )

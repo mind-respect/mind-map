@@ -152,7 +152,7 @@ define([
                 "some identification"
             );
             var relation1 = TestUtils.getChildWithLabel(centerBubble, "r1");
-            relation1.addGenericIdentification(
+            relation1.getModel().addGenericIdentification(
                 someIdentification
             );
             EventBus.publish(
@@ -160,7 +160,7 @@ define([
                 [relation1, someIdentification]
             );
             var relation2 = TestUtils.getChildWithLabel(centerBubble, "r2");
-            relation2.addGenericIdentification(
+            relation2.getModel().addGenericIdentification(
                 someIdentification
             );
             EventBus.publish(
@@ -204,7 +204,7 @@ define([
                 r2ChildOfCenterBubble.getModel()
             );
             var relation1 = TestUtils.getChildWithLabel(centerBubble, "r1");
-            relation1.addSameAs(
+            relation1.getModel().addSameAs(
                 identificationToRelation2
             );
             EventBus.publish(
@@ -240,7 +240,10 @@ define([
             );
             var relation1 = TestUtils.getChildWithLabel(centerBubble, "r1");
             GraphElementServiceMock.addIdentification();
-            GraphElementService.addSameAs(relation1, identificationToRelation2);
+            identificationToRelation2.makeSameAs();
+            relation1.getController().addIdentification(
+                identificationToRelation2
+            );
             r2ChildOfCenterBubble = TestUtils.getChildWithLabel(centerBubble, "r2");
             expect(
                 r2ChildOfCenterBubble.isGroupRelation()
@@ -264,7 +267,7 @@ define([
                 newRelation.getModel()
             );
             var relation1 = TestUtils.getChildWithLabel(centerBubble, "r1");
-            relation1.addSameAs(
+            relation1.getModel().addSameAs(
                 identificationToNewRelation
             );
             EventBus.publish(
@@ -348,7 +351,7 @@ define([
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
             var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
             expect(
-                possessionInTree.hasIdentifications()
+                possessionInTree.getModel().hasIdentifications()
             ).toBeTruthy();
         });
         it("shows identify button in label", function () {

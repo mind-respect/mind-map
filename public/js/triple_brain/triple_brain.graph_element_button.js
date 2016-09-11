@@ -89,7 +89,7 @@ define([
             case "note":
                 return graphElement.hasNote();
             case "identify":
-                return graphElement.hasIdentifications();
+                return graphElement.getModel().hasIdentifications();
             case "visitOtherInstances":
                 return graphElement.hasOtherInstances();
             case "makePrivate":

@@ -24,14 +24,14 @@ define([
             GraphElementServiceMock.addIdentification();
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             expect(
-                bubble1.hasIdentifications()
+                bubble1.getModel().hasIdentifications()
             ).toBeFalsy();
             VertexHtmlBuilderCommon._labelAutocompleteSelectHandler(
                 bubble1,
                 projectSearchResult
             );
             expect(
-                bubble1.hasIdentifications()
+                bubble1.getModel().hasIdentifications()
             ).toBeTruthy();
             SchemaServiceMock.getMock(
                 new Scenarios.getProjectSchema().getGraph()
@@ -42,13 +42,13 @@ define([
                 projectSearchResult
             );
             expect(
-                suggestionInTree.getIdentifications().length
+                suggestionInTree.getModel().getIdentifications().length
             ).toBe(2);
-            suggestionInTree.integrate(
+            var newVertexUi = suggestionInTree.integrate(
                 TestUtils.generateVertexUri()
             );
             expect(
-                suggestionInTree.getIdentifications().length
+                newVertexUi.getModel().getIdentifications().length
             ).toBe(3);
         });
     });

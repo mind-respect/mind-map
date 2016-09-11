@@ -16,16 +16,6 @@ define([
     };
 
     api.afterChildBuilt = function(suggestionRelationUi){
-        suggestionRelationUi.setTypes([]);
-        var serverFacade = suggestionRelationUi.getSuggestion();
-        suggestionRelationUi.setSameAs([
-            Identification.withUriLabelAndDescription(
-                serverFacade.getSameAs().getUri(),
-                serverFacade.getLabel(),
-                serverFacade.getSameAs().getComment()
-            )
-        ]);
-        suggestionRelationUi.setGenericIdentifications([]);
         var propertiesIndicator = suggestionRelationUi.buildHiddenNeighborPropertiesIndicator();
         propertiesIndicator.hide();
         suggestionRelationUi.getHtml().closest(

@@ -45,7 +45,7 @@ define([
     };
 
     api._labelAutocompleteSelectHandler = function (bubble, searchResult) {
-        var identificationResource = Identification.fromSearchResult(
+        var identification = Identification.fromSearchResult(
             searchResult
         );
         if (bubble.isSuggestion()) {
@@ -58,9 +58,9 @@ define([
                 bubble,
                 searchResult.uri
             );
-            VertexService.addGenericIdentification(
-                bubble,
-                identificationResource
+            identification.makeGeneric();
+            bubble.getController().addIdentification(
+                identification
             );
         }
     };

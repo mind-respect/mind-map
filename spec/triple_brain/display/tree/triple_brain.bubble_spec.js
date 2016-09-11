@@ -6,12 +6,13 @@ define([
     'test/test-scenarios',
     'test/test-utils',
     "test/mock/triple_brain.graph_service_mock",
+    "test/mock/triple_brain.graph_element_service_mock",
     "triple_brain.graph_displayer",
     "triple_brain.edge",
     "triple_brain.vertex",
     "triple_brain.selection_handler",
     "triple_brain.mind_map_info"
-], function (Scenarios, TestUtils, GraphServiceMock, GraphDisplayer, Edge, Vertex, SelectionHandler, MindMapInfo) {
+], function (Scenarios, TestUtils, GraphServiceMock, GraphElementServiceMock, GraphDisplayer, Edge, Vertex, SelectionHandler, MindMapInfo) {
     "use strict";
     describe("bubble", function () {
         it("can return parent bubble", function () {
@@ -317,12 +318,15 @@ define([
             expect(
                 idea.hasImages()
             ).toBeTruthy();
-            otherRelation.addGenericIdentification(
+            idea.getGroupRelation().getIdentification().makeGeneric();
+            GraphElementServiceMock.addIdentification();
+            otherRelation.getController().addIdentification(
                 idea.getGroupRelation().getIdentification()
             );
             expect(
                 otherRelation.hasImages()
-            ).toBeTruthy();
+            ).toBeFalsy();
+            GraphElementServiceMock.removeIdentification();
             otherRelation.moveToParent(idea);
             expect(
                 otherRelation.hasImages()

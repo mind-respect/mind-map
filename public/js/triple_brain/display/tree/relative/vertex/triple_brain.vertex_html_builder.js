@@ -22,8 +22,7 @@ define([
             return new VertexCreator(serverFacade);
         };
         api.completeBuild = function (vertex) {
-            GraphElementHtmlBuilder.setUpIdentifications(
-                vertex.getModel(),
+            GraphElementHtmlBuilder.integrateIdentifications(
                 vertex
             );
             vertex.refreshImages();

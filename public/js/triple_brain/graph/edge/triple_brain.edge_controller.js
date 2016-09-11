@@ -42,8 +42,8 @@ define([
         );
     };
     EdgeController.prototype._getAppropriateIdentificationForNewGroupRelation = function () {
-        if (this.getUi().hasIdentifications()) {
-            return this.getUi().getIdentifications()[0];
+        if (this.getUi().getModel().hasIdentifications()) {
+            return this.getUi().getModel().getIdentifications()[0];
         } else {
             var identification = Identification.fromFriendlyResource(
                 this.getUi().getModel()

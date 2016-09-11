@@ -163,7 +163,7 @@ define([
             this.html.append(
                 identitiesList
             );
-            $.each(this.graphElement.getIdentifications(), function () {
+            $.each(this.graphElement.getModel().getIdentifications(), function () {
                 self._addIdentificationAsListElement(
                     this
                 );
@@ -369,7 +369,10 @@ define([
         };
 
         IdentificationMenu.prototype._handleSelectIdentification = function (searchResult, graphElement) {
-            if (graphElement.hasSearchResultAsIdentification(searchResult)) {
+            var identifier = Identification.fromSearchResult(
+                searchResult
+            );
+            if (graphElement.getModel().hasIdentification(identifier)) {
                 return false;
             }
             var self = this;
@@ -386,13 +389,15 @@ define([
             } else {
                 identify();
             }
-            return true;
+            return identifier;
             function identify() {
-                self._identifyUsingServerIdentificationFctn(
-                    graphElement,
-                    searchResult,
-                    self._getServerIdentificationFctn()
-                );
+                graphElement.getController().addIdentification(
+                    identifier
+                ).then(function(identifications){
+                    $.each(identifications, function(){
+                        self._addIdentificationAsListElement(this);
+                    });
+                });
             }
         };
 
@@ -407,17 +412,6 @@ define([
                 UserMapAutocompleteProvider.toFetchRelationsForIdentification(this.graphElement),
                 WikidataAutocompleteProvider.build()
             ];
-        };
-
-        IdentificationMenu.prototype._getServerIdentificationFctn = function () {
-            var graphElement = this.graphElement;
-            return this.graphElement.isVertex() ? function (concept, identificationResource, callback) {
-                graphElement.serverFacade().addGenericIdentification(concept, identificationResource, callback);
-                graphElement.refreshImages();
-            } : function (concept, identificationResource, callback) {
-                graphElement.serverFacade().addSameAs(concept, identificationResource, callback);
-                graphElement.refreshImages();
-            };
         };
 
         IdentificationMenu.prototype._makeRemoveButton = function () {
@@ -435,44 +429,16 @@ define([
                         identification = identificationListElement.data(
                             "identification"
                         ),
-                        semanticMenu = identificationListElement.closest(
+                        graphElement = identificationListElement.closest(
                             '.identifications'
-                        ),
-                        graphElement = semanticMenu.data("graphElement");
+                        ).data("graphElement");
                     identificationListElement.remove();
-                    getServerRemoveIdentificationFunction()(
-                        graphElement,
+                    graphElement.getController().removeIdentification(
                         identification
                     );
-                    function getServerRemoveIdentificationFunction() {
-                        switch (identification.getType()) {
-                            case "type" :
-                                return graphElement.serverFacade().removeType;
-                            case "same_as" :
-                                return graphElement.serverFacade().removeSameAs;
-                            default :
-                                return graphElement.serverFacade().removeGenericIdentification;
-                        }
-                    }
                 }
             );
             return container;
-        };
-
-        IdentificationMenu.prototype._identifyUsingServerIdentificationFctn = function (graphElement, searchResult, serverIdentificationFctn) {
-            var identificationResource = Identification.fromSearchResult(
-                searchResult
-            );
-            var self = this;
-            serverIdentificationFctn(
-                graphElement,
-                identificationResource,
-                function (graphElement, identifications) {
-                    $.each(identifications, function () {
-                        self._addIdentificationAsListElement(this);
-                    });
-                }
-            );
         };
         return api;
     }

@@ -213,7 +213,7 @@ define([
                 "r2"
             );
             var b3 = r2.getTopMostChildBubble();
-            var b3ComparedWithUri = b3.getFirstIdentificationToAGraphElement().getExternalResourceUri();
+            var b3ComparedWithUri = b3.getModel().getFirstIdentificationToAGraphElement().getExternalResourceUri();
             r2.remove();
             TestUtils.enterCompareFlowWithGraph(
                 SubGraph.fromServerFormat(

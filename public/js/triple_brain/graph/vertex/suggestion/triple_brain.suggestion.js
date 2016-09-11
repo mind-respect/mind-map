@@ -132,6 +132,20 @@ define([
         Suggestion.prototype.hasType = function () {
             return this.type !== undefined;
         };
+        Suggestion.prototype.hasIdentifications = function () {
+            return true;
+        };
+        Suggestion.prototype.getIdentifications = function () {
+            var identifications = [
+                this.getSameAs()
+            ];
+            if(undefined !== this.getType()){
+                identifications.push(
+                    this.getType()
+                );
+            }
+            return identifications;
+        };
         Suggestion.prototype.getOrigin = function () {
             return this.origins[0];
         };

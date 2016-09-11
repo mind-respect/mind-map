@@ -78,32 +78,12 @@ define([
         return container;
     };
 
-    api.setUpIdentifications = function (serverFormat, graphElement) {
-        setup(
-            graphElement.setTypes,
-            serverFormat.getTypes,
-            graphElement.addType
-        );
-        setup(
-            graphElement.setSameAs,
-            serverFormat.getSameAs,
-            graphElement.addSameAs
-        );
-        setup(
-            graphElement.setGenericIdentifications,
-            serverFormat.getGenericIdentifications,
-            graphElement.addGenericIdentification
-        );
-        function setup(identificationsSetter, identificationGetter, addFctn) {
-            identificationsSetter.call(graphElement, []);
-            $.each(identificationGetter.call(serverFormat, []), function () {
-                var identificationFromServer = this;
-                addFctn.call(
-                    graphElement,
-                    identificationFromServer
-                );
-            });
-        }
+    api.integrateIdentifications = function (graphElement) {
+        $.each(graphElement.getModel().getIdentifications(), function(){
+            graphElement.addIdentification(
+                this
+            );
+        });
     };
     api._setupChildrenContainerDragOverAndDrop = function (graphElementUi) {
         graphElementUi.getTreeContainer().on("drop", function (event) {

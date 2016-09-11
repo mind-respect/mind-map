@@ -10,14 +10,13 @@ define([
         "triple_brain.error",
         "triple_brain.ui.vertex_segments",
         "triple_brain.event_bus",
-        "triple_brain.identified_bubble",
         "triple_brain.graph_element_ui",
         "triple_brain.bubble",
         "triple_brain.suggestion_service",
         "jquery.center-on-screen",
         "jquery.max_char"
     ],
-    function ($, GraphDisplayer, VertexService, Point, Error, VertexSegments, EventBus, IdentifiedBubble, GraphElementUi, Bubble, SuggestionService) {
+    function ($, GraphDisplayer, VertexService, Point, Error, VertexSegments, EventBus, GraphElementUi, Bubble, SuggestionService) {
         "use strict";
         var api = {};
         api.getWhenEmptyLabel = function () {
@@ -36,9 +35,10 @@ define([
         api.VertexUi = function (html) {
             this.html = html;
         };
-        api.VertexUi.prototype = new IdentifiedBubble.Object();
+
+        api.VertexUi.prototype = new Bubble.Bubble();
         api.VertexUi.prototype.init = function () {
-            IdentifiedBubble.Object.apply(this, [this.html]);
+            Bubble.Bubble.apply(this, [this.html]);
             return this;
         };
 
@@ -219,8 +219,8 @@ define([
             return VertexService;
         };
 
-        api.VertexUi.prototype.impactOnRemovedIdentification = function (identification) {
-            Bubble.Bubble.prototype.impactOnRemovedIdentification.call(
+        api.VertexUi.prototype.removeIdentification = function (identification) {
+            Bubble.Bubble.prototype.removeIdentification.call(
                 this,
                 identification
             );
@@ -244,24 +244,6 @@ define([
         };
         api.VertexUi.prototype.getLabel = function () {
             return this.html.find(".bubble-label");
-        };
-        api.VertexUi.prototype.serverFormat = function () {
-            return {
-                label: this.text(),
-                getSuggestions: this.getSuggestions(),
-                types: getCollectionAsServerFormat(this.getTypes()),
-                same_as: getCollectionAsServerFormat(this.getSameAs())
-            };
-            function getCollectionAsServerFormat(collection) {
-                var serverFormat = [];
-                $.each(collection, function () {
-                    var item = this;
-                    serverFormat.push(
-                        item.getJsonFormat()
-                    );
-                });
-                return serverFormat;
-            }
         };
         api.VertexUi.prototype.makePrivate = function () {
             this.getMakePrivateButton().addClass("hidden");

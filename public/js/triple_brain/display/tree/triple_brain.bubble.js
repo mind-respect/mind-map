@@ -48,7 +48,7 @@ define([
                         otherBubble.getController().expand();
                     }
                     var identification = otherBubble.getGroupRelation().getIdentification();
-                    if (this.hasIdentification(identification)) {
+                    if (this.getModel().hasIdentification(identification)) {
                         this.revertIdentificationIntegration(identification);
                     }
                 }
@@ -475,7 +475,7 @@ define([
             return this.html.data("images_menu");
         };
 
-        api.Bubble.prototype.impactOnRemovedIdentification = function (identification) {
+        api.Bubble.prototype.removeIdentification = function (identification) {
             var self = this;
             $.each(identification.getImages(), function () {
                 var image = this;
@@ -484,9 +484,10 @@ define([
             if (this.hasImagesMenu()) {
                 this.getImageMenu().refreshImages();
             }
+            this.reviewInLabelButtonsVisibility();
         };
 
-        api.Bubble.prototype.integrateIdentification = function (identification) {
+        api.Bubble.prototype.addIdentification = function (identification) {
             var parentBubble = this.getParentBubble();
             if (parentBubble.isGroupRelation()) {
                 var areIdentificationsTheSame =
@@ -502,6 +503,7 @@ define([
             if (identification.hasImages()) {
                 this.refreshImages();
             }
+            this.reviewInLabelButtonsVisibility();
         };
 
         api.Bubble.prototype.revertIdentificationIntegration = function (identification) {

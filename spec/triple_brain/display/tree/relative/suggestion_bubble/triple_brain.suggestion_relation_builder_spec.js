@@ -20,7 +20,7 @@ define([
             locationRelationSuggestion = SuggestionRelationBuilder.withServerFacade(
                 locationSuggestion
             ).create();
-            spyOn(Bubble.Bubble.prototype, "integrateIdentification").and.callFake(function(){});
+            spyOn(Bubble.Bubble.prototype, "addIdentification").and.callFake(function(){});
             SuggestionRelationBuilder.afterChildBuilt(locationRelationSuggestion);
         });
         it("has the suggestion label", function () {
@@ -39,10 +39,7 @@ define([
         // });
         it('has the suggestion "same as" has a "same as" identification', function () {
             expect(
-                locationRelationSuggestion.getSameAs().length
-            ).toBe(1);
-            expect(
-                locationRelationSuggestion.getSameAs()[0].getUri()
+                locationRelationSuggestion.getSuggestion().getSameAs().getUri()
             ).toBe(
                 locationSuggestion.getSameAs().getUri()
             );

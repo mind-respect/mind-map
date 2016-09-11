@@ -62,34 +62,6 @@ define([
                 callback
             );
         };
-        api.addSameAs = function (edge, sameAs, callback) {
-            GraphElementService.addSameAs(
-                edge,
-                sameAs,
-                callback
-            );
-        };
-        api.removeSameAs = function (edge, sameAs, callback) {
-            GraphElementService.removeIdentification(
-                edge,
-                sameAs,
-                callback
-            );
-        };
-        api.addType = function (edge, type, callback) {
-            GraphElementService.addType(
-                edge,
-                type,
-                callback
-            );
-        };
-        api.removeType = function (edge, type, callback) {
-            GraphElementService.removeType(
-                edge,
-                type,
-                callback
-            );
-        };
         api.inverse = function (edge) {
             return $.ajax({
                 type: 'PUT',

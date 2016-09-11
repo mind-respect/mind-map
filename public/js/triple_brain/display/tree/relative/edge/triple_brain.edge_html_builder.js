@@ -49,8 +49,7 @@ define([
                     parentVertexUi.getModel() :
                     childUi.getModel()
             );
-            GraphElementHtmlBuilder.setUpIdentifications(
-                model,
+            GraphElementHtmlBuilder.integrateIdentifications(
                 ui
             );
             EdgeHtmlBuilderCommon.moveInLabelButtonsContainerIfIsToTheLeft(

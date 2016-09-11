@@ -19,7 +19,8 @@ define([
 ], function ($, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu, EdgeService, Identification) {
     "use strict";
     var api = {},
-        cut;
+        cut,
+        identificationBaseEventBusKey = "/event/ui/graph/identification/";
     EventBus.subscribe(
         '/event/ui/mind_map_info/is_view_only',
         setUpSaveButton
@@ -106,7 +107,7 @@ define([
 
     GraphElementController.prototype.identifyCanDo = function () {
         return this.isSingle() && (
-                this.isOwned() || this.getUi().hasIdentifications()
+                this.isOwned() || this.getUi().getModel().hasIdentifications()
             );
     };
 
@@ -259,17 +260,15 @@ define([
             parent
         );
         if (parent.isGroupRelation()) {
-            var identification = parent.getGroupRelation().getIdentification();
-            EdgeService.addSameAs(
-                movedEdge,
+            var identification = parent.getGroupRelation().getIdentification().makeSameAs();
+            movedEdge.getController().addIdentification(
                 identification
             );
         }
         movedEdge.getController().changeEndVertex(newSourceVertex);
         if (previousParentGroupRelation.isGroupRelation()) {
-            GraphElementService.removeIdentification(
-                movedEdge,
-                movedEdge.getIdentificationWithExternalUri(
+            movedEdge.getController().removeIdentification(
+                movedEdge.getModel().getIdentificationWithExternalUri(
                     previousParentGroupRelation.getModel().getIdentification().getExternalResourceUri()
                 )
             );
@@ -290,8 +289,7 @@ define([
         var parentBubble = otherEdge.getParentBubble();
         if (parentBubble.isGroupRelation()) {
             var identification = parentBubble.getGroupRelation().getIdentification();
-            EdgeService.addSameAs(
-                movedEdge,
+            movedEdge.getController().addIdentification(
                 identification
             );
         }
@@ -306,6 +304,69 @@ define([
                 movedVertex.getModel()
             );
         }
+    };
+
+    GraphElementController.prototype.addIdentification = function (identification) {
+        var self = this;
+        var deferred = $.Deferred();
+        GraphElementService.addIdentification(
+            this.getUi(),
+            identification
+        ).then(function (identifications) {
+            self.getUi().getModel().addIdentifications(
+                identifications
+            );
+            $.each(identifications, function () {
+                var identification = this;
+                self.getUi().addIdentification(
+                    identification
+                );
+                self.getUi().applyToOtherInstances(function (otherInstanceUi) {
+                    otherInstanceUi.getModel().addIdentification(
+                        identification
+                    );
+                    otherInstanceUi.addIdentification(
+                        identification
+                    );
+                });
+                EventBus.publish(
+                    identificationBaseEventBusKey + "added",
+                    [self.getUi(), identification]
+                );
+            });
+            deferred.resolve(identifications);
+        });
+        return deferred.promise();
+    };
+
+    GraphElementController.prototype.removeIdentification = function (identification) {
+        var deferred = $.Deferred();
+        var self = this;
+        GraphElementService.removeIdentification(
+            this.getUi(),
+            identification
+        ).then(function () {
+            self.getUi().getModel().removeIdentification(
+                identification
+            );
+            self.getUi().removeIdentification(
+                identification
+            );
+            deferred.resolve();
+            self.getUi().applyToOtherInstances(function (otherUi) {
+                otherUi.getModel().removeIdentification(
+                    identification
+                );
+                otherUi.removeIdentification(identification);
+            });
+            var eventBusKey = identificationBaseEventBusKey + "removed";
+            EventBus.publish(
+                eventBusKey,
+                [self.getUi(), identification]
+            );
+        });
+        return deferred.promise();
+
     };
 
     GraphElementController.prototype.selectTreeCanDo = function () {

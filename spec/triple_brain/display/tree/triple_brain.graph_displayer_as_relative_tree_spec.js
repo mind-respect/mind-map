@@ -144,7 +144,7 @@ define([
                 relationSuggestion.text()
             ).toBe("location");
             expect(
-                vertexSuggestion.getIdentifications()[0].getLabel()
+                vertexSuggestion.getModel().getType().getLabel()
             ).toBe("Location");
         });
         it("does not show already accepted suggestions", function () {
@@ -299,7 +299,7 @@ define([
                 schema
             );
             expect(
-                propertyUi.getIdentifications().length
+                propertyUi.getModel().getIdentifications().length
             ).toBe(0);
         });
 

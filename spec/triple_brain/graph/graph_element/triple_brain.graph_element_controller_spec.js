@@ -150,14 +150,14 @@ define([
             groupRelation.expand();
             var groupRelationChild = groupRelation.getTopMostChildBubble();
             expect(
-                otherBubbleEdge.hasIdentifications()
+                otherBubbleEdge.getModel().hasIdentifications()
             ).toBeFalsy();
             GraphElementServiceMock.addIdentification();
             otherBubble.getController().moveAbove(
                 groupRelationChild
             );
             expect(
-                otherBubbleEdge.hasIdentifications()
+                otherBubbleEdge.getModel().hasIdentifications()
             ).toBeTruthy();
         });
     });

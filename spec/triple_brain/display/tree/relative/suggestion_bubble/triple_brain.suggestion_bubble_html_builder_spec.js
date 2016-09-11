@@ -24,7 +24,7 @@ define([
             locationBubbleSuggestion = SuggestionBubbleHtmlBuilder.withServerFacade(
                 locationSuggestion
             ).create();
-            spyOn(Bubble.Bubble.prototype, "integrateIdentification").and.callFake(function(){});
+            spyOn(Bubble.Bubble.prototype, "addIdentification").and.callFake(function(){});
             SuggestionBubbleHtmlBuilder.completeBuild(locationBubbleSuggestion);
         });
         it("can build from server facade", function () {
@@ -54,18 +54,23 @@ define([
         });
         it("has suggestion type as identification", function () {
             expect(
-                locationBubbleSuggestion.getTypes()[0].getUri()
+                locationBubbleSuggestion.getSuggestion().getType().getUri()
             ).toBe(locationSuggestion.getType().getUri());
         });
         it('has suggestion "same as" as identification', function () {
+            var karaokeSchemaScenario = new Scenarios.getKaraokeSchemaGraph();
+            locationSuggestion = karaokeSchemaScenario.getLocationPropertyAsSuggestion();
+            locationBubbleSuggestion = SuggestionBubbleHtmlBuilder.withServerFacade(
+                locationSuggestion
+            ).create();
             expect(
-                locationBubbleSuggestion.getTypes()[1].getUri()
+                locationBubbleSuggestion.getModel().getIdentifications()[0].getUri()
             ).toBe(locationSuggestion.getSameAs().getUri());
         });
         it('has the suggestion label for its type taken from the suggestion "same as"', function () {
             expect(
-                locationBubbleSuggestion.getTypes()[1].getLabel()
-            ).toBe(locationSuggestion.getLabel());
+                locationBubbleSuggestion.getModel().getIdentifications()[0].getLabel()
+            ).toBe("location");
         });
         it("publishes that it created a suggestion bubble ui", function(){
             var hasPublished = false;

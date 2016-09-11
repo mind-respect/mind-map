@@ -174,7 +174,7 @@ define([
                 hasVisited = true;
                 var relation = triple.destinationVertex().getParentBubble();
                 expect(
-                    relation.hasIdentifications()
+                    relation.getModel().hasIdentifications()
                 ).toBeTruthy();
             });
             expect(

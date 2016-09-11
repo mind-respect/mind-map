@@ -83,7 +83,7 @@ define([
         this.getUi().hideHiddenRelationsContainer();
         var uriToFetch = this.getUi().getModel().getExternalResourceUri();
         var suggestionUi = this.getUi();
-        var parentEdgeUri = this.getUi().getParentBubble().getFirstIdentificationToAGraphElement().getExternalResourceUri();
+        var parentEdgeUri = this.getUi().getParentBubble().getModel().getFirstIdentificationToAGraphElement().getExternalResourceUri();
         GraphService.getForCentralBubbleUri(
             uriToFetch,
             function (serverGraph) {

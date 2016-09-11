@@ -28,7 +28,7 @@ define([
     GraphCompare.prototype._showForVertices = function () {
         var self = this;
         GraphDisplayer.getVertexSelector().visitAllVertices(function (vertexUi) {
-            var identification = vertexUi.getFirstIdentificationToAGraphElement();
+            var identification = vertexUi.getModel().getFirstIdentificationToAGraphElement();
             if (!identification) {
                 vertexUi.setAsComparisonSuggestionToRemove();
                 return;
@@ -44,12 +44,13 @@ define([
             self.otherGraph.visitEdgesRelatedToVertex(related, function (edge) {
                 var isConnectedToEdge = false;
                 vertexUi.visitConnectedEdges(function (edgeUi) {
-                    var edgeIdentification = edgeUi.getFirstIdentificationToAGraphElement();
+                    var edgeIdentification = edgeUi.getModel().getFirstIdentificationToAGraphElement();
                     if (!edgeIdentification) {
                         return;
                     }
                     if (edge.isRelatedToIdentification(edgeIdentification)) {
                         isConnectedToEdge = true;
+                        edgeIdentification.makeGeneric();
                         edge.addGenericIdentification(
                             edgeIdentification
                         );
@@ -60,7 +61,8 @@ define([
                     var vertexToAdd = self.otherGraph.getVertexWithUri(
                         edge.getOtherVertex(related).getUri()
                     );
-                    vertexToAdd.addGenericIdentification(
+                    identification.makeGeneric();
+                    vertexToAdd.addIdentification(
                         identification
                     );
                     var tripleUi = GraphDisplayer.addSuggestionToSourceVertex(
@@ -85,7 +87,7 @@ define([
                         vertexToAdd.getLabel()
                     );
                     self.compareLabel(newVertex, vertexToAdd);
-                    if(vertexToAdd.getNumberOfConnectedEdges() > 1){
+                    if (vertexToAdd.getNumberOfConnectedEdges() > 1) {
                         newVertex.buildHiddenNeighborPropertiesIndicator();
                     }
                 }
@@ -96,7 +98,7 @@ define([
     GraphCompare.prototype._showForEdges = function () {
         var self = this;
         GraphDisplayer.getEdgeSelector().visitAllEdges(function (edgeUi) {
-            var identification = edgeUi.getFirstIdentificationToAGraphElement();
+            var identification = edgeUi.getModel().getFirstIdentificationToAGraphElement();
             if (!identification) {
                 edgeUi.setAsComparisonSuggestionToRemove();
                 return;

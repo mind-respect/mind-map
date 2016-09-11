@@ -47,7 +47,7 @@ define([
             if (isAppliedToBubble(vertex)) {
                 return;
             }
-            $.each(vertex.getIdentifications(), function () {
+            $.each(vertex.getModel().getIdentifications(), function () {
                 var identification = this;
                 if (isIdentificationADate(identification)) {
                     applyDatePickerToVertex(vertex);

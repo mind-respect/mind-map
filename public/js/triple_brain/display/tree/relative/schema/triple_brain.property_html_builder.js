@@ -20,8 +20,7 @@ define([
         EdgeHtmlBuilderCommon.moveInLabelButtonsContainerIfIsToTheLeft(
             property
         );
-        GraphElementHtmlBuilder.setUpIdentifications(
-            property.getModel(),
+        GraphElementHtmlBuilder.integrateIdentifications(
             property
         );
         property.refreshImages();

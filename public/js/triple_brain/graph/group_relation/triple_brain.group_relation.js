@@ -39,7 +39,7 @@ define([
         GroupRelation.prototype.getIdentification = function () {
             return this.identifiers[0];
         };
-        GroupRelation.prototype.getIdentifiers = function () {
+        GroupRelation.prototype.getIdentifications = GroupRelation.prototype.getIdentifiers = function () {
             return this.identifiers;
         };
         GroupRelation.prototype.getVertices = function () {
@@ -91,6 +91,9 @@ define([
         };
         GroupRelation.prototype.getNumberOfVertices = function () {
             return Object.keys(this.vertices).length;
+        };
+        GroupRelation.prototype.hasIdentifications = function () {
+            return true;
         };
         return api;
     }

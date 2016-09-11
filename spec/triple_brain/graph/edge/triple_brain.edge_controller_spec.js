@@ -64,7 +64,7 @@ define([
             var bubble1 = threeBubblesScenario.getBubble1InTree();
             var relation1 = TestUtils.getChildWithLabel(bubble1, "r1");
             var karaokeIdentification = new Scenarios.getKaraokeSchemaGraph().getSchemaAsIdentification();
-            relation1.addGenericIdentification(karaokeIdentification);
+            relation1.getModel().addGenericIdentification(karaokeIdentification);
             MindMapInfo._setIsViewOnly(false);
             new EdgeController.Self(
                 relation1

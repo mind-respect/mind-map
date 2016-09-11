@@ -47,9 +47,8 @@ define([
                     if (self.getUi().hasVisibleHiddenRelationsContainer()) {
                         self.expand();
                     }
-                    var identification = self.getUi().getGroupRelation().getIdentification();
-                    EdgeService.addSameAs(
-                        triple.edge(),
+                    var identification = self.getUi().getGroupRelation().getIdentification().makeSameAs();
+                    triple.edge().getController().addIdentification(
                         identification
                     );
                     EdgeService.updateLabel(

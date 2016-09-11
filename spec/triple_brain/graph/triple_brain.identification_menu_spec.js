@@ -11,8 +11,6 @@ define([
 ], function (Scenarios, GraphElementServiceMock, IdentificationMenu, UserMapAutocompleteProvider, MindMapInfo) {
     "use strict";
     describe("identification_menu", function () {
-        beforeEach(function () {
-        });
         it("does not integrate identification if it already exists for graph element", function () {
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas();
@@ -22,19 +20,19 @@ define([
             MindMapInfo._setIsViewOnly(false);
             var identificationMenu = IdentificationMenu.ofGraphElement(bubble1).create();
             GraphElementServiceMock.addIdentification();
-            var hasIntegratedIdentification = identificationMenu._handleSelectIdentification(
+            var identifier = identificationMenu._handleSelectIdentification(
                 projectSchemaSearchResult,
                 bubble1
             );
             expect(
-                hasIntegratedIdentification
-            ).toBeTruthy();
-            hasIntegratedIdentification = identificationMenu._handleSelectIdentification(
+                identifier
+            ).not.toBeFalsy();
+            identifier = identificationMenu._handleSelectIdentification(
                 projectSchemaSearchResult,
                 bubble1
             );
             expect(
-                hasIntegratedIdentification
+                identifier
             ).toBeFalsy();
         });
     });

@@ -10,11 +10,10 @@ define([
     "triple_brain.relative_tree_displayer_templates",
     "triple_brain.identification",
     "triple_brain.user_map_autocomplete_provider",
-    "triple_brain.graph_element_service",
     "triple_brain.suggestion_service",
     "triple_brain.graph_element_html_builder",
     "triple_brain.bubble_factory"
-], function ($, MindMapInfo, FriendlyResourceService, SelectionHandler, RelativeTreeTemplates, Identification, UserMapAutocompleteProvider, GraphElementService, SuggestionService, GraphElementHtmlBuilder, BubbleFactory) {
+], function ($, MindMapInfo, FriendlyResourceService, SelectionHandler, RelativeTreeTemplates, Identification, UserMapAutocompleteProvider, SuggestionService, GraphElementHtmlBuilder, BubbleFactory) {
     "use strict";
     var api = {};
     api.moveInLabelButtonsContainerIfIsToTheLeft = function(edge){
@@ -62,12 +61,11 @@ define([
                     var edge = BubbleFactory.fromSubHtml(
                         $(this)
                     );
-                    var identificationResource = Identification.fromSearchResult(
+                    var identification = Identification.fromSearchResult(
                         ui.item
-                    );
-                    GraphElementService.addSameAs(
-                        edge,
-                        identificationResource
+                    ).makeSameAs();
+                    edge.getController().addIdentification(
+                        identification
                     );
                     var newLabel = ui.item.label;
                     edge.setText(newLabel);

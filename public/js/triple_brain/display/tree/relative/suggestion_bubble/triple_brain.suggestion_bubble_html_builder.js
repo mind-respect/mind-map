@@ -19,11 +19,11 @@ define([
     api.withServerFacade = function (suggestion) {
         return new Self(suggestion);
     };
-    api.completeBuild = function(suggestionUi){
+    api.completeBuild = function (suggestionUi) {
         setupIdentifications(
             suggestionUi
         );
-        
+
     };
     function Self(model) {
         this.suggestion = model;
@@ -78,21 +78,21 @@ define([
             this.html
         );
     };
-    function setupIdentifications(suggestionUi){
-        suggestionUi.setTypes([]);
-        suggestionUi.setSameAs([]);
-        suggestionUi.setGenericIdentifications([]);
-        var serverFormat = suggestionUi.getSuggestion();
-        if (serverFormat.hasType()) {
-            suggestionUi.addType(serverFormat.getType());
+    function setupIdentifications(suggestionUi) {
+        var model = suggestionUi.getSuggestion();
+        if (model.hasType()) {
+            suggestionUi.addIdentification(
+                model.getType()
+            );
         }
-        suggestionUi.addType(
+        suggestionUi.addIdentification(
             Identification.withUriLabelAndDescription(
-                serverFormat.getSameAs().getUri(),
-                serverFormat.getLabel(),
-                serverFormat.getSameAs().getComment()
+                model.getSameAs().getUri(),
+                model.getLabel(),
+                model.getSameAs().getComment()
             )
         );
     }
+
     return api;
 });

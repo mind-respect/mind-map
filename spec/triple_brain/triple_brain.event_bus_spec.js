@@ -22,7 +22,7 @@ define([
                     "test_key": "test_value"
                 },
                 hasExecuted = false;
-            EventBus.executeAfterForEvent("some_event",
+            EventBus.executeAfterEvent("some_event",
                 function () {
                     hasExecuted = true;
                     expect(object.other_test_key).toBe("other_test_value");
@@ -46,7 +46,7 @@ define([
                     object_2_test_key: "object2_test_value"
                 };
             var hasExecuted = false;
-            EventBus.executeAfterForEvent("some_event",
+            EventBus.executeAfterEvent("some_event",
                 function () {
                     hasExecuted = true;
                     expect(object1.param1_other_test_key).toBe("param1_other_test_value");
@@ -73,7 +73,7 @@ define([
                 "test_key": "test_value"
             };
             var hasExecuted = false;
-            EventBus.executeAfterForEvent("some_event",
+            EventBus.executeAfterEvent("some_event",
                 function () {
                     hasExecuted = true;
                     expect(object.other_test_key).toBe("other_test_value");
@@ -85,7 +85,7 @@ define([
         });
         it("executes when no promises for event", function () {
             var hasExecuted = false;
-            EventBus.executeAfterForEvent("inexisting_event",
+            EventBus.executeAfterEvent("inexisting_event",
                 function () {
                     hasExecuted = true;
                 },

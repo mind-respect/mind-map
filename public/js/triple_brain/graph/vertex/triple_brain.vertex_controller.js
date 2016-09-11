@@ -260,7 +260,7 @@ define([
                 schema
             );
             identification.setType("generic");
-            return GraphElementService.addIdentificationAjax(
+            return GraphElementService.addIdentification(
                 newVertex,
                 identification
             );

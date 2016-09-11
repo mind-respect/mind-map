@@ -5,8 +5,9 @@
 define([
     "jquery",
     "triple_brain.friendly_resource",
-    "triple_brain.identification"
-], function ($, FriendlyResource, Identification) {
+    "triple_brain.identification",
+    "triple_brain.id_uri"
+], function ($, FriendlyResource, Identification, IdUri) {
     "use strict";
     var api = {};
     api.sortCompare = function (a, b) {
@@ -30,17 +31,13 @@ define([
         );
     };
     api.buildServerFormatFromUi = function (graphElementUi) {
-        var identifications = {};
-        $.each(graphElementUi.getIdentifications(), function () {
-            identifications[
-                this.getExternalResourceUri()
-                ] = this.getServerFormat();
-        });
         return {
             friendlyResource: FriendlyResource.buildServerFormatFromUi(
                 graphElementUi
             ),
-            identifications: identifications
+            identifications: Identification.getServerFormatArrayFromFacadeArray(
+                graphElementUi.getModel().getIdentifications()
+            )
         };
     };
     api.fromSuggestionAndElementUri = function (suggestion, elementUri) {
@@ -101,30 +98,56 @@ define([
         return this;
     };
 
+
+    api.GraphElement.prototype.removeIdentification = function (identification) {
+        var removeAction = identification.rightActionForType(
+            this.removeType,
+            this.removeSameAs,
+            this.removeGenericIdentification
+        );
+        removeAction.call(
+            this,
+            identification
+        );
+    };
+
+
     api.GraphElement.prototype.getTypes = function () {
         return this._types;
+    };
+    api.GraphElement.prototype.setTypes = function (types) {
+        return this._types = types;
     };
     api.GraphElement.prototype.getSameAs = function () {
         return this._sameAs;
     };
-    api.GraphElement.prototype.getGenericIdentifications = function () {
-        return this._genericIdentifications;
+    api.GraphElement.prototype.setSameAs = function (sameAs) {
+        return this._sameAs = sameAs;
     };
     api.GraphElement.prototype.hasIdentifications = function () {
         return this.getIdentifications().length > 0;
     };
-    api.GraphElement.prototype.getIdentifications = function () {
-        if (undefined === this._identifications) {
-            this._identifications = [].concat(
-                this._types
-            ).concat(
-                this._sameAs
-            ).concat(
-                this._genericIdentifications
-            );
-        }
-        return this._identifications;
+    api.GraphElement.prototype.getIdentificationWithExternalUri = function (externalUri) {
+        var identification = false;
+        $.each(this.getIdentifications(), function () {
+            if (this.getExternalResourceUri() === externalUri) {
+                identification = this;
+                return false;
+            }
+        });
+        return identification;
     };
+
+    api.GraphElement.prototype.getIdentifications = function () {
+        return [].concat(
+            this._types
+        ).concat(
+            this._sameAs
+        ).concat(
+            this._genericIdentifications
+        );
+    };
+
 
     api.GraphElement.prototype._buildIdentifications = function () {
         this._types = [];
@@ -170,11 +193,88 @@ define([
         this._genericIdentifications.push(identification);
     };
 
+    api.GraphElement.prototype.getGenericIdentifications = function () {
+        return this._genericIdentifications;
+    };
+
+    api.GraphElement.prototype.setGenericIdentifications = function (genericIdentifications) {
+        this._genericIdentifications = genericIdentifications;
+    };
+
+    api.GraphElement.prototype.addIdentifications = function (identifications) {
+        var self = this;
+        $.each(identifications, function () {
+            self.addIdentification(
+                this
+            );
+        });
+    };
+    api.GraphElement.prototype.addIdentification = function (identification) {
+        if (!identification.hasType()) {
+            return this.addIdentification(
+                identification.makeGeneric()
+            );
+        }
+        var addAction = identification.rightActionForType(
+            this.addType,
+            this.addSameAs,
+            this.addGenericIdentification
+        );
+        addAction.call(
+            this,
+            identification
+        );
+    };
     api.GraphElement.prototype.addSameAs = function (identification) {
         this._sameAs.push(identification);
     };
     api.GraphElement.prototype.addType = function (identification) {
         this._types.push(identification);
+    };
+
+    api.GraphElement.prototype.removeType = function (type) {
+        this._types = this.removeIdentificationInArray(
+            type,
+            this.getTypes()
+        );
+    };
+
+    api.GraphElement.prototype.removeSameAs = function (sameAs) {
+        this._sameAs = this.removeIdentificationInArray(
+            sameAs,
+            this.getSameAs()
+        );
+    };
+
+    api.GraphElement.prototype.removeGenericIdentification = function (generic) {
+        this._genericIdentifications = this.removeIdentificationInArray(
+            generic,
+            this.getGenericIdentifications()
+        );
+    };
+
+    api.GraphElement.prototype.getFirstIdentificationToAGraphElement = function () {
+        var identification = false;
+        $.each(this.getIdentifications(), function () {
+            if (IdUri.isUriOfAGraphElement(this.getExternalResourceUri())) {
+                identification = this;
+                return false;
+            }
+        });
+        return identification;
+    };
+
+    api.GraphElement.prototype.removeIdentificationInArray = function (identificationToRemove, array) {
+        var i = 0;
+        $.each(array, function () {
+            var identification = this;
+            if (identification.getUri() === identificationToRemove.getUri()) {
+                array.splice(i, 1);
+                return false;
+            }
+            i++;
+        });
+        return array;
     };
 
     api.GraphElement.prototype.setSortDate = function (sortDate) {

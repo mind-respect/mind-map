@@ -83,7 +83,6 @@ requirejs.config({
         "triple_brain.wikidata_autocomplete_provider": "triple_brain/search/autocomplete_results_provider/triple_brain.wikidata_autocomplete_provider",
         "triple_brain.mind-map_template": "triple_brain/triple_brain.mind-map_template",
         "triple_brain.id_uri": "triple_brain/triple_brain.id_uri",
-        "triple_brain.identified_bubble": "triple_brain/graph/triple_brain.identified_bubble",
         "triple_brain.vertex_service": "triple_brain/graph/vertex/triple_brain.vertex_service",
         "triple_brain.edge": "triple_brain/graph/edge/triple_brain.edge",
         "triple_brain.edge_ui": "triple_brain/graph/edge/triple_brain.edge_ui",

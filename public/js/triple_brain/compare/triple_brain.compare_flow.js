@@ -89,7 +89,7 @@ define([
 
     function setupDefaultCompare() {
         var centerVertex = GraphElementUi.getCenterVertexOrSchema();
-        var centerVertexGraphElementIdentifier = centerVertex.getFirstIdentificationToAGraphElement();
+        var centerVertexGraphElementIdentifier = centerVertex.getModel().getFirstIdentificationToAGraphElement();
         if (!centerVertexGraphElementIdentifier) {
             return;
         }
