@@ -69,5 +69,11 @@ define([
                 b1.isSelected()
             ).toBeTruthy();
         });
+        it("can check if it's connected to another vertex with uri even if it has group relations", function () {
+            var center = new Scenarios.GraphWithSimilarRelationsScenario().getCenterVertexInTree();
+            expect(
+                center.isConnectedToAVertexWithUri("dummy")
+            ).toBeFalsy();
+        });
     });
 });

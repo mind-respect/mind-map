@@ -180,7 +180,7 @@ define([
 
         api.VertexUi.prototype.isConnectedToAVertexWithUri = function (uri) {
             var isConnected = false;
-            this.visitAllConnected(function (edge) {
+            this.visitConnectedEdges(function (edge) {
                 var isConnectedToSource = uri === edge.getSourceVertex().getUri();
                 var isConnectedToDestination = uri === edge.getDestinationVertex().getUri();
                 if (isConnectedToSource || isConnectedToDestination) {
