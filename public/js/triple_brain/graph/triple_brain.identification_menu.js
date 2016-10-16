@@ -372,6 +372,7 @@ define([
             var identifier = Identification.fromSearchResult(
                 searchResult
             );
+            identifier.setType("generic");
             if (graphElement.getModel().hasIdentification(identifier)) {
                 return false;
             }
