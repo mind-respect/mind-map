@@ -67,11 +67,8 @@ define([
                     edge.getController().addIdentification(
                         identification
                     );
-                    var newLabel = ui.item.label;
-                    edge.setText(newLabel);
-                    FriendlyResourceService.updateLabel(
-                        edge,
-                        newLabel
+                    edge.getController().setLabel(
+                        ui.item.label
                     );
                 },
                 resultsProviders: [

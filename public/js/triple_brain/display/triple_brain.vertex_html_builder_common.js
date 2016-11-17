@@ -24,7 +24,6 @@ define([
 ], function ($, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, WikidataAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, GraphElementHtmlBuilder, BubbleFactory) {
     "use strict";
     var api = {};
-
     api.applyAutoCompleteIdentificationToLabelInput = function (input) {
         input.tripleBrainAutocomplete({
             select: function (event, ui) {
@@ -61,6 +60,9 @@ define([
             identification.makeGeneric();
             bubble.getController().addIdentification(
                 identification
+            );
+            bubble.getController().setLabel(
+                searchResult.label
             );
         }
     };

@@ -53,6 +53,19 @@ define([
             );
     };
 
+    GraphElementController.prototype.setLabel = function (newLabel) {
+        this.getUi().setText(
+            newLabel
+        );
+        this.getUi().getModel().setLabel(
+            newLabel
+        );
+        FriendlyResourceService.updateLabel(
+            this.getUi(),
+            newLabel
+        );
+    };
+
     GraphElementController.prototype.note = function () {
         var editor = api._getContentEditor().saferHtml(
             this.getUi().getNote()

@@ -9,9 +9,10 @@ define([
     "test/mock/triple_brain.schema_service_mock",
     "triple_brain.vertex_service",
     "triple_brain.user_map_autocomplete_provider",
+    "triple_brain.friendly_resource_service",
     "triple_brain.vertex_html_builder_common",
     "triple_brain.mind_map_info"
-], function (Scenarios, TestUtils, GraphElementServiceMock, SchemaServiceMock, VertexService, UserMapAutocompleteProvider, VertexHtmlBuilderCommon, MindMapInfo) {
+], function (Scenarios, TestUtils, GraphElementServiceMock, SchemaServiceMock, VertexService, UserMapAutocompleteProvider, FriendlyResourceService, VertexHtmlBuilderCommon, MindMapInfo) {
     "use strict";
     describe("vertex_html_builder_common", function () {
         it("waits for suggestion to be integrated before handling autocomplete select", function () {
@@ -50,6 +51,28 @@ define([
             expect(
                 newVertexUi.getModel().getIdentifications().length
             ).toBe(3);
+        });
+        it("updates label with the autocomplete text after select", function () {
+            MindMapInfo._setIsViewOnly(false);
+            var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),
+                projectSearchResult = searchProvider.formatResults(
+                    new Scenarios.getSearchResultsForProject().get(),
+                    "project"
+                )[0];
+            var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            var setLabelSpy = spyOn(
+                FriendlyResourceService,
+                'updateLabel'
+            ).and.callFake(function(ui, newLabel) {
+                expect(newLabel).toMatch(/project/);
+            });
+            VertexHtmlBuilderCommon._labelAutocompleteSelectHandler(
+                bubble1,
+                projectSearchResult
+            );
+            expect(
+                setLabelSpy
+            ).toHaveBeenCalled();
         });
     });
 });
