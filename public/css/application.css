@@ -41,8 +41,10 @@
 #app-presentation .jumbotron button:last-child { margin-left: 10px; }
 #app-presentation .jumbotron .fa { font-size: 125%; margin-bottom: 10px; }
 
+#welcome-content { font-size: 18px; }
+#welcome-content .timeline-container { margin-bottom: 30px; }
 #welcome-content img.example { width: 400px; }
-#welcome-content .action { margin-bottom: 50px; padding-bottom: 50px; border-bottom: 1px solid #eee; font-size: 18px; }
+#welcome-content .action { margin-bottom: 50px; padding-bottom: 50px; border-bottom: 1px solid #eee; }
 #welcome-content .action h2 { text-align: center; }
 #welcome-content .action img { width: 100%; }
 #welcome-content .action img[data-remote] { cursor: zoom-in; }

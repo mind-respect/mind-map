@@ -62,14 +62,18 @@
 }
 
 #welcome-content {
+  .timeline-container{
+    margin-bottom:30px;
+  }
   img.example {
     width: 400px;
   }
+  font-size: 18px;
   .action {
     margin-bottom: 50px;
     padding-bottom: 50px;
     border-bottom: 1px solid #eee;
-    font-size: 18px;
+
     h2 {
       text-align: center;
     }
