@@ -65,6 +65,7 @@
       }
     },
     "actions": {
+      "title": "How it works",
       "link": {
         "title": "Link",
         "overview": "Coherent mind by creating links between your different ideas. The idea is simple: cut your ideas in reusable chunks.",

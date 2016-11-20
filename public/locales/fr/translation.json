@@ -65,6 +65,7 @@
       }
     },
     "actions": {
+      "title": "Comment ça marche",
       "link": {
         "title": "Reliez vos notes",
         "overview": "Ayez un esprit cohérent en créant des liens entre vos différentes idées. L'idée est simple: découpez vos idées en petits morceaux qui peuvent être réutilisés et associés de milles et une façon.",
