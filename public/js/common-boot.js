@@ -14,6 +14,7 @@ requirejs.config({
         "jquery": "jquery/jquery-2.2.4",
         "jquery.performance": "jquery/jquery.performance",
         "jquery.safer-html": "jquery/jquery.safer-html",
+        "jquery.lazyload":"jquery/jquery.lazyload",
         "jquery-ui": "jquery/jquery-ui-11-4/jquery-ui.min",
         "jquery.url": "jquery/jquery.url",
         "jquery.nano": "jquery/jquery.nano",
@@ -162,6 +163,7 @@ requirejs.config({
     shim: {
         "polyk": [],
         "diff_match_patch":[],
+        "jquery.lazyload": ["jquery"],
         "jquery-ui": ["jquery"],
         "jquery.url": ["jquery"],
         "jquery.nano": ["jquery"],

@@ -21,12 +21,14 @@ define(
         "triple_brain.bubble_cloud_flow",
         "triple_brain.wikidata",
         "triple_brain.ui.search",
-        "triple_brain.modules"
+        "triple_brain.modules",
+        "jquery.lazyload"
     ],
     function ($, MindMapFlow, UserService, MindMapInfo, LandingPageFlow, SchemaListFlow, ChangePassword, LoginHandler, RegisterHandler, ExternalPageLoader, Header, GraphDisplayer, GraphDisplayerFactory, Flow, BubbleCloudFlow) {
         "use strict";
         var api = {};
         api.start = function () {
+            $("img.lazy").lazyload();
             GraphDisplayer.setImplementation(
                 GraphDisplayerFactory.getByName(
                     "relative_tree"

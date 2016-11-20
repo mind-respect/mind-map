@@ -25,6 +25,45 @@
     "description": "Remember, Understand and Evolve",
     "central": "Your central bubbles",
     "video_instruction": "Set to HD quality and fullscreen",
+    "level":{
+      "title":"The 6 levels of evolution of a thought",
+      "desc":"À ceux qui ont plein de pensées utiles ou intéressantes mais qui ont l'impression que souvent elles ne se concrétisent pas. Chacun des niveaux ci-dessous augmente les chances que vos pensées soient prise en compte et évoluent.",
+      "zero":{
+        "level":"Niveau 0",
+        "title":"Je ne réfléchis pas",
+        "desc":"Ne pas réfléchir profondément est utile pour agir rapidement dans le feu de l'action"
+      },
+      "one":{
+        "level":"Niveau 1",
+        "title":"Je réfléchis",
+        "desc":"La réflexion permet d'intégrer de nouvelles informations à ses connaissances et à son identité. Réfléchir est utile pour planifier ou pour peser les pours et les contres par exemple."
+      },
+      "two":{
+        "level":"Niveau 2",
+        "title":"Je prends des notes",
+        "desc":"Prendre en note aide à se rappeller de nos idées. Cela permet aussi de ralentir le débit de nos pensées et donc de pousser plus loin nos réflexions"
+      },
+      "three":{
+        "level":"Niveau 3",
+        "title":"Logiciel de prise de note",
+        "desc":"Grâce à ce type de logiciel on peut facilement retrouver ses pensées ! Cela améliore aussi son organisation personelle"
+      },
+      "four":{
+        "level":"Niveau 4",
+        "title":"Je carte mentale",
+        "desc":"Un logiciel de carte mentale est également un logiciel de prise de notes mais à la fois le contenu et la structure sont intégrés. Cela a pour résultat d'améliorer la compréhension des idées. En effet, des études ont démontrées que l'utilisation de tels outils augmentent les résultats scolaires."
+      },
+      "five":{
+        "level":"Niveau 5",
+        "title":"Je Mind Respect",
+        "desc":"C'est une application de carte mentale qui innove dans l'évolution de la pensée. Avec Mind Respect on crée davantage de liens entre ses idées, on fait évoluer ses perspectives, on s'exprime plus librement, on garde le contrôle de ses pensées et on réutilise ses réflexions."
+      },
+      "six":{
+        "level":"Niveau 6",
+        "title":"J'agis et je collabore de manière consciente et cohérente.",
+        "desc":"Je crois que de déposer nos pensées sur une plateforme qui favorise les relations entre nos idées et le monde peut faire de nous des individus plus conscients et cohérents. Grâce à l'information de qualité qui est produite, les logiciels, peuvent nous aider à collaborer pour construire un monde à notre image."
+      }
+    },
     "actions": {
       "link": {
         "title": "Link",
