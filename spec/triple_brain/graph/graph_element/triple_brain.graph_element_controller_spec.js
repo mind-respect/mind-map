@@ -142,7 +142,7 @@ define([
                 )
             ).toBeTruthy();
         });
-        it("adds the group relation identifier to a vertex moving around another vertex that is under a group relation", function () {
+        it("adds the group relation identifier to a vertex when moving around another vertex that is under a group relation", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
             var otherBubbleEdge = scenario.getOtherRelationInTree();
             var otherBubble = otherBubbleEdge.getTopMostChildBubble();

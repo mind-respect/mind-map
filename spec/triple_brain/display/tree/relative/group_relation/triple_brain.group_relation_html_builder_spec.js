@@ -132,6 +132,44 @@ define([
                 possessionGroupRelation.getNumberOfChild()
             ).toBe(2);
         });
+        it("does not move a relation to the group relation's parent if the group relation is not related to the removed identification", function(){
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var centerBubble = scenario.getCenterVertexInTree();
+
+            var possessionGroupRelation = TestUtils.getChildWithLabel(
+                centerBubble,
+                "Possession"
+            );
+            possessionGroupRelation.expand();
+            expect(
+                possessionGroupRelation.getNumberOfChild()
+            ).toBe(3);
+            expect(
+                centerBubble.getNumberOfChild()
+            ).toBe(4);
+            expect(
+                possessionGroupRelation.getNumberOfChild()
+            ).toBe(3);
+            var possessionRelation = possessionGroupRelation.getTopMostChildBubble();
+            var dummyIdentification = Identification.withUriAndLabel(
+                TestUtils.generateVertexUri(),
+                "dummy identification"
+            );
+            EventBus.publish(
+                "/event/ui/graph/identification/added",
+                [possessionRelation, dummyIdentification]
+            );
+            EventBus.publish(
+                "/event/ui/graph/identification/removed",
+                [possessionRelation, dummyIdentification]
+            );
+            expect(
+                centerBubble.getNumberOfChild()
+            ).toBe(4);
+            expect(
+                possessionGroupRelation.getNumberOfChild()
+            ).toBe(3);
+        });
         it("creates a group-relation when adding an identification to a relation shared with another relation at the same level", function () {
             var centerBubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
             expect(TestUtils.hasChildWithLabel(

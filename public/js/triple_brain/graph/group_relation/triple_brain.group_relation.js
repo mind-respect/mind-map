@@ -95,6 +95,16 @@ define([
         GroupRelation.prototype.hasIdentifications = function () {
             return true;
         };
+        GroupRelation.prototype.hasIdentification = function (identification) {
+            var contains = false;
+            $.each(this.identifiers, function () {
+                if (this.getExternalResourceUri() === identification.getExternalResourceUri()) {
+                    contains = true;
+                    return false;
+                }
+            });
+            return contains;
+        };
         return api;
     }
 );
