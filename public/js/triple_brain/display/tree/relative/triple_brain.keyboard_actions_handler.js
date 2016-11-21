@@ -15,6 +15,7 @@ define([
     "use strict";
     var api = {},
         tabKeyNumber = 9,
+        spaceBarKeyNumber = 32,
         leftArrowKeyNumber = 37,
         rightArrowKeyNumber = 39,
         upArrowKeyNumber = 38,
@@ -109,6 +110,7 @@ define([
         actions[upArrowKeyNumber] = upAction;
         actions[downArrowKeyNumber] = downAction;
         actions[enterKeyCode] = "addSibling";
+        actions[spaceBarKeyNumber] = focus;
         return actions;
     }
 
@@ -178,6 +180,10 @@ define([
 
     function selectNew(newSelectedElement) {
         SelectionHandler.setToSingleGraphElement(newSelectedElement);
+    }
+
+    function focus(selectedElement){
+        selectedElement.focus();
     }
 
 });
