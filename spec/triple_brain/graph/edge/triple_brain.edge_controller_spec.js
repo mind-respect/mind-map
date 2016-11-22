@@ -75,6 +75,29 @@ define([
                 identifierExternalResourceUri
             ).toBe(karaokeIdentification.getExternalResourceUri());
         });
+        it("adds new relation under the group relation when adding a child to a relation under a group relation", function(){
+            MindMapInfo._setIsViewOnly(false);
+            var centerVertex = new Scenarios.GraphWithSimilarRelationsScenario().getCenterVertexInTree();
+            expect(
+                centerVertex.getNumberOfChild()
+            ).toBe(
+                4
+            );
+            var groupRelation = TestUtils.getChildWithLabel(
+                centerVertex,
+                "Possession"
+            );
+            groupRelation.expand();
+            expect(
+                groupRelation.getNumberOfChild()
+            ).toBe(3);
+            var relationUnderGroupRelation = groupRelation.getTopMostChildBubble();
+            relationUnderGroupRelation.getController().addChild();
+            expect(
+                centerVertex.getNumberOfChild()
+            ).toBe(4);
+
+        });
         it("removes only one relation when removing a relation to a duplicated bubble", function () {
             var graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
             var bubble1 = graphWithCircularityScenario.getBubble1InTree();

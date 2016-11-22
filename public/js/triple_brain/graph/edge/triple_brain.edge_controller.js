@@ -30,7 +30,7 @@ define([
     };
 
     EdgeController.prototype.addChild = function () {
-        var parentVertex = this.edges.getParentVertex();
+        var parentVertex = this.getUi().getParentBubble();
         var newGroupRelation = GraphDisplayer.addNewGroupRelation(
             this._getAppropriateIdentificationForNewGroupRelation(),
             parentVertex,
