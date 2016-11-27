@@ -571,15 +571,21 @@ define([
             ).siblings(".vertices-children-container");
         };
         this.buildChildrenHtmlTreeRecursivelyEvenIfGrandParentAndIncludingDuplicates = function (parentVertexHtmlFacade, vertices) {
-            return buildChildrenHtmlTreeRecursively(
+            return this._buildChildrenHtmlTreeRecursively(
                 parentVertexHtmlFacade,
                 vertices
             );
         };
         this.buildChildrenHtmlTreeRecursively = function (parentVertexHtmlFacade, vertices) {
-            buildChildrenHtmlTreeRecursively(
+            this._buildChildrenHtmlTreeRecursively(
                 parentVertexHtmlFacade,
                 vertices
+            );
+        };
+        this._buildChildrenHtmlTreeRecursively = function(parentBubbleUi){
+            this.buildGroupRelations(
+                parentBubbleUi.getModel(),
+                parentBubbleUi
             );
         };
         this.getVertexHtmlBuilder = function () {
@@ -599,32 +605,41 @@ define([
                 true
             );
         };
+        this.buildGroupRelations = function(parentModel, parentUi){
+            $.each(sortSimilarRelationsByIsGroupRelationOrCreationDate(parentModel.similarRelations), function (key, groupRelation) {
+                this.buildGroupRelationToExpandOrNot(
+                    groupRelation,
+                    parentUi,
+                    false
+                );
+            }.bind(this));
+        };
         this.buildGroupRelationToExpandOrNot = function (groupRelation, parentVertexUi, isToExpand) {
             if (!isToExpand && groupRelation.hasMultipleVertices()) {
-                self.buildBubbleHtmlIntoContainer(
+                return self.buildBubbleHtmlIntoContainer(
                     groupRelation,
                     parentVertexUi,
                     GroupRelationHtmlBuilder
                 );
-                return;
             }
+            var relationUi;
             $.each(groupRelation.getSortedVertices(), function (key, verticesWithSameUri) {
                 $.each(verticesWithSameUri, function (vertexHtmlId, vertexAndEdge) {
                     var vertex = vertexAndEdge.vertex,
                         edge = vertexAndEdge.edge;
-                    var edgeUi = self.buildBubbleHtmlIntoContainer(
+                    relationUi = self.buildBubbleHtmlIntoContainer(
                         edge,
                         parentVertexUi,
                         self.edgeBuilder
                     );
                     var childVertexHtmlFacade = self.buildBubbleHtmlIntoContainer(
                         vertex,
-                        edgeUi,
+                        relationUi,
                         _htmlBuilder,
                         vertexHtmlId
                     );
                     self.edgeBuilder.afterChildBuilt(
-                        edgeUi,
+                        relationUi,
                         parentVertexUi,
                         childVertexHtmlFacade
                     );
@@ -632,12 +647,19 @@ define([
                         ".vertex-tree-container"
                     );
                     treeContainer[vertex.isLeftOriented ? "prepend" : "append"](
-                        buildChildrenHtmlTreeRecursively(
+                        self._buildChildrenHtmlTreeRecursively(
                             childVertexHtmlFacade
                         )
                     );
+                    if (childVertexHtmlFacade.isVertex() && childVertexHtmlFacade.hasSuggestions() && !childVertexHtmlFacade.hasHiddenRelations()) {
+                        api.addSuggestionsToVertex(
+                            childVertexHtmlFacade.getSuggestions(),
+                            childVertexHtmlFacade
+                        );
+                    }
                 });
             });
+            return relationUi;
         };
         function buildRootBubbleContainer() {
             var verticesContainer = RelativeTreeTemplates[
@@ -647,16 +669,6 @@ define([
                 verticesContainer
             );
             return verticesContainer;
-        }
-
-        function buildChildrenHtmlTreeRecursively(parentBubbleUi) {
-            var serverParentVertex = parentBubbleUi.getModel();
-            $.each(sortSimilarRelationsByIsGroupRelationOrCreationDate(serverParentVertex.similarRelations), function (key, groupRelation) {
-                self.buildGroupRelation(
-                    groupRelation,
-                    parentBubbleUi
-                );
-            });
         }
 
         function buildRootBubble(serverFacade, bubblesContainer) {
@@ -694,47 +706,10 @@ define([
                     serverRootVertex,
                     verticesContainer
                 );
-                $.each(sortSimilarRelationsByIsGroupRelationOrCreationDate(serverRootVertex.similarRelations), function (key, groupRelation) {
-                    if (groupRelation.hasMultipleVertices()) {
-                        self.buildBubbleHtmlIntoContainer(
-                            groupRelation,
-                            self.rootBubble,
-                            GroupRelationHtmlBuilder
-                        );
-                        return;
-                    }
-                    $.each(groupRelation.getVertices(), function (key, verticesWithSameUri) {
-                        $.each(verticesWithSameUri, function (vertexHtmlId, vertexAndEdge) {
-                            var vertex = vertexAndEdge.vertex,
-                                edgeUi = self.buildBubbleHtmlIntoContainer(
-                                    vertexAndEdge.edge,
-                                    self.rootBubble,
-                                    self.edgeBuilder
-                                ),
-                                childHtmlFacade = self.buildBubbleHtmlIntoContainer(
-                                    vertex,
-                                    edgeUi,
-                                    _htmlBuilder,
-                                    vertexHtmlId
-                                );
-                            self.edgeBuilder.afterChildBuilt(
-                                edgeUi,
-                                self.rootBubble,
-                                childHtmlFacade
-                            );
-                            self.buildChildrenHtmlTreeRecursively(
-                                childHtmlFacade,
-                                vertices
-                            );
-                            if (childHtmlFacade.isVertex() && childHtmlFacade.hasSuggestions() && !childHtmlFacade.hasHiddenRelations()) {
-                                api.addSuggestionsToVertex(
-                                    childHtmlFacade.getSuggestions(),
-                                    childHtmlFacade
-                                );
-                            }
-                        });
-                    });
-                });
+                self.buildGroupRelations(
+                    serverRootVertex,
+                    self.rootBubble
+                );
                 if (self.rootBubble.hasSuggestions()) {
                     api.addSuggestionsToVertex(
                         self.rootBubble.getModel().getSuggestions(),
