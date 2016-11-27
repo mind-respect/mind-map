@@ -56,13 +56,13 @@ define([
                 centerBubble,
                 "other relation"
             );
-            var dummyIdentification = Identification.withUriAndLabel(
+            var dummyIdentifier = Identification.withUriAndLabel(
                 TestUtils.generateVertexUri(),
                 "dummy identification"
             );
             EventBus.publish(
                 "/event/ui/graph/identification/added",
-                [otherRelation, dummyIdentification]
+                [otherRelation, dummyIdentifier]
             );
 
             expect(
@@ -102,17 +102,17 @@ define([
                 centerBubble,
                 "other relation"
             );
-            var dummyIdentification = Identification.withUriAndLabel(
+            var dummyIdentifier = Identification.withUriAndLabel(
                 TestUtils.generateVertexUri(),
                 "dummy identification"
             );
             EventBus.publish(
                 "/event/ui/graph/identification/added",
-                [otherRelation, dummyIdentification]
+                [otherRelation, dummyIdentifier]
             );
             EventBus.publish(
                 "/event/ui/graph/identification/removed",
-                [otherRelation, dummyIdentification]
+                [otherRelation, dummyIdentifier]
             );
             expect(
                 centerBubble.getNumberOfChild()
@@ -151,17 +151,17 @@ define([
                 possessionGroupRelation.getNumberOfChild()
             ).toBe(3);
             var possessionRelation = possessionGroupRelation.getTopMostChildBubble();
-            var dummyIdentification = Identification.withUriAndLabel(
+            var dummyIdentifier = Identification.withUriAndLabel(
                 TestUtils.generateVertexUri(),
                 "dummy identification"
             );
             EventBus.publish(
                 "/event/ui/graph/identification/added",
-                [possessionRelation, dummyIdentification]
+                [possessionRelation, dummyIdentifier]
             );
             EventBus.publish(
                 "/event/ui/graph/identification/removed",
-                [possessionRelation, dummyIdentification]
+                [possessionRelation, dummyIdentifier]
             );
             expect(
                 centerBubble.getNumberOfChild()
@@ -293,7 +293,7 @@ define([
             ).toBe("identification");
         });
         it("sets the group relation label and comment correctly when identifying a relation to a new relation that exists at the same level", function () {
-            VertexServiceMock.addRelationAndVertexToVertexMock();
+            VertexServiceMock.addRelationAndVertexToVertex();
             MindMapInfo._setIsViewOnly(false);
             var centerBubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
             centerBubble.getController().addChild();
@@ -337,7 +337,7 @@ define([
             expect(
                 groupRelation.getNumberOfChild()
             ).toBe(3);
-            VertexServiceMock.addRelationAndVertexToVertexMock();
+            VertexServiceMock.addRelationAndVertexToVertex();
             GraphElementServiceMock.addIdentification();
             MindMapInfo._setIsViewOnly(false);
             groupRelation.getController().addChild();

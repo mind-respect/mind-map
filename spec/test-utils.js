@@ -5,11 +5,12 @@
 define([
     "jquery",
     "triple_brain.vertex_server_format_builder",
+    "triple_brain.identification",
     'triple_brain.vertex',
     'triple_brain.edge',
     "triple_brain.graph_displayer",
     "triple_brain.compare_flow"
-], function ($, VertexServerFormatBuilder, Vertex, Edge, GraphDisplayer, CompareFlow) {
+], function ($, VertexServerFormatBuilder, Identification, Vertex, Edge, GraphDisplayer, CompareFlow) {
     "use strict";
     var api = {};
     api.generateVertexUri = function () {
@@ -20,6 +21,11 @@ define([
     };
     api.generateIdentificationUri = function () {
         return "\/service\/users\/foo\/graph\/identification\/" + generateUuid();
+    };
+    api.dummyIdentifier = function () {
+        return Identification.withUri(
+            api.generateIdentificationUri()
+        );
     };
     api.isGraphElementUiRemoved = function (element) {
         return element.getHtml().parents(".root-vertex-super-container").length === 0;

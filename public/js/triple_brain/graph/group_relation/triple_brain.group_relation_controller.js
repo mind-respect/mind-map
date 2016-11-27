@@ -47,15 +47,18 @@ define([
                     if (self.getUi().hasVisibleHiddenRelationsContainer()) {
                         self.expand();
                     }
-                    var identification = self.getUi().getGroupRelation().getIdentification().makeSameAs();
-                    triple.edge().getController().addIdentification(
-                        identification
-                    );
+                    $.each(self.getModel().getIdentifiers(), function(){
+                        var identifier = this;
+                        identifier.makeSameAs();
+                        triple.edge().getController().addIdentification(
+                            identifier
+                        );
+                    });
                     EdgeService.updateLabel(
                         triple.edge(),
-                        identification.getLabel(),
+                        self.getModel().getIdentification().getLabel(),
                         function (edge) {
-                            edge.setText(identification.getLabel());
+                            edge.setText(self.getModel().getIdentification().getLabel());
                             triple.edge().reviewEditButtonDisplay();
                         }
                     );

@@ -53,5 +53,36 @@ define([
                 selfIdentifier.getLabel()
             ).toBe("new r1 label");
         });
+        it("prevents from adding same identifier twice", function(){
+            var b1 = new Scenarios.threeBubblesGraph().getCenterBubbleInTree();
+            var identifier = TestUtils.dummyIdentifier();
+            expect(
+                b1.getModel().getIdentifiers().length
+            ).toBe(0);
+            b1.getModel().addIdentification(
+                identifier
+            );
+            expect(
+                b1.getModel().getIdentifiers().length
+            ).toBe(1);
+            b1.getModel().addIdentification(
+                identifier
+            );
+            expect(
+                b1.getModel().getIdentifiers().length
+            ).toBe(1);
+        });
+        it("prevents from adding self as identifier", function(){
+            var b1 = new Scenarios.threeBubblesGraph().getCenterBubbleInTree();
+            expect(
+                b1.getModel().getIdentifiers().length
+            ).toBe(0);
+            b1.addIdentification(
+                b1.getModel()._buildSelfIdentifier()
+            );
+            expect(
+                b1.getModel().getIdentifiers().length
+            ).toBe(0);
+        });
     });
 });

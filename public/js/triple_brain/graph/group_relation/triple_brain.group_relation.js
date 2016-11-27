@@ -105,6 +105,14 @@ define([
             });
             return contains;
         };
+        GroupRelation.prototype.addIdentification = function (identifier) {
+            if(this.hasIdentification(identifier)){
+                return;
+            }
+            this.identifiers.push(
+                identifier
+            );
+        };
         return api;
     }
 );

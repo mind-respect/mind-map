@@ -44,7 +44,7 @@ define([
             ).toBeFalsy();
         });
         it("can add sibling", function () {
-            VertexServiceMock.addRelationAndVertexToVertexMock();
+            VertexServiceMock.addRelationAndVertexToVertex();
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             var numberOfChild = bubble1.getNumberOfChild();
             var someChild = bubble1.getTopMostChildBubble().getTopMostChildBubble();
@@ -54,7 +54,7 @@ define([
             ).toBe(numberOfChild + 1);
         });
         it("adding bubble and relation selects new bubble", function () {
-            VertexServiceMock.addRelationAndVertexToVertexMock();
+            VertexServiceMock.addRelationAndVertexToVertex();
             var scenario = new Scenarios.threeBubblesGraph();
             var b2 = scenario.getBubble2InTree();
             GraphServiceMock.getForCentralBubbleUri(
@@ -128,7 +128,7 @@ define([
             expect(
                 b3.getNumberOfChild()
             ).toBe(0);
-            VertexServiceMock.addRelationAndVertexToVertexMock();
+            VertexServiceMock.addRelationAndVertexToVertex();
             GraphServiceMock.getForCentralBubbleUri(
                 scenario.getSubGraphForB3()
             );
@@ -149,7 +149,7 @@ define([
                 childBubble.isVertex()
             ).toBeTruthy();
             var numberOfChild = groupRelation.getNumberOfChild();
-            VertexServiceMock.addRelationAndVertexToVertexMock();
+            VertexServiceMock.addRelationAndVertexToVertex();
             childBubble.getController().addSibling();
             expect(
                 groupRelation.getNumberOfChild()
@@ -166,7 +166,7 @@ define([
             expect(
                 childBubble.isVertex()
             ).toBeTruthy();
-            VertexServiceMock.addRelationAndVertexToVertexMock();
+            VertexServiceMock.addRelationAndVertexToVertex();
             GraphElementServiceMock.addIdentification();
             FriendlyResourceServiceMock.updateLabel();
             var hasVisited = false;

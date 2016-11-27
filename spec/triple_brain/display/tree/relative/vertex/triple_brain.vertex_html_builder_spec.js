@@ -246,7 +246,7 @@ define([
             loadFixtures('graph-element-menu.html');
             var scenario = new Scenarios.threeBubblesGraph();
             var centerBubble = scenario.getCenterBubbleInTree();
-            VertexServiceMock.addRelationAndVertexToVertexMock();
+            VertexServiceMock.addRelationAndVertexToVertex();
             MindMapInfo._setIsViewOnly(false);
             expect(
                 centerBubble.getAddChildButton()

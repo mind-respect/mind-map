@@ -21,7 +21,7 @@ define([
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             SelectionHandler.setToSingleGraphElement(bubble1);
             var numberOfChild = bubble1.getNumberOfChild();
-            VertexServiceMock.addRelationAndVertexToVertexMock();
+            VertexServiceMock.addRelationAndVertexToVertex();
             TestUtils.pressKey("\t");
             expect(
                 bubble1.getNumberOfChild()
@@ -36,7 +36,7 @@ define([
                 relation1.getParentBubble().isGroupRelation()
             ).toBeFalsy();
             SelectionHandler.setToSingleGraphElement(relation1);
-            VertexServiceMock.addRelationAndVertexToVertexMock();
+            VertexServiceMock.addRelationAndVertexToVertex();
             TestUtils.pressKey("\t");
             expect(
                 relation1.getParentBubble().isGroupRelation()
@@ -79,7 +79,7 @@ define([
         });
 
         it("adds a sibling when pressing enter", function(){
-            VertexServiceMock.addRelationAndVertexToVertexMock();
+            VertexServiceMock.addRelationAndVertexToVertex();
             MindMapInfo._setIsViewOnly(false);
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             var numberOfChild = bubble1.getNumberOfChild();

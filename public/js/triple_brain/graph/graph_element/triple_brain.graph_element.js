@@ -238,6 +238,9 @@ define([
         });
     };
     api.GraphElement.prototype.addIdentification = function (identification) {
+        if(this.hasIdentification(identification)){
+            return;
+        }
         if (!identification.hasType()) {
             return this.addIdentification(
                 identification.makeGeneric()

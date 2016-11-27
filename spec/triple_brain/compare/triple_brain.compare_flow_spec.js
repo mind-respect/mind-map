@@ -49,7 +49,7 @@ define([
                     new Scenarios.threeBubblesGraph().getGraph()
                 )
             );
-            VertexServiceMock.addRelationAndVertexToVertexMock();
+            VertexServiceMock.addRelationAndVertexToVertex();
             MindMapInfo._setIsViewOnly(false);
             b1Fork.getController().addChild();
             var newRelation = TestUtils.getChildWithLabel(
@@ -72,7 +72,7 @@ define([
                     new Scenarios.threeBubblesGraph().getGraph()
                 )
             );
-            VertexServiceMock.addRelationAndVertexToVertexMock();
+            VertexServiceMock.addRelationAndVertexToVertex();
             MindMapInfo._setIsViewOnly(false);
             b1Fork.getController().addChild();
             var newRelation = TestUtils.getChildWithLabel(
