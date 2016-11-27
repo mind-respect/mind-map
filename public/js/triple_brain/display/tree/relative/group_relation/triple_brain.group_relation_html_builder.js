@@ -193,7 +193,7 @@ define([
                         );
                         if (isIdentifiedToRelation) {
                             var newGroupRelation = GraphDisplayer.addNewGroupRelation(
-                                childAsAnIdentification,
+                                [childAsAnIdentification],
                                 parentBubble
                             );
                             newGroupRelation.setUri(
@@ -203,11 +203,11 @@ define([
                             graphElement.moveToParent(newGroupRelation);
                             return;
                         }
-                        $.each(child.getModel().getIdentifications(), function () {
+                        $.each(child.getModel().getIdentifiers(), function () {
                             var identification = this;
                             if (graphElement.getModel().hasIdentification(identification)) {
                                 var newGroupRelation = GraphDisplayer.addNewGroupRelation(
-                                    identification,
+                                    [identification],
                                     parentBubble
                                 );
                                 newGroupRelation.setUri(

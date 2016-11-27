@@ -299,7 +299,7 @@ define([
                 schema
             );
             expect(
-                propertyUi.getModel().getIdentifications().length
+                propertyUi.getModel().getIdentifiers().length
             ).toBe(0);
         });
 

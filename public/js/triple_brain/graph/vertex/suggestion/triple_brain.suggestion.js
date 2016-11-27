@@ -71,7 +71,7 @@ define([
             };
             var suggestion = api.fromServerFormat(serverFormat);
             if (schemaProperty.hasIdentifications()) {
-                var identification = schemaProperty.getIdentifications()[0];
+                var identification = schemaProperty.getIdentifiers()[0];
                 suggestion._setType(
                     identification
                 );
@@ -135,7 +135,7 @@ define([
         Suggestion.prototype.hasIdentifications = function () {
             return true;
         };
-        Suggestion.prototype.getIdentifications = function () {
+        Suggestion.prototype.getIdentifiers = function () {
             var identifications = [
                 this.getSameAs()
             ];

@@ -64,12 +64,12 @@ define([
                 locationSuggestion
             ).create();
             expect(
-                locationBubbleSuggestion.getModel().getIdentifications()[0].getUri()
+                locationBubbleSuggestion.getModel().getIdentifiers()[0].getUri()
             ).toBe(locationSuggestion.getSameAs().getUri());
         });
         it('has the suggestion label for its type taken from the suggestion "same as"', function () {
             expect(
-                locationBubbleSuggestion.getModel().getIdentifications()[0].getLabel()
+                locationBubbleSuggestion.getModel().getIdentifiers()[0].getLabel()
             ).toBe("location");
         });
         it("publishes that it created a suggestion bubble ui", function(){

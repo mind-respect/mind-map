@@ -281,7 +281,7 @@ define([
         movedEdge.getController().changeEndVertex(newSourceVertex);
         if (previousParentGroupRelation.isGroupRelation()) {
             movedEdge.getController().removeIdentification(
-                movedEdge.getModel().getIdentificationWithExternalUri(
+                movedEdge.getModel().getIdentifierHavingExternalUri(
                     previousParentGroupRelation.getModel().getIdentification().getExternalResourceUri()
                 )
             );

@@ -63,7 +63,7 @@ define([
                 locationProperty,
                 karaokeSchemaScenario.getSchema().getUri()
             );
-            var locationIdentification = locationProperty.getIdentifications()[0];
+            var locationIdentification = locationProperty.getIdentifiers()[0];
             expect(
                 locationSuggestion.getType().getExternalResourceUri()
             ).toBe(
@@ -84,7 +84,7 @@ define([
         });
         it('the property identification images are set to the suggestion type', function () {
             var locationProperty = karaokeSchemaScenario.getLocationProperty();
-            var identification = locationProperty.getIdentifications()[0];
+            var identification = locationProperty.getIdentifiers()[0];
             identification._images = [
                 Image.withBase64ForSmallAndUrlForBigger(
                     "some_base_64",

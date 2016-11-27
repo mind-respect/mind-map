@@ -1043,7 +1043,7 @@ define([
             var foundIdentification;
             $.each(graph.edges, function (key, value) {
                 var edge = Edge.fromServerFormat(value);
-                $.each(edge.getIdentifications(), function () {
+                $.each(edge.getIdentifiers(), function () {
                     var identification = this;
                     if (identification.getLabel() === label) {
                         foundIdentification = identification;

@@ -43,13 +43,13 @@ define([
                 projectSearchResult
             );
             expect(
-                suggestionInTree.getModel().getIdentifications().length
+                suggestionInTree.getModel().getIdentifiers().length
             ).toBe(2);
             var newVertexUi = suggestionInTree.integrate(
                 TestUtils.generateVertexUri()
             );
             expect(
-                newVertexUi.getModel().getIdentifications().length
+                newVertexUi.getModel().getIdentifiers().length
             ).toBe(3);
         });
         it("updates label with the autocomplete text after select", function () {

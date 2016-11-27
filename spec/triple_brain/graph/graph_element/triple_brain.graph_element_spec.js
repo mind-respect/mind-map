@@ -42,7 +42,7 @@ define([
                 serverFormat
             );
             expect(
-                graphElement.getIdentifications().length
+                graphElement.getIdentifiers().length
             ).toBeGreaterThan(0);
         });
     });

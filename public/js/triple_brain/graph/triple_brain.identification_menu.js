@@ -163,7 +163,7 @@ define([
             this.html.append(
                 identitiesList
             );
-            $.each(this.graphElement.getModel().getIdentifications(), function () {
+            $.each(this.graphElement.getModel().getIdentifiers(), function () {
                 self._addIdentificationAsListElement(
                     this
                 );

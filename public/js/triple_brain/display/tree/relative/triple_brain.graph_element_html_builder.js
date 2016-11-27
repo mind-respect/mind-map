@@ -79,7 +79,7 @@ define([
     };
 
     api.integrateIdentifications = function (graphElement) {
-        $.each(graphElement.getModel().getIdentifications(), function(){
+        $.each(graphElement.getModel().getIdentifiers(), function(){
             graphElement.addIdentification(
                 this
             );

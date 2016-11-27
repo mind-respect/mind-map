@@ -36,7 +36,7 @@ define([
                 graphElementUi
             ),
             identifications: Identification.getServerFormatArrayFromFacadeArray(
-                graphElementUi.getModel().getIdentifications()
+                graphElementUi.getModel().getIdentifiers()
             )
         };
     };
@@ -87,7 +87,6 @@ define([
 
     api.GraphElement.prototype.init = function (graphElementServerFormat) {
         this.graphElementServerFormat = graphElementServerFormat;
-        this._buildIdentifications();
         FriendlyResource.FriendlyResource.apply(
             this
         );
@@ -95,6 +94,7 @@ define([
             this,
             graphElementServerFormat.friendlyResource
         );
+        this._buildIdentifications();
         return this;
     };
 
@@ -125,11 +125,11 @@ define([
         return this._sameAs = sameAs;
     };
     api.GraphElement.prototype.hasIdentifications = function () {
-        return this.getIdentifications().length > 0;
+        return this.getIdentifiers().length > 0;
     };
-    api.GraphElement.prototype.getIdentificationWithExternalUri = function (externalUri) {
+    api.GraphElement.prototype.getIdentifierHavingExternalUri = function (externalUri) {
         var identification = false;
-        $.each(this.getIdentifications(), function () {
+        $.each(this.getIdentifiers(), function () {
             if (this.getExternalResourceUri() === externalUri) {
                 identification = this;
                 return false;
@@ -138,18 +138,33 @@ define([
         return identification;
     };
 
-    api.GraphElement.prototype.getIdentifications = function () {
-        return [].concat(
+    api.GraphElement.prototype.getIdentifiers = function () {
+        var identifiers = [].concat(
             this._types
         ).concat(
             this._sameAs
         ).concat(
             this._genericIdentifications
         );
+        i = identifiers.length;
+        while (i--) {
+            if (identifiers[i].getExternalResourceUri() === this.getUri()) {
+                identifiers.splice(i, 1);
+            }
+        }
+        return identifiers;
     };
 
+    api.GraphElement.prototype.getIdentifiersIncludingSelf = function () {
+        var identifiers = this.getIdentifiers();
+        if(!this.hasIdentification(this.selfIdentifier)){
+            identifiers.push(this.selfIdentifier)
+        }
+        return identifiers;
+    };
 
     api.GraphElement.prototype._buildIdentifications = function () {
+        this.selfIdentifier = this._buildSelfIdentifier();
         this._types = [];
         this._sameAs = [];
         this._genericIdentifications = [];
@@ -175,13 +190,26 @@ define([
     };
     api.GraphElement.prototype.hasIdentification = function (identification) {
         var contains = false;
-        $.each(this.getIdentifications(), function () {
+        $.each(this.getIdentifiers(), function () {
             if (this.getExternalResourceUri() === identification.getExternalResourceUri()) {
                 contains = true;
                 return false;
             }
         });
         return contains;
+    };
+
+    api.GraphElement.prototype._buildSelfIdentifier = function(){
+        var identification = Identification.fromFriendlyResource(
+            this
+        );
+        identification.setLabel(
+            this.getLabel()
+        );
+        identification.setComment(
+            this.getComment()
+        );
+        return identification;
     };
 
     api.GraphElement.prototype.isRelatedToIdentification = function (identification) {
@@ -255,7 +283,7 @@ define([
 
     api.GraphElement.prototype.getFirstIdentificationToAGraphElement = function () {
         var identification = false;
-        $.each(this.getIdentifications(), function () {
+        $.each(this.getIdentifiersIncludingSelf(), function () {
             if (IdUri.isUriOfAGraphElement(this.getExternalResourceUri())) {
                 identification = this;
                 return false;

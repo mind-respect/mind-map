@@ -22,7 +22,7 @@ define([
                 vertexWithEventRelatedSuggestions.getSuggestions().length
             ).toBe(3);
             vertexWithEventRelatedSuggestions.removeIdentification(
-                vertexWithEventRelatedSuggestions.getModel().getIdentifications()[0]
+                vertexWithEventRelatedSuggestions.getModel().getIdentifiers()[0]
             );
             expect(
                 vertexWithEventRelatedSuggestions.getSuggestions().length

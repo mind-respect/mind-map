@@ -165,6 +165,7 @@ define([
             publishResetGraph();
             $("#drawn_graph").empty();
         };
+
         api.addNewGroupRelation = function (identification, parentBubble, addToLeft) {
             return _implementation.addNewGroupRelation(
                 identification,
@@ -172,6 +173,7 @@ define([
                 addToLeft
             );
         };
+
         return api;
 
         function publishAboutToUpdate() {

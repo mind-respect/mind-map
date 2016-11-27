@@ -99,7 +99,7 @@ define([
                 }
                 sourceVertex.isInvolved = true;
                 destinationVertex.isInvolved = true;
-                var edgeIdentifications = edge.getIdentifications();
+                var edgeIdentifications = edge.getIdentifiers();
                 if (edgeIdentifications.length > 0) {
                     setupGroupRelation(edgeIdentifications, true);
                     if (edgeIdentifications.length > 1) {

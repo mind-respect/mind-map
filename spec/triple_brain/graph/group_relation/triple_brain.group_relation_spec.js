@@ -52,7 +52,7 @@ define([
         it("can have multiple identifiers", function(){
             var relationWithMultipleIdentifiers = new Scenarios.relationWithMultipleIdentifiers().getComputerScientistRelation();
             var groupRelation = GroupRelation.usingIdentifiers(
-                relationWithMultipleIdentifiers.getIdentifications()
+                relationWithMultipleIdentifiers.getIdentifiers()
             );
             expect(
                 groupRelation.getIdentifiers().length

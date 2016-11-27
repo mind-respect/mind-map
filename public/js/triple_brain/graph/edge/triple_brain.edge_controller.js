@@ -32,7 +32,7 @@ define([
     EdgeController.prototype.addChild = function () {
         var parentVertex = this.getUi().getParentBubble();
         var newGroupRelation = GraphDisplayer.addNewGroupRelation(
-            this._getAppropriateIdentificationForNewGroupRelation(),
+            this.getUi().getModel().getIdentifiersIncludingSelf(),
             parentVertex,
             this.getUi().isToTheLeft()
         );
@@ -40,22 +40,7 @@ define([
         this.getUi().moveToParent(
             newGroupRelation
         );
-    };
-    EdgeController.prototype._getAppropriateIdentificationForNewGroupRelation = function () {
-        if (this.getUi().getModel().hasIdentifications()) {
-            return this.getUi().getModel().getIdentifications()[0];
-        } else {
-            var identification = Identification.fromFriendlyResource(
-                this.getUi().getModel()
-            );
-            identification.setLabel(
-                this.getUi().text()
-            );
-            identification.setComment(
-                this.getUi().getNote()
-            );
-            return identification;
-        }
+        return newGroupRelation;
     };
 
     EdgeController.prototype.removeCanDo = function () {

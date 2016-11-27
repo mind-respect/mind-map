@@ -96,7 +96,18 @@ define([
             expect(
                 centerVertex.getNumberOfChild()
             ).toBe(4);
-
+        });
+        it("adds all the identifiers of the relation to the the new child and group relation when adding a child", function(){
+            var groupRelation = new Scenarios.GraphWithSimilarRelationsScenario().getPossessionAsGroupRelationInTree();
+            groupRelation.expand();
+            var relationUnderGroupRelation = TestUtils.getChildWithLabel(
+                groupRelation,
+                "Possessed by book 2"
+            );
+            var newGroupRelation = relationUnderGroupRelation.getController().addChild().getModel();
+            expect(
+                newGroupRelation.getIdentifiers().length
+            ).toBe(2);
         });
         it("removes only one relation when removing a relation to a duplicated bubble", function () {
             var graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
