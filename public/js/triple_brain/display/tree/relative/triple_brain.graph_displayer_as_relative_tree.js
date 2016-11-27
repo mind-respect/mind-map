@@ -395,13 +395,13 @@ define([
         );
     };
 
-    api.addNewGroupRelation = function (identification, parentBubble, addToLeft) {
+    api.addNewGroupRelation = function (identifiers, parentBubble, addToLeft) {
         var treeMaker = new api.TreeMaker();
         treeMaker.setDirectionAroundCenter(
             addToLeft
         );
         var newGroupRelation = treeMaker.buildBubbleHtmlIntoContainer(
-            GroupRelation.usingIdentification(identification),
+            GroupRelation.usingIdentification(identifiers),
             parentBubble,
             GroupRelationHtmlBuilder
         );

@@ -166,9 +166,9 @@ define([
             $("#drawn_graph").empty();
         };
 
-        api.addNewGroupRelation = function (identification, parentBubble, addToLeft) {
+        api.addNewGroupRelation = function (identifiers, parentBubble, addToLeft) {
             return _implementation.addNewGroupRelation(
-                identification,
+                identifiers,
                 parentBubble,
                 addToLeft
             );

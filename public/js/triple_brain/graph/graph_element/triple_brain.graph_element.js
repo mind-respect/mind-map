@@ -146,7 +146,7 @@ define([
         ).concat(
             this._genericIdentifications
         );
-        i = identifiers.length;
+        var i = identifiers.length;
         while (i--) {
             if (identifiers[i].getExternalResourceUri() === this.getUri()) {
                 identifiers.splice(i, 1);
@@ -157,14 +157,14 @@ define([
 
     api.GraphElement.prototype.getIdentifiersIncludingSelf = function () {
         var identifiers = this.getIdentifiers();
-        if(!this.hasIdentification(this.selfIdentifier)){
-            identifiers.push(this.selfIdentifier)
+        var selfIdentifier = this._buildSelfIdentifier();
+        if(!this.hasIdentification(selfIdentifier)){
+            identifiers.push(selfIdentifier);
         }
         return identifiers;
     };
 
     api.GraphElement.prototype._buildIdentifications = function () {
-        this.selfIdentifier = this._buildSelfIdentifier();
         this._types = [];
         this._sameAs = [];
         this._genericIdentifications = [];

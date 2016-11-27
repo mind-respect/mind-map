@@ -33,7 +33,7 @@ define([
                 graphElement.getTypes().length
             ).toBe(0);
         });
-        it("includes identifications when building server format from ui", function(){
+        it("includes identifiers when building server format from ui", function(){
             var eventBubble = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();
             var serverFormat = GraphElement.buildServerFormatFromUi(
                 eventBubble
@@ -44,6 +44,14 @@ define([
             expect(
                 graphElement.getIdentifiers().length
             ).toBeGreaterThan(0);
+        });
+        it("has right label for self identifier even if it changed", function(){
+            var r1 = new Scenarios.threeBubblesGraph().getRelation1InTree();
+            r1.getController().setLabel("new r1 label");
+            var selfIdentifier = r1.getModel().getIdentifiersIncludingSelf()[0];
+            expect(
+                selfIdentifier.getLabel()
+            ).toBe("new r1 label");
         });
     });
 });

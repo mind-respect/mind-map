@@ -32,7 +32,7 @@ define([
     EdgeController.prototype.addChild = function () {
         var parentVertex = this.getUi().getParentBubble();
         var newGroupRelation = GraphDisplayer.addNewGroupRelation(
-            this.getUi().getModel().getIdentifiersIncludingSelf(),
+            this.getModel().getIdentifiersIncludingSelf(),
             parentVertex,
             this.getUi().isToTheLeft()
         );
