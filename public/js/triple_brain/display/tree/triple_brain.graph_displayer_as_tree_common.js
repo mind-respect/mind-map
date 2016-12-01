@@ -18,7 +18,8 @@ define([
                 centralBubble = vertexWithId(centralVertexUri),
                 edgesFacade = arrayOfEdgesHavingThoseRelatedToCenterVertexOnTop(),
                 nonEnhancedEdges = {},
-                joinIfMoreSimilarRelations = {};
+                joinIfMoreSimilarRelations = {},
+                childrenGroupedByIdentifiers = {};
             centralBubble.isInvolved = true;
             initRelationsOfVertex(
                 centralBubble
@@ -29,6 +30,12 @@ define([
                     );
                 }
             );
+            $.each(childrenGroupedByIdentifiers, function(sourceVertexKey, relationIdentifiers){
+                $.each(sortIdentifiersByNumberOfRelationsDesc(relationIdentifiers), function(identifierUri, tuple){
+                    console.log(tuple);
+                    debugger;
+                });
+            });
             serverGraph.edges = edgesFacade;
             function updateVerticesChildrenWithEdge(edge) {
                 initRelationsOfVertex(
@@ -80,7 +87,7 @@ define([
 
             function updateRelationsIdentification(edge) {
                 var sourceVertex = vertexWithId(
-                        edge.getSourceVertex().getUri()
+                    edge.getSourceVertex().getUri()
                     ),
                     destinationVertex = vertexWithId(
                         edge.getDestinationVertex().getUri()
@@ -101,15 +108,33 @@ define([
                 destinationVertex.isInvolved = true;
                 var edgeIdentifications = edge.getIdentifiers();
                 if (edgeIdentifications.length > 0) {
-                    setupGroupRelation(edgeIdentifications, true);
-                    if (edgeIdentifications.length > 1) {
-                        $.each(edgeIdentifications, function () {
-                            setupGroupRelation(
-                                this,
-                                false
-                            );
-                        });
+                    if (undefined === childrenGroupedByIdentifiers[sourceVertex.getUri()]) {
+                        childrenGroupedByIdentifiers[sourceVertex.getUri()] = {};
                     }
+                    var identifiers = childrenGroupedByIdentifiers[sourceVertex.getUri()];
+                    $.each(edgeIdentifications, function () {
+                        var identifier = this;
+                        if(undefined === identifiers[identifier.getUri()]){
+                            identifiers[identifier.getUri()] = [];
+                        }
+                        identifiers[identifier.getUri()].push(
+                            {
+                                vertex:destinationVertex,
+                                edge:edge
+                            }
+                        );
+                    });
+
+
+                    // setupGroupRelation(edgeIdentifications, true);
+                    // if (edgeIdentifications.length > 1) {
+                    //     $.each(edgeIdentifications, function () {
+                    //         setupGroupRelation(
+                    //             this,
+                    //             false
+                    //         );
+                    //     });
+                    // }
                 } else {
                     var key = edge.getUri(),
                         groupRelation = sourceVertex.similarRelations[key];
@@ -132,6 +157,7 @@ define([
                 function setupGroupRelation(identifiers, createIfUndefined) {
                     var key = getIdentifiersKey(identifiers),
                         groupRelation = sourceVertex.similarRelations[key];
+                    debugger;
                     if (groupRelation === undefined && createIfUndefined) {
                         groupRelation = GroupRelation.usingIdentification(
                             identifiers
@@ -142,8 +168,8 @@ define([
                             joinIfMoreSimilarRelations[key] = [];
                         }
                         joinIfMoreSimilarRelations[key].push({
-                            destinationVertex : destinationVertex,
-                            edge : edge
+                            destinationVertex: destinationVertex,
+                            edge: edge
                         });
                     }
                     else {
@@ -152,8 +178,8 @@ define([
                             edge
                         );
                         sourceVertex.similarRelations[key] = groupRelation;
-                        if(joinIfMoreSimilarRelations[key] !== undefined){
-                            $.each(joinIfMoreSimilarRelations[key], function(){
+                        if (joinIfMoreSimilarRelations[key] !== undefined) {
+                            $.each(joinIfMoreSimilarRelations[key], function () {
                                 groupRelation.addVertex(
                                     this.destinationVertex,
                                     this.edge
@@ -196,6 +222,25 @@ define([
 
             function isGraphElementFacadeBuilt(graphElementServerFormat) {
                 return graphElementServerFormat["getLabel"] !== undefined;
+            }
+            function sortIdentifiersByNumberOfRelationsDesc(identifiers) {
+                var sortedKeys = Object.keys(identifiers).sort(
+                    function (a, b) {
+                        var relationsA = identifiers[a];
+                        var relationsB = identifiers[b];
+                        if(relationsA.length === relationsB.length) {
+                            return 0
+                        }
+                        if(relationsA.length > relationsB.length) {
+                            return -1;
+                        }
+                        return 1;
+                    });
+                var sortedIdentifiers = {};
+                $.each(sortedKeys, function () {
+                    sortedIdentifiers[this] = identifiers[this];
+                });
+                return sortedIdentifiers;
             }
         };
         return api;

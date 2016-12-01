@@ -63,5 +63,9 @@ define([
                 possessionInTree.getNumberOfChild()
             ).toBe(3);
         });
+        // it("can return the most relevant identifier", function(){
+        //     var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+        //     var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
+        // });
     });
 });
