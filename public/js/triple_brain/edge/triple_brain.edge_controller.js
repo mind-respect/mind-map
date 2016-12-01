@@ -8,9 +8,7 @@ define([
     "triple_brain.edge_service",
     "triple_brain.identification",
     "triple_brain.graph_displayer",
-    "triple_brain.vertex_service",
-    "triple_brain.group_relation_controller"
-], function ($, GraphElementController, EdgeService, Identification, GraphDisplayer, VertexService, GroupRelationController) {
+], function ($, GraphElementController, EdgeService, Identification, GraphDisplayer) {
     "use strict";
     var api = {};
     api.Self = EdgeController;
