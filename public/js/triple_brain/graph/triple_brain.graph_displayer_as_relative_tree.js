@@ -222,7 +222,7 @@ define([
     };
 
     api.addSuggestionsToVertex = function (suggestions, vertex) {
-        if(MindMapInfo.isViewOnly()){
+        if (MindMapInfo.isViewOnly()) {
             return;
         }
         $.each(suggestions, function () {
@@ -582,7 +582,7 @@ define([
                 vertices
             );
         };
-        this._buildChildrenHtmlTreeRecursively = function(parentBubbleUi){
+        this._buildChildrenHtmlTreeRecursively = function (parentBubbleUi) {
             this.buildGroupRelations(
                 parentBubbleUi.getModel(),
                 parentBubbleUi
@@ -598,27 +598,54 @@ define([
                 false
             );
         };
-        this.buildGroupRelationToExpand = function (groupRelation, parentVertexUi) {
+        this.buildGroupRelationToExpand = function (groupRelation, parentBubbleUi) {
             this.buildGroupRelationToExpandOrNot(
                 groupRelation,
-                parentVertexUi,
+                parentBubbleUi,
                 true
             );
         };
-        this.buildGroupRelations = function(parentModel, parentUi){
+        this.buildGroupRelations = function (parentModel, parentUi) {
+            var buildThisBeforeThat = {};
+            var groupRelationsUi = {};
             $.each(sortSimilarRelationsByIsGroupRelationOrCreationDate(parentModel.similarRelations), function (key, groupRelation) {
-                this.buildGroupRelationToExpandOrNot(
-                    groupRelation,
-                    parentUi,
+                var buildLater = false;
+                if (groupRelation.hasMultipleVertices()) {
+                    $.each(parentModel.similarRelations, function (otherKey, otherGroupRelation) {
+                        if (otherKey === key) {
+                            return;
+                        }
+                        var identification = Identification.withUri(otherKey);
+
+                        if (groupRelation.hasIdentification(identification)) {
+                            buildThisBeforeThat[key] = otherKey;
+                            buildLater = true;
+                            return false;
+                        }
+                    });
+                }
+                if (!buildLater) {
+                    groupRelationsUi[key] = self.buildGroupRelationToExpandOrNot(
+                        groupRelation,
+                        parentUi,
+                        false
+                    );
+                }
+            });
+            $.each(buildThisBeforeThat, function (key, otherKey) {
+                self.buildGroupRelationToExpandOrNot(
+                    parentModel.similarRelations[key],
+                    groupRelationsUi[otherKey],
                     false
                 );
-            }.bind(this));
+            });
         };
-        this.buildGroupRelationToExpandOrNot = function (groupRelation, parentVertexUi, isToExpand) {
+        this.buildGroupRelationToExpandOrNot = function (groupRelation, parentBubbleUi, isToExpand) {
+            var self = this;
             if (!isToExpand && groupRelation.hasMultipleVertices()) {
                 return self.buildBubbleHtmlIntoContainer(
                     groupRelation,
-                    parentVertexUi,
+                    parentBubbleUi,
                     GroupRelationHtmlBuilder
                 );
             }
@@ -629,7 +656,7 @@ define([
                         edge = vertexAndEdge.edge;
                     relationUi = self.buildBubbleHtmlIntoContainer(
                         edge,
-                        parentVertexUi,
+                        parentBubbleUi,
                         self.edgeBuilder
                     );
                     var childVertexHtmlFacade = self.buildBubbleHtmlIntoContainer(
@@ -640,7 +667,7 @@ define([
                     );
                     self.edgeBuilder.afterChildBuilt(
                         relationUi,
-                        parentVertexUi,
+                        parentBubbleUi,
                         childVertexHtmlFacade
                     );
                     var treeContainer = childVertexHtmlFacade.getHtml().closest(

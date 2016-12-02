@@ -117,6 +117,10 @@ define([
         return true;
     };
 
+    api.GroupRelationUi.prototype.getMostRelevantIdentifier = function () {
+        return this.getModel().getIdentifiers()[0];
+    };
+
     api.GroupRelationUi.prototype.getModel = api.GroupRelationUi.prototype.getGroupRelation;
 
     return api;
