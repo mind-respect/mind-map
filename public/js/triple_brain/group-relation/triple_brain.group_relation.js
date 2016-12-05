@@ -20,12 +20,24 @@ define([
                 return new GroupRelation([identification]);
             }
         };
+        api.forTuplesAndIdentifier = function (tuples, identifier) {
+            var groupRelation = new GroupRelation(
+                [identifier]
+            );
+            tuples.forEach(function (tuple) {
+                groupRelation.addTuple(
+                    tuple
+                );
+            });
+            return groupRelation;
+        };
         api.usingIdentifiers = function (identifications) {
             return new GroupRelation(identifications);
         };
         function GroupRelation(identifiers) {
             this.identifiers = identifiers;
             this.vertices = {};
+            this.childGroupRelations = [];
             Identification.Identification.apply(
                 this
             );
@@ -42,9 +54,11 @@ define([
         GroupRelation.prototype.getIdentifiers = function () {
             return this.identifiers;
         };
+
         GroupRelation.prototype.getVertices = function () {
             return this.vertices;
         };
+
         GroupRelation.prototype.getSortedVertices = function () {
             var self = this;
             var sortedKeys = Object.keys(this.vertices).sort(
@@ -73,17 +87,17 @@ define([
             var verticesWithId = verticesWithUri[Object.keys(verticesWithUri)[0]];
             return verticesWithId[Object.keys(verticesWithId)[0]].vertex;
         };
-        GroupRelation.prototype.addVertex = function (vertex, edge) {
-            if (this.vertices[vertex.getUri()] === undefined) {
-                this.vertices[vertex.getUri()] = {};
+        GroupRelation.prototype.addTuple = function (tuple) {
+            if (this.vertices[tuple.vertex.getUri()] === undefined) {
+                this.vertices[tuple.vertex.getUri()] = {};
             }
             this.vertices[
-                vertex.getUri()
+                tuple.vertex.getUri()
                 ][
                 GraphUi.generateBubbleHtmlId()
                 ] = {
-                vertex: vertex,
-                edge: edge
+                vertex: tuple.vertex,
+                edge: tuple.edge
             };
         };
         GroupRelation.prototype.hasMultipleVertices = function () {
@@ -106,13 +120,57 @@ define([
             return contains;
         };
         GroupRelation.prototype.addIdentification = function (identifier) {
-            if(this.hasIdentification(identifier)){
+            if (this.hasIdentification(identifier)) {
                 return;
             }
             this.identifiers.push(
                 identifier
             );
         };
+        GroupRelation.prototype.getChildGroupRelations = function(){
+            return this.childGroupRelations;
+        };
+        GroupRelation.prototype.hasGroupRelationsChild = function(){
+            return this.childGroupRelations.length > 0;
+        };
+        GroupRelation.prototype.integrateGroupRelationToTreeIfApplicable = function (groupRelation) {
+            var hasIntegrated = false;
+            if (this._containsAllTuplesOfGroupRelation(groupRelation)) {
+                return true;
+            }
+            if(this._hasOneOfTheIdentifiers(groupRelation.getIdentifiers())){
+                $.each(groupRelation.getVertices(),function(key, tuple){
+                    this.addTuple(
+                        tuple
+                    );
+                    hasIntegrated = true;
+                }.bind(this));
+            }
+            return hasIntegrated;
+        };
+
+        GroupRelation.prototype._hasOneOfTheIdentifiers = function (identifiers) {
+            var has = false;
+            identifiers.forEach(function(identifier){
+                if(this.hasIdentification(identifier)){
+                    has = true;
+                }
+            }.bind(this));
+            return has;
+        };
+
+
+        GroupRelation.prototype._containsAllTuplesOfGroupRelation = function (groupRelation) {
+            var containsAll = true;
+            $.each(groupRelation.getVertices(), function (vertexKey) {
+                if (this.vertices[vertexKey] === undefined) {
+                    containsAll = false;
+                    return false;
+                }
+            }.bind(this));
+            return containsAll;
+        };
+
         return api;
     }
 );

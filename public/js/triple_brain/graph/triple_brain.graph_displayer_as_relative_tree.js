@@ -109,13 +109,13 @@ define([
         var parentUri = parentVertex.getUri();
         var treeMaker = new api.TreeMaker(VertexHtmlBuilder),
             nbRelationsWithGrandParent = removeRelationWithGrandParentFromServerGraph();
-        TreeDisplayerCommon.enhancedVerticesInfo(
+        TreeDisplayerCommon.setUiTreeInfoToVertices(
             serverGraph,
             parentUri
         );
         var parentVertexServerFormat = serverGraph.vertices[parentUri];
         parentVertex.getModel().isLeftOriented = parentVertex.isToTheLeft();
-        parentVertex.getModel().similarRelations = parentVertexServerFormat.similarRelations;
+        parentVertex.getModel().groupRelationRoots = parentVertexServerFormat.groupRelationRoots;
         if (nbRelationsWithGrandParent >= 1) {
             treeMaker.buildChildrenHtmlTreeRecursivelyEvenIfGrandParentAndIncludingDuplicates(
                 parentVertex,
@@ -416,7 +416,7 @@ define([
         var treeMaker = new api.TreeMaker(
             htmlBuilder
         );
-        newVertex.similarRelations = {};
+        newVertex.groupRelationRoots = [];
         return treeMaker.buildBubbleHtmlIntoContainer(
             newVertex,
             parentBubble,
@@ -488,7 +488,7 @@ define([
         };
         this.makeForNonCenterVertex = function (serverGraph, destinationVertexUri, parentVertex) {
             _htmlBuilder = VertexHtmlBuilder;
-            TreeDisplayerCommon.enhancedVerticesInfo(serverGraph, parentVertex.getUri());
+            TreeDisplayerCommon.setUiTreeInfoToVertices(serverGraph, parentVertex.getUri());
             var serverVertex = serverGraph.vertices[parentVertex.getUri()];
             serverVertex.isLeftOriented = parentVertex.isToTheLeft();
             parentVertex.setModel(serverVertex);
@@ -606,39 +606,13 @@ define([
             );
         };
         this.buildGroupRelations = function (parentModel, parentUi) {
-            var buildThisBeforeThat = {};
-            var groupRelationsUi = {};
-            $.each(sortSimilarRelationsByIsGroupRelationOrCreationDate(parentModel.similarRelations), function (key, groupRelation) {
-                var buildLater = false;
-                if (groupRelation.hasMultipleVertices()) {
-                    $.each(parentModel.similarRelations, function (otherKey, otherGroupRelation) {
-                        if (otherKey === key) {
-                            return;
-                        }
-                        var identification = Identification.withUri(otherKey);
-
-                        if (groupRelation.hasIdentification(identification)) {
-                            buildThisBeforeThat[key] = otherKey;
-                            buildLater = true;
-                            return false;
-                        }
-                    });
-                }
-                if (!buildLater) {
-                    groupRelationsUi[key] = self.buildGroupRelationToExpandOrNot(
-                        groupRelation,
-                        parentUi,
-                        false
-                    );
-                }
-            });
-            $.each(buildThisBeforeThat, function (key, otherKey) {
-                self.buildGroupRelationToExpandOrNot(
-                    parentModel.similarRelations[key],
-                    groupRelationsUi[otherKey],
+            sortGroupRelationRootsByIsGroupRelationOrCreationDate(parentModel.groupRelationRoots).forEach(function(groupRelation) {
+                this.buildGroupRelationToExpandOrNot(
+                    groupRelation,
+                    parentUi,
                     false
                 );
-            });
+            }.bind(this));
         };
         this.buildGroupRelationToExpandOrNot = function (groupRelation, parentBubbleUi, isToExpand) {
             var self = this;
@@ -720,7 +694,7 @@ define([
         }
 
         function makeInContainerUsingServerGraphAndCentralVertexUri(serverGraph, rootVertexUri, verticesContainer) {
-            TreeDisplayerCommon.enhancedVerticesInfo(
+            TreeDisplayerCommon.setUiTreeInfoToVertices(
                 serverGraph,
                 rootVertexUri
             );
@@ -750,11 +724,8 @@ define([
             }
         }
 
-        function sortSimilarRelationsByIsGroupRelationOrCreationDate(similarRelations) {
-            var sortedKeys = Object.keys(similarRelations).sort(
-                function (a, b) {
-                    var groupRelationA = similarRelations[a];
-                    var groupRelationB = similarRelations[b];
+        function sortGroupRelationRootsByIsGroupRelationOrCreationDate(groupRelationRoots) {
+            return groupRelationRoots.sort(function (groupRelationA, groupRelationB) {
                     if (groupRelationA.hasMultipleVertices() && !groupRelationB.hasMultipleVertices()) {
                         return -1;
                     }
@@ -767,12 +738,8 @@ define([
                         vertexA,
                         vertexB
                     );
-                });
-            var sortedSimilarRelations = {};
-            $.each(sortedKeys, function () {
-                sortedSimilarRelations[this] = similarRelations[this];
-            });
-            return sortedSimilarRelations;
+                }
+            );
         }
     };
     function compareVertices(vertexA, vertexB) {

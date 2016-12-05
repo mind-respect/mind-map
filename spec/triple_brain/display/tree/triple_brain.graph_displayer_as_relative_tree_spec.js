@@ -254,7 +254,8 @@ define([
                 deepGraphWithCircularity.getBubble1InTree()
             ).toBeDefined();
         });
-        it("can have duplicate relations", function () {
+
+        xit("can have duplicate relations", function () {
             var duplicateRelationsScenario = new Scenarios.graphWithARelationInTwoSimilarRelationsGroup(),
                 impact3InIndividualContext = duplicateRelationsScenario.getImpact3RelationInTheImpactOnTheIndividualContext(),
                 impact3InSocietyContext = duplicateRelationsScenario.getImpact3RelationInTheImpactOnSocietyContext();

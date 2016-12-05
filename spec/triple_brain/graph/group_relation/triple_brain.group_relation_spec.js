@@ -23,28 +23,43 @@ define([
         });
         it("generates vertex html id", function () {
             var book1 = scenario.getBook1();
-            groupRelation.addVertex(book1);
+            groupRelation.addTuple({
+                vertex:book1,
+                edge:undefined
+            });
             var objectKeys = Object.keys(groupRelation.getVertices()[book1.getUri()]);
             expect(
                     objectKeys[0].indexOf("bubble-ui-id-") !== -1
             ).toBeTruthy();
         });
         it("can tell if it has multiple vertices", function(){
-            groupRelation.addVertex(scenario.getBook1());
+            groupRelation.addTuple({
+                vertex:scenario.getBook1(),
+                edge:undefined
+            });
             expect(
                 groupRelation.hasMultipleVertices()
             ).toBeFalsy();
-            groupRelation.addVertex(scenario.getBook2());
+            groupRelation.addTuple({
+                vertex:scenario.getBook2(),
+                edge:undefined
+            });
             expect(
                 groupRelation.hasMultipleVertices()
             ).toBeTruthy();
         });
         it("can return the number of vertices", function(){
-            groupRelation.addVertex(scenario.getBook1());
+            groupRelation.addTuple({
+                vertex:scenario.getBook1(),
+                edge:undefined
+            });
             expect(
                 groupRelation.getNumberOfVertices()
             ).toBe(1);
-            groupRelation.addVertex(scenario.getBook2());
+            groupRelation.addTuple({
+                vertex:scenario.getBook2(),
+                edge:undefined
+            });
             expect(
                 groupRelation.getNumberOfVertices()
             ).toBe(2);

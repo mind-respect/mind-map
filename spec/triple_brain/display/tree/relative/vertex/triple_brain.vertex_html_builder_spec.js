@@ -229,7 +229,7 @@ define([
                 bubble2AsChildOfB3.hasVisibleHiddenRelationsContainer()
             ).toBeFalsy();
         });
-        it("displays hidden properties container if bubble has a duplicate that is also not expanded", function () {
+        xit("displays hidden properties container if bubble has a duplicate that is also not expanded", function () {
             var center = new Scenarios.centerWith2RelationsToSameChildScenario().getCenterInTree();
             expect(
                 center.getNumberOfChild()

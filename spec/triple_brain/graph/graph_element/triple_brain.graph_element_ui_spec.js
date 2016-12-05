@@ -110,7 +110,7 @@ define([
             ).toBe("");
         });
 
-        it("changes label of duplicate relations", function () {
+        xit("changes label of duplicate relations", function () {
             var duplicateRelationsScenario = new Scenarios.graphWithARelationInTwoSimilarRelationsGroup(),
                 impact3InTheIndividualContext = duplicateRelationsScenario.getImpact3RelationInTheImpactOnTheIndividualContext(),
                 impact3InSocietyContext = duplicateRelationsScenario.getImpact3RelationInTheImpactOnSocietyContext();

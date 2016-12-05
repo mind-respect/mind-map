@@ -485,14 +485,18 @@ define([
             this.getPossessionAsGroupRelation = function () {
                 var centerVertexUri = this.getCenterVertex().getUri(),
                     possessionExternalUri = this.getPossession().getExternalResourceUri();
-                TreeDisplayerCommon.enhancedVerticesInfo(
+                TreeDisplayerCommon.setUiTreeInfoToVertices(
                     graph,
                     centerVertexUri
                 );
                 var centerVertex = graph.vertices[centerVertexUri];
-                return centerVertex.similarRelations[
-                    possessionExternalUri
-                    ];
+                var groupRelationAsChildOfCenterVertex;
+                centerVertex.groupRelationRoots.forEach(function(groupRelation){
+                    if(possessionExternalUri === groupRelation.getIdentification().getExternalResourceUri()){
+                        groupRelationAsChildOfCenterVertex = groupRelation;
+                    }
+                });
+                return groupRelationAsChildOfCenterVertex;
             };
             this.getPossessionAsGroupRelationUi = function () {
                 return GroupRelationHtmlBuilder.withServerFacade(
@@ -824,13 +828,10 @@ define([
                 return treeBuilder.getBubbleWithLabelInTree("some project");
             };
             this.getImpact3RelationInTheImpactOnTheIndividualContext = function () {
-                var theRelation;
-                this.getSomeProjectInTree().visitAllChild(function (childBubble) {
-                    if (childBubble.isRelation()) {
-                        theRelation = childBubble;
-                    }
-                });
-                return theRelation;
+                TestUtils.getChildWithLabel(
+                    this.getSomeProjectInTree(),
+                    "impact 3"
+                );
             };
             this.getImpact3RelationInTheImpactOnSocietyContext = function () {
                 var theRelation;
