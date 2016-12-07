@@ -828,7 +828,7 @@ define([
                 return treeBuilder.getBubbleWithLabelInTree("some project");
             };
             this.getImpact3RelationInTheImpactOnTheIndividualContext = function () {
-                TestUtils.getChildWithLabel(
+                return TestUtils.getChildWithLabel(
                     this.getSomeProjectInTree(),
                     "impact 3"
                 );

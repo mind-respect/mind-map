@@ -255,7 +255,7 @@ define([
             ).toBeDefined();
         });
 
-        xit("can have duplicate relations", function () {
+        it("can have duplicate relations", function () {
             var duplicateRelationsScenario = new Scenarios.graphWithARelationInTwoSimilarRelationsGroup(),
                 impact3InIndividualContext = duplicateRelationsScenario.getImpact3RelationInTheImpactOnTheIndividualContext(),
                 impact3InSocietyContext = duplicateRelationsScenario.getImpact3RelationInTheImpactOnSocietyContext();

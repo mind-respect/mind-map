@@ -87,6 +87,11 @@ define([
             var verticesWithId = verticesWithUri[Object.keys(verticesWithUri)[0]];
             return verticesWithId[Object.keys(verticesWithId)[0]].vertex;
         };
+        GroupRelation.prototype.getSingleEdge = function () {
+            var verticesWithUri = this.getVertices();
+            var verticesWithId = verticesWithUri[Object.keys(verticesWithUri)[0]];
+            return verticesWithId[Object.keys(verticesWithId)[0]].edge;
+        };
         GroupRelation.prototype.addTuple = function (tuple) {
             if (this.vertices[tuple.vertex.getUri()] === undefined) {
                 this.vertices[tuple.vertex.getUri()] = {};
@@ -127,19 +132,19 @@ define([
                 identifier
             );
         };
-        GroupRelation.prototype.getChildGroupRelations = function(){
+        GroupRelation.prototype.getChildGroupRelations = function () {
             return this.childGroupRelations;
         };
-        GroupRelation.prototype.hasGroupRelationsChild = function(){
+        GroupRelation.prototype.hasGroupRelationsChild = function () {
             return this.childGroupRelations.length > 0;
         };
         GroupRelation.prototype.integrateGroupRelationToTreeIfApplicable = function (groupRelation) {
-            var hasIntegrated = false;
-            if (this._containsAllTuplesOfGroupRelation(groupRelation)) {
+            if (groupRelation.isARelation() && this._containsAllTuplesOfGroupRelation(groupRelation)) {
                 return true;
             }
-            if(this._hasOneOfTheIdentifiers(groupRelation.getIdentifiers())){
-                $.each(groupRelation.getVertices(),function(key, tuple){
+            var hasIntegrated = false;
+            if (this._hasOneOfTheIdentifiers(groupRelation.getIdentifiers())) {
+                $.each(groupRelation.getVertices(), function (key, tuple) {
                     this.addTuple(
                         tuple
                     );
@@ -149,10 +154,18 @@ define([
             return hasIntegrated;
         };
 
+        GroupRelation.prototype.isARelation = function () {
+            var verticesKeys = Object.keys(this.vertices);
+            if (1 !== verticesKeys.length) {
+                return false;
+            }
+            return this.getSingleEdge().getUri() === this.getIdentification().getExternalResourceUri();
+        };
+
         GroupRelation.prototype._hasOneOfTheIdentifiers = function (identifiers) {
             var has = false;
-            identifiers.forEach(function(identifier){
-                if(this.hasIdentification(identifier)){
+            identifiers.forEach(function (identifier) {
+                if (this.hasIdentification(identifier)) {
                     has = true;
                 }
             }.bind(this));

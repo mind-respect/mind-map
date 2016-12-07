@@ -35,7 +35,7 @@ define([
             var numberOfGroupedRelations = Object.keys(centerVertex.groupRelationRoots);
             expect(numberOfGroupedRelations.length).toBe(4);
         });
-        xit("creates only one group relation when different relations have multiple identifiers that are the same", function () {
+        it("creates only one group relation when different relations have multiple identifiers that are the same", function () {
             defineSimilarRelationsScenarioVariables();
             var relationWithMultipleIdentifiersScenario = new Scenarios.relationWithMultipleIdentifiers();
             var graph = relationWithMultipleIdentifiersScenario.getGraph();
@@ -48,7 +48,7 @@ define([
             var numberOfSimilarRelations = Object.keys(teamVertex.groupRelationRoots).length;
             expect(
                 numberOfSimilarRelations
-            ).toBe(2);
+            ).toBe(3);
         });
         it("relations with no identifications are grouped by relation uri", function () {
             defineSimilarRelationsScenarioVariables();
@@ -113,7 +113,7 @@ define([
                 2
             );
         });
-        xit("handles relations that are in 2 groups", function () {
+        it("handles relations that are in 2 groups", function () {
             var scenario = new Scenarios.graphWithARelationInTwoSimilarRelationsGroup();
             var centerBubble = scenario.getSomeProjectInTree();
             expect(
