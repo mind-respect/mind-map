@@ -74,7 +74,7 @@ define([
             }
             this._resetIsToTheLeft();
             SelectionHandler.setToSingleGraphElement(this);
-            if (this.isRelation()) {
+            if (this.isInTheRelationFamily()) {
                 this.reviewEditButtonDisplay();
             }
             if (isOriginalToTheLeft === this.isToTheLeft()) {

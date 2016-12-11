@@ -54,7 +54,7 @@ define([
                 return $(
                     "<span>"
                 ).addClass(
-                    "label label-info"
+                    "label bubble-label label-info"
                 ).text(
                     label.trim()
                 ).attr(

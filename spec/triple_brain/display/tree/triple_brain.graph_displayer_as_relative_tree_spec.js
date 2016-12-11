@@ -409,7 +409,10 @@ define([
                 groupRelation.isGroupRelation()
             ).toBeTruthy();
             groupRelation.expand();
-            var book1 = groupRelation.getTopMostChildBubble().getTopMostChildBubble();
+            var book1 = TestUtils.getChildWithLabel(
+                groupRelation,
+                "Possession of book 1"
+            ).getTopMostChildBubble();
             expect(
                 book1.text()
             ).toBe("book 1");
@@ -417,10 +420,6 @@ define([
             expect(
                 book2.text()
             ).toBe("book 2");
-            var book3 = book2.getBubbleUnder();
-            expect(
-                book3.text()
-            ).toBe("book 3");
         });
 
         it("sorts non center bubble children in order of creation date", function () {

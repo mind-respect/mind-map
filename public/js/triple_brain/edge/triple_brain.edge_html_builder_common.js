@@ -80,9 +80,10 @@ define([
                 ]
             }
         ).blur(function(){
-            BubbleFactory.fromSubHtml(
+            var edge = BubbleFactory.fromSubHtml(
                 $(this)
-            ).reviewEditButtonDisplay();
+            );
+            edge.reviewEditButtonDisplay();
         });
         labelAndButtons.appendTo(labelContainer);
         if (!MindMapInfo.isViewOnly()) {

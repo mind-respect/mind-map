@@ -42,6 +42,12 @@ define([
                 groupRelationUi
             );
             groupRelationUi.reviewInLabelButtonsVisibility();
+            groupRelationUi.reviewEditButtonDisplay();
+            // groupRelationUi.visitAllChild(function(child){
+            //     if(child.isGroupRelation()){
+            //         api.completeBuild(child);
+            //     }
+            // });
         };
 
         function Self(serverFacade) {
@@ -115,7 +121,12 @@ define([
                         )
                     );
                 }
-            ).appendTo(labelAndButtons);
+            ).blur(function(){
+                var edge = BubbleFactory.fromSubHtml(
+                    $(this)
+                );
+                edge.reviewEditButtonDisplay();
+            }).appendTo(labelAndButtons);
             labelHtml.attr(
                 "data-placeholder",
                 GroupRelationUi.getWhenEmptyLabel()

@@ -144,7 +144,10 @@ define([
                 groupRelation.isGroupRelation()
             ).toBeTruthy();
             groupRelation.expand();
-            var childBubble = groupRelation.getTopMostChildBubble().getTopMostChildBubble();
+            var childBubble = TestUtils.getChildWithLabel(
+                groupRelation,
+                "Possession of book 1"
+            ).getTopMostChildBubble();
             expect(
                 childBubble.isVertex()
             ).toBeTruthy();
@@ -162,7 +165,10 @@ define([
                 groupRelation.isGroupRelation()
             ).toBeTruthy();
             groupRelation.expand();
-            var childBubble = groupRelation.getTopMostChildBubble().getTopMostChildBubble();
+            var childBubble = TestUtils.getChildWithLabel(
+                groupRelation,
+                "Possession of book 1"
+            ).getTopMostChildBubble();
             expect(
                 childBubble.isVertex()
             ).toBeTruthy();

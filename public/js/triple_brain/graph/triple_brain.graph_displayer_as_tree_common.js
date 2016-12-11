@@ -23,7 +23,6 @@ define([
             this.centralBubble = this._vertexWithId(centralVertexUri);
             this.edgesFacade = this._arrayOfEdgesHavingThoseRelatedToCenterVertexOnTop();
             this.nonEnhancedEdges = {};
-            this.joinIfMoreSimilarRelations = {};
             this.identifiersRepertoire = {};
         }
 
@@ -50,10 +49,6 @@ define([
             $.each(this.serverGraph.vertices, function (key, sourceVertex) {
                 sourceVertex.groupRelationRoots = [];
                 $.each(sortIdentifiersByNumberOfRelationsDesc(sourceVertex.childrenGroupedByIdentifiers), function (identifierKey, tuplesHavingSameIdentifier) {
-                    tuplesHavingSameIdentifier.forEach(function(tuple){
-                        console.log(tuple.edge.getLabel());
-                    });
-
                     var groupRelation = GroupRelation.forTuplesAndIdentifier(
                         tuplesHavingSameIdentifier,
                         this.identifiersRepertoire[identifierKey]
@@ -160,55 +155,6 @@ define([
             this._revisitNonEnhancedEdges();
         };
 
-        UiTreeInfoBuilder.prototype._setupGroupRelation = function (identifiers, createIfUndefined) {
-            var key = this._getIdentifiersKey(identifiers),
-                groupRelation = sourceVertex.similarRelations[key];
-            if (groupRelation === undefined && createIfUndefined) {
-                groupRelation = GroupRelation.usingIdentification(
-                    identifiers
-                );
-            }
-            if (groupRelation === undefined) {
-                if (this.joinIfMoreSimilarRelations[key] === undefined) {
-                    this.joinIfMoreSimilarRelations[key] = [];
-                }
-                this.joinIfMoreSimilarRelations[key].push({
-                    destinationVertex: destinationVertex,
-                    edge: edge
-                });
-            }
-            else {
-                groupRelation.addTuple(
-                    destinationVertex,
-                    edge
-                );
-                sourceVertex.similarRelations[key] = groupRelation;
-                if (this.joinIfMoreSimilarRelations[key] !== undefined) {
-                    $.each(this.joinIfMoreSimilarRelations[key], function () {
-                        groupRelation.addTuple(
-                            this.destinationVertex,
-                            this.edge
-                        );
-                    });
-                    this.joinIfMoreSimilarRelations[key] = undefined;
-                }
-            }
-        };
-
-
-        UiTreeInfoBuilder.prototype._getIdentifiersKey = function (identifiers) {
-            var key = "";
-            if (Array.isArray(identifiers)) {
-                $.each(identifiers, function () {
-                    key += this.getExternalResourceUri();
-                });
-            }
-            else {
-                key = identifiers.getExternalResourceUri();
-            }
-            return key;
-        };
-
         UiTreeInfoBuilder.prototype._revisitNonEnhancedEdges = function () {
             $.each(this.nonEnhancedEdges, function (key, edge) {
                 this._updateRelationsIdentification(edge);
@@ -235,7 +181,7 @@ define([
                     var relationsA = identifiers[a];
                     var relationsB = identifiers[b];
                     if (relationsA.length === relationsB.length) {
-                        return 0
+                        return 0;
                     }
                     if (relationsA.length > relationsB.length) {
                         return -1;

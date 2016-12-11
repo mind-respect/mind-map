@@ -376,8 +376,8 @@ define([
         );
     };
     api.expandGroupRelation = function (groupRelationUi) {
-        var treeMaker = new api.TreeMaker(VertexHtmlBuilder),
-            groupRelation = groupRelationUi.getGroupRelation();
+        var treeMaker = new api.TreeMaker(VertexHtmlBuilder);
+        var groupRelation = groupRelationUi.getGroupRelation();
         treeMaker.buildGroupRelationToExpand(
             groupRelation,
             groupRelationUi
@@ -606,7 +606,7 @@ define([
             );
         };
         this.buildGroupRelations = function (parentModel, parentUi) {
-            sortGroupRelationRootsByIsGroupRelationOrCreationDate(parentModel.groupRelationRoots).forEach(function(groupRelation) {
+            sortGroupRelationRootsByIsGroupRelationOrCreationDate(parentModel.groupRelationRoots).forEach(function (groupRelation) {
                 this.buildGroupRelationToExpandOrNot(
                     groupRelation,
                     parentUi,
@@ -624,6 +624,18 @@ define([
                 );
             }
             var relationUi;
+            groupRelation.getChildGroupRelations().forEach(function (childGroupRelation) {
+                var childGroupRelationUi = this.buildGroupRelationToExpandOrNot(
+                    childGroupRelation,
+                    parentBubbleUi,
+                    false
+                );
+                if(childGroupRelationUi.isGroupRelation()){
+                    GroupRelationHtmlBuilder.completeBuild(
+                        childGroupRelationUi
+                    );
+                }
+            }.bind(this));
             $.each(groupRelation.getSortedVertices(), function (key, verticesWithSameUri) {
                 $.each(verticesWithSameUri, function (vertexHtmlId, vertexAndEdge) {
                     var vertex = vertexAndEdge.vertex,

@@ -4,8 +4,9 @@
 
 define([
     'test/test-scenarios',
+    'test/test-utils',
     'triple_brain.group_relation'
-], function (Scenarios, GroupRelation) {
+], function (Scenarios, TestUtils, GroupRelation) {
     "use strict";
     describe("grouped_relation", function () {
         var scenario, graph, centerVertex, possession, groupRelation;
@@ -71,6 +72,21 @@ define([
             );
             expect(
                 groupRelation.getIdentifiers().length
+            ).toBe(2);
+        });
+        it("can integrate a group relation to a greater depth than 1", function(){
+            var possessionGroupRelation = new Scenarios.GraphWithSimilarRelationsScenario().getPossessionAsGroupRelationInTree();
+            possessionGroupRelation.expand();
+            var possessionOfBook3Relation = TestUtils.getChildWithLabel(
+                possessionGroupRelation,
+                "Possession of book 3"
+            );
+            expect(
+                possessionOfBook3Relation.isGroupRelation()
+            ).toBeTruthy();
+            possessionOfBook3Relation.expand();
+            expect(
+                possessionOfBook3Relation.getNumberOfChild()
             ).toBe(2);
         });
     });

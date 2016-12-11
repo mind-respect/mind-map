@@ -260,23 +260,23 @@ define([
             expect(
                 book2.getBubbleAbove().text()
             ).toBe("book 1");
-            var book3Relation = TestUtils.getChildWithLabel(
+            var book1Relation = TestUtils.getChildWithLabel(
                 groupRelation,
-                "Possession of book 3"
+                "Possession of book 1"
             );
-            book3Relation.setText("Possession");
-            book3Relation.getLabel().blur();
+            book1Relation.setText("Possession");
+            book1Relation.getLabel().blur();
             expect(
-                book3Relation.getHtml()
+                book1Relation.getHtml()
             ).toHaveClass("same-as-group-relation");
-            var book3 = book3Relation.getTopMostChildBubble();
+            var book1 = book1Relation.getTopMostChildBubble();
             TestUtils.moveAbove(
-                book3,
-                book2
+                book2,
+                book1
             );
             expect(
                 book2.getBubbleAbove().text()
-            ).toBe("book 3");
+            ).not.toBe("book 1");
         });
         it("can move a vertex above a group relation", function () {
             MindMapInfo._setIsViewOnly(false);

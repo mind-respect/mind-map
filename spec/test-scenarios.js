@@ -963,18 +963,34 @@ define([
         );
         api.TreeQuerier = function (tree) {
             this.getBubbleWithLabelInTree = function (label) {
-                return BubbleFactory.fromHtml(
-                    tree.find(".bubble").has(".bubble-label:contains(" + label + ")")
+                return this._findUsingBubbleSelectorAndLabel(
+                    ".bubble",
+                    label
                 );
             };
             this.getRelationWithLabelInTree = function (label) {
-                return BubbleFactory.fromHtml(
-                    tree.find(".relation").has(".label:contains(" + label + ")")
+                return this._findUsingBubbleSelectorAndLabel(
+                    ".relation",
+                    label
                 );
             };
             this.getGroupRelationWithLabelInTree = function (label) {
+                return this._findUsingBubbleSelectorAndLabel(
+                    ".group-relation",
+                    label
+                );
+            };
+            this._findUsingBubbleSelectorAndLabel = function(bubbleSelector, label){
+                var bubbleHtml = tree.find(bubbleSelector).has(
+                    ".bubble-label:contains(" + label + ")"
+                );
+                if(bubbleHtml.length !== 1){
+                    console.error(
+                        bubbleHtml.length + " bubble(s) found but there should it should be one"
+                    );
+                }
                 return BubbleFactory.fromHtml(
-                    tree.find(".group-relation").has(".label:contains(" + label + ")")
+                    bubbleHtml
                 );
             };
         };

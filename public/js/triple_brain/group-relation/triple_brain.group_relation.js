@@ -105,6 +105,16 @@ define([
                 edge: tuple.edge
             };
         };
+        GroupRelation.prototype.visitTuples = function (visitor) {
+            $.each(this.vertices, function(vertexUri, verticesWithSameUri){
+                $.each(verticesWithSameUri, function(vertexHtmlId, tuple){
+                    visitor(tuple);
+                });
+            });
+        };
+        GroupRelation.prototype.removeTuple = function (tuple) {
+            delete this.vertices[tuple.vertex.getUri()];
+        };
         GroupRelation.prototype.hasMultipleVertices = function () {
             return this.getNumberOfVertices() > 1;
         };
@@ -138,18 +148,28 @@ define([
         GroupRelation.prototype.hasGroupRelationsChild = function () {
             return this.childGroupRelations.length > 0;
         };
+        GroupRelation.prototype.addChildGroupRelation = function (groupRelation) {
+            return this.childGroupRelations.push(
+                groupRelation
+            );
+        };
         GroupRelation.prototype.integrateGroupRelationToTreeIfApplicable = function (groupRelation) {
             if (groupRelation.isARelation() && this._containsAllTuplesOfGroupRelation(groupRelation)) {
                 return true;
             }
             var hasIntegrated = false;
+            var doWithTuplesAtThisDepth;
             if (this._hasOneOfTheIdentifiers(groupRelation.getIdentifiers())) {
-                $.each(groupRelation.getVertices(), function (key, tuple) {
-                    this.addTuple(
-                        tuple
-                    );
-                    hasIntegrated = true;
+                doWithTuplesAtThisDepth = this.addTuple;
+            }else if(groupRelation.hasMultipleVertices() && this._doesOneOfTheChildHasIdentifiers(groupRelation.getIdentifiers())){
+                doWithTuplesAtThisDepth = this.removeTuple.bind(this);
+                this.addChildGroupRelation(groupRelation);
+            }
+            if(doWithTuplesAtThisDepth){
+                groupRelation.visitTuples(function(tuple) {
+                    doWithTuplesAtThisDepth(tuple);
                 }.bind(this));
+                hasIntegrated = true;
             }
             return hasIntegrated;
         };
@@ -162,6 +182,10 @@ define([
             return this.getSingleEdge().getUri() === this.getIdentification().getExternalResourceUri();
         };
 
+        GroupRelation.prototype.getSortDate = function () {
+            return new Date(0);
+        };
+
         GroupRelation.prototype._hasOneOfTheIdentifiers = function (identifiers) {
             var has = false;
             identifiers.forEach(function (identifier) {
@@ -172,15 +196,34 @@ define([
             return has;
         };
 
+        GroupRelation.prototype._doesOneOfTheChildHasIdentifiers = function (identifiers) {
+            var has = false;
+            this.visitTuples(function(tuple){
+                var edge = tuple.edge;
+                if(edge.hasAllIdentifiers(identifiers)){
+                    has = true;
+                }
+            });
+            return has;
+        };
+
 
         GroupRelation.prototype._containsAllTuplesOfGroupRelation = function (groupRelation) {
             var containsAll = true;
-            $.each(groupRelation.getVertices(), function (vertexKey) {
-                if (this.vertices[vertexKey] === undefined) {
-                    containsAll = false;
-                    return false;
+            var presentAtGreaterDepth = false;
+            this.getChildGroupRelations().forEach(function(childGroupRelation){
+                if(childGroupRelation._containsAllTuplesOfGroupRelation(groupRelation)){
+                    presentAtGreaterDepth = true;
                 }
-            }.bind(this));
+            });
+            if(!presentAtGreaterDepth){
+                $.each(groupRelation.getVertices(), function (vertexKey) {
+                    if (this.vertices[vertexKey] === undefined) {
+                        containsAll = false;
+                        return false;
+                    }
+                }.bind(this));
+            }
             return containsAll;
         };
 

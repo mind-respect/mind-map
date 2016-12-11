@@ -31,7 +31,7 @@ define([
                 )
             ).toBeTruthy();
             var numberOfRelations = Object.keys(graph.edges);
-            expect(numberOfRelations.length).toBe(7);
+            expect(numberOfRelations.length).toBe(8);
             var numberOfGroupedRelations = Object.keys(centerVertex.groupRelationRoots);
             expect(numberOfGroupedRelations.length).toBe(4);
         });

@@ -127,6 +127,15 @@ define([
     api.GraphElement.prototype.hasIdentifications = function () {
         return this.getIdentifiers().length > 0;
     };
+    api.GraphElement.prototype.hasAllIdentifiers = function (identifiers) {
+        var has = true;
+        identifiers.forEach(function(identifier){
+            if(!this.hasIdentification(identifier)){
+                has = false;
+            }
+        }.bind(this));
+        return has;
+    };
     api.GraphElement.prototype.getIdentifierHavingExternalUri = function (externalUri) {
         var identification = false;
         $.each(this.getIdentifiers(), function () {
