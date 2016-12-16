@@ -10,8 +10,9 @@ define([
     "triple_brain.vertex_ui",
     "triple_brain.graph_element_ui",
     "triple_brain.group_relation_ui",
-    "triple_brain.compare_flow"
-], function ($, SelectionHandler, MindMapInfo, GraphUi, VertexUi, GraphElementUi, GroupRelationUi, CompareFlow) {
+    "triple_brain.compare_flow",
+    "triple_brain.wikidata"
+], function ($, SelectionHandler, MindMapInfo, GraphUi, VertexUi, GraphElementUi, GroupRelationUi, CompareFlow, Wikidata) {
     "use strict";
     var api = {};
     api.select = function () {
@@ -30,6 +31,7 @@ define([
         });
         return canDo;
     };
+
     api.expandAll = function () {
         GraphElementUi.getCenterBubble().getController().expand();
     };
@@ -45,6 +47,18 @@ define([
         GraphUi.zoom(
             -0.1
         );
+    };
+    api.wikidataOn = function(){
+        Wikidata.activate();
+    };
+    api.wikidataOff = function(){
+        Wikidata.deactivate();
+    };
+    api.wikidataOnCanDo = function(){
+        return !Wikidata.isActive();
+    };
+    api.wikidataOffCanDo = function(){
+        return Wikidata.isActive();
     };
     api.getUi = function () {
         return [];

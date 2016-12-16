@@ -109,6 +109,9 @@ define([
                 return hasMoreReferences(a, b);
             });
         };
+        this.isActive = function(){
+            return true;
+        };
 
         function hasMoreReferences(searchResultA, searchResultB) {
             var aNumberOfReferences = searchResultA.nonFormattedSearchResult.getNumberOfReferences();

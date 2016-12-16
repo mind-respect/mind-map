@@ -82,6 +82,7 @@ define([
                                     button.getAction()
                                     ]();
                             }
+                            api.reviewButtonsVisibility();
                         }
                     );
                 }

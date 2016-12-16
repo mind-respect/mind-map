@@ -11,10 +11,10 @@ define([
     "use strict";
     var api = {};
     api.build = function () {
-        return new Self();
+        return new WikiDataAutocompleteProvider();
     };
     return api;
-    function Self() {
+    function WikiDataAutocompleteProvider() {
         var self = this;
         this.getFetchMethod = function (searchTerm) {
             var url = WikidataUri.BASE_URL + "/w/api.php?action=wbsearchentities&language=" +
@@ -60,6 +60,9 @@ define([
                     }
                 );
             });
+        };
+        this.isActive = function(){
+            return Wikidata.isActive();
         };
     }
 });

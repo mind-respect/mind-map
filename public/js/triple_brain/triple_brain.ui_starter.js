@@ -29,6 +29,9 @@ define(
         var api = {};
         api.start = function () {
             $("img.lazy").lazyload();
+            $('.navbar-lower').affix({
+                offset: {top: 50}
+            });
             GraphDisplayer.setImplementation(
                 GraphDisplayerFactory.getByName(
                     "relative_tree"

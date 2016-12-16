@@ -25,10 +25,28 @@
 #share-link { font-size: 1.2em; }
 #share-link i { text-shadow: none; }
 
+.navbar-form { margin-top: 2px; }
+
 .navbar-nav .dropdown-menu a { font-size: 1.2em; }
 .navbar-nav .dropdown-menu a.icon:before { font-family: FontAwesome; margin-right: 5px; }
 .navbar-nav .dropdown-menu a.view:before { content: "\f06e"; /*eye*/ }
 .navbar-nav .dropdown-menu a.create:before { content: "\f067"; /*plus*/ }
+
+body { margin-top: 50px; }
+
+.divide-nav { height: 50px; }
+
+.divide-text { color: #fff; line-height: 20px; font-size: 20px; padding: 15px 0; }
+
+.affix { top: 50px; width: 100%; z-index: 1000; }
+
+.filler { min-height: 2000px; }
+
+.navbar-form { padding-left: 0; }
+
+.navbar-collapse { padding-left: 0; }
+
+.navbar-lower { background-color: transparent; box-shadow: none; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 #app-presentation { border-bottom: none; margin-top: 0; color: white; }
@@ -200,7 +218,7 @@
 
 .ui-dialog { opacity: 0.9; }
 
-#graph-element-menu { position: fixed; right: 10px; top: 100px; border: 1px solid #00005a; border-radius: 9px; max-width: 180px; padding: 1em; cursor: all-scroll; margin-right: 0; margin-left: 0; }
+#graph-element-menu { margin-top: 15px; }
 #graph-element-menu button { background: none; border: none; box-shadow: none; font-size: 22px; text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); color: #474747; margin-top: -10px; }
 
 button.graph-element-button { position: relative; font-size: 1.4em; margin-bottom: 5px; margin-right: 3px; line-height: 20px; color: #333; text-align: center; text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); background-image: linear-gradient(to bottom, #ffffff, #e6e6e6); background-repeat: repeat-x; border-bottom-color: #b3b3b3; border: 1px solid #ccc; border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25); -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); }
@@ -219,6 +237,10 @@ button.add-button-in-list:hover { color: #00d100; }
 #editor { max-height: 250px; height: 250px; border-collapse: separate; border: 1px solid #cccccc; padding: 4px; box-sizing: content-box; box-shadow: rgba(0, 0, 0, 0.07451) 0 1px 1px 0 inset; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; border-top-left-radius: 3px; overflow: scroll; outline: none; }
 
 #bubble-note-modal .btn-default { text-shadow: none; }
+
+button.active i { color: green; }
+
+button.inactive i { color: red; }
 
 .fa.fa-strike:after { content: ""; position: absolute; width: 3px; height: 141.421356%; top: -20.710678%; display: block; background: rgba(255, 0, 0, 0.6); opacity: 0.5; left: 50%; transform: translate(-50%, 0) rotate(-45deg); }
 

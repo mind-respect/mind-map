@@ -10,6 +10,7 @@ $dropDown       : false;
   //background-image: linear-gradient(to bottom,#fff, #7297ff);
   //background: linear-gradient(to bottom, #1e5799 0%,#2989d8 100%);
   background-color:rgba(0, 0, 0, 0.3);
+  //background-color:#7281b3;
   //background-color: $bgDefault;
   //border-color: $bgHighlight;
   .navbar-brand {
@@ -80,6 +81,10 @@ $dropDown       : false;
   }
 }
 
+.navbar-form{
+  margin-top:2px;
+}
+
 .navbar-nav .dropdown-menu a {
   font-size:1.2em;
   &.icon{
@@ -98,4 +103,43 @@ $dropDown       : false;
       content:"\f067"; /*plus*/
     }
   }
+}
+
+body{
+  margin-top: 50px;
+}
+
+.divide-nav{
+  height: 50px;
+  //background-color: #428bca;
+}
+
+.divide-text{
+  color:#fff;
+  line-height: 20px;
+  font-size:20px;
+  padding: 15px 0;
+}
+
+.affix {
+  top: 50px;
+  width:100%;
+  z-index: 1000;
+}
+
+.filler{
+  min-height: 2000px;
+}
+
+.navbar-form {
+  padding-left: 0;
+}
+
+.navbar-collapse{
+  padding-left:0;
+}
+
+.navbar-lower{
+  background-color:transparent;
+  box-shadow:none;
 }

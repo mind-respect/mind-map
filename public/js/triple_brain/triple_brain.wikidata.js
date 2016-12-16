@@ -6,11 +6,27 @@ define([
     "jquery",
     "triple_brain.wikidata_uri",
     "triple_brain.image",
-    "triple_brain.event_bus"
-], function ($, WikidataUri, Image, EventBus) {
+    "triple_brain.event_bus",
+    "triple_brain.graph_element_ui",
+    "triple_brain.graph_element_main_menu"
+], function ($, WikidataUri, Image, EventBus, GraphElementUi, GraphElementMainMenu) {
     "use strict";
     var api = {},
-        wikipediaUrlProperty ="P373";
+        wikipediaUrlProperty = "P373",
+        isActive = false;
+
+    api.isActive = function () {
+        return isActive;
+    };
+
+    api.activate = function () {
+        isActive = true;
+    };
+
+    api.deactivate = function () {
+        isActive = false;
+    };
+
     api.getImageForWikidataUri = function (wikidataUri) {
         var deferred = $.Deferred();
         var wikidataId = WikidataUri.idInWikidataUri(
@@ -26,15 +42,15 @@ define([
             return imageFromSearchResult(result, wikidataId);
         }).then(function (image) {
             deferred.resolve(image);
-        }).fail(function(){
+        }).fail(function () {
             deferred.reject();
         });
         return deferred.promise();
     };
-    api.getWikipediaUrlFromWikidataUri = function(wikidataUri){
+    api.getWikipediaUrlFromWikidataUri = function (wikidataUri) {
         var apiUrlToGetWikipediaUrl = WikidataUri.BASE_URL + "/w/api.php?action=wbgetclaims&entity=" + WikidataUri.idInWikidataUri(
-            wikidataUri
-        ) + "&property=" + wikipediaUrlProperty + "&format=json";
+                wikidataUri
+            ) + "&property=" + wikipediaUrlProperty + "&format=json";
         var deferred = $.Deferred();
         $.ajax({
             type: 'GET',
@@ -42,7 +58,7 @@ define([
             url: apiUrlToGetWikipediaUrl
         }).then(function (result) {
             var path = result.claims[wikipediaUrlProperty];
-            if(path === undefined || path.length === 0){
+            if (path === undefined || path.length === 0) {
                 deferred.resolve(
                     wikidataUri
                 );
@@ -55,7 +71,7 @@ define([
         return deferred.promise();
     };
 
-    api._beforeIdentificationAdded = function(graphElement, identification) {
+    api._beforeIdentificationAdded = function (graphElement, identification) {
         var deferred = $.Deferred();
         var isAWikidataIdentification = WikidataUri.isAWikidataUri(identification.getUri());
         if (identification.hasImages() || !isAWikidataIdentification) {
@@ -65,7 +81,7 @@ define([
         api.getImageForWikidataUri(
             identification.getUri()
         ).then(function (image) {
-            if(image === undefined) {
+            if (image === undefined) {
                 deferred.resolve();
                 return;
             }
@@ -73,7 +89,7 @@ define([
             graphElement.addImages([image]);
             graphElement.refreshImages();
             deferred.resolve();
-        }).fail(function(){
+        }).fail(function () {
             deferred.resolve();
         });
         return deferred.promise();
@@ -82,6 +98,16 @@ define([
         '/event/ui/graph/before/identification/added',
         api._beforeIdentificationAdded
     );
+    EventBus.subscribe(
+        '/event/ui/graph/drawn',
+        function () {
+            if(GraphElementUi.getCenterBubble().getModel().isPublic()){
+                api.activate();
+            }else{
+                api.deactivate();
+            }
+            GraphElementMainMenu.reviewButtonsVisibility();
+        });
     return api;
     function imageFromSearchResult(result, wikidataId) {
         var deferred = $.Deferred();
@@ -100,15 +126,15 @@ define([
         Image.getBase64OfExternalUrl(
             thumbUrl
         ).then(function (imageBase64) {
-                deferred.resolve(
-                    Image.withBase64ForSmallAndUrlForBigger(
-                        imageBase64,
-                        WikidataUri.rawImageUrlFromThumbUrl(thumbUrl)
-                    )
-                );
-            }).fail(function(){
-                deferred.reject();
-            });
+            deferred.resolve(
+                Image.withBase64ForSmallAndUrlForBigger(
+                    imageBase64,
+                    WikidataUri.rawImageUrlFromThumbUrl(thumbUrl)
+                )
+            );
+        }).fail(function () {
+            deferred.reject();
+        });
         return deferred.promise();
     }
 });

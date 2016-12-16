@@ -89,5 +89,34 @@ define([
                 possessionOfBook3Relation.getNumberOfChild()
             ).toBe(2);
         });
+        it("sets the right label for a group relation at a greater depth than 1", function(){
+            var possessionGroupRelation = new Scenarios.GraphWithSimilarRelationsScenario().getPossessionAsGroupRelationInTree();
+            possessionGroupRelation.expand();
+            var possessionOfBook3Relation = TestUtils.getChildWithLabel(
+                possessionGroupRelation,
+                "Possession of book 3"
+            );
+            expect(
+                possessionOfBook3Relation.isGroupRelation()
+            ).toBeTruthy();
+            expect(
+                possessionOfBook3Relation.text()
+            ).toBe("Possession of book 3");
+        });
+        xit("sets the right label for a relation duplicate", function(){
+            var twoSimilarGroupRelationsScenario = new Scenarios.graphWithARelationInTwoSimilarRelationsGroup();
+            var impactOnTheIndividualRelation = twoSimilarGroupRelationsScenario.getImpact3RelationInTheImpactOnTheIndividualContext();
+            expect(
+                impactOnTheIndividualRelation.text()
+            ).toBe(
+                "Impact on the individual"
+            );
+            var impactOnSocietyGroupRelation = twoSimilarGroupRelationsScenario.getImpact3RelationInTheImpactOnTheIndividualContext();
+            expect(
+                impactOnSocietyGroupRelation.text()
+            ).toBe(
+                "Impact on society"
+            );
+        });
     });
 });

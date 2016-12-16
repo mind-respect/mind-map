@@ -175,6 +175,61 @@
     </div>
     <!-- /.container -->
 </nav>
+<nav class="navbar navbar-default navbar-lower" role="navigation">
+    <div class="container">
+        <div class="collapse navbar-collapse collapse-buttons">
+            <div class="navbar-form navbar-left" role="search">
+                <div id="graph-element-menu" class="main-panel hidden-sm hidden-xs hidden" data-flow="mindMap">
+                    <button data-action="accept" data-icon="fa-check" class="graph-element-button in-label-button"></button>
+                    <button data-action="addChild" data-icon="fa-arrow-right" class="graph-element-button"></button>
+                    <button data-action="addSibling" data-icon="fa-arrows-v" class="graph-element-button"></button>
+                    <button data-action="connectTo" data-icon="fa-paper-plane-o" class="graph-element-button"></button>
+                    <button data-action="subElements" data-icon="fa-expand" class="graph-element-button"></button>
+                    <button data-action="reverseToRight" data-icon="fa-share" class="graph-element-button"></button>
+                    <button data-action="reverseToLeft" data-icon="fa-reply" class="graph-element-button"></button>
+                    <button data-action="center" data-icon="fa-bullseye" class="graph-element-button"></button>
+                    <button data-action="expand" data-icon="fa-leaf"
+                            class="graph-element-button"></button>
+                    <button data-action="collapse" data-icon="fa-eye-slash"
+                            class="graph-element-button"></button>
+                    <button data-action="identify" data-icon="fa-info-circle"
+                            class="graph-element-button in-label-button"></button>
+                    <button data-action="suggestions" data-icon="fa-lightbulb-o"
+                            class="suggestion graph-element-button"></button>
+                    <button data-action="note" data-icon="fa-book"
+                            class="note-button graph-element-button in-label-button"></button>
+                    <button data-action="images" data-icon="fa-picture-o" class="graph-element-button"></button>
+                    <button data-action="paste" data-icon="fa-paste" class="graph-element-button"></button>
+                    <button data-action="cut" data-icon="fa-cut" class="graph-element-button"></button>
+                    <button data-action="selectTree" data-icon="fa-sitemap" class="graph-element-button"></button>
+                    <button data-action="makePublic" data-icon="fa-unlock"
+                            class="graph-element-button in-label-button"></button>
+                    <button data-action="makePrivate" data-icon="fa-lock"
+                            class="graph-element-button in-label-button"></button>
+                    <button data-action="wikidataOn" data-icon="fa-wikipedia-w"
+                            class="whole-graph-button inactive graph-element-button in-label-button"
+                            data-mutuallyExclusive="turnWikidataOff"></button>
+                    <button data-action="wikidataOff" data-icon="fa-wikipedia-w"
+                            class="whole-graph-button active graph-element-button in-label-button" data-mutuallyExclusive="turnWikidataOn"></button>
+                    <button data-action="group" data-icon="fa-compress" class="graph-element-button"></button>
+                    <button data-action="remove" data-icon="fa-trash-o" class="graph-element-button"></button>
+                    <button data-action="visitOtherInstances" data-icon="fa fa-link"
+                            class="graph-element-button in-label-button"></button>
+                    <button data-action="expandAll" data-icon="fa-leaf"
+                            class="graph-element-button whole-graph-button"></button>
+                    <button data-action="zoomIn" data-icon="fa-search-plus"
+                            class="graph-element-button whole-graph-button"></button>
+                    <button data-action="zoomOut" data-icon="fa-search-minus"
+                            class="graph-element-button whole-graph-button"></button>
+                    <button data-action="compare" data-icon="fa-balance-scale"
+                            class="graph-element-button whole-graph-button"></button>
+                    <button data-action="select" data-icon="fa-square-o"
+                            class="graph-element-button whole-graph-button"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
 <div class="container">
     <div class="page-header hidden row" id="app-presentation" data-flow="landing">
         <div class="background"></div>
@@ -822,48 +877,50 @@
     </div>
     <div>
         <div id="drawn_graph" data-zoom="9" data-flow="mindMap" class="hidden"></div>
-        <div id="graph-element-menu" class="main-panel hidden-sm hidden-xs hidden" data-flow="mindMap">
-            <button data-action="accept" data-icon="fa-check" class="graph-element-button in-label-button"></button>
-            <button data-action="addChild" data-icon="fa-arrow-right" class="graph-element-button"></button>
-            <button data-action="addSibling" data-icon="fa-arrows-v" class="graph-element-button"></button>
-            <button data-action="connectTo" data-icon="fa-paper-plane-o" class="graph-element-button"></button>
-            <button data-action="subElements" data-icon="fa-expand" class="graph-element-button"></button>
-            <button data-action="reverseToRight" data-icon="fa-share" class="graph-element-button"></button>
-            <button data-action="reverseToLeft" data-icon="fa-reply" class="graph-element-button"></button>
-            <button data-action="center" data-icon="fa-bullseye" class="graph-element-button"></button>
-            <button data-action="expand" data-icon="fa-leaf"
-                    class="graph-element-button"></button>
-            <button data-action="collapse" data-icon="fa-eye-slash"
-                    class="graph-element-button"></button>
-            <button data-action="identify" data-icon="fa-info-circle"
-                    class="graph-element-button in-label-button"></button>
-            <button data-action="suggestions" data-icon="fa-lightbulb-o"
-                    class="suggestion graph-element-button"></button>
-            <button data-action="note" data-icon="fa-book"
-                    class="note-button graph-element-button in-label-button"></button>
-            <button data-action="images" data-icon="fa-picture-o" class="graph-element-button"></button>
-            <button data-action="paste" data-icon="fa-paste" class="graph-element-button"></button>
-            <button data-action="cut" data-icon="fa-cut" class="graph-element-button"></button>
-            <button data-action="selectTree" data-icon="fa-sitemap" class="graph-element-button"></button>
-            <button data-action="makePublic" data-icon="fa-unlock"
-                    class="graph-element-button in-label-button"></button>
-            <button data-action="makePrivate" data-icon="fa-lock"
-                    class="graph-element-button in-label-button"></button>
-            <button data-action="group" data-icon="fa-compress" class="graph-element-button"></button>
-            <button data-action="remove" data-icon="fa-trash-o" class="graph-element-button"></button>
-            <button data-action="visitOtherInstances" data-icon="fa fa-link"
-                    class="graph-element-button in-label-button"></button>
-            <button data-action="expandAll" data-icon="fa-leaf"
-                    class="graph-element-button whole-graph-button"></button>
-            <button data-action="zoomIn" data-icon="fa-search-plus"
-                    class="graph-element-button whole-graph-button"></button>
-            <button data-action="zoomOut" data-icon="fa-search-minus"
-                    class="graph-element-button whole-graph-button"></button>
-            <button data-action="compare" data-icon="fa-balance-scale"
-                    class="graph-element-button whole-graph-button"></button>
-            <button data-action="select" data-icon="fa-square-o"
-                    class="graph-element-button whole-graph-button"></button>
-        </div>
+        <!--<div id="graph-element-menu" class="main-panel hidden-sm hidden-xs hidden" data-flow="mindMap">-->
+            <!--<button data-action="accept" data-icon="fa-check" class="graph-element-button in-label-button"></button>-->
+            <!--<button data-action="addChild" data-icon="fa-arrow-right" class="graph-element-button"></button>-->
+            <!--<button data-action="addSibling" data-icon="fa-arrows-v" class="graph-element-button"></button>-->
+            <!--<button data-action="connectTo" data-icon="fa-paper-plane-o" class="graph-element-button"></button>-->
+            <!--<button data-action="subElements" data-icon="fa-expand" class="graph-element-button"></button>-->
+            <!--<button data-action="reverseToRight" data-icon="fa-share" class="graph-element-button"></button>-->
+            <!--<button data-action="reverseToLeft" data-icon="fa-reply" class="graph-element-button"></button>-->
+            <!--<button data-action="center" data-icon="fa-bullseye" class="graph-element-button"></button>-->
+            <!--<button data-action="expand" data-icon="fa-leaf"-->
+                    <!--class="graph-element-button"></button>-->
+            <!--<button data-action="collapse" data-icon="fa-eye-slash"-->
+                    <!--class="graph-element-button"></button>-->
+            <!--<button data-action="identify" data-icon="fa-info-circle"-->
+                    <!--class="graph-element-button in-label-button"></button>-->
+            <!--<button data-action="suggestions" data-icon="fa-lightbulb-o"-->
+                    <!--class="suggestion graph-element-button"></button>-->
+            <!--<button data-action="note" data-icon="fa-book"-->
+                    <!--class="note-button graph-element-button in-label-button"></button>-->
+            <!--<button data-action="images" data-icon="fa-picture-o" class="graph-element-button"></button>-->
+            <!--<button data-action="paste" data-icon="fa-paste" class="graph-element-button"></button>-->
+            <!--<button data-action="cut" data-icon="fa-cut" class="graph-element-button"></button>-->
+            <!--<button data-action="selectTree" data-icon="fa-sitemap" class="graph-element-button"></button>-->
+            <!--<button data-action="makePublic" data-icon="fa-unlock"-->
+                    <!--class="graph-element-button in-label-button"></button>-->
+            <!--<button data-action="makePrivate" data-icon="fa-lock"-->
+                    <!--class="graph-element-button in-label-button"></button>-->
+            <!--<button data-action="group" data-icon="fa-compress" class="graph-element-button"></button>-->
+            <!--<button data-action="remove" data-icon="fa-trash-o" class="graph-element-button"></button>-->
+            <!--<button data-action="visitOtherInstances" data-icon="fa fa-link"-->
+                    <!--class="graph-element-button in-label-button"></button>-->
+            <!--<button data-action="toggleWikidata" data-icon="fa-linkedin-square"-->
+                    <!--class="graph-element-button whole-graph-button"></button>-->
+            <!--<button data-action="expandAll" data-icon="fa-leaf"-->
+                    <!--class="graph-element-button whole-graph-button"></button>-->
+            <!--<button data-action="zoomIn" data-icon="fa-search-plus"-->
+                    <!--class="graph-element-button whole-graph-button"></button>-->
+            <!--<button data-action="zoomOut" data-icon="fa-search-minus"-->
+                    <!--class="graph-element-button whole-graph-button"></button>-->
+            <!--<button data-action="compare" data-icon="fa-balance-scale"-->
+                    <!--class="graph-element-button whole-graph-button"></button>-->
+            <!--<button data-action="select" data-icon="fa-square-o"-->
+                    <!--class="graph-element-button whole-graph-button"></button>-->
+        <!--</div>-->
     </div>
 </div>
 <div class="row hidden" id="word-cloud-container">

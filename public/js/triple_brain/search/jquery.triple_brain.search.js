@@ -42,50 +42,34 @@ define([
             return {
                 source: function (request, response) {
                     var searchTerm = request.term;
-                    if (options.resultsProviders.length === 1) {
-                        var singleResultsProvider = options.resultsProviders[0];
-                        $.when(
-                            singleResultsProvider.getFetchMethod(searchTerm)
+                    var searchResults = [];
+                    var providerPromises = [];
+                    options.resultsProviders.forEach(function (provider) {
+                        if(!provider.isActive()){
+                            return;
+                        }
+                        providerPromises.push(
+                            getResultsOfProvider(
+                                provider
+                            )
+                        );
+                    });
+                    $.when.apply(
+                        $, providerPromises
+                    ).then(function () {
+                        response(searchResults);
+                    });
+                    function getResultsOfProvider(provider){
+                        return provider.getFetchMethod(
+                            searchTerm
                         ).then(function (results) {
-                            response(
-                                singleResultsProvider.formatResults(
+                            searchResults = searchResults.concat(
+                                provider.formatResults(
                                     results,
                                     searchTerm
                                 )
                             );
                         });
-                    } else {
-                        $.when.apply(
-                            $,
-                            makeFetchMethodsArray()
-                        ).then(gatherAndReturnResults);
-                    }
-                    function gatherAndReturnResults() {
-                        var allResults = [],
-                            i = 0;
-                        $.each(arguments, function () {
-                            var results = $.isArray(this) ? this[0] : this;
-                            var resultProvider = options.resultsProviders[i];
-                            allResults = allResults.concat(
-                                resultProvider.formatResults(
-                                    results,
-                                    searchTerm
-                                )
-                            );
-                            i++;
-                        });
-                        response(allResults);
-                    }
-
-                    function makeFetchMethodsArray() {
-                        var fetchMethods = [];
-                        $.each(options.resultsProviders, function () {
-                            var provider = this;
-                            fetchMethods.push(
-                                provider.getFetchMethod(searchTerm)
-                            );
-                        });
-                        return fetchMethods;
                     }
                 },
                 change: function () {
