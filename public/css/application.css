@@ -32,7 +32,7 @@
 .navbar-nav .dropdown-menu a.view:before { content: "\f06e"; /*eye*/ }
 .navbar-nav .dropdown-menu a.create:before { content: "\f067"; /*plus*/ }
 
-body { margin-top: 50px; }
+body.mind-map-flow { margin-top: 50px; }
 
 .divide-nav { height: 50px; }
 

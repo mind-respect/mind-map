@@ -65,7 +65,14 @@ define([
                     SelectionHandler.removeAll();
                 }
             );
-            $("body").removeClass("hidden");
+            $("body").removeClass(
+                "hidden"
+            ).addClass("mind-map-flow");
+            $('#whole-graph-buttons-container').removeClass(
+                "hidden"
+            ).affix({
+                offset: {top: 50}
+            });
             centralBubble.scrollTo();
             GraphUi.initDragScroll();
             GraphUi.enableDragScroll();
