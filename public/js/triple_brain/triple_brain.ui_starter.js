@@ -90,17 +90,11 @@ define(
                 error: function (xhr) {
                     $("body").removeClass("hidden");
                     if (403 === xhr.status) {
-                        ExternalPageLoader.showLinearFlowWithOptions({
-                            href: "/not-allowed.html",
-                            title: $.t("not_allowed.title")
-                        });
+                        $("#not-allowed-modal").modal();
                     }
-                    // else if (404 === xhr.status) {
-                    //     ExternalPageLoader.showLinearFlowWithOptions({
-                    //         href: "/non-existent.html",
-                    //         title: $.t("non_existent.title")
-                    //     });
-                    // }
+                    else if (404 === xhr.status) {
+                        $("#non-existent-modal").modal();
+                    }
                 }
             });
         }
