@@ -81,7 +81,6 @@ requirejs.config({
         "triple_brain.scroll_on_mouse_frontier": "triple_brain/triple_brain.scroll_on_mouse_frontier",
         "triple_brain.header": "triple_brain/triple_brain.header",
         "triple_brain.language_manager": "triple_brain/triple_brain.language_manager",
-        "triple_brain.external_page_loader": "triple_brain/triple_brain.external_page_loader",
         "triple_brain.mind-map_template": "triple_brain/triple_brain.mind-map_template",
         "triple_brain.id_uri": "triple_brain/triple_brain.id_uri",
 

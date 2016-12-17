@@ -13,7 +13,6 @@ define(
         "triple_brain.change_password",
         "triple_brain.login_handler",
         "triple_brain.register_handler",
-        "triple_brain.external_page_loader",
         "triple_brain.header",
         "triple_brain.graph_displayer",
         "triple_brain.graph_displayer_factory",
@@ -24,7 +23,7 @@ define(
         "triple_brain.modules",
         "jquery.lazyload"
     ],
-    function ($, MindMapFlow, UserService, MindMapInfo, LandingPageFlow, SchemaListFlow, ChangePassword, LoginHandler, RegisterHandler, ExternalPageLoader, Header, GraphDisplayer, GraphDisplayerFactory, Flow, BubbleCloudFlow) {
+    function ($, MindMapFlow, UserService, MindMapInfo, LandingPageFlow, SchemaListFlow, ChangePassword, LoginHandler, RegisterHandler, Header, GraphDisplayer, GraphDisplayerFactory, Flow, BubbleCloudFlow) {
         "use strict";
         var api = {};
         api.start = function () {
