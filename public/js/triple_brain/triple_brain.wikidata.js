@@ -6,26 +6,11 @@ define([
     "jquery",
     "triple_brain.wikidata_uri",
     "triple_brain.image",
-    "triple_brain.event_bus",
-    "triple_brain.graph_element_ui",
-    "triple_brain.graph_element_main_menu"
-], function ($, WikidataUri, Image, EventBus, GraphElementUi, GraphElementMainMenu) {
+    "triple_brain.event_bus"
+], function ($, WikidataUri, Image, EventBus) {
     "use strict";
     var api = {},
-        wikipediaUrlProperty = "P373",
-        isActive = false;
-
-    api.isActive = function () {
-        return isActive;
-    };
-
-    api.activate = function () {
-        isActive = true;
-    };
-
-    api.deactivate = function () {
-        isActive = false;
-    };
+        wikipediaUrlProperty = "P373";
 
     api.getImageForWikidataUri = function (wikidataUri) {
         var deferred = $.Deferred();
@@ -98,16 +83,6 @@ define([
         '/event/ui/graph/before/identification/added',
         api._beforeIdentificationAdded
     );
-    EventBus.subscribe(
-        '/event/ui/graph/drawn',
-        function () {
-            if(GraphElementUi.getCenterBubble().getModel().isPublic()){
-                api.activate();
-            }else{
-                api.deactivate();
-            }
-            GraphElementMainMenu.reviewButtonsVisibility();
-        });
     return api;
     function imageFromSearchResult(result, wikidataId) {
         var deferred = $.Deferred();

@@ -45,8 +45,13 @@
     list-style-type: none;
   }
   .identifications {
+    .input-group-addon{
+      background:transparent;
+    }
     .add-identification {
-      margin-top: 10px;
+      &:before{
+        content: "• "
+      }
     }
     .read-more {
       &:before, &:after {

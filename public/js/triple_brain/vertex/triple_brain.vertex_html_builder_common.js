@@ -17,11 +17,12 @@ define([
     "triple_brain.schema_suggestion",
     "triple_brain.graph_element_html_builder",
     "triple_brain.bubble_factory",
+    "triple_brain.graph_element_ui",
     "jquery-ui",
     "jquery.triple_brain.search",
     "jquery.max_char",
     "jquery.safer-html"
-], function ($, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, WikidataAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, GraphElementHtmlBuilder, BubbleFactory) {
+], function ($, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, WikidataAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, GraphElementHtmlBuilder, BubbleFactory, GraphElementUi) {
     "use strict";
     var api = {};
     api.applyAutoCompleteIdentificationToLabelInput = function (input) {
@@ -38,7 +39,9 @@ define([
                 UserMapAutocompleteProvider.toFetchPublicAndUserVerticesExcept(
                     BubbleFactory.fromSubHtml(input)
                 ),
-                WikidataAutocompleteProvider.build()
+                WikidataAutocompleteProvider.buildWithIsActiveCondition(
+                    GraphElementUi.isWikidataActiveForInBubbleEdition
+                )
             ]
         });
     };

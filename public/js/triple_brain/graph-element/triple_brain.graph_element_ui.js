@@ -20,12 +20,26 @@ define([
     var api = {},
         otherInstancesKey = "otherInstances",
         textBeforeModificationKey = "textBeforeModification",
-        _centralBubble;
+        _centralBubble,
+        _isWikidataActive = false;
     api.Types = GraphElementType;
     var controllerGetters = {},
         selectors = {};
     initMenuHandlerGetters();
     initSelectors();
+
+    api.isWikidataActiveForInBubbleEdition= function () {
+        return _isWikidataActive;
+    };
+
+    api.activateWikidataForInBubbleEdition = function () {
+        _isWikidataActive = true;
+    };
+
+    api.deactivateWikidataForInBubbleEdition = function () {
+        _isWikidataActive = false;
+    };
+
     api.setDraggedElement = function (vertex) {
         $("body").data(
             "dragged-vertex",
@@ -665,6 +679,16 @@ define([
         }
     );
 
+    EventBus.subscribe(
+        '/event/ui/graph/drawn',
+        function () {
+            if(api.getCenterBubble().getModel().isPublic()){
+                api.activateWikidataForInBubbleEdition();
+            }else{
+                api.deactivateWikidataForInBubbleEdition();
+            }
+            GraphElementMainMenu.reviewButtonsVisibility();
+        });
     return api;
     function initMenuHandlerGetters() {
         controllerGetters[api.Types.Vertex] = GraphDisplayer.getVertexMenuHandler;

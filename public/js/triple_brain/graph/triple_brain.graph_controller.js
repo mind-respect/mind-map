@@ -10,9 +10,8 @@ define([
     "triple_brain.vertex_ui",
     "triple_brain.graph_element_ui",
     "triple_brain.group_relation_ui",
-    "triple_brain.compare_flow",
-    "triple_brain.wikidata"
-], function ($, SelectionHandler, MindMapInfo, GraphUi, VertexUi, GraphElementUi, GroupRelationUi, CompareFlow, Wikidata) {
+    "triple_brain.compare_flow"
+], function ($, SelectionHandler, MindMapInfo, GraphUi, VertexUi, GraphElementUi, GroupRelationUi, CompareFlow) {
     "use strict";
     var api = {};
     api.select = function () {
@@ -49,16 +48,16 @@ define([
         );
     };
     api.wikidataOn = function(){
-        Wikidata.activate();
+        GraphElementUi.activateWikidataForInBubbleEdition();
     };
     api.wikidataOff = function(){
-        Wikidata.deactivate();
+        GraphElementUi.deactivateWikidataForInBubbleEdition();
     };
     api.wikidataOnCanDo = function(){
-        return !Wikidata.isActive();
+        return !GraphElementUi.isWikidataActiveForInBubbleEdition();
     };
     api.wikidataOffCanDo = function(){
-        return Wikidata.isActive();
+        return GraphElementUi.isWikidataActiveForInBubbleEdition();
     };
     api.getUi = function () {
         return [];

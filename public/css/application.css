@@ -238,6 +238,8 @@ button.add-button-in-list:hover { color: #00d100; }
 
 #bubble-note-modal .btn-default { text-shadow: none; }
 
+i.active { color: green; }
+
 button.active i { color: green; }
 
 button.inactive i { color: red; }
@@ -261,7 +263,8 @@ button.inactive i { color: red; }
 .graph-element-menu ul { list-style-type: none; }
 .graph-element-menu .identifications { /*:-moz-placeholder for firefox 18- and ::-moz-placeholder for firefox 19+
 */ }
-.graph-element-menu .identifications .add-identification { margin-top: 10px; }
+.graph-element-menu .identifications .input-group-addon { background: transparent; }
+.graph-element-menu .identifications .add-identification:before { content: "• "; }
 .graph-element-menu .identifications .read-more:before, .graph-element-menu .identifications .read-more:after { content: "\00a0 "; }
 .graph-element-menu .identifications .read-more a { font-weight: bold; }
 .graph-element-menu .identifications .instruction { margin-top: 7px; margin-bottom: 11px; text-align: left; }

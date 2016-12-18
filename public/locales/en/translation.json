@@ -204,7 +204,8 @@
         "readLess": "less",
         "origin": "source",
         "nb_references": "other bubble(s) with the same identifier",
-        "no_other_references": "No other bubble with the same identifier"
+        "no_other_references": "No other bubble with the same identifier",
+        "wikidata-indicator":"Wikidata is always activated in the identifers menu"
       }
     }
   },
@@ -304,7 +305,9 @@
     "expandAll": "Expand all",
     "visitOtherInstances": "Visit the same bubble but in another context",
     "collapse": "Hide tree (ctrl+h)",
-    "expand": "Expand (ctrl+e)"
+    "expand": "Expand (ctrl+e)",
+    "wikidataOn": "Activate autocompletion from Wikidata",
+    "wikidataOff": "Deactivate autocompletion from Wikidata"
   },
   "hidden_properties_tooltip": "Expand (ctrl+e)",
   "search": {

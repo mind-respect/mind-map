@@ -10,12 +10,16 @@ define([
 ], function ($, Wikidata, WikidataUri, LanguageManager) {
     "use strict";
     var api = {};
-    api.build = function () {
+    api.build = function(){
         return new WikiDataAutocompleteProvider();
     };
+    api.buildWithIsActiveCondition = function (isActiveCondition) {
+        return new WikiDataAutocompleteProvider(isActiveCondition);
+    };
     return api;
-    function WikiDataAutocompleteProvider() {
+    function WikiDataAutocompleteProvider(isActiveCondition) {
         var self = this;
+        this.isActiveCondition = isActiveCondition;
         this.getFetchMethod = function (searchTerm) {
             var url = WikidataUri.BASE_URL + "/w/api.php?action=wbsearchentities&language=" +
                 LanguageManager.getBrowserLocale() +
@@ -62,7 +66,10 @@ define([
             });
         };
         this.isActive = function(){
-            return Wikidata.isActive();
+            if(!this.isActiveCondition){
+                return true;
+            }
+            return this.isActiveCondition();
         };
     }
 });

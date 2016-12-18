@@ -343,7 +343,14 @@ define([
                     'identification_textfield'
                     ].merge()
             );
-            this.html.append(identificationTextField);
+            var container = $("<div class='form-group'>").append(
+                $("<div class='input-group'>").append(
+                    $("<div class='input-group-addon'>").append(
+                        $("<i data-toggle='tooltip' data-i18n='[title]graph_element.menu.identification.wikidata-indicator' class='active fa fa-wikipedia-w'>")
+                    ),
+                    identificationTextField
+                ));
+            this.html.append(container);
             this._setUpAutoComplete(identificationTextField);
             this.identificationTextField = identificationTextField;
             return identificationTextField;
@@ -394,8 +401,8 @@ define([
             function identify() {
                 graphElement.getController().addIdentification(
                     identifier
-                ).then(function(identifications){
-                    $.each(identifications, function(){
+                ).then(function (identifications) {
+                    $.each(identifications, function () {
                         self._addIdentificationAsListElement(this);
                     });
                 });

@@ -16,7 +16,7 @@ define([
 ], function ($, MindMapInfo, FriendlyResourceService, SelectionHandler, RelativeTreeTemplates, Identification, UserMapAutocompleteProvider, SuggestionService, GraphElementHtmlBuilder, BubbleFactory) {
     "use strict";
     var api = {};
-    api.moveInLabelButtonsContainerIfIsToTheLeft = function(edge){
+    api.moveInLabelButtonsContainerIfIsToTheLeft = function (edge) {
         if (edge.isToTheLeft()) {
             var noteButton = edge.getInLabelButtonsContainer();
             edge.getLabelAndButtonsContainer().append(noteButton);
@@ -79,7 +79,7 @@ define([
                     )
                 ]
             }
-        ).blur(function(){
+        ).blur(function () {
             var edge = BubbleFactory.fromSubHtml(
                 $(this)
             );
@@ -103,7 +103,7 @@ define([
         GraphElementHtmlBuilder.setUpLabel(label);
         return label;
     };
-    api.buildInLabelButtons = function(edge){
+    api.buildInLabelButtons = function (edge) {
         var inLabelButtons = GraphElementHtmlBuilder.buildInLabelButtons(edge);
         edge.getLabelAndButtonsContainer().prepend(
             inLabelButtons
