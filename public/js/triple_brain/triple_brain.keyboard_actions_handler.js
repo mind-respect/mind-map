@@ -35,6 +35,7 @@ define([
         vKeyNumber = 86,
         nonCtrlPlusActions = defineNonCtrlPlusKeysAndTheirActions(),
         ctrlPlusActions = defineCtrlPlusKeysAndTheirActions();
+
     api.init = function () {
         EventBus.subscribe(
             "/event/ui/graph/drawing_info/updated/",
@@ -46,9 +47,23 @@ define([
             "keydown", keyDownHandler
         ).on(
             "keydown", keyDownHandler
+        ).off(
+            "paste", pasteHandler
+        ).on(
+            'paste', pasteHandler
         );
     };
     return api;
+
+    function pasteHandler(event) {
+        if (!SelectionHandler.isOnlyASingleElementSelected()) {
+            return;
+        }
+        var selectedElement = SelectionHandler.getSingleElement();
+        var oEvent = event.originalEvent;
+        event.preventDefault();
+        executeFeature("paste", selectedElement, oEvent);
+    }
 
     function keyDownHandler(event) {
         // console.log(event.which);
@@ -72,20 +87,22 @@ define([
         var selectedElement = SelectionHandler.getSingleElement();
         var feature = actionSet[event.which];
         if (feature === undefined) {
-            if (event.which !== ctrlKeyNumber && !MindMapInfo.isViewOnly()) {
+            var isPasting = event.ctrlKey && vKeyNumber && event.which;
+            if (!isPasting && event.which !== ctrlKeyNumber && !MindMapInfo.isViewOnly()) {
                 selectedElement.focus();
             }
             return;
         }
         event.preventDefault();
         event.stopPropagation();
+
         executeFeature(feature, selectedElement);
         function isThereASpecialKeyPressed() {
             return event.altKey || event.metaKey;
         }
     }
 
-    function executeFeature(feature, selectedElement) {
+    function executeFeature(feature, selectedElement, event) {
         if (typeof feature === "string") {
             var controller = selectedElement.getController();
             if (controller[feature] === undefined) {
@@ -95,10 +112,10 @@ define([
             if (canDoValidator !== undefined && !canDoValidator.call(controller)) {
                 return;
             }
-            controller[feature]();
+            controller[feature](event);
             return;
         }
-        feature(selectedElement);
+        feature(selectedElement, event);
     }
 
     function defineNonCtrlPlusKeysAndTheirActions() {
@@ -124,7 +141,6 @@ define([
         actions[zeroKeyNumber] = "center";
         actions[hKeyNumber] = "collapse";
         actions[xKeyNumber] = "cut";
-        actions[vKeyNumber] = "paste";
         return actions;
     }
 
@@ -182,7 +198,7 @@ define([
         SelectionHandler.setToSingleGraphElement(newSelectedElement);
     }
 
-    function focus(selectedElement){
+    function focus(selectedElement) {
         selectedElement.focus();
     }
 

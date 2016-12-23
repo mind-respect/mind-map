@@ -19,7 +19,7 @@ define([
 ], function ($, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu, EdgeService, Identification) {
     "use strict";
     var api = {},
-        cut,
+        bubbleCutClipboard,
         identificationBaseEventBusKey = "/event/ui/graph/identification/";
     EventBus.subscribe(
         '/event/ui/mind_map_info/is_view_only',
@@ -196,30 +196,50 @@ define([
 
     GraphElementController.prototype.cutCanDo = function () {
         return this.isSingleAndOwned() && !this.getUi().isCenterBubble() && (
-                undefined === cut || !this.getUi().isSameBubble(
-                    cut
+                undefined === bubbleCutClipboard || !this.getUi().isSameBubble(
+                    bubbleCutClipboard
                 )
             );
     };
 
     GraphElementController.prototype.cut = function () {
-        cut = this.getUi();
+        bubbleCutClipboard = this.getUi();
         this.getUi().cut();
     };
 
     GraphElementController.prototype.pasteCanDo = function () {
-        return this.isSingleAndOwned() && cut !== undefined &&
-            cut.getController()._canMoveAfter(
-                this.getUi()
-            );
+        return this.isSingleAndOwned();
     };
 
-    GraphElementController.prototype.paste = function () {
-        cut.getController().moveAfter(
+    GraphElementController.prototype.paste = function (event) {
+        if(bubbleCutClipboard === undefined){
+            this._pasteText(event);
+        }else{
+            this._pasteBubble();
+        }
+        this.getUi().paste();
+    };
+
+    GraphElementController.prototype._pasteText = function (event) {
+        var clipText = '';
+        if (window.clipboardData) {
+            clipText = window.clipboardData.getData('Text');
+        } else if (typeof event === 'object' && event.clipboardData) {
+            clipText = event.clipboardData.getData('text/plain');
+        }
+        this.setLabel(
+            this.getModel().getLabel() + " " + clipText
+        );
+    };
+
+    GraphElementController.prototype._pasteBubble = function () {
+        if(!bubbleCutClipboard.getController()._canMoveAfter(this.getUi())){
+            return;
+        }
+        bubbleCutClipboard.getController().moveAfter(
             this.getUi()
         );
-        cut = undefined;
-        this.getUi().paste();
+        bubbleCutClipboard = undefined;
     };
 
     GraphElementController.prototype.moveUnder = function (otherEdge) {
