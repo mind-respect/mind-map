@@ -94,6 +94,9 @@ define([
                     var edge = BubbleFactory.fromSubHtml(
                         $(this)
                     );
+                    if(edge.isInEditMode()){
+                        return;
+                    }
                     edge.deselect();
                     edge.hideMenu();
                     edge.focus();

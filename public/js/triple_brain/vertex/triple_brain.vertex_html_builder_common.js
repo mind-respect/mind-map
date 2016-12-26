@@ -146,8 +146,12 @@ define([
 
     function dblClickHandler(event) {
         event.stopPropagation();
-        BubbleFactory.fromSubHtml(
+        var bubble = BubbleFactory.fromSubHtml(
             $(this)
-        ).focus();
+        );
+        if(bubble.isInEditMode()){
+            return;
+        }
+        bubble.focus();
     }
 });

@@ -24,8 +24,10 @@ define([
             keyboard: false
         }).on('shown.bs.modal', function(){
             GraphUi.disableDragScroll();
+            GraphUi.lockDragScroll();
             $(this).find("[data-autofocus=true]:first").focus();
         }).on('hidden.bs.modal', function(){
+            GraphUi.unlockDragScroll();
             GraphUi.enableDragScroll();
         });
         return this;

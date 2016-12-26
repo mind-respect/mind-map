@@ -143,9 +143,6 @@ define([
         }).click(function () {
             GraphUi.enableDragScroll();
         }).mouseleave(function () {
-            if (GraphUi.isThereAnOpenModal() || GraphUi.isDragScrollEnabled()) {
-                return;
-            }
             GraphUi.enableDragScroll();
         });
         graphElementUi.getHtml().on("dragstart", function (event) {

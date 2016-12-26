@@ -139,6 +139,9 @@ define([
                         var groupRelation = BubbleFactory.fromSubHtml(
                             $(this)
                         );
+                        if(groupRelation.isInEditMode()){
+                            return;
+                        }
                         groupRelation.deselect();
                         groupRelation.hideMenu();
                         groupRelation.focus();

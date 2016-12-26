@@ -305,7 +305,7 @@ button.inactive i { color: red; }
 .relation.bubble .edit-relation-button { font-size: 1.50em; cursor: pointer; display: none; }
 .relation.bubble.same-as-group-relation .label-container { display: none; }
 .relation.bubble.same-as-group-relation .edit-relation-button { display: block; }
-.relation.bubble .label { border-radius: 0.80em; padding-top: 0.3em; }
+.relation.bubble .label { border-radius: 0.80em; padding-top: 5px; padding-bottom: 5px; padding-left: 11px; padding-right: 11px; }
 .relation.bubble .menu { background-color: transparent; z-index: 11; margin-left: 5px; }
 .relation.bubble .label-container { display: table-cell; padding-left: 6px; position: relative; }
 .relation.bubble.suggestion .in-bubble-content { border: none; }

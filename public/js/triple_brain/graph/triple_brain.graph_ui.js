@@ -12,7 +12,8 @@ define([
             _drawnGraph,
             _topLayer,
             _bubbleIdCounter = 0,
-            _isDragScrollEnabled = false;
+            _isDragScrollEnabled = false,
+            _isDragScrollLocked = false;
         api.initDragScroll = function () {
             var $body = $('body');
             var $toDragScroll = $body.scrollLeft() > 0 ? $body : $('html');
@@ -56,11 +57,26 @@ define([
             _bubbleIdCounter++;
             return "bubble-ui-id-" + _bubbleIdCounter;
         };
+
+        api.lockDragScroll = function(){
+            _isDragScrollLocked = true;
+        };
+
+        api.unlockDragScroll = function(){
+            _isDragScrollLocked = false;
+        };
+
         api.disableDragScroll = function () {
+            if(_isDragScrollLocked || !_isDragScrollEnabled){
+                return;
+            }
             DragScroll.disable();
             _isDragScrollEnabled = false;
         };
         api.enableDragScroll = function () {
+            if(_isDragScrollLocked || _isDragScrollEnabled){
+                return;
+            }
             DragScroll.enable();
             _isDragScrollEnabled = true;
         };
@@ -82,10 +98,6 @@ define([
         };
         api.setIsDraggingBubble = function (isDragging) {
             return api.getDrawnGraph().data("isDraggingBubble", isDragging);
-        };
-        api.isThereAnOpenModal = function () {
-            return $(".modal:visible").length > 0 ||
-                $(".ui-dialog").length > 0;
         };
         return api;
         function getSchemaInstructions() {

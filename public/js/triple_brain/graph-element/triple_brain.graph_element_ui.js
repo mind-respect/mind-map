@@ -11,11 +11,12 @@ define([
     "triple_brain.event_bus",
     "triple_brain.mind_map_info",
     "triple_brain.selection_handler",
+    "triple_brain.graph_ui",
     "jquery.focus-end",
     "jquery.center-on-screen",
     "jquery.safer-html",
     "jquery.max_char"
-], function ($, GraphDisplayer, GraphElementMainMenu, GraphElementButton, GraphElementType, EventBus, MindMapInfo, SelectionHandler) {
+], function ($, GraphDisplayer, GraphElementMainMenu, GraphElementButton, GraphElementType, EventBus, MindMapInfo, SelectionHandler, GraphUi) {
     "use strict";
     var api = {},
         otherInstancesKey = "otherInstances",
@@ -411,6 +412,8 @@ define([
             "draggable"
         );
         this.getInLabelButtonsContainer().addClass("hidden");
+        GraphUi.disableDragScroll();
+        GraphUi.lockDragScroll();
     };
     api.GraphElementUi.prototype.leaveEditMode = function () {
         var $label = this.getLabel();
@@ -429,6 +432,8 @@ define([
             $html.data("previous_draggable_status")
         );
         this.getInLabelButtonsContainer().removeClass("hidden");
+        GraphUi.unlockDragScroll();
+        GraphUi.enableDragScroll();
     };
     api.GraphElementUi.prototype.isInEditMode = function () {
         return this.getHtml().hasClass("edit");
