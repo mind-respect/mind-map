@@ -77,6 +77,15 @@ define([
             this.getBubble2InTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("b2");
             };
+            this.getBubble3InTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("b3");
+            };
+            this.getBubble4InTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("b4");
+            };
+            this.getBubble5InTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("b");
+            };
             Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
         };
 

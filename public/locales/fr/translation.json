@@ -308,7 +308,8 @@
     "collapse": "Cacher l'arbre (ctrl+h)",
     "expand": "Expandre (ctrl+e)",
     "wikidataOn": "Activer l'autocompletion de Wikidata",
-    "wikidataOff": "Désactiver l'autocompletion de Wikidata"
+    "wikidataOff": "Désactiver l'autocompletion de Wikidata",
+    "copy": "Copier"
   },
   "hidden_properties_tooltip": "Expandre (ctrl+e)",
   "search": {

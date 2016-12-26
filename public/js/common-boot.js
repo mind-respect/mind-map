@@ -11,6 +11,7 @@ requirejs.config({
         "md5": "vendor/md5.min",
         "polyk": "vendor/polyk",
         "diff_match_patch": "vendor/diff_match_patch_uncompressed",
+        "clipboard": "vendor/clipboard",
         /*
         Jquery
          */
@@ -84,7 +85,7 @@ requirejs.config({
         "triple_brain.mind-map_template": "triple_brain/triple_brain.mind-map_template",
         "triple_brain.id_uri": "triple_brain/triple_brain.id_uri",
 
-        "triple_brain.ui.utils": "triple_brain/triple_brain.ui.utils",
+        "triple_brain.ui_utils": "triple_brain/triple_brain.ui_utils",
         "triple_brain.user_service": "triple_brain/triple_brain.user_service",
         "triple_brain.login_handler": "triple_brain/triple_brain.login_handler",
         "triple_brain.register_handler": "triple_brain/triple_brain.register_handler",

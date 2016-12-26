@@ -18,8 +18,9 @@ define([
     "triple_brain.identification",
     "triple_brain.graph_element_service",
     "triple_brain.schema_suggestion",
-    "triple_brain.event_bus"
-], function ($, VertexService, SelectionHandler, GraphDisplayer, GraphElementController, DeleteMenu, EdgeUi, ImageMenu, LinkToFarVertexMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, EventBus) {
+    "triple_brain.event_bus",
+    "triple_brain.ui_utils"
+], function ($, VertexService, SelectionHandler, GraphDisplayer, GraphElementController, DeleteMenu, EdgeUi, ImageMenu, LinkToFarVertexMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, EventBus, UiUtils) {
     "use strict";
     var api = {};
 
@@ -273,6 +274,12 @@ define([
             );
         }
     };
+
+    VertexController.prototype.copyCanDo = function () {
+        return !this.isSingle();
+    };
+
+    VertexController.prototype.copy = function () {};
 
     VertexController.prototype.groupCanDo = function () {
         return this.isGroupAndOwned();

@@ -5,7 +5,7 @@
 define([
     "jquery",
     "triple_brain.point",
-    "triple_brain.ui.utils"
+    "triple_brain.ui_utils"
 ], function ($, Point, UiUtils) {
     "use strict";
     var scrollNumber = 40,

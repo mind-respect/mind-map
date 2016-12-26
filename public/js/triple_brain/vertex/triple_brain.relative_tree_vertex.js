@@ -11,9 +11,11 @@ define([
         "triple_brain.triple_ui_builder",
         "triple_brain.selection_handler",
         "triple_brain.bubble_factory",
-        "triple_brain.mind_map_info"
+        "triple_brain.mind_map_info",
+        "clipboard",
+        "triple_brain.bubble"
     ],
-    function ($, VertexUi, EventBus, TreeEdge, ObjectUtils, TripleUiBuilder, SelectionHandler, BubbleFactory, MindMapInfo) {
+    function ($, VertexUi, EventBus, TreeEdge, ObjectUtils, TripleUiBuilder, SelectionHandler, BubbleFactory, MindMapInfo, Clipboard, Bubble) {
         "use strict";
         var api = {};
         VertexUi.buildCommonConstructors(api);
@@ -34,6 +36,39 @@ define([
                 vertex.getHtml()
             );
         };
+        api.VerticesToHtmlLists = function (vertices) {
+            var integratedVerticesId = {};
+            var lists = $("<div>");
+            Bubble.sortBubblesByNumberOfParentVerticesAscending(vertices).forEach(function (vertex) {
+                if (integratedVerticesId[vertex.getId()]) {
+                    return;
+                }
+                lists.append(
+                    integrateVertex(vertex, true)
+                );
+            });
+            return lists;
+            function integrateVertex(vertex, isARoot) {
+                var html = $(
+                    isARoot ? "<div>" : "<li>"
+                ).append(vertex.text());
+                var ul = $("<ul>");
+                var hasChildInList = false;
+                vertices.forEach(function (childVertex) {
+                    if (childVertex.getParentVertex().isSameBubble(vertex)) {
+                        ul.append(
+                            integrateVertex(childVertex, false)
+                        );
+                        hasChildInList = true;
+                    }
+                });
+                if(hasChildInList){
+                    html.append(ul);
+                }
+                integratedVerticesId[vertex.getId()] = true;
+                return html;
+            }
+        };
         api = ObjectUtils.makeChildInheritParent(
             api,
             VertexUi
@@ -51,6 +86,7 @@ define([
             );
             return this;
         };
+
         api.RelativeTreeVertex.prototype.visitVerticesChildren = function (visitor) {
             var children = this.getChildrenBubblesHtml();
             $.each(children, function () {
@@ -125,7 +161,7 @@ define([
             return this.isALeaf() && (
                     MindMapInfo.isViewOnly() ?
                         this._hasPublicHiddenRelations() :
-                    this.getModel().getNumberOfConnectedEdges() > 1
+                        this.getModel().getNumberOfConnectedEdges() > 1
                 );
         };
         api.RelativeTreeVertex.prototype._hasPublicHiddenRelations = function () {
@@ -149,6 +185,28 @@ define([
             '/event/ui/graph/vertex_and_relation/added/',
             vertexAndRelationAddedHandler
         );
+        EventBus.subscribe('/event/ui/graph/drawn', function () {
+            var copyButton = $('.clipboard-copy-button')[0];
+            if (!copyButton) {
+                return;
+            }
+            var clipboard = new Clipboard(
+                $('.clipboard-copy-button')[0], {
+                    target: function (trigger) {
+                        var treeListCopyDump = $("#tree-list-copy-dump");
+                        treeListCopyDump.html(
+                            api.VerticesToHtmlLists(
+                                SelectionHandler.getSelectedVertices()
+                            )
+                        );
+                        return  treeListCopyDump[0];
+                    }
+                }
+            );
+            clipboard.on("success", function(){
+                $("#tree-list-copy-dump").empty();
+            });
+        });
         function vertexAndRelationAddedHandler(event, triple, tripleServerFormat) {
             var sourceBubble = triple.sourceVertex();
             if (!sourceBubble.isVertex()) {

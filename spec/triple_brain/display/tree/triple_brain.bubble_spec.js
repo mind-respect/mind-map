@@ -7,12 +7,13 @@ define([
     'test/test-utils',
     "test/mock/triple_brain.graph_service_mock",
     "test/mock/triple_brain.graph_element_service_mock",
+    "triple_brain.bubble",
     "triple_brain.graph_displayer",
     "triple_brain.edge",
     "triple_brain.vertex",
     "triple_brain.selection_handler",
     "triple_brain.mind_map_info"
-], function (Scenarios, TestUtils, GraphServiceMock, GraphElementServiceMock, GraphDisplayer, Edge, Vertex, SelectionHandler, MindMapInfo) {
+], function (Scenarios, TestUtils, GraphServiceMock, GraphElementServiceMock, Bubble, GraphDisplayer, Edge, Vertex, SelectionHandler, MindMapInfo) {
     "use strict";
     describe("bubble", function () {
         it("can return parent bubble", function () {
@@ -545,5 +546,57 @@ define([
         //     var b2 = scenario.getBubble2InTree();
         //
         // });
+        it("can calculate number of parent vertices", function(){
+            var scenario = new Scenarios.deepGraph();
+            var centerVertex = scenario.getBubble1InTree();
+            expect(
+                scenario.getBubble1InTree().calculateNumberOfParentVertices(centerVertex)
+            ).toBe(0);
+            expect(
+                scenario.getBubble2InTree().calculateNumberOfParentVertices(centerVertex)
+            ).toBe(1);
+            expect(
+                scenario.getBubble3InTree().calculateNumberOfParentVertices(centerVertex)
+            ).toBe(2);
+            expect(
+                scenario.getBubble4InTree().calculateNumberOfParentVertices(centerVertex)
+            ).toBe(2);
+            expect(
+                scenario.getBubble5InTree().calculateNumberOfParentVertices(centerVertex)
+            ).toBe(1);
+        });
+        it("can sort bubbles by number of parent vertices and order of appearance", function(){
+            var scenario = new Scenarios.deepGraph();
+            var b1 = scenario.getBubble1InTree();
+            var b2 = scenario.getBubble2InTree();
+            var b3 = scenario.getBubble3InTree();
+            var b4 = scenario.getBubble4InTree();
+            var b5 = scenario.getBubble5InTree();
+            b4.moveAbove(b3);
+            b2.moveAbove(b5);
+            var bubbles = [
+                b2,
+                b1,
+                b5,
+                b3,
+                b4
+            ];
+            var sortedBubbles = Bubble.sortBubblesByNumberOfParentVerticesAscending(bubbles);
+            expect(
+                sortedBubbles[0].text()
+            ).toBe("b1");
+            expect(
+                sortedBubbles[1].text()
+            ).toBe("b2");
+            expect(
+                sortedBubbles[2].text()
+            ).toBe("b5");
+            expect(
+                sortedBubbles[3].text()
+            ).toBe("b4");
+            expect(
+                sortedBubbles[4].text()
+            ).toBe("b3");
+        });
     });
 });

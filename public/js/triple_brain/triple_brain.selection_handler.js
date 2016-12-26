@@ -6,7 +6,7 @@ define([
     "jquery",
     "triple_brain.graph_ui",
     "triple_brain.scroll_on_mouse_frontier",
-    "triple_brain.ui.utils",
+    "triple_brain.ui_utils",
     "triple_brain.graph_displayer",
     "triple_brain.event_bus",
     "jquery-ui"

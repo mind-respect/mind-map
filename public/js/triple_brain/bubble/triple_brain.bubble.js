@@ -5,7 +5,7 @@
 define([
         "jquery",
         "triple_brain.event_bus",
-        "triple_brain.ui.utils",
+        "triple_brain.ui_utils",
         "triple_brain.image_displayer",
         "triple_brain.graph_element_ui",
         "triple_brain.graph_element_type",
@@ -26,11 +26,37 @@ define([
             return new api.Bubble(html);
         };
 
+        api.sortBubblesByNumberOfParentVerticesAscending = function (bubbles) {
+            var centerVertex = GraphElementUi.getCenterBubble();
+            return bubbles.sort(function (a, b) {
+                var difference = a.calculateNumberOfParentVertices(
+                        centerVertex
+                    ) -
+                    b.calculateNumberOfParentVertices(
+                        centerVertex
+                    );
+                if(0 === difference){
+                    return a.getNumberOfSiblingsAbove() - b.getNumberOfSiblingsAbove();
+                }
+                return difference;
+            });
+        };
+
         api.Bubble = function (html) {
             this.html = html;
         };
 
         api.Bubble.prototype = new GraphElementUi.GraphElementUi();
+
+        api.Bubble.prototype.calculateNumberOfParentVertices = function (centerVertex) {
+            var numberOfParentVertices = 0;
+            var parentVertex = this;
+            while (!centerVertex.isSameBubble(parentVertex)) {
+                numberOfParentVertices++;
+                parentVertex = parentVertex.getParentVertex();
+            }
+            return numberOfParentVertices;
+        };
 
         api.Bubble.prototype.moveTo = function (otherBubble, relation) {
             if (this.isVertex()) {
@@ -239,6 +265,14 @@ define([
             return this._getColumnBubble(
                 api._getBubbleHtmlAbove
             );
+        };
+
+        api.Bubble.prototype.getNumberOfSiblingsAbove = function () {
+            return this.getHtml().closest(
+                ".vertex-tree-container"
+            ).prevAll(
+                ".vertex-tree-container:first"
+            ).length;
         };
 
         api.Bubble.prototype.getBubbleUnder = function () {
