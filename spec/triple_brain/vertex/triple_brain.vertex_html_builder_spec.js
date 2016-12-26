@@ -209,6 +209,35 @@ define([
                 "https://bubl.guru/user/vince/graph/vertex/9d73e974-80c1-4a7c-8736-f0ec6178226d"
             );
         });
+        it("does not link non links when there is a link present", function () {
+            var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            bubble1.setText("The potatoes are cooked https://bubl.guru/user/vince/graph/vertex/9d73e974-80c1-4a7c-8736-f0ec6178226d");
+            bubble1.getLabel().blur();
+            var link = bubble1.getLabel().find("a:first");
+            var linkTextWithoutLineBreak = link.text().replace(
+                /\n/g,
+                ''
+            );
+            expect(
+                linkTextWithoutLineBreak
+            ).toBe(
+                "https://bubl.guru/user/vince/graph/vertex/9d73e974-80c1-4a7c-8736-f0ec6178226d"
+            );
+        });
+        it("still wraps long text when there is a link", function () {
+            var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            bubble1.setText(
+                "The potatoes are cooked for a long time " +
+                "so that this makes quite a long text in " +
+                "the bubble https://bubl.guru/user/vince/graph/vertex/9d73e974-80c1-4a7c-8736-f0ec6178226d"
+            );
+            bubble1.getLabel().blur();
+            var textBubbleRaw = bubble1.getHtml().text();
+            var hasLineBreak = /\r|\n/.exec(textBubbleRaw);
+            expect(
+                hasLineBreak
+            ).not.toBeNull();
+        });
         it("hides the hidden neighbor properties indicator when the bubble has a duplicate bubble that is already expanded", function () {
             var graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
             var bubble1 = graphWithCircularityScenario.getBubble1InTree();

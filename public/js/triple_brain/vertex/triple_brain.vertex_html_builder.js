@@ -159,7 +159,6 @@ define([
         return api;
         function linkify(htmlContent) {
             //http://stackoverflow.com/a/25821576/541493
-            var originalContent = htmlContent;
             htmlContent = htmlContent.replace(
                 /\n/g,
                 ''
@@ -169,9 +168,11 @@ define([
             var htmlWithLink = htmlContent.replace(urlRegex, function (url, b, c) {
                 var url2 = (c === 'www.') ? 'http://' + url : url;
                 hasLink = true;
-                return '<a href="' + url2 + '" target="_blank">' + originalContent + '</a>';
+                return '<a href="' + url2 + '" target="_blank">' + url + '</a>';
             });
-            return hasLink ? htmlWithLink : originalContent;
+            return $.maxCharText(
+                htmlWithLink
+            );
         }
     }
 );

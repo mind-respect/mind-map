@@ -10,17 +10,24 @@ define([
     var defaultMaxChar = 30;
     $.fn.maxChar = function (maxChars) {
         var $this = $(this);
+        var text = $this.maxCharCleanText();
+        $this.text($.maxCharText(
+            text,
+            maxChars
+        ));
+        return $this;
+    };
+    $.maxCharText = function(text, maxChars){
         if (undefined === maxChars) {
             maxChars = defaultMaxChar;
         }
         var iteration = maxChars,
-            text = $this.maxCharCleanText(),
             lines = [],
             lastIndexOfNewLine = 0;
         for (; lastIndexOfNewLine < text.length;) {
             var line = text.substring(
-                    lastIndexOfNewLine,
-                        lastIndexOfNewLine + maxChars
+                lastIndexOfNewLine,
+                    lastIndexOfNewLine + maxChars
                 ),
                 indexOfSpaceInLine = line.lastIndexOf(" ") + 1;
             if (0 === indexOfSpaceInLine && line.length >= maxChars) {
@@ -31,7 +38,7 @@ define([
             } else {
                 line = text.substring(
                     lastIndexOfNewLine,
-                        lastIndexOfNewLine + indexOfSpaceInLine
+                    lastIndexOfNewLine + indexOfSpaceInLine
                 );
                 iteration = indexOfSpaceInLine;
             }
@@ -40,10 +47,9 @@ define([
                 line
             );
         }
-        $this.text(lines.join(
+        return lines.join(
             '\n'
-        ));
-        return $this;
+        );
     };
     $.fn.maxCharCleanText = function () {
         var $this = $(this);

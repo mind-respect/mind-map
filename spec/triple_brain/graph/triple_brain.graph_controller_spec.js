@@ -5,12 +5,14 @@
 define([
     'test/test-scenarios',
     'triple_brain.graph_controller',
-    "triple_brain.graph_service"
-], function (Scenarios, GraphController, GraphService) {
+    "triple_brain.graph_service",
+    "triple_brain.mind_map_info"
+], function (Scenarios, GraphController, GraphService, MindMapInfo) {
     "use strict";
     describe("graph_controller", function () {
         it("can expand all leafs", function () {
             var scenario = new Scenarios.threeBubblesGraph();
+            MindMapInfo._setIsViewOnly(false);
             var b2 = scenario.getBubble2InTree();
             expect(
                 b2.getNumberOfChild()
