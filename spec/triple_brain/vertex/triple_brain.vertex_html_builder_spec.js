@@ -117,7 +117,7 @@ define([
             ).toBeFalsy();
             TestUtils.endDragging(bubble2);
             expect(
-                bubble2.getHiddenRelationsContainer().getHtml()
+                bubble2.getHiddenRelationsContainer().isVisible()
             ).toBeTruthy();
         });
         it("doesn't move to a parent bubble that is the child of the dragged one", function () {

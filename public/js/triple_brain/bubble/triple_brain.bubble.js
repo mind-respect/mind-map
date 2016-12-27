@@ -35,7 +35,7 @@ define([
                     b.calculateNumberOfParentVertices(
                         centerVertex
                     );
-                if(0 === difference){
+                if (0 === difference) {
                     return a.getNumberOfSiblingsAbove() - b.getNumberOfSiblingsAbove();
                 }
                 return difference;
@@ -435,7 +435,10 @@ define([
         };
 
         api.Bubble.prototype.showHiddenRelationsContainer = function () {
-            if (this.hasHiddenRelationsContainer() && this.isCollapsed()) {
+            var shouldShow = this.hasHiddenRelationsContainer() && (
+                    this.isCollapsed() || !this.hasChildren()
+                );
+            if (shouldShow) {
                 this.getHiddenRelationsContainer().show();
             }
         };
