@@ -81,7 +81,7 @@ define([
             this.edgeServer = edgeServer;
             this.uri = edgeServer.getUri();
             this.html = $(
-                "<div class='relation graph-element bubble' draggable='true'>"
+                "<div class='relation graph-element bubble' draggable='false'>"
             ).append("<div class='in-bubble-content'>");
         }
 
