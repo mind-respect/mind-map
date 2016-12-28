@@ -62,64 +62,6 @@ define([
                 bubble1Duplicate.hasTheDuplicateButton()
             ).toBeTruthy();
         });
-        it("hides menu when dragging", function () {
-            MindMapInfo._setIsViewOnly(false);
-            var bubble2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
-            SelectionHandler.setToSingleGraphElement(
-                bubble2
-            );
-            expect(
-                bubble2.getMenuHtml()
-            ).not.toHaveClass("hidden");
-            TestUtils.startDragging(bubble2);
-            expect(
-                bubble2.getMenuHtml()
-            ).toHaveClass("hidden");
-        });
-        it("hides hidden properties container when dragging", function () {
-            MindMapInfo._setIsViewOnly(false);
-            var bubble2 = new Scenarios.graphWithHiddenSimilarRelations().getBubble2InTree();
-            expect(
-                bubble2.getHiddenRelationsContainer().isVisible()
-            ).toBeTruthy();
-            TestUtils.startDragging(bubble2);
-            expect(
-                bubble2.getHiddenRelationsContainer().isVisible()
-            ).toBeFalsy();
-        });
-        it("hides arrow when dragging", function () {
-            var bubble2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
-            expect(
-                bubble2.getArrowHtml()
-            ).not.toHaveClass("hidden");
-            TestUtils.startDragging(bubble2);
-            expect(
-                bubble2.getArrowHtml()
-            ).toHaveClass("hidden");
-        });
-        it("shows arrow back when stopping to drag", function () {
-            var bubble2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
-            TestUtils.startDragging(bubble2);
-            expect(
-                bubble2.getArrowHtml()
-            ).toHaveClass("hidden");
-            TestUtils.endDragging(bubble2);
-            expect(
-                bubble2.getArrowHtml()
-            ).not.toHaveClass("hidden");
-        });
-        it("shows hidden relations container when stopping to drag", function () {
-            MindMapInfo._setIsViewOnly(false);
-            var bubble2 = new Scenarios.graphWithHiddenSimilarRelations().getBubble2InTree();
-            TestUtils.startDragging(bubble2);
-            expect(
-                bubble2.getHiddenRelationsContainer().isVisible()
-            ).toBeFalsy();
-            TestUtils.endDragging(bubble2);
-            expect(
-                bubble2.getHiddenRelationsContainer().isVisible()
-            ).toBeTruthy();
-        });
         it("doesn't move to a parent bubble that is the child of the dragged one", function () {
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             TestUtils.startDragging(bubble1);

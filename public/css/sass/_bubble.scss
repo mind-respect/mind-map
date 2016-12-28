@@ -2,6 +2,18 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
+#drag-bubble-text-dump{
+  font-size:30px;
+  padding:10px;
+  width:auto;
+  max-width:325px;
+  text-align: left;
+  display:inline-block;
+  border-radius:50px;
+  position:fixed;
+  top:-500px;
+}
+
 .cboxPhoto {
   max-width: 600px;
   height: auto !important;
@@ -11,7 +23,6 @@
   z-index: 5;
   cursor: default;
   display: table;
-
   &.drag-over{
     .in-bubble-content {
       border:3px dashed red;

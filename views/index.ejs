@@ -25,6 +25,7 @@
 </head>
 <body class='hidden' id="body">
 <div id="tree-list-copy-dump"></div>
+<div id="drag-bubble-text-dump"></div>
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -181,7 +182,8 @@
         <div class="collapse navbar-collapse collapse-buttons">
             <div class="navbar-form navbar-left" role="search">
                 <div id="graph-element-menu" class="main-panel hidden-sm hidden-xs hidden" data-flow="mindMap">
-                    <button data-action="accept" data-icon="fa-check" class="graph-element-button in-label-button"></button>
+                    <button data-action="accept" data-icon="fa-check"
+                            class="graph-element-button in-label-button"></button>
                     <button data-action="addChild" data-icon="fa-arrow-right" class="graph-element-button"></button>
                     <button data-action="addSibling" data-icon="fa-arrows-v" class="graph-element-button"></button>
                     <button data-action="connectTo" data-icon="fa-paper-plane-o" class="graph-element-button"></button>
@@ -202,7 +204,8 @@
                     <button data-action="images" data-icon="fa-picture-o" class="graph-element-button"></button>
                     <button data-action="paste" data-icon="fa-paste" class="graph-element-button"></button>
                     <button data-action="cut" data-icon="fa-cut" class="graph-element-button"></button>
-                    <button data-action="copy" data-icon="fa-copy" class="graph-element-button clipboard-copy-button" data-clipboard-action="copy" data-clipboard-target="#tree-list-copy-dump"></button>
+                    <button data-action="copy" data-icon="fa-copy" class="graph-element-button clipboard-copy-button"
+                            data-clipboard-action="copy" data-clipboard-target="#tree-list-copy-dump"></button>
                     <button data-action="selectTree" data-icon="fa-sitemap" class="graph-element-button"></button>
                     <button data-action="makePublic" data-icon="fa-unlock"
                             class="graph-element-button in-label-button"></button>
@@ -339,7 +342,8 @@
                         <li>
                             <div class="timeline-image">
                                 <img class="img-circle img-responsive lazy"
-                                     data-original="/css/images/levels/level-0-feature-square-250.jpg" alt="" height="250" width="250">
+                                     data-original="/css/images/levels/level-0-feature-square-250.jpg" alt=""
+                                     height="250" width="250">
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
@@ -355,7 +359,8 @@
                         <li class="timeline-inverted">
                             <div class="timeline-image">
                                 <img class="img-circle img-responsive lazy"
-                                     data-original="/css/images/levels/level-1-feature-square-250.jpg" height="250" width="250" alt="">
+                                     data-original="/css/images/levels/level-1-feature-square-250.jpg" height="250"
+                                     width="250" alt="">
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
@@ -371,7 +376,8 @@
                         <li>
                             <div class="timeline-image">
                                 <img class="img-circle img-responsive lazy"
-                                     data-original="/css/images/levels/level-2-feature-square-250.jpg" height="250" width="250" alt="">
+                                     data-original="/css/images/levels/level-2-feature-square-250.jpg" height="250"
+                                     width="250" alt="">
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
@@ -387,7 +393,8 @@
                         <li class="timeline-inverted">
                             <div class="timeline-image">
                                 <img class="img-circle img-responsive lazy"
-                                     data-original="/css/images/levels/level-3-feature-square-250.jpg" height="250" width="250" alt="">
+                                     data-original="/css/images/levels/level-3-feature-square-250.jpg" height="250"
+                                     width="250" alt="">
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
@@ -403,7 +410,8 @@
                         <li>
                             <div class="timeline-image">
                                 <img class="img-circle img-responsive lazy"
-                                     data-original="/css/images/levels/level-4-feature-square-250.jpg" width="250" height="250" alt="">
+                                     data-original="/css/images/levels/level-4-feature-square-250.jpg" width="250"
+                                     height="250" alt="">
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
@@ -419,7 +427,8 @@
                         <li class="timeline-inverted">
                             <div class="timeline-image">
                                 <img class="img-circle img-responsive lazy"
-                                     data-original="/css/images/levels/level-5-feature-square-250.jpg" width="250" height="250" alt="">
+                                     data-original="/css/images/levels/level-5-feature-square-250.jpg" width="250"
+                                     height="250" alt="">
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
@@ -435,7 +444,8 @@
                         <li>
                             <div class="timeline-image">
                                 <img class="img-circle img-responsive lazy"
-                                     data-original="/css/images/levels/level-6-feature-square-250.jpg" width="250" height="250" alt="">
+                                     data-original="/css/images/levels/level-6-feature-square-250.jpg" width="250"
+                                     height="250" alt="">
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
@@ -879,48 +889,48 @@
     <div>
         <div id="drawn_graph" data-zoom="9" data-flow="mindMap" class="hidden"></div>
         <!--<div id="graph-element-menu" class="main-panel hidden-sm hidden-xs hidden" data-flow="mindMap">-->
-            <!--<button data-action="accept" data-icon="fa-check" class="graph-element-button in-label-button"></button>-->
-            <!--<button data-action="addChild" data-icon="fa-arrow-right" class="graph-element-button"></button>-->
-            <!--<button data-action="addSibling" data-icon="fa-arrows-v" class="graph-element-button"></button>-->
-            <!--<button data-action="connectTo" data-icon="fa-paper-plane-o" class="graph-element-button"></button>-->
-            <!--<button data-action="subElements" data-icon="fa-expand" class="graph-element-button"></button>-->
-            <!--<button data-action="reverseToRight" data-icon="fa-share" class="graph-element-button"></button>-->
-            <!--<button data-action="reverseToLeft" data-icon="fa-reply" class="graph-element-button"></button>-->
-            <!--<button data-action="center" data-icon="fa-bullseye" class="graph-element-button"></button>-->
-            <!--<button data-action="expand" data-icon="fa-leaf"-->
-                    <!--class="graph-element-button"></button>-->
-            <!--<button data-action="collapse" data-icon="fa-eye-slash"-->
-                    <!--class="graph-element-button"></button>-->
-            <!--<button data-action="identify" data-icon="fa-info-circle"-->
-                    <!--class="graph-element-button in-label-button"></button>-->
-            <!--<button data-action="suggestions" data-icon="fa-lightbulb-o"-->
-                    <!--class="suggestion graph-element-button"></button>-->
-            <!--<button data-action="note" data-icon="fa-book"-->
-                    <!--class="note-button graph-element-button in-label-button"></button>-->
-            <!--<button data-action="images" data-icon="fa-picture-o" class="graph-element-button"></button>-->
-            <!--<button data-action="paste" data-icon="fa-paste" class="graph-element-button"></button>-->
-            <!--<button data-action="cut" data-icon="fa-cut" class="graph-element-button"></button>-->
-            <!--<button data-action="selectTree" data-icon="fa-sitemap" class="graph-element-button"></button>-->
-            <!--<button data-action="makePublic" data-icon="fa-unlock"-->
-                    <!--class="graph-element-button in-label-button"></button>-->
-            <!--<button data-action="makePrivate" data-icon="fa-lock"-->
-                    <!--class="graph-element-button in-label-button"></button>-->
-            <!--<button data-action="group" data-icon="fa-compress" class="graph-element-button"></button>-->
-            <!--<button data-action="remove" data-icon="fa-trash-o" class="graph-element-button"></button>-->
-            <!--<button data-action="visitOtherInstances" data-icon="fa fa-link"-->
-                    <!--class="graph-element-button in-label-button"></button>-->
-            <!--<button data-action="toggleWikidata" data-icon="fa-linkedin-square"-->
-                    <!--class="graph-element-button whole-graph-button"></button>-->
-            <!--<button data-action="expandAll" data-icon="fa-leaf"-->
-                    <!--class="graph-element-button whole-graph-button"></button>-->
-            <!--<button data-action="zoomIn" data-icon="fa-search-plus"-->
-                    <!--class="graph-element-button whole-graph-button"></button>-->
-            <!--<button data-action="zoomOut" data-icon="fa-search-minus"-->
-                    <!--class="graph-element-button whole-graph-button"></button>-->
-            <!--<button data-action="compare" data-icon="fa-balance-scale"-->
-                    <!--class="graph-element-button whole-graph-button"></button>-->
-            <!--<button data-action="select" data-icon="fa-square-o"-->
-                    <!--class="graph-element-button whole-graph-button"></button>-->
+        <!--<button data-action="accept" data-icon="fa-check" class="graph-element-button in-label-button"></button>-->
+        <!--<button data-action="addChild" data-icon="fa-arrow-right" class="graph-element-button"></button>-->
+        <!--<button data-action="addSibling" data-icon="fa-arrows-v" class="graph-element-button"></button>-->
+        <!--<button data-action="connectTo" data-icon="fa-paper-plane-o" class="graph-element-button"></button>-->
+        <!--<button data-action="subElements" data-icon="fa-expand" class="graph-element-button"></button>-->
+        <!--<button data-action="reverseToRight" data-icon="fa-share" class="graph-element-button"></button>-->
+        <!--<button data-action="reverseToLeft" data-icon="fa-reply" class="graph-element-button"></button>-->
+        <!--<button data-action="center" data-icon="fa-bullseye" class="graph-element-button"></button>-->
+        <!--<button data-action="expand" data-icon="fa-leaf"-->
+        <!--class="graph-element-button"></button>-->
+        <!--<button data-action="collapse" data-icon="fa-eye-slash"-->
+        <!--class="graph-element-button"></button>-->
+        <!--<button data-action="identify" data-icon="fa-info-circle"-->
+        <!--class="graph-element-button in-label-button"></button>-->
+        <!--<button data-action="suggestions" data-icon="fa-lightbulb-o"-->
+        <!--class="suggestion graph-element-button"></button>-->
+        <!--<button data-action="note" data-icon="fa-book"-->
+        <!--class="note-button graph-element-button in-label-button"></button>-->
+        <!--<button data-action="images" data-icon="fa-picture-o" class="graph-element-button"></button>-->
+        <!--<button data-action="paste" data-icon="fa-paste" class="graph-element-button"></button>-->
+        <!--<button data-action="cut" data-icon="fa-cut" class="graph-element-button"></button>-->
+        <!--<button data-action="selectTree" data-icon="fa-sitemap" class="graph-element-button"></button>-->
+        <!--<button data-action="makePublic" data-icon="fa-unlock"-->
+        <!--class="graph-element-button in-label-button"></button>-->
+        <!--<button data-action="makePrivate" data-icon="fa-lock"-->
+        <!--class="graph-element-button in-label-button"></button>-->
+        <!--<button data-action="group" data-icon="fa-compress" class="graph-element-button"></button>-->
+        <!--<button data-action="remove" data-icon="fa-trash-o" class="graph-element-button"></button>-->
+        <!--<button data-action="visitOtherInstances" data-icon="fa fa-link"-->
+        <!--class="graph-element-button in-label-button"></button>-->
+        <!--<button data-action="toggleWikidata" data-icon="fa-linkedin-square"-->
+        <!--class="graph-element-button whole-graph-button"></button>-->
+        <!--<button data-action="expandAll" data-icon="fa-leaf"-->
+        <!--class="graph-element-button whole-graph-button"></button>-->
+        <!--<button data-action="zoomIn" data-icon="fa-search-plus"-->
+        <!--class="graph-element-button whole-graph-button"></button>-->
+        <!--<button data-action="zoomOut" data-icon="fa-search-minus"-->
+        <!--class="graph-element-button whole-graph-button"></button>-->
+        <!--<button data-action="compare" data-icon="fa-balance-scale"-->
+        <!--class="graph-element-button whole-graph-button"></button>-->
+        <!--<button data-action="select" data-icon="fa-square-o"-->
+        <!--class="graph-element-button whole-graph-button"></button>-->
         <!--</div>-->
     </div>
 </div>
@@ -1293,10 +1303,10 @@
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
         i[r] = i[r] || function () {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
         a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
+            m = s.getElementsByTagName(o)[0];
         a.async = 1;
         a.src = g;
         m.parentNode.insertBefore(a, m)

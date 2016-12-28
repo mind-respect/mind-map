@@ -146,7 +146,8 @@ define([
             GraphUi.enableDragScroll();
         });
         graphElementUi.getHtml().on("dragstart", function (event) {
-            if (event.originalEvent) {
+            //event.originalEvent is undefined when using jasmine and v8 :S
+            if(event.originalEvent){
                 event.originalEvent.dataTransfer.setData('Text', "dummy data for dragging to work in Firefox");
             }
             var graphElementUi = BubbleFactory.fromHtml(
@@ -157,15 +158,13 @@ define([
             );
             GraphUi.setIsDraggingBubble(true);
             GraphUi.disableDragScroll();
-            graphElementUi.hideMenu();
-            graphElementUi.hideHiddenRelationsContainer();
-            graphElementUi.getArrowHtml().addClass("hidden");
-            graphElementUi.getHtml().addClass(
-                "dragged"
-            ).data(
-                "original-parent",
-                graphElementUi.getParentVertex()
+            var bubbleTextOnlyElement = $('#drag-bubble-text-dump').text(
+                graphElementUi.getTextOrDefault()
             );
+            if(event.originalEvent){
+                event.originalEvent.dataTransfer.setDragImage(bubbleTextOnlyElement[0], 0, 0);
+            }
+
         }).on(
             "dragend", function (event) {
                 event.preventDefault();
@@ -173,10 +172,7 @@ define([
                 var bubble = BubbleFactory.fromHtml(
                     $(this)
                 );
-                bubble.getArrowHtml().removeClass(
-                    "hidden"
-                );
-                bubble.showHiddenRelationsContainer();
+                $('#drag-bubble-text-dump').empty();
                 GraphUi.enableDragScroll();
             });
         graphElementUi.getLabel().on(

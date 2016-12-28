@@ -345,6 +345,8 @@ button.inactive i { color: red; }
 .edge-label { position: absolute; width: 100%; left: 0; right: 0; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
+#drag-bubble-text-dump { font-size: 30px; padding: 10px; width: auto; max-width: 325px; text-align: left; display: inline-block; border-radius: 50px; position: fixed; top: -500px; }
+
 .cboxPhoto { max-width: 600px; height: auto !important; }
 
 .bubble { z-index: 5; cursor: default; display: table; /*.label to override bootstrap*/ white-space: nowrap; position: relative; min-width: 0; margin: 0 0 0 0; }
