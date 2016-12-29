@@ -15,7 +15,8 @@ define([
     "triple_brain.identification",
     "bootstrap-wysiwyg",
     "bootstrap",
-    "jquery.safer-html"
+    "jquery.safer-html",
+    "jquery.max_char"
 ], function ($, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu, EdgeService, Identification) {
     "use strict";
     var api = {},
@@ -228,7 +229,9 @@ define([
             clipText = event.clipboardData.getData('text/plain');
         }
         this.setLabel(
-            this.getModel().getLabel() + " " + clipText
+            $.maxCharText(
+                this.getModel().getLabel() + " " + clipText
+            )
         );
     };
 

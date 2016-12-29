@@ -82,6 +82,7 @@ define([
         };
         function IdentificationMenu(graphElement) {
             this.graphElement = graphElement;
+            this.isViewOnly = MindMapInfo.isViewOnly() || graphElement.isGroupRelation();
         }
 
         IdentificationMenu.prototype.create = function () {
@@ -99,18 +100,20 @@ define([
                 },
                 $.t("graph_element.menu.identification.title_prefix")
             );
-            GraphElementMenu.setupAutoCompleteSuggestionZIndex(
-                this.identificationTextField
-            );
+            if (this.identificationTextField) {
+                GraphElementMenu.setupAutoCompleteSuggestionZIndex(
+                    this.identificationTextField
+                );
+            }
             return this;
         };
 
         IdentificationMenu.prototype._buildMenu = function () {
-            this._addTitle();
-            if (!MindMapInfo.isViewOnly()) {
+            if (!this.isViewOnly) {
+                this._addTitle();
                 this._addIdentificationTextField().focus();
+                this._addInstructions();
             }
-            this._addInstructions();
             this._addIdentifications();
         };
 
@@ -282,12 +285,17 @@ define([
                         identification.getUri() :
                         identification.getLabel()
                 );
-                return $(
+                var title = $(
                     "<h3 class='list-group-item-heading'>"
                 ).append(
-                    anchor,
-                    self._makeRemoveButton()
+                    anchor
                 );
+                if (!self.isViewOnly) {
+                    title.append(
+                        self._makeRemoveButton()
+                    );
+                }
+                return title;
             }
         };
 

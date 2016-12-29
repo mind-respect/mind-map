@@ -60,6 +60,9 @@ define([
             return;
         }
         var selectedElement = SelectionHandler.getSingleElement();
+        if(selectedElement.isInEditMode()){
+            return;
+        }
         var oEvent = event.originalEvent;
         event.preventDefault();
         executeFeature("paste", selectedElement, oEvent);

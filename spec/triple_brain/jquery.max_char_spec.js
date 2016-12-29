@@ -9,7 +9,7 @@ define([
     "use strict";
     describe("max_char", function () {
         var editable,
-            defaultMaxChar = 30;
+            defaultMaxChar = 40;
 
         beforeEach(function () {
             editable = $("<div contenteditable='true'>");
