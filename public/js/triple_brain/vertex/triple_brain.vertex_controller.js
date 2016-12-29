@@ -53,10 +53,18 @@ define([
             var groupRelation = this.getUi().getParentBubble().getParentBubble();
             return groupRelation.getController().addChild();
         }
-        return api.addChildToRealAndUiParent(
+        api.addChildToRealAndUiParent(
             this.getUi().getParentVertex(),
             this.getUi().getParentBubble().getParentBubble()
-        );
+        ).then(function(triple){
+            triple.edge().getController().moveUnder(
+                this.getUi().getParentBubble()
+            );
+            SelectionHandler.setToSingleVertex(
+                triple.destinationVertex()
+            );
+            triple.destinationVertex().centerOnScreenWithAnimation();
+        }.bind(this));
     };
 
     VertexController.prototype.removeCanDo = function () {
