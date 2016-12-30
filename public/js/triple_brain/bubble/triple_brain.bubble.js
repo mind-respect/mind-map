@@ -209,7 +209,24 @@ define([
                 ancestor :
                 this;
         };
-
+        api.Bubble.prototype.visitClosestChildVertices = function (visitor) {
+            this.visitClosestChildOfType(
+                GraphElementType.Vertex,
+                visitor
+            );
+        };
+        api.Bubble.prototype.visitClosestChildOfType = function (type, visitor) {
+            this.visitAllChild(function (child) {
+                if (type === child.getGraphElementType()) {
+                    visitor(child);
+                } else {
+                    child.visitClosestChildOfType(
+                        type,
+                        visitor
+                    )
+                }
+            });
+        };
         api.Bubble.prototype.isBubbleAChild = function (bubble) {
             return this.getChildrenContainer().find(
                     "#" + bubble.getId()
@@ -617,11 +634,17 @@ define([
         };
 
         api.Bubble.prototype.collapse = function () {
+            if (!this.hasChildren()) {
+                return;
+            }
             this.getChildrenContainer().addClass(
                 "hidden"
             );
             this.showHiddenRelationsContainer();
             this.reviewMenuButtonsVisibility();
+            this.visitClosestChildVertices(function (child) {
+                child.collapse();
+            });
             this.centerOnScreenWithAnimation();
         };
 
