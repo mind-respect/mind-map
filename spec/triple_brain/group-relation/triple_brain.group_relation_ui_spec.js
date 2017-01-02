@@ -36,6 +36,7 @@ define([
         it("can expand and collapse", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
             var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
+            possessionInTree.expand();
             expect(
                 possessionInTree.isCollapsed()
             ).toBeFalsy();

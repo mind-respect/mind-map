@@ -223,7 +223,7 @@ define([
                     child.visitClosestChildOfType(
                         type,
                         visitor
-                    )
+                    );
                 }
             });
         };
