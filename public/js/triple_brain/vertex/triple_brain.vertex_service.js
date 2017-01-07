@@ -147,7 +147,6 @@ define([
         };
         return api;
         function setCollectionPrivacy(isPublic, vertices) {
-            var typeQueryParam = isPublic ? "public" : "private";
             var verticesUri = [];
             $.each(vertices, function () {
                 var vertex = this;
@@ -156,10 +155,10 @@ define([
                 );
             });
             return $.ajax({
-                type: 'POST',
+                type: isPublic ? 'POST' : 'DELETE',
                 data: JSON.stringify(verticesUri),
                 contentType: 'application/json;charset=utf-8',
-                url: getVerticesUrl() + '/collection/public_access?type=' + typeQueryParam
+                url: getVerticesUrl() + '/collection/public_access'
             });
         }
 
