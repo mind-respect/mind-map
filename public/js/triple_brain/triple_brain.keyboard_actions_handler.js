@@ -10,8 +10,8 @@ define([
     "triple_brain.vertex_service",
     "triple_brain.identification_menu",
     "triple_brain.mind_map_info",
-    "triple_brain.graph_element_ui"
-], function ($, EventBus, SelectionHandler, CenterBubble, VertexService, IdentificationMenu, MindMapInfo, GraphElementUi) {
+    "triple_brain.graph_ui"
+], function ($, EventBus, SelectionHandler, CenterBubble, VertexService, IdentificationMenu, MindMapInfo, GraphUi) {
     "use strict";
     var api = {},
         tabKeyNumber = 9,
@@ -61,6 +61,9 @@ define([
         }
         var selectedElement = SelectionHandler.getSingleElement();
         if(selectedElement.isInEditMode()){
+            return;
+        }
+        if(GraphUi.isThereAnOpenModal()){
             return;
         }
         var oEvent = event.originalEvent;
