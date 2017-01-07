@@ -81,6 +81,10 @@ define([
         return this.vertexServerFormat.vertex.nbPublicNeighbors;
     };
 
+    Vertex.prototype.hasOnlyOneHiddenChild = function () {
+        return 2 === this.getNumberOfConnectedEdges();
+    };
+
     Vertex.prototype.isPublic = function () {
         return this.vertexServerFormat.vertex.isPublic;
     };

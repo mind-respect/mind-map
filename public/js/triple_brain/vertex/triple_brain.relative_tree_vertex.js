@@ -13,9 +13,10 @@ define([
         "triple_brain.bubble_factory",
         "triple_brain.mind_map_info",
         "clipboard",
-        "triple_brain.bubble"
+        "triple_brain.bubble",
+        "triple_brain.graph_element_ui"
     ],
-    function ($, VertexUi, EventBus, TreeEdge, ObjectUtils, TripleUiBuilder, SelectionHandler, BubbleFactory, MindMapInfo, Clipboard, Bubble) {
+    function ($, VertexUi, EventBus, TreeEdge, ObjectUtils, TripleUiBuilder, SelectionHandler, BubbleFactory, MindMapInfo, Clipboard, Bubble, GraphElementUi) {
         "use strict";
         var api = {};
         VertexUi.buildCommonConstructors(api);
@@ -186,27 +187,42 @@ define([
             vertexAndRelationAddedHandler
         );
         EventBus.subscribe('/event/ui/graph/drawn', function () {
+            var expandCalls = [];
+            api.visitAllVertices(function(vertexUi){
+                if(vertexUi.getModel().hasOnlyOneHiddenChild() && !vertexUi.isExpanded()){
+                    expandCalls.push(
+                        vertexUi.getController().expand(true)
+                    );
+                }
+            });
+            $.when.apply($, expandCalls).then(function(){
+                GraphElementUi.getCenterVertexOrSchema().centerOnScreenWithAnimation();
+            });
+            setupCopyButton();
+        });
+
+        function setupCopyButton(){
             var copyButton = $('.clipboard-copy-button')[0];
             if (!copyButton) {
                 return;
             }
             var clipboard = new Clipboard(
                 $('.clipboard-copy-button')[0], {
-                    target: function (trigger) {
+                    target: function () {
                         var treeListCopyDump = $("#tree-list-copy-dump");
                         treeListCopyDump.html(
                             api.VerticesToHtmlLists(
                                 SelectionHandler.getSelectedVertices()
                             )
                         );
-                        return  treeListCopyDump[0];
+                        return treeListCopyDump[0];
                     }
                 }
             );
             clipboard.on("success", function(){
                 $("#tree-list-copy-dump").empty();
             });
-        });
+        }
         function vertexAndRelationAddedHandler(event, triple, tripleServerFormat) {
             var sourceBubble = triple.sourceVertex();
             if (!sourceBubble.isVertex()) {

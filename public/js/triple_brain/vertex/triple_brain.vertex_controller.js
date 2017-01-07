@@ -56,7 +56,7 @@ define([
         api.addChildToRealAndUiParent(
             this.getUi().getParentVertex(),
             this.getUi().getParentBubble().getParentBubble()
-        ).then(function(triple){
+        ).then(function (triple) {
             triple.edge().getController().moveUnder(
                 this.getUi().getParentBubble()
             );
@@ -287,7 +287,8 @@ define([
         return !this.isSingle();
     };
 
-    VertexController.prototype.copy = function () {};
+    VertexController.prototype.copy = function () {
+    };
 
     VertexController.prototype.groupCanDo = function () {
         return this.isGroupAndOwned();
@@ -323,21 +324,34 @@ define([
             GraphDisplayer.displayUsingCentralBubbleUri
         );
     };
-    VertexController.prototype.expand = function (avoidCenter) {
+    VertexController.prototype.expand = function (avoidCenter, avoidExpandChild) {
         var deferred = $.Deferred().resolve();
-        var self = this;
+        avoidExpandChild = avoidExpandChild || false;
         if (this.getUi().hasVisibleHiddenRelationsContainer()) {
             if (!this.getUi().isCollapsed()) {
                 deferred = GraphDisplayer.addChildTree(
                     this.getUi()
-                );
+                ).done(function(){
+                    if(avoidExpandChild){
+                        return true;
+                    }
+                    var expandChildCalls = [];
+                    this.getUi().visitClosestChildVertices(function(childVertex){
+                        if(childVertex.getModel().hasOnlyOneHiddenChild()){
+                            expandChildCalls.push(
+                                childVertex.getController().expand(true, true)
+                            );
+                        }
+                    });
+                    return $.when.apply($, expandChildCalls);
+                }.bind(this));
             }
         } else {
             deferred = this.expandDescendantsIfApplicable();
         }
         return deferred.done(function () {
-            self.getUi().expand(avoidCenter);
-        });
+            this.getUi().expand(avoidCenter);
+        }.bind(this));
     };
     api.Self = VertexController;
     api.addChildToRealAndUiParent = function (realParent, uiParent) {
