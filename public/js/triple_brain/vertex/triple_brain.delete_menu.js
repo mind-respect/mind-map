@@ -3,12 +3,9 @@
  */
 
 define([
-        "jquery",
-        "triple_brain.graph_element_menu",
-        "triple_brain.graph_ui",
-        "jquery.i18next"
+        "jquery"
     ],
-    function ($, GraphElementMenu, GraphUi) {
+    function ($) {
         "use strict";
         var api = {};
         api.ofVertexAndDeletionBehavior = function (vertex, deleteCallback) {
@@ -19,85 +16,64 @@ define([
         };
         return api;
         function DeleteMenu(vertex, deleteCallback) {
-            var self = this;
-            var html = $("<div class='delete-menu text-center'>");
             this.build = function () {
-                GraphUi.addHtml(html);
-                html.append(
-                    title(),
-                    buttons()
-                );
-                GraphElementMenu.makeForMenuContentAndGraphElement(
-                    html,
-                    vertex,
-                    {},
-                    $.t("vertex.menu.delete.title_prefix")
-                );
-                return self;
+                this.vertex = vertex;
+                this.modal = $("#remove-confirm-menu");
+                this.modal.modal();
+                this.isMultipleBubblesFlow = Array.isArray(vertex);
+                this.modal.find(".multiple-flow")[
+                    this.isMultipleBubblesFlow ?
+                        "removeClass" :
+                        "addClass"
+                    ]("hidden");
+                this.displayLabelOfSelectedBubbles();
+                this.setupConfirmButton();
+                this.setupCancelButton();
+                return this;
             };
 
-            function title() {
-                return $(
-                    "<h2>"
-                ).attr(
-                    "data-i18n",
-                    "vertex.menu.delete.title"
-                );
-            }
-
-            function buttons() {
-                return $(
-                    "<div>"
-                ).append(
-                    confirmButton(),
-                    cancelButton()
-                ).css(
-                    "margin-top",
-                    "1.5em"
-                );
-                function confirmButton() {
-                    return $(
-                        "<button>"
-                    ).attr(
-                        "data-i18n",
-                        "vertex.menu.delete.button.confirm"
-                    ).data(
-                        "vertex",
-                        vertex
-                    ).on(
-                        "click",
-                        function (event) {
-                            event.stopPropagation();
-                            var button = $(this);
-                            deleteCallback(
-                                button.data("vertex")
-                            );
-                            GraphElementMenu.fromContentComponent(
-                                button
-                            ).close();
-                        }
-                    ).css(
-                        "margin-right",
-                        "1.5em"
-                    ).button();
+            this.displayLabelOfSelectedBubbles = function () {
+                var ul = this.modal.find(".selected-bubbles").empty();
+                var titleBubbleLabelContainer = this.modal.find(
+                    ".modal-title .bubble-label"
+                ).empty();
+                if (!this.isMultipleBubblesFlow) {
+                    titleBubbleLabelContainer.text(
+                        vertex.text()
+                    );
+                    return;
                 }
+                this.vertex.forEach(function (vertex) {
+                    ul.append(
+                        $("<li>").text(
+                            vertex.getTextOrDefault()
+                        )
+                    );
+                });
+            };
 
-                function cancelButton() {
-                    return $(
-                        "<button>"
-                    ).attr(
-                        "data-i18n",
-                        "vertex.menu.delete.button.cancel"
-                    ).on(
-                        "click",
-                        function () {
-                            GraphElementMenu.fromContentComponent(
-                                $(this)
-                            ).close();
-                        }
-                    ).button();
-                }
-            }
+            this.setupConfirmButton = function () {
+                this.modal.find(".confirm").on(
+                    "click",
+                    function (event) {
+                        event.stopPropagation();
+                        deleteCallback(
+                            this.vertex
+                        );
+                        this.modal.modal("hide");
+                    }.bind(this)
+                );
+            };
+
+            this.setupCancelButton = function () {
+                this.modal.find(".cancel").on(
+                    "click",
+                    function (event) {
+                        event.stopPropagation();
+                        this.modal.modal("hide");
+                    }.bind(this)
+                );
+            };
         }
     }
 );

@@ -60,6 +60,14 @@ define([
                 url: vertex.getUri()
             });
         };
+        api.removeCollection = function (vertices) {
+            return $.ajax({
+                type: 'DELETE',
+                data: JSON.stringify(verticesUriFromVertices(vertices)),
+                contentType: 'application/json;charset=utf-8',
+                url: getVerticesUrl() + '/collection'
+            });
+        };
         api.updateLabel = function (vertex, label, callback) {
             FriendlyResourceService.updateLabel(
                 vertex,
@@ -147,16 +155,9 @@ define([
         };
         return api;
         function setCollectionPrivacy(isPublic, vertices) {
-            var verticesUri = [];
-            $.each(vertices, function () {
-                var vertex = this;
-                verticesUri.push(
-                    vertex.getUri()
-                );
-            });
             return $.ajax({
                 type: isPublic ? 'POST' : 'DELETE',
-                data: JSON.stringify(verticesUri),
+                data: JSON.stringify(verticesUriFromVertices(vertices)),
                 contentType: 'application/json;charset=utf-8',
                 url: getVerticesUrl() + '/collection/public_access'
             });
@@ -171,6 +172,17 @@ define([
 
         function getVerticesUrl() {
             return UserService.currentUserUri() + "/graph/vertex";
+        }
+
+        function verticesUriFromVertices(vertices) {
+            var verticesUri = [];
+            $.each(vertices, function () {
+                var vertex = this;
+                verticesUri.push(
+                    vertex.getUri()
+                );
+            });
+            return verticesUri;
         }
     }
 );

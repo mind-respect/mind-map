@@ -255,10 +255,14 @@
       },
       "delete": {
         "title_prefix": "Remove ",
-        "title": "Do you really want to remove this bubble?",
+        "multiple": "All these bubbles",
+        "desc1": "Do you really want to remove this?",
+        "desc2": "The relations around an erased bubble are also removed.",
+        "desc3": "If you choose to remove this and it seems like related bubbles have disapeared, try to look for them in the search bar.",
         "button": {
-          "confirm": "Yes",
-          "cancel": "No"
+          "confirm": "Remove",
+          "multiple_confirm_suffix": "all",
+          "cancel": "Cancel"
         }
       }
     }

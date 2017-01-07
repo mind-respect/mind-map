@@ -256,10 +256,14 @@
       },
       "delete": {
         "title_prefix": "Effacer ",
-        "title": "Voulez-vous vraiment effacer cette bulle?",
+        "multiple": "Toutes ces bulles",
+        "desc1": "Voulez-vous vraiment effacer ça?",
+        "desc2": "Les relations autour d'une bulle effacée s'effacent également",
+        "desc3": "Si vous décidez d'effacer et que des bulles reliées semblent avoir disparues, essayez de les retrouver dans la barre de recherche",
         "button": {
-          "confirm": "Oui",
-          "cancel": "Non"
+          "confirm": "Effacer",
+          "multiple_confirm_suffix": "tout",
+          "cancel": "Annuler"
         }
       }
     }

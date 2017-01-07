@@ -68,24 +68,38 @@ define([
     };
 
     VertexController.prototype.removeCanDo = function () {
-        return this.isSingleAndOwned();
+        return this.isOwned();
     };
 
     VertexController.prototype.remove = function (skipConfirmation) {
         if (skipConfirmation) {
-            deleteAfterConfirmationBehavior(this.vertices);
+            deleteAfterConfirmationBehavior.bind(this)(
+                this.vertices
+            );
             return;
         }
         DeleteMenu.ofVertexAndDeletionBehavior(
             this.vertices,
-            deleteAfterConfirmationBehavior
+            deleteAfterConfirmationBehavior.bind(this)
         ).build();
         function deleteAfterConfirmationBehavior(vertexUi) {
-            VertexService.remove(
-                vertexUi
-            ).then(function () {
-                vertexUi.remove();
-            });
+            var removePromise = this.isSingle() ?
+                VertexService.remove(
+                    vertexUi
+                ):
+                VertexService.removeCollection(
+                    vertexUi
+                );
+            removePromise.then(function () {
+                if(this.isSingle()){
+                    vertexUi.remove();
+                    return true;
+                }
+                vertexUi.forEach(function(vertexUi){
+                    vertexUi.remove();
+                });
+                return true;
+            }.bind(this));
         }
     };
 
