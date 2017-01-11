@@ -223,7 +223,7 @@ define([
                 if (dragged === undefined) {
                     return;
                 }
-                dragged.getController().moveAfter(
+                dragged.getController().moveUnderParent(
                     parent
                 );
             }

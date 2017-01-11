@@ -99,6 +99,27 @@ define([
         });
     };
 
+    GraphElementController.prototype.focus = function(){
+        this.getUi().focus();
+    };
+
+    GraphElementController.prototype.travelLeft = function(){
+        this.getUi().travelLeft();
+    };
+
+    GraphElementController.prototype.travelRight = function(){
+        this.getUi().travelRight();
+    };
+
+    GraphElementController.prototype.travelUp = function(){
+        this.getUi().travelUp();
+    };
+
+    GraphElementController.prototype.travelDown = function(){
+        this.getUi().travelDown();
+    };
+
+
     GraphElementController.prototype.centerCanDo = function () {
         return this.isSingle() && !this.getUi().isCenterBubble();
     };
@@ -239,7 +260,7 @@ define([
         if(!bubbleCutClipboard.getController()._canMoveAfter(this.getUi())){
             return;
         }
-        bubbleCutClipboard.getController().moveAfter(
+        bubbleCutClipboard.getController().moveUnderParent(
             this.getUi()
         );
         bubbleCutClipboard = undefined;
@@ -269,7 +290,7 @@ define([
         return this.getUi().getUri() !== parent.getUri() && !this.getUi().isBubbleAChild(parent);
     };
 
-    GraphElementController.prototype.moveAfter = function (parent) {
+    GraphElementController.prototype.moveUnderParent = function (parent) {
         var ui = this.getUi();
         if (!this._canMoveAfter(parent)) {
             return;

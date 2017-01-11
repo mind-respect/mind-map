@@ -98,7 +98,7 @@ define([
                 b2.getController().expandCanDo()
             ).toBeTruthy();
         });
-        it("does does not show the expand bubbles button when there are no descendants to expand", function () {
+        it("does not show the expand bubbles button when there are no descendants to expand", function () {
             var scenario = new Scenarios.threeBubblesGraph();
             var b2 = scenario.getBubble2InTree();
             scenario.expandBubble2(
@@ -141,6 +141,9 @@ define([
                     scenario.getCenterVertexInTree()
                 )
             ).toBeTruthy();
+        });
+        it("can undo a move under parent", function(){
+
         });
         it("adds the group relation identifier to a vertex when moving around another vertex that is under a group relation", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();

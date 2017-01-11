@@ -33,6 +33,7 @@ define([
         ctrlKeyNumber = 17,
         xKeyNumber = 88,
         vKeyNumber = 86,
+        zKeyNumber = 90,
         nonCtrlPlusActions = defineNonCtrlPlusKeysAndTheirActions(),
         ctrlPlusActions = defineCtrlPlusKeysAndTheirActions();
 
@@ -60,10 +61,10 @@ define([
             return;
         }
         var selectedElement = SelectionHandler.getSingleElement();
-        if(selectedElement.isInEditMode()){
+        if (selectedElement.isInEditMode()) {
             return;
         }
-        if(GraphUi.isThereAnOpenModal()){
+        if (GraphUi.isThereAnOpenModal()) {
             return;
         }
         var oEvent = event.originalEvent;
@@ -109,31 +110,27 @@ define([
     }
 
     function executeFeature(feature, selectedElement, event) {
-        if (typeof feature === "string") {
-            var controller = selectedElement.getController();
-            if (controller[feature] === undefined) {
-                return;
-            }
-            var canDoValidator = controller[feature + "CanDo"];
-            if (canDoValidator !== undefined && !canDoValidator.call(controller)) {
-                return;
-            }
-            controller[feature](event);
+        var controller = selectedElement.getController();
+        if (controller[feature] === undefined) {
             return;
         }
-        feature(selectedElement, event);
+        var canDoValidator = controller[feature + "CanDo"];
+        if (canDoValidator !== undefined && !canDoValidator.call(controller)) {
+            return;
+        }
+        controller[feature](event);
     }
 
     function defineNonCtrlPlusKeysAndTheirActions() {
         var actions = {};
         actions[tabKeyNumber] = "addChild";
         actions[deleteKeyNumber] = "remove";
-        actions[leftArrowKeyNumber] = leftAction;
-        actions[rightArrowKeyNumber] = rightAction;
-        actions[upArrowKeyNumber] = upAction;
-        actions[downArrowKeyNumber] = downAction;
+        actions[leftArrowKeyNumber] = "travelLeft";
+        actions[rightArrowKeyNumber] = "travelRight";
+        actions[upArrowKeyNumber] = "travelUp";
+        actions[downArrowKeyNumber] = "travelDown";
         actions[enterKeyCode] = "addSibling";
-        actions[spaceBarKeyNumber] = focus;
+        actions[spaceBarKeyNumber] = "focus";
         return actions;
     }
 
@@ -147,65 +144,7 @@ define([
         actions[zeroKeyNumber] = "center";
         actions[hKeyNumber] = "collapse";
         actions[xKeyNumber] = "cut";
+        actions[zKeyNumber] = "undo";
         return actions;
     }
-
-    function leftAction(selectedElement) {
-        if (selectedElement.isCenterBubble()) {
-            var centerVertex = CenterBubble.usingBubble(
-                selectedElement
-            );
-            if (!centerVertex.hasChildToLeft()) {
-                return;
-            }
-            return selectNew(
-                centerVertex.getToTheLeftTopMostChild()
-            );
-        }
-        return selectNew(
-            selectedElement.isToTheLeft() ?
-                selectedElement.getTopMostChildBubble() :
-                selectedElement.getParentBubble()
-        );
-    }
-
-    function rightAction(selectedElement) {
-        if (selectedElement.isCenterBubble()) {
-            var centerVertex = CenterBubble.usingBubble(
-                selectedElement
-            );
-            if (!centerVertex.hasChildToRight()) {
-                return;
-            }
-            return selectNew(
-                centerVertex.getToTheRightTopMostChild()
-            );
-        }
-        return selectNew(
-            selectedElement.isToTheLeft() ?
-                selectedElement.getParentBubble() :
-                selectedElement.getTopMostChildBubble()
-        );
-    }
-
-    function upAction(selectedElement) {
-        selectNew(
-            selectedElement.getBubbleAbove()
-        );
-    }
-
-    function downAction(selectedElement) {
-        selectNew(
-            selectedElement.getBubbleUnder()
-        );
-    }
-
-    function selectNew(newSelectedElement) {
-        SelectionHandler.setToSingleGraphElement(newSelectedElement);
-    }
-
-    function focus(selectedElement) {
-        selectedElement.focus();
-    }
-
 });

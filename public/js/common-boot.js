@@ -13,7 +13,7 @@ requirejs.config({
         "diff_match_patch": "vendor/diff_match_patch_uncompressed",
         "clipboard": "vendor/clipboard",
         /*
-        Jquery
+         Jquery
          */
         "jquery": "jquery/jquery-2.2.4",
         "jquery.performance": "jquery/jquery.performance",
@@ -32,7 +32,7 @@ requirejs.config({
         "masonry": "vendor/masonry.pkgd.min",
 
         /*
-        Bootstrap
+         Bootstrap
          */
         "bootstrap": "vendor/bootstrap/3.3.4/bootstrap.min",
         "bootstrap-datepicker": "vendor/bootstrap/bootstrap-datepicker",
@@ -44,7 +44,7 @@ requirejs.config({
         "bootstrap-wysiwyg": "jquery/bootstrap-wysiwyg.min",
         "dragscroll": "vendor/dragscroll",
         /*
-        Flow
+         Flow
          */
         "triple_brain.flow": "triple_brain/flow/triple_brain.flow",
         "triple_brain.mind_map_flow": "triple_brain/flow/triple_brain.mind_map_flow",
@@ -54,7 +54,7 @@ requirejs.config({
         "triple_brain.schema_list_flow": "triple_brain/flow/triple_brain.schema_list_flow",
 
         /*
-        Search
+         Search
          */
         "jquery.triple_brain.search": "triple_brain/search/jquery.triple_brain.search",
         "triple_brain.big_search_box": "triple_brain/search/triple_brain.big_search_box",
@@ -65,35 +65,15 @@ requirejs.config({
         "triple_brain.wikidata_autocomplete_provider": "triple_brain/search/autocomplete_results_provider/triple_brain.wikidata_autocomplete_provider",
 
         /*
-        Compare
+         Compare
          */
 
         "triple_brain.compare_flow": "triple_brain/compare/triple_brain.compare_flow",
         "triple_brain.graph_compare": "triple_brain/compare/triple_brain.graph_compare",
         "triple_brain.fork_service": "triple_brain/compare/triple_brain.fork_service",
 
-
-        "triple_brain.visited_elements_cloud": "triple_brain/triple_brain.visited_elements_cloud",
-        "triple_brain.center_graph_elements": "triple_brain/triple_brain.center_graph_elements",
-        "triple_brain.center_graph_element_service": "triple_brain/triple_brain.center_graph_element_service",
-
-        "triple_brain.object_utils": "triple_brain/triple_brain.object_utils",
-        "triple_brain.selection_handler": "triple_brain/triple_brain.selection_handler",
-        "triple_brain.scroll_on_mouse_frontier": "triple_brain/triple_brain.scroll_on_mouse_frontier",
-        "triple_brain.header": "triple_brain/triple_brain.header",
-        "triple_brain.language_manager": "triple_brain/triple_brain.language_manager",
-        "triple_brain.mind-map_template": "triple_brain/triple_brain.mind-map_template",
-        "triple_brain.id_uri": "triple_brain/triple_brain.id_uri",
-
-        "triple_brain.ui_utils": "triple_brain/triple_brain.ui_utils",
-        "triple_brain.user_service": "triple_brain/triple_brain.user_service",
-        "triple_brain.login_handler": "triple_brain/triple_brain.login_handler",
-        "triple_brain.register_handler": "triple_brain/triple_brain.register_handler",
-        "triple_brain.change_password": "triple_brain/triple_brain.change_password",
-        "triple_brain.event_bus": "triple_brain/triple_brain.event_bus",
-
         /*
-        Identifier
+         Identifier
          */
         "triple_brain.identification": "triple_brain/identifier/triple_brain.identification",
         "triple_brain.identified_to_service": "triple_brain/identifier/triple_brain.identified_to_service",
@@ -101,7 +81,7 @@ requirejs.config({
         "triple_brain.identification_menu": "triple_brain/identifier/triple_brain.identification_menu",
 
         /*
-        Graph Element
+         Graph Element
          */
         "triple_brain.graph_element": "triple_brain/graph-element/triple_brain.graph_element",
         "triple_brain.graph_element_service": "triple_brain/graph-element/triple_brain.graph_element_service",
@@ -114,7 +94,7 @@ requirejs.config({
         "triple_brain.graph_element_type": "triple_brain/graph-element/triple_brain.graph_element_type",
 
         /*
-        Vertex
+         Vertex
          */
         "triple_brain.vertex": "triple_brain/vertex/triple_brain.vertex",
         "triple_brain.vertex_server_format_builder": "triple_brain/vertex/triple_brain.vertex_server_format_builder",
@@ -132,7 +112,7 @@ requirejs.config({
         "triple_brain.relative_tree_vertex": "triple_brain/vertex/triple_brain.relative_tree_vertex",
 
         /*
-        Suggestion
+         Suggestion
          */
 
         "triple_brain.suggestion": "triple_brain/suggestion/triple_brain.suggestion",
@@ -146,41 +126,28 @@ requirejs.config({
         "triple_brain.suggestion_relation_controller": "triple_brain/suggestion/triple_brain.suggestion_relation_controller",
 
         /*
-        Image
+         Image
          */
         "triple_brain.image_displayer": "triple_brain/image/triple_brain.image_displayer",
         "triple_brain.image_menu": "triple_brain/image/triple_brain.image_menu",
         "triple_brain.image": "triple_brain/image/triple_brain.image",
 
-        "triple_brain.ui.all": "triple_brain/triple_brain.ui.all",
-        "triple_brain.point": "triple_brain/triple_brain.point",
-        "triple_brain.segment": "triple_brain/triple_brain.segment",
-        "triple_brain.wikidata": "triple_brain/triple_brain.wikidata",
-        "triple_brain.wikidata_uri": "triple_brain/triple_brain.wikidata_uri",
-        "triple_brain.transform_matrix_2d": "triple_brain/triple_brain.transform_matrix_2d",
-        "triple_brain.error": "triple_brain/triple_brain.error",
-
         /*
-        Triple
+         Triple
          */
 
         "triple_brain.triple": "triple_brain/triple/triple_brain.triple",
         "triple_brain.triple_ui": "triple_brain/triple/triple_brain.triple_ui",
         "triple_brain.triple_ui_builder": "triple_brain/triple/triple_brain.triple_ui_builder",
 
-        "triple_brain.template": "triple_brain/triple_brain.template",
-
         /*
-        Group Relation
-        */
+         Group Relation
+         */
 
         "triple_brain.group_relation_controller": "triple_brain/group-relation/triple_brain.group_relation_controller",
         "triple_brain.group_relation": "triple_brain/group-relation/triple_brain.group_relation",
         "triple_brain.group_relation_ui": "triple_brain/group-relation/triple_brain.group_relation_ui",
         "triple_brain.group_relation_html_builder": "triple_brain/group-relation/triple_brain.group_relation_html_builder",
-
-
-        "triple_brain.keyboard_actions_handler": "triple_brain/triple_brain.keyboard_actions_handler",
 
 
         /*
@@ -203,7 +170,6 @@ requirejs.config({
         "triple_brain.property_html_builder": "triple_brain/property/triple_brain.property_html_builder",
         "triple_brain.property_controller": "triple_brain/property/triple_brain.property_controller",
 
-
         /*
          Edge
          */
@@ -218,8 +184,8 @@ requirejs.config({
         "triple_brain.edge_controller": "triple_brain/edge/triple_brain.edge_controller",
 
         /*
-        Bubble
-        */
+         Bubble
+         */
 
         "triple_brain.bubble": "triple_brain/bubble/triple_brain.bubble",
         "triple_brain.bubble_factory": "triple_brain/bubble/triple_brain.bubble_factory",
@@ -227,7 +193,7 @@ requirejs.config({
 
 
         /*
-        Graph
+         Graph
          */
         "triple_brain.graph_modal_menu": "triple_brain/graph/triple_brain.graph_modal_menu",
         "triple_brain.graph_displayer_as_relative_tree": "triple_brain/graph/triple_brain.graph_displayer_as_relative_tree",
@@ -241,14 +207,46 @@ requirejs.config({
         "triple_brain.graph_displayer_factory": "triple_brain/graph/triple_brain.graph_displayer_factory",
 
         /*
-        Friendly Resource
+         Friendly Resource
          */
         "triple_brain.friendly_resource_service": "triple_brain/friendly-resource/triple_brain.friendly_resource_service",
         "triple_brain.friendly_resource": "triple_brain/friendly-resource/triple_brain.friendly_resource",
 
+        /*
+         Misc
+         */
         "triple_brain.mind_map_info": "triple_brain/triple_brain.mind_map_info",
         "triple_brain.modules": "triple_brain/triple_brain.modules",
-        "triple_brain.module.date_picker": "module/date_picker/triple_brain.module.date_picker"
+        "triple_brain.module.date_picker": "module/date_picker/triple_brain.module.date_picker",
+        "mr.command": "triple_brain/mr.command",
+        "triple_brain.template": "triple_brain/triple_brain.template",
+        "triple_brain.keyboard_actions_handler": "triple_brain/triple_brain.keyboard_actions_handler",
+        "triple_brain.ui.all": "triple_brain/triple_brain.ui.all",
+        "triple_brain.point": "triple_brain/triple_brain.point",
+        "triple_brain.segment": "triple_brain/triple_brain.segment",
+        "triple_brain.wikidata": "triple_brain/triple_brain.wikidata",
+        "triple_brain.wikidata_uri": "triple_brain/triple_brain.wikidata_uri",
+        "triple_brain.transform_matrix_2d": "triple_brain/triple_brain.transform_matrix_2d",
+        "triple_brain.error": "triple_brain/triple_brain.error",
+
+        "triple_brain.visited_elements_cloud": "triple_brain/triple_brain.visited_elements_cloud",
+        "triple_brain.center_graph_elements": "triple_brain/triple_brain.center_graph_elements",
+        "triple_brain.center_graph_element_service": "triple_brain/triple_brain.center_graph_element_service",
+
+        "triple_brain.object_utils": "triple_brain/triple_brain.object_utils",
+        "triple_brain.selection_handler": "triple_brain/triple_brain.selection_handler",
+        "triple_brain.scroll_on_mouse_frontier": "triple_brain/triple_brain.scroll_on_mouse_frontier",
+        "triple_brain.header": "triple_brain/triple_brain.header",
+        "triple_brain.language_manager": "triple_brain/triple_brain.language_manager",
+        "triple_brain.mind-map_template": "triple_brain/triple_brain.mind-map_template",
+        "triple_brain.id_uri": "triple_brain/triple_brain.id_uri",
+
+        "triple_brain.ui_utils": "triple_brain/triple_brain.ui_utils",
+        "triple_brain.user_service": "triple_brain/triple_brain.user_service",
+        "triple_brain.login_handler": "triple_brain/triple_brain.login_handler",
+        "triple_brain.register_handler": "triple_brain/triple_brain.register_handler",
+        "triple_brain.change_password": "triple_brain/triple_brain.change_password",
+        "triple_brain.event_bus": "triple_brain/triple_brain.event_bus"
     },
     shim: {
         "polyk": [],

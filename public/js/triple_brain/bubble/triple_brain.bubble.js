@@ -678,6 +678,57 @@ define([
             return propertiesIndicator;
         };
 
+        api.Bubble.prototype.travelLeft = function () {
+            if (this.isCenterBubble()) {
+                var centerVertex = CenterBubble.usingBubble(
+                    this
+                );
+                if (!centerVertex.hasChildToLeft()) {
+                    return;
+                }
+                return selectNew(
+                    centerVertex.getToTheLeftTopMostChild()
+                );
+            }
+            return selectNew(
+                this.isToTheLeft() ?
+                    this.getTopMostChildBubble() :
+                    this.getParentBubble()
+            );
+        };
+        api.Bubble.prototype.travelRight = function () {
+            if (this.isCenterBubble()) {
+                var centerVertex = CenterBubble.usingBubble(
+                    this
+                );
+                if (!centerVertex.hasChildToRight()) {
+                    return;
+                }
+                return selectNew(
+                    centerVertex.getToTheRightTopMostChild()
+                );
+            }
+            return selectNew(
+                this.isToTheLeft() ?
+                    this.getParentBubble() :
+                    this.getTopMostChildBubble()
+            );
+        };
+        api.Bubble.prototype.travelUp = function () {
+            selectNew(
+                this.getBubbleAbove()
+            );
+        };
+        api.Bubble.prototype.travelDown = function () {
+            selectNew(
+                this.getBubbleUnder()
+            );
+        };
+        function selectNew(newSelectedElement) {
+            SelectionHandler.setToSingleGraphElement(
+                newSelectedElement
+            );
+        }
         EventBus.subscribe(
             '/event/ui/graph/vertex_and_relation/added/',
             function (event, triple, sourceBubble) {
