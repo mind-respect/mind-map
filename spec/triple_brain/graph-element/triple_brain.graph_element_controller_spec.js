@@ -8,9 +8,12 @@ define([
     "test/test-utils",
     "test/mock/triple_brain.friendly_resource_service_mock",
     "test/mock/triple_brain.graph_element_service_mock",
+    "test/mock/triple_brain.edge_service_mock",
+    "test/mock/triple_brain.graph_service_mock",
     "triple_brain.graph_element_controller",
-    "triple_brain.sub_graph"
-], function ($, Scenarios, TestUtils, FriendlyResourceServiceMock, GraphElementServiceMock, GraphElementController, SubGraph) {
+    "triple_brain.sub_graph",
+    "mr.app_controller"
+], function ($, Scenarios, TestUtils, FriendlyResourceServiceMock, GraphElementServiceMock, EdgeServiceMock, GraphServiceMock, GraphElementController, SubGraph, AppController) {
     "use strict";
     describe("graph_element_controller", function () {
         it("displays the graph element note", function () {
@@ -142,8 +145,40 @@ define([
                 )
             ).toBeTruthy();
         });
-        it("can undo a move under parent", function(){
-
+        it("can undo and redo a move under parent", function(){
+            var scenario = new Scenarios.threeBubblesGraph();
+            var b1 = scenario.getBubble1InTree();
+            var b2 = scenario.getBubble2InTree();
+            var b3 = scenario.getBubble3InTree();
+            expect(
+                b2.getParentVertex().isSameBubble(
+                    b1
+                )
+            ).toBeTruthy();
+            GraphElementServiceMock.removeIdentification();
+            EdgeServiceMock.changeSourceVertex();
+            GraphElementServiceMock.changeSortDate();
+            GraphServiceMock.getForCentralBubbleUri(
+                scenario.getSubGraphForB3()
+            );
+            b2.getController().moveUnderParent(b3);
+            expect(
+                b2.getParentVertex().isSameBubble(
+                    b1
+                )
+            ).toBeFalsy();
+            AppController.undo();
+            expect(
+                b2.getParentVertex().isSameBubble(
+                    b1
+                )
+            ).toBeTruthy();
+            AppController.redo();
+            expect(
+                b2.getParentVertex().isSameBubble(
+                    b1
+                )
+            ).toBeFalsy();
         });
         it("adds the group relation identifier to a vertex when moving around another vertex that is under a group relation", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();

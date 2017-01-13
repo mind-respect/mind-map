@@ -9,8 +9,9 @@ define([
     "triple_brain.keyboard_actions_handler",
     "triple_brain.selection_handler",
     "triple_brain.vertex_controller",
+    "mr.app_controller",
     'triple_brain.mind_map_info'
-], function (Scenarios, TestUtils, VertexServiceMock, KeyBoardActionsHandler, SelectionHandler, VertexController, MindMapInfo) {
+], function (Scenarios, TestUtils, VertexServiceMock, KeyBoardActionsHandler, SelectionHandler, VertexController, AppController, MindMapInfo) {
     "use strict";
     describe("keyboard_action_handler", function () {
         beforeEach(function () {
@@ -106,6 +107,18 @@ define([
             expect(
                 bubble1.isInEditMode()
             ).toBeFalsy();
+        });
+        it("can execute features for app controller when no bubbles are selected", function(){
+            new Scenarios.threeBubblesGraph().getBubble1InTree();
+            SelectionHandler.removeAll();
+            var actionSpy = spyOn(AppController, "undo");
+            expect(
+                actionSpy
+            ).not.toHaveBeenCalled();
+            TestUtils.pressCtrlPlusKey("Z");
+            expect(
+                actionSpy
+            ).toHaveBeenCalled();
         });
     });
 });

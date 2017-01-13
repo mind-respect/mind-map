@@ -219,6 +219,7 @@ requirejs.config({
         "triple_brain.modules": "triple_brain/triple_brain.modules",
         "triple_brain.module.date_picker": "module/date_picker/triple_brain.module.date_picker",
         "mr.command": "triple_brain/mr.command",
+        "mr.app_controller": "triple_brain/mr.app_controller",
         "triple_brain.template": "triple_brain/triple_brain.template",
         "triple_brain.keyboard_actions_handler": "triple_brain/triple_brain.keyboard_actions_handler",
         "triple_brain.ui.all": "triple_brain/triple_brain.ui.all",

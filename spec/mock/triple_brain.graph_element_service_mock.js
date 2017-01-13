@@ -24,5 +24,13 @@ define([
             return $.Deferred().resolve();
         });
     };
+    api.changeSortDate = function(){
+        spyOn(
+            GraphElementService,
+            "changeSortDate"
+        ).and.callFake(function () {
+            return $.Deferred().resolve();
+        });
+    };
     return api;
 });

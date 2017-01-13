@@ -10,8 +10,9 @@ define([
     "triple_brain.vertex_service",
     "triple_brain.identification_menu",
     "triple_brain.mind_map_info",
-    "triple_brain.graph_ui"
-], function ($, EventBus, SelectionHandler, CenterBubble, VertexService, IdentificationMenu, MindMapInfo, GraphUi) {
+    "triple_brain.graph_ui",
+    "mr.app_controller"
+], function ($, EventBus, SelectionHandler, CenterBubble, VertexService, IdentificationMenu, MindMapInfo, GraphUi, AppController) {
     "use strict";
     var api = {},
         tabKeyNumber = 9,
@@ -30,6 +31,7 @@ define([
         sKeyNumber = 83,
         zeroKeyNumber = 48,
         rKeyNumber = 82,
+        lKeyNumber = 76,
         ctrlKeyNumber = 17,
         xKeyNumber = 88,
         vKeyNumber = 86,
@@ -69,7 +71,9 @@ define([
         }
         var oEvent = event.originalEvent;
         event.preventDefault();
-        executeFeature("paste", selectedElement, oEvent);
+        executeFeature({
+            action: "paste"
+        }, selectedElement, oEvent);
     }
 
     function keyDownHandler(event) {
@@ -85,66 +89,108 @@ define([
         if (isThereASpecialKeyPressed()) {
             return;
         }
-        if (!SelectionHandler.isOnlyASingleElementSelected()) {
-            return;
-        }
         var actionSet = event.ctrlKey ?
             ctrlPlusActions :
             nonCtrlPlusActions;
-        var selectedElement = SelectionHandler.getSingleElement();
         var feature = actionSet[event.which];
         if (feature === undefined) {
             var isPasting = event.ctrlKey && vKeyNumber && event.which;
-            if (!isPasting && event.which !== ctrlKeyNumber && !MindMapInfo.isViewOnly()) {
-                selectedElement.focus();
+            if (!isPasting && event.which !== ctrlKeyNumber && !MindMapInfo.isViewOnly() && SelectionHandler.isOnlyASingleElementSelected()) {
+                SelectionHandler.getSingleElement().focus();
             }
             return;
         }
         event.preventDefault();
         event.stopPropagation();
-
-        executeFeature(feature, selectedElement);
+        executeFeature(feature);
         function isThereASpecialKeyPressed() {
             return event.altKey || event.metaKey;
         }
     }
 
-    function executeFeature(feature, selectedElement, event) {
-        var controller = selectedElement.getController();
-        if (controller[feature] === undefined) {
+    function executeFeature(feature, event) {
+        var controller;
+        if (feature.isForAppController) {
+            controller = AppController;
+        } else {
+            if (!SelectionHandler.isOnlyASingleElementSelected()) {
+                return;
+            }
+            controller = SelectionHandler.getSingleElement().getController();
+        }
+        if (controller[feature.action] === undefined) {
             return;
         }
-        var canDoValidator = controller[feature + "CanDo"];
+        var canDoValidator = controller[feature.action + "CanDo"];
         if (canDoValidator !== undefined && !canDoValidator.call(controller)) {
             return;
         }
-        controller[feature](event);
+        controller[feature.action](event);
     }
 
     function defineNonCtrlPlusKeysAndTheirActions() {
         var actions = {};
-        actions[tabKeyNumber] = "addChild";
-        actions[deleteKeyNumber] = "remove";
-        actions[leftArrowKeyNumber] = "travelLeft";
-        actions[rightArrowKeyNumber] = "travelRight";
-        actions[upArrowKeyNumber] = "travelUp";
-        actions[downArrowKeyNumber] = "travelDown";
-        actions[enterKeyCode] = "addSibling";
-        actions[spaceBarKeyNumber] = "focus";
+        actions[tabKeyNumber] = {
+            action: "addChild"
+        };
+        actions[deleteKeyNumber] = {
+            action: "remove"
+        };
+        actions[leftArrowKeyNumber] = {
+            action: "travelLeft"
+        };
+        actions[rightArrowKeyNumber] = {
+            action: "travelRight"
+        };
+        actions[upArrowKeyNumber] = {
+            action: "travelUp"
+        };
+        actions[downArrowKeyNumber] = {
+            action: "travelDown"
+        };
+        actions[enterKeyCode] = {
+            action: "addSibling"
+        };
+        actions[spaceBarKeyNumber] = {
+            action: "focus"
+        };
         return actions;
     }
 
     function defineCtrlPlusKeysAndTheirActions() {
         var actions = {};
-        actions[iArrowKeyNumber] = "identify";
-        actions[eKeyNumber] = "expand";
-        actions[sKeyNumber] = "suggestions";
-        actions[rKeyNumber] = "reverse";
-        actions[dKeyNumber] = "note";
-        actions[zeroKeyNumber] = "center";
-        actions[hKeyNumber] = "collapse";
-        actions[xKeyNumber] = "cut";
-        actions[zKeyNumber] = "undo";
+        actions[iArrowKeyNumber] = {
+            action: "identify"
+        };
+        actions[eKeyNumber] = {
+            action: "expand"
+        };
+        actions[sKeyNumber] = {
+            action: "suggestions"
+        };
+        actions[lKeyNumber] = {
+            action: "reverse"
+        };
+        actions[dKeyNumber] = {
+            action: "note"
+        };
+        actions[zeroKeyNumber] = {
+            action: "center"
+        };
+        actions[hKeyNumber] = {
+            action: "collapse"
+        };
+        actions[xKeyNumber] = {
+            action: "cut"
+        };
+        actions[rKeyNumber] = {
+            action: "redo",
+            isForAppController: true
+        };
+        actions[zKeyNumber] = {
+            action: "undo",
+            isForAppController: true
+        };
         return actions;
     }
 });

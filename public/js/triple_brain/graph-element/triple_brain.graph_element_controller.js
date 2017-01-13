@@ -13,11 +13,12 @@ define([
     "triple_brain.identification_menu",
     "triple_brain.edge_service",
     "triple_brain.identification",
+    "mr.command",
     "bootstrap-wysiwyg",
     "bootstrap",
     "jquery.safer-html",
     "jquery.max_char"
-], function ($, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu, EdgeService, Identification) {
+], function ($, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu, EdgeService, Identification, Command) {
     "use strict";
     var api = {},
         bubbleCutClipboard,
@@ -99,23 +100,23 @@ define([
         });
     };
 
-    GraphElementController.prototype.focus = function(){
+    GraphElementController.prototype.focus = function () {
         this.getUi().focus();
     };
 
-    GraphElementController.prototype.travelLeft = function(){
+    GraphElementController.prototype.travelLeft = function () {
         this.getUi().travelLeft();
     };
 
-    GraphElementController.prototype.travelRight = function(){
+    GraphElementController.prototype.travelRight = function () {
         this.getUi().travelRight();
     };
 
-    GraphElementController.prototype.travelUp = function(){
+    GraphElementController.prototype.travelUp = function () {
         this.getUi().travelUp();
     };
 
-    GraphElementController.prototype.travelDown = function(){
+    GraphElementController.prototype.travelDown = function () {
         this.getUi().travelDown();
     };
 
@@ -234,9 +235,9 @@ define([
     };
 
     GraphElementController.prototype.paste = function (event) {
-        if(bubbleCutClipboard === undefined){
+        if (bubbleCutClipboard === undefined) {
             this._pasteText(event);
-        }else{
+        } else {
             this._pasteBubble();
         }
         this.getUi().paste();
@@ -257,7 +258,7 @@ define([
     };
 
     GraphElementController.prototype._pasteBubble = function () {
-        if(!bubbleCutClipboard.getController()._canMoveAfter(this.getUi())){
+        if (!bubbleCutClipboard.getController()._canMoveUnderParent(this.getUi())) {
             return;
         }
         bubbleCutClipboard.getController().moveUnderParent(
@@ -286,15 +287,16 @@ define([
         );
     };
 
-    GraphElementController.prototype._canMoveAfter = function (parent) {
+    GraphElementController.prototype._canMoveUnderParent = function (parent) {
         return this.getUi().getUri() !== parent.getUri() && !this.getUi().isBubbleAChild(parent);
     };
 
-    GraphElementController.prototype.moveUnderParent = function (parent) {
+    GraphElementController.prototype._moveUnderParent = function (parent) {
         var ui = this.getUi();
-        if (!this._canMoveAfter(parent)) {
-            return;
+        if (!this._canMoveUnderParent(parent)) {
+            return $.Deferred().resolve();
         }
+        var promises = [];
         if (parent.isRelation()) {
             var newGroupRelation = GraphDisplayer.addNewGroupRelation(
                 Identification.fromFriendlyResource(
@@ -318,18 +320,44 @@ define([
         );
         if (parent.isGroupRelation()) {
             var identification = parent.getGroupRelation().getIdentification().makeSameAs();
-            movedEdge.getController().addIdentification(
-                identification
-            );
-        }
-        movedEdge.getController().changeEndVertex(newSourceVertex);
-        if (previousParentGroupRelation.isGroupRelation()) {
-            movedEdge.getController().removeIdentification(
-                movedEdge.getModel().getIdentifierHavingExternalUri(
-                    previousParentGroupRelation.getModel().getIdentification().getExternalResourceUri()
+            promises.push(
+                movedEdge.getController().addIdentification(
+                    identification
                 )
             );
         }
+        promises.push(
+            movedEdge.getController().changeEndVertex(newSourceVertex)
+        );
+        if (previousParentGroupRelation.isGroupRelation()) {
+            promises.push(
+                movedEdge.getController().removeIdentification(
+                    movedEdge.getModel().getIdentifierHavingExternalUri(
+                        previousParentGroupRelation.getModel().getIdentification().getExternalResourceUri()
+                    )
+                )
+            );
+        }
+        return $.when.apply($, promises);
+    };
+
+    GraphElementController.prototype.moveUnderParent = function (parent) {
+        var previousParent;
+        var moveUnderParentCommand = new Command.forExecuteUndoAndRedo(
+            function () {
+                previousParent = this.getUi().getParentVertex();
+                return this._moveUnderParent(parent);
+            }.bind(this),
+            function () {
+                return this._moveUnderParent(previousParent);
+            }.bind(this),
+            function () {
+                return this._moveUnderParent(parent);
+            }.bind(this)
+        );
+        return Command.executeCommand(
+            moveUnderParentCommand
+        );
     };
 
     GraphElementController.prototype._moveTo = function (otherEdge, isAbove, previousParentVertex) {

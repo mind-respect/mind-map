@@ -35,5 +35,13 @@ define([
             return $.Deferred().resolve();
         });
     };
+    api.changeSourceVertex = function(){
+        spyOn(
+            EdgeService,
+            "changeSourceVertex"
+        ).and.callFake(function () {
+            return $.Deferred().resolve();
+        });
+    };
     return api;
 });

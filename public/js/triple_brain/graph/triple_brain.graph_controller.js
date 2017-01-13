@@ -59,9 +59,6 @@ define([
     api.wikidataOffCanDo = function(){
         return GraphElementUi.isWikidataActiveForInBubbleEdition();
     };
-    api.undo = function(){
-        alert('bonjour');
-    };
     api.getUi = function () {
         return [];
     };
