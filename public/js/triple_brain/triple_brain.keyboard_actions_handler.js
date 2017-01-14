@@ -31,10 +31,10 @@ define([
         sKeyNumber = 83,
         zeroKeyNumber = 48,
         rKeyNumber = 82,
-        lKeyNumber = 76,
         ctrlKeyNumber = 17,
         xKeyNumber = 88,
         vKeyNumber = 86,
+        yKeyNumber = 89,
         zKeyNumber = 90,
         nonCtrlPlusActions = defineNonCtrlPlusKeysAndTheirActions(),
         ctrlPlusActions = defineCtrlPlusKeysAndTheirActions();
@@ -168,7 +168,7 @@ define([
         actions[sKeyNumber] = {
             action: "suggestions"
         };
-        actions[lKeyNumber] = {
+        actions[rKeyNumber] = {
             action: "reverse"
         };
         actions[dKeyNumber] = {
@@ -183,7 +183,7 @@ define([
         actions[xKeyNumber] = {
             action: "cut"
         };
-        actions[rKeyNumber] = {
+        actions[yKeyNumber] = {
             action: "redo",
             isForAppController: true
         };

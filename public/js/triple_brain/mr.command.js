@@ -50,7 +50,7 @@ define([
     api.Command = function (executeFtcn, undoFctn, redoFctn){
         this.executeFtcn = executeFtcn;
         this.undoFtcn = undoFctn;
-        this.redFctn = redoFctn;
+        this.redoFctn = redoFctn;
     };
 
     api.Command.prototype.execute = function(){
@@ -62,7 +62,7 @@ define([
     };
 
     api.Command.prototype.redo = function(){
-        return this.redFctn();
+        return this.redoFctn();
     };
 
     return api;
