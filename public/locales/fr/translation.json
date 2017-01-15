@@ -313,7 +313,9 @@
     "expand": "Expandre (ctrl+e)",
     "wikidataOn": "Activer l'autocompletion de Wikidata",
     "wikidataOff": "Désactiver l'autocompletion de Wikidata",
-    "copy": "Copier"
+    "copy": "Copier",
+    "undo": "Annuller (ctrl+z)",
+    "redo": "Refaire (ctrl+y)"
   },
   "hidden_properties_tooltip": "Expandre (ctrl+e)",
   "search": {

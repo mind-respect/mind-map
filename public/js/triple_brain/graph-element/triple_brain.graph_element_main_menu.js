@@ -9,10 +9,11 @@ define([
         "triple_brain.selection_handler",
         "triple_brain.graph_element_button",
         "triple_brain.mind_map_info",
+        "mr.app_controller",
         "jquery-ui",
         "jquery.i18next",
         "bootstrap"
-    ], function ($, GraphDisplayer, EventBus, SelectionHandler, GraphElementButton, MindMapInfo) {
+    ], function ($, GraphDisplayer, EventBus, SelectionHandler, GraphElementButton, MindMapInfo, AppController) {
         "use strict";
         var api = {},
             _menu;
@@ -47,9 +48,15 @@ define([
                     defineTooltip(button);
                 });
                 function setIcon(button) {
-                    $("<i>").addClass(
+                    var icon = $("<i>").addClass(
                         "fa " + button.getIconClass()
-                    ).appendTo(button.getHtml());
+                    );
+                    if(button.getHtml().hasClass("icon-flip-horizontal")){
+                        icon.addClass(
+                            "fa-flip-vertical"
+                        );
+                    }
+                    icon.appendTo(button.getHtml());
                 }
 
                 function applyActionOnClick(button) {
@@ -128,6 +135,12 @@ define([
                     );
                     return;
                 }
+                if(button.isForApp()){
+                    api.showAppButtonOnlyIfApplicable(
+                        button
+                    );
+                    return;
+                }
                 button.showOnlyIfApplicable(
                     controller,
                     graphElement
@@ -138,6 +151,12 @@ define([
         api.showWholeGraphButtonOnlyIfApplicable = function (button) {
             button.showOnlyIfApplicable(
                 GraphDisplayer.getGraphMenuHandler()
+            );
+        };
+
+        api.showAppButtonOnlyIfApplicable = function (button) {
+            button.showOnlyIfApplicable(
+                AppController
             );
         };
 
@@ -154,9 +173,15 @@ define([
         };
 
         api._getCurrentClickHandler = function (button) {
-            if (button !== undefined && button.isForWholeGraph()) {
-                return GraphDisplayer.getGraphMenuHandler();
+            if(button !== undefined){
+                if (button.isForWholeGraph()) {
+                    return GraphDisplayer.getGraphMenuHandler();
+                }
+                if(button.isForApp()){
+                    return AppController;
+                }
             }
+
             return api._currentClickHandler;
         };
 

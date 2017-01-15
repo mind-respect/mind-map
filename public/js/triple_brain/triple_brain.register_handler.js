@@ -3,7 +3,6 @@
  */
 
 define([
-        "require",
         "jquery",
         "triple_brain.user_service",
         "triple_brain.id_uri",
@@ -12,7 +11,7 @@ define([
         "bootstrap",
         "jquery.i18next"
     ],
-    function (require, $, UserService, IdUri, FriendlyResource, FriendlyResourceService) {
+    function ($, UserService, IdUri, FriendlyResource, FriendlyResourceService) {
         "use strict";
         var api = {};
         api.setupModal = function(){
