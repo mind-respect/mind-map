@@ -9,6 +9,14 @@ define([
 ], function ($, TestUtils, EdgeService) {
     "use strict";
     var api = {};
+    api.applyDefaultMocks = function(){
+        var spies = {};
+        spies["remove"] = api.remove();
+        spies["addToFarVertex"] = api.addToFarVertex();
+        spies["inverse"] = api.inverse();
+        spies["changeSourceVertex"] = api.changeSourceVertex();
+        return spies;
+    };
     api.remove = function () {
         return spyOn(EdgeService, "remove").and.callFake(function (edge, callback) {
             EdgeService._removeCallback(
@@ -18,17 +26,18 @@ define([
         });
     };
     api.addToFarVertex = function () {
-        return spyOn(EdgeService, "_add").and.callFake(function (sourceVertexUri, destinationVertexUri, callback) {
-            EdgeService._addCallback(
-                TestUtils.generateEdgeUri(),
-                sourceVertexUri,
-                destinationVertexUri,
-                callback
+        return spyOn(EdgeService, "_add").and.callFake(function (sourceVertexUri, destinationVertexUri) {
+            return $.Deferred().resolve(
+                EdgeService._buildAfterAddReturnObject(
+                    TestUtils.generateEdgeUri(),
+                    sourceVertexUri,
+                    destinationVertexUri
+                )
             );
         });
     };
     api.inverse = function () {
-        spyOn(
+        return spyOn(
             EdgeService,
             "inverse"
         ).and.callFake(function () {
@@ -36,7 +45,7 @@ define([
         });
     };
     api.changeSourceVertex = function(){
-        spyOn(
+        return spyOn(
             EdgeService,
             "changeSourceVertex"
         ).and.callFake(function () {

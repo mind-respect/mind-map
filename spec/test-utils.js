@@ -13,14 +13,15 @@ define([
 ], function ($, VertexServerFormatBuilder, Identification, Vertex, Edge, GraphDisplayer, CompareFlow) {
     "use strict";
     var api = {};
-    api.generateVertexUri = function () {
-        return "\/service\/users\/foo\/graph\/vertex\/" + generateUuid();
+    api.generateVertexUri = function (userName) {
+        userName = userName || "églantier";
+        return "\/service\/users\/"+userName+"\/graph\/vertex\/" + generateUuid();
     };
     api.generateEdgeUri = function () {
-        return "\/service\/users\/foo\/graph\/edge\/" + generateUuid();
+        return "\/service\/users\/églantier\/graph\/edge\/" + generateUuid();
     };
     api.generateIdentificationUri = function () {
-        return "\/service\/users\/foo\/graph\/identification\/" + generateUuid();
+        return "\/service\/users\/églantier\/graph\/identification\/" + generateUuid();
     };
     api.dummyIdentifier = function () {
         return Identification.withUri(

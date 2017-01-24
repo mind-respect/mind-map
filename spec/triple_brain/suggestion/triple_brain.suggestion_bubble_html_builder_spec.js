@@ -5,14 +5,18 @@
 define([
     "test/test-scenarios",
     "test/test-utils",
+    'test/mock',
     "triple_brain.suggestion_bubble_html_builder",
     "triple_brain.bubble",
     "triple_brain.graph_ui",
     "triple_brain.event_bus",
     "triple_brain.sub_graph"
-], function (Scenarios, TestUtils, SuggestionBubbleHtmlBuilder, Bubble, GraphUi, EventBus, SubGraph) {
+], function (Scenarios, TestUtils, Mock, SuggestionBubbleHtmlBuilder, Bubble, GraphUi, EventBus, SubGraph) {
     "use strict";
     describe("suggestion_bubble_html_builder", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         var suggestion,
             locationBubbleSuggestion,
             locationSuggestion;

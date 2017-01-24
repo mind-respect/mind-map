@@ -23,7 +23,7 @@ define([
     };
     api.getServerFormatArrayFromFacadeArray = function (identifications) {
         var serverFormat = [];
-        $.each(identifications, function(){
+        $.each(identifications, function () {
             serverFormat.push(
                 this.getServerFormat()
             );
@@ -138,8 +138,23 @@ define([
         return this;
     };
     api.Identification.prototype.getFirstIdentificationToAGraphElement = function () {
-        return IdUri.isUriOfAGraphElement(this.getExternalResourceUri()) ?
+        return this.refersToAGraphElement() ?
             this : false;
+    };
+    api.Identification.prototype.refersToAGraphElement = function () {
+        return IdUri.isUriOfAGraphElement(
+            this.getExternalResourceUri()
+        );
+    };
+    api.Identification.prototype.refersToOwnedGraphElement = function () {
+        return this.refersToAGraphElement() && IdUri.isGraphElementUriOwnedByCurrentUser(
+                this.getExternalResourceUri()
+            );
+    };
+    api.Identification.prototype.refersToSchema = function () {
+        return IdUri.isSchemaUri(
+            this.getExternalResourceUri()
+        );
     };
     api.Identification.prototype.getType = function () {
         return this.identificationServerFormat.identificationType;

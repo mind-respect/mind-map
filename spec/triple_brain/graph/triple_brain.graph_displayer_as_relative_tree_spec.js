@@ -21,6 +21,9 @@ define([
 ], function (Scenarios, TestUtils, Mock, GraphServiceMock, GraphDisplayerAsRelativeTree, GraphDisplayer, CenterBubble, VertexHtmlBuilder, EdgeHtmlBuilder, GraphElement, SubGraph, MindMapInfo, BubbleFactory, GraphElementType, IdUri) {
     "use strict";
     describe("graph_displayer_as_relative_tree_spec", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         it("distributes triples evenly to the right and left", function () {
             var centerBubble = CenterBubble.usingBubble(
                 new Scenarios.threeBubblesGraph().getCenterBubbleInTree()

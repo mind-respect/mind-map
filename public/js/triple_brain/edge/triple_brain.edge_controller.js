@@ -11,17 +11,17 @@ define([
 ], function ($, GraphElementController, EdgeService, Identification, GraphDisplayer) {
     "use strict";
     var api = {};
-    api.Self = EdgeController;
+    api.RelationController = EdgeController;
 
     function EdgeController(edges) {
         this.edges = edges;
-        GraphElementController.Self.prototype.init.call(
+        GraphElementController.GraphElementController.prototype.init.call(
             this,
             this.edges
         );
     }
 
-    EdgeController.prototype = new GraphElementController.Self();
+    EdgeController.prototype = new GraphElementController.GraphElementController();
 
     EdgeController.prototype.addChildCanDo = function () {
         return this.isSingleAndOwned();

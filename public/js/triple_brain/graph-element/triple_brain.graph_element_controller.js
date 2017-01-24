@@ -33,7 +33,7 @@ define([
     api._getContentEditor = function () {
         return api._getBubbleNoteModal().find(".editor");
     };
-    api.Self = GraphElementController;
+    api.GraphElementController = GraphElementController;
     function GraphElementController(graphElements) {
         if (graphElements) {
             this.init(graphElements);

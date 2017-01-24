@@ -3,16 +3,18 @@
  */
 
 define([
+    "test/test-scenarios",
+    'test/mock',
     "triple_brain.suggestion_relation_builder",
-    "triple_brain.bubble",
-    "test/test-scenarios"
-], function (SuggestionRelationBuilder, Bubble, Scenarios) {
+    "triple_brain.bubble"
+], function (Scenarios, Mock, SuggestionRelationBuilder, Bubble) {
     "use strict";
     describe("suggestion_relation_html_builder", function () {
         var suggestion,
             locationSuggestion,
             locationRelationSuggestion;
         beforeEach(function () {
+            Mock.applyDefaultMocks();
             var suggestionScenario = new Scenarios.oneBubbleHavingSuggestionsGraph();
             suggestion = suggestionScenario.getOneSuggestion();
             var karaokeSchemaScenario = new Scenarios.getKaraokeSchemaGraph();

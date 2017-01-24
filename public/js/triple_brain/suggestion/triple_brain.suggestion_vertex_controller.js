@@ -17,13 +17,13 @@ define([
 
     function SuggestionVertexController(suggestionsUi) {
         this.suggestionsUi = suggestionsUi;
-        GraphElementController.Self.prototype.init.call(
+        GraphElementController.GraphElementController.prototype.init.call(
             this,
             this.suggestionsUi
         );
     }
 
-    SuggestionVertexController.prototype = new GraphElementController.Self();
+    SuggestionVertexController.prototype = new GraphElementController.GraphElementController();
 
     SuggestionVertexController.prototype.acceptCanDo = function () {
         return this.isSingleAndOwned();
@@ -127,6 +127,6 @@ define([
         );
         return deferred.promise();
     };
-    api.Self = SuggestionVertexController;
+    api.VertexSuggestionController = SuggestionVertexController;
     return api;
 });

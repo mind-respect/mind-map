@@ -5,6 +5,7 @@
 define([
     "test/test-scenarios",
     "test/test-utils",
+    'test/mock',
     "test/mock/triple_brain.suggestion_service_mock",
     "triple_brain.suggestion_service",
     "triple_brain.graph_element_ui",
@@ -15,12 +16,13 @@ define([
     "triple_brain.graph_service",
     "test/mock/triple_brain.graph_service_mock",
     "triple_brain.mind_map_info"
-], function (Scenarios, TestUtils, SuggestionServiceMock, SuggestionService, GraphElementUi, GraphDisplayerAsRelativeTree, SelectionHandler, EventBus, SubGraph, GraphService, GraphServiceMock, MindMapInfo) {
+], function (Scenarios, TestUtils, Mock, SuggestionServiceMock, SuggestionService, GraphElementUi, GraphDisplayerAsRelativeTree, SelectionHandler, EventBus, SubGraph, GraphService, GraphServiceMock, MindMapInfo) {
     "use strict";
     describe("suggestion_bubble_ui", function () {
         var oneSuggestionScenario;
         beforeEach(function () {
             oneSuggestionScenario = new Scenarios.oneBubbleHavingSuggestionsGraph();
+            Mock.applyDefaultMocks();
         });
         //todo
         it("does not update the label of other bubbles on the map that are the same suggestion", function () {

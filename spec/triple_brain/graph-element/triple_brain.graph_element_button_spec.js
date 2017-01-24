@@ -30,7 +30,7 @@ define([
             ).toHaveClass("hidden");
             var bubble2 = scenario.getBubble2InTree();
             makePublicButton.showOnlyIfApplicable(
-                new VertexController.Self(
+                new VertexController.VertexController(
                     [bubble1, bubble2]
                 )
             );

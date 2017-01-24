@@ -5,15 +5,17 @@
 define([
     "test/test-scenarios",
     "test/test-utils",
+    'test/mock',
     "triple_brain.compare_flow",
     "triple_brain.identification",
     "triple_brain.sub_graph",
-    "test/mock/triple_brain.vertex_service_mock",
-    "test/mock/triple_brain.edge_service_mock",
     "triple_brain.mind_map_info"
-], function (Scenarios, TestUtils, CompareFlow, Identification, SubGraph, VertexServiceMock, EdgeServiceMock, MindMapInfo) {
+], function (Scenarios, TestUtils, Mock, CompareFlow, Identification, SubGraph, MindMapInfo) {
     "use strict";
     describe("compare_flow", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         it("resets graph elements label when quitting compare mode", function () {
             var scenario = new Scenarios.threeBubblesGraph();
             var bubble1 = scenario.getBubble1InTree();
@@ -49,7 +51,6 @@ define([
                     new Scenarios.threeBubblesGraph().getGraph()
                 )
             );
-            VertexServiceMock.addRelationAndVertexToVertex();
             MindMapInfo._setIsViewOnly(false);
             b1Fork.getController().addChild();
             var newRelation = TestUtils.getChildWithLabel(
@@ -72,7 +73,6 @@ define([
                     new Scenarios.threeBubblesGraph().getGraph()
                 )
             );
-            VertexServiceMock.addRelationAndVertexToVertex();
             MindMapInfo._setIsViewOnly(false);
             b1Fork.getController().addChild();
             var newRelation = TestUtils.getChildWithLabel(
@@ -91,7 +91,6 @@ define([
             MindMapInfo._setIsViewOnly(false);
             var scenario = new Scenarios.threeBubblesGraphFork();
             var b1Fork = scenario.getBubble1InTree();
-            EdgeServiceMock.remove();
             var r2 = TestUtils.getChildWithLabel(
                 b1Fork,
                 "r2"

@@ -3,15 +3,17 @@
  */
 
 define([
-    "triple_brain.center_bubble",
-    'test/test-scenarios'
-], function (CenterBubble, Scenarios) {
+    'test/test-scenarios',
+    'test/mock',
+    "triple_brain.center_bubble"
+], function (Scenarios, Mock, CenterBubble) {
     "use strict";
     describe("center_bubble", function () {
         var centerBubble,
             relation1,
             relation2;
         beforeEach(function () {
+            Mock.applyDefaultMocks();
             var scenario = new Scenarios.threeBubblesGraph();
             centerBubble = CenterBubble.usingBubble(
                 scenario.getCenterBubbleInTree()

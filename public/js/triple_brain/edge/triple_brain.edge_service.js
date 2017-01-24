@@ -21,11 +21,10 @@ define([
                 callback
             );
         };
-        api.addToFarVertex = function (sourceVertex, destinationVertexUri, callback) {
-            api._add(
+        api.addToFarVertex = function (sourceVertex, destinationVertexUri) {
+            return api._add(
                 sourceVertex.getUri(),
-                destinationVertexUri,
-                callback
+                destinationVertexUri
             );
         };
         api.remove = function (edge, callback) {
@@ -80,9 +79,10 @@ define([
                 url: edge.getUri() + "/destination-vertex/" + IdUri.elementIdFromUri(destinationVertex.getUri())
             }).success(callback);
         };
-        api._add = function (sourceVertexUri, destinationVertexUri, callback) {
+        api._add = function (sourceVertexUri, destinationVertexUri) {
             var sourceVertexUriFormatted = IdUri.encodeUri(sourceVertexUri);
             var destinationVertexUriFormatted = IdUri.encodeUri(destinationVertexUri);
+            var deferred = $.Deferred();
             var response = $.ajax({
                 type: 'POST',
                 url: edgesUrl() +
@@ -92,22 +92,22 @@ define([
                     var newEdgeUri = IdUri.resourceUriFromAjaxResponse(
                         response
                     );
-                    api._addCallback(
-                        newEdgeUri,
-                        sourceVertexUri,
-                        destinationVertexUri,
-                        callback
+                    deferred.resolve(
+                        api._buildAfterAddReturnObject(
+                            newEdgeUri,
+                            sourceVertexUri,
+                            destinationVertexUri
+                        )
                     );
                 }
             );
+            return deferred.promise();
         };
-        api._addCallback = function (newEdgeUri, sourceVertexUri, destinationVertexUri, callback) {
-            callback(
-                Edge.buildObjectWithUriOfSelfSourceAndDestinationVertex(
-                    newEdgeUri,
-                    sourceVertexUri,
-                    destinationVertexUri
-                )
+        api._buildAfterAddReturnObject = function (newEdgeUri, sourceVertexUri, destinationVertexUri, callback) {
+            Edge.buildObjectWithUriOfSelfSourceAndDestinationVertex(
+                newEdgeUri,
+                sourceVertexUri,
+                destinationVertexUri
             );
         };
         return api;

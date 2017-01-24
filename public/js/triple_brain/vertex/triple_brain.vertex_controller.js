@@ -5,13 +5,13 @@
 define([
     "jquery",
     "triple_brain.vertex_service",
+    "triple_brain.edge_service",
     "triple_brain.selection_handler",
     "triple_brain.graph_displayer",
     "triple_brain.graph_element_controller",
     "triple_brain.delete_menu",
     "triple_brain.edge_ui",
     "triple_brain.image_menu",
-    "triple_brain.link_to_far_vertex_menu",
     "triple_brain.included_graph_elements_menu",
     "triple_brain.vertex_ui",
     "triple_brain.vertex",
@@ -19,20 +19,20 @@ define([
     "triple_brain.graph_element_service",
     "triple_brain.schema_suggestion",
     "triple_brain.event_bus",
-    "triple_brain.ui_utils"
-], function ($, VertexService, SelectionHandler, GraphDisplayer, GraphElementController, DeleteMenu, EdgeUi, ImageMenu, LinkToFarVertexMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, EventBus, UiUtils) {
+    "triple_brain.id_uri"
+], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, DeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, EventBus, IdUri) {
     "use strict";
     var api = {};
 
     function VertexController(vertices) {
         this.vertices = vertices;
-        GraphElementController.Self.prototype.init.call(
+        GraphElementController.GraphElementController.prototype.init.call(
             this,
             this.vertices
         );
     }
 
-    VertexController.prototype = new GraphElementController.Self();
+    VertexController.prototype = new GraphElementController.GraphElementController();
 
     VertexController.prototype.addChildCanDo = function () {
         return this.isSingleAndOwned();
@@ -73,12 +73,11 @@ define([
 
     VertexController.prototype.remove = function (skipConfirmation) {
         if (skipConfirmation) {
-            deleteAfterConfirmationBehavior.bind(this)(
+            return deleteAfterConfirmationBehavior.bind(this)(
                 this.vertices
             );
-            return;
         }
-        DeleteMenu.ofVertexAndDeletionBehavior(
+        return DeleteMenu.ofVertexAndDeletionBehavior(
             this.vertices,
             deleteAfterConfirmationBehavior.bind(this)
         ).build();
@@ -86,16 +85,16 @@ define([
             var removePromise = this.isSingle() ?
                 VertexService.remove(
                     vertexUi
-                ):
+                ) :
                 VertexService.removeCollection(
                     vertexUi
                 );
-            removePromise.then(function () {
-                if(this.isSingle()){
+            return removePromise.then(function () {
+                if (this.isSingle()) {
                     vertexUi.remove();
                     return true;
                 }
-                vertexUi.forEach(function(vertexUi){
+                vertexUi.forEach(function (vertexUi) {
                     vertexUi.remove();
                 });
                 return true;
@@ -111,16 +110,6 @@ define([
         ImageMenu.ofVertex(
             this.vertices
         ).build();
-    };
-
-    VertexController.prototype.connectToCanDo = function () {
-        return this.isSingleAndOwned();
-    };
-
-    VertexController.prototype.connectTo = function () {
-        LinkToFarVertexMenu.ofVertex(
-            this.vertices
-        ).create();
     };
 
     VertexController.prototype.makePrivateCanDo = function () {
@@ -345,13 +334,13 @@ define([
             if (!this.getUi().isCollapsed()) {
                 deferred = GraphDisplayer.addChildTree(
                     this.getUi()
-                ).done(function(){
-                    if(avoidExpandChild){
+                ).done(function () {
+                    if (avoidExpandChild) {
                         return true;
                     }
                     var expandChildCalls = [];
-                    this.getUi().visitClosestChildVertices(function(childVertex){
-                        if(childVertex.getModel().hasOnlyOneHiddenChild()){
+                    this.getUi().visitClosestChildVertices(function (childVertex) {
+                        if (childVertex.getModel().hasOnlyOneHiddenChild()) {
                             expandChildCalls.push(
                                 childVertex.getController().expand(true, true)
                             );
@@ -367,7 +356,58 @@ define([
             this.getUi().expand(avoidCenter);
         }.bind(this));
     };
-    api.Self = VertexController;
+
+    VertexController.prototype.convertToDistantBubbleWithUriCanDo = function (distantVertexUri) {
+        if (this.getUi().hasChildren()) {
+            return false;
+        }
+        if (!IdUri.isGraphElementUriOwnedByCurrentUser(distantVertexUri)) {
+            return false;
+        }
+        if (!IdUri.isVertexUri(distantVertexUri)) {
+            return false;
+        }
+        var parent = this.getUi().getParentVertex();
+        var grandParent = parent.getParentVertex();
+        if (distantVertexUri === grandParent.getUri()) {
+            return false;
+        }
+        var canDo = true;
+        parent.visitClosestChildVertices(function (child) {
+            if (distantVertexUri === child.getUri()) {
+                canDo = false;
+            }
+        });
+        return canDo;
+    };
+
+    VertexController.prototype.convertToDistantBubbleWithUri = function (distantVertexUri) {
+        if (!this.convertToDistantBubbleWithUriCanDo(distantVertexUri)) {
+            return $.Deferred().reject();
+        }
+        var parent = this.getUi().getParentVertex();
+        var relation = this.getUi().getParentBubble();
+        return this.remove(true).then(function () {
+            return parent.getController()._relateToDistantVertexWithUri(
+                distantVertexUri
+            ).then(function(triple){
+                if(!relation.getModel().isLabelEmpty()){
+                    return triple.edge().getController().setLabel(
+                        relation.getModel().getLabel()
+                    );
+                }
+            });
+        });
+    };
+    VertexController.prototype._relateToDistantVertexWithUri = function (distantVertexUri) {
+        return EdgeService.addToFarVertex(this.getUi(), distantVertexUri).then(function () {
+            return GraphDisplayer.connectVertexToVertexWithUri(
+                this.getUi(),
+                distantVertexUri
+            );
+        }.bind(this));
+    };
+    api.VertexController = VertexController;
     api.addChildToRealAndUiParent = function (realParent, uiParent) {
         if (uiParent === undefined) {
             uiParent = realParent;

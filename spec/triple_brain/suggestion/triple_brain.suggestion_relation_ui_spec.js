@@ -5,13 +5,17 @@
 define([
     "test/test-scenarios",
     "test/test-utils",
+    'test/mock',
     "test/mock/triple_brain.suggestion_service_mock",
     "triple_brain.sub_graph",
     "triple_brain.graph_element_ui",
     "triple_brain.selection_handler"
-], function (Scenarios, TestUtils, SuggestionServiceMock, SubGraph, GraphElementUi, SelectionHandler) {
+], function (Scenarios, TestUtils, Mock, SuggestionServiceMock, SubGraph, GraphElementUi, SelectionHandler) {
     "use strict";
     describe("suggestion_relation_ui", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         it("can handle label update", function(){
             var relationSuggestionInTree = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree().getParentBubble();
             relationSuggestionInTree.getSuggestion()._setType(undefined);

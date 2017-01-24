@@ -6,20 +6,20 @@ define([
     "jquery",
     'test/test-scenarios',
     'test/test-utils',
-    "test/mock/triple_brain.friendly_resource_service_mock",
-    "test/mock/triple_brain.graph_element_service_mock",
-    "test/mock/triple_brain.vertex_service_mock",
+    'test/mock',
     "test/mock/triple_brain.graph_service_mock",
     "triple_brain.vertex_controller",
     "triple_brain.selection_handler",
     'triple_brain.vertex_service',
     'triple_brain.mind_map_info'
-], function ($, Scenarios, TestUtils, FriendlyResourceServiceMock, GraphElementServiceMock, VertexServiceMock, GraphServiceMock, VertexController, SelectionHandler, VertexService, MindMapInfo) {
+], function ($, Scenarios, TestUtils, Mock, GraphServiceMock, VertexController, SelectionHandler, VertexService, MindMapInfo) {
     "use strict";
     describe("vertex_controller", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         it("removes connected edges when removing a vertex", function () {
             var threeBubbles = new Scenarios.threeBubblesGraph();
-            VertexServiceMock.removeVertex();
             MindMapInfo._setIsViewOnly(false);
             var bubble1 = threeBubbles.getBubble1InTree(),
                 r1 = threeBubbles.getRelation1InTree();
@@ -44,7 +44,6 @@ define([
             ).toBeFalsy();
         });
         it("can add sibling", function () {
-            VertexServiceMock.addRelationAndVertexToVertex();
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             var numberOfChild = bubble1.getNumberOfChild();
             var someChild = bubble1.getTopMostChildBubble().getTopMostChildBubble();
@@ -54,7 +53,6 @@ define([
             ).toBe(numberOfChild + 1);
         });
         it("adding bubble and relation selects new bubble", function () {
-            VertexServiceMock.addRelationAndVertexToVertex();
             var scenario = new Scenarios.threeBubblesGraph();
             var b2 = scenario.getBubble2InTree();
             GraphServiceMock.getForCentralBubbleUri(
@@ -95,8 +93,7 @@ define([
             expect(
                 bubble1.getMakePublicButtonInBubbleContent()
             ).not.toHaveClass("hidden");
-            VertexServiceMock.makeCollectionPublic();
-            new VertexController.Self(
+            new VertexController.VertexController(
                 [
                     bubble1,
                     scenario.getBubble2InTree()
@@ -108,8 +105,7 @@ define([
             expect(
                 bubble1.getMakePublicButtonInBubbleContent()
             ).toHaveClass("hidden");
-            VertexServiceMock.makeCollectionPrivate();
-            new VertexController.Self(
+            new VertexController.VertexController(
                 [
                     bubble1,
                     scenario.getBubble2InTree()
@@ -128,7 +124,6 @@ define([
             expect(
                 b3.getNumberOfChild()
             ).toBe(0);
-            VertexServiceMock.addRelationAndVertexToVertex();
             GraphServiceMock.getForCentralBubbleUri(
                 scenario.getSubGraphForB3()
             );
@@ -152,7 +147,6 @@ define([
                 childBubble.isVertex()
             ).toBeTruthy();
             var numberOfChild = groupRelation.getNumberOfChild();
-            VertexServiceMock.addRelationAndVertexToVertex();
             childBubble.getController().addSibling();
             expect(
                 groupRelation.getNumberOfChild()
@@ -172,9 +166,6 @@ define([
             expect(
                 childBubble.isVertex()
             ).toBeTruthy();
-            VertexServiceMock.addRelationAndVertexToVertex();
-            GraphElementServiceMock.addIdentification();
-            FriendlyResourceServiceMock.updateLabel();
             var hasVisited = false;
             childBubble.getController().addSibling().then(function (triple) {
                 hasVisited = true;
@@ -256,12 +247,15 @@ define([
             b2.getModel().makePublic();
             var hasCalledService = false;
             var nbVerticesToMakePublic = 0;
-            spyOn(VertexService, "makeCollectionPublic").and.callFake(function (vertices) {
+            Mock.getSpy(
+                "VertexService",
+                "makeCollectionPublic"
+            ).and.callFake(function (vertices) {
                 hasCalledService = true;
                 nbVerticesToMakePublic = vertices.length;
                 return $.Deferred().resolve();
             });
-            new VertexController.Self([
+            new VertexController.VertexController([
                 scenario.getBubble1InTree(),
                 b2,
                 scenario.getBubble3InTree()
@@ -281,12 +275,15 @@ define([
             b3.getModel().makePublic();
             var hasCalledService = false;
             var nbVerticesToMakePrivate = 0;
-            spyOn(VertexService, "makeCollectionPrivate").and.callFake(function (vertices) {
+            Mock.getSpy(
+                "VertexService",
+                "makeCollectionPrivate"
+            ).and.callFake(function (vertices) {
                 hasCalledService = true;
                 nbVerticesToMakePrivate = vertices.length;
                 return $.Deferred().resolve();
             });
-            new VertexController.Self([
+            new VertexController.VertexController([
                 b1,
                 scenario.getBubble2InTree(),
                 b3
@@ -304,12 +301,141 @@ define([
             expect(
                 b1.getModel().isPublic()
             ).toBeTruthy();
-            VertexServiceMock.makePrivate();
             b1.getController().makePrivate();
             expect(
                 b1.getModel().isPublic()
             ).toBeFalsy();
         });
-
+        it("can convert vertex to a distant vertex connected to the current parent vertex", function () {
+            MindMapInfo._setIsViewOnly(false);
+            var parentWithSingleChildScenario = new Scenarios.parentWithSingleChildScenario();
+            var parent = parentWithSingleChildScenario.getParentInTree();
+            GraphServiceMock.getForCentralBubbleUri(
+                parentWithSingleChildScenario.getB1RelatedToParentGraph()
+            );
+            var child = parent.getTopMostChildBubble().getTopMostChildBubble();
+            child.getController().convertToDistantBubbleWithUri(
+                parentWithSingleChildScenario.getB1Uri()
+            );
+            var b1 = parent.getTopMostChildBubble().getTopMostChildBubble();
+            expect(
+                b1.text()
+            ).toBe("b1");
+        });
+        it("cannot add a relation to existing child", function () {
+            MindMapInfo._setIsViewOnly(false);
+            var parentWithSingleChildScenario = new Scenarios.parentWithSingleChildScenario();
+            var parent = parentWithSingleChildScenario.getParentInTree();
+            GraphServiceMock.getForCentralBubbleUri(
+                parentWithSingleChildScenario.getB1RelatedToParentGraph()
+            );
+            var child = parent.getTopMostChildBubble().getTopMostChildBubble();
+            child.getController().convertToDistantBubbleWithUri(
+                parentWithSingleChildScenario.getB1Uri()
+            );
+            var newChild;
+            parent.getController().addChild().then(function(triple){
+                newChild = triple.destinationVertex();
+            });
+            newChild.getController().convertToDistantBubbleWithUri(
+                parentWithSingleChildScenario.getB1Uri()
+            ).then(function(){
+                fail("should not be able to add a relation to an already existing child");
+            });
+        });
+        it("cannot add a relation to existing parent", function () {
+            MindMapInfo._setIsViewOnly(false);
+            var parentWithSingleChildScenario = new Scenarios.parentWithSingleChildScenario();
+            var parent = parentWithSingleChildScenario.getParentInTree();
+            var getForCentralBubbleUriSpy = GraphServiceMock.getForCentralBubbleUri(
+                parentWithSingleChildScenario.getB1RelatedToParentGraph()
+            );
+            var child = parent.getTopMostChildBubble().getTopMostChildBubble();
+            child.getController().convertToDistantBubbleWithUri(
+                parentWithSingleChildScenario.getB1Uri()
+            );
+            var newChild;
+            parent.getController().addChild().then(function(triple){
+                newChild = triple.destinationVertex();
+            });
+            var newChildChild;
+            newChild.getController().addChild().then(function(triple){
+                newChildChild = triple.destinationVertex();
+            });
+            expect(newChildChild.getController().convertToDistantBubbleWithUriCanDo(
+                parent.getUri()
+            )).toBeFalsy();
+        });
+        it("cannot add a relation to self", function () {
+            MindMapInfo._setIsViewOnly(false);
+            var parentWithSingleChildScenario = new Scenarios.parentWithSingleChildScenario();
+            var parent = parentWithSingleChildScenario.getParentInTree();
+            var child = parent.getTopMostChildBubble().getTopMostChildBubble();
+            child.getController().convertToDistantBubbleWithUri(
+                parentWithSingleChildScenario.getB1Uri()
+            );
+            var newChild;
+            parent.getController().addChild().then(function(triple){
+                newChild = triple.destinationVertex();
+            });
+            expect(newChild.getController().convertToDistantBubbleWithUriCanDo(
+                parent.getUri()
+            )).toBeFalsy();
+        });
+        it("cannot add a relation to a non owned vertex", function () {
+            MindMapInfo._setIsViewOnly(false);
+            var parentWithSingleChildScenario = new Scenarios.parentWithSingleChildScenario();
+            var parent = parentWithSingleChildScenario.getParentInTree();
+            var child = parent.getTopMostChildBubble().getTopMostChildBubble();
+            expect(child.getController().convertToDistantBubbleWithUriCanDo(
+                TestUtils.generateVertexUri("not-current-user")
+            )).toBeFalsy();
+        });
+        it("can only add a relation to a vertex", function () {
+            MindMapInfo._setIsViewOnly(false);
+            var parentWithSingleChildScenario = new Scenarios.parentWithSingleChildScenario();
+            var parent = parentWithSingleChildScenario.getParentInTree();
+            expect(parent.getController().convertToDistantBubbleWithUriCanDo(
+                new Scenarios.getProjectSchema().getCenterBubbleUri()
+            )).toBeFalsy();
+            expect(parent.getController().convertToDistantBubbleWithUriCanDo(
+                new Scenarios.getProjectSchema().getCenterBubbleUri()
+            )).toBeFalsy();
+            expect(parent.getController().convertToDistantBubbleWithUriCanDo(
+                new Scenarios.getKaraokeSchemaGraph().getLocationProperty().getUri()
+            )).toBeFalsy();
+            expect(parent.getController().convertToDistantBubbleWithUriCanDo(
+                TestUtils.generateEdgeUri()
+            )).toBeFalsy();
+        });
+        it("cannot convert a bubble to a distant relation if it has children", function () {
+            MindMapInfo._setIsViewOnly(false);
+            var parentWithSingleChildScenario = new Scenarios.parentWithSingleChildScenario();
+            var parent = parentWithSingleChildScenario.getParentInTree();
+            expect(
+                parent.getController().convertToDistantBubbleWithUriCanDo(
+                    parentWithSingleChildScenario.getB1Uri()
+                )
+            ).toBeFalsy();
+        });
+        it("keeps label of the relation when converting a bubble to a distant bubble", function () {
+            var parentWithSingleChildScenario = new Scenarios.parentWithSingleChildScenario();
+            var parent = parentWithSingleChildScenario.getParentInTree();
+            var relation = parent.getTopMostChildBubble();
+            expect(
+                relation.text()
+            ).toBe("relation");
+            var child = relation.getTopMostChildBubble();
+            GraphServiceMock.getForCentralBubbleUri(
+                parentWithSingleChildScenario.getB1RelatedToParentGraph()
+            );
+            child.getController().convertToDistantBubbleWithUri(
+                parentWithSingleChildScenario.getB1Uri()
+            );
+            relation = parent.getTopMostChildBubble();
+            expect(
+                relation.text()
+            ).toBe("relation");
+        });
     });
 });

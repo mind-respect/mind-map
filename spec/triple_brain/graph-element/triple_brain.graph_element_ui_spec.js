@@ -10,13 +10,12 @@ define([
     "test/mock/triple_brain.suggestion_service_mock",
     "test/mock/triple_brain.edge_service_mock",
     "test/mock/triple_brain.vertex_service_mock",
-    "triple_brain.link_to_far_vertex_menu",
     "triple_brain.identification",
     "triple_brain.graph_element_service",
     "triple_brain.sub_graph",
     "triple_brain.graph_displayer_as_relative_tree",
     "triple_brain.mind_map_info"
-], function (Scenarios, TestUtils, GraphServiceMock, GraphElementServiceMock, SuggestionServiceMock, EdgeServiceMock, VertexServiceMock, LinkToFarVertexMenu, Identification, GraphElementService, SubGraph, GraphDisplayerAsRelativeTree, MindMapInfo) {
+], function (Scenarios, TestUtils, GraphServiceMock, GraphElementServiceMock, SuggestionServiceMock, EdgeServiceMock, VertexServiceMock, Identification, GraphElementService, SubGraph, GraphDisplayerAsRelativeTree, MindMapInfo) {
     "use strict";
     describe("graph_element_ui", function () {
         var vertex, schema;

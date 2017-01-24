@@ -21,7 +21,7 @@ define([
             Mock.mockRemoveEdge();
             MindMapInfo.setIsAnonymous(false);
             MindMapInfo._setIsViewOnly(false);
-            new EdgeController.Self(
+            new EdgeController.RelationController(
                 relation1
             ).remove();
             expect(
@@ -35,7 +35,7 @@ define([
                 TestUtils.getChildWithLabel(bubble1, "r1").isGroupRelation()
             ).toBeFalsy();
             MindMapInfo._setIsViewOnly(false);
-            new EdgeController.Self(
+            new EdgeController.RelationController(
                 TestUtils.getChildWithLabel(bubble1, "r1")
             ).addChild();
             expect(
@@ -49,7 +49,7 @@ define([
             MindMapInfo._setIsViewOnly(false);
             var relation1 = TestUtils.getChildWithLabel(bubble1, "r1");
             var relation1Uri = relation1.getUri();
-            new EdgeController.Self(
+            new EdgeController.RelationController(
                 relation1
             ).addChild();
             var newGroupRelation = TestUtils.getChildWithLabel(bubble1, "r1");
@@ -66,7 +66,7 @@ define([
             var karaokeIdentification = new Scenarios.getKaraokeSchemaGraph().getSchemaAsIdentification();
             relation1.getModel().addGenericIdentification(karaokeIdentification);
             MindMapInfo._setIsViewOnly(false);
-            new EdgeController.Self(
+            new EdgeController.RelationController(
                 relation1
             ).addChild();
             var newGroupRelation = TestUtils.getChildWithLabel(bubble1, "karaoke");
@@ -137,7 +137,7 @@ define([
             ).toBeFalsy();
             MindMapInfo._setIsViewOnly(false);
             EdgeServiceMock.remove();
-            new EdgeController.Self(
+            new EdgeController.RelationController(
                 aRelationToSameBubble
             ).remove();
             expect(
@@ -184,7 +184,7 @@ define([
             ).toBeFalsy();
             MindMapInfo._setIsViewOnly(false);
             EdgeServiceMock.remove();
-            new EdgeController.Self(
+            new EdgeController.RelationController(
                 aRelation
             ).remove();
             expect(

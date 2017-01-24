@@ -5,10 +5,14 @@
 define([
     "test/test-scenarios",
     "test/test-utils",
+    'test/mock',
     "triple_brain.selection_handler"
-], function (Scenarios, TestUtils, SelectionHandler) {
+], function (Scenarios, TestUtils, Mock, SelectionHandler) {
     "use strict";
     describe("vertex_ui", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         it("removes suggestions related to an identification when identification removed", function () {
             var vertexWithEventRelatedSuggestions = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();
             expect(

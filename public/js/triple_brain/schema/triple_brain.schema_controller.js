@@ -12,16 +12,16 @@ define([
     function (SchemaService, GraphDisplayer, GraphElement, GraphElementController, SelectionHandler) {
         "use strict";
         var api = {};
-        api.Self = SchemaController;
+        api.SchemaController = SchemaController;
         function SchemaController(schemaUi) {
             this.schemasUi = schemaUi;
-            GraphElementController.Self.prototype.init.call(
+            GraphElementController.GraphElementController.prototype.init.call(
                 this,
                 this.schemasUi
             );
         }
 
-        SchemaController.prototype = new GraphElementController.Self();
+        SchemaController.prototype = new GraphElementController.GraphElementController();
 
         SchemaController.prototype.addChildCanDo = function () {
             return this.isSingleAndOwned();

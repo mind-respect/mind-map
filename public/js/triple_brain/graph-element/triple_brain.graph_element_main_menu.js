@@ -222,17 +222,17 @@ define([
                     nbSelectedGroupRelations = selectionInfo.getNbSelectedGroupRelations();
                 if (0 === nbSelectedVertices && 0 === nbSelectedGroupRelations) {
                     object = GraphDisplayer.getRelationMenuHandler();
-                    currentClickHandler = new object.Self(
+                    currentClickHandler = new object.RelationController(
                         selectionInfo.getSelectedElements()
                     );
                 } else if (0 === nbSelectedRelations && 0 === nbSelectedGroupRelations) {
                     object = GraphDisplayer.getVertexMenuHandler();
-                    currentClickHandler = new object.Self(
+                    currentClickHandler = new object.VertexController(
                         selectionInfo.getSelectedElements()
                     );
                 } else {
                     object = GraphDisplayer.getGraphElementMenuHandler();
-                    currentClickHandler = new object.Self(
+                    currentClickHandler = new object.GraphElementController(
                         selectionInfo.getSelectedElements()
                     );
                 }

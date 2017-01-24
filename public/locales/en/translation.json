@@ -298,7 +298,6 @@
     "cut": "Cut (ctrl+x)",
     "paste": "Paste (ctrl+v)",
     "selectTree": "Select tree",
-    "connectTo": "Connect to existing bubble",
     "makePrivate": "Make private",
     "makePublic": "Make public",
     "remove": "Delete (del)",

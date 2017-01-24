@@ -102,7 +102,6 @@ requirejs.config({
         "triple_brain.ui.vertex_segments": "triple_brain/vertex/triple_brain.ui.vertex_segments",
         "triple_brain.vertex_service": "triple_brain/vertex/triple_brain.vertex_service",
         "triple_brain.ui.vertex_hidden_neighbor_properties_indicator": "triple_brain/vertex/triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
-        "triple_brain.link_to_far_vertex_menu": "triple_brain/vertex/triple_brain.link_to_far_vertex_menu",
         "triple_brain.included_graph_elements_menu": "triple_brain/vertex/triple_brain.included_graph_elements_menu",
         "triple_brain.vertex_controller": "triple_brain/vertex/triple_brain.vertex_controller",
         "triple_brain.delete_menu": "triple_brain/vertex/triple_brain.delete_menu",

@@ -4,12 +4,24 @@
 
 define([
     'test/test-scenarios',
+    'test/mock',
+    "test/mock/triple_brain.user_service_mock",
     "triple_brain.id_uri",
     "triple_brain.graph_element_type"
-], function (Scenarios, IdUri, GraphElementType) {
+], function (Scenarios, Mock, UserServiceMock, IdUri, GraphElementType) {
     "use strict";
     describe("id_uri", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
+
         it("can tell if vertex uri is owned by current user", function () {
+            Mock.getSpy(
+                "UserService",
+                "authenticatedUserInCache"
+            ).and.returnValue({
+                user_name: "foo"
+            });
             expect(
                 IdUri.isGraphElementUriOwnedByCurrentUser(
                     "\/service\/users\/not_foo\/graph\/vertex\/7c92d7a4-ad89-4225-bfbc-1a19063f1d74"
@@ -23,6 +35,12 @@ define([
         });
 
         it("can tell if schema uri is owned by current user", function () {
+            Mock.getSpy(
+                "UserService",
+                "authenticatedUserInCache"
+            ).and.returnValue({
+                user_name: "foo"
+            });
             expect(
                 IdUri.isGraphElementUriOwnedByCurrentUser(
                     "/service/users/not_foo/graph/schema/40e520f2-be43-4de8-8843-cf9c2e6dff92"

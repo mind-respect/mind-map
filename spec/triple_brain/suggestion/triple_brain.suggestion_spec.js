@@ -3,14 +3,16 @@
  */
 
 define([
-    "triple_brain.suggestion",
     "test/test-scenarios",
+    'test/mock',
+    "triple_brain.suggestion",
     "triple_brain.image"
-], function (Suggestion, Scenarios, Image) {
+], function (Scenarios, Mock, Suggestion, Image) {
     "use strict";
     describe("suggestion", function () {
         var karaokeSchemaScenario;
         beforeEach(function () {
+            Mock.applyDefaultMocks();
             karaokeSchemaScenario = new Scenarios.getKaraokeSchemaGraph();
         });
         it("can build from schema property and origin uri", function () {

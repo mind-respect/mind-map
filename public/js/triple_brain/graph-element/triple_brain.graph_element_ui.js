@@ -29,7 +29,7 @@ define([
     initMenuHandlerGetters();
     initSelectors();
 
-    api.isWikidataActiveForInBubbleEdition= function () {
+    api.isWikidataActiveForInBubbleEdition = function () {
         return _isWikidataActive;
     };
 
@@ -327,7 +327,18 @@ define([
         var controller = controllerGetters[
             this.getGraphElementType()
             ]();
-        return new controller.Self(this);
+        return new controller[
+            this._getControllerName()
+            ](this);
+    };
+
+    api.GraphElementUi.prototype._getControllerName = function () {
+        var controllerName = "";
+        var nameParts = this.getGraphElementType().split("_");
+        nameParts.forEach(function(namePart){
+           controllerName += namePart.capitalizeFirstLetter();
+        });
+        return controllerName + "Controller";
     };
 
     api.GraphElementUi.prototype.getTextOrDefault = function () {
@@ -687,9 +698,9 @@ define([
     EventBus.subscribe(
         '/event/ui/graph/drawn',
         function () {
-            if(api.getCenterBubble().getModel().isPublic()){
+            if (api.getCenterBubble().getModel().isPublic()) {
                 api.activateWikidataForInBubbleEdition();
-            }else{
+            } else {
                 api.deactivateWikidataForInBubbleEdition();
             }
             GraphElementMainMenu.reviewButtonsVisibility();

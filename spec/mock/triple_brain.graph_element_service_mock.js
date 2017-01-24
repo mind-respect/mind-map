@@ -9,6 +9,13 @@ define([
 ], function ($, TestUtils, GraphElementService) {
     "use strict";
     var api = {};
+    api.applyDefaultMocks = function(){
+        var spies = {};
+        spies["addIdentification"] = api.addIdentification();
+        spies["removeIdentification"] = api.removeIdentification();
+        spies["changeSortDate"] = api.changeSortDate();
+        return spies;
+    };
     api.addIdentification = function () {
         return spyOn(GraphElementService, "addIdentification").and.callFake(function(graphElement, identification){
             var identifications = {};

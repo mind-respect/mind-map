@@ -43,7 +43,7 @@ define([
                 api.displayUsingCentralBubbleUri(bubbleUri, errorCallback);
         };
         api.connectVertexToVertexWithUri = function (parentVertex, destinationVertexUri, callback) {
-            _implementation.connectVertexToVertexWithUri(
+            return _implementation.connectVertexToVertexWithUri(
                 parentVertex,
                 destinationVertexUri,
                 callback

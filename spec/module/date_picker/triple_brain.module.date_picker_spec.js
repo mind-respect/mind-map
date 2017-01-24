@@ -5,14 +5,18 @@
 define([
     'test/test-scenarios',
     'test/test-utils',
+    'test/mock',
     'triple_brain.identification',
     'triple_brain.event_bus',
     'triple_brain.selection_handler',
     'triple_brain.module.date_picker',
     "triple_brain.mind_map_info"
-], function (Scenarios, TestUtils, Identification, EventBus, SelectionHandler, ModuleDatePicker, MindMapInfo) {
+], function (Scenarios, TestUtils, Mock, Identification, EventBus, SelectionHandler, ModuleDatePicker, MindMapInfo) {
     "use strict";
     describe("module.date_picker", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         it("applies date picker for some specific identifications", function () {
             var bubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
             var someIdentification = Identification.withUriAndLabel(

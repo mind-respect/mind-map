@@ -3,15 +3,18 @@
  */
 
 define([
+    'test/test-scenarios',
+    'test/mock',
+    "test/mock/triple_brain.schema_service_mock",
     'triple_brain.schema_suggestion',
     'triple_brain.user_map_autocomplete_provider',
     'triple_brain.wikidata_autocomplete_provider',
-    "triple_brain.graph_element_type",
-    "test/mock/triple_brain.schema_service_mock",
-    'test/test-scenarios'
-], function (SchemaSuggestion, UserMapAutocompleteProvider, WikidataAutocompleteProvider, GraphElementType, SchemaServiceMock, Scenarios) {
+], function (Scenarios, Mock, SchemaServiceMock, SchemaSuggestion, UserMapAutocompleteProvider, WikidataAutocompleteProvider) {
     "use strict";
     describe("schema_suggestion", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         it("makes a suggestion out of every property", function () {
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),
                 formattedSearchResults = searchProvider.formatResults(

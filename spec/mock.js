@@ -5,7 +5,11 @@
 define([
     "jquery",
     'test/test-utils',
-    "triple_brain.user_service",
+    "test/mock/triple_brain.user_service_mock",
+    "test/mock/triple_brain.edge_service_mock",
+    "test/mock/triple_brain.vertex_service_mock",
+    "test/mock/triple_brain.graph_element_service_mock",
+    "test/mock/triple_brain.friendly_resource_service_mock",
     "triple_brain.mind_map_info",
     "triple_brain.suggestion_service",
     "triple_brain.graph_service",
@@ -15,9 +19,10 @@ define([
     "triple_brain.edge_service",
     "triple_brain.search",
     "triple_brain.id_uri"
-], function ($, TestUtils, UserService, MindMapInfo, SuggestionService, GraphService, SchemaService, VertexService, FriendlyResourceService, EdgeService, SearchService, IdUri) {
+], function ($, TestUtils, UserServiceMock, EdgeServiceMock, VertexServiceMock, GraphElementServiceMock, FriendlyResourceServiceMock, MindMapInfo, SuggestionService, GraphService, SchemaService, VertexService, FriendlyResourceService, EdgeService, SearchService, IdUri) {
     "use strict";
     var api = {};
+    var spies = {};
     api.setCenterBubbleUriInUrl = function (centerVertexUri) {
         window.usernameForBublGuru = IdUri.usernameFromUri(
             centerVertexUri
@@ -57,10 +62,37 @@ define([
             callback(edge);
         });
     };
-    UserService.authenticatedUserInCache = function () {
-        return {
-            user_name: "foo"
+    api.applyDefaultMocks = function () {
+        spies["UserService"] = {
+            mocker: UserServiceMock ,
+            spies: UserServiceMock.applyDefaultMocks()
         };
+        spies["EdgeService"] = {
+            mocker: EdgeServiceMock,
+            spies: EdgeServiceMock.applyDefaultMocks()
+        };
+        spies["VertexService"] = {
+            mocker: VertexServiceMock,
+            spies: VertexServiceMock.applyDefaultMocks()
+        };
+        spies["GraphElementService"] = {
+            mocker: GraphElementServiceMock,
+            spies: GraphElementServiceMock.applyDefaultMocks()
+        };
+        spies["FriendlyResourceService"] = {
+            mocker: FriendlyResourceServiceMock,
+            spies: FriendlyResourceServiceMock.applyDefaultMocks()
+        };
+    };
+    api.getSpy = function (object, method) {
+        return spies[object].spies[method];
+    };
+    api.resetSpy = function(object, method){
+        api.getSpy(object, method).calls.reset();
+    };
+    api.newSpy = function (object, method, args) {
+        api.resetSpy(object, method);
+        return spies[object].mocker[method].apply(this, args);
     };
     VertexService.addSuggestions = function () {
         return $.Deferred().resolve();

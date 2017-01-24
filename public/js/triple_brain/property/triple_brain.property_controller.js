@@ -9,17 +9,17 @@ define([
 ], function (MindMapInfo, GraphElementController, FriendlyResourceService) {
     "use strict";
     var api = {};
-    api.Self = PropertyControler;
+    api.PropertyController = PropertyControler;
 
     function PropertyControler(propertiesUi) {
         this.propertiesUi = propertiesUi;
-        GraphElementController.Self.prototype.init.call(
+        GraphElementController.GraphElementController.prototype.init.call(
             this,
             this.propertiesUi
         );
     }
 
-    PropertyControler.prototype = new GraphElementController.Self();
+    PropertyControler.prototype = new GraphElementController.GraphElementController();
 
     PropertyControler.prototype.removeCanDo = function () {
         return this.isSingleAndOwned();

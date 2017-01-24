@@ -195,6 +195,7 @@ define([
         }
     };
     api.connectVertexToVertexWithUri = function (parentVertex, destinationVertexUri, callback) {
+        var deferred = $.Deferred();
         GraphService.getForCentralBubbleUri(
             destinationVertexUri,
             function (serverGraph) {
@@ -214,8 +215,14 @@ define([
                 if (callback !== undefined) {
                     callback(drawnTree, farVertex);
                 }
+                deferred.resolve(new TripleUi.TripleUi(
+                    relation,
+                    parentVertex,
+                    farVertex
+                ));
             }
         );
+        return deferred.promise();
     };
     api.name = function () {
         return "relative_tree";

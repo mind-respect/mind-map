@@ -50,6 +50,11 @@ define([
                     uri
                 );
         };
+        api.isVertexUri = function (uri) {
+            return GraphElementType.Vertex === api.getGraphElementTypeFromUri(
+                    uri
+                );
+        };
         api.schemaUriOfProperty = function (propertyUri) {
             return propertyUri.substr(
                 0,

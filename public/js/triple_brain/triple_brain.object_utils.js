@@ -7,6 +7,9 @@ define([
 ], function($){
     "use strict";
     var api = {};
+    String.prototype.capitalizeFirstLetter = function() {
+        return this.charAt(0).toUpperCase() + this.slice(1);
+    };
     api.makeChildInheritParent = function(childApi, parentApi){
         return $.extend(
             {},

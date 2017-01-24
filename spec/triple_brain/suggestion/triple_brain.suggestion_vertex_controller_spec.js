@@ -5,14 +5,18 @@
 define([
     'test/test-scenarios',
     'test/test-utils',
+    'test/mock',
     "test/mock/triple_brain.suggestion_service_mock",
     "test/mock/triple_brain.graph_service_mock",
     "triple_brain.suggestion_vertex_controller",
     "triple_brain.sub_graph",
     'triple_brain.mind_map_info'
-], function (Scenarios, TestUtils, SuggestionServiceMock, GraphServiceMock, SuggestionVertexController, SubGraph, MindMapInfo) {
+], function (Scenarios, TestUtils, Mock, SuggestionServiceMock, GraphServiceMock, SuggestionVertexController, SubGraph, MindMapInfo) {
     "use strict";
     describe("suggestion_vertex_controller", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         it("also accepts all parent suggestions when a suggestion is accepted", function () {
             SuggestionServiceMock.accept();
             MindMapInfo._setIsViewOnly(false);

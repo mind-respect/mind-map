@@ -60,13 +60,17 @@ define([
                 bubble,
                 searchResult.uri
             );
-            identification.makeGeneric();
-            bubble.getController().addIdentification(
-                identification
-            );
-            bubble.getController().setLabel(
-                searchResult.label
-            );
+            bubble.getController().convertToDistantBubbleWithUri(
+                identification.getExternalResourceUri()
+            ).fail(function(){
+                identification.makeGeneric();
+                bubble.getController().addIdentification(
+                    identification
+                );
+                bubble.getController().setLabel(
+                    searchResult.label
+                );
+            });
         }
     };
 

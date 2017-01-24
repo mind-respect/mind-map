@@ -29,10 +29,11 @@ define([
         "triple_brain.id_uri",
         "triple_brain.language_manager",
         "text!locales/en/translation.json",
+        "triple_brain.user_map_autocomplete_provider",
         "triple_brain.mind_map_flow",
         "test/vendor/jasmine-jquery"
     ],
-    function ($, TestScenarioData, Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, TestUtils, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, EventBus, Suggestion, Identification, FriendlyResource, IdUri, LanguageManager, enTranslation, MindMapFlow) {
+    function ($, TestScenarioData, Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, TestUtils, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, EventBus, Suggestion, Identification, FriendlyResource, IdUri, LanguageManager, enTranslation, UserMapAutocompleteProvider, MindMapFlow) {
         "use strict";
         var api = {},
             testData = JSON.parse(TestScenarioData);
@@ -60,15 +61,15 @@ define([
             this.getCenterVertex = function () {
                 var graph = this.getGraph();
                 return Vertex.fromServerFormat(graph.vertices[
-                        uriOfVertexWithLabel(graph, "b1")
-                        ]
+                    uriOfVertexWithLabel(graph, "b1")
+                    ]
                 );
             };
             this.getBubble2 = function () {
                 var graph = this.getGraph();
                 return Vertex.fromServerFormat(graph.vertices[
-                        uriOfVertexWithLabel(graph, "b2")
-                        ]
+                    uriOfVertexWithLabel(graph, "b2")
+                    ]
                 );
             };
             this.getBubble1InTree = function () {
@@ -137,6 +138,7 @@ define([
                     "creationDate.surroundBubble7Graph"
                 );
             }
+
             Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
         };
 
@@ -149,8 +151,8 @@ define([
             };
             this.getMergeBubble = function () {
                 return Vertex.fromServerFormat(this.getGraph().vertices[
-                        uriOfVertexWithLabel(this.getGraph(), "merge")
-                        ]
+                    uriOfVertexWithLabel(this.getGraph(), "merge")
+                    ]
                 );
             };
 
@@ -278,12 +280,12 @@ define([
             this.getBubble4InTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("b4");
             };
-            this.getSubGraphForB2 = function() {
+            this.getSubGraphForB2 = function () {
                 return api._getTestData(
                     "threeBubblesGraph.subGraphForB2"
                 );
             };
-            this.getSubGraphForB3 = function() {
+            this.getSubGraphForB3 = function () {
                 return api._getTestData(
                     "threeBubblesGraph.subGraphForB3"
                 );
@@ -293,13 +295,13 @@ define([
                 return uriOfVertexWithLabel(this.getGraph(), "b1");
             };
 
-            this.getR1Uri = function(){
+            this.getR1Uri = function () {
                 return uriOfEdgeWithLabel(this.getGraph(), "r1");
             };
             this.getBubble1 = function () {
                 return Vertex.fromServerFormat(this.getGraph().vertices[
-                        uriOfVertexWithLabel(this.getGraph(), "b1")
-                        ]
+                    uriOfVertexWithLabel(this.getGraph(), "b1")
+                    ]
                 );
             };
             this.getBubble1InTree = function () {
@@ -323,8 +325,8 @@ define([
             };
             this.getBubble2 = function () {
                 return Vertex.fromServerFormat(this.getGraph().vertices[
-                        uriOfVertexWithLabel(this.getGraph(), "b2")
-                        ]
+                    uriOfVertexWithLabel(this.getGraph(), "b2")
+                    ]
                 );
             };
             this.getBubble2Ui = function () {
@@ -365,8 +367,43 @@ define([
             this.getCenterBubbleUri = function () {
                 return uriOfVertexWithLabel(this.getGraph(), "b1");
             };
+            this.getCenterAsSearchResult = function () {
+                return UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas().formatResults(
+                    JSON.parse(
+                        api._getTestData(
+                            "threeBubblesGraph.forkedB1SearchResults"
+                        )
+                    ),
+                    "b1"
+                );
+            };
             this.getBubble1InTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("b1");
+            };
+            Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
+        };
+
+        api.parentWithSingleChildScenario = function () {
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                return api._getTestData(
+                    "threeBubblesGraph.subGraphForParent"
+                );
+            };
+            this.getCenterBubbleUri = function () {
+                return uriOfVertexWithLabel(this.getGraph(), "parent");
+            };
+
+            this.getParentInTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("parent");
+            };
+            this.getB1RelatedToParentGraph = function () {
+                return api._getTestData(
+                    "threeBubblesGraph.subGraphOfB1RelatedToParent"
+                );
+            };
+            this.getB1Uri = function () {
+                return uriOfVertexWithLabel(this.getB1RelatedToParentGraph(), "b1");
             };
             Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
         };
@@ -381,7 +418,7 @@ define([
             this.getCenterBubbleUri = function () {
                 return this.getBubble1().getUri();
             };
-            this.getB2SurroundGraph = function(){
+            this.getB2SurroundGraph = function () {
                 return api._getTestData(
                     "graphWithHiddenSimilarRelations.b2Graph"
                 );
@@ -409,14 +446,14 @@ define([
             };
             this.getBubble1 = function () {
                 return Vertex.fromServerFormat(this.getGraph().vertices[
-                        uriOfVertexWithLabel(this.getGraph(), "b1")
-                        ]
+                    uriOfVertexWithLabel(this.getGraph(), "b1")
+                    ]
                 );
             };
             this.getBubble2 = function () {
                 return Vertex.fromServerFormat(this.getGraph().vertices[
-                        uriOfVertexWithLabel(this.getGraph(), "b2")
-                        ]
+                    uriOfVertexWithLabel(this.getGraph(), "b2")
+                    ]
                 );
             };
             this.getBubble1InTree = function () {
@@ -437,8 +474,8 @@ define([
             };
             this.getBubble = function () {
                 return Vertex.fromServerFormat(this.getGraph().vertices[
-                        uriOfVertexWithLabel(this.getGraph(), "distant bubble")
-                        ]
+                    uriOfVertexWithLabel(this.getGraph(), "distant bubble")
+                    ]
                 );
             };
             this.getBubbleInTree = function () {
@@ -460,8 +497,8 @@ define([
             };
             this.getCenterVertex = function () {
                 return Vertex.fromServerFormat(graph.vertices[
-                        uriOfVertexWithLabel(graph, "me")
-                        ]
+                    uriOfVertexWithLabel(graph, "me")
+                    ]
                 );
             };
             var graph = this.getGraph();
@@ -477,8 +514,8 @@ define([
             var graph = this.getGraph();
             this.getCenterVertex = function () {
                 return Vertex.fromServerFormat(graph.vertices[
-                        uriOfVertexWithLabel(graph, "me")
-                        ]
+                    uriOfVertexWithLabel(graph, "me")
+                    ]
                 );
             };
             this.getCenterVertexInTree = function () {
@@ -500,8 +537,8 @@ define([
                 );
                 var centerVertex = graph.vertices[centerVertexUri];
                 var groupRelationAsChildOfCenterVertex;
-                centerVertex.groupRelationRoots.forEach(function(groupRelation){
-                    if(possessionExternalUri === groupRelation.getIdentification().getExternalResourceUri()){
+                centerVertex.groupRelationRoots.forEach(function (groupRelation) {
+                    if (possessionExternalUri === groupRelation.getIdentification().getExternalResourceUri()) {
                         groupRelationAsChildOfCenterVertex = groupRelation;
                     }
                 });
@@ -517,8 +554,8 @@ define([
             };
             this.getBook1 = function () {
                 return Vertex.fromServerFormat(graph.vertices[
-                        uriOfVertexWithLabel(graph, "book 1")
-                        ]
+                    uriOfVertexWithLabel(graph, "book 1")
+                    ]
                 );
             };
             this.getBook1InTree = function () {
@@ -528,8 +565,8 @@ define([
             };
             this.getBook2 = function () {
                 return Vertex.fromServerFormat(graph.vertices[
-                        uriOfVertexWithLabel(graph, "book 2")
-                        ]
+                    uriOfVertexWithLabel(graph, "book 2")
+                    ]
                 );
             };
             this.getRelationWithBook1InTree = function () {
@@ -552,7 +589,7 @@ define([
             };
             Mock.setCenterBubbleUriInUrl(this.getCenterVertex().getUri());
         };
-        api.relationWithMultipleIdentifiers = function(){
+        api.relationWithMultipleIdentifiers = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
                 return api._getTestData(
@@ -597,8 +634,8 @@ define([
             var graph = this.getGraph();
             this.getVertex = function () {
                 return Vertex.fromServerFormat(graph.vertices[
-                        uriOfVertexWithLabel(graph, "Event")
-                        ]
+                    uriOfVertexWithLabel(graph, "Event")
+                    ]
                 );
             };
             this.getVertexUi = function () {
@@ -651,7 +688,7 @@ define([
             };
             Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
         };
-        api.withAcceptedSuggestionGraph = function(){
+        api.withAcceptedSuggestionGraph = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
                 return api._getTestData(
@@ -668,7 +705,7 @@ define([
             };
             Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
         };
-        api.withAcceptedSuggestionGraphNotCentered = function(){
+        api.withAcceptedSuggestionGraphNotCentered = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
                 return api._getTestData(
@@ -797,13 +834,13 @@ define([
             };
         };
 
-        api.withRelationsAsIdentifierSearchSome = function(){
+        api.withRelationsAsIdentifierSearchSome = function () {
             this.get = function () {
                 return api._getTestData("relationsAsIdentifier.searchSome");
             };
         };
 
-        api.withRelationsAsIdentifierGraph = function(){
+        api.withRelationsAsIdentifierGraph = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
                 return api._getTestData("relationsAsIdentifier.graph");
@@ -989,11 +1026,11 @@ define([
                     label
                 );
             };
-            this._findUsingBubbleSelectorAndLabel = function(bubbleSelector, label){
+            this._findUsingBubbleSelectorAndLabel = function (bubbleSelector, label) {
                 var bubbleHtml = tree.find(bubbleSelector).has(
                     ".bubble-label:contains(" + label + ")"
                 );
-                if(bubbleHtml.length !== 1){
+                if (bubbleHtml.length !== 1) {
                     console.error(
                         bubbleHtml.length + " bubble(s) found but there should it should be one"
                     );
@@ -1013,7 +1050,7 @@ define([
             if (data.constructor === Array) {
                 return data.slice();
             }
-            if(typeof data === 'object'){
+            if (typeof data === 'object') {
                 return $.extend(deep, {}, data);
             }
             return data;
@@ -1030,6 +1067,7 @@ define([
             });
             return uri;
         }
+
         function uriOfEdgeWithLabel(graph, label) {
             var uri;
             $.each(graph.edges, function (key, value) {
@@ -1095,7 +1133,7 @@ define([
                     centerBubbleUri
                 );
             GraphDisplayer.getVertexSelector().visitAllVertices(function (vertex) {
-                if(vertex.getUri() === centerBubbleUri){
+                if (vertex.getUri() === centerBubbleUri) {
                     vertex.setAsCentral();
                 }
                 EventBus.publish(

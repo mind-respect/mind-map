@@ -7,16 +7,16 @@ define([
 ], function (GraphElementController) {
     "use strict";
     var api = {};
-    api.Self = SuggestionRelationController;
+    api.RelationSuggestionController = SuggestionRelationController;
     function SuggestionRelationController(suggestionsRelationUi) {
         this.suggestionsRelationUi = suggestionsRelationUi;
-        GraphElementController.Self.prototype.init.call(
+        GraphElementController.GraphElementController.prototype.init.call(
             this,
             this.suggestionsRelationUi
         );
     }
 
-    SuggestionRelationController.prototype = new GraphElementController.Self();
+    SuggestionRelationController.prototype = new GraphElementController.GraphElementController();
 
     SuggestionRelationController.prototype.centerCanDo = function () {
         return false;

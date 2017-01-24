@@ -5,13 +5,17 @@
 define([
     "test/test-scenarios",
     "test/test-utils",
+    'test/mock',
     "triple_brain.compare_flow",
     "triple_brain.identification",
     "triple_brain.sub_graph",
     "triple_brain.graph_displayer_as_relative_tree"
-], function (Scenarios, TestUtils, CompareFlow, Identification, SubGraph, GraphDisplayerAsRelativeTree) {
+], function (Scenarios, TestUtils, Mock, CompareFlow, Identification, SubGraph, GraphDisplayerAsRelativeTree) {
     "use strict";
     describe("graph_compare", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         it("adds a bubble and it's child for a missing triple", function () {
             var scenario = new Scenarios.threeBubblesGraphFork();
             var b1Fork = scenario.getBubble1InTree();

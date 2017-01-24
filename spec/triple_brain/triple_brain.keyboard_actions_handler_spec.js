@@ -60,7 +60,7 @@ define([
             MindMapInfo._setIsViewOnly(false);
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             SelectionHandler.setToSingleGraphElement(bubble1);
-            var actionSpy = spyOn(VertexController.Self.prototype, "identify");
+            var actionSpy = spyOn(VertexController.VertexController.prototype, "identify");
             expect(
                 actionSpy
             ).not.toHaveBeenCalled();

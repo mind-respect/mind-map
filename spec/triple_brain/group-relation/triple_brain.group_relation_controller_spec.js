@@ -19,7 +19,7 @@ define([
             MindMapInfo._setIsViewOnly(false);
             SelectionHandler.setToSingleGraphElement(possessionInTree);
             var hideDescriptionSpy = spyOn(possessionInTree, "hideDescription");
-            new GroupRelationController.Self(
+            new GroupRelationController.GroupRelationController(
                 possessionInTree
             ).addChild();
             expect(

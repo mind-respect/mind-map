@@ -5,16 +5,18 @@
 define([
     "test/test-scenarios",
     "test/test-utils",
-    "test/mock/triple_brain.vertex_service_mock",
+    'test/mock',
     "triple_brain.vertex_html_builder",
     "triple_brain.graph_ui",
     "triple_brain.selection_handler",
-    "triple_brain.edge_service",
     "triple_brain.edge_controller",
     "triple_brain.mind_map_info"
-], function (Scenarios, TestUtils, VertexServiceMock, VertexHtmlBuilder, GraphUi, SelectionHandler, EdgeService, EdgeController, MindMapInfo) {
+], function (Scenarios, TestUtils, Mock, VertexHtmlBuilder, GraphUi, SelectionHandler, EdgeController, MindMapInfo) {
     "use strict";
     describe("vertex_html_builder", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         var bubble1, graphWithCircularityScenario;
         beforeEach(function () {
             var threeBubblesScenario = new Scenarios.threeBubblesGraph();
@@ -83,7 +85,7 @@ define([
             ).getTopMostChildBubble();
             var newVertex = TestUtils.addTriple(bubble2).destinationVertex();
             TestUtils.startDragging(newVertex);
-            var changeEndVertexSpy = spyOn(EdgeController.Self.prototype, "changeEndVertex");
+            var changeEndVertexSpy = spyOn(EdgeController.RelationController.prototype, "changeEndVertex");
             expect(
                 changeEndVertexSpy.calls.count()
             ).toBe(0);
@@ -107,7 +109,10 @@ define([
             ).getTopMostChildBubble();
             var newVertex = TestUtils.addTriple(bubble2).destinationVertex();
             TestUtils.startDragging(newVertex);
-            var changeSourceVertexSpy = spyOn(EdgeService, "changeSourceVertex");
+            var changeSourceVertexSpy = Mock.getSpy(
+                "EdgeService",
+                "changeSourceVertex"
+            );
             expect(
                 changeSourceVertexSpy.calls.count()
             ).toBe(0);
@@ -217,7 +222,6 @@ define([
             loadFixtures('graph-element-menu.html');
             var scenario = new Scenarios.threeBubblesGraph();
             var centerBubble = scenario.getCenterBubbleInTree();
-            VertexServiceMock.addRelationAndVertexToVertex();
             MindMapInfo._setIsViewOnly(false);
             expect(
                 centerBubble.getAddChildButton()

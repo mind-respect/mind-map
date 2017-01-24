@@ -4,8 +4,9 @@
 
 define([
     "test/test-scenarios",
+    'test/mock',
     "triple_brain.bubble_factory"
-], function (Scenarios, BubbleFactory) {
+], function (Scenarios, Mock, BubbleFactory) {
     "use strict";
     describe("bubble_factory", function () {
         var vertexUi,
@@ -26,6 +27,7 @@ define([
             var karaokeScenario = new Scenarios.getKaraokeSchemaGraph();
             schemaUi = karaokeScenario.getSchemaUi();
             propertyUi = karaokeScenario.getInviteesPropertyUi();
+            Mock.applyDefaultMocks();
         });
         it("can return vertex ui facade from html", function () {
             expect(

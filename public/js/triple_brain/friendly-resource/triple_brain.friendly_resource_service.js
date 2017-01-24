@@ -20,7 +20,7 @@ define([
         });
     };
     api.remove = function (friendlyResource, callback) {
-        $.ajax({
+        return $.ajax({
             type: 'DELETE',
             url: friendlyResource.getUri()
         }).success(callback);

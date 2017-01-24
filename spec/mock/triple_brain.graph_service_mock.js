@@ -7,8 +7,9 @@ define([
 ], function (GraphService) {
     "use strict";
     var api = {};
-    api.getForCentralBubbleUri = function(serverGraphToReturn){
-        return spyOn(GraphService, "getForCentralBubbleUri").and.callFake(function(centerUri, callback){
+    api.getForCentralBubbleUri = function(serverGraphToReturn, spy){
+        spy = spy || spyOn(GraphService, "getForCentralBubbleUri");
+        return spy.and.callFake(function(centerUri, callback){
             callback(serverGraphToReturn);
         });
     };

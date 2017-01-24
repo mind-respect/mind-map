@@ -5,10 +5,14 @@
 define([
     "test/test-scenarios",
     "test/test-utils",
+    'test/mock',
     "triple_brain.mind_map_info"
-], function (Scenarios, TestUtils, MindMapInfo) {
+], function (Scenarios, TestUtils, Mock, MindMapInfo) {
     "use strict";
     describe("edge_html_builder", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         it("adds duplicate button if has duplicate", function () {
             loadFixtures('graph-element-menu.html');
             var duplicateRelationsScenario = new Scenarios.graphWithARelationInTwoSimilarRelationsGroup();

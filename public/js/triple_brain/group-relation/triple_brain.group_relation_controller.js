@@ -12,17 +12,17 @@ define([
     function ($, VertexService, EdgeService, GraphElementController, SelectionHandler) {
         "use strict";
         var api = {};
-        api.Self = GroupRelationController;
+        api.GroupRelationController = GroupRelationController;
 
         function GroupRelationController(groupRelationUi) {
             this.groupRelationsUi = groupRelationUi;
-            GraphElementController.Self.prototype.init.call(
+            GraphElementController.GraphElementController.prototype.init.call(
                 this,
                 this.groupRelationsUi
             );
         }
 
-        GroupRelationController.prototype = new GraphElementController.Self();
+        GroupRelationController.prototype = new GraphElementController.GraphElementController();
 
         GroupRelationController.prototype.cutCanDo = function () {
             return false;
