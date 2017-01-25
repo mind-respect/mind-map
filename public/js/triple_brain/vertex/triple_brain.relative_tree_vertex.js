@@ -55,10 +55,10 @@ define([
                 ).append(vertex.text());
                 var ul = $("<ul>");
                 var hasChildInList = false;
-                vertices.forEach(function (childVertex) {
-                    if (childVertex.getParentVertex().isSameBubble(vertex)) {
+                vertices.forEach(function (otherVertex) {
+                    if (vertex.isVertexAChild(otherVertex)) {
                         ul.append(
-                            integrateVertex(childVertex, false)
+                            integrateVertex(otherVertex, false)
                         );
                         hasChildInList = true;
                     }
@@ -169,6 +169,9 @@ define([
             return this.getModel().getNbPublicNeighbors() > (
                     this.getParentVertex().getModel().isPublic() ? 1 : 0
                 );
+        };
+        api.RelativeTreeVertex.prototype.isVertexAChild = function (otherVertex) {
+            return !otherVertex.isCenterBubble() && otherVertex.getParentVertex().isSameBubble(this);
         };
         api.RelativeTreeVertex.prototype.selectTree = function () {
             SelectionHandler.setToSingleVertex(

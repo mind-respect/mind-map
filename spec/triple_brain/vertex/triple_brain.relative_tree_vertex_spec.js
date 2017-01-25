@@ -4,10 +4,11 @@
 
 define([
     'test/test-scenarios',
+    'test/mock',
     'test/test-utils',
     'triple_brain.relative_tree_vertex',
     'triple_brain.mind_map_info'
-], function (Scenarios, TestUtils, RelativeTreeVertex, MindMapInfo) {
+], function (Scenarios, Mock, TestUtils, RelativeTreeVertex, MindMapInfo) {
     "use strict";
     describe("relative_tree_vertex", function () {
         var bubble1,
@@ -15,6 +16,7 @@ define([
             bubble3,
             relation1;
         beforeEach(function () {
+            Mock.applyDefaultMocks();
             var scenario = new Scenarios.threeBubblesGraph();
             bubble1 = scenario.getCenterBubbleInTree();
             bubble2 = scenario.getBubble2InTree();
@@ -98,6 +100,51 @@ define([
             expect(
                 b3.hasHiddenRelations()
             ).toBeTruthy();
+        });
+        it("can export vertices to an html list", function(){
+            var scenario  = new Scenarios.threeBubblesGraph();
+            var listContainer = RelativeTreeVertex.VerticesToHtmlLists([
+                scenario.getBubble1InTree(),
+                scenario.getBubble2InTree(),
+                scenario.getBubble3InTree()
+            ]);
+            expect(
+                listContainer[0].childNodes[0].childNodes[0].nodeValue
+            ).toBe("b1");
+            var list = listContainer.find("ul");
+            var b2 = list.find("> li:first");
+            expect(
+                b2.text()
+            ).toBe("b2");
+            var b3 = list.find("> li:last");
+            expect(
+                b3.text()
+            ).toBe("b3");
+        });
+        it("can export vertices to an html list even if it has group relations", function(){
+            var groupRelation = new Scenarios.GraphWithSimilarRelationsScenario().getPossessionAsGroupRelationInTree();
+            groupRelation.expand();
+            var firstChildVertex = groupRelation.getTopMostChildBubble().getTopMostChildBubble().getTopMostChildBubble();
+            var secondChildVertex = firstChildVertex.getBubbleUnder();
+            var thirdChildVertex = secondChildVertex.getBubbleUnder();
+            var listContainer = RelativeTreeVertex.VerticesToHtmlLists([
+                groupRelation.getParentVertex(),
+                firstChildVertex,
+                secondChildVertex,
+                thirdChildVertex
+            ]);
+            expect(
+                listContainer[0].childNodes[0].childNodes[0].nodeValue
+            ).toBe("me");
+            var list = listContainer.find("ul");
+            var firstChildVertexInList = list.find("> li:first");
+            expect(
+                firstChildVertexInList.text()
+            ).toBe(firstChildVertex.text());
+            var lastChildVertexInList = list.find("> li:last");
+            expect(
+                lastChildVertexInList.text()
+            ).toBe(thirdChildVertex.text());
         });
     });
 });
