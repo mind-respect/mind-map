@@ -437,5 +437,34 @@ define([
                 relation.text()
             ).toBe("relation");
         });
+        it("automatically expands a child bubble having a single hidden relation when it's parent is expanded", function () {
+            var scenario = new Scenarios.automaticExpand();
+            var b3 = scenario.getB3InTree();
+            var graphMocks = {};
+            graphMocks[b3.getUri()] = scenario.getB3SubGraph();
+            graphMocks[scenario.getB31Uri()] = scenario.getB31SubGraph();
+            GraphServiceMock.getForCentralBubbleUriMultiple(graphMocks);
+            b3.getController().expand();
+            var b31 = TestUtils.getChildWithLabel(
+                b3,
+                'r31'
+            ).getTopMostChildBubble();
+            expect(
+                b31.text()
+            ).toBe("b31");
+            expect(
+                b31.isExpanded()
+            ).toBeTruthy();
+            var b32 = TestUtils.getChildWithLabel(
+                b3,
+                'r32'
+            ).getTopMostChildBubble();
+            expect(
+                b32.text()
+            ).toBe("b32");
+            expect(
+                b32.isExpanded()
+            ).toBeFalsy();
+        });
     });
 });

@@ -408,6 +408,44 @@ define([
             Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
         };
 
+        api.automaticExpand = function () {
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                return api._getTestData(
+                    "automaticExpand.centerGraph"
+                );
+            };
+            this.getCenterBubbleUri = function () {
+                return uriOfVertexWithLabel(this.getGraph(), "b1");
+            };
+
+            this.getB1InTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("b1");
+            };
+            this.getB3InTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("b3");
+            };
+            this.getB2SubGraph = function () {
+                return api._getTestData(
+                    "automaticExpand.b2SubGraph"
+                );
+            };
+            this.getB3SubGraph = function () {
+                return api._getTestData(
+                    "automaticExpand.b3SubGraph"
+                );
+            };
+            this.getB31SubGraph = function () {
+                return api._getTestData(
+                    "automaticExpand.b31SubGraph"
+                );
+            };
+            this.getB31Uri = function () {
+                return uriOfVertexWithLabel(this.getB31SubGraph(), "b31");
+            };
+            Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
+        };
+
         api.graphWithHiddenSimilarRelations = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
