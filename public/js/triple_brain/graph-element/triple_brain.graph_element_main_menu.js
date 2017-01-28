@@ -22,7 +22,9 @@ define([
                 if (!button.canActionBePossiblyMade(controller)) {
                     return;
                 }
-                button.cloneInto(menuContainer);
+                button.cloneInto(menuContainer).tooltip({
+                    delay: {"show": 0, "hide": 0}
+                });
             });
         };
         api.reset = function () {
@@ -38,8 +40,6 @@ define([
                         "fixed"
                     );
                 }
-            }).tooltip({
-                delay: {"show": 0, "hide": 0}
             });
             function initButtons() {
                 api.visitButtons(function (button) {

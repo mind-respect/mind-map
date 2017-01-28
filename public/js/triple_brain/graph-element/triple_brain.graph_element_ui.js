@@ -555,13 +555,10 @@ define([
     };
 
     api.GraphElementUi.prototype.updateInLabelNoteButtonHoverText = function () {
-        var noteWithoutHtml = $("<div/>").html(
-            this.getNote()
-        ).text();
         this.getNoteButtonInBubbleContent().attr(
             "title",
-            noteWithoutHtml
-        );
+            this.getNote()
+        ).tooltip('fixTitle');
     };
 
     api.GraphElementUi.prototype.isDisplayingComparison = function () {

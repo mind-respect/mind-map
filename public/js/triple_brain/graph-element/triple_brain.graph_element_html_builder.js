@@ -64,15 +64,17 @@ define([
         GraphElementMainMenu.visitButtons(function (button) {
             if (button.canBeInLabel()) {
                 var cloneHtml = button.cloneInto(container);
+                var tooltipOptions = {
+                    delay: {"show": 0, "hide": 0}
+                };
                 if ("note" === cloneHtml.data("action")) {
-                    var noteWithoutHtml = $("<div/>").html(
-                        graphElement.getNote()
-                    ).text();
                     cloneHtml.attr(
                         "title",
-                        noteWithoutHtml
+                        graphElement.getNote()
                     );
+                    tooltipOptions.html = true;
                 }
+                cloneHtml.tooltip(tooltipOptions);
             }
         });
         return container;
