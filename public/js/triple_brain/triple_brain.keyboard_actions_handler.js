@@ -39,6 +39,23 @@ define([
         nonCtrlPlusActions = defineNonCtrlPlusKeysAndTheirActions(),
         ctrlPlusActions = defineCtrlPlusKeysAndTheirActions();
 
+    api.disable = function(){
+        $(window).off(
+            "keydown", keyDownHandler
+        ).off(
+            "paste", pasteHandler
+        );
+    };
+
+    api.enable = function(){
+        api.disable();
+        $(window).on(
+            "keydown", keyDownHandler
+        ).on(
+            'paste', pasteHandler
+        );
+    };
+
     api.init = function () {
         EventBus.subscribe(
             "/event/ui/graph/drawing_info/updated/",
@@ -46,15 +63,7 @@ define([
         );
     };
     api._handleKeyboardActions = function () {
-        $(window).off(
-            "keydown", keyDownHandler
-        ).on(
-            "keydown", keyDownHandler
-        ).off(
-            "paste", pasteHandler
-        ).on(
-            'paste', pasteHandler
-        );
+        api.enable();
     };
     return api;
 
@@ -64,9 +73,6 @@ define([
         }
         var selectedElement = SelectionHandler.getSingleElement();
         if (selectedElement.isInEditMode()) {
-            return;
-        }
-        if (GraphUi.isThereAnOpenModal()) {
             return;
         }
         var oEvent = event.originalEvent;

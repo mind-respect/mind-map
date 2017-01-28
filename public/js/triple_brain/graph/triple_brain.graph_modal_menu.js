@@ -5,10 +5,20 @@
 define([
     "jquery",
     "triple_brain.graph_ui",
+    "triple_brain.keyboard_actions_handler",
     "bootstrap"
-], function ($, GraphUi) {
+], function ($, GraphUi, KeyboardActionsHandler) {
     "use strict";
     var api = {};
+    $('.modal').on('shown.bs.modal', function() {
+        KeyboardActionsHandler.disable();
+        GraphUi.disableDragScroll();
+        GraphUi.lockDragScroll();
+    }).on('hidden.bs.modal', function () {
+        KeyboardActionsHandler.enable();
+        GraphUi.unlockDragScroll();
+        GraphUi.enableDragScroll();
+    });
     api.forModalId = function(modalId){
         return new GraphModalMenu(
             $("#"+modalId)
