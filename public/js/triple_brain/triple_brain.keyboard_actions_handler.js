@@ -79,7 +79,7 @@ define([
         event.preventDefault();
         executeFeature({
             action: "paste"
-        }, selectedElement, oEvent);
+        }, oEvent);
     }
 
     function keyDownHandler(event) {
