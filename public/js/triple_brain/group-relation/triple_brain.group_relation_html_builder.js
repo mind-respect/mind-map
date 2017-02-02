@@ -16,8 +16,7 @@ define([
         "triple_brain.graph_element_html_builder",
         "triple_brain.edge_html_builder_common",
         "triple_brain.mind_map_info",
-        "triple_brain.bubble_factory",
-        "jquery-ui"
+        "triple_brain.bubble_factory"
     ],
     function ($, RelativeTreeTemplates, PropertiesIndicator, GroupRelationUi, GroupRelation, SelectionHandler, GraphElementMainMenu, GraphDisplayer, EventBus, Identification, GraphElementHtmlBuilder, EdgeHtmlBuilderCommon, MindMapInfo, BubbleFactory) {
         "use strict";

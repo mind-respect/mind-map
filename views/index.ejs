@@ -1002,10 +1002,98 @@
                     <button type="button" class="confirm btn btn-danger" tabindex="-1">
                         <i class="fa fa-trash-o"></i>
                         <span data-i18n="vertex.menu.delete.button.confirm"></span>
-                        <span class="multiple-flow" data-i18n="vertex.menu.delete.button.multiple_confirm_suffix"></span>
+                        <span class="multiple-flow"
+                              data-i18n="vertex.menu.delete.button.multiple_confirm_suffix"></span>
                     </button>
                     <button type="button" class="cancel btn btn-success"
                             data-i18n="vertex.menu.delete.button.cancel"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade row" id="identifiers-menu" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span data-i18n="graph_element.menu.identification.title"></span>
+                    <span data-i18n="graph_element.menu.identification.title_prefix"></span>
+                    <span class="bubble-label"></span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="identifications col-md-12">
+                        <div class='form-group'>
+                            <div class="input-group">
+                                <div class='input-group-addon'>
+                                    <i data-toggle='tooltip'
+                                       data-i18n='[title]graph_element.menu.identification.wikidata-indicator'
+                                       class='active fa fa-wikipedia-w'></i>
+                                </div>
+                                <input type="text"
+                                       data-i18n="[placeholder]graph_element.menu.identification.placeholder"
+                                       class="add-identification form-control">
+                            </div>
+                        </div>
+                        <div class='instruction'>
+                            <div class='small' data-i18n="graph_element.menu.identification.example"></div>
+                            <a href='#' class="what-for" data-i18n="graph_element.menu.identification.what_for"></a>
+                            <span style='margin-left:0.5em;' class='hidden why'
+                                  data-i18n="graph_element.menu.identification.why"></span>
+                        </div>
+                        <ul class="list list-group main-list"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-lg-12 text-center">
+                    <button type="button" class="cancel btn btn-success"
+                            data-i18n="modal.close"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade row" id="image-menu" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span data-i18n="vertex.menu.image.title"></span>
+                    <span data-i18n="vertex.menu.image.title_prefix"></span>
+                    <span class="bubble-label"></span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="identifications col-md-12">
+                        <section class='image-upload-wrapper text-center'>
+                           <article>
+                                <div class='holder'></div>
+                                <div class='hidden upload'><label><input type='file'></label></div>
+                                <div class='filereader'>File API & FileReader API not supported</div>
+                                <div class='formdata'>XHR2's FormData is not supported</div>
+                                <div class='progress'>XHR2's upload progress isn't supported</div>
+                                <div>
+                                    <div data-i18n='vertex.menu.image.progress'></div>
+                                    <progress class='uploadprogress' min='0' max='100' value='0'></progress>
+                                    <span class='progress-label'></span>
+                                </div>
+                            </article>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-lg-12 text-center">
+                    <button type="button" class="cancel btn btn-success"
+                            data-i18n="modal.close"></button>
                 </div>
             </div>
         </div>

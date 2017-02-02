@@ -65,7 +65,8 @@ define([
             if (button.canBeInLabel()) {
                 var cloneHtml = button.cloneInto(container);
                 var tooltipOptions = {
-                    delay: {"show": 0, "hide": 0}
+                    delay: {"show": 0, "hide": 0},
+                    container: 'body'
                 };
                 if ("note" === cloneHtml.data("action")) {
                     cloneHtml.attr(
@@ -74,7 +75,7 @@ define([
                     );
                     tooltipOptions.html = true;
                 }
-                cloneHtml.tooltip(tooltipOptions);
+                // cloneHtml.tooltip(tooltipOptions);
             }
         });
         return container;

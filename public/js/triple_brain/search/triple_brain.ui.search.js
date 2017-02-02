@@ -8,8 +8,7 @@ define([
         "triple_brain.graph_displayer",
         "triple_brain.user_map_autocomplete_provider",
         "triple_brain.event_bus",
-        "triple_brain.mind_map_info",
-        "jquery-ui"
+        "triple_brain.mind_map_info"
     ],
     function ($, IdUri, GraphDisplayer, UserMapAutocompleteProvider, EventBus, MindMapInfo) {
         "use strict";

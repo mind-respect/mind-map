@@ -21,7 +21,6 @@ define([
         "triple_brain.schema_suggestion",
         "triple_brain.identified_to_service",
         "triple_brain.graph_element_type",
-        "jquery-ui",
         "jquery.triple_brain.search",
         "jquery.i18next",
         "jquery.performance"
@@ -34,6 +33,21 @@ define([
         api.ofGraphElement = function (graphElementUi) {
             return new IdentificationMenu(graphElementUi);
         };
+
+        api.setup = function(){
+            if(MindMapInfo.isViewOnly()){
+                return;
+            }
+            api._setupInstructions();
+        };
+
+        api._setupInstructions = function () {
+            api._getModal().find(".what-for").click(function (event) {
+                event.preventDefault();
+                $(this).next('.why').toggleClass("hidden");
+            });
+        };
+
         api._handleClickReferences = function (event) {
             event.preventDefault();
             var anchor = $(this).disableAnchor();
@@ -86,20 +100,11 @@ define([
         }
 
         IdentificationMenu.prototype.create = function () {
-            var row = $("<div class='row'>");
-            this.html = $(
-                "<div class='identifications col-md-12'>"
-            ).appendTo(row);
+            var modal = api._getModal();
+            this.html = modal.find(".identifications");
             this._buildMenu();
             this.html.data("graphElement", this.graphElement);
-            GraphElementMenu.makeForMenuContentAndGraphElement(
-                row,
-                this.graphElement, {
-                    height: 350,
-                    width: 550
-                },
-                $.t("graph_element.menu.identification.title_prefix")
-            );
+            modal.modal();
             if (this.identificationTextField) {
                 GraphElementMenu.setupAutoCompleteSuggestionZIndex(
                     this.identificationTextField
@@ -110,67 +115,18 @@ define([
 
         IdentificationMenu.prototype._buildMenu = function () {
             if (!this.isViewOnly) {
-                this._addTitle();
-                this._addIdentificationTextField().focus();
-                this._addInstructions();
+                this._setupIdentificationTextField().focus();
             }
             this._addIdentifications();
         };
 
-        IdentificationMenu.prototype._addTitle = function () {
-            this.html.append(
-                $("<h4>").attr(
-                    "data-i18n",
-                    "graph_element.menu.identification.title"
-                )
-            );
-        };
-
-        IdentificationMenu.prototype._addInstructions = function () {
-            var container = $("<div class='instruction'>");
-            container.append(
-                $("<div class='small'>").attr(
-                    "data-i18n",
-                    (
-                        "graph_element.menu.identification.example"
-                    )
-                )
-            );
-            container.append(
-                $("<a href='#' class=''>").attr(
-                    "data-i18n",
-                    (
-                        "graph_element.menu.identification.what_for"
-                    )
-                ).click(function (event) {
-                    event.preventDefault();
-                    $(this).next('.why').toggleClass("hidden");
-                })
-            );
-            container.append(
-                $("<span style='margin-left:0.5em;' class='hidden why'>").attr(
-                    "data-i18n",
-                    (
-                        "graph_element.menu.identification.why"
-                    )
-                )
-            );
-            this.html.append(
-                container
-            );
-        };
-
         IdentificationMenu.prototype._addIdentifications = function () {
-            var identitiesList = MindMapTemplate['identification_existing_identities'].merge(),
-                self = this;
-            this.html.append(
-                identitiesList
-            );
-            $.each(this.graphElement.getModel().getIdentifiers(), function () {
-                self._addIdentificationAsListElement(
-                    this
+            var identifiers = this.graphElement.getModel().getIdentifiers();
+            Object.keys(identifiers).forEach(function(key) {
+                this._addIdentificationAsListElement(
+                    identifiers[key]
                 );
-            });
+            }.bind(this));
         };
 
         IdentificationMenu.prototype._getMainListHtml = function () {
@@ -184,20 +140,19 @@ define([
                 "identification",
                 identification
             );
-            var self = this;
             this._makeTitle(identification).then(function (title) {
-                var description = self._makeDescription(identification);
+                var description = this._makeDescription(identification);
                 li.append(
-                    self._makeImage(identification),
+                    this._makeImage(identification),
                     title,
                     description,
-                    self._makeOrigin(identification),
-                    self._makeReferencesContainer(identification)
+                    this._makeOrigin(identification),
+                    this._makeReferencesContainer(identification)
                 );
-                self._getMainListHtml().append(
+                this._getMainListHtml().append(
                     li
                 );
-            });
+            }.bind(this));
         };
 
         IdentificationMenu.prototype._makeImage = function (identification) {
@@ -345,20 +300,8 @@ define([
             return container;
         };
 
-        IdentificationMenu.prototype._addIdentificationTextField = function () {
-            var identificationTextField = $(
-                MindMapTemplate[
-                    'identification_textfield'
-                    ].merge()
-            );
-            var container = $("<div class='form-group'>").append(
-                $("<div class='input-group'>").append(
-                    $("<div class='input-group-addon'>").append(
-                        $("<i data-toggle='tooltip' data-i18n='[title]graph_element.menu.identification.wikidata-indicator' class='active fa fa-wikipedia-w'>")
-                    ),
-                    identificationTextField
-                ));
-            this.html.append(container);
+        IdentificationMenu.prototype._setupIdentificationTextField = function () {
+            var identificationTextField = api._getModal().find(".add-identification");
             this._setUpAutoComplete(identificationTextField);
             this.identificationTextField = identificationTextField;
             return identificationTextField;
@@ -455,6 +398,9 @@ define([
                 }
             );
             return container;
+        };
+        api._getModal = function(){
+            return $("#identifiers-menu");
         };
         return api;
     }

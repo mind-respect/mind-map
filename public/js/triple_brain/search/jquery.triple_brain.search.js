@@ -5,8 +5,7 @@
 define([
     "jquery",
     "triple_brain.graph_ui",
-    "triple_brain.event_bus",
-    "jquery-ui"
+    "triple_brain.event_bus"
 ], function ($, GraphUi, EventBus) {
     "use strict";
     var enterKeyCode = 13,
@@ -15,6 +14,7 @@ define([
         referencesText;
     $.fn.tripleBrainAutocomplete = function (options) {
         var textInput = $(this);
+        return textInput;
         textInput.autocomplete(
             $.extend(
                 getAutocompleteOptions(),

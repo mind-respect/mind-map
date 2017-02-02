@@ -2,6 +2,13 @@
     /*
      * http://stackoverflow.com/questions/13534601/re-attaching-jquery-detach
      */
+    var id=0;
+    $.fn.uniqueId = function(){
+        $(this).prop(
+            "id",
+            id++
+        );
+    };
     $.fn.detachTemp = function() {
         this.data('dt_placeholder',$('<span />').insertAfter( this ));
         return this.detach();

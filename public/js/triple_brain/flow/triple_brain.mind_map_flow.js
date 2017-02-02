@@ -18,8 +18,10 @@ define([
     "triple_brain.bubble_cloud_flow",
     "triple_brain.flow",
     "triple_brain.bubble_factory",
-    "triple_brain.other_user_flow"
-], function ($, UserService, EventBus, Header, SelectionHandler, GraphDisplayer, GraphDisplayerFactory, MindMapInfo, GraphElementMainMenu, GraphUi, LanguageManager, IdUriUtils, BubbleCloudFlow, Flow, BubbleFactory) {
+    "triple_brain.identification_menu",
+    "triple_brain.image_menu",
+    "triple_brain.other_user_flow",
+], function ($, UserService, EventBus, Header, SelectionHandler, GraphDisplayer, GraphDisplayerFactory, MindMapInfo, GraphElementMainMenu, GraphUi, LanguageManager, IdUriUtils, BubbleCloudFlow, Flow, BubbleFactory, IdentificationMenu, ImageMenu) {
     "use strict";
     var api = {};
     api.enterBubbleCloud = function () {
@@ -118,7 +120,8 @@ define([
                 );
                 GraphElementMainMenu._getMenu().removeClass("hidden");
                 GraphElementMainMenu.reset();
-                // EventBus.publish("while-fetching-graph");
+                IdentificationMenu.setup();
+                ImageMenu.setup();
             });
         }
     }

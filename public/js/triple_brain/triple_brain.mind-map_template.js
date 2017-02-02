@@ -26,17 +26,12 @@ define([
         );
         t.add('vertex_menu', '<div class="menu"></div>');
         t.add('vertex_move_button', '<div class="move"></div>');
-        t.add('identification_existing_identities', '<ul class="list list-group main-list"></ul>');
         t.add(
             'identification_existing_identity',
                 '<h3 class="type-label identification" identification-uri="{identification_uri}">{type_label}' +
                 '<button class="remove-button-in-list">x</button>' +
                 '</h3>' +
                 '<div class="group description">{description}</div>'
-        );
-        t.add(
-            'identification_textfield',
-            '<input type="text" data-i18n="[placeholder]graph_element.menu.identification.placeholder" class="add-identification form-control">'
         );
 
         t.add(
@@ -66,22 +61,7 @@ define([
         
         t.add('auto_complete_suggestion_list', '<ul class="auto-complete-suggestion"></ul>');
         t.add('auto_complete_suggestion_list_element', '<li>{name}</li>');
-        t.add(
-            'image_upload',
-                "<section class='image-upload-wrapper text-center'>" +
-                "<header>" +
-                "<h2 data-i18n='vertex.menu.image.title'></h2>" +
-                "</header>" +
-                "<article>" +
-                "<div class='holder'></div>" +
-                "<p class='hidden upload'><label><input type='file'></label></p>" +
-                "<p class='filereader'>File API & FileReader API not supported</p>" +
-                "<p class='formdata'>XHR2's FormData is not supported</p>" +
-                "<p class='progress'>XHR2's upload progress isn't supported</p>" +
-                "<p><div data-i18n='vertex.menu.image.progress'></div><progress class='uploadprogress' min='0' max='100' value='0'></progress><span class='progress-label'></span></p>" +
-                "</article>" +
-                "</section>"
-        );
+
         return api;
     }
 );

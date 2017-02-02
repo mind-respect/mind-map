@@ -6,13 +6,9 @@ define([
     "jquery",
     "triple_brain.event_bus",
     "triple_brain.selection_handler",
-    "triple_brain.center_bubble",
-    "triple_brain.vertex_service",
-    "triple_brain.identification_menu",
     "triple_brain.mind_map_info",
-    "triple_brain.graph_ui",
     "mr.app_controller"
-], function ($, EventBus, SelectionHandler, CenterBubble, VertexService, IdentificationMenu, MindMapInfo, GraphUi, AppController) {
+], function ($, EventBus, SelectionHandler, MindMapInfo, AppController) {
     "use strict";
     var api = {},
         tabKeyNumber = 9,

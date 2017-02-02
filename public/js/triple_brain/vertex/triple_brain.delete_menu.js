@@ -32,7 +32,6 @@ define([
                     ]("hidden");
                 this.displayLabelOfSelectedBubbles();
                 this.setupConfirmButton();
-                this.setupCancelButton();
                 return this;
             };
 
@@ -64,16 +63,6 @@ define([
                         deleteCallback(
                             this.vertex
                         );
-                        this.modal.modal("hide");
-                    }.bind(this)
-                );
-            };
-
-            this.setupCancelButton = function () {
-                this.modal.find(".cancel").on(
-                    "click",
-                    function (event) {
-                        event.stopPropagation();
                         this.modal.modal("hide");
                     }.bind(this)
                 );

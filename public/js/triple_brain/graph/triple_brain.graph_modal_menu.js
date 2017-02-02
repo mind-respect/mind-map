@@ -14,6 +14,9 @@ define([
         KeyboardActionsHandler.disable();
         GraphUi.disableDragScroll();
         GraphUi.lockDragScroll();
+        $(this).find(".modal-footer .cancel").click(function(){
+            $(this).closest(".modal").modal("hide");
+        });
     }).on('hidden.bs.modal', function () {
         KeyboardActionsHandler.enable();
         GraphUi.unlockDragScroll();

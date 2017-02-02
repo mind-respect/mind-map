@@ -4,9 +4,8 @@
 
 define([
     "require",
-    "jquery",
-    "triple_brain.graph_element_main_menu"
-], function (require, $, GraphElementMainMenu) {
+    "jquery"
+], function (require, $) {
     "use strict";
     /*
      inspired by http://blog.overnetcity.com/2014/11/18/undo-redo-angularjs-command-pattern/
