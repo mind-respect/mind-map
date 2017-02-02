@@ -22,9 +22,10 @@ define([
                 if (!button.canActionBePossiblyMade(controller)) {
                     return;
                 }
-                button.cloneInto(menuContainer).tooltip({
-                    delay: {"show": 0, "hide": 0}
-                });
+                button.cloneInto(menuContainer);
+                //     .tooltip({
+                //     delay: {"show": 0, "hide": 0}
+                // });
             });
         };
         api.reset = function () {

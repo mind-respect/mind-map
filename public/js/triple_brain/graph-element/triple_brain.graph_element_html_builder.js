@@ -74,7 +74,7 @@ define([
                     );
                     tooltipOptions.html = true;
                 }
-                cloneHtml.tooltip(tooltipOptions);
+                // cloneHtml.tooltip(tooltipOptions);
             }
         });
         return container;
