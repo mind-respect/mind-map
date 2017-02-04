@@ -43,17 +43,16 @@
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <form class="navbar-form navbar-left" role="search" id="header-search-form">
-                        <div class="form-group form-group-lg">
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-search search-icon"></i>
-                                </div>
-                                <input type='text' id="landing-page-search" class='form-control input-lg hidden'
-                                       data-i18n="[placeholder]search.big.placeholder"/>
-                                <input id="vertex-search-input" data-i18n="[placeholder]left_menu.search"
-                                       class='form-control input-lg hidden'>
-                            </div>
-                        </div>
+                        <input type='text' id="landing-page-search" class='input-lg search-box hidden'
+                               data-i18n="[placeholder]search.big.placeholder"/>
+                        <input id="vertex-search-input" data-i18n="[placeholder]left_menu.search"
+                               class='input-lg search-box hidden'>
+                        <label for="landing-page-search" class="hidden">
+                            <span class="glyphicon glyphicon-search search-icon"></span>
+                        </label>
+                        <label for="vertex-search-input" class="hidden">
+                            <span class="glyphicon glyphicon-search search-icon"></span>
+                        </label>
                     </form>
                 </li>
                 <li class="dropdown">
@@ -1073,7 +1072,7 @@
                 <div class="row">
                     <div class="identifications col-md-12">
                         <section class='image-upload-wrapper text-center'>
-                           <article>
+                            <article>
                                 <div class='holder'></div>
                                 <div class='hidden upload'><label><input type='file'></label></div>
                                 <div class='filereader'>File API & FileReader API not supported</div>

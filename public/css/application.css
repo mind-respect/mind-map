@@ -48,6 +48,16 @@ body.mind-map-flow { margin-top: 50px; }
 
 .navbar-lower { background-color: transparent; box-shadow: none; }
 
+.search-box { margin-top: 6px; transition: width 0.6s, border-radius 0.6s, background 0.6s, box-shadow 0.6s; width: 40px; height: 40px; border: none; cursor: pointer; background: #ebebeb; }
+.search-box + label .search-icon { color: black; }
+.search-box:hover { color: white; background: #c8c8c8; box-shadow: 0 0 0 5px #3d4752; }
+.search-box:hover + label .search-icon { color: white; }
+.search-box:focus { transition: width 0.6s cubic-bezier(0, 1.22, 0.66, 1.39), border-radius 0.6s, background 0.6s; border: none; outline: none; box-shadow: none; padding-left: 15px; cursor: text; width: 300px; border-radius: auto; background: #ebebeb; color: black; }
+.search-box:focus + label .search-icon { color: black; }
+.search-box:not(:focus) { text-indent: -5000px; }
+
+.search-icon { position: relative; left: -30px; cursor: pointer; }
+
 /* Copyright Vincent Blouin under the GPL License version 3 */
 #app-presentation { border-bottom: none; margin-top: 0; color: white; }
 #app-presentation .background { position: absolute; background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("images/neurons-440660-white3.jpg"); left: 0; width: 100%; min-height: 454px; }
@@ -555,7 +565,9 @@ li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-bu
 
 .link-like-button { border-style: none; font-size: 0.7em; padding: 0 0 0 0; background-color: transparent; font-weight: normal; }
 
-.popover { position: relative; }
+.popover { /*
+position relative because it gets narrow and misplaced for
+to the right vertices. */ position: relative; }
 
 .ui-autocomplete { cursor: pointer; width: 200px; position: absolute !important; }
 .ui-autocomplete li.autocomplete-element:hover { background-color: #f5f5f5; }

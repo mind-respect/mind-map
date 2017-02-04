@@ -35,6 +35,7 @@ define([
         api.commonSetupForAuthenticated = function () {
             api._commonSetup();
             getMyBubblesSearchInput().removeClass("hidden");
+            getMyBubblesSearchInputLabel().removeClass("hidden");
             handleCreateNewConceptButton();
             handleCreateNewSchemaButton();
             handleDisconnectButton();
@@ -53,6 +54,7 @@ define([
             getBubbleMenu().addClass("hidden");
             getCreateSchemaButton().addClass("hidden");
             getLandingPageSearchInput().removeClass("hidden");
+            getLandingPageSearchInputLabel().removeClass("hidden");
             getDisconnectButton().addClass("hidden");
             getUserMenu().addClass("hidden");
             getAllYourBubblesButton().addClass("hidden");
@@ -279,8 +281,16 @@ define([
             return $("#landing-page-search");
         }
 
+        function getLandingPageSearchInputLabel() {
+            return $("label[for=landing-page-search]");
+        }
+
         function getMyBubblesSearchInput() {
             return $("#vertex-search-input");
+        }
+
+        function getMyBubblesSearchInputLabel() {
+            return $("label[for=vertex-search-input]");
         }
 
         function getShareLink() {

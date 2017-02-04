@@ -214,7 +214,11 @@ li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-bu
 }
 
 .popover{
-  //max-width: 100%; // Max Width of the popover (depending on the container!)
+  /*
+  position relative because it gets narrow and misplaced for
+  to the right vertices.
+   */
+
   position:relative;
 }
 
