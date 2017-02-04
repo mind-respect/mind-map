@@ -135,8 +135,9 @@ define([
                 );
         }
 
-        this.getMoreInfoForSearchResult = function (searchResult, callback) {
+        this.getMoreInfoForSearchResult = function (searchResult) {
             var originalSearchResult = searchResult.nonFormattedSearchResult;
+            var deferred = $.Deferred();
             IdentificationContext.buildWithoutBubbleLinks(
                 originalSearchResult,
                 function (context, image, comment) {
@@ -146,7 +147,7 @@ define([
                             originalSearchResult.getGraphElement().getComment()
                         )
                     );
-                    callback({
+                    deferred.resolve({
                             conciseSearchResult: searchResult,
                             title: searchResult.label,
                             text: moreInfo,
@@ -156,6 +157,7 @@ define([
                     );
                 }
             );
+            return deferred.promise();
         };
     }
 });

@@ -45,7 +45,7 @@ define([
                     var searchResults = [];
                     var providerPromises = [];
                     options.resultsProviders.forEach(function (provider) {
-                        if(!provider.isActive()){
+                        if (!provider.isActive()) {
                             return;
                         }
                         providerPromises.push(
@@ -59,7 +59,7 @@ define([
                     ).then(function () {
                         response(searchResults);
                     });
-                    function getResultsOfProvider(provider){
+                    function getResultsOfProvider(provider) {
                         return provider.getFetchMethod(
                             searchTerm
                         ).then(function (results) {
@@ -72,6 +72,9 @@ define([
                         });
                     }
                 },
+                classes: {
+                    "ui-autocomplete": "list-group"
+                },
                 change: function () {
                     removeSearchFlyout();
                 },
@@ -81,120 +84,50 @@ define([
                 focus: function (event, ui) {
                     api._onFocusAction(
                         ui.item,
-                        $(event.currentTarget)
+                        $(event.toElement)
                     );
                 }
             };
         }
 
         function renderItemCustom(ul, item) {
-            var listElement = $("<li>"),
-                moreInfoContainer = $("<div class='info'>"),
-                labelContainer = $("<span class='element-label'>").append(
-                    item.label + " "
-                );
-            if (item.elementType !== undefined && item.elementType !== "") {
-                $("<span class='type'>").append(
+            var listElement = $("<li class='list-group-item autocomplete-element'>").append(
+                $("<span class='badge'>").append(
                     item.elementType
-                ).appendTo(moreInfoContainer);
-            }
-            if (item.somethingToDistinguish !== undefined && item.somethingToDistinguish !== "") {
-                $("<div class='distinction'>").append(
+                ),
+                $("<strong class='list-group-item-heading'>").append(item.label),
+                $("<p class='list-group-item-text'>").append(
                     item.somethingToDistinguish
-                ).appendTo(moreInfoContainer);
-            }
-            if (item.nbReferences !== undefined && item.nbReferences > 0) {
-                $("<div class='nb-references'>").append(
-                    item.nbReferences + referencesText
-                ).appendTo(moreInfoContainer);
-            }
-            $("<a>").append(
-                labelContainer,
-                moreInfoContainer
-            ).appendTo(listElement);
+                )
+            ).uniqueId();
+            listElement.data("searchResult", item);
+            listElement.popover({
+                animation:false,
+                html: true,
+                placement:'auto left',
+                container:'body',
+                title: item.label,
+                trigger: "manual",
+                content: function () {
+                    return buildDescriptionPanelHtml(
+                        api.getCachedDetailsOfSearchResult(
+                            $(this).data("searchResult")
+                        )
+                    );
+                }
+            });
             return listElement.appendTo(ul);
         }
     };
-    api._onFocusAction = function (searchResult, resultsList) {
-        if (api.hasCachedDetailsForSearchResult(searchResult)) {
-            displayDescriptionPanel(
-                api.getCachedDetailsOfSearchResult(
-                    searchResult
-                )
-            );
-            return;
-        }
-        searchResult.provider.getMoreInfoForSearchResult(
-            searchResult,
-            function (moreInfo) {
-                detailsCache[searchResult.uri] = moreInfo;
-                displayDescriptionPanel(moreInfo);
-            }
-        );
-        function displayDescriptionPanel(description) {
-            removeSearchFlyout();
-            if (!resultsList.is(":visible")) {
-                return;
-            }
-            var moreInfoPanel = $("<div class='hidden'>");
-            moreInfoPanel.addClass("autocomplete-flyout");
-            if (description.image !== undefined) {
-                var image = $(
-                    "<img src='" +
-                    description.image.getBase64ForSmall() +
-                    "'>"
-                );
-                moreInfoPanel.append(
-                    image
-                );
-            }
-            var title = $("<span class='title'>").append(
-                description.title + " "
-            );
-            var searchResult = description.conciseSearchResult;
-            var sourceContainer = $("<span>");
-            sourceContainer.append(
-                $.t("vertex.search.source") + ": " +
-                searchResult.source
-            );
-            var text = $("<div class='description'>").append(
-                description.text,
-                " "
-            );
-            $("body").append(moreInfoPanel);
-            moreInfoPanel.append(
-                title,
-                "<br/>",
-                sourceContainer,
-                "<br/>"
-            );
-            if (description.source !== undefined) {
-                var descriptionSource = $("<span class='source'>").append(
-                    "[" + description.source + "] "
-                );
-                moreInfoPanel.append(descriptionSource);
-            }
-            moreInfoPanel.append(text);
-            var listPosition = resultsList.offset();
-            var widthMargin = 20;
-            var rightAlignedPosition = {
-                x: listPosition.left + resultsList.width() + widthMargin,
-                y: listPosition.top
-            };
-            var mostRightPositionInScreen = $(window).width() + $("html,body").scrollLeft();
-            var position;
-            if (rightAlignedPosition.x + moreInfoPanel.width() > mostRightPositionInScreen) {
-                position = {
-                    x: listPosition.left - moreInfoPanel.width(),
-                    y: listPosition.top
-                };
-            } else {
-                position = rightAlignedPosition;
-            }
-            moreInfoPanel.css("left", position.x);
-            moreInfoPanel.css("top", position.y);
-            moreInfoPanel.removeClass("hidden");
-        }
+    api._onFocusAction = function (searchResult, listElement) {
+        $('.autocomplete-element:not(#'+listElement.prop("id") +')').popover('hide');
+        var getMoreInfoPromise = api.hasCachedDetailsForSearchResult(searchResult) ?
+            $.Deferred().resolve(api.getCachedDetailsOfSearchResult(searchResult)) :
+            searchResult.provider.getMoreInfoForSearchResult(searchResult);
+        getMoreInfoPromise.then(function (moreInfo) {
+            detailsCache[searchResult.uri] = moreInfo;
+            listElement.popover("show");
+        });
     };
     api.hasCachedDetailsForSearchResult = function (searchResult) {
         return detailsCache[searchResult.uri] !== undefined;
@@ -209,6 +142,24 @@ define([
 
     return api;
     function removeSearchFlyout() {
-        $(".autocomplete-flyout").remove();
+        $('.autocomplete-element').popover('hide');
+    }
+
+    function buildDescriptionPanelHtml(description) {
+        var container = $("#search-popover");
+        var imgContainer = container.find(".img").empty();
+        if (description.image) {
+            imgContainer.append(
+                $(
+                    "<img src='" +
+                    description.image.getBase64ForSmall() +
+                    "'>"
+                )
+            );
+        }
+        var searchResult = description.conciseSearchResult;
+        container.find(".source").html(searchResult.source);
+        container.find(".description").html(description.comment);
+        return container.html();
     }
 });

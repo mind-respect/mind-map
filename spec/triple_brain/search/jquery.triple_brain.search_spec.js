@@ -18,11 +18,11 @@ define([
             )[0];
             var getMoreInfoSpy = spyOn(searchResult.provider,
                 "getMoreInfoForSearchResult"
-            ).and.callFake(function (searchResult, callback) {
-                    callback({
-                        conciseSearchResult: searchResult
-                    });
+            ).and.callFake(function (searchResult) {
+                return $.Deferred().resolve({
+                    conciseSearchResult: searchResult
                 });
+            });
             expect(getMoreInfoSpy.calls.count()).toBe(0);
             var listHtml = $("<div>");
             $Search._onFocusAction(searchResult, listHtml);

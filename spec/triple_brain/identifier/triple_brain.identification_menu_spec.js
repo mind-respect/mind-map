@@ -18,6 +18,7 @@ define([
             Mock.applyDefaultMocks();
         });
         it("does not integrate identification if it already exists for graph element", function () {
+            loadFixtures('identifiers-menu.html');
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas();
             var projectSchemaSearchResult = searchProvider.formatResults(
@@ -41,6 +42,7 @@ define([
             ).toBeFalsy();
         });
         it("sets an identifier type to a new identifier", function () {
+            loadFixtures('identifiers-menu.html');
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas();
             var projectSchemaSearchResult = searchProvider.formatResults(

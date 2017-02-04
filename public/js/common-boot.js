@@ -19,7 +19,7 @@ requirejs.config({
         "jquery.performance": "jquery/jquery.performance",
         "jquery.safer-html": "jquery/jquery.safer-html",
         "jquery.lazyload": "jquery/jquery.lazyload",
-        "jquery-ui": "jquery/jquery-ui-11-4/jquery-ui.min",
+        "jquery-ui": "jquery/jquery-ui-1.12.1/jquery-ui",
         "jquery.url": "jquery/jquery.url",
         "jquery.nano": "jquery/jquery.nano",
         "jquery.tinysort.min": "jquery/jquery.tinysort.min",
@@ -34,7 +34,7 @@ requirejs.config({
         /*
          Bootstrap
          */
-        "bootstrap": "vendor/bootstrap/3.3.4/bootstrap.min",
+        "bootstrap": "vendor/bootstrap/bootstrap",
         "bootstrap-datepicker": "vendor/bootstrap/bootstrap-datepicker",
         //"bootstrap-modal-carousel" : "vendor/bootstrap/bootstrap-modal-carousel",
         "ekko-lightbox": "vendor/bootstrap/ekko-lightbox",

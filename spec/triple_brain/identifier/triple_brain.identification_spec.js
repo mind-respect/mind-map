@@ -13,7 +13,7 @@ define([
 ], function (Scenarios, TestUtils, $, UserMapAutocompleteProvider, Identification, Image, $Search) {
     "use strict";
     describe("identification", function () {
-        it("sets image if search result has one", function(){
+        it("sets image if search result has one", function () {
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas();
             var searchResult = searchProvider.formatResults(
                 new Scenarios.getSearchResultsForImpact().get()
@@ -27,15 +27,15 @@ define([
             ).toBeFalsy();
             spyOn(searchResult.provider,
                 "getMoreInfoForSearchResult"
-            ).and.callFake(function (searchResult, callback) {
-                    callback({
-                        conciseSearchResult: searchResult,
-                        image: Image.withBase64ForSmallAndUrlForBigger(
-                            "dummy_base_64",
-                            "http://example.org/some_image.png"
-                        )
-                    });
+            ).and.callFake(function (searchResult) {
+                return $.Deferred().resolve({
+                    conciseSearchResult: searchResult,
+                    image: Image.withBase64ForSmallAndUrlForBigger(
+                        "dummy_base_64",
+                        "http://example.org/some_image.png"
+                    )
                 });
+            });
             $Search._onFocusAction(
                 searchResult,
                 $("<div>")

@@ -47,9 +47,10 @@ define([
                 return format;
             });
         };
-        this.getMoreInfoForSearchResult = function (searchResult, callback) {
+        this.getMoreInfoForSearchResult = function (searchResult) {
+            var deferred = $.Deferred();
             Wikidata.getImageForWikidataUri(searchResult.uri).then(function(image){
-                callback({
+                deferred.resolve({
                         conciseSearchResult: searchResult,
                         title: searchResult.label,
                         text: searchResult.somethingToDistinguish,
@@ -57,13 +58,14 @@ define([
                     }
                 );
             }).fail(function(){
-                callback({
+                deferred.resolve({
                         conciseSearchResult: searchResult,
                         title: searchResult.label,
                         text: searchResult.somethingToDistinguish
                     }
                 );
             });
+            return deferred.promise();
         };
         this.isActive = function(){
             if(!this.isActiveCondition){
