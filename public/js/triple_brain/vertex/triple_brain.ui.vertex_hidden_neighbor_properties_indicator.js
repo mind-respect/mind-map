@@ -53,7 +53,8 @@ define([
                 this.hiddenNeighborPropertiesContainer
             );
             this.hiddenNeighborPropertiesContainer.tooltip({
-                delay: {"show": 0, "hide": 0}
+                delay: {"show": 0, "hide": 0},
+                container: 'body'
             }).on(
                 "click",
                 handleHiddenPropertiesContainerClick

@@ -5,8 +5,7 @@
 define([
     "jquery",
     "triple_brain.graph_displayer",
-    "triple_brain.graph_ui",
-    "jquery-ui"
+    "triple_brain.graph_ui"
 ], function ($, GraphDisplayer, GraphUi) {
     "use strict";
     var api = {};

@@ -18,7 +18,6 @@ define([
     "triple_brain.graph_element_html_builder",
     "triple_brain.bubble_factory",
     "triple_brain.graph_element_ui",
-    "jquery-ui",
     "jquery.triple_brain.search",
     "jquery.max_char",
     "jquery.safer-html"

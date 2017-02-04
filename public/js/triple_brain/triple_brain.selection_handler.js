@@ -8,8 +8,7 @@ define([
     "triple_brain.scroll_on_mouse_frontier",
     "triple_brain.ui_utils",
     "triple_brain.graph_displayer",
-    "triple_brain.event_bus",
-    "jquery-ui"
+    "triple_brain.event_bus"
 ], function ($, GraphUi, ScrollOnMouseFrontier, UiUtils, GraphDisplayer, EventBus) {
     "use strict";
     var api = {},

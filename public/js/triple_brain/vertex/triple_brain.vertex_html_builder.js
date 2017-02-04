@@ -12,7 +12,6 @@ define([
         "triple_brain.graph_element_ui",
         "triple_brain.graph_ui",
         "triple_brain.center_bubble",
-        "jquery-ui",
         "jquery.is-fully-on-screen",
         "jquery.center-on-screen"
     ], function ($, EventBus, MindMapTemplate, RelativeTreeVertex, VertexHtmlCommon, GraphElementHtmlBuilder, GraphElementUi, GraphUi, CenterBubble) {

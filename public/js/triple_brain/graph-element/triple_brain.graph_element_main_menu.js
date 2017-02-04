@@ -10,7 +10,6 @@ define([
         "triple_brain.graph_element_button",
         "triple_brain.mind_map_info",
         "mr.app_controller",
-        "jquery-ui",
         "jquery.i18next",
         "bootstrap"
     ], function ($, GraphDisplayer, EventBus, SelectionHandler, GraphElementButton, MindMapInfo, AppController) {
@@ -23,25 +22,22 @@ define([
                     return;
                 }
                 button.cloneInto(menuContainer);
-                //     .tooltip({
-                //     delay: {"show": 0, "hide": 0}
-                // });
             });
         };
         api.reset = function () {
             initButtons();
-            api._getMenu().draggable({
-                stop: function () {
-                    var menu = $(this);
-                    var topOff = menu.offset().top - $(window).scrollTop();
-                    menu.css(
-                        "top", topOff
-                    ).css(
-                        "position",
-                        "fixed"
-                    );
-                }
-            });
+            // api._getMenu().draggable({
+            //     stop: function () {
+            //         var menu = $(this);
+            //         var topOff = menu.offset().top - $(window).scrollTop();
+            //         menu.css(
+            //             "top", topOff
+            //         ).css(
+            //             "position",
+            //             "fixed"
+            //         );
+            //     }
+            // });
             function initButtons() {
                 api.visitButtons(function (button) {
                     setIcon(button);
@@ -97,8 +93,6 @@ define([
 
                 function defineTooltip(button) {
                     button.getHtml().attr(
-                        "data-toggle", "tooltip"
-                    ).attr(
                         "title",
                         $.i18n.translate("menu-button." + button.getAction())
                     );
