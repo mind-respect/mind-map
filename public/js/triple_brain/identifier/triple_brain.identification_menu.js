@@ -121,6 +121,7 @@ define([
         };
 
         IdentificationMenu.prototype._addIdentifications = function () {
+            this._getMainListHtml().empty();
             var identifiers = this.graphElement.getModel().getIdentifiers();
             Object.keys(identifiers).forEach(function(key) {
                 this._addIdentificationAsListElement(
@@ -302,6 +303,7 @@ define([
 
         IdentificationMenu.prototype._setupIdentificationTextField = function () {
             var identificationTextField = api._getModal().find(".add-identification");
+            identificationTextField.val("");
             this._setUpAutoComplete(identificationTextField);
             this.identificationTextField = identificationTextField;
             return identificationTextField;
