@@ -1,8 +1,4 @@
 /*
- * Copyright Vincent Blouin under the GPL License version 3
- */
-
-/*
  * Purl (A JavaScript URL parser) v2.3.1
  * Developed and maintanined by Mark Perkins, mark@allmarkedup.com
  * Source repository: https://github.com/allmarkedup/jQuery-URL-Parser

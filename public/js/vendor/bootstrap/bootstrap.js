@@ -1,7 +1,5 @@
-/*!
- * Bootstrap v3.3.7 (http://getbootstrap.com)
- * Copyright 2011-2016 Twitter, Inc.
- * Licensed under the MIT license
+/*
+ * Copyright Vincent Blouin under the GPL License version 3
  */
 
 if (typeof jQuery === 'undefined') {
@@ -1375,7 +1373,6 @@ if (typeof jQuery === 'undefined') {
     if (obj instanceof $.Event) {
       self.inState[obj.type == 'focusin' ? 'focus' : 'hover'] = true
     }
-
     if (self.tip().hasClass('in') || self.hoverState == 'in') {
       self.hoverState = 'in'
       return
@@ -1384,7 +1381,6 @@ if (typeof jQuery === 'undefined') {
     clearTimeout(self.timeout)
 
     self.hoverState = 'in'
-
     if (!self.options.delay || !self.options.delay.show) return self.show()
 
     self.timeout = setTimeout(function () {

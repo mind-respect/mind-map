@@ -62,21 +62,20 @@ define([
             "<div class='in-label-buttons'>"
         );
         GraphElementMainMenu.visitButtons(function (button) {
-            if (button.canBeInLabel()) {
-                var cloneHtml = button.cloneInto(container);
-                var tooltipOptions = {
-                    delay: {"show": 0, "hide": 0},
-                    container: 'body'
-                };
-                if ("note" === cloneHtml.data("action")) {
-                    cloneHtml.attr(
-                        "title",
-                        graphElement.getNote()
-                    );
-                    tooltipOptions.html = true;
-                }
-                // cloneHtml.tooltip(tooltipOptions);
+            if (!button.canBeInLabel()) {
+                return;
             }
+            var clonedButton = button.cloneInto(container);
+            var cloneHtml = clonedButton.getHtml();
+            if ("note" === cloneHtml.data("action")) {
+                cloneHtml.attr(
+                    "title",
+                    graphElement.getNote()
+                );
+            }
+            GraphElementMainMenu.defineTooltip(
+                clonedButton
+            );
         });
         return container;
     };

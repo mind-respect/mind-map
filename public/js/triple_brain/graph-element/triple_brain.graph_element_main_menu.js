@@ -21,83 +21,86 @@ define([
                 if (!button.canActionBePossiblyMade(controller)) {
                     return;
                 }
-                button.cloneInto(menuContainer);
+                var clone = button.cloneInto(menuContainer);
+                api.applyActionOnClick(
+                    clone
+                );
+                api.defineTooltip(
+                    clone
+                );
             });
         };
         api.reset = function () {
             initButtons();
-            // api._getMenu().draggable({
-            //     stop: function () {
-            //         var menu = $(this);
-            //         var topOff = menu.offset().top - $(window).scrollTop();
-            //         menu.css(
-            //             "top", topOff
-            //         ).css(
-            //             "position",
-            //             "fixed"
-            //         );
-            //     }
-            // });
             function initButtons() {
                 api.visitButtons(function (button) {
                     setIcon(button);
-                    applyActionOnClick(button);
-                    defineTooltip(button);
+                    api.applyActionOnClick(button);
+                    setTitle(button);
+                    api.defineTooltip(button, 'auto top');
                 });
                 function setIcon(button) {
                     var icon = $("<i>").addClass(
                         "fa " + button.getIconClass()
                     );
-                    if(button.getHtml().hasClass("icon-flip-horizontal")){
+                    if (button.getHtml().hasClass("icon-flip-horizontal")) {
                         icon.addClass(
                             "fa-flip-vertical"
                         );
                     }
                     icon.appendTo(button.getHtml());
                 }
-
-                function applyActionOnClick(button) {
-                    button.getHtml().on(
-                        "click",
-                        function (event) {
-                            event.stopPropagation();
-                            var button = GraphElementButton.fromHtml(
-                                $(this)
-                            );
-                            var isInBubble = button.isInBubble();
-                            var graphElements = isInBubble ?
-                                button.getParentBubble() :
-                                SelectionHandler.getOneOrArrayOfSelected();
-
-                            var controller = isInBubble ?
-                                graphElements.getController() :
-                                api._getCurrentClickHandler(button);
-                            var clickHandler = controller[
-                            button.getAction() + "BtnClick"
-                                ];
-                            if (clickHandler) {
-                                clickHandler.call(
-                                    controller,
-                                    event,
-                                    graphElements
-                                );
-                            } else {
-                                controller[
-                                    button.getAction()
-                                    ]();
-                            }
-                            api.reviewButtonsVisibility();
-                        }
-                    );
-                }
-
-                function defineTooltip(button) {
+                function setTitle(button){
                     button.getHtml().attr(
                         "title",
                         $.i18n.translate("menu-button." + button.getAction())
                     );
                 }
             }
+        };
+        api.applyActionOnClick = function (button) {
+            button.getHtml().on(
+                "click",
+                function (event) {
+                    event.stopPropagation();
+                    var button = GraphElementButton.fromHtml(
+                        $(this)
+                    );
+                    var isInBubble = button.isInBubble();
+                    var graphElements = isInBubble ?
+                        button.getParentBubble() :
+                        SelectionHandler.getOneOrArrayOfSelected();
+
+                    var controller = isInBubble ?
+                        graphElements.getController() :
+                        api._getCurrentClickHandler(button);
+                    var clickHandler = controller[
+                    button.getAction() + "BtnClick"
+                        ];
+                    if (clickHandler) {
+                        clickHandler.call(
+                            controller,
+                            event,
+                            graphElements
+                        );
+                    } else {
+                        controller[
+                            button.getAction()
+                            ]();
+                    }
+                    api.reviewButtonsVisibility();
+                }
+            );
+        };
+        api.defineTooltip = function(button, placement) {
+            button.getHtml().popover({
+                placement: placement || 'right',
+                html:true,
+                animation:false,
+                trigger:'hover',
+                container:'body',
+                template:'<div class="popover like-tooltip" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3></div>'
+            });
         };
         api.getExpandAllButton = function () {
             return api._getButtonHavingAction(
@@ -130,7 +133,7 @@ define([
                     );
                     return;
                 }
-                if(button.isForApp()){
+                if (button.isForApp()) {
                     api.showAppButtonOnlyIfApplicable(
                         button
                     );
@@ -168,11 +171,11 @@ define([
         };
 
         api._getCurrentClickHandler = function (button) {
-            if(button !== undefined){
+            if (button !== undefined) {
                 if (button.isForWholeGraph()) {
                     return GraphDisplayer.getGraphMenuHandler();
                 }
-                if(button.isForApp()){
+                if (button.isForApp()) {
                     return AppController;
                 }
             }

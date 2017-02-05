@@ -218,10 +218,35 @@ li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-bu
   position relative because it gets narrow and misplaced for
   to the right vertices.
    */
-
   position:relative;
-}
+  &.like-tooltip{
+    width:auto;
+    display: inline-block !important;
+    background-color: black;
+    &.top{
+      .arrow{
+        &:after{
+          border-top-color:black;
+        }
+      }
+    }
+    &.right{
+      .arrow{
+        &:after{
+          border-right-color:black;
+        }
+      }
+    }
 
+    h3{
+      display: inline-block;
+      background-color:black;
+      width:auto;
+      border-color:black;
+      color:white;
+    }
+  }
+}
 .ui-autocomplete{
   cursor:pointer;
   width:200px;

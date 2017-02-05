@@ -75,11 +75,14 @@ define([
         );
     };
     GraphElementButton.prototype.cloneInto = function (container) {
-        var copyBehavior = true;
-        return this.html.clone(
-            copyBehavior
-        ).appendTo(
-            container
+        //avoiding copy behavior because it breaks bootstrap tooltip
+        var copyBehavior = false;
+        return api.fromHtml(
+            this.html.clone(
+                copyBehavior
+            ).appendTo(
+                container
+            )
         );
     };
     GraphElementButton.prototype.canBeInLabel = function () {
