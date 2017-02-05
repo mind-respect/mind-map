@@ -93,6 +93,7 @@ define([
             );
         };
         api.defineTooltip = function(button, placement) {
+            preventNativeTooltip();
             button.getHtml().popover({
                 placement: placement || 'right',
                 html:true,
@@ -101,6 +102,13 @@ define([
                 container:'body',
                 template:'<div class="popover like-tooltip" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3></div>'
             });
+            function preventNativeTooltip(){
+                button.getHtml().hover(
+                    function(event) {
+                        event.preventDefault();
+                    }
+                );
+            }
         };
         api.getExpandAllButton = function () {
             return api._getButtonHavingAction(

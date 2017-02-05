@@ -73,6 +73,9 @@ define([
                     graphElement.getNote()
                 );
             }
+            GraphElementMainMenu.applyActionOnClick(
+                clonedButton
+            );
             GraphElementMainMenu.defineTooltip(
                 clonedButton
             );

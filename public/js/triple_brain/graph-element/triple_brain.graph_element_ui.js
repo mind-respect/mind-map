@@ -556,9 +556,9 @@ define([
 
     api.GraphElementUi.prototype.updateInLabelNoteButtonHoverText = function () {
         this.getNoteButtonInBubbleContent().attr(
-            "title",
+            "data-original-title",
             this.getNote()
-        ).tooltip('fixTitle');
+        );
     };
 
     api.GraphElementUi.prototype.isDisplayingComparison = function () {
