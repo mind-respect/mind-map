@@ -82,9 +82,13 @@ define([
                     removeSearchFlyout();
                 },
                 focus: function (event, ui) {
+                    var menu = $(this).data("uiAutocomplete").menu.element;
+                    menu.find("li").removeClass("focus");
+                    var focused = menu.find("li:has(.ui-state-active)");
+                    focused.addClass("focus");
                     api._onFocusAction(
                         ui.item,
-                        $(event.toElement)
+                        focused
                     );
                 }
             };
