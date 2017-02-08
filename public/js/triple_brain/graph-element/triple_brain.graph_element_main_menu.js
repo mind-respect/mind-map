@@ -37,7 +37,7 @@ define([
                     setIcon(button);
                     api.applyActionOnClick(button);
                     setTitle(button);
-                    api.defineTooltip(button, 'auto top');
+                    api.defineTooltip(button);
                 });
                 function setIcon(button) {
                     var icon = $("<i>").addClass(
@@ -92,10 +92,10 @@ define([
                 }
             );
         };
-        api.defineTooltip = function(button, placement) {
+        api.defineTooltip = function(button) {
             preventNativeTooltip();
             button.getHtml().popover({
-                placement: placement || 'right',
+                placement: 'right',
                 html:true,
                 animation:false,
                 trigger:'hover',
