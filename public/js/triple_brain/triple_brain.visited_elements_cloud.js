@@ -14,11 +14,17 @@ define([
     return {
         buildFromElementsInContainer: function (elements, container) {
             _elements = elements;
+            sortElements();
             _container = container;
             buildHtml();
             setupCloud();
         }
     };
+    function sortElements(){
+        _elements.sort(function(a, b){
+            return a.getLastCenterDate() < b.getLastCenterDate();
+        });
+    }
     function setupCloud() {
 // Find all tagcloud items with a weight defined and add them to this array
         _container = _container[0];
@@ -73,7 +79,7 @@ define([
             if (weights.length > 0) {
                 var itemWeight = elem.getAttribute('tagcloud-weight') || 0;
                 var numerator = itemWeight - lowerBound;
-                prctnge = (numerator / denominator) * 150 + 50;
+                prctnge = (numerator / denominator) * 50 + 50;
             }
             // None of the cloud items are weighted, base the size randomly
             else {

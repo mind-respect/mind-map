@@ -37,5 +37,8 @@ define([
     Self.prototype.getNumberOfVisits = function () {
         return this.centerGraphElementServerFormat.numberOfVisits;
     };
+    Self.prototype.getLastCenterDate = function () {
+        return new Date(this.centerGraphElementServerFormat.lastCenterDate);
+    };
     return api;
 });
