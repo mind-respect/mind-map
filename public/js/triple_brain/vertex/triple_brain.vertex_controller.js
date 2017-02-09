@@ -287,7 +287,7 @@ define([
     };
 
     VertexController.prototype.copyCanDo = function () {
-        return !this.isSingle();
+        return !this.isSingle() || "" !== this.getUi().text();
     };
 
     VertexController.prototype.copy = function () {

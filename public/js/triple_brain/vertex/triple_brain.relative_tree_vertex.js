@@ -209,22 +209,27 @@ define([
             if (!copyButton) {
                 return;
             }
-            var clipboard = new Clipboard(
-                $('.clipboard-copy-button')[0], {
-                    target: function () {
-                        var treeListCopyDump = $("#tree-list-copy-dump");
-                        treeListCopyDump.html(
-                            api.VerticesToHtmlLists(
-                                SelectionHandler.getSelectedVertices()
-                            )
-                        );
-                        return treeListCopyDump[0];
-                    }
-                }
-            );
-            clipboard.on("success", function(){
-                $("#tree-list-copy-dump").empty();
+            $.each($('.clipboard-copy-button'), function(){
+               setup(this);
             });
+            function setup(button){
+                var clipboard = new Clipboard(
+                    button, {
+                        target: function () {
+                            var treeListCopyDump = $("#tree-list-copy-dump");
+                            treeListCopyDump.html(
+                                api.VerticesToHtmlLists(
+                                    SelectionHandler.getSelectedVertices()
+                                )
+                            );
+                            return treeListCopyDump[0];
+                        }
+                    }
+                );
+                clipboard.on("success", function(){
+                    $("#tree-list-copy-dump").empty();
+                });
+            }
         }
         function vertexAndRelationAddedHandler(event, triple, tripleServerFormat) {
             var sourceBubble = triple.sourceVertex();
