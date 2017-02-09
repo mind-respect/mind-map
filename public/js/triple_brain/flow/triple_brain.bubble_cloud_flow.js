@@ -15,6 +15,7 @@ define([
     "use strict";
     var api = {};
     api.enter = function () {
+        $("body").removeClass("no-scroll");
         LanguageManager.loadLocaleContent(function () {
             $("html").i18n();
             $("body").removeClass("hidden");
