@@ -11,17 +11,18 @@
   padding:1em;
   li {
     cursor:pointer;
-    max-width: 250px;
+    width: 250px;
     white-space:nowrap;
     display:inline-block;
     text-overflow:ellipsis;
     overflow: hidden;
-    box-shadow: $centerVertexBorder;
-    border-radius:50px;
+    //box-shadow: $centerVertexBorder;
+    //border-radius:50px;
     padding:0.25em;
     line-height: 90%;
     margin:0.2em;
     font-size:0.6em;
+    text-align:left;
     &:hover{
       text-decoration:underline;
     }

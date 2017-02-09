@@ -31,20 +31,23 @@ define([
         var list = _container.find("ul");
         $.each(_elements, function () {
             var element = this;
-            $("<li>").attr(
-                "tagcloud-weight",
-                element.getNumberOfVisits()
-            ).data(
-                "uri",
-                element.getUri()
-            ).text(
-                element.getLabel()
-            ).click(function (event) {
-                event.preventDefault();
-                window.location = IdUri.htmlUrlForBubbleUri(
-                    $(this).data("uri")
-                );
-            }).appendTo(list);
+            $("<li>").append(
+                $("<a>").attr(
+                    "tagcloud-weight",
+                    element.getNumberOfVisits()
+                ).data(
+                    "uri",
+                    element.getUri()
+                ).text(
+                    element.getLabel()
+                ).click(function (event) {
+                        event.preventDefault();
+                        window.location = IdUri.htmlUrlForBubbleUri(
+                            $(this).data("uri")
+                        );
+                    }
+                )
+            ).appendTo(list);
         });
         _container.reattach();
     }
