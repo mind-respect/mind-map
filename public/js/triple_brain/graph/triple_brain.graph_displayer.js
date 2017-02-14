@@ -164,6 +164,7 @@ define([
             publishAboutToUpdate();
             publishResetGraph();
             $("#drawn_graph").empty();
+            $(".popover").remove();
         };
 
         api.addNewGroupRelation = function (identifiers, parentBubble, addToLeft) {
