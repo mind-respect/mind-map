@@ -199,6 +199,7 @@ li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-bu
 .hidden-properties-container {
   z-index: 3;
   min-width: 25px;
+  cursor:pointer;
   img {
     width: 80px;
     height: auto;

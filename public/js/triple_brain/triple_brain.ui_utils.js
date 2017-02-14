@@ -10,6 +10,16 @@ define(
     function($, Point){
         "use strict";
         var api = {};
+        $.fn.popoverLikeToolTip = function() {
+            return this.popover({
+                placement: 'right',
+                html:true,
+                animation:false,
+                trigger:'hover',
+                container:'body',
+                template:'<div class="popover like-tooltip" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3></div>'
+            });
+        };
         api.positionLeft = function(componentToPosition, staticComponent){
             var horizontalBuffer = 16;
             var componentOffset = Point.fromCoordinates(

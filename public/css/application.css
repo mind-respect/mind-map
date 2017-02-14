@@ -561,7 +561,7 @@ li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-bu
 
 .main-panel { z-index: 12; background-color: transparent; opacity: 0.91; -moz-border-radius: 15px; border-radius: 15px; cursor: default; }
 
-.hidden-properties-container { z-index: 3; min-width: 25px; }
+.hidden-properties-container { z-index: 3; min-width: 25px; cursor: pointer; }
 .hidden-properties-container img { width: 80px; height: auto; }
 
 .link-like-button { border-style: none; font-size: 0.7em; padding: 0 0 0 0; background-color: transparent; font-weight: normal; }

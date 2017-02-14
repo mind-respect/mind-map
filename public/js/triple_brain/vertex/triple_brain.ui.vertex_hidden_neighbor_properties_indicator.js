@@ -41,20 +41,16 @@ define([
                 "src",
                 imageUrl
             ).attr(
-                "data-toggle", "tooltip"
-            ).attr(
                 "title",
                 $.i18n.translate("hidden_properties_tooltip")
-            );
+            ).popoverLikeToolTip();
             this.hiddenNeighborPropertiesContainer.append(
                 img
             );
             this.bubble.getHtml()[isLeftOriented ? "prepend" : "append"](
                 this.hiddenNeighborPropertiesContainer
             );
-            this.hiddenNeighborPropertiesContainer.tooltip({
-                container: 'body'
-            }).on(
+            this.hiddenNeighborPropertiesContainer.on(
                 "click",
                 handleHiddenPropertiesContainerClick
             );

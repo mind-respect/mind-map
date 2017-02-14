@@ -94,14 +94,7 @@ define([
         };
         api.defineTooltip = function(button) {
             preventNativeTooltip();
-            button.getHtml().popover({
-                placement: 'right',
-                html:true,
-                animation:false,
-                trigger:'hover',
-                container:'body',
-                template:'<div class="popover like-tooltip" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3></div>'
-            });
+            button.getHtml().popoverLikeToolTip();
             function preventNativeTooltip(){
                 button.getHtml().hover(
                     function(event) {
