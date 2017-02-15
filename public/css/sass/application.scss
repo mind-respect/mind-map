@@ -223,28 +223,28 @@ li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-bu
   &.like-tooltip{
     width:auto;
     display: inline-block !important;
-    background-color: black;
+    background-color: white;
     &.top{
       .arrow{
         &:after{
-          border-top-color:black;
+          border-top-color:white;
         }
       }
     }
     &.right{
       .arrow{
         &:after{
-          border-right-color:black;
+          border-right-color:white;
         }
       }
     }
 
     h3{
       display: inline-block;
-      background-color:black;
+      background-color:white;
       width:auto;
-      border-color:black;
-      color:white;
+      border-color:white;
+      color:black;
     }
   }
 }
