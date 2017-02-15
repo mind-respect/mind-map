@@ -47,6 +47,9 @@ define([
                     parentVertex
                 ).reviewAddBubbleButtonDirection();
             }
+            RelativeTreeVertex.setupVertexCopyButton(
+                vertex
+            );
             EventBus.publish(
                 '/event/ui/vertex/build_complete',
                 vertex

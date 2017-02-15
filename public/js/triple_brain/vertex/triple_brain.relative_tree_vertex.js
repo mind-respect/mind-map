@@ -185,6 +185,36 @@ define([
                 }
             });
         };
+
+        api.setupVertexCopyButton = function(vertex){
+            var button = vertex.getButtonHtmlHavingAction("copy");
+            if(button.length === 0){
+                return;
+            }
+            api.setupCopyButton(
+                button[0]
+            );
+        };
+
+        api.setupCopyButton = function(button){
+            var clipboard = new Clipboard(
+                button, {
+                    target: function () {
+                        var treeListCopyDump = $("#tree-list-copy-dump");
+                        treeListCopyDump.html(
+                            api.VerticesToHtmlLists(
+                                SelectionHandler.getSelectedVertices()
+                            )
+                        );
+                        return treeListCopyDump[0];
+                    }
+                }
+            );
+            clipboard.on("success", function(){
+                $("#tree-list-copy-dump").empty();
+            });
+        };
+
         EventBus.subscribe(
             '/event/ui/graph/vertex_and_relation/added/',
             vertexAndRelationAddedHandler
@@ -201,35 +231,17 @@ define([
             $.when.apply($, expandCalls).then(function(){
                 GraphElementUi.getCenterVertexOrSchema().centerOnScreenWithAnimation();
             });
-            setupCopyButton();
+            setupCopyButtons();
         });
 
-        function setupCopyButton(){
+        function setupCopyButtons(){
             var copyButton = $('.clipboard-copy-button')[0];
             if (!copyButton) {
                 return;
             }
             $.each($('.clipboard-copy-button'), function(){
-               setup(this);
+               api.setupCopyButton(this);
             });
-            function setup(button){
-                var clipboard = new Clipboard(
-                    button, {
-                        target: function () {
-                            var treeListCopyDump = $("#tree-list-copy-dump");
-                            treeListCopyDump.html(
-                                api.VerticesToHtmlLists(
-                                    SelectionHandler.getSelectedVertices()
-                                )
-                            );
-                            return treeListCopyDump[0];
-                        }
-                    }
-                );
-                clipboard.on("success", function(){
-                    $("#tree-list-copy-dump").empty();
-                });
-            }
         }
         function vertexAndRelationAddedHandler(event, triple, tripleServerFormat) {
             var sourceBubble = triple.sourceVertex();
