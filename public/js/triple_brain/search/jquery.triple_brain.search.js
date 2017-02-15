@@ -110,7 +110,6 @@ define([
                 html: true,
                 placement:'auto left',
                 container:'body',
-                title: item.label,
                 trigger: "manual",
                 content: function () {
                     return buildDescriptionPanelHtml(
