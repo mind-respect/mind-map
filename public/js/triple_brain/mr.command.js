@@ -33,7 +33,7 @@ define([
             return $.Deferred().resolve();
         }
         var command = redos.pop();
-        return command.execute().then(function (data) {
+        return command.redo().then(function (data) {
             undos.push(command);
             api._reviewButtonsVisibility();
             return data;
@@ -73,6 +73,9 @@ define([
     };
 
     api.Command.prototype.redo = function () {
+        if(this.redoFctn === undefined){
+            return this.execute();
+        }
         return this.redoFctn();
     };
 

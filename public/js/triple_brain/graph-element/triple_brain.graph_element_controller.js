@@ -4,6 +4,7 @@
 
 define([
     "jquery",
+    "triple_brain.graph_element_type",
     "triple_brain.graph_element_service",
     "triple_brain.friendly_resource_service",
     "triple_brain.graph_displayer",
@@ -18,7 +19,7 @@ define([
     "bootstrap",
     "jquery.safer-html",
     "jquery.max_char"
-], function ($, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu, EdgeService, Identification, Command) {
+], function ($, GraphElementType, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu, EdgeService, Identification, Command) {
     "use strict";
     var api = {},
         bubbleCutClipboard,
@@ -269,8 +270,7 @@ define([
 
     GraphElementController.prototype.moveUnder = function (otherEdge) {
         var previousParentVertex = this.getUi().getParentVertex();
-        this.getUi().moveUnder(otherEdge);
-        this._moveTo(
+        return this._moveTo(
             otherEdge,
             false,
             previousParentVertex
@@ -279,8 +279,7 @@ define([
 
     GraphElementController.prototype.moveAbove = function (otherEdge) {
         var previousParentVertex = this.getUi().getParentVertex();
-        this.getUi().moveAbove(otherEdge);
-        this._moveTo(
+        return this._moveTo(
             otherEdge,
             true,
             previousParentVertex
@@ -361,6 +360,34 @@ define([
     };
 
     GraphElementController.prototype._moveTo = function (otherEdge, isAbove, previousParentVertex) {
+        var previousIndex = this.getUi().getIndexInTree();
+        var moveToCommand = new Command.forExecuteUndoAndRedo(
+            function () {
+                return this._moveToExecute(otherEdge, isAbove, previousParentVertex);
+            }.bind(this),
+            function () {
+                var edgeUnder = previousParentVertex.getChildOfTypeAtIndex(
+                    GraphElementType.Relation,
+                    previousIndex
+                );
+                return this._moveToExecute(
+                    edgeUnder,
+                    true,
+                    this.getUi().getParentVertex()
+                );
+            }.bind(this)
+        );
+        return Command.executeCommand(
+            moveToCommand
+        );
+    };
+
+    GraphElementController.prototype._moveToExecute = function (otherEdge, isAbove, previousParentVertex) {
+        if(isAbove){
+            this.getUi().moveAbove(otherEdge);
+        }else{
+            this.getUi().moveUnder(otherEdge);
+        }
         var movedEdge = this.getUi().isVertex() ?
             this.getUi().getParentBubble() :
             this.getUi();
@@ -372,16 +399,20 @@ define([
             )
         );
         var parentBubble = otherEdge.getParentBubble();
+        var addIdentificationPromise = $.Deferred().resolve();
         if (parentBubble.isGroupRelation()) {
             var identification = parentBubble.getGroupRelation().getIdentification();
-            movedEdge.getController().addIdentification(
+            addIdentificationPromise = movedEdge.getController().addIdentification(
                 identification
             );
         }
         if (previousParentVertex.getUri() !== otherEdge.getParentVertex().getUri()) {
-            return movedEdge.getController().changeEndVertex(
-                otherEdge.getParentVertex()
-            ).then(changeSortDate);
+            return $.when.apply($, [
+                addIdentificationPromise,
+                movedEdge.getController().changeEndVertex(
+                    otherEdge.getParentVertex()
+                ).then(changeSortDate)
+            ]);
         }
         return changeSortDate();
         function changeSortDate() {

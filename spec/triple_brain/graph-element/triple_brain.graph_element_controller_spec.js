@@ -6,16 +6,17 @@ define([
     "jquery",
     "test/test-scenarios",
     "test/test-utils",
-    "test/mock/triple_brain.friendly_resource_service_mock",
-    "test/mock/triple_brain.graph_element_service_mock",
-    "test/mock/triple_brain.edge_service_mock",
+    'test/mock',
     "test/mock/triple_brain.graph_service_mock",
     "triple_brain.graph_element_controller",
     "triple_brain.sub_graph",
     "mr.app_controller"
-], function ($, Scenarios, TestUtils, FriendlyResourceServiceMock, GraphElementServiceMock, EdgeServiceMock, GraphServiceMock, GraphElementController, SubGraph, AppController) {
+], function ($, Scenarios, TestUtils, Mock, GraphServiceMock, GraphElementController, SubGraph, AppController) {
     "use strict";
     describe("graph_element_controller", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         it("displays the graph element note", function () {
             loadFixtures('graph-element-note-menu.html');
             var threeBubbles = new Scenarios.threeBubblesGraph();
@@ -61,7 +62,6 @@ define([
 
         });
         it("updates model label when accepting comparison", function () {
-            FriendlyResourceServiceMock.updateLabel();
             var scenario = new Scenarios.threeBubblesGraphFork();
             var b1Fork = scenario.getBubble1InTree();
             TestUtils.enterCompareFlowWithGraph(
@@ -155,9 +155,6 @@ define([
                     b1
                 )
             ).toBeTruthy();
-            GraphElementServiceMock.removeIdentification();
-            EdgeServiceMock.changeSourceVertex();
-            GraphElementServiceMock.changeSortDate();
             GraphServiceMock.getForCentralBubbleUri(
                 scenario.getSubGraphForB3()
             );
@@ -180,6 +177,36 @@ define([
                 )
             ).toBeFalsy();
         });
+        it("can undo and redo a move under a bubble", function(){
+            var scenario = new Scenarios.creationDateScenario();
+            var b7 = scenario.getBubble7InTree();
+            scenario.expandBubble7(b7);
+            var b72 = TestUtils.getChildWithLabel(
+                b7,
+                "r72"
+            ).getTopMostChildBubble();
+            var b73 = TestUtils.getChildWithLabel(
+                b7,
+                "r73"
+            ).getTopMostChildBubble();
+            expect(b73.getBubbleAbove().isSameBubble(
+                b72
+            )).toBeTruthy();
+            b72.getController().moveUnder(
+                b73.getParentBubble()
+            );
+            expect(b72.getBubbleAbove().isSameBubble(
+                b73
+            )).toBeTruthy();
+            AppController.undo();
+            expect(b73.getBubbleAbove().isSameBubble(
+                b72
+            )).toBeTruthy();
+            AppController.redo();
+            expect(b72.getBubbleAbove().isSameBubble(
+                b73
+            )).toBeTruthy();
+        });
         it("adds the group relation identifier to a vertex when moving around another vertex that is under a group relation", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
             var otherBubbleEdge = scenario.getOtherRelationInTree();
@@ -190,7 +217,6 @@ define([
             expect(
                 otherBubbleEdge.getModel().hasIdentifications()
             ).toBeFalsy();
-            GraphElementServiceMock.addIdentification();
             otherBubble.getController().moveAbove(
                 groupRelationChild
             );

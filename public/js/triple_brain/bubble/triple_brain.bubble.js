@@ -292,6 +292,36 @@ define([
             ).length;
         };
 
+        api.Bubble.prototype.getIndexInTree = function () {
+            var index = -1;
+            var currentIndex = -1;
+            this.getParentVertex().visitClosestChildOfType(
+                this.getGraphElementType(),
+                function (bubble) {
+                    currentIndex++;
+                    if (bubble.isSameBubble(this)) {
+                        index = currentIndex;
+                    }
+                }.bind(this)
+            );
+            return index;
+        };
+
+        api.Bubble.prototype.getChildOfTypeAtIndex = function (type, index) {
+            var currentIndex = -1;
+            var childAtIndex = this;
+            this.visitClosestChildOfType(
+                type,
+                function (bubble) {
+                    currentIndex++;
+                    if (index === currentIndex) {
+                        childAtIndex = bubble;
+                    }
+                }.bind(this)
+            );
+            return childAtIndex;
+        };
+
         api.Bubble.prototype.getBubbleUnder = function () {
             return this._getColumnBubble(
                 api._getBubbleHtmlUnder
@@ -729,6 +759,7 @@ define([
                 newSelectedElement
             );
         }
+
         EventBus.subscribe(
             '/event/ui/graph/vertex_and_relation/added/',
             function (event, triple, sourceBubble) {

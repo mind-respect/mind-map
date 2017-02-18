@@ -5,17 +5,20 @@
 define([
     'test/test-scenarios',
     'test/test-utils',
+    'test/mock',
     "test/mock/triple_brain.graph_service_mock",
-    "test/mock/triple_brain.graph_element_service_mock",
     "triple_brain.bubble",
     "triple_brain.graph_displayer",
     "triple_brain.edge",
     "triple_brain.vertex",
     "triple_brain.selection_handler",
     "triple_brain.mind_map_info"
-], function (Scenarios, TestUtils, GraphServiceMock, GraphElementServiceMock, Bubble, GraphDisplayer, Edge, Vertex, SelectionHandler, MindMapInfo) {
+], function (Scenarios, TestUtils, Mock, GraphServiceMock, Bubble, GraphDisplayer, Edge, Vertex, SelectionHandler, MindMapInfo) {
     "use strict";
     describe("bubble", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         it("can return parent bubble", function () {
             var b2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
             var parentBubble = b2.getParentBubble();
@@ -320,14 +323,12 @@ define([
                 idea.hasImages()
             ).toBeTruthy();
             idea.getGroupRelation().getIdentification().makeGeneric();
-            GraphElementServiceMock.addIdentification();
             otherRelation.getController().addIdentification(
                 idea.getGroupRelation().getIdentification()
             );
             expect(
                 otherRelation.hasImages()
             ).toBeFalsy();
-            GraphElementServiceMock.removeIdentification();
             otherRelation.moveToParent(idea);
             expect(
                 otherRelation.hasImages()
@@ -597,6 +598,60 @@ define([
             expect(
                 sortedBubbles[4].text()
             ).toBe("b3");
+        });
+        it("can return the index in tree", function(){
+            var scenario = new Scenarios.creationDateScenario();
+            var b7 = scenario.getBubble7InTree();
+            scenario.expandBubble7(b7);
+            var b71 = TestUtils.getChildWithLabel(
+                b7,
+                "r71"
+            ).getTopMostChildBubble();
+            expect(
+                b71.getIndexInTree()
+            ).toBe(0);
+            var b72 = TestUtils.getChildWithLabel(
+                b7,
+                "r72"
+            ).getTopMostChildBubble();
+            expect(
+                b72.getIndexInTree()
+            ).toBe(1);
+            var b73 = TestUtils.getChildWithLabel(
+                b7,
+                "r73"
+            ).getTopMostChildBubble();
+            expect(
+                b73.getIndexInTree()
+            ).toBe(2);
+        });
+        it("can get bubble at index", function(){
+            var scenario = new Scenarios.creationDateScenario();
+            var b7 = scenario.getBubble7InTree();
+            var b71 = TestUtils.getChildWithLabel(
+                b7,
+                "r71"
+            ).getTopMostChildBubble();
+            expect(b7.getChildOfTypeAtIndex(
+                b71.getGraphElementType(),
+                0
+            ).isSameBubble(b71)).toBeTruthy();
+            var b72 = TestUtils.getChildWithLabel(
+                b7,
+                "r72"
+            ).getTopMostChildBubble();
+            expect(b7.getChildOfTypeAtIndex(
+                b72.getGraphElementType(),
+                1
+            ).isSameBubble(b72)).toBeTruthy();
+            var b73 = TestUtils.getChildWithLabel(
+                b7,
+                "r73"
+            ).getTopMostChildBubble();
+            expect(b7.getChildOfTypeAtIndex(
+                b73.getGraphElementType(),
+                2
+            ).isSameBubble(b73)).toBeTruthy();
         });
     });
 });
