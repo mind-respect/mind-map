@@ -153,9 +153,6 @@ define([
         actions[enterKeyCode] = {
             action: "addSibling"
         };
-        actions[spaceBarKeyNumber] = {
-            action: "focus"
-        };
         return actions;
     }
 

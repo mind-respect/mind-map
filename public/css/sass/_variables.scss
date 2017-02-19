@@ -6,9 +6,56 @@ $edgeSize: 3px;
 $edgeColor: #3a87ad;
 $edgeInverseColor: darkslateblue;
 $edgeStyle: $edgeSize solid $edgeColor;
-$linksColor:#00005a;
-$relationConnectorHeight:22px;
+$linksColor: #00005a;
+$relationConnectorHeight: 22px;
 $centerVertexBorder: -1px -2px 1px midnightblue;
-$inLabelButtonsPadding:8px;
+$inLabelButtonsPadding: 8px;
 $compareBubbleAddBackgroundColor: #E6FFE6;
-$compareBubbleRemoveBackgroundColor: #FFE6E6
+$compareBubbleRemoveBackgroundColor: #FFE6E6;
+
+@mixin keyframes( $animationName ) {
+  @-webkit-keyframes $animationName {
+    @content;
+  }
+  @-moz-keyframes $animationName {
+    @content;
+  }
+  @-o-keyframes $animationName {
+    @content;
+  }
+  @keyframes $animationName {
+    @content;
+  }
+}
+
+@include keyframes(cursorBlink) {
+  /*using content to avoid using opacity because it blurs the label in chromium*/
+  0% {
+    content: "_";
+  }
+  50% {
+    content: "_";
+  }
+  50.01% {
+    content: " ";
+  }
+  100% {
+    content: " ";
+  }
+}
+
+@-moz-keyframes cursorBlink {
+  /*overriding for firefox because using content doesn't work*/
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  50.01% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}

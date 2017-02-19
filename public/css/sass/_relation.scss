@@ -81,9 +81,10 @@
       display: inline-block;
       font-family: helvetica;
       font-size: $fontSize;
-      &:empty:not(:focus):before {
-        content: attr(data-placeholder);
-        font-style: italic;
+      &:not(:focus):after {
+        color:white;
+      }
+      &:empty:not(:focus):after {
         color: white;
       }
     }

@@ -74,6 +74,11 @@
   &.edit {
     user-select: text;
     cursor: text;
+    .bubble-label{
+      &:after {
+        content: "";
+      }
+    }
   }
   white-space: nowrap;
   .bubble-label {
@@ -90,20 +95,32 @@
     width: auto;
     display: table-cell;
     white-space: pre;
-    &:empty:not(:focus):before {
-      content: attr(data-placeholder);
-      color: grey;
-      font-style: italic;
+    &:empty:not(:focus){
+      &:after {
+        content: attr(data-placeholder) ;
+        color: grey;
+        font-style: italic;
+      }
     }
   }
   position: relative;
   min-width: 0;
   margin: 0 0 0 0;
   &.selected {
+    .bubble-label{
+      &:not(:focus):after {
+        content:"_";
+        font-family: monospace;
+        animation: cursorBlink steps(1) 500ms infinite alternate;
+        color: black;
+        font-style: normal;
+      }
+    }
     z-index: 11;
     .in-bubble-content {
       z-index: 5;
     }
+
   }
   .image_container {
     z-index: 3;
