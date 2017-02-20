@@ -90,7 +90,7 @@ define([
             getSchemaInstructions().removeClass("hidden");
         };
         api.hasSelectedFromAutocomplete = function () {
-            return $("ul.ui-autocomplete:visible").find(".ui-state-focus").length > 0;
+            return $(".ui-autocomplete:visible").find(".ui-menu-item.focus").length > 0;
         };
         api.isDraggingBubble = function () {
             return _drawnGraph.data("isDraggingBubble") !== undefined &&
