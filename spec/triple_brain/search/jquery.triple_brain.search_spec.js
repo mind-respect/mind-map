@@ -5,12 +5,16 @@
 define([
     'test/test-scenarios',
     'test/test-utils',
+    'test/mock',
     'triple_brain.user_map_autocomplete_provider',
     "jquery",
     "jquery.triple_brain.search"
-], function (Scenarios, TestUtils, UserMapAutocompleteProvider, $, $Search) {
+], function (Scenarios, TestUtils, Mock, UserMapAutocompleteProvider, $, $Search) {
     "use strict";
     describe("jquery.triple_brain.search", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         it("doesn't fetch more info more than once", function () {
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas();
             var searchResult = searchProvider.formatResults(
