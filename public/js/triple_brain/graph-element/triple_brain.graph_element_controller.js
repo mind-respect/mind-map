@@ -251,11 +251,14 @@ define([
         } else if (typeof event === 'object' && event.clipboardData) {
             clipText = event.clipboardData.getData('text/plain');
         }
+        var separator = "" === this.getUi().text().trim()  ?
+            "" : " ";
         this.setLabel(
             $.maxCharText(
-                this.getModel().getLabel() + " " + clipText
+                this.getModel().getLabel() + separator + clipText
             )
         );
+        this.getUi().getLabel().blur();
     };
 
     GraphElementController.prototype._pasteBubble = function () {
