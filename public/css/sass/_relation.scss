@@ -39,10 +39,10 @@
   }
   .label {
     border-radius: 0.80em;
-    padding-top:5px;
-    padding-bottom:5px;
-    padding-left:11px;
-    padding-right:11px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 11px;
+    padding-right: 11px;
   }
   .menu {
     background-color: transparent;
@@ -54,7 +54,23 @@
     padding-left: 6px;
     position: relative;
   }
+
+  &.selected:not(.not-editable) {
+    .bubble-label {
+      &:empty:not(:focus):after {
+        color: white;
+      }
+    }
+  }
+
   &.suggestion {
+    &.selected, &.single-selected{
+      .bubble-label {
+        &:after {
+          color: black !important;
+        }
+      }
+    }
     .in-bubble-content {
       border: none;
       .label-info {
@@ -62,11 +78,6 @@
         background-color: #E7EEF2;
         color: black;
         text-shadow: none;
-      }
-      .bubble-label {
-        &:empty:not(:focus):before {
-          color: black;
-        }
       }
     }
   }
@@ -82,7 +93,7 @@
       font-family: helvetica;
       font-size: $fontSize;
       &:not(:focus):after {
-        color:white;
+        color: white;
       }
       &:empty:not(:focus):after {
         color: white;

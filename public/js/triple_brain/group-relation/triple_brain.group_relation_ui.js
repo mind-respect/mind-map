@@ -65,11 +65,13 @@ define([
     };
     api.GroupRelationUi.prototype.deselect = function () {
         this.html.removeClass("selected");
+        this.html.removeClass("single-selected");
         this.hideButtons();
         this.hideDescription();
     };
 
     api.GroupRelationUi.prototype.makeSingleSelected = function () {
+        this.html.addClass("single-selected");
         this.showButtons();
         this._showDescription();
     };

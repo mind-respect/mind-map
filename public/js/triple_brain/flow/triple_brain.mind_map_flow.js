@@ -52,6 +52,9 @@ define([
             var centralBubble = BubbleFactory.getGraphElementFromUri(
                 centralBubbleUri
             );
+            if(MindMapInfo.isViewOnly()){
+                GraphUi.getDrawnGraph().find(".bubble").addClass("not-editable");
+            }
             if (centralBubble.isSchema() && !MindMapInfo.isViewOnly()) {
                 GraphUi.showSchemaInstructions();
             } else {

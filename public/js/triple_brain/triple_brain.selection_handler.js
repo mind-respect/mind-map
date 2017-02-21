@@ -23,7 +23,7 @@ define([
         GraphDisplayer.getVertexSelector().visitAllVertices(function(vertex){
             api.addVertex(vertex);
         });
-        reflectSelectionChange();
+        api.reflectSelectionChange();
     };
 
     api.selectAllRelationsOnly = function(){
@@ -32,7 +32,7 @@ define([
         GraphDisplayer.getEdgeSelector().visitAllEdges(function(edge){
             api.addRelation(edge);
         });
-        reflectSelectionChange();
+        api.reflectSelectionChange();
     };
 
     api.setToSingleGraphElement = function (graphElement) {
@@ -54,7 +54,7 @@ define([
         selectionInfo.setToSingleGroupRelation(groupRelation);
         groupRelation.select();
         groupRelation.makeSingleSelected();
-        reflectSelectionChange();
+        api.reflectSelectionChange();
     };
 
     api.setToSingleVertex = function (vertex) {
@@ -62,7 +62,7 @@ define([
         selectionInfo.setToSingleVertex(vertex);
         vertex.select();
         vertex.makeSingleSelected();
-        reflectSelectionChange();
+        api.reflectSelectionChange();
     };
 
     api.setToSingleRelation = function (relation) {
@@ -70,10 +70,11 @@ define([
         selectionInfo.setToSingleRelation(relation);
         relation.select();
         relation.makeSingleSelected();
-        reflectSelectionChange();
+        api.reflectSelectionChange();
     };
 
-    api.addGraphElement = function (graphElement) {
+    api.addGraphElement = function (graphElement, onlyPrepare) {
+        onlyPrepare = onlyPrepare || false;
         var adder = graphElement.rightActionForType(
             api.addVertex,
             api.addRelation,
@@ -83,41 +84,47 @@ define([
             api.addVertex,
             api.addRelation
         );
-        adder(graphElement);
+        adder(graphElement, onlyPrepare);
     };
 
-    api.addGroupRelation = function (groupRelation) {
+    api.addGroupRelation = function (groupRelation, onlyPrepare) {
         groupRelation.select();
         selectionInfo.addGroupRelation(groupRelation);
-        reflectSelectionChange();
+        if(!onlyPrepare){
+            api.reflectSelectionChange();
+        }
     };
 
-    api.addRelation = function (relation) {
+    api.addRelation = function (relation, onlyPrepare) {
         relation.select();
         selectionInfo.addRelation(relation);
-        reflectSelectionChange();
+        if(!onlyPrepare){
+            api.reflectSelectionChange();
+        }
     };
 
-    api.addVertex = function (vertex) {
+    api.addVertex = function (vertex, onlyPrepare) {
         vertex.select();
         selectionInfo.addVertex(vertex);
-        reflectSelectionChange();
+        if(!onlyPrepare){
+            api.reflectSelectionChange();
+        }
     };
     api.removeVertex = function (vertex) {
         vertex.deselect();
         selectionInfo.removeVertex(vertex);
-        reflectSelectionChange();
+        api.reflectSelectionChange();
     };
     api.removeRelation = function (relation) {
         relation.deselect();
         selectionInfo.removeRelation(relation);
-        reflectSelectionChange();
+        api.reflectSelectionChange();
     };
 
     api.removeAll = function () {
         deselectAll();
         selectionInfo.removeAll();
-        reflectSelectionChange();
+        api.reflectSelectionChange();
     };
 
     api.getSelectedVertices = function () {
@@ -175,15 +182,7 @@ define([
     api.getSelectionInfo = function(){
         return selectionInfo;
     };
-    EventBus.subscribe("/event/ui/graph/reset", selectionInfo.removeAll);
-    return api;
-    function centerBubbleIfApplicable(bubble) {
-        var html = bubble.getHtml();
-        if (!UiUtils.isElementFullyOnScreen(html)) {
-            html.centerOnScreenWithAnimation();
-        }
-    }
-    function reflectSelectionChange() {
+    api.reflectSelectionChange = function() {
         var nbSelectedGraphElements = selectionInfo.getNbSelected();
         if (0 === nbSelectedGraphElements) {
             EventBus.publish(
@@ -196,8 +195,15 @@ define([
             "/event/ui/selection/changed",
             selectionInfo
         );
+    };
+    EventBus.subscribe("/event/ui/graph/reset", selectionInfo.removeAll);
+    return api;
+    function centerBubbleIfApplicable(bubble) {
+        var html = bubble.getHtml();
+        if (!UiUtils.isElementFullyOnScreen(html)) {
+            html.centerOnScreenWithAnimation();
+        }
     }
-
     function activateSelectionOnMindMap(event) {
         var mindMap = $(this).off(
             event
@@ -225,7 +231,7 @@ define([
                         }
                     });
                     removeSelectBoxIfExists();
-                    reflectSelectionChange();
+                    api.reflectSelectionChange();
                     GraphUi.enableDragScroll();
                 }
             }

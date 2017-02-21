@@ -256,12 +256,14 @@ define([
 
         api.VertexUi.prototype.deselect = function () {
             this.html.removeClass("selected");
+            this.html.removeClass("single-selected");
             this.hideButtons();
         };
         api.VertexUi.prototype.select = function () {
             this.html.addClass("selected");
         };
         api.VertexUi.prototype.makeSingleSelected = function () {
+            this.html.addClass("single-selected");
             this.showButtons();
         };
         api.VertexUi.prototype.setIncludedVertices = function (includedVertices) {

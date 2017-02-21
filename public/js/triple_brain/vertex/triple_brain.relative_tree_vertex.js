@@ -173,18 +173,6 @@ define([
         api.RelativeTreeVertex.prototype.isVertexAChild = function (otherVertex) {
             return !otherVertex.isCenterBubble() && otherVertex.getParentVertex().isSameBubble(this);
         };
-        api.RelativeTreeVertex.prototype.selectTree = function () {
-            SelectionHandler.setToSingleVertex(
-                this
-            );
-            this.visitDescendants(function (bubble) {
-                if (bubble.isVertex()) {
-                    SelectionHandler.addVertex(
-                        bubble
-                    );
-                }
-            });
-        };
 
         api.setupVertexCopyButton = function(vertex){
             var button = vertex.getButtonHtmlHavingAction("copy");

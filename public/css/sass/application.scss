@@ -260,3 +260,11 @@ li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-bu
     }
   }
 }
+
+.not-editable .bubble.single-selected .bubble-label{
+    &:after {
+      content: "";
+      color: grey;
+      font-style: italic;
+    }
+}

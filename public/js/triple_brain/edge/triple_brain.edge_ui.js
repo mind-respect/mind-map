@@ -87,10 +87,12 @@ define([
             this.html.addClass("selected");
         };
         api.EdgeUi.prototype.makeSingleSelected = function () {
+            this.html.addClass("single-selected");
             this.showMenu();
         };
         api.EdgeUi.prototype.deselect = function () {
             this.html.removeClass("selected");
+            this.html.removeClass("single-selected");
             this.hideMenu();
         };
         api.EdgeUi.prototype.isSelected = function () {

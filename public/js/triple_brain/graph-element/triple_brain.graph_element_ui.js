@@ -381,14 +381,18 @@ define([
         this.reviewMenuButtonsVisibility();
     };
     api.GraphElementUi.prototype.selectTree = function () {
-        SelectionHandler.setToSingleGraphElement(
-            this
+        var onlyPrepare = true;
+        SelectionHandler.removeAll();
+        SelectionHandler.addGraphElement(
+            this,
+            onlyPrepare
         );
         this.visitDescendants(function (bubble) {
             SelectionHandler.addGraphElement(
-                bubble
+                bubble, onlyPrepare
             );
         });
+
     };
     api.GraphElementUi.prototype.focus = function () {
         this.hideMenu();
