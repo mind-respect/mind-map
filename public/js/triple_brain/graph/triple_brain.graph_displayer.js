@@ -6,9 +6,10 @@ define([
         "jquery",
         "triple_brain.event_bus",
         "triple_brain.mind_map_info",
-        "triple_brain.id_uri"
+        "triple_brain.id_uri",
+        "triple_brain.graph_ui"
     ],
-    function ($, EventBus, MindMapInfo, IdUri) {
+    function ($, EventBus, MindMapInfo, IdUri, GraphUi) {
         "use strict";
         var _implementation,
             api = {};
@@ -164,7 +165,7 @@ define([
             publishAboutToUpdate();
             publishResetGraph();
             $("#drawn_graph").empty();
-            $(".popover").remove();
+            GraphUi.removePopovers();
         };
 
         api.addNewGroupRelation = function (identifiers, parentBubble, addToLeft) {

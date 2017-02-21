@@ -67,6 +67,7 @@ define([
                     if (event.ctrlKey) {
                         return;
                     }
+                    GraphUi.removePopovers();
                     SelectionHandler.removeAll();
                 }
             );

@@ -99,6 +99,9 @@ define([
         api.setIsDraggingBubble = function (isDragging) {
             return api.getDrawnGraph().data("isDraggingBubble", isDragging);
         };
+        api.removePopovers = function(){
+            $(".popover").remove();
+        };
         return api;
         function getSchemaInstructions() {
             return $("#schema-instructions");
