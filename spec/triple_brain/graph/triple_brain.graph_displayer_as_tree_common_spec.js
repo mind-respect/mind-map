@@ -5,12 +5,16 @@
 define([
     'test/test-scenarios',
     'test/test-utils',
+    'test/mock',
     'triple_brain.graph_displayer_as_tree_common',
     'triple_brain.graph_displayer_as_relative_tree',
     'triple_brain.identification'
-], function (Scenarios, TestUtils, TreeDisplayerCommon, GraphDisplayerAsRelativeTree, Identification) {
+], function (Scenarios, TestUtils, Mock, TreeDisplayerCommon, GraphDisplayerAsRelativeTree, Identification) {
     "use strict";
     describe("graph_displayer_as_tree_common", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         var similarRelationsScenario,
             graph,
             centerVertex,
@@ -136,6 +140,12 @@ define([
                     "impact 3"
                 )
             ).toBeTruthy();
+        });
+        it("can handle a special case", function(){
+            var scenario = new Scenarios.groupRelationSpecialCase();
+            scenario.getCenterBubbleInTree();
+            //testing true to be truthy to test if there is no js error at this point
+            expect(true).toBeTruthy();
         });
         function defineSimilarRelationsScenarioVariables() {
             similarRelationsScenario = new Scenarios.GraphWithSimilarRelationsScenario();

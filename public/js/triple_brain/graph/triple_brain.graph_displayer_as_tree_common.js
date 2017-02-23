@@ -177,13 +177,15 @@ define([
 
         function sortIdentifiersByNumberOfRelationsDesc(identifiers) {
             var sortedKeys = Object.keys(identifiers).sort(
-                function (a, b) {
-                    var relationsA = identifiers[a];
-                    var relationsB = identifiers[b];
-                    if (relationsA.length === relationsB.length) {
+                function (identifierAUri, identifierBUri) {
+                    var relationsA = identifiers[identifierAUri];
+                    var relationsB = identifiers[identifierBUri];
+                    var numberOfRelationsInA = relationsA.length;
+                    var numberOfRelationsInB = relationsB.length;
+                    if (numberOfRelationsInA === numberOfRelationsInB) {
                         return 0;
                     }
-                    if (relationsA.length > relationsB.length) {
+                    if (numberOfRelationsInA > numberOfRelationsInB) {
                         return -1;
                     }
                     return 1;

@@ -503,6 +503,24 @@ define([
             Mock.setCenterBubbleUriInUrl(this.getBubble1().getUri());
         };
 
+
+        api.groupRelationSpecialCase = function () {
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                return api._getTestData(
+                    "groupRelationSpecialCase"
+                );
+            };
+            this.getCenterBubbleUri = function () {
+                return uriOfVertexWithLabel(this.getGraph(), "center");
+            };
+
+            this.getCenterBubbleInTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("center");
+            };
+            Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
+        };
+
         api.getDistantGraph = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {

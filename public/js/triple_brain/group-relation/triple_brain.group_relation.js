@@ -85,6 +85,9 @@ define([
         GroupRelation.prototype.getAnyVertex = function () {
             var verticesWithUri = this.getVertices();
             var verticesWithId = verticesWithUri[Object.keys(verticesWithUri)[0]];
+            if(undefined === verticesWithId){
+                return this.getChildGroupRelations()[0].getAnyVertex();
+            }
             return verticesWithId[Object.keys(verticesWithId)[0]].vertex;
         };
         GroupRelation.prototype.getSingleEdge = function () {
