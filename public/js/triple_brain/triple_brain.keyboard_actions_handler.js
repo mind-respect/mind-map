@@ -12,7 +12,6 @@ define([
     "use strict";
     var api = {},
         tabKeyNumber = 9,
-        spaceBarKeyNumber = 32,
         leftArrowKeyNumber = 37,
         rightArrowKeyNumber = 39,
         upArrowKeyNumber = 38,

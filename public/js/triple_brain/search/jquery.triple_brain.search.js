@@ -10,6 +10,8 @@ define([
 ], function ($, GraphUi, EventBus) {
     "use strict";
     var enterKeyCode = 13,
+        upArrowKeyCode = 38,
+        downArrowKeyCode = 40,
         api = {},
         detailsCache = {},
         referencesText;
@@ -22,12 +24,29 @@ define([
             }
             if(input.is("textarea") || input.is("[contenteditable]")){
                 /*
-                    unfortunately we need to disable traversing autocomplete
-                    suggestions with up and down arrow keys when using textarea or contenteditable
-                    because otherwise we can't use up and down keys to change the line
-                    of the caret position.
+                 unfortunately we need to disable traversing autocomplete
+                 suggestions with up and down arrow keys when using textarea or contenteditable
+                 because otherwise we can't use up and down keys to change the line
+                 of the caret position.
                  */
-                event.stopImmediatePropagation();
+                if([downArrowKeyCode, upArrowKeyCode].indexOf(event.which) !== -1){
+                    event.stopImmediatePropagation();
+                }
+                /*
+                * We could use other keys and change event.which to up or down to
+                * keep the same feature but with a different key. I tried with page
+                * up and page down but it caused other problems I could not avoid without
+                * creating other problems.
+                *
+                * if(pageDownKeyCode === event.which){
+                 event.which = downArrowKeyCode;
+                 }
+                 if(pageUpKeyCode === event.which){
+                 event.which = upArrowKeyCode;
+                 event.stopPropagation();
+                 event.preventDefault();
+                 }
+                */
             }
         });
         textInput.autocomplete(
