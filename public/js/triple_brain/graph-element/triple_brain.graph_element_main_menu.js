@@ -50,7 +50,8 @@ define([
                     }
                     icon.appendTo(button.getHtml());
                 }
-                function setTitle(button){
+
+                function setTitle(button) {
                     button.getHtml().attr(
                         "title",
                         $.i18n.translate("menu-button." + button.getAction())
@@ -92,12 +93,12 @@ define([
                 }
             );
         };
-        api.defineTooltip = function(button) {
+        api.defineTooltip = function (button) {
             preventNativeTooltip();
             button.getHtml().popoverLikeToolTip();
-            function preventNativeTooltip(){
+            function preventNativeTooltip() {
                 button.getHtml().hover(
-                    function(event) {
+                    function (event) {
                         event.preventDefault();
                     }
                 );
@@ -160,11 +161,10 @@ define([
         };
 
         api.reviewButtonsVisibility = function () {
-            var selectionInfo = SelectionHandler.getSelectionInfo();
-            var controller = updateCurrentClickHandler(selectionInfo);
-            var selected = 1 === selectionInfo.getNbSelected() ?
-                selectionInfo.getSingleElement() :
-                selectionInfo.getSelectedElements();
+            var controller = updateCurrentClickHandler();
+            var selected = 1 === SelectionHandler.getNbSelected() ?
+                SelectionHandler.getSingleElement() :
+                SelectionHandler.getSelectedElements();
             api.onlyShowButtonsIfApplicable(
                 controller,
                 selected
@@ -205,36 +205,28 @@ define([
             return api._getMenu().find("> button");
         }
 
-        function updateCurrentClickHandler(selectionInfo) {
-            var nbSelectedGraphElements = selectionInfo.getNbSelected(),
-                currentClickHandler,
-                object;
+        function updateCurrentClickHandler() {
+            var nbSelectedGraphElements = SelectionHandler.getNbSelected();
+            var currentClickHandler;
             if (0 === nbSelectedGraphElements) {
                 currentClickHandler = GraphDisplayer.getGraphMenuHandler();
-            }
-
-            else if (1 === nbSelectedGraphElements) {
-                currentClickHandler = selectionInfo.getSingleElement().getController();
+            }else if (1 === nbSelectedGraphElements) {
+                currentClickHandler = SelectionHandler.getSingleElement().getController();
             } else {
-                var nbSelectedVertices = selectionInfo.getNbSelectedVertices(),
-                    nbSelectedRelations = selectionInfo.getNbSelectedRelations(),
-                    nbSelectedGroupRelations = selectionInfo.getNbSelectedGroupRelations();
-                if (0 === nbSelectedVertices && 0 === nbSelectedGroupRelations) {
-                    object = GraphDisplayer.getRelationMenuHandler();
-                    currentClickHandler = new object.RelationController(
-                        selectionInfo.getSelectedElements()
+                var anyElement = SelectionHandler.getSingleElement();
+                var anyElementType = anyElement.getGraphElementType();
+                var areAllElementsOfSameType = true;
+                SelectionHandler.getSelectedElements().forEach(function (selectedElement) {
+                    if (selectedElement.getGraphElementType() !== anyElementType) {
+                        areAllElementsOfSameType = false;
+                    }
+                });
+                var graphElementControllerClass = GraphDisplayer.getGraphElementMenuHandler();
+                currentClickHandler = areAllElementsOfSameType ? anyElement.getControllerWithElements(
+                        SelectionHandler.getSelectedElements()
+                    ) : new graphElementControllerClass.GraphElementController(
+                        SelectionHandler.getSelectedElements()
                     );
-                } else if (0 === nbSelectedRelations && 0 === nbSelectedGroupRelations) {
-                    object = GraphDisplayer.getVertexMenuHandler();
-                    currentClickHandler = new object.VertexController(
-                        selectionInfo.getSelectedElements()
-                    );
-                } else {
-                    object = GraphDisplayer.getGraphElementMenuHandler();
-                    currentClickHandler = new object.GraphElementController(
-                        selectionInfo.getSelectedElements()
-                    );
-                }
             }
             setCurrentClickHandler(
                 currentClickHandler

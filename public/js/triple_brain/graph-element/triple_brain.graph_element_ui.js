@@ -325,12 +325,14 @@ define([
     };
 
     api.GraphElementUi.prototype.getController = function () {
-        var controller = controllerGetters[
-            this.getGraphElementType()
-            ]();
+        return this.getControllerWithElements(this);
+    };
+
+    api.GraphElementUi.prototype.getControllerWithElements = function (elements) {
+        var controller = this._getControllerClass();
         return new controller[
             this._getControllerName()
-            ](this);
+            ](elements);
     };
 
     api.GraphElementUi.prototype._getControllerName = function () {
@@ -340,6 +342,12 @@ define([
            controllerName += namePart.capitalizeFirstLetter();
         });
         return controllerName + "Controller";
+    };
+
+    api.GraphElementUi.prototype._getControllerClass = function () {
+        return controllerGetters[
+            this.getGraphElementType()
+            ]();
     };
 
     api.GraphElementUi.prototype.getTextOrDefault = function () {
@@ -674,6 +682,10 @@ define([
             this._updateLabelsOfElementsWithSameUri();
         }
         SelectionHandler.setToSingleGraphElement(this);
+    };
+
+    api.GraphElementUi.prototype.removeSingleSelected = function () {
+        this.html.removeClass("single-selected");
     };
 
     api.GraphElementUi.prototype._updateLabelsOfElementsWithSameUri = function () {

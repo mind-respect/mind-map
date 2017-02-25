@@ -114,7 +114,7 @@ define([
                 this.serverFacade.getIdentification().getLabel()
             ).click(function (event) {
                     event.stopPropagation();
-                    SelectionHandler.setToSingleGroupRelation(
+                    SelectionHandler.setToSingleGraphElement(
                         GroupRelationUi.withHtml(
                             $(this).closest(".group-relation")
                         )

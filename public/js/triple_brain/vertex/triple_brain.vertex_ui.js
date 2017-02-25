@@ -256,7 +256,7 @@ define([
 
         api.VertexUi.prototype.deselect = function () {
             this.html.removeClass("selected");
-            this.html.removeClass("single-selected");
+            this.removeSingleSelected();
             this.hideButtons();
         };
         api.VertexUi.prototype.select = function () {

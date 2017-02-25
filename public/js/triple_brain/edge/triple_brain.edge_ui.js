@@ -92,7 +92,7 @@ define([
         };
         api.EdgeUi.prototype.deselect = function () {
             this.html.removeClass("selected");
-            this.html.removeClass("single-selected");
+            this.removeSingleSelected();
             this.hideMenu();
         };
         api.EdgeUi.prototype.isSelected = function () {
