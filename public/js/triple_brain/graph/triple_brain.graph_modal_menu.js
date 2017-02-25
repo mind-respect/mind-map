@@ -6,7 +6,7 @@ define([
     "jquery",
     "triple_brain.graph_ui",
     "triple_brain.keyboard_actions_handler",
-    "bootstrap"
+   "bootstrap"
 ], function ($, GraphUi, KeyboardActionsHandler) {
     "use strict";
     var api = {};

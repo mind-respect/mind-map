@@ -12,11 +12,12 @@ define([
     "triple_brain.mind_map_info",
     "triple_brain.selection_handler",
     "triple_brain.graph_ui",
+    "triple_brain.keyboard_actions_handler",
     "jquery.focus-end",
     "jquery.center-on-screen",
     "jquery.safer-html",
     "jquery.max_char"
-], function ($, GraphDisplayer, GraphElementMainMenu, GraphElementButton, GraphElementType, EventBus, MindMapInfo, SelectionHandler, GraphUi) {
+], function ($, GraphDisplayer, GraphElementMainMenu, GraphElementButton, GraphElementType, EventBus, MindMapInfo, SelectionHandler, GraphUi, KeyboardActionsHandler) {
     "use strict";
     var api = {},
         otherInstancesKey = "otherInstances",
@@ -429,6 +430,7 @@ define([
         this.getInLabelButtonsContainer().addClass("hidden");
         GraphUi.disableDragScroll();
         GraphUi.lockDragScroll();
+        KeyboardActionsHandler.disable();
     };
     api.GraphElementUi.prototype.leaveEditMode = function () {
         var $label = this.getLabel();
@@ -449,6 +451,7 @@ define([
         this.getInLabelButtonsContainer().removeClass("hidden");
         GraphUi.unlockDragScroll();
         GraphUi.enableDragScroll();
+        KeyboardActionsHandler.enable();
     };
     api.GraphElementUi.prototype.isInEditMode = function () {
         return this.getHtml().hasClass("edit");

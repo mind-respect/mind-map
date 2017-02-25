@@ -15,6 +15,21 @@ define([
         referencesText;
     $.fn.tripleBrainAutocomplete = function (options) {
         var textInput = $(this);
+        textInput.on("keydown", function(event) {
+            var input = $(this);
+            if (!input.is(":focus")) {
+                return;
+            }
+            if(input.is("textarea") || input.is("[contenteditable]")){
+                /*
+                    unfortunately we need to disable traversing autocomplete
+                    suggestions with up and down arrow keys when using textarea or contenteditable
+                    because otherwise we can't use up and down keys to change the line
+                    of the caret position.
+                 */
+                event.stopImmediatePropagation();
+            }
+        });
         textInput.autocomplete(
             $.extend(
                 getAutocompleteOptions(),
