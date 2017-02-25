@@ -80,7 +80,7 @@ define([
             $("#select-all-bubbles").click(function (event) {
                 event.preventDefault();
                 event.stopPropagation();
-                SelectionHandler.selectAllBubblesOnly();
+                SelectionHandler.selectAllVerticesOnly();
             });
             $("#select-all-relations").click(function (event) {
                 event.preventDefault();

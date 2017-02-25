@@ -8,7 +8,8 @@ define([
     "triple_brain.scroll_on_mouse_frontier",
     "triple_brain.ui_utils",
     "triple_brain.graph_displayer",
-    "triple_brain.event_bus"
+    "triple_brain.event_bus",
+    'jquery.performance'
 ], function ($, GraphUi, ScrollOnMouseFrontier, UiUtils, GraphDisplayer, EventBus) {
     "use strict";
     var api = {},
@@ -18,19 +19,25 @@ define([
         selectedRelations = [],
         selectedVertices = [];
 
-    api.selectAllBubblesOnly = function(){
+    api.selectAllVerticesOnly = function(){
+        GraphUi.getDrawnGraph().detachTemp();
         deselectAll();
+        var onlyPrepare = true;
         GraphDisplayer.getVertexSelector().visitAllVertices(function(vertex){
-            api.addVertex(vertex);
+            api.addVertex(vertex, onlyPrepare);
         });
+        GraphUi.getDrawnGraph().reattach();
         api.reflectSelectionChange();
     };
 
     api.selectAllRelationsOnly = function(){
+        GraphUi.getDrawnGraph().detachTemp();
         deselectAll();
+        var onlyPrepare = true;
         GraphDisplayer.getEdgeSelector().visitAllEdges(function(edge){
-            api.addRelation(edge);
+            api.addRelation(edge, onlyPrepare);
         });
+        GraphUi.getDrawnGraph().reattach();
         api.reflectSelectionChange();
     };
 
