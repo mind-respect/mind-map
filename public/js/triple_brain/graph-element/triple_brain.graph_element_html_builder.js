@@ -164,6 +164,7 @@ define([
             var graphElementUi = BubbleFactory.fromHtml(
                 $(this)
             );
+            graphElementUi.hideMenu();
             GraphElementUi.setDraggedElement(
                 graphElementUi
             );
