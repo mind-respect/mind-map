@@ -328,6 +328,7 @@ define([
         );
     };
     VertexController.prototype.expand = function (avoidCenter, avoidExpandChild) {
+        this.getUi().beforeExpand();
         var deferred = $.Deferred().resolve();
         avoidExpandChild = avoidExpandChild || false;
         if (this.getUi().hasVisibleHiddenRelationsContainer()) {
@@ -382,6 +383,7 @@ define([
     };
 
     VertexController.prototype.convertToDistantBubbleWithUri = function (distantVertexUri) {
+        this.getUi().beforeConvertToDistantBubbleWithUri();
         if (!this.convertToDistantBubbleWithUriCanDo(distantVertexUri)) {
             return $.Deferred().reject();
         }
@@ -396,8 +398,9 @@ define([
                         relation.getModel().getLabel()
                     );
                 }
-            });
-        });
+                this.getUi().afterConvertToDistantBubbleWithUri();
+            }.bind(this));
+        }.bind(this));
     };
     VertexController.prototype._relateToDistantVertexWithUri = function (distantVertexUri) {
         return EdgeService.addToFarVertex(this.getUi(), distantVertexUri).then(function () {

@@ -12,8 +12,9 @@ define([
         "triple_brain.bubble_factory",
         "triple_brain.selection_handler",
         "triple_brain.center_bubble",
-        "triple_brain.ui.vertex_hidden_neighbor_properties_indicator"
-    ], function ($, EventBus, UiUtils, ImageDisplayer, GraphElementUi, GraphElementType, BubbleFactory, SelectionHandler, CenterBubble, PropertiesIndicator) {
+        "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
+        "mr.loading"
+    ], function ($, EventBus, UiUtils, ImageDisplayer, GraphElementUi, GraphElementType, BubbleFactory, SelectionHandler, CenterBubble, PropertiesIndicator, Loading) {
         "use strict";
         var api = {};
         var MoveRelation = {
@@ -629,8 +630,16 @@ define([
             return this.html.find(".arrow");
         };
 
+        api.Bubble.prototype.centerOnScreen = function () {
+            this.getHtml().centerOnScreen();
+        };
+
         api.Bubble.prototype.centerOnScreenWithAnimation = function () {
-            this.getHtml().centerOnScreenWithAnimation();
+            var deferred = $.Deferred();
+            this.getHtml().centerOnScreenWithAnimation({
+                done:deferred.resolve
+            });
+            return deferred.promise();
         };
 
         api.Bubble.prototype.hasDescendantsWithHiddenRelations = function () {
@@ -684,6 +693,10 @@ define([
             );
         };
 
+        api.Bubble.prototype.beforeExpand = function () {
+            Loading.show();
+        };
+
         api.Bubble.prototype.expand = function (avoidScreenCenter) {
             this.getChildrenContainer().removeClass(
                 "hidden"
@@ -693,7 +706,7 @@ define([
             }
             this.reviewMenuButtonsVisibility();
             if (avoidScreenCenter === undefined || !avoidScreenCenter) {
-                this.centerOnScreenWithAnimation();
+                this.centerOnScreenWithAnimation().then(Loading.hide);
             }
         };
 

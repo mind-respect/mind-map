@@ -29,9 +29,8 @@ define([
             return this;
         };
         $.fn.centerOnScreenWithAnimation = function (options) {
-            if (options === undefined) {
-                options = {};
-            }
+            options = options || {};
+            options.duration = "750";
             var container = containerFromOptions(options);
             var element = this;
             var position = element.offset();
@@ -39,7 +38,7 @@ define([
             container.stop().animate({
                 scrollLeft: scrollLeftFromPosition(position, element, visibleSize),
                 scrollTop: scrollTopFromPosition(position, element, visibleSize)
-            }, 750);
+            }, options);
             return this;
         };
 

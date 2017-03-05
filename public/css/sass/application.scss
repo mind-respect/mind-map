@@ -268,3 +268,26 @@ li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-bu
       font-style: italic;
     }
 }
+
+.overlay {
+  background-color: black;
+  display: block;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0.65;
+  width:100%;
+  height:100%;
+  z-index:999;
+}
+.loading:not(.sr-only){
+  text-align:center;
+  left:50%;
+  top:50%;
+  position:fixed;
+  color:white;
+  font-weight:bold;
+  z-index:1000;
+}

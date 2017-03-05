@@ -13,10 +13,11 @@ define([
         "triple_brain.graph_element_ui",
         "triple_brain.bubble",
         "triple_brain.suggestion_service",
+        "mr.loading",
         "jquery.center-on-screen",
         "jquery.max_char"
     ],
-    function ($, GraphDisplayer, VertexService, Point, Error, VertexSegments, EventBus, GraphElementUi, Bubble, SuggestionService) {
+    function ($, GraphDisplayer, VertexService, Point, Error, VertexSegments, EventBus, GraphElementUi, Bubble, SuggestionService, Loading) {
         "use strict";
         var api = {};
         api.getWhenEmptyLabel = function () {
@@ -293,6 +294,14 @@ define([
 
         api.VertexUi.prototype.isImmediateChildOfGroupRelation = function () {
             return this.getParentBubble().getParentBubble().isGroupRelation();
+        };
+
+        api.VertexUi.prototype.beforeConvertToDistantBubbleWithUri = function(){
+            Loading.show();
+        };
+
+        api.VertexUi.prototype.afterConvertToDistantBubbleWithUri = function(){
+            Loading.hide();
         };
 
         api.VertexUi.prototype.getDeepestChildDistance = function () {
