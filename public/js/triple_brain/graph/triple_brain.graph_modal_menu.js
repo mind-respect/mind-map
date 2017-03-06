@@ -10,7 +10,7 @@ define([
 ], function ($, GraphUi, KeyboardActionsHandler) {
     "use strict";
     var api = {};
-    $('.modal').on('shown.bs.modal', function() {
+    $('.modal').on('show.bs.modal', function() {
         KeyboardActionsHandler.disable();
         GraphUi.disableDragScroll();
         GraphUi.lockDragScroll();
