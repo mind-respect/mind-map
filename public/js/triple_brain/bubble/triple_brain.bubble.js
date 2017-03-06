@@ -13,8 +13,8 @@ define([
         "triple_brain.selection_handler",
         "triple_brain.center_bubble",
         "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
-        "mr.loading"
-    ], function ($, EventBus, UiUtils, ImageDisplayer, GraphElementUi, GraphElementType, BubbleFactory, SelectionHandler, CenterBubble, PropertiesIndicator, Loading) {
+        "mr.loading-flow"
+    ], function ($, EventBus, UiUtils, ImageDisplayer, GraphElementUi, GraphElementType, BubbleFactory, SelectionHandler, CenterBubble, PropertiesIndicator, LoadingFlow) {
         "use strict";
         var api = {};
         var MoveRelation = {
@@ -694,7 +694,7 @@ define([
         };
 
         api.Bubble.prototype.beforeExpand = function () {
-            Loading.show();
+            LoadingFlow.enter();
         };
 
         api.Bubble.prototype.expand = function (avoidScreenCenter) {
@@ -706,7 +706,7 @@ define([
             }
             this.reviewMenuButtonsVisibility();
             if (avoidScreenCenter === undefined || !avoidScreenCenter) {
-                this.centerOnScreenWithAnimation().then(Loading.hide);
+                this.centerOnScreenWithAnimation().then(LoadingFlow.leave);
             }
         };
 

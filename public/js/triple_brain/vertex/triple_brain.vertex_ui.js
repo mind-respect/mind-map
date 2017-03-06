@@ -13,11 +13,11 @@ define([
         "triple_brain.graph_element_ui",
         "triple_brain.bubble",
         "triple_brain.suggestion_service",
-        "mr.loading",
+        "mr.loading-flow",
         "jquery.center-on-screen",
         "jquery.max_char"
     ],
-    function ($, GraphDisplayer, VertexService, Point, Error, VertexSegments, EventBus, GraphElementUi, Bubble, SuggestionService, Loading) {
+    function ($, GraphDisplayer, VertexService, Point, Error, VertexSegments, EventBus, GraphElementUi, Bubble, SuggestionService, LoadingFlow) {
         "use strict";
         var api = {};
         api.getWhenEmptyLabel = function () {
@@ -297,11 +297,11 @@ define([
         };
 
         api.VertexUi.prototype.beforeConvertToDistantBubbleWithUri = function(){
-            Loading.show();
+            LoadingFlow.enter();
         };
 
         api.VertexUi.prototype.afterConvertToDistantBubbleWithUri = function(){
-            Loading.hide();
+            LoadingFlow.leave();
         };
 
         api.VertexUi.prototype.getDeepestChildDistance = function () {
