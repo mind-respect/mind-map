@@ -697,7 +697,9 @@ define([
             LoadingFlow.enter();
         };
 
-        api.Bubble.prototype.expand = function (avoidScreenCenter) {
+        api.Bubble.prototype.expand = function (avoidScreenCenter, isChildExpand) {
+            avoidScreenCenter = avoidScreenCenter || false;
+            isChildExpand = isChildExpand || false;
             this.getChildrenContainer().removeClass(
                 "hidden"
             );
@@ -705,8 +707,14 @@ define([
                 this.getHiddenRelationsContainer().hide();
             }
             this.reviewMenuButtonsVisibility();
-            if (avoidScreenCenter === undefined || !avoidScreenCenter) {
-                this.centerOnScreenWithAnimation().then(LoadingFlow.leave);
+            if (avoidScreenCenter && !isChildExpand) {
+                LoadingFlow.leave();
+            }else{
+                this.centerOnScreenWithAnimation().then(function(){
+                    if(!isChildExpand){
+                        LoadingFlow.leave();
+                    }
+                });
             }
         };
 

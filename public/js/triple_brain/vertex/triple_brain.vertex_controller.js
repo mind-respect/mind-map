@@ -327,15 +327,16 @@ define([
             GraphDisplayer.displayUsingCentralBubbleUri
         );
     };
-    VertexController.prototype.expand = function (avoidCenter, avoidExpandChild) {
+    VertexController.prototype.expand = function (avoidCenter, avoidExpandChild, isChildExpand) {
         this.getUi().beforeExpand();
         var deferred = $.Deferred().resolve();
         avoidExpandChild = avoidExpandChild || false;
+        isChildExpand = isChildExpand || false;
         if (this.getUi().hasVisibleHiddenRelationsContainer()) {
             if (!this.getUi().isCollapsed()) {
                 deferred = GraphDisplayer.addChildTree(
                     this.getUi()
-                ).done(function () {
+                ).then(function () {
                     if (avoidExpandChild) {
                         return true;
                     }
@@ -343,7 +344,7 @@ define([
                     this.getUi().visitClosestChildVertices(function (childVertex) {
                         if (childVertex.getModel().hasOnlyOneHiddenChild()) {
                             expandChildCalls.push(
-                                childVertex.getController().expand(true, true)
+                                childVertex.getController().expand(true, true, true)
                             );
                         }
                     });
@@ -353,8 +354,8 @@ define([
         } else {
             deferred = this.expandDescendantsIfApplicable();
         }
-        return deferred.done(function () {
-            this.getUi().expand(avoidCenter);
+        return deferred.then(function () {
+            this.getUi().expand(avoidCenter, isChildExpand);
         }.bind(this));
     };
 
