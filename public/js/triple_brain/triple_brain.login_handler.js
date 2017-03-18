@@ -130,7 +130,7 @@ define([
             return {
                 email: this.getEmailField().val(),
                 password: this.getPasswordField().val(),
-                staySignedIn: "on" === this.getStaySignedInField().val()
+                staySignedIn: this.getStaySignedInField().is(":checked")
             };
         };
 

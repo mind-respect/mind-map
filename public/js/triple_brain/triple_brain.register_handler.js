@@ -121,7 +121,7 @@ define([
                 user_name: this.getUsernameField().val(),
                 email: this.getEmailField().val(),
                 password: this.getPasswordField().val(),
-                staySignedIn: "on" === this.getStaySignedInField().val()
+                staySignedIn: this.getStaySignedInField().is(":checked")
             };
         };
 
