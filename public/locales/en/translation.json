@@ -134,7 +134,8 @@
     "login": "Login",
     "register": "Register",
     "about": "about",
-    "error": "Invalid credentials"
+    "error": "Invalid credentials",
+    "stay": "Stay signed in"
   },
   "forgot_password": {
     "button": "Forgot password",

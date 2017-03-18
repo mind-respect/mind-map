@@ -14,7 +14,7 @@ define([
     function ($, UserService, IdUri, FriendlyResource, FriendlyResourceService) {
         "use strict";
         var api = {};
-        api.setupModal = function(){
+        api.setupModal = function () {
             new RegisterForm(
                 getModalSection()
             ).setup();
@@ -31,22 +31,24 @@ define([
             this.handleSubmitButton();
             this.submitWhenPressingEnter();
             getCancelButton().click(closeModal);
+            getModalSection().on('shown.bs.modal', function () {
+                this.getUsernameField().focus();
+            }.bind(this));
         };
 
         RegisterForm.prototype.handleSubmitButton = function () {
-            var self = this;
             this.getRegisterLink().on(
                 "click",
                 function (event) {
                     event.preventDefault();
                     UserService.register(
-                        self.getFormData(),
+                        this.getFormData(),
                         handleRegistrationSuccess,
-                        function(errors){
-                            self.handleRegistrationError.call(self, errors);
-                        }
+                        function (errors) {
+                            this.handleRegistrationError.call(this, errors);
+                        }.bind(this)
                     );
-                });
+                }.bind(this));
         };
 
         RegisterForm.prototype.handleForgotPassword = function () {
@@ -96,7 +98,7 @@ define([
                     FriendlyResourceService.updateLabel(
                         FriendlyResource.withUri(uri),
                         user.user_name,
-                        function(){
+                        function () {
                             window.location = IdUri.htmlUrlForBubbleUri(uri);
                         }
                     );
@@ -106,26 +108,25 @@ define([
         }
 
         RegisterForm.prototype.handleRegistrationError = function (errors) {
-            var self = this;
             this.getLoginErrorMessage().addClass("hidden");
-            $.each(errors, function () {
-                var error = this;
-                self._getErrorWithName(
+            errors.forEach(function (error) {
+                this._getErrorWithName(
                     error.reason
                 ).removeClass("hidden");
-            });
+            }.bind(this));
         };
 
         RegisterForm.prototype.getFormData = function () {
             return {
-                user_name:this.getUsernameField().val(),
+                user_name: this.getUsernameField().val(),
                 email: this.getEmailField().val(),
-                password: this.getPasswordField().val()
+                password: this.getPasswordField().val(),
+                staySignedIn: "on" === this.getStaySignedInField().val()
             };
         };
 
         RegisterForm.prototype.getLoginErrorMessage = function () {
-            return this.container.find('.login-error');
+            return this.container.find('.alert-danger');
         };
 
         RegisterForm.prototype.getLoginButton = function () {
@@ -144,19 +145,23 @@ define([
             return this.container.find(".login-password");
         };
 
+        RegisterForm.prototype.getStaySignedInField = function () {
+            return this.container.find("[name=stayConnected]");
+        };
+
         RegisterForm.prototype.getForm = function () {
             return this.container.find('.login-form');
         };
 
-        RegisterForm.prototype.getRegisterLink = function() {
+        RegisterForm.prototype.getRegisterLink = function () {
             return this.container.find(".register-link");
         };
 
-        RegisterForm.prototype.getForgotPasswordButton = function() {
+        RegisterForm.prototype.getForgotPasswordButton = function () {
             return this.container.find(".forgot-password-link");
         };
 
-        RegisterForm.prototype.getMandatoryEmailErrorMessage = function(){
+        RegisterForm.prototype.getMandatoryEmailErrorMessage = function () {
             return this._getErrorWithName("mandatory_email");
         };
 
@@ -180,13 +185,14 @@ define([
             return $("#register-page-modal");
         }
 
-        function getCancelButton(){
+        function getCancelButton() {
             return getModalSection().find(".cancel");
         }
 
-        function closeModal(){
+        function closeModal() {
             getModalSection().modal("hide");
         }
+
         return api;
     }
 );

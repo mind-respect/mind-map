@@ -25,44 +25,45 @@ define([
         }
 
         LoginForm.prototype.setup = function () {
-            this.handleLoginForm();
+            this.setupLoginForm();
             this.handleSubmitButton();
             this.handleForgotPassword();
             getCancelButton().click(closeModal);
         };
-        LoginForm.prototype.handleLoginForm = function () {
-            var self = this;
+        LoginForm.prototype.setupLoginForm = function () {
             this.submitWhenPressingEnter();
+            getModalSection().on('shown.bs.modal', function () {
+                this.getEmailField().focus();
+            }.bind(this));
             this.getLoginButton().click(function () {
                 UserService.authenticate(
-                    self.getFormData(),
+                    this.getFormData(),
                     function (user) {
                         window.location = "/user/" + user.user_name;
                     },
                     function () {
-                        self.hideAllMessages();
-                        self.getLoginErrorMessage().removeClass("hidden");
-                    }
+                        this.hideAllMessages();
+                        this.getLoginErrorMessage().removeClass("hidden");
+                    }.bind(this)
                 );
-            });
+            }.bind(this));
             this.hideAllMessages();
             this.getForm()[0].reset();
         };
 
         LoginForm.prototype.handleSubmitButton = function () {
-            var self = this;
-            this.getRegisterLink().on(
-                "click",
+            this.getRegisterLink().click(
                 function (event) {
                     event.preventDefault();
                     UserService.register(
-                        self.getFormData(),
+                        this.getFormData(),
                         handleRegistrationSuccess,
                         function (errors) {
-                            self.handleRegistrationError.call(self, errors);
+                            this.handleRegistrationError.call(this, errors);
                         }
                     );
-                });
+                }.bind(this)
+            );
         };
 
         LoginForm.prototype.handleForgotPassword = function () {
@@ -128,7 +129,8 @@ define([
         LoginForm.prototype.getFormData = function () {
             return {
                 email: this.getEmailField().val(),
-                password: this.getPasswordField().val()
+                password: this.getPasswordField().val(),
+                staySignedIn: "on" === this.getStaySignedInField().val()
             };
         };
 
@@ -146,6 +148,10 @@ define([
 
         LoginForm.prototype.getPasswordField = function () {
             return this.container.find(".login-password");
+        };
+
+        LoginForm.prototype.getStaySignedInField = function () {
+            return this.container.find("[name=stayConnected]");
         };
 
         LoginForm.prototype.getForm = function () {

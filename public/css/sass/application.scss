@@ -291,3 +291,10 @@ li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-bu
   font-weight:bold;
   z-index:1000;
 }
+
+input[type=checkbox].form-control {
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+  vertical-align: -8px;
+}

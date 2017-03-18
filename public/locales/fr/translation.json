@@ -134,7 +134,8 @@
     "login": "Authentifier",
     "register": "S'enregistrer",
     "about": "à propos",
-    "error": "Courriel ou mot de passe invalide(s)"
+    "error": "Courriel ou mot de passe invalide(s)",
+    "stay": "Rester connecté"
   },
   "forgot_password": {
     "button": "Mot de passe oublié",

@@ -183,8 +183,8 @@
         <div class="collapse navbar-collapse collapse-buttons">
             <div class="navbar-form navbar-left" role="search">
                 <div id="graph-element-menu" class="main-panel hidden-sm hidden-xs hidden" data-flow="mindMap">
-                        <button data-action="accept" data-icon="fa-check"
-                                class="graph-element-button in-label-button"></button>
+                    <button data-action="accept" data-icon="fa-check"
+                            class="graph-element-button in-label-button"></button>
                     <button data-action="addChild" data-icon="fa-arrow-right" class="graph-element-button"></button>
                     <button data-action="addSibling" data-icon="fa-arrows-v" class="graph-element-button"></button>
                     <button data-action="copy" data-icon="fa-copy" class="graph-element-button clipboard-copy-button"
@@ -1157,20 +1157,26 @@
                                    data-i18n="[placeholder]login.password"/>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div class="col-lg-12 text-center">
-                    <button type="button" class="login-button btn btn-success"
-                            data-i18n="login.login"></button>
-                    <button type="button" class="forgot-password-link btn btn-primary"
-                            data-i18n="forgot_password.button"></button>
-                    <button type="button" class="cancel btn btn-danger"
-                            data-i18n="cancel"></button>
-                </div>
+                    <div class="form-group">
+                        <label for="login-stay-connected">
+                            <input id="login-stay-connected" class="form-control checkbox" name="stayConnected" type="checkbox" checked="checked"/>
+                            <span data-i18n="login.stay"></span>
+                        </label>
+                    </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <div class="col-lg-12 text-center">
+                <button type="button" class="login-button btn btn-success"
+                        data-i18n="login.login"></button>
+                <button type="button" class="forgot-password-link btn btn-primary"
+                        data-i18n="forgot_password.button"></button>
+                <button type="button" class="cancel btn btn-danger"
+                        data-i18n="cancel"></button>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <div class="security-form-wrapper modal fade row" id="register-page-modal" role="dialog" aria-hidden="true">
@@ -1260,6 +1266,12 @@
                                    type="password"
                                    data-i18n="[placeholder]login.password"/>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-stay-connected">
+                            <input id="register-stay-connected" class="form-control" name="stayConnected" checked="checked" type="checkbox"/>
+                            <span data-i18n="login.stay"></span>
+                        </label>
                     </div>
                 </form>
             </div>
