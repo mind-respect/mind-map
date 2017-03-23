@@ -185,7 +185,6 @@ define([
     };
 
     GraphElementController.prototype.expand = function (avoidCenter) {
-        this.getUi().beforeExpand();
         var deferred = $.Deferred().resolve();
         this.expandDescendantsIfApplicable();
         return deferred.done(function () {

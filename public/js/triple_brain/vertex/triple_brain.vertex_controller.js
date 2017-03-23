@@ -328,7 +328,6 @@ define([
         );
     };
     VertexController.prototype.expand = function (avoidCenter, avoidExpandChild, isChildExpand) {
-        this.getUi().beforeExpand();
         var deferred = $.Deferred().resolve();
         avoidExpandChild = avoidExpandChild || false;
         isChildExpand = isChildExpand || false;
