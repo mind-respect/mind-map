@@ -639,13 +639,14 @@ define([
             var centerOptions = {
                 done:deferred.resolve
             };
+            var htmlToScroll = this.getParentBubble().getHtml();
             if(this.isCenterBubble()){
-                this.getHtml().centerOnScreenWithAnimation(centerOptions);
+                htmlToScroll.centerOnScreenWithAnimation(centerOptions);
             }
             else if(this.isToTheLeft()){
-                this.getHtml().centerRightSideOfScreenWithAnimation(centerOptions);
+                htmlToScroll.centerRightSideOfScreenWithAnimation(centerOptions);
             }else{
-                this.getHtml().centerLeftSideOfScreenWithAnimation(centerOptions);
+                htmlToScroll.centerLeftSideOfScreenWithAnimation(centerOptions);
             }
             return deferred.promise();
         };
