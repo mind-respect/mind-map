@@ -639,7 +639,7 @@ define([
             var centerOptions = {
                 done:deferred.resolve
             };
-            var htmlToScroll = this.getParentBubble().getHtml();
+            var htmlToScroll = this.isGroupRelation() ? this.getHtml() : this.getParentBubble().getHtml();
             if(this.isCenterBubble()){
                 htmlToScroll.centerOnScreenWithAnimation(centerOptions);
             }
@@ -722,7 +722,7 @@ define([
             this.reviewMenuButtonsVisibility();
             if (avoidScreenCenter && !isChildExpand) {
             }else{
-                this.centerOnScreenWithAnimation().then();
+                this.centerOnScreenWithAnimation();
             }
         };
 
