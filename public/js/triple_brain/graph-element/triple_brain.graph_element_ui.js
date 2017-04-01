@@ -388,6 +388,7 @@ define([
     };
     api.GraphElementUi.prototype.paste = function () {
         this.reviewMenuButtonsVisibility();
+        this.focus();
     };
     api.GraphElementUi.prototype.selectTree = function () {
         var onlyPrepare = true;
