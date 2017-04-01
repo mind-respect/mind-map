@@ -55,7 +55,7 @@ define([
                 childVertex.remove(false);
             });
             childVertex.remove(false);
-            parentBubble.centerOnScreenWithAnimation();
+            parentBubble.sideCenterOnScreenWithAnimation();
         });
     };
     EdgeController.prototype.reverseToRightCanDo = function () {

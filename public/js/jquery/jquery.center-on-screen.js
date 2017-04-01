@@ -66,7 +66,7 @@ define([
             container.stop().animate({
                 scrollLeft: scrollPositionGetter.forX(position, element, visibleSize),
                 scrollTop: scrollPositionGetter.forY(position, element, visibleSize)
-            }, options);
+            }, 0);
             return this;
         };
 

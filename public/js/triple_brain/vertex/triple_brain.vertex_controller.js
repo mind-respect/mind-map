@@ -63,7 +63,7 @@ define([
             SelectionHandler.setToSingleVertex(
                 triple.destinationVertex()
             );
-            triple.destinationVertex().centerOnScreenWithAnimation();
+            triple.destinationVertex().sideCenterOnScreenWithAnimation();
         }.bind(this));
     };
 

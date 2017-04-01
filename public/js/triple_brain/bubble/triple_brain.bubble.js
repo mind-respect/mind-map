@@ -450,7 +450,7 @@ define([
                 SelectionHandler.setToSingleVertex(
                     parentVertex
                 );
-                parentVertex.centerOnScreenWithAnimation();
+                parentVertex.sideCenterOnScreenWithAnimation();
             }
         };
 
@@ -651,12 +651,29 @@ define([
             return deferred.promise();
         };
 
-        api.Bubble.prototype.centerLeftSideOfScreenWithAnimation = function () {
-
+        api.Bubble.prototype.centerOnScreenWithAnimation = function () {
+            var deferred = $.Deferred();
+            var centerOptions = {
+                done:deferred.resolve
+            };
+            this.getHtml().centerOnScreenWithAnimation(centerOptions);
         };
 
-        api.Bubble.prototype.centerRightSideOfScreenWithAnimation = function () {
-
+        api.Bubble.prototype.sideCenterOnScreenWithAnimation = function () {
+            var deferred = $.Deferred();
+            var centerOptions = {
+                done:deferred.resolve
+            };
+            var htmlToScroll = this.isGroupRelation() ? this.getHtml() : this.getParentBubble().getHtml();
+            if(this.isCenterBubble()){
+                htmlToScroll.centerOnScreenWithAnimation(centerOptions);
+            }
+            else if(this.isToTheLeft()){
+                htmlToScroll.centerRightSideOfScreenWithAnimation(centerOptions);
+            }else{
+                htmlToScroll.centerLeftSideOfScreenWithAnimation(centerOptions);
+            }
+            return deferred.promise();
         };
 
         api.Bubble.prototype.hasDescendantsWithHiddenRelations = function () {
@@ -722,7 +739,7 @@ define([
             this.reviewMenuButtonsVisibility();
             if (avoidScreenCenter && !isChildExpand) {
             }else{
-                this.centerOnScreenWithAnimation();
+                this.sideCenterOnScreenWithAnimation();
             }
         };
 

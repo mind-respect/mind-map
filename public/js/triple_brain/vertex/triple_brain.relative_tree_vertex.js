@@ -217,7 +217,7 @@ define([
                 }
             });
             $.when.apply($, expandCalls).then(function(){
-                GraphElementUi.getCenterVertexOrSchema().centerOnScreenWithAnimation();
+                GraphElementUi.getCenterVertexOrSchema().sideCenterOnScreenWithAnimation();
             });
             setupCopyButtons();
         });
