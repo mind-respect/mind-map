@@ -79,13 +79,10 @@ define([
             this.getUi().text()
         );
         getSaveButton().text($.t("vertex.menu.note.update"));
-        api._getBubbleNoteModal().modal({
+        var $modal = api._getBubbleNoteModal();
+        $modal.modal({
             backdrop: 'static',
             keyboard: false
-        }).on('shown.bs.modal', function () {
-            GraphUi.disableDragScroll();
-        }).on('hidden.bs.modal', function () {
-            GraphUi.enableDragScroll();
         });
         if (MindMapInfo.isViewOnly()) {
             api._getContentEditor().prop("content-editable", "false");
@@ -559,9 +556,10 @@ define([
     }
 
     function initNoteModal() {
-        api._getBubbleNoteModal().on('show.bs.modal', function () {
+        api._getBubbleNoteModal().on('shown.bs.modal', function () {
             GraphUi.disableDragScroll();
-        }).on('hide.bs.modal', function () {
+            api._getContentEditor().focusEnd();
+        }).on('hidden.bs.modal', function () {
             GraphUi.enableDragScroll();
         });
         api._getBubbleNoteModal().find("input[data-edit=createLink]").click(function (event) {
