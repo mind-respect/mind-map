@@ -19,11 +19,12 @@ define([
             this.build = function () {
                 this.vertex = vertex;
                 this.modal = $("#remove-confirm-menu");
-                this.modal.modal().on('shown.bs.modal', function() {
+                this.modal.on('shown.bs.modal', function() {
                     $(this).find(
                         ".confirm"
                     ).attr('tabindex',-1).focus();
                 });
+                this.modal.modal();
                 this.isMultipleBubblesFlow = Array.isArray(vertex);
                 this.modal.find(".multiple-flow")[
                     this.isMultipleBubblesFlow ?
