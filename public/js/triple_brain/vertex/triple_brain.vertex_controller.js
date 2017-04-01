@@ -188,7 +188,7 @@ define([
     VertexController.prototype.makePublic = function () {
         var self = this;
         if (this.isSingle()) {
-            VertexService.makePublic(
+            return VertexService.makePublic(
                 this.getUi()
             ).then(function () {
                 self.getModel().makePublic();
@@ -207,7 +207,7 @@ define([
                     );
                 }
             });
-            VertexService.makeCollectionPublic(
+            return VertexService.makeCollectionPublic(
                 privateVertices
             ).then(function () {
                 $.each(privateVertices, function () {
@@ -429,6 +429,11 @@ define([
                     SelectionHandler.setToSingleGraphElement(
                         triple.destinationVertex()
                     );
+                    if(realParent.getModel().isPublic()){
+                        triple.destinationVertex().getController().makePublic().then(function(){
+                            deferred.resolve(triple);
+                        });
+                    }
                     return deferred.resolve(triple);
                 }
             );
