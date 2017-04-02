@@ -5,14 +5,16 @@
 define([
     'test/test-scenarios',
     'test/test-utils',
-    "test/mock/triple_brain.vertex_service_mock",
-    "test/mock/triple_brain.graph_element_service_mock",
+    'test/mock',
     'triple_brain.group_relation_controller',
     'triple_brain.mind_map_info',
     'triple_brain.selection_handler'
-], function (Scenarios, TestUtils, VertexServiceMock, GraphElementServiceMock, GroupRelationController, MindMapInfo, SelectionHandler) {
+], function (Scenarios, TestUtils, Mock, GroupRelationController, MindMapInfo, SelectionHandler) {
     "use strict";
     describe("group_relation_controller", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         it("hides description after adding child", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
             var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
@@ -34,14 +36,12 @@ define([
             ).toBeTruthy();
         });
         it("gives all it's identifiers to the new relation when adding a child", function(){
-            VertexServiceMock.addRelationAndVertexToVertex();
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
             var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
             possessionInTree.getModel().addIdentification(
                 TestUtils.dummyIdentifier()
             );
             var testWasMade = false;
-            GraphElementServiceMock.addIdentification();
             possessionInTree.getController().addChild().then(function(triple){
                 expect(
                     triple.edge().getModel().getIdentifiers().length
@@ -53,5 +53,23 @@ define([
             ).toBeTruthy();
         });
 
+        it("makes new child public if parent vertex is public", function(){
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
+            possessionInTree.getParentVertex().getModel().makePublic();
+            possessionInTree.getModel().addIdentification(
+                TestUtils.dummyIdentifier()
+            );
+            var testWasMade = false;
+            possessionInTree.getController().addChild().then(function(triple){
+                expect(
+                    triple.destinationVertex().getModel().isPublic()
+                ).toBeTruthy();
+                testWasMade = true;
+            });
+            expect(
+                testWasMade
+            ).toBeTruthy();
+        });
     });
 });

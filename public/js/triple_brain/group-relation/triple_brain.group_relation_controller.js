@@ -40,8 +40,9 @@ define([
             var deferred = $.Deferred();
             this.getUi().hideDescription();
             var self = this;
+            var parentVertex = this.getUi().getParentVertex();
             VertexService.addRelationAndVertexToVertex(
-                this.getUi().getParentVertex(),
+                parentVertex,
                 this.getUi(),
                 function (triple) {
                     if (self.getUi().hasVisibleHiddenRelationsContainer()) {
@@ -65,7 +66,13 @@ define([
                     SelectionHandler.setToSingleVertex(
                         triple.destinationVertex()
                     );
-                    deferred.resolve(triple);
+                    if(parentVertex.getModel().isPublic()){
+                        triple.destinationVertex().getController().makePublic().then(function(){
+                            deferred.resolve(triple);
+                        });
+                    }else{
+                        deferred.resolve(triple);
+                    }
                 }
             );
             return deferred.promise();

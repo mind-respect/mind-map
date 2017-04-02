@@ -80,7 +80,7 @@ define([
             b2.getController().addChild().done(function (triple) {
                 hasVisited = true;
                 expect(
-                    triple.destinationVertex().getModel().isPublic()
+                    triple.destinationVertex().getModel
                 ).toBeTruthy();
             });
             expect(

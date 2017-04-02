@@ -1,8 +1,10 @@
 #graph-element-menu {
-  margin-top:15px;
+  margin-top:20px;
   button {
-    background: none;
-    border: none;
+    background:none;
+    //background-color:rgba(255, 255, 255, 1);
+    border:none;
+    border-radius:12px;
     box-shadow: none;
     font-size: 22px;
     text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
