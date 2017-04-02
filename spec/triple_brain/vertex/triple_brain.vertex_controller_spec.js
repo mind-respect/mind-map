@@ -68,7 +68,24 @@ define([
             expect(
                 hasVisited
             ).toBeTruthy();
-
+        });
+        it("adding bubble and relation makes new bubble public if parent is public", function () {
+            var scenario = new Scenarios.threeBubblesGraph();
+            var b2 = scenario.getBubble2InTree();
+            GraphServiceMock.getForCentralBubbleUri(
+                scenario.getSubGraphForB2()
+            );
+            b2.getModel().makePublic();
+            var hasVisited = false;
+            b2.getController().addChild().done(function (triple) {
+                hasVisited = true;
+                expect(
+                    triple.destinationVertex().getModel().isPublic()
+                ).toBeTruthy();
+            });
+            expect(
+                hasVisited
+            ).toBeTruthy();
         });
         it("hides suggestions when calling the suggestions action when they are already visible", function () {
             var eventBubble = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();

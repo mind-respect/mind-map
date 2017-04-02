@@ -17,6 +17,7 @@ define([
         spies["remove"] = api.remove();
         spies["makeCollectionPrivate"] = api.makeCollectionPrivate();
         spies["makeCollectionPublic"] = api.makeCollectionPublic();
+        spies["makePublic"] = api.makePublic();
         spies["makePrivate"] = api.makePrivate();
         return spies;
     };
@@ -50,6 +51,11 @@ define([
     };
     api.makeCollectionPublic = function () {
         return spyOn(VertexService, "makeCollectionPublic").and.callFake(function () {
+            return $.Deferred().resolve();
+        });
+    };
+    api.makePublic = function () {
+        return spyOn(VertexService, "makePublic").and.callFake(function () {
             return $.Deferred().resolve();
         });
     };
