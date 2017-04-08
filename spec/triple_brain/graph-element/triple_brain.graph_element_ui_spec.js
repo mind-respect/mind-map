@@ -47,7 +47,7 @@ define([
             expect(
                 bubble1Duplicate.getModel().hasIdentifications()
             ).toBeFalsy();
-            karaokeIdentification.setType("generic");
+            karaokeIdentification.makeGeneric();
             GraphElementServiceMock.addIdentification();
             bubble1.getController().addIdentification(
                 karaokeIdentification
@@ -149,7 +149,7 @@ define([
         it("comparing label sets html markup", function () {
             var scenario = new Scenarios.threeBubblesGraph();
             var bubble1 = scenario.getBubble1InTree();
-            bubble1.getModel().addGenericIdentification(
+            bubble1.getModel().addIdentification(
                 Identification.fromFriendlyResource(
                     bubble1.getModel()
                 )
@@ -175,7 +175,7 @@ define([
         it("re-compares label after label change in comparison mode", function () {
             var scenario = new Scenarios.threeBubblesGraph();
             var bubble1 = scenario.getBubble1InTree();
-            bubble1.getModel().addGenericIdentification(
+            bubble1.getModel().addIdentification(
                 Identification.fromFriendlyResource(
                     bubble1.getModel()
                 )

@@ -9,14 +9,21 @@ define([
     "jquery.triple_brain.search"
 ], function ($, FriendlyResource, IdUri, $Search) {
     "use strict";
+    var RELATION_URIS = {
+        "sameAs" : "same-as",
+        "type" : "type",
+        "generic": "generic"
+    };
     var api = {};
-    api.fromMultipleServerFormat = function (serverFormat, type) {
+    api.fromMultipleServerFormat = function (serverFormat, relationExternalResourceUri) {
         var identifications = {};
         $.each(serverFormat, function (externalUri, identificationServerFormat) {
             var identification = api.fromServerFormat(
                 identificationServerFormat
             );
-            identification.setType(type);
+            identification.setRelationExternalResourceUri(
+                relationExternalResourceUri
+            );
             identifications[externalUri] = identification;
         });
         return identifications;
@@ -122,18 +129,22 @@ define([
     api.Identification.prototype.getServerFormat = function () {
         return this.identificationServerFormat;
     };
-    api.Identification.prototype.setType = function (type) {
-        this.identificationServerFormat.identificationType = type;
-    };
+
     api.Identification.prototype.makeGeneric = function () {
-        this.setType(
-            "generic"
+        this.setRelationExternalResourceUri(
+            RELATION_URIS.generic
+        );
+        return this;
+    };
+    api.Identification.prototype.makeType = function () {
+        this.setRelationExternalResourceUri(
+            RELATION_URIS.type
         );
         return this;
     };
     api.Identification.prototype.makeSameAs = function () {
-        this.setType(
-            "same_as"
+        this.setRelationExternalResourceUri(
+            RELATION_URIS.sameAs
         );
         return this;
     };
@@ -156,12 +167,16 @@ define([
             this.getExternalResourceUri()
         );
     };
-    api.Identification.prototype.getType = function () {
-        return this.identificationServerFormat.identificationType;
+    api.Identification.prototype.setRelationExternalResourceUri = function (relationExternalResourceUri) {
+        return this.identificationServerFormat.relationExternalResourceUri = relationExternalResourceUri;
     };
-    api.Identification.prototype.hasType = function () {
-        return undefined !== this.getType();
+    api.Identification.prototype.getRelationExternalResourceUri = function () {
+        return this.identificationServerFormat.relationExternalResourceUri;
     };
+    api.Identification.prototype.hasRelationExternalUri = function () {
+        return undefined !== this.getRelationExternalResourceUri();
+    };
+
     api.Identification.prototype.getJsonFormat = function () {
         var serverFormat = this.getServerFormat();
         serverFormat.friendlyResource.images = this.getImagesServerFormat();
@@ -170,26 +185,14 @@ define([
         );
     };
 
-    api.Identification.prototype.rightActionForType = function (typeAction, sameAsAction, genericIdentificationAction) {
-        switch (this.getType()) {
-            case "type" :
-                return typeAction;
-            case "same_as"  :
-                return sameAsAction;
-            case "generic"  :
-                return genericIdentificationAction;
-            default :
-                return function () {
-                };
-        }
-    };
-
     api.Identification.prototype.getNbReferences = function () {
         if (this.identificationServerFormat.nbReferences === undefined) {
             return 0;
         }
         return this.identificationServerFormat.nbReferences;
     };
+
+
 
     return api;
 });

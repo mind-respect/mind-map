@@ -57,6 +57,28 @@ define([
                 newVertexUi.getModel().getIdentifiers().length
             ).toBe(3);
         });
+
+        it("in handling autocomplete select does not try to convert to distant bubble if schema", function () {
+            MindMapInfo._setIsViewOnly(false);
+            var convertToDistantSpy = spyOn(
+                VertexController.VertexController.prototype,
+                'convertToDistantBubbleWithUri'
+            );
+            var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),
+                projectSearchResult = searchProvider.formatResults(
+                    new Scenarios.getSearchResultsForProject().get(),
+                    "project"
+                )[0];
+            var schema = new Scenarios.getProjectSchema().getSchemaInTree();
+            VertexHtmlBuilderCommon._labelAutocompleteSelectHandler(
+                schema,
+                projectSearchResult
+            );
+            expect(
+                convertToDistantSpy.calls.count()
+            ).toBe(0);
+        });
+
         it("updates label with the autocomplete text after select", function () {
             MindMapInfo._setIsViewOnly(false);
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),

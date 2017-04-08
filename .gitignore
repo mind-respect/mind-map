@@ -5,5 +5,5 @@ node_modules
 _SpecRunner.html
 mind-map.iml
 phantomjsdriver.log
-src/main/webapp/js/mind-map-built.js
-src/main/webapp/js/mind-map-built.js.map
+public/js/mind-map-built.js
+public/js/mind-map-built.js.map

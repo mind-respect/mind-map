@@ -26,14 +26,14 @@ define([
                 deferred.resolve(
                     Identification.fromMultipleServerFormat(
                         serverIdentifications,
-                        identification.getType()
+                        identification.getRelationExternalResourceUri()
                     )
                 );
             });
             return deferred.promise();
         }
     };
-    api.removeIdentification = function (graphElement, identification) {
+    api.removeIdentifier = function (graphElement, identification) {
         return $.ajax({
             type: 'DELETE',
             url: graphElement.getUri() + '/identification?uri=' + identification.getUri()

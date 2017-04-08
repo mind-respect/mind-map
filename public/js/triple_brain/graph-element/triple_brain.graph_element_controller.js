@@ -329,7 +329,7 @@ define([
         );
         if (previousParentGroupRelation.isGroupRelation()) {
             promises.push(
-                movedEdge.getController().removeIdentification(
+                movedEdge.getController().removeIdentifier(
                     movedEdge.getModel().getIdentifierHavingExternalUri(
                         previousParentGroupRelation.getModel().getIdentification().getExternalResourceUri()
                     )
@@ -454,25 +454,25 @@ define([
         return deferred.promise();
     };
 
-    GraphElementController.prototype.removeIdentification = function (identification) {
+    GraphElementController.prototype.removeIdentifier = function (identification) {
         var deferred = $.Deferred();
         var self = this;
-        GraphElementService.removeIdentification(
+        GraphElementService.removeIdentifier(
             this.getUi(),
             identification
         ).then(function () {
-            self.getUi().getModel().removeIdentification(
+            self.getUi().getModel().removeIdentifier(
                 identification
             );
-            self.getUi().removeIdentification(
+            self.getUi().removeIdentifier(
                 identification
             );
             deferred.resolve();
             self.getUi().applyToOtherInstances(function (otherUi) {
-                otherUi.getModel().removeIdentification(
+                otherUi.getModel().removeIdentifier(
                     identification
                 );
-                otherUi.removeIdentification(identification);
+                otherUi.removeIdentifier(identification);
             });
             var eventBusKey = identificationBaseEventBusKey + "removed";
             EventBus.publish(

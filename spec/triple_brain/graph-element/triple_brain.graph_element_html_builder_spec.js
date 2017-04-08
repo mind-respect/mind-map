@@ -185,7 +185,7 @@ define([
                     identification
                 )
             ).toBeTruthy();
-            GraphElementServiceMock.removeIdentification();
+            GraphElementServiceMock.removeIdentifier();
             TestUtils.startDragging(
                 relation
             );

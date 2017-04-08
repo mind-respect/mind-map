@@ -332,7 +332,7 @@ define([
             var identifier = Identification.fromSearchResult(
                 searchResult
             );
-            identifier.setType("generic");
+            identifier.makeGeneric();
             if (graphElement.getModel().hasIdentification(identifier)) {
                 return false;
             }
@@ -394,7 +394,7 @@ define([
                             '.identifications'
                         ).data("graphElement");
                     identificationListElement.remove();
-                    graphElement.getController().removeIdentification(
+                    graphElement.getController().removeIdentifier(
                         identification
                     );
                 }

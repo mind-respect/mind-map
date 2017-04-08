@@ -17,6 +17,7 @@ define([
             schemaUi,
             propertyUi;
         beforeEach(function () {
+            Mock.applyDefaultMocks();
             var threeBubblesScenario = new Scenarios.threeBubblesGraph();
             vertexUi = threeBubblesScenario.getBubble1Ui();
             relationUi = threeBubblesScenario.getRelation1Ui();
@@ -27,7 +28,6 @@ define([
             var karaokeScenario = new Scenarios.getKaraokeSchemaGraph();
             schemaUi = karaokeScenario.getSchemaUi();
             propertyUi = karaokeScenario.getInviteesPropertyUi();
-            Mock.applyDefaultMocks();
         });
         it("can return vertex ui facade from html", function () {
             expect(

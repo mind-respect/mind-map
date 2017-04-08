@@ -6,19 +6,19 @@ define([
     'test/test-scenarios',
     'test/test-utils',
     'test/mock',
-    "test/mock/triple_brain.edge_service_mock",
-    'triple_brain.edge_service',
     'triple_brain.edge_controller',
     'triple_brain.mind_map_info'
-], function (Scenarios, TestUtils, Mock, EdgeServiceMock, EdgeService, EdgeController, MindMapInfo) {
+], function (Scenarios, TestUtils, Mock, EdgeController, MindMapInfo) {
     "use strict";
     describe("edge_controller", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         it("can remove edge", function () {
             var threeBubblesScenario = new Scenarios.threeBubblesGraph();
             var bubble1 = threeBubblesScenario.getBubble1InTree();
             var numberOfChild = bubble1.getNumberOfChild();
             var relation1 = bubble1.getTopMostChildBubble();
-            Mock.mockRemoveEdge();
             MindMapInfo.setIsAnonymous(false);
             MindMapInfo._setIsViewOnly(false);
             new EdgeController.RelationController(
@@ -64,7 +64,7 @@ define([
             var bubble1 = threeBubblesScenario.getBubble1InTree();
             var relation1 = TestUtils.getChildWithLabel(bubble1, "r1");
             var karaokeIdentification = new Scenarios.getKaraokeSchemaGraph().getSchemaAsIdentification();
-            relation1.getModel().addGenericIdentification(karaokeIdentification);
+            relation1.getModel().addIdentification(karaokeIdentification);
             MindMapInfo._setIsViewOnly(false);
             new EdgeController.RelationController(
                 relation1
@@ -136,7 +136,6 @@ define([
                 )
             ).toBeFalsy();
             MindMapInfo._setIsViewOnly(false);
-            EdgeServiceMock.remove();
             new EdgeController.RelationController(
                 aRelationToSameBubble
             ).remove();
@@ -183,7 +182,6 @@ define([
                 )
             ).toBeFalsy();
             MindMapInfo._setIsViewOnly(false);
-            EdgeServiceMock.remove();
             new EdgeController.RelationController(
                 aRelation
             ).remove();
@@ -199,12 +197,12 @@ define([
             ).toBeTruthy();
         });
         it("changes destination vertex if relation is inverse when changing end vertex", function () {
-            var changeSourceVertexSpy = spyOn(
-                EdgeService,
+            var changeSourceVertexSpy = Mock.getSpy(
+                "EdgeService",
                 "changeSourceVertex"
             );
-            var changeDestinationVertexSpy = spyOn(
-                EdgeService,
+            var changeDestinationVertexSpy = Mock.getSpy(
+                "EdgeService",
                 "changeDestinationVertex"
             );
             var scenario = new Scenarios.threeBubblesGraph();
@@ -228,7 +226,6 @@ define([
             expect(
                 changeDestinationVertexSpy.calls.count()
             ).toBe(0);
-            EdgeServiceMock.inverse();
             r2.getController().reverse();
             r2.getController().changeEndVertex(
                 b1

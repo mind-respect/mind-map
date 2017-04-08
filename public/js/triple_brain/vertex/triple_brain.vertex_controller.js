@@ -271,7 +271,7 @@ define([
             var identification = Identification.fromFriendlyResource(
                 schema
             );
-            identification.setType("generic");
+            identification.makeGeneric();
             return GraphElementService.addIdentification(
                 newVertex,
                 identification
@@ -383,10 +383,10 @@ define([
     };
 
     VertexController.prototype.convertToDistantBubbleWithUri = function (distantVertexUri) {
-        this.getUi().beforeConvertToDistantBubbleWithUri();
         if (!this.convertToDistantBubbleWithUriCanDo(distantVertexUri)) {
             return $.Deferred().reject();
         }
+        this.getUi().beforeConvertToDistantBubbleWithUri();
         var parent = this.getUi().getParentVertex();
         var relation = this.getUi().getParentBubble();
         return this.remove(true).then(function () {

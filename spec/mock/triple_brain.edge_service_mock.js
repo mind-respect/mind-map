@@ -15,6 +15,7 @@ define([
         spies["addToFarVertex"] = api.addToFarVertex();
         spies["inverse"] = api.inverse();
         spies["changeSourceVertex"] = api.changeSourceVertex();
+        spies["changeDestinationVertex"] = api.changeDestinationVertex();
         return spies;
     };
     api.remove = function () {
@@ -48,6 +49,14 @@ define([
         return spyOn(
             EdgeService,
             "changeSourceVertex"
+        ).and.callFake(function () {
+            return $.Deferred().resolve();
+        });
+    };
+    api.changeDestinationVertex = function(){
+        return spyOn(
+            EdgeService,
+            "changeDestinationVertex"
         ).and.callFake(function () {
             return $.Deferred().resolve();
         });

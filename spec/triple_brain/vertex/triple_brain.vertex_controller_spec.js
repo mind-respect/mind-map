@@ -435,6 +435,7 @@ define([
                 )
             ).toBeFalsy();
         });
+
         it("keeps label of the relation when converting a bubble to a distant bubble", function () {
             var parentWithSingleChildScenario = new Scenarios.parentWithSingleChildScenario();
             var parent = parentWithSingleChildScenario.getParentInTree();

@@ -59,9 +59,14 @@ define([
                 bubble,
                 searchResult.uri
             );
-            bubble.getController().convertToDistantBubbleWithUri(
-                identification.getExternalResourceUri()
-            ).fail(function(){
+            if(bubble.isVertex()){
+                bubble.getController().convertToDistantBubbleWithUri(
+                    identification.getExternalResourceUri()
+                ).fail(identify);
+            }else{
+                identify();
+            }
+            function identify(){
                 identification.makeGeneric();
                 bubble.getController().addIdentification(
                     identification
@@ -69,7 +74,7 @@ define([
                 bubble.getController().setLabel(
                     searchResult.label
                 );
-            });
+            }
         }
     };
 

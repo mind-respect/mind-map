@@ -46,13 +46,13 @@ define([
         );
         serverFormat.identifications = [];
         var sameAs = suggestion.getSameAs();
-        sameAs.setType("same_as");
+        sameAs.makeSameAs();
         serverFormat.identifications.push(
             sameAs.getServerFormat()
         );
         if (suggestion.hasType()) {
             var type = suggestion.getType();
-            type.setType("type");
+            type.makeType();
             serverFormat.identifications.push(
                 type.getServerFormat()
             );
@@ -99,38 +99,25 @@ define([
     };
 
 
-    api.GraphElement.prototype.removeIdentification = function (identification) {
-        var removeAction = identification.rightActionForType(
-            this.removeType,
-            this.removeSameAs,
-            this.removeGenericIdentification
-        );
-        removeAction.call(
-            this,
-            identification
-        );
+    api.GraphElement.prototype.removeIdentifier = function (identifierToRemove) {
+        var i = 0;
+        this.identifiers.forEach(function (identifier) {
+            if (identifier.getUri() === identifierToRemove.getUri()) {
+                this.identifiers.splice(i, 1);
+                return false;
+            }
+            i++;
+        }.bind(this));
+        return this.identifiers;
     };
 
-
-    api.GraphElement.prototype.getTypes = function () {
-        return this._types;
-    };
-    api.GraphElement.prototype.setTypes = function (types) {
-        return this._types = types;
-    };
-    api.GraphElement.prototype.getSameAs = function () {
-        return this._sameAs;
-    };
-    api.GraphElement.prototype.setSameAs = function (sameAs) {
-        return this._sameAs = sameAs;
-    };
     api.GraphElement.prototype.hasIdentifications = function () {
         return this.getIdentifiers().length > 0;
     };
     api.GraphElement.prototype.hasAllIdentifiers = function (identifiers) {
         var has = true;
-        identifiers.forEach(function(identifier){
-            if(!this.hasIdentification(identifier)){
+        identifiers.forEach(function (identifier) {
+            if (!this.hasIdentification(identifier)) {
                 has = false;
             }
         }.bind(this));
@@ -148,53 +135,34 @@ define([
     };
 
     api.GraphElement.prototype.getIdentifiers = function () {
-        var identifiers = [].concat(
-            this._types
-        ).concat(
-            this._sameAs
-        ).concat(
-            this._genericIdentifications
-        );
-        var i = identifiers.length;
-        while (i--) {
-            if (identifiers[i].getExternalResourceUri() === this.getUri()) {
-                identifiers.splice(i, 1);
+        var identifiers = [];
+        this.identifiers.forEach(function(identifier){
+            if (identifier.getExternalResourceUri() !== this.getUri()) {
+                return identifiers.push(identifier);
             }
-        }
+        }.bind(this));
         return identifiers;
     };
 
     api.GraphElement.prototype.getIdentifiersIncludingSelf = function () {
         var identifiers = this.getIdentifiers();
         var selfIdentifier = this._buildSelfIdentifier();
-        if(!this.hasIdentification(selfIdentifier)){
+        if (!this.hasIdentification(selfIdentifier)) {
             identifiers.push(selfIdentifier);
         }
         return identifiers;
     };
 
     api.GraphElement.prototype._buildIdentifications = function () {
-        this._types = [];
-        this._sameAs = [];
-        this._genericIdentifications = [];
+        this.identifiers = [];
         if (undefined === this.graphElementServerFormat.identifications) {
             return;
         }
         var self = this;
         $.each(this.graphElementServerFormat.identifications, function () {
-            var identification = Identification.fromServerFormat(
+            self.identifiers.push(Identification.fromServerFormat(
                 this
-            );
-            switch (identification.getType()) {
-                case "generic" :
-                    self._genericIdentifications.push(identification);
-                    return;
-                case "type":
-                    self._types.push(identification);
-                    return;
-                case "same_as":
-                    self._sameAs.push(identification);
-            }
+            ));
         });
     };
     api.GraphElement.prototype.hasIdentification = function (identification) {
@@ -208,7 +176,7 @@ define([
         return contains;
     };
 
-    api.GraphElement.prototype._buildSelfIdentifier = function(){
+    api.GraphElement.prototype._buildSelfIdentifier = function () {
         var identification = Identification.fromFriendlyResource(
             this
         );
@@ -221,21 +189,9 @@ define([
         return identification;
     };
 
-    api.GraphElement.prototype.isRelatedToIdentification = function (identification) {
+    api.GraphElement.prototype.isRelatedToIdentifier = function (identification) {
         return identification.getExternalResourceUri() === this.getUri() ||
             this.hasIdentification(identification);
-    };
-
-    api.GraphElement.prototype.addGenericIdentification = function (identification) {
-        this._genericIdentifications.push(identification);
-    };
-
-    api.GraphElement.prototype.getGenericIdentifications = function () {
-        return this._genericIdentifications;
-    };
-
-    api.GraphElement.prototype.setGenericIdentifications = function (genericIdentifications) {
-        this._genericIdentifications = genericIdentifications;
     };
 
     api.GraphElement.prototype.addIdentifications = function (identifications) {
@@ -247,50 +203,15 @@ define([
         });
     };
     api.GraphElement.prototype.addIdentification = function (identification) {
-        if(this.hasIdentification(identification)){
+        if (this.hasIdentification(identification)) {
             return;
         }
-        if (!identification.hasType()) {
+        if (!identification.hasRelationExternalUri()) {
             return this.addIdentification(
                 identification.makeGeneric()
             );
         }
-        var addAction = identification.rightActionForType(
-            this.addType,
-            this.addSameAs,
-            this.addGenericIdentification
-        );
-        addAction.call(
-            this,
-            identification
-        );
-    };
-    api.GraphElement.prototype.addSameAs = function (identification) {
-        this._sameAs.push(identification);
-    };
-    api.GraphElement.prototype.addType = function (identification) {
-        this._types.push(identification);
-    };
-
-    api.GraphElement.prototype.removeType = function (type) {
-        this._types = this.removeIdentificationInArray(
-            type,
-            this.getTypes()
-        );
-    };
-
-    api.GraphElement.prototype.removeSameAs = function (sameAs) {
-        this._sameAs = this.removeIdentificationInArray(
-            sameAs,
-            this.getSameAs()
-        );
-    };
-
-    api.GraphElement.prototype.removeGenericIdentification = function (generic) {
-        this._genericIdentifications = this.removeIdentificationInArray(
-            generic,
-            this.getGenericIdentifications()
-        );
+        this.identifiers.push(identification);
     };
 
     api.GraphElement.prototype.getFirstIdentificationToAGraphElement = function () {
@@ -302,19 +223,6 @@ define([
             }
         });
         return identification;
-    };
-
-    api.GraphElement.prototype.removeIdentificationInArray = function (identificationToRemove, array) {
-        var i = 0;
-        $.each(array, function () {
-            var identification = this;
-            if (identification.getUri() === identificationToRemove.getUri()) {
-                array.splice(i, 1);
-                return false;
-            }
-            i++;
-        });
-        return array;
     };
 
     api.GraphElement.prototype.setSortDate = function (sortDate) {

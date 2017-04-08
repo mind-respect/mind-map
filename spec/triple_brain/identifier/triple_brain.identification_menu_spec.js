@@ -53,7 +53,7 @@ define([
             var testIsMade = false;
             Mock.getSpy("GraphElementService", "addIdentification").and.callFake(function(graphElement, identification){
                 expect(
-                    identification.getType()
+                    identification.getRelationExternalResourceUri()
                 ).toBe("generic");
                 testIsMade = true;
                 var identifications = {};

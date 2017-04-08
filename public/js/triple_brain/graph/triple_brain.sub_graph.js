@@ -92,7 +92,7 @@ define([
         var related = false;
         $.each(graphElements, function () {
             var graphElement = this;
-            if (graphElement.isRelatedToIdentification(identification)) {
+            if (graphElement.isRelatedToIdentifier(identification)) {
                 related = graphElement;
                 return false;
             }

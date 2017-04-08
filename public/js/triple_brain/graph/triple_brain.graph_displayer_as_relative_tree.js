@@ -781,7 +781,7 @@ define([
         $.each(parentVertex.getSuggestions(), function () {
             var suggestion = this;
             if (childVertex.getIdentification) {
-                if (suggestion.isRelatedToIdentification(childVertex.getIdentification())) {
+                if (suggestion.isRelatedToIdentifier(childVertex.getIdentification())) {
                     suggestion.shouldNotDisplay();
                     hasFlagged = true;
                 }

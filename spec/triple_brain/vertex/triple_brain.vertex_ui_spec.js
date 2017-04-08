@@ -25,7 +25,7 @@ define([
             expect(
                 vertexWithEventRelatedSuggestions.getSuggestions().length
             ).toBe(3);
-            vertexWithEventRelatedSuggestions.removeIdentification(
+            vertexWithEventRelatedSuggestions.removeIdentifier(
                 vertexWithEventRelatedSuggestions.getModel().getIdentifiers()[0]
             );
             expect(

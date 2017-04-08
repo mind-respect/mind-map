@@ -557,9 +557,9 @@ define([
             return this.html.data("images_menu");
         };
 
-        api.Bubble.prototype.removeIdentification = function (identification) {
+        api.Bubble.prototype.removeIdentifier = function (identifier) {
             var self = this;
-            $.each(identification.getImages(), function () {
+            $.each(identifier.getImages(), function () {
                 var image = this;
                 self.removeImage(image);
             });

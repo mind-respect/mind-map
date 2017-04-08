@@ -180,7 +180,7 @@ define([
         Suggestion.prototype.shouldNotDisplay = function () {
             return this._shouldDisplay = false;
         };
-        Suggestion.prototype.isRelatedToIdentification = function (identification) {
+        Suggestion.prototype.isRelatedToIdentifier = function (identification) {
             return this.getSameAs().getUri() === identification.getExternalResourceUri() ||
                 (this.hasType() && this.getType().getUri() === identification.getExternalResourceUri());
         };

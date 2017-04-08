@@ -5,10 +5,14 @@
 define([
     "test/test-scenarios",
     "test/test-utils",
+    'test/mock',
     "triple_brain.graph_element"
-], function (Scenarios, TestUtils, GraphElement) {
+], function (Scenarios, TestUtils, Mock, GraphElement) {
     "use strict";
     describe("graph_element", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         it("takes the type and same as of a suggestion and sets them as identifications", function(){
             var vertexSuggestionInTree = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
             var graphElement = GraphElement.fromSuggestionAndElementUri(
@@ -16,11 +20,8 @@ define([
                 TestUtils.generateVertexUri()
             );
             expect(
-                graphElement.getSameAs().length
-            ).toBe(1);
-            expect(
-                graphElement.getTypes().length
-            ).toBe(1);
+                graphElement.getIdentifiers().length
+            ).toBe(2);
         });
         it("does not fail if suggestion has no type", function(){
             var vertexSuggestionInTree = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
@@ -30,8 +31,8 @@ define([
                 TestUtils.generateVertexUri()
             );
             expect(
-                graphElement.getTypes().length
-            ).toBe(0);
+                graphElement.getIdentifiers().length
+            ).toBe(1);
         });
         it("includes identifiers when building server format from ui", function(){
             var eventBubble = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();

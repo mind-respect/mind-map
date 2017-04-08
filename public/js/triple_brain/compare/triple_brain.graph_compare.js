@@ -48,10 +48,10 @@ define([
                     if (!edgeIdentification) {
                         return;
                     }
-                    if (edge.isRelatedToIdentification(edgeIdentification)) {
+                    if (edge.isRelatedToIdentifier(edgeIdentification)) {
                         isConnectedToEdge = true;
                         edgeIdentification.makeGeneric();
-                        edge.addGenericIdentification(
+                        edge.addIdentification(
                             edgeIdentification
                         );
                         return false;

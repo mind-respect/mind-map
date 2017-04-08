@@ -12,7 +12,7 @@ define([
     api.applyDefaultMocks = function(){
         var spies = {};
         spies["addIdentification"] = api.addIdentification();
-        spies["removeIdentification"] = api.removeIdentification();
+        spies["removeIdentifier"] = api.removeIdentifier();
         spies["changeSortDate"] = api.changeSortDate();
         return spies;
     };
@@ -26,8 +26,8 @@ define([
             return $.Deferred().resolve(identifications);
         });
     };
-    api.removeIdentification = function () {
-        return spyOn(GraphElementService, "removeIdentification").and.callFake(function(){
+    api.removeIdentifier = function () {
+        return spyOn(GraphElementService, "removeIdentifier").and.callFake(function(){
             return $.Deferred().resolve();
         });
     };

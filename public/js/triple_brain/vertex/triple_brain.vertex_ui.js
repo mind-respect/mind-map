@@ -220,8 +220,8 @@ define([
             return VertexService;
         };
 
-        api.VertexUi.prototype.removeIdentification = function (identification) {
-            Bubble.Bubble.prototype.removeIdentification.call(
+        api.VertexUi.prototype.removeIdentifier = function (identification) {
+            Bubble.Bubble.prototype.removeIdentifier.call(
                 this,
                 identification
             );

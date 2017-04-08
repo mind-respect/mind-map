@@ -92,15 +92,15 @@ define([
         );
         var isFromComparison = this.getSuggestion().getOrigin().isFromComparison();
         if (isFromComparison) {
-            vertex.addGenericIdentification(
+            vertex.addIdentification(
                 this.getSuggestion().getType()
             );
         } else {
-            vertex.addType(
+            vertex.addIdentification(
                 this.getSuggestion().getSameAs()
             );
             if (this.getSuggestion().hasType()) {
-                vertex.addType(
+                vertex.addIdentification(
                     this.getSuggestion().getType()
                 );
             }

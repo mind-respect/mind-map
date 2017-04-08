@@ -5,8 +5,7 @@
 define([
     "test/test-scenarios",
     "test/test-utils",
-    "test/mock/triple_brain.vertex_service_mock",
-    "test/mock/triple_brain.graph_element_service_mock",
+    "test/mock",
     "triple_brain.mind_map_info",
     "triple_brain.group_relation_html_builder",
     "triple_brain.group_relation_controller",
@@ -14,9 +13,13 @@ define([
     "triple_brain.event_bus",
     "triple_brain.id_uri",
     "triple_brain.graph_element_service"
-], function (Scenarios, TestUtils, VertexServiceMock, GraphElementServiceMock, MindMapInfo, GroupRelationHtmlBuilder, GroupRelationController, Identification, EventBus, IdUri, GraphElementService) {
+], function (Scenarios, TestUtils, Mock, MindMapInfo, GroupRelationHtmlBuilder, GroupRelationController, Identification, EventBus, IdUri, GraphElementService) {
     "use strict";
     describe("group_relation_html_builder", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
+
         var groupRelation;
         it("has the label of the identification", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
@@ -190,7 +193,7 @@ define([
                 "some identification"
             );
             var relation1 = TestUtils.getChildWithLabel(centerBubble, "r1");
-            relation1.getModel().addGenericIdentification(
+            relation1.getModel().addIdentification(
                 someIdentification
             );
             EventBus.publish(
@@ -198,7 +201,7 @@ define([
                 [relation1, someIdentification]
             );
             var relation2 = TestUtils.getChildWithLabel(centerBubble, "r2");
-            relation2.getModel().addGenericIdentification(
+            relation2.getModel().addIdentification(
                 someIdentification
             );
             EventBus.publish(
@@ -242,8 +245,8 @@ define([
                 r2ChildOfCenterBubble.getModel()
             );
             var relation1 = TestUtils.getChildWithLabel(centerBubble, "r1");
-            relation1.getModel().addSameAs(
-                identificationToRelation2
+            relation1.getModel().addIdentification(
+                identificationToRelation2.makeSameAs()
             );
             EventBus.publish(
                 "/event/ui/graph/identification/added",
@@ -277,7 +280,6 @@ define([
                 r2ChildOfCenterBubble.getModel()
             );
             var relation1 = TestUtils.getChildWithLabel(centerBubble, "r1");
-            GraphElementServiceMock.addIdentification();
             identificationToRelation2.makeSameAs();
             relation1.getController().addIdentification(
                 identificationToRelation2
@@ -293,7 +295,6 @@ define([
             ).toBe("identification");
         });
         it("sets the group relation label and comment correctly when identifying a relation to a new relation that exists at the same level", function () {
-            VertexServiceMock.addRelationAndVertexToVertex();
             MindMapInfo._setIsViewOnly(false);
             var centerBubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
             centerBubble.getController().addChild();
@@ -305,7 +306,7 @@ define([
                 newRelation.getModel()
             );
             var relation1 = TestUtils.getChildWithLabel(centerBubble, "r1");
-            relation1.getModel().addSameAs(
+            relation1.getModel().addIdentification(
                 identificationToNewRelation
             );
             EventBus.publish(
@@ -337,8 +338,6 @@ define([
             expect(
                 groupRelation.getNumberOfChild()
             ).toBe(3);
-            VertexServiceMock.addRelationAndVertexToVertex();
-            GraphElementServiceMock.addIdentification();
             MindMapInfo._setIsViewOnly(false);
             groupRelation.getController().addChild();
             expect(

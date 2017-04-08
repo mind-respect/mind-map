@@ -19,7 +19,7 @@ define([
         it("resets graph elements label when quitting compare mode", function () {
             var scenario = new Scenarios.threeBubblesGraph();
             var bubble1 = scenario.getBubble1InTree();
-            bubble1.getModel().addGenericIdentification(
+            bubble1.getModel().addIdentification(
                 Identification.fromFriendlyResource(
                     bubble1.getModel()
                 )
