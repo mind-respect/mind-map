@@ -15,8 +15,8 @@ define([
         it("includes schema properties", function () {
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas();
             var formattedSearchResults = searchProvider.formatResults(
-                    new Scenarios.getSearchResultsForImpact().get()
-                );
+                new Scenarios.getSearchResultsForImpact().get()
+            );
             expect(
                 searchResultIsProperty(
                     formattedSearchResults[0]
@@ -112,31 +112,44 @@ define([
                 serverResults[1].type
             ).toBe("schema");
             var topSearchResult = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas().formatResults(
-                    serverResults,
-                    ""
-                )[0];
+                serverResults,
+                ""
+            )[0];
             expect(
                 topSearchResult.elementType
             ).toBe(
                 "Model"
             );
         });
-        it("puts the element with the most references above", function () {
+        it("filters out results that are the same", function () {
             var serverResults = [];
             serverResults = serverResults.concat(
                 new Scenarios.withRelationsAsIdentifierSearchSome().get()
             );
             expect(
                 serverResults.length
-            ).toBe(3);
+            ).toBe(5);
+            var searchResultsThroughProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas().formatResults(
+                serverResults,
+                ""
+            );
+            expect(
+                searchResultsThroughProvider.length
+            ).toBe(2);
+        });
+        it("puts the identifiers above", function () {
+            var serverResults = [];
+            serverResults = serverResults.concat(
+                new Scenarios.withRelationsAsIdentifierSearchSome().get()
+            );
             var topSearchResult = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas().formatResults(
                 serverResults,
                 ""
             )[0];
             expect(
-                topSearchResult.nonFormattedSearchResult.getNumberOfReferences()
+                topSearchResult.nonFormattedSearchResult.getGraphElementType()
             ).toBe(
-                3
+                GraphElementType.Meta
             );
         });
         it("puts proprieties above relations in the list of formatted search results", function () {
@@ -163,7 +176,44 @@ define([
                 "Component"
             );
         });
+        it("prioritize bubbles with highest number of visits", function () {
+            var serverResults = [];
+            serverResults = serverResults.concat(
+                new Scenarios.getSearchResultsForImpactVertices().get()
+            );
+            moveServerSearchResultWithLabelToLastIndex(
+                serverResults,
+                "impact 2 bubble"
+            );
+            expect(
+                serverResults[5].graphElement.friendlyResource.label
+            ).toBe(
+                "impact 2 bubble"
+            );
+            var topSearchResultAfterIdentifiers = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas().formatResults(
+                serverResults,
+                ""
+            )[2];
+            expect(
+                topSearchResultAfterIdentifiers.nonFormattedSearchResult.getGraphElement().getLabel()
+            ).toBe(
+                "impact 2 bubble"
+            );
+        });
     });
+
+    function moveServerSearchResultWithLabelToLastIndex(searchResults, searchResultLabel) {
+        var i = searchResults.length;
+        while (i--) {
+            var searchResult = searchResults[i];
+            if (searchResult.graphElement && searchResultLabel === searchResult.graphElement.friendlyResource.label){
+                var temp = searchResults[searchResults.length -1];
+                searchResults[searchResults.length -1] = searchResult;
+                searchResults[i] = temp;
+            }
+        }
+    }
+
     function searchResultIsProperty(searchResult) {
         return stringContains(
             searchResult.uri,
@@ -174,10 +224,11 @@ define([
     function stringContains(string, toVerify) {
         return string.indexOf(toVerify) !== -1;
     }
-    function oneOfSearchResultIfOfType(searchResults, type){
+
+    function oneOfSearchResultIfOfType(searchResults, type) {
         var isTrue = false;
-        $.each(searchResults, function(){
-            if(type === this.nonFormattedSearchResult.getGraphElementType()){
+        $.each(searchResults, function () {
+            if (type === this.nonFormattedSearchResult.getGraphElementType()) {
                 isTrue = true;
             }
         });

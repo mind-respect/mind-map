@@ -341,19 +341,25 @@ button.inactive i { color: red; }
 .relation.bubble { position: relative; }
 .relation.bubble.compare-add .in-bubble-content .label-info, .relation.bubble.compare-add.inverse .in-bubble-content .label-info, .relation.bubble.compare-add.suggestion .in-bubble-content .label-info { color: black; }
 .relation.bubble.compare-add .in-bubble-content .label-info .bubble-label, .relation.bubble.compare-add.inverse .in-bubble-content .label-info .bubble-label, .relation.bubble.compare-add.suggestion .in-bubble-content .label-info .bubble-label { color: black; }
-.relation.bubble.compare-add .in-bubble-content .label-info .bubble-label:empty:not(:focus):before, .relation.bubble.compare-add.inverse .in-bubble-content .label-info .bubble-label:empty:not(:focus):before, .relation.bubble.compare-add.suggestion .in-bubble-content .label-info .bubble-label:empty:not(:focus):before { color: grey; }
+.relation.bubble.compare-add .in-bubble-content .label-info .bubble-label:empty:not(:focus):after, .relation.bubble.compare-add.inverse .in-bubble-content .label-info .bubble-label:empty:not(:focus):after, .relation.bubble.compare-add.suggestion .in-bubble-content .label-info .bubble-label:empty:not(:focus):after { color: grey; }
 .relation.bubble.compare-remove .in-bubble-content .label-info .bubble-label, .relation.bubble.compare-remove.inverse .in-bubble-content .label-info .bubble-label, .relation.bubble.compare-remove.suggestion .in-bubble-content .label-info .bubble-label { color: black; }
-.relation.bubble.compare-remove .in-bubble-content .label-info .bubble-label:empty:not(:focus):before, .relation.bubble.compare-remove.inverse .in-bubble-content .label-info .bubble-label:empty:not(:focus):before, .relation.bubble.compare-remove.suggestion .in-bubble-content .label-info .bubble-label:empty:not(:focus):before { color: grey; }
-.relation.bubble .edit-relation-button { font-size: 1.50em; cursor: pointer; display: none; }
+.relation.bubble.compare-remove .in-bubble-content .label-info .bubble-label:empty:not(:focus):after, .relation.bubble.compare-remove.inverse .in-bubble-content .label-info .bubble-label:empty:not(:focus):after, .relation.bubble.compare-remove.suggestion .in-bubble-content .label-info .bubble-label:empty:not(:focus):after { color: grey; }
+.relation.bubble .on-edge-button { font-size: 1.50em; cursor: pointer; }
+.relation.bubble .edit-relation-button { display: none; }
 .relation.bubble.same-as-group-relation .label-container { display: none; }
 .relation.bubble.same-as-group-relation .edit-relation-button { display: block; }
 .relation.bubble .label { border-radius: 0.80em; padding-top: 5px; padding-bottom: 5px; padding-left: 11px; padding-right: 11px; }
 .relation.bubble .menu { background-color: transparent; z-index: 11; margin-left: 5px; }
 .relation.bubble .label-container { display: table-cell; padding-left: 6px; position: relative; }
 .relation.bubble.selected:not(.not-editable) .bubble-label:empty:not(:focus):after { color: white; }
-.relation.bubble.suggestion.selected .bubble-label:after, .relation.bubble.suggestion.single-selected .bubble-label:after { color: black !important; }
+.relation.bubble.suggestion.selected .bubble-label:after, .relation.bubble.suggestion.single-selected .bubble-label:after { color: black; }
 .relation.bubble.suggestion .in-bubble-content { border: none; }
-.relation.bubble.suggestion .in-bubble-content .label-info { border: 3px dashed black; background-color: #E7EEF2; color: black; text-shadow: none; }
+.relation.bubble.suggestion .in-bubble-content .label-info { background-color: #E7EEF2; color: black; text-shadow: none; }
+.relation.bubble.suggestion .in-bubble-content .label-info { border: 3px dotted darkgreen; }
+.relation.bubble.meta-relation .label-container { display: none; }
+.relation.bubble.meta-relation .remove-relation-button { display: block; font-size: 1.15em; }
+.relation.bubble.meta-relation .in-bubble-content { border: none; }
+.relation.bubble.meta-relation .in-bubble-content .label-info { border: 3px solid purple; }
 .relation.bubble .in-bubble-content .label-info { background-color: #3a87ad; height: auto; font-size: 1.05em; }
 .relation.bubble .in-bubble-content .bubble-label { display: inline-block; font-family: helvetica; font-size: 1.05em; }
 .relation.bubble .in-bubble-content .bubble-label:not(:focus):after { color: white; }
@@ -431,7 +437,8 @@ button.inactive i { color: red; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .vertex { /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */ white-space: nowrap; }
-.vertex.suggestion .in-bubble-content { border: 3px dashed black; color: black; text-shadow: none; }
+.vertex.meta .in-bubble-content { border-radius: 0px; border: 3px solid purple; color: black; text-shadow: none; }
+.vertex.suggestion .in-bubble-content { border: 3px dotted darkgreen; color: black; text-shadow: none; }
 .vertex.edit .in-bubble-content { width: 325px; max-width: 325px; }
 .vertex.edit .in-bubble-content .in-bubble-note-button { display: none; }
 .vertex.edit .bubble-label { white-space: pre-wrap; }
@@ -445,7 +452,7 @@ button.inactive i { color: red; }
 .vertex.center-vertex .arrow { height: 0; width: 0; top: 0; left: 0; border-top: none; }
 .vertex.center-vertex .arrow:before { content: ""; }
 .vertex.center-vertex:before { border-left: none; height: 0; width: 0; top: 0; left: 0; }
-.vertex.center-vertex .in-bubble-content { box-shadow: -1px -2px 1px midnightblue; }
+.vertex.center-vertex:not(.meta) .in-bubble-content { box-shadow: -1px -2px 1px midnightblue; }
 .vertex .included-graph-elements-flag { position: absolute; top: 25px; left: 30%; font-weight: bold; }
 .vertex .included-graph-elements-flag { z-index: 3; }
 .vertex .in-bubble-content { border-radius: 50px; /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c3d9ff+0,b1c8ef+41,98b0d9+100;Lavender+3D */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#daeef6+0,96ddf2+50,ddeff7+100 */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffedb7+0,ffe28d+100 */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fff2cb+0,ffebaf+100 */ white-space: normal; padding: 1em; padding-bottom: 0.7em; padding-top: 0.7em; margin-left: 0.3em; display: table; }

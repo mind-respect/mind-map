@@ -10,8 +10,8 @@ define([
     "triple_brain.sub_graph",
     "triple_brain.suggestion",
     "triple_brain.triple",
-    "triple_brain.graph_displayer"
-], function ($, GraphElementController, SuggestionService, GraphService, SubGraph, Suggestion, Triple, GraphDisplayer) {
+    "mr.graph-ui-builder"
+], function ($, GraphElementController, SuggestionService, GraphService, SubGraph, Suggestion, Triple, GraphUiBuilder) {
     "use strict";
     var api = {};
 
@@ -99,7 +99,7 @@ define([
                     destinationVertex = subGraph.getVertexWithUri(
                         destinationVertex.getUri()
                     );
-                    var triple = GraphDisplayer.addSuggestionToVertex(
+                    var triple = GraphUiBuilder.addSuggestionToVertex(
                         Suggestion.fromTriple(
                             Triple.fromEdgeAndSourceAndDestinationVertex(
                                 edge,

@@ -7,9 +7,10 @@ define([
         "triple_brain.event_bus",
         "triple_brain.mind_map_info",
         "triple_brain.id_uri",
-        "triple_brain.graph_ui"
+        "triple_brain.graph_ui",
+        "triple_brain.graph_element_type"
     ],
-    function ($, EventBus, MindMapInfo, IdUri, GraphUi) {
+    function ($, EventBus, MindMapInfo, IdUri, GraphUi, GraphElementType) {
         "use strict";
         var _implementation,
             api = {};
@@ -38,10 +39,25 @@ define([
                 errorCallback
             );
         };
+
+        api.displayForMetaWithUri = function (metaUri, errorCallback) {
+            displayUsingBubbleUri(
+                metaUri,
+                _implementation.displayForMetaWithUri,
+                errorCallback
+            );
+        };
+
         api.displayForBubbleWithUri = function (bubbleUri, errorCallback) {
-            return IdUri.isSchemaUri(bubbleUri) ?
-                api.displayForSchemaWithUri(bubbleUri, errorCallback) :
-                api.displayUsingCentralBubbleUri(bubbleUri, errorCallback);
+            switch(IdUri.getGraphElementTypeFromUri(bubbleUri)){
+                case GraphElementType.Schema :
+                    return api.displayForSchemaWithUri(bubbleUri, errorCallback);
+                case GraphElementType.Vertex :
+                case GraphElementType.Relation :
+                    return api.displayUsingCentralBubbleUri(bubbleUri, errorCallback);
+                case GraphElementType.Meta :
+                    return api.displayForMetaWithUri(bubbleUri, errorCallback);
+            }
         };
         api.connectVertexToVertexWithUri = function (parentVertex, destinationVertexUri, callback) {
             return _implementation.connectVertexToVertexWithUri(
@@ -49,14 +65,6 @@ define([
                 destinationVertexUri,
                 callback
             );
-        };
-
-        api.addSuggestionsToVertex = function (suggestions, vertex) {
-            return _implementation.addSuggestionsToVertex(suggestions, vertex);
-        };
-
-        api.addSuggestionToVertex = function (suggestion, vertex) {
-            return _implementation.addSuggestionToVertex(suggestion, vertex);
         };
 
         api.addProperty = function (property, schema) {
@@ -114,6 +122,12 @@ define([
         api.getRelationSuggestionSelector = function () {
             return _implementation.getRelationSuggestionSelector();
         };
+        api.getMetaUiSelector = function () {
+            return _implementation.getMetaUiSelector();
+        };
+        api.getMetaUiRelationSelector = function () {
+            return _implementation.getMetaUiRelationSelector();
+        };
         api.canAddChildTree = function () {
             return _implementation.canAddChildTree();
         };
@@ -154,6 +168,12 @@ define([
         };
         api.getGraphMenuHandler = function () {
             return _implementation.getGraphMenuHandler();
+        };
+        api.getMetaController = function () {
+            return _implementation.getMetaController();
+        };
+        api.getMetaRelationController = function(){
+            return _implementation.getMetaRelationController();
         };
         api.canGetIsToTheLeft = function () {
             return !api.allowsMovingVertices();

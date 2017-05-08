@@ -8,13 +8,13 @@ define([
         "triple_brain.vertex",
         "triple_brain.edge",
         'triple_brain.schema',
-        "triple_brain.vertex_html_builder",
-        "triple_brain.edge_html_builder",
-        "triple_brain.group_relation_html_builder",
-        "triple_brain.suggestion_bubble_html_builder",
-        "triple_brain.suggestion_relation_builder",
-        "triple_brain.schema_html_builder",
-        "triple_brain.property_html_builder",
+        "mr.vertex-ui-builder",
+        "mr.edge-ui-builder",
+        "mr.group-relation-ui-builder",
+        "mr.suggestion-ui-builder",
+        "mr.suggestion-relation-ui-builder",
+        "mr.schema-ui-builder",
+        "mr.property-ui-builder",
         "triple_brain.graph_displayer_as_relative_tree",
         'test/mock',
         'test/test-utils',
@@ -30,10 +30,18 @@ define([
         "triple_brain.language_manager",
         "text!locales/en/translation.json",
         "triple_brain.user_map_autocomplete_provider",
-        "triple_brain.mind_map_flow",
+        "mr.meta_graph",
+        "mr.meta_graph_ui",
+        "triple_brain.graph_element_type",
+        "triple_brain.sub_graph",
+        "triple_brain.mind_map_flow", /*
+         Do not remove triple_brain.mind_map_flow dependency
+         because it listens on the event bus and it's used
+         for some tests.
+         */
         "test/vendor/jasmine-jquery"
     ],
-    function ($, TestScenarioData, Vertex, Edge, Schema, VertexHtmlBuilder, EdgeHtmlBuilder, GroupRelationHtmlBuilder, SuggestionBubbleHtmlBuilder, SuggestionRelationBuilder, SchemaHtmlBuilder, PropertyHtmlBuilder, GraphDisplayerAsRelativeTree, Mock, TestUtils, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, EventBus, Suggestion, Identification, FriendlyResource, IdUri, LanguageManager, enTranslation, UserMapAutocompleteProvider, MindMapFlow) {
+    function ($, TestScenarioData, Vertex, Edge, Schema, VertexUiBuilder, EdgeUiBuilder, GroupRelationUiBuilder, SuggestionUiBuilder, SuggestionRelationUiBuilder, SchemaUiBuilder, PropertyUiBuilder, GraphDisplayerAsRelativeTree, Mock, TestUtils, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, EventBus, Suggestion, Identification, FriendlyResource, IdUri, LanguageManager, enTranslation, UserMapAutocompleteProvider, MetaGraph, MetaGraphUi, GraphElementType, SubGraph) {
         "use strict";
         var api = {},
             testData = JSON.parse(TestScenarioData);
@@ -319,9 +327,9 @@ define([
                 );
             };
             this.getBubble1Ui = function () {
-                return VertexHtmlBuilder.withServerFacade(
+                return new VertexUiBuilder.VertexUiBuilder().create(
                     this.getBubble1()
-                ).create();
+                );
             };
             this.getBubble2 = function () {
                 return Vertex.fromServerFormat(this.getGraph().vertices[
@@ -330,9 +338,9 @@ define([
                 );
             };
             this.getBubble2Ui = function () {
-                return VertexHtmlBuilder.withServerFacade(
+                return new VertexUiBuilder.VertexUiBuilder().create(
                     this.getBubble2()
-                ).create();
+                );
             };
             this.getCenterBubbleInTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("b1");
@@ -341,10 +349,10 @@ define([
                 return relationWithLabel(this.getGraph(), "r1");
             };
             this.getRelation1Ui = function () {
-                var edge = EdgeHtmlBuilder.withServerFacade(
+                var edge = new EdgeUiBuilder.EdgeUiBuilder().create(
                     this.getRelation1()
-                ).create();
-                // EdgeHtmlBuilder.afterChildBuilt(
+                );
+                // EdgeUiBuilder.afterChildBuilt(
                 //     edge,
                 //     this.getBubble1Ui(),
                 //     this.getBubble2Ui()
@@ -601,9 +609,9 @@ define([
                 return groupRelationAsChildOfCenterVertex;
             };
             this.getPossessionAsGroupRelationUi = function () {
-                return GroupRelationHtmlBuilder.withServerFacade(
+                return new GroupRelationUiBuilder.GroupRelationUiBuilder().create(
                     this.getPossessionAsGroupRelation()
-                ).create();
+                );
             };
             this.getPossessionAsGroupRelationInTree = function () {
                 return treeBuilder.getRelationWithLabelInTree("Possession");
@@ -702,14 +710,14 @@ define([
                 return this.getVertex().getSuggestions()[0];
             };
             this.getAVertexSuggestionUi = function () {
-                return SuggestionBubbleHtmlBuilder.withServerFacade(
+                return new SuggestionUiBuilder.SuggestionUiBuilder().create(
                     this.getOneSuggestion()
-                ).create();
+                );
             };
             this.getARelationSuggestionUi = function () {
-                return SuggestionRelationBuilder.withServerFacade(
+                return new SuggestionRelationUiBuilder.SuggestionRelationUiBuilder().create(
                     this.getOneSuggestion()
-                ).create();
+                );
             };
             this.getCenterBubbleUri = function () {
                 return this.getVertex().getUri();
@@ -794,14 +802,14 @@ define([
                 return this.getSchema().getProperties();
             };
             this.getSchemaUi = function () {
-                return SchemaHtmlBuilder.withServerFacade(
+                return new SchemaUiBuilder.SchemaUiBuilder().create(
                     this.getSchema()
-                ).create();
+                );
             };
             this.getInviteesPropertyUi = function () {
-                return PropertyHtmlBuilder.withServerFacade(
+                return new PropertyUiBuilder.PropertyUiBuilder().create(
                     this.getInviteesProperty()
-                ).create();
+                );
             };
             this.getLocationProperty = function () {
                 return schemaPropertyWithLabel(
@@ -946,6 +954,52 @@ define([
             );
         };
 
+        api.aroundEventIdentifier = function () {
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                return api._getTestData("centerMeta.aroundEvent");
+            };
+            var graph = this.getGraph();
+            this.getCenterBubbleUri = function () {
+                return TestUtils.getIdentifierWithLabelInSubGraph(
+                    "Event",
+                    SubGraph.fromServerFormat(graph)
+                ).getUri();
+            };
+            this.getEventBubbleInTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("Event");
+            };
+            this.getEvent1 = function () {
+                return treeBuilder.getBubbleWithLabelInTree("e1");
+            };
+            this.getEvent2 = function () {
+                return treeBuilder.getBubbleWithLabelInTree("e2");
+            };
+            Mock.setCenterBubbleUriInUrl(
+                this.getCenterBubbleUri()
+            );
+        };
+
+        api.aroundTodoIdentifier = function(){
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                return api._getTestData("centerMeta.aroundTodo");
+            };
+            var graph = this.getGraph();
+            this.getCenterBubbleUri = function () {
+                return TestUtils.getIdentifierWithLabelInSubGraph(
+                    "To do",
+                    SubGraph.fromServerFormat(graph)
+                ).getUri();
+            };
+            this.getTodoBubbleInTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("To do");
+            };
+            Mock.setCenterBubbleUriInUrl(
+                this.getCenterBubbleUri()
+            );
+        };
+
         api.getSchemaProjectDetailsSearchResult = function () {
             this.get = function () {
                 return api._getTestData(
@@ -966,6 +1020,13 @@ define([
             this.get = function () {
                 return api._getTestData(
                     "projectSchema.searchResultsForImpact"
+                );
+            };
+        };
+        api.getSearchResultsForImpactVertices = function () {
+            this.get = function () {
+                return api._getTestData(
+                    "projectSchema.impactVerticesSearchResults"
                 );
             };
         };
@@ -1174,15 +1235,7 @@ define([
 
         function makeTree(graph, centerBubbleUri) {
             GraphDisplayer.reset();
-            var treeMaker = new GraphDisplayerAsRelativeTree.TreeMaker();
-            var tree = IdUri.isSchemaUri(centerBubbleUri) ?
-                treeMaker.makeForSchema(
-                    Schema.fromServerFormat(graph)
-                ) :
-                treeMaker.makeForCenterVertex(
-                    graph,
-                    centerBubbleUri
-                );
+            var tree = getTree();
             GraphDisplayer.getVertexSelector().visitAllVertices(function (vertex) {
                 if (vertex.getUri() === centerBubbleUri) {
                     vertex.setAsCentral();
@@ -1200,6 +1253,26 @@ define([
                 }
             );
             return tree;
+            function getTree() {
+                switch (IdUri.getGraphElementTypeFromUri(centerBubbleUri)) {
+                    case GraphElementType.Schema :
+                        return GraphDisplayerAsRelativeTree.makeForSchema(
+                            Schema.fromServerFormat(graph)
+                        );
+                    case GraphElementType.Vertex :
+                        return GraphDisplayerAsRelativeTree.makeForCenterVertex(
+                            graph,
+                            centerBubbleUri
+                        );
+                    case GraphElementType.Meta :
+                        return MetaGraphUi.buildFromMetaSubGraph(
+                            MetaGraph.fromServerFormatAndCenterUri(
+                                graph,
+                                centerBubbleUri
+                            )
+                        );
+                }
+            }
         }
 
         function TreeBuilder(context) {

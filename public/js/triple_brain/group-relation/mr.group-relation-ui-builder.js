@@ -14,17 +14,14 @@ define([
         "triple_brain.event_bus",
         "triple_brain.identification",
         "triple_brain.graph_element_html_builder",
-        "triple_brain.edge_html_builder_common",
+        "mr.edge-ui-builder-common",
         "triple_brain.mind_map_info",
         "triple_brain.bubble_factory"
     ],
-    function ($, RelativeTreeTemplates, PropertiesIndicator, GroupRelationUi, GroupRelation, SelectionHandler, GraphElementMainMenu, GraphDisplayer, EventBus, Identification, GraphElementHtmlBuilder, EdgeHtmlBuilderCommon, MindMapInfo, BubbleFactory) {
+    function ($, RelativeTreeTemplates, PropertiesIndicator, GroupRelationUi, GroupRelation, SelectionHandler, GraphElementMainMenu, GraphDisplayer, EventBus, Identification, GraphElementHtmlBuilder, EdgeUiBuilderCommon, MindMapInfo, BubbleFactory) {
         "use strict";
         var api = {},
             NUMBER_OF_SIBLINGS_UNDER_WHICH_YOU_SHOULD_EXPAND = 4;
-        api.withServerFacade = function (serverFacade) {
-            return new Self(serverFacade);
-        };
         api.completeBuild = function (groupRelationUi) {
             groupRelationUi.buildHiddenNeighborPropertiesIndicator();
             groupRelationUi.addIdentification(
@@ -49,11 +46,10 @@ define([
             // });
         };
 
-        function Self(serverFacade) {
-            this.serverFacade = serverFacade;
-        }
+        api.GroupRelationUiBuilder = function() {};
 
-        Self.prototype.create = function () {
+        api.GroupRelationUiBuilder.prototype.create = function (serverFacade) {
+            this.serverFacade = serverFacade;
             this.html = $(
                 RelativeTreeTemplates['group_relation'].merge()
             ).data(
@@ -76,7 +72,7 @@ define([
                  */
                 this.serverFacade.getIdentifiers()[0].getUri()
             );
-            EdgeHtmlBuilderCommon.buildInLabelButtons(
+            EdgeUiBuilderCommon.buildInLabelButtons(
                 groupRelationUi
             );
             groupRelationUi.hideButtons();
@@ -86,7 +82,7 @@ define([
             return groupRelationUi;
         };
 
-        Self.prototype._createMenu = function (groupRelationUi) {
+        api.GroupRelationUiBuilder.prototype._createMenu = function (groupRelationUi) {
             var menu = $("<div class='menu'>");
             GraphElementMainMenu.addRelevantButtonsInMenu(
                 menu,
@@ -101,7 +97,7 @@ define([
             );
         };
 
-        Self.prototype._addLabel = function () {
+        api.GroupRelationUiBuilder.prototype._addLabel = function () {
             var container = $("<div class='label-container'>").appendTo(
                 this.html.find(".in-bubble-content")
             );
@@ -152,7 +148,7 @@ define([
             this._setupDescriptionOnLabel(labelHtml);
         };
 
-        Self.prototype._setupDescriptionOnLabel = function (labelHtml) {
+        api.GroupRelationUiBuilder.prototype._setupDescriptionOnLabel = function (labelHtml) {
             var identification = this.serverFacade.getIdentification();
             labelHtml.attr(
                 "data-toggle", "popover"
@@ -168,7 +164,7 @@ define([
             );
         };
 
-        Self.prototype._addArrow = function () {
+        api.GroupRelationUiBuilder.prototype._addArrow = function () {
             this.html.append("<span class='arrow'>");
         };
         EventBus.subscribe(

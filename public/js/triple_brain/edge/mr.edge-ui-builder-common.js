@@ -22,7 +22,11 @@ define([
             edge.getLabelAndButtonsContainer().append(noteButton);
         }
     };
-    api.buildLabel = function (edgeHtml, text, whenEmptyLabel) {
+    api.buildLabel = function (edgeUi, text, whenEmptyLabel, isViewOnly) {
+        var edgeHtml = edgeUi.getHtml();
+        if(isViewOnly){
+            edgeUi.makeLabelNonEditable();
+        }
         var bubbleContentContainer = edgeHtml.find(".in-bubble-content");
         var labelContainer = $(
             "<div class='label-container'>"
@@ -86,7 +90,7 @@ define([
             edge.reviewEditButtonDisplay();
         });
         labelAndButtons.appendTo(labelContainer);
-        if (!MindMapInfo.isViewOnly()) {
+        if (!MindMapInfo.isViewOnly() && !isViewOnly) {
             label.on(
                 "dblclick",
                 function (event) {

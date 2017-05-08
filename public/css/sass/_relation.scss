@@ -2,12 +2,12 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 .relation.bubble {
-  &.compare-add, &.compare-add.inverse, &.compare-add.suggestion {
+  &.compare-add, &.compare-add.inverse, &.compare-add.suggestion{
     .in-bubble-content .label-info {
       color: black;
       .bubble-label {
         color: black;
-        &:empty:not(:focus):before {
+        &:empty:not(:focus):after {
           color: grey;
         }
       }
@@ -17,15 +17,17 @@
     .in-bubble-content .label-info {
       .bubble-label {
         color: black;
-        &:empty:not(:focus):before {
+        &:empty:not(:focus):after {
           color: grey;
         }
       }
     }
   }
-  .edit-relation-button {
+  .on-edge-button{
     font-size: 1.50em;
     cursor: pointer;
+  }
+  .edit-relation-button {
     display: none;
   }
   position: relative;
@@ -63,21 +65,40 @@
     }
   }
 
-  &.suggestion {
+  &.suggestion{
     &.selected, &.single-selected{
       .bubble-label {
         &:after {
-          color: black !important;
+          color: black;
         }
       }
     }
     .in-bubble-content {
       border: none;
       .label-info {
-        border: $edgeSize dashed black;
         background-color: #E7EEF2;
         color: black;
         text-shadow: none;
+      }
+    }
+  }
+  &.suggestion{
+    .in-bubble-content .label-info {
+      border: $edgeSize dotted $suggestionColor;
+    }
+  }
+  &.meta-relation{
+    .label-container {
+      display: none;
+    }
+    .remove-relation-button {
+      display: block;
+      font-size:1.15em;
+    }
+    .in-bubble-content {
+      border: none;
+      .label-info {
+        border: $edgeSize solid $metaColor;
       }
     }
   }

@@ -11,20 +11,17 @@ define([
         "use strict";
         var api = {};
         api.buildCommonConstructors = EdgeUi.buildCommonConstructors;
+
         EdgeUi.buildCommonConstructors(api);
-        api.createFromHtmlAndUri = function (html, uri) {
-            var edge = new api.TreeEdge().init(
+
+        api.createFromHtml = function(html){
+            var treeEdge = new api.TreeEdge().init(
                 html
             );
-            edge.setUri(uri);
-            api.initCache(
-                edge
-            );
-            EdgeUi.initCache(
-                edge
-            );
-            return edge;
+            api.initCache(treeEdge);
+            return treeEdge;
         };
+
         api.getWhenEmptyLabel = function () {
             return EdgeUi.getWhenEmptyLabel();
         };
@@ -103,7 +100,7 @@ define([
         api.TreeEdge.prototype.remove = function () {
             Bubble.Bubble.prototype.remove.call(
                 this,
-                this.getParentVertex()
+                this.getParentBubble()
             );
         };
 

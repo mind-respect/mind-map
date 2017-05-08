@@ -74,12 +74,18 @@ requirejs.config({
         "triple_brain.fork_service": "triple_brain/compare/triple_brain.fork_service",
 
         /*
-         Identifier
+         Meta
          */
         "triple_brain.identification": "triple_brain/identifier/triple_brain.identification",
         "triple_brain.identified_to_service": "triple_brain/identifier/triple_brain.identified_to_service",
         "triple_brain.identification_context": "triple_brain/identifier/triple_brain.identification_context",
         "triple_brain.identification_menu": "triple_brain/identifier/triple_brain.identification_menu",
+        "mr.meta_graph": "triple_brain/identifier/mr.meta_graph",
+        "mr.meta_graph_ui": "triple_brain/identifier/mr.meta_graph_ui",
+        "mr.meta_ui": "triple_brain/identifier/mr.meta_ui",
+        "mr.meta_ui_relation": "triple_brain/identifier/mr.meta_ui_relation",
+        "mr.meta_relation_controller": "triple_brain/identifier/mr.meta_relation_controller",
+        "mr.meta_controller": "triple_brain/identifier/mr.meta_controller",
 
         /*
          Graph Element
@@ -106,9 +112,9 @@ requirejs.config({
         "triple_brain.included_graph_elements_menu": "triple_brain/vertex/triple_brain.included_graph_elements_menu",
         "triple_brain.vertex_controller": "triple_brain/vertex/triple_brain.vertex_controller",
         "triple_brain.delete_menu": "triple_brain/vertex/triple_brain.delete_menu",
-        "triple_brain.vertex_html_builder": "triple_brain/vertex/triple_brain.vertex_html_builder",
-        "triple_brain.vertex_html_builder_common": "triple_brain/vertex/triple_brain.vertex_html_builder_common",
-        "triple_brain.vertex_html_builder_view_only": "triple_brain/vertex/triple_brain.vertex_html_builder_view_only",
+        "mr.vertex-ui-builder": "triple_brain/vertex/mr.vertex-ui-builder",
+        "mr.vertex-ui-builder-common": "triple_brain/vertex/mr.vertex-ui-builder-common",
+        "mr.vertex-ui-builder-view-only": "triple_brain/vertex/mr.vertex-ui-builder-view-only",
         "triple_brain.relative_tree_vertex": "triple_brain/vertex/triple_brain.relative_tree_vertex",
 
         /*
@@ -118,10 +124,10 @@ requirejs.config({
         "triple_brain.suggestion": "triple_brain/suggestion/triple_brain.suggestion",
         "triple_brain.suggestion_origin": "triple_brain/suggestion/triple_brain.suggestion_origin",
         "triple_brain.suggestion_service": "triple_brain/suggestion/triple_brain.suggestion_service",
-        "triple_brain.suggestion_bubble_html_builder": "triple_brain/suggestion/triple_brain.suggestion_bubble_html_builder",
+        "mr.suggestion-ui-builder": "triple_brain/suggestion/mr.suggestion-ui-builder",
         "triple_brain.suggestion_bubble_ui": "triple_brain/suggestion/triple_brain.suggestion_bubble_ui",
         "triple_brain.suggestion_vertex_controller": "triple_brain/suggestion/triple_brain.suggestion_vertex_controller",
-        "triple_brain.suggestion_relation_builder": "triple_brain/suggestion/triple_brain.suggestion_relation_builder",
+        "mr.suggestion-relation-ui-builder": "triple_brain/suggestion/mr.suggestion-relation-ui-builder",
         "triple_brain.suggestion_relation_ui": "triple_brain/suggestion/triple_brain.suggestion_relation_ui",
         "triple_brain.suggestion_relation_controller": "triple_brain/suggestion/triple_brain.suggestion_relation_controller",
 
@@ -147,7 +153,7 @@ requirejs.config({
         "triple_brain.group_relation_controller": "triple_brain/group-relation/triple_brain.group_relation_controller",
         "triple_brain.group_relation": "triple_brain/group-relation/triple_brain.group_relation",
         "triple_brain.group_relation_ui": "triple_brain/group-relation/triple_brain.group_relation_ui",
-        "triple_brain.group_relation_html_builder": "triple_brain/group-relation/triple_brain.group_relation_html_builder",
+        "mr.group-relation-ui-builder": "triple_brain/group-relation/mr.group-relation-ui-builder",
 
 
         /*
@@ -157,7 +163,7 @@ requirejs.config({
         "triple_brain.schema_controller": "triple_brain/schema/triple_brain.schema_controller",
         "triple_brain.schema_service": "triple_brain/schema/triple_brain.schema_service",
         "triple_brain.schema": "triple_brain/schema/triple_brain.schema",
-        "triple_brain.schema_html_builder": "triple_brain/schema/triple_brain.schema_html_builder",
+        "mr.schema-ui-builder": "triple_brain/schema/mr.schema-ui-builder",
         "triple_brain.schema_ui": "triple_brain/schema/triple_brain.schema_ui",
         "triple_brain.schema_suggestion": "triple_brain/schema/triple_brain.schema_suggestion",
 
@@ -167,7 +173,7 @@ requirejs.config({
 
         "triple_brain.property": "triple_brain/property/triple_brain.property",
         "triple_brain.property_ui": "triple_brain/property/triple_brain.property_ui",
-        "triple_brain.property_html_builder": "triple_brain/property/triple_brain.property_html_builder",
+        "mr.property-ui-builder": "triple_brain/property/mr.property-ui-builder",
         "triple_brain.property_controller": "triple_brain/property/triple_brain.property_controller",
 
         /*
@@ -177,9 +183,9 @@ requirejs.config({
         "triple_brain.edge": "triple_brain/edge/triple_brain.edge",
         "triple_brain.edge_ui": "triple_brain/edge/triple_brain.edge_ui",
         "triple_brain.edge_service": "triple_brain/edge/triple_brain.edge_service",
-        "triple_brain.edge_html_builder_view_only": "triple_brain/edge/triple_brain.edge_html_builder_view_only",
-        "triple_brain.edge_html_builder": "triple_brain/edge/triple_brain.edge_html_builder",
-        "triple_brain.edge_html_builder_common": "triple_brain/edge/triple_brain.edge_html_builder_common",
+        "mr.edge-ui-builder-view-only": "triple_brain/edge/mr.edge-ui-builder-view-only",
+        "mr.edge-ui-builder": "triple_brain/edge/mr.edge-ui-builder",
+        "mr.edge-ui-builder-common": "triple_brain/edge/mr.edge-ui-builder-common",
         "triple_brain.tree_edge": "triple_brain/edge/triple_brain.tree_edge",
         "triple_brain.edge_controller": "triple_brain/edge/triple_brain.edge_controller",
 
@@ -205,6 +211,7 @@ requirejs.config({
         "triple_brain.sub_graph": "triple_brain/graph/triple_brain.sub_graph",
         "triple_brain.graph_displayer": "triple_brain/graph/triple_brain.graph_displayer",
         "triple_brain.graph_displayer_factory": "triple_brain/graph/triple_brain.graph_displayer_factory",
+        "mr.graph-ui-builder": "triple_brain/graph/mr.graph-ui-builder",
 
         /*
          Friendly Resource

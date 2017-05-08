@@ -3,8 +3,8 @@
  */
 
 define([
+        "require",
         "jquery",
-        "triple_brain.graph_displayer",
         "triple_brain.vertex_service",
         "triple_brain.point",
         "triple_brain.error",
@@ -17,7 +17,7 @@ define([
         "jquery.center-on-screen",
         "jquery.max_char"
     ],
-    function ($, GraphDisplayer, VertexService, Point, Error, VertexSegments, EventBus, GraphElementUi, Bubble, SuggestionService, LoadingFlow) {
+    function (require, $, VertexService, Point, Error, VertexSegments, EventBus, GraphElementUi, Bubble, SuggestionService, LoadingFlow) {
         "use strict";
         var api = {};
         api.getWhenEmptyLabel = function () {
@@ -157,7 +157,7 @@ define([
 
         api.VertexUi.prototype.visitConnectedEdges = function (visitor) {
             this.visitAllConnected(function (connected) {
-                if (connected.isRelation() || connected.isRelationSuggestion()) {
+                if (connected.isEdge()) {
                     visitor(connected);
                 }
             });
@@ -206,7 +206,7 @@ define([
                 existingSuggestions;
             var mergedSuggestions = existingSuggestions.concat(suggestions);
             this.getModel().setSuggestions(mergedSuggestions);
-            GraphDisplayer.addSuggestionsToVertex(
+            require("mr.graph-ui-builder").addSuggestionsToVertex(
                 this.getModel().getSuggestions(),
                 this
             );
@@ -267,27 +267,7 @@ define([
             this.html.addClass("single-selected");
             this.showButtons();
         };
-        api.VertexUi.prototype.setIncludedVertices = function (includedVertices) {
-            this.html.data(
-                "includedVertices",
-                includedVertices
-            );
-        };
-        api.VertexUi.prototype.hasIncludedGraphElements = function () {
-            return Object.keys(this.getIncludedVertices()).length > 0;
-        };
-        api.VertexUi.prototype.getIncludedVertices = function () {
-            return this.html.data("includedVertices");
-        };
-        api.VertexUi.prototype.setIncludedEdges = function (includedEdges) {
-            this.html.data(
-                "includedEdges",
-                includedEdges
-            );
-        };
-        api.VertexUi.prototype.getIncludedEdges = function () {
-            return this.html.data("includedEdges");
-        };
+
         api.VertexUi.prototype.getMenuHtml = function () {
             return this.html.find('.menu');
         };
@@ -296,11 +276,11 @@ define([
             return this.getParentBubble().getParentBubble().isGroupRelation();
         };
 
-        api.VertexUi.prototype.beforeConvertToDistantBubbleWithUri = function(){
+        api.VertexUi.prototype.beforeConvertToDistantBubbleWithUri = function () {
             LoadingFlow.enter();
         };
 
-        api.VertexUi.prototype.afterConvertToDistantBubbleWithUri = function(){
+        api.VertexUi.prototype.afterConvertToDistantBubbleWithUri = function () {
             LoadingFlow.leave();
         };
 

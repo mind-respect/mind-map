@@ -11,13 +11,13 @@ define([
     'triple_brain.vertex_controller',
     "triple_brain.vertex_service",
     "triple_brain.user_map_autocomplete_provider",
-    "triple_brain.vertex_html_builder_common",
+    "mr.vertex-ui-builder-common",
     "triple_brain.mind_map_info",
     'triple_brain.identification',
     'triple_brain.id_uri'
-], function (Scenarios, TestUtils, Mock, SchemaServiceMock, GraphServiceMock, VertexController, VertexService, UserMapAutocompleteProvider, VertexHtmlBuilderCommon, MindMapInfo, Identification, IdUri) {
+], function (Scenarios, TestUtils, Mock, SchemaServiceMock, GraphServiceMock, VertexController, VertexService, UserMapAutocompleteProvider, VertexUiBuilderCommon, MindMapInfo, Identification, IdUri) {
     "use strict";
-    describe("vertex_html_builder_common", function () {
+    describe("vertex-ui-builder-common", function () {
         beforeEach(function () {
             Mock.applyDefaultMocks();
         });
@@ -32,7 +32,7 @@ define([
             expect(
                 bubble1.getModel().hasIdentifications()
             ).toBeFalsy();
-            VertexHtmlBuilderCommon._labelAutocompleteSelectHandler(
+            VertexUiBuilderCommon._labelAutocompleteSelectHandler(
                 bubble1,
                 projectSearchResult
             );
@@ -43,7 +43,7 @@ define([
                 new Scenarios.getProjectSchema().getGraph()
             );
             var suggestionInTree = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
-            VertexHtmlBuilderCommon._labelAutocompleteSelectHandler(
+            VertexUiBuilderCommon._labelAutocompleteSelectHandler(
                 suggestionInTree,
                 projectSearchResult
             );
@@ -70,7 +70,7 @@ define([
                     "project"
                 )[0];
             var schema = new Scenarios.getProjectSchema().getSchemaInTree();
-            VertexHtmlBuilderCommon._labelAutocompleteSelectHandler(
+            VertexUiBuilderCommon._labelAutocompleteSelectHandler(
                 schema,
                 projectSearchResult
             );
@@ -93,7 +93,7 @@ define([
             ).and.callFake(function (ui, newLabel) {
                 expect(newLabel).toMatch(/project/);
             });
-            VertexHtmlBuilderCommon._labelAutocompleteSelectHandler(
+            VertexUiBuilderCommon._labelAutocompleteSelectHandler(
                 bubble1,
                 projectSearchResult
             );
@@ -120,7 +120,7 @@ define([
             expect(
                 child.text()
             ).not.toBe("b1");
-            VertexHtmlBuilderCommon._labelAutocompleteSelectHandler(
+            VertexUiBuilderCommon._labelAutocompleteSelectHandler(
                 child,
                 b1SearchResult
             );
@@ -151,7 +151,7 @@ define([
                     child.getUri()
                 )
             });
-            VertexHtmlBuilderCommon._labelAutocompleteSelectHandler(
+            VertexUiBuilderCommon._labelAutocompleteSelectHandler(
                 child,
                 otherUserVertexSearchResult
             );

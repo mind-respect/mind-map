@@ -61,6 +61,10 @@ define([
 
     Vertex.prototype = new GraphElement.GraphElement();
 
+    Vertex.prototype.hasIncludedGraphElements = function () {
+        return Object.keys(this.getIncludedVertices()).length > 0;
+    };
+
     Vertex.prototype.getIncludedVertices = function () {
         return this._includedVertices;
     };
@@ -137,5 +141,6 @@ define([
             suggestions
         );
     };
+
     return api;
 });

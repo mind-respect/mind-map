@@ -12,6 +12,17 @@ define([
     api.fromServerFormat = function (serverFormat) {
         return new api.Edge().init(serverFormat);
     };
+    api.withLabelSelfSourceAndDestinationUri = function(label, uri, sourceUri, destinationUri){
+        var edge = new api.Edge().init(
+            api.buildObjectWithUriOfSelfSourceAndDestinationVertex(
+                uri,
+                sourceUri,
+                destinationUri
+            )
+        );
+        edge.setLabel(label);
+        return edge;
+    };
     api.buildObjectWithUriOfSelfSourceAndDestinationVertex = function (uri, sourceVertexUri, destinationVertexUri) {
         return {
             graphElement: GraphElement.buildObjectWithUri(

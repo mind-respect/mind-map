@@ -171,7 +171,9 @@ define([
                 );
         };
         api.RelativeTreeVertex.prototype.isVertexAChild = function (otherVertex) {
-            return !otherVertex.isCenterBubble() && otherVertex.getParentVertex().isSameBubble(this);
+            return !otherVertex.isCenterBubble() &&
+                !otherVertex.isSameBubble(this) &&
+                otherVertex.getParentVertex().isSameBubble(this);
         };
 
         api.setupVertexCopyButton = function(vertex){

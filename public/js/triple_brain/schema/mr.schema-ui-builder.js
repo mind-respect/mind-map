@@ -6,21 +6,17 @@ define([
     "jquery",
     "triple_brain.schema_ui",
     "triple_brain.mind_map_info",
-    "triple_brain.vertex_html_builder_common",
+    "mr.vertex-ui-builder-common",
     "triple_brain.graph_element_html_builder",
     "triple_brain.graph_element_main_menu",
     "triple_brain.schema_controller",
     "triple_brain.relative_tree_vertex",
     "triple_brain.graph_ui",
     "triple_brain.event_bus"
-], function($, SchemaUi, MindMapInfo, VertexHtmlCommon, GraphElementHtmlBuilder, GraphElementMainMenu, SchemaController, RelativeTreeVertex, GraphUi, EventBus){
+], function($, SchemaUi, MindMapInfo, VertexUiBuilderCommon, GraphElementHtmlBuilder, GraphElementMainMenu, SchemaController, RelativeTreeVertex, GraphUi, EventBus){
     "use strict";
     var api = {};
-    api.withServerFacade = function(serverFacade){
-        return new Self(
-            serverFacade
-        );
-    };
+
     api.completeBuild = function(){
         if(!MindMapInfo.isSchemaMode()){
             return;
@@ -35,7 +31,8 @@ define([
             GraphUi.showSchemaInstructions();
         }
     };
-    function Self(serverFacade){
+    api.SchemaUiBuilder = function(){};
+    api.SchemaUiBuilder.prototype.create = function(serverFacade, htmlId){
         this.serverFacade = serverFacade;
         this.html = $(
             "<div class='schema vertex graph-element relative bubble'>"
@@ -43,11 +40,9 @@ define([
             "uri",
             serverFacade.getUri()
         );
-        VertexHtmlCommon.setUpClickBehavior(
+        VertexUiBuilderCommon.setUpClickBehavior(
             this.html
         );
-    }
-    Self.prototype.create = function(htmlId){
         if(undefined === htmlId){
             htmlId = GraphUi.generateBubbleHtmlId();
         }
@@ -55,9 +50,9 @@ define([
         var schemaUi = SchemaUi.createFromHtml(
             this.html
         );
-        VertexHtmlCommon.buildLabelHtml(
+        VertexUiBuilderCommon.buildLabelHtml(
             schemaUi,
-            VertexHtmlCommon.buildInsideBubbleContainer(
+            VertexUiBuilderCommon.buildInsideBubbleContainer(
                 this.html
             ),
             SchemaUi,
@@ -75,12 +70,17 @@ define([
         schemaUi.setNote(
             this.serverFacade.getComment()
         );
-        VertexHtmlCommon.buildInLabelButtons(
+        VertexUiBuilderCommon.buildInLabelButtons(
             schemaUi
         );
         return schemaUi;
     };
-    Self.prototype._addMenu = function(){
+
+    api.SchemaUiBuilder.prototype.getClass = function(){
+        return api;
+    };
+
+    api.SchemaUiBuilder.prototype._addMenu = function(){
         return $("<div class='menu'>").appendTo(
             this.html
         );

@@ -6,53 +6,58 @@ define([
         "jquery",
         "triple_brain.event_bus",
         "triple_brain.mind-map_template",
+        "triple_brain.bubble_factory",
         "triple_brain.relative_tree_vertex",
-        "triple_brain.vertex_html_builder_common",
+        "mr.vertex-ui-builder-common",
         "triple_brain.graph_element_html_builder",
         "triple_brain.graph_element_ui",
         "triple_brain.graph_ui",
         "triple_brain.center_bubble",
         "jquery.is-fully-on-screen",
         "jquery.center-on-screen"
-    ], function ($, EventBus, MindMapTemplate, RelativeTreeVertex, VertexHtmlCommon, GraphElementHtmlBuilder, GraphElementUi, GraphUi, CenterBubble) {
+    ], function ($, EventBus, MindMapTemplate, BubbleFactory, RelativeTreeVertex, VertexUiBuilderCommon, GraphElementHtmlBuilder, GraphElementUi, GraphUi, CenterBubble) {
         "use strict";
         var api = {};
-        api.withServerFacade = function (serverFacade) {
-            return new VertexCreator(serverFacade);
-        };
-        api.completeBuild = function (vertex) {
-            GraphElementHtmlBuilder.integrateIdentifications(
-                vertex
+        api.withOptions = function (options) {
+            return new api.VertexUiBuilder(
+                options
             );
-            vertex.refreshImages();
-            VertexHtmlCommon.moveInLabelButtonsContainerIfIsToTheLeft(
-                vertex
+        };
+        api.completeBuild = function (vertexUi) {
+            if(!vertexUi.isMeta()){
+                GraphElementHtmlBuilder.integrateIdentifications(
+                    vertexUi
+                );
+            }
+            vertexUi.refreshImages();
+            VertexUiBuilderCommon.moveInLabelButtonsContainerIfIsToTheLeft(
+                vertexUi
             );
             var hasAnExpandedOtherInstance = false;
-            vertex.applyToOtherInstances(function (otherInstance) {
+            vertexUi.applyToOtherInstances(function (otherInstance) {
                 if (otherInstance.getNumberOfChild() > 0) {
                     hasAnExpandedOtherInstance = true;
                     return false;
                 }
             });
-            vertex.buildHiddenNeighborPropertiesIndicator();
-            if (!vertex.hasHiddenRelations() || hasAnExpandedOtherInstance) {
-                vertex.getHiddenRelationsContainer().hide();
+            vertexUi.buildHiddenNeighborPropertiesIndicator();
+            if (!vertexUi.hasHiddenRelations() || hasAnExpandedOtherInstance) {
+                vertexUi.getHiddenRelationsContainer().hide();
             }
-            vertex.reviewInLabelButtonsVisibility();
-            GraphElementHtmlBuilder._setupChildrenContainerDragOverAndDrop(vertex);
-            var parentVertex = vertex.getParentVertex();
+            vertexUi.reviewInLabelButtonsVisibility();
+            GraphElementHtmlBuilder._setupChildrenContainerDragOverAndDrop(vertexUi);
+            var parentVertex = vertexUi.getParentVertex();
             if (parentVertex.isCenterBubble()) {
                 CenterBubble.usingBubble(
                     parentVertex
                 ).reviewAddBubbleButtonDirection();
             }
             RelativeTreeVertex.setupVertexCopyButton(
-                vertex
+                vertexUi
             );
             EventBus.publish(
                 '/event/ui/vertex/build_complete',
-                vertex
+                vertexUi
             );
         };
         EventBus.subscribe(
@@ -63,33 +68,39 @@ define([
             api.completeBuild(vertex);
         }
 
-        function VertexCreator(serverFacade) {
+        api.VertexUiBuilder = function (options) {
+            this.options = options || {};
+        };
+
+        api.VertexUiBuilder.prototype.create = function (serverFacade, htmlId) {
             this.serverFacade = serverFacade;
             this.html = $(
                 MindMapTemplate['relative_vertex'].merge()
+            ).addClass(
+                this.options.htmlClass
             ).data(
                 "uri",
                 serverFacade.getUri()
             );
-            VertexHtmlCommon.setUpClickBehavior(
-                this.html
+            VertexUiBuilderCommon.setUpClickBehavior(
+                this.html,
+                this.options.isViewOnly
             );
-        }
-
-        VertexCreator.prototype.create = function (htmlId) {
             if (undefined === htmlId) {
                 htmlId = GraphUi.generateBubbleHtmlId();
             }
             this.html.attr('id', htmlId);
-            this.vertexUi = RelativeTreeVertex.createFromHtml(
+            this.vertexUi = BubbleFactory.getUiObjectClassFromHtml(
+                this.html
+            ).createFromHtml(
                 this.html
             );
-            var label = VertexHtmlCommon.buildLabelHtml(
+            var label = VertexUiBuilderCommon.buildLabelHtml(
                 this.vertexUi,
-                VertexHtmlCommon.buildInsideBubbleContainer(
+                VertexUiBuilderCommon.buildInsideBubbleContainer(
                     this.html
                 ),
-                RelativeTreeVertex,
+                this.vertexUi.getSelector(),
                 this.serverFacade
             ).blur(function () {
                 var $label = $(this);
@@ -107,20 +118,15 @@ define([
             GraphElementHtmlBuilder.setupDragAndDrop(
                 this.vertexUi
             );
-            this.vertexUi.setIncludedVertices(
-                this.serverFacade.getIncludedVertices()
-            );
-            this.vertexUi.setIncludedEdges(
-                this.serverFacade.getIncludedEdges()
-            );
-            if (this.vertexUi.hasIncludedGraphElements()) {
+
+            if (this.vertexUi.isVertex() && this.serverFacade.hasIncludedGraphElements()) {
                 this._showItHasIncludedGraphElements();
             }
             this.vertexUi.setNote(
                 this.serverFacade.getComment()
             );
             this._createMenu();
-            VertexHtmlCommon.buildInLabelButtons(
+            VertexUiBuilderCommon.buildInLabelButtons(
                 this.vertexUi
             );
             this.vertexUi.hideMenu();
@@ -137,7 +143,11 @@ define([
             return this.vertexUi;
         };
 
-        VertexCreator.prototype._showItHasIncludedGraphElements = function () {
+        api.VertexUiBuilder.prototype.getClass = function () {
+            return api;
+        };
+
+        api.VertexUiBuilder.prototype._showItHasIncludedGraphElements = function () {
             this.html.append(
                 $("<div class='included-graph-elements-flag'>").text(
                     ". . ."
@@ -145,14 +155,14 @@ define([
             ).addClass("includes-vertices");
         };
 
-        VertexCreator.prototype._createMenu = function () {
+        api.VertexUiBuilder.prototype._createMenu = function () {
             var vertexMenu = $(
                 MindMapTemplate['vertex_menu'].merge()
             );
             this.html.find(
                 ".in-bubble-content"
             ).append(vertexMenu);
-            VertexHtmlCommon.addRelevantButtonsInMenu(
+            VertexUiBuilderCommon.addRelevantButtonsInMenu(
                 vertexMenu,
                 this.vertexUi
             );

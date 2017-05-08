@@ -18,10 +18,11 @@ define([
             undefined
         );
     };
-    api.toFetchOnlyCurrentUserVerticesAndSchemas = function () {
+    api.toFetchOnlyCurrentUserVerticesAndSchemas = function (options) {
         return new UserMapAutoCompleteProvider(
             SearchService.searchForOnlyOwnVerticesAndSchemasAjaxCall,
-            undefined
+            undefined,
+            options
         );
     };
     api.toFetchOnlyCurrentUserVerticesExcept = function (vertexToIgnore) {
@@ -30,10 +31,11 @@ define([
             vertexToIgnore
         );
     };
-    api.toFetchPublicAndUserVerticesExcept = function (vertexToIgnore) {
+    api.toFetchPublicAndUserVerticesExcept = function (vertexToIgnore, options) {
         return new UserMapAutoCompleteProvider(
             SearchService.searchForOwnVerticesAndPublicOnesAjaxCall,
-            vertexToIgnore
+            vertexToIgnore,
+            options
         );
     };
     api.toFetchRelationsForIdentification = function (edgeToIdentify) {
@@ -49,7 +51,8 @@ define([
         );
     };
     return api;
-    function UserMapAutoCompleteProvider(fetchMethod, graphElementToIgnore) {
+    function UserMapAutoCompleteProvider(fetchMethod, graphElementToIgnore, options) {
+        this.options = options || {};
         var self = this;
         this.getFetchMethod = function (searchTerm) {
             return fetchMethod(
@@ -69,7 +72,7 @@ define([
                 var formatted = applyBasicFormat(searchResult);
                 formatted.elementType = $.t(
                     "search.context." +
-                    searchResult.getGraphElementType()
+                    searchResult.getDeepGraphElementType()
                 );
                 formatted.somethingToDistinguish = searchResult.getSomethingToDistinguish();
                 formatted.nbReferences = searchResult.getNumberOfReferences();
@@ -90,36 +93,79 @@ define([
                     provider: self
                 };
             }
-
+            if(this.shouldFilter()){
+                formattedResults = this.filterSearchResults(formattedResults);
+            }
             this.sortFormattedResults(formattedResults);
             return formattedResults;
+        };
+
+        this.shouldFilter = function(){
+            if(!this.options.noFilter){
+                return true;
+            }
+            if(typeof this.options.noFilter === "function"){
+                return !this.options.noFilter();
+            }
+            return !this.options.noFilter;
         };
 
         this.sortFormattedResults = function (formattedResults) {
             formattedResults.sort(function (a, b) {
                 if (isPrioritySearchResult(a)) {
                     if (isPrioritySearchResult(b)) {
-                        return hasMoreReferences(a, b);
+                        return hasMoreReferencesOrVisits(a, b);
                     }
                     return -1;
                 }
                 if (isPrioritySearchResult(b)) {
                     return 1;
                 }
-                return hasMoreReferences(a, b);
+                return hasMoreReferencesOrVisits(a, b);
             });
         };
-        this.isActive = function(){
+        this.filterSearchResults = function (searchResults) {
+            return searchResults.filter(function (formattedSearchResult) {
+                var searchResult = formattedSearchResult.nonFormattedSearchResult;
+                if (GraphElementType.Meta === searchResult.getGraphElementType()) {
+                    return true;
+                }
+                var hasAnIdentifierWithinTheSearchResults = false;
+                searchResults.forEach(function (otherFormattedSearchResult) {
+                    var otherSearchResult = otherFormattedSearchResult.nonFormattedSearchResult;
+                    if (GraphElementType.Meta === otherSearchResult.getGraphElementType()) {
+                        if (searchResult.getGraphElement().getUri() === otherSearchResult.getGraphElement().getExternalResourceUri()) {
+                            hasAnIdentifierWithinTheSearchResults = true;
+                        }
+                        searchResult.getGraphElement().getIdentifiers().forEach(function (identifier) {
+                            if (identifier.getExternalResourceUri() === otherSearchResult.getGraphElement().getExternalResourceUri()) {
+                                hasAnIdentifierWithinTheSearchResults = true;
+                            }
+                        });
+                    }
+                });
+                return !hasAnIdentifierWithinTheSearchResults;
+            });
+        };
+        this.isActive = function () {
             return true;
         };
 
-        function hasMoreReferences(searchResultA, searchResultB) {
+        function hasMoreReferencesOrVisits(searchResultA, searchResultB) {
             var aNumberOfReferences = searchResultA.nonFormattedSearchResult.getNumberOfReferences();
             var bNumberOfReferences = searchResultB.nonFormattedSearchResult.getNumberOfReferences();
             if (aNumberOfReferences > bNumberOfReferences) {
                 return -1;
             }
             if (bNumberOfReferences > aNumberOfReferences) {
+                return 1;
+            }
+            var aNbVisits = searchResultA.nonFormattedSearchResult.getNbVisits();
+            var bNbVisits = searchResultB.nonFormattedSearchResult.getNbVisits();
+            if (aNbVisits > bNbVisits) {
+                return -1;
+            }
+            if (bNbVisits > aNbVisits) {
                 return 1;
             }
             return 0;
@@ -131,7 +177,7 @@ define([
                 ) || formattedResult.nonFormattedSearchResult.is(
                     GraphElementType.Property
                 ) || formattedResult.nonFormattedSearchResult.is(
-                    SearchResult.additionalTypes.Identification
+                    GraphElementType.Meta
                 );
         }
 

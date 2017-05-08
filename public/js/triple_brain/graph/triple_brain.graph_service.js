@@ -10,10 +10,10 @@ define([
     function ($, IdUriUtils, MindMapInfo) {
         "use strict";
         var api = {};
-        api.getForCentralBubbleUri = function (centralVertexUri, callback, errorCallback) {
+        api.getForCentralBubbleUri = function (centralBubbleUri, callback, errorCallback) {
             $.ajax({
                 type: 'GET',
-                url: api.graphUriForCentralBubbleUri(centralVertexUri)
+                url: api.graphUriForCentralBubbleUri(centralBubbleUri)
             }).done(callback).fail(errorCallback);
         };
         api.getForCentralVertexUriAtDepth = function (centralVertexUri, depth) {
@@ -22,15 +22,15 @@ define([
                 url: api.graphUriForCentralBubbleUri(centralVertexUri) + "?depth=" + depth
             });
         };
-        api.graphUriForCentralBubbleUri = function (centerVertexUri) {
-            if (!MindMapInfo.isAnonymous() && IdUriUtils.isGraphElementUriOwnedByCurrentUser(centerVertexUri)) {
-                var uri = centerVertexUri + "/surround_graph";
-                if (MindMapInfo.getCenterBubbleUri() === centerVertexUri) {
+        api.graphUriForCentralBubbleUri = function (centralBubbleUri) {
+            if (!MindMapInfo.isAnonymous() && IdUriUtils.isGraphElementUriOwnedByCurrentUser(centralBubbleUri)) {
+                var uri = centralBubbleUri + "/surround_graph";
+                if (MindMapInfo.getCenterBubbleUri() === centralBubbleUri) {
                     uri += "?center=true";
                 }
                 return uri;
             } else {
-                return IdUriUtils.convertGraphElementUriToNonOwnedUri(centerVertexUri);
+                return IdUriUtils.convertGraphElementUriToNonOwnedUri(centralBubbleUri);
             }
         };
         return api;

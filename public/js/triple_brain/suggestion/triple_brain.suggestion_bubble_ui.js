@@ -10,11 +10,11 @@ define([
     "triple_brain.vertex",
     "triple_brain.event_bus",
     "triple_brain.selection_handler",
-    "triple_brain.vertex_html_builder",
+    "mr.vertex-ui-builder",
     "triple_brain.suggestion",
     "triple_brain.mind_map_info",
     "jquery.i18next"
-], function ($, RelativeTreeVertex, GraphElementUi, VertexUi, Vertex, EventBus, SelectionHandler, VertexHtmlBuilder, Suggestion, MindMapInfo) {
+], function ($, RelativeTreeVertex, GraphElementUi, VertexUi, Vertex, EventBus, SelectionHandler, VertexUiBuilder, Suggestion, MindMapInfo) {
     "use strict";
     var api = {};
     RelativeTreeVertex.buildCommonConstructors(api);
@@ -136,7 +136,7 @@ define([
             '/event/ui/html/vertex/created/',
             vertexUi
         );
-        VertexHtmlBuilder.completeBuild(vertexUi);
+        VertexUiBuilder.completeBuild(vertexUi);
         this.integrationDeferrer.resolve(vertexUi);
         return vertexUi;
     };

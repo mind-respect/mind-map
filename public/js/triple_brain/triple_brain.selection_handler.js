@@ -9,8 +9,9 @@ define([
     "triple_brain.ui_utils",
     "triple_brain.graph_displayer",
     "triple_brain.event_bus",
+    "triple_brain.graph_element_type",
     'jquery.performance'
-], function ($, GraphUi, ScrollOnMouseFrontier, UiUtils, GraphDisplayer, EventBus) {
+], function ($, GraphUi, ScrollOnMouseFrontier, UiUtils, GraphDisplayer, EventBus, GraphElementType) {
     "use strict";
     var api = {},
         _selectBox,
@@ -42,17 +43,16 @@ define([
     };
 
     api.setToSingleGraphElement = function (graphElement) {
-        var setter = graphElement.rightActionForType(
-            api.setToSingleVertex,
-            api.setToSingleRelation,
-            api.setToSingleRelation,
-            api.setToSingleVertex,
-            api.setToSingleRelation,
-            api.setToSingleVertex,
-            api.setToSingleRelation
-        );
-        setter(graphElement);
+        api._getSetterFromGraphElement(
+            graphElement
+        )(graphElement);
         centerBubbleIfApplicable(graphElement);
+    };
+
+    api._getSetterFromGraphElement = function(graphElement){
+        return graphElement.isEdge() ?
+            api.setToSingleRelation :
+            api.setToSingleVertex;
     };
 
     api.setToSingleVertex = function (vertex) {
@@ -71,16 +71,19 @@ define([
 
     api.addGraphElement = function (graphElement, onlyPrepare) {
         onlyPrepare = onlyPrepare || false;
-        var adder = graphElement.rightActionForType(
-            api.addVertex,
-            api.addRelation,
-            api.addGroupRelation,
-            api.addVertex,
-            api.addRelation,
-            api.addVertex,
-            api.addRelation
+        api._getAdderFromGraphElement(graphElement)(
+            graphElement, onlyPrepare
         );
-        adder(graphElement, onlyPrepare);
+    };
+
+    api._getAdderFromGraphElement = function(graphElement){
+        if(graphElement.isGroupRelation()){
+            return api.addGroupRelation;
+        }
+        if(graphElement.isEdge()){
+            return api.addRelation;
+        }
+        return api.addVertex;
     };
 
     api.addRelation = function (relation, onlyPrepare) {

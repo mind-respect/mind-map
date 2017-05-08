@@ -274,6 +274,7 @@
     "default": "groupe"
   },
   "identification": {
+    "default":"Méta",
     "context": {
       "bubble": "Bulle",
       "with_properties": "avec les propriétés",
@@ -281,6 +282,9 @@
       "source_bubble": "Bulle source",
       "destination_bubble": "Bulle destination"
     }
+  },
+  "meta_relation":{
+    "remove_tooltip": "effacer la relation"
   },
   "selection": {
     "group": "grouper"

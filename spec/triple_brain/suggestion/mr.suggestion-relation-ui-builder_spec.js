@@ -5,9 +5,9 @@
 define([
     "test/test-scenarios",
     'test/mock',
-    "triple_brain.suggestion_relation_builder",
+    "mr.suggestion-relation-ui-builder",
     "triple_brain.bubble"
-], function (Scenarios, Mock, SuggestionRelationBuilder, Bubble) {
+], function (Scenarios, Mock, SuggestionRelationUiBuilder, Bubble) {
     "use strict";
     describe("suggestion_relation_html_builder", function () {
         var suggestion,
@@ -19,11 +19,9 @@ define([
             suggestion = suggestionScenario.getOneSuggestion();
             var karaokeSchemaScenario = new Scenarios.getKaraokeSchemaGraph();
             locationSuggestion = karaokeSchemaScenario.getLocationPropertyAsSuggestion();
-            locationRelationSuggestion = SuggestionRelationBuilder.withServerFacade(
-                locationSuggestion
-            ).create();
+            locationRelationSuggestion = new SuggestionRelationUiBuilder.SuggestionRelationUiBuilder().create(locationSuggestion);
             spyOn(Bubble.Bubble.prototype, "addIdentification").and.callFake(function(){});
-            SuggestionRelationBuilder.afterChildBuilt(locationRelationSuggestion);
+            SuggestionRelationUiBuilder.afterChildBuilt(locationRelationSuggestion);
         });
         it("has the suggestion label", function () {
             expect(
@@ -32,7 +30,7 @@ define([
         });
         // it('has "same as" uri as label if suggestion label is empty', function () {
         //     locationSuggestion.setLabel("");
-        //     locationRelationSuggestion = SuggestionRelationBuilder.withServerFacade(
+        //     locationRelationSuggestion = SuggestionRelationUiBuilder.withServerFacade(
         //         locationSuggestion
         //     ).create();
         //     expect(

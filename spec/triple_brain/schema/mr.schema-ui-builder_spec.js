@@ -4,21 +4,21 @@
 
 define([
     "test/test-scenarios",
-    "triple_brain.schema_html_builder",
+    'test/mock',
+    "mr.schema-ui-builder",
     "triple_brain.graph_ui"
-], function (Scenarios, SchemaHtmlBuilder, GraphUi) {
+], function (Scenarios, Mock, SchemaUiBuilder, GraphUi) {
     "use strict";
-    describe("schema_html_builder", function () {
+    describe("schema-ui-builder", function () {
         var schema;
         beforeEach(function () {
             var scenario = new Scenarios.getKaraokeSchemaGraph();
             schema = scenario.getSchema();
+            Mock.applyDefaultMocks();
         });
         it("can build from server facade", function(){
             var uiId = GraphUi.generateBubbleHtmlId();
-            var schemaUi = SchemaHtmlBuilder.withServerFacade(
-                schema
-            ).create(uiId);
+            var schemaUi = new SchemaUiBuilder.SchemaUiBuilder().create(schema, uiId);
             expect(
                 schemaUi.getId()
             ).toBe(uiId);
@@ -27,9 +27,7 @@ define([
             ).toBe(schemaUi.getUri());
         });
         it("if no uiId is specified it generates one", function(){
-            var schemaUi = SchemaHtmlBuilder.withServerFacade(
-                schema
-            ).create();
+            var schemaUi = new SchemaUiBuilder.SchemaUiBuilder().create(schema);
             expect(
                 schemaUi.getId()
             ).toBeDefined();

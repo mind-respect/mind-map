@@ -64,7 +64,7 @@ define([
     };
     api.getCenterVertexOrSchema = function () {
         var centerBubble = api.getCenterBubble();
-        if (centerBubble.isCenterVertexOrSchema()) {
+        if (centerBubble.isCenterVertexSchemaOrMeta()) {
             return centerBubble;
         }
         return centerBubble.getParentBubble();
@@ -245,19 +245,25 @@ define([
     api.GraphElementUi.prototype.isCenterBubble = function () {
         return this.html.hasClass("center-vertex");
     };
-    api.GraphElementUi.prototype.isCenterVertexOrSchema = function () {
+    api.GraphElementUi.prototype.isCenterVertexSchemaOrMeta = function () {
         return (
-                this.isVertex() || this.isSchema()
+                this.isVertex() || this.isSchema() || this.isMeta()
             ) && this.isCenterBubble();
     };
+
     api.GraphElementUi.prototype.isSchema = function () {
         return this.getGraphElementType() === api.Types.Schema;
+    };
+    api.GraphElementUi.prototype.isMeta = function () {
+        return this.getGraphElementType() === api.Types.Meta;
     };
     api.GraphElementUi.prototype.isRelation = function () {
         return this.getGraphElementType() === api.Types.Relation;
     };
     api.GraphElementUi.prototype.isEdge = function () {
-        return this.isRelation() || this.isRelationSuggestion || this.isProperty();
+        return this.isInTypes(
+            GraphElementType.getEdgeTypes()
+        );
     };
     api.GraphElementUi.prototype.isGroupRelation = function () {
         return this.getGraphElementType() === api.Types.GroupRelation;
@@ -362,7 +368,7 @@ define([
             ]();
     };
 
-    api.GraphElementUi.prototype.rightActionForType = function (vertexAction, edgeAction, groupRelationAction, schemaAction, propertyAction, suggestionVertexAction, suggestionRelationAction) {
+    api.GraphElementUi.prototype.rightActionForType = function (vertexAction, edgeAction, groupRelationAction, schemaAction, propertyAction, suggestionVertexAction, suggestionRelationAction, metaAction, metaRelationAction) {
         switch (this.getGraphElementType()) {
             case api.Types.Vertex :
                 return vertexAction;
@@ -378,6 +384,10 @@ define([
                 return suggestionVertexAction;
             case api.Types.RelationSuggestion :
                 return suggestionRelationAction;
+            case api.Types.Meta :
+                return metaAction;
+            case api.Types.MetaRelation :
+                return metaRelationAction;
             default:
                 return function () {
                 };
@@ -422,6 +432,9 @@ define([
             ) !== this.text();
     };
     api.GraphElementUi.prototype.editMode = function () {
+        if(!this.isLabelEditable()){
+            return;
+        }
         this.getLabel().attr(
             "contenteditable",
             "true"
@@ -468,6 +481,7 @@ define([
     api.GraphElementUi.prototype.centerOnScreen = function () {
         this.getHtml().centerOnScreen();
     };
+
     api.GraphElementUi.prototype.isInTypes = function (types) {
         return $.inArray(
                 this.getGraphElementType(),
@@ -699,6 +713,20 @@ define([
         });
     };
 
+    api.GraphElementUi.prototype.makeLabelNonEditable = function () {
+        this.html.addClass("not-editable");
+        this.html.data(
+            "non-editable",
+            true
+        );
+    };
+
+    api.GraphElementUi.prototype.isLabelEditable = function () {
+        return !this.html.data(
+            "non-editable"
+        );
+    };
+
     EventBus.subscribe(
         '/event/ui/graph/vertex/privacy/updated',
         function (event, graphElement) {
@@ -731,6 +759,8 @@ define([
         controllerGetters[api.Types.Property] = GraphDisplayer.getPropertyMenuHandler;
         controllerGetters[api.Types.VertexSuggestion] = GraphDisplayer.getVertexSuggestionController;
         controllerGetters[api.Types.RelationSuggestion] = GraphDisplayer.getRelationSuggestionMenuHandler;
+        controllerGetters[api.Types.Meta] = GraphDisplayer.getMetaController;
+        controllerGetters[api.Types.MetaRelation] = GraphDisplayer.getMetaRelationController;
     }
 
     function initSelectors() {
@@ -741,5 +771,7 @@ define([
         selectors[api.Types.Property] = GraphDisplayer.getPropertySelector;
         selectors[api.Types.VertexSuggestion] = GraphDisplayer.getVertexSuggestionSelector;
         selectors[api.Types.RelationSuggestion] = GraphDisplayer.getRelationSuggestionSelector;
+        selectors[api.Types.Meta] = GraphDisplayer.getMetaUiSelector;
+        selectors[api.Types.MetaRelation] = GraphDisplayer.getMetaUiRelationSelector;
     }
 });

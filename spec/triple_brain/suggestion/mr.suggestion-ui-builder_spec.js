@@ -6,12 +6,11 @@ define([
     "test/test-scenarios",
     "test/test-utils",
     'test/mock',
-    "triple_brain.suggestion_bubble_html_builder",
+    "mr.suggestion-ui-builder",
     "triple_brain.bubble",
     "triple_brain.graph_ui",
-    "triple_brain.event_bus",
-    "triple_brain.sub_graph"
-], function (Scenarios, TestUtils, Mock, SuggestionBubbleHtmlBuilder, Bubble, GraphUi, EventBus, SubGraph) {
+    "triple_brain.event_bus"
+], function (Scenarios, TestUtils, Mock, SuggestionUiBuilder, Bubble, GraphUi, EventBus) {
     "use strict";
     describe("suggestion_bubble_html_builder", function () {
         beforeEach(function () {
@@ -25,17 +24,13 @@ define([
             suggestion = suggestionScenario.getOneSuggestion();
             var karaokeSchemaScenario = new Scenarios.getKaraokeSchemaGraph();
             locationSuggestion = karaokeSchemaScenario.getLocationPropertyAsSuggestion();
-            locationBubbleSuggestion = SuggestionBubbleHtmlBuilder.withServerFacade(
-                locationSuggestion
-            ).create();
+            locationBubbleSuggestion = new SuggestionUiBuilder.SuggestionUiBuilder().create(locationSuggestion);
             spyOn(Bubble.Bubble.prototype, "addIdentification").and.callFake(function(){});
-            SuggestionBubbleHtmlBuilder.completeBuild(locationBubbleSuggestion);
+            SuggestionUiBuilder.completeBuild(locationBubbleSuggestion);
         });
         it("can build from server facade", function () {
             var uiId = GraphUi.generateBubbleHtmlId();
-            var suggestionUi = SuggestionBubbleHtmlBuilder.withServerFacade(
-                suggestion
-            ).create(uiId);
+            var suggestionUi = new SuggestionUiBuilder.SuggestionUiBuilder().create(suggestion, uiId);
             expect(
                 suggestionUi.getId()
             ).toBe(uiId);
@@ -44,9 +39,7 @@ define([
             ).toBe(suggestion.getUri());
         });
         it("if no uiId is specified it generates one", function () {
-            var suggestionUi = SuggestionBubbleHtmlBuilder.withServerFacade(
-                suggestion
-            ).create();
+            var suggestionUi = new SuggestionUiBuilder.SuggestionUiBuilder().create(suggestion);
             expect(
                 suggestionUi.getId()
             ).toBeDefined();
@@ -64,9 +57,7 @@ define([
         it('has suggestion "same as" as identification', function () {
             var karaokeSchemaScenario = new Scenarios.getKaraokeSchemaGraph();
             locationSuggestion = karaokeSchemaScenario.getLocationPropertyAsSuggestion();
-            locationBubbleSuggestion = SuggestionBubbleHtmlBuilder.withServerFacade(
-                locationSuggestion
-            ).create();
+            locationBubbleSuggestion = new SuggestionUiBuilder.SuggestionUiBuilder().create(locationSuggestion);
             expect(
                 locationBubbleSuggestion.getModel().getIdentifiers()[0].getUri()
             ).toBe(locationSuggestion.getSameAs().getUri());

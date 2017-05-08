@@ -3,9 +3,8 @@
  */
 
 define([
-    "require",
     "mr.command"
-], function (require, Command) {
+], function (Command) {
     "use strict";
     var api = {};
     api.undoCanDo = function(){

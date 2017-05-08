@@ -4,22 +4,23 @@
 
 define([
     "jquery",
+    "triple_brain.id_uri",
     "triple_brain.graph_element",
     "triple_brain.edge",
     "triple_brain.schema",
     "triple_brain.property",
     "triple_brain.vertex",
+    "triple_brain.identification",
     "triple_brain.graph_element_type",
     "triple_brain.event_bus",
     "triple_brain.wikidata_uri",
     "jquery.i18next"
-], function ($, GraphElement, Edge, Schema, Property, Vertex, GraphElementType, EventBus, WikiDataUri) {
+], function ($, IdUri, GraphElement, Edge, Schema, Property, Vertex, Identification, GraphElementType, EventBus, WikiDataUri) {
     "use strict";
     var api = {},
         referencesText;
     api.additionalTypes = {
-        "Edge" : "edge",
-        "Identification" : "identification"
+        "Edge" : "edge"
     };
     api.fromServerFormatArray = function (searchResultsServerFormat) {
         var searchResults = [];
@@ -41,49 +42,49 @@ define([
                     destinationVertex = Vertex.fromServerFormat(
                         searchResult.edge.destinationVertex
                     );
-                return new Self(
+                return new SearchResult(
                     Edge.fromServerFormat(searchResult.edge),
                     GraphElementType.Relation,
                     api._buildEdgeSomethingToDistinguish(
                         sourceVertex,
                         destinationVertex
                     ),
-                    searchResult.nbReferences
+                    searchResult
                 );
             case GraphElementType.Schema :
                 var schema = Schema.fromSearchResult(searchResult);
-                return new Self(
+                return new SearchResult(
                     schema,
                     GraphElementType.Schema,
                     api._buildSchemaSomethingToDistinguish(schema),
-                    searchResult.nbReferences
+                    searchResult
                 );
             case GraphElementType.Property :
                 var property = Property.fromServerFormat(searchResult.graphElement);
                 property.setSchema(
                     Schema.fromServerFormat(searchResult.schema)
                 );
-                return new Self(
+                return new SearchResult(
                     property,
                     GraphElementType.Property,
                     api._buildPropertySomethingToDistinguish(property),
-                    searchResult.nbReferences
+                    searchResult
                 );
             case GraphElementType.Vertex :
                 var vertex = GraphElement.fromServerFormat(searchResult.graphElement);
-                return new Self(
+                return new SearchResult(
                     vertex,
                     GraphElementType.Vertex,
                     api._buildVertexSomethingToDistinguish(searchResult),
-                    searchResult.nbReferences
+                    searchResult
                 );
-            case api.additionalTypes.Identification :
-                var graphElement = GraphElement.fromServerFormat(searchResult.graphElement);
-                return new Self(
-                    graphElement,
-                    api.additionalTypes.Identification,
-                    api._buildIdentifierSomethingToDistinguish(searchResult),
-                    searchResult.nbReferences
+            case GraphElementType.Meta :
+                var identifier = Identification.fromServerFormat(searchResult.identifierPojo);
+                return new SearchResult(
+                    identifier,
+                    GraphElementType.Meta,
+                    api._buildIdentifierSomethingToDistinguish(identifier),
+                    searchResult
                 );
         }
     };
@@ -121,14 +122,14 @@ define([
                 )
             );
     };
-    api._buildIdentifierSomethingToDistinguish = function(searchResult){
+    api._buildIdentifierSomethingToDistinguish = function(identifier){
         var source = WikiDataUri.isAWikidataUri(
-            searchResult.externalUri
+            identifier.getExternalResourceUri()
         ) ? "wikipedia.org" : "mindrespect.com";
-        return searchResult.nbReferences + referencesText + ". source: " + source;
+        return identifier.getNbReferences() + referencesText + ". source: " + source;
     };
     api.forGraphElementAndItsType = function (graphElement, graphElementType) {
-        return new Self(
+        return new SearchResult(
             graphElement,
             graphElementType
         );
@@ -145,28 +146,43 @@ define([
         );
     };
 
-    function Self(graphElement, graphElementType, somethingToDistinguish, numberOfReferences) {
+    function SearchResult(graphElement, graphElementType, somethingToDistinguish, serverFormat) {
         this.graphElement = graphElement;
         this.graphElementType = graphElementType;
         this.somethingToDistinguish = somethingToDistinguish;
-        this.numberOfReferences = numberOfReferences;
+        this.serverFormat = serverFormat;
     }
 
-    Self.prototype.getGraphElement = function () {
+    SearchResult.prototype.getGraphElement = function () {
         return this.graphElement;
     };
-    Self.prototype.getGraphElementType = function () {
+    
+    SearchResult.prototype.getGraphElementType = function () {
         return this.graphElementType;
     };
 
-    Self.prototype.getNumberOfReferences = function () {
-        return this.numberOfReferences;
+    SearchResult.prototype.getDeepGraphElementType = function () {
+        if(GraphElementType.Meta === this.getGraphElementType()){
+            return IdUri.getGraphElementTypeFromUri(
+                this.getGraphElement().getExternalResourceUri()
+            );
+        }else{
+            return this.getGraphElementType();
+        }
     };
 
-    Self.prototype.is = function (graphElementType) {
+    SearchResult.prototype.getNumberOfReferences = function () {
+        return this.serverFormat.nbReferences;
+    };
+
+    SearchResult.prototype.getNbVisits = function () {
+        return this.serverFormat.nbVisits;
+    };
+
+    SearchResult.prototype.is = function (graphElementType) {
         return graphElementType === this.getGraphElementType();
     };
-    Self.prototype.getSomethingToDistinguish = function () {
+    SearchResult.prototype.getSomethingToDistinguish = function () {
         return this.somethingToDistinguish;
     };
     EventBus.subscribe("localized-text-loaded", function(){

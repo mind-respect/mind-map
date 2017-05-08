@@ -30,7 +30,9 @@ define([
                     );
                 },
                 resultsProviders: [
-                    UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas()
+                    UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas({
+                        noFilter: true
+                    })
                 ]
             });
         }

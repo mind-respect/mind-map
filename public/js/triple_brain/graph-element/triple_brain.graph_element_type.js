@@ -6,14 +6,43 @@ define(
     [],
     function () {
         "use strict";
-        return {
+        var api = {
             "Vertex": "vertex",
             "Relation": "relation",
             "GroupRelation": "group_relation",
             "Schema": "schema",
             "Property": "property",
             "VertexSuggestion": "vertex_suggestion",
-            "RelationSuggestion": "relation_suggestion"
+            "RelationSuggestion": "relation_suggestion",
+            "Meta": "meta",
+            "MetaRelation": "meta_relation"
         };
+        api.fromString = function (type) {
+            switch (type) {
+                case "edge" :
+                    return api.Relation;
+                case "identification" :
+                    return api.Meta;
+                default:
+                    return type;
+            }
+        };
+        api.getVertexTypes = function(){
+            return [
+                api.Vertex,
+                api.VertexSuggestion,
+                api.Schema,
+                api.Meta
+            ];
+        };
+        api.getEdgeTypes = function(){
+            return [
+                api.Relation,
+                api.Property,
+                api.RelationSuggestion,
+                api.MetaRelation
+            ];
+        };
+        return api;
     }
 );

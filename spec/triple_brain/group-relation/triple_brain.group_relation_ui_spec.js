@@ -5,10 +5,14 @@
 define([
     'test/test-scenarios',
     'test/test-utils',
+    'test/mock',
     'triple_brain.selection_handler'
-], function (Scenarios, TestUtils, SelectionHandler) {
+], function (Scenarios, TestUtils, Mock, SelectionHandler) {
     "use strict";
     describe("group_relation_ui", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         it("shows description upon selection", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
             var possessionInTree = scenario.getPossessionAsGroupRelationInTree();

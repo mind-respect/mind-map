@@ -79,5 +79,16 @@ define([
                 center.isConnectedToAVertexWithUri("dummy")
             ).toBeFalsy();
         });
+        it("can remove a vertex under a meta bubble", function () {
+            var eventBubble = new Scenarios.aroundEventIdentifier().getEventBubbleInTree();
+            var vertex = eventBubble.getTopMostChildBubble().getTopMostChildBubble();
+            expect(
+                eventBubble.getNumberOfChild()
+            ).toBe(2);
+            vertex.remove();
+            expect(
+                eventBubble.getNumberOfChild()
+            ).toBe(1);
+        });
     });
 });

@@ -146,5 +146,15 @@ define([
                 lastChildVertexInList.text()
             ).toBe(thirdChildVertex.text());
         });
+        it("can export vertices to an html list when center is a meta", function(){
+            var eventBubble = new Scenarios.aroundEventIdentifier().getEventBubbleInTree();
+            var aChildVertex = eventBubble.getTopMostChildBubble().getTopMostChildBubble();
+            var listContainer = RelativeTreeVertex.VerticesToHtmlLists([
+                aChildVertex
+            ]);
+            expect(
+                listContainer[0].childNodes[0].childNodes[0].nodeValue
+            ).toBe(aChildVertex.text());
+        });
     });
 });

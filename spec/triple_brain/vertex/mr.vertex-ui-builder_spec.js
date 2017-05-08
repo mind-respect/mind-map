@@ -6,14 +6,14 @@ define([
     "test/test-scenarios",
     "test/test-utils",
     'test/mock',
-    "triple_brain.vertex_html_builder",
+    "mr.vertex-ui-builder",
     "triple_brain.graph_ui",
     "triple_brain.selection_handler",
     "triple_brain.edge_controller",
     "triple_brain.mind_map_info"
-], function (Scenarios, TestUtils, Mock, VertexHtmlBuilder, GraphUi, SelectionHandler, EdgeController, MindMapInfo) {
+], function (Scenarios, TestUtils, Mock, VertexUiBuilder, GraphUi, SelectionHandler, EdgeController, MindMapInfo) {
     "use strict";
-    describe("vertex_html_builder", function () {
+    describe("vertex-ui-builder", function () {
         beforeEach(function () {
             Mock.applyDefaultMocks();
         });
@@ -25,9 +25,10 @@ define([
         });
         it("can build from server facade", function () {
             var uiId = GraphUi.generateBubbleHtmlId();
-            var vertexUi = VertexHtmlBuilder.withServerFacade(
-                bubble1
-            ).create(uiId);
+            var vertexUi = new VertexUiBuilder.VertexUiBuilder().create(
+                bubble1,
+                uiId
+            );
             expect(
                 vertexUi.getId()
             ).toBe(uiId);
@@ -36,9 +37,9 @@ define([
             ).toBe(bubble1.getUri());
         });
         it("if no uiId is specified it generates one", function () {
-            var vertexUi = VertexHtmlBuilder.withServerFacade(
+            var vertexUi = new VertexUiBuilder.VertexUiBuilder().create(
                 bubble1
-            ).create();
+            );
             expect(
                 vertexUi.getId()
             ).toBeDefined();
@@ -135,12 +136,15 @@ define([
         });
         it("detects links and changes them to hyperlinks when building vertex", function () {
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1();
-            var bubble1Ui = VertexHtmlBuilder.withServerFacade(bubble1).create("123");
+            var bubble1Ui = new VertexUiBuilder.VertexUiBuilder().create(bubble1, "123");
             expect(
                 bubble1Ui.getLabel().find("a").length
             ).toBe(0);
             bubble1.setLabel("http://bubl.guru");
-            bubble1Ui = VertexHtmlBuilder.withServerFacade(bubble1).create("123");
+            bubble1Ui = new VertexUiBuilder.VertexUiBuilder().create(
+                bubble1,
+                "123"
+            );
             expect(
                 bubble1Ui.getLabel().find("a").length
             ).toBe(1);

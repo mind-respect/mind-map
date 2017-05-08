@@ -55,6 +55,11 @@ define([
                     uri
                 );
         };
+        api.isMetaUri = function (uri) {
+            return GraphElementType.Meta === api.getGraphElementTypeFromUri(
+                    uri
+                );
+        };
         api.schemaUriOfProperty = function (propertyUri) {
             return propertyUri.substr(
                 0,
@@ -117,13 +122,11 @@ define([
             uri = uri.substr(
                 0, uri.lastIndexOf("/")
             );
-            var type = uri.substr(
-                uri.lastIndexOf("/") + 1
+            return GraphElementType.fromString(
+                uri.substr(
+                    uri.lastIndexOf("/") + 1
+                )
             );
-            if ("edge" === type) {
-                type = GraphElementType.Relation;
-            }
-            return type;
         };
         api.getGraphElementShortIdFromUri = function (uri) {
             return uri.substring(

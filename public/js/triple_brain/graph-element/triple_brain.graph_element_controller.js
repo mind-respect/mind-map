@@ -228,7 +228,7 @@ define([
     };
 
     GraphElementController.prototype.pasteCanDo = function () {
-        return this.isSingleAndOwned();
+        return this.isSingleAndOwned() && this.getUi().isLabelEditable();
     };
 
     GraphElementController.prototype.paste = function (event) {

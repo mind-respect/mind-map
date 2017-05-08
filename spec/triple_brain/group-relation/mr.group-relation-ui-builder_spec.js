@@ -7,13 +7,12 @@ define([
     "test/test-utils",
     "test/mock",
     "triple_brain.mind_map_info",
-    "triple_brain.group_relation_html_builder",
     "triple_brain.group_relation_controller",
     "triple_brain.identification",
     "triple_brain.event_bus",
     "triple_brain.id_uri",
-    "triple_brain.graph_element_service"
-], function (Scenarios, TestUtils, Mock, MindMapInfo, GroupRelationHtmlBuilder, GroupRelationController, Identification, EventBus, IdUri, GraphElementService) {
+    "triple_brain.graph_element_type"
+], function (Scenarios, TestUtils, Mock, MindMapInfo, GroupRelationController, Identification, EventBus, IdUri, GraphElementType) {
     "use strict";
     describe("group_relation_html_builder", function () {
         beforeEach(function () {
@@ -292,7 +291,7 @@ define([
                 IdUri.getGraphElementTypeFromUri(
                     r2ChildOfCenterBubble.getUri()
                 )
-            ).toBe("identification");
+            ).toBe(GraphElementType.Meta);
         });
         it("sets the group relation label and comment correctly when identifying a relation to a new relation that exists at the same level", function () {
             MindMapInfo._setIsViewOnly(false);

@@ -45,7 +45,8 @@ define([
     };
 
     VertexController.prototype.addSiblingCanDo = function () {
-        return this.isSingleAndOwned() && !this.vertices.isCenterBubble();
+        return this.isSingleAndOwned() && !this.vertices.isCenterBubble() &&
+                !this.getUi().getParentBubble().getParentBubble().isMeta();
     };
 
     VertexController.prototype.addSibling = function () {
@@ -228,7 +229,7 @@ define([
     }
 
     VertexController.prototype.subElementsCanDo = function () {
-        return this.isSingle() && this.vertices.hasIncludedGraphElements();
+        return this.isSingle() && this.getModel().hasIncludedGraphElements();
     };
 
     VertexController.prototype.subElements = function () {

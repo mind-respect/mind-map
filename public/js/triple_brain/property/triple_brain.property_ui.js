@@ -12,7 +12,7 @@ define([
     var api = {};
     TreeEdge.buildCommonConstructors(api);
     api.createFromHtml = function(html){
-        var property = new api.Self(html);
+        var property = new api.PropertyUi(html);
         api.initCache(property);
         return property;
     };
@@ -26,16 +26,16 @@ define([
     api.getWhenEmptyLabel = function(){
         return $.t("property.when-empty");
     };
-    api.Self = function(html){
+    api.PropertyUi = function(html){
         this.html = html;
         TreeEdge.TreeEdge.apply(this);
         this.init(this.html);
     };
-    api.Self.prototype = new TreeEdge.TreeEdge();
-    api.Self.prototype.getGraphElementType = function(){
+    api.PropertyUi.prototype = new TreeEdge.TreeEdge();
+    api.PropertyUi.prototype.getGraphElementType = function(){
         return GraphElementUi.Types.Property;
     };
-    api.Self.prototype.remove = function () {
+    api.PropertyUi.prototype.remove = function () {
         this.html.closest(".vertex-tree-container").remove();
     };
     return api;

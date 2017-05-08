@@ -25,6 +25,7 @@ define([
     "use strict";
     var api = {};
     api.applyAutoCompleteIdentificationToLabelInput = function (input) {
+        var vertex = BubbleFactory.fromSubHtml(input);
         input.tripleBrainAutocomplete({
             select: function (event, ui) {
                 api._labelAutocompleteSelectHandler(
@@ -36,7 +37,12 @@ define([
             },
             resultsProviders: [
                 UserMapAutocompleteProvider.toFetchPublicAndUserVerticesExcept(
-                    BubbleFactory.fromSubHtml(input)
+                    vertex,
+                    {
+                        noFilter: function(){
+                            return !this.hasChildren();
+                        }.bind(vertex)
+                    }
                 ),
                 WikidataAutocompleteProvider.buildWithIsActiveCondition(
                     GraphElementUi.isWikidataActiveForInBubbleEdition
@@ -109,12 +115,12 @@ define([
         wrapper.append(container).appendTo(html);
         return container;
     };
-    api.setUpClickBehavior = function (html) {
+    api.setUpClickBehavior = function (html, isViewOnly) {
         html.on(
             "click",
             clickHandler
         );
-        if (!MindMapInfo.isViewOnly()) {
+        if (!MindMapInfo.isViewOnly() && !isViewOnly) {
             html.on(
                 "dblclick",
                 dblClickHandler

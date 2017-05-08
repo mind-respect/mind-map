@@ -179,7 +179,7 @@ define([
         };
 
         api.Bubble.prototype.getParentBubble = function () {
-            if (this.isCenterVertexOrSchema()) {
+            if (this.isCenterVertexSchemaOrMeta()) {
                 return this;
             }
             return BubbleFactory.fromHtml(
@@ -188,25 +188,25 @@ define([
             );
         };
         api.Bubble.prototype.getParentVertex = function () {
-            return this._getClosestParentOfType(
-                GraphElementType.Vertex
+            return this._getClosestParentOfTypes(
+                GraphElementType.getVertexTypes()
             );
         };
         api.Bubble.prototype.getParentSuggestionVertex = function () {
-            return this._getClosestParentOfType(
+            return this._getClosestParentOfTypes([
                 GraphElementType.VertexSuggestion
-            );
+            ]);
         };
-        api.Bubble.prototype._getClosestParentOfType = function (type) {
+        api.Bubble.prototype._getClosestParentOfTypes = function (types) {
             var parentBubble = this.getParentBubble();
             if (this.isSameBubble(parentBubble)) {
                 return this;
             }
-            if (type === parentBubble.getGraphElementType()) {
+            if (parentBubble.isInTypes(types)) {
                 return parentBubble;
             }
-            var ancestor = parentBubble._getClosestParentOfType(type);
-            return type === ancestor.getGraphElementType() ?
+            var ancestor = parentBubble._getClosestParentOfTypes(types);
+            return ancestor.isInTypes(types) ?
                 ancestor :
                 this;
         };

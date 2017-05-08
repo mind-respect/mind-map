@@ -76,7 +76,7 @@ define([
                 ),
                 $("<div class='info'>").append(
                     $("<span class='type'>").text(
-                        $.t("search.context." + reference.getGraphElementType())
+                        $.t("search.context." + reference.getDeepGraphElementType())
                     ),
                     $("<div class='distinction'>").text(
                         reference.getSomethingToDistinguish()

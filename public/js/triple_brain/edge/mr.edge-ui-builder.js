@@ -4,23 +4,20 @@
 
 define([
         "jquery",
-        "triple_brain.tree_edge",
-        "triple_brain.edge_ui",
         "triple_brain.event_bus",
-        "triple_brain.relative_tree_vertex",
         "triple_brain.graph_displayer",
         "triple_brain.graph_element_main_menu",
-        "triple_brain.edge_html_builder_common",
+        "mr.edge-ui-builder-common",
         "triple_brain.graph_element_html_builder",
         "triple_brain.bubble_factory",
         "triple_brain.mind_map_info"
     ],
-    function ($, TreeEdge, EdgeUi, EventBus, RelativeTreeVertex, GraphDisplayer, GraphElementMainMenu, EdgeHtmlBuilderCommon, GraphElementHtmlBuilder, BubbleFactory, MindMapInfo) {
+    function ($, EventBus, GraphDisplayer, GraphElementMainMenu, EdgeUiBuilderCommon, GraphElementHtmlBuilder, BubbleFactory, MindMapInfo) {
         "use strict";
         var api = {};
-        api.withServerFacade = function (edgeServer) {
-            return new EdgeCreator(
-                edgeServer
+        api.withOptions = function (options) {
+            return new api.EdgeUiBuilder(
+                options
             );
         };
         api.afterChildBuilt = function (ui, parentUi, childUi) {
@@ -52,7 +49,7 @@ define([
             GraphElementHtmlBuilder.integrateIdentifications(
                 ui
             );
-            EdgeHtmlBuilderCommon.moveInLabelButtonsContainerIfIsToTheLeft(
+            EdgeUiBuilderCommon.moveInLabelButtonsContainerIfIsToTheLeft(
                 ui
             );
             ui.refreshImages();
@@ -77,51 +74,63 @@ define([
             ).find("> .vertical-border").addClass("small");
             ui.reviewEditButtonDisplay();
         };
-        function EdgeCreator(edgeServer) {
+        api.EdgeUiBuilder = function (options) {
+            this.options = options || {};
+        };
+
+        api.EdgeUiBuilder.prototype.create = function (edgeServer) {
             this.edgeServer = edgeServer;
             this.uri = edgeServer.getUri();
             this.html = $(
                 "<div class='relation graph-element bubble' draggable='false'>"
-            ).append("<div class='in-bubble-content'>");
-        }
-
-        EdgeCreator.prototype.create = function () {
-            this.html.uniqueId();
-            var edge = TreeEdge.createFromHtmlAndUri(
-                this.html,
+            ).addClass(
+                this.options.htmlClass
+            ).append("<div class='in-bubble-content'>").data(
+                "uri",
                 this.uri
             );
-            EdgeHtmlBuilderCommon.buildLabel(
-                this.html,
+            this.html.uniqueId();
+            var uiObjectClass = BubbleFactory.getUiObjectClassFromHtml(this.html);
+            var edgeUi = uiObjectClass.createFromHtml(
+                this.html
+            );
+            EdgeUiBuilderCommon.buildLabel(
+                edgeUi,
                 this.edgeServer.getLabel(),
-                TreeEdge.getWhenEmptyLabel()
+                uiObjectClass.getWhenEmptyLabel(),
+                this.options.isViewOnly
             );
             this.html.append(
                 "<span class='connector'>"
             );
-            edge.setModel(
+            edgeUi.setModel(
                 this.edgeServer
             );
-            edge.setNote(
+            edgeUi.setNote(
                 this.edgeServer.getComment()
             );
-            buildMenu(edge);
-            EdgeHtmlBuilderCommon.buildInLabelButtons(
-                edge
+            buildMenu(edgeUi);
+            EdgeUiBuilderCommon.buildInLabelButtons(
+                edgeUi
             );
-            edge.hideMenu();
-            edge.addImages(
+            edgeUi.hideMenu();
+            edgeUi.addImages(
                 this.edgeServer.getImages()
             );
             if (!MindMapInfo.isViewOnly()) {
                 addEditButton(
-                    edge
+                    edgeUi
                 );
             }
-            return edge;
+            return edgeUi;
         };
+
+        api.EdgeUiBuilder.prototype.getClass = function(){
+            return api;
+        };
+
         function addEditButton(edge) {
-            edge.getHtml().prepend("<i class='fa fa-pencil edit-relation-button'>").click(function () {
+            edge.getHtml().prepend("<i class='fa fa-pencil edit-relation-button on-edge-button'>").click(function () {
                 var edge = BubbleFactory.fromSubHtml(
                     $(this)
                 );

@@ -178,6 +178,18 @@ define([
         );
     };
 
+    api.getIdentifierWithLabelInSubGraph = function(identifierLabel, subGraph){
+        var identifierWithLabel;
+        subGraph.visitGraphElements(function(graphElement){
+            graphElement.getIdentifiers().forEach(function(identifier){
+                if(identifier.getLabel() === identifierLabel){
+                    identifierWithLabel = identifier;
+                }
+            });
+        });
+        return identifierWithLabel;
+    };
+
     return api;
 
     function generateUuid() {

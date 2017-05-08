@@ -97,7 +97,10 @@ define([
         if (feature === undefined) {
             var isPasting = event.ctrlKey && vKeyNumber && event.which;
             if (!isPasting && event.which !== ctrlKeyNumber && !MindMapInfo.isViewOnly() && SelectionHandler.isOnlyASingleElementSelected()) {
-                SelectionHandler.getSingleElement().focus();
+                var selectedElement = SelectionHandler.getSingleElement();
+                if(selectedElement.isLabelEditable()){
+                    selectedElement.focus();
+                }
             }
             return;
         }

@@ -6,21 +6,26 @@ define([
     "jquery",
     "test/test-scenarios",
     "test/test-utils",
+    'test/mock',
     "test/mock/triple_brain.suggestion_service_mock",
-    "test/mock/triple_brain.friendly_resource_service_mock",
-    "test/mock/triple_brain.graph_element_service_mock",
     "triple_brain.suggestion_service",
-    "triple_brain.graph_displayer_as_relative_tree",
+    "mr.graph-ui-builder",
     "triple_brain.selection_handler",
     "triple_brain.mind_map_info"
-], function ($, Scenarios, TestUtils, SuggestionServiceMock, FriendlyResourceServiceMock, GraphElementServiceMock, SuggestionService, GraphDisplayerAsRelativeTree, SelectionHandler, MindMapInfo) {
+], function ($, Scenarios, TestUtils, Mock, SuggestionServiceMock, SuggestionService, GraphUiBuilder, SelectionHandler, MindMapInfo) {
     "use strict";
     describe("graph_element_html_builder", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         it("does not update label to service if label has not changed", function () {
             var threeBubblesScenario = new Scenarios.threeBubblesGraph();
             var bubble1 = threeBubblesScenario.getBubble1InTree();
             var bubble1Label = bubble1.getLabel();
-            var updateLabelInServiceSpy = FriendlyResourceServiceMock.updateLabel();
+            var updateLabelInServiceSpy = Mock.getSpy(
+                "FriendlyResourceService",
+                "updateLabel"
+            );
             expect(
                 updateLabelInServiceSpy
             ).not.toHaveBeenCalled();
@@ -42,7 +47,7 @@ define([
         it("does not accept suggestion if label has not changed", function () {
             var oneBubbleHavingSuggestionsGraph = new Scenarios.oneBubbleHavingSuggestionsGraph();
             var eventBubble = oneBubbleHavingSuggestionsGraph.getVertexUi();
-            GraphDisplayerAsRelativeTree.addSuggestionsToVertex(
+            GraphUiBuilder.addSuggestionsToVertex(
                 eventBubble.getModel().getSuggestions(),
                 eventBubble
             );
@@ -70,7 +75,7 @@ define([
         it("accepts relation and vertex suggestion if relation label is changed", function () {
             var oneBubbleHavingSuggestionsGraph = new Scenarios.oneBubbleHavingSuggestionsGraph();
             var eventBubble = oneBubbleHavingSuggestionsGraph.getVertexUi();
-            GraphDisplayerAsRelativeTree.addSuggestionsToVertex(
+            GraphUiBuilder.addSuggestionsToVertex(
                 eventBubble.getModel().getSuggestions(),
                 eventBubble
             );
@@ -129,7 +134,6 @@ define([
                 )
             ).toBeFalsy();
             var otherBubble = otherRelation.getTopMostChildBubble();
-            GraphElementServiceMock.addIdentification();
             TestUtils.startDragging(
                 otherBubble
             );
@@ -185,7 +189,6 @@ define([
                     identification
                 )
             ).toBeTruthy();
-            GraphElementServiceMock.removeIdentifier();
             TestUtils.startDragging(
                 relation
             );
@@ -299,7 +302,7 @@ define([
             MindMapInfo._setIsViewOnly(false);
             var oneBubbleHavingSuggestionsGraph = new Scenarios.oneBubbleHavingSuggestionsGraph();
             var eventBubble = oneBubbleHavingSuggestionsGraph.getVertexUi();
-            GraphDisplayerAsRelativeTree.addSuggestionsToVertex(
+            GraphUiBuilder.addSuggestionsToVertex(
                 eventBubble.getModel().getSuggestions(),
                 eventBubble
             );
@@ -327,7 +330,7 @@ define([
             MindMapInfo._setIsViewOnly(false);
             var oneBubbleHavingSuggestionsGraph = new Scenarios.oneBubbleHavingSuggestionsGraph();
             var eventBubble = oneBubbleHavingSuggestionsGraph.getVertexUi();
-            GraphDisplayerAsRelativeTree.addSuggestionsToVertex(
+            GraphUiBuilder.addSuggestionsToVertex(
                 eventBubble.getModel().getSuggestions(),
                 eventBubble
             );
@@ -343,7 +346,7 @@ define([
             MindMapInfo._setIsViewOnly(false);
             var oneBubbleHavingSuggestionsGraph = new Scenarios.oneBubbleHavingSuggestionsGraph();
             var eventBubble = oneBubbleHavingSuggestionsGraph.getVertexUi();
-            GraphDisplayerAsRelativeTree.addSuggestionsToVertex(
+            GraphUiBuilder.addSuggestionsToVertex(
                 eventBubble.getModel().getSuggestions(),
                 eventBubble
             );

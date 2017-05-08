@@ -192,7 +192,22 @@ define([
         return this.identificationServerFormat.nbReferences;
     };
 
+    api.Identification.prototype.getNbReferences = function () {
+        if (this.identificationServerFormat.nbReferences === undefined) {
+            return 0;
+        }
+        return this.identificationServerFormat.nbReferences;
+    };
 
+    api.Identification.prototype.isPublic = function(){
+        return false;
+    };
 
+    api.Identification.prototype.hasIdentifications = function(){
+        return false;
+    };
+    api.Identification.prototype.getIdentifiers = function(){
+        return [this];
+    };
     return api;
 });

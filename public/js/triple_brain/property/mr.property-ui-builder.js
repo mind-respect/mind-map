@@ -6,18 +6,16 @@ define([
     "jquery",
     "triple_brain.property_ui",
     "triple_brain.graph_element_html_builder",
-    "triple_brain.edge_html_builder_common",
+    "mr.edge-ui-builder-common",
     "triple_brain.graph_element_main_menu",
     "triple_brain.graph_displayer",
     "triple_brain.event_bus"
-], function ($, PropertyUi, GraphElementHtmlBuilder, EdgeHtmlBuilderCommon, GraphElementMainMenu, GraphDisplayer, EventBus) {
+], function ($, PropertyUi, GraphElementHtmlBuilder, EdgeUiBuilderCommon, GraphElementMainMenu, GraphDisplayer, EventBus) {
     "use strict";
     var api = {};
-    api.withServerFacade = function (serverFacade) {
-        return new Self(serverFacade);
-    };
+
     api.completeBuild = function (property) {
-        EdgeHtmlBuilderCommon.moveInLabelButtonsContainerIfIsToTheLeft(
+        EdgeUiBuilderCommon.moveInLabelButtonsContainerIfIsToTheLeft(
             property
         );
         GraphElementHtmlBuilder.integrateIdentifications(
@@ -26,11 +24,11 @@ define([
         property.refreshImages();
         property.reviewInLabelButtonsVisibility();
     };
-    function Self(serverFacade) {
-        this.serverFacade = serverFacade;
-    }
 
-    Self.prototype.create = function () {
+    api.PropertyUiBuilder = function() {};
+
+    api.PropertyUiBuilder.prototype.create = function (serverFacade) {
+        this.serverFacade = serverFacade;
         this.html = $("<div class='property relation bubble graph-element public'>").data(
             "uri",
             this.serverFacade.getUri()
@@ -41,8 +39,8 @@ define([
         var propertyUi = PropertyUi.createFromHtml(
             this.html
         );
-        EdgeHtmlBuilderCommon.buildLabel(
-            this.html,
+        EdgeUiBuilderCommon.buildLabel(
+            propertyUi,
             this.serverFacade.getLabel(),
             PropertyUi.getWhenEmptyLabel()
         );
@@ -53,7 +51,7 @@ define([
             this.html.find(".label-container"),
             propertyUi
         ).hide();
-        EdgeHtmlBuilderCommon.buildInLabelButtons(
+        EdgeUiBuilderCommon.buildInLabelButtons(
             propertyUi
         );
         this.html.append(
@@ -64,7 +62,7 @@ define([
         );
         return propertyUi;
     };
-    Self.prototype._buildMenu = function (container, propertyUi) {
+    api.PropertyUiBuilder.prototype._buildMenu = function (container, propertyUi) {
         var menu = $("<div class='relation-menu menu'>").appendTo(
             container
         );

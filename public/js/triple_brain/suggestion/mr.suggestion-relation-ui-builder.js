@@ -4,17 +4,13 @@
 
 define([
     "jquery",
-    "triple_brain.edge_html_builder_common",
+    "mr.edge-ui-builder-common",
     "triple_brain.suggestion_relation_ui",
-    "triple_brain.graph_element_main_menu",
-    "triple_brain.identification"
-], function ($, EdgeHtmlBuilderCommon, SuggestionRelationUi, GraphElementMainMenu, Identification) {
+    "triple_brain.graph_element_main_menu"
+], function ($, EdgeUiBuilderCommon, SuggestionRelationUi, GraphElementMainMenu) {
     "use strict";
     var api = {};
-    api.withServerFacade = function (serverFacade) {
-        return new Self(serverFacade);
-    };
-
+    
     api.afterChildBuilt = function(suggestionRelationUi){
         var propertiesIndicator = suggestionRelationUi.buildHiddenNeighborPropertiesIndicator();
         propertiesIndicator.hide();
@@ -23,11 +19,10 @@ define([
         ).find("> .vertical-border").addClass("small");
     };
 
-    function Self(serverFacade) {
-        this.serverFacade = serverFacade;
-    }
+    api.SuggestionRelationUiBuilder = function() {};
 
-    Self.prototype.create = function () {
+    api.SuggestionRelationUiBuilder.prototype.create = function (serverFacade) {
+        this.serverFacade = serverFacade;
         this.html = $(
             "<div class='suggestion relation graph-element bubble'>"
         ).data(
@@ -36,21 +31,20 @@ define([
         ).uniqueId().append(
             "<span class='connector'>"
         ).append("<div class='in-bubble-content'>");
-        var edge = this.edge = SuggestionRelationUi.createFromHtmlAndUri(
-            this.html,
-            this.serverFacade.getUri()
+        var edgeUi = this.edge = SuggestionRelationUi.createFromHtml(
+            this.html
         );
-        EdgeHtmlBuilderCommon.buildLabel(
-            this.html,
+        EdgeUiBuilderCommon.buildLabel(
+            edgeUi,
             this.serverFacade.getLabel(),
             SuggestionRelationUi.getWhenEmptyLabel()
         ).css("visibility", "visible");
-        edge.setModel(this.serverFacade);
+        edgeUi.setModel(this.serverFacade);
         this._buildMenu();
-        edge.hideMenu();
-        return edge;
+        edgeUi.hideMenu();
+        return edgeUi;
     };
-    Self.prototype._buildMenu = function () {
+    api.SuggestionRelationUiBuilder.prototype._buildMenu = function () {
         var menu = $("<span class='relation-menu menu'>");
         this.html.find(".label-container").append(menu);
         GraphElementMainMenu.addRelevantButtonsInMenu(

@@ -57,7 +57,7 @@ define([
         });
     };
 
-    api.buildInLabelButtons = function (graphElement) {
+    api.buildInLabelButtons = function (graphElementUi) {
         var container = $(
             "<div class='in-label-buttons'>"
         );
@@ -70,7 +70,7 @@ define([
             if ("note" === cloneHtml.data("action")) {
                 cloneHtml.attr(
                     "title",
-                    graphElement.getNote()
+                    graphElementUi.getNote()
                 );
             }
             GraphElementMainMenu.applyActionOnClick(
@@ -83,9 +83,9 @@ define([
         return container;
     };
 
-    api.integrateIdentifications = function (graphElement) {
-        $.each(graphElement.getModel().getIdentifiers(), function(){
-            graphElement.addIdentification(
+    api.integrateIdentifications = function (graphElementUi) {
+        $.each(graphElementUi.getModel().getIdentifiers(), function(){
+            graphElementUi.addIdentification(
                 this
             );
         });

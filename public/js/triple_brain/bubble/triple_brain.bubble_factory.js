@@ -10,36 +10,42 @@ define([
     "use strict";
     var api = {};
     api.fromHtml = function (html) {
-        var uiSelector;
-        if (html.hasClass("vertex")) {
-            if (html.hasClass("suggestion")) {
-                uiSelector = GraphDisplayer.getVertexSuggestionSelector();
-            } else if (html.hasClass("schema")) {
-                uiSelector = GraphDisplayer.getSchemaSelector();
-            } else {
-                uiSelector = GraphDisplayer.getVertexSelector();
-            }
-        } else if (html.hasClass("relation")) {
-            if (html.hasClass("suggestion")) {
-                uiSelector = GraphDisplayer.getRelationSuggestionSelector();
-            } else if (html.hasClass("property")) {
-                uiSelector = GraphDisplayer.getPropertySelector();
-            } else if (html.hasClass("group-relation")) {
-                uiSelector = GraphDisplayer.getGroupRelationSelector();
-            } else {
-                uiSelector = GraphDisplayer.getEdgeSelector();
-            }
-        }
-        var uiFacade = uiSelector.withHtml(html);
+        var uiObjectClass = api.getUiObjectClassFromHtml(html);
+        var uiFacade = uiObjectClass.withHtml(html);
         if (undefined === uiFacade) {
             /*
              todo this case should not happen but it did using npm test only somehow
              should review the cache system
              also the builder *html_builder system
              */
-            uiFacade = uiSelector.createFromHtmlAndUri(html, html.data("uri"));
+            uiFacade = uiObjectClass.createFromHtmlAndUri(html, html.data("uri"));
         }
         return uiFacade;
+    };
+    api.getUiObjectClassFromHtml = function (html) {
+        if (html.hasClass("vertex")) {
+            if (html.hasClass("suggestion")) {
+                return GraphDisplayer.getVertexSuggestionSelector();
+            } else if (html.hasClass("schema")) {
+                return GraphDisplayer.getSchemaSelector();
+            } else if (html.hasClass("meta")) {
+                return GraphDisplayer.getMetaUiSelector();
+            } else {
+                return GraphDisplayer.getVertexSelector();
+            }
+        } else if (html.hasClass("relation")) {
+            if (html.hasClass("suggestion")) {
+                return GraphDisplayer.getRelationSuggestionSelector();
+            } else if (html.hasClass("meta-relation")) {
+                return GraphDisplayer.getMetaUiRelationSelector();
+            } else if (html.hasClass("property")) {
+                return GraphDisplayer.getPropertySelector();
+            } else if (html.hasClass("group-relation")) {
+                return GraphDisplayer.getGroupRelationSelector();
+            } else {
+                return GraphDisplayer.getEdgeSelector();
+            }
+        }
     };
     api.fromSubHtml = function (html) {
         return api.fromHtml(
@@ -53,33 +59,29 @@ define([
     };
     api.getSelectorFromType = function (type) {
         switch (type) {
-            case GraphElementType.Vertex :
-            {
+            case GraphElementType.Vertex : {
                 return GraphDisplayer.getVertexSelector();
             }
-            case GraphElementType.Relation :
-            {
+            case GraphElementType.Relation : {
                 return GraphDisplayer.getEdgeSelector();
             }
-            case GraphElementType.GroupRelation :
-            {
+            case GraphElementType.GroupRelation : {
                 return GraphDisplayer.getGroupRelationSelector();
             }
-            case GraphElementType.Schema :
-            {
+            case GraphElementType.Schema : {
                 return GraphDisplayer.getSchemaSelector();
             }
-            case GraphElementType.Property :
-            {
+            case GraphElementType.Property : {
                 return GraphDisplayer.getPropertySelector();
             }
-            case GraphElementType.VertexSuggestion :
-            {
+            case GraphElementType.VertexSuggestion : {
                 return GraphDisplayer.getVertexSuggestionSelector();
             }
-            case GraphElementType.RelationSuggestion :
-            {
+            case GraphElementType.RelationSuggestion : {
                 return GraphDisplayer.getRelationSuggestionSelector();
+            }
+            case GraphElementType.Meta : {
+                return GraphDisplayer.getMetaUiSelector();
             }
         }
     };

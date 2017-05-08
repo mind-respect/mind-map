@@ -10,15 +10,15 @@ define([
     "triple_brain.graph_displayer_as_relative_tree",
     "triple_brain.graph_displayer",
     "triple_brain.center_bubble",
-    "triple_brain.vertex_html_builder",
-    "triple_brain.edge_html_builder",
+    "mr.vertex-ui-builder",
+    "mr.edge-ui-builder",
     "triple_brain.graph_element",
     "triple_brain.sub_graph",
     "triple_brain.mind_map_info",
     "triple_brain.bubble_factory",
     "triple_brain.graph_element_type",
-    "triple_brain.id_uri"
-], function (Scenarios, TestUtils, Mock, GraphServiceMock, GraphDisplayerAsRelativeTree, GraphDisplayer, CenterBubble, VertexHtmlBuilder, EdgeHtmlBuilder, GraphElement, SubGraph, MindMapInfo, BubbleFactory, GraphElementType, IdUri) {
+    "triple_brain.id_uri",
+], function (Scenarios, TestUtils, Mock, GraphServiceMock, GraphDisplayerAsRelativeTree, GraphDisplayer, CenterBubble, VertexUiBuilder, EdgeUiBuilder, GraphElement, SubGraph, MindMapInfo, BubbleFactory, GraphElementType, IdUri) {
     "use strict";
     describe("graph_displayer_as_relative_tree_spec", function () {
         beforeEach(function () {
@@ -128,52 +128,6 @@ define([
                 mergeBubbleScenario.getBubble3()
             ).toBeDefined();
         });
-        it("can show a bubble suggestions", function () {
-            var karaokeSchemaScenario = new Scenarios.getKaraokeSchemaGraph();
-            var bubble2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
-            var locationSuggestion = karaokeSchemaScenario.getLocationPropertyAsSuggestion();
-            bubble2.getModel().setSuggestions(
-                [
-                    locationSuggestion
-                ]
-            );
-            GraphDisplayerAsRelativeTree.addSuggestionsToVertex(
-                bubble2.getModel().getSuggestions(),
-                bubble2
-            );
-            var relationSuggestion = bubble2.getTopMostChildBubble(),
-                vertexSuggestion = relationSuggestion.getTopMostChildBubble();
-            expect(
-                relationSuggestion.text()
-            ).toBe("location");
-            expect(
-                vertexSuggestion.getModel().getType().getLabel()
-            ).toBe("Location");
-        });
-        it("does not show already accepted suggestions", function () {
-            var centerBubble = new Scenarios.withAcceptedSuggestionGraph().getCenterBubbleInTree();
-            expect(
-                centerBubble.getNumberOfChild()
-            ).toBe(3);
-            expect(
-                TestUtils.hasChildWithLabel(
-                    centerBubble,
-                    "start date"
-                )
-            ).toBeTruthy();
-            expect(
-                TestUtils.hasChildWithLabel(
-                    centerBubble,
-                    "venue"
-                )
-            ).toBeTruthy();
-            expect(
-                TestUtils.hasChildWithLabel(
-                    centerBubble,
-                    "Person"
-                )
-            ).toBeTruthy();
-        });
         it("can make a vertex connect to a distant vertex", function () {
             connectDistantVertexTest(function (distantBubble) {
                 var connectedBubble = distantBubble.getTopMostChildBubble().getTopMostChildBubble();
@@ -280,8 +234,8 @@ define([
                 parent.getUri(),
                 destinationVertex.getUri()
             );
-            var spyOnVertexCompleteBuild = spyOn(VertexHtmlBuilder, "completeBuild");
-            var spyOnEdgeCompleteBuild = spyOn(EdgeHtmlBuilder, "afterChildBuilt");
+            var spyOnVertexCompleteBuild = spyOn(VertexUiBuilder, "completeBuild");
+            var spyOnEdgeCompleteBuild = spyOn(EdgeUiBuilder, "afterChildBuilt");
             GraphDisplayerAsRelativeTree.addEdgeAndVertex(
                 parent,
                 edge,
@@ -585,7 +539,7 @@ define([
             Mock.setCenterBubbleUriInUrl(
                 edgeUri
             );
-            GraphDisplayer.displayUsingCentralBubbleUri(
+            GraphDisplayer.displayForBubbleWithUri(
                 edgeUri
             );
             var edgeUi = BubbleFactory.getGraphElementFromUri(

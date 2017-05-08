@@ -273,6 +273,7 @@
     "default": "group"
   },
   "identification": {
+    "default":"Meta",
     "context": {
       "bubble": "Bubble",
       "with_properties": "with properties",
@@ -280,6 +281,9 @@
       "source_bubble": "Source bubble",
       "destination_bubble": "Destination bubble"
     }
+  },
+  "meta_relation":{
+    "remove_tooltip": "remove the relation"
   },
   "selection": {
     "group": "group"

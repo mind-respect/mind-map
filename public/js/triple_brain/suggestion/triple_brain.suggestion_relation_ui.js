@@ -12,9 +12,8 @@ define([
     "use strict";
     var api = {};
     TreeEdge.buildCommonConstructors(api);
-    api.createFromHtmlAndUri = function (html, uri) {
-        var relationSuggestion = new api.Self(html);
-        relationSuggestion.setUri(uri);
+    api.createFromHtml = function (html) {
+        var relationSuggestion = new api.SuggestionRelationUi(html);
         api.initCache(relationSuggestion);
         TreeEdge.initCache(
             relationSuggestion
@@ -27,25 +26,25 @@ define([
     api.getWhenEmptyLabel = function () {
         return "suggestion";
     };
-    api.Self = function (html) {
+    api.SuggestionRelationUi = function (html) {
         this.html = html;
         TreeEdge.TreeEdge.apply(this);
         this.init(html);
     };
-    api.Self.prototype = new TreeEdge.TreeEdge();
-    api.Self.prototype.getGraphElementType = function () {
+    api.SuggestionRelationUi.prototype = new TreeEdge.TreeEdge();
+    api.SuggestionRelationUi.prototype.getGraphElementType = function () {
         return GraphElementUi.Types.RelationSuggestion;
     };
 
-    api.Self.prototype.getModel = function () {
+    api.SuggestionRelationUi.prototype.getModel = function () {
         return this.model.getSameAs();
     };
 
-    api.Self.prototype.getSuggestion = function () {
+    api.SuggestionRelationUi.prototype.getSuggestion = function () {
         return this.model;
     };
 
-    api.Self.prototype.removeFromCache = function () {
+    api.SuggestionRelationUi.prototype.removeFromCache = function () {
         api.removeFromCache(
             this.getUri(),
             this.getId()
@@ -60,7 +59,7 @@ define([
         );
     };
 
-    api.Self.prototype.integrate = function (newRelationUri, destinationVertex) {
+    api.SuggestionRelationUi.prototype.integrate = function (newRelationUri, destinationVertex) {
         this.removeFromCache();
         this.html.removeClass(
             "suggestion"
@@ -75,9 +74,12 @@ define([
             "placeholder", TreeEdge.getWhenEmptyLabel()
         );
         var isFromComparison = this.getSuggestion().getOrigin().isFromComparison();
-        var edge = TreeEdge.createFromHtmlAndUri(
-            this.html,
+        this.html.data(
+            "uri",
             newRelationUri
+        );
+        var edge = TreeEdge.createFromHtml(
+            this.html
         );
         edge.setModel(
             this.getModel()

@@ -9,14 +9,14 @@ define([
     "test/mock/triple_brain.suggestion_service_mock",
     "triple_brain.suggestion_service",
     "triple_brain.graph_element_ui",
-    "triple_brain.graph_displayer_as_relative_tree",
+    "mr.graph-ui-builder",
     "triple_brain.selection_handler",
     "triple_brain.event_bus",
     "triple_brain.sub_graph",
     "triple_brain.graph_service",
     "test/mock/triple_brain.graph_service_mock",
     "triple_brain.mind_map_info"
-], function (Scenarios, TestUtils, Mock, SuggestionServiceMock, SuggestionService, GraphElementUi, GraphDisplayerAsRelativeTree, SelectionHandler, EventBus, SubGraph, GraphService, GraphServiceMock, MindMapInfo) {
+], function (Scenarios, TestUtils, Mock, SuggestionServiceMock, SuggestionService, GraphElementUi, GraphUiBuilder, SelectionHandler, EventBus, SubGraph, GraphService, GraphServiceMock, MindMapInfo) {
     "use strict";
     describe("suggestion_bubble_ui", function () {
         var oneSuggestionScenario;
@@ -40,7 +40,7 @@ define([
         it("can remove newly accepted suggestion", function () {
             var oneBubbleHavingSuggestionsGraph = new Scenarios.oneBubbleHavingSuggestionsGraph();
             var eventBubble = oneBubbleHavingSuggestionsGraph.getVertexUi();
-            GraphDisplayerAsRelativeTree.addSuggestionsToVertex(
+            GraphUiBuilder.addSuggestionsToVertex(
                 eventBubble.getModel().getSuggestions(),
                 eventBubble
             );
