@@ -10,11 +10,32 @@ define([
     "triple_brain.edge",
     "triple_brain.id_uri",
     "triple_brain.event_bus",
-    "triple_brain.bubble_factory"
-], function ($, GraphUiBuilder, VertexUiBuilder, EdgeUiBuilder, Edge, IdUri, EventBus, BubbleFactory) {
+    "triple_brain.bubble_factory",
+    "mr.meta_service",
+    "triple_brain.id_uri"
+], function ($, GraphUiBuilder, VertexUiBuilder, EdgeUiBuilder, Edge, IdUri, EventBus, BubbleFactory, MetaService) {
     "use strict";
     var api = {};
     api.buildFromMetaSubGraph = function (metaSubGraph) {
+        var deferred = $.Deferred();
+        if(metaSubGraph.getMetaCenter()){
+            deferred.resolve(
+                api._build(metaSubGraph)
+            );
+        }
+        else {
+            MetaService.getForUri(
+                IdUri.getGraphElementUriInUrl()
+            ).then(function(metaCenter){
+                metaSubGraph.setMetaCenter(metaCenter);
+                deferred.resolve(
+                    api._build(metaSubGraph)
+                );
+            });
+        }
+        return deferred.promise();
+    };
+    api._build = function(metaSubGraph){
         var container = GraphUiBuilder.buildRootBubbleContainer();
         var graphUiBuilder = GraphUiBuilder.usingVertexUiBuilder(
             VertexUiBuilder.withOptions({
@@ -45,11 +66,11 @@ define([
                 }
             });
             var edge = edgeRelatedToMeta || Edge.withLabelSelfSourceAndDestinationUri(
-                "m",
-                IdUri.generateUuid(),
-                vertex.getUri(),
-                metaCenter.getUri()
-            );
+                    "m",
+                    IdUri.generateUuid(),
+                    vertex.getUri(),
+                    metaCenter.getUri()
+                );
             var edgeUi = graphUiBuilder.addEdge(
                 edge,
                 metaCenter

@@ -86,6 +86,7 @@ requirejs.config({
         "mr.meta_ui_relation": "triple_brain/identifier/mr.meta_ui_relation",
         "mr.meta_relation_controller": "triple_brain/identifier/mr.meta_relation_controller",
         "mr.meta_controller": "triple_brain/identifier/mr.meta_controller",
+        "mr.meta_service": "triple_brain/identifier/mr.meta_service",
 
         /*
          Graph Element

@@ -23,7 +23,11 @@ define([
             return this.metaCenter;
         };
 
-        api.MetaGraph.prototype.getSubGraph = function(){
+        api.MetaGraph.prototype.setMetaCenter = function (metaCenter) {
+            return this.metaCenter = metaCenter;
+        };
+
+        api.MetaGraph.prototype.getSubGraph = function () {
             return this.subGraph;
         };
 
@@ -31,12 +35,15 @@ define([
             var centerMeta;
             this.subGraph.visitGraphElements(function (graphElement) {
                 graphElement.getIdentifiersIncludingSelf().forEach(function (identifier) {
-                    if(identifier.getUri() === this.centerUri){
+                    if (identifier.getUri() === this.centerUri) {
                         centerMeta = identifier;
                     }
                 }.bind(this));
             }.bind(this));
             return centerMeta;
+        };
+        api.MetaGraph.prototype.getCenterUri = function () {
+            return this.centerUri;
         };
         return api;
     }

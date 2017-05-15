@@ -32,7 +32,7 @@
       "zero":{
         "level":"Niveau 0",
         "title":"Je ne réfléchis pas",
-        "desc":"Ne pas réfléchir profondément est utile pour agir rapidement dans le feu de l'action"
+        "desc":"Ne pas réfléchir profondément aide à relaxer ou réagir rapidement"
       },
       "one":{
         "level":"Niveau 1",
@@ -331,7 +331,7 @@
       "vertex": "Bubble",
       "relation": "Relation",
       "schema": "Model",
-      "identification": "Identifier"
+      "meta": "Reference"
     },
     "identifier": {
       "references": " reference(s)"

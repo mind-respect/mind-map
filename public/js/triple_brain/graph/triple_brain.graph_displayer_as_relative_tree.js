@@ -99,8 +99,9 @@ define([
                     subGraphServerFormat,
                     uri
                 )
-            );
-            callback();
+            ).then(function(){
+                callback();
+            });
         });
     };
     api.canAddChildTree = function () {

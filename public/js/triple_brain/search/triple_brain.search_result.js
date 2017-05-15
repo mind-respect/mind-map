@@ -162,13 +162,7 @@ define([
     };
 
     SearchResult.prototype.getDeepGraphElementType = function () {
-        if(GraphElementType.Meta === this.getGraphElementType()){
-            return IdUri.getGraphElementTypeFromUri(
-                this.getGraphElement().getExternalResourceUri()
-            );
-        }else{
-            return this.getGraphElementType();
-        }
+        return this.getGraphElementType();
     };
 
     SearchResult.prototype.getNumberOfReferences = function () {

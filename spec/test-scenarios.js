@@ -1265,12 +1265,16 @@ define([
                             centerBubbleUri
                         );
                     case GraphElementType.Meta :
-                        return MetaGraphUi.buildFromMetaSubGraph(
+                        var container;
+                        MetaGraphUi.buildFromMetaSubGraph(
                             MetaGraph.fromServerFormatAndCenterUri(
                                 graph,
                                 centerBubbleUri
                             )
-                        );
+                        ).then(function(_container){
+                            container = _container;
+                        });
+                        return container;
                 }
             }
         }
