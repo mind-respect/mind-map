@@ -869,6 +869,14 @@ define([
             };
         };
 
+        api.sameLabelMetasSearchResult = function () {
+            this.get = function () {
+                return JSON.parse(api._getTestData(
+                    "metasWithSameLabelSearchResult"
+                ));
+            };
+        };
+
         api.getWikidataSearchResultForProject = function () {
             this.get = function () {
                 return api._getTestData(

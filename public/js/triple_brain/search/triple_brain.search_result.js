@@ -166,7 +166,8 @@ define([
     };
 
     SearchResult.prototype.getNumberOfReferences = function () {
-        return this.serverFormat.nbReferences;
+        return GraphElementType.Meta === this.getGraphElementType() ?
+            this.graphElement.getNbReferences() : 0;
     };
 
     SearchResult.prototype.getNbVisits = function () {

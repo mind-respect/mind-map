@@ -200,13 +200,55 @@ define([
                 "impact 2 bubble"
             );
         });
+        it("prioritize metas with highest number of references", function () {
+            var serverResults = [];
+            serverResults = serverResults.concat(
+                new Scenarios.sameLabelMetasSearchResult().get()
+            );
+            moveServerSearchResultWithLabelToLastIndex(
+                serverResults,
+                "meta3"
+            );
+            expect(
+                serverResults[3].identifierPojo.friendlyResource.label
+            ).toBe(
+                "meta3"
+            );
+            var searchResults = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas().formatResults(
+                serverResults,
+                ""
+            );
+            expect(
+                searchResults[0].nonFormattedSearchResult.getGraphElement().getLabel()
+            ).toBe(
+                "meta3"
+            );
+            expect(
+                searchResults[1].nonFormattedSearchResult.getGraphElement().getLabel()
+            ).toBe(
+                "meta2"
+            );
+            expect(
+                searchResults[2].nonFormattedSearchResult.getGraphElement().getLabel()
+            ).toBe(
+                "meta1"
+            );
+            expect(
+                searchResults[3].nonFormattedSearchResult.getGraphElement().getLabel()
+            ).toBe(
+                "meta0"
+            );
+        });
     });
 
     function moveServerSearchResultWithLabelToLastIndex(searchResults, searchResultLabel) {
         var i = searchResults.length;
         while (i--) {
             var searchResult = searchResults[i];
-            if (searchResult.graphElement && searchResultLabel === searchResult.graphElement.friendlyResource.label){
+            var friendlyResource = searchResult.graphElement ?
+                searchResult.graphElement.friendlyResource :
+                searchResult.identifierPojo.friendlyResource;
+            if (searchResultLabel === friendlyResource.label){
                 var temp = searchResults[searchResults.length -1];
                 searchResults[searchResults.length -1] = searchResult;
                 searchResults[i] = temp;
