@@ -159,7 +159,7 @@ define([
         }.bind(this));
     };
     api.GraphUiBuilder.prototype.buildGroupRelationToExpandOrNot = function (groupRelation, parentBubbleUi, isToExpand) {
-        if (!isToExpand && groupRelation.hasMultipleVertices()) {
+        if (!isToExpand && groupRelation.isTrulyAGroupRelation()) {
             return this.buildBubbleHtmlIntoContainer(
                 groupRelation,
                 parentBubbleUi,
@@ -269,10 +269,10 @@ define([
 
     function sortGroupRelationRootsByIsGroupRelationOrCreationDate(groupRelationRoots) {
         return groupRelationRoots.sort(function (groupRelationA, groupRelationB) {
-                if (groupRelationA.hasMultipleVertices() && !groupRelationB.hasMultipleVertices()) {
+                if (groupRelationA.isTrulyAGroupRelation() && !groupRelationB.isTrulyAGroupRelation()) {
                     return -1;
                 }
-                if (!groupRelationA.hasMultipleVertices() && groupRelationB.hasMultipleVertices()) {
+                if (!groupRelationA.isTrulyAGroupRelation() && groupRelationB.isTrulyAGroupRelation()) {
                     return 1;
                 }
                 var vertexA = groupRelationA.getAnyVertex();

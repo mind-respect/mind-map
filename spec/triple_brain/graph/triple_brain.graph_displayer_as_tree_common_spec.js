@@ -147,6 +147,15 @@ define([
             //testing true to be truthy to test if there is no js error at this point
             expect(true).toBeTruthy();
         });
+
+        it("does not duplicate relations on the same level sharing more than one common meta", function(){
+            var scenario = new Scenarios.sameLevelRelationsWithMoreThanOneCommonMetaScenario();
+            var centerBubble = scenario.getCenterBubbleInTree();
+            var groupRelation = centerBubble.getTopMostChildBubble();
+            expect(
+                groupRelation.getNumberOfChild()
+            ).toBe(2);
+        });
         function defineSimilarRelationsScenarioVariables() {
             similarRelationsScenario = new Scenarios.GraphWithSimilarRelationsScenario();
             graph = similarRelationsScenario.getGraph();

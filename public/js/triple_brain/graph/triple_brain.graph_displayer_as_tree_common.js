@@ -23,7 +23,7 @@ define([
             this.centralBubble = this._vertexWithId(centralVertexUri);
             this.edgesFacade = this._arrayOfEdgesHavingThoseRelatedToCenterVertexOnTop();
             this.nonEnhancedEdges = {};
-            this.identifiersRepertoire = {};
+            this.allIdentifiers = {};
         }
 
         UiTreeInfoBuilder.prototype.doIt = function () {
@@ -49,17 +49,18 @@ define([
             $.each(this.serverGraph.vertices, function (key, sourceVertex) {
                 sourceVertex.groupRelationRoots = [];
                 $.each(sortIdentifiersByNumberOfRelationsDesc(sourceVertex.childrenGroupedByIdentifiers), function (identifierKey, tuplesHavingSameIdentifier) {
+
                     var groupRelation = GroupRelation.forTuplesAndIdentifier(
                         tuplesHavingSameIdentifier,
-                        this.identifiersRepertoire[identifierKey]
+                        this.allIdentifiers[identifierKey]
                     );
-                    var integratedIntoAnotherGroupRelationTree = false;
+                    var isTupleUnderAnotherRelation = false;
                     sourceVertex.groupRelationRoots.forEach(function (existingGroupRelationRoot) {
                         if(existingGroupRelationRoot.integrateGroupRelationToTreeIfApplicable(groupRelation)){
-                            integratedIntoAnotherGroupRelationTree = true;
+                            isTupleUnderAnotherRelation = true;
                         }
                     });
-                    if (!integratedIntoAnotherGroupRelationTree) {
+                    if (!isTupleUnderAnotherRelation) {
                         sourceVertex.groupRelationRoots.push(
                             groupRelation
                         );
@@ -140,7 +141,7 @@ define([
             var edgeIdentifications = edge.getIdentifiersIncludingSelf();
             var identifiers = sourceVertex.childrenGroupedByIdentifiers;
             edgeIdentifications.forEach(function (identifier) {
-                this.identifiersRepertoire[identifier.getExternalResourceUri()] = identifier;
+                this.allIdentifiers[identifier.getExternalResourceUri()] = identifier;
                 if (undefined === identifiers[identifier.getExternalResourceUri()]) {
                     identifiers[identifier.getExternalResourceUri()] = [];
                 }

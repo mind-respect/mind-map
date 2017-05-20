@@ -118,6 +118,9 @@ define([
         GroupRelation.prototype.removeTuple = function (tuple) {
             delete this.vertices[tuple.vertex.getUri()];
         };
+        GroupRelation.prototype.isTrulyAGroupRelation = function(){
+            return this.hasMultipleVertices() || this.hasGroupRelationsChild();
+        };
         GroupRelation.prototype.hasMultipleVertices = function () {
             return this.getNumberOfVertices() > 1;
         };
@@ -164,7 +167,7 @@ define([
             var doWithTuplesAtThisDepth;
             if (this._hasOneOfTheIdentifiers(groupRelation.getIdentifiers())) {
                 doWithTuplesAtThisDepth = this.addTuple;
-            }else if(groupRelation.hasMultipleVertices() && this._doesOneOfTheChildHasIdentifiers(groupRelation.getIdentifiers())){
+            }else if(groupRelation.isTrulyAGroupRelation() && this._doesOneOfTheChildHasIdentifiers(groupRelation.getIdentifiers())){
                 doWithTuplesAtThisDepth = this.removeTuple.bind(this);
                 this.addChildGroupRelation(groupRelation);
             }

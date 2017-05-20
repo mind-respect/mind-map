@@ -59,5 +59,12 @@ define([
                 )
             ).toBeTruthy();
         });
+        it("does not create multiple relations when relations on the same level sharing more than one common meta", function(){
+            var scenario = new Scenarios.sameLevelRelationsWithMoreThanOneCommonMetaScenario();
+            var centerBubble = scenario.getCenterBubbleInTree();
+            expect(
+                centerBubble.getNumberOfChild()
+            ).toBe(1);
+        });
     });
 });

@@ -511,7 +511,6 @@ define([
             Mock.setCenterBubbleUriInUrl(this.getBubble1().getUri());
         };
 
-
         api.groupRelationSpecialCase = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
@@ -527,6 +526,28 @@ define([
                 return treeBuilder.getBubbleWithLabelInTree("center");
             };
             Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
+        };
+
+        api.sameLevelRelationsWithMoreThanOneCommonMetaScenario = function () {
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                return api._getTestData(
+                    "sameLevelRelationsWithMoreThanOneCommonMeta"
+                );
+            };
+            this.getBubble = function () {
+                return Vertex.fromServerFormat(this.getGraph().vertices[
+                    uriOfVertexWithLabel(this.getGraph(), "center")
+                    ]
+                );
+            };
+            this.getCenterBubbleInTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("center");
+            };
+            this.getCenterBubbleUri = function () {
+                return this.getBubble().getUri();
+            };
+            Mock.setCenterBubbleUriInUrl(this.getBubble().getUri());
         };
 
         api.getDistantGraph = function () {
