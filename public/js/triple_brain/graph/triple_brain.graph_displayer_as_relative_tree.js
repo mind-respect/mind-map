@@ -124,8 +124,8 @@ define([
     };
     api.addChildTreeUsingGraph = function (parentVertex, serverGraph) {
         var parentUri = parentVertex.getUri();
-        var graphBuilder = GraphUiBuilder.withDefaultHtmlBuilders(),
-            nbRelationsWithGrandParent = removeRelationWithGrandParentFromServerGraph();
+        var graphBuilder = GraphUiBuilder.withDefaultHtmlBuilders();
+        var nbRelationsWithGrandParent = removeRelationWithGrandParentFromServerGraph();
         TreeDisplayerCommon.setUiTreeInfoToVertices(
             serverGraph,
             parentUri
@@ -174,6 +174,9 @@ define([
         );
         function removeRelationWithGrandParentFromServerGraph() {
             var parentRelation = parentVertex.getRelationWithUiParent();
+            if(parentRelation.isMetaRelation()){
+                return 0;
+            }
             var relationWithGrandParentUri = parentRelation.getUri();
             var grandParent = parentVertex.getParentVertex();
             var grandParentUriToCompare = grandParent.getUri();

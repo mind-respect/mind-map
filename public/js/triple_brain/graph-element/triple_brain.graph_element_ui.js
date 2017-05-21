@@ -257,6 +257,9 @@ define([
     api.GraphElementUi.prototype.isMeta = function () {
         return this.getGraphElementType() === api.Types.Meta;
     };
+    api.GraphElementUi.prototype.isMetaRelation = function () {
+        return this.getGraphElementType() === api.Types.MetaRelation;
+    };
     api.GraphElementUi.prototype.isRelation = function () {
         return this.getGraphElementType() === api.Types.Relation;
     };

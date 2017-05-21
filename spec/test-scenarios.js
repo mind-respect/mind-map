@@ -4,7 +4,7 @@
 
 define([
         "jquery",
-        "text!test/test-scenarios-data.json",
+        "text!test/js-test-data-client-side.json",
         "triple_brain.vertex",
         "triple_brain.edge",
         'triple_brain.schema',
@@ -883,6 +883,36 @@ define([
                     "wikidataSearchResultForProject"
                 );
             };
+        };
+
+        api.getMetaCenterChildHavingGroupRelation = function(){
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                return api._getTestData(
+                    "metaCenterChildHavingGroupRelation.metaCenter"
+                );
+            };
+            this.expandBubble1 = function (bubble1) {
+                return GraphDisplayerAsRelativeTree.addChildTreeUsingGraph(
+                    bubble1,
+                    api._getTestData(
+                        "metaCenterChildHavingGroupRelation.childOfB1"
+                    )
+                );
+            };
+            var graph = this.getGraph();
+            this.getCenterBubbleUri = function () {
+                return TestUtils.getIdentifierWithLabelInSubGraph(
+                    "Human",
+                    SubGraph.fromServerFormat(graph)
+                ).getUri();
+            };
+            this.getMetaCenterInTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("Human");
+            };
+            Mock.setCenterBubbleUriInUrl(
+                this.getCenterBubbleUri()
+            );
         };
 
         api.getProjectSchema = function () {

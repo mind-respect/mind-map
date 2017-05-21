@@ -586,7 +586,22 @@ define([
                 centerBubble.hasChildren()
             ).toBeFalsy();
         });
-
+        it("can expand child of meta center having a group relation as a child", function(){
+            var scenario = new Scenarios.getMetaCenterChildHavingGroupRelation();
+            var centerBubble = scenario.getMetaCenterInTree();
+            var b1 = centerBubble.getTopMostChildBubble().getTopMostChildBubble();
+            expect(
+                b1.text()
+            ).toBe("b1");
+            scenario.expandBubble1(b1);
+            var groupRelation = b1.getTopMostChildBubble();
+            expect(
+                groupRelation.isGroupRelation()
+            ).toBeTruthy();
+            expect(
+                groupRelation.getNumberOfChild()
+            ).toBe(2);
+        });
         function getNumberOfHiddenPropertiesContainer(bubble) {
             return bubble.getHtml().find(
                 ".hidden-properties-container"
