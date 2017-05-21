@@ -172,7 +172,7 @@
     "schema": "model",
     "bubble": "bubble",
     "create": "create",
-    "select": "select",
+    "select": "select all",
     "disconnect": "disconnect",
     "redraw": "redraw",
     "selection": {
