@@ -14,6 +14,13 @@
   }
 }
 
+#whole-graph-buttons-container{
+  width:0;
+  .container{
+    width:0;
+  }
+}
+
 button.graph-element-button {
   position:relative;
   font-size:1.4em;
