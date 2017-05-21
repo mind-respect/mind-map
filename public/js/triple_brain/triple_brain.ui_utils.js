@@ -10,6 +10,8 @@ define(
     function($, Point){
         "use strict";
         var api = {};
+        var $currentPopover = null;
+        avoidMultiplePopoversDisplayedAtTheSameTime();
         $.fn.popoverLikeToolTip = function() {
             return this.popover({
                 placement: 'right',
@@ -20,6 +22,7 @@ define(
                 template:'<div class="popover like-tooltip" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3></div>'
             });
         };
+
         api.positionLeft = function(componentToPosition, staticComponent){
             var horizontalBuffer = 16;
             var componentOffset = Point.fromCoordinates(
@@ -112,6 +115,23 @@ define(
         return api;
         function isPositionVerticallyOffScreen(position) {
             return position.y < 10;
+        }
+        function avoidMultiplePopoversDisplayedAtTheSameTime(){
+            //http://stackoverflow.com/a/24289767
+            $(document).on('shown.bs.popover', function (ev) {
+                var $target = $(ev.target);
+                if ($currentPopover && ($currentPopover.get(0) !== $target.get(0))) {
+                    $currentPopover.popover('toggle');
+                }
+                $currentPopover = $target;
+            });
+
+            $(document).on('hidden.bs.popover', function (ev) {
+                var $target = $(ev.target);
+                if ($currentPopover && ($currentPopover.get(0) === $target.get(0))) {
+                    $currentPopover = null;
+                }
+            });
         }
     }
 );
