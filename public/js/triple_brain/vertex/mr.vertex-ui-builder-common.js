@@ -18,10 +18,11 @@ define([
     "triple_brain.graph_element_html_builder",
     "triple_brain.bubble_factory",
     "triple_brain.graph_element_ui",
+    "triple_brain.point",
     "jquery.triple_brain.search",
     "jquery.max_char",
     "jquery.safer-html"
-], function ($, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, WikidataAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, GraphElementHtmlBuilder, BubbleFactory, GraphElementUi) {
+], function ($, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, WikidataAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, GraphElementHtmlBuilder, BubbleFactory, GraphElementUi, Point) {
     "use strict";
     var api = {};
     api.applyAutoCompleteIdentificationToLabelInput = function (input) {
@@ -166,6 +167,10 @@ define([
         if(bubble.isInEditMode()){
             return;
         }
-        bubble.focus();
+        bubble.focus(
+            Point.fromCoordinates(
+            event.offsetX,
+            event.offsetY
+        ));
     }
 });

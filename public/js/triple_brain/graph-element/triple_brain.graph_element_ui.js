@@ -414,11 +414,17 @@ define([
         });
 
     };
-    api.GraphElementUi.prototype.focus = function () {
+    api.GraphElementUi.prototype.focus = function (clickPosition) {
         this.hideMenu();
         this.editMode();
         this._setTextBeforeModification();
-        this.getLabel().maxCharCleanTextApply().focusEnd();
+        var label = this.getLabel();
+        label.maxCharCleanTextApply();
+        if(clickPosition){
+            label.focusAtPosition(clickPosition);
+        }else{
+            label.focusEnd();
+        }
         this.getHtml().centerOnScreen();
     };
     api.GraphElementUi.prototype._setTextBeforeModification = function () {

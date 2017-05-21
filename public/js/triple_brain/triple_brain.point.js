@@ -18,12 +18,23 @@ define(
             },
             fromPoint: function (point) {
                 return new Point(point.x, point.y);
+            },
+            fromHtmlPoint: function(offset){
+                return new Point(offset.left, offset.top);
             }
         };
         function Point(x, y) {
             this.x = x;
             this.y = y;
         }
+
+        Point.prototype.distanceFromPoint = function (otherPoint) {
+            return Math.sqrt(
+                Math.pow(otherPoint.x - this.x, 2) +
+                Math.pow(otherPoint.y - this.y, 2)
+            );
+        };
+
         Point.prototype.cross = function (pointToCompare) {
             return this.x * pointToCompare.y - pointToCompare.x * this.y;
         };
