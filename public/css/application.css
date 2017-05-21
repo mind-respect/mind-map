@@ -259,7 +259,7 @@ body.mind-map-flow { margin-top: 50px; }
 .ui-dialog { opacity: 0.9; }
 
 #graph-element-menu { margin-top: 20px; }
-#graph-element-menu button { background: none; border: none; border-radius: 12px; box-shadow: none; font-size: 22px; text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); color: #474747; margin-top: -10px; }
+#graph-element-menu button { background: none; border: none; border-radius: 12px; box-shadow: none; font-size: 22px; text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); color: black; margin-top: -10px; }
 
 #whole-graph-buttons-container { width: 0; }
 #whole-graph-buttons-container .container { width: 0; }
