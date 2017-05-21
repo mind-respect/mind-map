@@ -10,7 +10,6 @@ define(
     function($, Point){
         "use strict";
         var api = {};
-        var $currentPopover = null;
         avoidMultiplePopoversDisplayedAtTheSameTime();
         $.fn.popoverLikeToolTip = function() {
             return this.popover({
@@ -117,6 +116,7 @@ define(
             return position.y < 10;
         }
         function avoidMultiplePopoversDisplayedAtTheSameTime(){
+            var $currentPopover = null;
             //http://stackoverflow.com/a/24289767
             $(document).on('shown.bs.popover', function (ev) {
                 var $target = $(ev.target);

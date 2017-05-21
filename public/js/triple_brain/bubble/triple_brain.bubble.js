@@ -744,6 +744,9 @@ define([
         };
 
         api.Bubble.prototype.buildHiddenNeighborPropertiesIndicator = function () {
+            if(this.hasHiddenRelationsContainer()){
+                return;
+            }
             var propertiesIndicator = PropertiesIndicator.withBubble(
                 this
             );
