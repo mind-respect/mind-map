@@ -234,6 +234,9 @@ define([
         EventBus.subscribe(
             "/event/ui/graph/identification/removed",
             function (event, graphElement, identification) {
+                if(graphElement.isRemoved()){
+                    return;
+                }
                 var parentBubble = graphElement.getParentBubble();
                 var shouldMove = parentBubble.isGroupRelation() &&
                     parentBubble.getModel().hasIdentification(identification);

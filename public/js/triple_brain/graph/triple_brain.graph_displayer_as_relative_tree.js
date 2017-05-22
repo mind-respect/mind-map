@@ -44,7 +44,7 @@ define([
     "triple_brain.suggestion_bubble_ui",
     "triple_brain.suggestion_relation_ui",
     "mr.meta_ui",
-    "mr.meta_ui_relation",
+    "mr.meta_relation_ui",
     "triple_brain.suggestion_vertex_controller",
     "triple_brain.suggestion_relation_controller",
     "triple_brain.triple_ui",
@@ -55,7 +55,7 @@ define([
     "mr.graph-ui-builder",
     "mr.meta_graph_ui",
     "mr.meta_graph"
-], function ($, GraphService, TreeDisplayerCommon, VertexUiBuilder, ViewOnlyVertexUiBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUri, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, VertexController, GroupRelationController, EdgeController, GraphController, MetaController, MetaRelationController, GraphElementController, GraphElement, KeyboardActionsHandler, Edge, Identification, GroupRelationUiBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaUiBuilder, SchemaUi, SchemaController, PropertyUiBuilder, PropertyController, PropertyUi, SuggestionUiBuilder, SuggestionRelationUiBuilder, SuggestionBubbleUi, SuggestionRelationUi, MetaUi, MetaUiRelation, SuggestionVertexController, SuggestionRelationController, TripleUi, SelectionHandler, GroupRelation, GraphElementMainMenu, MindMapInfo, GraphUiBuilder, MetaGraphUi, MetaGraph) {
+], function ($, GraphService, TreeDisplayerCommon, VertexUiBuilder, ViewOnlyVertexUiBuilder, GraphUi, RelativeTreeTemplates, EdgeUi, EventBus, IdUri, RelativeTreeVertex, EdgeBuilder, EdgeBuilderForViewOnly, TreeEdge, Point, VertexController, GroupRelationController, EdgeController, GraphController, MetaController, MetaRelationController, GraphElementController, GraphElement, KeyboardActionsHandler, Edge, Identification, GroupRelationUiBuilder, GroupRelationUi, SchemaService, SchemaServerFacade, SchemaUiBuilder, SchemaUi, SchemaController, PropertyUiBuilder, PropertyController, PropertyUi, SuggestionUiBuilder, SuggestionRelationUiBuilder, SuggestionBubbleUi, SuggestionRelationUi, MetaUi, MetaRelationUi, SuggestionVertexController, SuggestionRelationController, TripleUi, SelectionHandler, GroupRelation, GraphElementMainMenu, MindMapInfo, GraphUiBuilder, MetaGraphUi, MetaGraph) {
     "use strict";
     KeyboardActionsHandler.init();
     var api = {};
@@ -371,7 +371,7 @@ define([
         return MetaUi;
     };
     api.getMetaUiRelationSelector = function(){
-        return MetaUiRelation;
+        return MetaRelationUi;
     };
     api.buildIncludedGraphElementsView = function (vertex, container) {
         var serverGraph = {

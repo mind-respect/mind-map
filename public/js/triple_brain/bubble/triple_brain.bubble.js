@@ -803,6 +803,9 @@ define([
                 this.getBubbleUnder()
             );
         };
+        api.Bubble.prototype.isRemoved = function(){
+            return this.html.closest(".vertices-children-container").length === 0;
+        };
         function selectNew(newSelectedElement) {
             SelectionHandler.setToSingleGraphElement(
                 newSelectedElement

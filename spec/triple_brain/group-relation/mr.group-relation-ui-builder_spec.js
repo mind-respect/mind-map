@@ -398,5 +398,17 @@ define([
                 possessionInTree.getIdentifyButtonInLabel()
             ).not.toHaveClass("hidden");
         });
+        it("can handle the case where it's a meta relation that is removed", function(){
+            var eventBubble = new Scenarios.aroundEventIdentifier().getEventBubbleInTree();
+            var metaRelation = eventBubble.getTopMostChildBubble();
+            metaRelation.remove();
+            EventBus.publish(
+                "/event/ui/graph/identification/removed",
+                [metaRelation, metaRelation.getModel()]
+            );
+            expect(
+                true
+            ).toBeTruthy();
+        });
     });
 });
