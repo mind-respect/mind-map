@@ -11,9 +11,11 @@ define([
         "triple_brain.graph_element_button",
         "triple_brain.selection_handler",
         "triple_brain.graph_element_ui",
-        "triple_brain.bubble"
+        "triple_brain.bubble",
+        "triple_brain.bubble_factory",
+        "triple_brain.graph_element_type"
     ],
-    function ($, GraphUi, EventBus, GraphDisplayer, EdgeService, GraphElementButton, SelectionHandler, GraphElementUi, Bubble) {
+    function ($, GraphUi, EventBus, GraphDisplayer, EdgeService, GraphElementButton, SelectionHandler, GraphElementUi, Bubble, BubbleFactory, GraphElementType) {
         "use strict";
         var api = {};
         api.getWhenEmptyLabel = function () {
@@ -49,24 +51,28 @@ define([
         };
         api.EdgeUi.prototype.getDestinationVertex = function () {
             return GraphDisplayer.getVertexSelector().withId(
-                this.html.data('destination_vertex_id')
-            );
+                    this.html.data("destination_vertex_id")
+                ) || GraphDisplayer.getMetaUiSelector().withId(
+                    this.html.data("destination_vertex_id")
+                );
         };
         api.EdgeUi.prototype.getSourceVertex = function () {
             return GraphDisplayer.getVertexSelector().withId(
                 this.html.data("source_vertex_id")
-            );
+            ) || GraphDisplayer.getMetaUiSelector().withId(
+                    this.html.data("source_vertex_id")
+                );
         };
         api.EdgeUi.prototype.inverseAbstract = function () {
-            var sourceVertexUri = this.html.data("source_vertex_id");
-            var destinationVertexUri = this.html.data("destination_vertex_id");
+            var sourceVertexId = this.html.data("source_vertex_id");
+            var destinationVertexId = this.html.data("destination_vertex_id");
             this.html.data(
                 "source_vertex_id",
-                destinationVertexUri
+                destinationVertexId
             );
             this.html.data(
                 "destination_vertex_id",
-                sourceVertexUri
+                sourceVertexId
             );
         };
         api.EdgeUi.prototype.serverFacade = function () {

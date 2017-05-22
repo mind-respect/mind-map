@@ -9,7 +9,7 @@ define([
     "triple_brain.selection_handler",
     "triple_brain.graph_displayer",
     "triple_brain.graph_element_controller",
-    "triple_brain.delete_menu",
+    "mr.vertex_delete_menu",
     "triple_brain.edge_ui",
     "triple_brain.image_menu",
     "triple_brain.included_graph_elements_menu",
@@ -20,7 +20,7 @@ define([
     "triple_brain.schema_suggestion",
     "triple_brain.event_bus",
     "triple_brain.id_uri"
-], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, DeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, EventBus, IdUri) {
+], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, VertexDeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, EventBus, IdUri) {
     "use strict";
     var api = {};
 
@@ -78,24 +78,25 @@ define([
                 this.vertices
             );
         }
-        return DeleteMenu.ofVertexAndDeletionBehavior(
-            this.vertices,
+        return VertexDeleteMenu.forVertices(
+            this.vertices
+        ).ask().then(
             deleteAfterConfirmationBehavior.bind(this)
-        ).build();
-        function deleteAfterConfirmationBehavior(vertexUi) {
+        );
+        function deleteAfterConfirmationBehavior() {
             var removePromise = this.isSingle() ?
                 VertexService.remove(
-                    vertexUi
+                    this.vertices
                 ) :
                 VertexService.removeCollection(
-                    vertexUi
+                    this.vertices
                 );
             return removePromise.then(function () {
                 if (this.isSingle()) {
-                    vertexUi.remove();
+                    this.vertices.remove();
                     return true;
                 }
-                vertexUi.forEach(function (vertexUi) {
+                this.vertices.forEach(function (vertexUi) {
                     vertexUi.remove();
                 });
                 return true;

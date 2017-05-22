@@ -4,9 +4,8 @@
 
 define([
     "triple_brain.graph_element_controller",
-    "triple_brain.delete_menu",
-    "triple_brain.graph_element_service"
-], function (GraphElementController, DeleteMenu, GraphElementService) {
+    "mr.meta_relation_delete_menu"
+], function (GraphElementController, MetaRelationDeleteMenu) {
     "use strict";
     var api = {};
 
@@ -28,16 +27,25 @@ define([
     MetaRelationController.prototype.removeCanDo = function () {
         return this.isOwned();
     };
-    MetaRelationController.prototype.remove = function () {
-        var meta = this.getUi().getParentBubble().getModel();
-        var graphElementToRemoveIdentifier = this.getModel().hasIdentification(meta) ?
-            this.getUi() :
-            this.getUi().getSourceVertex();
-        graphElementToRemoveIdentifier.getController().removeIdentifier(
-            meta
-        ).then(function(){
-            this.getUi().remove();
-        }.bind(this));
+    MetaRelationController.prototype.remove = function (skipConfirmation) {
+        if(skipConfirmation){
+            return doIt.bind(this)();
+        }else{
+            return MetaRelationDeleteMenu.ofMetaRelation(
+                this.getUi()
+            ).ask().then(doIt.bind(this));
+        }
+        function doIt(){
+            var meta = this.getUi().getParentBubble().getModel();
+            var graphElementToRemoveIdentifier = this.getModel().hasIdentification(meta) ?
+                this.getUi() :
+                this.getUi().getSourceVertex();
+            graphElementToRemoveIdentifier.getController().removeIdentifier(
+                meta
+            ).then(function(){
+                this.getUi().remove();
+            }.bind(this));
+        }
     };
     MetaRelationController.prototype.cutCanDo = function () {
         return false;

@@ -36,5 +36,15 @@ define([
                 eventBubble.isSelected()
             ).toBeTruthy();
         });
+        it("can return the source and destination vertex", function () {
+            var eventBubble = new Scenarios.aroundEventIdentifier().getEventBubbleInTree();
+            var metaRelation = eventBubble.getTopMostChildBubble();
+            expect(
+                metaRelation.getSourceVertex().isVertex()
+            ).toBeTruthy();
+            expect(
+                metaRelation.getDestinationVertex().text()
+            ).toBe("Event");
+        });
     });
 });

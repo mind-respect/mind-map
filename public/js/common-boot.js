@@ -87,6 +87,7 @@ requirejs.config({
         "mr.meta_relation_controller": "triple_brain/identifier/mr.meta_relation_controller",
         "mr.meta_controller": "triple_brain/identifier/mr.meta_controller",
         "mr.meta_service": "triple_brain/identifier/mr.meta_service",
+        "mr.meta_relation_delete_menu": "triple_brain/identifier/mr.meta_relation_delete_menu",
 
         /*
          Graph Element
@@ -112,7 +113,7 @@ requirejs.config({
         "triple_brain.ui.vertex_hidden_neighbor_properties_indicator": "triple_brain/vertex/triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
         "triple_brain.included_graph_elements_menu": "triple_brain/vertex/triple_brain.included_graph_elements_menu",
         "triple_brain.vertex_controller": "triple_brain/vertex/triple_brain.vertex_controller",
-        "triple_brain.delete_menu": "triple_brain/vertex/triple_brain.delete_menu",
+        "mr.vertex_delete_menu": "triple_brain/vertex/mr.vertex_delete_menu",
         "mr.vertex-ui-builder": "triple_brain/vertex/mr.vertex-ui-builder",
         "mr.vertex-ui-builder-common": "triple_brain/vertex/mr.vertex-ui-builder-common",
         "mr.vertex-ui-builder-view-only": "triple_brain/vertex/mr.vertex-ui-builder-view-only",
@@ -238,6 +239,7 @@ requirejs.config({
         "triple_brain.wikidata_uri": "triple_brain/triple_brain.wikidata_uri",
         "triple_brain.transform_matrix_2d": "triple_brain/triple_brain.transform_matrix_2d",
         "triple_brain.error": "triple_brain/triple_brain.error",
+        "mr.ask_modal": "triple_brain/mr.ask_modal",
 
         "triple_brain.visited_elements_cloud": "triple_brain/triple_brain.visited_elements_cloud",
         "triple_brain.center_graph_elements": "triple_brain/triple_brain.center_graph_elements",

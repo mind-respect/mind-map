@@ -283,7 +283,11 @@
     }
   },
   "meta_relation":{
-    "remove_tooltip": "remove the relation"
+    "remove_tooltip": "remove the relation",
+    "deleteMenu": {
+      "association": "association between",
+      "and": "and"
+    }
   },
   "selection": {
     "group": "group"

@@ -188,16 +188,16 @@ define([
             );
         };
         api.Bubble.prototype.getParentVertex = function () {
-            return this._getClosestParentOfTypes(
+            return this.getClosestParentInTypes(
                 GraphElementType.getVertexTypes()
             );
         };
         api.Bubble.prototype.getParentSuggestionVertex = function () {
-            return this._getClosestParentOfTypes([
+            return this.getClosestParentInTypes([
                 GraphElementType.VertexSuggestion
             ]);
         };
-        api.Bubble.prototype._getClosestParentOfTypes = function (types) {
+        api.Bubble.prototype.getClosestParentInTypes = function (types) {
             var parentBubble = this.getParentBubble();
             if (this.isSameBubble(parentBubble)) {
                 return this;
@@ -205,7 +205,7 @@ define([
             if (parentBubble.isInTypes(types)) {
                 return parentBubble;
             }
-            var ancestor = parentBubble._getClosestParentOfTypes(types);
+            var ancestor = parentBubble.getClosestParentInTypes(types);
             return ancestor.isInTypes(types) ?
                 ancestor :
                 this;

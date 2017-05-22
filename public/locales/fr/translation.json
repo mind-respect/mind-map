@@ -284,7 +284,11 @@
     }
   },
   "meta_relation":{
-    "remove_tooltip": "effacer la relation"
+    "remove_tooltip": "effacer la relation",
+    "deleteMenu": {
+      "association": "l'association entre",
+      "and": "et"
+    }
   },
   "selection": {
     "group": "grouper"

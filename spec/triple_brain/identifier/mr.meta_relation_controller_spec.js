@@ -32,7 +32,7 @@ define([
                 hasBeenCalled = true;
                 return $.Deferred().resolve();
             });
-            eventBubble.getTopMostChildBubble().getController().remove();
+            eventBubble.getTopMostChildBubble().getController().remove(true);
             expect(
                 hasBeenCalled
             ).toBeTruthy();
@@ -51,7 +51,7 @@ define([
                 hasBeenCalled = true;
                 return $.Deferred().resolve();
             });
-            toDoMetaBubble.getTopMostChildBubble().getController().remove();
+            toDoMetaBubble.getTopMostChildBubble().getController().remove(true);
             expect(
                 hasBeenCalled
             ).toBeTruthy();
