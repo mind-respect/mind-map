@@ -105,6 +105,9 @@ define([
             this._buildMenu();
             this.html.data("graphElement", this.graphElement);
             modal.modal();
+            modal.find(".bubble-label").text(
+                this.graphElement.text()
+            );
             if (this.identificationTextField) {
                 GraphElementMenu.setupAutoCompleteSuggestionZIndex(
                     this.identificationTextField
@@ -115,7 +118,7 @@ define([
 
         IdentificationMenu.prototype._buildMenu = function () {
             if (!this.isViewOnly) {
-                this._setupIdentificationTextField().focus();
+                this._setupIdentificationTextField();
             }
             this._addIdentifications();
         };
@@ -306,6 +309,7 @@ define([
             identificationTextField.val("");
             this._setUpAutoComplete(identificationTextField);
             this.identificationTextField = identificationTextField;
+            this.identificationTextField.attr('tabindex',-1);
             return identificationTextField;
         };
 
@@ -404,6 +408,9 @@ define([
         api._getModal = function(){
             return $("#identifiers-menu");
         };
+        api._getModal().on('shown.bs.modal', function () {
+            $(this).find(".add-identification").focus();
+        });
         return api;
     }
 );
