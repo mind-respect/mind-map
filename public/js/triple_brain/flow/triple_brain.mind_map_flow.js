@@ -74,12 +74,17 @@ define([
             $("body").removeClass(
                 "hidden"
             ).addClass("mind-map-flow");
+
+            /*
+            * scrollTo center bubble before affix whole-graph-buttons-container
+            * otherwise center bubble is top centered
+            */
+            centralBubble.scrollTo();
             $('#whole-graph-buttons-container').removeClass(
                 "hidden"
             ).affix({
                 offset: {top: 50}
             });
-            centralBubble.scrollTo();
             GraphUi.initDragScroll();
             GraphUi.enableDragScroll();
             SelectionHandler.setToSingleVertex(centralBubble);

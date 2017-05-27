@@ -22,9 +22,7 @@ define([
         });
         var canGetPublicAndPrivate = UserService.hasCurrentUser() && usernameForBublGuru === UserService.authenticatedUserInCache().user_name;
         if(canGetPublicAndPrivate){
-            CenterGraphElementService.getPublicAndPrivate(
-                setupCenterGraphElements
-            );
+            CenterGraphElementService.getPublicAndPrivate().then(setupCenterGraphElements);
         }else{
             CenterGraphElementService.getPublicOnlyForUsername(
                 usernameForBublGuru,

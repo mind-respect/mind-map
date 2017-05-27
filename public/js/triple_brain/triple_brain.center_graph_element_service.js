@@ -8,12 +8,12 @@ define([
 ], function ($, UserService) {
     "use strict";
     var api = {};
-    api.getPublicAndPrivate = function(callback){
+    api.getPublicAndPrivate = function(){
         return $.ajax({
             type: 'GET',
             url: UserService.currentUserUri() + "/center-elements",
             dataType: 'json'
-        }).success(callback);
+        });
     };
     api.getPublicOnlyForUsername = function(username, callback){
         return $.ajax({
