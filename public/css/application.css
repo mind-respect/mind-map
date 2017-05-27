@@ -415,6 +415,8 @@ button.inactive i { color: red; }
 .bubble.edit { user-select: text; cursor: text; }
 .bubble.edit .bubble-label:after { content: ""; }
 .bubble .bubble-label { outline: 0 solid transparent; border: none; font-family: arial; font-size: 14px; width: auto; display: table-cell; white-space: pre; }
+.bubble .bubble-label:empty:not(:focus):before { content: " "; font-family: monospace; font-size: 17px; }
+.bubble .bubble-label:not(:empty):not(:focus):after { content: " "; font-family: monospace; font-size: 17px; }
 .bubble .bubble-label:empty:not(:focus):after { content: attr(data-placeholder); color: grey; font-style: italic; }
 .bubble .bubble-label del { text-decoration: none; }
 .bubble .bubble-label[contenteditable='true']:before { content: "\feff "; }

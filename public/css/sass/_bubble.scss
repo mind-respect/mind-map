@@ -83,6 +83,18 @@
   white-space: nowrap;
   .bubble-label {
     &:empty:not(:focus) {
+      &:before {
+        content: " ";
+        font-family: $cursorBlinkFontFamily;
+        font-size: $cursorBlinkFontSize;
+      }
+    }
+    &:not(:empty):not(:focus):after {
+      content: " ";
+      font-family: $cursorBlinkFontFamily;
+      font-size: $cursorBlinkFontSize;
+    }
+    &:empty:not(:focus) {
       &:after {
         content: attr(data-placeholder);
         color: grey;
@@ -111,16 +123,16 @@
       &:empty:not(:focus) {
         &:before {
           content: "_";
-          font-family: monospace;
-          font-size:17px;
+          font-family: $cursorBlinkFontFamily;
+          font-size:$cursorBlinkFontSize;
           animation: cursorBlink steps(1) 500ms infinite alternate;
           font-style: normal;
         }
       }
       &:not(:empty):not(:focus):after {
         content: "_";
-        font-family: monospace;
-        font-size:17px;
+        font-family: $cursorBlinkFontFamily;
+        font-size: $cursorBlinkFontSize;
         animation: cursorBlink steps(1) 500ms infinite alternate;
         font-style: normal;
       }
