@@ -5,8 +5,8 @@
 define([
     "test/test-scenarios",
     "test/test-utils",
+    'test/mock',
     "test/mock/triple_brain.graph_service_mock",
-    "test/mock/triple_brain.graph_element_service_mock",
     "test/mock/triple_brain.suggestion_service_mock",
     "test/mock/triple_brain.edge_service_mock",
     "test/mock/triple_brain.vertex_service_mock",
@@ -14,16 +14,17 @@ define([
     "triple_brain.graph_element_service",
     "triple_brain.sub_graph",
     "triple_brain.graph_displayer_as_relative_tree",
-    "triple_brain.mind_map_info"
-], function (Scenarios, TestUtils, GraphServiceMock, GraphElementServiceMock, SuggestionServiceMock, EdgeServiceMock, VertexServiceMock, Identification, GraphElementService, SubGraph, GraphDisplayerAsRelativeTree, MindMapInfo) {
+    "triple_brain.mind_map_info",
+    "triple_brain.selection_handler"
+], function (Scenarios, TestUtils, Mock, GraphServiceMock, SuggestionServiceMock, EdgeServiceMock, VertexServiceMock, Identification, GraphElementService, SubGraph, GraphDisplayerAsRelativeTree, MindMapInfo, SelectionHandler) {
     "use strict";
     describe("graph_element_ui", function () {
-        var vertex, schema;
         beforeEach(function () {
-            vertex = new Scenarios.threeBubblesGraph().getBubble1Ui();
-            schema = new Scenarios.getKaraokeSchemaGraph().getSchemaUi();
+            Mock.applyDefaultMocks();
         });
         it("can tell the difference between vertex and schema", function () {
+            var vertex = new Scenarios.threeBubblesGraph().getBubble1Ui();
+            var schema = new Scenarios.getKaraokeSchemaGraph().getSchemaUi();
             expect(
                 vertex.isVertex()
             ).toBeTruthy();
@@ -48,7 +49,6 @@ define([
                 bubble1Duplicate.getModel().hasIdentifications()
             ).toBeFalsy();
             karaokeIdentification.makeGeneric();
-            GraphElementServiceMock.addIdentification();
             bubble1.getController().addIdentification(
                 karaokeIdentification
             );
@@ -265,6 +265,40 @@ define([
                 suggestionUi.text()
             ).toBe("something");
         });
+        it("gets only vertices if selected bubble is vertex", function(){
+            var scenario = new Scenarios.threeBubblesGraph();
+            var center = scenario.getBubble1InTree();
+            expect(
+                SelectionHandler.getNbSelectedRelations()
+            ).toBe(0);
+            expect(
+                SelectionHandler.getNbSelectedVertices()
+            ).toBe(0);
+            center.selectTree();
+            expect(
+                SelectionHandler.getNbSelectedRelations()
+            ).toBe(0);
+            expect(
+                SelectionHandler.getNbSelectedVertices()
+            ).toBe(3);
+        });
+        it("can get descendants of a bubble where there is a group relation", function(){
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var center = scenario.getCenterVertexInTree();
+            expect(
+                SelectionHandler.getNbSelectedRelations()
+            ).toBe(0);
+            expect(
+                SelectionHandler.getNbSelectedVertices()
+            ).toBe(0);
+            center.selectTree();
+            expect(
+                SelectionHandler.getNbSelectedRelations()
+            ).toBe(0);
+            expect(
+                SelectionHandler.getNbSelectedVertices()
+            ).toBe(3);
+        });
     });
     // it("sets the right number of other instances to far vertex added to a new vertex", function () {
     //     var b1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
@@ -288,5 +322,4 @@ define([
     //         otherGraphCenterBubble.hasOtherInstances()
     //     ).toBeFalsy();
     // });
-    
 });

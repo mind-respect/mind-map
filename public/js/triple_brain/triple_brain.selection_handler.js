@@ -77,9 +77,6 @@ define([
     };
 
     api._getAdderFromGraphElement = function(graphElement){
-        if(graphElement.isGroupRelation()){
-            return api.addGroupRelation;
-        }
         if(graphElement.isEdge()){
             return api.addRelation;
         }

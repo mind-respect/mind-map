@@ -410,10 +410,20 @@ define([
             this,
             onlyPrepare
         );
+        var typesToSelect;
+        if(this.isVertex()){
+            typesToSelect = [GraphElementType.Vertex];
+        }else if(this.isRelation()){
+            typesToSelect = [GraphElementType.Relation];
+        }else{
+            typesToSelect = GraphElementType.getAll();
+        }
         this.visitDescendants(function (bubble) {
-            SelectionHandler.addGraphElement(
-                bubble, onlyPrepare
-            );
+            if(bubble.isInTypes(typesToSelect)){
+                SelectionHandler.addGraphElement(
+                    bubble, onlyPrepare
+                );
+            }
         });
 
     };

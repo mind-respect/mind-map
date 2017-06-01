@@ -43,6 +43,11 @@ define(
                 api.MetaRelation
             ];
         };
+        api.getAll = function(){
+            return api.getVertexTypes().concat(
+                api.getEdgeTypes()
+            );
+        };
         return api;
     }
 );
