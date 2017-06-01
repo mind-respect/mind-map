@@ -82,23 +82,19 @@
   }
   white-space: nowrap;
   .bubble-label {
-    &:empty:not(:focus) {
-      &:before {
-        content: " ";
-        font-family: $cursorBlinkFontFamily;
-        font-size: $cursorBlinkFontSize;
-      }
-    }
-    &:not(:empty):not(:focus):after {
-      content: " ";
+    &:before, &:after {
+      content: ' ';
       font-family: $cursorBlinkFontFamily;
       font-size: $cursorBlinkFontSize;
     }
+
     &:empty:not(:focus) {
       &:after {
-        content: attr(data-placeholder);
+        content: attr(data-placeholder) + ' ';
         color: grey;
         font-style: italic;
+        font-family: $bubbleFontFamily;
+        font-size: calc(1em);
       }
     }
     del {
@@ -141,8 +137,9 @@
   &.selected:not(.not-editable) {
     .bubble-label {
       &:empty:not(:focus):after {
-        content: attr(data-placeholder);
+        content: attr(data-placeholder) + ' ';
         color: grey;
+        font-family: $bubbleFontFamily;
         font-style: italic;
       }
     }

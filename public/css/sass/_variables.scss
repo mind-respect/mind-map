@@ -16,6 +16,7 @@ $compareBubbleAddBackgroundColor: #E6FFE6;
 $compareBubbleRemoveBackgroundColor: #FFE6E6;
 $cursorBlinkFontSize: 17px;
 $cursorBlinkFontFamily: monospace;
+$bubbleFontFamily: arial;
 
 @mixin keyframes( $animationName ) {
   @-webkit-keyframes $animationName {

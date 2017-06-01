@@ -415,15 +415,14 @@ button.inactive i { color: red; }
 .bubble.edit { user-select: text; cursor: text; }
 .bubble.edit .bubble-label:after { content: ""; }
 .bubble .bubble-label { outline: 0 solid transparent; border: none; font-family: arial; font-size: 14px; width: auto; display: table-cell; white-space: pre; }
-.bubble .bubble-label:empty:not(:focus):before { content: " "; font-family: monospace; font-size: 17px; }
-.bubble .bubble-label:not(:empty):not(:focus):after { content: " "; font-family: monospace; font-size: 17px; }
-.bubble .bubble-label:empty:not(:focus):after { content: attr(data-placeholder); color: grey; font-style: italic; }
+.bubble .bubble-label:before, .bubble .bubble-label:after { content: ' '; font-family: monospace; font-size: 17px; }
+.bubble .bubble-label:empty:not(:focus):after { content: attr(data-placeholder) ; color: grey; font-style: italic; font-family: arial; font-size: calc(1em); }
 .bubble .bubble-label del { text-decoration: none; }
 .bubble .bubble-label[contenteditable='true']:before { content: "\feff "; }
 .bubble.single-selected:not(.not-editable) .bubble-label:empty:not(:focus):before { content: "_"; font-family: monospace; font-size: 17px; animation: cursorBlink steps(1) 500ms infinite alternate; font-style: normal; }
 .bubble.single-selected:not(.not-editable) .bubble-label:not(:empty):not(:focus):after { content: "_"; font-family: monospace; font-size: 17px; animation: cursorBlink steps(1) 500ms infinite alternate; font-style: normal; }
 .bubble.selected:not(.not-editable) { z-index: 11; }
-.bubble.selected:not(.not-editable) .bubble-label:empty:not(:focus):after { content: attr(data-placeholder); color: grey; font-style: italic; }
+.bubble.selected:not(.not-editable) .bubble-label:empty:not(:focus):after { content: attr(data-placeholder) ; color: grey; font-family: arial; font-style: italic; }
 .bubble.selected:not(.not-editable) .in-bubble-content { z-index: 5; }
 .bubble .image_container { z-index: 3; position: relative; min-width: 60px; text-align: right; }
 .bubble .image_container:empty { min-width: 0; }
