@@ -90,5 +90,27 @@ define([
                 eventBubble.getNumberOfChild()
             ).toBe(1);
         });
+        it("selects the parent vertex after it's removed if right under a relation and vertex", function () {
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var otherBubble = scenario.getOtherRelationInTree().getTopMostChildBubble();
+            expect(
+                otherBubble._getParentBubbleToSelectAfterRemove().isVertex()
+            ).toBeTruthy();
+        });
+        it("selects the group relation after it's removed if right under a relation and group relation", function () {
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+            groupRelation.expand();
+            var vertexUnderGroupRelation = TestUtils.getChildWithLabel(
+                groupRelation,
+                "Possessed by book 2"
+            ).getTopMostChildBubble();
+            expect(
+                vertexUnderGroupRelation.isVertex()
+            ).toBeTruthy();
+            expect(
+                vertexUnderGroupRelation._getParentBubbleToSelectAfterRemove().isGroupRelation()
+            ).toBeTruthy();
+        });
     });
 });

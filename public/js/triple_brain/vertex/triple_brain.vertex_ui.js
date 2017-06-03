@@ -44,14 +44,17 @@ define([
         };
 
         api.VertexUi.prototype.remove = function () {
-            var parentVertex = this.isCenterBubble() ?
-                undefined :
-                this.getParentVertex();
+            var parentBubble = this._getParentBubbleToSelectAfterRemove();
             this.removeConnectedEdges();
             Bubble.Bubble.prototype.remove.call(
                 this,
-                parentVertex
+                parentBubble
             );
+        };
+
+        api.VertexUi.prototype._getParentBubbleToSelectAfterRemove = function(){
+            return this.isCenterBubble() ? undefined :
+                this.getParentBubble().getParentBubble();
         };
 
         api.VertexUi.prototype.areSuggestionsShown = function () {
