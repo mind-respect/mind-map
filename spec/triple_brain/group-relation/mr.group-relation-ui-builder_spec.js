@@ -326,7 +326,7 @@ define([
                 newGroupRelation.isGroupRelation()
             ).toBeTruthy();
             expect(
-                newGroupRelation.getNote()
+                newGroupRelation.getModel().getComment()
             ).toBe("some comment");
         });
 

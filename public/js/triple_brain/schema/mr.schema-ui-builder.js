@@ -50,6 +50,7 @@ define([
         var schemaUi = SchemaUi.createFromHtml(
             this.html
         );
+        schemaUi.setModel(serverFacade);
         VertexUiBuilderCommon.buildLabelHtml(
             schemaUi,
             VertexUiBuilderCommon.buildInsideBubbleContainer(
@@ -67,9 +68,6 @@ define([
         );
         schemaUi.hideMenu();
         schemaUi.makePublic();
-        schemaUi.setNote(
-            this.serverFacade.getComment()
-        );
         VertexUiBuilderCommon.buildInLabelButtons(
             schemaUi
         );

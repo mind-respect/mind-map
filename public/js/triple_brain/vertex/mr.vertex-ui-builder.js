@@ -95,6 +95,7 @@ define([
             ).createFromHtml(
                 this.html
             );
+            this.vertexUi.setModel(serverFacade);
             var label = VertexUiBuilderCommon.buildLabelHtml(
                 this.vertexUi,
                 VertexUiBuilderCommon.buildInsideBubbleContainer(
@@ -122,9 +123,6 @@ define([
             if (this.vertexUi.isVertex() && this.serverFacade.hasIncludedGraphElements()) {
                 this._showItHasIncludedGraphElements();
             }
-            this.vertexUi.setNote(
-                this.serverFacade.getComment()
-            );
             this._createMenu();
             VertexUiBuilderCommon.buildInLabelButtons(
                 this.vertexUi

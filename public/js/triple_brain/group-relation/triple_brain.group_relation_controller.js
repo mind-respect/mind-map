@@ -38,7 +38,6 @@ define([
 
         GroupRelationController.prototype.addChild = function () {
             var deferred = $.Deferred();
-            this.getUi().hideDescription();
             var self = this;
             var parentVertex = this.getUi().getParentVertex();
             VertexService.addRelationAndVertexToVertex(

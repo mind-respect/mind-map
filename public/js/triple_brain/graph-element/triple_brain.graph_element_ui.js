@@ -538,18 +538,6 @@ define([
             "uri"
         );
     };
-    api.GraphElementUi.prototype.setNote = function (note) {
-        this.html.data("note", note);
-    };
-    api.GraphElementUi.prototype.getNote = function () {
-        if (this.html.data("note") === undefined) {
-            this.html.data("note", "");
-        }
-        return this.html.data("note");
-    };
-    api.GraphElementUi.prototype.hasNote = function () {
-        return this.getNote().trim().length > 0;
-    };
     api.GraphElementUi.prototype.getInLabelButtonsContainer = function () {
         return this.getHtml().find(
             ".in-label-buttons"
@@ -606,7 +594,7 @@ define([
     api.GraphElementUi.prototype.updateInLabelNoteButtonHoverText = function () {
         this.getNoteButtonInBubbleContent().attr(
             "data-original-title",
-            this.getNote()
+            this.getModel().getComment()
         );
     };
 

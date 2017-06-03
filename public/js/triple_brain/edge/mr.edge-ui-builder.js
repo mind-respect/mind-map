@@ -106,9 +106,6 @@ define([
             edgeUi.setModel(
                 this.edgeServer
             );
-            edgeUi.setNote(
-                this.edgeServer.getComment()
-            );
             buildMenu(edgeUi);
             EdgeUiBuilderCommon.buildInLabelButtons(
                 edgeUi

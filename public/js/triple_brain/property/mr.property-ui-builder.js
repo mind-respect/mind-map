@@ -39,13 +39,11 @@ define([
         var propertyUi = PropertyUi.createFromHtml(
             this.html
         );
+        propertyUi.setModel(serverFacade);
         EdgeUiBuilderCommon.buildLabel(
             propertyUi,
             this.serverFacade.getLabel(),
             PropertyUi.getWhenEmptyLabel()
-        );
-        propertyUi.setNote(
-            this.serverFacade.getComment()
         );
         this._buildMenu(
             this.html.find(".label-container"),

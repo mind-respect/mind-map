@@ -67,13 +67,11 @@ define([
         this.html.removeClass("selected");
         this.html.removeClass("single-selected");
         this.hideButtons();
-        this.hideDescription();
     };
 
     api.GroupRelationUi.prototype.makeSingleSelected = function () {
         this.html.addClass("single-selected");
         this.showButtons();
-        this._showDescription();
     };
 
     api.GroupRelationUi.prototype.showButtons = function () {
@@ -88,20 +86,8 @@ define([
         return this.html.find('.menu');
     };
 
-    api.GroupRelationUi.prototype._showDescription = function () {
-        this.getLabel().popover('show');
-    };
-
-    api.GroupRelationUi.prototype.hideDescription = function () {
-        this.getLabel().popover('hide');
-    };
-
     api.GroupRelationUi.prototype.getLabel = function () {
         return this.html.find('.bubble-label');
-    };
-
-    api.GroupRelationUi.prototype.getNote = function () {
-        return this.getLabel().attr("data-content");
     };
 
     api.GroupRelationUi.prototype.expand = function () {

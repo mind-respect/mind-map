@@ -93,7 +93,7 @@ define([
     GraphElementButton.prototype.shouldBeVisibleInGraphElementLabel = function (graphElement) {
         switch (this.getAction()) {
             case "note":
-                return graphElement.hasNote();
+                return graphElement.getModel().hasComment();
             case "identify":
                 return graphElement.getModel().hasIdentifications();
             case "visitOtherInstances":

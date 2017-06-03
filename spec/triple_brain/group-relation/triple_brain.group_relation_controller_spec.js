@@ -15,19 +15,7 @@ define([
         beforeEach(function () {
             Mock.applyDefaultMocks();
         });
-        it("hides description after adding child", function () {
-            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
-            var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
-            MindMapInfo._setIsViewOnly(false);
-            SelectionHandler.setToSingleGraphElement(possessionInTree);
-            var hideDescriptionSpy = spyOn(possessionInTree, "hideDescription");
-            new GroupRelationController.GroupRelationController(
-                possessionInTree
-            ).addChild();
-            expect(
-                hideDescriptionSpy
-            ).toHaveBeenCalled();
-        });
+
         it("can identify", function(){
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
             var possessionInTree = scenario.getPossessionAsGroupRelationInTree();

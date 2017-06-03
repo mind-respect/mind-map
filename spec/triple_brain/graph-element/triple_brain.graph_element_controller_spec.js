@@ -32,7 +32,7 @@ define([
         it("prevents iframe injection", function () {
             loadFixtures('graph-element-note-menu.html');
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
-            bubble1.setNote("<iframe></iframe>");
+            bubble1.getModel().setComment("<iframe></iframe>");
             bubble1.getController().note();
             expect(
                 GraphElementController._getContentEditor().html()
@@ -41,7 +41,7 @@ define([
         it("prevents script injection", function () {
             loadFixtures('graph-element-note-menu.html');
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
-            bubble1.setNote("<script>alert('yo')</script>");
+            bubble1.getModel().setComment("<script>alert('yo')</script>");
             bubble1.getController().note();
             expect(
                 GraphElementController._getContentEditor().html()
@@ -50,7 +50,7 @@ define([
         it("can have script tag as text", function () {
             loadFixtures('graph-element-note-menu.html');
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
-            bubble1.setNote(
+            bubble1.getModel().setComment(
                 $("<div>").text("<script>alert('yo')</script>")
             );
             bubble1.getController().note();

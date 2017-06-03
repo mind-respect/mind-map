@@ -145,23 +145,6 @@ define([
             }
             labelAndButtons.appendTo(container);
             GraphElementHtmlBuilder.setUpLabel(labelHtml);
-            this._setupDescriptionOnLabel(labelHtml);
-        };
-
-        api.GroupRelationUiBuilder.prototype._setupDescriptionOnLabel = function (labelHtml) {
-            var identification = this.serverFacade.getIdentification();
-            labelHtml.attr(
-                "data-toggle", "popover"
-            ).attr(
-                "title", identification.getLabel()
-            ).attr(
-                "data-content", identification.getComment()
-            ).popover({
-                    container: "body",
-                    placement: this.serverFacade.isLeftOriented ? "right" : "left",
-                    trigger: "manual"
-                }
-            );
         };
 
         api.GroupRelationUiBuilder.prototype._addArrow = function () {

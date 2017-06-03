@@ -27,7 +27,7 @@ define([
         return {
             uri: friendlyResourceUi.getUri(),
             label: friendlyResourceUi.text(),
-            comment: friendlyResourceUi.getNote()
+            comment: friendlyResourceUi.getModel().getComment()
         };
     };
     api.buildObjectWithUriAndLabel = function (uri, label) {

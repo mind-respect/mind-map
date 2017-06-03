@@ -4,14 +4,18 @@
 
 define([
     'test/test-scenarios',
+    'test/mock',
     'triple_brain.friendly_resource'
-], function (Scenarios, FriendlyResource) {
+], function (Scenarios, Mock, FriendlyResource) {
     "use strict";
     describe("friendly_resource", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         it("includes label comment and uri when building server format from ui", function () {
             var scenario = new Scenarios.threeBubblesGraph();
             var bubble1 = scenario.getBubble1InTree();
-            bubble1.setNote("some comment");
+            bubble1.getModel().setComment("some comment");
             var serverFormat = FriendlyResource.buildServerFormatFromUi(
                 bubble1
             );

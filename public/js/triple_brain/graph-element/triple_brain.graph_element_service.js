@@ -46,7 +46,7 @@ define([
             data: note,
             contentType: "text/plain"
         }).success(function () {
-            graphElement.setNote(note);
+            graphElement.getModel().setComment(note);
             EventBus.publish(
                 '/event/ui/graph/element/note/updated',
                 graphElement

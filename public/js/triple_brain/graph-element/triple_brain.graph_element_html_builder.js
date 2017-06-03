@@ -70,7 +70,7 @@ define([
             if ("note" === cloneHtml.data("action")) {
                 cloneHtml.attr(
                     "title",
-                    graphElementUi.getNote()
+                    graphElementUi.getModel().getComment()
                 );
             }
             GraphElementMainMenu.applyActionOnClick(

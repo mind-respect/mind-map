@@ -52,7 +52,7 @@ define([
     };
     GraphElementController.prototype.noteCanDo = function () {
         return this.isSingle() && (
-                this.isOwned() || this.graphElements.hasNote()
+                this.isOwned() || this.getModel().hasComment()
             );
     };
 
@@ -71,7 +71,7 @@ define([
 
     GraphElementController.prototype.note = function () {
         var editor = api._getContentEditor().saferHtml(
-            this.getUi().getNote()
+            this.getUi().getModel().getComment()
         );
         api._getBubbleNoteModal().data(
             "graphElement", this.graphElements
