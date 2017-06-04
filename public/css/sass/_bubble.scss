@@ -90,7 +90,7 @@
 
     &:empty:not(:focus) {
       &:after {
-        content: attr(data-placeholder) + ' ';
+        content: attr(data-placeholder) ' ';
         color: grey;
         font-style: italic;
         font-family: $bubbleFontFamily;
@@ -137,7 +137,7 @@
   &.selected:not(.not-editable) {
     .bubble-label {
       &:empty:not(:focus):after {
-        content: attr(data-placeholder) + ' ';
+        content: attr(data-placeholder) ' ';
         color: grey;
         font-family: $bubbleFontFamily;
         font-style: italic;
