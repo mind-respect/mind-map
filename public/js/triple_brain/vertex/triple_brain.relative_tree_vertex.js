@@ -159,11 +159,19 @@ define([
         };
 
         api.RelativeTreeVertex.prototype.hasHiddenRelations = function () {
-            return this.isALeaf() && (
-                    MindMapInfo.isViewOnly() ?
+            return MindMapInfo.isViewOnly() ?
                         this._hasPublicHiddenRelations() :
-                        this.getModel().getNumberOfConnectedEdges() > 1
-                );
+                        this.getNumberOfHiddenRelations() > 0;
+
+        };
+        api.RelativeTreeVertex.prototype.getNumberOfHiddenRelations = function(){
+            if(this.isALeaf()){
+                if(this.getParentBubble().isMetaRelation()){
+                    return this.getModel().getNumberOfConnectedEdges();
+                }
+                return this.getModel().getNumberOfConnectedEdges() - 1;
+            }
+            return 0;
         };
         api.RelativeTreeVertex.prototype._hasPublicHiddenRelations = function () {
             return this.getModel().getNbPublicNeighbors() > (

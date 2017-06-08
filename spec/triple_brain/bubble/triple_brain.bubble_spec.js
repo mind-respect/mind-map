@@ -182,14 +182,21 @@ define([
 
         it("shows hidden relation container when has some", function () {
             MindMapInfo._setIsViewOnly(false);
-            var b2 = new Scenarios.publicPrivate().getBubble2();
-            var bubble3 = new Scenarios.threeBubblesGraph().getBubble3InTree();
+            var b1 = new Scenarios.publicPrivate().getBubble1();
+            var b2 = TestUtils.getChildWithLabel(
+                b1,
+                "r1"
+            ).getTopMostChildBubble();
+            expect(
+                b2.text()
+            ).toBe("b2");
             expect(
                 b2.hasHiddenRelations()
             ).toBeFalsy();
             expect(
                 b2.hasVisibleHiddenRelationsContainer()
             ).toBeFalsy();
+            var bubble3 = new Scenarios.threeBubblesGraph().getBubble3InTree();
             expect(
                 bubble3.hasHiddenRelations()
             ).toBeTruthy();

@@ -82,6 +82,7 @@
   }
   white-space: nowrap;
   .bubble-label {
+    color:black;
     &:before, &:after {
       content: ' ';
       font-family: $cursorBlinkFontFamily;

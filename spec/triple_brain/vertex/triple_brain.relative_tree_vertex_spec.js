@@ -11,26 +11,21 @@ define([
 ], function (Scenarios, Mock, TestUtils, RelativeTreeVertex, MindMapInfo) {
     "use strict";
     describe("relative_tree_vertex", function () {
-        var bubble1,
-            bubble2,
-            bubble3,
-            relation1;
         beforeEach(function () {
             Mock.applyDefaultMocks();
-            var scenario = new Scenarios.threeBubblesGraph();
-            bubble1 = scenario.getCenterBubbleInTree();
-            bubble2 = scenario.getBubble2InTree();
-            bubble3 = scenario.getBubble3InTree();
-            relation1 = scenario.getRelation1InTree();
         });
         it("can return relation with ui parent", function () {
+            var scenario = new Scenarios.threeBubblesGraph();
+            var bubble2 = scenario.getBubble2InTree();
             var relationWithParent = bubble2.getRelationWithUiParent();
             expect(
                 relationWithParent.getUri()
-            ).toBe(relation1.getUri());
+            ).toBe(scenario.getRelation1InTree().getUri());
         });
         it("can visit immediate vertices child", function () {
             var hasVisited = false;
+            var scenario = new Scenarios.threeBubblesGraph();
+            var bubble1 = scenario.getCenterBubbleInTree();
             bubble1.visitVerticesChildren(function (vertex) {
                 expect(
                         "b2" === vertex.text() ||
@@ -41,10 +36,15 @@ define([
             expect(hasVisited).toBeTruthy();
         });
         it("can visit all vertices when there are none", function () {
+            var scenario = new Scenarios.threeBubblesGraph();
+
             var numberOfVisitedVertices = 0;
             RelativeTreeVertex.visitAllVertices(function(){
                 numberOfVisitedVertices++;
             });
+            var bubble1 = scenario.getCenterBubbleInTree();
+            var bubble2 = scenario.getBubble2InTree();
+            var bubble3 = scenario.getBubble3InTree();
             expect(numberOfVisitedVertices).toBe(3);
             bubble3.remove();
             bubble2.remove();
@@ -155,6 +155,62 @@ define([
             expect(
                 listContainer[0].childNodes[0].childNodes[0].nodeValue
             ).toBe(aChildVertex.text());
+        });
+        it("can return the number of hidden relations", function(){
+            MindMapInfo._setIsViewOnly(false);
+            var scenario = new Scenarios.threeBubblesGraph();
+            var b2 = scenario.getBubble2InTree();
+            b2.getHiddenRelationsContainer().show();
+            expect(
+                b2.getNumberOfHiddenRelations()
+            ).toBe(2);
+            expect(
+                b2.hasHiddenRelations()
+            ).toBeTruthy();
+        });
+
+        it("returns zero hidden relations if vertex is expanded", function(){
+            var scenario = new Scenarios.threeBubblesGraph();
+            expect(
+                scenario.getBubble1InTree().getNumberOfHiddenRelations()
+            ).toBe(0);
+            var b2 = scenario.getBubble2InTree();
+            b2.getHiddenRelationsContainer().show();
+            expect(
+                b2.getNumberOfHiddenRelations()
+            ).toBe(2);
+            expect(
+                b2.hasHiddenRelations()
+            ).toBeTruthy();
+            scenario.expandBubble2(b2);
+            MindMapInfo._setIsViewOnly(false);
+            expect(
+                b2.getNumberOfHiddenRelations()
+            ).toBe(0);
+            expect(
+                b2.hasHiddenRelations()
+            ).toBeFalsy();
+        });
+
+        it("returns one more hidden relations if immediate child of a meta", function(){
+            var scenario = new Scenarios.aroundEventIdentifier();
+            var event2 = scenario.getEvent2();
+            event2.getHiddenRelationsContainer().show();
+            expect(
+                event2.getNumberOfHiddenRelations()
+            ).toBe(2);
+            MindMapInfo._setIsViewOnly(false);
+            expect(
+                event2.hasHiddenRelations()
+            ).toBeTruthy();
+            var event1 = scenario.getEvent1();
+            event1.getHiddenRelationsContainer().show();
+            expect(
+                event1.getNumberOfHiddenRelations()
+            ).toBe(1);
+            expect(
+                event1.hasHiddenRelations()
+            ).toBeTruthy();
         });
     });
 });

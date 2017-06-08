@@ -910,6 +910,9 @@ define([
             this.getMetaCenterInTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("Human");
             };
+            this.getB1InTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("b1");
+            };
             Mock.setCenterBubbleUriInUrl(
                 this.getCenterBubbleUri()
             );

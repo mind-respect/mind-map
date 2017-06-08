@@ -278,7 +278,10 @@ define([
         it("does not display child suggestions if child has hidden relations", function () {
             var centerBubble = new Scenarios.withAcceptedSuggestionGraphNotCentered().getCenterBubbleInTree();
             var eventBubble = centerBubble.getTopMostChildBubble().getTopMostChildBubble();
-            expect(eventBubble.hasHiddenRelations());
+            eventBubble.getHiddenRelationsContainer().show();
+            expect(
+                eventBubble.hasHiddenRelations()
+            ).toBeTruthy();
             expect(
                 eventBubble.getNumberOfChild()
             ).toBe(0);
@@ -588,8 +591,7 @@ define([
         });
         it("can expand child of meta center having a group relation as a child", function(){
             var scenario = new Scenarios.getMetaCenterChildHavingGroupRelation();
-            var centerBubble = scenario.getMetaCenterInTree();
-            var b1 = centerBubble.getTopMostChildBubble().getTopMostChildBubble();
+            var b1 = scenario.getB1InTree();
             expect(
                 b1.text()
             ).toBe("b1");
