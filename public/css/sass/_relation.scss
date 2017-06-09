@@ -2,6 +2,9 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 .relation.bubble {
+  .hidden-properties-content{
+    margin-left: $marginOfHiddenPropertiesToRelation;
+  }
   &.compare-add, &.compare-add.inverse, &.compare-add.suggestion{
     .in-bubble-content .label-info {
       color: black;
@@ -68,6 +71,7 @@
   &.suggestion{
     &.selected, &.single-selected{
       .bubble-label {
+        color:black;
         &:after {
           color: black;
         }
@@ -75,6 +79,9 @@
     }
     .in-bubble-content {
       border: none;
+      .bubble-label{
+        color: black;
+      }
       .label-info {
         background-color: #E7EEF2;
         color: black;
@@ -83,6 +90,9 @@
     }
   }
   &.suggestion{
+    .bubble-label{
+      color:black;
+    }
     .in-bubble-content .label-info {
       border: $edgeSize dotted $suggestionColor;
     }

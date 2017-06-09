@@ -208,7 +208,9 @@ body.mind-map-flow { margin-top: 50px; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .left-oriented [data-action=addChild] .fa-arrow-right { transform: rotate(180deg); }
+.left-oriented .vertex.selected .in-bubble-content { box-shadow: 5px 5px 5px black; }
 .left-oriented .vertex .in-bubble-content .in-label-buttons { margin-right: -32px; margin-left: auto; padding-left: 8px; }
+.left-oriented .relation .hidden-properties-content { margin-left: 0; margin-right: 25px; }
 .left-oriented .relation.public .label-container:after { right: auto; left: 4px; }
 .left-oriented .relation .in-bubble-content .in-bubble-note-button { left: auto; right: -32px; }
 .left-oriented .relation .label-container { padding-left: 0; padding-right: 6px; }
@@ -342,6 +344,7 @@ button.inactive i { color: red; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .relation.bubble { position: relative; }
+.relation.bubble .hidden-properties-content { margin-left: 25px; }
 .relation.bubble.compare-add .in-bubble-content .label-info, .relation.bubble.compare-add.inverse .in-bubble-content .label-info, .relation.bubble.compare-add.suggestion .in-bubble-content .label-info { color: black; }
 .relation.bubble.compare-add .in-bubble-content .label-info .bubble-label, .relation.bubble.compare-add.inverse .in-bubble-content .label-info .bubble-label, .relation.bubble.compare-add.suggestion .in-bubble-content .label-info .bubble-label { color: black; }
 .relation.bubble.compare-add .in-bubble-content .label-info .bubble-label:empty:not(:focus):after, .relation.bubble.compare-add.inverse .in-bubble-content .label-info .bubble-label:empty:not(:focus):after, .relation.bubble.compare-add.suggestion .in-bubble-content .label-info .bubble-label:empty:not(:focus):after { color: grey; }
@@ -355,9 +358,12 @@ button.inactive i { color: red; }
 .relation.bubble .menu { background-color: transparent; z-index: 11; margin-left: 5px; }
 .relation.bubble .label-container { display: table-cell; padding-left: 6px; position: relative; }
 .relation.bubble.selected:not(.not-editable) .bubble-label:empty:not(:focus):after { color: white; }
+.relation.bubble.suggestion.selected .bubble-label, .relation.bubble.suggestion.single-selected .bubble-label { color: black; }
 .relation.bubble.suggestion.selected .bubble-label:after, .relation.bubble.suggestion.single-selected .bubble-label:after { color: black; }
 .relation.bubble.suggestion .in-bubble-content { border: none; }
+.relation.bubble.suggestion .in-bubble-content .bubble-label { color: black; }
 .relation.bubble.suggestion .in-bubble-content .label-info { background-color: #E7EEF2; color: black; text-shadow: none; }
+.relation.bubble.suggestion .bubble-label { color: black; }
 .relation.bubble.suggestion .in-bubble-content .label-info { border: 3px dotted darkgreen; }
 .relation.bubble.meta-relation .label-container { display: none; }
 .relation.bubble.meta-relation .remove-relation-button { display: block; font-size: 1.15em; }
@@ -450,8 +456,8 @@ button.inactive i { color: red; }
 .vertex.includes-vertices .in-bubble-content { padding-bottom: 2em; }
 .vertex .in-bubble-content .in-label-buttons { margin-left: -24px; padding-left: 0; padding-right: 8px; }
 .vertex.selected { z-index: 12; }
-.vertex.selected .in-bubble-content { box-shadow: 5px 5px 5px black; }
-.vertex.selected.center-vertex .in-bubble-content { box-shadow: 5px 5px 5px black; }
+.vertex.selected .in-bubble-content { box-shadow: -5px 5px 5px black; }
+.vertex.selected.center-vertex .in-bubble-content { box-shadow: -5px 5px 5px black; }
 .vertex.center-vertex .connector { height: 0; width: 0; }
 .vertex.center-vertex .arrow { height: 0; width: 0; top: 0; left: 0; border-top: none; }
 .vertex.center-vertex .arrow:before { content: ""; }
@@ -463,7 +469,6 @@ button.inactive i { color: red; }
 .vertex .in-bubble-content > * { display: table-cell; }
 .vertex .in-bubble-content .bubble-label { padding: 0; }
 .vertex .in-bubble-content .in-bubble-note-button { display: block; }
-.vertex .move { background-image: url("images/icons/vertex/move.png"); min-width: 25px; min-height: 25px; margin-right: 5px; margin-left: 8px; float: left; }
 .vertex .ui-button { width: 1.7em; height: 1.8em; margin-right: 0; font-size: 1.1em; padding: 0; }
 
 .included-vertices-container .layout { position: absolute; }
@@ -608,8 +613,7 @@ li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-bu
 
 .main-panel { z-index: 12; background-color: transparent; opacity: 0.91; -moz-border-radius: 15px; border-radius: 15px; cursor: default; }
 
-.hidden-properties-container { z-index: 3; min-width: 25px; cursor: pointer; }
-.hidden-properties-container img { width: 80px; height: auto; }
+.hidden-properties-container { z-index: 3; min-width: 25px; cursor: pointer; font-size: 22px; font-weight: bold; color: darkslategrey; }
 
 .link-like-button { border-style: none; font-size: 0.7em; padding: 0 0 0 0; background-color: transparent; font-weight: normal; }
 

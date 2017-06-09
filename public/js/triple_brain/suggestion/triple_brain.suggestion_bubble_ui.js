@@ -140,5 +140,8 @@ define([
         this.integrationDeferrer.resolve(vertexUi);
         return vertexUi;
     };
+    api.SuggestionBubbleUi.prototype.getNumberOfHiddenRelations = function(){
+        return 0;
+    };
     return api;
 });

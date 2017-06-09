@@ -200,11 +200,11 @@ li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-bu
   z-index: 3;
   min-width: 25px;
   cursor:pointer;
-  img {
-    width: 80px;
-    height: auto;
-  }
+  font-size: 22px;
+  font-weight: bold;
+  color: darkslategrey;
 }
+
 
 .link-like-button {
   border-style: none;

@@ -139,6 +139,10 @@ define([
             return y;
         };
 
+        api.EdgeUi.prototype.getNumberOfHiddenRelations = function () {
+            return 0;
+        };
+
         EventBus.subscribe(
             '/event/ui/graph/vertex/privacy/updated',
             function(event, graphElement){

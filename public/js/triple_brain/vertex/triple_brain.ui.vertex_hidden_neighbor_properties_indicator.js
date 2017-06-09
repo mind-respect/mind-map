@@ -11,10 +11,7 @@ define([
     ],
     function ($, MindMapTemplate, EventBus, GraphDisplayer, BubbleFactory) {
         "use strict";
-        var api = {},
-            imageBasePath = "/css/images/icons/vertex/",
-            rightSideImagePath = imageBasePath + "floral-design.svg",
-            leftSideImagePath = imageBasePath + "left-floral-design.svg";
+        var api = {};
         api.withBubble = function (bubble) {
             return new HiddenNeighborPropertiesIndicator(bubble);
         };
@@ -30,30 +27,36 @@ define([
         }
 
         HiddenNeighborPropertiesIndicator.prototype.build = function () {
-            var isLeftOriented = this.bubble.isToTheLeft();
+
             this.hiddenNeighborPropertiesContainer = $(
                 MindMapTemplate[
                     'hidden_property_container'
                     ].merge()
             ).data("vertex", this.bubble);
-            var imageUrl = isLeftOriented ? leftSideImagePath : rightSideImagePath;
-            var img = $("<img>").attr(
-                "src",
-                imageUrl
+            var div = $("<div class='hidden-properties-content'>").append(
+                this.buildContent()
             ).attr(
                 "title",
                 $.i18n.translate("hidden_properties_tooltip")
             ).popoverLikeToolTip();
             this.hiddenNeighborPropertiesContainer.append(
-                img
+                div
             );
-            this.bubble.getHtml()[isLeftOriented ? "prepend" : "append"](
+            this.bubble.getHtml()[this.bubble.isToTheLeft() ? "prepend" : "append"](
                 this.hiddenNeighborPropertiesContainer
             );
             this.hiddenNeighborPropertiesContainer.on(
                 "click",
                 handleHiddenPropertiesContainerClick
             );
+        };
+
+        HiddenNeighborPropertiesIndicator.prototype.buildContent = function(){
+            var isLeftOriented = this.bubble.isToTheLeft();
+            var plusSign = "+";
+            var numberOfHiddenRelations = this.bubble.getNumberOfHiddenRelations();
+            return (isLeftOriented ? numberOfHiddenRelations : plusSign) +
+                " " + (isLeftOriented ? plusSign : numberOfHiddenRelations);
         };
 
         HiddenNeighborPropertiesIndicator.prototype.remove = function () {
@@ -80,9 +83,8 @@ define([
             this.getHtml().prependTo(
                 this.bubble.getHtml()
             );
-            this.getHtml().find("img").attr(
-                "src",
-                leftSideImagePath
+            this.getHtml().find(".hidden-properties-content").text(
+                this.buildContent()
             );
         };
 
@@ -90,9 +92,8 @@ define([
             this.getHtml().appendTo(
                 this.bubble.getHtml()
             );
-            this.getHtml().find("img").attr(
-                "src",
-                rightSideImagePath
+            this.getHtml().find(".hidden-properties-content").text(
+                this.buildContent()
             );
         };
 

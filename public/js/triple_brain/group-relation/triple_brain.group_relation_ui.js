@@ -109,6 +109,11 @@ define([
         return this.getModel().getIdentifiers()[0];
     };
 
+    api.GroupRelationUi.prototype.getNumberOfHiddenRelations = function(){
+        return this.getModel().getNumberOfVertices();
+    };
+
+
     api.GroupRelationUi.prototype.getModel = api.GroupRelationUi.prototype.getGroupRelation;
 
     return api;

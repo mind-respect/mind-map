@@ -6,6 +6,11 @@
     transform: rotate(180deg);
   }
   .vertex {
+    &.selected{
+      .in-bubble-content {
+        box-shadow: 5px 5px 5px black;
+      }
+    }
     .in-bubble-content {
       .in-label-buttons{
         margin-right:-32px;
@@ -15,6 +20,10 @@
     }
   }
   .relation {
+    .hidden-properties-content{
+      margin-left: 0;
+      margin-right: $marginOfHiddenPropertiesToRelation;
+    }
     &.public {
       .label-container{
         &:after {;

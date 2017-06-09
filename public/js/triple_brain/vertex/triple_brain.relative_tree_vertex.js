@@ -159,7 +159,7 @@ define([
         };
 
         api.RelativeTreeVertex.prototype.hasHiddenRelations = function () {
-            return MindMapInfo.isViewOnly() ?
+            return !this.isCenterBubble() && MindMapInfo.isViewOnly() ?
                         this._hasPublicHiddenRelations() :
                         this.getNumberOfHiddenRelations() > 0;
 
