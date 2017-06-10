@@ -57,10 +57,10 @@ define([
     };
 
     GraphElementController.prototype.setLabel = function (newLabel) {
-        this.getUi().setText(
+        this.getUi().getModel().setLabel(
             newLabel
         );
-        this.getUi().getModel().setLabel(
+        this.getUi().setText(
             newLabel
         );
         FriendlyResourceService.updateLabel(

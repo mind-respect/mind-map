@@ -179,12 +179,13 @@ define([
         };
 
         api.Bubble.prototype.getParentBubble = function () {
-            if (this.isCenterVertexSchemaOrMeta()) {
+            var parentHtml = this.html.closest(".vertices-children-container")
+                .siblings(".vertex-container").find("> .bubble");
+            if(parentHtml.length === 0){
                 return this;
             }
             return BubbleFactory.fromHtml(
-                this.html.closest(".vertices-children-container")
-                    .siblings(".vertex-container").find("> .bubble")
+                parentHtml
             );
         };
         api.Bubble.prototype.getParentVertex = function () {

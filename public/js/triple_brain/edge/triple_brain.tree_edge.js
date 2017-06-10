@@ -5,12 +5,12 @@
 define([
         "jquery",
         "triple_brain.edge_ui",
-        "triple_brain.bubble"
+        "triple_brain.bubble",
+        "triple_brain.object_utils"
     ],
-    function ($, EdgeUi, Bubble) {
+    function ($, EdgeUi, Bubble, ObjectUtils) {
         "use strict";
         var api = {};
-        api.buildCommonConstructors = EdgeUi.buildCommonConstructors;
 
         EdgeUi.buildCommonConstructors(api);
 
@@ -19,6 +19,9 @@ define([
                 html
             );
             api.initCache(treeEdge);
+            EdgeUi.initCache(
+                treeEdge
+            );
             return treeEdge;
         };
 
@@ -30,6 +33,10 @@ define([
                 edge.getHtml()
             );
         };
+        api = ObjectUtils.makeChildInheritParent(
+            api,
+            EdgeUi
+        );
         api.TreeEdge = function () {
         };
         api.TreeEdge.prototype = new EdgeUi.EdgeUi();
@@ -89,12 +96,29 @@ define([
         api.TreeEdge.prototype.reviewEditButtonDisplay = function () {
             var parentBubble = this.getParentBubble();
             if (!parentBubble.isGroupRelation()) {
+                this.setAsNotSameAsGroupRelation();
                 return;
             }
             if (parentBubble.text() !== this.text() && "" !== this.text().trim()) {
                 return;
             }
             this.setAsSameAsGroupRelation();
+        };
+
+        api.TreeEdge.prototype.removeIdentifier = function(identifier){
+            Bubble.Bubble.prototype.removeIdentifier.call(
+                this,
+                identifier
+            );
+            this.reviewEditButtonDisplay();
+        };
+
+        api.TreeEdge.prototype.setText = function(text){
+            Bubble.Bubble.prototype.setText.call(
+                this,
+                text
+            );
+            this.reviewEditButtonDisplay();
         };
 
         api.TreeEdge.prototype.remove = function () {
@@ -109,7 +133,6 @@ define([
                 this
             );
         };
-
         return api;
     }
 );

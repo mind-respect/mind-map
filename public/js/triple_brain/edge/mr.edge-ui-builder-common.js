@@ -83,12 +83,7 @@ define([
                     )
                 ]
             }
-        ).blur(function () {
-            var edge = BubbleFactory.fromSubHtml(
-                $(this)
-            );
-            edge.reviewEditButtonDisplay();
-        });
+        );
         labelAndButtons.appendTo(labelContainer);
         if (!MindMapInfo.isViewOnly() && !isViewOnly) {
             label.on(

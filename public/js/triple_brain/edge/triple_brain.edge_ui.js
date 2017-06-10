@@ -31,8 +31,7 @@ define([
                 });
             };
         };
-        api.buildCommonConstructors(api);
-        
+
         api.EdgeUi = function (html) {
             this.html = html;
             Bubble.Bubble.apply(this, [html]);
@@ -151,7 +150,7 @@ define([
                 });
             }
         );
-
+        api.buildCommonConstructors(api);
         return api;
     }
 );

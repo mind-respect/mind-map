@@ -116,12 +116,7 @@ define([
                         )
                     );
                 }
-            ).blur(function(){
-                var edge = BubbleFactory.fromSubHtml(
-                    $(this)
-                );
-                edge.reviewEditButtonDisplay();
-            }).appendTo(labelAndButtons);
+            ).appendTo(labelAndButtons);
             labelHtml.attr(
                 "data-placeholder",
                 GroupRelationUi.getWhenEmptyLabel()

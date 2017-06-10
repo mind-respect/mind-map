@@ -5,14 +5,16 @@
 define([
     'test/test-scenarios',
     "test/test-utils",
+    'test/mock',
     "triple_brain.selection_handler"
-], function (Scenarios, TestUtils, SelectionHandler) {
+], function (Scenarios, TestUtils, Mock, SelectionHandler) {
     "use strict";
-    describe("bubble", function () {
+    describe("tree_edge", function () {
         var edge1,
             child1,
             centerBubble;
         beforeEach(function () {
+            Mock.applyDefaultMocks();
             var scenario = new Scenarios.threeBubblesGraph();
             edge1 = scenario.getRelation1InTree();
             child1 = scenario.getBubble2();
@@ -72,6 +74,28 @@ define([
             expect(
                 b1.isSelected()
             ).toBeTruthy();
+        });
+        it("reviews edit button display when moved away from group relation", function () {
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+            groupRelation.expand();
+            var relationUnderGroupRelation = TestUtils.getChildWithLabel(
+                groupRelation,
+                "Possession of book 1"
+            );
+            relationUnderGroupRelation.getController().setLabel(
+                groupRelation.text()
+            );
+            expect(
+                relationUnderGroupRelation.isSetAsSameAsGroupRelation()
+            ).toBeTruthy();
+            var otherBubble = scenario.getOtherRelationInTree().getTopMostChildBubble();
+            relationUnderGroupRelation.getTopMostChildBubble().getController().moveUnderParent(
+                otherBubble
+            );
+            expect(
+                relationUnderGroupRelation.isSetAsSameAsGroupRelation()
+            ).toBeFalsy();
         });
     });
 });
