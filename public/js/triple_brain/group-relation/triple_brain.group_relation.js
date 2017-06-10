@@ -127,6 +127,14 @@ define([
         GroupRelation.prototype.getNumberOfVertices = function () {
             return Object.keys(this.vertices).length;
         };
+        GroupRelation.prototype.getNumberOfVerticesAtAnyDepth = function () {
+            var numberOfVertices = this.getNumberOfVertices();
+            this.getChildGroupRelations().forEach(function(childGroupRelation){
+                numberOfVertices += childGroupRelation.getNumberOfVerticesAtAnyDepth();
+            });
+            return numberOfVertices;
+        };
+
         GroupRelation.prototype.hasIdentifications = function () {
             return true;
         };

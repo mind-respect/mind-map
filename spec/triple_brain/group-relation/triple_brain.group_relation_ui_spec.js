@@ -43,6 +43,13 @@ define([
                 possessionInTree.getNumberOfChild()
             ).toBe(3);
         });
+        it("includes the deeper relations in the number of hidden relations", function () {
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
+            expect(
+                possessionInTree.getNumberOfHiddenRelations()
+            ).toBe(4);
+        });
         // it("can return the most relevant identifier", function(){
         //     var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
         //     var possessionInTree = scenario.getPossessionAsGroupRelationInTree();

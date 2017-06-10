@@ -110,7 +110,7 @@ define([
     };
 
     api.GroupRelationUi.prototype.getNumberOfHiddenRelations = function(){
-        return this.getModel().getNumberOfVertices();
+        return this.getModel().getNumberOfVerticesAtAnyDepth();
     };
 
 
