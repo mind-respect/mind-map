@@ -44,7 +44,7 @@ define([
         return false;
     };
     MetaUi.prototype.getNumberOfHiddenRelations = function(){
-        return 0
+        return 0;
     };
     return api;
 });
