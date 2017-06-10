@@ -41,7 +41,10 @@ define([
         return GraphElementUi.Types.Meta;
     };
     MetaUi.prototype.hasHiddenRelations = function(){
-
+        return false;
+    };
+    MetaUi.prototype.getNumberOfHiddenRelations = function(){
+        return 0
     };
     return api;
 });
