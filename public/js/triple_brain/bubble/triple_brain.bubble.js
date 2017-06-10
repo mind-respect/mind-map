@@ -639,7 +639,7 @@ define([
             var centerOptions = {
                 done:deferred.resolve
             };
-            var htmlToScroll = this.isGroupRelation() ? this.getHtml() : this.getParentBubble().getHtml();
+            var htmlToScroll = this.isGroupRelation() ? this.getHtml() : this.getHtml();
             if(this.isCenterBubble()){
                 htmlToScroll.centerOnScreenWithAnimation(centerOptions);
             }
@@ -740,6 +740,9 @@ define([
             if (avoidScreenCenter && !isChildExpand) {
             }else{
                 this.sideCenterOnScreenWithAnimation();
+            }
+            if(!avoidScreenCenter){
+                SelectionHandler.setToSingleGraphElement(this);
             }
         };
 

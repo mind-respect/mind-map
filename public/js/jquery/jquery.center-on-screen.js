@@ -86,12 +86,12 @@ define([
         function scrollRightSideFromPosition(position, element, visibleSize) {
             var scrollLeft = $(window).scrollLeft();
             return  scrollLeft - (
-                    scrollLeft + visibleSize.x - position.left
+                    scrollLeft + (visibleSize.x  - visibleSize.x / 8) - position.left
                 ) + element.width()
         }
 
-        function scrollSideLeftFromPosition(position) {
-            return position.left;
+        function scrollSideLeftFromPosition(position, element, visibleSize) {
+            return position.left - visibleSize.x / 5;
         }
 
         function visibleSizeFromOptions(options) {
