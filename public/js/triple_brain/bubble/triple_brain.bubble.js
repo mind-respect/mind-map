@@ -678,7 +678,7 @@ define([
 
         api.Bubble.prototype.hasDescendantsWithHiddenRelations = function () {
             return this.getChildrenContainer().find(
-                    ".hidden-properties-container:not(.hidden)"
+                    ".hidden-properties-container .hidden-properties-content:not(.hidden)"
                 ).length > 0;
         };
 
@@ -696,7 +696,7 @@ define([
 
         api.Bubble.prototype.visitExpandableDescendants = function (visitor) {
             return this.getChildrenContainer().find(
-                ".hidden-properties-container:not(.hidden)"
+                ".hidden-properties-container .hidden-properties-content:not(.hidden)"
             ).each(function () {
                 visitor(
                     BubbleFactory.fromSubHtml(

@@ -49,6 +49,10 @@ define([
                 "click",
                 handleHiddenPropertiesContainerClick
             );
+            var loadingAnimation = $('<i class="loading hidden fa fa-refresh fa-spin fa-4x fa-fw"></i>');
+            this.hiddenNeighborPropertiesContainer.append(
+                loadingAnimation
+            );
         };
 
         HiddenNeighborPropertiesIndicator.prototype.buildContent = function(){
@@ -64,15 +68,15 @@ define([
         };
 
         HiddenNeighborPropertiesIndicator.prototype.hide = function () {
-            this.hiddenNeighborPropertiesContainer.addClass("hidden");
+            this._getContent().addClass("hidden");
         };
 
         HiddenNeighborPropertiesIndicator.prototype.show = function () {
-            this.hiddenNeighborPropertiesContainer.removeClass("hidden");
+            this._getContent().removeClass("hidden");
         };
 
         HiddenNeighborPropertiesIndicator.prototype.isVisible = function () {
-            return !this.getHtml().hasClass("hidden");
+            return !this._getContent().hasClass("hidden");
         };
 
         HiddenNeighborPropertiesIndicator.prototype.getHtml = function () {
@@ -83,7 +87,7 @@ define([
             this.getHtml().prependTo(
                 this.bubble.getHtml()
             );
-            this.getHtml().find(".hidden-properties-content").text(
+            this._getContent().text(
                 this.buildContent()
             );
         };
@@ -92,13 +96,26 @@ define([
             this.getHtml().appendTo(
                 this.bubble.getHtml()
             );
-            this.getHtml().find(".hidden-properties-content").text(
+            this._getContent().text(
                 this.buildContent()
             );
         };
 
+
+        HiddenNeighborPropertiesIndicator.prototype._getContent = function(){
+            return this.getHtml().find(".hidden-properties-content");
+        };
+
         HiddenNeighborPropertiesIndicator.prototype.getBubble = function () {
             return this.bubble;
+        };
+
+        HiddenNeighborPropertiesIndicator.prototype._showLoading = function () {
+            this.hiddenNeighborPropertiesContainer.find(".loading").removeClass("hidden");
+        };
+
+        HiddenNeighborPropertiesIndicator.prototype._hideLoading = function () {
+            this.hiddenNeighborPropertiesContainer.find(".loading").addClass("hidden");
         };
 
         function handleHiddenPropertiesContainerClick(event) {
@@ -109,7 +126,12 @@ define([
             var hiddenPropertiesContainer = api.fromHtml(
                 $(this)
             );
-            hiddenPropertiesContainer.getBubble().getController().expand();
+            hiddenPropertiesContainer._showLoading();
+
+            hiddenPropertiesContainer.getBubble().getController().expand().then(function(){
+                hiddenPropertiesContainer._hideLoading();
+            });
+
             hiddenPropertiesContainer.hide();
         }
 
