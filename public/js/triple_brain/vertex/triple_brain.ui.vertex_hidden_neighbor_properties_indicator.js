@@ -68,11 +68,13 @@ define([
         };
 
         HiddenNeighborPropertiesIndicator.prototype.hide = function () {
+            this.hiddenNeighborPropertiesContainer.addClass("hidden");
             this._getContent().addClass("hidden");
         };
 
         HiddenNeighborPropertiesIndicator.prototype.show = function () {
             this._getContent().removeClass("hidden");
+            this.hiddenNeighborPropertiesContainer.removeClass("hidden");
         };
 
         HiddenNeighborPropertiesIndicator.prototype.isVisible = function () {
@@ -112,9 +114,11 @@ define([
 
         HiddenNeighborPropertiesIndicator.prototype._showLoading = function () {
             this.hiddenNeighborPropertiesContainer.find(".loading").removeClass("hidden");
+            this.hiddenNeighborPropertiesContainer.removeClass("hidden");
         };
 
         HiddenNeighborPropertiesIndicator.prototype._hideLoading = function () {
+            this.hiddenNeighborPropertiesContainer.addClass("hidden");
             this.hiddenNeighborPropertiesContainer.find(".loading").addClass("hidden");
         };
 
@@ -131,7 +135,6 @@ define([
             hiddenPropertiesContainer.getBubble().getController().expand().then(function(){
                 hiddenPropertiesContainer._hideLoading();
             });
-
             hiddenPropertiesContainer.hide();
         }
 
