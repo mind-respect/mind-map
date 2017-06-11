@@ -78,7 +78,9 @@ define([
         };
 
         HiddenNeighborPropertiesIndicator.prototype.isVisible = function () {
-            return !this._getContent().hasClass("hidden");
+            return !this.hiddenNeighborPropertiesContainer.hasClass("hidden") &&
+                (!this._getContent().hasClass("hidden") ||
+                    !this.hiddenNeighborPropertiesContainer.find(".loading").hasClass("hidden"));
         };
 
         HiddenNeighborPropertiesIndicator.prototype.getHtml = function () {
@@ -114,12 +116,13 @@ define([
 
         HiddenNeighborPropertiesIndicator.prototype._showLoading = function () {
             this.hiddenNeighborPropertiesContainer.find(".loading").removeClass("hidden");
+            this._getContent().addClass("hidden");
             this.hiddenNeighborPropertiesContainer.removeClass("hidden");
         };
 
         HiddenNeighborPropertiesIndicator.prototype._hideLoading = function () {
-            this.hiddenNeighborPropertiesContainer.addClass("hidden");
             this.hiddenNeighborPropertiesContainer.find(".loading").addClass("hidden");
+            this.hiddenNeighborPropertiesContainer.addClass("hidden");
         };
 
         function handleHiddenPropertiesContainerClick(event) {
@@ -131,11 +134,9 @@ define([
                 $(this)
             );
             hiddenPropertiesContainer._showLoading();
-
             hiddenPropertiesContainer.getBubble().getController().expand().then(function(){
                 hiddenPropertiesContainer._hideLoading();
             });
-            hiddenPropertiesContainer.hide();
         }
 
         return api;

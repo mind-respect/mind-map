@@ -4,11 +4,15 @@
 
 define([
     "test/test-scenarios",
+    'test/mock',
     "test/mock/triple_brain.graph_service_mock",
     "triple_brain.graph_service"
-], function (Scenarios, GraphServiceMock, GraphService) {
+], function (Scenarios, Mock, GraphServiceMock, GraphService) {
     "use strict";
     describe("vertex hidden neighbor properties indicator", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         it("hides the flag instantly on click in order to avoid to handle the click twice", function(){
             var threeBubblesScenario = new Scenarios.threeBubblesGraph();
             var b3 = threeBubblesScenario.getBubble3InTree();
@@ -17,12 +21,12 @@ define([
                 //disable callback to be able to test
             };
             expect(
-                b3.getHiddenRelationsContainer().isVisible()
-            ).toBeTruthy();
+                b3.getHiddenRelationsContainer()._getContent().hasClass("hidden")
+            ).toBeFalsy();
             b3.getHiddenRelationsContainer().getHtml().click();
             expect(
-                b3.getHiddenRelationsContainer().isVisible()
-            ).toBeFalsy();
+                b3.getHiddenRelationsContainer()._getContent().hasClass("hidden")
+            ).toBeTruthy();
         });
         it("shows child tree when clicking", function(){
             var threeBubblesScenario = new Scenarios.threeBubblesGraph();
