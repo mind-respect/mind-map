@@ -74,13 +74,14 @@ define([
 
         HiddenNeighborPropertiesIndicator.prototype.show = function () {
             this._getContent().removeClass("hidden");
+            this._getLoading().addClass("hidden");
             this.hiddenNeighborPropertiesContainer.removeClass("hidden");
         };
 
         HiddenNeighborPropertiesIndicator.prototype.isVisible = function () {
             return !this.hiddenNeighborPropertiesContainer.hasClass("hidden") &&
                 (!this._getContent().hasClass("hidden") ||
-                    !this.hiddenNeighborPropertiesContainer.find(".loading").hasClass("hidden"));
+                    !this._getLoading().hasClass("hidden"));
         };
 
         HiddenNeighborPropertiesIndicator.prototype.getHtml = function () {
@@ -110,18 +111,22 @@ define([
             return this.getHtml().find(".hidden-properties-content");
         };
 
+        HiddenNeighborPropertiesIndicator.prototype._getLoading = function(){
+            return this.hiddenNeighborPropertiesContainer.find(".loading");
+        };
+
         HiddenNeighborPropertiesIndicator.prototype.getBubble = function () {
             return this.bubble;
         };
 
         HiddenNeighborPropertiesIndicator.prototype._showLoading = function () {
-            this.hiddenNeighborPropertiesContainer.find(".loading").removeClass("hidden");
+            this._getLoading().removeClass("hidden");
             this._getContent().addClass("hidden");
             this.hiddenNeighborPropertiesContainer.removeClass("hidden");
         };
 
         HiddenNeighborPropertiesIndicator.prototype._hideLoading = function () {
-            this.hiddenNeighborPropertiesContainer.find(".loading").addClass("hidden");
+            this._getLoading().addClass("hidden");
             this.hiddenNeighborPropertiesContainer.addClass("hidden");
         };
 
