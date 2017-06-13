@@ -99,7 +99,7 @@ define([
                 this.setAsNotSameAsGroupRelation();
                 return;
             }
-            if (parentBubble.text() !== this.text() && "" !== this.text().trim()) {
+            if (parentBubble.text().trim() !== this.text().trim() && "" !== this.text().trim()) {
                 return;
             }
             this.setAsSameAsGroupRelation();

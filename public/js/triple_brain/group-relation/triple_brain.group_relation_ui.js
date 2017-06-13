@@ -113,6 +113,16 @@ define([
         return this.getModel().getNumberOfVerticesAtAnyDepth();
     };
 
+    api.GroupRelationUi.prototype.getGreatestGroupRelationAncestor = function () {
+        var greatest = this;
+        do{
+            var parent = greatest.getParentBubble();
+            if(parent.isGroupRelation()){
+                greatest = parent;
+            }
+        }while(parent.isGroupRelation());
+        return greatest;
+    };
 
     api.GroupRelationUi.prototype.getModel = api.GroupRelationUi.prototype.getGroupRelation;
 

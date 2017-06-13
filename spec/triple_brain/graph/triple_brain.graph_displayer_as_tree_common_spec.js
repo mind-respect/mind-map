@@ -151,7 +151,13 @@ define([
         it("does not duplicate relations on the same level sharing more than one common meta", function(){
             var scenario = new Scenarios.sameLevelRelationsWithMoreThanOneCommonMetaScenario();
             var centerBubble = scenario.getCenterBubbleInTree();
-            var groupRelation = centerBubble.getTopMostChildBubble();
+            var groupRelation = TestUtils.getChildWithLabel(
+                centerBubble,
+                "Creator"
+            );
+            expect(
+                groupRelation.isGroupRelation()
+            ).toBeTruthy();
             expect(
                 groupRelation.getNumberOfChild()
             ).toBe(2);

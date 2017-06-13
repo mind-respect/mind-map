@@ -317,24 +317,33 @@ define([
             parent
         );
         if (parent.isGroupRelation()) {
-            var identification = parent.getGroupRelation().getIdentification().makeSameAs();
-            promises.push(
-                movedEdge.getController().addIdentification(
-                    identification
-                )
-            );
+            var greatestParentGroupRelation = parent.getGreatestGroupRelationAncestor();
+            greatestParentGroupRelation.getModel().getIdentifiersAtAnyDepth().forEach(function(identifier){
+                identifier.makeSameAs();
+                promises.push(
+                    movedEdge.getController().addIdentification(
+                        identifier
+                    )
+                );
+            });
         }
         promises.push(
             movedEdge.getController().changeEndVertex(newSourceVertex)
         );
         if (previousParentGroupRelation.isGroupRelation()) {
-            promises.push(
-                movedEdge.getController().removeIdentifier(
-                    movedEdge.getModel().getIdentifierHavingExternalUri(
-                        previousParentGroupRelation.getModel().getIdentification().getExternalResourceUri()
-                    )
-                )
-            );
+            previousParentGroupRelation = previousParentGroupRelation.getGreatestGroupRelationAncestor();
+            previousParentGroupRelation.getModel().getIdentifiersAtAnyDepth().forEach(function(identifier){
+                identifier = movedEdge.getModel().getIdentifierHavingExternalUri(
+                    identifier.getExternalResourceUri()
+                );
+                if(identifier){
+                    promises.push(
+                        movedEdge.getController().removeIdentifier(
+                            identifier
+                        )
+                    );
+                }
+            });
         }
         return $.when.apply($, promises);
     };

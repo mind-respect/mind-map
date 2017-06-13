@@ -224,5 +224,78 @@ define([
                 otherBubbleEdge.getModel().hasIdentifications()
             ).toBeTruthy();
         });
+        it("removes the identifier of the relation under the group relation when moving under another bubble", function () {
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+            groupRelation.expand();
+            var relationUnderGroupRelation = TestUtils.getChildWithLabel(
+                groupRelation,
+                "Possession of book 1"
+            );
+            expect(
+                relationUnderGroupRelation.getModel().hasIdentification(
+                    groupRelation.getModel().getIdentification()
+                )
+            ).toBeTruthy();
+            var vertex = relationUnderGroupRelation.getTopMostChildBubble();
+            vertex.getController().moveUnderParent(
+                scenario.getOtherRelationInTree().getTopMostChildBubble()
+            );
+            expect(
+                relationUnderGroupRelation.getModel().hasIdentification(
+                    groupRelation.getModel().getIdentification()
+                )
+            ).toBeFalsy();
+        });
+        it("removes all the identifier to the relation under the group relation when moving under another bubble", function () {
+            var scenario = new Scenarios.sameLevelRelationsWithMoreThanOneCommonMetaScenario();
+            var centerBubble = scenario.getCenterBubbleInTree();
+            var groupRelation = TestUtils.getChildWithLabel(
+                centerBubble,
+                "Creator"
+            );
+            var groupRelationUnderGroupRelation = groupRelation.getTopMostChildBubble();
+            var relationWithTwoIdentifiers = groupRelationUnderGroupRelation.getTopMostChildBubble();
+            expect(
+                relationWithTwoIdentifiers.getModel().getIdentifiers().length
+            ).toBe(2);
+            var vertex = relationWithTwoIdentifiers.getTopMostChildBubble();
+            var otherBubble = TestUtils.getChildWithLabel(
+                centerBubble,
+                "other relation"
+            ).getTopMostChildBubble();
+            expect(
+                otherBubble.isVertex()
+            ).toBeTruthy();
+            vertex.getController().moveUnderParent(
+                otherBubble
+            );
+            expect(
+                relationWithTwoIdentifiers.getModel().getIdentifiers().length
+            ).toBe(0);
+        });
+        it("adds all the identifier to the relation when moving under a the group relation", function () {
+            var scenario = new Scenarios.sameLevelRelationsWithMoreThanOneCommonMetaScenario();
+            var centerBubble = scenario.getCenterBubbleInTree();
+            var otherRelation = TestUtils.getChildWithLabel(
+                centerBubble,
+                "other relation"
+            );
+            expect(
+                otherRelation.getModel().getIdentifiers().length
+            ).toBe(0);
+            var groupRelation = TestUtils.getChildWithLabel(
+                centerBubble,
+                "Creator"
+            );
+            var groupRelationUnderGroupRelation = groupRelation.getTopMostChildBubble();
+            var otherBubble = otherRelation.getTopMostChildBubble();
+            otherBubble.getController().moveUnderParent(
+                groupRelationUnderGroupRelation
+            );
+            expect(
+                otherRelation.getModel().getIdentifiers().length
+            ).toBe(2);
+        });
     });
 });

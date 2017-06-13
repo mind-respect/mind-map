@@ -64,7 +64,7 @@ define([
             var centerBubble = scenario.getCenterBubbleInTree();
             expect(
                 centerBubble.getNumberOfChild()
-            ).toBe(1);
+            ).toBe(2);
         });
     });
 });

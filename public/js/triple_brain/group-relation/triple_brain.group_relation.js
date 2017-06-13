@@ -135,6 +135,14 @@ define([
             return numberOfVertices;
         };
 
+        GroupRelation.prototype.getIdentifiersAtAnyDepth = function () {
+            var identifiers = [].concat(this.identifiers);
+            this.getChildGroupRelations().forEach(function(childGroupRelation){
+                identifiers = identifiers.concat(childGroupRelation.getIdentifiersAtAnyDepth());
+            });
+            return identifiers;
+        };
+
         GroupRelation.prototype.hasIdentifications = function () {
             return true;
         };
