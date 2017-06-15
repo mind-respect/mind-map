@@ -97,5 +97,32 @@ define([
                 relationUnderGroupRelation.isSetAsSameAsGroupRelation()
             ).toBeFalsy();
         });
+        it("reviews edit button display when moved away from group relation to another group relation", function () {
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var centerBubble = scenario.getCenterVertexInTree();
+            var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+            groupRelation.expand();
+            var relationUnderGroupRelation = groupRelation.getTopMostChildBubble().getBubbleUnder();
+            expect(
+                relationUnderGroupRelation.isRelation()
+            ).toBeTruthy();
+            relationUnderGroupRelation.setText("Possession");
+            expect(
+                relationUnderGroupRelation.isSetAsSameAsGroupRelation()
+            ).toBeTruthy();
+            var otherGroupRelation = TestUtils.getChildWithLabel(
+                centerBubble,
+                "original relation"
+            );
+            expect(
+                otherGroupRelation.isGroupRelation()
+            ).toBeTruthy();
+            relationUnderGroupRelation.getTopMostChildBubble().getController().moveUnderParent(
+                otherGroupRelation
+            );
+            expect(
+                relationUnderGroupRelation.isSetAsSameAsGroupRelation()
+            ).toBeFalsy();
+        });
     });
 });

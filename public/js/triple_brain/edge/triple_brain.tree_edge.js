@@ -100,6 +100,7 @@ define([
                 return;
             }
             if (parentBubble.text().trim() !== this.text().trim() && "" !== this.text().trim()) {
+                this.setAsNotSameAsGroupRelation();
                 return;
             }
             this.setAsSameAsGroupRelation();
@@ -132,6 +133,15 @@ define([
             Bubble.Bubble.prototype.remove.call(
                 this
             );
+        };
+
+        api.TreeEdge.prototype.moveTo = function(otherBubble, relation){
+            Bubble.Bubble.prototype.moveTo.call(
+                this,
+                otherBubble,
+                relation
+            );
+            this.reviewEditButtonDisplay();
         };
         return api;
     }
