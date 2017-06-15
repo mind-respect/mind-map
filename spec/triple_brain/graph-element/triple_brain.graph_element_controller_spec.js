@@ -274,7 +274,7 @@ define([
                 relationWithTwoIdentifiers.getModel().getIdentifiers().length
             ).toBe(0);
         });
-        it("adds all the identifier to the relation when moving under a the group relation", function () {
+        it("adds all the identifier to the relation when moving under a group relation", function () {
             var scenario = new Scenarios.sameLevelRelationsWithMoreThanOneCommonMetaScenario();
             var centerBubble = scenario.getCenterBubbleInTree();
             var otherRelation = TestUtils.getChildWithLabel(
@@ -296,6 +296,28 @@ define([
             expect(
                 otherRelation.getModel().getIdentifiers().length
             ).toBe(2);
+        });
+        it("does not add the identifiers related to the child group relations when moving under a group relation", function () {
+            var scenario = new Scenarios.sameLevelRelationsWithMoreThanOneCommonMetaScenario();
+            var centerBubble = scenario.getCenterBubbleInTree();
+            var otherRelation = TestUtils.getChildWithLabel(
+                centerBubble,
+                "other relation"
+            );
+            expect(
+                otherRelation.getModel().getIdentifiers().length
+            ).toBe(0);
+            var groupRelation = TestUtils.getChildWithLabel(
+                centerBubble,
+                "Creator"
+            );
+            var otherBubble = otherRelation.getTopMostChildBubble();
+            otherBubble.getController().moveUnderParent(
+                groupRelation
+            );
+            expect(
+                otherRelation.getModel().getIdentifiers().length
+            ).toBe(1);
         });
     });
 });

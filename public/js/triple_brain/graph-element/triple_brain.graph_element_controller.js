@@ -247,7 +247,7 @@ define([
         } else if (typeof event === 'object' && event.clipboardData) {
             clipText = event.clipboardData.getData('text/plain');
         }
-        var separator = "" === this.getUi().text().trim()  ?
+        var separator = "" === this.getUi().text().trim() ?
             "" : " ";
         this.setLabel(
             $.maxCharText(
@@ -317,26 +317,27 @@ define([
             parent
         );
         if (parent.isGroupRelation()) {
-            var greatestParentGroupRelation = parent.getGreatestGroupRelationAncestor();
-            greatestParentGroupRelation.getModel().getIdentifiersAtAnyDepth().forEach(function(identifier){
-                identifier.makeSameAs();
+            var parentGroupRelation = parent;
+            do {
                 promises.push(
-                    movedEdge.getController().addIdentification(
-                        identifier
+                    movedEdge.getController().addIdentifiers(
+                        parentGroupRelation.getModel().getIdentifiers()
                     )
                 );
-            });
+                parentGroupRelation = parentGroupRelation.getParentBubble();
+            } while (parentGroupRelation.isGroupRelation());
+
         }
         promises.push(
             movedEdge.getController().changeEndVertex(newSourceVertex)
         );
         if (previousParentGroupRelation.isGroupRelation()) {
             previousParentGroupRelation = previousParentGroupRelation.getGreatestGroupRelationAncestor();
-            previousParentGroupRelation.getModel().getIdentifiersAtAnyDepth().forEach(function(identifier){
+            previousParentGroupRelation.getModel().getIdentifiersAtAnyDepth().forEach(function (identifier) {
                 identifier = movedEdge.getModel().getIdentifierHavingExternalUri(
                     identifier.getExternalResourceUri()
                 );
-                if(identifier){
+                if (identifier) {
                     promises.push(
                         movedEdge.getController().removeIdentifier(
                             identifier
@@ -391,9 +392,9 @@ define([
     };
 
     GraphElementController.prototype._moveToExecute = function (otherEdge, isAbove, previousParentVertex) {
-        if(isAbove){
+        if (isAbove) {
             this.getUi().moveAbove(otherEdge);
-        }else{
+        } else {
             this.getUi().moveUnder(otherEdge);
         }
         var movedEdge = this.getUi().isVertex() ?
@@ -428,6 +429,14 @@ define([
                 movedVertex.getModel()
             );
         }
+    };
+
+    GraphElementController.prototype.addIdentifiers = function (identifiers) {
+        var promises = [];
+        identifiers.forEach(function(identifier){
+            promises.push(this.addIdentification(identifier));
+        }.bind(this));
+        return $.when.apply($, promises);
     };
 
     GraphElementController.prototype.addIdentification = function (identification) {
