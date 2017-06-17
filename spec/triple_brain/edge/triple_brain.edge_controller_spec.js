@@ -97,17 +97,23 @@ define([
                 centerVertex.getNumberOfChild()
             ).toBe(4);
         });
-        it("adds all the identifiers of the relation to the the new child and group relation when adding a child", function(){
+        it("adds all the identifiers of the relation to the the new child relation when adding a child", function(){
             var groupRelation = new Scenarios.GraphWithSimilarRelationsScenario().getPossessionAsGroupRelationInTree();
             groupRelation.expand();
             var relationUnderGroupRelation = TestUtils.getChildWithLabel(
                 groupRelation,
                 "Possessed by book 2"
             );
-            var newGroupRelation = relationUnderGroupRelation.getController().addChild().getModel();
+            var tested = false;
+            relationUnderGroupRelation.getController().addChild().then(function(triple){
+                expect(
+                    triple.edge().getModel().getIdentifiers().length
+                ).toBe(2);
+                tested = true;
+            });
             expect(
-                newGroupRelation.getIdentifiers().length
-            ).toBe(2);
+                tested
+            ).toBeTruthy();
         });
         it("removes only one relation when removing a relation to a duplicated bubble", function () {
             var graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
@@ -236,6 +242,57 @@ define([
             expect(
                 changeDestinationVertexSpy.calls.count()
             ).toBe(1);
+        });
+        it("can add a child to a relation under a group relation", function () {
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+            groupRelation.expand();
+            var centerBubble = scenario.getCenterVertexInTree();
+            var centerBubbleNumberOfChild = centerBubble.getNumberOfChild();
+            var relationUnderGroupRelation = TestUtils.getChildWithLabel(
+                groupRelation,
+                "Possession of book 1"
+            );
+            expect(
+                relationUnderGroupRelation.isGroupRelation()
+            ).toBeFalsy();
+            relationUnderGroupRelation.getController().addChild();
+            var newGroupRelation = TestUtils.getChildWithLabel(
+                groupRelation,
+                "Possession of book 1"
+            );
+            expect(
+                newGroupRelation.text()
+            ).toBe("Possession of book 1");
+            expect(
+                newGroupRelation.isGroupRelation()
+            ).toBeTruthy();
+            expect(
+                centerBubble.getNumberOfChild()
+            ).toBe(centerBubbleNumberOfChild);
+        });
+        it("does not hide the new group relation when adding a child to a relation under a group relation", function () {
+            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+            var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+            groupRelation.expand();
+            var relationUnderGroupRelation = TestUtils.getChildWithLabel(
+                groupRelation,
+                "Possession of book 1"
+            );
+            expect(
+                relationUnderGroupRelation.isGroupRelation()
+            ).toBeFalsy();
+            relationUnderGroupRelation.getController().addChild();
+            var newGroupRelation = TestUtils.getChildWithLabel(
+                groupRelation,
+                "Possession of book 1"
+            );
+            expect(
+                newGroupRelation.isGroupRelation()
+            ).toBeTruthy();
+            expect(
+                newGroupRelation.isSetAsSameAsGroupRelation()
+            ).toBeFalsy();
         });
     });
 });

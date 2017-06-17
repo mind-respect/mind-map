@@ -28,17 +28,33 @@ define([
     };
 
     EdgeController.prototype.addChild = function () {
-        var parentVertex = this.getUi().getParentBubble();
+        var deferred = $.Deferred();
+        var parentBubble = this.getUi().getParentBubble();
+        var newGroupRelationIdentifiers = this.getModel().getIdentifiersIncludingSelf();
+        var excludedIdentifiers = [];
+        if(parentBubble.isGroupRelation()){
+            newGroupRelationIdentifiers = newGroupRelationIdentifiers.filter(function(identifier){
+                if(parentBubble.getModel().hasIdentification(identifier)){
+                    excludedIdentifiers.push(identifier);
+                    return false;
+                }
+                return true;
+            });
+        }
         var newGroupRelation = GraphDisplayer.addNewGroupRelation(
-            this.getModel().getIdentifiersIncludingSelf(),
-            parentVertex,
+            newGroupRelationIdentifiers,
+            parentBubble,
             this.getUi().isToTheLeft()
         );
-        newGroupRelation.getController().addChild();
         this.getUi().moveToParent(
             newGroupRelation
         );
-        return newGroupRelation;
+        newGroupRelation.getController().addChild().then(function(triple){
+            triple.edge().getController().addIdentifiers(excludedIdentifiers).then(function(){
+                deferred.resolve(triple);
+            });
+        });
+        return deferred.promise();
     };
 
     EdgeController.prototype.removeCanDo = function () {

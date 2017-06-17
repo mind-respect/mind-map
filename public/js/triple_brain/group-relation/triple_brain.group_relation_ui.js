@@ -124,6 +124,8 @@ define([
         return greatest;
     };
 
+    api.GroupRelationUi.prototype.reviewEditButtonDisplay = function () {};
+
     api.GroupRelationUi.prototype.getModel = api.GroupRelationUi.prototype.getGroupRelation;
 
     return api;
