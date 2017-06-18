@@ -289,78 +289,21 @@ define([
         return this.getUi().getUri() !== parent.getUri() && !this.getUi().isBubbleAChild(parent);
     };
 
-    GraphElementController.prototype._moveUnderParent = function (parent) {
-        var ui = this.getUi();
-        if (!this._canMoveUnderParent(parent)) {
+    GraphElementController.prototype.moveUnderParent = function (parent) {
+        if(!this._canMoveUnderParent(parent)){
             return $.Deferred().resolve();
         }
-        var promises = [];
-        if (parent.isRelation()) {
-            var newGroupRelation = GraphDisplayer.addNewGroupRelation(
-                Identification.fromFriendlyResource(
-                    parent.getModel()
-                ),
-                parent.getParentBubble(),
-                parent.isToTheLeft()
-            );
-            parent.moveToParent(newGroupRelation);
-            parent = newGroupRelation;
-        }
-        var newSourceVertex = parent.isVertex() ?
-            parent :
-            parent.getParentVertex();
-        var movedEdge = ui.isRelation() ?
-            ui :
-            ui.getParentBubble();
-        var previousParentGroupRelation = movedEdge.getParentBubble();
-        ui.moveToParent(
-            parent
-        );
-        if (parent.isGroupRelation()) {
-            var parentGroupRelation = parent;
-            do {
-                promises.push(
-                    movedEdge.getController().addIdentifiers(
-                        parentGroupRelation.getModel().getIdentifiers()
-                    )
-                );
-                parentGroupRelation = parentGroupRelation.getParentBubble();
-            } while (parentGroupRelation.isGroupRelation());
-
-        }
-        promises.push(
-            movedEdge.getController().changeEndVertex(newSourceVertex)
-        );
-        if (previousParentGroupRelation.isGroupRelation()) {
-            previousParentGroupRelation = previousParentGroupRelation.getGreatestGroupRelationAncestor();
-            previousParentGroupRelation.getModel().getIdentifiersAtAnyDepth().forEach(function (identifier) {
-                identifier = movedEdge.getModel().getIdentifierHavingExternalUri(
-                    identifier.getExternalResourceUri()
-                );
-                if (identifier) {
-                    promises.push(
-                        movedEdge.getController().removeIdentifier(
-                            identifier
-                        )
-                    );
-                }
-            });
-        }
-        return $.when.apply($, promises);
-    };
-
-    GraphElementController.prototype.moveUnderParent = function (parent) {
         var previousParent;
         var moveUnderParentCommand = new Command.forExecuteUndoAndRedo(
             function () {
                 previousParent = this.getUi().getParentVertex();
-                return this._moveUnderParent(parent);
+                return parent.getController().becomeParent(this.getUi());
             }.bind(this),
             function () {
-                return this._moveUnderParent(previousParent);
+                return previousParent.getController().becomeParent(this.getUi());
             }.bind(this),
             function () {
-                return this._moveUnderParent(parent);
+                return parent.getController().becomeParent(this.getUi());
             }.bind(this)
         );
         return Command.executeCommand(
@@ -429,6 +372,10 @@ define([
                 movedVertex.getModel()
             );
         }
+    };
+
+    GraphElementController.prototype.becomeExParent = function(){
+        return $.Deferred().resolve();
     };
 
     GraphElementController.prototype.addIdentifiers = function (identifiers) {

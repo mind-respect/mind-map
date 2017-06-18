@@ -143,6 +143,14 @@ define([
             );
             this.reviewEditButtonDisplay();
         };
+
+        api.TreeEdge.prototype.convertToGroupRelation = function (newGroupRelation) {
+            newGroupRelation.moveAbove(this);
+            this.moveToParent(
+                newGroupRelation
+            );
+        };
+
         return api;
     }
 );

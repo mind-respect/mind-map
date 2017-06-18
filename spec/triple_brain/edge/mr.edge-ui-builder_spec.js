@@ -25,6 +25,7 @@ define([
             MindMapInfo._setIsViewOnly(false);
             var scenario = new Scenarios.threeBubblesGraph();
             var b3 = scenario.getBubble3InTree();
+            scenario.expandBubble3(b3);
             expect(
                 TestUtils.hasChildWithLabel(
                     b3,

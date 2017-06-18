@@ -7,8 +7,9 @@ define([
     'test/test-utils',
     'test/mock',
     'triple_brain.edge_controller',
-    'triple_brain.mind_map_info'
-], function (Scenarios, TestUtils, Mock, EdgeController, MindMapInfo) {
+    'triple_brain.mind_map_info',
+    'triple_brain.graph_element_type'
+], function (Scenarios, TestUtils, Mock, EdgeController, MindMapInfo, GraphElementType) {
     "use strict";
     describe("edge_controller", function () {
         beforeEach(function () {
@@ -293,6 +294,56 @@ define([
             expect(
                 newGroupRelation.isSetAsSameAsGroupRelation()
             ).toBeFalsy();
+        });
+        it("adds a child to the parent group relation when adding a child to a relation where the identifier of the parent group relation is self", function () {
+            var scenario = new Scenarios.withRelationsAsIdentifierGraph();
+            var centerBubble = scenario.getCenterInTree();
+            var groupRelation = TestUtils.getChildWithLabel(
+                centerBubble,
+                "original some relation"
+            );
+            expect(
+                groupRelation.isGroupRelation()
+            ).toBeTruthy();
+            groupRelation.expand();
+            var groupRelationNumberOfChild = groupRelation.getNumberOfChild();
+            var originalRelation = TestUtils.getChildWithLabel(
+                groupRelation,
+                "original some relation"
+            );
+            expect(
+                originalRelation.isRelation()
+            ).toBeTruthy();
+            expect(
+                groupRelation.getModel().getIdentification().getExternalResourceUri()
+            ).toBe(originalRelation.getUri());
+            originalRelation.getController().addChild();
+            expect(
+                groupRelation.getNumberOfChild()
+            ).toBe(groupRelationNumberOfChild + 1);
+        });
+        it("adds it's identifiers to the moved edge when becoming a parent", function () {
+            var threeBubblesScenario = new Scenarios.threeBubblesGraph();
+            var centerBubble = threeBubblesScenario.getBubble1InTree();
+            var r2 = TestUtils.getChildWithLabel(
+                centerBubble,
+                "r2"
+            );
+            var b3 = r2.getTopMostChildBubble();
+            var r1 = TestUtils.getChildWithLabel(
+                centerBubble,
+                "r1"
+            );
+            r1.getModel().addIdentification(
+                TestUtils.dummyIdentifier()
+            );
+            expect(
+                r2.getModel().getIdentifiers().length
+            ).toBe(0);
+            b3.getController().moveUnderParent(r1);
+            expect(
+                r2.getModel().getIdentifiers().length
+            ).toBe(1);
         });
     });
 });

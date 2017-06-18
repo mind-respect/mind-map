@@ -76,6 +76,40 @@ define([
             );
             return deferred.promise();
         };
+
+        GroupRelationController.prototype.becomeParent = function (vertexUi) {
+            var movedEdge = vertexUi.getParentBubble();
+            var promises = [];
+            var parentGroupRelation = this.getUi();
+            do {
+                promises.push(
+                    movedEdge.getController().addIdentifiers(
+                        parentGroupRelation.getModel().getIdentifiers()
+                    )
+                );
+                parentGroupRelation = parentGroupRelation.getParentBubble();
+            } while (parentGroupRelation.isGroupRelation());
+            movedEdge.moveToParent(this.getUi());
+            return $.when.apply($, promises);
+        };
+
+        GroupRelationController.prototype.becomeExParent = function (movedEdge) {
+            var promises = [];
+            var previousParentGroupRelation = this.getUi().getGreatestGroupRelationAncestor();
+            previousParentGroupRelation.getModel().getIdentifiersAtAnyDepth().forEach(function (identifier) {
+                identifier = movedEdge.getModel().getIdentifierHavingExternalUri(
+                    identifier.getExternalResourceUri()
+                );
+                if (identifier) {
+                    promises.push(
+                        movedEdge.getController().removeIdentifier(
+                            identifier
+                        )
+                    );
+                }
+            });
+            return $.when.apply($, promises);
+        };
         return api;
     }
 );

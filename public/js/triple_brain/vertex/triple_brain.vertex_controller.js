@@ -46,7 +46,7 @@ define([
 
     VertexController.prototype.addSiblingCanDo = function () {
         return this.isSingleAndOwned() && !this.vertices.isCenterBubble() &&
-                !this.getUi().getParentBubble().getParentBubble().isMeta();
+            !this.getUi().getParentBubble().getParentBubble().isMeta();
     };
 
     VertexController.prototype.addSibling = function () {
@@ -222,6 +222,24 @@ define([
         }
     };
 
+    VertexController.prototype.becomeParent = function (graphElementUi) {
+        var movedEdge = graphElementUi.isRelation() ? graphElementUi : graphElementUi.getParentBubble();
+        var promises = [];
+        promises.push(
+            movedEdge.getController().changeEndVertex(
+                this.getUi()
+            )
+        );
+        promises.push(
+            movedEdge.getParentBubble().getController().becomeExParent(movedEdge)
+        );
+        return $.when.apply($, promises).then(function(){
+            movedEdge.moveToParent(
+                this.getUi()
+            );
+        }.bind(this));
+    };
+
     function publishVertexPrivacyUpdated(ui) {
         EventBus.publish(
             '/event/ui/graph/vertex/privacy/updated',
@@ -394,8 +412,8 @@ define([
         return this.remove(true).then(function () {
             return parent.getController()._relateToDistantVertexWithUri(
                 distantVertexUri
-            ).then(function(triple){
-                if(!relation.getModel().isLabelEmpty()){
+            ).then(function (triple) {
+                if (!relation.getModel().isLabelEmpty()) {
                     return triple.edge().getController().setLabel(
                         relation.getModel().getLabel()
                     );
@@ -431,8 +449,8 @@ define([
                     SelectionHandler.setToSingleGraphElement(
                         triple.destinationVertex()
                     );
-                    if(realParent.getModel().isPublic()){
-                        triple.destinationVertex().getController().makePublic().then(function(){
+                    if (realParent.getModel().isPublic()) {
+                        triple.destinationVertex().getController().makePublic().then(function () {
                             deferred.resolve(triple);
                         });
                     }

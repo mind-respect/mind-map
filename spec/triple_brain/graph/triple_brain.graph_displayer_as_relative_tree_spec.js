@@ -524,7 +524,7 @@ define([
             var center = relationsAsIdentifierScenario.getCenterInTree();
             var groupRelation = TestUtils.getChildWithLabel(
                 center,
-                "some relation"
+                "original some relation"
             );
             expect(
                 groupRelation.isGroupRelation()

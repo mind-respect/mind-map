@@ -146,7 +146,7 @@ define([
 
     api.GraphElement.prototype.getIdentifiersIncludingSelf = function () {
         var identifiers = this.getIdentifiers();
-        var selfIdentifier = this._buildSelfIdentifier();
+        var selfIdentifier = this.buildSelfIdentifier();
         if (!this.hasIdentification(selfIdentifier)) {
             identifiers.push(selfIdentifier);
         }
@@ -176,7 +176,7 @@ define([
         return contains;
     };
 
-    api.GraphElement.prototype._buildSelfIdentifier = function () {
+    api.GraphElement.prototype.buildSelfIdentifier = function () {
         var identification = Identification.fromFriendlyResource(
             this
         );

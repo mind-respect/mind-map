@@ -6,8 +6,9 @@ define([
     'test/test-scenarios',
     "test/test-utils",
     'test/mock',
-    "triple_brain.selection_handler"
-], function (Scenarios, TestUtils, Mock, SelectionHandler) {
+    "triple_brain.selection_handler",
+    "triple_brain.graph_element_type"
+], function (Scenarios, TestUtils, Mock, SelectionHandler, GraphElementType) {
     "use strict";
     describe("tree_edge", function () {
         var edge1,
@@ -123,6 +124,27 @@ define([
             expect(
                 relationUnderGroupRelation.isSetAsSameAsGroupRelation()
             ).toBeFalsy();
+        });
+        it("sets the new group relation at the same index of the relation when adding a child", function () {
+            var centerBubble = new Scenarios.threeBubblesGraph().getCenterBubbleInTree();
+            centerBubble.getController().addChild();
+            centerBubble.getController().addChild();
+            var relation = centerBubble.getTopMostChildBubble();
+            var indexInTypes = [GraphElementType.Relation, GraphElementType.GroupRelation];
+            expect(
+                relation._getIndexInTreeInTypes(indexInTypes)
+            ).toBe(0);
+            relation.getController().addChild();
+            var newGroupRelation = TestUtils.getChildWithLabel(
+                centerBubble,
+                relation.text()
+            );
+            expect(
+                newGroupRelation.isGroupRelation()
+            ).toBeTruthy();
+            expect(
+                newGroupRelation._getIndexInTreeInTypes(indexInTypes)
+            ).toBe(0);
         });
     });
 });

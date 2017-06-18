@@ -215,12 +215,18 @@ define([
             );
         };
         api.Bubble.prototype.visitClosestChildOfType = function (type, visitor) {
+            return this.visitClosestChildInTypes(
+                [type],
+                visitor
+            );
+        };
+        api.Bubble.prototype.visitClosestChildInTypes = function (types, visitor) {
             this.visitAllChild(function (child) {
-                if (type === child.getGraphElementType()) {
+                if (child.isInTypes(types)) {
                     visitor(child);
                 } else {
-                    child.visitClosestChildOfType(
-                        type,
+                    child.visitClosestChildInTypes(
+                        types,
                         visitor
                     );
                 }
@@ -292,10 +298,15 @@ define([
         };
 
         api.Bubble.prototype.getIndexInTree = function () {
+            return this._getIndexInTreeInTypes(
+                [this.getGraphElementType()]
+            );
+        };
+        api.Bubble.prototype._getIndexInTreeInTypes = function (graphElementTypes) {
             var index = -1;
             var currentIndex = -1;
-            this.getParentVertex().visitClosestChildOfType(
-                this.getGraphElementType(),
+            this.getParentVertex().visitClosestChildInTypes(
+                graphElementTypes,
                 function (bubble) {
                     currentIndex++;
                     if (bubble.isSameBubble(this)) {

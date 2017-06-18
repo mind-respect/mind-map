@@ -79,7 +79,7 @@ define([
                 b1.getModel().getIdentifiers().length
             ).toBe(0);
             b1.addIdentification(
-                b1.getModel()._buildSelfIdentifier()
+                b1.getModel().buildSelfIdentifier()
             );
             expect(
                 b1.getModel().getIdentifiers().length

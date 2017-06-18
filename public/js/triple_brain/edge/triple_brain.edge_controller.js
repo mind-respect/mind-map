@@ -29,32 +29,54 @@ define([
 
     EdgeController.prototype.addChild = function () {
         var deferred = $.Deferred();
-        var parentBubble = this.getUi().getParentBubble();
-        var newGroupRelationIdentifiers = this.getModel().getIdentifiersIncludingSelf();
-        var excludedIdentifiers = [];
-        if(parentBubble.isGroupRelation()){
-            newGroupRelationIdentifiers = newGroupRelationIdentifiers.filter(function(identifier){
-                if(parentBubble.getModel().hasIdentification(identifier)){
-                    excludedIdentifiers.push(identifier);
-                    return false;
-                }
-                return true;
+        var newGroupRelation = this._convertToGroupRelation();
+        newGroupRelation.getController().addChild().then(function (triple) {
+            triple.edge().getController().addIdentifiers(
+                this.getModel().getIdentifiers()
+            ).then(function () {
+                deferred.resolve(triple);
             });
+        }.bind(this));
+        return deferred.promise();
+    };
+
+    EdgeController.prototype.becomeParent = function (vertexUi) {
+        var newGroupRelation = this._convertToGroupRelation();
+        vertexUi.moveToParent(
+            newGroupRelation
+        );
+        var promises = [];
+        var movedEdge = vertexUi.getParentBubble();
+        promises.push(
+            movedEdge.getController().addIdentifiers(
+                this.getModel().getIdentifiers()
+            )
+        );
+        promises.push(
+            movedEdge.getController().changeEndVertex(
+                this.getUi()
+            )
+        );
+        return $.when.apply($, promises);
+    };
+
+    EdgeController.prototype._convertToGroupRelation = function () {
+        var parentBubble = this.getUi().getParentBubble();
+        if (parentBubble.isGroupRelation()) {
+            if (parentBubble.getModel().hasIdentification(this.getModel().buildSelfIdentifier())) {
+                return parentBubble;
+            }
         }
+        var groupRelationIdentifiers = parentBubble.isGroupRelation() ?
+            this.getModel().buildSelfIdentifier() :
+            this.getModel().getIdentifiersIncludingSelf();
         var newGroupRelation = GraphDisplayer.addNewGroupRelation(
-            newGroupRelationIdentifiers,
+            groupRelationIdentifiers,
             parentBubble,
             this.getUi().isToTheLeft()
         );
-        this.getUi().moveToParent(
-            newGroupRelation
-        );
-        newGroupRelation.getController().addChild().then(function(triple){
-            triple.edge().getController().addIdentifiers(excludedIdentifiers).then(function(){
-                deferred.resolve(triple);
-            });
-        });
-        return deferred.promise();
+        this.getUi().convertToGroupRelation(newGroupRelation);
+        return newGroupRelation;
     };
 
     EdgeController.prototype.removeCanDo = function () {
@@ -103,7 +125,7 @@ define([
         var self = this;
         EdgeService.inverse(
             this.getUi()
-        ).then(function(){
+        ).then(function () {
             self.getUi().inverse();
         });
     };
@@ -115,7 +137,7 @@ define([
             return doIt();
         }
         function doIt() {
-            if(self.getUi().isInverse()){
+            if (self.getUi().isInverse()) {
                 return EdgeService.changeDestinationVertex(
                     endVertex,
                     self.getUi()

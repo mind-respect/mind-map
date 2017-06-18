@@ -364,7 +364,7 @@ define([
             ).toBeLessThan(3);
             var groupRelationInFewRelationsContext = TestUtils.getChildWithLabel(
                 centerWithLessRelations,
-                "some relation"
+                "original some relation"
             );
             expect(
                 groupRelationInFewRelationsContext.isGroupRelation()
