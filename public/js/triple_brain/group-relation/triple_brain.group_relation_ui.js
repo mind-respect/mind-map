@@ -86,10 +86,6 @@ define([
         return this.html.find('.menu');
     };
 
-    api.GroupRelationUi.prototype.getLabel = function () {
-        return this.html.find('.bubble-label');
-    };
-
     api.GroupRelationUi.prototype.expand = function () {
         if(!this.isCollapsed() && !this.isExpanded()){
             GraphDisplayer.expandGroupRelation(

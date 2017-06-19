@@ -61,9 +61,7 @@ define([
                 destination_vertex_id: this.getDestinationVertex().getId()
             };
         };
-        api.TreeEdge.prototype.getLabel = function () {
-            return this.html.find(".bubble-label");
-        };
+        
         api.TreeEdge.prototype.inverse = function () {
             this.html[
                 this.html.hasClass("inverse") ?

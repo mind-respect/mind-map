@@ -246,9 +246,11 @@ define([
             );
             this.setSuggestions(suggestions);
         };
-        api.VertexUi.prototype.getLabel = function () {
-            return this.html.find(".bubble-label");
+
+        api.VertexUi.prototype.getLabelContainer = function () {
+            return this.html.find('.in-bubble-content-wrapper');
         };
+
         api.VertexUi.prototype.makePrivate = function () {
             this.getMakePrivateButton().addClass("hidden");
             this.getMakePublicButton().removeClass("hidden");

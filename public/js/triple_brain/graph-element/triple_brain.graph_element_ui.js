@@ -733,6 +733,14 @@ define([
         );
     };
 
+    api.GraphElementUi.prototype.getLabel = function () {
+        return this.html.find('.bubble-label');
+    };
+
+    api.GraphElementUi.prototype.getLabelContainer = function () {
+        return this.html.find('.label-container');
+    };
+
     EventBus.subscribe(
         '/event/ui/graph/vertex/privacy/updated',
         function (event, graphElement) {
