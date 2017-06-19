@@ -745,14 +745,11 @@ define([
             if (this.hasHiddenRelationsContainer()) {
                 this.getHiddenRelationsContainer().hide();
             }
-            this.reviewMenuButtonsVisibility();
-            if (avoidScreenCenter && !isChildExpand) {
-            }else{
+            if (!avoidScreenCenter) {
                 this.sideCenterOnScreenWithAnimation();
-            }
-            if(!avoidScreenCenter){
                 SelectionHandler.setToSingleGraphElement(this);
             }
+            this.reviewMenuButtonsVisibility();
         };
 
         api.Bubble.prototype.buildHiddenNeighborPropertiesIndicator = function () {
