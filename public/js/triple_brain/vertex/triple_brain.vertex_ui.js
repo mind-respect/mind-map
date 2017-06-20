@@ -52,9 +52,15 @@ define([
             );
         };
 
-        api.VertexUi.prototype._getParentBubbleToSelectAfterRemove = function(){
-            return this.isCenterBubble() ? undefined :
-                this.getParentBubble().getParentBubble();
+        api.VertexUi.prototype._getParentBubbleToSelectAfterRemove = function () {
+            if(this.isCenterBubble()){
+                return undefined;
+            }
+            var toSelect = this.getParentBubble().getParentBubble();
+            if (toSelect.isGroupRelation() && 1 === toSelect.getNumberOfChild()) {
+                toSelect = toSelect.getParentBubble();
+            }
+            return toSelect;
         };
 
         api.VertexUi.prototype.areSuggestionsShown = function () {

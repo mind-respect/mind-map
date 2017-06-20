@@ -146,5 +146,27 @@ define([
                 newGroupRelation._getIndexInTreeInTypes(indexInTypes)
             ).toBe(0);
         });
+        it("removes the parent group relation when removing the last relation under a group relation", function () {
+            var centerBubble = new Scenarios.withRelationsAsIdentifierGraph().getCenterInTree();
+            expect(
+                TestUtils.hasChildWithLabel(
+                    centerBubble,
+                    "original some relation"
+                )
+            ).toBeTruthy();
+            var groupRelation = TestUtils.getChildWithLabel(
+                centerBubble,
+                "original some relation"
+            );
+            groupRelation.visitClosestChildVertices(function (vertex) {
+                vertex.remove();
+            });
+            expect(
+                TestUtils.hasChildWithLabel(
+                    centerBubble,
+                    "original some relation"
+                )
+            ).toBeFalsy();
+        });
     });
 });

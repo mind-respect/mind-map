@@ -112,5 +112,21 @@ define([
                 vertexUnderGroupRelation._getParentBubbleToSelectAfterRemove().isGroupRelation()
             ).toBeTruthy();
         });
+        it("selects the parent vertex after remove if it was the last vertex under a group relation", function () {
+            var centerBubble = new Scenarios.withRelationsAsIdentifierGraph().getCenterInTree();
+            expect(
+                centerBubble.isSelected()
+            ).toBeFalsy();
+            var groupRelation = TestUtils.getChildWithLabel(
+                centerBubble,
+                "original some relation"
+            );
+            groupRelation.visitClosestChildVertices(function (vertex) {
+                vertex.remove();
+            });
+            expect(
+                centerBubble.isSelected()
+            ).toBeTruthy();
+        });
     });
 });

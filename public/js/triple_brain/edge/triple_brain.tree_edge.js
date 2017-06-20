@@ -121,16 +121,26 @@ define([
         };
 
         api.TreeEdge.prototype.remove = function () {
+            var parentBubble = this.getParentBubble();
             Bubble.Bubble.prototype.remove.call(
                 this,
-                this.getParentBubble()
+                parentBubble
             );
+            this._removeParentGroupRelationIfItsALeaf(parentBubble);
         };
 
         api.TreeEdge.prototype.collateralRemove = function () {
+            var parentBubble = this.getParentBubble();
             Bubble.Bubble.prototype.remove.call(
                 this
             );
+            this._removeParentGroupRelationIfItsALeaf(parentBubble);
+        };
+
+        api.TreeEdge.prototype._removeParentGroupRelationIfItsALeaf = function(parentBubble){
+            if(parentBubble.isGroupRelation() && parentBubble.isALeaf()){
+                parentBubble.remove();
+            }
         };
 
         api.TreeEdge.prototype.moveTo = function(otherBubble, relation){
