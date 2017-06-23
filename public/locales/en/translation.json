@@ -342,9 +342,6 @@
     },
     "references": " reference(s)"
   },
-  "wordcloud": {
-    "title": "Central bubbles"
-  },
   "schemaList": {
     "title": "Schemas",
     "linkButton": "Visit this model",

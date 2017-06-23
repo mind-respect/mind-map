@@ -6,25 +6,37 @@
   margin-top:5%;
 }
 #word-cloud {
-  text-align:center;
+  text-align:left;
   font-size:30px;
   padding:1em;
+  h2{
+    font-weight:bold;
+  }
   li {
+    a:hover{
+      text-decoration: none;
+    }
+    font-weight:bold;
+    .label{
+      background-color:black;
+      font-size:1em;
+      &:hover{
+        background-color: #337ab7;
+      }
+    }
+    a{
+      color:white;
+    }
     cursor:pointer;
-    width: 250px;
+    max-width: 250px;
     white-space:nowrap;
     display:inline-block;
     text-overflow:ellipsis;
     overflow: hidden;
-    //box-shadow: $centerVertexBorder;
-    //border-radius:50px;
     padding:0.25em;
     line-height: 90%;
     margin:0.2em;
     font-size:0.6em;
     text-align:left;
-    &:hover{
-      text-decoration:underline;
-    }
   }
 }

@@ -25,6 +25,11 @@ define([
             var segments = $.url(uri).segment();
             return segments[2];
         };
+        api.currentUsernameInUrl = function(){
+            return $.url(
+                window.location.href
+            ).segment()[1];
+        };
         api.allCentralUrlForUsername = function (username) {
             return "/user/" + username;
         };

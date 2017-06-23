@@ -17,6 +17,7 @@ define([
             sortElements();
             _container = container;
             buildHtml();
+            setTitle();
         }
     };
     function sortElements() {
@@ -31,15 +32,17 @@ define([
         var list = _container.find("ul");
         $.each(_elements, function () {
             var element = this;
-            $("<li>").append(
+            $("<li class=''>").append(
                 $("<a>").attr(
                     "tagcloud-weight",
                     element.getNumberOfVisits()
                 ).data(
                     "uri",
                     element.getUri()
-                ).text(
-                    element.getLabel()
+                ).append(
+                    $("<span class='label label-primary'>").text(
+                        element.getLabel()
+                    )
                 ).click(function (event) {
                         event.preventDefault();
                         window.location = IdUri.htmlUrlForBubbleUri(
@@ -50,5 +53,10 @@ define([
             ).appendTo(list);
         });
         _container.reattach();
+    }
+    function setTitle(){
+        _container.siblings("h2").text(
+            IdUri.currentUsernameInUrl()
+        );
     }
 });
