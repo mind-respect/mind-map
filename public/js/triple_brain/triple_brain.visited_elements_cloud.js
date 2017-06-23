@@ -30,8 +30,25 @@ define([
     function buildHtml() {
         _container.detachTemp();
         var list = _container.find("ul");
+        var index = 0;
         $.each(_elements, function () {
+            index++;
             var element = this;
+            var span = $("<span class='label'>").text(
+                element.getLabel()
+            );
+            if(index % 4 === 0){
+                span.addClass("label-warning");
+            }
+            if(index % 3 === 0){
+                span.addClass("label-danger");
+            }
+            else if(index % 2 === 0){
+                span.addClass("label-success");
+            }
+            else if(index % 2 === 1){
+                span.addClass("label-primary");
+            }
             $("<li class=''>").append(
                 $("<a>").attr(
                     "tagcloud-weight",
@@ -40,9 +57,7 @@ define([
                     "uri",
                     element.getUri()
                 ).append(
-                    $("<span class='label label-primary'>").text(
-                        element.getLabel()
-                    )
+                    span
                 ).click(function (event) {
                         event.preventDefault();
                         window.location = IdUri.htmlUrlForBubbleUri(
