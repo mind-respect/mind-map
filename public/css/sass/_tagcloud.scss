@@ -16,19 +16,25 @@
     a:hover{
       text-decoration: none;
     }
-    font-weight:bold;
     .label{
-      //background-color:black;
       font-size:1em;
+      transition: font-size 0.3s ease, background-color 0.3s ease;
       &:hover{
-        background-color: #337ab7;
+        font-size: 40px;
       }
     }
-    //a.label{
-    //  color:white;
-    //}
+    .label-dark-blue{
+      background-color:darkblue;
+
+    }
+    .label-light-blue{
+      background-color: #2b6199;
+    }
     cursor:pointer;
     max-width: 250px;
+    &:hover{
+      max-width: 750px;
+    }
     white-space:nowrap;
     display:inline-block;
     text-overflow:ellipsis;
@@ -38,8 +44,5 @@
     margin:0.2em;
     font-size:0.6em;
     text-align:left;
-    //&:hover{
-    //  text-decoration:underline;
-    //}
   }
 }

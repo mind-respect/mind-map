@@ -544,10 +544,13 @@ button.inactive i { color: red; }
 
 #word-cloud { text-align: left; font-size: 30px; padding: 1em; }
 #word-cloud h2 { font-weight: bold; }
-#word-cloud li { font-weight: bold; cursor: pointer; max-width: 250px; white-space: nowrap; display: inline-block; text-overflow: ellipsis; overflow: hidden; padding: 0.25em; line-height: 90%; margin: 0.2em; font-size: 0.6em; text-align: left; }
+#word-cloud li { cursor: pointer; max-width: 250px; white-space: nowrap; display: inline-block; text-overflow: ellipsis; overflow: hidden; padding: 0.25em; line-height: 90%; margin: 0.2em; font-size: 0.6em; text-align: left; }
 #word-cloud li a:hover { text-decoration: none; }
-#word-cloud li .label { font-size: 1em; }
-#word-cloud li .label:hover { background-color: #337ab7; }
+#word-cloud li .label { font-size: 1em; transition: font-size 0.3s ease, background-color 0.3s ease; }
+#word-cloud li .label:hover { font-size: 40px; }
+#word-cloud li .label-dark-blue { background-color: darkblue; }
+#word-cloud li .label-light-blue { background-color: #2b6199; }
+#word-cloud li:hover { max-width: 750px; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 #schemas-container { margin-top: 5%; }
