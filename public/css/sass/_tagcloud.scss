@@ -3,24 +3,39 @@
  */
 
 #word-cloud-container{
-  margin-top:5%;
+  .background {
+    position: absolute;
+    background-image: linear-gradient(
+                    rgba(0, 0, 0, 0.5),
+                    rgba(0, 0, 0, 0.5)
+    ),
+    url("images/neurons-440660-white3.jpg");
+    left: 0;
+    width: 100%;
+    min-height: 200px;
+  }
+  .content{
+    margin-top:3%;
+  }
+  h2{
+    font-weight:bold;
+    font-size: 2rem;
+    color: white;
+  }
 }
 #word-cloud {
+  margin-top:5%;
   text-align:left;
   font-size:30px;
   padding:1em;
-  h2{
-    font-weight:bold;
-  }
   li {
     a:hover{
       text-decoration: none;
     }
     .label{
       font-size:1em;
-      transition: font-size 0.3s ease, background-color 0.3s ease;
       &:hover{
-        font-size: 40px;
+        background-color: black;
       }
     }
     .label-dark-blue{
@@ -31,10 +46,7 @@
       background-color: #2b6199;
     }
     cursor:pointer;
-    max-width: 250px;
-    &:hover{
-      max-width: 750px;
-    }
+    width: 250px;
     white-space:nowrap;
     display:inline-block;
     text-overflow:ellipsis;
