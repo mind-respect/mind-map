@@ -311,6 +311,11 @@ define([
             // divided by 2 because of the edges
             return depth / 2;
         };
+
+        api.VertexUi.prototype.getDropContainer = function () {
+            return this.html.find('.bubble-label');
+        };
+
         api.buildCommonConstructors(api);
         return api;
     }

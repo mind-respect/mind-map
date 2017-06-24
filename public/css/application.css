@@ -545,7 +545,7 @@ button.inactive i { color: red; }
 #word-cloud-container h2 { font-weight: bold; font-size: 2rem; color: white; }
 
 #word-cloud { margin-top: 5%; text-align: left; font-size: 30px; padding: 1em; }
-#word-cloud li { cursor: pointer; width: 250px; white-space: nowrap; display: inline-block; text-overflow: ellipsis; overflow: hidden; padding: 0.25em; line-height: 90%; margin: 0.2em; font-size: 0.6em; text-align: left; }
+#word-cloud li { cursor: pointer; width: 250px; white-space: nowrap; display: inline-block; text-overflow: ellipsis; color: white; overflow: hidden; padding: 0.25em; line-height: 90%; margin: 0.2em; font-size: 0.6em; text-align: left; }
 #word-cloud li a:hover { text-decoration: none; }
 #word-cloud li .label { font-size: 1em; }
 #word-cloud li .label:hover { background-color: black; }

@@ -142,6 +142,10 @@ define([
             return 0;
         };
 
+        api.EdgeUi.prototype.getDropContainer = function () {
+            return this.html.find('.label-container');
+        };
+
         EventBus.subscribe(
             '/event/ui/graph/vertex/privacy/updated',
             function(event, graphElement){

@@ -187,7 +187,7 @@ define([
                 $('#drag-bubble-text-dump').empty();
                 GraphUi.enableDragScroll();
             });
-        graphElementUi.getLabelContainer().on(
+        graphElementUi.getDropContainer().on(
             "dragover", function (event) {
                 event.preventDefault();
                 event.stopPropagation();
