@@ -349,7 +349,10 @@ define([
                 "Possession"
             );
             possessionGroupRelation.expand();
-            var possessionRelation = possessionGroupRelation.getTopMostChildBubble();
+            var possessionRelation = TestUtils.getChildWithLabel(
+                possessionGroupRelation,
+                "Possession of book 1"
+            );
             var centerBubbleNumberOfChild = centerBubble.getNumberOfChild();
             possessionRelation.moveToParent(centerBubble);
             expect(
@@ -554,7 +557,7 @@ define([
         //     var b2 = scenario.getBubble2InTree();
         //
         // });
-        it("can calculate number of parent vertices", function(){
+        it("can calculate number of parent vertices", function () {
             var scenario = new Scenarios.deepGraph();
             var centerVertex = scenario.getBubble1InTree();
             expect(
@@ -573,7 +576,7 @@ define([
                 scenario.getBubble5InTree().calculateNumberOfParentVertices(centerVertex)
             ).toBe(1);
         });
-        it("can sort bubbles by number of parent vertices and order of appearance", function(){
+        it("can sort bubbles by number of parent vertices and order of appearance", function () {
             var scenario = new Scenarios.deepGraph();
             var b1 = scenario.getBubble1InTree();
             var b2 = scenario.getBubble2InTree();
@@ -606,7 +609,7 @@ define([
                 sortedBubbles[4].text()
             ).toBe("b3");
         });
-        it("can return the index in tree", function(){
+        it("can return the index in tree", function () {
             var scenario = new Scenarios.creationDateScenario();
             var b7 = scenario.getBubble7InTree();
             scenario.expandBubble7(b7);
@@ -632,7 +635,7 @@ define([
                 b73.getIndexInTree()
             ).toBe(2);
         });
-        it("can get bubble at index", function(){
+        it("can get bubble at index", function () {
             var scenario = new Scenarios.creationDateScenario();
             var b7 = scenario.getBubble7InTree();
             var b71 = TestUtils.getChildWithLabel(

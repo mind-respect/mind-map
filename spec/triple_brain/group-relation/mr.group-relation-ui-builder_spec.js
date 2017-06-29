@@ -122,7 +122,10 @@ define([
             expect(
                 possessionGroupRelation.getNumberOfChild()
             ).toBe(3);
-            var possessionRelation = possessionGroupRelation.getTopMostChildBubble();
+            var possessionRelation = TestUtils.getChildWithLabel(
+                possessionGroupRelation,
+                "Possession of book 1"
+            );
             EventBus.publish(
                 "/event/ui/graph/identification/removed",
                 [possessionRelation, possessionGroupRelation.getGroupRelation().getIdentification()]

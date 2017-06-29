@@ -12,7 +12,7 @@ define([
     var api = {};
     api.sortCompare = function (a, b) {
         if (a.getSortDate() === b.getSortDate()) {
-            if (a.getMoveDate() === b.getMoveDate()) {
+              if (a.getMoveDate() === b.getMoveDate()) {
                 return 0;
             }
             if (a.getMoveDate() > b.getMoveDate()) {

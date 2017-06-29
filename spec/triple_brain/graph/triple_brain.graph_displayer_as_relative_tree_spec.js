@@ -352,15 +352,32 @@ define([
             toTheLeftVertex = toTheLeftVertex.getBubbleUnder();
             expect(
                 toTheLeftVertex.text()
-            ).toBe("b5");
+            ).toBe("To do");
             toTheRightVertex = toTheRightVertex.getBubbleUnder();
             expect(
                 toTheRightVertex.text()
-            ).toBe("b6");
-            toTheLeftVertex = toTheLeftVertex.getBubbleUnder();
+            ).toBe("b5");
+            toTheLeftVertex = toTheLeftVertex.getBubbleUnder().getTopMostChildBubble();
             expect(
                 toTheLeftVertex.text()
+            ).toBe("b6");
+            toTheRightVertex = toTheRightVertex.getBubbleUnder();
+            expect(
+                toTheRightVertex.text()
             ).toBe("b7");
+        });
+
+        it("sorts group relations with the earliest vertex's date", function () {
+            var scenario = new Scenarios.creationDateScenario();
+            var b1 = scenario.getBubble1InTree();
+            var r2 = TestUtils.getChildWithLabel(
+                b1,
+                "r2"
+            );
+            var groupRelation = r2.getBubbleUnder();
+            expect(
+                groupRelation.text()
+            ).toBe("To do");
         });
 
         it("sorts children of group relation in order of creation date", function () {
@@ -408,19 +425,6 @@ define([
             expect(
                 childVertex.text()
             ).toBe("b74");
-        });
-
-        it("sorts bubble children so that group relations are at the top", function () {
-            var me = new Scenarios.GraphWithSimilarRelationsScenario().getCenterVertexInTree();
-            var centerBubble = CenterBubble.usingBubble(me);
-            var toTheRightBubble = centerBubble.getToTheRightTopMostChild();
-            expect(
-                toTheRightBubble.isGroupRelation()
-            ).toBeTruthy();
-            var toTheLeftBubble = centerBubble.getToTheLeftTopMostChild();
-            expect(
-                toTheLeftBubble.isGroupRelation()
-            ).toBeTruthy();
         });
 
         it("setups to the left html correctly when adding new suggestion to vertex", function () {
@@ -596,7 +600,10 @@ define([
                 b1.text()
             ).toBe("b1");
             scenario.expandBubble1(b1);
-            var groupRelation = b1.getTopMostChildBubble();
+            var groupRelation = TestUtils.getChildWithLabel(
+                b1,
+                "r2"
+            );
             expect(
                 groupRelation.isGroupRelation()
             ).toBeTruthy();

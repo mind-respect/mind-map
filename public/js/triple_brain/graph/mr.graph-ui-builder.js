@@ -269,14 +269,8 @@ define([
 
     function sortGroupRelationRootsByIsGroupRelationOrCreationDate(groupRelationRoots) {
         return groupRelationRoots.sort(function (groupRelationA, groupRelationB) {
-                if (groupRelationA.isTrulyAGroupRelation() && !groupRelationB.isTrulyAGroupRelation()) {
-                    return -1;
-                }
-                if (!groupRelationA.isTrulyAGroupRelation() && groupRelationB.isTrulyAGroupRelation()) {
-                    return 1;
-                }
-                var vertexA = groupRelationA.getAnyVertex();
-                var vertexB = groupRelationB.getAnyVertex();
+                var vertexA = groupRelationA.getFirstVertex();
+                var vertexB = groupRelationB.getFirstVertex();
                 return GraphElement.sortCompare(
                     vertexA,
                     vertexB

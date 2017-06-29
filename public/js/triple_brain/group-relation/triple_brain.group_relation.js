@@ -59,12 +59,20 @@ define([
             return this.vertices;
         };
 
+        GroupRelation.prototype.getSortedVerticesAtAnyDepth = function () {
+            return this._getSortedVerticesAtAnyDepthOrNot(true);
+        };
+
         GroupRelation.prototype.getSortedVertices = function () {
-            var self = this;
-            var sortedKeys = Object.keys(this.vertices).sort(
+            return this._getSortedVerticesAtAnyDepthOrNot(false);
+        };
+
+        GroupRelation.prototype._getSortedVerticesAtAnyDepthOrNot = function (atAnyDepth) {
+            var vertices = atAnyDepth ? this.getVerticesAtAnyDepth() : this.vertices;
+            var sortedKeys = Object.keys(vertices).sort(
                 function (a, b) {
-                    var vertexAUiInstances = self.vertices[a];
-                    var vertexBUiInstances = self.vertices[b];
+                    var vertexAUiInstances = vertices[a];
+                    var vertexBUiInstances = vertices[b];
                     var vertexA = vertexAUiInstances[
                         Object.keys(vertexAUiInstances)
                         ].vertex;
@@ -77,11 +85,23 @@ define([
                     );
                 });
             var sorted = {};
-            $.each(sortedKeys, function () {
-                sorted[this] = self.vertices[this];
+            sortedKeys.forEach(function(sortedKey){
+                sorted[sortedKey] = vertices[sortedKey];
             });
             return sorted;
         };
+
+        GroupRelation.prototype.getFirstVertex = function () {
+            var sortedTuples = this.getSortedVerticesAtAnyDepth();
+            var firstTupleByVertexUid = sortedTuples[Object.keys(sortedTuples)[0]];
+            var firstTuple = firstTupleByVertexUid[Object.keys(firstTupleByVertexUid)[0]];
+            return firstTuple.vertex;
+        };
+
+        GroupRelation.prototype.getSortDate = function () {
+            return new Date(0);
+        };
+
         GroupRelation.prototype.getAnyVertex = function () {
             var verticesWithUri = this.getVertices();
             var verticesWithId = verticesWithUri[Object.keys(verticesWithUri)[0]];
@@ -90,6 +110,7 @@ define([
             }
             return verticesWithId[Object.keys(verticesWithId)[0]].vertex;
         };
+
         GroupRelation.prototype.getSingleEdge = function () {
             var verticesWithUri = this.getVertices();
             var verticesWithId = verticesWithUri[Object.keys(verticesWithUri)[0]];
@@ -133,6 +154,15 @@ define([
                 numberOfVertices += childGroupRelation.getNumberOfVerticesAtAnyDepth();
             });
             return numberOfVertices;
+        };
+
+        GroupRelation.prototype.getVerticesAtAnyDepth = function () {
+
+            var vertices = $.extend(true, {}, this.vertices);
+            this.getChildGroupRelations().forEach(function(childGroupRelation){
+                $.extend(true, vertices, childGroupRelation.getVerticesAtAnyDepth());
+            });
+            return vertices;
         };
 
         GroupRelation.prototype.getIdentifiersAtAnyDepth = function () {
@@ -202,10 +232,6 @@ define([
                 return false;
             }
             return this.getSingleEdge().getUri() === this.getIdentification().getExternalResourceUri();
-        };
-
-        GroupRelation.prototype.getSortDate = function () {
-            return new Date(0);
         };
 
         GroupRelation.prototype._hasOneOfTheIdentifiers = function (identifiers) {
