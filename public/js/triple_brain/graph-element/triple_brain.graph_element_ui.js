@@ -399,7 +399,11 @@ define([
     api.GraphElementUi.prototype.cut = function () {
         this.reviewMenuButtonsVisibility();
     };
-    api.GraphElementUi.prototype.paste = function () {
+    api.GraphElementUi.prototype.pasteText = function () {
+        this.paste();
+        this.focus();
+    };
+    api.GraphElementUi.prototype.pasteBubble = api.GraphElementUi.prototype.paste = function () {
         this.reviewMenuButtonsVisibility();
     };
     api.GraphElementUi.prototype.selectTree = function () {

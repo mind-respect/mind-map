@@ -255,6 +255,7 @@ define([
             )
         );
         this.getUi().getLabel().blur();
+        this.getUi().pasteText();
     };
 
     GraphElementController.prototype._pasteBubble = function () {
@@ -265,6 +266,7 @@ define([
             this.getUi()
         );
         bubbleCutClipboard = undefined;
+        this.getUi().pasteBubble();
     };
 
     GraphElementController.prototype.moveUnder = function (otherEdge) {
