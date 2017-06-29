@@ -81,6 +81,11 @@ define([
             var movedEdge = vertexUi.getParentBubble();
             var promises = [];
             var parentGroupRelation = this.getUi();
+            promises.push(
+                movedEdge.getController().changeEndVertex(
+                    this.getUi().getParentVertex()
+                )
+            );
             do {
                 promises.push(
                     movedEdge.getController().addIdentifiers(
