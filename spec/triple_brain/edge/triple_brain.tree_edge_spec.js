@@ -168,5 +168,33 @@ define([
                 )
             ).toBeFalsy();
         });
+        it("removes the parent group relation when moving away the last relation under a group relation", function () {
+            var centerBubble = new Scenarios.withRelationsAsIdentifierGraph().getCenterInTree();
+            var bubbleNotUnderAGroupRelation = TestUtils.getChildWithLabel(
+                centerBubble,
+                "some different relation"
+            ).getTopMostChildBubble();
+            expect(
+                TestUtils.hasChildWithLabel(
+                    centerBubble,
+                    "original some relation"
+                )
+            ).toBeTruthy();
+            var groupRelation = TestUtils.getChildWithLabel(
+                centerBubble,
+                "original some relation"
+            );
+            groupRelation.visitClosestChildVertices(function (vertex) {
+                vertex.moveToParent(
+                    bubbleNotUnderAGroupRelation
+                );
+            });
+            expect(
+                TestUtils.hasChildWithLabel(
+                    centerBubble,
+                    "original some relation"
+                )
+            ).toBeFalsy();
+        });
     });
 });

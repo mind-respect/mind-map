@@ -427,7 +427,7 @@ define([
                 );
             }).then(function(){
                 this.getUi().afterConvertToDistantBubbleWithUri();
-            }.bind(this))
+            }.bind(this));
         }.bind(this));
     };
     VertexController.prototype._relateToDistantVertexWithUri = function (distantVertexUri) {

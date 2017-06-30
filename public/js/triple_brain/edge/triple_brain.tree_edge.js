@@ -144,11 +144,13 @@ define([
         };
 
         api.TreeEdge.prototype.moveTo = function(otherBubble, relation){
+            var previousParentBubble = this.getParentBubble();
             Bubble.Bubble.prototype.moveTo.call(
                 this,
                 otherBubble,
                 relation
             );
+            this._removeParentGroupRelationIfItsALeaf(previousParentBubble);
             this.reviewEditButtonDisplay();
         };
 
