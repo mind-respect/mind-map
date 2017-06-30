@@ -455,6 +455,25 @@ define([
                 relation.text()
             ).toBe("relation");
         });
+        it("keeps the identifiers of the relation when converting a bubble to a distant bubble", function () {
+            var parentWithSingleChildScenario = new Scenarios.parentWithSingleChildScenario();
+            var parent = parentWithSingleChildScenario.getParentInTree();
+            var relation = parent.getTopMostChildBubble();
+            relation.getModel().addIdentification(
+                TestUtils.dummyIdentifier()
+            );
+            var child = relation.getTopMostChildBubble();
+            GraphServiceMock.getForCentralBubbleUri(
+                parentWithSingleChildScenario.getB1RelatedToParentGraph()
+            );
+            child.getController().convertToDistantBubbleWithUri(
+                parentWithSingleChildScenario.getB1Uri()
+            );
+            relation = parent.getTopMostChildBubble();
+            expect(
+                relation.getModel().hasIdentifications()
+            ).toBeTruthy();
+        });
         it("automatically expands a child bubble having a single hidden relation when it's parent is expanded", function () {
             var scenario = new Scenarios.automaticExpand();
             var b3 = scenario.getB3InTree();

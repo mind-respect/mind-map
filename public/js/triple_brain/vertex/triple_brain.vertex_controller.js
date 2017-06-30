@@ -409,17 +409,25 @@ define([
         this.getUi().beforeConvertToDistantBubbleWithUri();
         var parent = this.getUi().getParentVertex();
         var relation = this.getUi().getParentBubble();
+        var newTriple;
         return this.remove(true).then(function () {
             return parent.getController()._relateToDistantVertexWithUri(
                 distantVertexUri
             ).then(function (triple) {
+                newTriple = triple;
+            }).then(function(){
                 if (!relation.getModel().isLabelEmpty()) {
-                    return triple.edge().getController().setLabel(
+                    return newTriple.edge().getController().setLabel(
                         relation.getModel().getLabel()
                     );
                 }
+            }).then(function(){
+                return newTriple.edge().getController().addIdentifiers(
+                    relation.getModel().getIdentifiers()
+                );
+            }).then(function(){
                 this.getUi().afterConvertToDistantBubbleWithUri();
-            }.bind(this));
+            }.bind(this))
         }.bind(this));
     };
     VertexController.prototype._relateToDistantVertexWithUri = function (distantVertexUri) {
