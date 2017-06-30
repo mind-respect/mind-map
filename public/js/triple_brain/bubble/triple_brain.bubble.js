@@ -736,7 +736,17 @@ define([
             );
         };
 
+        api.Bubble.prototype.beforeExpand = function () {
+            if(!this.hasVisibleHiddenRelationsContainer()) {
+                return;
+            }
+            this.getHiddenRelationsContainer().showLoading();
+        };
+
         api.Bubble.prototype.expand = function (avoidScreenCenter, isChildExpand) {
+            if(this.hasHiddenRelationsContainer()) {
+                this.getHiddenRelationsContainer().hideLoading();
+            }
             avoidScreenCenter = avoidScreenCenter || false;
             isChildExpand = isChildExpand || false;
             this.getChildrenContainer().removeClass(

@@ -351,6 +351,7 @@ define([
         var deferred = $.Deferred().resolve();
         avoidExpandChild = avoidExpandChild || false;
         isChildExpand = isChildExpand || false;
+        this.getUi().beforeExpand();
         if (this.getUi().hasVisibleHiddenRelationsContainer()) {
             if (!this.getUi().isCollapsed()) {
                 deferred = GraphDisplayer.addChildTree(

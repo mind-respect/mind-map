@@ -119,13 +119,13 @@ define([
             return this.bubble;
         };
 
-        HiddenNeighborPropertiesIndicator.prototype._showLoading = function () {
+        HiddenNeighborPropertiesIndicator.prototype.showLoading = function () {
             this._getLoading().removeClass("hidden");
             this._getContent().addClass("hidden");
             this.hiddenNeighborPropertiesContainer.removeClass("hidden");
         };
 
-        HiddenNeighborPropertiesIndicator.prototype._hideLoading = function () {
+        HiddenNeighborPropertiesIndicator.prototype.hideLoading = function () {
             this._getLoading().addClass("hidden");
             this.hiddenNeighborPropertiesContainer.addClass("hidden");
         };
@@ -138,10 +138,7 @@ define([
             var hiddenPropertiesContainer = api.fromHtml(
                 $(this)
             );
-            hiddenPropertiesContainer._showLoading();
-            hiddenPropertiesContainer.getBubble().getController().expand().then(function(){
-                hiddenPropertiesContainer._hideLoading();
-            });
+            hiddenPropertiesContainer.getBubble().getController().expand();
         }
 
         return api;
