@@ -24,7 +24,7 @@ module.exports = function (grunt) {
                     src: 'public/js/**/*.js',
                     specs: 'spec/**/*_spec.js',
                     keepRunner: true,
-                    version: "2.2.0",
+                    version: "2.0.1",
                     template: require('grunt-template-jasmine-requirejs'),
                     outfile: "public/_SpecRunner.html",
                     templateOptions: {
