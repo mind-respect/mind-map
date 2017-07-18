@@ -7,7 +7,7 @@ define([
     "triple_brain.friendly_resource",
     "triple_brain.id_uri",
     "jquery.triple_brain.search"
-], function ($, FriendlyResource, IdUri, $Search) {
+], function ($, FriendlyResource, IdUri, Search) {
     "use strict";
     var RELATION_URIS = {
         "sameAs" : "same-as",
@@ -93,8 +93,8 @@ define([
             searchResult.label,
             searchResult.comment
         );
-        if ($Search.hasCachedDetailsForSearchResult(searchResult)) {
-            var moreInfo = $Search.getCachedDetailsOfSearchResult(searchResult);
+        if (Search.hasCachedDetailsForSearchResult(searchResult)) {
+            var moreInfo = Search.getCachedDetailsOfSearchResult(searchResult);
             if (moreInfo.image !== undefined) {
                 identification.addImage(moreInfo.image);
             }

@@ -8,6 +8,7 @@ define([
     'test/mock',
     "test/mock/triple_brain.schema_service_mock",
     "test/mock/triple_brain.graph_service_mock",
+    "triple_brain.graph_element",
     'triple_brain.vertex_controller',
     "triple_brain.vertex_service",
     "triple_brain.user_map_autocomplete_provider",
@@ -15,7 +16,7 @@ define([
     "triple_brain.mind_map_info",
     'triple_brain.identification',
     'triple_brain.id_uri'
-], function (Scenarios, TestUtils, Mock, SchemaServiceMock, GraphServiceMock, VertexController, VertexService, UserMapAutocompleteProvider, VertexUiBuilderCommon, MindMapInfo, Identification, IdUri) {
+], function (Scenarios, TestUtils, Mock, SchemaServiceMock, GraphServiceMock, GraphElement, VertexController, VertexService, UserMapAutocompleteProvider, VertexUiBuilderCommon, MindMapInfo, Identification, IdUri) {
     "use strict";
     describe("vertex-ui-builder-common", function () {
         beforeEach(function () {
@@ -131,32 +132,22 @@ define([
         });
         it("can identify to a vertex using autocomplete", function () {
             MindMapInfo._setIsViewOnly(false);
-            var parentWithSingleChildScenario = new Scenarios.parentWithSingleChildScenario();
-            var parent = parentWithSingleChildScenario.getParentInTree();
-            var child = parent.getTopMostChildBubble().getTopMostChildBubble();
             var otherUserVertexSearchResult = new Scenarios.threeBubblesGraphFork().getCenterAsSearchResult()[0];
-            var otherUserVertexIdentifier = Identification.fromSearchResult(
-                otherUserVertexSearchResult
+            var otherUserVertexIdentifier = Identification.fromFriendlyResource(
+                otherUserVertexSearchResult.nonFormattedSearchResult.graphElement
             );
+            var b3 = new Scenarios.threeBubblesGraph().getBubble3InTree();
             expect(
-                child.getModel().hasIdentification(
+                b3.getModel().hasIdentification(
                     otherUserVertexIdentifier
                 )
             ).toBeFalsy();
-            Mock.getSpy(
-                "UserService",
-                "authenticatedUserInCache"
-            ).and.returnValue({
-                user_name: IdUri.getOwnerFromUri(
-                    child.getUri()
-                )
-            });
             VertexUiBuilderCommon._labelAutocompleteSelectHandler(
-                child,
+                b3,
                 otherUserVertexSearchResult
             );
             expect(
-                child.getModel().hasIdentification(
+                b3.getModel().hasIdentification(
                     otherUserVertexIdentifier
                 )
             ).toBeTruthy();

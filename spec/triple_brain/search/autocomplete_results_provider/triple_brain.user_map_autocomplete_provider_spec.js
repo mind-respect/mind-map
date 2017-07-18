@@ -56,9 +56,12 @@ define([
                     new Scenarios.getSearchResultForB1().get(),
                     "b1"
                 )[0];
+            var verticesLabel = vertexSearchResult.somethingToDistinguish.split(", ");
             expect(
-                vertexSearchResult.somethingToDistinguish === "r1, r2" ||
-                vertexSearchResult.somethingToDistinguish === "r2, r1"
+                verticesLabel.indexOf("b2") !== -1
+            ).toBeTruthy();
+            expect(
+                verticesLabel.indexOf("b3") !== -1
             ).toBeTruthy();
             expect(
                 vertexSearchResult.elementType
@@ -66,10 +69,10 @@ define([
                 "Bubble"
             );
         });
-        it("vertex context is empty if it has no relations", function () {
+        it("vertex context is empty if it has no neighbors", function () {
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas();
             var searchResults = new Scenarios.getSearchResultForB1().get();
-            searchResults[0].properties = undefined;
+            searchResults[0].context = undefined;
             var vertexSearchResult = searchProvider.formatResults(
                 searchResults,
                 "b1"
@@ -86,11 +89,13 @@ define([
                     new Scenarios.getSearchResultForR2().get(),
                     "r2"
                 )[0];
+            var verticesLabel = edgeSearchResult.somethingToDistinguish.split(", ");
             expect(
-                edgeSearchResult.somethingToDistinguish
-            ).toBe(
-                "b1 -> b3"
-            );
+                verticesLabel.indexOf("b1") !== -1
+            ).toBeTruthy();
+            expect(
+                verticesLabel.indexOf("b3") !== -1
+            ).toBeTruthy();
             expect(
                 edgeSearchResult.elementType
             ).toBe(
@@ -210,7 +215,7 @@ define([
                 "meta3"
             );
             expect(
-                serverResults[3].identifierPojo.friendlyResource.label
+                serverResults[3].graphElement.friendlyResource.label
             ).toBe(
                 "meta3"
             );

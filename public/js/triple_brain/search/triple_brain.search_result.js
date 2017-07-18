@@ -36,18 +36,17 @@ define([
     api.fromServerFormat = function (searchResult) {
         switch (searchResult.type) {
             case api.additionalTypes.Edge :
-                var sourceVertex = Vertex.fromServerFormat(
-                        searchResult.edge.sourceVertex
-                    ),
-                    destinationVertex = Vertex.fromServerFormat(
-                        searchResult.edge.destinationVertex
-                    );
+                // var sourceVertex = Vertex.fromServerFormat(
+                //         searchResult.edge.sourceVertex
+                //     ),
+                //     destinationVertex = Vertex.fromServerFormat(
+                //         searchResult.edge.destinationVertex
+                //     );
                 return new SearchResult(
-                    Edge.fromServerFormat(searchResult.edge),
+                    GraphElement.fromServerFormat(searchResult.graphElement),
                     GraphElementType.Relation,
-                    api._buildEdgeSomethingToDistinguish(
-                        sourceVertex,
-                        destinationVertex
+                    api._buildSomethingToDistinguish(
+                        searchResult
                     ),
                     searchResult
                 );
@@ -56,18 +55,15 @@ define([
                 return new SearchResult(
                     schema,
                     GraphElementType.Schema,
-                    api._buildSchemaSomethingToDistinguish(schema),
+                    api._buildSomethingToDistinguish(searchResult),
                     searchResult
                 );
             case GraphElementType.Property :
                 var property = Property.fromServerFormat(searchResult.graphElement);
-                property.setSchema(
-                    Schema.fromServerFormat(searchResult.schema)
-                );
                 return new SearchResult(
                     property,
                     GraphElementType.Property,
-                    api._buildPropertySomethingToDistinguish(property),
+                    api._buildPropertySomethingToDistinguish(searchResult),
                     searchResult
                 );
             case GraphElementType.Vertex :
@@ -75,11 +71,14 @@ define([
                 return new SearchResult(
                     vertex,
                     GraphElementType.Vertex,
-                    api._buildVertexSomethingToDistinguish(searchResult),
+                    api._buildSomethingToDistinguish(searchResult),
                     searchResult
                 );
             case GraphElementType.Meta :
-                var identifier = Identification.fromServerFormat(searchResult.identifierPojo);
+                var identifierAsGraphElement = GraphElement.fromServerFormat(
+                    searchResult.graphElement
+                );
+                var identifier = identifierAsGraphElement.getIdentifiers()[0];
                 return new SearchResult(
                     identifier,
                     GraphElementType.Meta,
@@ -88,11 +87,25 @@ define([
                 );
         }
     };
-    api._buildPropertySomethingToDistinguish = function (property) {
-        return "<- " + property.getSchema().getLabel();
+    api._buildPropertySomethingToDistinguish = function (searchResult) {
+        if(!searchResult.context){
+            return "";
+        }
+        return "<- " + searchResult.context[Object.keys(searchResult.context)];
     };
-    api._buildEdgeSomethingToDistinguish = function (sourceVertex, destinationVertex) {
-        return sourceVertex.getLabel() + " -> " +destinationVertex.getLabel();
+    api._buildSomethingToDistinguish = function(searchResult){
+        if(!searchResult.context){
+            return "";
+        }
+        var contextLabels = [];
+        Object.keys(searchResult.context).forEach(function(uri) {
+            contextLabels.push(searchResult.context[uri]);
+        });
+        return contextLabels.join(", ");
+    };
+    api._buildEdgeSomethingToDistinguish = function (searchResult) {
+        var contextValues = Object.values(searchResult.context);
+        return contextValues[0] + "  " + contextValues[1];
     };
     api._buildSchemaSomethingToDistinguish = function (schema) {
         return api.formatRelationsName(

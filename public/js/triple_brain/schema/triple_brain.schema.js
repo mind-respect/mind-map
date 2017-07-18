@@ -14,6 +14,7 @@ define([
             serverFormat
         );
     };
+
     api.fromSearchResult = function(searchResult){
         searchResult.friendlyResource = searchResult.graphElement.friendlyResource;
         return new Schema(
