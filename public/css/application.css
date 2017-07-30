@@ -548,9 +548,10 @@ button.inactive i { color: red; }
 #word-cloud li { cursor: pointer; width: 250px; white-space: nowrap; display: inline-block; text-overflow: ellipsis; color: white; overflow: hidden; padding: 0.25em; line-height: 90%; margin: 0.2em; font-size: 0.6em; text-align: left; }
 #word-cloud li a:hover { text-decoration: none; }
 #word-cloud li .label { font-size: 1em; }
-#word-cloud li .label:hover { background-color: black; }
-#word-cloud li .label-dark-blue { background-color: darkblue; }
-#word-cloud li .label-light-blue { background-color: #2b6199; }
+#word-cloud li .label:hover { background-color: #2b6199; }
+#word-cloud li:nth-child(odd) .label:not(:hover) { background-color: white; color: black; }
+#word-cloud li:nth-child(odd) .label:hover { color: white; }
+#word-cloud li:nth-child(even) .label:not(:hover) { background-color: #626569; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 #schemas-container { margin-top: 5%; }

@@ -35,15 +35,25 @@
     .label{
       font-size:1em;
       &:hover{
-        background-color: black;
+        background-color: #2b6199;
       }
     }
-    .label-dark-blue{
-      background-color:darkblue;
+    &:nth-child(odd){
+      .label {
+        &:not(:hover){
+          background-color: white;
+          color:black;
+        }
+        &:hover{
+          color:white;
+        }
+      }
 
     }
-    .label-light-blue{
-      background-color: #2b6199;
+    &:nth-child(even){
+      .label:not(:hover){
+        background-color: rgb(98, 101, 105);
+      }
     }
     cursor:pointer;
     width: 250px;

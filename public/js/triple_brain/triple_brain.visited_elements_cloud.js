@@ -37,12 +37,6 @@ define([
             var span = $("<span class='label'>").text(
                 element.getLabel()
             );
-            if(index % 2 === 0){
-                span.addClass("label-light-blue");
-            }
-            else {
-                span.addClass("label-dark-blue");
-            }
             $("<li class=''>").append(
                 $("<a>").attr(
                     "tagcloud-weight",
