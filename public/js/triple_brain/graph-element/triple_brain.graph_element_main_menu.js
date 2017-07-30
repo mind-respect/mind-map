@@ -75,20 +75,9 @@ define([
                     var controller = isInBubble ?
                         graphElements.getController() :
                         api._getCurrentClickHandler(button);
-                    var clickHandler = controller[
-                    button.getAction() + "BtnClick"
-                        ];
-                    if (clickHandler) {
-                        clickHandler.call(
-                            controller,
-                            event,
-                            graphElements
-                        );
-                    } else {
-                        controller[
-                            button.getAction()
-                            ]();
-                    }
+                    controller[
+                        button.getAction()
+                        ]();
                     api.reviewButtonsVisibility();
                 }
             );

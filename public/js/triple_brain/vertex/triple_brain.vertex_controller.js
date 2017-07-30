@@ -122,6 +122,10 @@ define([
             );
     };
 
+    VertexController.prototype.makePrivateCanDoFromInLabel = function(){
+        return false;
+    };
+
     VertexController.prototype.makePrivate = function () {
         var self = this;
         if (this.isSingle()) {
@@ -163,6 +167,10 @@ define([
                     this.isSingle() && !this.getUi().getModel().isPublic()
                 )
             );
+    };
+
+    VertexController.prototype.makePublicCanDoFromInLabel = function(){
+        return false;
     };
 
     VertexController.prototype._areAllElementsPublic = function () {

@@ -73,9 +73,15 @@ define([
                     graphElementUi.getModel().getComment()
                 );
             }
-            GraphElementMainMenu.applyActionOnClick(
-                clonedButton
-            );
+            var controller = graphElementUi.getController();
+            var canDoFromInLabel = controller[button.getAction() + "CanDoFromInLabel"];
+            if (canDoFromInLabel === undefined || canDoFromInLabel.call(controller)) {
+                GraphElementMainMenu.applyActionOnClick(
+                    clonedButton
+                );
+            }else{
+                cloneHtml.attr("disabled", "disabled");
+            }
             GraphElementMainMenu.defineTooltip(
                 clonedButton
             );

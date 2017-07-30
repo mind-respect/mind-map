@@ -151,11 +151,6 @@ define([
         ).create();
     };
 
-    GraphElementController.prototype.identifyBtnClick = function (event) {
-        event.stopPropagation();
-        this.identify();
-    };
-
     GraphElementController.prototype.acceptCanDo = function () {
         return false;
     };
