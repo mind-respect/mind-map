@@ -53,10 +53,22 @@ define([
     }
 
     function buildContextCellForElement(element){
+        var anchor = buildAnchorForElement(element);
+        var container = $("<div class='container'>").appendTo(
+            anchor
+        );
+        var contextUris = Object.keys(element.getContext());
+        for(var i = 0 ; i < contextUris.length; i++){
+            var text = element.getContext()[contextUris[i]];
+            text += (i ===  contextUris.length - 1) ? " ..." : " ● ";
+            container.append(
+                $("<span class='text'>").text(
+                    text
+                )
+            );
+        }
         return $("<td class='context'>").append(
-            buildAnchorForElement(element).text(
-                element.getFormattedContext()
-            )
+            anchor
         );
     }
 
@@ -69,7 +81,7 @@ define([
     }
 
     function buildNumberVisitsCellForElement(element){
-        return $("<td class='number-visits'>").append(
+        return $("<td class='number-visits' >").append(
             buildAnchorForElement(element).text(
                 element.getNumberOfVisits()
             )

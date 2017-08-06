@@ -2,7 +2,7 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
-#word-cloud-container{
+#word-cloud-container {
   .background {
     position: absolute;
     background-image: linear-gradient(
@@ -14,58 +14,86 @@
     width: 100%;
     min-height: 200px;
   }
-  .content{
-    margin-top:3%;
+  .content {
+    margin-top: 3%;
   }
-  h2{
-    font-weight:bold;
+  h2 {
+    font-weight: bold;
     font-size: 2rem;
     color: white;
   }
 }
+
 $tagCloudFontSize: 0.6em;
 #word-cloud {
-  margin-top:5%;
-  text-align:left;
-  font-size:30px;
-  padding:1em;
+  margin-top: 5%;
+  text-align: left;
+  font-size: 30px;
+  padding: 1em;
 
-  table, table *{
-    cursor:pointer;
+  table{
+    table-layout: fixed;
+    word-wrap: break-word;
   }
 
-  th{
-    font-size:$tagCloudFontSize;
-    &.context{
-      text-align:center;
-    }
+  table, table * {
+    cursor: pointer;
+  }
+
+  .last-visit, .number-visits {
+    width: 10%;
+  }
+
+  .context {
+    text-align: center;
+  }
+
+  .bubble-label, .context {
+    width: 40%;
+    text-overflow: ellipsis;
+  }
+
+  th {
+    font-size: $tagCloudFontSize;
   }
 
   td {
+    &.bubble-label{
+      a{
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+    &.context {
+      .container {
+        width: 100%;
+        .text {
+          max-width:20%;
+        }
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
     text-align: left;
-    &.context{
-      text-align:center;
-    }
-    &.last-visit, &.number-visits{
-      width:10%;
-    }
-    color:black;
-    a{
-      display:block;
-      color:black;
-      &:hover{
-        color:black;
+
+    color: black;
+    a {
+      display: block;
+      color: black;
+      &:hover {
+        color: black;
         text-decoration: none;
       }
     }
-    cursor:pointer;
-    white-space:nowrap;
-    text-overflow:ellipsis;
+    cursor: pointer;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     overflow: hidden;
-    padding:0.25em;
+    padding: 0.25em;
     line-height: 90%;
-    margin:0.2em;
-    font-size:$tagCloudFontSize;
-    text-align:left;
+    margin: 0.2em;
+    font-size: $tagCloudFontSize;
+    text-align: left;
   }
 }

@@ -40,6 +40,9 @@ define([
     CenterGraphElement.prototype.getLastCenterDate = function () {
         return new Date(this.centerGraphElementServerFormat.lastCenterDate);
     };
+    CenterGraphElement.prototype.getContext = function () {
+        return this.centerGraphElementServerFormat.context;
+    };
     CenterGraphElement.prototype.getFormattedContext = function () {
         var formattedContext = "";
         var contextUris = Object.keys(this.centerGraphElementServerFormat.context);
