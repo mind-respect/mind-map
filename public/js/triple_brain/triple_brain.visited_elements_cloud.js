@@ -34,8 +34,8 @@ define([
         _elements.forEach(function(element){
             var tr = $("<tr class=''>");
             tr.append(
-                buildContextCellForElement(element),
                 buildLabelCellForElement(element),
+                buildContextCellForElement(element),
                 buildLastVisitCellForElement(element),
                 buildNumberVisitsCellForElement(element)
             );
