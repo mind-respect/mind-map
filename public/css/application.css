@@ -551,7 +551,7 @@ button.inactive i { color: red; }
 #word-cloud .context { text-align: center; }
 #word-cloud .bubble-label, #word-cloud .context { width: 40%; text-overflow: ellipsis; }
 #word-cloud th { font-size: 0.6em; }
-#word-cloud td { text-align: left; color: black; cursor: pointer; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; padding: 0.25em; line-height: 90%; margin: 0.2em; font-size: 0.6em; text-align: left; }
+#word-cloud td { text-align: left; color: black; cursor: pointer; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-size: 0.6em; text-align: left; }
 #word-cloud td.bubble-label a { overflow: hidden; text-overflow: ellipsis; }
 #word-cloud td.context .container { width: 100%; overflow: hidden; text-overflow: ellipsis; }
 #word-cloud td.context .container .text { max-width: 20%; }
