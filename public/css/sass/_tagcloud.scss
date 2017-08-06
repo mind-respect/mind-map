@@ -40,17 +40,25 @@ $tagCloudFontSize: 0.6em;
     cursor: pointer;
   }
 
-  .last-visit, .number-visits {
-    width: 7%;
+  .last-visit{
+    width:7%;
   }
-
+  .number-visits {
+    width: 4%;
+  }
   .context {
     text-align: center;
   }
 
   .bubble-label, .context {
-    width: 43%;
     text-overflow: ellipsis;
+  }
+  .bubble-label {
+    width: 36%;
+  }
+
+  .context {
+    width: 53%;
   }
 
   th {
@@ -70,7 +78,7 @@ $tagCloudFontSize: 0.6em;
         //display:inline-flex;
         .grid-item {
           float: left;
-          max-width:30%;
+          max-width:27%;
           //flex-basis:0;
           //float:left;
           //flex-grow:0;
