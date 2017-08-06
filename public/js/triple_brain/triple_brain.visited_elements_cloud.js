@@ -82,7 +82,9 @@ define([
 
     function buildNumberVisitsCellForElement(element){
         return $("<td class='number-visits' >").append(
-            buildAnchorForElement(element).text(
+            buildAnchorForElement(element).addClass(
+                "text-right"
+            ).text(
                 element.getNumberOfVisits()
             )
         );
