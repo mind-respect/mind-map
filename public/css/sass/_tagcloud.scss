@@ -78,7 +78,7 @@ $tagCloudFontSize: 0.6em;
         //display:inline-flex;
         .grid-item {
           float: left;
-          max-width:27%;
+          max-width:40%; // 200% / 5 items (2 lines / 5 items)
           //flex-basis:0;
           //float:left;
           //flex-grow:0;

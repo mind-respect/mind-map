@@ -557,7 +557,7 @@ button.inactive i { color: red; }
 #word-cloud td { text-align: left; color: black; cursor: pointer; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-size: 0.6em; }
 #word-cloud td.bubble-label a { overflow: hidden; text-overflow: ellipsis; }
 #word-cloud td.context .grid { overflow: hidden; text-overflow: ellipsis; }
-#word-cloud td.context .grid .grid-item { float: left; max-width: 27%; overflow: hidden; padding-left: 5px; text-overflow: ellipsis; }
+#word-cloud td.context .grid .grid-item { float: left; max-width: 40%; overflow: hidden; padding-left: 5px; text-overflow: ellipsis; }
 #word-cloud td.context .grid .grid-item:after { content: " ● "; }
 #word-cloud td.context .grid .grid-item:last-of-type:after { content: " ..."; }
 #word-cloud td a { display: block; color: black; }
