@@ -545,13 +545,14 @@ button.inactive i { color: red; }
 #word-cloud-container h2 { font-weight: bold; font-size: 2rem; color: white; }
 
 #word-cloud { margin-top: 5%; text-align: left; font-size: 30px; padding: 1em; }
-#word-cloud li { cursor: pointer; width: 250px; white-space: nowrap; display: inline-block; text-overflow: ellipsis; color: white; overflow: hidden; padding: 0.25em; line-height: 90%; margin: 0.2em; font-size: 0.6em; text-align: left; }
-#word-cloud li a:hover { text-decoration: none; }
-#word-cloud li .label { font-size: 1em; }
-#word-cloud li .label:hover { background-color: #2b6199; }
-#word-cloud li:nth-child(odd) .label:not(:hover) { background-color: white; color: black; }
-#word-cloud li:nth-child(odd) .label:hover { color: white; }
-#word-cloud li:nth-child(even) .label:not(:hover) { background-color: #626569; }
+#word-cloud table, #word-cloud table * { cursor: pointer; }
+#word-cloud th { font-size: 0.6em; }
+#word-cloud th.context { text-align: center; }
+#word-cloud td { text-align: left; color: black; cursor: pointer; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; padding: 0.25em; line-height: 90%; margin: 0.2em; font-size: 0.6em; text-align: left; }
+#word-cloud td.context { text-align: center; }
+#word-cloud td.last-visit, #word-cloud td.number-visits { width: 10%; }
+#word-cloud td a { display: block; color: black; }
+#word-cloud td a:hover { color: black; text-decoration: none; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 #schemas-container { margin-top: 5%; }

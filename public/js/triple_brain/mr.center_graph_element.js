@@ -12,18 +12,18 @@ define([
         var elements = [];
         $.each(serverFormat, function(){
             elements.push(
-                new Self().init(
+                new CenterGraphElement().init(
                     this
                 )
             );
         });
         return elements;
     };
-    function Self() {
+    function CenterGraphElement() {
     }
 
-    Self.prototype = new FriendlyResource.FriendlyResource();
-    Self.prototype.init = function (serverFormat) {
+    CenterGraphElement.prototype = new FriendlyResource.FriendlyResource();
+    CenterGraphElement.prototype.init = function (serverFormat) {
         this.centerGraphElementServerFormat = serverFormat;
         FriendlyResource.FriendlyResource.apply(
             this.centerGraphElementServerFormat.graphElement.friendlyResource
@@ -34,11 +34,20 @@ define([
         );
         return this;
     };
-    Self.prototype.getNumberOfVisits = function () {
+    CenterGraphElement.prototype.getNumberOfVisits = function () {
         return this.centerGraphElementServerFormat.numberOfVisits;
     };
-    Self.prototype.getLastCenterDate = function () {
+    CenterGraphElement.prototype.getLastCenterDate = function () {
         return new Date(this.centerGraphElementServerFormat.lastCenterDate);
+    };
+    CenterGraphElement.prototype.getFormattedContext = function () {
+        var formattedContext = "";
+        var contextUris = Object.keys(this.centerGraphElementServerFormat.context);
+        for(var i = 0 ; i < contextUris.length; i++){
+            formattedContext += this.centerGraphElementServerFormat.context[contextUris[i]];
+            formattedContext += (i ===  contextUris.length - 1) ? " ..." : " ● ";
+        }
+        return formattedContext;
     };
     return api;
 });

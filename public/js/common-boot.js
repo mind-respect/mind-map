@@ -242,7 +242,7 @@ requirejs.config({
         "mr.ask_modal": "triple_brain/mr.ask_modal",
 
         "triple_brain.visited_elements_cloud": "triple_brain/triple_brain.visited_elements_cloud",
-        "triple_brain.center_graph_elements": "triple_brain/triple_brain.center_graph_elements",
+        "mr.center_graph_element": "triple_brain/mr.center_graph_element",
         "triple_brain.center_graph_element_service": "triple_brain/triple_brain.center_graph_element_service",
 
         "triple_brain.object_utils": "triple_brain/triple_brain.object_utils",

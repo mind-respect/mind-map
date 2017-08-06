@@ -6,12 +6,12 @@ define([
     "jquery",
     "triple_brain.id_uri",
     "triple_brain.center_graph_element_service",
-    "triple_brain.center_graph_elements",
+    "mr.center_graph_element",
     "triple_brain.visited_elements_cloud",
     "triple_brain.user_service",
     "triple_brain.graph_ui",
     "triple_brain.language_manager"
-], function ($, IdUri, CenterGraphElementService, CenterGraphElements, VisitedElementsCloud, UserService, GraphUi, LanguageManager) {
+], function ($, IdUri, CenterGraphElementService, CenterGraphElement, VisitedElementsCloud, UserService, GraphUi, LanguageManager) {
     "use strict";
     var api = {};
     api.enter = function () {
@@ -35,7 +35,7 @@ define([
         GraphUi.getDrawnGraph().addClass("hidden");
         $("body").removeClass("hidden");
         getSectionContainer().removeClass("hidden");
-        var centerGraphElements = CenterGraphElements.fromServerFormat(elements);
+        var centerGraphElements = CenterGraphElement.fromServerFormat(elements);
         if(centerGraphElements.length === 0){
             UserService.getDefaultVertexUri(UserService.authenticatedUserInCache().user_name, function(uri){
                 window.location = IdUri.htmlUrlForBubbleUri(uri);

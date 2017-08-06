@@ -20,6 +20,7 @@ define([
             setTitle();
         }
     };
+
     function sortElements() {
         _elements.sort(function (a, b) {
             return a.getLastCenterDate() > b.getLastCenterDate() ?
@@ -29,35 +30,62 @@ define([
 
     function buildHtml() {
         _container.detachTemp();
-        var list = _container.find("ul");
-        var index = 0;
-        $.each(_elements, function () {
-            index++;
-            var element = this;
-            var span = $("<span class='label'>").text(
-                element.getLabel()
+        var tableBody = _container.find("tbody");
+        _elements.forEach(function(element){
+            var tr = $("<tr class=''>");
+            tr.append(
+                buildContextCellForElement(element),
+                buildLabelCellForElement(element),
+                buildLastVisitCellForElement(element),
+                buildNumberVisitsCellForElement(element)
             );
-            $("<li class=''>").append(
-                $("<a>").attr(
-                    "tagcloud-weight",
-                    element.getNumberOfVisits()
-                ).data(
-                    "uri",
-                    element.getUri()
-                ).append(
-                    span
-                ).click(function (event) {
-                        event.preventDefault();
-                        window.location = IdUri.htmlUrlForBubbleUri(
-                            $(this).data("uri")
-                        );
-                    }
-                )
-            ).appendTo(list);
+            tr.appendTo(tableBody);
         });
         _container.reattach();
     }
-    function setTitle(){
+
+    function buildLabelCellForElement(element){
+        return $("<td class='bubble-label'>").append(
+            buildAnchorForElement(element).text(
+                element.getLabel()
+            )
+        );
+    }
+
+    function buildContextCellForElement(element){
+        return $("<td class='context'>").append(
+            buildAnchorForElement(element).text(
+                element.getFormattedContext()
+            )
+        );
+    }
+
+    function buildLastVisitCellForElement(element){
+        return $("<td class='last-visit'>").append(
+            buildAnchorForElement(element).text(
+                element.getLastCenterDate().toLocaleDateString()
+            )
+        );
+    }
+
+    function buildNumberVisitsCellForElement(element){
+        return $("<td class='number-visits'>").append(
+            buildAnchorForElement(element).text(
+                element.getNumberOfVisits()
+            )
+        );
+    }
+
+    function buildAnchorForElement(element){
+        return $("<a>").prop(
+            "href",
+            IdUri.htmlUrlForBubbleUri(
+                element.getUri()
+            )
+        );
+    }
+
+    function setTitle() {
         _container.siblings("h2").text(
             IdUri.currentUsernameInUrl()
         );

@@ -23,49 +23,50 @@
     color: white;
   }
 }
+$tagCloudFontSize: 0.6em;
 #word-cloud {
   margin-top:5%;
   text-align:left;
   font-size:30px;
   padding:1em;
-  li {
-    a:hover{
-      text-decoration: none;
-    }
-    .label{
-      font-size:1em;
-      &:hover{
-        background-color: #2b6199;
-      }
-    }
-    &:nth-child(odd){
-      .label {
-        &:not(:hover){
-          background-color: white;
-          color:black;
-        }
-        &:hover{
-          color:white;
-        }
-      }
 
+  table, table *{
+    cursor:pointer;
+  }
+
+  th{
+    font-size:$tagCloudFontSize;
+    &.context{
+      text-align:center;
     }
-    &:nth-child(even){
-      .label:not(:hover){
-        background-color: rgb(98, 101, 105);
+  }
+
+  td {
+    text-align: left;
+    &.context{
+      text-align:center;
+    }
+    &.last-visit, &.number-visits{
+      width:10%;
+    }
+    color:black;
+    a{
+      display:block;
+      color:black;
+      &:hover{
+        color:black;
+        text-decoration: none;
       }
     }
     cursor:pointer;
-    width: 250px;
     white-space:nowrap;
-    display:inline-block;
+    //display:inline-block;
     text-overflow:ellipsis;
-    color:white;
     overflow: hidden;
     padding:0.25em;
     line-height: 90%;
     margin:0.2em;
-    font-size:0.6em;
+    font-size:$tagCloudFontSize;
     text-align:left;
   }
 }
