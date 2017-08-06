@@ -46,9 +46,6 @@ $tagCloudFontSize: 0.6em;
   .number-visits {
     width: 4%;
   }
-  .context {
-    text-align: center;
-  }
 
   .bubble-label, .context {
     text-overflow: ellipsis;
@@ -63,6 +60,8 @@ $tagCloudFontSize: 0.6em;
 
   th {
     font-size: $tagCloudFontSize;
+    color:#656464;
+    //font-weight:normal;
   }
 
   td {
@@ -70,9 +69,11 @@ $tagCloudFontSize: 0.6em;
       a{
         overflow: hidden;
         text-overflow: ellipsis;
+        font-weight:bold;
       }
     }
     &.context {
+      text-align: center;
       .grid {
         //width: 100%;
         //display:inline-flex;

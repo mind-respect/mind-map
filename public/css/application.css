@@ -549,13 +549,13 @@ button.inactive i { color: red; }
 #word-cloud table, #word-cloud table * { cursor: pointer; }
 #word-cloud .last-visit { width: 7%; }
 #word-cloud .number-visits { width: 4%; }
-#word-cloud .context { text-align: center; }
 #word-cloud .bubble-label, #word-cloud .context { text-overflow: ellipsis; }
 #word-cloud .bubble-label { width: 36%; }
 #word-cloud .context { width: 53%; }
-#word-cloud th { font-size: 0.6em; }
+#word-cloud th { font-size: 0.6em; color: #656464; }
 #word-cloud td { text-align: left; color: black; cursor: pointer; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-size: 0.6em; }
-#word-cloud td.bubble-label a { overflow: hidden; text-overflow: ellipsis; }
+#word-cloud td.bubble-label a { overflow: hidden; text-overflow: ellipsis; font-weight: bold; }
+#word-cloud td.context { text-align: center; }
 #word-cloud td.context .grid { overflow: hidden; text-overflow: ellipsis; }
 #word-cloud td.context .grid .grid-item { float: left; max-width: 35%; overflow: hidden; padding-left: 5px; text-overflow: ellipsis; }
 #word-cloud td.context .grid .grid-item:after { content: " ● "; }
