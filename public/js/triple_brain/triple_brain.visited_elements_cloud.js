@@ -54,15 +54,14 @@ define([
 
     function buildContextCellForElement(element){
         var anchor = buildAnchorForElement(element);
-        var container = $("<div class='container'>").appendTo(
+        var container = $("<div class='grid'>").appendTo(
             anchor
         );
         var contextUris = Object.keys(element.getContext());
         for(var i = 0 ; i < contextUris.length; i++){
             var text = element.getContext()[contextUris[i]];
-            text += (i ===  contextUris.length - 1) ? " ..." : " ● ";
             container.append(
-                $("<span class='text'>").text(
+                $("<div class='grid-item'>").text(
                     text
                 )
             );

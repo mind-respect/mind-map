@@ -355,7 +355,7 @@
   },
   "centralBubbles":{
     "center": "Centre",
-    "context": "Contexte",
+    "context": "Bulles autour",
     "lastVisit": "Dernière visite",
     "nbVisits": "# Visites"
   }

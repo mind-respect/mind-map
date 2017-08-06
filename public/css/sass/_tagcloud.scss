@@ -41,7 +41,7 @@ $tagCloudFontSize: 0.6em;
   }
 
   .last-visit, .number-visits {
-    width: 10%;
+    width: 7%;
   }
 
   .context {
@@ -49,7 +49,7 @@ $tagCloudFontSize: 0.6em;
   }
 
   .bubble-label, .context {
-    width: 40%;
+    width: 43%;
     text-overflow: ellipsis;
   }
 
@@ -65,10 +65,27 @@ $tagCloudFontSize: 0.6em;
       }
     }
     &.context {
-      .container {
-        width: 100%;
-        .text {
-          max-width:20%;
+      .grid {
+        //width: 100%;
+        //display:inline-flex;
+        .grid-item {
+          float: left;
+          max-width:30%;
+          //flex-basis:0;
+          //float:left;
+          //flex-grow:0;
+          //max-width:25%;
+          overflow: hidden;
+          padding-left:5px;
+          text-overflow: ellipsis;
+          &:after{
+            content:" ● "
+          }
+          &:last-of-type{
+            &:after{
+              content:" ..."
+            }
+          }
         }
         overflow: hidden;
         text-overflow: ellipsis;
@@ -91,6 +108,5 @@ $tagCloudFontSize: 0.6em;
     text-overflow: ellipsis;
     overflow: hidden;
     font-size: $tagCloudFontSize;
-    text-align: left;
   }
 }

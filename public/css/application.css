@@ -547,14 +547,16 @@ button.inactive i { color: red; }
 #word-cloud { margin-top: 5%; text-align: left; font-size: 30px; padding: 1em; }
 #word-cloud table { table-layout: fixed; word-wrap: break-word; }
 #word-cloud table, #word-cloud table * { cursor: pointer; }
-#word-cloud .last-visit, #word-cloud .number-visits { width: 10%; }
+#word-cloud .last-visit, #word-cloud .number-visits { width: 7%; }
 #word-cloud .context { text-align: center; }
-#word-cloud .bubble-label, #word-cloud .context { width: 40%; text-overflow: ellipsis; }
+#word-cloud .bubble-label, #word-cloud .context { width: 43%; text-overflow: ellipsis; }
 #word-cloud th { font-size: 0.6em; }
-#word-cloud td { text-align: left; color: black; cursor: pointer; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-size: 0.6em; text-align: left; }
+#word-cloud td { text-align: left; color: black; cursor: pointer; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-size: 0.6em; }
 #word-cloud td.bubble-label a { overflow: hidden; text-overflow: ellipsis; }
-#word-cloud td.context .container { width: 100%; overflow: hidden; text-overflow: ellipsis; }
-#word-cloud td.context .container .text { max-width: 20%; }
+#word-cloud td.context .grid { overflow: hidden; text-overflow: ellipsis; }
+#word-cloud td.context .grid .grid-item { float: left; max-width: 30%; overflow: hidden; padding-left: 5px; text-overflow: ellipsis; }
+#word-cloud td.context .grid .grid-item:after { content: " ● "; }
+#word-cloud td.context .grid .grid-item:last-of-type:after { content: " ..."; }
 #word-cloud td a { display: block; color: black; }
 #word-cloud td a:hover { color: black; text-decoration: none; }
 
