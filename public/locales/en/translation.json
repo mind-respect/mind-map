@@ -351,5 +351,11 @@
     "1": "bubbles of",
     "2": "copy",
     "3": "to keep or to use them"
+  },
+  "centralBubbles":{
+    "center": "Centre",
+    "context": "Context",
+    "lastVisit": "Last Visit",
+    "nbVisits": "Number of visits"
   }
 }

@@ -352,5 +352,11 @@
     "1": "bulles de",
     "2": "les copier",
     "3": "pour les conserver ou les utiliser"
+  },
+  "centralBubbles":{
+    "center": "Centre",
+    "context": "Contexte",
+    "lastVisit": "Dernière visite",
+    "nbVisits": "Nomb de visites"
   }
 }
