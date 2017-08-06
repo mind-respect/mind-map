@@ -73,7 +73,9 @@ define([
 
     function buildLastVisitCellForElement(element){
         return $("<td class='last-visit'>").append(
-            buildAnchorForElement(element).text(
+            buildAnchorForElement(element).addClass(
+                "text-right"
+            ).text(
                 element.getLastCenterDate().toLocaleDateString()
             )
         );
