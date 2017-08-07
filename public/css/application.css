@@ -553,7 +553,7 @@ button.inactive i { color: red; }
 #word-cloud .bubble-label { width: 29%; }
 #word-cloud .context { width: 60%; }
 #word-cloud th { font-size: 0.6em; color: #656464; }
-#word-cloud td { text-align: left; color: black; cursor: pointer; text-overflow: ellipsis; overflow: hidden; font-size: 0.6em; }
+#word-cloud td { text-align: left; color: black; cursor: pointer; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-size: 0.6em; }
 #word-cloud td.bubble-label a { overflow: hidden; text-overflow: ellipsis; font-weight: bold; }
 #word-cloud td.context { text-align: center; }
 #word-cloud td.context .grid { overflow: hidden; text-overflow: ellipsis; }
