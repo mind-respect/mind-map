@@ -113,6 +113,7 @@ $tagCloudFontSize: 0.6em;
       }
     }
     cursor: pointer;
+    white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     font-size: $tagCloudFontSize;
