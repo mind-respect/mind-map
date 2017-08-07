@@ -9,11 +9,13 @@ define([
     "jquery.performance"
 ], function ($, IdUri) {
     "use strict";
-    var _elements,
+    var NUMBER_OF_VISIT_RANKS = 3,
+        _elements,
         _container;
     return {
         buildFromElementsInContainer: function (elements, container) {
             _elements = elements;
+            defineNumberVisitsRank();
             sortElements();
             _container = container;
             buildHtml();
@@ -82,17 +84,30 @@ define([
     }
 
     function buildNumberVisitsCellForElement(element){
+        var label = $('<span class="label">').addClass(
+            getNumberOfVisitsLabelClassFromRank(
+                element.getNumberOfVisitsRank()
+            )
+        ).text(element.getNumberOfVisits());
         return $("<td class='number-visits' >").append(
             buildAnchorForElement(element).addClass(
                 "text-right"
-            ).text(
-                element.getNumberOfVisits()
+            ).append(
+                label
             )
         );
     }
 
+    function getNumberOfVisitsLabelClassFromRank(rank){
+        switch(rank){
+            case 1: return "label-danger";
+            case 2 : return "label-warning";
+            default : return "label-info";
+        }
+    }
+
     function buildAnchorForElement(element){
-        return $("<a>").prop(
+        return $("<a target='_blank'>").prop(
             "href",
             IdUri.htmlUrlForBubbleUri(
                 element.getUri()
@@ -104,5 +119,27 @@ define([
         _container.siblings("h2").text(
             IdUri.currentUsernameInUrl()
         );
+    }
+
+    function defineNumberVisitsRank(){
+        _elements.sort(function (a, b) {
+            return a.getNumberOfVisits() > b.getNumberOfVisits() ?
+                -1 : 1;
+        });
+
+        var amountPerRank = Math.ceil(_elements.length / NUMBER_OF_VISIT_RANKS);
+        var currentRankLimit = amountPerRank;
+        var currentRank = 1;
+        var index = 1;
+        _elements.forEach(function(element){
+            if(index <= currentRankLimit){
+                element.setVisitRank(currentRank);
+            }
+            if(index === currentRankLimit){
+                currentRankLimit += amountPerRank;
+                currentRank++;
+            }
+            index++;
+        });
     }
 });

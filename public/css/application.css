@@ -547,11 +547,11 @@ button.inactive i { color: red; }
 #word-cloud { margin-top: 5%; text-align: left; font-size: 30px; padding: 1em; }
 #word-cloud table { table-layout: fixed; word-wrap: break-word; }
 #word-cloud table, #word-cloud table * { cursor: pointer; }
-#word-cloud .last-visit { width: 7%; }
+#word-cloud .last-visit { width: 10%; }
 #word-cloud .number-visits { width: 4%; }
 #word-cloud .bubble-label, #word-cloud .context { text-overflow: ellipsis; }
-#word-cloud .bubble-label { width: 29%; }
-#word-cloud .context { width: 60%; }
+#word-cloud .bubble-label { width: 28%; }
+#word-cloud .context { width: 58%; }
 #word-cloud th { font-size: 0.6em; color: #656464; }
 #word-cloud td { text-align: left; color: black; cursor: pointer; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-size: 0.6em; }
 #word-cloud td.bubble-label a { overflow: hidden; text-overflow: ellipsis; font-weight: bold; }
