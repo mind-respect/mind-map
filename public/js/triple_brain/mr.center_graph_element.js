@@ -35,6 +35,9 @@ define([
         return this;
     };
     CenterGraphElement.prototype.getNumberOfVisits = function () {
+        if(!this.centerGraphElementServerFormat.numberOfVisits){
+            return 0;
+        }
         return this.centerGraphElementServerFormat.numberOfVisits;
     };
     CenterGraphElement.prototype.getLastCenterDate = function () {
