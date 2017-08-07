@@ -51,11 +51,11 @@ $tagCloudFontSize: 0.6em;
     text-overflow: ellipsis;
   }
   .bubble-label {
-    width: 36%;
+    width: 29%;
   }
 
   .context {
-    width: 53%;
+    width: 60%;
   }
 
   th {
@@ -113,7 +113,6 @@ $tagCloudFontSize: 0.6em;
       }
     }
     cursor: pointer;
-    white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     font-size: $tagCloudFontSize;
