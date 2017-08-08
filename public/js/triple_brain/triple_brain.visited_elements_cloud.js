@@ -44,7 +44,9 @@ define([
                 bubbleLabel: getLabelCellContentForElement(element),
                 context: getContextCellContentForElement(element),
                 lastVisit: getLastVisitCellContentForElement(element),
-                numberVisits: getNumberVisitsCellContentForElement(element)
+                lastVisitValue: element.getLastCenterDate(),
+                numberVisits: getNumberVisitsCellContentForElement(element),
+                numberVisitsValue: element.getNumberOfVisits()
             });
         });
         table.bootstrapTable({
@@ -93,12 +95,14 @@ define([
                 field: 'lastVisit',
                 title: $.t("centralBubbles.lastVisit"),
                 sortable:true,
-                'class': 'last-visit'
+                'class': 'last-visit',
+                sortName: "lastVisitValue"
             },{
                 field: 'numberVisits',
                 title: $.t("centralBubbles.nbVisits"),
                 sortable:true,
-                'class': 'number-visits'
+                'class': 'number-visits',
+                sortName: "numberVisitsValue"
             },{
                 field:"select",
                  checkbox:true,
