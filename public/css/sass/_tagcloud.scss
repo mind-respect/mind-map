@@ -17,7 +17,7 @@
   .content {
     margin-top: 3%;
   }
-  h2 {
+  h2.user-name-on-background {
     font-weight: bold;
     font-size: 2rem;
     color: white;
@@ -28,10 +28,15 @@ $tagCloudFontSize: 0.6em;
 #word-cloud {
   margin-top: 5%;
   text-align: left;
-  font-size: 30px;
   padding: 1em;
 
-  table{
+  button.remove{
+    margin-top: 10px;
+    margin-left: 10px;
+  }
+
+  table {
+    font-size: 30px;
     table-layout: fixed;
     word-wrap: break-word;
   }
@@ -40,8 +45,8 @@ $tagCloudFontSize: 0.6em;
     cursor: pointer;
   }
 
-  .last-visit{
-    width:10%;
+  .last-visit {
+    width: 10%;
   }
   .number-visits {
     width: 4%;
@@ -60,16 +65,16 @@ $tagCloudFontSize: 0.6em;
 
   th {
     font-size: $tagCloudFontSize;
-    color:#656464;
+    color: #656464;
     //font-weight:normal;
   }
 
   td {
-    &.bubble-label{
-      a{
+    &.bubble-label {
+      a {
         overflow: hidden;
         text-overflow: ellipsis;
-        font-weight:bold;
+        font-weight: bold;
       }
     }
     &.context {
@@ -79,20 +84,20 @@ $tagCloudFontSize: 0.6em;
         //display:inline-flex;
         .grid-item {
           float: left;
-          max-width:35%; // 200% / 5 items (2 lines / 5 items) but reserve some extra space for padding etc
+          max-width: 35%; // 200% / 5 items (2 lines / 5 items) but reserve some extra space for padding etc
           //flex-basis:0;
           //float:left;
           //flex-grow:0;
           //max-width:25%;
           overflow: hidden;
-          padding-left:5px;
+          padding-left: 5px;
           text-overflow: ellipsis;
-          &:after{
-            content:" ● "
+          &:after {
+            content: " ● "
           }
-          &:last-of-type{
-            &:after{
-              content:" ..."
+          &:last-of-type {
+            &:after {
+              content: " ..."
             }
           }
         }
@@ -102,9 +107,9 @@ $tagCloudFontSize: 0.6em;
     }
 
     &.number-visits {
-      .label{
-        display:inline-block;
-        width:100%;
+      .label {
+        display: inline-block;
+        width: 100%;
       }
     }
 

@@ -6,12 +6,17 @@
 define([
     "jquery",
     "triple_brain.id_uri",
-    "jquery.performance"
-], function ($, IdUri) {
+    "mr.ask_modal",
+    "triple_brain.center_graph_element_service",
+    "bootstrap-table"
+], function ($, IdUri, AskModal, CenterGraphElementService) {
     "use strict";
     var NUMBER_OF_VISIT_RANKS = 3,
         _elements,
-        _container;
+        _container,
+        tableData = [],
+        checkedCenters = [],
+        table = $('#word-cloud-table');
     return {
         buildFromElementsInContainer: function (elements, container) {
             _elements = elements;
@@ -20,6 +25,7 @@ define([
             _container = container;
             buildHtml();
             setTitle();
+            handleRemoveCenterBtnClick();
         }
     };
 
@@ -31,36 +37,90 @@ define([
     }
 
     function buildHtml() {
-        _container.detachTemp();
-        var tableBody = _container.find("tbody");
-        _elements.forEach(function(element){
-            var tr = $("<tr class=''>");
-            tr.append(
-                buildLabelCellForElement(element),
-                buildContextCellForElement(element),
-                buildLastVisitCellForElement(element),
-                buildNumberVisitsCellForElement(element)
-            );
-            tr.appendTo(tableBody);
+        _elements.forEach(function (element) {
+            tableData.push({
+                uri: element.getUri(),
+                centerElement: element,
+                bubbleLabel: getLabelCellContentForElement(element),
+                context: getContextCellContentForElement(element),
+                lastVisit: getLastVisitCellContentForElement(element),
+                numberVisits: getNumberVisitsCellContentForElement(element)
+            });
         });
-        _container.reattach();
+        table.bootstrapTable({
+            onPostHeader: function () {
+                $(".fixed-table-toolbar .search input").attr(
+                    "placeholder",
+                    $.t("centralBubbles.filter")
+                );
+                _container.find("input[type=checkbox]").addClass("form-control");
+            },
+            onCheckAll: function(rows){
+                checkedCenters = [];
+                rows.forEach(function(row){
+                    checkedCenters.push(
+                        row.centerElement
+                    );
+                });
+            },
+            onUncheckAll: function(){
+                checkedCenters = [];
+            },
+            onCheck: function(row){
+                checkedCenters.push(
+                    row.centerElement
+                );
+            },
+            onUncheck: function(row){
+                var index = 0;
+                checkedCenters.forEach(function(centerElement) {
+                    if (centerElement.getUri() === row.centerElement.getUri()) {
+                        checkedCenters.splice(index,1);
+                    }
+                    index++;
+                });
+            },
+            columns: [{
+                field: 'bubbleLabel',
+                title: $.t("centralBubbles.center"),
+                'class': 'bubble-label',
+                searchable: true
+            }, {
+                field: 'context',
+                title: $.t("centralBubbles.context"),
+                'class': 'context'
+            }, {
+                field: 'lastVisit',
+                title: $.t("centralBubbles.lastVisit"),
+                sortable:true,
+                'class': 'last-visit'
+            },{
+                field: 'numberVisits',
+                title: $.t("centralBubbles.nbVisits"),
+                sortable:true,
+                'class': 'number-visits'
+            },{
+                field:"select",
+                 checkbox:true,
+                "class": "form-group"
+            }],
+            data:tableData
+        });
     }
 
-    function buildLabelCellForElement(element){
-        return $("<td class='bubble-label'>").append(
-            buildAnchorForElement(element).text(
-                element.getLabel()
-            )
-        );
+    function getLabelCellContentForElement(element) {
+        return buildAnchorForElement(element).text(
+            element.getLabel()
+        ).prop('outerHTML');
     }
 
-    function buildContextCellForElement(element){
+    function getContextCellContentForElement(element) {
         var anchor = buildAnchorForElement(element);
         var container = $("<div class='grid'>").appendTo(
             anchor
         );
         var contextUris = Object.keys(element.getContext());
-        for(var i = 0 ; i < contextUris.length; i++){
+        for (var i = 0; i < contextUris.length; i++) {
             var text = element.getContext()[contextUris[i]];
             container.append(
                 $("<div class='grid-item'>").text(
@@ -68,45 +128,42 @@ define([
                 )
             );
         }
-        return $("<td class='context'>").append(
-            anchor
-        );
+        return container.prop('outerHTML');
     }
 
-    function buildLastVisitCellForElement(element){
-        return $("<td class='last-visit'>").append(
-            buildAnchorForElement(element).addClass(
-                "text-right"
-            ).text(
-                element.getLastCenterDate().toLocaleDateString()
-            )
-        );
+    function getLastVisitCellContentForElement(element) {
+        return buildAnchorForElement(element).addClass(
+            "text-right"
+        ).text(
+            element.getLastCenterDate().toLocaleDateString()
+        ).prop('outerHTML');
     }
 
-    function buildNumberVisitsCellForElement(element){
+    function getNumberVisitsCellContentForElement(element) {
         var label = $('<span class="label">').addClass(
             getNumberOfVisitsLabelClassFromRank(
                 element.getNumberOfVisitsRank()
             )
         ).text(element.getNumberOfVisits());
-        return $("<td class='number-visits' >").append(
-            buildAnchorForElement(element).addClass(
-                "text-right"
-            ).append(
-                label
-            )
-        );
+        return buildAnchorForElement(element).addClass(
+            "text-right"
+        ).append(
+            label
+        ).prop('outerHTML');
     }
 
-    function getNumberOfVisitsLabelClassFromRank(rank){
-        switch(rank){
-            case 1: return "label-danger";
-            case 2 : return "label-warning";
-            default : return "label-info";
+    function getNumberOfVisitsLabelClassFromRank(rank) {
+        switch (rank) {
+            case 1:
+                return "label-danger";
+            case 2 :
+                return "label-warning";
+            default :
+                return "label-info";
         }
     }
 
-    function buildAnchorForElement(element){
+    function buildAnchorForElement(element) {
         return $("<a target='_blank'>").prop(
             "href",
             IdUri.htmlUrlForBubbleUri(
@@ -121,7 +178,7 @@ define([
         );
     }
 
-    function defineNumberVisitsRank(){
+    function defineNumberVisitsRank() {
         _elements.sort(function (a, b) {
             return a.getNumberOfVisits() > b.getNumberOfVisits() ?
                 -1 : 1;
@@ -131,15 +188,59 @@ define([
         var currentRankLimit = amountPerRank;
         var currentRank = 1;
         var index = 1;
-        _elements.forEach(function(element){
-            if(index <= currentRankLimit){
+        _elements.forEach(function (element) {
+            if (index <= currentRankLimit) {
                 element.setVisitRank(currentRank);
             }
-            if(index === currentRankLimit){
+            if (index === currentRankLimit) {
                 currentRankLimit += amountPerRank;
                 currentRank++;
             }
             index++;
         });
+    }
+    function handleRemoveCenterBtnClick(){
+        $("#remove-center-btn").off(
+            "click",
+            removeCenterBtnClick
+        ).on(
+            "click",
+            removeCenterBtnClick
+        );
+    }
+    function removeCenterBtnClick(){
+        if(!checkedCenters.length){
+            return;
+        }
+        var centersUri = checkedCenters.map(function(center){
+            return center.getUri();
+        });
+        askToRemoveCenters().then(function(){
+            return CenterGraphElementService.removeCentersWithUri(
+                centersUri
+            );
+        }).then(function(){
+            table.bootstrapTable('remove', {field: 'uri', values: centersUri});
+            checkedCenters = [];
+        });
+    }
+
+    function askToRemoveCenters(){
+        displayCentersLabelToRemove();
+        var modal = $("#remove-centers-confirm-menu").modal();
+        var hasMultipleCheckedElements = checkedCenters.length > 1;
+        var askModal = AskModal.usingModalHtml(modal, hasMultipleCheckedElements);
+        return askModal.ask();
+    }
+
+    function displayCentersLabelToRemove() {
+        var ul = $("#remove-centers-list").empty();
+        checkedCenters.forEach(function (centerElement) {
+            ul.append(
+                $("<li>").text(
+                    centerElement.getLabel()
+                )
+            );
+        }.bind(this));
     }
 });

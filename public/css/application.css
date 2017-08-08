@@ -542,10 +542,11 @@ button.inactive i { color: red; }
 /* Copyright Vincent Blouin under the GPL License version 3 */
 #word-cloud-container .background { position: absolute; background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("images/neurons-440660-white3.jpg"); left: 0; width: 100%; min-height: 200px; }
 #word-cloud-container .content { margin-top: 3%; }
-#word-cloud-container h2 { font-weight: bold; font-size: 2rem; color: white; }
+#word-cloud-container h2.user-name-on-background { font-weight: bold; font-size: 2rem; color: white; }
 
-#word-cloud { margin-top: 5%; text-align: left; font-size: 30px; padding: 1em; }
-#word-cloud table { table-layout: fixed; word-wrap: break-word; }
+#word-cloud { margin-top: 5%; text-align: left; padding: 1em; }
+#word-cloud button.remove { margin-top: 10px; margin-left: 10px; }
+#word-cloud table { font-size: 30px; table-layout: fixed; word-wrap: break-word; }
 #word-cloud table, #word-cloud table * { cursor: pointer; }
 #word-cloud .last-visit { width: 10%; }
 #word-cloud .number-visits { width: 4%; }

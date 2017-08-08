@@ -38,6 +38,9 @@ define([
         if(!this.centerGraphElementServerFormat.numberOfVisits){
             return 0;
         }
+        if(this.centerGraphElementServerFormat.numberOfVisits > 999){
+            return 999;
+        }
         return this.centerGraphElementServerFormat.numberOfVisits;
     };
     CenterGraphElement.prototype.getLastCenterDate = function () {

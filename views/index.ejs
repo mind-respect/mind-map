@@ -21,6 +21,9 @@
     <link rel="stylesheet" href="/css/timeline.css"/>
     <!--Modules-->
     <link rel="stylesheet" href="/js/module/date_picker/date-picker.css"/>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
+
     <script src="/js/require.js"></script>
 </head>
 <body class='hidden' id="body">
@@ -950,22 +953,37 @@
     <div class="row content">
         <div class="col-md-1"></div>
         <div class="col-md-10">
-            <h2 class="text-center"></h2>
+            <h2 class="text-center user-name-on-background"></h2>
             <div id="word-cloud">
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th class="bubble-label" data-i18n="centralBubbles.center"></th>
-                            <th class="context" data-i18n="centralBubbles.context"></th>
-                            <th class="last-visit text-right" data-i18n="centralBubbles.lastVisit"></th>
-                            <th class="number-visits text-right" data-i18n="centralBubbles.nbVisits"></th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+                <div id="word-cloud-header">
+                    <button type="button" id="remove-center-btn" class="remove btn btn-danger pull-right" data-i18n="[title]centralBubbles.removeInfo">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+                <table id="word-cloud-table" data-search="true" data-header="#word-cloud-header"></table>
             </div>
         </div>
         <div class="col-md-1"></div>
+    </div>
+</div>
+
+<div class="modal row" id="remove-centers-confirm-menu" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span data-i18n="centralBubbles.confirmRemove.title"></span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <strong class="multiple-flow hidden" data-i18n="vertex.menu.delete.multiple"></strong>
+                <ul id="remove-centers-list">
+                    <li data-i18n="centralBubbles.confirmRemove.info"></li>
+                </ul>
+                <strong data-i18n="centralBubbles.confirmRemove.really"></strong>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
     </div>
 </div>
 
@@ -1473,6 +1491,7 @@
         </div>
     </div>
 </div>
+
 <script>
     var bubl_guru_force_refresh = "<%= bust %>";
     var usernameForBublGuru = "<%= usernameForBublGuru %>";
