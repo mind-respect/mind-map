@@ -220,12 +220,11 @@ define([
             return center.getUri();
         });
         askToRemoveCenters().then(function(){
+            table.bootstrapTable('remove', {field: 'uri', values: centersUri});
+            checkedCenters = [];
             return CenterGraphElementService.removeCentersWithUri(
                 centersUri
             );
-        }).then(function(){
-            table.bootstrapTable('remove', {field: 'uri', values: centersUri});
-            checkedCenters = [];
         });
     }
 
