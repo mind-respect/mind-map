@@ -34,6 +34,7 @@ define([
                 uri: element.getUri(),
                 centerElement: element,
                 bubbleLabel: getLabelCellContentForElement(element),
+                bubbleLabelValue: element.getLabel(),
                 context: getContextCellContentForElement(element),
                 lastVisit: getLastVisitCellContentForElement(element),
                 lastVisitValue: element.getLastCenterDate().getTime(),
@@ -42,7 +43,7 @@ define([
             });
         });
         table.bootstrapTable({
-            search:true,
+            search: true,
             header: "#word-cloud-header",
             sortName: "lastVisit",
             sortOrder: "desc",
@@ -54,65 +55,72 @@ define([
                 );
                 _container.find("input[type=checkbox]").addClass("form-control");
             },
-            onCheckAll: function(rows){
+            onCheckAll: function (rows) {
                 checkedCenters = [];
-                rows.forEach(function(row){
+                rows.forEach(function (row) {
                     checkedCenters.push(
                         row.centerElement
                     );
                 });
             },
-            onUncheckAll: function(){
+            onUncheckAll: function () {
                 checkedCenters = [];
             },
-            onCheck: function(row){
+            onCheck: function (row) {
                 checkedCenters.push(
                     row.centerElement
                 );
             },
-            onUncheck: function(row){
+            onUncheck: function (row) {
                 var index = 0;
-                checkedCenters.forEach(function(centerElement) {
+                checkedCenters.forEach(function (centerElement) {
                     if (centerElement.getUri() === row.centerElement.getUri()) {
-                        checkedCenters.splice(index,1);
+                        checkedCenters.splice(index, 1);
                     }
                     index++;
                 });
             },
             columns: [{
+                field: "bubbleLabelValue",
+                searchable: true
+            }, {
                 field: 'bubbleLabel',
                 title: $.t("centralBubbles.center"),
                 'class': 'bubble-label',
-                searchable: true
+                searchable: false
             }, {
                 field: 'context',
                 title: $.t("centralBubbles.context"),
-                'class': 'context'
+                'class': 'context',
+                searchable: false
             }, {
                 field: 'lastVisit',
                 title: $.t("centralBubbles.lastVisit"),
-                sortable:true,
+                sortable: true,
                 'class': 'last-visit',
-                sortName: "lastVisitValue"
-            },{
+                sortName: "lastVisitValue",
+                searchable: false
+            }, {
                 field: 'numberVisits',
                 title: $.t("centralBubbles.nbVisits"),
-                sortable:true,
+                sortable: true,
                 'class': 'number-visits',
-                sortName: "numberVisitsValue"
-            },{
-                field:"select",
-                 checkbox:true,
-                "class": "form-group"
+                sortName: "numberVisitsValue",
+                searchable: false
+            }, {
+                field: "select",
+                checkbox: true,
+                "class": "form-group",
+                searchable: false
             }],
-            data:tableData
+            data: tableData
         });
     }
 
     function getLabelCellContentForElement(element) {
         var label = element.getLabel().trim();
         var anchor = buildAnchorForElement(element);
-        if(!label){
+        if (!label) {
             anchor.addClass("empty");
             label = "empty label";
         }
@@ -123,7 +131,7 @@ define([
 
     function getContextCellContentForElement(element) {
         return IdUri.isMetaUri(element.getUri()) ?
-            getMetaContextCellContentForElement(element):
+            getMetaContextCellContentForElement(element) :
             getVertexContextCellContentForElement(element);
     }
 
@@ -145,7 +153,7 @@ define([
             anchor
         );
         var contextUris = Object.keys(element.getContext());
-        if(contextUris.length < 1){
+        if (contextUris.length < 1) {
             anchor.addClass("empty").text(
                 "empty label"
             );
@@ -229,7 +237,8 @@ define([
             index++;
         });
     }
-    function handleRemoveCenterBtnClick(){
+
+    function handleRemoveCenterBtnClick() {
         $("#remove-center-btn").off(
             "click",
             removeCenterBtnClick
@@ -238,14 +247,15 @@ define([
             removeCenterBtnClick
         );
     }
-    function removeCenterBtnClick(){
-        if(!checkedCenters.length){
+
+    function removeCenterBtnClick() {
+        if (!checkedCenters.length) {
             return;
         }
-        var centersUri = checkedCenters.map(function(center){
+        var centersUri = checkedCenters.map(function (center) {
             return center.getUri();
         });
-        askToRemoveCenters().then(function(){
+        askToRemoveCenters().then(function () {
             table.bootstrapTable('remove', {field: 'uri', values: centersUri});
             checkedCenters = [];
             return CenterGraphElementService.removeCentersWithUri(
@@ -254,7 +264,7 @@ define([
         });
     }
 
-    function askToRemoveCenters(){
+    function askToRemoveCenters() {
         displayCentersLabelToRemove();
         var modal = $("#remove-centers-confirm-menu").modal();
         var hasMultipleCheckedElements = checkedCenters.length > 1;
