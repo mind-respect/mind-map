@@ -120,7 +120,12 @@ define([
     function getLabelCellContentForElement(element) {
         var label = element.getLabel().trim();
         var anchor = buildAnchorForElement(element);
-        if (!label) {
+        if (label) {
+            anchor.attr(
+                "title",
+                label
+            );
+        }else{
             anchor.addClass("empty");
             label = "empty label";
         }

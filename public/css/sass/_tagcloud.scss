@@ -79,33 +79,15 @@ $tagCloudFontSize: 0.6em;
         text-overflow: ellipsis;
         font-weight: bold;
       }
-      &:hover{
-        white-space: inherit;
-      }
     }
     &.context {
-      &:hover{
-        white-space: inherit;
-        .grid{
-          overflow: inherit;
-          .grid-item{
-            max-width: inherit;
-          }
-        }
-      }
       .reference.badge{
         font-size:0.8em;
       }
       .grid {
-        //width: 100%;
-        //display:inline-flex;
         .grid-item {
           float: left;
           max-width: 35%; // 200% / 5 items (2 lines / 5 items) but reserve some extra space for padding etc
-          //flex-basis:0;
-          //float:left;
-          //flex-grow:0;
-          //max-width:25%;
           overflow: hidden;
           padding-left: 5px;
           text-overflow: ellipsis;

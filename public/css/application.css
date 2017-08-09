@@ -557,10 +557,6 @@ button.inactive i { color: red; }
 #word-cloud td { text-align: left; color: black; cursor: pointer; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-size: 0.6em; }
 #word-cloud td a.empty { color: transparent !important; }
 #word-cloud td.bubble-label a { overflow: hidden; text-overflow: ellipsis; font-weight: bold; }
-#word-cloud td.bubble-label:hover { white-space: inherit; }
-#word-cloud td.context:hover { white-space: inherit; }
-#word-cloud td.context:hover .grid { overflow: inherit; }
-#word-cloud td.context:hover .grid .grid-item { max-width: inherit; }
 #word-cloud td.context .reference.badge { font-size: 0.8em; }
 #word-cloud td.context .grid { overflow: hidden; text-overflow: ellipsis; }
 #word-cloud td.context .grid .grid-item { float: left; max-width: 35%; overflow: hidden; padding-left: 5px; text-overflow: ellipsis; }
