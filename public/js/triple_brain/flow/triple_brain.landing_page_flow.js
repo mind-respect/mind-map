@@ -10,8 +10,10 @@ define([
     "triple_brain.graph_displayer_factory",
     "triple_brain.graph_element_main_menu",
     "triple_brain.flow",
+    "triple_brain.id_uri",
+    "triple_brain.user_service",
     "ekko-lightbox"
-], function ($, LanguageManager, MindMapInfo, GraphDisplayer, GraphDisplayerFactory, GraphElementMainMenu, Flow) {
+], function ($, LanguageManager, MindMapInfo, GraphDisplayer, GraphDisplayerFactory, GraphElementMainMenu, Flow, IdUri, UserService) {
     "use strict";
     var api = {};
     api.enterForAuthenticated = function () {
@@ -20,6 +22,12 @@ define([
         api.enter();
     };
     api.enter = function () {
+        if(MindMapInfo.isAuthenticatedLandingPageFlow() && window.location.href.indexOf("?") === -1){
+            window.location.href = IdUri.allCentralUrlForUsername(
+                UserService.authenticatedUserInCache().user_name
+            );
+            return;
+        }
         LanguageManager.loadLocaleContent(function () {
             $("html").i18n();
             Flow.showOnlyFlow("landing");
