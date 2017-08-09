@@ -150,7 +150,7 @@ define([
         if(contextUris.length < 1){
             anchor.addClass("empty").text(
                 "empty label"
-            )
+            );
         }
         for (var i = 0; i < contextUris.length; i++) {
             var text = element.getContext()[contextUris[i]];
