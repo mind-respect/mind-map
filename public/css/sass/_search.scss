@@ -97,3 +97,22 @@ $zIndex:2000;
 .ui-dialog {
   opacity: 0.9;
 }
+.distinguish-vertex{
+  white-space: nowrap;
+  .distinguish-vertex-item{
+    display:inline-block;
+    float:left;
+    text-overflow: ellipsis;
+    padding-left: 5px;
+    max-width:100%;
+    overflow: hidden;
+    &:after {
+      content: " ● "
+    }
+    &:last-of-type {
+      &:after {
+        content: " ..."
+      }
+    }
+  }
+}

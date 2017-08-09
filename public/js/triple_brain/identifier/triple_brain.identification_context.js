@@ -53,7 +53,7 @@ define([
             case GraphElementType.Schema :
                 return this._makeBubbleContext();
             case GraphElementType.Relation :
-                return this._makeRelationContext();
+                return this._makeBubbleContext();
             case GraphElementType.Property :
                 return this._makePropertyContext();
             default:
@@ -62,13 +62,13 @@ define([
     };
 
     Self.prototype._makeBubbleContext = function () {
-        var vertex = this.detailedGraphElement,
+        var graphElement = this.detailedGraphElement,
             tPreString = "identification.context",
             context = $("<div class='context'>").append(
                 $.t(tPreString + ".bubble"),
                 ": ",
-                this.makeBubbleLinks ? this._vertexLink(this.detailedGraphElement) :
-                    vertex.getLabel(),
+                this.makeBubbleLinks ? this._graphElementLink(this.detailedGraphElement) :
+                    graphElement.getLabel(),
                 " "
             );
         this._addCommentToContext(
@@ -80,7 +80,7 @@ define([
     Self.prototype._addCommentToContext = function (context) {
         context.append(
             $("<div>").append(
-                this.detailedGraphElement.getComment()
+                this.detailedGraphElement.getComment() || ""
             )
         );
     };
@@ -92,27 +92,6 @@ define([
         return this.detailedGraphElement.getImages()[0];
     };
 
-    Self.prototype._makeRelationContext = function () {
-        var relation = this.originalSearchResult.getGraphElement();
-        var sourceVertex = relation.getSourceVertex(),
-            destinationVertex = relation.getDestinationVertex();
-        var context = $("<div class='context'>").append(
-            $.t("vertex.search.destination_bubble") + ": ",
-            this.makeBubbleLinks ?
-                this._vertexLink(destinationVertex) :
-                destinationVertex.getLabel(),
-            "<br>",
-            $.t("vertex.search.source_bubble") + ": ",
-            this.makeBubbleLinks ?
-                this._vertexLink(sourceVertex) :
-                sourceVertex.getLabel()
-        );
-        this._addCommentToContext(
-            context
-        );
-        return context;
-    };
-
     Self.prototype._makePropertyContext = function () {
         var context = $("<div>");
         this._addCommentToContext(
@@ -120,7 +99,7 @@ define([
         );
         return context;
     };
-    Self.prototype._vertexLink = function () {
+    Self.prototype._graphElementLink = function () {
         return $("<button class='link-like-button'>").append(
             this.detailedGraphElement.getLabel()
         ).data(

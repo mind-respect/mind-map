@@ -20,11 +20,11 @@ define([
     var api = {},
         referencesText;
     api.additionalTypes = {
-        "Edge" : "edge"
+        "Edge": "edge"
     };
     api.fromServerFormatArray = function (searchResultsServerFormat) {
         var searchResults = [];
-        $.each(searchResultsServerFormat, function(){
+        $.each(searchResultsServerFormat, function () {
             searchResults.push(
                 api.fromServerFormat(
                     this
@@ -71,7 +71,7 @@ define([
                 return new SearchResult(
                     vertex,
                     GraphElementType.Vertex,
-                    api._buildSomethingToDistinguish(searchResult),
+                    api._buildVertexSomethingToDistinguish(searchResult),
                     searchResult
                 );
             case GraphElementType.Meta :
@@ -88,17 +88,17 @@ define([
         }
     };
     api._buildPropertySomethingToDistinguish = function (searchResult) {
-        if(!searchResult.context){
+        if (!searchResult.context) {
             return "";
         }
         return "<- " + searchResult.context[Object.keys(searchResult.context)];
     };
-    api._buildSomethingToDistinguish = function(searchResult){
-        if(!searchResult.context){
+    api._buildSomethingToDistinguish = function (searchResult) {
+        if (!searchResult.context) {
             return "";
         }
         var contextLabels = [];
-        Object.keys(searchResult.context).forEach(function(uri) {
+        Object.keys(searchResult.context).forEach(function (uri) {
             contextLabels.push(searchResult.context[uri]);
         });
         return contextLabels.join(", ");
@@ -115,27 +115,22 @@ define([
         );
     };
     api._buildVertexSomethingToDistinguish = function (searchResult) {
-        var edgesName = [],
-            number = 0;
-        if(!searchResult.properties){
+        if(!searchResult.context){
             return "";
         }
-        $.each(searchResult.properties, function () {
-            var property = GraphElement.fromServerFormat(this);
-            edgesName.push(property.getLabel());
-            number++;
-            if(number === 5){
-                return false;
-            }
-        });
-
-        return api.formatRelationsName(
-                api.removedEmptyAndDuplicateRelationsName(
-                    edgesName
+        var contextUris = Object.keys(searchResult.context);
+        var container = $("<div class='distinguish-vertex clearfix'>");
+        for (var i = 0; i < contextUris.length; i++) {
+            var text = searchResult.context[contextUris[i]];
+            container.append(
+                $("<div class='distinguish-vertex-item'>").text(
+                    text
                 )
             );
+        }
+        return container.prop('outerHTML');
     };
-    api._buildIdentifierSomethingToDistinguish = function(identifier){
+    api._buildIdentifierSomethingToDistinguish = function (identifier) {
         var source = WikiDataUri.isAWikidataUri(
             identifier.getExternalResourceUri()
         ) ? "wikipedia.org" : "mindrespect.com";
@@ -169,7 +164,7 @@ define([
     SearchResult.prototype.getGraphElement = function () {
         return this.graphElement;
     };
-    
+
     SearchResult.prototype.getGraphElementType = function () {
         return this.graphElementType;
     };
@@ -193,7 +188,7 @@ define([
     SearchResult.prototype.getSomethingToDistinguish = function () {
         return this.somethingToDistinguish;
     };
-    EventBus.subscribe("localized-text-loaded", function(){
+    EventBus.subscribe("localized-text-loaded", function () {
         referencesText = $.t("search.identifier.bubbles");
     });
     return api;

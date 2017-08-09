@@ -56,12 +56,14 @@ define([
                     new Scenarios.getSearchResultForB1().get(),
                     "b1"
                 )[0];
-            var verticesLabel = vertexSearchResult.somethingToDistinguish.split(", ");
+            var somethingToDistinguish = $(
+                vertexSearchResult.somethingToDistinguish
+            );
             expect(
-                verticesLabel.indexOf("b2") !== -1
+                somethingToDistinguish.find(".distinguish-vertex-item:contains(b2)").length > 0
             ).toBeTruthy();
             expect(
-                verticesLabel.indexOf("b3") !== -1
+                somethingToDistinguish.find(".distinguish-vertex-item:contains(b3)").length > 0
             ).toBeTruthy();
             expect(
                 vertexSearchResult.elementType

@@ -8,12 +8,12 @@ define([
 ], function ($, FriendlyResource) {
     "use strict";
     var api = {};
-    api.fromServerFormat = function (serverFormat) {
+    api.fromServerFormat = function (centersServerFormat) {
         var elements = [];
-        $.each(serverFormat, function(){
+        centersServerFormat.forEach(function(centerServerFormat){
             elements.push(
                 new CenterGraphElement().init(
-                    this
+                    centerServerFormat
                 )
             );
         });
@@ -57,15 +57,6 @@ define([
     };
     CenterGraphElement.prototype.getNbReferences = function () {
         return this.centerGraphElementServerFormat.nbReferences;
-    };
-    CenterGraphElement.prototype.getFormattedContext = function () {
-        var formattedContext = "";
-        var contextUris = Object.keys(this.centerGraphElementServerFormat.context);
-        for(var i = 0 ; i < contextUris.length; i++){
-            formattedContext += this.centerGraphElementServerFormat.context[contextUris[i]];
-            formattedContext += (i ===  contextUris.length - 1) ? " ..." : " ● ";
-        }
-        return formattedContext;
     };
     return api;
 });
