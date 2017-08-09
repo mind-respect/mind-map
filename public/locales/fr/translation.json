@@ -356,17 +356,17 @@
   "centralBubbles":{
     "center": "Centre",
     "context": "Bulles autour",
-    "lastVisit": "Dernière visite",
+    "lastVisit": "Visite",
     "nbVisits": "#",
     "removeInfo": "Supprimer de cette liste (n'efface pas la bulle)",
     "filter": "Filtrer",
     "confirmRemove": {
       "title": "Supprimer de la liste des centres",
       "really": "Voulez-vous vraiment supprimer ça?",
-      "info": "Cette action ne supprime pas la(es) bulle(s). Elle pourra toujours être trouvée par la recherche principale et par ses relations avec d'autres bulles."
+      "info": "Cette action ne supprime pas la bulle(s). Elle pourra toujours être trouvée par la recherche principale et par ses relations avec d'autres bulles."
     },
     "reference":{
-      "prefix": "Référence à",
+      "reference": "Référence",
       "bubble": "bulle(s)"
     }
   }

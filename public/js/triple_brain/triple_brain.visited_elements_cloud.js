@@ -21,20 +21,12 @@ define([
         buildFromElementsInContainer: function (elements, container) {
             _elements = elements;
             defineNumberVisitsRank();
-            sortElements();
             _container = container;
             buildHtml();
             setTitle();
             handleRemoveCenterBtnClick();
         }
     };
-
-    function sortElements() {
-        _elements.sort(function (a, b) {
-            return a.getLastCenterDate() > b.getLastCenterDate() ?
-                -1 : 1;
-        });
-    }
 
     function buildHtml() {
         _elements.forEach(function (element) {
@@ -50,6 +42,10 @@ define([
             });
         });
         table.bootstrapTable({
+            search:true,
+            header: "#word-cloud-header",
+            sortName: "lastVisit",
+            sortOrder: "desc",
             searchAlign: 'left',
             onPostHeader: function () {
                 $(".fixed-table-toolbar .search input").attr(
@@ -133,11 +129,13 @@ define([
 
     function getMetaContextCellContentForElement(element) {
         return buildAnchorForElement(element).append(
-            $.t("centralBubbles.reference.prefix"),
-            " ",
             element.getNbReferences(),
             " ",
-            $.t("centralBubbles.reference.bubble")
+            $.t("centralBubbles.reference.bubble"),
+            " ",
+            $("<span class='badge reference'>").text(
+                $.t("centralBubbles.reference.reference")
+            )
         ).prop('outerHTML');
     }
 

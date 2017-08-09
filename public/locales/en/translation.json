@@ -355,7 +355,7 @@
   "centralBubbles":{
     "center": "Center",
     "context": "Bubbles around",
-    "lastVisit": "Last Visit",
+    "lastVisit": "Visit",
     "nbVisits": "#",
     "removeInfo": "Remove from this list (does not remove the bubble)",
     "filter": "Filter",
@@ -365,7 +365,7 @@
       "info": "This action does not remove the bubble(s). It will still be accessible throught the main search and with it's relations with other bubbles."
     },
     "reference":{
-      "prefix": "Reference to",
+      "reference": "Reference",
       "bubble": "bulle(s)"
     }
   }

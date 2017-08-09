@@ -81,7 +81,9 @@ $tagCloudFontSize: 0.6em;
       }
     }
     &.context {
-      text-align: center;
+      .reference.badge{
+        font-size:0.8em;
+      }
       .grid {
         //width: 100%;
         //display:inline-flex;
