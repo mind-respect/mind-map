@@ -50,6 +50,7 @@ define([
             });
         });
         table.bootstrapTable({
+            searchAlign: 'left',
             onPostHeader: function () {
                 $(".fixed-table-toolbar .search input").attr(
                     "placeholder",
@@ -113,8 +114,14 @@ define([
     }
 
     function getLabelCellContentForElement(element) {
-        return buildAnchorForElement(element).text(
-            element.getLabel()
+        var label = element.getLabel().trim();
+        var anchor = buildAnchorForElement(element);
+        if(!label){
+            anchor.addClass("empty");
+            label = "empty label";
+        }
+        return anchor.text(
+            label
         ).prop('outerHTML');
     }
 
@@ -140,6 +147,11 @@ define([
             anchor
         );
         var contextUris = Object.keys(element.getContext());
+        if(contextUris.length < 1){
+            anchor.addClass("empty").text(
+                "empty label"
+            )
+        }
         for (var i = 0; i < contextUris.length; i++) {
             var text = element.getContext()[contextUris[i]];
             container.append(
@@ -148,7 +160,7 @@ define([
                 )
             );
         }
-        return container.prop('outerHTML');
+        return anchor.prop('outerHTML');
     }
 
     function getLastVisitCellContentForElement(element) {
