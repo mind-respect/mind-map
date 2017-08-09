@@ -364,6 +364,10 @@
       "title": "Supprimer de la liste des centres",
       "really": "Voulez-vous vraiment supprimer ça?",
       "info": "Cette action ne supprime pas la(es) bulle(s). Elle pourra toujours être trouvée par la recherche principale et par ses relations avec d'autres bulles."
+    },
+    "reference":{
+      "prefix": "Référence à",
+      "bubble": "bulle(s)"
     }
   }
 }

@@ -119,6 +119,22 @@ define([
     }
 
     function getContextCellContentForElement(element) {
+        return IdUri.isMetaUri(element.getUri()) ?
+            getMetaContextCellContentForElement(element):
+            getVertexContextCellContentForElement(element);
+    }
+
+    function getMetaContextCellContentForElement(element) {
+        return buildAnchorForElement(element).append(
+            $.t("centralBubbles.reference.prefix"),
+            " ",
+            element.getNbReferences(),
+            " ",
+            $.t("centralBubbles.reference.bubble")
+        ).prop('outerHTML');
+    }
+
+    function getVertexContextCellContentForElement(element) {
         var anchor = buildAnchorForElement(element);
         var container = $("<div class='grid'>").appendTo(
             anchor

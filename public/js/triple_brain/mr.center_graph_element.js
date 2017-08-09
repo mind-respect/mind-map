@@ -55,6 +55,9 @@ define([
     CenterGraphElement.prototype.getNumberOfVisitsRank = function () {
         return this.visitRank;
     };
+    CenterGraphElement.prototype.getNbReferences = function () {
+        return this.centerGraphElementServerFormat.nbReferences;
+    };
     CenterGraphElement.prototype.getFormattedContext = function () {
         var formattedContext = "";
         var contextUris = Object.keys(this.centerGraphElementServerFormat.context);
