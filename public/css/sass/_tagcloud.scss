@@ -79,8 +79,20 @@ $tagCloudFontSize: 0.6em;
         text-overflow: ellipsis;
         font-weight: bold;
       }
+      &:hover{
+        white-space: inherit;
+      }
     }
     &.context {
+      &:hover{
+        white-space: inherit;
+        .grid{
+          overflow: inherit;
+          .grid-item{
+            max-width: inherit;
+          }
+        }
+      }
       .reference.badge{
         font-size:0.8em;
       }
