@@ -194,7 +194,7 @@ define([
         return this.somethingToDistinguish;
     };
     EventBus.subscribe("localized-text-loaded", function(){
-        referencesText = $.t("search.identifier.references");
+        referencesText = $.t("search.identifier.bubbles");
     });
     return api;
 });
