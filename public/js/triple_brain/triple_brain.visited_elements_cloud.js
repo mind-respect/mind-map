@@ -44,7 +44,7 @@ define([
                 bubbleLabel: getLabelCellContentForElement(element),
                 context: getContextCellContentForElement(element),
                 lastVisit: getLastVisitCellContentForElement(element),
-                lastVisitValue: element.getLastCenterDate(),
+                lastVisitValue: element.getLastCenterDate().getTime(),
                 numberVisits: getNumberVisitsCellContentForElement(element),
                 numberVisitsValue: element.getNumberOfVisits()
             });
