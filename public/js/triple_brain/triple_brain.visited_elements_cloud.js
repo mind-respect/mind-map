@@ -120,12 +120,7 @@ define([
     function getLabelCellContentForElement(element) {
         var label = element.getLabel().trim();
         var anchor = buildAnchorForElement(element);
-        if (label) {
-            anchor.attr(
-                "title",
-                label
-            );
-        }else{
+        if (!label) {
             anchor.addClass("empty");
             label = "empty label";
         }
@@ -212,6 +207,9 @@ define([
             IdUri.htmlUrlForBubbleUri(
                 element.getUri()
             )
+        ).attr(
+            "title",
+            element.getLabel()
         );
     }
 
