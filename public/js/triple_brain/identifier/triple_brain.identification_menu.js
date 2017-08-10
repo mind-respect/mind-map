@@ -220,7 +220,7 @@ define([
             var url = identification.getExternalResourceUri();
             if (IdUri.isUriOfAGraphElement(url)) {
                 url = IdUri.htmlUrlForBubbleUri(
-                    url
+                    identification.getUri()
                 );
             }
             if (WikidataUri.isAWikidataUri(url)) {
