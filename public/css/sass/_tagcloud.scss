@@ -106,9 +106,13 @@ $tagCloudFontSize: 0.6em;
     }
 
     &.number-visits {
+      a{
+        text-align: center;
+      }
       .label {
         display: inline-block;
-        width: 100%;
+        padding-left:10px;
+        padding-right:10px;
       }
     }
 

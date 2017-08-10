@@ -567,7 +567,8 @@ button.inactive i { color: red; }
 #word-cloud td.context .grid .grid-item { float: left; max-width: 35%; overflow: hidden; padding-left: 5px; text-overflow: ellipsis; }
 #word-cloud td.context .grid .grid-item:after { content: " ● "; }
 #word-cloud td.context .grid .grid-item:last-of-type:after { content: " ..."; }
-#word-cloud td.number-visits .label { display: inline-block; width: 100%; }
+#word-cloud td.number-visits a { text-align: center; }
+#word-cloud td.number-visits .label { display: inline-block; padding-left: 10px; padding-right: 10px; }
 #word-cloud td a { display: block; color: black; }
 #word-cloud td a:hover { color: black; text-decoration: none; }
 
