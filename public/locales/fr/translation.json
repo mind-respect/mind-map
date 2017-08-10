@@ -365,9 +365,6 @@
       "really": "Voulez-vous vraiment supprimer ça?",
       "info": "Cette action ne supprime pas la bulle(s). Elle pourra toujours être trouvée par la recherche principale et par ses relations."
     },
-    "reference":{
-      "reference": "Référence",
-      "bubble": "bulle(s)"
-    }
+    "reference": "Référence"
   }
 }

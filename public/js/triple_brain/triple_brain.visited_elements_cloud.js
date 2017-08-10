@@ -124,30 +124,20 @@ define([
             anchor.addClass("empty");
             label = "empty label";
         }
-        return anchor.text(
+        anchor.text(
             label
-        ).prop('outerHTML');
+        );
+        if (IdUri.isMetaUri(element.getUri())) {
+            anchor.append(
+                $("<span class='badge reference'>").text(
+                    $.t("centralBubbles.reference")
+                )
+            );
+        }
+        return anchor.prop('outerHTML');
     }
 
     function getContextCellContentForElement(element) {
-        return IdUri.isMetaUri(element.getUri()) ?
-            getMetaContextCellContentForElement(element) :
-            getVertexContextCellContentForElement(element);
-    }
-
-    function getMetaContextCellContentForElement(element) {
-        return buildAnchorForElement(element).append(
-            element.getNbReferences(),
-            " ",
-            $.t("centralBubbles.reference.bubble"),
-            " ",
-            $("<span class='badge reference'>").text(
-                $.t("centralBubbles.reference.reference")
-            )
-        ).prop('outerHTML');
-    }
-
-    function getVertexContextCellContentForElement(element) {
         var anchor = buildAnchorForElement(element);
         var container = $("<div class='grid'>").appendTo(
             anchor

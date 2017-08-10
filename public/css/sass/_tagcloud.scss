@@ -78,12 +78,13 @@ $tagCloudFontSize: 0.6em;
         overflow: hidden;
         text-overflow: ellipsis;
         font-weight: bold;
+        .reference.badge{
+          font-size:0.8em;
+          margin-left:5px;
+        }
       }
     }
     &.context {
-      .reference.badge{
-        font-size:0.8em;
-      }
       .grid {
         .grid-item {
           float: left;
