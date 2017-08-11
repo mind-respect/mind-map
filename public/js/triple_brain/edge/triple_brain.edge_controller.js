@@ -47,9 +47,12 @@ define([
         );
         var promises = [];
         var movedEdge = vertexUi.getParentBubble();
+        var identifiers = this.getModel().hasIdentifications() ?
+            this.getModel().getIdentifiers():
+            this.getModel().getIdentifiersIncludingSelf();
         promises.push(
             movedEdge.getController().addIdentifiers(
-                this.getModel().getIdentifiers()
+                identifiers
             )
         );
         promises.push(

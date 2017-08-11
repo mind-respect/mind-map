@@ -322,28 +322,50 @@ define([
                 groupRelation.getNumberOfChild()
             ).toBe(groupRelationNumberOfChild + 1);
         });
-        it("adds it's identifiers to the moved edge when becoming a parent", function () {
-            var threeBubblesScenario = new Scenarios.threeBubblesGraph();
-            var centerBubble = threeBubblesScenario.getBubble1InTree();
-            var r2 = TestUtils.getChildWithLabel(
-                centerBubble,
-                "r2"
-            );
-            var b3 = r2.getTopMostChildBubble();
-            var r1 = TestUtils.getChildWithLabel(
-                centerBubble,
-                "r1"
-            );
-            r1.getModel().addIdentification(
-                TestUtils.dummyIdentifier()
-            );
-            expect(
-                r2.getModel().getIdentifiers().length
-            ).toBe(0);
-            b3.getController().moveUnderParent(r1);
-            expect(
-                r2.getModel().getIdentifiers().length
-            ).toBe(1);
+        describe("becomeParent", function(){
+            it("adds it's identifiers to the moved edge when becoming a parent", function () {
+                var threeBubblesScenario = new Scenarios.threeBubblesGraph();
+                var centerBubble = threeBubblesScenario.getBubble1InTree();
+                var r2 = TestUtils.getChildWithLabel(
+                    centerBubble,
+                    "r2"
+                );
+                var b3 = r2.getTopMostChildBubble();
+                var r1 = TestUtils.getChildWithLabel(
+                    centerBubble,
+                    "r1"
+                );
+                r1.getModel().addIdentification(
+                    TestUtils.dummyIdentifier()
+                );
+                expect(
+                    r2.getModel().getIdentifiers().length
+                ).toBe(0);
+                b3.getController().moveUnderParent(r1);
+                expect(
+                    r2.getModel().getIdentifiers().length
+                ).toBe(1);
+            });
+            it("adds the relation's identifier to the child relation", function(){
+                var threeBubblesScenario = new Scenarios.threeBubblesGraph();
+                var centerBubble = threeBubblesScenario.getBubble1InTree();
+                var r2 = TestUtils.getChildWithLabel(
+                    centerBubble,
+                    "r2"
+                );
+                var b3 = r2.getTopMostChildBubble();
+                var r1 = TestUtils.getChildWithLabel(
+                    centerBubble,
+                    "r1"
+                );
+                expect(
+                    r2.getModel().getIdentifiersIncludingSelf().length
+                ).toBe(1);
+                b3.getController().moveUnderParent(r1);
+                expect(
+                    r2.getModel().getIdentifiersIncludingSelf().length
+                ).toBe(2);
+            });
         });
     });
 });
