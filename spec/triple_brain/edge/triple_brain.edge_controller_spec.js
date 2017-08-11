@@ -322,6 +322,36 @@ define([
                 groupRelation.getNumberOfChild()
             ).toBe(groupRelationNumberOfChild + 1);
         });
+        describe("addChild", function(){
+            it("excludes self identifier when adding a child and already having identifiers", function(){
+                var threeBubblesScenario = new Scenarios.threeBubblesGraph();
+                var centerBubble = threeBubblesScenario.getBubble1InTree();
+                var r1 = TestUtils.getChildWithLabel(
+                    centerBubble,
+                    "r1"
+                );
+                var identifier = TestUtils.dummyIdentifier();
+                identifier.setLabel("some identifier");
+                r1.getModel().addIdentification(
+                    identifier
+                );
+                r1.getController().addChild();
+                var newGroupRelation = TestUtils.getChildWithLabel(
+                    centerBubble,
+                    "some identifier"
+                );
+                expect(
+                    newGroupRelation.isGroupRelation()
+                ).toBeTruthy();
+                var newRelation = TestUtils.getChildWithLabel(
+                    centerBubble,
+                    "some identifier"
+                );
+                expect(
+                    newGroupRelation.getModel().getIdentifiers().length
+                ).toBe(1);
+            });
+        });
         describe("becomeParent", function(){
             it("adds it's identifiers to the moved edge when becoming a parent", function () {
                 var threeBubblesScenario = new Scenarios.threeBubblesGraph();

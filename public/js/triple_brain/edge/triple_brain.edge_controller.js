@@ -70,9 +70,12 @@ define([
                 return parentBubble;
             }
         }
+        var identifiers = this.getModel().hasIdentifications() ?
+            this.getModel().getIdentifiers():
+            this.getModel().getIdentifiersIncludingSelf();
         var groupRelationIdentifiers = parentBubble.isGroupRelation() ?
             this.getModel().buildSelfIdentifier() :
-            this.getModel().getIdentifiersIncludingSelf();
+            identifiers;
         var newGroupRelation = GraphDisplayer.addNewGroupRelation(
             groupRelationIdentifiers,
             parentBubble,
