@@ -833,8 +833,8 @@ define([
 
         EventBus.subscribe(
             '/event/ui/graph/vertex_and_relation/added/',
-            function (event, triple, sourceBubble) {
-                sourceBubble.hideHiddenRelationsContainer();
+            function (event, triple, tripleJson) {
+                triple.sourceVertex().hideHiddenRelationsContainer();
                 var destinationHtml = triple.destinationVertex().getHtml();
                 if (!UiUtils.isElementFullyOnScreen(destinationHtml)) {
                     destinationHtml.centerOnScreenWithAnimation();

@@ -51,7 +51,7 @@ define([
             }
             EventBus.publish(
                 '/event/ui/graph/vertex_and_relation/added/',
-                [triple, sourceBubble]
+                [triple, tripleJson]
             );
         };
         api.remove = function (vertex) {

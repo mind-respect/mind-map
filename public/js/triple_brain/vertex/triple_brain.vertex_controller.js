@@ -451,11 +451,9 @@ define([
         if (uiParent === undefined) {
             uiParent = realParent;
         }
-        if (!uiParent.isExpanded()) {
-            return uiParent.getController().expand().then(doIt);
-        } else {
-            return doIt();
-        }
+        return uiParent.isExpanded() ?
+            doIt() :
+            uiParent.getController().expand().then(doIt);
         function doIt() {
             var deferred = $.Deferred();
             VertexService.addRelationAndVertexToVertex(

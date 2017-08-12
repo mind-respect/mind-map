@@ -212,5 +212,30 @@ define([
                 event1.hasHiddenRelations()
             ).toBeTruthy();
         });
+        it("adds to other instances", function(){
+            var graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
+            var b1 = graphWithCircularityScenario.getBubble1InTree();
+            var b2 = TestUtils.getChildWithLabel(
+                b1,
+                "r1"
+            ).getTopMostChildBubble();
+            expect(
+                b2.getNumberOfChild()
+            ).toBe(0);
+            var bubble3 = TestUtils.getChildWithLabel(
+                b1,
+                "r3"
+            ).getTopMostChildBubble();
+            graphWithCircularityScenario.expandBubble3(bubble3);
+            var otherB2 = bubble3.getTopMostChildBubble().getTopMostChildBubble();
+            expect(
+                otherB2.text()
+            ).toBe("b2");
+            otherB2.getHiddenRelationsContainer().hide();
+            otherB2.getController().addChild();
+            expect(
+                b2.getNumberOfChild()
+            ).toBe(1);
+        });
     });
 });

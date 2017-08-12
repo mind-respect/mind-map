@@ -241,7 +241,7 @@ define([
                api.setupCopyButton(this);
             });
         }
-        function vertexAndRelationAddedHandler(event, triple, tripleServerFormat) {
+        function vertexAndRelationAddedHandler(event, triple, tripleJson) {
             var sourceBubble = triple.sourceVertex();
             if (!sourceBubble.isVertex()) {
                 return;
@@ -250,7 +250,7 @@ define([
             sourceBubble.applyToOtherInstances(function (otherInstance) {
                 TripleUiBuilder.createUsingServerTriple(
                     otherInstance,
-                    tripleServerFormat
+                    tripleJson
                 );
                 otherInstance.resetOtherInstances();
             });
