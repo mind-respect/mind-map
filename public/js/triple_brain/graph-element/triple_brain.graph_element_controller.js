@@ -190,7 +190,7 @@ define([
     };
 
     GraphElementController.prototype.expandDescendantsIfApplicable = function () {
-        var deferred = $.Deferred();
+        var deferred = $.Deferred().resolve();
         if (this.getUi().hasDescendantsWithHiddenRelations()) {
             var addChildTreeActions = [];
             var avoidCenter = true;

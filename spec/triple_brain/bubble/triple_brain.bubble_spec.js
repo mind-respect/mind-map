@@ -663,5 +663,31 @@ define([
                 2
             ).isSameBubble(b73)).toBeTruthy();
         });
+        describe("expand", function(){
+            it("hides hidden relations container of other instances", function(){
+                var graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
+                var b1 = graphWithCircularityScenario.getBubble1InTree();
+                var b2 = TestUtils.getChildWithLabel(
+                    b1,
+                    "r1"
+                ).getTopMostChildBubble();
+                expect(
+                    b2.getNumberOfChild()
+                ).toBe(0);
+                var bubble3 = TestUtils.getChildWithLabel(
+                    b1,
+                    "r3"
+                ).getTopMostChildBubble();
+                graphWithCircularityScenario.expandBubble3(bubble3);
+                var otherB2 = bubble3.getTopMostChildBubble().getTopMostChildBubble();
+                expect(
+                    otherB2.getHiddenRelationsContainer().isVisible()
+                ).toBeTruthy();
+                b2.expand();
+                expect(
+                    otherB2.getHiddenRelationsContainer().isVisible()
+                ).toBeFalsy();
+            });
+        });
     });
 });

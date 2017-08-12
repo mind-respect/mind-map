@@ -755,6 +755,11 @@ define([
             if (this.hasHiddenRelationsContainer()) {
                 this.getHiddenRelationsContainer().hide();
             }
+            this.applyToOtherInstances(function(otherInstance){
+                if (otherInstance.hasHiddenRelationsContainer()) {
+                    otherInstance.getHiddenRelationsContainer().hide();
+                }
+            });
             if (!avoidScreenCenter) {
                 this.sideCenterOnScreenWithAnimation();
                 SelectionHandler.setToSingleGraphElement(this);
