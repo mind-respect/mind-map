@@ -15,11 +15,12 @@ define([
     "triple_brain.edge_service",
     "triple_brain.identification",
     "mr.command",
+    "triple_brain.selection_handler",
     "bootstrap-wysiwyg",
     "bootstrap",
     "jquery.safer-html",
     "jquery.max_char"
-], function ($, GraphElementType, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu, EdgeService, Identification, Command) {
+], function ($, GraphElementType, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu, EdgeService, Identification, Command, SelectionHandler) {
     "use strict";
     var api = {},
         bubbleCutClipboard,
@@ -134,9 +135,13 @@ define([
     };
 
     GraphElementController.prototype.visitOtherInstances = function () {
+        var otherInstance = this.graphElements.getOtherInstances()[0];
         $(
-            this.graphElements.getOtherInstances()[0].getHtml()
+            otherInstance.getHtml()
         ).centerOnScreenWithAnimation();
+        SelectionHandler.setToSingleGraphElement(
+            otherInstance
+        );
     };
 
     GraphElementController.prototype.identifyCanDo = function () {

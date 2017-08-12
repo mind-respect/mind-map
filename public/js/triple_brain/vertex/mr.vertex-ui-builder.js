@@ -55,6 +55,9 @@ define([
             RelativeTreeVertex.setupVertexCopyButton(
                 vertexUi
             );
+            GraphElementHtmlBuilder.completeBuild(
+                vertexUi
+            );
             EventBus.publish(
                 '/event/ui/vertex/build_complete',
                 vertexUi

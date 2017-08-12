@@ -73,6 +73,9 @@ define([
                 ".vertex-tree-container"
             ).find("> .vertical-border").addClass("small");
             ui.reviewEditButtonDisplay();
+            GraphElementHtmlBuilder.completeBuild(
+                ui
+            );
         };
         api.EdgeUiBuilder = function (options) {
             this.options = options || {};

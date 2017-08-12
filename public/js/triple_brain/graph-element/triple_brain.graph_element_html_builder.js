@@ -19,6 +19,12 @@ define([
     "use strict";
     var enterKeyCode = 13,
         api = {};
+    api.completeBuild = function(graphElementUi){
+        graphElementUi.applyToOtherInstances(function (otherInstance) {
+            otherInstance.resetOtherInstances();
+            otherInstance.reviewInLabelButtonsVisibility();
+        });
+    };
     api.setUpLabel = function (label) {
         label.blur(function () {
             var $input = $(this),

@@ -370,5 +370,27 @@ define([
                 b1.isInEditMode()
             ).toBeFalsy();
         });
+        describe("completeBuild", function(){
+            it("shows link the button of other instances", function(){
+                loadFixtures("graph-element-menu.html");
+                var graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
+                var b1 = graphWithCircularityScenario.getBubble1InTree();
+                var b2 = TestUtils.getChildWithLabel(
+                    b1,
+                    "r1"
+                ).getTopMostChildBubble();
+                var bubble3 = TestUtils.getChildWithLabel(
+                    b1,
+                    "r3"
+                ).getTopMostChildBubble();
+                expect(
+                    b2._getInLabelButtonWithAction("visitOtherInstances").hasClass("hidden")
+                ).toBeTruthy();
+                graphWithCircularityScenario.expandBubble3(bubble3);
+                expect(
+                    b2._getInLabelButtonWithAction("visitOtherInstances").hasClass("hidden")
+                ).toBeFalsy();
+            });
+        });
     });
 });

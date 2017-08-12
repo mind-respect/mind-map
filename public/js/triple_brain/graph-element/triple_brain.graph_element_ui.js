@@ -588,6 +588,12 @@ define([
         );
     };
 
+    api.GraphElementUi.prototype._getInLabelButtonWithAction = function(action){
+        return this.getInLabelButtonsContainer().find(
+            "[data-action="+action+"]"
+        );
+    };
+
     api.GraphElementUi.prototype.getIdentifyButtonInLabel = function () {
         return this.getInLabelButtonsContainer().find(
             "[data-action=identify]"
