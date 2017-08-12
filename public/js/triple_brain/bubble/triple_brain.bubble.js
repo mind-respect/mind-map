@@ -419,7 +419,7 @@ define([
             return !this.hasChildren();
         };
         api.Bubble.prototype.getNumberOfChild = function () {
-            return this.getChildrenBubblesHtml().length;
+            return !this.getChildrenContainer().hasClass("hidden")  && this.getChildrenBubblesHtml().length;
         };
         api.Bubble.prototype.getSelectorFromContainer = function (container) {
             return BubbleFactory.fromHtml(

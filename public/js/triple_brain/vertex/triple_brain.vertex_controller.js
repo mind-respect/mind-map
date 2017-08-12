@@ -39,7 +39,7 @@ define([
     };
 
     VertexController.prototype.addChild = function () {
-        return api.addChildToRealAndUiParent(
+        return this._addChildToRealAndUiParent(
             this.getUi()
         );
     };
@@ -54,7 +54,7 @@ define([
             var groupRelation = this.getUi().getParentBubble().getParentBubble();
             return groupRelation.getController().addChild();
         }
-        api.addChildToRealAndUiParent(
+        return this._addChildToRealAndUiParent(
             this.getUi().getParentVertex(),
             this.getUi().getParentBubble().getParentBubble()
         ).then(function (triple) {
@@ -447,8 +447,7 @@ define([
             );
         }.bind(this));
     };
-    api.VertexController = VertexController;
-    api.addChildToRealAndUiParent = function (realParent, uiParent) {
+    VertexController.prototype._addChildToRealAndUiParent = function (realParent, uiParent) {
         if (uiParent === undefined) {
             uiParent = realParent;
         }
@@ -463,9 +462,11 @@ define([
                 realParent,
                 uiParent,
                 function (triple) {
+                    triple.destinationVertex().getModel().incrementNumberOfConnectedEdges();
                     SelectionHandler.setToSingleGraphElement(
                         triple.destinationVertex()
                     );
+                    triple.sourceVertex().getModel().incrementNumberOfConnectedEdges();
                     if (realParent.getModel().isPublic()) {
                         triple.destinationVertex().getController().makePublic().then(function () {
                             deferred.resolve(triple);
@@ -477,5 +478,6 @@ define([
             return deferred.promise();
         }
     };
+    api.VertexController = VertexController;
     return api;
 });

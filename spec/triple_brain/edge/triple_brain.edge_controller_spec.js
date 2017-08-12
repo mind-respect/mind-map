@@ -15,19 +15,37 @@ define([
         beforeEach(function () {
             Mock.applyDefaultMocks();
         });
-        it("can remove edge", function () {
-            var threeBubblesScenario = new Scenarios.threeBubblesGraph();
-            var bubble1 = threeBubblesScenario.getBubble1InTree();
-            var numberOfChild = bubble1.getNumberOfChild();
-            var relation1 = bubble1.getTopMostChildBubble();
-            MindMapInfo.setIsAnonymous(false);
-            MindMapInfo._setIsViewOnly(false);
-            new EdgeController.RelationController(
-                relation1
-            ).remove();
-            expect(
-                bubble1.getNumberOfChild()
-            ).toBe(numberOfChild - 1);
+        describe("remove", function(){
+            it("can", function () {
+                var threeBubblesScenario = new Scenarios.threeBubblesGraph();
+                var bubble1 = threeBubblesScenario.getBubble1InTree();
+                var numberOfChild = bubble1.getNumberOfChild();
+                var relation1 = bubble1.getTopMostChildBubble();
+                MindMapInfo.setIsAnonymous(false);
+                MindMapInfo._setIsViewOnly(false);
+                new EdgeController.RelationController(
+                    relation1
+                ).remove();
+                expect(
+                    bubble1.getNumberOfChild()
+                ).toBe(numberOfChild - 1);
+            });
+            it("decrements number of connected relations to the parent", function () {
+                var threeBubblesScenario = new Scenarios.threeBubblesGraph();
+                var bubble1 = threeBubblesScenario.getBubble1InTree();
+                expect(
+                    bubble1.getModel().getNumberOfConnectedEdges()
+                ).toBe(
+                    2
+                );
+                var relation1 = bubble1.getTopMostChildBubble();
+                relation1.getController().remove();
+                expect(
+                    bubble1.getModel().getNumberOfConnectedEdges()
+                ).toBe(
+                    1
+                );
+            });
         });
         it("changes to a group relation when adding a child", function () {
             var threeBubblesScenario = new Scenarios.threeBubblesGraph();

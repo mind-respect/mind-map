@@ -90,17 +90,17 @@ define([
     };
 
     EdgeController.prototype.remove = function () {
-        var self = this;
         EdgeService.remove(this.getUi(), function () {
-            var parentBubble = self.getUi().getParentBubble();
-            var childVertex = self.getUi().getTopMostChildBubble();
-            self.getUi().applyToOtherInstances(function (otherInstance) {
+            var parentBubble = this.getUi().getParentBubble();
+            var childVertex = this.getUi().getTopMostChildBubble();
+            this.getUi().applyToOtherInstances(function (otherInstance) {
                 var childVertex = otherInstance.getTopMostChildBubble();
                 childVertex.remove(false);
             });
             childVertex.remove(false);
+            parentBubble.getModel().decrementNumberOfConnectedEdges();
             parentBubble.sideCenterOnScreenWithAnimation();
-        });
+        }.bind(this));
     };
     EdgeController.prototype.reverseToRightCanDo = function () {
         if (!this.isSingleAndOwned()) {

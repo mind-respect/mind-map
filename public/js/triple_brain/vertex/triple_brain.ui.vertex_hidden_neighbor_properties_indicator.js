@@ -63,6 +63,12 @@ define([
                 " " + (isLeftOriented ? plusSign : numberOfHiddenRelations);
         };
 
+        HiddenNeighborPropertiesIndicator.prototype._updateContent = function(){
+            this._getContent().text(
+                this.buildContent()
+            );
+        };
+
         HiddenNeighborPropertiesIndicator.prototype.remove = function () {
             this.hiddenNeighborPropertiesContainer.remove();
         };
@@ -76,6 +82,7 @@ define([
             this._getContent().removeClass("hidden");
             this._getLoading().addClass("hidden");
             this.hiddenNeighborPropertiesContainer.removeClass("hidden");
+            this._updateContent();
         };
 
         HiddenNeighborPropertiesIndicator.prototype.isVisible = function () {
@@ -92,18 +99,14 @@ define([
             this.getHtml().prependTo(
                 this.bubble.getHtml()
             );
-            this._getContent().text(
-                this.buildContent()
-            );
+            this._updateContent();
         };
 
         HiddenNeighborPropertiesIndicator.prototype.convertToRight = function () {
             this.getHtml().appendTo(
                 this.bubble.getHtml()
             );
-            this._getContent().text(
-                this.buildContent()
-            );
+            this._updateContent();
         };
 
 

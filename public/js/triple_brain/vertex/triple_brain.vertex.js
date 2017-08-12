@@ -29,7 +29,6 @@ define([
                 includedEdges:{},
                 includedVertices:{},
                 isPublic:false,
-                numberOfConnectedEdges:1,
                 suggestions:{}
             }
         };
@@ -50,6 +49,7 @@ define([
     };
     function Vertex(vertexServerFormat) {
         this.vertexServerFormat = vertexServerFormat;
+        this.vertexServerFormat.vertex.numberOfConnectedEdges = this.vertexServerFormat.vertex.numberOfConnectedEdges || 0;
         this._includedVertices = this._buildIncludedVertices();
         this._includedEdges = this._buildIncludedEdges();
         this._suggestions = this._buildSuggestions();
@@ -79,6 +79,14 @@ define([
     };
     Vertex.prototype.getNumberOfConnectedEdges = function () {
         return this.vertexServerFormat.vertex.numberOfConnectedEdges;
+    };
+
+    Vertex.prototype.incrementNumberOfConnectedEdges = function () {
+        this.vertexServerFormat.vertex.numberOfConnectedEdges++;
+    };
+
+    Vertex.prototype.decrementNumberOfConnectedEdges = function () {
+        this.vertexServerFormat.vertex.numberOfConnectedEdges--;
     };
 
     Vertex.prototype.getNbPublicNeighbors = function () {

@@ -503,5 +503,40 @@ define([
                 b32.isExpanded()
             ).toBeFalsy();
         });
+        describe("addChild", function(){
+            it("increments number of connected edges", function(){
+                var b1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+                expect(
+                    b1.getModel().getNumberOfConnectedEdges()
+                ).toBe(2);
+                b1.getController().addChild();
+                expect(
+                    b1.getModel().getNumberOfConnectedEdges()
+                ).toBe(3);
+            });
+            it("sets to 1 the number of connected edges to the destination vertex", function(){
+                var b1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+                var destinationVertex;
+                b1.getController().addChild().then(function(triple){
+                    destinationVertex = triple.destinationVertex();
+                });
+                expect(
+                    destinationVertex.getModel().getNumberOfConnectedEdges()
+                ).toBe(1);
+            });
+        });
+        describe("addSibling", function(){
+            it("increments the number of connected edges of the parent model", function(){
+                var b1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+                var childVertex = b1.getTopMostChildBubble().getTopMostChildBubble();
+                expect(
+                    b1.getModel().getNumberOfConnectedEdges()
+                ).toBe(2);
+                childVertex.getController().addSibling();
+                expect(
+                    b1.getModel().getNumberOfConnectedEdges()
+                ).toBe(3);
+            });
+        });
     });
 });
