@@ -181,26 +181,35 @@ define([
             );
     };
 
-    GraphElementController.prototype.expand = function (avoidCenter) {
-        var deferred = $.Deferred().resolve();
-        this.expandDescendantsIfApplicable();
+    GraphElementController.prototype.expand = function (avoidCenter, avoidExpandChild, isChildExpand) {
+        var deferred = this.expandDescendantsIfApplicable();
         return deferred.done(function () {
             this.getUi().expand(avoidCenter);
+            var expandChildCalls = [];
+            this.getUi().visitClosestChildVertices(function (childVertex) {
+                if (childVertex.getModel().hasOnlyOneHiddenChild()) {
+                    expandChildCalls.push(
+                        childVertex.getController().expand(true, true, true)
+                    );
+                }
+            });
+            return $.when.apply($, expandChildCalls);
         }.bind(this));
     };
 
     GraphElementController.prototype.expandDescendantsIfApplicable = function () {
         var deferred = $.Deferred().resolve();
-        if (this.getUi().hasDescendantsWithHiddenRelations()) {
-            var addChildTreeActions = [];
-            var avoidCenter = true;
-            this.getUi().visitExpandableDescendants(function (expandableLeaf) {
-                addChildTreeActions.push(
-                    expandableLeaf.getController().expand(avoidCenter)
-                );
-            });
-            deferred = $.when.apply($, addChildTreeActions);
+        if (!this.getUi().hasDescendantsWithHiddenRelations()) {
+            return deferred;
         }
+        var addChildTreeActions = [];
+        var avoidCenter = true;
+        this.getUi().visitExpandableDescendants(function (expandableLeaf) {
+            addChildTreeActions.push(
+                expandableLeaf.getController().expand(avoidCenter)
+            );
+        });
+        deferred = $.when.apply($, addChildTreeActions);
         return deferred;
     };
 

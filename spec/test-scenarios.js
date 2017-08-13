@@ -511,6 +511,35 @@ define([
             Mock.setCenterBubbleUriInUrl(this.getBubble1().getUri());
         };
 
+        api.graphWithGroupRelationHavingAVertexChildWithOneHiddenRelation = function () {
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                return api._getTestData(
+                    "graphWithHiddenSimilarRelations.b2Graph"
+                );
+            };
+            this.getBubble2InTree = function(){
+                return treeBuilder.getBubbleWithLabelInTree("b2");
+            };
+            this.getTshirtGroupRelationInTree = function(){
+                return treeBuilder.getRelationWithLabelInTree("T-shirt");
+            };
+            this.getCenterBubbleUri = function () {
+                return uriOfVertexWithLabel(this.getGraph(), "b2");
+            };
+            this.getShirt2Graph = function () {
+                return api._getTestData(
+                    "graphWithHiddenSimilarRelations.shirt2Graph"
+                );
+            };
+            this.getShirt2VertexUri = function () {
+                return api._getTestData(
+                    "graphWithHiddenSimilarRelations.shirt2BubbleUri"
+                );
+            };
+            Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
+        };
+
         api.groupRelationSpecialCase = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {

@@ -6,10 +6,8 @@ define([
     'test/test-scenarios',
     'test/test-utils',
     'test/mock',
-    'triple_brain.group_relation_controller',
-    'triple_brain.mind_map_info',
-    'triple_brain.selection_handler'
-], function (Scenarios, TestUtils, Mock, GroupRelationController, MindMapInfo, SelectionHandler) {
+    "test/mock/triple_brain.graph_service_mock",
+], function (Scenarios, TestUtils, Mock, GraphServiceMock) {
     "use strict";
     describe("group_relation_controller", function () {
         beforeEach(function () {
@@ -58,6 +56,28 @@ define([
             expect(
                 testWasMade
             ).toBeTruthy();
+        });
+
+        describe("expand", function(){
+            it("also expands child bubbles having only one child", function(){
+                var scenario = new Scenarios.graphWithGroupRelationHavingAVertexChildWithOneHiddenRelation();
+                var tshirtGroupRelation = scenario.getTshirtGroupRelationInTree();
+                GraphServiceMock.getForCentralBubbleUriAndGraph(
+                    scenario.getShirt2VertexUri(),
+                    scenario.getShirt2Graph()
+                );
+                tshirtGroupRelation.getController().expand();
+                var shirt2 = TestUtils.getChildWithLabel(
+                    tshirtGroupRelation,
+                    "shirt2"
+                ).getTopMostChildBubble();
+                expect(
+                    shirt2.isVertex()
+                ).toBeTruthy();
+                expect(
+                    shirt2.getNumberOfChild()
+                ).toBe(1);
+            });
         });
     });
 });
