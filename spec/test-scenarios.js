@@ -1002,7 +1002,7 @@ define([
             };
             this.getImpact3RelationInTheImpactOnSocietyContext = function () {
                 var theRelation;
-                this.getSomeProjectInTree().visitAllChild(function (childBubble) {
+                this.getSomeProjectInTree().visitAllImmediateChild(function (childBubble) {
                     if (childBubble.isGroupRelation()) {
                         GraphDisplayerAsRelativeTree.expandGroupRelation(childBubble);
                         var treeQuerier = new api.TreeQuerier(childBubble.getChildrenContainer());

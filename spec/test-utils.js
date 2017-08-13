@@ -89,7 +89,7 @@ define([
     };
     api.getChildWithLabel = function (bubble, label) {
         var childWithLabel = bubble;
-        bubble.visitAllChild(function (child) {
+        bubble.visitAllImmediateChild(function (child) {
             if (child.text() === label) {
                 childWithLabel = child;
                 return false;
@@ -100,7 +100,7 @@ define([
 
     api.hasChildWithLabel = function (bubble, label) {
         var hasChild = false;
-        bubble.visitAllChild(function (child) {
+        bubble.visitAllImmediateChild(function (child) {
             if (child.text() === label) {
                 hasChild = true;
                 return false;

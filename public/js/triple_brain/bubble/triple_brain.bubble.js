@@ -156,7 +156,7 @@ define([
             if (this.hasHiddenRelationsContainer()) {
                 this.getHiddenRelationsContainer().convertToLeft();
             }
-            this.visitAllChild(function (child) {
+            this.visitAllImmediateChild(function (child) {
                 child.convertToLeft();
             });
         };
@@ -170,7 +170,7 @@ define([
             if (this.hasHiddenRelationsContainer()) {
                 this.getHiddenRelationsContainer().convertToRight();
             }
-            this.visitAllChild(function (child) {
+            this.visitAllImmediateChild(function (child) {
                 child.convertToRight();
             });
         };
@@ -221,7 +221,7 @@ define([
             );
         };
         api.Bubble.prototype.visitClosestChildInTypes = function (types, visitor) {
-            this.visitAllChild(function (child) {
+            this.visitAllImmediateChild(function (child) {
                 if (child.isInTypes(types)) {
                     visitor(child);
                 } else {
@@ -263,7 +263,7 @@ define([
             }
         };
 
-        api.Bubble.prototype.visitAllChild = function (visitor) {
+        api.Bubble.prototype.visitAllImmediateChild = function (visitor) {
             $.each(this.getChildrenBubblesHtml(), function () {
                 return visitor(BubbleFactory.fromHtml(
                     $(this)
@@ -476,7 +476,8 @@ define([
         api.Bubble.prototype.isVisible = function () {
             return !this.html.closest(
                     ".vertex-container"
-                ).hasClass("hidden") && !this.getTreeContainer().hasClass("hidden");
+                ).hasClass("hidden") && !this.getTreeContainer().hasClass("hidden") &&
+                !this.getParentVertex().getChildrenContainer().hasClass("hidden");
         };
 
         api.Bubble.prototype._removeHideOrShow = function (action, argument) {
@@ -716,6 +717,9 @@ define([
         };
 
         api.Bubble.prototype.collapse = function () {
+            this.applyToOtherInstances(function(otherInstance){
+                otherInstance.reviewInLabelButtonsVisibility();
+            });
             if (!this.hasChildren()) {
                 return;
             }
@@ -759,6 +763,12 @@ define([
                 if (otherInstance.hasHiddenRelationsContainer()) {
                     otherInstance.getHiddenRelationsContainer().hide();
                 }
+            });
+            this.visitDescendants(function(descendant){
+                descendant.reviewInLabelButtonsVisibility();
+                descendant.applyToOtherInstances(function(){
+                    descendant.reviewInLabelButtonsVisibility();
+                });
             });
             if (!avoidScreenCenter) {
                 this.sideCenterOnScreenWithAnimation();

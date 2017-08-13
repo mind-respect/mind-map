@@ -166,6 +166,19 @@ define([
         return this.getOtherInstances().length > 0;
     };
 
+    api.GraphElementUi.prototype.hasOtherVisibleInstance = function () {
+        if(!this.hasOtherInstances()){
+            return false;
+        }
+        var hasOtherVisibleInstance = false;
+        this.getOtherInstances().forEach(function(otherInstance){
+            if(otherInstance.isVisible()){
+                hasOtherVisibleInstance = true;
+            }
+        });
+        return hasOtherVisibleInstance;
+    };
+
     api.GraphElementUi.prototype.getOtherInstances = function () {
         if (this.html.data(otherInstancesKey) === undefined) {
             this._defineSameInstances();

@@ -161,7 +161,7 @@ define([
                     );
                     return;
                 }
-                parentBubble.visitAllChild(function (child) {
+                parentBubble.visitAllImmediateChild(function (child) {
                     if (child.isGroupRelation()) {
                         var isSameIdentification =
                             child.getGroupRelation().getIdentification().getExternalResourceUri() ===

@@ -272,7 +272,7 @@ define([
     VertexController.prototype.suggestions = function () {
         var suggestionMethod = this.vertices.areSuggestionsShown() ?
             "hide" : "show";
-        this.vertices.visitAllChild(function (child) {
+        this.vertices.visitAllImmediateChild(function (child) {
             if (child.isSuggestion()) {
                 child[suggestionMethod]();
             }

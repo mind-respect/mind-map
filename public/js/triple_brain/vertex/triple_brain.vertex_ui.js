@@ -65,7 +65,7 @@ define([
 
         api.VertexUi.prototype.areSuggestionsShown = function () {
             var areShown = false;
-            this.visitAllChild(function (child) {
+            this.visitAllImmediateChild(function (child) {
                 if (child.isSuggestion()) {
                     areShown = child.isVisible();
                     return false;

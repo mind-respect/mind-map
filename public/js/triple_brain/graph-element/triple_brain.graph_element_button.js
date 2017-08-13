@@ -97,7 +97,7 @@ define([
             case "identify":
                 return graphElement.getModel().hasIdentifications();
             case "visitOtherInstances":
-                return graphElement.hasOtherInstances();
+                return graphElement.hasOtherVisibleInstance();
             case "makePrivate":
                 return graphElement.isVertex() && graphElement.getModel().isPublic() && !MindMapInfo.isViewOnly();
             case "makePublic":

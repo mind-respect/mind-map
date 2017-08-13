@@ -21,7 +21,6 @@ define([
         api = {};
     api.completeBuild = function(graphElementUi){
         graphElementUi.applyToOtherInstances(function (otherInstance) {
-            otherInstance.resetOtherInstances();
             otherInstance.reviewInLabelButtonsVisibility();
         });
     };

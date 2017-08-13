@@ -145,7 +145,7 @@ define([
             );
         }
         parentVertex.hideHiddenRelationsContainer();
-        parentVertex.visitAllChild(function (childBubble) {
+        parentVertex.visitAllImmediateChild(function (childBubble) {
             if (childBubble.isGroupRelation()) {
                 GroupRelationUiBuilder.completeBuild(childBubble);
             }
@@ -156,7 +156,7 @@ define([
             if (childBubble.isRelation()) {
                 childBubble.resetOtherInstances();
                 childBubble.reviewInLabelButtonsVisibility();
-                childBubble.visitAllChild(function (childVertex) {
+                childBubble.visitAllImmediateChild(function (childVertex) {
                     VertexUiBuilder.completeBuild(
                         childVertex
                     );
@@ -456,7 +456,7 @@ define([
                 return;
             }
             VertexUiBuilder.completeBuild(vertex);
-            vertex.visitAllChild(function (childBubble) {
+            vertex.visitAllImmediateChild(function (childBubble) {
                 if (childBubble.isGroupRelation()) {
                     GroupRelationUiBuilder.completeBuild(childBubble);
                 }

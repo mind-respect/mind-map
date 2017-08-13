@@ -688,6 +688,59 @@ define([
                     otherB2.getHiddenRelationsContainer().isVisible()
                 ).toBeFalsy();
             });
+            it("reviews the display of the 'visitOtherInstances' on expand", function(){
+                loadFixtures("graph-element-menu.html");
+                var graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
+                var b1 = graphWithCircularityScenario.getBubble1InTree();
+                var b2 = TestUtils.getChildWithLabel(
+                    b1,
+                    "r1"
+                ).getTopMostChildBubble();
+                expect(
+                    b2.getNumberOfChild()
+                ).toBe(0);
+                graphWithCircularityScenario.expandBubble2(b2);
+                var b3 = TestUtils.getChildWithLabel(
+                    b1,
+                    "r3"
+                ).getTopMostChildBubble();
+                graphWithCircularityScenario.expandBubble3(b3);
+                b3.collapse();
+                expect(
+                    b2._getInLabelButtonWithAction("visitOtherInstances").hasClass("hidden")
+                ).toBeTruthy();
+                b3.expand();
+                expect(
+                    b2._getInLabelButtonWithAction("visitOtherInstances").hasClass("hidden")
+                ).toBeFalsy();
+            });
+        });
+        describe("collapse", function(){
+            it("reviews the display of the 'visitOtherInstances' button", function(){
+                loadFixtures("graph-element-menu.html");
+                var graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
+                var b1 = graphWithCircularityScenario.getBubble1InTree();
+                var b2 = TestUtils.getChildWithLabel(
+                    b1,
+                    "r1"
+                ).getTopMostChildBubble();
+                expect(
+                    b2.getNumberOfChild()
+                ).toBe(0);
+                graphWithCircularityScenario.expandBubble2(b2);
+                var b3 = TestUtils.getChildWithLabel(
+                    b1,
+                    "r3"
+                ).getTopMostChildBubble();
+                graphWithCircularityScenario.expandBubble3(b3);
+                expect(
+                    b2._getInLabelButtonWithAction("visitOtherInstances").hasClass("hidden")
+                ).toBeFalsy();
+                b3.collapse();
+                expect(
+                    b2._getInLabelButtonWithAction("visitOtherInstances").hasClass("hidden")
+                ).toBeTruthy();
+            });
         });
     });
 });
