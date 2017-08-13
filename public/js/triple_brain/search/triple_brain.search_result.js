@@ -82,7 +82,7 @@ define([
                 return new SearchResult(
                     identifier,
                     GraphElementType.Meta,
-                    api._buildIdentifierSomethingToDistinguish(identifier),
+                    api._buildVertexSomethingToDistinguish(searchResult),
                     searchResult
                 );
         }
@@ -129,12 +129,6 @@ define([
             );
         }
         return container.prop('outerHTML');
-    };
-    api._buildIdentifierSomethingToDistinguish = function (identifier) {
-        var source = WikiDataUri.isAWikidataUri(
-            identifier.getExternalResourceUri()
-        ) ? "wikipedia.org" : "mindrespect.com";
-        return identifier.getNbReferences() + referencesText + ". source: " + source;
     };
     api.forGraphElementAndItsType = function (graphElement, graphElementType) {
         return new SearchResult(
