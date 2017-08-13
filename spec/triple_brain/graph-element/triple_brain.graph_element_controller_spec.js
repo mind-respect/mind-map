@@ -10,8 +10,9 @@ define([
     "test/mock/triple_brain.graph_service_mock",
     "triple_brain.graph_element_controller",
     "triple_brain.sub_graph",
-    "mr.app_controller"
-], function ($, Scenarios, TestUtils, Mock, GraphServiceMock, GraphElementController, SubGraph, AppController) {
+    "mr.app_controller",
+    "mr.command"
+], function ($, Scenarios, TestUtils, Mock, GraphServiceMock, GraphElementController, SubGraph, AppController, Command) {
     "use strict";
     describe("graph_element_controller", function () {
         beforeEach(function () {
@@ -130,83 +131,115 @@ define([
                 b2.getController().collapseCanDo()
             ).toBeTruthy();
         });
-        it("can move a vertex above a group relation", function () {
-            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
-            var otherBubble = scenario.getOtherRelationInTree().getTopMostChildBubble();
-            var groupRelation = scenario.getPossessionAsGroupRelationInTree();
-            groupRelation.expand();
-            otherBubble.moveAbove(
-                groupRelation
-            );
-            var grandParent = otherBubble.getParentBubble().getParentBubble();
-            expect(
-                grandParent.isSameUri(
-                    scenario.getCenterVertexInTree()
-                )
-            ).toBeTruthy();
+        describe("moveAbove", function(){
+            it("can move a vertex above a group relation", function () {
+                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+                var otherBubble = scenario.getOtherRelationInTree().getTopMostChildBubble();
+                var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+                groupRelation.expand();
+                otherBubble.moveAbove(
+                    groupRelation
+                );
+                var grandParent = otherBubble.getParentBubble().getParentBubble();
+                expect(
+                    grandParent.isSameUri(
+                        scenario.getCenterVertexInTree()
+                    )
+                ).toBeTruthy();
+            });
+            it("prevents from moving above self", function(){
+                var scenario = new Scenarios.threeBubblesGraph();
+                var b2 = scenario.getBubble2InTree();
+                Command._reset();
+                expect(
+                    Command.canUndo()
+                ).toBeFalsy();
+                var r1 = b2.getParentBubble();
+                b2.getController().moveAbove(r1);
+                expect(
+                    Command.canUndo()
+                ).toBeFalsy();
+            });
         });
-        it("can undo and redo a move under parent", function(){
-            var scenario = new Scenarios.threeBubblesGraph();
-            var b1 = scenario.getBubble1InTree();
-            var b2 = scenario.getBubble2InTree();
-            var b3 = scenario.getBubble3InTree();
-            expect(
-                b2.getParentVertex().isSameBubble(
-                    b1
-                )
-            ).toBeTruthy();
-            GraphServiceMock.getForCentralBubbleUri(
-                scenario.getSubGraphForB3()
-            );
-            b2.getController().moveUnderParent(b3);
-            expect(
-                b2.getParentVertex().isSameBubble(
-                    b1
-                )
-            ).toBeFalsy();
-            AppController.undo();
-            expect(
-                b2.getParentVertex().isSameBubble(
-                    b1
-                )
-            ).toBeTruthy();
-            AppController.redo();
-            expect(
-                b2.getParentVertex().isSameBubble(
-                    b1
-                )
-            ).toBeFalsy();
+
+        describe("moveUnder", function(){
+            it("prevents from moving under self", function(){
+                var scenario = new Scenarios.threeBubblesGraph();
+                var b2 = scenario.getBubble2InTree();
+                Command._reset();
+                expect(
+                    Command.canUndo()
+                ).toBeFalsy();
+                var r1 = b2.getParentBubble();
+                b2.getController().moveUnder(r1);
+                expect(
+                    Command.canUndo()
+                ).toBeFalsy();
+            });
+            it("can undo and redo a move under parent", function(){
+                var scenario = new Scenarios.threeBubblesGraph();
+                var b1 = scenario.getBubble1InTree();
+                var b2 = scenario.getBubble2InTree();
+                var b3 = scenario.getBubble3InTree();
+                expect(
+                    b2.getParentVertex().isSameBubble(
+                        b1
+                    )
+                ).toBeTruthy();
+                GraphServiceMock.getForCentralBubbleUri(
+                    scenario.getSubGraphForB3()
+                );
+                b2.getController().moveUnderParent(b3);
+                expect(
+                    b2.getParentVertex().isSameBubble(
+                        b1
+                    )
+                ).toBeFalsy();
+                AppController.undo();
+                expect(
+                    b2.getParentVertex().isSameBubble(
+                        b1
+                    )
+                ).toBeTruthy();
+                AppController.redo();
+                expect(
+                    b2.getParentVertex().isSameBubble(
+                        b1
+                    )
+                ).toBeFalsy();
+            });
+            it("can undo and redo a move under a bubble", function(){
+                var scenario = new Scenarios.creationDateScenario();
+                var b7 = scenario.getBubble7InTree();
+                scenario.expandBubble7(b7);
+                var b72 = TestUtils.getChildWithLabel(
+                    b7,
+                    "r72"
+                ).getTopMostChildBubble();
+                var b73 = TestUtils.getChildWithLabel(
+                    b7,
+                    "r73"
+                ).getTopMostChildBubble();
+                expect(b73.getBubbleAbove().isSameBubble(
+                    b72
+                )).toBeTruthy();
+                b72.getController().moveUnder(
+                    b73.getParentBubble()
+                );
+                expect(b72.getBubbleAbove().isSameBubble(
+                    b73
+                )).toBeTruthy();
+                AppController.undo();
+                expect(b73.getBubbleAbove().isSameBubble(
+                    b72
+                )).toBeTruthy();
+                AppController.redo();
+                expect(b72.getBubbleAbove().isSameBubble(
+                    b73
+                )).toBeTruthy();
+            });
         });
-        it("can undo and redo a move under a bubble", function(){
-            var scenario = new Scenarios.creationDateScenario();
-            var b7 = scenario.getBubble7InTree();
-            scenario.expandBubble7(b7);
-            var b72 = TestUtils.getChildWithLabel(
-                b7,
-                "r72"
-            ).getTopMostChildBubble();
-            var b73 = TestUtils.getChildWithLabel(
-                b7,
-                "r73"
-            ).getTopMostChildBubble();
-            expect(b73.getBubbleAbove().isSameBubble(
-                b72
-            )).toBeTruthy();
-            b72.getController().moveUnder(
-                b73.getParentBubble()
-            );
-            expect(b72.getBubbleAbove().isSameBubble(
-                b73
-            )).toBeTruthy();
-            AppController.undo();
-            expect(b73.getBubbleAbove().isSameBubble(
-                b72
-            )).toBeTruthy();
-            AppController.redo();
-            expect(b72.getBubbleAbove().isSameBubble(
-                b73
-            )).toBeTruthy();
-        });
+
         it("adds the group relation identifier to a vertex when moving around another vertex that is under a group relation", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
             var otherBubbleEdge = scenario.getOtherRelationInTree();

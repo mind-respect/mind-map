@@ -84,6 +84,12 @@ define([
             'triple_brain.graph_element_main_menu'
         ).reviewButtonsVisibility();
     };
+
+    api._reset = function(){
+        undos = [];
+        redos = [];
+    };
+
     return api;
 
 });

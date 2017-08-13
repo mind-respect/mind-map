@@ -270,6 +270,9 @@ define([
     };
 
     GraphElementController.prototype.moveUnder = function (otherEdge) {
+        if(!this._canMoveAboveOrUnder(otherEdge)){
+            return $.Deferred().resolve();
+        }
         var previousParentVertex = this.getUi().getParentVertex();
         return this._moveTo(
             otherEdge,
@@ -279,12 +282,22 @@ define([
     };
 
     GraphElementController.prototype.moveAbove = function (otherEdge) {
+        if(!this._canMoveAboveOrUnder(otherEdge)){
+            return $.Deferred().resolve();
+        }
         var previousParentVertex = this.getUi().getParentVertex();
         return this._moveTo(
             otherEdge,
             true,
             previousParentVertex
         );
+    };
+
+    GraphElementController.prototype._canMoveAboveOrUnder = function (otherEdge) {
+        var graphElementToCompare = this.getUi().isVertex() ?
+            this.getUi().getParentBubble() :
+            this.getUi();
+        return !graphElementToCompare.isSameUri(otherEdge);
     };
 
     GraphElementController.prototype._canMoveUnderParent = function (parent) {
