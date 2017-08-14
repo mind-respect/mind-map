@@ -98,6 +98,9 @@
     }
   }
   &.meta-relation{
+    .image_container{
+      display:none;
+    }
     .label-container {
       display: none;
     }

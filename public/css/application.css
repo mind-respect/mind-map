@@ -365,6 +365,7 @@ button.inactive i { color: red; }
 .relation.bubble.suggestion .in-bubble-content .label-info { background-color: #E7EEF2; color: black; text-shadow: none; }
 .relation.bubble.suggestion .bubble-label { color: black; }
 .relation.bubble.suggestion .in-bubble-content .label-info { border: 3px dotted darkgreen; }
+.relation.bubble.meta-relation .image_container { display: none; }
 .relation.bubble.meta-relation .label-container { display: none; }
 .relation.bubble.meta-relation .remove-relation-button { display: block; font-size: 1.15em; }
 .relation.bubble.meta-relation .in-bubble-content { border: none; }
