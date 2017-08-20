@@ -8,8 +8,10 @@ define([
     "triple_brain.id_uri",
     "mr.ask_modal",
     "triple_brain.center_graph_element_service",
-    "bootstrap-table"
-], function ($, IdUri, AskModal, CenterGraphElementService) {
+    "triple_brain.event_bus",
+    "bootstrap-table",
+    "jquery.i18next"
+], function ($, IdUri, AskModal, CenterGraphElementService, EventBus) {
     "use strict";
     var NUMBER_OF_VISIT_RANKS = 3,
         _elements,
@@ -25,6 +27,29 @@ define([
             buildHtml();
             setTitle();
             handleRemoveCenterBtnClick();
+            EventBus.subscribe("localized-text-loaded", function(){
+                $(".fixed-table-toolbar .search input").attr(
+                    "data-i18n",
+                    "[placeholder]centralBubbles.filter"
+                );
+                _container.find("th.bubble-label .th-inner").attr(
+                    "data-i18n",
+                    "centralBubbles.center"
+                );
+                _container.find("th.context .th-inner").attr(
+                    "data-i18n",
+                    "centralBubbles.context"
+                );
+                _container.find("th.last-visit .th-inner").attr(
+                    "data-i18n",
+                    "centralBubbles.lastVisit"
+                );
+                _container.find("th.number-visits .th-inner").attr(
+                    "data-i18n",
+                    "centralBubbles.nbVisits"
+                );
+                _container.i18n();
+            });
         }
     };
 
