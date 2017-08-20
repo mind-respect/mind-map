@@ -61,6 +61,12 @@ $tagCloudFontSize: 0.6em;
 
   .context {
     width: 56%;
+    a.empty{
+      &:before{
+        content:"...";
+        color:black;
+      }
+    }
   }
 
   th {
