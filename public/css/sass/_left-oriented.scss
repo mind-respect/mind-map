@@ -6,6 +6,11 @@
     transform: rotate(180deg);
   }
   .vertex {
+    &.inverse{
+      .arrow{
+        left:auto;
+      }
+    }
     &.selected{
       .in-bubble-content {
         box-shadow: 5px 5px 5px black;
@@ -66,9 +71,17 @@
         content: url('images/icons/vertex/arrowhead_left.svg');
       }
     }
-    &.inverse{
-      .arrow:before {
-        content: url('images/icons/vertex/arrowhead_right.svg');
+    &.relation.inverse{
+      .connector{
+        &:before{
+          content: url('images/icons/vertex/arrowhead_right.svg');
+        }
+      }
+      .arrow {
+        left:auto;
+        &:before {
+          content: "";
+        }
       }
     }
     &.view-only {

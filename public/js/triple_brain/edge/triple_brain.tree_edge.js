@@ -51,9 +51,6 @@ define([
         api.TreeEdge.prototype.childVertexInDisplay = function () {
             return this.getTopMostChildBubble();
         };
-        api.TreeEdge.prototype.isInverse = function () {
-            return this.html.hasClass("inverse");
-        };
         api.TreeEdge.prototype.serverFormat = function () {
             return {
                 label: this.text(),
@@ -63,17 +60,20 @@ define([
         };
         
         api.TreeEdge.prototype.inverse = function () {
+            var isInverse = this.isInverse();
             this.html[
-                this.html.hasClass("inverse") ?
+                isInverse ?
                     "removeClass" :
                     "addClass"
                 ]("inverse");
-            var childVertexHtml = this.childVertexInDisplay().getHtml();
-            childVertexHtml[
-                childVertexHtml.hasClass("inverse") ?
-                    "removeClass" :
-                    "addClass"
-                ]("inverse");
+            this.getHtml().closest(
+                ".vertex-tree-container"
+            ).find("> .vertical-border")[
+                isInverse ?
+                    "addClass" :
+                    "removeClass"
+                ]("small");
+            this.childVertexInDisplay().inverse();
             this.inverseAbstract();
         };
         api.TreeEdge.prototype.removeFromCache = function () {

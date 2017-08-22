@@ -65,6 +65,14 @@ $connectorRadius: 25px;
 .left-oriented {
   &.vertices-children-container, .vertices-children-container {
     .vertex-tree-container {
+      > .vertex-container {
+        .relation.inverse {
+          .connector {
+            left: auto;
+            right: -44px;
+          }
+        }
+      }
       &:first-child {
         > .vertex-container {
           .property, .group-relation {
@@ -115,14 +123,22 @@ $connectorRadius: 25px;
     .vertex-tree-container {
       &:first-child {
         > .vertex-container {
-          .relation .connector {
-            border-top-right-radius: 0;
+          .relation {
+            &.inverse .connector{
+              left: -41px;
+            }
+            .connector {
+              border-top-right-radius: 0;
+            }
           }
         }
       }
       &:last-of-type {
         > .vertex-container {
           .relation {
+            &.inverse .connector{
+              left: -41px;
+            }
             .connector {
               border-bottom-right-radius: 0;
             }
@@ -176,7 +192,10 @@ $connectorRadius: 25px;
         border-radius: $connectorRadius;
         border-bottom: $edgeStyle;
         border-top: none;
-        top: calc(50% - #{$relationConnectorHeight - 3});
+        top: calc(50% - #{$relationConnectorHeight});
+        &:before {
+          top: 11px;
+        }
       }
       .property, .group-relation {
         .arrow {
@@ -207,12 +226,15 @@ $connectorRadius: 25px;
       border-left: none;
       border-right: none;
     }
+    > .vertices-children-container > .vertex-tree-container > .vertex-container > .vertex > .arrow{
+        top:calc(50% - 3px);
+    }
   }
 }
 
 .vertical-border {
   display: table;
-  height: 50%;
+  height: 51%;
   border-left: $edgeStyle;
   padding-right: 40px;
 }

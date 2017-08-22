@@ -2,6 +2,18 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 .relation.bubble {
+  &.inverse{
+    .connector {
+      width: 51px;
+      left: -44px;
+      &:before{
+        content: url(images/icons/vertex/arrowhead_left.svg);
+        position: relative;
+        top: -11px;
+        left: 20px;
+      }
+    }
+  }
   .hidden-properties-content{
     margin-left: $marginOfHiddenPropertiesToRelation;
   }
@@ -189,14 +201,6 @@
   z-index: 5;
 }
 
-.relation.inverse .in-bubble-content .label-info {
-  background: $edgeInverseColor;
-}
-
-.relation.inverse input[type=text] {
-  border-color: red;
-}
-
 .bubble.property {
   margin-top: 1em;
   margin-bottom: 1em;
@@ -250,3 +254,11 @@
   left: 0;
   right: 0;
 }
+
+//.relation.inverse .in-bubble-content .label-info {
+//  background: $edgeInverseColor;
+//}
+//
+//.relation.inverse input[type=text] {
+//  border-color: red;
+//}

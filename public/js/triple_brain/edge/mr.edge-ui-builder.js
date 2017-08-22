@@ -33,6 +33,9 @@ define([
                 "destination_vertex_id",
                 childUi.getId()
             );
+            ui.getHtml().closest(
+                ".vertex-tree-container"
+            ).find("> .vertical-border").addClass("small");
             if (isInverse) {
                 ui.inverse();
             }
@@ -69,9 +72,6 @@ define([
                 '/event/ui/html/edge/created/',
                 ui
             );
-            ui.getHtml().closest(
-                ".vertex-tree-container"
-            ).find("> .vertical-border").addClass("small");
             ui.reviewEditButtonDisplay();
             GraphElementHtmlBuilder.completeBuild(
                 ui

@@ -764,6 +764,10 @@ define([
         return this.html.find('.label-container');
     };
 
+    api.GraphElementUi.prototype.isInverse = function () {
+        return this.html.hasClass("inverse");
+    };
+
     EventBus.subscribe(
         '/event/ui/graph/vertex/privacy/updated',
         function (event, graphElement) {
