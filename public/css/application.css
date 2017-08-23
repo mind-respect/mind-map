@@ -1,22 +1,22 @@
 @charset "UTF-8";
 /* Copyright Vincent Blouin under the GPL License version 3 */
 /* Copyright Vincent Blouin under the GPL License version 3 */
-@-webkit-keyframes $animationName { /*using content to avoid using opacity because it blurs the label in chromium*/
+@-webkit-keyframes cursorBlink { /*using content to avoid using opacity because it blurs the label in chromium*/
   0% { content: "_"; }
   50% { content: "_"; }
   50.01% { content: " "; }
   100% { content: " "; } }
-@-moz-keyframes $animationName { /*using content to avoid using opacity because it blurs the label in chromium*/
+@-moz-keyframes cursorBlink { /*using content to avoid using opacity because it blurs the label in chromium*/
   0% { content: "_"; }
   50% { content: "_"; }
   50.01% { content: " "; }
   100% { content: " "; } }
-@-o-keyframes $animationName { /*using content to avoid using opacity because it blurs the label in chromium*/
+@-o-keyframes cursorBlink { /*using content to avoid using opacity because it blurs the label in chromium*/
   0% { content: "_"; }
   50% { content: "_"; }
   50.01% { content: " "; }
   100% { content: " "; } }
-@keyframes $animationName { /*using content to avoid using opacity because it blurs the label in chromium*/
+@keyframes cursorBlink { /*using content to avoid using opacity because it blurs the label in chromium*/
   0% { content: "_"; }
   50% { content: "_"; }
   50.01% { content: " "; }

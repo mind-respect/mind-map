@@ -21,16 +21,16 @@ $bubbleFontFamily: arial;
 $marginOfHiddenPropertiesToRelation: 25px;
 
 @mixin keyframes( $animationName ) {
-  @-webkit-keyframes $animationName {
+  @-webkit-keyframes cursorBlink {
     @content;
   }
-  @-moz-keyframes $animationName {
+  @-moz-keyframes cursorBlink {
     @content;
   }
-  @-o-keyframes $animationName {
+  @-o-keyframes cursorBlink {
     @content;
   }
-  @keyframes $animationName {
+  @keyframes cursorBlink {
     @content;
   }
 }
