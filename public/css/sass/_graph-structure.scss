@@ -101,7 +101,7 @@ $connectorRadius: 25px;
           .property, .group-relation {
             .arrow {
               border-top: none;
-              top: calc(50% - 1.4em);
+              top: calc(50% - 18px);
               border-bottom: $edgeStyle;
               border-bottom-left-radius: 0;
               border-bottom-right-radius: $connectorRadius;
@@ -169,6 +169,11 @@ $connectorRadius: 25px;
         }
       }
     }
+    .property, .group-relation {
+      .arrow {
+        top: calc(50% - 2px);
+      }
+    }
     &:last-of-type {
       > .vertex-container {
         .connector {
@@ -200,7 +205,7 @@ $connectorRadius: 25px;
       .property, .group-relation {
         .arrow {
           border-top: none;
-          top: calc(50% - 1.4em);
+          top: calc(50% - 18px);
           border-bottom: $edgeStyle;
           border-bottom-left-radius: $connectorRadius;
         }
