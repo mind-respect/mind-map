@@ -201,7 +201,9 @@
                             class="graph-element-button"></button>
                     <button data-action="collapse" data-icon="fa-eye-slash"
                             class="graph-element-button"></button>
-                    <button data-action="identify" data-icon="fa-info-circle"
+                    <button data-action="identify" data-icon="fa-tag"
+                            class="graph-element-button in-label-button"></button>
+                    <button data-action="identifyWhenMany" data-icon="fa-tags"
                             class="graph-element-button in-label-button"></button>
                     <button data-action="suggestions" data-icon="fa-lightbulb-o"
                             class="suggestion graph-element-button"></button>
@@ -1068,7 +1070,6 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">
-                    <span data-i18n="graph_element.menu.identification.title"></span>
                     <span data-i18n="graph_element.menu.identification.title_prefix"></span>
                     <span class="bubble-label"></span>
                 </h4>
@@ -1087,12 +1088,6 @@
                                        data-i18n="[placeholder]graph_element.menu.identification.placeholder"
                                        class="add-identification form-control">
                             </div>
-                        </div>
-                        <div class='instruction'>
-                            <div class='small' data-i18n="graph_element.menu.identification.example"></div>
-                            <a href='#' class="what-for" data-i18n="graph_element.menu.identification.what_for"></a>
-                            <span style='margin-left:0.5em;' class='hidden why'
-                                  data-i18n="graph_element.menu.identification.why"></span>
                         </div>
                         <ul class="list list-group main-list"></ul>
                     </div>

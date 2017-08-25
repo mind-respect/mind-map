@@ -56,7 +56,7 @@ define([
             ).toBeTruthy();
         });
 
-        it("calls identification method when pressing ctrl+i", function(){
+        it("calls identification method when pressing ctrl+g", function(){
             MindMapInfo._setIsViewOnly(false);
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             SelectionHandler.setToSingleGraphElement(bubble1);
@@ -64,7 +64,7 @@ define([
             expect(
                 actionSpy
             ).not.toHaveBeenCalled();
-            TestUtils.pressCtrlPlusKey("I");
+            TestUtils.pressCtrlPlusKey("G");
             expect(
                 actionSpy
             ).toHaveBeenCalled();

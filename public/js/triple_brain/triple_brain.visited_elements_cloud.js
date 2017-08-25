@@ -154,9 +154,8 @@ define([
         );
         if (IdUri.isMetaUri(element.getUri())) {
             anchor.append(
-                $("<span class='badge reference'>").text(
-                    $.t("centralBubbles.reference")
-                )
+                " ",
+                $("<i class='fa fa-tag' data-i18n='[title]centralBubbles.reference'>")
             );
         }
         return anchor.prop('outerHTML');

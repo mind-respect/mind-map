@@ -36,6 +36,7 @@ define([
         return api._getBubbleNoteModal().find(".editor");
     };
     api.GraphElementController = GraphElementController;
+
     function GraphElementController(graphElements) {
         if (graphElements) {
             this.init(graphElements);
@@ -53,8 +54,8 @@ define([
     };
     GraphElementController.prototype.noteCanDo = function () {
         return this.isSingle() && (
-                this.isOwned() || this.getModel().hasComment()
-            );
+            this.isOwned() || this.getModel().hasComment()
+        );
     };
 
     GraphElementController.prototype.setLabel = function (newLabel) {
@@ -146,11 +147,17 @@ define([
 
     GraphElementController.prototype.identifyCanDo = function () {
         return this.isSingle() && (
-                this.isOwned() || this.getUi().getModel().hasIdentifications()
-            );
+            (this.isOwned() && !this.getModel().hasIdentifications()) ||
+            this.getModel().getIdentifiers().length === 1
+        );
     };
 
-    GraphElementController.prototype.identify = function () {
+
+    GraphElementController.prototype.identifyWhenManyCanDo = function () {
+        return this.isSingle() && this.getModel().getIdentifiers().length > 1;
+    };
+
+    GraphElementController.prototype.identifyWhenMany = GraphElementController.prototype.identify = function () {
         IdentificationMenu.ofGraphElement(
             this.graphElements
         ).create();
@@ -175,10 +182,10 @@ define([
 
     GraphElementController.prototype.expandCanDo = function () {
         return this.isSingle() && (
-                this.getUi().hasVisibleHiddenRelationsContainer() ||
-                this.getUi().hasDescendantsWithHiddenRelations() ||
-                this.getUi().isCollapsed()
-            );
+            this.getUi().hasVisibleHiddenRelationsContainer() ||
+            this.getUi().hasDescendantsWithHiddenRelations() ||
+            this.getUi().isCollapsed()
+        );
     };
 
     GraphElementController.prototype.expand = function (avoidCenter, avoidExpandChild, isChildExpand) {
@@ -215,8 +222,8 @@ define([
 
     GraphElementController.prototype.collapseCanDo = function () {
         return this.isSingle() && !this.getUi().isCenterBubble() && (
-                !this.getUi().isALeaf() && !this.getUi().isCollapsed()
-            );
+            !this.getUi().isALeaf() && !this.getUi().isCollapsed()
+        );
     };
 
     GraphElementController.prototype.collapse = function () {
@@ -225,10 +232,10 @@ define([
 
     GraphElementController.prototype.cutCanDo = function () {
         return this.isSingleAndOwned() && !this.getUi().isCenterBubble() && (
-                undefined === bubbleCutClipboard || !this.getUi().isSameBubble(
-                    bubbleCutClipboard
-                )
-            );
+            undefined === bubbleCutClipboard || !this.getUi().isSameBubble(
+                bubbleCutClipboard
+            )
+        );
     };
 
     GraphElementController.prototype.cut = function () {
@@ -279,7 +286,7 @@ define([
     };
 
     GraphElementController.prototype.moveUnder = function (otherEdge) {
-        if(!this._canMoveAboveOrUnder(otherEdge)){
+        if (!this._canMoveAboveOrUnder(otherEdge)) {
             return $.Deferred().resolve();
         }
         var previousParentVertex = this.getUi().getParentVertex();
@@ -291,7 +298,7 @@ define([
     };
 
     GraphElementController.prototype.moveAbove = function (otherEdge) {
-        if(!this._canMoveAboveOrUnder(otherEdge)){
+        if (!this._canMoveAboveOrUnder(otherEdge)) {
             return $.Deferred().resolve();
         }
         var previousParentVertex = this.getUi().getParentVertex();
@@ -314,7 +321,7 @@ define([
     };
 
     GraphElementController.prototype.moveUnderParent = function (parent) {
-        if(!this._canMoveUnderParent(parent)){
+        if (!this._canMoveUnderParent(parent)) {
             return $.Deferred().resolve();
         }
         var previousParent;
@@ -391,6 +398,7 @@ define([
             ]);
         }
         return changeSortDate();
+
         function changeSortDate() {
             return GraphElementService.changeSortDate(
                 movedVertex.getModel()
@@ -398,13 +406,13 @@ define([
         }
     };
 
-    GraphElementController.prototype.becomeExParent = function(){
+    GraphElementController.prototype.becomeExParent = function () {
         return $.Deferred().resolve();
     };
 
     GraphElementController.prototype.addIdentifiers = function (identifiers) {
         var promises = [];
-        identifiers.forEach(function(identifier){
+        identifiers.forEach(function (identifier) {
             promises.push(this.addIdentification(identifier));
         }.bind(this));
         return $.when.apply($, promises);
@@ -501,6 +509,7 @@ define([
 
     setUpCancelButton();
     initNoteModal();
+
     function setUpSaveButton() {
         if (MindMapInfo.isViewOnly()) {
             getSaveButton().addClass("hidden");

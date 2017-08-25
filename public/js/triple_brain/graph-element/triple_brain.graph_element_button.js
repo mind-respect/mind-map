@@ -95,7 +95,9 @@ define([
             case "note":
                 return graphElement.getModel().hasComment();
             case "identify":
-                return graphElement.getModel().hasIdentifications();
+                return graphElement.getModel().getIdentifiers().length === 1;
+            case "identifyWhenMany":
+                return graphElement.getModel().getIdentifiers().length > 1;
             case "visitOtherInstances":
                 return graphElement.hasOtherVisibleInstance();
             case "makePrivate":

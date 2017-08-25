@@ -38,14 +38,6 @@ define([
             if(MindMapInfo.isViewOnly()){
                 return;
             }
-            api._setupInstructions();
-        };
-
-        api._setupInstructions = function () {
-            api._getModal().find(".what-for").click(function (event) {
-                event.preventDefault();
-                $(this).next('.why').toggleClass("hidden");
-            });
         };
 
         api._handleClickReferences = function (event) {

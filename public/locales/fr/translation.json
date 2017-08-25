@@ -197,18 +197,14 @@
   "graph_element": {
     "menu": {
       "identification": {
-        "title_prefix": "Identifiants de ",
-        "title": "Dites ce qu'est cette bulle",
-        "placeholder": "Est un(e) ou la même \"chose\" que",
-        "example": "ex: Cette bulle est un fruit ou cette bulle est la même chose que Madonna la chanteuse.",
-        "what_for": "À quoi ça sert?",
-        "why": "À avoir automatiquement une image, une description, des suggestions, à grouper les relations et à trouver toutes les autres bulles qui ont les mêmes identifiants.",
+        "title_prefix": "Étiquettes de ",
+        "placeholder": "Chercher pour un étiquette à ajouter",
         "readMore": "plus",
         "readLess": "moins",
         "origin": "source",
-        "nb_references": "autre bulle(s) ayant le même identifiant",
-        "no_other_references": "Aucune autre bulle avec le même identifiant",
-        "wikidata-indicator":"Wikidata est toujours activé dans le menu d'identification"
+        "nb_references": "autre bulle(s) ayant le même étiquette",
+        "no_other_references": "Aucune autre bulle avec le même étiquette",
+        "wikidata-indicator":"Wikidata est toujours activé dans le menu d'étiquettes"
       }
     }
   },
@@ -217,7 +213,7 @@
   },
   "schema": {
     "when-empty": "modèle",
-    "instruction": "Identifier un modèle à une autre bulle pour utiliser ses composants."
+    "instruction": "Étiquetter un modèle à une autre bulle pour utiliser ses composants."
   },
   "suggestion": {
     "when-empty": "composant"
@@ -297,7 +293,8 @@
     "select": "Sélection à la main",
     "group": "Créer une bulle à partir de celles sélectionnés",
     "addChild": "Ajouter un enfant (tab)",
-    "identify": "Identifications (ctrl+i)",
+    "identify": "Étiquettes (ctrl+g)",
+    "identifyWhenMany": "Étiquettes (ctrl+g)",
     "compare": "Comparer avec un autre usager",
     "reverseToRight": "Inverser la relation (ctrl+r)",
     "reverseToLeft": "Inverser la relation (ctrl+r)",
@@ -336,12 +333,12 @@
       "vertex": "Bulle",
       "relation": "Relation",
       "schema": "Modèle",
-      "meta": "Référence"
+      "meta": "Étiquette"
     },
     "identifier": {
       "bubbles": " bulles(s)"
     },
-    "references": " référence(s)"
+    "references": " tag(s)"
   },
   "schemaList": {
     "title": "Modèles",
@@ -365,6 +362,6 @@
       "really": "Voulez-vous vraiment supprimer ça?",
       "info": "Cette action ne supprime pas la bulle(s). Elle pourra toujours être trouvée par la recherche principale et par ses relations."
     },
-    "reference": "Référence"
+    "reference": "Étiquette"
   }
 }

@@ -16,7 +16,7 @@ define([
         rightArrowKeyNumber = 39,
         upArrowKeyNumber = 38,
         downArrowKeyNumber = 40,
-        iArrowKeyNumber = 73,
+        gArrowKeyNumber = 71,
         deleteKeyNumber = 46,
         escapeKeyNumber = 27,
         enterKeyCode = 13,
@@ -106,7 +106,12 @@ define([
         }
         event.preventDefault();
         event.stopPropagation();
-        executeFeature(feature);
+        if(!Array.isArray(feature)){
+            feature = [feature];
+        }
+        feature.forEach(function(feature){
+            executeFeature(feature);
+        });
         function isThereASpecialKeyPressed() {
             return event.altKey || event.metaKey;
         }
@@ -160,9 +165,11 @@ define([
 
     function defineCtrlPlusKeysAndTheirActions() {
         var actions = {};
-        actions[iArrowKeyNumber] = {
+        actions[gArrowKeyNumber] = [{
             action: "identify"
-        };
+        },{
+            action: "identifyWhenMany"
+        }];
         actions[eKeyNumber] = {
             action: "expand"
         };
