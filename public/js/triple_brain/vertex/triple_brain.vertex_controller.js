@@ -83,6 +83,7 @@ define([
         ).ask().then(
             deleteAfterConfirmationBehavior.bind(this)
         );
+
         function deleteAfterConfirmationBehavior() {
             var removePromise = this.isSingle() ?
                 VertexService.remove(
@@ -114,15 +115,24 @@ define([
         ).build();
     };
 
-    VertexController.prototype.makePrivateCanDo = function () {
-        return this.isOwned() && (
-                (this.isMultiple() && !this._areAllElementsPrivate()) || (
-                    this.isSingle() && this.getUi().getModel().isPublic()
-                )
-            );
+    VertexController.prototype.togglePublicPrivate = function () {
+        if (this._areAllElementsPrivate()) {
+            this.makePublic();
+        } else if (this._areAllElementsPublic()) {
+            this.makePrivate();
+        }
     };
 
-    VertexController.prototype.makePrivateCanDoFromInLabel = function(){
+
+    VertexController.prototype.makePrivateCanDo = function () {
+        return this.isOwned() && (
+            (this.isMultiple() && !this._areAllElementsPrivate()) || (
+                this.isSingle() && this.getUi().getModel().isPublic()
+            )
+        );
+    };
+
+    VertexController.prototype.makePrivateCanDoFromInLabel = function () {
         return false;
     };
 
@@ -163,33 +173,37 @@ define([
 
     VertexController.prototype.makePublicCanDo = function () {
         return this.isOwned() && (
-                (this.isMultiple() && !this._areAllElementsPublic()) || (
-                    this.isSingle() && !this.getUi().getModel().isPublic()
-                )
-            );
+            (this.isMultiple() && !this._areAllElementsPublic()) || (
+                this.isSingle() && !this.getUi().getModel().isPublic()
+            )
+        );
     };
 
-    VertexController.prototype.makePublicCanDoFromInLabel = function(){
+    VertexController.prototype.makePublicCanDoFromInLabel = function () {
         return false;
     };
 
     VertexController.prototype._areAllElementsPublic = function () {
+        if (this.isSingle()) {
+            return this.getModel().isPublic();
+        }
         var allPublic = true;
-        $.each(this.getUi(), function () {
-            if (!this.getModel().isPublic()) {
+        this.getUi().forEach(function (ui) {
+            if (!ui.getModel().isPublic()) {
                 allPublic = false;
-                return false;
             }
         });
         return allPublic;
     };
 
     VertexController.prototype._areAllElementsPrivate = function () {
+        if (this.isSingle()) {
+            return !this.getModel().isPublic();
+        }
         var allPrivate = true;
-        $.each(this.getUi(), function () {
-            if (this.getModel().isPublic()) {
+        this.getUi().forEach(function (ui) {
+            if (ui.getModel().isPublic()) {
                 allPrivate = false;
-                return false;
             }
         });
         return allPrivate;
@@ -241,7 +255,7 @@ define([
         promises.push(
             movedEdge.getParentBubble().getController().becomeExParent(movedEdge)
         );
-        return $.when.apply($, promises).then(function(){
+        return $.when.apply($, promises).then(function () {
             movedEdge.moveToParent(
                 this.getUi()
             );
@@ -292,6 +306,7 @@ define([
             );
         });
         return deferred;
+
         function addIdentification(newVertexServerFormat) {
             newVertex = Vertex.fromServerFormat(
                 newVertexServerFormat
@@ -424,17 +439,17 @@ define([
                 distantVertexUri
             ).then(function (triple) {
                 newTriple = triple;
-            }).then(function(){
+            }).then(function () {
                 if (!relation.getModel().isLabelEmpty()) {
                     return newTriple.edge().getController().setLabel(
                         relation.getModel().getLabel()
                     );
                 }
-            }).then(function(){
+            }).then(function () {
                 return newTriple.edge().getController().addIdentifiers(
                     relation.getModel().getIdentifiers()
                 );
-            }).then(function(){
+            }).then(function () {
                 this.getUi().afterConvertToDistantBubbleWithUri();
             }.bind(this));
         }.bind(this));
@@ -454,6 +469,7 @@ define([
         return uiParent.isExpanded() ?
             doIt() :
             uiParent.getController().expand().then(doIt);
+
         function doIt() {
             var deferred = $.Deferred();
             VertexService.addRelationAndVertexToVertex(

@@ -178,7 +178,7 @@ define([
         }
     }
     function activateSelectionOnMindMap(event) {
-        var mindMap = $(this).off(
+        $(this).off(
             event
         );
         getSelectBox().removeClass("hidden").css(

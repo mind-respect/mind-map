@@ -7,8 +7,9 @@ define([
     "triple_brain.event_bus",
     "triple_brain.selection_handler",
     "triple_brain.mind_map_info",
+    "triple_brain.graph_element_main_menu",
     "mr.app_controller"
-], function ($, EventBus, SelectionHandler, MindMapInfo, AppController) {
+], function ($, EventBus, SelectionHandler, MindMapInfo, GraphElementMainMenu, AppController) {
     "use strict";
     var api = {},
         tabKeyNumber = 9,
@@ -23,6 +24,7 @@ define([
         dKeyNumber = 68,
         eKeyNumber = 69,
         hKeyNumber = 72,
+        pKeyNumber = 80,
         sKeyNumber = 83,
         zeroKeyNumber = 48,
         rKeyNumber = 82,
@@ -122,10 +124,7 @@ define([
         if (feature.isForAppController) {
             controller = AppController;
         } else {
-            if (!SelectionHandler.isOnlyASingleElementSelected()) {
-                return;
-            }
-            controller = SelectionHandler.getSingleElement().getController();
+            controller = GraphElementMainMenu.getControllerFromCurrentSelection();
         }
         if (controller[feature.action] === undefined) {
             return;
@@ -198,6 +197,9 @@ define([
         actions[zKeyNumber] = {
             action: "undo",
             isForAppController: true
+        };
+        actions[pKeyNumber] = {
+            action: "togglePublicPrivate"
         };
         return actions;
     }

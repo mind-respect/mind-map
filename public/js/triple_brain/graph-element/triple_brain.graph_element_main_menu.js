@@ -180,6 +180,32 @@ define([
             return _menu;
         };
 
+        api.getControllerFromCurrentSelection = function(){
+            var nbSelectedGraphElements = SelectionHandler.getNbSelected();
+            var currentController;
+            if (0 === nbSelectedGraphElements) {
+                currentController = GraphDisplayer.getGraphMenuHandler();
+            }else if (1 === nbSelectedGraphElements) {
+                currentController = SelectionHandler.getSingleElement().getController();
+            } else {
+                var anyElement = SelectionHandler.getSingleElement();
+                var anyElementType = anyElement.getGraphElementType();
+                var areAllElementsOfSameType = true;
+                SelectionHandler.getSelectedElements().forEach(function (selectedElement) {
+                    if (selectedElement.getGraphElementType() !== anyElementType) {
+                        areAllElementsOfSameType = false;
+                    }
+                });
+                var graphElementControllerClass = GraphDisplayer.getGraphElementMenuHandler();
+                currentController = areAllElementsOfSameType ? anyElement.getControllerWithElements(
+                    SelectionHandler.getSelectedElements()
+                ) : new graphElementControllerClass.GraphElementController(
+                    SelectionHandler.getSelectedElements()
+                );
+            }
+            return currentController;
+        };
+
         EventBus.subscribe("/event/ui/selection/changed", api.reviewButtonsVisibility);
         EventBus.subscribe('/event/ui/graph/vertex/suggestions/updated', api.reviewButtonsVisibility);
         EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function () {
@@ -195,28 +221,7 @@ define([
         }
 
         function updateCurrentClickHandler() {
-            var nbSelectedGraphElements = SelectionHandler.getNbSelected();
-            var currentClickHandler;
-            if (0 === nbSelectedGraphElements) {
-                currentClickHandler = GraphDisplayer.getGraphMenuHandler();
-            }else if (1 === nbSelectedGraphElements) {
-                currentClickHandler = SelectionHandler.getSingleElement().getController();
-            } else {
-                var anyElement = SelectionHandler.getSingleElement();
-                var anyElementType = anyElement.getGraphElementType();
-                var areAllElementsOfSameType = true;
-                SelectionHandler.getSelectedElements().forEach(function (selectedElement) {
-                    if (selectedElement.getGraphElementType() !== anyElementType) {
-                        areAllElementsOfSameType = false;
-                    }
-                });
-                var graphElementControllerClass = GraphDisplayer.getGraphElementMenuHandler();
-                currentClickHandler = areAllElementsOfSameType ? anyElement.getControllerWithElements(
-                        SelectionHandler.getSelectedElements()
-                    ) : new graphElementControllerClass.GraphElementController(
-                        SelectionHandler.getSelectedElements()
-                    );
-            }
+            var currentClickHandler = api.getControllerFromCurrentSelection();
             setCurrentClickHandler(
                 currentClickHandler
             );

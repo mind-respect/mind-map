@@ -5,24 +5,24 @@
 define([
     "test/test-scenarios",
     "test/test-utils",
-    "test/mock/triple_brain.vertex_service_mock",
+    'test/mock',
     "triple_brain.keyboard_actions_handler",
     "triple_brain.selection_handler",
     "triple_brain.vertex_controller",
     "mr.app_controller",
     'triple_brain.mind_map_info'
-], function (Scenarios, TestUtils, VertexServiceMock, KeyBoardActionsHandler, SelectionHandler, VertexController, AppController, MindMapInfo) {
+], function (Scenarios, TestUtils, Mock, KeyBoardActionsHandler, SelectionHandler, VertexController, AppController, MindMapInfo) {
     "use strict";
     describe("keyboard_action_handler", function () {
         beforeEach(function () {
             KeyBoardActionsHandler._handleKeyboardActions();
+            Mock.applyDefaultMocks();
         });
         it("adds a child when pressing tab key", function () {
             MindMapInfo._setIsViewOnly(false);
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             SelectionHandler.setToSingleGraphElement(bubble1);
             var numberOfChild = bubble1.getNumberOfChild();
-            VertexServiceMock.addRelationAndVertexToVertex();
             TestUtils.pressKey("\t");
             expect(
                 bubble1.getNumberOfChild()
@@ -37,7 +37,6 @@ define([
                 relation1.getParentBubble().isGroupRelation()
             ).toBeFalsy();
             SelectionHandler.setToSingleGraphElement(relation1);
-            VertexServiceMock.addRelationAndVertexToVertex();
             TestUtils.pressKey("\t");
             expect(
                 relation1.getParentBubble().isGroupRelation()
@@ -80,7 +79,6 @@ define([
         });
 
         it("adds a sibling when pressing enter", function(){
-            VertexServiceMock.addRelationAndVertexToVertex();
             MindMapInfo._setIsViewOnly(false);
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             var numberOfChild = bubble1.getNumberOfChild();
@@ -119,6 +117,37 @@ define([
             expect(
                 actionSpy
             ).toHaveBeenCalled();
+        });
+        it("can toggle to public or private with shortcut key", function(){
+            var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            expect(
+                bubble1.getModel().isPublic()
+            ).toBeFalsy();
+            SelectionHandler.setToSingleGraphElement(bubble1);
+            TestUtils.pressCtrlPlusKey("P");
+            expect(
+                bubble1.getModel().isPublic()
+            ).toBeTruthy();
+        });
+        it("can apply shortcut to multiple elements", function(){
+            var scenario = new Scenarios.threeBubblesGraph();
+            var bubble1 = scenario.getBubble1InTree();
+            var bubble2 = scenario.getBubble2InTree();
+            SelectionHandler.addGraphElement(bubble1);
+            SelectionHandler.addGraphElement(bubble2);
+            expect(
+                bubble1.getModel().isPublic()
+            ).toBeFalsy();
+            expect(
+                bubble2.getModel().isPublic()
+            ).toBeFalsy();
+            TestUtils.pressCtrlPlusKey("P");
+            expect(
+                bubble1.getModel().isPublic()
+            ).toBeTruthy();
+            expect(
+                bubble2.getModel().isPublic()
+            ).toBeTruthy();
         });
     });
 });
