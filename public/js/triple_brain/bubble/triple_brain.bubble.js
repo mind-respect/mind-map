@@ -452,13 +452,16 @@ define([
             );
         };
 
-        api.Bubble.prototype.remove = function (parentVertex) {
+        api.Bubble.prototype.remove = function (parentVertex, bubbleToSelect) {
             this._removeHideOrShow("remove");
             this.removeHiddenRelationsContainer();
-            if (parentVertex) {
-                SelectionHandler.setToSingleVertex(
-                    parentVertex
+            var toSelect =  bubbleToSelect || parentVertex;
+            if(toSelect){
+                SelectionHandler.setToSingleGraphElement(
+                    toSelect
                 );
+            }
+            if (parentVertex) {
                 parentVertex.sideCenterOnScreenWithAnimation();
             }
         };

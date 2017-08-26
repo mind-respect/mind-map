@@ -216,7 +216,7 @@ define([
     }
 
     function buildAnchorForElement(element) {
-        return $("<a target='_blank'>").prop(
+        return $("<a>").prop(
             "href",
             IdUri.htmlUrlForBubbleUri(
                 element.getUri()

@@ -122,9 +122,13 @@ define([
             if (this._isRemoved()) {
                 return;
             }
+            var bubbleAbove = this.getBubbleAbove();
+            var bubbleUnder = this.getBubbleUnder();
             this.removeFromCache();
             VertexUi.VertexUi.prototype.remove.call(
-                this
+                this,
+                bubbleAbove,
+                bubbleUnder
             );
         };
         api.RelativeTreeVertex.prototype._setHasBeenCalledToRemove = function () {

@@ -43,12 +43,19 @@ define([
             return this;
         };
 
-        api.VertexUi.prototype.remove = function () {
+        api.VertexUi.prototype.remove = function (bubbleAbove, bubbleUnder) {
             var parentBubble = this._getParentBubbleToSelectAfterRemove();
+            var bubbleToSelect = parentBubble;
+            if(!bubbleAbove.isSameBubble(this)){
+                bubbleToSelect = bubbleAbove;
+            }else if(!bubbleUnder.isSameBubble(this)){
+                bubbleToSelect = bubbleUnder;
+            }
             this.removeConnectedEdges();
             Bubble.Bubble.prototype.remove.call(
                 this,
-                parentBubble
+                parentBubble,
+                bubbleToSelect
             );
         };
 

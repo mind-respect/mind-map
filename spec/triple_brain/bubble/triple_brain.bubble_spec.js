@@ -341,6 +341,59 @@ define([
                 otherRelation.hasImages()
             ).toBeFalsy();
         });
+        it("selects above sibling when available after it's removed", function () {
+            var scenario = new Scenarios.threeBubblesGraph();
+            var bubble1 = scenario.getBubble1InTree();
+            var newVertex;
+            bubble1.getController().addChild().then(function(tripleUi){
+                newVertex = tripleUi.destinationVertex();
+            });
+            expect(
+                newVertex.getBubbleAbove().text()
+            ).toBe("b2");
+            var bubble2 = scenario.getBubble2InTree();
+            SelectionHandler.setToSingleGraphElement(newVertex);
+            expect(
+                bubble2.isSelected()
+            ).toBeFalsy();
+            newVertex.remove();
+            expect(
+                bubble2.isSelected()
+            ).toBeTruthy();
+        });
+        it("selects bubble under when available after it's removed", function () {
+            var scenario = new Scenarios.threeBubblesGraph();
+            var bubble1 = scenario.getBubble1InTree();
+            var newVertex;
+            bubble1.getController().addChild().then(function(tripleUi){
+                newVertex = tripleUi.destinationVertex();
+            });
+            expect(
+                newVertex.getBubbleAbove().text()
+            ).toBe("b2");
+            var bubble2 = scenario.getBubble2InTree();
+            SelectionHandler.setToSingleGraphElement(bubble2);
+            expect(
+                newVertex.isSelected()
+            ).toBeFalsy();
+            bubble2.remove();
+            expect(
+                newVertex.isSelected()
+            ).toBeTruthy();
+        });
+        it("selects parent bubble when no siblings after it's removed", function () {
+            var scenario = new Scenarios.threeBubblesGraph();
+            var bubble1 = scenario.getBubble1InTree();
+            var bubble2 = scenario.getBubble2InTree();
+            SelectionHandler.setToSingleGraphElement(bubble2);
+            expect(
+                bubble1.isSelected()
+            ).toBeFalsy();
+            bubble2.remove();
+            expect(
+                bubble1.isSelected()
+            ).toBeTruthy();
+        });
         it("doesn't create a duplicate when moving a bubble to the center vertex", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
             var centerBubble = scenario.getCenterVertexInTree();
