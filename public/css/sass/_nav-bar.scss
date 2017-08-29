@@ -22,6 +22,7 @@ $dropDown       : false;
   .navbar-nav {
     > li {
       > a {
+        cursor:pointer;
         font-size:1.2em;
         color: $colDefault;
         &:hover,  &:focus {
@@ -87,6 +88,7 @@ $dropDown       : false;
 
 .navbar-nav .dropdown-menu a {
   font-size:1.2em;
+  cursor: pointer;
   &.icon{
     &:before {
       font-family: FontAwesome;

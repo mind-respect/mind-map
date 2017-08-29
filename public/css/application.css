@@ -33,7 +33,7 @@
 .navbar-default .navbar-brand { color: #ffffff; }
 .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus { color: #ffffff; }
 .navbar-default .navbar-text { color: #ffffff; }
-.navbar-default .navbar-nav > li > a { font-size: 1.2em; color: #ffffff; }
+.navbar-default .navbar-nav > li > a { cursor: pointer; font-size: 1.2em; color: #ffffff; }
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus { color: #ffffff; text-decoration: underline; }
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus { color: #ffffff; background-color: rgba(18, 29, 70, 0.4); }
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus { background-image: none; color: #ffffff; background-color: rgba(18, 29, 70, 0.4); }
@@ -52,7 +52,7 @@
 
 .navbar-form { margin-top: 2px; }
 
-.navbar-nav .dropdown-menu a { font-size: 1.2em; }
+.navbar-nav .dropdown-menu a { font-size: 1.2em; cursor: pointer; }
 .navbar-nav .dropdown-menu a.icon:before { font-family: FontAwesome; margin-right: 5px; }
 .navbar-nav .dropdown-menu a.view:before { content: "\f06e"; /*eye*/ }
 .navbar-nav .dropdown-menu a.create:before { content: "\f067"; /*plus*/ }
