@@ -31,7 +31,7 @@ define([
             var centerVertex = GraphElementUi.getCenterBubble();
             return bubbles.sort(function (a, b) {
                 var difference = a.calculateNumberOfParentVertices(
-                        centerVertex
+                    centerVertex
                     ) -
                     b.calculateNumberOfParentVertices(
                         centerVertex
@@ -135,6 +135,7 @@ define([
                 MoveRelation.After
             );
         };
+
         function convertTreeStructureToLeft() {
             var treeContainer = $(this);
             treeContainer.find("> .vertex-container").prependTo(treeContainer);
@@ -178,7 +179,7 @@ define([
         api.Bubble.prototype.getParentBubble = function () {
             var parentHtml = this.html.closest(".vertices-children-container")
                 .siblings(".vertex-container").find("> .bubble");
-            if(parentHtml.length === 0){
+            if (parentHtml.length === 0) {
                 return this;
             }
             return BubbleFactory.fromHtml(
@@ -234,13 +235,25 @@ define([
         };
         api.Bubble.prototype.isBubbleAChild = function (bubble) {
             return this.getChildrenContainer().find(
-                    "#" + bubble.getId()
-                ).length > 0;
+                "#" + bubble.getId()
+            ).length > 0;
         };
 
         api.Bubble.prototype.getTopMostChildBubble = function () {
             var topMostBubbleHtml = this.getChildrenBubblesHtml().filter(
                 ":first"
+            );
+            if (topMostBubbleHtml.length === 0) {
+                return this;
+            }
+            return BubbleFactory.fromHtml(
+                topMostBubbleHtml
+            );
+        };
+
+        api.Bubble.prototype.getBottomMostChildBubble = function () {
+            var topMostBubbleHtml = this.getChildrenBubblesHtml().filter(
+                ":last"
             );
             if (topMostBubbleHtml.length === 0) {
                 return this;
@@ -284,8 +297,9 @@ define([
         };
 
         api.Bubble.prototype.getBubbleAbove = function () {
-            return this._getColumnBubble(
-                api._getBubbleHtmlAbove
+            var isAbove = true;
+            return this._getColumnBubbleAboveOrUnder(
+                isAbove
             );
         };
 
@@ -333,22 +347,25 @@ define([
         };
 
         api.Bubble.prototype.getBubbleUnder = function () {
-            return this._getColumnBubble(
-                api._getBubbleHtmlUnder
+            var isAbove = false;
+            return this._getColumnBubbleAboveOrUnder(
+                isAbove
             );
         };
 
-        api.Bubble.prototype._getColumnBubble = function (surroundHtmlGetter) {
-            var surroundBubbleHtml = surroundHtmlGetter(
+        api.Bubble.prototype._getColumnBubbleAboveOrUnder = function (isAbove) {
+            var surroundBubbleHtml = isAbove ? api._getBubbleHtmlAbove(
+                this.html
+            ) : api._getBubbleHtmlUnder(
                 this.html
             );
             if (surroundBubbleHtml.length === 0) {
-                return this._getColumnBubbleInAnotherBranch(surroundHtmlGetter);
+                return this._getColumnBubbleInAnotherBranch(isAbove);
             }
             return BubbleFactory.fromHtml(surroundBubbleHtml);
         };
 
-        api.Bubble.prototype._getColumnBubbleInAnotherBranch = function (htmlGetter) {
+        api.Bubble.prototype._getColumnBubbleInAnotherBranch = function (isAbove) {
             var distance = 1,
                 parentBubble = this,
                 surroundBubble,
@@ -359,7 +376,9 @@ define([
                 if (parentBubble.isCenterBubble()) {
                     return this;
                 }
-                surroundBubbleHtml = htmlGetter(
+                surroundBubbleHtml = isAbove ? api._getBubbleHtmlAbove(
+                    parentBubble.getHtml()
+                ) : api._getBubbleHtmlUnder(
                     parentBubble.getHtml()
                 );
                 if (surroundBubbleHtml.length !== 0) {
@@ -372,16 +391,12 @@ define([
                 surroundBubbleHtml
             );
             while (distance !== 0) {
-                surroundBubble = surroundBubble.getTopMostChildBubble();
+                surroundBubble = isAbove ?
+                    surroundBubble.getBottomMostChildBubble() :
+                    surroundBubble.getTopMostChildBubble();
                 distance--;
             }
             return surroundBubble;
-        };
-
-        api.Bubble.prototype.getBubbleUnder = function () {
-            return this._getColumnBubble(
-                api._getBubbleHtmlUnder
-            );
         };
 
         api.Bubble.prototype.getTreeContainer = function () {
@@ -419,7 +434,7 @@ define([
             return !this.hasChildren();
         };
         api.Bubble.prototype.getNumberOfChild = function () {
-            return !this.getChildrenContainer().hasClass("hidden")  && this.getChildrenBubblesHtml().length;
+            return !this.getChildrenContainer().hasClass("hidden") && this.getChildrenBubblesHtml().length;
         };
         api.Bubble.prototype.getSelectorFromContainer = function (container) {
             return BubbleFactory.fromHtml(
@@ -455,8 +470,8 @@ define([
         api.Bubble.prototype.remove = function (parentVertex, bubbleToSelect) {
             this._removeHideOrShow("remove");
             this.removeHiddenRelationsContainer();
-            var toSelect =  bubbleToSelect || parentVertex;
-            if(toSelect){
+            var toSelect = bubbleToSelect || parentVertex;
+            if (toSelect) {
                 SelectionHandler.setToSingleGraphElement(
                     toSelect
                 );
@@ -478,7 +493,7 @@ define([
 
         api.Bubble.prototype.isVisible = function () {
             return !this.html.closest(
-                    ".vertex-container"
+                ".vertex-container"
                 ).hasClass("hidden") && !this.getTreeContainer().hasClass("hidden") &&
                 !this.getParentVertex().getChildrenContainer().hasClass("hidden");
         };
@@ -650,15 +665,15 @@ define([
         api.Bubble.prototype.centerOnScreenWithAnimation = function () {
             var deferred = $.Deferred();
             var centerOptions = {
-                done:deferred.resolve
+                done: deferred.resolve
             };
             var htmlToScroll = this.isGroupRelation() ? this.getHtml() : this.getHtml();
-            if(this.isCenterBubble()){
+            if (this.isCenterBubble()) {
                 htmlToScroll.centerOnScreenWithAnimation(centerOptions);
             }
-            else if(this.isToTheLeft()){
+            else if (this.isToTheLeft()) {
                 htmlToScroll.centerRightSideOfScreenWithAnimation(centerOptions);
-            }else{
+            } else {
                 htmlToScroll.centerLeftSideOfScreenWithAnimation(centerOptions);
             }
             return deferred.promise();
@@ -667,7 +682,7 @@ define([
         api.Bubble.prototype.centerOnScreenWithAnimation = function () {
             var deferred = $.Deferred();
             var centerOptions = {
-                done:deferred.resolve
+                done: deferred.resolve
             };
             this.getHtml().centerOnScreenWithAnimation(centerOptions);
         };
@@ -675,15 +690,15 @@ define([
         api.Bubble.prototype.sideCenterOnScreenWithAnimation = function () {
             var deferred = $.Deferred();
             var centerOptions = {
-                done:deferred.resolve
+                done: deferred.resolve
             };
             var htmlToScroll = this.isGroupRelation() ? this.getHtml() : this.getParentBubble().getHtml();
-            if(this.isCenterBubble()){
+            if (this.isCenterBubble()) {
                 htmlToScroll.centerOnScreenWithAnimation(centerOptions);
             }
-            else if(this.isToTheLeft()){
+            else if (this.isToTheLeft()) {
                 htmlToScroll.centerRightSideOfScreenWithAnimation(centerOptions);
-            }else{
+            } else {
                 htmlToScroll.centerLeftSideOfScreenWithAnimation(centerOptions);
             }
             return deferred.promise();
@@ -691,8 +706,8 @@ define([
 
         api.Bubble.prototype.hasDescendantsWithHiddenRelations = function () {
             return this.getChildrenContainer().find(
-                    ".hidden-properties-container .hidden-properties-content:not(.hidden)"
-                ).length > 0;
+                ".hidden-properties-container .hidden-properties-content:not(.hidden)"
+            ).length > 0;
         };
 
         api.Bubble.prototype.visitDescendants = function (visitor) {
@@ -720,7 +735,7 @@ define([
         };
 
         api.Bubble.prototype.collapse = function () {
-            this.applyToOtherInstances(function(otherInstance){
+            this.applyToOtherInstances(function (otherInstance) {
                 otherInstance.reviewInLabelButtonsVisibility();
             });
             if (!this.hasChildren()) {
@@ -744,14 +759,14 @@ define([
         };
 
         api.Bubble.prototype.beforeExpand = function () {
-            if(!this.hasVisibleHiddenRelationsContainer()) {
+            if (!this.hasVisibleHiddenRelationsContainer()) {
                 return;
             }
             this.getHiddenRelationsContainer().showLoading();
         };
 
         api.Bubble.prototype.expand = function (avoidScreenCenter, isChildExpand) {
-            if(this.hasHiddenRelationsContainer()) {
+            if (this.hasHiddenRelationsContainer()) {
                 this.getHiddenRelationsContainer().hideLoading();
             }
             avoidScreenCenter = avoidScreenCenter || false;
@@ -762,14 +777,14 @@ define([
             if (this.hasHiddenRelationsContainer()) {
                 this.getHiddenRelationsContainer().hide();
             }
-            this.applyToOtherInstances(function(otherInstance){
+            this.applyToOtherInstances(function (otherInstance) {
                 if (otherInstance.hasHiddenRelationsContainer()) {
                     otherInstance.getHiddenRelationsContainer().hide();
                 }
             });
-            this.visitDescendants(function(descendant){
+            this.visitDescendants(function (descendant) {
                 descendant.reviewInLabelButtonsVisibility();
-                descendant.applyToOtherInstances(function(){
+                descendant.applyToOtherInstances(function () {
                     descendant.reviewInLabelButtonsVisibility();
                 });
             });
@@ -781,7 +796,7 @@ define([
         };
 
         api.Bubble.prototype.buildHiddenNeighborPropertiesIndicator = function () {
-            if(this.hasHiddenRelationsContainer()){
+            if (this.hasHiddenRelationsContainer()) {
                 return;
             }
             var propertiesIndicator = PropertiesIndicator.withBubble(
@@ -840,9 +855,10 @@ define([
                 this.getBubbleUnder()
             );
         };
-        api.Bubble.prototype.isRemoved = function(){
+        api.Bubble.prototype.isRemoved = function () {
             return this.html.closest(".vertices-children-container").length === 0;
         };
+
         function selectNew(newSelectedElement) {
             SelectionHandler.setToSingleGraphElement(
                 newSelectedElement

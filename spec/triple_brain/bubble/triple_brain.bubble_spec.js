@@ -108,6 +108,29 @@ define([
             ).toBe(b2.getId());
         });
 
+        it("returns bottom bubble of above tree when getting above bubble", function () {
+            var scenario = new Scenarios.threeBubblesGraph();
+            var b1 = scenario.getBubble1InTree();
+            var b2 = scenario.getBubble2InTree();
+            var underB2;
+            b1.getController().addChild().then(function(tripleUi){
+                underB2 = tripleUi.destinationVertex();
+            });
+            b2.getController().addChild();
+            var bottomBubbleUnderB2;
+            b2.expand();
+            b2.getController().addChild().then(function(tripleUi){
+                bottomBubbleUnderB2 = tripleUi.destinationVertex();
+            });
+            underB2.getController().addChild();
+            underB2.getController().addChild();
+            var topBubbleUnderB2 = underB2.getTopMostChildBubble().getTopMostChildBubble();
+            var bubbleAbove = topBubbleUnderB2.getBubbleAbove();
+            expect(
+                bubbleAbove.isSameBubble(bottomBubbleUnderB2)
+            ).toBeTruthy();
+        });
+
         it("can get bubble below", function () {
             var b2 = new Scenarios.threeBubblesGraph().getBubble2InTree();
             var newEdge1 = TestUtils.addTriple(b2).edge(),
