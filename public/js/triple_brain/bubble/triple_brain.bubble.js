@@ -470,10 +470,11 @@ define([
         api.Bubble.prototype.remove = function (parentVertex, bubbleToSelect) {
             this._removeHideOrShow("remove");
             this.removeHiddenRelationsContainer();
-            var toSelect = bubbleToSelect || parentVertex;
-            if (toSelect) {
+            bubbleToSelect = bubbleToSelect && bubbleToSelect.getParentVertex().isSameBubble(parentVertex) ?
+                bubbleToSelect : parentVertex;
+            if(bubbleToSelect){
                 SelectionHandler.setToSingleGraphElement(
-                    toSelect
+                    bubbleToSelect
                 );
             }
             if (parentVertex) {

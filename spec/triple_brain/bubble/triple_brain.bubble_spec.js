@@ -417,6 +417,28 @@ define([
                 bubble1.isSelected()
             ).toBeTruthy();
         });
+        it("selects parent bubble when no siblings after it's removed even when there's a tree above", function () {
+            var scenario = new Scenarios.threeBubblesGraph();
+            var b1 = scenario.getBubble1InTree();
+            var b2 = scenario.getBubble2InTree();
+            var underB2;
+            b1.getController().addChild().then(function(tripleUi){
+                underB2 = tripleUi.destinationVertex();
+            });
+            b2.expand();
+            b2.getController().addChild();
+            b2.getController().addChild();
+            underB2.getController().addChild();
+            var childOfBubbleUnderB2 = underB2.getTopMostChildBubble().getTopMostChildBubble();
+            SelectionHandler.setToSingleGraphElement(childOfBubbleUnderB2);
+            expect(
+                underB2.isSelected()
+            ).toBeFalsy();
+            childOfBubbleUnderB2.remove();
+            expect(
+                underB2.isSelected()
+            ).toBeTruthy();
+        });
         it("doesn't create a duplicate when moving a bubble to the center vertex", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
             var centerBubble = scenario.getCenterVertexInTree();
