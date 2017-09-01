@@ -5,10 +5,14 @@
 define([
     'test/test-scenarios',
     'test/test-utils',
+    'test/mock',
     'triple_brain.group_relation'
-], function (Scenarios, TestUtils, GroupRelation) {
+], function (Scenarios, TestUtils, Mock, GroupRelation) {
     "use strict";
     describe("grouped_relation", function () {
+        beforeEach(function () {
+            Mock.applyDefaultMocks();
+        });
         var scenario, graph, centerVertex, possession, groupRelation;
         beforeEach(function () {
             scenario = new Scenarios.GraphWithSimilarRelationsScenario();

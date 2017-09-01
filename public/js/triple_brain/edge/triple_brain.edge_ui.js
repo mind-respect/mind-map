@@ -139,7 +139,7 @@ define([
         };
 
         api.EdgeUi.prototype.getNumberOfHiddenRelations = function () {
-            return 0;
+            return 1;
         };
 
         api.EdgeUi.prototype.getDropContainer = function () {
