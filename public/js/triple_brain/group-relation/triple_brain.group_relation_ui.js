@@ -106,7 +106,8 @@ define([
     };
 
     api.GroupRelationUi.prototype.getNumberOfHiddenRelations = function(){
-        return this.getModel().getNumberOfVerticesAtAnyDepth();
+        return this.getModel().getNumberOfVerticesAtAnyDepth() ||
+            this.getNumberOfChildEvenIfHidden();
     };
 
     api.GroupRelationUi.prototype.getGreatestGroupRelationAncestor = function () {

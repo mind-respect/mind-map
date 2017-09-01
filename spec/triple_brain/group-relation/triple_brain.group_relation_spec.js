@@ -107,6 +107,18 @@ define([
                 possessionOfBook3Relation.text()
             ).toBe("Possession of book 3");
         });
+        it("has right number of hidden relations when new", function(){
+            var bubble1 = new Scenarios.threeBubblesGraph().getCenterBubbleInTree();
+            var r1 = bubble1.getTopMostChildBubble();
+            r1.getController().addChild();
+            var groupRelation = bubble1.getTopMostChildBubble();
+            expect(
+                groupRelation.isGroupRelation()
+            ).toBeTruthy();
+            expect(
+                groupRelation.getNumberOfHiddenRelations()
+            ).toBe(2);
+        });
         xit("sets the right label for a relation duplicate", function(){
             var twoSimilarGroupRelationsScenario = new Scenarios.graphWithARelationInTwoSimilarRelationsGroup();
             var impactOnTheIndividualRelation = twoSimilarGroupRelationsScenario.getImpact3RelationInTheImpactOnTheIndividualContext();

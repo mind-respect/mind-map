@@ -436,6 +436,9 @@ define([
         api.Bubble.prototype.getNumberOfChild = function () {
             return !this.getChildrenContainer().hasClass("hidden") && this.getChildrenBubblesHtml().length;
         };
+        api.Bubble.prototype.getNumberOfChildEvenIfHidden = function () {
+            return this.getChildrenBubblesHtml().length;
+        };
         api.Bubble.prototype.getSelectorFromContainer = function (container) {
             return BubbleFactory.fromHtml(
                 container.find("> .bubble")
