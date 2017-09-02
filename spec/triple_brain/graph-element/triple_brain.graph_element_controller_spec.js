@@ -131,7 +131,7 @@ define([
                 b2.getController().collapseCanDo()
             ).toBeTruthy();
         });
-        describe("moveAbove", function(){
+        describe("moveAbove", function () {
             it("can move a vertex above a group relation", function () {
                 var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
                 var otherBubble = scenario.getOtherRelationInTree().getTopMostChildBubble();
@@ -147,7 +147,7 @@ define([
                     )
                 ).toBeTruthy();
             });
-            it("prevents from moving above self", function(){
+            it("prevents from moving above self", function () {
                 var scenario = new Scenarios.threeBubblesGraph();
                 var b2 = scenario.getBubble2InTree();
                 Command._reset();
@@ -162,8 +162,8 @@ define([
             });
         });
 
-        describe("moveUnder", function(){
-            it("prevents from moving under self", function(){
+        describe("moveUnder", function () {
+            it("prevents from moving under self", function () {
                 var scenario = new Scenarios.threeBubblesGraph();
                 var b2 = scenario.getBubble2InTree();
                 Command._reset();
@@ -176,7 +176,7 @@ define([
                     Command.canUndo()
                 ).toBeFalsy();
             });
-            it("can undo and redo a move under parent", function(){
+            it("can undo and redo a move under parent", function () {
                 var scenario = new Scenarios.threeBubblesGraph();
                 var b1 = scenario.getBubble1InTree();
                 var b2 = scenario.getBubble2InTree();
@@ -208,7 +208,7 @@ define([
                     )
                 ).toBeFalsy();
             });
-            it("can undo and redo a move under a bubble", function(){
+            it("can undo and redo a move under a bubble", function () {
                 var scenario = new Scenarios.creationDateScenario();
                 var b7 = scenario.getBubble7InTree();
                 scenario.expandBubble7(b7);
@@ -351,6 +351,16 @@ define([
             expect(
                 otherRelation.getModel().getIdentifiers().length
             ).toBe(1);
+        });
+        describe("_canMoveUnderParent", function () {
+            it("return false if already is parent", function () {
+                var scenario = new Scenarios.threeBubblesGraph();
+                var bubble1 = scenario.getBubble1InTree();
+                var bubble2 = scenario.getBubble2InTree();
+                expect(
+                    bubble2.getController()._canMoveUnderParent(bubble1)
+                ).toBe(false);
+            });
         });
     });
 });

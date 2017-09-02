@@ -317,7 +317,9 @@ define([
     };
 
     GraphElementController.prototype._canMoveUnderParent = function (parent) {
-        return this.getUi().getUri() !== parent.getUri() && !this.getUi().isBubbleAChild(parent);
+        var newParentIsNotSelf = this.getUi().getUri() !== parent.getUri();
+        var isNotAlreadyParent = !this.getUi().getParentVertex().isSameBubble(parent);
+        return newParentIsNotSelf && !this.getUi().isBubbleAChild(parent) && isNotAlreadyParent;
     };
 
     GraphElementController.prototype.moveUnderParent = function (parent) {

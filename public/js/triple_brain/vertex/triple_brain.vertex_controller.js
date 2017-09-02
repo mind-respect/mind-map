@@ -259,6 +259,7 @@ define([
             movedEdge.moveToParent(
                 this.getUi()
             );
+            this.getModel().incrementNumberOfConnectedEdges();
         }.bind(this));
     };
 

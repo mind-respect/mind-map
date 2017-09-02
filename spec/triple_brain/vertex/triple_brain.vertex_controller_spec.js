@@ -538,5 +538,25 @@ define([
                 ).toBe(3);
             });
         });
+        describe("becomeParent", function(){
+            it("increments number of child", function () {
+                var scenario = new Scenarios.threeBubblesGraph();
+                var bubble1 = scenario.getBubble1InTree();
+                var bubble2 = scenario.getBubble2InTree();
+                var newChild;
+                bubble1.getController().addChild().then(function (tripleui) {
+                    newChild = tripleui.destinationVertex();
+                });
+                bubble2.getController().moveUnderParent(newChild);
+                expect(
+                    newChild.getModel().getNumberOfConnectedEdges()
+                ).toBe(2);
+                newChild.collapse();
+                expect(
+                    newChild.getHiddenRelationsContainer().getHtml().text()
+                ).toBe("+ 1");
+            });
+
+        });
     });
 });
