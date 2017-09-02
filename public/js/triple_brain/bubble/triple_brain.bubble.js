@@ -16,7 +16,7 @@ define([
         "mr.loading-flow"
     ], function ($, EventBus, UiUtils, ImageDisplayer, GraphElementUi, GraphElementType, BubbleFactory, SelectionHandler, CenterBubble, PropertiesIndicator, LoadingFlow) {
         "use strict";
-        var api = {};
+        var api = {}
         var MoveRelation = {
             "Parent": "parent",
             "After": "after",
