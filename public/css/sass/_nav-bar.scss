@@ -163,7 +163,7 @@ $tl: 0.6s; // transition length
     & + label .search-icon {    color: white    }
   }
   &:focus {
-    transition: width $tl cubic-bezier(0,1.22,.66,1.39), border-radius $tl, background $tl;
+    transition: width $tl cubic-bezier(0,1.22,0,1.39), border-radius $tl, background $tl;
     border: none;outline: none;
     box-shadow: none;
     padding-left: 15px;
