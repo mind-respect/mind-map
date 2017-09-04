@@ -17,9 +17,6 @@ define([
     api.select = function () {
         SelectionHandler.handleButtonClick();
     };
-    api.selectCanDo = function () {
-        return !MindMapInfo.isSchemaMode();
-    };
     api.expandAllCanDo = function () {
         var canDo = false;
         GraphElementUi.visitAll(function(graphElementUi){

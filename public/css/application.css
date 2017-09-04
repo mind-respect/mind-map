@@ -73,11 +73,11 @@ body.mind-map-flow { margin-top: 50px; }
 
 .navbar-lower { background-color: transparent; box-shadow: none; }
 
-.search-box { margin-top: 6px; transition: width 0.6s, border-radius 0.6s, background 0.6s, box-shadow 0.6s; width: 40px; height: 40px; border: none; cursor: pointer; background: #ebebeb; }
+.search-box { margin-top: 6px; transition: width 0s, border-radius 0s, background 0s, box-shadow 0s; width: 40px; height: 40px; border: none; cursor: pointer; background: #ebebeb; }
 .search-box + label .search-icon { color: black; }
 .search-box:hover { color: white; background: #c8c8c8; box-shadow: 0 0 0 5px #3d4752; }
 .search-box:hover + label .search-icon { color: white; }
-.search-box:focus { transition: width 0.6s cubic-bezier(0, 1.22, 0, 1.39), border-radius 0.6s, background 0.6s; border: none; outline: none; box-shadow: none; padding-left: 15px; cursor: text; width: 300px; border-radius: auto; background: #ebebeb; color: black; }
+.search-box:focus { transition: width 0s cubic-bezier(0, 1.22, 0, 1.39), border-radius 0s, background 0s; border: none; outline: none; box-shadow: none; padding-left: 15px; cursor: text; width: 300px; border-radius: auto; background: #ebebeb; color: black; }
 .search-box:focus + label .search-icon { color: black; }
 .search-box:not(:focus) { text-indent: -5000px; }
 
