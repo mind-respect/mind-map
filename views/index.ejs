@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="/css/twitter_bootstrap/bootstrap-modal-carousel.min.css"/>
     <link rel="stylesheet" href="/css/jquery/colorbox/colorbox.css"/>
     <link rel="stylesheet" href="/css/application.css"/>
-    <link rel="stylesheet" href="/font-awesome-4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/js/bower_components/google-code-prettify/src/prettify.css"/>
     <link rel="stylesheet" href="/css/timeline.css"/>
     <!--Modules-->
@@ -231,8 +231,6 @@
                     <button data-action="zoomOut" data-icon="fa-search-minus"
                             class="graph-element-button whole-graph-button"></button>
                     <button data-action="compare" data-icon="fa-balance-scale"
-                            class="graph-element-button whole-graph-button"></button>
-                    <button data-action="select" data-icon="fa-square-o"
                             class="graph-element-button whole-graph-button"></button>
                     <button data-action="undo" data-icon="fa-undo"
                             class="app-button graph-element-button in-label-button"></button>
@@ -957,7 +955,8 @@
             <h2 class="text-center user-name-on-background"></h2>
             <div id="word-cloud">
                 <div id="word-cloud-header">
-                    <button type="button" id="remove-center-btn" class="remove btn btn-danger pull-right" data-i18n="[title]centralBubbles.removeInfo">
+                    <button type="button" id="remove-center-btn" class="remove btn btn-danger pull-right"
+                            data-i18n="[title]centralBubbles.removeInfo">
                         <i class="fa fa-trash"></i>
                     </button>
                 </div>
@@ -1004,7 +1003,6 @@
 <div class='frontier right-frontier'></div>
 <div class='frontier top-frontier'></div>
 <div class='frontier bottom-frontier'></div>
-<div id="selection-box" class='hidden'></div>
 </div>
 
 <div class="modal fade row" id="not-allowed-modal" role="dialog" aria-hidden="true">
@@ -1194,24 +1192,25 @@
                     </div>
                     <div class="form-group">
                         <label for="login-stay-connected">
-                            <input id="login-stay-connected" class="form-control checkbox" name="stayConnected" type="checkbox" checked="checked"/>
+                            <input id="login-stay-connected" class="form-control checkbox" name="stayConnected"
+                                   type="checkbox" checked="checked"/>
                             <span data-i18n="login.stay"></span>
                         </label>
                     </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <div class="col-lg-12 text-center">
-                <button type="button" class="login-button btn btn-success"
-                        data-i18n="login.login"></button>
-                <button type="button" class="forgot-password-link btn btn-primary"
-                        data-i18n="forgot_password.button"></button>
-                <button type="button" class="cancel btn btn-danger"
-                        data-i18n="cancel"></button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="col-lg-12 text-center">
+                    <button type="button" class="login-button btn btn-success"
+                            data-i18n="login.login"></button>
+                    <button type="button" class="forgot-password-link btn btn-primary"
+                            data-i18n="forgot_password.button"></button>
+                    <button type="button" class="cancel btn btn-danger"
+                            data-i18n="cancel"></button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 
 <div class="security-form-wrapper modal fade row" id="register-page-modal" role="dialog" aria-hidden="true">
@@ -1304,7 +1303,8 @@
                     </div>
                     <div class="form-group">
                         <label for="register-stay-connected">
-                            <input id="register-stay-connected" class="form-control" name="stayConnected" checked="checked" type="checkbox"/>
+                            <input id="register-stay-connected" class="form-control" name="stayConnected"
+                                   checked="checked" type="checkbox"/>
                             <span data-i18n="login.stay"></span>
                         </label>
                     </div>
@@ -1506,8 +1506,8 @@
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
         i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
         a = s.createElement(o),
             m = s.getElementsByTagName(o)[0];
         a.async = 1;

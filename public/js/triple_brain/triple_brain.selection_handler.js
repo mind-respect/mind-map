@@ -13,12 +13,9 @@ define([
     'jquery.performance'
 ], function ($, GraphUi, ScrollOnMouseFrontier, UiUtils, GraphDisplayer, EventBus, GraphElementType) {
     "use strict";
-    var api = {},
-        _selectBox,
-        SELECT_BOX_MIN_WIDTH = 45,
-        SELECT_BOX_MIN_HEIGHT = 40,
-        selectedRelations = [],
-        selectedVertices = [];
+    var api = {};
+    var selectedRelations = [];
+    var selectedVertices = [];
 
     api.selectAllVerticesOnly = function(){
         GraphUi.getDrawnGraph().detachTemp();
@@ -125,17 +122,6 @@ define([
     api.handleSelectionManagementClick = function (event) {
         event.preventDefault();
     };
-    api.handleButtonClick = function () {
-        removeSelectBoxIfExists();
-        GraphUi.getTopLayer().off(
-            "click",
-            activateSelectionOnMindMap
-        ).on(
-            "click",
-            activateSelectionOnMindMap
-        );
-        GraphUi.disableDragScroll();
-    };
 
     api.getNbSelectedVertices = function () {
         return selectedVertices.length;
@@ -177,39 +163,6 @@ define([
             html.centerOnScreenWithAnimation();
         }
     }
-    function activateSelectionOnMindMap(event) {
-        $(this).off(
-            event
-        );
-        getSelectBox().removeClass("hidden").css(
-            "width", SELECT_BOX_MIN_WIDTH
-        ).css(
-            "height", SELECT_BOX_MIN_WIDTH
-        ).css(
-            "left", event.pageX - SELECT_BOX_MIN_WIDTH / 2
-        ).css(
-            "top", event.pageY - SELECT_BOX_MIN_HEIGHT / 2
-        ).resizable({
-                handles: "ne, se, sw, nw",
-                containment: "document",
-                stop : function () {
-                    ScrollOnMouseFrontier.disable();
-                    api.removeAll();
-                    GraphDisplayer.getVertexSelector().visitAllVertices(function (vertex) {
-                        if (UiUtils.doComponentsCollide(
-                            vertex.getHtml(),
-                            getSelectBox()
-                        )) {
-                            api.addVertex(vertex);
-                        }
-                    });
-                    removeSelectBoxIfExists();
-                    api.reflectSelectionChange();
-                    GraphUi.enableDragScroll();
-                }
-            }
-        );
-    }
 
     function deselectAll() {
         api.getSelectedElements().forEach(function(graphElement){
@@ -228,16 +181,5 @@ define([
                 return;
             }
         }
-    }
-
-    function removeSelectBoxIfExists() {
-        getSelectBox().addClass("hidden");
-    }
-
-    function getSelectBox() {
-        if (!_selectBox) {
-            _selectBox = $("#selection-box");
-        }
-        return _selectBox;
     }
 });
