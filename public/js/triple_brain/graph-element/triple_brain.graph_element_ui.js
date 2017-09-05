@@ -713,6 +713,9 @@ define([
                 this.getModel().getLabel()
             );
         }
+        if (this.isCenterBubble()) {
+            $("title").text(this.getTextOrDefault());
+        }
         this.leaveEditMode();
         this.getLabel().maxChar();
         this.getHtml().centerOnScreen();
