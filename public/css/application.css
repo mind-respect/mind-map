@@ -52,6 +52,8 @@
 
 .navbar-form { margin-top: 2px; }
 
+.logo-navbar { height: 220%; margin-top: -5px; width: auto; }
+
 .navbar-nav .dropdown-menu a { font-size: 1.2em; cursor: pointer; }
 .navbar-nav .dropdown-menu a.icon:before { font-family: FontAwesome; margin-right: 5px; }
 .navbar-nav .dropdown-menu a.view:before { content: "\f06e"; /*eye*/ }
