@@ -52,7 +52,7 @@ define([
             var centralBubble = BubbleFactory.getGraphElementFromUri(
                 centralBubbleUri
             );
-            $("title").text(centralBubble.getTextOrDefault());
+            document.title = centralBubble.getTextOrDefault();
             if(MindMapInfo.isViewOnly()){
                 GraphUi.getDrawnGraph().find(".bubble").addClass("not-editable");
             }

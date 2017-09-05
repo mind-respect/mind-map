@@ -714,7 +714,7 @@ define([
             );
         }
         if (this.isCenterBubble()) {
-            $("title").text(this.getTextOrDefault());
+            document.title = this.getTextOrDefault();
         }
         this.leaveEditMode();
         this.getLabel().maxChar();
