@@ -34,6 +34,8 @@ define([
                         noFilter: true
                     })
                 ]
+            }).click(function(){
+                $(this).val("");
             });
         }
 
