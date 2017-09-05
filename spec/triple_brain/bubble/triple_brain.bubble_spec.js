@@ -840,5 +840,53 @@ define([
                 ).toBeTruthy();
             });
         });
+        describe("travelRight", function(){
+            it("prevents from selecting child bubble after it's hidden using collapse", function(){
+                var scenario = new Scenarios.threeBubblesGraph();
+                var b2 = scenario.getBubble2InTree();
+                scenario.expandBubble2(b2);
+                SelectionHandler.setToSingleGraphElement(b2);
+                expect(
+                    b2.isSelected()
+                ).toBeTruthy();
+                b2.travelRight();
+                expect(
+                    b2.isSelected()
+                ).toBeFalsy();
+                b2.collapse();
+                SelectionHandler.setToSingleGraphElement(b2);
+                expect(
+                    b2.isSelected()
+                ).toBeTruthy();
+                b2.travelRight();
+                expect(
+                    b2.isSelected()
+                ).toBeTruthy();
+            });
+        });
+        describe("travelLeft", function(){
+            it("prevents from selecting child bubble after it's hidden using collapse", function(){
+                var scenario = new Scenarios.threeBubblesGraph();
+                var b3 = scenario.getBubble3InTree();
+                scenario.expandBubble3(b3);
+                SelectionHandler.setToSingleGraphElement(b3);
+                expect(
+                    b3.isSelected()
+                ).toBeTruthy();
+                b3.travelLeft();
+                expect(
+                    b3.isSelected()
+                ).toBeFalsy();
+                b3.collapse();
+                SelectionHandler.setToSingleGraphElement(b3);
+                expect(
+                    b3.isSelected()
+                ).toBeTruthy();
+                b3.travelLeft();
+                expect(
+                    b3.isSelected()
+                ).toBeTruthy();
+            });
+        });
     });
 });

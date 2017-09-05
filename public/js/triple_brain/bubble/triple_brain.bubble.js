@@ -240,6 +240,9 @@ define([
         };
 
         api.Bubble.prototype.getTopMostChildBubble = function () {
+            if(!this.hasChildren()){
+                return this;
+            }
             var topMostBubbleHtml = this.getChildrenBubblesHtml().filter(
                 ":first"
             );
