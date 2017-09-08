@@ -1,4 +1,5 @@
 {
+  "locale": "en",
   "loading": "Loading...",
   "modal": {
     "close": "Close"
@@ -285,6 +286,11 @@
       "and": "and"
     }
   },
+
+  "meta": {
+    "description": "Agile note-taking for an evolving mind."
+  },
+
   "selection": {
     "group": "group"
   },

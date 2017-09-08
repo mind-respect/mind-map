@@ -1,8 +1,10 @@
 {
+  "locale": "fr",
   "loading": "Chargement...",
   "modal": {
     "close": "Fermer"
   },
+
   "compare_flow": {
     "title": "Mode comparaison",
     "with_user": "avec",
@@ -286,6 +288,11 @@
       "and": "et"
     }
   },
+
+  "meta": {
+    "description": "Prise de notes agile, pour un esprit en évolution."
+  },
+
   "selection": {
     "group": "grouper"
   },
