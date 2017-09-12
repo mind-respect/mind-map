@@ -570,23 +570,70 @@ define([
                 b1.hasDescendantsWithHiddenRelations()
             ).toBeFalsy();
         });
-        it("displays the hidden relations container after collapse", function () {
-            var scenario = new Scenarios.threeBubblesGraph();
-            var b2 = scenario.getBubble2InTree();
-            expect(
-                b2.getHiddenRelationsContainer().isVisible()
-            ).toBeTruthy();
-            GraphServiceMock.getForCentralBubbleUri(
-                scenario.getSubGraphForB2()
-            );
-            b2.getHiddenRelationsContainer().getHtml().click();
-            expect(
-                b2.getHiddenRelationsContainer().isVisible()
-            ).toBeFalsy();
-            b2.collapse();
-            expect(
-                b2.getHiddenRelationsContainer().isVisible()
-            ).toBeTruthy();
+        describe("collapse", function(){
+            it("displays the hidden relations container after collapse", function () {
+                var scenario = new Scenarios.threeBubblesGraph();
+                var b2 = scenario.getBubble2InTree();
+                expect(
+                    b2.getHiddenRelationsContainer().isVisible()
+                ).toBeTruthy();
+                GraphServiceMock.getForCentralBubbleUri(
+                    scenario.getSubGraphForB2()
+                );
+                b2.getHiddenRelationsContainer().getHtml().click();
+                expect(
+                    b2.getHiddenRelationsContainer().isVisible()
+                ).toBeFalsy();
+                b2.collapse();
+                expect(
+                    b2.getHiddenRelationsContainer().isVisible()
+                ).toBeTruthy();
+            });
+            it("collapses child vertices for central vertex", function () {
+                var scenario = new Scenarios.threeBubblesGraph();
+                var b1 = scenario.getBubble1InTree();
+                var b2 = scenario.getBubble2InTree();
+                scenario.expandBubble2(b2);
+                expect(
+                    b2.isExpanded()
+                ).toBeTruthy();
+                expect(
+                    b1.getNumberOfChild()
+                ).toBe(2);
+                b1.collapse();
+                expect(
+                    b1.getNumberOfChild()
+                ).toBe(2);
+                expect(
+                    b2.isExpanded()
+                ).toBeFalsy();
+            });
+            it("collapses child group relations for central vertex", function () {
+                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+                var centerBubble = scenario.getCenterVertexInTree();
+                var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+                groupRelation.expand();
+                expect(
+                    groupRelation.isExpanded()
+                ).toBeTruthy();
+                centerBubble.collapse();
+                expect(
+                    groupRelation.isExpanded()
+                ).toBeFalsy();
+            });
+        });
+        describe("hasAnExpandedChild", function(){
+            it("returns false for a child that has no hidden relations container and no child", function(){
+                var scenario = new Scenarios.threeBubblesGraph();
+                var b1 = scenario.getBubble1InTree();
+                expect(
+                    b1.hasAnExpandedChild()
+                ).toBeFalsy();
+                b1.getController().addChild();
+                expect(
+                    b1.hasAnExpandedChild()
+                ).toBeFalsy();
+            });
         });
         it("hides the collapse button right away after collapse and shows the expand button", function () {
             loadFixtures('graph-element-menu.html');

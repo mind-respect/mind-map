@@ -221,8 +221,9 @@ define([
     };
 
     GraphElementController.prototype.collapseCanDo = function () {
-        return this.isSingle() && !this.getUi().isCenterBubble() && (
-            !this.getUi().isALeaf() && !this.getUi().isCollapsed()
+        return this.isSingle() && (
+            (!this.getUi().isCenterBubble() && !this.getUi().isALeaf() && !this.getUi().isCollapsed()) ||
+            (this.getUi().isCenterBubble() && this.getUi().hasAnExpandedChild())
         );
     };
 
@@ -507,6 +508,16 @@ define([
     };
     GraphElementController.prototype.isOwned = function () {
         return !MindMapInfo.isViewOnly();
+    };
+
+    GraphElementController.prototype.deselect = function () {
+        if(this.isMultiple() || this.getUi().isCenterBubble()){
+            SelectionHandler.removeAll();
+            return;
+        }
+        SelectionHandler.setToSingleGraphElement(
+            this.getUi().getParentBubble()
+        );
     };
 
     setUpCancelButton();
