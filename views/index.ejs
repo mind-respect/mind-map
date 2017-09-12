@@ -956,9 +956,13 @@
             <h2 class="text-center user-name-on-background"></h2>
             <div id="word-cloud">
                 <div id="word-cloud-header">
-                    <button type="button" id="remove-center-btn" class="remove btn btn-danger pull-right"
+                    <button type="button" id="remove-center-btn" class="owner-only remove hidden btn btn-danger pull-right"
                             data-i18n="[title]centralBubbles.removeInfo">
                         <i class="fa fa-trash"></i>
+                    </button>
+                    <button type="button" id="create-bubble-btn" class="owner-only hidden create btn btn-info pull-right"
+                            data-i18n="[title]centralBubbles.createInfo">
+                        <i class="fa fa-plus-circle"></i>
                     </button>
                 </div>
                 <table id="word-cloud-table"></table>

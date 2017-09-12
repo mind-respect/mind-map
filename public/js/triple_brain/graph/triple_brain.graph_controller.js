@@ -7,11 +7,16 @@ define([
     "triple_brain.selection_handler",
     "triple_brain.mind_map_info",
     "triple_brain.graph_ui",
+    "triple_brain.graph_displayer",
     "triple_brain.vertex_ui",
+    "triple_brain.vertex",
     "triple_brain.graph_element_ui",
     "triple_brain.group_relation_ui",
-    "triple_brain.compare_flow"
-], function ($, SelectionHandler, MindMapInfo, GraphUi, VertexUi, GraphElementUi, GroupRelationUi, CompareFlow) {
+    "triple_brain.compare_flow",
+    "triple_brain.vertex_service",
+    "triple_brain.id_uri"
+
+], function ($, SelectionHandler, MindMapInfo, GraphUi, GraphDisplayer, VertexUi, Vertex, GraphElementUi, GroupRelationUi, CompareFlow, VertexService, IdUri) {
     "use strict";
     var api = {};
     api.select = function () {
@@ -34,6 +39,22 @@ define([
     api.compare = function () {
         CompareFlow.enter();
     };
+
+    api.createVertex = function () {
+        VertexService.createVertex(function (newVertex) {
+            var serverFormatFacade = Vertex.fromServerFormat(
+                newVertex
+            );
+            if (MindMapInfo.isTagCloudFlow() || MindMapInfo.isAuthenticatedLandingPageFlow()) {
+                window.location = IdUri.htmlUrlForBubbleUri(serverFormatFacade.getUri());
+                return;
+            }
+            GraphDisplayer.displayUsingCentralBubbleUri(
+                serverFormatFacade.getUri()
+            );
+        });
+    };
+
     api.zoomIn = function () {
         GraphUi.zoom(
             0.1

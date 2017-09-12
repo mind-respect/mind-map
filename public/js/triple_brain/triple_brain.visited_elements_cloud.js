@@ -9,9 +9,12 @@ define([
     "mr.ask_modal",
     "triple_brain.center_graph_element_service",
     "triple_brain.event_bus",
+    "triple_brain.graph_controller",
+    "triple_brain.user_service",
     "bootstrap-table",
     "jquery.i18next"
-], function ($, IdUri, AskModal, CenterGraphElementService, EventBus) {
+
+], function ($, IdUri, AskModal, CenterGraphElementService, EventBus, GraphController, UserService) {
     "use strict";
     var NUMBER_OF_VISIT_RANKS = 3,
         _elements,
@@ -27,6 +30,8 @@ define([
             buildHtml();
             setTitle();
             handleRemoveCenterBtnClick();
+            handleCreateNewConceptButton();
+            hideElementsForOwnerOnlyIfApplicable();
             EventBus.subscribe("localized-text-loaded", function(){
                 $(".fixed-table-toolbar .search input").attr(
                     "data-i18n",
@@ -234,6 +239,12 @@ define([
         );
     }
 
+    function hideElementsForOwnerOnlyIfApplicable() {
+         if (IdUri.currentUsernameInUrl() === UserService.authenticatedUserInCache().user_name) {
+           $(".owner-only").removeClass("hidden");
+         }
+    }
+
     function defineNumberVisitsRank() {
         _elements.sort(function (a, b) {
             return a.getNumberOfVisits() > b.getNumberOfVisits() ?
@@ -264,6 +275,21 @@ define([
             "click",
             removeCenterBtnClick
         );
+    }
+
+    function handleCreateNewConceptButton() {
+        $("#create-bubble-btn").off(
+            "click",
+            createNewConcept
+        ).on(
+            "click",
+            createNewConcept
+        );
+    }
+
+    function createNewConcept(event) {
+        event.preventDefault();
+        GraphController.createVertex();
     }
 
     function removeCenterBtnClick() {

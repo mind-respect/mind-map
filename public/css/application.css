@@ -561,7 +561,7 @@ button.inactive i { color: red; }
 #word-cloud-container h2.user-name-on-background { font-weight: bold; font-size: 2rem; color: white; }
 
 #word-cloud { margin-top: 7%; text-align: left; padding: 1em; }
-#word-cloud button.remove { margin-top: 10px; margin-left: 10px; }
+#word-cloud button.remove, #word-cloud button.create { margin-top: 10px; margin-left: 10px; }
 #word-cloud table { font-size: 30px; table-layout: fixed; word-wrap: break-word; }
 #word-cloud table, #word-cloud table * { cursor: pointer; }
 #word-cloud .last-visit { width: 10%; }

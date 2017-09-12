@@ -360,6 +360,7 @@
     "context": "Bubbles around",
     "lastVisit": "Visit",
     "nbVisits": "#",
+    "createInfo": "Create a new bubble",
     "removeInfo": "Remove from this list (does not remove the bubble)",
     "filter": "Filter",
     "confirmRemove": {

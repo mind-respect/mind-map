@@ -362,6 +362,7 @@
     "context": "Bulles autour",
     "lastVisit": "Visite",
     "nbVisits": "#",
+    "createInfo": "Créer une nouvelle bulle",
     "removeInfo": "Supprimer de cette liste (n'efface pas la bulle)",
     "filter": "Filtrer",
     "confirmRemove": {

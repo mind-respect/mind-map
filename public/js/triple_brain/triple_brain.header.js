@@ -10,16 +10,15 @@ define([
         "triple_brain.selection_handler",
         "triple_brain.user_service",
         "triple_brain.graph_displayer",
-        "triple_brain.vertex",
-        "triple_brain.vertex_service",
         "triple_brain.mind_map_info",
         "triple_brain.event_bus",
         "triple_brain.schema_service",
         "triple_brain.id_uri",
         "triple_brain.language_manager",
-        "triple_brain.graph_element_ui"
+        "triple_brain.graph_element_ui",
+        "triple_brain.graph_controller"
     ],
-    function ($, BigSearchBox, LoginHandler, RegisterHandler, SelectionHandler, UserService, GraphDisplayer, Vertex, VertexService, MindMapInfo, EventBus, SchemaService, IdUri, LanguageManager, GraphElementUi) {
+    function ($, BigSearchBox, LoginHandler, RegisterHandler, SelectionHandler, UserService, GraphDisplayer, MindMapInfo, EventBus, SchemaService, IdUri, LanguageManager, GraphElementUi, GraphController) {
         "use strict";
         var api = {};
         api.earlyInit = function () {
@@ -195,18 +194,7 @@ define([
 
         function createNewConcept(event) {
             event.preventDefault();
-            VertexService.createVertex(function (newVertex) {
-                var serverFormatFacade = Vertex.fromServerFormat(
-                    newVertex
-                );
-                if (MindMapInfo.isTagCloudFlow() || MindMapInfo.isAuthenticatedLandingPageFlow()) {
-                    window.location = IdUri.htmlUrlForBubbleUri(serverFormatFacade.getUri());
-                    return;
-                }
-                GraphDisplayer.displayUsingCentralBubbleUri(
-                    serverFormatFacade.getUri()
-                );
-            });
+            GraphController.createVertex();
         }
 
         function setUpShareLinkButton() {
