@@ -98,7 +98,7 @@ define([
         var feature = actionSet[event.which];
         if (feature === undefined) {
             var isPasting = event.ctrlKey && vKeyNumber && event.which;
-            if (!isPasting && event.which !== ctrlKeyNumber && !MindMapInfo.isViewOnly() && SelectionHandler.isOnlyASingleElementSelected()) {
+                if (!isPasting && event.which !== ctrlKeyNumber && !MindMapInfo.isViewOnly() && SelectionHandler.isOnlyASingleElementSelected()) {
                 var selectedElement = SelectionHandler.getSingleElement();
                 if(selectedElement.isLabelEditable()){
                     selectedElement.focus();

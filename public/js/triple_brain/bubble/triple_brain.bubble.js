@@ -452,6 +452,23 @@ define([
             return !this.hasVisibleHiddenRelationsContainer();
         };
 
+        api.Bubble.prototype.hasAnExpandedChild = function () {
+            var hasAnExpandedChild = false;
+            this.visitClosestChildVertices(function(vertexUi){
+                if(vertexUi.getNumberOfChild() > 0){
+                    hasAnExpandedChild = true;
+                }
+            });
+            this.visitAllImmediateChild(function(child){
+                if(child.isGroupRelation()){
+                    if(child.getNumberOfChild() > 0){
+                        hasAnExpandedChild = true;
+                    }
+                }
+            });
+            return hasAnExpandedChild;
+        };
+
         api.Bubble.prototype.hasHiddenRelationsContainer = function () {
             return undefined !== this.getHiddenRelationsContainer();
         };
@@ -748,13 +765,20 @@ define([
             if (!this.hasChildren()) {
                 return;
             }
-            this.getChildrenContainer().addClass(
-                "hidden"
-            );
-            this.showHiddenRelationsContainer();
+            if(!this.isCenterBubble()){
+                this.getChildrenContainer().addClass(
+                    "hidden"
+                );
+                this.showHiddenRelationsContainer();
+            }
             this.reviewMenuButtonsVisibility();
             this.visitClosestChildVertices(function (child) {
                 child.collapse();
+            });
+            this.visitAllImmediateChild(function(child){
+                if(child.isGroupRelation()){
+                    child.collapse();
+                }
             });
             this.centerOnScreenWithAnimation();
         };
