@@ -159,6 +159,9 @@ define([
         actions[enterKeyCode] = {
             action: "addSibling"
         };
+        actions[escapeKeyNumber] = {
+            action: "deselect"
+        };
         return actions;
     }
 

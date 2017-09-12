@@ -510,6 +510,16 @@ define([
         return !MindMapInfo.isViewOnly();
     };
 
+    GraphElementController.prototype.deselect = function () {
+        if(this.isMultiple() || this.getUi().isCenterBubble()){
+            SelectionHandler.removeAll();
+            return;
+        }
+        SelectionHandler.setToSingleGraphElement(
+            this.getUi().getParentBubble()
+        );
+    };
+
     setUpCancelButton();
     initNoteModal();
 

@@ -14,9 +14,6 @@ define([
 ], function ($, SelectionHandler, MindMapInfo, GraphUi, VertexUi, GraphElementUi, GroupRelationUi, CompareFlow) {
     "use strict";
     var api = {};
-    api.select = function () {
-        SelectionHandler.handleButtonClick();
-    };
     api.expandAllCanDo = function () {
         var canDo = false;
         GraphElementUi.visitAll(function(graphElementUi){

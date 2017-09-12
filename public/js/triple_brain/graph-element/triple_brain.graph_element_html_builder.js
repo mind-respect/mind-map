@@ -18,6 +18,7 @@ define([
 ], function ($, EventBus, BubbleFactory, SuggestionService, FriendlyResourceService, GraphElementService, SelectionHandler, GraphUi, GraphElementMainMenu, GraphElementUi, EdgeService, MindMapInfo) {
     "use strict";
     var enterKeyCode = 13,
+        escapeKeyCode = 27,
         api = {};
     api.completeBuild = function(graphElementUi){
         graphElementUi.applyToOtherInstances(function (otherInstance) {
@@ -53,7 +54,7 @@ define([
                 );
             }
         }).keydown(function (event) {
-            if (enterKeyCode === event.which) {
+            if ([enterKeyCode, escapeKeyCode].indexOf(event.which) !== -1) {
                 if (!GraphUi.hasSelectedFromAutocomplete()) {
                     event.preventDefault();
                     $(this).blur();
