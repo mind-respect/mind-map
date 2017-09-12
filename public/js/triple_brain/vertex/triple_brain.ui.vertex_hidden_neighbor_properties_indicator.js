@@ -7,9 +7,10 @@ define([
         "triple_brain.mind-map_template",
         "triple_brain.event_bus",
         "triple_brain.graph_displayer",
-        "triple_brain.bubble_factory"
+        "triple_brain.bubble_factory",
+        "triple_brain.ui_utils"
     ],
-    function ($, MindMapTemplate, EventBus, GraphDisplayer, BubbleFactory) {
+    function ($, MindMapTemplate, EventBus, GraphDisplayer, BubbleFactory, UiUtils) {
         "use strict";
         var api = {};
         api.withBubble = function (bubble) {
@@ -22,6 +23,7 @@ define([
             hiddenNeighborPropertiesIndicator.hiddenNeighborPropertiesContainer = html;
             return hiddenNeighborPropertiesIndicator;
         };
+
         function HiddenNeighborPropertiesIndicator(bubble) {
             this.bubble = bubble;
         }
@@ -33,12 +35,13 @@ define([
                     'hidden_property_container'
                     ].merge()
             ).data("vertex", this.bubble);
+            var title = $.i18n.translate(
+                UiUtils.isMacintosh() ? "hidden_properties_tooltip_forMac" : "hidden_properties_tooltip"
+            );
             var div = $("<div class='hidden-properties-content'>").append(
                 this.buildContent()
-            ).attr(
-                "title",
-                $.i18n.translate("hidden_properties_tooltip")
-            ).popoverLikeToolTip();
+            ).attr("title", title).popoverLikeToolTip();
+
             this.hiddenNeighborPropertiesContainer.append(
                 div
             );
@@ -55,7 +58,7 @@ define([
             );
         };
 
-        HiddenNeighborPropertiesIndicator.prototype.buildContent = function(){
+        HiddenNeighborPropertiesIndicator.prototype.buildContent = function () {
             var isLeftOriented = this.bubble.isToTheLeft();
             var plusSign = "+";
             var numberOfHiddenRelations = this.bubble.getNumberOfHiddenRelations();
@@ -63,7 +66,7 @@ define([
                 " " + (isLeftOriented ? plusSign : numberOfHiddenRelations);
         };
 
-        HiddenNeighborPropertiesIndicator.prototype._updateContent = function(){
+        HiddenNeighborPropertiesIndicator.prototype._updateContent = function () {
             this._getContent().text(
                 this.buildContent()
             );
@@ -110,11 +113,11 @@ define([
         };
 
 
-        HiddenNeighborPropertiesIndicator.prototype._getContent = function(){
+        HiddenNeighborPropertiesIndicator.prototype._getContent = function () {
             return this.getHtml().find(".hidden-properties-content");
         };
 
-        HiddenNeighborPropertiesIndicator.prototype._getLoading = function(){
+        HiddenNeighborPropertiesIndicator.prototype._getLoading = function () {
             return this.hiddenNeighborPropertiesContainer.find(".loading");
         };
 

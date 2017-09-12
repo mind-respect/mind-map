@@ -69,10 +69,18 @@ define([
             "data-action"
         );
     };
+    GraphElementButton.prototype.getCombinedKeyShortcut = function () {
+        return this.html.attr(
+            "data-combinedShortcut"
+        );
+    };
     GraphElementButton.prototype.getIconClass = function () {
         return this.html.attr(
             "data-icon"
         );
+    };
+    GraphElementButton.prototype.hasCombinedKeyShortcut = function () {
+        return this.getCombinedKeyShortcut() !== undefined;
     };
     GraphElementButton.prototype.cloneInto = function (container) {
         //avoiding copy behavior because it breaks bootstrap tooltip

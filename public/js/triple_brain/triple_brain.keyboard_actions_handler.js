@@ -11,30 +11,34 @@ define([
     "triple_brain.ui_utils",
     "mr.app_controller"
 ], function ($, EventBus, SelectionHandler, MindMapInfo, GraphElementMainMenu, UiUtils, AppController) {
+
     "use strict";
+
     var api = {},
-        tabKeyNumber = 9,
-        leftArrowKeyNumber = 37,
-        rightArrowKeyNumber = 39,
-        upArrowKeyNumber = 38,
-        downArrowKeyNumber = 40,
-        gArrowKeyNumber = 71,
-        deleteKeyNumber = 8,
-        escapeKeyNumber = 27,
-        enterKeyCode = 13,
-        dKeyNumber = 68,
-        eKeyNumber = 69,
-        hKeyNumber = 72,
-        pKeyNumber = 80,
-        sKeyNumber = 83,
-        zeroKeyNumber = 48,
-        rKeyNumber = 82,
-        xKeyNumber = 88,
-        vKeyNumber = 86,
-        yKeyNumber = 89,
-        zKeyNumber = 90,
-        nonCtrlPlusActions = defineNonCtrlPlusKeysAndTheirActions(),
-        ctrlPlusActions = defineCtrlPlusKeysAndTheirActions();
+    tabKeyNumber = 9,
+    leftArrowKeyNumber = 37,
+    rightArrowKeyNumber = 39,
+    upArrowKeyNumber = 38,
+    downArrowKeyNumber = 40,
+    gArrowKeyNumber = 71,
+    deleteKeyNumber = 8,
+    escapeKeyNumber = 27,
+    enterKeyCode = 13,
+    dKeyNumber = 68,
+    eKeyNumber = 69,
+    hKeyNumber = 72,
+    iKeyNumber = 73,
+    pKeyNumber = 80,
+    sKeyNumber = 83,
+    zeroKeyNumber = 48,
+    xKeyNumber = 88,
+    vKeyNumber = 86,
+    yKeyNumber = 89,
+    zKeyNumber = 90,
+    plusKeyNumber = 187,
+    minusKeyNumber = 189,
+    nonCtrlPlusActions = defineNonCtrlPlusKeysAndTheirActions(),
+    ctrlPlusActions = defineCtrlPlusKeysAndTheirActions();
 
     api._ctrlKeyNumber = UiUtils.isMacintosh() ? 91 : 17;
 
@@ -182,7 +186,7 @@ define([
         actions[sKeyNumber] = {
             action: "suggestions"
         };
-        actions[rKeyNumber] = {
+        actions[iKeyNumber] = {
             action: "reverse"
         };
         actions[dKeyNumber] = {
@@ -207,6 +211,12 @@ define([
         };
         actions[pKeyNumber] = {
             action: "togglePublicPrivate"
+        };
+        actions[plusKeyNumber] = {
+            action: "zoomIn"
+        };
+        actions[minusKeyNumber] = {
+            action: "zoomOut"
         };
         return actions;
     }

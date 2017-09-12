@@ -9,10 +9,11 @@ define([
         "triple_brain.selection_handler",
         "triple_brain.graph_element_button",
         "triple_brain.mind_map_info",
+        "triple_brain.ui_utils",
         "mr.app_controller",
         "jquery.i18next",
         "bootstrap"
-    ], function ($, GraphDisplayer, EventBus, SelectionHandler, GraphElementButton, MindMapInfo, AppController) {
+    ], function ($, GraphDisplayer, EventBus, SelectionHandler, GraphElementButton, MindMapInfo, UiUtils, AppController) {
         "use strict";
         var api = {},
             _menu;
@@ -52,9 +53,14 @@ define([
                 }
 
                 function setTitle(button) {
+                    var title = $.i18n.translate("menu-button." + button.getAction());
+
+                    if (button.hasCombinedKeyShortcut()) {
+                        title += UiUtils.isMacintosh() ? " (⌘" : " (ctrl+";
+                        title += button.getCombinedKeyShortcut() + ")";
+                    }
                     button.getHtml().attr(
-                        "title",
-                        $.i18n.translate("menu-button." + button.getAction())
+                        "title", title
                     );
                 }
             }
