@@ -1,4 +1,5 @@
 {
+  "locale": "en",
   "loading": "Loading...",
   "modal": {
     "close": "Close"
@@ -188,7 +189,7 @@
     "select": "select"
   },
   "left_menu": {
-    "search": "Nouveau centre"
+    "search": "Search for bubbles"
   },
   "edge": {
     "default": "relate"
@@ -285,6 +286,11 @@
       "and": "and"
     }
   },
+
+  "meta": {
+    "description": "Agile note-taking for an evolving mind."
+  },
+
   "selection": {
     "group": "group"
   },

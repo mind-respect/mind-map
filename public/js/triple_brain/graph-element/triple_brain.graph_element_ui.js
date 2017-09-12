@@ -713,6 +713,9 @@ define([
                 this.getModel().getLabel()
             );
         }
+        if (this.isCenterBubble()) {
+            document.title = this.getTextOrDefault();
+        }
         this.leaveEditMode();
         this.getLabel().maxChar();
         this.getHtml().centerOnScreen();

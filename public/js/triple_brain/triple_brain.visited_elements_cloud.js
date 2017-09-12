@@ -228,6 +228,7 @@ define([
     }
 
     function setTitle() {
+        document.title = IdUri.currentUsernameInUrl();
         _container.siblings("h2").text(
             IdUri.currentUsernameInUrl()
         );
