@@ -23,11 +23,13 @@ define([
         "triple_brain.graph_displayer_factory",
         'triple_brain.graph_displayer_as_tree_common',
         "triple_brain.event_bus",
+        "triple_brain.keyboard_actions_handler",
         "triple_brain.suggestion",
         "triple_brain.identification",
         "triple_brain.friendly_resource",
         "triple_brain.id_uri",
         "triple_brain.language_manager",
+        "triple_brain.ui_utils",
         "text!locales/en/translation.json",
         "triple_brain.user_map_autocomplete_provider",
         "mr.meta_graph",
@@ -41,8 +43,12 @@ define([
          */
         "test/vendor/jasmine-jquery"
     ],
-    function ($, TestScenarioData, Vertex, Edge, Schema, VertexUiBuilder, EdgeUiBuilder, GroupRelationUiBuilder, SuggestionUiBuilder, SuggestionRelationUiBuilder, SchemaUiBuilder, PropertyUiBuilder, GraphDisplayerAsRelativeTree, Mock, TestUtils, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, EventBus, Suggestion, Identification, FriendlyResource, IdUri, LanguageManager, enTranslation, UserMapAutocompleteProvider, MetaGraph, MetaGraphUi, GraphElementType, SubGraph) {
+    function ($, TestScenarioData, Vertex, Edge, Schema, VertexUiBuilder, EdgeUiBuilder, GroupRelationUiBuilder, SuggestionUiBuilder, SuggestionRelationUiBuilder, SchemaUiBuilder, PropertyUiBuilder, GraphDisplayerAsRelativeTree, Mock, TestUtils, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, EventBus, KeyboardActionsHandler, Suggestion, Identification, FriendlyResource, IdUri, LanguageManager, UiUtils, enTranslation, UserMapAutocompleteProvider, MetaGraph, MetaGraphUi, GraphElementType, SubGraph) {
         "use strict";
+        KeyboardActionsHandler._ctrlKeyNumber = 17;
+        UiUtils.isMacintosh = function () {
+            return false;
+        };
         var api = {},
             testData = JSON.parse(TestScenarioData);
         $.i18n.init({

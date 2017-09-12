@@ -22,6 +22,10 @@ define(
             });
         };
 
+        api.isMacintosh = function () {
+            return navigator.platform.indexOf('Mac') > -1;
+        };
+
         api.positionLeft = function(componentToPosition, staticComponent){
             var horizontalBuffer = 16;
             var componentOffset = Point.fromCoordinates(

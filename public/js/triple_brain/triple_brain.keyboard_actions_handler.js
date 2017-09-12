@@ -8,8 +8,9 @@ define([
     "triple_brain.selection_handler",
     "triple_brain.mind_map_info",
     "triple_brain.graph_element_main_menu",
+    "triple_brain.ui_utils",
     "mr.app_controller"
-], function ($, EventBus, SelectionHandler, MindMapInfo, GraphElementMainMenu, AppController) {
+], function ($, EventBus, SelectionHandler, MindMapInfo, GraphElementMainMenu, UiUtils, AppController) {
     "use strict";
     var api = {},
         tabKeyNumber = 9,
@@ -18,7 +19,7 @@ define([
         upArrowKeyNumber = 38,
         downArrowKeyNumber = 40,
         gArrowKeyNumber = 71,
-        deleteKeyNumber = 46,
+        deleteKeyNumber = 8,
         escapeKeyNumber = 27,
         enterKeyCode = 13,
         dKeyNumber = 68,
@@ -28,13 +29,14 @@ define([
         sKeyNumber = 83,
         zeroKeyNumber = 48,
         rKeyNumber = 82,
-        ctrlKeyNumber = 17,
         xKeyNumber = 88,
         vKeyNumber = 86,
         yKeyNumber = 89,
         zKeyNumber = 90,
         nonCtrlPlusActions = defineNonCtrlPlusKeysAndTheirActions(),
         ctrlPlusActions = defineCtrlPlusKeysAndTheirActions();
+
+    api._ctrlKeyNumber = UiUtils.isMacintosh() ? 91 : 17;
 
     api.disable = function(){
         $(window).off(
@@ -59,6 +61,7 @@ define([
             api._handleKeyboardActions
         );
     };
+    
     api._handleKeyboardActions = function () {
         api.enable();
     };
@@ -83,6 +86,7 @@ define([
         // console.log(event.which);
         var target = $(event.target),
             isWorkingOnSomething = !target.is("body");
+        var isCombineKeyPressed = UiUtils.isMacintosh() ? event.metaKey : event.ctrlKey;
         if (isWorkingOnSomething) {
             if (event.keyCode === escapeKeyNumber) {
                 target.blur();
@@ -92,13 +96,13 @@ define([
         if (isThereASpecialKeyPressed()) {
             return;
         }
-        var actionSet = event.ctrlKey ?
+        var actionSet = isCombineKeyPressed ?
             ctrlPlusActions :
             nonCtrlPlusActions;
         var feature = actionSet[event.which];
         if (feature === undefined) {
-            var isPasting = event.ctrlKey && vKeyNumber && event.which;
-                if (!isPasting && event.which !== ctrlKeyNumber && !MindMapInfo.isViewOnly() && SelectionHandler.isOnlyASingleElementSelected()) {
+            var isPasting = isCombineKeyPressed && vKeyNumber && event.which;
+                if (!isPasting && event.which !== api._ctrlKeyNumber && !MindMapInfo.isViewOnly() && SelectionHandler.isOnlyASingleElementSelected()) {
                 var selectedElement = SelectionHandler.getSingleElement();
                 if(selectedElement.isLabelEditable()){
                     selectedElement.focus();
@@ -115,7 +119,7 @@ define([
             executeFeature(feature);
         });
         function isThereASpecialKeyPressed() {
-            return event.altKey || event.metaKey;
+            return event.altKey || (event.metaKey && !UiUtils.isMacintosh());
         }
     }
 

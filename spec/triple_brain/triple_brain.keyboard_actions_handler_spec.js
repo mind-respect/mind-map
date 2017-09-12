@@ -3,6 +3,7 @@
  */
 
 define([
+    "jquery",
     "test/test-scenarios",
     "test/test-utils",
     'test/mock',
@@ -10,8 +11,10 @@ define([
     "triple_brain.selection_handler",
     "triple_brain.vertex_controller",
     "mr.app_controller",
+    "mr.command",
     'triple_brain.mind_map_info'
-], function (Scenarios, TestUtils, Mock, KeyBoardActionsHandler, SelectionHandler, VertexController, AppController, MindMapInfo) {
+
+], function ($, Scenarios, TestUtils, Mock, KeyBoardActionsHandler, SelectionHandler, VertexController, AppController, Command, MindMapInfo) {
     "use strict";
     describe("keyboard_action_handler", function () {
         beforeEach(function () {
@@ -55,7 +58,7 @@ define([
             ).toBeTruthy();
         });
 
-        it("calls identification method when pressing ctrl+g", function(){
+        it("calls identification method when pressing ctrl+g", function () {
             MindMapInfo._setIsViewOnly(false);
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             SelectionHandler.setToSingleGraphElement(bubble1);
@@ -68,7 +71,7 @@ define([
                 actionSpy
             ).toHaveBeenCalled();
         });
-        it("does not focus when pressing control only", function(){
+        it("does not focus when pressing control only", function () {
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             SelectionHandler.setToSingleGraphElement(bubble1);
             var ctrlKeyCode = 17;
@@ -78,7 +81,7 @@ define([
             ).toBeFalsy();
         });
 
-        it("adds a sibling when pressing enter", function(){
+        it("adds a sibling when pressing enter", function () {
             MindMapInfo._setIsViewOnly(false);
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             var numberOfChild = bubble1.getNumberOfChild();
@@ -91,7 +94,7 @@ define([
             ).toBe(numberOfChild + 1);
         });
 
-        it("prevents bubble content editing when in view only", function(){
+        it("prevents bubble content editing when in view only", function () {
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             SelectionHandler.setToSingleGraphElement(bubble1);
             bubble1.leaveEditMode();
@@ -106,19 +109,25 @@ define([
                 bubble1.isInEditMode()
             ).toBeFalsy();
         });
-        it("can execute features for app controller when no bubbles are selected", function(){
+        it("can execute features for app controller when no bubbles are selected", function () {
             new Scenarios.threeBubblesGraph().getBubble1InTree();
             SelectionHandler.removeAll();
             var actionSpy = spyOn(AppController, "undo");
             expect(
                 actionSpy
             ).not.toHaveBeenCalled();
+            var command = Command.forExecuteUndoAndRedo(function () {
+                return $.Deferred().resolve();
+            }, function () {
+            }, function () {
+            });
+            Command.executeCommand(command);
             TestUtils.pressCtrlPlusKey("Z");
             expect(
                 actionSpy
             ).toHaveBeenCalled();
         });
-        it("can toggle to public or private with shortcut key", function(){
+        it("can toggle to public or private with shortcut key", function () {
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             expect(
                 bubble1.getModel().isPublic()
@@ -129,7 +138,7 @@ define([
                 bubble1.getModel().isPublic()
             ).toBeTruthy();
         });
-        it("can apply shortcut to multiple elements", function(){
+        it("can apply shortcut to multiple elements", function () {
             var scenario = new Scenarios.threeBubblesGraph();
             var bubble1 = scenario.getBubble1InTree();
             var bubble2 = scenario.getBubble2InTree();
