@@ -21,7 +21,8 @@ define([
     upArrowKeyNumber = 38,
     downArrowKeyNumber = 40,
     gArrowKeyNumber = 71,
-    deleteKeyNumber = 8,
+    deleteKeyNumber = 46,
+    backspaceKeyNumber = 8,
     escapeKeyNumber = 27,
     enterKeyCode = 13,
     dKeyNumber = 68,
@@ -150,6 +151,9 @@ define([
             action: "addChild"
         };
         actions[deleteKeyNumber] = {
+            action: "remove"
+        };
+        actions[backspaceKeyNumber] = {
             action: "remove"
         };
         actions[leftArrowKeyNumber] = {
