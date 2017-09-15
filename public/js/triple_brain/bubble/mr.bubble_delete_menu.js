@@ -14,6 +14,11 @@ define([
                 vertices
             );
         };
+        api.forRelation = function (relation) {
+            return new DeleteMenu(
+                relation
+            );
+        };
         function DeleteMenu(graphElements) {
             this.graphElements = graphElements;
             this.modal = $("#remove-confirm-menu");
@@ -29,6 +34,11 @@ define([
                     "addClass"
                 ]("hidden");
             this.displayLabelOfSelectedBubbles();
+            this.modal.find(".vertex-only")[
+                this._areAllElementsVertices() ?
+                "removeClass" :
+                "addClass"
+                ]("hidden");
         }
 
         DeleteMenu.prototype.ask = function(){
@@ -49,6 +59,17 @@ define([
                     )
                 );
             }.bind(this));
+        };
+
+        DeleteMenu.prototype._areAllElementsVertices = function(){
+            var areAllVertices = true;
+            var elements = this.isMultipleBubblesFlow ? this.graphElements : [this.graphElements];
+            elements.forEach(function (graphElement) {
+                if(!graphElement.isVertex()){
+                    areAllVertices = false;
+                }
+            });
+            return areAllVertices;
         };
 
         return api;

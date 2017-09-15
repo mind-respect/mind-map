@@ -9,7 +9,7 @@ define([
     "triple_brain.selection_handler",
     "triple_brain.graph_displayer",
     "triple_brain.graph_element_controller",
-    "mr.vertex_delete_menu",
+    "mr.bubble_delete_menu",
     "triple_brain.edge_ui",
     "triple_brain.image_menu",
     "triple_brain.included_graph_elements_menu",
@@ -20,7 +20,7 @@ define([
     "triple_brain.schema_suggestion",
     "triple_brain.event_bus",
     "triple_brain.id_uri"
-], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, VertexDeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, EventBus, IdUri) {
+], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, BubbleDeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, EventBus, IdUri) {
     "use strict";
     var api = {};
 
@@ -78,7 +78,7 @@ define([
                 this.vertices
             );
         }
-        return VertexDeleteMenu.forVertices(
+        return BubbleDeleteMenu.forVertices(
             this.vertices
         ).ask().then(
             deleteAfterConfirmationBehavior.bind(this)
