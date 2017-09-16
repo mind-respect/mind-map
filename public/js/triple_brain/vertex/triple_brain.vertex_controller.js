@@ -115,7 +115,7 @@ define([
         ).build();
     };
 
-    VertexController.prototype.togglePublicPrivate = function () {
+        VertexController.prototype.togglePublicPrivate = function () {
         if (this._areAllElementsPrivate()) {
             this.makePublic();
         } else if (this._areAllElementsPublic()) {

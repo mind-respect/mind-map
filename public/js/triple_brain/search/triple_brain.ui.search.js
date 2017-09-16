@@ -30,7 +30,7 @@ define([
                     );
                 },
                 resultsProviders: [
-                    UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas({
+                    UserMapAutocompleteProvider.toFetchAllOwned({
                         noFilter: true
                     })
                 ]

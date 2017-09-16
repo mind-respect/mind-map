@@ -6,8 +6,11 @@ define([
     "jquery",
     "triple_brain.graph_ui",
     "triple_brain.event_bus",
+    "triple_brain.id_uri",
+    "triple_brain.wikidata",
+    "triple_brain.wikidata_uri",
     "jquery-ui"
-], function ($, GraphUi, EventBus) {
+], function ($, GraphUi, EventBus, IdUri, Wikidata, WikidataUri) {
     "use strict";
     var enterKeyCode = 13,
         upArrowKeyCode = 38,
@@ -129,14 +132,16 @@ define([
         }
 
         function renderItemCustom(ul, item) {
+            var icon;
+            if(IdUri.isVertexUri(item.uri)){icon = "fa-circle-o";}
+            else if (IdUri.isMetaUri(item.uri)){icon = "fa-tag";}
+            else if (IdUri.isEdgeUri(item.uri)){icon = "fa-arrows-h";}
+            else {icon = "fa-wikipedia-w";}
+
             var listElement = $("<li class='list-group-item autocomplete-element'>").append(
-                $("<span class='badge'>").append(
-                    item.elementType
-                ),
+                $("<i class='fa pull-right'>").addClass(icon),
                 $("<strong class='list-group-item-heading'>").append(item.label),
-                $("<p class='list-group-item-text'>").append(
-                    item.somethingToDistinguish
-                )
+                $("<p class='list-group-item-text'>").append(item.somethingToDistinguish)
             ).uniqueId();
             listElement.data("searchResult", item);
             listElement.popover({

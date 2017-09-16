@@ -12,6 +12,13 @@ define([
 ], function ($, SearchService, GraphElementType, IdentificationContext, IdUri, SearchResult) {
     "use strict";
     var api = {};
+    api.toFetchAllOwned = function (options) {
+        return new UserMapAutoCompleteProvider(
+            SearchService.searchForAllOwnResources,
+            undefined,
+            options
+        );
+    };
     api.toFetchOnlyCurrentUserVertices = function () {
         return new UserMapAutoCompleteProvider(
             SearchService.searchForOnlyOwnVerticesAjaxCall,

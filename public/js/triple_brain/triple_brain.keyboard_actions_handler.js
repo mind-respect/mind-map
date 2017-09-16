@@ -35,8 +35,11 @@ define([
     vKeyNumber = 86,
     yKeyNumber = 89,
     zKeyNumber = 90,
-    plusKeyNumber = 187,
-    minusKeyNumber = 189,
+    plusKeyNumber = 107,
+    minusKeyNumber = 109,
+    plusKeyNumberMac = 187,
+    minusKeyNumberMac = 189,
+
     nonCtrlPlusActions = defineNonCtrlPlusKeysAndTheirActions(),
     ctrlPlusActions = defineCtrlPlusKeysAndTheirActions();
 
@@ -215,7 +218,13 @@ define([
         actions[plusKeyNumber] = {
             action: "zoomIn"
         };
+        actions[plusKeyNumberMac] = {
+            action: "zoomIn"
+        };
         actions[minusKeyNumber] = {
+            action: "zoomOut"
+        };
+        actions[minusKeyNumberMac] = {
             action: "zoomOut"
         };
         return actions;

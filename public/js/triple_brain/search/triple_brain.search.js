@@ -9,6 +9,14 @@ define([
     function ($, UserService) {
         "use strict";
         var api = {};
+        api.searchForAllOwnResources =  function (searchText) {
+            return $.ajax({
+                type:'GET',
+                url: UserService.currentUserUri() +
+                "/search/own_all_resource/auto_complete?text=" + searchText
+            });
+        };
+
         api.searchForOwnVerticesAndPublicOnes = function (searchText, successCallback) {
             api.searchForOwnVerticesAndPublicOnesAjaxCall(
                 searchText
