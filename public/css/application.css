@@ -302,7 +302,7 @@ button.inactive i { color: red; }
 
 .icon-flip-horizontal { transform: scaleX(-1); -moz-transform: scaleX(-1); -webkit-transform: scaleX(-1); -ms-transform: scaleX(-1); }
 
-.fa.fa-strike:after { content: ""; position: absolute; width: 1px; height: 117.421356%; top: -6.710678%; display: block; background: darkslategray; opacity: 0.5; left: 50%; transform: translate(-50%, 0) rotate(-45deg); }
+.fa.fa-strike:after { content: ""; position: absolute; width: 3px; height: 117.421356%; top: -6.710678%; display: block; background: darkslategray; opacity: 0.5; left: 50%; transform: translate(-50%, 0) rotate(-45deg); }
 
 [data-action=addChild].left .fa-arrow-right { transform: rotate(180deg); }
 
