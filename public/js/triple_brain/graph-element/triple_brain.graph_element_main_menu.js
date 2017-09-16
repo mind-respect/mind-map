@@ -44,6 +44,9 @@ define([
                     var icon = $("<i>").addClass(
                         "fa " + button.getIconClass()
                     );
+                    icon.addClass(
+                        button.getAdditionalClasses()
+                    );
                     if (button.getHtml().hasClass("icon-flip-horizontal")) {
                         icon.addClass(
                             "fa-flip-vertical"

@@ -34,6 +34,21 @@ define([
         setupMindMap(true, false);
     };
     EventBus.subscribe(
+        '/event/ui/user/get_authenticated/success',
+        function(event, authenticatedUser){
+            var isADevUser = [
+                "spdupuis",
+                "vince"
+            ].indexOf(authenticatedUser.user_name) !== -1;
+            var devOnlyHtml = $(".dev-only");
+            if(isADevUser){
+                devOnlyHtml.removeClass("hidden");
+            }else{
+                devOnlyHtml.remove();
+            }
+        }
+    );
+    EventBus.subscribe(
         '/event/ui/graph/drawing_info/updated/',
         function (event, centralBubbleUri) {
             SelectionHandler.removeAll();

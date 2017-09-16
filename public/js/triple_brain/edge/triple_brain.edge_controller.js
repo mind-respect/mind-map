@@ -8,7 +8,8 @@ define([
     "triple_brain.edge_service",
     "triple_brain.identification",
     "triple_brain.graph_displayer",
-], function ($, GraphElementController, EdgeService, Identification, GraphDisplayer) {
+    "mr.bubble_delete_menu"
+], function ($, GraphElementController, EdgeService, Identification, GraphDisplayer, BubbleDeleteMenu) {
     "use strict";
     var api = {};
     api.RelationController = EdgeController;
@@ -89,18 +90,28 @@ define([
         return this.isSingleAndOwned();
     };
 
-    EdgeController.prototype.remove = function () {
-        EdgeService.remove(this.getUi(), function () {
-            var parentBubble = this.getUi().getParentBubble();
-            var childVertex = this.getUi().getTopMostChildBubble();
-            this.getUi().applyToOtherInstances(function (otherInstance) {
-                var childVertex = otherInstance.getTopMostChildBubble();
+    EdgeController.prototype.remove = function (skipConfirmation) {
+        if (skipConfirmation) {
+            return deleteAfterConfirmationBehavior.bind(this)();
+        }
+        return BubbleDeleteMenu.forRelation(
+            this.getUi()
+        ).ask().then(
+            deleteAfterConfirmationBehavior.bind(this)
+        );
+        function deleteAfterConfirmationBehavior(){
+            return EdgeService.remove(this.getUi(), function () {
+                var parentBubble = this.getUi().getParentBubble();
+                var childVertex = this.getUi().getTopMostChildBubble();
+                this.getUi().applyToOtherInstances(function (otherInstance) {
+                    var childVertex = otherInstance.getTopMostChildBubble();
+                    childVertex.remove(false);
+                });
                 childVertex.remove(false);
-            });
-            childVertex.remove(false);
-            parentBubble.getModel().decrementNumberOfConnectedEdges();
-            parentBubble.sideCenterOnScreenWithAnimation();
-        }.bind(this));
+                parentBubble.getModel().decrementNumberOfConnectedEdges();
+                parentBubble.sideCenterOnScreenWithAnimation();
+            }.bind(this));
+        }
     };
     EdgeController.prototype.reverseToRightCanDo = function () {
         if (!this.isSingleAndOwned()) {

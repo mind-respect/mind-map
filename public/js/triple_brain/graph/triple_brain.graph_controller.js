@@ -69,10 +69,10 @@ define([
         GraphElementUi.deactivateWikidataForInBubbleEdition();
     };
     api.wikidataOnCanDo = function(){
-        return !GraphElementUi.isWikidataActiveForInBubbleEdition();
+        return !MindMapInfo.isViewOnly() && !GraphElementUi.isWikidataActiveForInBubbleEdition();
     };
     api.wikidataOffCanDo = function(){
-        return GraphElementUi.isWikidataActiveForInBubbleEdition();
+        return !MindMapInfo.isViewOnly() && GraphElementUi.isWikidataActiveForInBubbleEdition();
     };
     api.getUi = function () {
         return [];

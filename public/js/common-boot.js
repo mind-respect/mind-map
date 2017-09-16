@@ -115,7 +115,6 @@ requirejs.config({
         "triple_brain.ui.vertex_hidden_neighbor_properties_indicator": "triple_brain/vertex/triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
         "triple_brain.included_graph_elements_menu": "triple_brain/vertex/triple_brain.included_graph_elements_menu",
         "triple_brain.vertex_controller": "triple_brain/vertex/triple_brain.vertex_controller",
-        "mr.vertex_delete_menu": "triple_brain/vertex/mr.vertex_delete_menu",
         "mr.vertex-ui-builder": "triple_brain/vertex/mr.vertex-ui-builder",
         "mr.vertex-ui-builder-common": "triple_brain/vertex/mr.vertex-ui-builder-common",
         "mr.vertex-ui-builder-view-only": "triple_brain/vertex/mr.vertex-ui-builder-view-only",
@@ -200,7 +199,7 @@ requirejs.config({
         "triple_brain.bubble": "triple_brain/bubble/triple_brain.bubble",
         "triple_brain.bubble_factory": "triple_brain/bubble/triple_brain.bubble_factory",
         "triple_brain.center_bubble": "triple_brain/bubble/triple_brain.center_bubble",
-
+        "mr.bubble_delete_menu": "triple_brain/bubble/mr.bubble_delete_menu",
 
         /*
          Graph

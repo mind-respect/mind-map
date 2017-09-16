@@ -74,30 +74,6 @@
                         </li>
                     </ul>
                 </li>
-                <!--<li class="dropdown">-->
-                <!--<a href="/" id="all-your-bubbles-button" data-i18n='top_menu.central'></a>-->
-                <!--</li>-->
-                <!--<li class="dropdown">-->
-                <!--<a href="/schemas" data-i18n='top_menu.schemas'></a>-->
-                <!--</li>-->
-                <!--<li class="dropdown">-->
-                <!--<a href="#" id="save-as-image-button" data-i18n='top_menu.save_as_image' class="hidden"></a>-->
-                <!--</li>-->
-                <!--<li class="dropdown">-->
-                <!--<a id="select-button" class="hidden" data-toggle="dropdown"-->
-                <!--data-i18n='top_menu.selection.title'></a>-->
-                <!--<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">-->
-                <!--<li>-->
-                <!--<a href="" id="select-all-bubbles" role="menuitem">-->
-                <!--<span data-i18n='top_menu.selection.bubbles'></span>-->
-                <!--</a>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<a href="" id="select-all-relations" role="menuitem"-->
-                <!--data-i18n='top_menu.selection.relations'></a>-->
-                <!--</li>-->
-                <!--</ul>-->
-                <!--</li>-->
                 <li class="dropdown" id="bubble-menu">
                     <a data-toggle="dropdown" data-i18n='top_menu.bubble'></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
@@ -115,7 +91,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="dev-only dropdown" id="schema-menu">
+                <li class="dev-only hidden dropdown" id="schema-menu">
                     <a data-toggle="dropdown" data-i18n='top_menu.schema'></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                         <li>
@@ -199,7 +175,7 @@
                     <button data-action="center" data-combinedShortcut="0" data-icon="fa-bullseye" class="graph-element-button"></button>
                     <button data-action="expand" data-combinedShortcut="E" data-icon="fa-leaf"
                             class="graph-element-button"></button>
-                    <button data-action="collapse" data-combinedShortcut="H" data-icon="fa-eye-slash"
+                    <button data-action="collapse" data-combinedShortcut="H" data-icon="fa-leaf" data-additionalClass="fa-strike"
                             class="graph-element-button"></button>
                     <button data-action="identify" data-combinedShortcut="G" data-icon="fa-tag"
                             class="graph-element-button in-label-button"></button>
@@ -217,7 +193,7 @@
                             class="graph-element-button in-label-button"></button>
                     <button data-action="makePrivate" data-combinedShortcut="P" data-icon="fa-lock"
                             class="graph-element-button in-label-button"></button>
-                    <button data-action="group" data-icon="fa-compress" class="graph-element-button"></button>
+                    <button data-action="group" data-icon="fa-compress" class="dev-only graph-element-button"></button>
                     <button data-action="remove" data-icon="fa-trash-o" class="graph-element-button"></button>
                     <!--<button data-action="wikidataOn" data-icon="fa-wikipedia-w"-->
                             <!--class="whole-graph-button inactive graph-element-button in-label-button"></button>-->
@@ -232,7 +208,7 @@
                     <button data-action="zoomOut" data-combinedShortcut="&minus;"  data-icon="fa-search-minus"
                             class="graph-element-button whole-graph-button"></button>
                     <button data-action="compare" data-icon="fa-balance-scale"
-                            class="graph-element-button whole-graph-button"></button>
+                            class="dev-only hidden graph-element-button whole-graph-button"></button>
                     <button data-action="undo" data-combinedShortcut="Z" data-icon="fa-undo"
                             class="app-button graph-element-button in-label-button"></button>
                     <button data-action="redo" data-combinedShortcut="Y"  data-icon="fa-repeat"
@@ -991,7 +967,7 @@
                 <ul class="selected-bubbles"></ul>
                 <strong data-i18n="vertex.menu.delete.desc1"></strong>
                 <ul>
-                    <li data-i18n="vertex.menu.delete.desc2"></li>
+                    <li class="vertex-only" data-i18n="vertex.menu.delete.desc2"></li>
                     <li data-i18n="vertex.menu.delete.desc3"></li>
                 </ul>
             </div>

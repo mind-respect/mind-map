@@ -25,7 +25,7 @@ define([
                 MindMapInfo._setIsViewOnly(false);
                 new EdgeController.RelationController(
                     relation1
-                ).remove();
+                ).remove(true);
                 expect(
                     bubble1.getNumberOfChild()
                 ).toBe(numberOfChild - 1);
@@ -39,7 +39,7 @@ define([
                     2
                 );
                 var relation1 = bubble1.getTopMostChildBubble();
-                relation1.getController().remove();
+                relation1.getController().remove(true);
                 expect(
                     bubble1.getModel().getNumberOfConnectedEdges()
                 ).toBe(
@@ -163,7 +163,7 @@ define([
             MindMapInfo._setIsViewOnly(false);
             new EdgeController.RelationController(
                 aRelationToSameBubble
-            ).remove();
+            ).remove(true);
             expect(
                 TestUtils.isGraphElementUiRemoved(
                     aRelationToSameBubble
@@ -209,7 +209,7 @@ define([
             MindMapInfo._setIsViewOnly(false);
             new EdgeController.RelationController(
                 aRelation
-            ).remove();
+            ).remove(true);
             expect(
                 TestUtils.isGraphElementUiRemoved(
                     aRelation

@@ -95,7 +95,7 @@ define([
                 b1Fork,
                 "r2"
             );
-            r2.getController().remove();
+            r2.getController().remove(true);
             TestUtils.enterCompareFlowWithGraph(
                 SubGraph.fromServerFormat(
                     new Scenarios.threeBubblesGraph().getGraph()

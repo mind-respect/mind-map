@@ -79,6 +79,11 @@ define([
             "data-icon"
         );
     };
+    GraphElementButton.prototype.getAdditionalClasses = function () {
+        return this.html.attr(
+            "data-additionalClass"
+        );
+    };
     GraphElementButton.prototype.hasCombinedKeyShortcut = function () {
         return this.getCombinedKeyShortcut() !== undefined;
     };
