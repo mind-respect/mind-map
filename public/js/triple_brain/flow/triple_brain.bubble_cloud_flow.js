@@ -7,11 +7,11 @@ define([
     "triple_brain.id_uri",
     "triple_brain.center_graph_element_service",
     "mr.center_graph_element",
-    "triple_brain.visited_elements_cloud",
+    "mr.central_bubble_table",
     "triple_brain.user_service",
     "triple_brain.graph_ui",
     "triple_brain.language_manager"
-], function ($, IdUri, CenterGraphElementService, CenterGraphElement, VisitedElementsCloud, UserService, GraphUi, LanguageManager) {
+], function ($, IdUri, CenterGraphElementService, CenterGraphElement, CentralBubbleTable, UserService, GraphUi, LanguageManager) {
     "use strict";
     var api = {};
     api.enter = function () {
@@ -46,7 +46,7 @@ define([
             window.location = IdUri.htmlUrlForBubbleUri(centerGraphElements[0].getUri());
             return;
         }
-        VisitedElementsCloud.buildFromElementsInContainer(
+        CentralBubbleTable.buildFromElementsInContainer(
             centerGraphElements,
             getWordsContainer()
         );

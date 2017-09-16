@@ -32,7 +32,7 @@ define([
             handleRemoveCenterBtnClick();
             handleCreateNewConceptButton();
             hideElementsForOwnerOnlyIfApplicable();
-            EventBus.subscribe("localized-text-loaded", function(){
+            EventBus.subscribe("localized-text-loaded", function () {
                 $(".fixed-table-toolbar .search input").attr(
                     "data-i18n",
                     "[placeholder]centralBubbles.filter"
@@ -157,12 +157,13 @@ define([
         anchor.text(
             label
         );
-        if (IdUri.isMetaUri(element.getUri())) {
-            anchor.append(
-                " ",
-                $("<i class='fa fa-tag' data-i18n='[title]centralBubbles.reference'>")
-            );
-        }
+
+        var icon = IdUri.isMetaUri(element.getUri()) ? "fa-tag" : "fa-circle-o";
+
+        anchor.prepend(
+            $("<i class='fa'>").addClass(icon),
+            " "
+        );
         return anchor.prop('outerHTML');
     }
 
@@ -240,9 +241,9 @@ define([
     }
 
     function hideElementsForOwnerOnlyIfApplicable() {
-         if (IdUri.currentUsernameInUrl() === UserService.authenticatedUserInCache().user_name) {
-           $(".owner-only").removeClass("hidden");
-         }
+        if (IdUri.currentUsernameInUrl() === UserService.authenticatedUserInCache().user_name) {
+            $(".owner-only").removeClass("hidden");
+        }
     }
 
     function defineNumberVisitsRank() {
