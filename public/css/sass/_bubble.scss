@@ -83,15 +83,9 @@
   white-space: nowrap;
   .bubble-label {
     color:black;
-    &:before, &:after {
-      content: ' ';
-      font-family: $cursorBlinkFontFamily;
-      font-size: $cursorBlinkFontSize;
-    }
-
     &:empty:not(:focus) {
       &:after {
-        content: attr(data-placeholder) ' ';
+        content: attr(data-placeholder);
         color: grey;
         font-style: italic;
         font-family: $bubbleFontFamily;
@@ -115,30 +109,10 @@
   position: relative;
   min-width: 0;
   margin: 0 0 0 0;
-  &.single-selected:not(.not-editable) {
-    .bubble-label {
-      &:empty:not(:focus) {
-        &:before {
-          content: "_";
-          font-family: $cursorBlinkFontFamily;
-          font-size:$cursorBlinkFontSize;
-          animation: cursorBlink steps(1) 500ms infinite alternate;
-          font-style: normal;
-        }
-      }
-      &:not(:empty):not(:focus):after {
-        content: "_";
-        font-family: $cursorBlinkFontFamily;
-        font-size: $cursorBlinkFontSize;
-        animation: cursorBlink steps(1) 500ms infinite alternate;
-        font-style: normal;
-      }
-    }
-  }
   &.selected:not(.not-editable) {
     .bubble-label {
       &:empty:not(:focus):after {
-        content: attr(data-placeholder) ' ';
+        content: attr(data-placeholder);
         color: grey;
         font-family: $bubbleFontFamily;
         font-style: italic;

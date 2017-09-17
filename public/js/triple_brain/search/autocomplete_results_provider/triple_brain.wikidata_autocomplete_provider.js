@@ -10,13 +10,14 @@ define([
 ], function ($, Wikidata, WikidataUri, LanguageManager) {
     "use strict";
     var api = {};
-    api.build = function(){
+    api.build = function () {
         return new WikiDataAutocompleteProvider();
     };
     api.buildWithIsActiveCondition = function (isActiveCondition) {
         return new WikiDataAutocompleteProvider(isActiveCondition);
     };
     return api;
+
     function WikiDataAutocompleteProvider(isActiveCondition) {
         var self = this;
         this.isActiveCondition = isActiveCondition;
@@ -49,7 +50,7 @@ define([
         };
         this.getMoreInfoForSearchResult = function (searchResult) {
             var deferred = $.Deferred();
-            Wikidata.getImageForWikidataUri(searchResult.uri).then(function(image){
+            Wikidata.getImageForWikidataUri(searchResult.uri).then(function (image) {
                 deferred.resolve({
                         conciseSearchResult: searchResult,
                         title: searchResult.label,
@@ -57,7 +58,7 @@ define([
                         image: image
                     }
                 );
-            }).fail(function(){
+            }).fail(function () {
                 deferred.resolve({
                         conciseSearchResult: searchResult,
                         title: searchResult.label,
@@ -67,11 +68,10 @@ define([
             });
             return deferred.promise();
         };
-        this.isActive = function(){
-            if(!this.isActiveCondition){
-                return true;
-            }
-            return this.isActiveCondition();
+        this.isActive = function (bubble) {
+            return this.isActiveCondition ?
+                this.isActiveCondition() :
+                bubble && bubble.getModel().isPublic();
         };
     }
 });

@@ -361,7 +361,9 @@ define([
         IdentificationMenu.prototype._getResultsProvidersForVertex = function () {
             return [
                 UserMapAutocompleteProvider.toFetchPublicAndUserVerticesExcept(this.graphElement),
-                WikidataAutocompleteProvider.build()
+                WikidataAutocompleteProvider.buildWithIsActiveCondition(function(){
+                    return true;
+                })
             ];
         };
         IdentificationMenu.prototype._getResultsProvidersForRelations = function () {

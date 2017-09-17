@@ -45,9 +45,7 @@ define([
                         }.bind(vertex)
                     }
                 ),
-                WikidataAutocompleteProvider.buildWithIsActiveCondition(
-                    GraphElementUi.isWikidataActiveForInBubbleEdition
-                )
+                WikidataAutocompleteProvider.build()
             ]
         });
     };

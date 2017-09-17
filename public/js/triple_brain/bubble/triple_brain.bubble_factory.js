@@ -48,9 +48,10 @@ define([
         }
     };
     api.fromSubHtml = function (html) {
-        return api.fromHtml(
-            html.closest(".bubble")
-        );
+        var bubbleHtml = html.closest(".bubble");
+        return bubbleHtml.length  ? api.fromHtml(
+            bubbleHtml
+        ) : false ;
     };
     api.getGraphElementFromUri = function (uri) {
         return api.getSelectorFromType(

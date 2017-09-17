@@ -144,7 +144,7 @@ define([
                 searchResultsThroughProvider.length
             ).toBe(2);
         });
-        it("puts the identifiers above", function () {
+        it("puts metas above", function () {
             var serverResults = [];
             serverResults = serverResults.concat(
                 new Scenarios.withRelationsAsIdentifierSearchSome().get()
@@ -157,6 +157,23 @@ define([
                 topSearchResult.nonFormattedSearchResult.getGraphElementType()
             ).toBe(
                 GraphElementType.Meta
+            );
+        });
+        xit("can use an option to put bubbles above metas", function () {
+            var serverResults = [];
+            serverResults = serverResults.concat(
+                new Scenarios.withRelationsAsIdentifierSearchSome().get()
+            );
+            var topSearchResult = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas({
+                prioritizeBubble: true
+            }).formatResults(
+                serverResults,
+                ""
+            )[0];
+            expect(
+                topSearchResult.nonFormattedSearchResult.getGraphElementType()
+            ).toBe(
+                GraphElementType.Vertex
             );
         });
         it("puts proprieties above relations in the list of formatted search results", function () {

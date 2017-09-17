@@ -62,18 +62,7 @@ define([
             -0.1
         );
     };
-    api.wikidataOn = function(){
-        GraphElementUi.activateWikidataForInBubbleEdition();
-    };
-    api.wikidataOff = function(){
-        GraphElementUi.deactivateWikidataForInBubbleEdition();
-    };
-    api.wikidataOnCanDo = function(){
-        return !MindMapInfo.isViewOnly() && !GraphElementUi.isWikidataActiveForInBubbleEdition();
-    };
-    api.wikidataOffCanDo = function(){
-        return !MindMapInfo.isViewOnly() && GraphElementUi.isWikidataActiveForInBubbleEdition();
-    };
+
     api.getUi = function () {
         return [];
     };

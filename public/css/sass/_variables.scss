@@ -15,54 +15,5 @@ $metaColor: purple;
 $inLabelButtonsPadding: 8px;
 $compareBubbleAddBackgroundColor: #E6FFE6;
 $compareBubbleRemoveBackgroundColor: #FFE6E6;
-$cursorBlinkFontSize: 17px;
-$cursorBlinkFontFamily: monospace;
 $bubbleFontFamily: arial;
 $marginOfHiddenPropertiesToRelation: 25px;
-
-@mixin keyframes( $animationName ) {
-  @-webkit-keyframes cursorBlink {
-    @content;
-  }
-  @-moz-keyframes cursorBlink {
-    @content;
-  }
-  @-o-keyframes cursorBlink {
-    @content;
-  }
-  @keyframes cursorBlink {
-    @content;
-  }
-}
-
-@include keyframes(cursorBlink) {
-  /*using content to avoid using opacity because it blurs the label in chromium*/
-  0% {
-    content: "_";
-  }
-  50% {
-    content: "_";
-  }
-  50.01% {
-    content: " ";
-  }
-  100% {
-    content: " ";
-  }
-}
-
-@-moz-keyframes cursorBlink {
-  /*overriding for firefox because using content doesn't work*/
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 1;
-  }
-  50.01% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 0;
-  }
-}

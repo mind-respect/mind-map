@@ -7,10 +7,9 @@ define([
     "triple_brain.graph_ui",
     "triple_brain.event_bus",
     "triple_brain.id_uri",
-    "triple_brain.wikidata",
-    "triple_brain.wikidata_uri",
+    "triple_brain.bubble_factory",
     "jquery-ui"
-], function ($, GraphUi, EventBus, IdUri, Wikidata, WikidataUri) {
+], function ($, GraphUi, EventBus, IdUri, BubbleFactory) {
     "use strict";
     var enterKeyCode = 13,
         upArrowKeyCode = 38,
@@ -81,8 +80,11 @@ define([
                     var searchTerm = request.term;
                     var searchResults = [];
                     var providerPromises = [];
+                    var bubble = BubbleFactory.fromSubHtml(
+                        this.element
+                    );
                     options.resultsProviders.forEach(function (provider) {
-                        if (!provider.isActive()) {
+                        if (!provider.isActive(bubble)) {
                             return;
                         }
                         providerPromises.push(
@@ -90,7 +92,7 @@ define([
                                 provider
                             )
                         );
-                    });
+                    }.bind(this));
                     $.when.apply(
                         $, providerPromises
                     ).then(function () {
