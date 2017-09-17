@@ -58,6 +58,7 @@ define([
         );
     };
     return api;
+
     function UserMapAutoCompleteProvider(fetchMethod, graphElementToIgnore, options) {
         this.options = options || {};
         var self = this;
@@ -69,6 +70,7 @@ define([
         this.formatResults = function (searchResults) {
             var formattedResults = [];
             $.each(searchResults, addFormattedResult);
+
             function addFormattedResult() {
                 var serverFormat = this;
                 var searchResult = SearchResult.fromServerFormat(serverFormat);
@@ -100,18 +102,19 @@ define([
                     provider: self
                 };
             }
-            if(this.shouldFilter()){
+
+            if (this.shouldFilter()) {
                 formattedResults = this.filterSearchResults(formattedResults);
             }
             this.sortFormattedResults(formattedResults);
             return formattedResults;
         };
 
-        this.shouldFilter = function(){
-            if(!this.options.noFilter){
+        this.shouldFilter = function () {
+            if (!this.options.noFilter) {
                 return true;
             }
-            if(typeof this.options.noFilter === "function"){
+            if (typeof this.options.noFilter === "function") {
                 return !this.options.noFilter();
             }
             return !this.options.noFilter;
@@ -119,6 +122,15 @@ define([
 
         this.sortFormattedResults = function (formattedResults) {
             formattedResults.sort(function (a, b) {
+                if(isVertexHavingTagWithSameLabelInSearchResults(a, formattedResults)){
+                    if(isVertexHavingTagWithSameLabelInSearchResults(b, formattedResults)){
+                        return hasMoreReferencesOrVisits(a, b);
+                    }
+                    return -1;
+                }
+                if(isVertexHavingTagWithSameLabelInSearchResults(b, formattedResults)){
+                    return 1;
+                }
                 if (isPrioritySearchResult(a)) {
                     if (isPrioritySearchResult(b)) {
                         return hasMoreReferencesOrVisits(a, b);
@@ -178,14 +190,58 @@ define([
             return 0;
         }
 
+        function isVertexHavingTagWithSameLabelInSearchResults(searchResult, allSearchResults){
+            if(GraphElementType.Vertex !== searchResult.nonFormattedSearchResult.graphElementType) {
+                return false;
+            }
+            var hasTagWithSameLabelInSearchResults = false;
+            allSearchResults.forEach(function(otherSearchResult){
+                if(GraphElementType.Meta !== otherSearchResult.nonFormattedSearchResult.graphElementType) {
+                    return false;
+                }
+                var vertex = searchResult.nonFormattedSearchResult.graphElement;
+                var tag = otherSearchResult.nonFormattedSearchResult.graphElement;
+                if(vertex.hasIdentification(tag)){
+                    hasTagWithSameLabelInSearchResults = true;
+                }
+            });
+            return hasTagWithSameLabelInSearchResults;
+        }
+
+        function isSearchResultAVertexOrTag(searchResult) {
+            return [
+                GraphElementType.Vertex,
+                GraphElementType.Meta
+            ].indexOf(
+                searchResult.nonFormattedSearchResult.graphElementType
+            ) !== -1;
+        }
+
+        function isSearchResultTaggedAndSharesLabelWithOther(searchResultA, searchResultB) {
+            var vertexSearchResult;
+            var tagSearchResult;
+            if(GraphElementType.Vertex === searchResultA.nonFormattedSearchResult.graphElementType){
+                vertexSearchResult = searchResultA;
+                tagSearchResult = searchResultB;
+            } else{
+                vertexSearchResult = searchResultB;
+                tagSearchResult = searchResultA;
+            }
+            var vertex = vertexSearchResult.nonFormattedSearchResult.graphElement;
+            var tag = tagSearchResult.nonFormattedSearchResult.graphElement;
+            return vertex.hasIdentification(
+                tag
+            );
+        }
+
         function isPrioritySearchResult(formattedResult) {
             return formattedResult.nonFormattedSearchResult.is(
-                    GraphElementType.Schema
-                ) || formattedResult.nonFormattedSearchResult.is(
-                    GraphElementType.Property
-                ) || formattedResult.nonFormattedSearchResult.is(
-                    GraphElementType.Meta
-                );
+                GraphElementType.Schema
+            ) || formattedResult.nonFormattedSearchResult.is(
+                GraphElementType.Property
+            ) || formattedResult.nonFormattedSearchResult.is(
+                GraphElementType.Meta
+            );
         }
 
         this.getMoreInfoForSearchResult = function (searchResult) {

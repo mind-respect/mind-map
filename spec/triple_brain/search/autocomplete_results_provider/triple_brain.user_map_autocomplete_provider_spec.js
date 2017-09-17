@@ -159,19 +159,19 @@ define([
                 GraphElementType.Meta
             );
         });
-        xit("can use an option to put bubbles above metas", function () {
+        it("prioritizes vertices tagged to a search result tag and where they have the same label", function () {
             var serverResults = [];
             serverResults = serverResults.concat(
-                new Scenarios.withRelationsAsIdentifierSearchSome().get()
+                new Scenarios.getBookSearchResults()
             );
             var topSearchResult = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas({
-                prioritizeBubble: true
+                noFilter: true
             }).formatResults(
                 serverResults,
                 ""
             )[0];
             expect(
-                topSearchResult.nonFormattedSearchResult.getGraphElementType()
+                    topSearchResult.nonFormattedSearchResult.getGraphElementType()
             ).toBe(
                 GraphElementType.Vertex
             );

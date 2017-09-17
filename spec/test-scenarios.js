@@ -626,7 +626,7 @@ define([
         api.GraphWithSimilarRelationsScenario = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
-                return api._getTestData("graphWithSimilarRelations");
+                return api._getTestData("graphWithSimilarRelations.graph");
             };
             this.getCenterBubbleUri = function () {
                 return uriOfVertexWithLabel(this.getGraph(), "me");
@@ -703,6 +703,9 @@ define([
                 );
             };
             Mock.setCenterBubbleUriInUrl(this.getCenterVertex().getUri());
+        };
+        api.getBookSearchResults = function () {
+            return api._getTestData("graphWithSimilarRelations.bookSearchResults");
         };
         api.relationWithMultipleIdentifiers = function () {
             var treeBuilder = new TreeBuilder(this);
