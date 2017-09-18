@@ -159,13 +159,14 @@ define([
                 GraphElementType.Meta
             );
         });
-        it("prioritizes vertices tagged to a search result tag and where they have the same label", function () {
+        it("can prioritizes vertices", function () {
             var serverResults = [];
             serverResults = serverResults.concat(
                 new Scenarios.getBookSearchResults()
             );
             var topSearchResult = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas({
-                noFilter: true
+                noFilter: true,
+                prioritizeVertex: true
             }).formatResults(
                 serverResults,
                 ""

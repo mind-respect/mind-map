@@ -31,7 +31,8 @@ define([
                 },
                 resultsProviders: [
                     UserMapAutocompleteProvider.toFetchAllOwned({
-                        noFilter: true
+                        noFilter: true,
+                        prioritizeVertex: true
                     })
                 ]
             }).click(function(){

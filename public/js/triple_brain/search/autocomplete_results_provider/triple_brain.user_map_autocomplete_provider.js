@@ -107,6 +107,9 @@ define([
                 formattedResults = this.filterSearchResults(formattedResults);
             }
             this.sortFormattedResults(formattedResults);
+            if(this.options.prioritizeVertex){
+                this.sortToPrioritizeVertices(formattedResults);
+            }
             return formattedResults;
         };
 
@@ -120,17 +123,20 @@ define([
             return !this.options.noFilter;
         };
 
+        this.sortToPrioritizeVertices = function (formattedResults) {
+            formattedResults.sort(function (a, b) {
+                if(GraphElementType.Vertex === a.nonFormattedSearchResult.graphElementType){
+                    return -1;
+                }else if(GraphElementType.Vertex === b.nonFormattedSearchResult.graphElementType){
+                    return 1;
+                }else{
+                    return 0;
+                }
+            });
+        };
+
         this.sortFormattedResults = function (formattedResults) {
             formattedResults.sort(function (a, b) {
-                if(isVertexHavingTagWithSameLabelInSearchResults(a, formattedResults)){
-                    if(isVertexHavingTagWithSameLabelInSearchResults(b, formattedResults)){
-                        return hasMoreReferencesOrVisits(a, b);
-                    }
-                    return -1;
-                }
-                if(isVertexHavingTagWithSameLabelInSearchResults(b, formattedResults)){
-                    return 1;
-                }
                 if (isPrioritySearchResult(a)) {
                     if (isPrioritySearchResult(b)) {
                         return hasMoreReferencesOrVisits(a, b);
@@ -141,7 +147,7 @@ define([
                     return 1;
                 }
                 return hasMoreReferencesOrVisits(a, b);
-            });
+            }.bind(this));
         };
         this.filterSearchResults = function (searchResults) {
             return searchResults.filter(function (formattedSearchResult) {
@@ -188,50 +194,6 @@ define([
                 return 1;
             }
             return 0;
-        }
-
-        function isVertexHavingTagWithSameLabelInSearchResults(searchResult, allSearchResults){
-            if(GraphElementType.Vertex !== searchResult.nonFormattedSearchResult.graphElementType) {
-                return false;
-            }
-            var hasTagWithSameLabelInSearchResults = false;
-            allSearchResults.forEach(function(otherSearchResult){
-                if(GraphElementType.Meta !== otherSearchResult.nonFormattedSearchResult.graphElementType) {
-                    return false;
-                }
-                var vertex = searchResult.nonFormattedSearchResult.graphElement;
-                var tag = otherSearchResult.nonFormattedSearchResult.graphElement;
-                if(vertex.hasIdentification(tag)){
-                    hasTagWithSameLabelInSearchResults = true;
-                }
-            });
-            return hasTagWithSameLabelInSearchResults;
-        }
-
-        function isSearchResultAVertexOrTag(searchResult) {
-            return [
-                GraphElementType.Vertex,
-                GraphElementType.Meta
-            ].indexOf(
-                searchResult.nonFormattedSearchResult.graphElementType
-            ) !== -1;
-        }
-
-        function isSearchResultTaggedAndSharesLabelWithOther(searchResultA, searchResultB) {
-            var vertexSearchResult;
-            var tagSearchResult;
-            if(GraphElementType.Vertex === searchResultA.nonFormattedSearchResult.graphElementType){
-                vertexSearchResult = searchResultA;
-                tagSearchResult = searchResultB;
-            } else{
-                vertexSearchResult = searchResultB;
-                tagSearchResult = searchResultA;
-            }
-            var vertex = vertexSearchResult.nonFormattedSearchResult.graphElement;
-            var tag = tagSearchResult.nonFormattedSearchResult.graphElement;
-            return vertex.hasIdentification(
-                tag
-            );
         }
 
         function isPrioritySearchResult(formattedResult) {
