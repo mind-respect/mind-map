@@ -24,6 +24,7 @@ define([
     deleteKeyNumber = 46,
     backspaceKeyNumber = 8,
     escapeKeyNumber = 27,
+    spacebarKeyNumber = 32,
     enterKeyCode = 13,
     dKeyNumber = 68,
     eKeyNumber = 69,
@@ -176,6 +177,9 @@ define([
         };
         actions[escapeKeyNumber] = {
             action: "deselect"
+        };
+        actions[spacebarKeyNumber] = {
+            action: "focus"
         };
         return actions;
     }
