@@ -4,6 +4,7 @@
 
 define([
     "jquery",
+    "triple_brain.ui_utils",
     "triple_brain.mind_map_info",
     "triple_brain.friendly_resource_service",
     "triple_brain.selection_handler",
@@ -13,7 +14,7 @@ define([
     "triple_brain.suggestion_service",
     "triple_brain.graph_element_html_builder",
     "triple_brain.bubble_factory"
-], function ($, MindMapInfo, FriendlyResourceService, SelectionHandler, RelativeTreeTemplates, Identification, UserMapAutocompleteProvider, SuggestionService, GraphElementHtmlBuilder, BubbleFactory) {
+], function ($, UiUtils, MindMapInfo, FriendlyResourceService, SelectionHandler, RelativeTreeTemplates, Identification, UserMapAutocompleteProvider, SuggestionService, GraphElementHtmlBuilder, BubbleFactory) {
     "use strict";
     var api = {};
     api.moveInLabelButtonsContainerIfIsToTheLeft = function (edge) {
@@ -48,7 +49,7 @@ define([
                 var edge = BubbleFactory.fromSubHtml(
                     $(this)
                 );
-                if (event.ctrlKey) {
+                if (UiUtils.isMacintosh() ? event.metaKey : event.ctrlKey) {
                     if (edge.isSelected()) {
                         SelectionHandler.removeRelation(edge);
                     } else {

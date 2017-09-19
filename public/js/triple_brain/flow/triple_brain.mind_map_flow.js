@@ -4,6 +4,7 @@
 
 define([
     "jquery",
+    "triple_brain.ui_utils",
     "triple_brain.user_service",
     "triple_brain.event_bus",
     "triple_brain.header",
@@ -21,7 +22,7 @@ define([
     "triple_brain.identification_menu",
     "triple_brain.image_menu",
     "triple_brain.other_user_flow",
-], function ($, UserService, EventBus, Header, SelectionHandler, GraphDisplayer, GraphDisplayerFactory, MindMapInfo, GraphElementMainMenu, GraphUi, LanguageManager, IdUriUtils, BubbleCloudFlow, Flow, BubbleFactory, IdentificationMenu, ImageMenu) {
+], function ($, UiUtils, UserService, EventBus, Header, SelectionHandler, GraphDisplayer, GraphDisplayerFactory, MindMapInfo, GraphElementMainMenu, GraphUi, LanguageManager, IdUriUtils, BubbleCloudFlow, Flow, BubbleFactory, IdentificationMenu, ImageMenu) {
     "use strict";
     var api = {};
     api.enterBubbleCloud = function () {
@@ -80,7 +81,8 @@ define([
             GraphUi.getDrawnGraph().on(
                 "click",
                 function (event) {
-                    if (event.ctrlKey) {
+                    if (UiUtils.isMacintosh() ? event.metaKey : event.ctrlKey)
+                    {
                         return;
                     }
                     GraphUi.removePopovers();
