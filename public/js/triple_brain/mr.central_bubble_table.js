@@ -11,10 +11,11 @@ define([
     "triple_brain.event_bus",
     "triple_brain.graph_controller",
     "triple_brain.user_service",
+    "triple_brain.graph_element_type",
     "bootstrap-table",
     "jquery.i18next"
 
-], function ($, IdUri, AskModal, CenterGraphElementService, EventBus, GraphController, UserService) {
+], function ($, IdUri, AskModal, CenterGraphElementService, EventBus, GraphController, UserService, GraphElementType) {
     "use strict";
     var NUMBER_OF_VISIT_RANKS = 3,
         _elements,
@@ -157,14 +158,24 @@ define([
         anchor.text(
             label
         );
-
-        var icon = IdUri.isMetaUri(element.getUri()) ? "fa-tag" : "fa-circle-o";
-
         anchor.prepend(
-            $("<i class='fa'>").addClass(icon),
+            $("<i class='fa'>").addClass(
+                getIconClassFromElementUri(element.getUri())
+            ),
             " "
         );
         return anchor.prop('outerHTML');
+    }
+
+    function getIconClassFromElementUri(elementUri){
+        switch (IdUri.getGraphElementTypeFromUri(elementUri)){
+            case GraphElementType.Relation :
+                return "fa-arrows-h";
+            case GraphElementType.Meta :
+                return "fa-tag";
+            default :
+                return "fa-circle-o";
+        }
     }
 
     function getContextCellContentForElement(element) {
