@@ -600,7 +600,7 @@ body.no-scroll { overflow: hidden; }
 
 .round-button { border-radius: 20px; }
 
-#drawn_graph { position: absolute; padding: 50%; }
+#drawn_graph { position: absolute; padding: 50%; top: 0; }
 
 a, input[type=button].link-like-button, button.link-like-button { color: #00005a; }
 

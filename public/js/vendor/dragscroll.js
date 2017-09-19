@@ -1,7 +1,7 @@
 /*
  * https://github.com/asvd/dragscroll
  *
- *  modified for bubl.guru added global disable option so that inner components
+ *  modified for mindrespect.com added global disable option so that inner components
  *  can still be dragged
  */
 
@@ -77,7 +77,7 @@
     };
 
     /*
-      bubl.guru always calls it manually
+      mindrespect.com always calls it manually
     if (_document.readyState == 'complete') {
         reset();
     } else {
