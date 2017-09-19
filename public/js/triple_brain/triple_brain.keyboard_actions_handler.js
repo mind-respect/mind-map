@@ -128,7 +128,7 @@ define([
             executeFeature(feature);
         });
         function isThereASpecialKeyPressed() {
-            return event.altKey || (event.metaKey && !UiUtils.isMacintosh());
+            return event.altKey || (event.metaKey && !UiUtils.isMacintosh()) || (event.ctrlKey && UiUtils.isMacintosh());
         }
     }
 

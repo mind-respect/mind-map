@@ -4,6 +4,7 @@
 
 define([
     "jquery",
+    "triple_brain.ui_utils",
     "triple_brain.graph_displayer",
     "triple_brain.vertex_ui",
     "triple_brain.vertex_service",
@@ -22,7 +23,7 @@ define([
     "jquery.triple_brain.search",
     "jquery.max_char",
     "jquery.safer-html"
-], function ($, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, WikidataAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, GraphElementHtmlBuilder, BubbleFactory, GraphElementUi, Point) {
+], function ($, UiUtils, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, WikidataAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, GraphElementHtmlBuilder, BubbleFactory, GraphElementUi, Point) {
     "use strict";
     var api = {};
     api.applyAutoCompleteIdentificationToLabelInput = function (input) {
@@ -144,7 +145,7 @@ define([
         var vertex = BubbleFactory.fromSubHtml(
             $(this)
         );
-        if (event.ctrlKey) {
+        if (UiUtils.isMacintosh() ? event.metaKey : event.ctrlKey) {
             if (vertex.isSelected()) {
                 SelectionHandler.removeVertex(vertex);
             } else {
