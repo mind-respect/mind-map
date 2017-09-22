@@ -5,10 +5,11 @@
 define([
         "jquery",
         "triple_brain.user_service",
+        "triple_brain.language_manager",
         "triple_brain.id_uri",
         "bootstrap"
     ],
-    function ($, UserService, IdUri) {
+    function ($, UserService, LanguageManager, IdUri) {
         "use strict";
         var api = {};
         api.setupModal = function () {
@@ -55,8 +56,12 @@ define([
             this.getRegisterLink().click(
                 function (event) {
                     event.preventDefault();
+                    var userData = this.getFormData();
+                    userData.preferred_locales = [
+                        LanguageManager.getBrowserLocale()
+                    ];
                     UserService.register(
-                        this.getFormData(),
+                        userData,
                         handleRegistrationSuccess,
                         function (errors) {
                             this.handleRegistrationError.call(this, errors);

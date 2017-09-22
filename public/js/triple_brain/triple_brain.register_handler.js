@@ -5,13 +5,11 @@
 define([
         "jquery",
         "triple_brain.user_service",
-        "triple_brain.id_uri",
-        "triple_brain.friendly_resource",
-        "triple_brain.friendly_resource_service",
+        "triple_brain.language_manager",
         "bootstrap",
         "jquery.i18next"
     ],
-    function ($, UserService, IdUri, FriendlyResource, FriendlyResourceService) {
+    function ($, UserService, LanguageManager) {
         "use strict";
         var api = {};
         api.setupModal = function () {
@@ -41,8 +39,16 @@ define([
                 "click",
                 function (event) {
                     event.preventDefault();
+                    var userData = this.getFormData();
+                    userData.preferred_locales = [
+                        LanguageManager.getBrowserLocale()
+                    ];
+                    var userData = this.getFormData();
+                    userData.preferred_locales = [
+                        LanguageManager.getBrowserLocale()
+                    ];
                     UserService.register(
-                        this.getFormData(),
+                        userData,
                         handleRegistrationSuccess,
                         function (errors) {
                             this.handleRegistrationError.call(this, errors);
@@ -92,19 +98,7 @@ define([
         };
 
         function handleRegistrationSuccess(user) {
-            UserService.getDefaultVertexUri(
-                user.user_name,
-                function (uri) {
-                    FriendlyResourceService.updateLabel(
-                        FriendlyResource.withUri(uri),
-                        user.user_name,
-                        function () {
-                            window.location = IdUri.htmlUrlForBubbleUri(uri);
-                        }
-                    );
-
-                }
-            );
+            window.location = "/user/" + user.user_name;
         }
 
         RegisterForm.prototype.handleRegistrationError = function (errors) {
