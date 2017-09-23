@@ -43,10 +43,6 @@ define([
                     userData.preferred_locales = [
                         LanguageManager.getBrowserLocale()
                     ];
-                    var userData = this.getFormData();
-                    userData.preferred_locales = [
-                        LanguageManager.getBrowserLocale()
-                    ];
                     UserService.register(
                         userData,
                         handleRegistrationSuccess,
