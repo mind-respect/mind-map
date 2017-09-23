@@ -36,7 +36,7 @@ requirejs.config({
         /*
          Bootstrap
          */
-        "bootstrap": "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min",
+        "bootstrap": "vendor/bootstrap/bootstrap",
         "bootstrap-datepicker": "vendor/bootstrap/bootstrap-datepicker",
         //"bootstrap-modal-carousel" : "vendor/bootstrap/bootstrap-modal-carousel",
         "ekko-lightbox": "vendor/bootstrap/ekko-lightbox",
