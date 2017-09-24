@@ -503,9 +503,7 @@ define([
                 SelectionHandler.setToSingleGraphElement(
                     bubbleToSelect
                 );
-            }
-            if (ancestor) {
-                ancestor.sideCenterOnScreenWithAnimation();
+                bubbleToSelect.sideCenterOnScreenWithAnimation();
             }
         };
 
