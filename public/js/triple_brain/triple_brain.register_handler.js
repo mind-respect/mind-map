@@ -6,10 +6,11 @@ define([
         "jquery",
         "triple_brain.user_service",
         "triple_brain.language_manager",
+        "mr.loading_flow",
         "bootstrap",
         "jquery.i18next"
     ],
-    function ($, UserService, LanguageManager) {
+    function ($, UserService, LanguageManager, LoadingFlow) {
         "use strict";
         var api = {};
         api.setupModal = function () {
@@ -39,6 +40,8 @@ define([
                 "click",
                 function (event) {
                     event.preventDefault();
+                    getModalSection().addClass("hidden");
+                    LoadingFlow.enter();
                     var userData = this.getFormData();
                     userData.preferred_locales = [
                         LanguageManager.getBrowserLocale()
@@ -95,6 +98,7 @@ define([
 
         function handleRegistrationSuccess(user) {
             window.location = "/user/" + user.user_name;
+            LoadingFlow.leave();
         }
 
         RegisterForm.prototype.handleRegistrationError = function (errors) {

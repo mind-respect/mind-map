@@ -13,7 +13,7 @@ define([
         "triple_brain.graph_element_ui",
         "triple_brain.bubble",
         "triple_brain.suggestion_service",
-        "mr.loading-flow",
+        "mr.loading_flow",
         "jquery.center-on-screen",
         "jquery.max_char"
     ],

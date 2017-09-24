@@ -13,7 +13,7 @@ define([
         "triple_brain.selection_handler",
         "triple_brain.center_bubble",
         "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
-        "mr.loading-flow"
+        "mr.loading_flow"
     ], function ($, EventBus, UiUtils, ImageDisplayer, GraphElementUi, GraphElementType, BubbleFactory, SelectionHandler, CenterBubble, PropertiesIndicator, LoadingFlow) {
         "use strict";
         var api = {};

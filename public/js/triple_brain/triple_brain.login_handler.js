@@ -7,9 +7,10 @@ define([
         "triple_brain.user_service",
         "triple_brain.language_manager",
         "triple_brain.id_uri",
+        "mr.loading_flow",
         "bootstrap"
     ],
-    function ($, UserService, LanguageManager, IdUri) {
+    function ($, UserService, LanguageManager, IdUri, LoadingFlow) {
         "use strict";
         var api = {};
         api.setupModal = function () {
@@ -56,6 +57,7 @@ define([
             this.getRegisterLink().click(
                 function (event) {
                     event.preventDefault();
+                    LoadingFlow.enter();
                     var userData = this.getFormData();
                     userData.preferred_locales = [
                         LanguageManager.getBrowserLocale()
@@ -116,6 +118,7 @@ define([
                 user.user_name,
                 function (uri) {
                     window.location = "/user/" + IdUri.usernameFromUri(uri);
+                    LoadingFlow.leave();
                 }
             );
         }
