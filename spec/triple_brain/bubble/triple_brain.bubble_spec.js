@@ -364,80 +364,105 @@ define([
                 otherRelation.hasImages()
             ).toBeFalsy();
         });
-        it("selects above sibling when available after it's removed", function () {
-            var scenario = new Scenarios.threeBubblesGraph();
-            var bubble1 = scenario.getBubble1InTree();
-            var newVertex;
-            bubble1.getController().addChild().then(function(tripleUi){
-                newVertex = tripleUi.destinationVertex();
+        describe("remove", function(){
+            it("selects above sibling when available after it's removed", function () {
+                var scenario = new Scenarios.threeBubblesGraph();
+                var bubble1 = scenario.getBubble1InTree();
+                var newVertex;
+                bubble1.getController().addChild().then(function(tripleUi){
+                    newVertex = tripleUi.destinationVertex();
+                });
+                expect(
+                    newVertex.getBubbleAbove().text()
+                ).toBe("b2");
+                var bubble2 = scenario.getBubble2InTree();
+                SelectionHandler.setToSingleGraphElement(newVertex);
+                expect(
+                    bubble2.isSelected()
+                ).toBeFalsy();
+                newVertex.remove();
+                expect(
+                    bubble2.isSelected()
+                ).toBeTruthy();
             });
-            expect(
-                newVertex.getBubbleAbove().text()
-            ).toBe("b2");
-            var bubble2 = scenario.getBubble2InTree();
-            SelectionHandler.setToSingleGraphElement(newVertex);
-            expect(
-                bubble2.isSelected()
-            ).toBeFalsy();
-            newVertex.remove();
-            expect(
-                bubble2.isSelected()
-            ).toBeTruthy();
-        });
-        it("selects bubble under when available after it's removed", function () {
-            var scenario = new Scenarios.threeBubblesGraph();
-            var bubble1 = scenario.getBubble1InTree();
-            var newVertex;
-            bubble1.getController().addChild().then(function(tripleUi){
-                newVertex = tripleUi.destinationVertex();
+            it("selects bubble under when available after it's removed", function () {
+                var scenario = new Scenarios.threeBubblesGraph();
+                var bubble1 = scenario.getBubble1InTree();
+                var newVertex;
+                bubble1.getController().addChild().then(function(tripleUi){
+                    newVertex = tripleUi.destinationVertex();
+                });
+                expect(
+                    newVertex.getBubbleAbove().text()
+                ).toBe("b2");
+                var bubble2 = scenario.getBubble2InTree();
+                SelectionHandler.setToSingleGraphElement(bubble2);
+                expect(
+                    newVertex.isSelected()
+                ).toBeFalsy();
+                bubble2.remove();
+                expect(
+                    newVertex.isSelected()
+                ).toBeTruthy();
             });
-            expect(
-                newVertex.getBubbleAbove().text()
-            ).toBe("b2");
-            var bubble2 = scenario.getBubble2InTree();
-            SelectionHandler.setToSingleGraphElement(bubble2);
-            expect(
-                newVertex.isSelected()
-            ).toBeFalsy();
-            bubble2.remove();
-            expect(
-                newVertex.isSelected()
-            ).toBeTruthy();
-        });
-        it("selects parent bubble when no siblings after it's removed", function () {
-            var scenario = new Scenarios.threeBubblesGraph();
-            var bubble1 = scenario.getBubble1InTree();
-            var bubble2 = scenario.getBubble2InTree();
-            SelectionHandler.setToSingleGraphElement(bubble2);
-            expect(
-                bubble1.isSelected()
-            ).toBeFalsy();
-            bubble2.remove();
-            expect(
-                bubble1.isSelected()
-            ).toBeTruthy();
-        });
-        it("selects parent bubble when no siblings after it's removed even when there's a tree above", function () {
-            var scenario = new Scenarios.threeBubblesGraph();
-            var b1 = scenario.getBubble1InTree();
-            var b2 = scenario.getBubble2InTree();
-            var underB2;
-            b1.getController().addChild().then(function(tripleUi){
-                underB2 = tripleUi.destinationVertex();
+            it("selects parent bubble when no siblings after it's removed", function () {
+                var scenario = new Scenarios.threeBubblesGraph();
+                var bubble1 = scenario.getBubble1InTree();
+                var bubble2 = scenario.getBubble2InTree();
+                SelectionHandler.setToSingleGraphElement(bubble2);
+                expect(
+                    bubble1.isSelected()
+                ).toBeFalsy();
+                bubble2.remove();
+                expect(
+                    bubble1.isSelected()
+                ).toBeTruthy();
             });
-            b2.expand();
-            b2.getController().addChild();
-            b2.getController().addChild();
-            underB2.getController().addChild();
-            var childOfBubbleUnderB2 = underB2.getTopMostChildBubble().getTopMostChildBubble();
-            SelectionHandler.setToSingleGraphElement(childOfBubbleUnderB2);
-            expect(
-                underB2.isSelected()
-            ).toBeFalsy();
-            childOfBubbleUnderB2.remove();
-            expect(
-                underB2.isSelected()
-            ).toBeTruthy();
+            it("selects parent bubble when no siblings after it's removed even when there's a tree above", function () {
+                var scenario = new Scenarios.threeBubblesGraph();
+                var b1 = scenario.getBubble1InTree();
+                var b2 = scenario.getBubble2InTree();
+                var underB2;
+                b1.getController().addChild().then(function(tripleUi){
+                    underB2 = tripleUi.destinationVertex();
+                });
+                b2.expand();
+                b2.getController().addChild();
+                b2.getController().addChild();
+                underB2.getController().addChild();
+                var childOfBubbleUnderB2 = underB2.getTopMostChildBubble().getTopMostChildBubble();
+                SelectionHandler.setToSingleGraphElement(childOfBubbleUnderB2);
+                expect(
+                    underB2.isSelected()
+                ).toBeFalsy();
+                childOfBubbleUnderB2.remove();
+                expect(
+                    underB2.isSelected()
+                ).toBeTruthy();
+            });
+            it("selects above sibling when available after it's removed even when parent is a group relation", function () {
+                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+                var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+                groupRelation.expand();
+                var vertexAbove = TestUtils.getChildWithLabel(
+                    groupRelation,
+                    "Possession of book 1"
+                ).getTopMostChildBubble();
+                expect(
+                    vertexAbove.isVertex()
+                ).toBeTruthy();
+                var vertexUnder = vertexAbove.getBubbleUnder();
+                expect(
+                    vertexUnder.isVertex()
+                ).toBeTruthy();
+                expect(
+                    vertexAbove.isSelected()
+                ).toBeFalsy();
+                vertexUnder.remove();
+                expect(
+                    vertexAbove.isSelected()
+                ).toBeTruthy();
+            });
         });
         it("doesn't create a duplicate when moving a bubble to the center vertex", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();

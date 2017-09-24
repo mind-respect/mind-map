@@ -490,18 +490,22 @@ define([
             );
         };
 
-        api.Bubble.prototype.remove = function (parentVertex, bubbleToSelect) {
+        api.Bubble.prototype.remove = function (ancestor, bubbleToSelect) {
             this._removeHideOrShow("remove");
             this.removeHiddenRelationsContainer();
-            bubbleToSelect = bubbleToSelect && bubbleToSelect.getParentVertex().isSameBubble(parentVertex) ?
-                bubbleToSelect : parentVertex;
+            var sharesSameAncestor = bubbleToSelect && bubbleToSelect.getClosestParentInTypes(
+                [ancestor.getGraphElementType()]
+            ).isSameBubble(ancestor);
+            if(!sharesSameAncestor){
+                bubbleToSelect = ancestor;
+            }
             if(bubbleToSelect){
                 SelectionHandler.setToSingleGraphElement(
                     bubbleToSelect
                 );
             }
-            if (parentVertex) {
-                parentVertex.sideCenterOnScreenWithAnimation();
+            if (ancestor) {
+                ancestor.sideCenterOnScreenWithAnimation();
             }
         };
 
