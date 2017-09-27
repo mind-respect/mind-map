@@ -49,7 +49,7 @@ define([
         var promises = [];
         var movedEdge = vertexUi.getParentBubble();
         var identifiers = this.getModel().hasIdentifications() ?
-            this.getModel().getIdentifiers():
+            this.getModel().getIdentifiers() :
             this.getModel().getIdentifiersIncludingSelf();
         promises.push(
             movedEdge.getController().addIdentifiers(
@@ -72,7 +72,7 @@ define([
             }
         }
         var identifiers = this.getModel().hasIdentifications() ?
-            this.getModel().getIdentifiers():
+            this.getModel().getIdentifiers() :
             this.getModel().getIdentifiersIncludingSelf();
         var groupRelationIdentifiers = parentBubble.isGroupRelation() ?
             this.getModel().buildSelfIdentifier() :
@@ -99,7 +99,8 @@ define([
         ).ask().then(
             deleteAfterConfirmationBehavior.bind(this)
         );
-        function deleteAfterConfirmationBehavior(){
+
+        function deleteAfterConfirmationBehavior() {
             return EdgeService.remove(this.getUi(), function () {
                 var parentBubble = this.getUi().getParentBubble();
                 var childVertex = this.getUi().getTopMostChildBubble();
@@ -146,6 +147,27 @@ define([
             self.getUi().inverse();
         });
     };
+    EdgeController.prototype.sourceVertex = function (sourceVertex) {
+        var self = this;
+        if (!sourceVertex.isExpanded()) {
+            return sourceVertex.getController().expand().then(doIt);
+        } else {
+            return doIt();
+        }
+
+        function doIt() {
+            if (self.getUi().isInverse()) {
+                return EdgeService.changeSourceVertex(
+                    sourceVertex,
+                    self.getUi()
+                );
+            }
+            return EdgeService.changeDestinationVertex(
+                sourceVertex,
+                self.getUi()
+            );
+        }
+    };
     EdgeController.prototype.changeEndVertex = function (endVertex) {
         var self = this;
         if (!endVertex.isExpanded()) {
@@ -153,6 +175,7 @@ define([
         } else {
             return doIt();
         }
+
         function doIt() {
             if (self.getUi().isInverse()) {
                 return EdgeService.changeDestinationVertex(

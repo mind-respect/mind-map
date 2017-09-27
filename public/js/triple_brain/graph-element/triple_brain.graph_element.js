@@ -248,5 +248,8 @@ define([
         );
     };
 
+    api.GraphElement.prototype.isPristine = function(){
+        return this.isLabelEmpty() && !this.hasIdentifications();
+    };
     return api;
 });

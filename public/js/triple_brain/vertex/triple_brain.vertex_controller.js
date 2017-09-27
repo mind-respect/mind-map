@@ -44,6 +44,68 @@ define([
         );
     };
 
+    VertexController.prototype.convertToRelationCanDo = function () {
+        if (!this.isSingleAndOwned()) {
+            return false;
+        }
+        if (!this.getUi().isExpanded()) {
+            return false;
+        }
+        if(this.getModel().isLabelEmpty()){
+            return false;
+        }
+        var numberOfChild = this.getModel().getNumberOfChild();
+        if (numberOfChild >= 2) {
+            return false;
+        }
+        var parentBubble = this.getUi().getParentBubble();
+        if (!parentBubble.isRelation() || !parentBubble.getModel().isPristine()) {
+            return false;
+        }
+        if (numberOfChild === 1) {
+            var childRelation = this.getUi().getTopMostChildBubble();
+            return childRelation.isRelation() && childRelation.getModel().isPristine();
+        }
+        return true;
+    };
+
+    VertexController.prototype.convertToRelation = function () {
+        var parentRelation = this.getUi().getParentBubble();
+        var promises = [];
+        var label = this.getModel().getLabel();
+        var toSelect;
+        if (this.getModel().getNumberOfChild() === 1) {
+            var childRelation = this.getUi().getTopMostChildBubble();
+            promises.push(
+                childRelation.getController().setLabel(
+                    label
+                )
+            );
+            promises.push(
+                childRelation.getController().moveUnder(
+                    parentRelation
+                )
+            );
+            promises.push(
+                this.remove(true)
+            );
+            toSelect = childRelation;
+        } else {
+            promises.push(
+                parentRelation.getController().setLabel(
+                    label
+                )
+            );
+            this.setLabel(
+                ""
+            );
+            toSelect = this.getUi();
+        }
+        return $.when.apply($, promises).then(function () {
+            SelectionHandler.setToSingleGraphElement(toSelect);
+        });
+    };
+
     VertexController.prototype.addSiblingCanDo = function () {
         return this.isSingleAndOwned() && !this.vertices.isCenterBubble() &&
             !this.getUi().getParentBubble().getParentBubble().isMeta();
@@ -115,7 +177,7 @@ define([
         ).build();
     };
 
-        VertexController.prototype.togglePublicPrivate = function () {
+    VertexController.prototype.togglePublicPrivate = function () {
         if (this._areAllElementsPrivate()) {
             this.makePublic();
         } else if (this._areAllElementsPublic()) {

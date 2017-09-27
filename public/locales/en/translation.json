@@ -326,7 +326,8 @@
     "wikidataOff": "Deactivate autocompletion from Wikidata",
     "copy": "Copy",
     "undo": "Undo",
-    "redo": "Redo"
+    "redo": "Redo",
+    "convertToRelation": "Convert to relation"
   },
   "hidden_properties_tooltip": "Expand (ctrl+E)",
   "hidden_properties_tooltip_forMac": "Expand (⌘+E)",

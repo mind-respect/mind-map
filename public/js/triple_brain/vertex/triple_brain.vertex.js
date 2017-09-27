@@ -81,6 +81,10 @@ define([
         return this.vertexServerFormat.vertex.numberOfConnectedEdges;
     };
 
+    Vertex.prototype.getNumberOfChild = function () {
+        return this.getNumberOfConnectedEdges() - 1;
+    };
+
     Vertex.prototype.incrementNumberOfConnectedEdges = function () {
         this.vertexServerFormat.vertex.numberOfConnectedEdges++;
     };
