@@ -327,7 +327,8 @@
     "copy": "Copy",
     "undo": "Undo",
     "redo": "Redo",
-    "convertToRelation": "Convert to relation"
+    "convertToRelation": "Convert to relation",
+    "convertToGroupRelation": "Convert to group relation"
   },
   "hidden_properties_tooltip": "Expand (ctrl+E)",
   "hidden_properties_tooltip_forMac": "Expand (⌘+E)",

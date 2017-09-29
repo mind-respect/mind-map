@@ -329,7 +329,8 @@
     "copy": "Copier",
     "undo": "Annuller",
     "redo": "Refaire",
-    "convertToRelation": "Convertir en relation"
+    "convertToRelation": "Convertir en relation",
+    "convertToGroupRelation": "Convertir en relation groupée"
   },
   "hidden_properties_tooltip": "Expandre (ctrl+E)",
   "hidden_properties_tooltip_forMac": "Expandre (⌘+E)",

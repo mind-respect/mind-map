@@ -54,11 +54,10 @@ define([
                 );
             }
         };
-        api.updateLabel = function (edge, label, callback) {
-            FriendlyResourceService.updateLabel(
+        api.updateLabel = function (edge, label) {
+            return FriendlyResourceService.updateLabel(
                 edge,
-                label,
-                callback
+                label
             );
         };
         api.inverse = function (edge) {

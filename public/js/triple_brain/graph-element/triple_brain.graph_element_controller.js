@@ -65,7 +65,7 @@ define([
         this.getUi().setText(
             newLabel
         );
-        FriendlyResourceService.updateLabel(
+        return FriendlyResourceService.updateLabel(
             this.getUi(),
             newLabel
         );

@@ -68,11 +68,10 @@ define([
                 url: getVerticesUrl() + '/collection'
             });
         };
-        api.updateLabel = function (vertex, label, callback) {
-            FriendlyResourceService.updateLabel(
+        api.updateLabel = function (vertex, label) {
+            return FriendlyResourceService.updateLabel(
                 vertex,
-                label,
-                callback
+                label
             );
         };
         api.getSuggestions = function (vertex) {

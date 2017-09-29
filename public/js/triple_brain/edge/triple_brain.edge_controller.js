@@ -58,7 +58,7 @@ define([
         );
         promises.push(
             movedEdge.getController().changeEndVertex(
-                this.getUi()
+                this.getUi().getParentVertex()
             )
         );
         return $.when.apply($, promises);

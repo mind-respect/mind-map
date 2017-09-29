@@ -224,9 +224,9 @@ define([
         api.Bubble.prototype.visitClosestChildInTypes = function (types, visitor) {
             this.visitAllImmediateChild(function (child) {
                 if (child.isInTypes(types)) {
-                    visitor(child);
+                    return visitor(child);
                 } else {
-                    child.visitClosestChildInTypes(
+                    return child.visitClosestChildInTypes(
                         types,
                         visitor
                     );
@@ -282,7 +282,7 @@ define([
         api.Bubble.prototype.visitAllImmediateChild = function (visitor) {
             $.each(this.getChildrenBubblesHtml(), function () {
                 return visitor(BubbleFactory.fromHtml(
-                    $(this)
+                     $(this)
                 ));
             });
         };

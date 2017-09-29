@@ -19,8 +19,9 @@ define([
     "triple_brain.graph_element_service",
     "triple_brain.schema_suggestion",
     "triple_brain.event_bus",
-    "triple_brain.id_uri"
-], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, BubbleDeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, EventBus, IdUri) {
+    "triple_brain.id_uri",
+    "triple_brain.graph_element_type"
+], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, BubbleDeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, EventBus, IdUri, GraphElementType) {
     "use strict";
     var api = {};
 
@@ -51,7 +52,7 @@ define([
         if (!this.getUi().isExpanded()) {
             return false;
         }
-        if(this.getModel().isLabelEmpty()){
+        if (this.getModel().isLabelEmpty()) {
             return false;
         }
         var numberOfChild = this.getModel().getNumberOfChild();
@@ -103,6 +104,57 @@ define([
         }
         return $.when.apply($, promises).then(function () {
             SelectionHandler.setToSingleGraphElement(toSelect);
+        });
+    };
+
+    VertexController.prototype.convertToGroupRelationCanDo = function () {
+        if (!this.isSingleAndOwned()) {
+            return false;
+        }
+        if (!this.getUi().isExpanded()) {
+            return false;
+        }
+        if (this.getModel().isLabelEmpty()) {
+            return false;
+        }
+        var numberOfChild = this.getModel().getNumberOfChild();
+        if (numberOfChild <= 1) {
+            return false;
+        }
+        var allChildAreEmptyRelations = true;
+        this.getUi().visitAllImmediateChild(function (child) {
+            if (!child.isRelation() || !child.getModel().isPristine()) {
+                allChildAreEmptyRelations = false;
+            }
+        });
+        if (!allChildAreEmptyRelations) {
+            return false;
+        }
+        var parentBubble = this.getUi().getParentBubble();
+        return parentBubble.isRelation() && parentBubble.getModel().isPristine();
+    };
+
+    VertexController.prototype.convertToGroupRelation = function () {
+        var parentRelation = this.getUi().getParentBubble();
+        var promise = parentRelation.getController().setLabel(
+            this.getModel().getLabel()
+        );
+        this.getUi().visitClosestChildOfType(GraphElementType.Vertex, function (childRelation) {
+            promise = promise.then(function () {
+                parentRelation = this.getUi().getParentBubble();
+                if (parentRelation.getParentBubble().isGroupRelation()) {
+                    parentRelation = parentRelation.getParentBubble();
+                }
+                return childRelation.getController().moveUnderParent(
+                    parentRelation
+                );
+            }.bind(this));
+        }.bind(this));
+        promise = promise.then(function () {
+            return this.remove(true);
+        }.bind(this));
+        return promise.then(function () {
+            SelectionHandler.setToSingleGraphElement(parentRelation);
         });
     };
 
