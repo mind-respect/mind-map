@@ -503,7 +503,9 @@ define([
                 SelectionHandler.setToSingleGraphElement(
                     bubbleToSelect
                 );
-                bubbleToSelect.sideCenterOnScreenWithAnimation();
+                if(!bubbleToSelect.getHtml().isFullyOnScreen()){
+                    bubbleToSelect.sideCenterOnScreenWithAnimation();
+                }
             }
         };
 
