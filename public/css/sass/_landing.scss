@@ -2,6 +2,14 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
+
+footer {
+  text-align: center;
+  .fa-copyright {
+    transform: rotate(-180deg);
+  }
+}
+
 #app-presentation {
   border-bottom: none;
   $height: 454px;
