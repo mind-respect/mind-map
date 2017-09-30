@@ -15,39 +15,40 @@ define([
     "use strict";
 
     var api = {},
-    tabKeyNumber = 9,
-    leftArrowKeyNumber = 37,
-    rightArrowKeyNumber = 39,
-    upArrowKeyNumber = 38,
-    downArrowKeyNumber = 40,
-    gArrowKeyNumber = 71,
-    deleteKeyNumber = 46,
-    backspaceKeyNumber = 8,
-    escapeKeyNumber = 27,
-    spacebarKeyNumber = 32,
-    enterKeyCode = 13,
-    dKeyNumber = 68,
-    eKeyNumber = 69,
-    hKeyNumber = 72,
-    iKeyNumber = 73,
-    pKeyNumber = 80,
-    sKeyNumber = 83,
-    zeroKeyNumber = 48,
-    xKeyNumber = 88,
-    vKeyNumber = 86,
-    yKeyNumber = 89,
-    zKeyNumber = 90,
-    plusKeyNumber = 107,
-    minusKeyNumber = 109,
-    plusKeyNumberMac = 187,
-    minusKeyNumberMac = 189,
+        tabKeyNumber = 9,
+        leftArrowKeyNumber = 37,
+        rightArrowKeyNumber = 39,
+        upArrowKeyNumber = 38,
+        downArrowKeyNumber = 40,
+        gArrowKeyNumber = 71,
+        deleteKeyNumber = 46,
+        backspaceKeyNumber = 8,
+        escapeKeyNumber = 27,
+        spacebarKeyNumber = 32,
+        enterKeyCode = 13,
+        dKeyNumber = 68,
+        eKeyNumber = 69,
+        hKeyNumber = 72,
+        iKeyNumber = 73,
+        pKeyNumber = 80,
+        sKeyNumber = 83,
+        zeroKeyNumber = 48,
+        xKeyNumber = 88,
+        vKeyNumber = 86,
+        yKeyNumber = 89,
+        zKeyNumber = 90,
+        oKeyNumber = 79,
+        plusKeyNumber = 107,
+        minusKeyNumber = 109,
+        plusKeyNumberMac = 187,
+        minusKeyNumberMac = 189,
 
-    nonCtrlPlusActions = defineNonCtrlPlusKeysAndTheirActions(),
-    ctrlPlusActions = defineCtrlPlusKeysAndTheirActions();
+        nonCtrlPlusActions = defineNonCtrlPlusKeysAndTheirActions(),
+        ctrlPlusActions = defineCtrlPlusKeysAndTheirActions();
 
     api._ctrlKeyNumber = UiUtils.isMacintosh() ? 91 : 17;
 
-    api.disable = function(){
+    api.disable = function () {
         $(window).off(
             "keydown", keyDownHandler
         ).off(
@@ -55,7 +56,7 @@ define([
         );
     };
 
-    api.enable = function(){
+    api.enable = function () {
         api.disable();
         $(window).on(
             "keydown", keyDownHandler
@@ -70,7 +71,7 @@ define([
             api._handleKeyboardActions
         );
     };
-    
+
     api._handleKeyboardActions = function () {
         api.enable();
     };
@@ -111,9 +112,9 @@ define([
         var feature = actionSet[event.which];
         if (feature === undefined) {
             var isPasting = isCombineKeyPressed && vKeyNumber && event.which;
-                if (!isPasting && event.which !== api._ctrlKeyNumber && !MindMapInfo.isViewOnly() && SelectionHandler.isOnlyASingleElementSelected()) {
+            if (!isPasting && event.which !== api._ctrlKeyNumber && !MindMapInfo.isViewOnly() && SelectionHandler.isOnlyASingleElementSelected()) {
                 var selectedElement = SelectionHandler.getSingleElement();
-                if(selectedElement.isLabelEditable()){
+                if (selectedElement.isLabelEditable()) {
                     selectedElement.focus();
                 }
             }
@@ -121,12 +122,13 @@ define([
         }
         event.preventDefault();
         event.stopPropagation();
-        if(!Array.isArray(feature)){
+        if (!Array.isArray(feature)) {
             feature = [feature];
         }
-        feature.forEach(function(feature){
+        feature.forEach(function (feature) {
             executeFeature(feature);
         });
+
         function isThereASpecialKeyPressed() {
             return event.altKey || (event.metaKey && !UiUtils.isMacintosh()) || (event.ctrlKey && UiUtils.isMacintosh());
         }
@@ -188,7 +190,7 @@ define([
         var actions = {};
         actions[gArrowKeyNumber] = [{
             action: "identify"
-        },{
+        }, {
             action: "identifyWhenMany"
         }];
         actions[eKeyNumber] = {
@@ -223,6 +225,11 @@ define([
         actions[pKeyNumber] = {
             action: "togglePublicPrivate"
         };
+        actions[oKeyNumber] = [{
+            action: "convertToRelation"
+        }, {
+            action: "convertToGroupRelation"
+        }];
         actions[plusKeyNumber] = {
             action: "zoomIn"
         };

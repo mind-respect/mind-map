@@ -371,6 +371,14 @@
       "really": "Do you really want to remove that?",
       "info": "This action does not remove the bubble(s). It will still be accessible throught the main search and by it's relations."
     },
-    "reference": "Tag"
+    "reference": "Tag",
+    "typeFilter":{
+      "tag": "Tag",
+      "vertex": "Bubble",
+      "relation": "Relation",
+      "bubbleType": "Bubble type",
+      "addAll": "Add All",
+      "removeAll": "Remove All"
+    }
   }
 }

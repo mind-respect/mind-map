@@ -33,6 +33,7 @@ define([
             handleRemoveCenterBtnClick();
             handleCreateNewConceptButton();
             hideElementsForOwnerOnlyIfApplicable();
+            setupTypeFilters();
             EventBus.subscribe("localized-text-loaded", function () {
                 $(".fixed-table-toolbar .search input").attr(
                     "data-i18n",
@@ -66,6 +67,7 @@ define([
                 centerElement: element,
                 bubbleLabel: getLabelCellContentForElement(element),
                 bubbleLabelValue: element.getLabel(),
+                graphElementType: IdUri.getGraphElementTypeFromUri(element.getUri()),
                 context: getContextCellContentForElement(element),
                 lastVisit: getLastVisitCellContentForElement(element),
                 lastVisitValue: element.getLastCenterDate().getTime(),
@@ -167,8 +169,8 @@ define([
         return anchor.prop('outerHTML');
     }
 
-    function getIconClassFromElementUri(elementUri){
-        switch (IdUri.getGraphElementTypeFromUri(elementUri)){
+    function getIconClassFromElementUri(elementUri) {
+        switch (IdUri.getGraphElementTypeFromUri(elementUri)) {
             case GraphElementType.Relation :
                 return "fa-arrows-h";
             case GraphElementType.Meta :
@@ -337,5 +339,73 @@ define([
                 )
             );
         }.bind(this));
+    }
+
+    function setupTypeFilters() {
+        setupAddAll();
+        setupRemoveAll();
+        getFilterByTypeInputs().click(reviewTypeFilters);
+        reviewTypeFilters();
+    }
+
+    function reviewTypeFilters() {
+        var typesToFilter = [];
+        $.each(getFilterByTypeInputs(), function () {
+            var input = $(this);
+            if (input.prop("checked")) {
+                typesToFilter.push(
+                    input.data("filterName")
+                );
+            }
+        });
+        table.bootstrapTable('filterBy', {
+            "graphElementType": typesToFilter
+        });
+        getAddAllTypeFiltersButton().removeClass("hidden");
+        getRemoveAllTypeFiltersButton().removeClass("hidden");
+        if (0 === typesToFilter.length) {
+            getRemoveAllTypeFiltersButton().addClass("hidden");
+        }
+        if (3 === typesToFilter.length) {
+            getAddAllTypeFiltersButton().addClass("hidden");
+        }
+    }
+
+    function setupAddAll() {
+        getAddAllTypeFiltersButton().click(function (event) {
+            event.preventDefault();
+            $.each(getFilterByTypeInputs(), function () {
+                var input = $(this);
+                if (!input.prop("checked")) {
+                    input.click();
+                }
+            });
+        });
+    }
+
+    function setupRemoveAll() {
+        getRemoveAllTypeFiltersButton().click(function (event) {
+            event.preventDefault();
+            $.each(getFilterByTypeInputs(), function () {
+                var input = $(this);
+                if (input.prop("checked")) {
+                    input.click();
+                }
+            });
+        });
+    }
+
+    function getAddAllTypeFiltersButton() {
+        return $("#addAllTypeFilters");
+    }
+
+    function getRemoveAllTypeFiltersButton() {
+        return $("#removeAllTypeFilter");
+    }
+
+    function getFilterByTypeInputs() {
+        return _container.find(
+            $("input.filter-type-checkbox")
+        );
     }
 });

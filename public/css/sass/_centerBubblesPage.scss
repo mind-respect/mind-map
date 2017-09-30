@@ -140,4 +140,9 @@ $tagCloudFontSize: 0.6em;
     overflow: hidden;
     font-size: $tagCloudFontSize;
   }
+  .typeFilters{
+    ul{
+      display:inline-block;
+    }
+  }
 }

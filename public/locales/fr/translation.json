@@ -373,6 +373,13 @@
       "really": "Voulez-vous vraiment supprimer ça?",
       "info": "Cette action ne supprime pas la bulle(s). Elle pourra toujours être trouvée par la recherche principale et par ses relations."
     },
-    "reference": "Étiquette"
+    "typeFilter":{
+      "tag": "Étiquette",
+      "vertex": "Bulle",
+      "relation": "Relation",
+      "bubbleType": "Type de bulle",
+      "addAll": "Ajouter tout",
+      "removeAll": "Enlever tout"
+    }
   }
 }

@@ -30,7 +30,7 @@ requirejs.config({
         "jquery.is-fully-on-screen": "jquery/jquery.is-fully-on-screen",
         "jquery.i18next": "vendor/i18next.amd.withJQuery-1.6.3",
         "masonry": "vendor/masonry.pkgd.min",
-        "bootstrap-table": "jquery/bootstrap-table.min",
+        "bootstrap-table": "jquery/bootstrap-table",
         "bootstrap-table-lang": "jquery/bootstrap-table-zh-CN.min",
 
         /*
