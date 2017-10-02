@@ -147,6 +147,10 @@ define([
         return 1 === api.getNbSelectedElements();
     };
 
+    api.isEmpty = function(){
+        return 0 === api.getNbSelected();
+    };
+
     api.reflectSelectionChange = function() {
         EventBus.publish(
             "/event/ui/selection/changed",

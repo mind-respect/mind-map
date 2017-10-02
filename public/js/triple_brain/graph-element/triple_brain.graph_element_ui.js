@@ -715,7 +715,9 @@ define([
         if (!this.isSuggestion()) {
             this._updateLabelsOfElementsWithSameUri();
         }
-        SelectionHandler.setToSingleGraphElement(this);
+        if(SelectionHandler.isEmpty()){
+            SelectionHandler.setToSingleGraphElement(this);
+        }
     };
 
     api.GraphElementUi.prototype.removeSingleSelected = function () {
