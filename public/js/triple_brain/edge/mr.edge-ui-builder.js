@@ -134,6 +134,9 @@ define([
                 var edge = BubbleFactory.fromSubHtml(
                     $(this)
                 );
+                if(!edge.isSetAsSameAsGroupRelation()){
+                    return;
+                }
                 edge.setAsNotSameAsGroupRelation();
                 edge.focus();
             });

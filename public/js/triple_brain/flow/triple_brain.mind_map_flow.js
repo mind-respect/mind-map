@@ -79,7 +79,7 @@ define([
             }
             centralBubble.setAsCentral();
             GraphUi.getDrawnGraph().on(
-                "click",
+                "mousedown",
                 function (event) {
                     if (UiUtils.isMacintosh() ? event.metaKey : event.ctrlKey)
                     {

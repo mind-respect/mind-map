@@ -26,7 +26,8 @@ define([
         });
     };
     api.setUpLabel = function (label) {
-        label.blur(function () {
+        label.blur(function (event) {
+            console.log("blur");
             var $input = $(this),
                 elementUi = BubbleFactory.fromSubHtml($input);
             if (elementUi.isSuggestion() && elementUi.hasTextChangedAfterModification()) {

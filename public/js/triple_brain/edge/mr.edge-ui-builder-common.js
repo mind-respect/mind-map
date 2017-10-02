@@ -32,7 +32,7 @@ define([
         var labelContainer = $(
             "<div class='label-container'>"
         ).appendTo(bubbleContentContainer).on(
-            "click",
+            "mousedown",
             function (event) {
                 event.stopPropagation();
                 var edge = BubbleFactory.fromSubHtml(

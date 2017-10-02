@@ -117,7 +117,7 @@ define([
     };
     api.setUpClickBehavior = function (html, isViewOnly) {
         html.on(
-            "click",
+            "mousedown",
             clickHandler
         );
         if (!MindMapInfo.isViewOnly() && !isViewOnly) {
