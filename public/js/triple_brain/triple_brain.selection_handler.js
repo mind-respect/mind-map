@@ -9,9 +9,8 @@ define([
     "triple_brain.ui_utils",
     "triple_brain.graph_displayer",
     "triple_brain.event_bus",
-    "triple_brain.graph_element_type",
     'jquery.performance'
-], function ($, GraphUi, ScrollOnMouseFrontier, UiUtils, GraphDisplayer, EventBus, GraphElementType) {
+], function ($, GraphUi, ScrollOnMouseFrontier, UiUtils, GraphDisplayer, EventBus) {
     "use strict";
     var api = {};
     var selectedRelations = [];
