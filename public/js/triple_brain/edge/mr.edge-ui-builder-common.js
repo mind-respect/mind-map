@@ -31,18 +31,7 @@ define([
         var bubbleContentContainer = edgeHtml.find(".in-bubble-content");
         var labelContainer = $(
             "<div class='label-container'>"
-        ).appendTo(bubbleContentContainer);
-        var labelAndButtons = $(
-            "<div class='label label-info label-and-buttons'>"
-        );
-        var label = $(
-            "<div class='bubble-label'>"
-        ).text(
-            text
-        ).attr(
-            "data-placeholder",
-            whenEmptyLabel
-        ).on(
+        ).appendTo(bubbleContentContainer).on(
             "click",
             function (event) {
                 event.stopPropagation();
@@ -59,6 +48,17 @@ define([
                     SelectionHandler.setToSingleRelation(edge);
                 }
             }
+        );
+        var labelAndButtons = $(
+            "<div class='label label-info label-and-buttons'>"
+        );
+        var label = $(
+            "<div class='bubble-label'>"
+        ).text(
+            text
+        ).attr(
+            "data-placeholder",
+            whenEmptyLabel
         ).appendTo(
             labelAndButtons
         ).tripleBrainAutocomplete({
