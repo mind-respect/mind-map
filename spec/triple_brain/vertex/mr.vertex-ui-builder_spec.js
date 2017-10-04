@@ -65,7 +65,7 @@ define([
                 bubble1Duplicate.hasTheDuplicateButton()
             ).toBeTruthy();
         });
-        it("doesn't move to a parent bubble that is the child of the dragged one", function () {
+        xit("doesn't move to a parent bubble that is the child of the dragged one", function () {
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             TestUtils.startDragging(bubble1);
             var bubble2 = TestUtils.getChildWithLabel(

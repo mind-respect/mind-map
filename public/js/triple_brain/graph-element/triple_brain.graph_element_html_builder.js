@@ -14,8 +14,9 @@ define([
     "triple_brain.graph_element_main_menu",
     "triple_brain.graph_element_ui",
     "triple_brain.edge_service",
-    "triple_brain.mind_map_info"
-], function ($, EventBus, BubbleFactory, SuggestionService, FriendlyResourceService, GraphElementService, SelectionHandler, GraphUi, GraphElementMainMenu, GraphElementUi, EdgeService, MindMapInfo) {
+    "triple_brain.mind_map_info",
+    "triple_brain.id_uri"
+], function ($, EventBus, BubbleFactory, SuggestionService, FriendlyResourceService, GraphElementService, SelectionHandler, GraphUi, GraphElementMainMenu, GraphElementUi, EdgeService, MindMapInfo, IdUri) {
     "use strict";
     var enterKeyCode = 13,
         escapeKeyCode = 27,
@@ -27,7 +28,6 @@ define([
     };
     api.setUpLabel = function (label) {
         label.blur(function (event) {
-            console.log("blur");
             var $input = $(this),
                 elementUi = BubbleFactory.fromSubHtml($input);
             if (elementUi.isSuggestion() && elementUi.hasTextChangedAfterModification()) {
@@ -45,6 +45,7 @@ define([
             }
             function doIt() {
                 elementUi.getModel().setLabel(elementUi.text());
+                SelectionHandler.removeAll();
                 elementUi.labelUpdateHandle();
                 if (!elementUi.hasTextChangedAfterModification()) {
                     return;
@@ -158,17 +159,11 @@ define([
             $(this).closest(".vertex-tree-container").removeClass("drag-over");
         });
     };
-    api.setupDragAndDrop = function (graphElementUi) {
-        if (MindMapInfo.isViewOnly()) {
-            return;
-        }
-        graphElementUi.getHtml().find(".in-bubble-content-wrapper").mousedown(function () {
-            GraphUi.disableDragScroll();
-        }).click(function () {
-            GraphUi.enableDragScroll();
-        }).mouseleave(function () {
-            GraphUi.enableDragScroll();
-        });
+    api.setupDrag = function (graphElementUi) {
+        graphElementUi.getHtml().prop(
+            "draggable",
+            "true"
+        );
         graphElementUi.getHtml().on("dragstart", function (event) {
             //event.originalEvent is undefined when using jasmine and v8 :S
             if(event.originalEvent){
@@ -200,6 +195,18 @@ define([
                 $('#drag-bubble-text-dump').empty();
                 GraphUi.enableDragScroll();
             });
+    };
+    api.setupDrop = function (graphElementUi) {
+        if (MindMapInfo.isViewOnly()) {
+            return;
+        }
+        graphElementUi.getHtml().find(".in-bubble-content-wrapper").mousedown(function () {
+            GraphUi.disableDragScroll();
+        }).click(function () {
+            GraphUi.enableDragScroll();
+        }).mouseleave(function () {
+            GraphUi.enableDragScroll();
+        });
         graphElementUi.getDropContainer().on(
             "dragover", function (event) {
                 event.preventDefault();

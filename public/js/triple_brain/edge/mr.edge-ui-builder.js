@@ -39,6 +39,9 @@ define([
             if (isInverse) {
                 ui.inverse();
             }
+            if (!MindMapInfo.isViewOnly()) {
+                GraphElementHtmlBuilder.setupDrag(ui);
+            }
             model.setSourceVertex(
                 isInverse ?
                     childUi.getModel() :
@@ -65,7 +68,7 @@ define([
             }
             var propertiesIndicator = ui.buildHiddenNeighborPropertiesIndicator();
             propertiesIndicator.hide();
-            GraphElementHtmlBuilder.setupDragAndDrop(
+            GraphElementHtmlBuilder.setupDrop(
                 ui
             );
             EventBus.publish(

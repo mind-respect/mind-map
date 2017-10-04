@@ -13,9 +13,10 @@ define([
         "triple_brain.graph_element_ui",
         "triple_brain.graph_ui",
         "triple_brain.center_bubble",
+        "triple_brain.mind_map_info",
         "jquery.is-fully-on-screen",
         "jquery.center-on-screen"
-    ], function ($, EventBus, MindMapTemplate, BubbleFactory, RelativeTreeVertex, VertexUiBuilderCommon, GraphElementHtmlBuilder, GraphElementUi, GraphUi, CenterBubble) {
+    ], function ($, EventBus, MindMapTemplate, BubbleFactory, RelativeTreeVertex, VertexUiBuilderCommon, GraphElementHtmlBuilder, GraphElementUi, GraphUi, CenterBubble, MindMapInfo) {
         "use strict";
         var api = {};
         api.withOptions = function (options) {
@@ -24,7 +25,7 @@ define([
             );
         };
         api.completeBuild = function (vertexUi) {
-            if(!vertexUi.isMeta()){
+            if (!vertexUi.isMeta()) {
                 GraphElementHtmlBuilder.integrateIdentifications(
                     vertexUi
                 );
@@ -45,6 +46,9 @@ define([
                 vertexUi.getHiddenRelationsContainer().hide();
             }
             vertexUi.reviewInLabelButtonsVisibility();
+            if (!MindMapInfo.isViewOnly() && !vertexUi.isCenterBubble()) {
+                GraphElementHtmlBuilder.setupDrag(vertexUi);
+            }
             GraphElementHtmlBuilder._setupChildrenContainerDragOverAndDrop(vertexUi);
             var parentVertex = vertexUi.getParentVertex();
             if (parentVertex.isCenterBubble()) {
@@ -67,6 +71,7 @@ define([
             '/event/ui/vertex/visit_after_graph_drawn',
             handleVisitAfterGraphDrawn
         );
+
         function handleVisitAfterGraphDrawn(event, vertex) {
             api.completeBuild(vertex);
         }
@@ -119,7 +124,7 @@ define([
                     label.html()
                 )
             );
-            GraphElementHtmlBuilder.setupDragAndDrop(
+            GraphElementHtmlBuilder.setupDrop(
                 this.vertexUi
             );
 
@@ -170,6 +175,7 @@ define([
             return vertexMenu;
         };
         return api;
+
         function linkify(htmlContent) {
             //http://stackoverflow.com/a/25821576/541493
             htmlContent = htmlContent.replace(
