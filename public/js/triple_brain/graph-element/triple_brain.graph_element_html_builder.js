@@ -35,6 +35,9 @@ define([
                 var vertexSuggestion = isRelationSuggestion ?
                     elementUi.getTopMostChildBubble() : elementUi;
                 vertexSuggestion.getController().accept().then(function (newElementUi) {
+                    if(elementUi.isSuggestion()){
+                        SelectionHandler.removeAll();
+                    }
                     elementUi = isRelationSuggestion ?
                         newElementUi.getParentBubble() :
                         newElementUi;
@@ -45,7 +48,6 @@ define([
             }
             function doIt() {
                 elementUi.getModel().setLabel(elementUi.text());
-                SelectionHandler.removeAll();
                 elementUi.labelUpdateHandle();
                 if (!elementUi.hasTextChangedAfterModification()) {
                     return;
