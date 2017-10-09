@@ -23,7 +23,7 @@ define([
             relationSuggestionInTree.setText("bingo");
             relationSuggestionInTree.getLabel().blur();
             expect(
-                SelectionHandler.getSingleElement().getModel().getLabel()
+                relationSuggestionInTree.getModel().getLabel()
             ).toBe(
                 "bingo"
             );

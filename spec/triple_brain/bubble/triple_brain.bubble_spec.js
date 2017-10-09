@@ -440,7 +440,7 @@ define([
                     underB2.isSelected()
                 ).toBeTruthy();
             });
-            it("selects above sibling when available after it's removed even when parent is a group relation", function () {
+            it("selects under sibling when available after it's removed even when parent is a group relation", function () {
                 var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
                 var groupRelation = scenario.getPossessionAsGroupRelationInTree();
                 groupRelation.expand();
@@ -456,11 +456,11 @@ define([
                     vertexUnder.isVertex()
                 ).toBeTruthy();
                 expect(
-                    vertexAbove.isSelected()
+                    vertexUnder.isSelected()
                 ).toBeFalsy();
-                vertexUnder.remove();
+                vertexAbove.remove();
                 expect(
-                    vertexAbove.isSelected()
+                    vertexUnder.isSelected()
                 ).toBeTruthy();
             });
         });

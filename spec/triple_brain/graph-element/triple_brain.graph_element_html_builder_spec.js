@@ -344,6 +344,7 @@ define([
         });
         it("updates the selection to the new relation when accepting suggestion from label update", function () {
             MindMapInfo._setIsViewOnly(false);
+            SelectionHandler.removeAll();
             var oneBubbleHavingSuggestionsGraph = new Scenarios.oneBubbleHavingSuggestionsGraph();
             var eventBubble = oneBubbleHavingSuggestionsGraph.getVertexUi();
             GraphUiBuilder.addSuggestionsToVertex(

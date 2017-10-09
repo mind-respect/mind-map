@@ -76,7 +76,7 @@ define([
                 groupRelationUi
             );
             groupRelationUi.hideButtons();
-            GraphElementHtmlBuilder.setupDragAndDrop(
+            GraphElementHtmlBuilder.setupDrop(
                 groupRelationUi
             );
             return groupRelationUi;
