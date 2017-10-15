@@ -92,9 +92,15 @@ define([
         return this.getSourceVertex().isPublic() &&
             this.getDestinationVertex().isPublic();
     };
+    api.Edge.prototype.isSourceVertex = function (vertex) {
+        return this.getSourceVertex().getUri() === vertex.getUri();
+    };
+    api.Edge.prototype.isDestinationVertex= function (vertex) {
+        return this.getDestinationVertex().getUri() === vertex.getUri();
+    };
     api.Edge.prototype.isRelatedToVertex = function (vertex) {
-        return this.getSourceVertex().getUri() === vertex.getUri() ||
-            this.getDestinationVertex().getUri() === vertex.getUri();
+        return this.isSourceVertex(vertex) ||
+            this.isDestinationVertex(vertex);
     };
     api.Edge.prototype.getOtherVertex = function (vertex) {
         return this.getSourceVertex().getUri() === vertex.getUri() ?

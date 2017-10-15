@@ -25,13 +25,11 @@ define([
         it("can be removed", function () {
             var eventBubble = new Scenarios.aroundEventIdentifier().getEventBubbleInTree();
             var metaRelation = eventBubble.getTopMostChildBubble();
-            expect(
-                eventBubble.getNumberOfChild()
-            ).toBe(2);
+            var numberOfChild = eventBubble.getNumberOfChild();
             metaRelation.remove();
             expect(
                 eventBubble.getNumberOfChild()
-            ).toBe(1);
+            ).toBe(numberOfChild - 1);
             expect(
                 eventBubble.isSelected()
             ).toBeTruthy();

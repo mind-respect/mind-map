@@ -51,7 +51,14 @@ define([
                 hasBeenCalled = true;
                 return $.Deferred().resolve();
             });
-            toDoMetaBubble.getTopMostChildBubble().getController().remove(true);
+            var metaRelation = TestUtils.getChildWithLabel(
+                toDoMetaBubble,
+                "f1"
+            );
+            expect(
+                metaRelation.isMetaRelation()
+            ).toBeTruthy();
+            metaRelation.getController().remove(true);
             expect(
                 hasBeenCalled
             ).toBeTruthy();

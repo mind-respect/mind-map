@@ -194,7 +194,11 @@ define([
 
         it("returns one more hidden relations if immediate child of a meta", function(){
             var scenario = new Scenarios.aroundEventIdentifier();
-            var event2 = scenario.getEvent2();
+            var eventCenter = scenario.getEventBubbleInTree();
+            var event2 = TestUtils.getChildWithLabel(
+                eventCenter,
+                "e2"
+            ).getTopMostChildBubble();
             event2.getHiddenRelationsContainer().show();
             expect(
                 event2.getNumberOfHiddenRelations()
@@ -203,11 +207,14 @@ define([
             expect(
                 event2.hasHiddenRelations()
             ).toBeTruthy();
-            var event1 = scenario.getEvent1();
+            var event1 = TestUtils.getChildWithLabel(
+                eventCenter,
+                "e1"
+            ).getTopMostChildBubble();
             event1.getHiddenRelationsContainer().show();
             expect(
                 event1.getNumberOfHiddenRelations()
-            ).toBe(1);
+            ).toBe(2);
             expect(
                 event1.hasHiddenRelations()
             ).toBeTruthy();

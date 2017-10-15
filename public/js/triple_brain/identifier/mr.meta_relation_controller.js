@@ -36,7 +36,7 @@ define([
             ).ask().then(doIt.bind(this));
         }
         function doIt(){
-            var meta = this.getUi().getParentBubble().getModel();
+            var meta = this.getUi().getParentMetaCenter().getModel();
             var graphElementToRemoveIdentifier = this.getModel().hasIdentification(meta) ?
                 this.getUi() :
                 this.getUi().getSourceVertex();

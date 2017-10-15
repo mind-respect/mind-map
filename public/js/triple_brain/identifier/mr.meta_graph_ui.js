@@ -18,7 +18,7 @@ define([
     var api = {};
     api.buildFromMetaSubGraph = function (metaSubGraph) {
         var deferred = $.Deferred();
-        if(metaSubGraph.getMetaCenter()){
+        if (metaSubGraph.getMetaCenter()) {
             deferred.resolve(
                 api._build(metaSubGraph)
             );
@@ -26,7 +26,7 @@ define([
         else {
             MetaService.getForUri(
                 IdUri.getGraphElementUriInUrl()
-            ).then(function(metaCenter){
+            ).then(function (metaCenter) {
                 metaSubGraph.setMetaCenter(metaCenter);
                 deferred.resolve(
                     api._build(metaSubGraph)
@@ -35,7 +35,7 @@ define([
         }
         return deferred.promise();
     };
-    api._build = function(metaSubGraph){
+    api._build = function (metaSubGraph) {
         var container = GraphUiBuilder.buildRootBubbleContainer();
         var graphUiBuilder = GraphUiBuilder.usingVertexUiBuilder(
             VertexUiBuilder.withOptions({
@@ -56,23 +56,76 @@ define([
             })
         );
         api._edgePopoverText = $.t("meta_relation.remove_tooltip");
-        metaSubGraph.getSubGraph().visitVertices(function (vertex) {
-            var edgeRelatedToMeta;
-            metaSubGraph.getSubGraph().visitEdgesRelatedToVertex(vertex, function(edge){
-                if(edge.hasIdentification(metaSubGraph.getMetaCenter())){
-                    edgeRelatedToMeta = edge;
-                    edgeRelatedToMeta.setSourceVertex(vertex);
-                    edgeRelatedToMeta.setDestinationVertex(metaCenter);
-                }
-            });
-            var edge = edgeRelatedToMeta || Edge.withLabelSelfSourceAndDestinationUri(
-                    "m",
+        var edgesBySourceVertex = buildEdgesGroupedBySourceVertex(metaSubGraph);
+        var subGraph = metaSubGraph.getSubGraph();
+        Object.keys(edgesBySourceVertex).forEach(function (vertexUri) {
+            var sourceVertexAndEdges = edgesBySourceVertex[vertexUri];
+            var child;
+            var vertex = subGraph.getVertexWithUri(
+                sourceVertexAndEdges.sourceVertex.getUri()
+            );
+            if (sourceVertexAndEdges.edges.length === 0) {
+                child = Edge.withLabelSelfSourceAndDestinationUri(
+                    vertex.getLabel(),
                     IdUri.generateUuid(),
                     vertex.getUri(),
                     metaCenter.getUri()
                 );
+            } else if (sourceVertexAndEdges.edges.length === 1) {
+                vertex = sourceVertexAndEdges.destinationVertex;
+                child = sourceVertexAndEdges.edges[0];
+            } else {
+                child = Edge.withLabelSelfSourceAndDestinationUri(
+                    vertex.getLabel(),
+                    IdUri.generateUuid(),
+                    vertex.getUri(),
+                    metaCenter.getUri()
+                );
+                child.setSourceVertex(vertex);
+                child.setDestinationVertex(metaCenter);
+                var edgeToGroupVertexUi = graphUiBuilder.addEdge(
+                    child,
+                    metaCenter
+                );
+                var groupVertexUi = graphUiBuilder.addVertex(
+                    vertex,
+                    edgeToGroupVertexUi
+                );
+                graphUiBuilder.getEdgeUiBuilder().getClass().afterChildBuilt(
+                    edgeToGroupVertexUi,
+                    metaCenter,
+                    groupVertexUi
+                );
+                edgeToGroupVertexUi.getLabel().addClass("hidden");
+                sourceVertexAndEdges.edges.forEach(function (edgeBetweenGroupAndDestination) {
+                    edgeBetweenGroupAndDestination.setSourceVertex(
+                        groupVertexUi.getModel()
+                    );
+                    var destinationVertex = subGraph.getVertexWithUri(
+                        edgeBetweenGroupAndDestination.getDestinationVertex().getUri()
+                    );
+                    edgeBetweenGroupAndDestination.setDestinationVertex(
+                        destinationVertex
+                    );
+                    var edgeBetweenGroupAndDestinationUi = graphUiBuilder.addEdge(
+                        edgeBetweenGroupAndDestination,
+                        groupVertexUi
+                    );
+                    var destinationVertexUi = graphUiBuilder.addVertex(
+                        destinationVertex,
+                        edgeBetweenGroupAndDestinationUi
+                    );
+                    graphUiBuilder.getEdgeUiBuilder().getClass().afterChildBuilt(
+                        edgeBetweenGroupAndDestinationUi,
+                        groupVertexUi,
+                        destinationVertexUi
+                    );
+                    api._setupEdgeUi(edgeBetweenGroupAndDestinationUi);
+                });
+                return;
+            }
             var edgeUi = graphUiBuilder.addEdge(
-                edge,
+                child,
                 metaCenter
             );
             var sourceVertexUi = graphUiBuilder.addVertex(
@@ -88,7 +141,7 @@ define([
         });
         return container;
     };
-    api._setupEdgeUi = function(edgeUi){
+    api._setupEdgeUi = function (edgeUi) {
         edgeUi.getLabel().addClass("hidden");
         edgeUi.getHtml().prepend("<i class='fa fa-remove remove-relation-button on-edge-button'>").click(function () {
             var edgeUi = BubbleFactory.fromSubHtml(
@@ -114,4 +167,51 @@ define([
         }
     );
     return api;
+
+    function buildEdgesGroupedBySourceVertex(metaSubGraph) {
+        var edgesBySourceVertex = {};
+        var excludedDestinationVerticesUri = {};
+        var subGraph = metaSubGraph.getSubGraph();
+        subGraph.visitEdges(function (edge) {
+            if (!edge.hasIdentification(metaSubGraph.getMetaCenter())) {
+                return;
+            }
+            var sourceVertex = subGraph.getVertexWithUri(
+                edge.getSourceVertex().getUri()
+            );
+            if (!edgesBySourceVertex[sourceVertex.getUri()]) {
+                edgesBySourceVertex[sourceVertex.getUri()] = {
+                    sourceVertex: sourceVertex,
+                    destinationVertex: subGraph.getVertexWithUri(edge.getDestinationVertex().getUri()),
+                    edges: []
+                };
+            }
+            edgesBySourceVertex[sourceVertex.getUri()].edges.push(
+                edge
+            );
+            excludedDestinationVerticesUri[edge.getDestinationVertex().getUri()] = true;
+        });
+        Object.keys(edgesBySourceVertex).forEach(function (vertexUri) {
+            var sourceVertexAndEdges = edgesBySourceVertex[vertexUri];
+            var areDestinationVerticesGroupedBySourceVertex = sourceVertexAndEdges.edges.length > 1;
+            if (!areDestinationVerticesGroupedBySourceVertex) {
+                return;
+            }
+            sourceVertexAndEdges.edges.forEach(function (edge) {
+                excludedDestinationVerticesUri[
+                    edge.getDestinationVertex().getUri()
+                    ] = true;
+            });
+        });
+        subGraph.visitVertices(function (vertex) {
+            var isAVertexNotGroupedBySourceVertex = !edgesBySourceVertex[vertex.getUri()] && !excludedDestinationVerticesUri[vertex.getUri()];
+            if (isAVertexNotGroupedBySourceVertex) {
+                edgesBySourceVertex[vertex.getUri()] = {
+                    sourceVertex: vertex,
+                    edges: []
+                };
+            }
+        });
+        return edgesBySourceVertex;
+    }
 });
