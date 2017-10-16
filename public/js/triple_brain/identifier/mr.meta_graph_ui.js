@@ -122,6 +122,7 @@ define([
                     );
                     api._setupEdgeUi(edgeBetweenGroupAndDestinationUi);
                 });
+                groupVertexUi.collapse();
                 return;
             }
             var edgeUi = graphUiBuilder.addEdge(
