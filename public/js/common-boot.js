@@ -120,6 +120,7 @@ requirejs.config({
         "mr.vertex-ui-builder-view-only": "triple_brain/vertex/mr.vertex-ui-builder-view-only",
         "triple_brain.relative_tree_vertex": "triple_brain/vertex/triple_brain.relative_tree_vertex",
         "mr.group-vertex-under-meta-ui": "triple_brain/vertex/mr.group-vertex-under-meta-ui",
+        "mr.group-vertex-under-meta_controller": "triple_brain/vertex/mr.group-vertex-under-meta_controller",
 
         /*
          Suggestion

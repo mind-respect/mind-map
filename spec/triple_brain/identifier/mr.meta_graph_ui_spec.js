@@ -137,8 +137,19 @@ define([
                 sourceVertexAsGroupRelation.getNumberOfHiddenRelations()
             ).toBe(2);
         });
-        xit("excludes the source vertex in it's number of hidden child for a vertex under a source vertex", function(){
-            expect(false).toBeTruthy();
+        it("excludes the source vertex in it's number of hidden child for a vertex under a source vertex", function(){
+            var toDoMetaBubble = new Scenarios.aroundTodoIdentifier().getTodoBubbleInTree();
+            var sourceVertexAsGroupRelation = TestUtils.getChildWithLabel(
+                toDoMetaBubble,
+                "e1"
+            ).getTopMostChildBubble();
+            var e2 = TestUtils.getChildWithLabel(
+                sourceVertexAsGroupRelation,
+                "r1"
+            ).getTopMostChildBubble();
+            expect(
+                e2.getNumberOfHiddenRelations()
+            ).toBe(0);
         });
         xit("excludes the source vertex in it's child for a vertex under a source vertex", function(){
             expect(false).toBeTruthy();

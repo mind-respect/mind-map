@@ -170,7 +170,11 @@ define([
         };
         api.RelativeTreeVertex.prototype.getNumberOfHiddenRelations = function(){
             if(this.isALeaf()){
-                if(this.getParentBubble().isMetaRelation()){
+                var parentBubble = this.getParentBubble();
+                if(parentBubble.getParentBubble().isGroupVertexUnderMeta()){
+                    return this.getModel().getNumberOfConnectedEdges() - 2;
+                }
+                if(parentBubble.isMetaRelation()){
                     return this.getModel().getNumberOfConnectedEdges();
                 }
                 return this.getModel().getNumberOfConnectedEdges() - 1;

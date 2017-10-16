@@ -175,6 +175,9 @@ define([
         api.getMetaController = function () {
             return _implementation.getMetaController();
         };
+        api.getGroupVertexUnderMetaController = function () {
+            return _implementation.getGroupVertexUnderMetaController();
+        };
         api.getMetaRelationController = function(){
             return _implementation.getMetaRelationController();
         };

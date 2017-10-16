@@ -5,8 +5,8 @@
 define([
     "jquery",
     "triple_brain.vertex_ui",
-    "triple_brain.graph_element_ui"
-], function ($, VertexUi) {
+    "triple_brain.graph_element_type"
+], function ($, VertexUi, GraphElementType) {
     "use strict";
     var api = {};
     VertexUi.buildCommonConstructors(api);
@@ -32,6 +32,9 @@ define([
             this
         );
         return this;
+    };
+    GroupVertexUnderMetaUi.prototype.getGraphElementType = function () {
+        return GraphElementType.GroupVertexUnderMeta;
     };
     GroupVertexUnderMetaUi.prototype.hasHiddenRelations = function(){
         return false;

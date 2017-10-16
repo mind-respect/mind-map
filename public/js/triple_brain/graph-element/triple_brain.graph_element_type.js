@@ -15,7 +15,8 @@ define(
             "VertexSuggestion": "vertex_suggestion",
             "RelationSuggestion": "relation_suggestion",
             "Meta": "meta",
-            "MetaRelation": "meta_relation"
+            "MetaRelation": "meta_relation",
+            "GroupVertexUnderMeta": "group_vertex_under_meta"
         };
         api.fromString = function (type) {
             switch (type) {
