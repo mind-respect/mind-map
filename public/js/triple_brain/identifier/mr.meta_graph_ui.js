@@ -98,6 +98,9 @@ define([
                     vertex,
                     edgeToGroupVertexUi
                 );
+                graphUiBuilder.getVertexUiBuilder().getClass().completeBuild(
+                    groupVertexUi
+                );
                 graphUiBuilder.setVertexUiBuilder(
                     previousVertexUiBuilder
                 );
