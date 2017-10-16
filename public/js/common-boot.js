@@ -47,7 +47,7 @@ requirejs.config({
         "dragscroll": "vendor/dragscroll",
 
 
-        "intro": "vendor/node_modules/intro.js/intro",
+        // "intro": "vendor/node_modules/intro.js/intro",
 
 
         /*
