@@ -214,7 +214,7 @@ define([
             event1.getHiddenRelationsContainer().show();
             expect(
                 event1.getNumberOfHiddenRelations()
-            ).toBe(2);
+            ).toBe(3);
             expect(
                 event1.hasHiddenRelations()
             ).toBeTruthy();

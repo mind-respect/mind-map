@@ -11,9 +11,10 @@ define([
     "triple_brain.id_uri",
     "triple_brain.event_bus",
     "triple_brain.bubble_factory",
+    "triple_brain.graph_displayer",
     "mr.meta_service",
     "triple_brain.id_uri"
-], function ($, GraphUiBuilder, VertexUiBuilder, EdgeUiBuilder, Edge, IdUri, EventBus, BubbleFactory, MetaService) {
+], function ($, GraphUiBuilder, VertexUiBuilder, EdgeUiBuilder, Edge, IdUri, EventBus, BubbleFactory, GraphDisplayer, MetaService) {
     "use strict";
     var api = {};
     api.buildFromMetaSubGraph = function (metaSubGraph) {
@@ -87,9 +88,18 @@ define([
                     child,
                     metaCenter
                 );
+                var previousVertexUiBuilder = graphUiBuilder.getVertexUiBuilder();
+                graphUiBuilder.setVertexUiBuilder(
+                    VertexUiBuilder.withOptions({
+                        htmlClass: "group-vertex-under-meta"
+                    })
+                );
                 var groupVertexUi = graphUiBuilder.addVertex(
                     vertex,
                     edgeToGroupVertexUi
+                );
+                graphUiBuilder.setVertexUiBuilder(
+                    previousVertexUiBuilder
                 );
                 graphUiBuilder.getEdgeUiBuilder().getClass().afterChildBuilt(
                     edgeToGroupVertexUi,

@@ -1057,7 +1057,7 @@ define([
         api.aroundEventIdentifier = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
-                return api._getTestData("centerMeta.aroundEvent");
+                return api._getTestData("centerMetaEventAndTodo.aroundEvent");
             };
             var graph = this.getGraph();
             this.getCenterBubbleUri = function () {
@@ -1083,7 +1083,7 @@ define([
         api.aroundTodoIdentifier = function(){
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
-                return api._getTestData("centerMeta.aroundTodo");
+                return api._getTestData("centerMetaEventAndTodo.aroundTodo");
             };
             var graph = this.getGraph();
             this.getCenterBubbleUri = function () {

@@ -105,6 +105,7 @@ define([
                 toDoMetaBubble,
                 "e1"
             ).getTopMostChildBubble();
+            sourceVertexAsGroupRelation.expand();
             expect(
                 sourceVertexAsGroupRelation.getNumberOfChild()
             ).toBe(2);
@@ -116,18 +117,25 @@ define([
                 e2.text()
             ).toBe("e2");
         });
-        it("keeps collapsed group source vertices", function(){
+        it("collapses group source vertices", function(){
             var toDoMetaBubble = new Scenarios.aroundTodoIdentifier().getTodoBubbleInTree();
             var sourceVertexAsGroupRelation = TestUtils.getChildWithLabel(
                 toDoMetaBubble,
                 "e1"
             ).getTopMostChildBubble();
             expect(
-                sourceVertexAsGroupRelation.isExpanded()
-            ).toBeFalsy();
+                sourceVertexAsGroupRelation.isCollapsed()
+            ).toBeTruthy();
         });
-        xit("has the number of tagged relations for source vertex groups", function(){
-            expect(false).toBeTruthy();
+        it("has the number of tagged relations for source vertex groups", function(){
+            var toDoMetaBubble = new Scenarios.aroundTodoIdentifier().getTodoBubbleInTree();
+            var sourceVertexAsGroupRelation = TestUtils.getChildWithLabel(
+                toDoMetaBubble,
+                "e1"
+            ).getTopMostChildBubble();
+            expect(
+                sourceVertexAsGroupRelation.getNumberOfHiddenRelations()
+            ).toBe(2);
         });
         xit("excludes the source vertex in it's number of hidden child for a vertex under a source vertex", function(){
             expect(false).toBeTruthy();

@@ -188,25 +188,6 @@ define([
                 otherVertex.getParentVertex().isSameBubble(this);
         };
 
-        api.RelativeTreeVertex.prototype.inverse = function () {
-            var isInverse = this.isInverse();
-            this.getHtml()[
-                isInverse ?
-                    "removeClass" :
-                    "addClass"
-                ]("inverse");
-            var verticalBorders = this.getHtml().closest(
-                ".vertex-tree-container"
-            ).find(
-                "> .vertical-border"
-            );
-            verticalBorders[
-                isInverse ?
-                    "removeClass" :
-                    "addClass"
-                ]("small");
-        };
-
         api.setupVertexCopyButton = function(vertex){
             var button = vertex.getButtonHtmlHavingAction("copy");
             if(button.length === 0){
