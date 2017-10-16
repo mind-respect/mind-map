@@ -14,17 +14,18 @@
     <link rel="stylesheet" href="/css/twitter_bootstrap/css/bootstrap-theme.min.css"/>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.min.css"/>
-    <link rel="stylesheet" href="/css/twitter_bootstrap/ekko-lightbox.min.css"/>
+   <!-- <link rel="stylesheet" href="/css/twitter_bootstrap/ekko-lightbox.min.css"/> -->
     <link rel="stylesheet" href="/css/twitter_bootstrap/bootstrap-modal-carousel.min.css"/>
     <link rel="stylesheet" href="/css/jquery/colorbox/colorbox.css"/>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/intro.js/2.8.0-alpha.1/introjs.min.css"/>
     <link rel="stylesheet" href="/css/application.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/js/bower_components/google-code-prettify/src/prettify.css"/>
     <link rel="stylesheet" href="/css/timeline.css"/>
     <!--Modules-->
     <link rel="stylesheet" href="/js/module/date_picker/date-picker.css"/>
-    <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
+    <!-- Latest compiled and minified CSS -->
 
     <script src="/js/require.js"></script>
 </head>
@@ -38,6 +39,18 @@
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
+            <form class="navbar-form navbar-right visible-sm" role="search" id="header-search-form">
+                <input type='text' id="landing-page-search" class='input-lg search-box hidden'
+                       data-i18n="[placeholder]search.big.placeholder"/>
+                <input id="vertex-search-input" data-i18n="[placeholder]left_menu.search"
+                       class='input-lg search-box hidden'>
+                <label for="landing-page-search" class="hidden">
+                    <span class="glyphicon glyphicon-search search-icon"></span>
+                </label>
+                <label for="vertex-search-input" class="hidden">
+                    <span class="glyphicon glyphicon-search search-icon"></span>
+                </label>
+            </form>
             <button type="button" class="navbar-toggle" data-toggle="collapse"
                     data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span>
@@ -45,15 +58,15 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+            <a class="navbar-brand" id="logo" href="/?flow=landing"><img class="logo-navbar img-responsive"
+                                                                         data-i18n="[alt]landing.title;[title]landing.title"
+                                                                         src="/css/images/logo_horizontal.png"></a>
         </div>
-        <a class="navbar-brand" id="logo" href="/?flow=landing"><img class="logo-navbar img-responsive"
-                                                                     data-i18n="[alt]landing.title;[title]landing.title"
-                                                                     src="/css/images/logo_horizontal.png"></a>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <form class="navbar-form navbar-left" role="search" id="header-search-form">
+                    <form class="navbar-form navbar-left hidden-sm" role="search" id="header-search-form">
                         <input type='text' id="landing-page-search" class='input-lg search-box hidden'
                                data-i18n="[placeholder]search.big.placeholder"/>
                         <input id="vertex-search-input" data-i18n="[placeholder]left_menu.search"
@@ -77,6 +90,8 @@
                         </li>
                     </ul>
                 </li>
+                <i class="fa fa-user-circle"></i>
+
                 <li class="dropdown" id="bubble-menu">
                     <a data-toggle="dropdown">
                         <span data-i18n='top_menu.bubble'></span>
@@ -241,6 +256,8 @@
                         <span data-i18n="landing.slogan"></span>
                     </h2>
                     <p data-i18n="landing.description"></p>
+                    <a href='http://example.com/' data-intro='Hello step one!'>lalala</a>
+
                     <div>
                         <!--<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
                         <!--Use it <span class="caret"></span>-->
@@ -428,7 +445,7 @@
                             <div class="line"></div>
                         </li>
                         <li class="timeline-inverted">
-                            <div class="timeline-image">
+                            <div class="timeline-image level-5-position">
                                 <img class="img-circle img-responsive lazy"
                                      data-original="/css/images/levels/level-5-feature-square-250.jpg" width="250"
                                      height="250" alt="">
@@ -445,7 +462,7 @@
                             <div class="line"></div>
                         </li>
                         <li>
-                            <div class="timeline-image">
+                            <div class="timeline-image level-6-position">
                                 <img class="img-circle img-responsive lazy"
                                      data-original="/css/images/levels/level-6-feature-square-250.jpg" width="250"
                                      height="250" alt="">

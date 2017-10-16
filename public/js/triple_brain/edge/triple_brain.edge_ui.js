@@ -39,6 +39,12 @@ define([
 
         api.EdgeUi.prototype = new Bubble.Bubble();
 
+        api.EdgeUi.prototype.focus = function () {
+            this.setAsNotSameAsGroupRelation();
+            Bubble.Bubble.prototype.focus.call(
+                this
+            );
+        };
         api.EdgeUi.prototype.getMenuHtml = function () {
             return this.html.find('.relation-menu');
         };

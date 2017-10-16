@@ -19,9 +19,17 @@
 .navbar-default .navbar-link { color: #ffffff; }
 .navbar-default .navbar-link:hover { color: #ffffff; }
 
-@media (max-width: 767px) { .navbar-default .navbar-nav .open .dropdown-menu > li > a { color: #ffffff; }
+@media (max-width: 990px) { .navbar-header { float: none; padding: 20px; }
+  .navbar-toggle { display: block; }
+  .navbar-collapse { border-top: 1px solid transparent; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1); }
+  .navbar-nav { float: none !important; margin: 7.5px -15px; }
+  .navbar-nav > li { float: none; }
+  .navbar-nav > li > a { padding-top: 10px; padding-bottom: 10px; } }
+@media (max-width: 767px) { .navbar-default .navbar-nav .open .dropdown-menu > li > a { color: #ffffff; margin: 30px; }
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus { color: #ffffff; }
-  .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus { color: #ffffff; background-color: rgba(18, 29, 70, 0.4); } }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus { color: #ffffff; background-color: rgba(18, 29, 70, 0.4); }
+  .navbar-header { padding: 20px; }
+  .navbar-right { padding-left: 30px; } }
 #share-link { font-size: 1.2em; }
 #share-link i { text-shadow: none; }
 
@@ -50,17 +58,20 @@ body.mind-map-flow { margin-top: 50px; }
 
 .navbar-lower { background-color: transparent; box-shadow: none; }
 
-.search-box { margin-top: 6px; transition: width 0s, border-radius 0s, background 0s, box-shadow 0s; width: 40px; height: 40px; border: none; cursor: pointer; background: #ebebeb; }
+.search-box { margin-top: 6px; transition: width 1s, border-radius 1s, background 1s, box-shadow 1s; width: 40px; height: 40px; border: none; cursor: pointer; background: #ebebeb; }
 .search-box + label .search-icon { color: black; }
 .search-box:hover { color: white; background: #c8c8c8; box-shadow: 0 0 0 5px #3d4752; }
 .search-box:hover + label .search-icon { color: white; }
-.search-box:focus { transition: width 0s cubic-bezier(0, 1.22, 0, 1.39), border-radius 0s, background 0s; border: none; outline: none; box-shadow: none; padding-left: 15px; cursor: text; width: 300px; border-radius: auto; background: #ebebeb; color: black; }
+.search-box:focus { transition: width 1s cubic-bezier(0, 1.22, 0, 1.39), border-radius 1s, background 1s; border: none; outline: none; box-shadow: none; padding-left: 15px; cursor: text; width: 300px; border-radius: auto; background: #ebebeb; color: black; }
 .search-box:focus + label .search-icon { color: black; }
 .search-box:not(:focus) { text-indent: -5000px; }
 
 .search-icon { position: relative; left: -30px; cursor: pointer; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
+footer { text-align: center; }
+footer .fa-copyright { transform: rotate(-180deg); }
+
 #app-presentation { border-bottom: none; margin-top: 0; color: white; }
 #app-presentation .background { position: absolute; background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("images/neurons-440660-white3.jpg"); left: 0; width: 100%; min-height: 454px; }
 #app-presentation .jumbotron { z-index: 1; background: none; display: flex; align-items: center; min-height: 454px; }
@@ -107,6 +118,8 @@ body.mind-map-flow { margin-top: 50px; }
 @media (min-width: 1202px) { .modal-lg { width: 1200px; } }
 #bigImageModal img { width: 100%; }
 
+@media (max-width: 990px) { .level-5-position { margin-top: 30px; }
+  .level-6-position { margin-top: 60px; } }
 /* Copyright Vincent Blouin under the GPL License version 3 */
 #registration-page { overflow-y: scroll; max-height: 500px; }
 #registration-page .language-list { float: left; width: 100%; margin-bottom: 1em; }
@@ -217,6 +230,7 @@ body.mind-map-flow { margin-top: 50px; }
 .bottom-frontier { width: 100%; min-height: 2em; bottom: 0; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
+@media (max-width: 767px) { #header-search-form { padding-left: 3ù0px; } }
 .ui-menu .ui-menu-item, .ui-menu .references-container, .identifications .ui-menu-item, .identifications .references-container { border-bottom: 1px solid #d3d2d2; }
 .ui-menu .ui-menu-item .element-label, .ui-menu .references-container .element-label, .identifications .ui-menu-item .element-label, .identifications .references-container .element-label { font-weight: bold; font-size: 14px; padding-right: 44px; }
 .ui-menu .ui-menu-item a, .ui-menu .references-container a, .identifications .ui-menu-item a, .identifications .references-container a { white-space: nowrap; }
@@ -340,8 +354,10 @@ button.inactive i { color: red; }
 .relation.bubble.compare-remove .in-bubble-content .label-info .bubble-label:empty:not(:focus):after, .relation.bubble.compare-remove.inverse .in-bubble-content .label-info .bubble-label:empty:not(:focus):after, .relation.bubble.compare-remove.suggestion .in-bubble-content .label-info .bubble-label:empty:not(:focus):after { color: grey; }
 .relation.bubble .on-edge-button { font-size: 1.50em; cursor: pointer; }
 .relation.bubble .edit-relation-button { display: none; }
+.relation.bubble.same-as-group-relation.selected { color: rgba(255, 210, 149, 0.7); }
 .relation.bubble.same-as-group-relation .label-container { display: none; }
 .relation.bubble.same-as-group-relation .edit-relation-button { display: block; }
+.relation.bubble.edit .in-bubble-content { background-color: orange !important; }
 .relation.bubble .label { border-radius: 0.80em; padding-top: 5px; padding-bottom: 5px; padding-left: 15px; padding-right: 15px; }
 .relation.bubble .menu { background-color: transparent; z-index: 11; margin-left: 5px; }
 .relation.bubble .label-container { display: table-cell; padding-left: 6px; position: relative; }
@@ -359,6 +375,8 @@ button.inactive i { color: red; }
 .relation.bubble.meta-relation .in-bubble-content { border: none; }
 .relation.bubble.meta-relation .in-bubble-content .label-info { border: 3px solid purple; }
 .relation.bubble .in-bubble-content .label-info { background-color: #3a87ad; height: auto; font-size: 1.05em; }
+.relation.bubble .in-bubble-content .label-info:hover { background-color: rgba(255, 210, 149, 0.4); }
+.relation.bubble .in-bubble-content .label-info.selected { background-color: rgba(255, 210, 149, 0.7) !important; }
 .relation.bubble .in-bubble-content .bubble-label { color: white; display: inline-block; font-family: helvetica; font-size: 1.05em; }
 .relation.bubble .in-bubble-content .bubble-label:not(:focus):after { color: white; }
 .relation.bubble .in-bubble-content .bubble-label:empty:not(:focus):after { color: white; }
@@ -370,7 +388,7 @@ button.inactive i { color: red; }
 
 .relation { padding: 0; margin-top: 0; margin-right: 0; margin-left: 0; vertical-align: middle; }
 
-.relation.selected .label { box-shadow: 4px 4px 4px black; }
+.relation.selected .label { background-color: rgba(255, 210, 149, 0.7) !important; box-shadow: 4px 4px 4px black; }
 
 .relation input { border-radius: 3px 3px 3px 3px; border-width: 0.2em; border-color: #3a87ad; padding: 0; outline: none; font-family: courier new, monospace; font-size: 14px; vertical-align: middle; background-color: transparent; overflow: hidden; position: absolute; width: 100%; top: 0; left: 0; right: 0; z-index: 5; }
 
@@ -432,14 +450,15 @@ button.inactive i { color: red; }
 .vertex.inverse .arrow { width: 47px; left: -37px; }
 .vertex.meta .in-bubble-content { border-radius: 0px; border: 3px solid purple; color: black; text-shadow: none; }
 .vertex.suggestion .in-bubble-content { border: 3px dotted darkgreen; color: black; text-shadow: none; }
-.vertex.edit .in-bubble-content { width: 325px; max-width: 325px; }
+.vertex.edit .in-bubble-content { background-color: orange !important; max-width: 325px; width: 325px; }
 .vertex.edit .in-bubble-content .in-bubble-note-button { display: none; }
 .vertex.edit .bubble-label { white-space: pre-wrap; }
 .vertex.absolute { white-space: nowrap; position: absolute !important; min-width: 120px; }
 .vertex.includes-vertices .in-bubble-content { padding-bottom: 2em; }
+.vertex .in-bubble-content:hover { background-color: rgba(255, 210, 149, 0.4); }
 .vertex .in-bubble-content .in-label-buttons { margin-left: -24px; padding-left: 0; padding-right: 8px; }
 .vertex.selected { z-index: 12; }
-.vertex.selected .in-bubble-content { box-shadow: -5px 5px 5px black; }
+.vertex.selected .in-bubble-content { background-color: rgba(255, 210, 149, 0.7); box-shadow: -5px 5px 5px black; }
 .vertex.selected.center-vertex .in-bubble-content { box-shadow: -5px 5px 5px black; }
 .vertex.center-vertex .connector { height: 0; width: 0; }
 .vertex.center-vertex .arrow { height: 0; width: 0; top: 0; left: 0; border-top: none; }

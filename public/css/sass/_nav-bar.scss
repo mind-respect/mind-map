@@ -4,6 +4,7 @@ $bgHighlight    : rgba(18, 29, 70, 0.4);
 $colDefault     : #ffffff;
 $colHighlight   : #ffffff;
 $dropDown       : false;
+
 .navbar-default {
   border:none;
   background-image: none;
@@ -63,16 +64,53 @@ $dropDown       : false;
     color: $colDefault;
     &:hover {
       color: $colHighlight; }}}
+
+@media (max-width: 990px) {
+  .navbar-header {
+    float: none;
+    padding: 20px;
+  }
+  .navbar-toggle {
+    display: block;
+  }
+  .navbar-collapse {
+    border-top: 1px solid transparent;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .navbar-collapse.collapse {
+    //display: none!important;
+  }
+  .navbar-nav {
+    float: none!important;
+    margin: 7.5px -15px;
+  }
+  .navbar-nav>li {
+    float: none;
+  }
+  .navbar-nav>li>a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
 @media (max-width: 767px) {
   .navbar-default .navbar-nav .open .dropdown-menu {
     > li > a {
       color: $colDefault;
+      margin: 30px;
       &:hover, &:focus {
         color: $colHighlight; }}
     > .active {
       > a, > a:hover, > a:focus {
         color: $colHighlight;
         background-color: $bgHighlight; }}}
+  .navbar-header{
+    padding: 20px;
+  }
+
+ .navbar-right{
+    padding-left: 30px;
+  }
 }
 
 #share-link{
@@ -151,7 +189,7 @@ body.mind-map-flow{
   background-color:transparent;
   box-shadow:none;
 }
-$tl: 0s; // transition length
+$tl: 1s; // transition length
 
 .search-box {
   margin-top:6px;

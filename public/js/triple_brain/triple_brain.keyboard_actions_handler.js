@@ -114,6 +114,7 @@ define([
             var isPasting = isCombineKeyPressed && vKeyNumber && event.which;
             if (!isPasting && event.which !== api._ctrlKeyNumber && !MindMapInfo.isViewOnly() && SelectionHandler.isOnlyASingleElementSelected()) {
                 var selectedElement = SelectionHandler.getSingleElement();
+                debugger;
                 if (selectedElement.isLabelEditable()) {
                     selectedElement.focus();
                 }

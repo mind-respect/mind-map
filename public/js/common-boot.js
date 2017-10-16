@@ -46,6 +46,10 @@ requirejs.config({
         "bootstrap-wysiwyg": "jquery/bootstrap-wysiwyg.min",
         "dragscroll": "vendor/dragscroll",
 
+
+        "intro": "vendor/node_modules/intro.js/intro",
+
+
         /*
          Flow
          */
