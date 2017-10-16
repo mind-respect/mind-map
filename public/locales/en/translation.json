@@ -180,10 +180,10 @@
       "title": "select",
       "relations": "relations"
     },
-    "connect": "connection",
-    "login": "login",
-    "register": "try",
-    "language": "language"
+    "connect": "Connection",
+    "login": "Login",
+    "register": "Try it",
+    "language": "Language"
   },
   "top_center_menu": {
     "select": "select"

@@ -39,18 +39,6 @@
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <form class="navbar-form navbar-right visible-sm" role="search" id="header-search-form">
-                <input type='text' id="landing-page-search" class='input-lg search-box hidden'
-                       data-i18n="[placeholder]search.big.placeholder"/>
-                <input id="vertex-search-input" data-i18n="[placeholder]left_menu.search"
-                       class='input-lg search-box hidden'>
-                <label for="landing-page-search" class="hidden">
-                    <span class="glyphicon glyphicon-search search-icon"></span>
-                </label>
-                <label for="vertex-search-input" class="hidden">
-                    <span class="glyphicon glyphicon-search search-icon"></span>
-                </label>
-            </form>
             <button type="button" class="navbar-toggle" data-toggle="collapse"
                     data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span>
@@ -66,7 +54,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <form class="navbar-form navbar-left hidden-sm" role="search" id="header-search-form">
+                    <form class="navbar-form navbar-left " role="search" id="header-search-form">
                         <input type='text' id="landing-page-search" class='input-lg search-box hidden'
                                data-i18n="[placeholder]search.big.placeholder"/>
                         <input id="vertex-search-input" data-i18n="[placeholder]left_menu.search"
@@ -80,7 +68,10 @@
                     </form>
                 </li>
                 <li class="dropdown">
-                    <a data-toggle="dropdown" data-i18n='top_menu.connect' id="connect-menu-button"></a>
+                    <a data-toggle="dropdown" id="connect-menu-button">
+                        <span data-i18n="top_menu.connect"></span>
+                        <i class="fa fa-user-circle-o"></i>
+                    </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                         <li>
                             <a href="#" id="login-button" data-i18n="top_menu.login"></a>
@@ -90,7 +81,6 @@
                         </li>
                     </ul>
                 </li>
-                <i class="fa fa-user-circle"></i>
 
                 <li class="dropdown" id="bubble-menu">
                     <a data-toggle="dropdown">
@@ -140,7 +130,7 @@
                 <li id="language-selector-container">
                     <a data-toggle="dropdown">
                         <span data-i18n="top_menu.language"></span>
-                        <i class="fa fa-language"></i>
+                        <i class="fa fa-globe"></i>
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                         <li>
@@ -256,7 +246,7 @@
                         <span data-i18n="landing.slogan"></span>
                     </h2>
                     <p data-i18n="landing.description"></p>
-                    <a href='http://example.com/' data-intro='Hello step one!'>lalala</a>
+                    <!--<a href='http://example.com/' data-intro='Hello step one!'>lalala</a>-->
 
                     <div>
                         <!--<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->

@@ -182,10 +182,10 @@
       "bubbles": "les bulles",
       "relations": "les relations"
     },
-    "connect": "connexion",
-    "login": "connexion",
-    "register": "essayez",
-    "language": "langue"
+    "connect": "Connexion",
+    "login": "Se connecter",
+    "register": "Essayer",
+    "language": "Langue"
   },
   "top_center_menu": {
     "select": "sélection"
