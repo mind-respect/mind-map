@@ -30,7 +30,9 @@ define([
                 return GraphDisplayer.getSchemaSelector();
             } else if (html.hasClass("meta")) {
                 return GraphDisplayer.getMetaUiSelector();
-            } else {
+            } else if(html.hasClass("group-vertex-under-meta")){
+                return GraphDisplayer.getGroupVertexUnderMetaUiSelector();
+            }else {
                 return GraphDisplayer.getVertexSelector();
             }
         } else if (html.hasClass("relation")) {

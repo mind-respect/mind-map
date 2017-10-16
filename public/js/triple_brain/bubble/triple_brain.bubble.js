@@ -191,6 +191,13 @@ define([
                 GraphElementType.getVertexTypes()
             );
         };
+
+        api.Bubble.prototype.getParentMetaCenter = function () {
+            return this.getClosestParentInTypes([
+                GraphElementType.Meta
+            ]);
+        };
+
         api.Bubble.prototype.getParentSuggestionVertex = function () {
             return this.getClosestParentInTypes([
                 GraphElementType.VertexSuggestion
@@ -240,7 +247,7 @@ define([
         };
 
         api.Bubble.prototype.getTopMostChildBubble = function () {
-            if(!this.hasChildren()){
+            if (!this.hasChildren()) {
                 return this;
             }
             var topMostBubbleHtml = this.getChildrenBubblesHtml().filter(
@@ -282,7 +289,7 @@ define([
         api.Bubble.prototype.visitAllImmediateChild = function (visitor) {
             $.each(this.getChildrenBubblesHtml(), function () {
                 return visitor(BubbleFactory.fromHtml(
-                     $(this)
+                    $(this)
                 ));
             });
         };
@@ -454,14 +461,14 @@ define([
 
         api.Bubble.prototype.hasAnExpandedChild = function () {
             var hasAnExpandedChild = false;
-            this.visitClosestChildVertices(function(vertexUi){
-                if(vertexUi.getNumberOfChild() > 0){
+            this.visitClosestChildVertices(function (vertexUi) {
+                if (vertexUi.getNumberOfChild() > 0) {
                     hasAnExpandedChild = true;
                 }
             });
-            this.visitAllImmediateChild(function(child){
-                if(child.isGroupRelation()){
-                    if(child.getNumberOfChild() > 0){
+            this.visitAllImmediateChild(function (child) {
+                if (child.isGroupRelation()) {
+                    if (child.getNumberOfChild() > 0) {
                         hasAnExpandedChild = true;
                     }
                 }
@@ -496,10 +503,10 @@ define([
             var sharesSameAncestor = bubbleToSelect && bubbleToSelect.getClosestParentInTypes(
                 [ancestor.getGraphElementType()]
             ).isSameBubble(ancestor);
-            if(!sharesSameAncestor){
+            if (!sharesSameAncestor) {
                 bubbleToSelect = ancestor;
             }
-            if(bubbleToSelect){
+            if (bubbleToSelect) {
                 SelectionHandler.setToSingleGraphElement(
                     bubbleToSelect
                 );
@@ -766,7 +773,7 @@ define([
             if (!this.hasChildren()) {
                 return;
             }
-            if(!this.isCenterBubble()){
+            if (!this.isCenterBubble()) {
                 this.getChildrenContainer().addClass(
                     "hidden"
                 );
@@ -776,8 +783,8 @@ define([
             this.visitClosestChildVertices(function (child) {
                 child.collapse();
             });
-            this.visitAllImmediateChild(function(child){
-                if(child.isGroupRelation()){
+            this.visitAllImmediateChild(function (child) {
+                if (child.isGroupRelation()) {
                     child.collapse();
                 }
             });

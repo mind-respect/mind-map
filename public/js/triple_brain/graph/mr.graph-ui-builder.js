@@ -263,6 +263,10 @@ define([
         this.vertexUiBuilder = vertexUiBuilder;
     };
 
+    api.GraphUiBuilder.prototype.getVertexUiBuilder = function(){
+        return this.vertexUiBuilder;
+    };
+
     api.GraphUiBuilder.prototype.setEdgeUiBuilder = function(edgeUiBuilder){
         this.edgeUiBuilder = edgeUiBuilder;
     };

@@ -260,6 +260,10 @@ define([
     api.GraphElementUi.prototype.isMetaRelation = function () {
         return this.getGraphElementType() === api.Types.MetaRelation;
     };
+    api.GraphElementUi.prototype.isGroupVertexUnderMeta = function () {
+        return GraphElementType.GroupVertexUnderMeta === this.getGraphElementType();
+    };
+
     api.GraphElementUi.prototype.isRelation = function () {
         return this.getGraphElementType() === api.Types.Relation;
     };
@@ -300,13 +304,12 @@ define([
     };
 
     api.GraphElementUi.prototype.reviewMenuButtonsVisibility = function () {
-        var self = this;
         this.visitMenuButtons(function (button) {
             button.showOnlyIfApplicable(
-                self.getController(),
-                self
+                this.getController(),
+                this
             );
-        });
+        }.bind(this));
     };
 
     api.GraphElementUi.prototype.visitMenuButtons = function (visitor) {
@@ -789,6 +792,7 @@ define([
         controllerGetters[api.Types.RelationSuggestion] = GraphDisplayer.getRelationSuggestionMenuHandler;
         controllerGetters[api.Types.Meta] = GraphDisplayer.getMetaController;
         controllerGetters[api.Types.MetaRelation] = GraphDisplayer.getMetaRelationController;
+        controllerGetters[GraphElementType.GroupVertexUnderMeta] = GraphDisplayer.getGroupVertexUnderMetaController;
     }
 
     function initSelectors() {
@@ -801,5 +805,6 @@ define([
         selectors[api.Types.RelationSuggestion] = GraphDisplayer.getRelationSuggestionSelector;
         selectors[api.Types.Meta] = GraphDisplayer.getMetaUiSelector;
         selectors[api.Types.MetaRelation] = GraphDisplayer.getMetaUiRelationSelector;
+        selectors[GraphElementType.GroupVertexUnderMeta] = GraphDisplayer.getGroupVertexUnderMetaUiSelector;
     }
 });

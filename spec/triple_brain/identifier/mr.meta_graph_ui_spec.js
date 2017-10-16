@@ -35,12 +35,21 @@ define([
         });
         it("displays the related bubbles", function(){
             var scenario = new Scenarios.aroundEventIdentifier();
+            var eventCenter = scenario.getEventBubbleInTree();
+            var event1 = TestUtils.getChildWithLabel(
+                eventCenter,
+                "e1"
+            ).getTopMostChildBubble();
             expect(
-                scenario.getEvent1()
-            ).toBeDefined();
+                event1.isVertex()
+            ).toBeTruthy();
+            var event2 = TestUtils.getChildWithLabel(
+                eventCenter,
+                "e2"
+            ).getTopMostChildBubble();
             expect(
-                scenario.getEvent2()
-            ).toBeDefined();
+                event2.isVertex()
+            ).toBeTruthy();
         });
         it("builds relation of type meta", function(){
             var eventBubble = new Scenarios.aroundEventIdentifier().getEventBubbleInTree();
@@ -82,6 +91,68 @@ define([
             ).toBe(
                 eventMetaBubble.getModel().getUri()
             );
+        });
+        it("groups tagged edges by source vertex", function(){
+            var toDoMetaBubble = new Scenarios.aroundTodoIdentifier().getTodoBubbleInTree();
+            expect(
+                toDoMetaBubble.getNumberOfChild()
+            ).toBe(2);
+            expect(TestUtils.hasChildWithLabel(
+                toDoMetaBubble,
+                "e1"
+            )).toBeTruthy();
+            var sourceVertexAsGroupRelation = TestUtils.getChildWithLabel(
+                toDoMetaBubble,
+                "e1"
+            ).getTopMostChildBubble();
+            sourceVertexAsGroupRelation.expand();
+            expect(
+                sourceVertexAsGroupRelation.getNumberOfChild()
+            ).toBe(2);
+            var e2 = TestUtils.getChildWithLabel(
+                sourceVertexAsGroupRelation,
+                "r1"
+            ).getTopMostChildBubble();
+            expect(
+                e2.text()
+            ).toBe("e2");
+        });
+        it("collapses group source vertices", function(){
+            var toDoMetaBubble = new Scenarios.aroundTodoIdentifier().getTodoBubbleInTree();
+            var sourceVertexAsGroupRelation = TestUtils.getChildWithLabel(
+                toDoMetaBubble,
+                "e1"
+            ).getTopMostChildBubble();
+            expect(
+                sourceVertexAsGroupRelation.isCollapsed()
+            ).toBeTruthy();
+        });
+        it("has the number of tagged relations for source vertex groups", function(){
+            var toDoMetaBubble = new Scenarios.aroundTodoIdentifier().getTodoBubbleInTree();
+            var sourceVertexAsGroupRelation = TestUtils.getChildWithLabel(
+                toDoMetaBubble,
+                "e1"
+            ).getTopMostChildBubble();
+            expect(
+                sourceVertexAsGroupRelation.getNumberOfHiddenRelations()
+            ).toBe(2);
+        });
+        it("excludes the source vertex in it's number of hidden child for a vertex under a source vertex", function(){
+            var toDoMetaBubble = new Scenarios.aroundTodoIdentifier().getTodoBubbleInTree();
+            var sourceVertexAsGroupRelation = TestUtils.getChildWithLabel(
+                toDoMetaBubble,
+                "e1"
+            ).getTopMostChildBubble();
+            var e2 = TestUtils.getChildWithLabel(
+                sourceVertexAsGroupRelation,
+                "r1"
+            ).getTopMostChildBubble();
+            expect(
+                e2.getNumberOfHiddenRelations()
+            ).toBe(0);
+        });
+        xit("excludes the source vertex in it's child for a vertex under a source vertex", function(){
+            expect(false).toBeTruthy();
         });
     });
 });

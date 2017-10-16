@@ -273,6 +273,25 @@ define([
             this.getMakePublicButton().addClass("hidden");
         };
 
+        api.VertexUi.prototype.inverse = function () {
+            var isInverse = this.isInverse();
+            this.getHtml()[
+                isInverse ?
+                    "removeClass" :
+                    "addClass"
+                ]("inverse");
+            var verticalBorders = this.getHtml().closest(
+                ".vertex-tree-container"
+            ).find(
+                "> .vertical-border"
+            );
+            verticalBorders[
+                isInverse ?
+                    "removeClass" :
+                    "addClass"
+                ]("small");
+        };
+
         api.VertexUi.prototype.deselect = function () {
             this.html.removeClass("selected");
             this.removeSingleSelected();

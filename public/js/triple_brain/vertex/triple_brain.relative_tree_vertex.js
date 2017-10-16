@@ -170,7 +170,11 @@ define([
         };
         api.RelativeTreeVertex.prototype.getNumberOfHiddenRelations = function(){
             if(this.isALeaf()){
-                if(this.getParentBubble().isMetaRelation()){
+                var parentBubble = this.getParentBubble();
+                if(parentBubble.getParentBubble().isGroupVertexUnderMeta()){
+                    return this.getModel().getNumberOfConnectedEdges() - 2;
+                }
+                if(parentBubble.isMetaRelation()){
                     return this.getModel().getNumberOfConnectedEdges();
                 }
                 return this.getModel().getNumberOfConnectedEdges() - 1;
@@ -186,25 +190,6 @@ define([
             return !otherVertex.isCenterBubble() &&
                 !otherVertex.isSameBubble(this) &&
                 otherVertex.getParentVertex().isSameBubble(this);
-        };
-
-        api.RelativeTreeVertex.prototype.inverse = function () {
-            var isInverse = this.isInverse();
-            this.getHtml()[
-                isInverse ?
-                    "removeClass" :
-                    "addClass"
-                ]("inverse");
-            var verticalBorders = this.getHtml().closest(
-                ".vertex-tree-container"
-            ).find(
-                "> .vertical-border"
-            );
-            verticalBorders[
-                isInverse ?
-                    "removeClass" :
-                    "addClass"
-                ]("small");
         };
 
         api.setupVertexCopyButton = function(vertex){

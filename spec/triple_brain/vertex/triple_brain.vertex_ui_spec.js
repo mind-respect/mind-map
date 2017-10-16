@@ -82,13 +82,11 @@ define([
         it("can remove a vertex under a meta bubble", function () {
             var eventBubble = new Scenarios.aroundEventIdentifier().getEventBubbleInTree();
             var vertex = eventBubble.getTopMostChildBubble().getTopMostChildBubble();
-            expect(
-                eventBubble.getNumberOfChild()
-            ).toBe(2);
+            var numberOfChild = eventBubble.getNumberOfChild();
             vertex.remove();
             expect(
                 eventBubble.getNumberOfChild()
-            ).toBe(1);
+            ).toBe(numberOfChild - 1);
         });
         it("selects the parent vertex after it's removed if right under a relation and vertex", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();

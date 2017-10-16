@@ -125,6 +125,9 @@ define([
         api.getMetaUiSelector = function () {
             return _implementation.getMetaUiSelector();
         };
+        api.getGroupVertexUnderMetaUiSelector = function () {
+            return _implementation.getGroupVertexUnderMetaUiSelector();
+        };
         api.getMetaUiRelationSelector = function () {
             return _implementation.getMetaUiRelationSelector();
         };
@@ -171,6 +174,9 @@ define([
         };
         api.getMetaController = function () {
             return _implementation.getMetaController();
+        };
+        api.getGroupVertexUnderMetaController = function () {
+            return _implementation.getGroupVertexUnderMetaController();
         };
         api.getMetaRelationController = function(){
             return _implementation.getMetaRelationController();
