@@ -61,6 +61,9 @@ body.mind-map-flow { margin-top: 50px; }
 .search-icon { position: relative; left: -30px; cursor: pointer; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
+footer { text-align: center; }
+footer .fa-copyright { transform: rotate(-180deg); }
+
 #app-presentation { border-bottom: none; margin-top: 0; color: white; }
 #app-presentation .background { position: absolute; background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("images/neurons-440660-white3.jpg"); left: 0; width: 100%; min-height: 454px; }
 #app-presentation .jumbotron { z-index: 1; background: none; display: flex; align-items: center; min-height: 454px; }
