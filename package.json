@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "start": "node ./bin/www",
-    "test": "grunt test && grunt jshint && grunt requirejs"
+    "test": "npm install --prefix public/js/vendor && grunt test && grunt jshint && grunt requirejs"
   },
   "dependencies": {
     "ejs": "*",
