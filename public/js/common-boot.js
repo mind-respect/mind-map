@@ -12,6 +12,7 @@ requirejs.config({
         "polyk": "vendor/polyk",
         "diff_match_patch": "vendor/diff_match_patch_uncompressed",
         "clipboard": "vendor/clipboard",
+        "intro": "vendor/node_modules/intro.js/intro",
         /*
          Jquery
          */

@@ -10,6 +10,9 @@ branches:
 addons:
   ssh_known_hosts: mindrespect.com
 
+before_script:
+  - npm install --prefix public/js/vendor
+
 before_install:
     - openssl aes-256-cbc -K $encrypted_bff8767fc6c0_key -iv $encrypted_bff8767fc6c0_iv -in .travis/id_rsa.enc -out id_rsa -d
 

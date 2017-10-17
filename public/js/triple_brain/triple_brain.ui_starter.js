@@ -21,8 +21,8 @@ define(
         "triple_brain.wikidata",
         "triple_brain.ui.search",
         "triple_brain.modules",
-        "jquery.lazyload"
-        // "intro"
+        "jquery.lazyload",
+        "intro"
     ],
     function ($, MindMapFlow, UserService, MindMapInfo, LandingPageFlow, SchemaListFlow, ChangePassword, LoginHandler, RegisterHandler, Header, GraphDisplayer, GraphDisplayerFactory, Flow, BubbleCloudFlow) {
         "use strict";
