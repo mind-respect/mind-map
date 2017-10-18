@@ -47,6 +47,7 @@ $tagCloudFontSize: 0.6em;
 
   .last-visit {
     width: 10%;
+    text-overflow: ellipsis;
   }
   .number-visits {
     width: 6%;

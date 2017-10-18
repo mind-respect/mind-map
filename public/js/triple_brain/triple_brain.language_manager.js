@@ -6,8 +6,10 @@ define([
     "jquery",
     "triple_brain.user_service",
     "triple_brain.event_bus",
+    "moment",
+    "moment/locale/fr-ca",
     "jquery.i18next"
-], function ($, UserService, EventBus) {
+], function ($, UserService, EventBus, Moment) {
     "use strict";
     var api = {},
         possibleLanguages;
@@ -187,6 +189,11 @@ define([
     };
     api.loadLocaleContent = function (callback) {
         var locale = getLocaleUsedForSiteTranslation();
+        Moment.locale(
+            "fr" === locale ?
+                "fr-ca" :
+                "en"
+        );
         $.i18n.init({
             lng: locale,
             useLocalStorage: false,
@@ -194,7 +201,7 @@ define([
             customLoad: function (lng, ns, options, loadComplete) {
                 var basePath = ns === "translation" ?
                     "/locales/" :
-                "/js/module/" + ns + "/locales/";
+                    "/js/module/" + ns + "/locales/";
                 var url = basePath + lng + "/" + "translation" + ".json?bust=" + bubl_guru_force_refresh;
                 $.ajax({
                     url: url,
@@ -210,11 +217,11 @@ define([
             }
         }, callback);
     };
-    api.changeLanguage = function(language){
-        if(api.getBrowserLocale() === language){
+    api.changeLanguage = function (language) {
+        if (api.getBrowserLocale() === language) {
             return;
         }
-        $.i18n.setLng(language, function(t) {
+        $.i18n.setLng(language, function (t) {
             window.location.reload();
         });
     };
@@ -222,14 +229,14 @@ define([
 
     function isLocaleFrench(locale) {
         return locale.indexOf(
-                "fr"
-            ) >= 0;
+            "fr"
+        ) >= 0;
     }
 
     function isLocaleEnglish(locale) {
         return locale.indexOf(
-                "en"
-            ) >= 0;
+            "en"
+        ) >= 0;
     }
 
     function makeLanguage(fullname, locale) {
@@ -251,7 +258,6 @@ define([
         });
         return formattedLanguages;
     }
-
 
 
     function getLocaleUsedForSiteTranslation() {

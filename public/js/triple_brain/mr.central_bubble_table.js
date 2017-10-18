@@ -12,10 +12,11 @@ define([
     "triple_brain.graph_controller",
     "triple_brain.user_service",
     "triple_brain.graph_element_type",
+    "moment",
     "bootstrap-table",
     "jquery.i18next"
 
-], function ($, IdUri, AskModal, CenterGraphElementService, EventBus, GraphController, UserService, GraphElementType) {
+], function ($, IdUri, AskModal, CenterGraphElementService, EventBus, GraphController, UserService, GraphElementType, Moment) {
     "use strict";
     var NUMBER_OF_VISIT_RANKS = 3,
         _elements,
@@ -206,7 +207,7 @@ define([
         return buildAnchorForElement(element).addClass(
             "text-right"
         ).text(
-            element.getLastCenterDate().toLocaleDateString()
+            new Moment(element.getLastCenterDate()).calendar().split(" ")[0]
         ).prop('outerHTML');
     }
 

@@ -557,7 +557,7 @@ button.inactive i { color: red; }
 #word-cloud button.remove, #word-cloud button.create { margin-top: 10px; margin-left: 10px; }
 #word-cloud table { font-size: 30px; table-layout: fixed; word-wrap: break-word; }
 #word-cloud table, #word-cloud table * { cursor: pointer; }
-#word-cloud .last-visit { width: 10%; }
+#word-cloud .last-visit { width: 10%; text-overflow: ellipsis; }
 #word-cloud .number-visits { width: 6%; }
 #word-cloud .bubble-label, #word-cloud .context { text-overflow: ellipsis; }
 #word-cloud .bubble-label { width: 28%; }

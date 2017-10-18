@@ -268,6 +268,11 @@ requirejs.config({
         "triple_brain.change_password": "triple_brain/triple_brain.change_password",
         "triple_brain.event_bus": "triple_brain/triple_brain.event_bus"
     },
+    packages:[{
+        name: 'moment',
+        location: 'vendor/node_modules/moment/',
+        main: 'moment'
+    }],
     shim: {
         "polyk": [],
         "diff_match_patch": [],
