@@ -207,7 +207,7 @@ define([
         return buildAnchorForElement(element).addClass(
             "text-right"
         ).text(
-            new Moment(element.getLastCenterDate()).calendar().split(" ")[0]
+            new Moment(element.getLastCenterDate()).fromNow()
         ).prop('outerHTML');
     }
 
