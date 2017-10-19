@@ -72,10 +72,7 @@ define([
                     vertex.getUri(),
                     metaCenter.getUri()
                 );
-            } else if (sourceVertexAndEdges.edges.length === 1) {
-                vertex = sourceVertexAndEdges.destinationVertex;
-                child = sourceVertexAndEdges.edges[0];
-            } else {
+            }else{
                 child = Edge.withLabelSelfSourceAndDestinationUri(
                     vertex.getLabel(),
                     IdUri.generateUuid(),
@@ -135,7 +132,9 @@ define([
                     );
                     api._setupEdgeUi(edgeBetweenGroupAndDestinationUi);
                 });
-                groupVertexUi.collapse();
+                if(groupVertexUi.getNumberOfHiddenRelations() > 1){
+                    groupVertexUi.collapse();
+                }
                 return;
             }
             var edgeUi = graphUiBuilder.addEdge(

@@ -53,8 +53,8 @@ define([
             });
             var metaRelation = TestUtils.getChildWithLabel(
                 toDoMetaBubble,
-                "f1"
-            );
+                "o1"
+            ).getTopMostChildBubble().getTopMostChildBubble();
             expect(
                 metaRelation.isMetaRelation()
             ).toBeTruthy();
