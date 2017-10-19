@@ -18,12 +18,12 @@ define([
         });
     };
     api.remove = function(suggestionsUri, vertex, callback){
-        $.ajax({
+        return $.ajax({
             type: 'DELETE',
             url: vertex.getUri()+ '/suggestions',
             data: JSON.stringify(suggestionsUri),
             contentType: 'application/json;charset=utf-8'
-        }).success(function(){
+        }).then(function(){
             if(callback !== undefined){
                 callback();
             }

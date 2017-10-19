@@ -18,14 +18,14 @@ define([
         };
 
         api.searchForOwnVerticesAndPublicOnes = function (searchText, successCallback) {
-            api.searchForOwnVerticesAndPublicOnesAjaxCall(
+            return api.searchForOwnVerticesAndPublicOnesAjaxCall(
                 searchText
-            ).success(successCallback);
+            ).then(successCallback);
         };
         api.searchForOwnVerticesOnly = function (searchText, successCallback) {
-            api.searchForOwnVerticesOnly(
+            return api.searchForOwnVerticesOnly(
                 searchText
-            ).success(successCallback);
+            ).then(successCallback);
         };
         api.searchForOnlyOwnVerticesAjaxCall = function(searchText){
             return $.ajax({
@@ -56,9 +56,9 @@ define([
             });
         };
         api.getSearchResultDetails = function(uri, callback){
-            api.getSearchResultDetailsAjaxCall(
+            return api.getSearchResultDetailsAjaxCall(
                 uri
-            ).success(
+            ).then(
                 callback
             );
         };

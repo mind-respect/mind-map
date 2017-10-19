@@ -1,7 +1,3 @@
-/*
- * Copyright Vincent Blouin under the GPL License version 3
- */
-
 /*jslint regexp: true */
 /*global require, XMLHttpRequest, ActiveXObject,
   define, window, process, Packages,

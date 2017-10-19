@@ -20,7 +20,7 @@ define([
             method: 'GET',
             url: UserService.getUsersResourceUrl() + username + "/center-elements/public",
             dataType: 'json'
-        }).success(callback);
+        }).then(callback);
     };
     api.removeCentersWithUri = function(centersUri){
         return $.ajax({

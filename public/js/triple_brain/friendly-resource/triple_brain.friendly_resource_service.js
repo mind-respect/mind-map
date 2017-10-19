@@ -19,7 +19,7 @@ define([
         return $.ajax({
             type: 'DELETE',
             url: friendlyResource.getUri()
-        }).success(callback);
+        }).then(callback);
     };
     return api;
 });
