@@ -5,9 +5,15 @@
 
 footer {
   text-align: center;
+  margin-bottom: 50px;
   .fa-copyright {
     transform: rotate(-180deg);
   }
+}
+
+.fa-code-fork{
+  transform: rotate(-90deg);
+  margin-right: 5px;
 }
 
 #app-presentation {

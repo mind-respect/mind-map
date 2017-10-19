@@ -168,14 +168,16 @@
   },
   "top_menu": {
     "share": "partager",
-    "central": "toutes vos centrales",
-    "schemas": "tous les modèles",
+    "central": "Vos cartes mentales",
+    "schemas": "Tous les modèles",
     "save_as_image": "sauvegarder en image",
-    "bubble": "bulle",
-    "create": "créer",
-    "schema": "modèle",
-    "select": "sélectionner tout",
-    "disconnect": "déconnecter",
+    "bubble": "Bulles",
+    "create": "Créer",
+    "schema": "Modèles",
+    "select": "Sélectionner tout",
+    "disconnect": "Déconnecter",
+    "contribute": "Contribuez",
+    "contribute_link": "http://about.mindrespect.com/?language=fr",
     "redraw": "redessiner",
     "selection": {
       "title": "sélectionner",
@@ -185,7 +187,7 @@
     "connect": "Connexion",
     "login": "Se connecter",
     "register": "Essayer",
-    "language": "Langue"
+    "language": "Langue "
   },
   "top_center_menu": {
     "select": "sélection"

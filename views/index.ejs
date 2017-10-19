@@ -89,21 +89,22 @@
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                         <li>
-                            <a href="" id="select-all-bubbles" role="menuitem">
-                                <span data-i18n='top_menu.select'></span>
-                            </a>
-                        </li>
-                        <li>
                             <a href="" id="create-concept" class="create icon" role="menuitem"
                                data-i18n='top_menu.create'></a>
                         </li>
                         <li class="dropdown">
-                            <a href="/" id="all-your-bubbles-button" class="view icon" data-i18n='top_menu.central'></a>
+                            <a href="/" id="all-your-bubbles-button">
+                                <i class="fa fa-code-fork"></i>
+                                <span data-i18n='top_menu.central'></span>
+                            </a>
                         </li>
                     </ul>
                 </li>
                 <li class="dev-only hidden dropdown" id="schema-menu">
-                    <a data-toggle="dropdown" data-i18n='top_menu.schema'></a>
+                    <a data-toggle="dropdown">
+                        <span data-i18n='top_menu.schema'></span>
+                        <i class="fa fa-object-group"></i>
+                    </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                         <li>
                             <a href="" id="create-schema" class="create icon" role="menuitem"
@@ -152,9 +153,10 @@
                         </span>
                     </a>
                 </li>
-                <li data-i18n="[title]login.about">
-                    <a href="http://about.mindrespect.com">
-                        <i class="fa fa-info-circle"></i>
+                <li>
+                    <a data-i18n='[href]top_menu.contribute_link'>
+                        <span data-i18n='top_menu.contribute'></span>
+                        <i class="fa fa-code"></i>
                     </a>
                 </li>
                 <li data-i18n="[title]top_menu.share">
@@ -205,7 +207,7 @@
                             class="graph-element-button"></button>
                     <button data-action="cut" data-combinedShortcut="X" data-icon="fa-cut"
                             class="graph-element-button"></button>
-                    <button data-action="selectTree" data-icon="fa-sitemap" class="graph-element-button"></button>
+                    <!--<button data-action="selectTree" data-icon="fa-sitemap" class="graph-element-button"></button>-->
                     <button data-action="makePublic" data-combinedShortcut="P" data-icon="fa-unlock"
                             class="graph-element-button in-label-button"></button>
                     <button data-action="makePrivate" data-combinedShortcut="P" data-icon="fa-lock"
@@ -226,6 +228,8 @@
                             class="graph-element-button whole-graph-button"></button>
                     <button data-action="compare" data-icon="fa-balance-scale"
                             class="dev-only hidden graph-element-button whole-graph-button"></button>
+                    <button data-action="selectTree" data-combinedShortcut="A" data-icon="fa-sitemap"
+                            class="app-button graph-element-button whole-graph-button"></button>
                     <button data-action="undo" data-combinedShortcut="Z" data-icon="fa-undo"
                             class="app-button graph-element-button in-label-button"></button>
                     <button data-action="redo" data-combinedShortcut="Y" data-icon="fa-repeat"
@@ -1053,7 +1057,7 @@
                         <i class="fa fa-plus-circle"></i>
                     </button>
                 </div>
-                <table id="word-cloud-table"></table>
+                <table class="table-responsive" id="word-cloud-table"></table>
             </div>
         </div>
         <div class="col-md-1"></div>
@@ -1575,7 +1579,12 @@
         </div>
     </div>
 </div>
-<footer data-flow="landing" class="hidden"><span class="fa fa-copyright"></span> Copyleft - MindRespect</footer>
+<footer data-flow="landing" class="hidden"><span class="fa fa-copyright"></span> Copyleft - MindRespect -
+    <a data-i18n='[href]top_menu.contribute_link'>
+        <span data-i18n='top_menu.contribute'></span>
+        <i class="fa fa-code"></i>
+    </a>
+</footer>
 
 <script>
     var bubl_guru_force_refresh = "<%= bust %>";

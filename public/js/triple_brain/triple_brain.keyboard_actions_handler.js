@@ -25,6 +25,7 @@ define([
         escapeKeyNumber = 27,
         spacebarKeyNumber = 32,
         enterKeyCode = 13,
+        aKeyNumber = 65,
         dKeyNumber = 68,
         eKeyNumber = 69,
         hKeyNumber = 72,
@@ -192,6 +193,9 @@ define([
         }, {
             action: "identifyWhenMany"
         }];
+        actions[aKeyNumber] = {
+            action: "selectTree"
+        };
         actions[eKeyNumber] = {
             action: "expand"
         };
