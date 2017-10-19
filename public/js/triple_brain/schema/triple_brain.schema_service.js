@@ -15,37 +15,39 @@ define([
         var response = $.ajax({
             type: 'POST',
             url: getBaseUri()
-        }).success(function () {
+        }).then(function () {
             callback(
                 IdUri.resourceUriFromAjaxResponse(
                     response
                 )
             );
         });
+        return response;
     };
     api.get = function(uri, callback){
         return $.ajax({
             type: 'GET',
             url: adaptSchemaUri(uri)
-        }).success(callback);
+        }).then(callback);
     };
     api.list = function(callback){
         return $.ajax({
             type: 'GET',
             url: "/service/schemas"
-        }).success(callback);
+        }).then(callback);
     };
     api.createProperty = function(schema, callback){
         var response = $.ajax({
             type: 'POST',
             url: schema.getUri() + "/property"
-        }).success(function () {
+        }).then(function () {
             callback(
                 IdUri.resourceUriFromAjaxResponse(
                     response
                 )
             );
         });
+        return response;
     };
     return api;
     function getBaseUri(){

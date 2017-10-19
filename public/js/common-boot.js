@@ -16,40 +16,34 @@ requirejs.config({
         /*
          Jquery
          */
-        "jquery": "jquery/jquery-2.2.4",
+        "jquery": "vendor/node_modules/jquery/dist/jquery",
         "jquery.performance": "jquery/jquery.performance",
         "jquery.safer-html": "jquery/jquery.safer-html",
         "jquery.lazyload": "jquery/jquery.lazyload",
         "jquery-ui": "jquery/jquery-ui-1.12.1/jquery-ui",
         "jquery.url": "jquery/jquery.url",
         "jquery.nano": "jquery/jquery.nano",
-        "jquery.tinysort.min": "jquery/jquery.tinysort.min",
         "jquery.cookie": "jquery/jquery.cookie",
         "jquery.colorbox": "jquery/jquery.colorbox-min",
         "jquery.focus-end": "jquery/jquery.focus-end",
         "jquery.center-on-screen": "jquery/jquery.center-on-screen",
         "jquery.is-fully-on-screen": "jquery/jquery.is-fully-on-screen",
         "jquery.i18next": "vendor/i18next.amd.withJQuery-1.6.3",
-        "masonry": "vendor/masonry.pkgd.min",
         "bootstrap-table": "jquery/bootstrap-table",
         "bootstrap-table-lang": "jquery/bootstrap-table-zh-CN.min",
 
         /*
          Bootstrap
          */
-        "bootstrap": "vendor/bootstrap/bootstrap",
+        "bootstrap": "vendor/node_modules/bootstrap/dist/js/bootstrap",
         "bootstrap-datepicker": "vendor/bootstrap/bootstrap-datepicker",
         //"bootstrap-modal-carousel" : "vendor/bootstrap/bootstrap-modal-carousel",
-        "ekko-lightbox": "vendor/bootstrap/ekko-lightbox",
+        "ekko-lightbox": "vendor/node_modules/ekko-lightbox/dist/ekko-lightbox",
         "jquery.max_char": "triple_brain/jquery.max_char",
         "jquery.hotkeys": "jquery/jquery.hotkeys",
-        "google-code-prettify": "bower_components/google-code-prettify/bin/prettify.min",
+        "google-code-prettify": "vendor/node_modules/google-code-prettify/bin/prettify.min",
         "bootstrap-wysiwyg": "jquery/bootstrap-wysiwyg.min",
         "dragscroll": "vendor/dragscroll",
-
-
-        // "intro": "vendor/node_modules/intro.js/intro",
-
 
         /*
          Flow
@@ -280,7 +274,6 @@ requirejs.config({
         "jquery-ui": ["jquery"],
         "jquery.url": ["jquery"],
         "jquery.nano": ["jquery"],
-        "jquery.tinysort.min": ["jquery"],
         "jquery.cookie": ["jquery"],
         "jquery.cometd": ["jquery"],
         "jquery.cometd-ack": ["jquery"],

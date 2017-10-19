@@ -28,10 +28,10 @@ define([
             );
         };
         api.remove = function (edge, callback) {
-            $.ajax({
+            return $.ajax({
                 type: 'DELETE',
                 url: edge.getUri()
-            }).success(function () {
+            }).then(function () {
                 api._removeCallback(
                     edge,
                     callback
@@ -70,13 +70,13 @@ define([
             return $.ajax({
                 type: 'PUT',
                 url: edge.getUri() + "/source-vertex/" + IdUri.elementIdFromUri(sourceVertex.getUri())
-            }).success(callback);
+            }).then(callback);
         };
         api.changeDestinationVertex = function (destinationVertex, edge, callback) {
             return $.ajax({
                 type: 'PUT',
                 url: edge.getUri() + "/destination-vertex/" + IdUri.elementIdFromUri(destinationVertex.getUri())
-            }).success(callback);
+            }).then(callback);
         };
         api._add = function (sourceVertexUri, destinationVertexUri) {
             var sourceVertexUriFormatted = IdUri.encodeUri(sourceVertexUri);
@@ -87,7 +87,7 @@ define([
                 url: edgesUrl() +
                 '?sourceVertexId=' + sourceVertexUriFormatted +
                 '&destinationVertexId=' + destinationVertexUriFormatted
-            }).success(function () {
+            }).then(function () {
                     var newEdgeUri = IdUri.resourceUriFromAjaxResponse(
                         response
                     );

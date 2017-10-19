@@ -19,14 +19,14 @@ define([
                 type: 'GET',
                 url: uri,
                 dataType: 'json'
-            }).success(callback);
+            }).then(callback);
         };
         api.createVertex = function (callback) {
             return $.ajax({
                 type: 'POST',
                 url: getVerticesUrl(),
                 dataType: 'json'
-            }).success(callback);
+            }).then(callback);
         };
         api.addRelationAndVertexToVertex = function (vertex, sourceBubble, callback) {
             return $.ajax({
@@ -75,11 +75,11 @@ define([
             );
         };
         api.getSuggestions = function (vertex) {
-            $.ajax({
+            return $.ajax({
                 type: 'GET',
                 url: vertex.getUri() + '/suggestions',
                 dataType: 'json'
-            }).success(function (jsonSuggestions) {
+            }).then(function (jsonSuggestions) {
                 var suggestions = Suggestion.fromServerArray(
                     jsonSuggestions
                 );
@@ -95,7 +95,7 @@ define([
         api.addSuggestions = function (vertex, suggestions) {
             return api.addSuggestionsAjax(
                 vertex, suggestions
-            ).success(function () {
+            ).then(function () {
                 vertex.addSuggestions(suggestions);
                 EventBus.publish(
                     '/event/ui/graph/vertex/suggestions/updated',
@@ -141,7 +141,7 @@ define([
                 url: getVerticesUrl() + '/group',
                 data: JSON.stringify(graphElementsUris),
                 contentType: 'application/json;charset=utf-8'
-            }).success(function () {
+            }).then(function () {
                     var createdVertexUri = response.getResponseHeader("Location");
                     var relativeUri = createdVertexUri.substring(
                         createdVertexUri.indexOf("/service")
@@ -151,6 +151,7 @@ define([
                     );
                 }
             );
+            return response;
         };
         return api;
         function setCollectionPrivacy(isPublic, vertices) {

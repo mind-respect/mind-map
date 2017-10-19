@@ -45,7 +45,7 @@ define([
             url: graphElement.getUri() + '/comment',
             data: note,
             contentType: "text/plain"
-        }).success(function () {
+        }).then(function () {
             graphElement.getModel().setComment(note);
             EventBus.publish(
                 '/event/ui/graph/element/note/updated',

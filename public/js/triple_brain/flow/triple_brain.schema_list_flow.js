@@ -11,9 +11,8 @@ define([
     "triple_brain.id_uri",
     "triple_brain.vertex_controller",
     "triple_brain.event_bus",
-    "triple_brain.user_service",
-    "masonry"
-], function ($, Flow, LanguageManager, SchemaService, Schema, IdUri, VertexController, EventBus, UserService, Masonry) {
+    "triple_brain.user_service"
+], function ($, Flow, LanguageManager, SchemaService, Schema, IdUri, VertexController, EventBus, UserService) {
     "use strict";
     var api = {},
         linkTooltip,
@@ -32,10 +31,6 @@ define([
                     buildSchemaContainer(this)
                 );
             });
-            var msnry = new Masonry('#schemas-container .list', {
-                "itemSelector": '.schema-container'
-            });
-            msnry.layout();
         });
     };
     EventBus.subscribe("localized-text-loaded", function () {

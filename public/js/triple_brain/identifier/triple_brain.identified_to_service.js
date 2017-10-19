@@ -14,7 +14,7 @@ define([
         $.ajax({
             type: 'GET',
             url: getBaseUri() + encodeURIComponent(identification.getExternalResourceUri())
-        }).success(function(searchResultsServerFormat){
+        }).then(function(searchResultsServerFormat){
             deferred.resolve(
                 SearchResult.fromServerFormatArray(
                     searchResultsServerFormat

@@ -14,7 +14,7 @@ define([
             data: JSON.stringify(subGraph),
             url: UserService.currentUserUri() + "/fork",
             contentType: 'application/json'
-        }).success(callback);
+        }).then(callback);
     };
     return api;
 });
