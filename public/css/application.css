@@ -151,7 +151,7 @@ footer .fa-copyright { transform: rotate(-180deg); }
 .security-form a { float: left; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
-#drawn_graph { position: absolute; background: radial-gradient(rgba(0, 0, 255, 0) 5%, #1e87af 100%); }
+#drawn_graph { position: absolute; background: radial-gradient(rgba(0, 0, 255, 0) 5%, #0b46ff 100%); }
 
 .vertices-children-container { display: table-cell; vertical-align: middle; }
 
@@ -363,7 +363,6 @@ button.inactive i { color: red; }
 .relation.bubble.compare-remove .in-bubble-content .label-info .bubble-label:empty:not(:focus):after, .relation.bubble.compare-remove.inverse .in-bubble-content .label-info .bubble-label:empty:not(:focus):after, .relation.bubble.compare-remove.suggestion .in-bubble-content .label-info .bubble-label:empty:not(:focus):after { color: grey; }
 .relation.bubble .on-edge-button { font-size: 1.50em; cursor: pointer; }
 .relation.bubble .edit-relation-button { display: none; }
-.relation.bubble.same-as-group-relation.selected { color: rgba(255, 210, 149, 0.7); }
 .relation.bubble.same-as-group-relation .label-container { display: none; }
 .relation.bubble.same-as-group-relation .edit-relation-button { display: block; }
 .relation.bubble .label { border-radius: 0.80em; padding-top: 5px; padding-bottom: 5px; padding-left: 15px; padding-right: 15px; }
@@ -383,8 +382,6 @@ button.inactive i { color: red; }
 .relation.bubble.meta-relation .in-bubble-content { border: none; }
 .relation.bubble.meta-relation .in-bubble-content .label-info { border: 3px solid purple; }
 .relation.bubble .in-bubble-content .label-info { background-color: #3a87ad; height: auto; font-size: 1.05em; }
-.relation.bubble .in-bubble-content .label-info:hover { background-color: rgba(68, 201, 251, 0.4); }
-.relation.bubble .in-bubble-content .label-info.selected { background-color: rgba(68, 201, 251, 0.7) !important; }
 .relation.bubble .in-bubble-content .bubble-label { color: white; display: inline-block; font-family: helvetica; font-size: 1.05em; }
 .relation.bubble .in-bubble-content .bubble-label:not(:focus):after { color: white; }
 .relation.bubble .in-bubble-content .bubble-label:empty:not(:focus):after { color: white; }
@@ -396,9 +393,7 @@ button.inactive i { color: red; }
 
 .relation { padding: 0; margin-top: 0; margin-right: 0; margin-left: 0; vertical-align: middle; }
 
-.relation.edit .label.label-info.label-and-buttons { background-color: rgba(8, 74, 98, 0.7) !important; }
-
-.relation.selected .label { background-color: rgba(68, 201, 251, 0.7) !important; box-shadow: 4px 4px 4px black; }
+.relation.selected .label { box-shadow: 4px 4px 4px black; }
 
 .relation input { border-radius: 3px 3px 3px 3px; border-width: 0.2em; border-color: #3a87ad; padding: 0; outline: none; font-family: courier new, monospace; font-size: 14px; vertical-align: middle; background-color: transparent; overflow: hidden; position: absolute; width: 100%; top: 0; left: 0; right: 0; z-index: 5; }
 
@@ -460,15 +455,14 @@ button.inactive i { color: red; }
 .vertex.inverse .arrow { width: 47px; left: -37px; }
 .vertex.meta .in-bubble-content { border-radius: 0px; border: 3px solid purple; color: black; text-shadow: none; }
 .vertex.suggestion .in-bubble-content { border: 3px dotted darkgreen; color: black; text-shadow: none; }
-.vertex.edit .in-bubble-content { background-color: rgba(175, 106, 30, 0.7) !important; max-width: 325px; width: 325px; }
+.vertex.edit .in-bubble-content { width: 325px; max-width: 325px; }
 .vertex.edit .in-bubble-content .in-bubble-note-button { display: none; }
 .vertex.edit .bubble-label { white-space: pre-wrap; }
 .vertex.absolute { white-space: nowrap; position: absolute !important; min-width: 120px; }
 .vertex.includes-vertices .in-bubble-content { padding-bottom: 2em; }
-.vertex .in-bubble-content:hover { background-color: rgba(255, 210, 149, 0.4); }
 .vertex .in-bubble-content .in-label-buttons { margin-left: -24px; padding-left: 0; padding-right: 8px; }
 .vertex.selected { z-index: 12; }
-.vertex.selected .in-bubble-content { background-color: rgba(255, 210, 149, 0.7); box-shadow: -5px 5px 5px black; }
+.vertex.selected .in-bubble-content { box-shadow: -5px 5px 5px black; }
 .vertex.selected.center-vertex .in-bubble-content { box-shadow: -5px 5px 5px black; }
 .vertex.center-vertex .connector { height: 0; width: 0; }
 .vertex.center-vertex .arrow { height: 0; width: 0; top: 0; left: 0; border-top: none; }
