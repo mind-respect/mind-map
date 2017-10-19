@@ -148,7 +148,10 @@ define([
         });
         it("can export vertices to an html list when center is a meta", function(){
             var eventBubble = new Scenarios.aroundEventIdentifier().getEventBubbleInTree();
-            var aChildVertex = eventBubble.getTopMostChildBubble().getTopMostChildBubble();
+            var aChildVertex = TestUtils.getChildWithLabel(
+                eventBubble,
+                "a1"
+            ).getTopMostChildBubble();
             var listContainer = RelativeTreeVertex.VerticesToHtmlLists([
                 aChildVertex
             ]);

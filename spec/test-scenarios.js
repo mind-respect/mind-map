@@ -1095,6 +1095,14 @@ define([
             this.getTodoBubbleInTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("To do");
             };
+            this.expandE3 = function(e3){
+                return GraphDisplayerAsRelativeTree.addChildTreeUsingGraph(
+                    e3,
+                    api._getTestData(
+                        "centerMetaEventAndTodo.aroundE3"
+                    )
+                );
+            };
             Mock.setCenterBubbleUriInUrl(
                 this.getCenterBubbleUri()
             );

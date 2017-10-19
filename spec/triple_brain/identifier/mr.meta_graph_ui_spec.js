@@ -151,8 +151,35 @@ define([
                 e2.getNumberOfHiddenRelations()
             ).toBe(0);
         });
-        xit("excludes the source vertex in it's child for a vertex under a source vertex", function(){
-            expect(false).toBeTruthy();
+        it("excludes the source vertex in it's child for a vertex under a source vertex", function(){
+            var aroundTodoScenario = new Scenarios.aroundTodoIdentifier();
+            var toDoMetaBubble = aroundTodoScenario.getTodoBubbleInTree();
+            var sourceVertexAsGroupRelation = TestUtils.getChildWithLabel(
+                toDoMetaBubble,
+                "e1"
+            ).getTopMostChildBubble();
+            var e3 = TestUtils.getChildWithLabel(
+                sourceVertexAsGroupRelation,
+                "r2"
+            ).getTopMostChildBubble();
+            expect(
+                e3.text()
+            ).toBe("e3");
+            expect(
+                e3.isVertex()
+            ).toBeTruthy();
+            aroundTodoScenario.expandE3(
+                e3
+            );
+            expect(
+                e3.getNumberOfChild()
+            ).toBe(2);
+            expect(
+                TestUtils.hasChildWithLabel(
+                    e3,
+                    "r2"
+                )
+            ).toBeFalsy();
         });
     });
 });

@@ -16,6 +16,7 @@ define([
                 serverGraph, centralVertexUri
             ).doIt();
         };
+
         function UiTreeInfoBuilder(serverGraph, centralVertexUri) {
             this.serverGraph = serverGraph;
             this.vertices = serverGraph.vertices;
@@ -48,6 +49,9 @@ define([
         UiTreeInfoBuilder.prototype._buildRelationsOfVertices = function () {
             $.each(this.serverGraph.vertices, function (key, sourceVertex) {
                 sourceVertex.groupRelationRoots = [];
+                if (!sourceVertex.childrenGroupedByIdentifiers) {
+                    return;
+                }
                 $.each(sortIdentifiersByNumberOfRelationsDesc(sourceVertex.childrenGroupedByIdentifiers), function (identifierKey, tuplesHavingSameIdentifier) {
 
                     var groupRelation = GroupRelation.forTuplesAndIdentifier(
@@ -56,7 +60,7 @@ define([
                     );
                     var isTupleUnderAnotherRelation = false;
                     sourceVertex.groupRelationRoots.forEach(function (existingGroupRelationRoot) {
-                        if(existingGroupRelationRoot.integrateGroupRelationToTreeIfApplicable(groupRelation)){
+                        if (existingGroupRelationRoot.integrateGroupRelationToTreeIfApplicable(groupRelation)) {
                             isTupleUnderAnotherRelation = true;
                         }
                     });

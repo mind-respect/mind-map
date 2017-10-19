@@ -176,9 +176,6 @@ define([
         );
         function removeRelationWithGrandParentFromServerGraph() {
             var parentRelation = parentVertex.getRelationWithUiParent();
-            if(parentRelation.isMetaRelation()){
-                return 0;
-            }
             var relationWithGrandParentUri = parentRelation.getUri();
             var grandParent = parentVertex.getParentVertex();
             var grandParentUriToCompare = grandParent.getUri();
