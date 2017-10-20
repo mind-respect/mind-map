@@ -484,7 +484,6 @@ define([
 
     };
     GraphElementController.prototype.selectTreeCanDo = function () {
-        debugger;
         return this.isSingleAndOwned() && this.getUi().hasChildren();
     };
 
