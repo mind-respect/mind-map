@@ -52,6 +52,14 @@ define([
         });
     };
 
+    api.selectTree = function () {
+        GraphElementUi.getCenterBubble().selectTree();
+    };
+
+    api.selectTreeCanDo = function () {
+        return VertexUi.getNumber() > SelectionHandler.getNbSelectedVertices();
+    };
+
     api.zoomIn = function () {
         GraphUi.zoom(
             0.1
