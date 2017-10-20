@@ -483,8 +483,8 @@ define([
         return deferred.promise();
 
     };
-
     GraphElementController.prototype.selectTreeCanDo = function () {
+        debugger;
         return this.isSingleAndOwned() && this.getUi().hasChildren();
     };
 
