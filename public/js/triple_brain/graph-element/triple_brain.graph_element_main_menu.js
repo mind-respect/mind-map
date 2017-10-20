@@ -131,13 +131,11 @@ define([
                     api.showWholeGraphButtonOnlyIfApplicable(
                         button
                     );
-                    return;
                 }
                 if (button.isForApp()) {
                     api.showAppButtonOnlyIfApplicable(
                         button
                     );
-                    return;
                 }
                 button.showOnlyIfApplicable(
                     controller,
