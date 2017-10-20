@@ -581,6 +581,8 @@ button.inactive i { color: red; }
 #word-cloud .typeFilters { margin-top: 20px; }
 #word-cloud .typeFilters ul { display: inline-block; }
 
+#create-bubble-btn { margin-right: 12px; }
+
 /* Copyright Vincent Blouin under the GPL License version 3 */
 #schemas-container { margin-top: 5%; }
 #schemas-container li { font-size: 1.75em; }

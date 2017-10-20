@@ -1022,38 +1022,46 @@
                 <div class="row typeFilters">
                     <div class="col-md-12">
                         <strong data-i18n="centralBubbles.typeFilter.bubbleType"></strong>
-                        <label for="filter-checkbox" data-i18n="[title]centralBubbles.typeFilter.tag">
+                        <label for="filter-checkbox-meta" data-i18n="[title]centralBubbles.typeFilter.tag">
                             <i class="fa fa-tag"></i>
-                            <input id="filter-checkbox" data-filter-name="meta" class="form-control checkbox filter-type-checkbox" name="filterTags" type="checkbox" checked="checked">
+                            <input id="filter-checkbox-meta" data-filter-name="meta"
+                                   class="form-control checkbox filter-type-checkbox" name="filterTags" type="checkbox"
+                                   checked="checked">
                         </label>
-                        <label for="filter-checkbox" data-i18n="[title]centralBubbles.typeFilter.vertex">
+                        <label for="filter-checkbox-vertex" data-i18n="[title]centralBubbles.typeFilter.vertex">
                             <i class="fa fa-circle-o"></i>
-                            <input id="filter-checkbox" data-filter-name="vertex" class="form-control checkbox filter-type-checkbox"  name="filterVertices" type="checkbox" checked="checked">
+                            <input id="filter-checkbox-vertex" data-filter-name="vertex"
+                                   class="form-control checkbox filter-type-checkbox" name="filterVertices"
+                                   type="checkbox" checked="checked">
                         </label>
-                        <label for="filter-checkbox" data-i18n="[title]centralBubbles.typeFilter.relation">
+                        <label for="filter-checkbox-tag" data-i18n="[title]centralBubbles.typeFilter.relation">
                             <i class="fa fa-arrows-h"></i>
-                            <input id="filter-checkbox" data-filter-name="relation" class="form-control checkbox filter-type-checkbox" name="filterRelations" type="checkbox" checked="checked">
+                            <input id="filter-checkbox-tag" data-filter-name="relation"
+                                   class="form-control checkbox filter-type-checkbox" name="filterRelations"
+                                   type="checkbox" checked="checked">
                         </label>
                         <ul class="list-inline">
                             <li class="list-item">
-                                <a href="#" id="addAllTypeFilters" data-i18n="centralBubbles.typeFilter.addAll" class="hidden"></a>
+                                <a href="#" id="addAllTypeFilters" data-i18n="centralBubbles.typeFilter.addAll"
+                                   class="hidden"></a>
                             </li>
                             <li>
-                                <a href="#" id="removeAllTypeFilter" data-i18n="centralBubbles.typeFilter.removeAll" class="hidden"></a>
+                                <a href="#" id="removeAllTypeFilter" data-i18n="centralBubbles.typeFilter.removeAll"
+                                   class="hidden"></a>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div id="word-cloud-header">
+                    <button type="button" id="create-bubble-btn"
+                            class="owner-only hidden create btn btn-info pull-left"
+                            data-i18n="[title]centralBubbles.createInfo">
+                        <i class="fa fa-plus-circle"></i>
+                    </button>
                     <button type="button" id="remove-center-btn"
                             class="owner-only remove hidden btn btn-danger pull-right"
                             data-i18n="[title]centralBubbles.removeInfo">
                         <i class="fa fa-trash"></i>
-                    </button>
-                    <button type="button" id="create-bubble-btn"
-                            class="owner-only hidden create btn btn-info pull-right"
-                            data-i18n="[title]centralBubbles.createInfo">
-                        <i class="fa fa-plus-circle"></i>
                     </button>
                 </div>
                 <table class="table-responsive" id="word-cloud-table"></table>
