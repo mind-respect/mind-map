@@ -248,7 +248,7 @@ define([
     }
 
     function setTitle() {
-        document.title = IdUri.currentUsernameInUrl();
+        document.title = IdUri.currentUsernameInUrl() + " | MindRespect";
         _container.siblings("h2").text(
             IdUri.currentUsernameInUrl()
         );
