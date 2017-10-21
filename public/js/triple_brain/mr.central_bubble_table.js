@@ -124,7 +124,7 @@ define([
                 field: 'lastVisit',
                 title: $.t("centralBubbles.lastVisit"),
                 sortable: true,
-                'class': 'last-visit hidden-sm',
+                'class': 'last-visit hidden-sm hidden-xs',
                 sortName: "lastVisitValue",
                 searchable: false
             }, {

@@ -566,7 +566,7 @@ button.inactive i { color: red; }
 #word-cloud-container .content { margin-top: 3%; }
 #word-cloud-container h2.user-name-on-background { font-weight: bold; font-size: 2rem; color: white; }
 
-#word-cloud { margin-top: 7%; text-align: left; padding: 1em; }
+#word-cloud { margin-top: 3%; text-align: left; padding: 1em; }
 #word-cloud button.remove, #word-cloud button.create { margin-top: 10px; }
 #word-cloud button.create { margin-right: 10px; }
 #word-cloud table { font-size: 30px; table-layout: fixed; word-wrap: break-word; }
@@ -593,7 +593,8 @@ button.inactive i { color: red; }
 #word-cloud .typeFilters { margin-top: 20px; }
 #word-cloud .typeFilters ul { display: inline-block; }
 
-@media (max-width: 992px) { .user-name-on-background { margin-top: 100px; } }
+@media (max-width: 992px) { .user-name-on-background { margin-top: 100px; }
+  #word-cloud { margin-top: 7%; } }
 /* Copyright Vincent Blouin under the GPL License version 3 */
 #schemas-container { margin-top: 5%; }
 #schemas-container li { font-size: 1.75em; }

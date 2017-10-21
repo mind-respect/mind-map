@@ -30,7 +30,7 @@
 
 $tagCloudFontSize: 0.6em;
 #word-cloud {
-  margin-top: 7%;
+  margin-top: 3%;
   text-align: left;
   padding: 1em;
 
@@ -166,4 +166,7 @@ $tagCloudFontSize: 0.6em;
     margin-top: 100px;
   }
 
+  #word-cloud {
+    margin-top: 7%;
+  }
 }
