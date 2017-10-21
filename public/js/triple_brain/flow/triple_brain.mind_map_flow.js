@@ -79,7 +79,7 @@ define([
             }
             centralBubble.setAsCentral();
             GraphUi.getDrawnGraph().on(
-                "click",
+                "mousedown",
                 function (event) {
                     var clickedOnSomethingInsideABubble = $(event.target).closest(".bubble").length === 1;
                     if(clickedOnSomethingInsideABubble){

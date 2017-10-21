@@ -4,11 +4,6 @@
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .vertical-align { display: flex; align-items: center; }
 
-a:hover { background-color: rgba(254, 254, 254, 0.8) !important; border-radius: 10px 10px 10px 10px; color: black !important; text-decoration: none !important; }
-
-.dropdown-menu { border: none !important; border-radius: 10px 10px; border-radius-top-left: 10px !important; background-color: rgba(254, 254, 254, 0.7); left: inherit !important; margin-top: 3px !important; margin-right: 4px !important; left: inherit !important; }
-.dropdown-menu a:hover { background-color: black !important; color: white !important; }
-
 .navbar-default { border: none; background-image: none; background-color: rgba(0, 0, 0, 0.3); }
 .navbar-default .navbar-brand { color: #ffffff; }
 .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus { background-color: transparent !important; color: #ffffff; }
@@ -22,6 +17,9 @@ a:hover { background-color: rgba(254, 254, 254, 0.8) !important; border-radius: 
 .navbar-default .navbar-collapse, .navbar-default .navbar-form { border-color: #ffffff; }
 .navbar-default .navbar-link { color: #ffffff; }
 .navbar-default .navbar-link:hover { color: #ffffff; }
+.navbar-default a:hover { background-color: rgba(254, 254, 254, 0.8) !important; border-radius: 10px 10px 10px 10px; color: black; text-decoration: none; }
+.navbar-default .dropdown-menu { border: none !important; border-radius: 10px 10px; border-radius-top-left: 10px !important; background-color: rgba(254, 254, 254, 0.7); left: inherit !important; margin-top: 3px !important; margin-right: 4px !important; left: inherit !important; }
+.navbar-default .dropdown-menu a:hover { background-color: black !important; color: white !important; }
 
 @media (max-width: 992px) { .navbar-header { float: none; padding: 20px; }
   .navbar-left, .navbar-right { float: none !important; }
