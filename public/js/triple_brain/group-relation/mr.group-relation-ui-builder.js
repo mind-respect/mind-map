@@ -108,7 +108,7 @@ define([
                 "<div class='bubble-label'>"
             ).text(
                 this.serverFacade.getIdentification().getLabel()
-            ).click(function (event) {
+            ).on("mousedown", function (event) {
                     event.stopPropagation();
                     SelectionHandler.setToSingleGraphElement(
                         GroupRelationUi.withHtml(
