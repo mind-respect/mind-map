@@ -4,14 +4,18 @@
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .vertical-align { display: flex; align-items: center; }
 
+a:hover { background-color: rgba(254, 254, 254, 0.8) !important; border-radius: 10px 10px 10px 10px; color: black !important; text-decoration: none !important; }
+
+.dropdown-menu { border: none !important; border-radius: 10px 10px; border-radius-top-left: 10px !important; background-color: rgba(254, 254, 254, 0.7); left: inherit !important; margin-top: 3px !important; margin-right: 4px !important; left: inherit !important; }
+.dropdown-menu a:hover { background-color: black !important; color: white !important; }
+
 .navbar-default { border: none; background-image: none; background-color: rgba(0, 0, 0, 0.3); }
 .navbar-default .navbar-brand { color: #ffffff; }
-.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus { color: #ffffff; }
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus { background-color: transparent !important; color: #ffffff; }
 .navbar-default .navbar-text { color: #ffffff; }
-.navbar-default .navbar-nav > li > a { cursor: pointer; font-size: 1.2em; color: #ffffff; }
-.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus { color: #ffffff; text-decoration: underline; }
+.navbar-default .navbar-nav > li > a { margin-right: 5px; margin-top: 3px; cursor: pointer; font-size: 1.2em; color: #ffffff; }
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus { color: #ffffff; background-color: rgba(18, 29, 70, 0.4); }
-.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus { background-image: none; color: #ffffff; background-color: rgba(18, 29, 70, 0.4); }
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus { background-image: none; color: #ffffff; background-color: rgba(254, 254, 254, 0.8) !important; border-radius: 10px 10px 0px 0px; color: black !important; }
 .navbar-default .navbar-toggle { border-color: rgba(18, 29, 70, 0.4); }
 .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus { background-color: rgba(18, 29, 70, 0.4); }
 .navbar-default .navbar-toggle .icon-bar { background-color: #ffffff; }
@@ -42,7 +46,7 @@
 
 .navbar-form { margin-top: 2px; }
 
-.logo-navbar { height: 220%; margin-top: -5px; width: auto; }
+.logo-navbar { height: 220%; margin-top: -7px; width: auto; }
 
 .navbar-nav .dropdown-menu a { font-size: 1.2em; cursor: pointer; }
 .navbar-nav .dropdown-menu a.icon:before { font-family: FontAwesome; margin-right: 5px; }
@@ -76,8 +80,13 @@ body.mind-map-flow { margin-top: 50px; }
 .search-icon { position: relative; left: -30px; cursor: pointer; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
+a:hover { text-decoration: none; }
+
 footer { text-align: center; margin-bottom: 50px; }
 footer .fa-copyright { transform: rotate(-180deg); }
+
+footer > a { color: black; text-decoration: none; }
+footer > a:hover { background-color: black !important; color: white !important; }
 
 .fa-code-fork { transform: rotate(90deg); margin-right: 5px; }
 
@@ -151,7 +160,7 @@ footer .fa-copyright { transform: rotate(-180deg); }
 .security-form a { float: left; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
-#drawn_graph { position: absolute; background: radial-gradient(rgba(0, 0, 255, 0) 5%, #1e87af 100%); }
+#drawn_graph { position: absolute; background: radial-gradient(rgba(0, 0, 255, 0) 5%, #0b46ff 100%); }
 
 .vertices-children-container { display: table-cell; vertical-align: middle; }
 
@@ -363,7 +372,6 @@ button.inactive i { color: red; }
 .relation.bubble.compare-remove .in-bubble-content .label-info .bubble-label:empty:not(:focus):after, .relation.bubble.compare-remove.inverse .in-bubble-content .label-info .bubble-label:empty:not(:focus):after, .relation.bubble.compare-remove.suggestion .in-bubble-content .label-info .bubble-label:empty:not(:focus):after { color: grey; }
 .relation.bubble .on-edge-button { font-size: 1.50em; cursor: pointer; }
 .relation.bubble .edit-relation-button { display: none; }
-.relation.bubble.same-as-group-relation.selected { color: rgba(255, 210, 149, 0.7); }
 .relation.bubble.same-as-group-relation .label-container { display: none; }
 .relation.bubble.same-as-group-relation .edit-relation-button { display: block; }
 .relation.bubble .label { border-radius: 0.80em; padding-top: 5px; padding-bottom: 5px; padding-left: 15px; padding-right: 15px; }
@@ -383,8 +391,6 @@ button.inactive i { color: red; }
 .relation.bubble.meta-relation .in-bubble-content { border: none; }
 .relation.bubble.meta-relation .in-bubble-content .label-info { border: 3px solid purple; }
 .relation.bubble .in-bubble-content .label-info { background-color: #3a87ad; height: auto; font-size: 1.05em; }
-.relation.bubble .in-bubble-content .label-info:hover { background-color: rgba(68, 201, 251, 0.4); }
-.relation.bubble .in-bubble-content .label-info.selected { background-color: rgba(68, 201, 251, 0.7) !important; }
 .relation.bubble .in-bubble-content .bubble-label { color: white; display: inline-block; font-family: helvetica; font-size: 1.05em; }
 .relation.bubble .in-bubble-content .bubble-label:not(:focus):after { color: white; }
 .relation.bubble .in-bubble-content .bubble-label:empty:not(:focus):after { color: white; }
@@ -396,9 +402,7 @@ button.inactive i { color: red; }
 
 .relation { padding: 0; margin-top: 0; margin-right: 0; margin-left: 0; vertical-align: middle; }
 
-.relation.edit .label.label-info.label-and-buttons { background-color: rgba(8, 74, 98, 0.7) !important; }
-
-.relation.selected .label { background-color: rgba(68, 201, 251, 0.7) !important; box-shadow: 4px 4px 4px black; }
+.relation.selected .label { box-shadow: 4px 4px 4px black; }
 
 .relation input { border-radius: 3px 3px 3px 3px; border-width: 0.2em; border-color: #3a87ad; padding: 0; outline: none; font-family: courier new, monospace; font-size: 14px; vertical-align: middle; background-color: transparent; overflow: hidden; position: absolute; width: 100%; top: 0; left: 0; right: 0; z-index: 5; }
 
@@ -460,15 +464,14 @@ button.inactive i { color: red; }
 .vertex.inverse .arrow { width: 47px; left: -37px; }
 .vertex.meta .in-bubble-content { border-radius: 0px; border: 3px solid purple; color: black; text-shadow: none; }
 .vertex.suggestion .in-bubble-content { border: 3px dotted darkgreen; color: black; text-shadow: none; }
-.vertex.edit .in-bubble-content { background-color: rgba(175, 106, 30, 0.7) !important; max-width: 325px; width: 325px; }
+.vertex.edit .in-bubble-content { width: 325px; max-width: 325px; }
 .vertex.edit .in-bubble-content .in-bubble-note-button { display: none; }
 .vertex.edit .bubble-label { white-space: pre-wrap; }
 .vertex.absolute { white-space: nowrap; position: absolute !important; min-width: 120px; }
 .vertex.includes-vertices .in-bubble-content { padding-bottom: 2em; }
-.vertex .in-bubble-content:hover { background-color: rgba(255, 210, 149, 0.4); }
 .vertex .in-bubble-content .in-label-buttons { margin-left: -24px; padding-left: 0; padding-right: 8px; }
 .vertex.selected { z-index: 12; }
-.vertex.selected .in-bubble-content { background-color: rgba(255, 210, 149, 0.7); box-shadow: -5px 5px 5px black; }
+.vertex.selected .in-bubble-content { box-shadow: -5px 5px 5px black; }
 .vertex.selected.center-vertex .in-bubble-content { box-shadow: -5px 5px 5px black; }
 .vertex.center-vertex .connector { height: 0; width: 0; }
 .vertex.center-vertex .arrow { height: 0; width: 0; top: 0; left: 0; border-top: none; }
@@ -557,12 +560,15 @@ button.inactive i { color: red; }
 .zoom-scale-1 .in-bubble-content { zoom: 500%; -moz-transform: scale(5); }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
+.user-name-on-background { margin-top: 40px; }
+
 #word-cloud-container .background { position: absolute; background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("images/neurons-440660-white3.jpg"); left: 0; width: 100%; min-height: 200px; }
 #word-cloud-container .content { margin-top: 3%; }
 #word-cloud-container h2.user-name-on-background { font-weight: bold; font-size: 2rem; color: white; }
 
 #word-cloud { margin-top: 7%; text-align: left; padding: 1em; }
-#word-cloud button.remove, #word-cloud button.create { margin-top: 10px; margin-left: 10px; }
+#word-cloud button.remove, #word-cloud button.create { margin-top: 10px; }
+#word-cloud button.create { margin-right: 10px; }
 #word-cloud table { font-size: 30px; table-layout: fixed; word-wrap: break-word; }
 #word-cloud table, #word-cloud table * { cursor: pointer; }
 #word-cloud .last-visit { width: 10%; white-space: normal; }
@@ -587,8 +593,7 @@ button.inactive i { color: red; }
 #word-cloud .typeFilters { margin-top: 20px; }
 #word-cloud .typeFilters ul { display: inline-block; }
 
-#create-bubble-btn { margin-right: 12px; }
-
+@media (max-width: 992px) { .user-name-on-background { margin-top: 100px; } }
 /* Copyright Vincent Blouin under the GPL License version 3 */
 #schemas-container { margin-top: 5%; }
 #schemas-container li { font-size: 1.75em; }
