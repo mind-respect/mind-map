@@ -13,6 +13,7 @@ requirejs.config({
         "diff_match_patch": "vendor/diff_match_patch_uncompressed",
         "clipboard": "vendor/clipboard",
         "intro": "vendor/node_modules/intro.js/intro",
+        // "html2canvas": "vendor/node_modules/html2canvas/dist/html2canvas",
         /*
          Jquery
          */

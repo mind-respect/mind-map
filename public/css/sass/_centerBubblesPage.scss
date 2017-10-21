@@ -30,7 +30,7 @@
 
 $tagCloudFontSize: 0.6em;
 #word-cloud {
-  margin-top: 7%;
+  margin-top: 3%;
   text-align: left;
   padding: 1em;
 
@@ -56,25 +56,26 @@ $tagCloudFontSize: 0.6em;
     width: 10%;
     white-space:normal;
   }
-  .number-visits {
-    width: 6%;
-  }
 
   .bubble-label, .context {
     text-overflow: ellipsis;
   }
   .bubble-label {
-    width: 28%;
+    width: 30%;
   }
 
   .context {
-    width: 56%;
+    width: 60%;
     a.empty{
       &:before{
         content:"...";
         color:black;
       }
     }
+  }
+
+  .select-checkbox{
+    text-align:center;
   }
 
   th {
@@ -102,7 +103,7 @@ $tagCloudFontSize: 0.6em;
       .grid {
         .grid-item {
           float: left;
-          max-width: 35%; // 200% / 5 items (2 lines / 5 items) but reserve some extra space for padding etc
+          max-width: 50%; // 200% / 4 items (2 lines / 4 items) but reserve some extra space for padding etc
           overflow: hidden;
           padding-left: 5px;
           text-overflow: ellipsis;
@@ -165,4 +166,7 @@ $tagCloudFontSize: 0.6em;
     margin-top: 100px;
   }
 
+  #word-cloud {
+    margin-top: 7%;
+  }
 }

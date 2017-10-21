@@ -18,8 +18,7 @@ define([
 
 ], function ($, IdUri, AskModal, CenterGraphElementService, EventBus, GraphController, UserService, GraphElementType, Moment) {
     "use strict";
-    var NUMBER_OF_VISIT_RANKS = 3,
-        _elements,
+    var _elements,
         _container,
         tableData = [],
         checkedCenters = [],
@@ -27,7 +26,6 @@ define([
     return {
         buildFromElementsInContainer: function (elements, container) {
             _elements = elements;
-            defineNumberVisitsRank();
             _container = container;
             buildHtml();
             setTitle();
@@ -52,10 +50,6 @@ define([
                     "data-i18n",
                     "centralBubbles.lastVisit"
                 );
-                _container.find("th.number-visits .th-inner").attr(
-                    "data-i18n",
-                    "centralBubbles.nbVisits"
-                );
                 _container.i18n();
             });
         }
@@ -71,9 +65,7 @@ define([
                 graphElementType: IdUri.getGraphElementTypeFromUri(element.getUri()),
                 context: getContextCellContentForElement(element),
                 lastVisit: getLastVisitCellContentForElement(element),
-                lastVisitValue: element.getLastCenterDate().getTime(),
-                numberVisits: getNumberVisitsCellContentForElement(element),
-                numberVisitsValue: element.getNumberOfVisits()
+                lastVisitValue: element.getLastCenterDate().getTime()
             });
         });
         table.bootstrapTable({
@@ -116,7 +108,8 @@ define([
             },
             columns: [{
                 field: "bubbleLabelValue",
-                searchable: true
+                searchable: true,
+                'class': 'hidden'
             }, {
                 field: 'bubbleLabel',
                 title: $.t("centralBubbles.center"),
@@ -125,26 +118,19 @@ define([
             }, {
                 field: 'context',
                 title: $.t("centralBubbles.context"),
-                'class': 'context',
+                'class': 'context hidden-xs',
                 searchable: false
             }, {
                 field: 'lastVisit',
                 title: $.t("centralBubbles.lastVisit"),
                 sortable: true,
-                'class': 'last-visit',
+                'class': 'last-visit hidden-sm hidden-xs',
                 sortName: "lastVisitValue",
-                searchable: false
-            }, {
-                field: 'numberVisits',
-                title: $.t("centralBubbles.nbVisits"),
-                sortable: true,
-                'class': 'number-visits',
-                sortName: "numberVisitsValue",
                 searchable: false
             }, {
                 field: "select",
                 checkbox: true,
-                "class": "form-group",
+                "class": "form-group select-checkbox",
                 searchable: false
             }],
             data: tableData
@@ -211,30 +197,6 @@ define([
         ).prop('outerHTML');
     }
 
-    function getNumberVisitsCellContentForElement(element) {
-        var label = $('<span class="label">').addClass(
-            getNumberOfVisitsLabelClassFromRank(
-                element.getNumberOfVisitsRank()
-            )
-        ).text(element.getNumberOfVisits());
-        return buildAnchorForElement(element).addClass(
-            "text-right"
-        ).append(
-            label
-        ).prop('outerHTML');
-    }
-
-    function getNumberOfVisitsLabelClassFromRank(rank) {
-        switch (rank) {
-            case 1:
-                return "label-danger";
-            case 2 :
-                return "label-warning";
-            default :
-                return "label-info";
-        }
-    }
-
     function buildAnchorForElement(element) {
         return $("<a>").prop(
             "href",
@@ -260,27 +222,6 @@ define([
         }
     }
 
-    function defineNumberVisitsRank() {
-        _elements.sort(function (a, b) {
-            return a.getNumberOfVisits() > b.getNumberOfVisits() ?
-                -1 : 1;
-        });
-
-        var amountPerRank = Math.ceil(_elements.length / NUMBER_OF_VISIT_RANKS);
-        var currentRankLimit = amountPerRank;
-        var currentRank = 1;
-        var index = 1;
-        _elements.forEach(function (element) {
-            if (index <= currentRankLimit) {
-                element.setVisitRank(currentRank);
-            }
-            if (index === currentRankLimit) {
-                currentRankLimit += amountPerRank;
-                currentRank++;
-            }
-            index++;
-        });
-    }
 
     function handleRemoveCenterBtnClick() {
         $("#remove-center-btn").off(
