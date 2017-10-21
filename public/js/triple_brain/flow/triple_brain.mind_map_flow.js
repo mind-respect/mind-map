@@ -85,7 +85,6 @@ define([
                     if(clickedOnSomethingInsideABubble){
                         return;
                     }
-                    event.stopPropagation();
                     if (UiUtils.isMacintosh() ? event.metaKey : event.ctrlKey)
                     {
                         return;
