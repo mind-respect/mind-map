@@ -5,31 +5,6 @@ $colDefault     : #ffffff;
 $colHighlight   : #ffffff;
 $dropDown       : false;
 
-a:hover {
-  background-color: rgba(254, 254, 254, 0.8) !important;
-  //border: 3px solid rgba(254, 254, 254, 0.7);
-  border-radius: 10px 10px 10px 10px;
-  color: black !important;
-  text-decoration: none !important;
-}
-
-.dropdown-menu{
-  border: none !important;
-  border-radius: 10px 10px;
-  border-radius-top-left: 10px !important;
-  background-color: rgba(254, 254, 254, 0.7);
-  left: inherit !important;
-  margin-top: 3px !important;
-  margin-right: 4px !important;
-  left: inherit !important;
-  a{
-    &:hover{
-      background-color: black !important;
-      color: white !important;
-    }
-  }
-}
-
 .navbar-default {
   border:none;
   background-image: none;
@@ -87,11 +62,40 @@ a:hover {
       background-color: $colDefault; }}
   .navbar-collapse,
   .navbar-form {
-    border-color: $colDefault; }
+    border-color: $colDefault;
+  }
   .navbar-link {
     color: $colDefault;
     &:hover {
-      color: $colHighlight; }}}
+      color: $colHighlight;
+    }
+  }
+
+  a:hover {
+    background-color: rgba(254, 254, 254, 0.8) !important;
+    //border: 3px solid rgba(254, 254, 254, 0.7);
+    border-radius: 10px 10px 10px 10px;
+    color: black ;
+    text-decoration: none ;
+  }
+
+  .dropdown-menu {
+    border: none !important;
+    border-radius: 10px 10px;
+    border-radius-top-left: 10px !important;
+    background-color: rgba(254, 254, 254, 0.7);
+    left: inherit !important;
+    margin-top: 3px !important;
+    margin-right: 4px !important;
+    left: inherit !important;
+    a {
+      &:hover {
+        background-color: black !important;
+        color: white !important;
+      }
+    }
+  }
+}
 
 @media (max-width: 992px) {
   .navbar-header {
