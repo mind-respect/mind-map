@@ -102,7 +102,7 @@ footer > a:hover { background-color: black !important; color: white !important; 
 #app-presentation .jumbotron .fa { font-size: 125%; margin-bottom: 10px; }
 
 #welcome-content { font-size: 18px; }
-#welcome-content .well { background-color: #e95420; box-shadow: 0 0 5px #4582ec; border: 1px solid #3b5998; color: white; background-image: none; font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+#welcome-content .well { background-color: #d9534f; border: 1px solid #d43f3a; color: white; background-image: none; font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif; }
 #welcome-content .timeline-container { margin-bottom: 30px; }
 #welcome-content img.example { width: 400px; }
 #welcome-content .action { margin-bottom: 50px; padding-bottom: 50px; border-bottom: 1px solid #eee; }
