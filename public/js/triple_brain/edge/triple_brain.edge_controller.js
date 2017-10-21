@@ -41,9 +41,10 @@ define([
         return deferred.promise();
     };
 
-    EdgeController.prototype.becomeParent = function (vertexUi) {
+    EdgeController.prototype.becomeParent = function (graphElementUi) {
+        var vertexUi = graphElementUi.isRelation() ? graphElementUi.getTopMostChildBubble() : graphElementUi;
         var newGroupRelation = this._convertToGroupRelation();
-        vertexUi.moveToParent(
+        graphElementUi.moveToParent(
             newGroupRelation
         );
         var promises = [];

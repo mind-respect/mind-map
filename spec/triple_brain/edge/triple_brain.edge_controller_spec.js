@@ -414,6 +414,25 @@ define([
                     r2.getModel().getIdentifiersIncludingSelf().length
                 ).toBe(2);
             });
+            it("can become parent of a relation", function(){
+                var threeBubblesScenario = new Scenarios.threeBubblesGraph();
+                var centerBubble = threeBubblesScenario.getBubble1InTree();
+                var r2 = TestUtils.getChildWithLabel(
+                    centerBubble,
+                    "r2"
+                );
+                var r1 = TestUtils.getChildWithLabel(
+                    centerBubble,
+                    "r1"
+                );
+                expect(
+                    r1.getParentBubble().text()
+                ).not.toBe("r2");
+                r1.getController().moveUnderParent(r2);
+                expect(
+                    r1.getParentBubble().text()
+                ).toBe("r2");
+            });
         });
     });
 });
