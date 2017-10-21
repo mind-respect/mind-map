@@ -2,6 +2,10 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
+.user-name-on-background {
+  margin-top: 40px;
+}
+
 #word-cloud-container {
   .background {
     position: absolute;
@@ -32,7 +36,10 @@ $tagCloudFontSize: 0.6em;
 
   button.remove, button.create{
     margin-top: 10px;
-    margin-left: 10px;
+  }
+
+  button.create{
+    margin-right: 10px;
   }
 
   table {
@@ -148,6 +155,14 @@ $tagCloudFontSize: 0.6em;
     }
   }
 }
-#create-bubble-btn{
-  margin-right:12px;
+
+@media (max-width: 992px) {
+  body {
+    //margin-right: 0px !important;
+    //margin-left: 0px !important;
+  }
+  .user-name-on-background {
+    margin-top: 100px;
+  }
+
 }

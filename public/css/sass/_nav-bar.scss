@@ -5,6 +5,31 @@ $colDefault     : #ffffff;
 $colHighlight   : #ffffff;
 $dropDown       : false;
 
+a:hover {
+  background-color: rgba(254, 254, 254, 0.8) !important;
+  //border: 3px solid rgba(254, 254, 254, 0.7);
+  border-radius: 10px 10px 10px 10px;
+  color: black !important;
+  text-decoration: none !important;
+}
+
+.dropdown-menu{
+  border: none !important;
+  border-radius: 10px 10px;
+  border-radius-top-left: 10px !important;
+  background-color: rgba(254, 254, 254, 0.7);
+  left: inherit !important;
+  margin-top: 3px !important;
+  margin-right: 4px !important;
+  left: inherit !important;
+  a{
+    &:hover{
+      background-color: black !important;
+      color: white !important;
+    }
+  }
+}
+
 .navbar-default {
   border:none;
   background-image: none;
@@ -17,18 +42,19 @@ $dropDown       : false;
   .navbar-brand {
     color: $colDefault;
     &:hover, &:focus {
+      background-color: transparent !important;
       color: $colHighlight; }}
   .navbar-text {
     color: $colDefault; }
   .navbar-nav {
     > li {
       > a {
+        margin-right: 5px;
+        margin-top: 3px;
         cursor:pointer;
         font-size:1.2em;
         color: $colDefault;
         &:hover,  &:focus {
-          color: $colHighlight;
-          text-decoration:underline;
         }
       }
       @if $dropDown {
@@ -50,7 +76,9 @@ $dropDown       : false;
       > a, > a:hover, > a:focus {
         background-image:none;
         color: $colHighlight;
-        background-color: $bgHighlight; }}}
+        background-color: rgba(254, 254, 254, 0.8) !important;
+        border-radius: 10px 10px 0px 0px;
+        color: black !important; }}}
   .navbar-toggle {
     border-color: $bgHighlight;
     &:hover, &:focus {
@@ -146,7 +174,7 @@ $dropDown       : false;
 
 .logo-navbar{
   height: 220%;
-  margin-top: -5px;
+  margin-top: -7px;
   width: auto;
 }
 
