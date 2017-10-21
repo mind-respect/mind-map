@@ -572,18 +572,18 @@ button.inactive i { color: red; }
 #word-cloud table { font-size: 30px; table-layout: fixed; word-wrap: break-word; }
 #word-cloud table, #word-cloud table * { cursor: pointer; }
 #word-cloud .last-visit { width: 10%; white-space: normal; }
-#word-cloud .number-visits { width: 6%; }
 #word-cloud .bubble-label, #word-cloud .context { text-overflow: ellipsis; }
-#word-cloud .bubble-label { width: 28%; }
-#word-cloud .context { width: 56%; }
+#word-cloud .bubble-label { width: 30%; }
+#word-cloud .context { width: 60%; }
 #word-cloud .context a.empty:before { content: "..."; color: black; }
+#word-cloud .select-checkbox { text-align: center; }
 #word-cloud th { font-size: 0.6em; color: #656464; }
 #word-cloud td { text-align: left; color: black; cursor: pointer; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-size: 0.6em; }
 #word-cloud td a.empty { color: transparent !important; }
 #word-cloud td.bubble-label a { overflow: hidden; text-overflow: ellipsis; font-weight: bold; }
 #word-cloud td.bubble-label a .reference.badge { font-size: 0.8em; margin-left: 5px; }
 #word-cloud td.context .grid { overflow: hidden; text-overflow: ellipsis; }
-#word-cloud td.context .grid .grid-item { float: left; max-width: 35%; overflow: hidden; padding-left: 5px; text-overflow: ellipsis; }
+#word-cloud td.context .grid .grid-item { float: left; max-width: 50%; overflow: hidden; padding-left: 5px; text-overflow: ellipsis; }
 #word-cloud td.context .grid .grid-item:after { content: " ● "; }
 #word-cloud td.context .grid .grid-item:last-of-type:after { content: " ..."; }
 #word-cloud td.number-visits a { text-align: center; }

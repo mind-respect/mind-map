@@ -118,19 +118,19 @@ define([
             }, {
                 field: 'context',
                 title: $.t("centralBubbles.context"),
-                'class': 'context',
+                'class': 'context hidden-xs',
                 searchable: false
             }, {
                 field: 'lastVisit',
                 title: $.t("centralBubbles.lastVisit"),
                 sortable: true,
-                'class': 'last-visit',
+                'class': 'last-visit hidden-sm',
                 sortName: "lastVisitValue",
                 searchable: false
             }, {
                 field: "select",
                 checkbox: true,
-                "class": "form-group",
+                "class": "form-group select-checkbox",
                 searchable: false
             }],
             data: tableData
