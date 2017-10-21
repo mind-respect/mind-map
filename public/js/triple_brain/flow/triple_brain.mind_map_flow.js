@@ -21,8 +21,8 @@ define([
     "triple_brain.bubble_factory",
     "triple_brain.identification_menu",
     "triple_brain.image_menu",
-    "triple_brain.other_user_flow",
-], function ($, UiUtils, UserService, EventBus, Header, SelectionHandler, GraphDisplayer, GraphDisplayerFactory, MindMapInfo, GraphElementMainMenu, GraphUi, LanguageManager, IdUriUtils, BubbleCloudFlow, Flow, BubbleFactory, IdentificationMenu, ImageMenu) {
+    "triple_brain.other_user_flow"
+], function ($, UiUtils, UserService, EventBus, Header, SelectionHandler, GraphDisplayer, GraphDisplayerFactory, MindMapInfo, GraphElementMainMenu, GraphUi, LanguageManager, IdUriUtils, BubbleCloudFlow, Flow, BubbleFactory, IdentificationMenu, ImageMenu, html2canvas) {
     "use strict";
     var api = {};
     api.enterBubbleCloud = function () {
@@ -113,6 +113,9 @@ define([
             SelectionHandler.setToSingleVertex(centralBubble);
             GraphDisplayer.getGraphMenuHandler().zoomOut();
             EventBus.publish('/event/ui/graph/drawn');
+            // html2canvas(document.body).then(function(canvas) {
+            //     document.body.innerHTML = canvas;
+            // });
             //if (window.callPhantom === 'function') {
             //    window.callPhantom('takeShot');
             //}
