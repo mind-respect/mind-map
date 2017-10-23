@@ -359,22 +359,38 @@ define([
     };
 
     VertexController.prototype.becomeParent = function (graphElementUi) {
-        var movedEdge = graphElementUi.isRelation() ? graphElementUi : graphElementUi.getParentBubble();
         var promises = [];
-        promises.push(
-            movedEdge.getController().changeEndVertex(
-                this.getUi()
-            )
-        );
-        promises.push(
-            movedEdge.getParentBubble().getController().becomeExParent(movedEdge)
-        );
+        var uiToBeChild;
+        if(graphElementUi.isGroupRelation()){
+            graphElementUi.expand();
+            graphElementUi.visitClosestChildOfType(
+                GraphElementType.Relation,
+                moveEdge.bind(this)
+            );
+            uiToBeChild = graphElementUi;
+        }else{
+            uiToBeChild = graphElementUi.isRelation() ? graphElementUi : graphElementUi.getParentBubble();
+            moveEdge.bind(this)(uiToBeChild);
+        }
+
         return $.when.apply($, promises).then(function () {
-            movedEdge.moveToParent(
+            uiToBeChild.moveToParent(
                 this.getUi()
             );
             this.getModel().incrementNumberOfConnectedEdges();
         }.bind(this));
+        function moveEdge(movedEdge){
+            promises.push(
+                movedEdge.getController().changeEndVertex(
+                    this.getUi()
+                )
+            );
+            if(!graphElementUi.isGroupRelation()){
+                promises.push(
+                    movedEdge.getParentBubble().getController().becomeExParent(movedEdge)
+                );
+            }
+        }
     };
 
     function publishVertexPrivacyUpdated(ui) {

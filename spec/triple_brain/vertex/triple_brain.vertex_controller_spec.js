@@ -556,7 +556,48 @@ define([
                     newChild.getHiddenRelationsContainer().getHtml().text()
                 ).toBe("+ 1");
             });
-
+            it("can become parent of a group relation", function(){
+                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+                var center = scenario.getCenterVertexInTree();
+                var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+                var otherVertex = TestUtils.getChildWithLabel(
+                    center,
+                    "other relation"
+                ).getTopMostChildBubble();
+                groupRelation.expand();
+                expect(
+                    TestUtils.hasChildWithLabel(
+                        otherVertex,
+                        "Possession"
+                    )
+                ).toBeFalsy();
+                groupRelation.getController().moveUnderParent(otherVertex);
+                otherVertex = TestUtils.getChildWithLabel(
+                    center,
+                    "other relation"
+                ).getTopMostChildBubble();
+                expect(
+                    TestUtils.hasChildWithLabel(
+                        otherVertex,
+                        "Possession"
+                    )
+                ).toBeTruthy();
+            });
+            it("does not remove the relation's tag when moving a group relation", function(){
+                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+                var center = scenario.getCenterVertexInTree();
+                var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+                var otherVertex = TestUtils.getChildWithLabel(
+                    center,
+                    "other relation"
+                ).getTopMostChildBubble();
+                groupRelation.expand();
+                var groupRelationNumberOfChild = groupRelation.getNumberOfChild();
+                groupRelation.getController().moveUnderParent(otherVertex);
+                expect(
+                    groupRelation.getNumberOfChild()
+                ).toBe(groupRelationNumberOfChild);
+            });
         });
     });
 });
