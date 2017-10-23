@@ -113,13 +113,13 @@ define([
             var b1 = scenario.getBubble1InTree();
             var b2 = scenario.getBubble2InTree();
             var underB2;
-            b1.getController().addChild().then(function(tripleUi){
+            b1.getController().addChild().then(function (tripleUi) {
                 underB2 = tripleUi.destinationVertex();
             });
             b2.getController().addChild();
             var bottomBubbleUnderB2;
             b2.expand();
-            b2.getController().addChild().then(function(tripleUi){
+            b2.getController().addChild().then(function (tripleUi) {
                 bottomBubbleUnderB2 = tripleUi.destinationVertex();
             });
             underB2.getController().addChild();
@@ -274,102 +274,127 @@ define([
                 ideaFor2.hasImages()
             ).toBeFalsy();
         });
-        it("can move to another parent", function () {
-            var scenario = new Scenarios.threeBubblesGraph();
-            var centerBubble = scenario.getBubble1InTree();
-            expect(
-                centerBubble.getNumberOfChild()
-            ).toBe(2);
-            var bubble3 = scenario.getBubble3InTree();
-            expect(
-                bubble3.getNumberOfChild()
-            ).toBe(0);
-            var relation1 = scenario.getRelation1InTree();
-            relation1.moveToParent(bubble3);
-            expect(
-                centerBubble.getNumberOfChild()
-            ).toBe(1);
-            expect(
-                bubble3.getNumberOfChild()
-            ).toBe(1);
+        describe('moveTo', function () {
+            it("can move to another parent", function () {
+                var scenario = new Scenarios.threeBubblesGraph();
+                var centerBubble = scenario.getBubble1InTree();
+                expect(
+                    centerBubble.getNumberOfChild()
+                ).toBe(2);
+                var bubble3 = scenario.getBubble3InTree();
+                expect(
+                    bubble3.getNumberOfChild()
+                ).toBe(0);
+                var relation1 = scenario.getRelation1InTree();
+                relation1.moveToParent(bubble3);
+                expect(
+                    centerBubble.getNumberOfChild()
+                ).toBe(1);
+                expect(
+                    bubble3.getNumberOfChild()
+                ).toBe(1);
+            });
+            it("also moves a vertex's parent relation when moving a vertex", function () {
+                var scenario = new Scenarios.threeBubblesGraph();
+                var bubble3 = scenario.getBubble3InTree();
+                expect(
+                    bubble3.getNumberOfChild()
+                ).toBe(0);
+                var bubble2 = scenario.getBubble2InTree();
+                bubble2.moveToParent(bubble3);
+                expect(
+                    bubble3.getTopMostChildBubble().text()
+                ).toBe("r1");
+            });
+            it("expands a closed group relation when moving a graph element to it", function () {
+                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+                var centerBubble = scenario.getCenterVertexInTree();
+                var possessionGroupRelation = TestUtils.getChildWithLabel(
+                    centerBubble,
+                    "Possession"
+                );
+                expect(
+                    possessionGroupRelation.isExpanded()
+                ).toBeFalsy();
+                var otherRelation = TestUtils.getChildWithLabel(
+                    centerBubble,
+                    "other relation"
+                );
+                otherRelation.moveToParent(
+                    possessionGroupRelation
+                );
+                expect(
+                    possessionGroupRelation.isExpanded()
+                ).toBeTruthy();
+            });
+            it("selects the moved bubble after it moved", function () {
+                var scenario = new Scenarios.threeBubblesGraph();
+                var relation1 = scenario.getRelation1InTree();
+                var bubble3 = scenario.getBubble3InTree();
+                expect(
+                    SelectionHandler.getNbSelected()
+                ).toBe(0);
+                relation1.moveToParent(bubble3);
+                expect(
+                    SelectionHandler.getNbSelected()
+                ).toBe(1);
+                expect(
+                    SelectionHandler.getSingleElement().getUri()
+                ).toBe(relation1.getUri());
+            });
+            it("removes image related to an identification when a relation moved to a group relation that shares that identification", function () {
+                var scenario = new Scenarios.groupRelationWithImage();
+                var centerBubble = scenario.getSomeProject();
+                var otherRelation = TestUtils.getChildWithLabel(
+                    centerBubble,
+                    "other relation"
+                );
+                var idea = scenario.getIdeaGroupRelationInTree();
+                expect(
+                    idea.hasImages()
+                ).toBeTruthy();
+                idea.getGroupRelation().getIdentification().makeGeneric();
+                otherRelation.getController().addIdentification(
+                    idea.getGroupRelation().getIdentification()
+                );
+                expect(
+                    otherRelation.hasImages()
+                ).toBeFalsy();
+                otherRelation.moveToParent(idea);
+                expect(
+                    otherRelation.hasImages()
+                ).toBeFalsy();
+            });
+            it("can move a group relation under a relation", function () {
+                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+                var center = scenario.getCenterVertexInTree();
+                var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+                var otherRelation = TestUtils.getChildWithLabel(
+                    center,
+                    "other relation"
+                );
+                groupRelation.expand();
+                expect(
+                    TestUtils.hasChildWithLabel(
+                        otherRelation,
+                        "Possession"
+                    )
+                ).toBeFalsy();
+                groupRelation.moveToParent(otherRelation);
+                expect(
+                    TestUtils.hasChildWithLabel(
+                        otherRelation,
+                        "Possession"
+                    )
+                ).toBeTruthy();
+            });
         });
-        it("also moves a vertex's parent relation when moving a vertex", function () {
-            var scenario = new Scenarios.threeBubblesGraph();
-            var bubble3 = scenario.getBubble3InTree();
-            expect(
-                bubble3.getNumberOfChild()
-            ).toBe(0);
-            var bubble2 = scenario.getBubble2InTree();
-            bubble2.moveToParent(bubble3);
-            expect(
-                bubble3.getTopMostChildBubble().text()
-            ).toBe("r1");
-        });
-        it("expands a closed group relation when moving a graph element to it", function () {
-            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
-            var centerBubble = scenario.getCenterVertexInTree();
-            var possessionGroupRelation = TestUtils.getChildWithLabel(
-                centerBubble,
-                "Possession"
-            );
-            expect(
-                possessionGroupRelation.isExpanded()
-            ).toBeFalsy();
-            var otherRelation = TestUtils.getChildWithLabel(
-                centerBubble,
-                "other relation"
-            );
-            otherRelation.moveToParent(
-                possessionGroupRelation
-            );
-            expect(
-                possessionGroupRelation.isExpanded()
-            ).toBeTruthy();
-        });
-        it("selects the moved bubble after it moved", function () {
-            var scenario = new Scenarios.threeBubblesGraph();
-            var relation1 = scenario.getRelation1InTree();
-            var bubble3 = scenario.getBubble3InTree();
-            expect(
-                SelectionHandler.getNbSelected()
-            ).toBe(0);
-            relation1.moveToParent(bubble3);
-            expect(
-                SelectionHandler.getNbSelected()
-            ).toBe(1);
-            expect(
-                SelectionHandler.getSingleElement().getUri()
-            ).toBe(relation1.getUri());
-        });
-        it("removes image related to an identification when a relation moved to a group relation that shares that identification", function () {
-            var scenario = new Scenarios.groupRelationWithImage();
-            var centerBubble = scenario.getSomeProject();
-            var otherRelation = TestUtils.getChildWithLabel(
-                centerBubble,
-                "other relation"
-            );
-            var idea = scenario.getIdeaGroupRelationInTree();
-            expect(
-                idea.hasImages()
-            ).toBeTruthy();
-            idea.getGroupRelation().getIdentification().makeGeneric();
-            otherRelation.getController().addIdentification(
-                idea.getGroupRelation().getIdentification()
-            );
-            expect(
-                otherRelation.hasImages()
-            ).toBeFalsy();
-            otherRelation.moveToParent(idea);
-            expect(
-                otherRelation.hasImages()
-            ).toBeFalsy();
-        });
-        describe("remove", function(){
+        describe("remove", function () {
             it("selects above sibling when available after it's removed", function () {
                 var scenario = new Scenarios.threeBubblesGraph();
                 var bubble1 = scenario.getBubble1InTree();
                 var newVertex;
-                bubble1.getController().addChild().then(function(tripleUi){
+                bubble1.getController().addChild().then(function (tripleUi) {
                     newVertex = tripleUi.destinationVertex();
                 });
                 expect(
@@ -389,7 +414,7 @@ define([
                 var scenario = new Scenarios.threeBubblesGraph();
                 var bubble1 = scenario.getBubble1InTree();
                 var newVertex;
-                bubble1.getController().addChild().then(function(tripleUi){
+                bubble1.getController().addChild().then(function (tripleUi) {
                     newVertex = tripleUi.destinationVertex();
                 });
                 expect(
@@ -423,7 +448,7 @@ define([
                 var b1 = scenario.getBubble1InTree();
                 var b2 = scenario.getBubble2InTree();
                 var underB2;
-                b1.getController().addChild().then(function(tripleUi){
+                b1.getController().addChild().then(function (tripleUi) {
                     underB2 = tripleUi.destinationVertex();
                 });
                 b2.expand();
@@ -595,7 +620,7 @@ define([
                 b1.hasDescendantsWithHiddenRelations()
             ).toBeFalsy();
         });
-        describe("collapse", function(){
+        describe("collapse", function () {
             it("displays the hidden relations container after collapse", function () {
                 var scenario = new Scenarios.threeBubblesGraph();
                 var b2 = scenario.getBubble2InTree();
@@ -647,8 +672,8 @@ define([
                 ).toBeFalsy();
             });
         });
-        describe("hasAnExpandedChild", function(){
-            it("returns false for a child that has no hidden relations container and no child", function(){
+        describe("hasAnExpandedChild", function () {
+            it("returns false for a child that has no hidden relations container and no child", function () {
                 var scenario = new Scenarios.threeBubblesGraph();
                 var b1 = scenario.getBubble1InTree();
                 expect(
@@ -808,6 +833,7 @@ define([
         it("can get bubble at index", function () {
             var scenario = new Scenarios.creationDateScenario();
             var b7 = scenario.getBubble7InTree();
+            scenario.expandBubble7(b7);
             var b71 = TestUtils.getChildWithLabel(
                 b7,
                 "r71"
@@ -833,8 +859,8 @@ define([
                 2
             ).isSameBubble(b73)).toBeTruthy();
         });
-        describe("expand", function(){
-            it("hides hidden relations container of other instances", function(){
+        describe("expand", function () {
+            it("hides hidden relations container of other instances", function () {
                 var graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
                 var b1 = graphWithCircularityScenario.getBubble1InTree();
                 var b2 = TestUtils.getChildWithLabel(
@@ -858,7 +884,7 @@ define([
                     otherB2.getHiddenRelationsContainer().isVisible()
                 ).toBeFalsy();
             });
-            it("reviews the display of the 'visitOtherInstances' on expand", function(){
+            it("reviews the display of the 'visitOtherInstances' on expand", function () {
                 loadFixtures("graph-element-menu.html");
                 var graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
                 var b1 = graphWithCircularityScenario.getBubble1InTree();
@@ -885,8 +911,8 @@ define([
                 ).toBeFalsy();
             });
         });
-        describe("collapse", function(){
-            it("reviews the display of the 'visitOtherInstances' button", function(){
+        describe("collapse", function () {
+            it("reviews the display of the 'visitOtherInstances' button", function () {
                 loadFixtures("graph-element-menu.html");
                 var graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
                 var b1 = graphWithCircularityScenario.getBubble1InTree();
@@ -912,8 +938,8 @@ define([
                 ).toBeTruthy();
             });
         });
-        describe("travelRight", function(){
-            it("prevents from selecting child bubble after it's hidden using collapse", function(){
+        describe("travelRight", function () {
+            it("prevents from selecting child bubble after it's hidden using collapse", function () {
                 var scenario = new Scenarios.threeBubblesGraph();
                 var b2 = scenario.getBubble2InTree();
                 scenario.expandBubble2(b2);
@@ -936,8 +962,8 @@ define([
                 ).toBeTruthy();
             });
         });
-        describe("travelLeft", function(){
-            it("prevents from selecting child bubble after it's hidden using collapse", function(){
+        describe("travelLeft", function () {
+            it("prevents from selecting child bubble after it's hidden using collapse", function () {
                 var scenario = new Scenarios.threeBubblesGraph();
                 var b3 = scenario.getBubble3InTree();
                 scenario.expandBubble3(b3);

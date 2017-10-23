@@ -203,7 +203,7 @@ define([
             graphWithCircularityScenario.expandBubble3(bubble3);
             var bubble2AsChildOfB3 = TestUtils.getChildWithLabel(
                 bubble3,
-                "r2"
+                "r3"
             ).getTopMostChildBubble();
             expect(
                 bubble2AsChildOfB3.hasVisibleHiddenRelationsContainer()

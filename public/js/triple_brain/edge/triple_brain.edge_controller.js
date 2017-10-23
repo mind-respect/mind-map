@@ -8,8 +8,9 @@ define([
     "triple_brain.edge_service",
     "triple_brain.identification",
     "triple_brain.graph_displayer",
-    "mr.bubble_delete_menu"
-], function ($, GraphElementController, EdgeService, Identification, GraphDisplayer, BubbleDeleteMenu) {
+    "mr.bubble_delete_menu",
+    "triple_brain.graph_element_type"
+], function ($, GraphElementController, EdgeService, Identification, GraphDisplayer, BubbleDeleteMenu, GraphElementType) {
     "use strict";
     var api = {};
     api.RelationController = EdgeController;
@@ -42,27 +43,38 @@ define([
     };
 
     EdgeController.prototype.becomeParent = function (graphElementUi) {
-        var vertexUi = graphElementUi.isRelation() ? graphElementUi.getTopMostChildBubble() : graphElementUi;
+        var promises = [];
         var newGroupRelation = this._convertToGroupRelation();
         graphElementUi.moveToParent(
             newGroupRelation
         );
-        var promises = [];
-        var movedEdge = vertexUi.getParentBubble();
-        var identifiers = this.getModel().hasIdentifications() ?
-            this.getModel().getIdentifiers() :
-            this.getModel().getIdentifiersIncludingSelf();
-        promises.push(
-            movedEdge.getController().addIdentifiers(
-                identifiers
-            )
-        );
-        promises.push(
-            movedEdge.getController().changeEndVertex(
-                this.getUi().getParentVertex()
-            )
-        );
+        if(graphElementUi.isGroupRelation()){
+            graphElementUi.expand();
+            graphElementUi.visitClosestChildOfType(
+                GraphElementType.Relation,
+                moveEdge.bind(this)
+            );
+        }else if(graphElementUi.isVertex()){
+            moveEdge.bind(this)(graphElementUi.getParentBubble());
+        }else{
+            moveEdge.bind(this)(graphElementUi);
+        }
         return $.when.apply($, promises);
+        function moveEdge(movedEdge){
+            var identifiers = this.getModel().hasIdentifications() ?
+                this.getModel().getIdentifiers() :
+                this.getModel().getIdentifiersIncludingSelf();
+            promises.push(
+                movedEdge.getController().addIdentifiers(
+                    identifiers
+                )
+            );
+            promises.push(
+                movedEdge.getController().changeEndVertex(
+                    this.getUi().getParentVertex()
+                )
+            );
+        }
     };
 
     EdgeController.prototype._convertToGroupRelation = function () {

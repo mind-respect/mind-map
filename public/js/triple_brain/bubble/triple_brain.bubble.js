@@ -17,7 +17,7 @@ define([
     ], function ($, EventBus, UiUtils, ImageDisplayer, GraphElementUi, GraphElementType, BubbleFactory, SelectionHandler, CenterBubble, PropertiesIndicator, LoadingFlow) {
         "use strict";
         var api = {};
-        var MoveRelation = {
+        api.MoveRelation = {
             "Parent": "parent",
             "After": "after",
             "Before": "before"
@@ -60,6 +60,18 @@ define([
         };
 
         api.Bubble.prototype.moveTo = function (otherBubble, relation) {
+            // if(this.isGroupRelation()){
+            //     this.visitClosestChildOfType(GraphElementType.Relation, function(childRelation){
+            //         childRelation.moveTo(
+            //             otherBubble,
+            //             relation
+            //         );
+            //     });
+            //     return;
+            // }
+            if(this.isGroupRelation()){
+                this.expand();
+            }
             if (this.isVertex()) {
                 return this.getParentBubble().moveTo(
                     otherBubble,
@@ -69,7 +81,7 @@ define([
             var isOriginalToTheLeft = this.isToTheLeft();
             var treeContainer = this.getTreeContainer();
             var toMove = treeContainer.add(treeContainer.next(".clear-fix"));
-            if (MoveRelation.Parent === relation) {
+            if (api.MoveRelation.Parent === relation) {
                 if (otherBubble.isGroupRelation()) {
                     if (!otherBubble.isExpanded()) {
                         otherBubble.getController().expand();
@@ -80,7 +92,7 @@ define([
                     }
                 }
             }
-            if (MoveRelation.Parent === relation) {
+            if (api.MoveRelation.Parent === relation) {
                 var newContainer;
                 newContainer = otherBubble.isCenterBubble() ?
                     CenterBubble.usingBubble(otherBubble).getContainerItShouldNextAddTo() :
@@ -89,7 +101,7 @@ define([
                     toMove
                 );
             } else {
-                if (MoveRelation.Before === relation) {
+                if (api.MoveRelation.Before === relation) {
                     otherBubble.getTreeContainer().before(
                         toMove
                     );
@@ -111,7 +123,9 @@ define([
                 this.convertToLeft();
                 $.each(treeContainers, convertTreeStructureToLeft);
             } else {
-                this.getDestinationVertex().convertToRight();
+                this.visitDescendants(function(descendant){
+                    descendant.convertToRight();
+                });
                 this.convertToRight();
                 $.each(treeContainers, convertTreeStructureToRight);
             }
@@ -120,19 +134,19 @@ define([
         api.Bubble.prototype.moveToParent = function (parent) {
             return this.moveTo(
                 parent,
-                MoveRelation.Parent
+                api.MoveRelation.Parent
             );
         };
         api.Bubble.prototype.moveAbove = function (newSibling) {
             return this.moveTo(
                 newSibling,
-                MoveRelation.Before
+                api.MoveRelation.Before
             );
         };
         api.Bubble.prototype.moveUnder = function (newSibling) {
             return this.moveTo(
                 newSibling,
-                MoveRelation.After
+                api.MoveRelation.After
             );
         };
 

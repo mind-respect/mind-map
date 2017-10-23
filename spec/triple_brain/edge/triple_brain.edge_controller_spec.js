@@ -433,6 +433,33 @@ define([
                     r1.getParentBubble().text()
                 ).toBe("r2");
             });
+            it("can become parent of a group relation", function(){
+                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+                var center = scenario.getCenterVertexInTree();
+                var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+                var otherRelation = TestUtils.getChildWithLabel(
+                    center,
+                    "other relation"
+                );
+                groupRelation.expand();
+                expect(
+                    TestUtils.hasChildWithLabel(
+                        otherRelation,
+                        "Possession"
+                    )
+                ).toBeFalsy();
+                groupRelation.getController().moveUnderParent(otherRelation);
+                otherRelation = TestUtils.getChildWithLabel(
+                    center,
+                    "other relation"
+                );
+                expect(
+                    TestUtils.hasChildWithLabel(
+                        otherRelation,
+                        "Possession"
+                    )
+                ).toBeTruthy();
+            });
         });
     });
 });

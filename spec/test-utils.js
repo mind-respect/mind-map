@@ -88,13 +88,14 @@ define([
         container.trigger(event);
     };
     api.getChildWithLabel = function (bubble, label) {
-        var childWithLabel = bubble;
+        var childWithLabel;
         bubble.visitAllImmediateChild(function (child) {
             if (child.text() === label) {
                 childWithLabel = child;
                 return false;
             }
         });
+        expect(childWithLabel).not.toBeUndefined();
         return childWithLabel;
     };
 

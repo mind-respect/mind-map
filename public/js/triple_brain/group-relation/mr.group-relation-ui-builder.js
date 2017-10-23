@@ -39,6 +39,11 @@ define([
             );
             groupRelationUi.reviewInLabelButtonsVisibility();
             groupRelationUi.reviewEditButtonDisplay();
+            if (!MindMapInfo.isViewOnly()) {
+                GraphElementHtmlBuilder.setupDrag(
+                    groupRelationUi
+                );
+            }
             // groupRelationUi.visitAllChild(function(child){
             //     if(child.isGroupRelation()){
             //         api.completeBuild(child);
