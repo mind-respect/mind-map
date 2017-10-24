@@ -7,9 +7,10 @@ define([
         "triple_brain.vertex_service",
         "triple_brain.edge_service",
         "triple_brain.graph_element_controller",
-        "triple_brain.selection_handler"
+        "triple_brain.selection_handler",
+        "triple_brain.graph_element_type"
     ],
-    function ($, VertexService, EdgeService, GraphElementController, SelectionHandler) {
+    function ($, VertexService, EdgeService, GraphElementController, SelectionHandler, GraphElementType) {
         "use strict";
         var api = {};
         api.GroupRelationController = GroupRelationController;
@@ -77,25 +78,40 @@ define([
             return deferred.promise();
         };
 
-        GroupRelationController.prototype.becomeParent = function (vertexUi) {
-            var movedEdge = vertexUi.getParentBubble();
+        GroupRelationController.prototype.becomeParent = function (graphElementUi) {
+            var uiChild;
             var promises = [];
-            var parentGroupRelation = this.getUi();
-            promises.push(
-                movedEdge.getController().changeEndVertex(
-                    this.getUi().getParentVertex()
-                )
-            );
-            do {
+            if(graphElementUi.isGroupRelation()){
+                graphElementUi.expand();
+                graphElementUi.visitClosestChildOfType(
+                    GraphElementType.Relation,
+                    moveEdge.bind(this)
+                );
+                uiChild = graphElementUi;
+            }else{
+                uiChild = graphElementUi.isVertex() ? graphElementUi.getParentBubble() : graphElementUi;
+                moveEdge.bind(this)(
+                    uiChild
+                );
+            }
+            uiChild.moveToParent(this.getUi());
+            return $.when.apply($, promises);
+            function moveEdge(movedEdge){
+                var parentGroupRelation = this.getUi();
                 promises.push(
-                    movedEdge.getController().addIdentifiers(
-                        parentGroupRelation.getModel().getIdentifiers()
+                    movedEdge.getController().changeEndVertex(
+                        this.getUi().getParentVertex()
                     )
                 );
-                parentGroupRelation = parentGroupRelation.getParentBubble();
-            } while (parentGroupRelation.isGroupRelation());
-            movedEdge.moveToParent(this.getUi());
-            return $.when.apply($, promises);
+                do {
+                    promises.push(
+                        movedEdge.getController().addIdentifiers(
+                            parentGroupRelation.getModel().getIdentifiers()
+                        )
+                    );
+                    parentGroupRelation = parentGroupRelation.getParentBubble();
+                } while (parentGroupRelation.isGroupRelation());
+            }
         };
 
         GroupRelationController.prototype.becomeExParent = function (movedEdge) {

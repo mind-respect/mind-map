@@ -14,21 +14,21 @@ define([
             Mock.applyDefaultMocks();
         });
 
-        it("can identify", function(){
+        it("can identify", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
             var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
             expect(
                 possessionInTree.getController().identifyCanDo()
             ).toBeTruthy();
         });
-        it("gives all it's identifiers to the new relation when adding a child", function(){
+        it("gives all it's identifiers to the new relation when adding a child", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
             var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
             possessionInTree.getModel().addIdentification(
                 TestUtils.dummyIdentifier()
             );
             var testWasMade = false;
-            possessionInTree.getController().addChild().then(function(triple){
+            possessionInTree.getController().addChild().then(function (triple) {
                 expect(
                     triple.edge().getModel().getIdentifiers().length
                 ).toBe(2);
@@ -39,7 +39,7 @@ define([
             ).toBeTruthy();
         });
 
-        it("makes new child public if parent vertex is public", function(){
+        it("makes new child public if parent vertex is public", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
             var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
             possessionInTree.getParentVertex().getModel().makePublic();
@@ -47,7 +47,7 @@ define([
                 TestUtils.dummyIdentifier()
             );
             var testWasMade = false;
-            possessionInTree.getController().addChild().then(function(triple){
+            possessionInTree.getController().addChild().then(function (triple) {
                 expect(
                     triple.destinationVertex().getModel().isPublic()
                 ).toBeTruthy();
@@ -58,8 +58,8 @@ define([
             ).toBeTruthy();
         });
 
-        describe("expand", function(){
-            it("also expands child bubbles having only one child", function(){
+        describe("expand", function () {
+            it("also expands child bubbles having only one child", function () {
                 var scenario = new Scenarios.graphWithGroupRelationHavingAVertexChildWithOneHiddenRelation();
                 var tshirtGroupRelation = scenario.getTshirtGroupRelationInTree();
                 GraphServiceMock.getForCentralBubbleUriAndGraph(
@@ -77,6 +77,54 @@ define([
                 expect(
                     shirt2.getNumberOfChild()
                 ).toBe(1);
+            });
+        });
+        describe("becomeParent", function () {
+            it("can become parent of an edge", function () {
+                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+                var center = scenario.getCenterVertexInTree();
+                var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+                var otherRelation = TestUtils.getChildWithLabel(
+                    center,
+                    "other relation"
+                );
+                groupRelation.expand();
+                expect(
+                    TestUtils.hasChildWithLabel(
+                        groupRelation,
+                        "other relation"
+                    )
+                ).toBeFalsy();
+                otherRelation.getController().moveUnderParent(groupRelation);
+                expect(
+                    TestUtils.hasChildWithLabel(
+                        groupRelation,
+                        "other relation"
+                    )
+                ).toBeTruthy();
+            });
+            it("can become parent of a group relation", function () {
+                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+                var center = scenario.getCenterVertexInTree();
+                var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+                var otherGroupRelation = TestUtils.getChildWithLabel(
+                    center,
+                    "original relation"
+                );
+                groupRelation.expand();
+                expect(
+                    TestUtils.hasChildWithLabel(
+                        groupRelation,
+                        "original relation"
+                    )
+                ).toBeFalsy();
+                otherGroupRelation.getController().moveUnderParent(groupRelation);
+                expect(
+                    TestUtils.hasChildWithLabel(
+                        groupRelation,
+                        "original relation"
+                    )
+                ).toBeTruthy();
             });
         });
     });

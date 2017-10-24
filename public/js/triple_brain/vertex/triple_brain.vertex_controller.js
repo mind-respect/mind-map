@@ -360,21 +360,21 @@ define([
 
     VertexController.prototype.becomeParent = function (graphElementUi) {
         var promises = [];
-        var uiToBeChild;
+        var uiChild;
         if(graphElementUi.isGroupRelation()){
             graphElementUi.expand();
             graphElementUi.visitClosestChildOfType(
                 GraphElementType.Relation,
                 moveEdge.bind(this)
             );
-            uiToBeChild = graphElementUi;
+            uiChild = graphElementUi;
         }else{
-            uiToBeChild = graphElementUi.isRelation() ? graphElementUi : graphElementUi.getParentBubble();
-            moveEdge.bind(this)(uiToBeChild);
+            uiChild = graphElementUi.isRelation() ? graphElementUi : graphElementUi.getParentBubble();
+            moveEdge.bind(this)(uiChild);
         }
 
         return $.when.apply($, promises).then(function () {
-            uiToBeChild.moveToParent(
+            uiChild.moveToParent(
                 this.getUi()
             );
             this.getModel().incrementNumberOfConnectedEdges();
