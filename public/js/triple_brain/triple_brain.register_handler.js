@@ -102,6 +102,8 @@ define([
         }
 
         RegisterForm.prototype.handleRegistrationError = function (errors) {
+            getModalSection().removeClass("hidden");
+            LoadingFlow.leave();
             this.getLoginErrorMessage().addClass("hidden");
             errors.forEach(function (error) {
                 this._getErrorWithName(
