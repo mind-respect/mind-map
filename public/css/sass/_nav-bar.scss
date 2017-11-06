@@ -241,7 +241,7 @@ body.mind-map-flow{
   background-color:transparent;
   box-shadow:none;
 }
-$tl: 1s; // transition length
+$tl: 0.5s; // transition length
 
 .search-box {
   margin-top:6px;
@@ -259,7 +259,7 @@ $tl: 1s; // transition length
     & + label .search-icon {    color: white    }
   }
   &:focus {
-    transition: width $tl cubic-bezier(0,1.22,0,1.39), border-radius $tl, background $tl;
+    transition: width $tl cubic-bezier(0,1,0,1), border-radius $tl, background $tl;
     border: none;outline: none;
     box-shadow: none;
     padding-left: 15px;

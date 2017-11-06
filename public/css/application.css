@@ -67,11 +67,11 @@ body.mind-map-flow { margin-top: 50px; }
 
 .navbar-lower { background-color: transparent; box-shadow: none; }
 
-.search-box { margin-top: 6px; transition: width 1s, border-radius 1s, background 1s, box-shadow 1s; width: 40px; height: 40px; border: none; cursor: pointer; background: #ebebeb; }
+.search-box { margin-top: 6px; transition: width 0.5s, border-radius 0.5s, background 0.5s, box-shadow 0.5s; width: 40px; height: 40px; border: none; cursor: pointer; background: #ebebeb; }
 .search-box + label .search-icon { color: black; }
 .search-box:hover { color: white; background: #c8c8c8; box-shadow: 0 0 0 5px #3d4752; }
 .search-box:hover + label .search-icon { color: white; }
-.search-box:focus { transition: width 1s cubic-bezier(0, 1.22, 0, 1.39), border-radius 1s, background 1s; border: none; outline: none; box-shadow: none; padding-left: 15px; cursor: text; width: 300px; border-radius: auto; background: #ebebeb; color: black; }
+.search-box:focus { transition: width 0.5s cubic-bezier(0, 1, 0, 1), border-radius 0.5s, background 0.5s; border: none; outline: none; box-shadow: none; padding-left: 15px; cursor: text; width: 300px; border-radius: auto; background: #ebebeb; color: black; }
 .search-box:focus + label .search-icon { color: black; }
 .search-box:not(:focus) { text-indent: -5000px; }
 
