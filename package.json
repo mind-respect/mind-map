@@ -3,7 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "start": "node ./bin/www",
-    "test": "npm install --prefix public/js/vendor && karma start karma.conf.js && node build.js"
+    "test-debug": "karma start karma.conf.js --single-run false --browsers=Chrome --auto-watch",
+    "test-only": "karma start karma.conf.js",
+    "before-commit": "npm install && npm install --prefix public/js/vendor && npm run test-only && npm run lint",
+    "test": "npm install --prefix public/js/vendor && npm run test-only && npm run lint && node build.js",
+    "lint": "jshint public/js/triple_brain/** public/js/module/**/*.js spec/*.js spec/mock/** spec/module/**"
   },
   "dependencies": {
     "ejs": "*",
@@ -31,6 +35,7 @@
     "karma-safari-launcher": "^1.0.0",
     "phantomjs": "^2.1.7",
     "requirejs": "^2.3.5",
-    "serve-static": "*"
+    "serve-static": "*",
+    "jshint": "^2.9.5"
   }
 }
