@@ -22,7 +22,7 @@
     "grunt-contrib-connect": "*",
     "grunt-contrib-jasmine": "~1.0.3",
     "grunt-contrib-jshint": "~1.0.0",
-    "grunt-contrib-requirejs": "1.0.0",
+    "grunt-contrib-requirejs": "0.4.4",
     "grunt-contrib-watch": "*",
     "grunt-template-jasmine-requirejs": "~0.2.3",
     "serve-static": "*"
