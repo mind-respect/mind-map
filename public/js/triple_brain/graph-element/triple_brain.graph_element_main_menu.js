@@ -40,6 +40,7 @@ define([
                     setTitle(button);
                     api.defineTooltip(button);
                 });
+
                 function setIcon(button) {
                     var icon = $("<i>").addClass(
                         "fa " + button.getIconClass()
@@ -91,9 +92,9 @@ define([
                 }
             );
         };
-        api.defineTooltip = function (button) {
+        api.defineTooltip = function (button, options) {
             preventNativeTooltip();
-            button.getHtml().popoverLikeToolTip();
+            button.getHtml().popoverLikeToolTip(options);
             function preventNativeTooltip() {
                 button.getHtml().hover(
                     function (event) {
@@ -187,12 +188,12 @@ define([
             return _menu;
         };
 
-        api.getControllerFromCurrentSelection = function(){
+        api.getControllerFromCurrentSelection = function () {
             var nbSelectedGraphElements = SelectionHandler.getNbSelected();
             var currentController;
             if (0 === nbSelectedGraphElements) {
                 currentController = GraphDisplayer.getGraphMenuHandler();
-            }else if (1 === nbSelectedGraphElements) {
+            } else if (1 === nbSelectedGraphElements) {
                 currentController = SelectionHandler.getSingleElement().getController();
             } else {
                 var anyElement = SelectionHandler.getSingleElement();

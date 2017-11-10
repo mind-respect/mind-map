@@ -175,6 +175,7 @@ define([
                 "/user"
             );
         };
+
         api._hasParamAtIndex = function (index) {
             return decodeURIComponent(
                     window.location.pathname

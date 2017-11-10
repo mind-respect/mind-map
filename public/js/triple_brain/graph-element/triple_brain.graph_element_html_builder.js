@@ -77,23 +77,18 @@ define([
             }
             var clonedButton = button.cloneInto(container);
             var cloneHtml = clonedButton.getHtml();
-            if ("note" === cloneHtml.data("action")) {
-                cloneHtml.attr(
-                    "title",
-                    graphElementUi.getModel().getComment()
+            cloneHtml.click(function(){
+                var graphElementUi = BubbleFactory.fromSubHtml(
+                    $(this)
                 );
-            }
-            var controller = graphElementUi.getController();
-            var canDoFromInLabel = controller[button.getAction() + "CanDoFromInLabel"];
-            if (canDoFromInLabel === undefined || canDoFromInLabel.call(controller)) {
-                GraphElementMainMenu.applyActionOnClick(
-                    clonedButton
-                );
-            }else{
-                cloneHtml.attr("disabled", "disabled");
-            }
+                if (!graphElementUi.isSelected()) {
+                    SelectionHandler.addGraphElement(graphElementUi);
+                }
+            });
             GraphElementMainMenu.defineTooltip(
-                clonedButton
+                clonedButton,{
+                    trigger:'focus'
+                }
             );
         });
         return container;

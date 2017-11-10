@@ -13,11 +13,12 @@ define([
     "triple_brain.selection_handler",
     "triple_brain.graph_ui",
     "triple_brain.keyboard_actions_handler",
+    "triple_brain.id_uri",
     "jquery.focus-end",
     "jquery.center-on-screen",
     "jquery.safer-html",
     "jquery.max_char"
-], function ($, GraphDisplayer, GraphElementMainMenu, GraphElementButton, GraphElementType, EventBus, MindMapInfo, SelectionHandler, GraphUi, KeyboardActionsHandler) {
+], function ($, GraphDisplayer, GraphElementMainMenu, GraphElementButton, GraphElementType, EventBus, MindMapInfo, SelectionHandler, GraphUi, KeyboardActionsHandler, IdUri) {
     "use strict";
     var api = {},
         otherInstancesKey = "otherInstances",
@@ -761,6 +762,34 @@ define([
 
     api.GraphElementUi.prototype.isInverse = function () {
         return this.html.hasClass("inverse");
+    };
+
+    api.GraphElementUi.prototype.noteInLabelButtonContent = function(){
+        return this.getModel().getComment();
+    };
+
+    api.GraphElementUi.prototype.identifyInLabelButtonContent = function(){
+        if(!this.getModel().hasIdentifications()){
+            return "";
+        }
+        var list = $("<ul>");
+        this.getModel().getIdentifiers().forEach(function(identifier){
+            list.append(
+                $("<li>").append(
+                    $("<a>").attr(
+                        "href",
+                        IdUri.htmlUrlForBubbleUri(
+                            identifier.getUri()
+                        )
+                    ).text(
+                        identifier.getLabel()
+                    ).mousedown(function(){
+                        window.location = $(this).attr("href");
+                    })
+                )
+            );
+        });
+        return list;
     };
 
     EventBus.subscribe(

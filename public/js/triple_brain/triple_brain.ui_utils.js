@@ -5,28 +5,44 @@
 define(
     [
         "jquery",
-        "triple_brain.point"
+        "triple_brain.point",
+        "triple_brain.bubble_factory",
+        "triple_brain.graph_element_button"
     ],
-    function($, Point){
+    function ($, Point, BubbleFactory, GraphElementButton) {
         "use strict";
         var api = {};
         avoidMultiplePopoversDisplayedAtTheSameTime();
-        $.fn.popoverLikeToolTip = function() {
-            return this.popover({
-                placement: 'right',
-                html:true,
-                animation:false,
-                trigger:'hover',
-                container:'body',
-                template:'<div class="popover like-tooltip" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3></div>'
-            });
+        $.fn.popoverLikeToolTip = function (options) {
+            options = options || {};
+            return this.popover(
+                $.extend({
+                    placement: 'right',
+                    html: true,
+                    animation: false,
+                    content: function () {
+                        var graphElementUi = BubbleFactory.fromSubHtml($(this));
+                        if (graphElementUi) {
+                            var button = GraphElementButton.fromHtml($(this));
+                            var popoverContentFctn = graphElementUi[button.getAction() + "InLabelButtonContent"];
+                            return popoverContentFctn === undefined ? "" :
+                                popoverContentFctn.bind(graphElementUi)();
+                        } else {
+                            return $(this).attr("data-content");
+                        }
+                    },
+                    trigger: 'hover',
+                    container: 'body',
+                    template: '<div class="popover like-tooltip" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+                }, options)
+            );
         };
 
         api.isMacintosh = function () {
             return navigator.platform.indexOf('Mac') > -1;
         };
 
-        api.positionLeft = function(componentToPosition, staticComponent){
+        api.positionLeft = function (componentToPosition, staticComponent) {
             var horizontalBuffer = 16;
             var componentOffset = Point.fromCoordinates(
                 ($(componentToPosition).width() * -1) - horizontalBuffer,
@@ -46,7 +62,7 @@ define(
             $(componentToPosition).css('left', componentPosition.x);
             $(componentToPosition).css('top', componentPosition.y);
         };
-        api.positionRight = function(componentToPosition, staticComponent){
+        api.positionRight = function (componentToPosition, staticComponent) {
             var componentOffset = Point.fromCoordinates(
                 $(staticComponent).width(),
                 $(staticComponent).height() / 2 - $(componentToPosition).height() / 2
@@ -66,22 +82,22 @@ define(
             $(componentToPosition).css('top', componentPosition.y);
         };
 
-        api.componentPosition = function(component){
+        api.componentPosition = function (component) {
             return Point.fromCoordinates(
                 $(component).offset().left,
                 $(component).offset().top
             );
         };
 
-        api.getBrowserSafeScrollX = function(){
+        api.getBrowserSafeScrollX = function () {
             return Math.max($('body').scrollLeft(), $('html').scrollLeft());
         };
 
-        api.getBrowserSafeScrollY = function(){
+        api.getBrowserSafeScrollY = function () {
             return Math.max($('body').scrollTop(), $('html').scrollTop());
         };
 
-        api.doComponentsCollide = function($div1, $div2){
+        api.doComponentsCollide = function ($div1, $div2) {
             var x1 = $div1.offset().left;
             var y1 = $div1.offset().top;
             var h1 = $div1.outerHeight(true);
@@ -99,7 +115,7 @@ define(
             return !(b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2);
         };
 
-        api.isElementFullyOnScreen = function(element){
+        api.isElementFullyOnScreen = function (element) {
             var docViewTop = $(window).scrollTop();
             var docViewBottom = docViewTop + $(window).height();
 
@@ -116,10 +132,12 @@ define(
             return isOnScreenVertically && isOnScreenHorizontally;
         };
         return api;
+
         function isPositionVerticallyOffScreen(position) {
             return position.y < 10;
         }
-        function avoidMultiplePopoversDisplayedAtTheSameTime(){
+
+        function avoidMultiplePopoversDisplayedAtTheSameTime() {
             var $currentPopover = null;
             //http://stackoverflow.com/a/24289767
             $(document).on('shown.bs.popover', function (ev) {
