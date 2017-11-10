@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "start": "node ./bin/www",
-    "test": "npm install --prefix public/js/vendor && grunt test && grunt jshint && grunt requirejs"
+    "test": "npm install --prefix public/js/vendor && karma start karma.conf.js && node build.js"
   },
   "dependencies": {
     "ejs": "*",
@@ -17,14 +17,20 @@
   },
   "devDependencies": {
     "connect": "*",
-    "grunt": "~0.4.5",
-    "grunt-cli": "*",
-    "grunt-contrib-connect": "*",
-    "grunt-contrib-jasmine": "^1.1.0",
-    "grunt-contrib-jshint": "~1.0.0",
-    "grunt-contrib-requirejs": "^1.0.0",
-    "grunt-contrib-watch": "*",
-    "grunt-template-jasmine-requirejs": "~0.2.3",
+    "jasmine-node": "^1.14.5",
+    "jsdom": "^11.3.0",
+    "jasmine": "^2.8.0",
+    "karma": "^1.7.1",
+    "karma-jasmine": "^1.1.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-coverage": "^1.1.1",
+    "karma-firefox-launcher": "^1.0.1",
+    "karma-opera-launcher": "^1.0.0",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-requirejs": "^1.1.0",
+    "karma-safari-launcher": "^1.0.0",
+    "phantomjs": "^2.1.7",
+    "requirejs": "^2.3.5",
     "serve-static": "*"
   }
 }

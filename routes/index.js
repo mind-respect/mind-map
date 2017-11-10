@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var isDebug = 'development' === process.env.debug;
+const requireJsConfig = require("../requirejsConfig");
 var bublGuruFlow = "";
 //var webshot = require('webshot');
 //var uuid = require("node-uuid");
@@ -14,7 +15,8 @@ router.get('/', function (req, res, next) {
             usernameForBublGuru : "",
             graphElementTypeForBublGuru: "",
             graphElementShortIdForBublGuru : "",
-            bublGuruFlow: "landing"
+            bublGuruFlow: "landing",
+            requireJsConfig: requireJsConfig
         }
     );
 });
@@ -28,7 +30,8 @@ router.get('/user/:username', function (req, res, next) {
             usernameForBublGuru : req.params.username,
             graphElementTypeForBublGuru: "",
             graphElementShortIdForBublGuru : "",
-            bublGuruFlow: "centersCloud"
+            bublGuruFlow: "centersCloud",
+            requireJsConfig: requireJsConfig
         }
     );
 });
@@ -42,7 +45,8 @@ router.get('/user/:username/graph/:graphElementType/:graphElementShortId', funct
             usernameForBublGuru : req.params.username,
             graphElementTypeForBublGuru : req.params.graphElementType,
             graphElementShortIdForBublGuru : req.params.graphElementShortId,
-            bublGuruFlow: bublGuruFlow
+            bublGuruFlow: bublGuruFlow,
+            requireJsConfig: requireJsConfig
         }
     );
 });
@@ -57,7 +61,8 @@ router.get('/schemas', function (req, res, next) {
             usernameForBublGuru : "",
             graphElementTypeForBublGuru : "",
             graphElementShortIdForBublGuru : "",
-            bublGuruFlow: "schemaList"
+            bublGuruFlow: "schemaList",
+            requireJsConfig: requireJsConfig
         }
     );
 });

@@ -62,7 +62,7 @@ define([
                 );
             }
         });
-        jasmine.getFixtures().fixturesPath = '../spec/fixtures';
+        jasmine.getFixtures().fixturesPath = '/base/spec/fixtures';
         loadFixtures('compare-flow.html');
         api.deepGraph = function () {
             var treeBuilder = new TreeBuilder(this);

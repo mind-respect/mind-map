@@ -60,24 +60,24 @@ define([
             var threeBubblesGraph = new Scenarios.threeBubblesGraph();
             var bubble2 = threeBubblesGraph.getBubble2InTree();
             expect(
-                bubble2.getHtml()
-            ).toHaveAttr("draggable");
+                bubble2.getHtml()[0].hasAttribute("draggable")
+            ).toBeTruthy()
             bubble2.editMode();
             expect(
-                bubble2.getHtml()
-            ).not.toHaveAttr("draggable");
+                bubble2.getHtml()[0].hasAttribute("draggable")
+            ).toBeFalsy();
         });
         it("is draggable again when leaving edit mode", function () {
             var threeBubblesGraph = new Scenarios.threeBubblesGraph();
             var bubble2 = threeBubblesGraph.getBubble2InTree();
             bubble2.editMode();
             expect(
-                bubble2.getHtml()
-            ).not.toHaveAttr("draggable");
+                bubble2.getHtml()[0].hasAttribute("draggable")
+            ).toBeFalsy();
             bubble2.leaveEditMode();
             expect(
-                bubble2.getHtml()
-            ).toHaveAttr("draggable");
+                bubble2.getHtml()[0].hasAttribute("draggable")
+            ).toBeTruthy();
         });
         // it("non draggable elements are not made draggable after leaving edit mode", function () {
         //     var threeBubblesGraph = new Scenarios.threeBubblesGraph();
