@@ -768,7 +768,7 @@ define([
         return this.getModel().getComment();
     };
 
-    api.GraphElementUi.prototype.identifyInLabelButtonContent = function(){
+    api.GraphElementUi.prototype.identifyWhenManyInLabelButtonContent = api.GraphElementUi.prototype.identifyInLabelButtonContent = function(){
         if(!this.getModel().hasIdentifications()){
             return "";
         }
