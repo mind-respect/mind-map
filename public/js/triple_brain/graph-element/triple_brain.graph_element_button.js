@@ -103,27 +103,10 @@ define([
             "in-label-button"
         );
     };
-    GraphElementButton.prototype.shouldBeVisibleInGraphElementLabel = function (graphElement) {
-        switch (this.getAction()) {
-            case "note":
-                return graphElement.getModel().hasComment();
-            case "identify":
-                return graphElement.getModel().getIdentifiers().length === 1;
-            case "identifyWhenMany":
-                return graphElement.getModel().getIdentifiers().length > 1;
-            case "visitOtherInstances":
-                return graphElement.hasOtherVisibleInstance();
-            case "makePrivate":
-                return graphElement.isVertex() && graphElement.getModel().isPublic() && !MindMapInfo.isViewOnly();
-            case "makePublic":
-                return graphElement.isVertex() && !graphElement.getModel().isPublic() && !MindMapInfo.isViewOnly();
-            case "isPublic":
-                return !graphElement.isVertex() && graphElement.getModel().isPublic() && !MindMapInfo.isViewOnly();
-            case "accept":
-                return graphElement.isDisplayingComparison();
-            default:
-                return false;
-        }
+    GraphElementButton.prototype.shouldBeVisibleInGraphElementLabel = function (graphElementUi) {
+        var controller = graphElementUi.getController();
+        var canShowActionButtonInLabel = controller[this.getAction()+ "CanShowInLabel"];
+        return canShowActionButtonInLabel === undefined ? $.Deferred().resolve(false) : canShowActionButtonInLabel.bind(controller)();
     };
     GraphElementButton.prototype._hideMenuForGraphElements = function (elements) {
         $.each(elements, function () {

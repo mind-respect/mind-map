@@ -18,7 +18,7 @@ define(
         "triple_brain.graph_displayer_factory",
         "triple_brain.flow",
         "triple_brain.bubble_cloud_flow",
-        "triple_brain.wikidata",
+        "mr.wikidata",
         "triple_brain.ui.search",
         "triple_brain.modules",
         "jquery.lazyload",

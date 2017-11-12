@@ -4,8 +4,8 @@
 
 define([
     "jquery",
-    "triple_brain.wikidata",
-    "triple_brain.wikidata_uri",
+    "mr.wikidata",
+    "mr.wikidata_uri",
     "triple_brain.language_manager"
 ], function ($, Wikidata, WikidataUri, LanguageManager) {
     "use strict";

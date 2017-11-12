@@ -1,10 +1,10 @@
 #graph-element-menu {
-  margin-top:20px;
+  margin-top: 20px;
   button {
-    background:none;
+    background: none;
     //background-color:rgba(255, 255, 255, 1);
-    border:none;
-    border-radius:12px;
+    border: none;
+    border-radius: 12px;
     box-shadow: none;
     font-size: 22px;
     text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
@@ -13,16 +13,16 @@
   }
 }
 
-#whole-graph-buttons-container{
-  width:0;
-  .container{
-    width:0;
+#whole-graph-buttons-container {
+  width: 0;
+  .container {
+    width: 0;
   }
 }
 
 button.graph-element-button {
-  position:relative;
-  font-size:1.4em;
+  position: relative;
+  font-size: 1.4em;
   margin-bottom: 5px;
   margin-right: 3px;
   line-height: 20px;
@@ -100,19 +100,19 @@ button {
   text-shadow: none;
 }
 
-i.active{
-  color:green;
+i.active {
+  color: green;
 }
 
-button.active i{
-  color:green;
+button.active i {
+  color: green;
 }
 
-button.inactive i{
-  color:red;
+button.inactive i {
+  color: red;
 }
 
-.icon-flip-horizontal{
+.icon-flip-horizontal {
   transform: scaleX(-1);
   -moz-transform: scaleX(-1);
   -webkit-transform: scaleX(-1);
@@ -131,15 +131,21 @@ button.inactive i{
   left: 50%;
   transform: translate(-50%, 0) rotate(-45deg);
 }
+
 [data-action=addChild].left .fa-arrow-right {
   transform: rotate(180deg);
 }
-.popover-content{
+
+.popover-title {
+  font-weight: bold;
+}
+
+.popover-content {
   ul {
     list-style: none;
     padding-left: 0;
   }
-  &:empty{
-
+  &:empty {
+    padding: 0;
   }
 }

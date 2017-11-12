@@ -6,13 +6,15 @@ define([
     "jquery",
     "triple_brain.friendly_resource",
     "triple_brain.identification",
-    "triple_brain.id_uri"
-], function ($, FriendlyResource, Identification, IdUri) {
+    "triple_brain.id_uri",
+    "mr.wikidata_uri",
+    "mr.wikidata"
+], function ($, FriendlyResource, Identification, IdUri, WikidataUri, Wikidata) {
     "use strict";
     var api = {};
     api.sortCompare = function (a, b) {
         if (a.getSortDate() === b.getSortDate()) {
-              if (a.getMoveDate() === b.getMoveDate()) {
+            if (a.getMoveDate() === b.getMoveDate()) {
                 return 0;
             }
             if (a.getMoveDate() > b.getMoveDate()) {
@@ -95,6 +97,7 @@ define([
             graphElementServerFormat.friendlyResource
         );
         this._buildIdentifications();
+        // this.wikipediaLinksPromise = this._buildWikidataLinks();
         return this;
     };
 
@@ -136,7 +139,7 @@ define([
 
     api.GraphElement.prototype.getIdentifiers = function () {
         var identifiers = [];
-        this.identifiers.forEach(function(identifier){
+        this.identifiers.forEach(function (identifier) {
             if (identifier.getExternalResourceUri() !== this.getUri()) {
                 return identifiers.push(identifier);
             }
@@ -248,8 +251,27 @@ define([
         );
     };
 
-    api.GraphElement.prototype.isPristine = function(){
+    api.GraphElement.prototype.isPristine = function () {
         return this.isLabelEmpty() && !this.hasIdentifications();
     };
+
+    // api.GraphElement.prototype._buildWikidataLinks = function () {
+    //     var promises = [];
+    //     this.getIdentifiers().forEach(function (identifier) {
+    //         var uri = identifier.getExternalResourceUri();
+    //         if (!WikidataUri.isAWikidataUri(uri)) {
+    //             return;
+    //         }
+    //         promises.push(Wikidata.getWikipediaUrlFromWikidataUri(uri));
+    //     });
+    //     return $.when.apply($, promises).then(function(){
+    //         return Array.from(arguments);
+    //     });
+    // };
+    //
+    // api.GraphElement.prototype.getWikipediaLinks = function () {
+    //     return this.wikipediaLinksPromise;
+    // };
+
     return api;
 });

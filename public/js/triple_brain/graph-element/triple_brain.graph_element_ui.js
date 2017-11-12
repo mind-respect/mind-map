@@ -103,6 +103,7 @@ define([
             delete cacheWithIdAsKey[id];
         };
         EventBus.subscribe('/event/ui/graph/reset', emptyCache);
+
         function emptyCache() {
             cacheWithIdAsKey = {};
             cacheWithUriAsKey = {};
@@ -155,12 +156,12 @@ define([
     };
 
     api.GraphElementUi.prototype.hasOtherVisibleInstance = function () {
-        if(!this.hasOtherInstances()){
+        if (!this.hasOtherInstances()) {
             return false;
         }
         var hasOtherVisibleInstance = false;
-        this.getOtherInstances().forEach(function(otherInstance){
-            if(otherInstance.isVisible()){
+        this.getOtherInstances().forEach(function (otherInstance) {
+            if (otherInstance.isVisible()) {
                 hasOtherVisibleInstance = true;
             }
         });
@@ -248,8 +249,8 @@ define([
     };
     api.GraphElementUi.prototype.isCenterVertexSchemaOrMeta = function () {
         return (
-                this.isVertex() || this.isSchema() || this.isMeta()
-            ) && this.isCenterBubble();
+            this.isVertex() || this.isSchema() || this.isMeta()
+        ) && this.isCenterBubble();
     };
 
     api.GraphElementUi.prototype.isSchema = function () {
@@ -351,8 +352,8 @@ define([
     api.GraphElementUi.prototype._getControllerName = function () {
         var controllerName = "";
         var nameParts = this.getGraphElementType().split("_");
-        nameParts.forEach(function(namePart){
-           controllerName += namePart.capitalizeFirstLetter();
+        nameParts.forEach(function (namePart) {
+            controllerName += namePart.capitalizeFirstLetter();
         });
         return controllerName + "Controller";
     };
@@ -418,15 +419,15 @@ define([
             onlyPrepare
         );
         var typesToSelect;
-        if(this.isVertex()){
+        if (this.isVertex()) {
             typesToSelect = [GraphElementType.Vertex];
-        }else if(this.isRelation()){
+        } else if (this.isRelation()) {
             typesToSelect = [GraphElementType.Relation];
-        }else{
+        } else {
             typesToSelect = GraphElementType.getAll();
         }
         this.visitDescendants(function (bubble) {
-            if(bubble.isInTypes(typesToSelect)){
+            if (bubble.isInTypes(typesToSelect)) {
                 SelectionHandler.addGraphElement(
                     bubble, onlyPrepare
                 );
@@ -440,9 +441,9 @@ define([
         this._setTextBeforeModification();
         var label = this.getLabel();
         label.maxCharCleanTextApply();
-        if(clickPosition){
+        if (clickPosition) {
             label.focusAtPosition(clickPosition);
-        }else{
+        } else {
             label.focusEnd();
         }
         this.getHtml().centerOnScreen();
@@ -454,11 +455,11 @@ define([
     };
     api.GraphElementUi.prototype.hasTextChangedAfterModification = function () {
         return this.getHtml().data(
-                textBeforeModificationKey
-            ) !== this.text();
+            textBeforeModificationKey
+        ) !== this.text();
     };
     api.GraphElementUi.prototype.editMode = function () {
-        if(!this.isLabelEditable()){
+        if (!this.isLabelEditable()) {
             return;
         }
         this.getLabel().attr(
@@ -510,9 +511,9 @@ define([
 
     api.GraphElementUi.prototype.isInTypes = function (types) {
         return $.inArray(
-                this.getGraphElementType(),
-                types
-            ) !== -1;
+            this.getGraphElementType(),
+            types
+        ) !== -1;
     };
     api.GraphElementUi.prototype.getHtml = function () {
         return this.html;
@@ -552,31 +553,28 @@ define([
     };
     api.GraphElementUi.prototype.reviewInLabelButtonsVisibility = function (applyToOtherInstances) {
         var graphElementUi = this;
-        this.getInLabelButtonsContainer().find("button").each(function () {
+        var promises = this.getInLabelButtonsContainer().find("button").map(function () {
             var button = GraphElementButton.fromHtml($(this));
-            var shouldDisplay = button.shouldBeVisibleInGraphElementLabel(graphElementUi);
-            button.getHtml()[shouldDisplay ?
-                "removeClass" :
-                "addClass"
-                ]("hidden");
+            return button.shouldBeVisibleInGraphElementLabel(graphElementUi).then(function (shouldDisplay) {
+                button.getHtml()[shouldDisplay ?
+                    "removeClass" :
+                    "addClass"
+                    ]("hidden");
+            });
         });
         if (applyToOtherInstances !== undefined && !applyToOtherInstances) {
             return;
         }
-        this.applyToOtherInstances(function (otherInstance) {
-            otherInstance.reviewInLabelButtonsVisibility(false);
-        });
+        $.when.apply($, promises).then(function () {
+            this.applyToOtherInstances(function (otherInstance) {
+                otherInstance.reviewInLabelButtonsVisibility(false);
+            });
+        }.bind(this));
     };
 
     api.GraphElementUi.prototype.getOtherInstanceButton = function () {
         return this.getInLabelButtonsContainer().find(
             "[data-action=visitOtherInstances]"
-        );
-    };
-
-    api.GraphElementUi.prototype.getNoteButtonInBubbleContent = function () {
-        return this.getInLabelButtonsContainer().find(
-            "[data-action=note]"
         );
     };
 
@@ -592,9 +590,9 @@ define([
         );
     };
 
-    api.GraphElementUi.prototype._getInLabelButtonWithAction = function(action){
+    api.GraphElementUi.prototype._getInLabelButtonWithAction = function (action) {
         return this.getInLabelButtonsContainer().find(
-            "[data-action="+action+"]"
+            "[data-action=" + action + "]"
         );
     };
 
@@ -604,17 +602,10 @@ define([
         );
     };
 
-    api.GraphElementUi.prototype.updateInLabelNoteButtonHoverText = function () {
-        this.getNoteButtonInBubbleContent().attr(
-            "data-original-title",
-            this.getModel().getComment()
-        );
-    };
-
     api.GraphElementUi.prototype.isDisplayingComparison = function () {
         return this.getLabel().find(
-                "del,ins"
-            ).length > 0;
+            "del,ins"
+        ).length > 0;
     };
 
     api.GraphElementUi.prototype.setComparedWith = function (comparedWith) {
@@ -719,7 +710,7 @@ define([
         if (!this.isSuggestion()) {
             this._updateLabelsOfElementsWithSameUri();
         }
-        if(SelectionHandler.isEmpty()){
+        if (SelectionHandler.isEmpty()) {
             SelectionHandler.setToSingleGraphElement(this);
         }
     };
@@ -764,29 +755,29 @@ define([
         return this.html.hasClass("inverse");
     };
 
-    api.GraphElementUi.prototype.noteInLabelButtonContent = function(){
+    api.GraphElementUi.prototype.noteInLabelButtonContent = function () {
         return this.getModel().getComment();
     };
 
-    api.GraphElementUi.prototype.identifyWhenManyInLabelButtonContent = api.GraphElementUi.prototype.identifyInLabelButtonContent = function(){
-        if(!this.getModel().hasIdentifications()){
+    api.GraphElementUi.prototype.identifyWhenManyInLabelButtonContent = api.GraphElementUi.prototype.identifyInLabelButtonContent = function () {
+        if (!this.getModel().hasIdentifications()) {
             return "";
         }
-        var list = $("<ul>");
-        this.getModel().getIdentifiers().forEach(function(identifier){
+        var list = $("<ul  class='list-group'>");
+        this.getModel().getIdentifiers().forEach(function (identifier) {
             list.append(
-                $("<li>").append(
-                    $("<a>").attr(
-                        "href",
-                        IdUri.htmlUrlForBubbleUri(
-                            identifier.getUri()
-                        )
-                    ).text(
-                        identifier.getLabel()
-                    ).mousedown(function(){
-                        window.location = $(this).attr("href");
-                    })
-                )
+                $("<a class='list-group-item'>").attr(
+                    "href",
+                    IdUri.htmlUrlForBubbleUri(
+                        identifier.getUri()
+                    )
+                ).append(
+                    $("<span class='badge'>").text(identifier.getNbReferences())
+                ).append(
+                    $("<span>").text(identifier.getLabel())
+                ).mousedown(function () {
+                    window.location = $(this).attr("href");
+                })
             );
         });
         return list;
@@ -798,12 +789,6 @@ define([
             graphElement.reviewInLabelButtonsVisibility();
         }
     );
-    EventBus.subscribe(
-        '/event/ui/graph/element/note/updated',
-        function (event, graphElement) {
-            graphElement.updateInLabelNoteButtonHoverText();
-        }
-    );
 
     EventBus.subscribe(
         '/event/ui/graph/drawn',
@@ -811,6 +796,7 @@ define([
             GraphElementMainMenu.reviewButtonsVisibility();
         });
     return api;
+
     function initMenuHandlerGetters() {
         controllerGetters[api.Types.Vertex] = GraphDisplayer.getVertexMenuHandler;
         controllerGetters[api.Types.Relation] = GraphDisplayer.getRelationMenuHandler;

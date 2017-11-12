@@ -8,8 +8,6 @@ define([
         "triple_brain.mind-map_template",
         "triple_brain.graph_ui",
         "triple_brain.id_uri",
-        "triple_brain.wikidata_uri",
-        "triple_brain.wikidata",
         "triple_brain.wikidata_autocomplete_provider",
         "triple_brain.user_map_autocomplete_provider",
         "triple_brain.graph_element_menu",
@@ -25,7 +23,7 @@ define([
         "jquery.i18next",
         "jquery.performance"
     ],
-    function ($, Identification, MindMapTemplate, GraphUi, IdUri, WikidataUri, Wikidata, WikidataAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu, SearchService, IdentificationContext, SearchResult, MindMapInfo, SuggestionService, SchemaSuggestion, IdentifiedToService, GraphElementType) {
+    function ($, Identification, MindMapTemplate, GraphUi, IdUri, WikidataAutocompleteProvider, UserMapAutocompleteProvider, GraphElementMenu, SearchService, IdentificationContext, SearchResult, MindMapInfo, SuggestionService, SchemaSuggestion, IdentifiedToService, GraphElementType) {
         "use strict";
         var api = {},
             DESCRIPTION_MAX_CHAR = 155;
@@ -209,23 +207,13 @@ define([
         IdentificationMenu.prototype._makeTitle = function (identification) {
             var deferred = $.Deferred();
             var self = this;
-            var url = identification.getExternalResourceUri();
-            if (IdUri.isUriOfAGraphElement(url)) {
-                url = IdUri.htmlUrlForBubbleUri(
-                    identification.getUri()
-                );
-            }
-            if (WikidataUri.isAWikidataUri(url)) {
-                Wikidata.getWikipediaUrlFromWikidataUri(url).then(function (wikipediaUrl) {
-                    deferred.resolve(
-                        buildTitleWithUrl(wikipediaUrl)
-                    );
-                });
-            } else {
-                deferred.resolve(
-                    buildTitleWithUrl(url)
-                );
-            }
+            deferred.resolve(
+                buildTitleWithUrl(
+                    IdUri.htmlUrlForBubbleUri(
+                        identification.getUri()
+                    )
+                )
+            );
             return deferred.promise();
             function buildTitleWithUrl(url) {
                 var anchor = $("<a target=_blank>").prop(

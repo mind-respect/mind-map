@@ -110,14 +110,14 @@ define([
                 bubble1InTree.getModel().hasComment()
             ).toBeFalsy();
             expect(
-                bubble1InTree.getNoteButtonInBubbleContent().hasClass("hidden")
+                bubble1InTree._getInLabelButtonWithAction("note").hasClass("hidden")
             ).toBeTruthy();
             var bubble3InTree = threeBubblesGraph.getBubble3InTree();
             expect(
                 bubble3InTree.getModel().hasComment()
             ).toBeTruthy();
             expect(
-                bubble3InTree.getNoteButtonInBubbleContent().hasClass("hidden")
+                bubble3InTree._getInLabelButtonWithAction("note").hasClass("hidden")
             ).toBeFalsy();
         });
         it("identifies edge to group relation when dropped on group relation", function () {

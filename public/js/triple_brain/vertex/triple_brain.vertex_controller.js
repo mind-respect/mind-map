@@ -246,8 +246,10 @@ define([
         );
     };
 
-    VertexController.prototype.makePrivateCanDoFromInLabel = function () {
-        return false;
+    VertexController.prototype.makePrivateCanShowInLabel = function () {
+        return $.Deferred().resolve(
+            this.getModel().isPublic() && this.isOwned()
+        );
     };
 
     VertexController.prototype.makePrivate = function () {
@@ -293,10 +295,12 @@ define([
         );
     };
 
-    VertexController.prototype.makePublicCanDoFromInLabel = function () {
-        return false;
+    VertexController.prototype.makePublicCanShowInLabel = function () {
+        return $.Deferred().resolve(
+            !this.getModel().isPublic() && this.isOwned()
+        );
     };
-
+    
     VertexController.prototype._areAllElementsPublic = function () {
         if (this.isSingle()) {
             return this.getModel().isPublic();

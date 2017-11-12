@@ -6,7 +6,7 @@ define([
     'jquery',
     'test/test-scenarios',
     'test/test-utils',
-    "triple_brain.wikidata",
+    "mr.wikidata",
     "triple_brain.identification"
 ], function ($, Scenarios, TestUtils, Wikidata, Identification) {
     "use strict";

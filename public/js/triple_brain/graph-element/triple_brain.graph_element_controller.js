@@ -57,7 +57,11 @@ define([
             this.isOwned() || this.getModel().hasComment()
         );
     };
-
+    GraphElementController.prototype.noteCanShowInLabel = function () {
+        return $.Deferred().resolve(
+            this.getModel().hasComment()
+        );
+    };
     GraphElementController.prototype.setLabel = function (newLabel) {
         this.getUi().getModel().setLabel(
             newLabel
@@ -145,26 +149,49 @@ define([
         );
     };
 
+    GraphElementController.prototype.visitOtherInstancesCanShowInLabel = function(){
+        return $.Deferred().resolve(
+            this.getUi().hasOtherVisibleInstance()
+        );
+    };
+
     GraphElementController.prototype.identifyCanDo = function () {
         return this.isSingle() && (
             (this.isOwned() && !this.getModel().hasIdentifications()) ||
             this.getModel().getIdentifiers().length === 1
         );
     };
-
-
+    
+    GraphElementController.prototype.identifyCanShowInLabel = function () {
+        return $.Deferred().resolve(
+            this.getModel().getIdentifiers().length === 1
+        );
+    };
+    
     GraphElementController.prototype.identifyWhenManyCanDo = function () {
         return this.isSingle() && this.getModel().getIdentifiers().length > 1;
     };
-
+    
     GraphElementController.prototype.identifyWhenMany = GraphElementController.prototype.identify = function () {
         IdentificationMenu.ofGraphElement(
             this.graphElements
         ).create();
     };
 
+    GraphElementController.prototype.identifyWhenManyCanShowInLabel = function(){
+        return $.Deferred().resolve(
+            this.getModel().getIdentifiers().length > 1
+        );
+    };
+
     GraphElementController.prototype.acceptCanDo = function () {
         return false;
+    };
+
+    GraphElementController.prototype.acceptCanShowInLabel = function () {
+        return $.Deferred().resolve(
+            this.getUi().isDisplayingComparison()
+        );
     };
 
     GraphElementController.prototype.accept = function () {

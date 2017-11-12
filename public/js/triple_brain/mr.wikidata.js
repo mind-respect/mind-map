@@ -4,7 +4,7 @@
 
 define([
     "jquery",
-    "triple_brain.wikidata_uri",
+    "mr.wikidata_uri",
     "triple_brain.image",
     "triple_brain.event_bus"
 ], function ($, WikidataUri, Image, EventBus) {

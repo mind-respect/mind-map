@@ -6,12 +6,14 @@ define([
     "jquery",
     "triple_brain.friendly_resource",
     "triple_brain.id_uri",
-    "jquery.triple_brain.search"
-], function ($, FriendlyResource, IdUri, Search) {
+    "jquery.triple_brain.search",
+    "mr.wikidata_uri",
+    "mr.wikidata"
+], function ($, FriendlyResource, IdUri, Search, WikidataUri, Wikidata) {
     "use strict";
     var RELATION_URIS = {
-        "sameAs" : "same-as",
-        "type" : "type",
+        "sameAs": "same-as",
+        "type": "type",
         "generic": "generic"
     };
     var api = {};
@@ -118,6 +120,7 @@ define([
             this,
             serverFormat.friendlyResource
         );
+        this.wikipediaLinkPromise = this._buildWikidataLink();
         return this;
     };
 
@@ -159,8 +162,8 @@ define([
     };
     api.Identification.prototype.refersToOwnedGraphElement = function () {
         return this.refersToAGraphElement() && IdUri.isGraphElementUriOwnedByCurrentUser(
-                this.getExternalResourceUri()
-            );
+            this.getExternalResourceUri()
+        );
     };
     api.Identification.prototype.refersToSchema = function () {
         return IdUri.isSchemaUri(
@@ -199,15 +202,31 @@ define([
         return this.identificationServerFormat.nbReferences;
     };
 
-    api.Identification.prototype.isPublic = function(){
+    api.Identification.prototype.isPublic = function () {
         return false;
     };
 
-    api.Identification.prototype.hasIdentifications = function(){
+    api.Identification.prototype.hasIdentifications = function () {
         return false;
     };
-    api.Identification.prototype.getIdentifiers = function(){
+    api.Identification.prototype.getIdentifiers = function () {
         return [this];
+    };
+    api.Identification.prototype._buildWikidataLink = function () {
+        var deferred = $.Deferred().resolve(false);
+        var externalUri = this.getExternalResourceUri();
+        if (WikidataUri.isAWikidataUri(externalUri)) {
+            deferred = Wikidata.getWikipediaUrlFromWikidataUri(externalUri).then(function (wikipediaUrl) {
+                return {
+                    link: wikipediaUrl,
+                    label: this.getLabel()
+                };
+            }.bind(this));
+        }
+        return deferred.promise();
+    };
+    api.Identification.prototype.getWikipediaLink = function () {
+        return this.wikipediaLinkPromise;
     };
     return api;
 });

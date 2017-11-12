@@ -311,7 +311,10 @@ button.inactive i { color: red; }
 
 [data-action=addChild].left .fa-arrow-right { transform: rotate(180deg); }
 
+.popover-title { font-weight: bold; }
+
 .popover-content ul { list-style: none; padding-left: 0; }
+.popover-content:empty { padding: 0; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .ui-dialog-titlebar { text-align: center; }

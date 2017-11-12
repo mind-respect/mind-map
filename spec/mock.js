@@ -10,6 +10,7 @@ define([
     "test/mock/triple_brain.vertex_service_mock",
     "test/mock/triple_brain.graph_element_service_mock",
     "test/mock/triple_brain.friendly_resource_service_mock",
+    "test/mock/mr.wikidata_mock",
     "triple_brain.mind_map_info",
     "triple_brain.suggestion_service",
     "triple_brain.graph_service",
@@ -19,7 +20,7 @@ define([
     "triple_brain.edge_service",
     "triple_brain.search",
     "triple_brain.id_uri"
-], function ($, TestUtils, UserServiceMock, EdgeServiceMock, VertexServiceMock, GraphElementServiceMock, FriendlyResourceServiceMock, MindMapInfo, SuggestionService, GraphService, SchemaService, VertexService, FriendlyResourceService, EdgeService, SearchService, IdUri) {
+], function ($, TestUtils, UserServiceMock, EdgeServiceMock, VertexServiceMock, GraphElementServiceMock, FriendlyResourceServiceMock, WikidataMock, MindMapInfo, SuggestionService, GraphService, SchemaService, VertexService, FriendlyResourceService, EdgeService, SearchService, IdUri) {
     "use strict";
     var api = {};
     var spies = {};
@@ -82,6 +83,10 @@ define([
         spies["FriendlyResourceService"] = {
             mocker: FriendlyResourceServiceMock,
             spies: FriendlyResourceServiceMock.applyDefaultMocks()
+        };
+        spies["WikidataMock"] = {
+            mocker: WikidataMock,
+            spies: WikidataMock.applyDefaultMocks()
         };
     };
     api.getSpy = function (object, method) {

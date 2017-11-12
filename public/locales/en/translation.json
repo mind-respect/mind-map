@@ -330,7 +330,8 @@
     "undo": "Undo",
     "redo": "Redo",
     "convertToRelation": "Convert to relation",
-    "convertToGroupRelation": "Convert to group relation"
+    "convertToGroupRelation": "Convert to group relation",
+    "wikipediaLinks": "Learn more on Wikipedia"
   },
   "hidden_properties_tooltip": "Expand (ctrl+E)",
   "hidden_properties_tooltip_forMac": "Expand (⌘+E)",

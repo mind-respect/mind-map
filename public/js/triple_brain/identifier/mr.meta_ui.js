@@ -25,9 +25,11 @@ define([
         );
         return vertex;
     };
-    function MetaUi(){
+
+    function MetaUi() {
 
     }
+
     MetaUi.prototype = new VertexUi.VertexUi();
     MetaUi.prototype.init = function (html) {
         this.html = html;
@@ -40,11 +42,35 @@ define([
     MetaUi.prototype.getGraphElementType = function () {
         return GraphElementUi.Types.Meta;
     };
-    MetaUi.prototype.hasHiddenRelations = function(){
+    MetaUi.prototype.hasHiddenRelations = function () {
         return false;
     };
-    MetaUi.prototype.getNumberOfHiddenRelations = function(){
+    MetaUi.prototype.getNumberOfHiddenRelations = function () {
         return 0;
+    };
+
+    MetaUi.prototype.wikipediaLinksInLabelButtonContent = function () {
+        var list = $("<ul class='list-group'>");
+        this.getModel().getWikipediaLink().then(function (link) {
+            list.append(
+                $("<a class='list-group-item'>").attr(
+                    "href",
+                    link.link
+                ).attr(
+                    "target",
+                    "_blank"
+                ).append(
+                    $("<i>").addClass(
+                        "fa fa-wikipedia-w pull-right"
+                    )
+                ).append(
+                    $("<span>").text(link.label)
+                ).mousedown(function () {
+                    window.open($(this).attr("href"), "_blank");
+                })
+            );
+        });
+        return list;
     };
     return api;
 });

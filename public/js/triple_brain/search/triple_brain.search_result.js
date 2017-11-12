@@ -13,9 +13,8 @@ define([
     "triple_brain.identification",
     "triple_brain.graph_element_type",
     "triple_brain.event_bus",
-    "triple_brain.wikidata_uri",
     "jquery.i18next"
-], function ($, IdUri, GraphElement, Edge, Schema, Property, Vertex, Identification, GraphElementType, EventBus, WikiDataUri) {
+], function ($, IdUri, GraphElement, Edge, Schema, Property, Vertex, Identification, GraphElementType, EventBus) {
     "use strict";
     var api = {},
         referencesText;
