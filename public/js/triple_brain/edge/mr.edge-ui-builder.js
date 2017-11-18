@@ -61,7 +61,7 @@ define([
             ui.refreshImages();
             ui.resetOtherInstances();
             ui.reviewInLabelButtonsVisibility();
-            if (MindMapInfo.isViewOnly() && "" === ui.text()) {
+            if (MindMapInfo.isViewOnly() && ("" === ui.text() || ui.isSetAsSameAsGroupRelation())) {
                 ui.getHtml().closest(".vertex-tree-container").addClass(
                     "no-relation-label"
                 );

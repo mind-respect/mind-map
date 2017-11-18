@@ -12,10 +12,9 @@ define([
         "triple_brain.selection_handler",
         "triple_brain.graph_element_ui",
         "triple_brain.bubble",
-        "triple_brain.bubble_factory",
-        "triple_brain.graph_element_type"
+        "triple_brain.mind_map_info"
     ],
-    function ($, GraphUi, EventBus, GraphDisplayer, EdgeService, GraphElementButton, SelectionHandler, GraphElementUi, Bubble, BubbleFactory, GraphElementType) {
+    function ($, GraphUi, EventBus, GraphDisplayer, EdgeService, GraphElementButton, SelectionHandler, GraphElementUi, Bubble, MindMapInfo) {
         "use strict";
         var api = {};
         api.getWhenEmptyLabel = function () {
@@ -123,6 +122,11 @@ define([
         };
 
         api.EdgeUi.prototype.setAsSameAsGroupRelation = function () {
+            if(MindMapInfo.isViewOnly()){
+                this.getHtml().closest(".vertex-tree-container").addClass(
+                    "no-relation-label"
+                );
+            }
             return this.getHtml().addClass(
                 "same-as-group-relation"
             );
@@ -133,15 +137,7 @@ define([
         };
 
         api.EdgeUi.prototype.getYPosition = function () {
-            var edgeIsSetAsSameAsGroupRelation = this.isSetAsSameAsGroupRelation();
-            if(edgeIsSetAsSameAsGroupRelation){
-                this.setAsNotSameAsGroupRelation();
-            }
-            var y = this.getLabel().offset().top;
-            if(edgeIsSetAsSameAsGroupRelation){
-                this.setAsSameAsGroupRelation();
-            }
-            return y;
+            return this.getLabel().offset().top;
         };
 
         api.EdgeUi.prototype.getNumberOfHiddenRelations = function () {
