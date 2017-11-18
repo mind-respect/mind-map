@@ -265,12 +265,14 @@
 
 .vertex-tree-container{
   &.no-relation-label{
-    .relation{
-      .label-container{
-        display:none;
-      }
-      .connector{
-        width:75px;
+    >.vertex-container{
+      .relation{
+        .label-container{
+          display:none;
+        }
+        .connector{
+          width:75px;
+        }
       }
     }
   }

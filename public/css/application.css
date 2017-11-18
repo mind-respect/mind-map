@@ -423,8 +423,8 @@ button.inactive i { color: red; }
 
 .edge-label { position: absolute; width: 100%; left: 0; right: 0; }
 
-.vertex-tree-container.no-relation-label .relation .label-container { display: none; }
-.vertex-tree-container.no-relation-label .relation .connector { width: 75px; }
+.vertex-tree-container.no-relation-label > .vertex-container .relation .label-container { display: none; }
+.vertex-tree-container.no-relation-label > .vertex-container .relation .connector { width: 75px; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 #drag-bubble-text-dump { font-size: 30px; padding: 10px; width: auto; max-width: 325px; text-align: left; display: inline-block; border-radius: 50px; position: fixed; top: -500px; }
@@ -494,8 +494,8 @@ button.inactive i { color: red; }
 
 .included-vertices-container .layout { position: absolute; }
 
-.vertex-tree-container.no-relation-label .vertex .arrow { border-top: none; }
-.vertex-tree-container.no-relation-label .vertex .arrow:before { top: -9px; }
+.vertex-tree-container.no-relation-label > .vertices-children-container > .vertex-tree-container > .vertex-container .vertex .arrow { border-top: none; }
+.vertex-tree-container.no-relation-label > .vertices-children-container > .vertex-tree-container > .vertex-container .vertex .arrow:before { top: -9px; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 [data-zoom="0"] .vertex.edit .in-bubble-content { width: 70vw; max-width: 70vw; }

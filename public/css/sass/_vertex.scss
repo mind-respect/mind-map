@@ -190,11 +190,13 @@
 
 .vertex-tree-container{
   &.no-relation-label{
-    .vertex {
-      .arrow{
-        border-top: none;
-        &:before{
-          top:-9px;
+    > .vertices-children-container > .vertex-tree-container > .vertex-container{
+      .vertex {
+        .arrow{
+          border-top: none;
+          &:before{
+            top:-9px;
+          }
         }
       }
     }
