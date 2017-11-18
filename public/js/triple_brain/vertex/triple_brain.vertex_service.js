@@ -136,13 +136,13 @@ define([
             );
         };
         api.group = function (graphElementsUris, callback) {
-            var response = $.ajax({
+            return $.ajax({
                 type: 'POST',
                 url: getVerticesUrl() + '/group',
                 data: JSON.stringify(graphElementsUris),
                 contentType: 'application/json;charset=utf-8'
-            }).then(function () {
-                    var createdVertexUri = response.getResponseHeader("Location");
+            }).then(function (data, textStatus, jqXHR) {
+                    var createdVertexUri = jqXHR.getResponseHeader("Location");
                     var relativeUri = createdVertexUri.substring(
                         createdVertexUri.indexOf("/service")
                     );
@@ -151,7 +151,6 @@ define([
                     );
                 }
             );
-            return response;
         };
         return api;
         function setCollectionPrivacy(isPublic, vertices) {

@@ -12,17 +12,16 @@ define([
     var api = {},
         baseUri;
     api.create = function (callback) {
-        var response = $.ajax({
+        return $.ajax({
             type: 'POST',
             url: getBaseUri()
-        }).then(function () {
+        }).then(function (data, textStatus, jqXHR) {
             callback(
                 IdUri.resourceUriFromAjaxResponse(
-                    response
+                    jqXHR
                 )
             );
         });
-        return response;
     };
     api.get = function(uri, callback){
         return $.ajax({
@@ -37,17 +36,16 @@ define([
         }).then(callback);
     };
     api.createProperty = function(schema, callback){
-        var response = $.ajax({
+        return $.ajax({
             type: 'POST',
             url: schema.getUri() + "/property"
-        }).then(function () {
+        }).then(function (data, textStatus, jqXHR) {
             callback(
                 IdUri.resourceUriFromAjaxResponse(
-                    response
+                    jqXHR
                 )
             );
         });
-        return response;
     };
     return api;
     function getBaseUri(){

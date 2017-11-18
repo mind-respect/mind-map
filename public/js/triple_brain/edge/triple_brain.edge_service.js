@@ -82,14 +82,14 @@ define([
             var sourceVertexUriFormatted = IdUri.encodeUri(sourceVertexUri);
             var destinationVertexUriFormatted = IdUri.encodeUri(destinationVertexUri);
             var deferred = $.Deferred();
-            var response = $.ajax({
+            $.ajax({
                 type: 'POST',
                 url: edgesUrl() +
                 '?sourceVertexId=' + sourceVertexUriFormatted +
                 '&destinationVertexId=' + destinationVertexUriFormatted
-            }).then(function () {
+            }).then(function (data, textStatus, jqXHR) {
                     var newEdgeUri = IdUri.resourceUriFromAjaxResponse(
-                        response
+                        jqXHR
                     );
                     deferred.resolve(
                         api._buildAfterAddReturnObject(

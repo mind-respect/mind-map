@@ -42,7 +42,10 @@ define([
             dataType: "jsonp",
             url: apiUrlToGetWikipediaUrl
         }).then(function (result) {
-            var path = result.claims[wikipediaUrlProperty];
+            var path;
+            if(result.claims){
+                path = result.claims[wikipediaUrlProperty];
+            }
             if (path === undefined || path.length === 0) {
                 deferred.resolve(
                     wikidataUri
