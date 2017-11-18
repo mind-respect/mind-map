@@ -262,3 +262,16 @@
 //.relation.inverse input[type=text] {
 //  border-color: red;
 //}
+
+.vertex-tree-container{
+  &.no-relation-label{
+    .relation{
+      .label-container{
+        display:none;
+      }
+      .connector{
+        width:75px;
+      }
+    }
+  }
+}

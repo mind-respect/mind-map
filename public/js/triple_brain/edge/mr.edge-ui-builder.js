@@ -62,9 +62,9 @@ define([
             ui.resetOtherInstances();
             ui.reviewInLabelButtonsVisibility();
             if (MindMapInfo.isViewOnly() && "" === ui.text()) {
-                ui.getHtml().find(
-                    ".label-container"
-                ).addClass("hidden");
+                ui.getHtml().closest(".vertex-tree-container").addClass(
+                    "no-relation-label"
+                );
             }
             var propertiesIndicator = ui.buildHiddenNeighborPropertiesIndicator();
             propertiesIndicator.hide();

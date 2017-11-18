@@ -187,3 +187,16 @@
     position: absolute;
   }
 }
+
+.vertex-tree-container{
+  &.no-relation-label{
+    .vertex {
+      .arrow{
+        border-top: none;
+        &:before{
+          top:-9px;
+        }
+      }
+    }
+  }
+}
