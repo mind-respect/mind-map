@@ -49,8 +49,19 @@ define([
     GraphElementController.prototype.getUi = function () {
         return this.graphElements;
     };
+    GraphElementController.prototype.getUiArray = function () {
+        if(this.isSingle()){
+            return [this.graphElements];
+        }
+        return this.graphElements;
+    };
     GraphElementController.prototype.getModel = function () {
         return this.getUi().getModel();
+    };
+    GraphElementController.prototype.getModelArray = function () {
+        return this.getUiArray().map(function(ui){
+            return ui.getModel();
+        });
     };
     GraphElementController.prototype.noteCanDo = function () {
         return this.isSingle() && (

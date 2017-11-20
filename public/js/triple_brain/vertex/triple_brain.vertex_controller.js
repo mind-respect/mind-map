@@ -188,7 +188,10 @@ define([
     };
 
     VertexController.prototype.remove = function (skipConfirmation) {
-        if(skipConfirmation === undefined && this.getModel().isPristine()){
+        var isPristine = this.getModelArray().every(function(model){
+            return model.isPristine();
+        });
+        if(skipConfirmation === undefined && isPristine){
             skipConfirmation = true;
         }
         if (skipConfirmation) {
@@ -205,18 +208,14 @@ define([
         function deleteAfterConfirmationBehavior() {
             var removePromise = this.isSingle() ?
                 VertexService.remove(
-                    this.vertices
+                    this.getUi()
                 ) :
                 VertexService.removeCollection(
-                    this.vertices
+                    this.getUi()
                 );
             return removePromise.then(function () {
-                if (this.isSingle()) {
-                    this.vertices.remove();
-                    return true;
-                }
-                this.vertices.forEach(function (vertexUi) {
-                    vertexUi.remove();
+                this.getUiArray().forEach(function(ui){
+                    ui.remove();
                 });
                 return true;
             }.bind(this));

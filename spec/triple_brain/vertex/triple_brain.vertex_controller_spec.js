@@ -36,9 +36,10 @@ define([
             });
             it("skips confirmation when vertex is pristine", function(){
                 var centerBubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
-                var deleteMenuSpy = spyOn(BubbleDeleteMenu.DeleteMenu.prototype, 'ask').and.callFake(function(){
-                    return $.Deferred().resolve();
-                });
+                var deleteMenuSpy = Mock.getSpy(
+                    "BubbleDeleteMenu",
+                    "ask"
+                );
                 expect(
                     deleteMenuSpy.calls.count()
                 ).toBe(0);
@@ -55,6 +56,43 @@ define([
                     ''
                 ).getTopMostChildBubble();
                 emptyVertex.getController().remove();
+                expect(
+                    deleteMenuSpy.calls.count()
+                ).toBe(1);
+            });
+            it("skips confirmation when multiple vertices are pristine", function(){
+                var scenario = new Scenarios.threeBubblesGraph();
+                var centerBubble = scenario.getBubble1InTree();
+                var deleteMenuSpy = Mock.getSpy(
+                    "BubbleDeleteMenu",
+                    "ask"
+                );
+                expect(
+                    deleteMenuSpy.calls.count()
+                ).toBe(0);
+                var b2 = TestUtils.getChildWithLabel(
+                    centerBubble,
+                    'r1'
+                ).getTopMostChildBubble();
+                var b3 = TestUtils.getChildWithLabel(
+                    centerBubble,
+                    'r2'
+                ).getTopMostChildBubble();
+                var b2AndB3Controller = new VertexController.VertexController([b2, b3]);
+                b2AndB3Controller.remove();
+                expect(
+                    deleteMenuSpy.calls.count()
+                ).toBe(1);
+                scenario.expandBubble2(b2);
+                b2.getController().addChild();
+                var emptyVertex = TestUtils.getChildWithLabel(
+                    b2,
+                    ''
+                ).getTopMostChildBubble();
+                b2.getController().addChild();
+                var emptyVertex2 = emptyVertex.getBubbleUnder();
+                var emptyVerticesController = new VertexController.VertexController([emptyVertex, emptyVertex2]);
+                emptyVerticesController.remove();
                 expect(
                     deleteMenuSpy.calls.count()
                 ).toBe(1);
