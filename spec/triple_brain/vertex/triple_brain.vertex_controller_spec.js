@@ -11,26 +11,54 @@ define([
     "triple_brain.vertex_controller",
     "triple_brain.selection_handler",
     'triple_brain.vertex_service',
-    'triple_brain.mind_map_info'
-], function ($, Scenarios, TestUtils, Mock, GraphServiceMock, VertexController, SelectionHandler, VertexService, MindMapInfo) {
+    'triple_brain.mind_map_info',
+    'mr.bubble_delete_menu'
+], function ($, Scenarios, TestUtils, Mock, GraphServiceMock, VertexController, SelectionHandler, VertexService, MindMapInfo, BubbleDeleteMenu) {
     "use strict";
     describe("vertex_controller", function () {
         beforeEach(function () {
             Mock.applyDefaultMocks();
         });
-        it("removes connected edges when removing a vertex", function () {
-            var threeBubbles = new Scenarios.threeBubblesGraph();
-            MindMapInfo._setIsViewOnly(false);
-            var bubble1 = threeBubbles.getBubble1InTree(),
-                r1 = threeBubbles.getRelation1InTree();
-            expect(
-                bubble1.getNumberOfChild()
-            ).toBe(2);
-            var bubble2 = r1.getTopMostChildBubble();
-            bubble2.getController().remove(true);
-            expect(
-                bubble1.getNumberOfChild()
-            ).toBe(1);
+        describe("remove", function(){
+            it("removes connected edges when removing a vertex", function () {
+                var threeBubbles = new Scenarios.threeBubblesGraph();
+                MindMapInfo._setIsViewOnly(false);
+                var bubble1 = threeBubbles.getBubble1InTree(),
+                    r1 = threeBubbles.getRelation1InTree();
+                expect(
+                    bubble1.getNumberOfChild()
+                ).toBe(2);
+                var bubble2 = r1.getTopMostChildBubble();
+                bubble2.getController().remove(true);
+                expect(
+                    bubble1.getNumberOfChild()
+                ).toBe(1);
+            });
+            it("skips confirmation when vertex is pristine", function(){
+                var centerBubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
+                var deleteMenuSpy = spyOn(BubbleDeleteMenu.DeleteMenu.prototype, 'ask').and.callFake(function(){
+                    return $.Deferred().resolve();
+                });
+                expect(
+                    deleteMenuSpy.calls.count()
+                ).toBe(0);
+                TestUtils.getChildWithLabel(
+                    centerBubble,
+                    'r1'
+                ).getTopMostChildBubble().getController().remove();
+                expect(
+                    deleteMenuSpy.calls.count()
+                ).toBe(1);
+                centerBubble.getController().addChild();
+                var emptyVertex = TestUtils.getChildWithLabel(
+                    centerBubble,
+                    ''
+                ).getTopMostChildBubble();
+                emptyVertex.getController().remove();
+                expect(
+                    deleteMenuSpy.calls.count()
+                ).toBe(1);
+            });
         });
         it("cannot add sibling if center bubble", function () {
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();

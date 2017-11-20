@@ -72,6 +72,7 @@ define([
             return areAllVertices;
         };
 
+        api.DeleteMenu = DeleteMenu;
         return api;
     }
 );

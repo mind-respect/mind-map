@@ -187,6 +187,9 @@ define([
     };
 
     VertexController.prototype.remove = function (skipConfirmation) {
+        if(skipConfirmation === undefined && this.getModel().isPristine()){
+            skipConfirmation = true;
+        }
         if (skipConfirmation) {
             return deleteAfterConfirmationBehavior.bind(this)(
                 this.vertices
