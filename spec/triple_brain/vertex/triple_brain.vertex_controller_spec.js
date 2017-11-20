@@ -60,16 +60,36 @@ define([
                 ).toBe(1);
             });
         });
-        it("cannot add sibling if center bubble", function () {
-            var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
-            var someChild = bubble1.getTopMostChildBubble().getTopMostChildBubble();
-            MindMapInfo._setIsViewOnly(false);
-            expect(
-                someChild.getController().addSiblingCanDo()
-            ).toBeTruthy();
-            expect(
-                bubble1.getController().addSiblingCanDo()
-            ).toBeFalsy();
+        describe("addSiblingCanDo", function(){
+            it("cannot add sibling if center bubble", function () {
+                var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+                var someChild = bubble1.getTopMostChildBubble().getTopMostChildBubble();
+                MindMapInfo._setIsViewOnly(false);
+                expect(
+                    someChild.getController().addSiblingCanDo()
+                ).toBeTruthy();
+                expect(
+                    bubble1.getController().addSiblingCanDo()
+                ).toBeFalsy();
+            });
+            it("returns false if vertex is pristine", function(){
+                var centerBubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
+                var b2 = TestUtils.getChildWithLabel(
+                    centerBubble,
+                    'r1'
+                ).getTopMostChildBubble();
+                expect(
+                    b2.getController().addSiblingCanDo()
+                ).toBeTruthy();
+                centerBubble.getController().addChild();
+                var emptyVertex = TestUtils.getChildWithLabel(
+                    centerBubble,
+                    ''
+                ).getTopMostChildBubble();
+                expect(
+                    emptyVertex.getController().addSiblingCanDo()
+                ).toBeFalsy();
+            });
         });
         it("can add sibling", function () {
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
@@ -79,6 +99,26 @@ define([
             expect(
                 bubble1.getNumberOfChild()
             ).toBe(numberOfChild + 1);
+        });
+        describe("addChildCanDo", function(){
+            it("returns false if vertex is pristine", function(){
+                var centerBubble = new Scenarios.threeBubblesGraph().getBubble1InTree();
+                var b2 = TestUtils.getChildWithLabel(
+                    centerBubble,
+                    'r1'
+                ).getTopMostChildBubble();
+                expect(
+                    b2.getController().addChildCanDo()
+                ).toBeTruthy();
+                centerBubble.getController().addChild();
+                var emptyVertex = TestUtils.getChildWithLabel(
+                    centerBubble,
+                    ''
+                ).getTopMostChildBubble();
+                expect(
+                    emptyVertex.getController().addChildCanDo()
+                ).toBeFalsy();
+            });
         });
         it("adding bubble and relation selects new bubble", function () {
             var scenario = new Scenarios.threeBubblesGraph();

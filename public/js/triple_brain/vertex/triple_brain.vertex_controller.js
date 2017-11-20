@@ -36,7 +36,7 @@ define([
     VertexController.prototype = new GraphElementController.GraphElementController();
 
     VertexController.prototype.addChildCanDo = function () {
-        return this.isSingleAndOwned();
+        return this.isSingleAndOwned() && !this.getModel().isPristine();
     };
 
     VertexController.prototype.addChild = function () {
@@ -159,8 +159,9 @@ define([
     };
 
     VertexController.prototype.addSiblingCanDo = function () {
-        return this.isSingleAndOwned() && !this.vertices.isCenterBubble() &&
-            !this.getUi().getParentBubble().getParentBubble().isMeta();
+        return this.isSingleAndOwned() && !this.getUi().isCenterBubble() &&
+            !this.getUi().getParentBubble().getParentBubble().isMeta() &&
+            !this.getModel().isPristine();
     };
 
     VertexController.prototype.addSibling = function () {
