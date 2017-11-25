@@ -30,6 +30,7 @@ define([
         var vertex = BubbleFactory.fromSubHtml(input);
         input.tripleBrainAutocomplete({
             select: function (event, ui) {
+                event.preventDefault();
                 api._labelAutocompleteSelectHandler(
                     BubbleFactory.fromSubHtml(
                         $(this)
@@ -52,7 +53,7 @@ define([
     };
 
     api._labelAutocompleteSelectHandler = function (bubble, searchResult) {
-        var identification = Identification.fromSearchResult(
+        var identifier = Identification.fromSearchResult(
             searchResult
         );
         if (bubble.isSuggestion()) {
@@ -65,22 +66,7 @@ define([
                 bubble,
                 searchResult.uri
             );
-            if(bubble.isVertex()){
-                bubble.getController().convertToDistantBubbleWithUri(
-                    identification.getExternalResourceUri()
-                ).fail(identify);
-            }else{
-                identify();
-            }
-            function identify(){
-                identification.makeGeneric();
-                bubble.getController().addIdentification(
-                    identification
-                );
-                bubble.getController().setLabel(
-                    searchResult.label
-                );
-            }
+            bubble.buildAfterAutocompleteMenu(identifier);
         }
     };
 

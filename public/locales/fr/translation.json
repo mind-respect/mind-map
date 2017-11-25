@@ -351,7 +351,13 @@
     "identifier": {
       "bubbles": " bulles(s)"
     },
-    "references": " tag(s)"
+    "references": " tag(s)",
+    "afterSelect": {
+      "tag": "étiquetter",
+      "tagAbout": "Cela vous permettra de retrouver toutes les bulles que vous aurez étiquetté.",
+      "merge": "fusionner",
+      "mergeAbout": "Vous aurez accès à toutes les relations de cette bulle et vice-versa."
+    }
   },
   "schemaList": {
     "title": "Modèles",

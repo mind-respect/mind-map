@@ -13,8 +13,9 @@ define(
         "use strict";
         var api = {};
         avoidMultiplePopoversDisplayedAtTheSameTime();
-        $.fn.popoverLikeToolTip = function (options) {
+            $.fn.popoverLikeToolTip = function (options) {
             options = options || {};
+            $(this).data("allowMultiplePopoverDisplayed", options.allowMultiplePopoverDisplayed);
             return this.popover(
                 $.extend({
                     placement: 'right',
@@ -142,6 +143,9 @@ define(
             //http://stackoverflow.com/a/24289767
             $(document).on('shown.bs.popover', function (ev) {
                 var $target = $(ev.target);
+                if($target.data("allowMultiplePopoverDisplayed")){
+                    return;
+                }
                 if ($currentPopover && ($currentPopover.get(0) !== $target.get(0))) {
                     $currentPopover.popover('toggle');
                 }
@@ -150,6 +154,9 @@ define(
 
             $(document).on('hidden.bs.popover', function (ev) {
                 var $target = $(ev.target);
+                if($target.data("allowMultiplePopoverDisplayed")){
+                    return;
+                }
                 if ($currentPopover && ($currentPopover.get(0) === $target.get(0))) {
                     $currentPopover = null;
                 }

@@ -46,9 +46,9 @@ define([
         api.VertexUi.prototype.remove = function (bubbleAbove, bubbleUnder) {
             var parentBubble = this._getParentBubbleToSelectAfterRemove();
             var bubbleToSelect = parentBubble;
-            if(!bubbleUnder.isSameBubble(this)){
+            if (!bubbleUnder.isSameBubble(this)) {
                 bubbleToSelect = bubbleUnder;
-            }else if(!bubbleAbove.isSameBubble(this)){
+            } else if (!bubbleAbove.isSameBubble(this)) {
                 bubbleToSelect = bubbleAbove;
             }
             this.removeConnectedEdges();
@@ -60,7 +60,7 @@ define([
         };
 
         api.VertexUi.prototype._getParentBubbleToSelectAfterRemove = function () {
-            if(this.isCenterBubble()){
+            if (this.isCenterBubble()) {
                 return undefined;
             }
             var toSelect = this.getParentBubble().getParentBubble();
@@ -340,6 +340,66 @@ define([
 
         api.VertexUi.prototype.getDropContainer = function () {
             return this.html.find('.bubble-label');
+        };
+
+        api.VertexUi.prototype.buildAfterAutocompleteMenu = function (identifier) {
+            this.setText(identifier.getLabel());
+            this.getLabel().maxChar();
+            var html = this.getHtml();
+            var content = $("<div class='list-group'>").append(
+                $('<a href="#" class="list-group-item">').append(
+                    $("<span class='badge'>").text("?").popoverLikeToolTip({
+                        content:$.t('search.afterSelect.tagAbout'),
+                        trigger:"hover"
+                    }),
+                    $('<h4 class="list-group-item-heading">').append(
+                        $("<i class='fa fa-tag'>"),
+                        " ",
+                        $("<span>").text($.t('search.afterSelect.tag'))
+                    )
+                ).click(function(event){
+                    event.preventDefault();
+                    event.stopPropagation();
+                    identify.bind(this)();
+                }.bind(this)),
+                $('<a href="#" class="list-group-item">').append(
+                    $("<span class='badge'>").text("?").popoverLikeToolTip({
+                        content:$.t('search.afterSelect.mergeAbout'),
+                        trigger:"hover"
+                    }),
+                    $('<h4 class="list-group-item-heading">').append(
+                        $("<i class='fa fa-handshake-o'>"),
+                        " ",
+                        $("<span>").text($.t('search.afterSelect.merge'))
+                    )
+                ).click((function(event){
+                    event.preventDefault();
+                    event.stopPropagation();
+                    this.getController().convertToDistantBubbleWithUri(
+                        identifier.getExternalResourceUri()
+                    ).fail(identify);
+                }.bind(this)))
+            );
+            this.html.popoverLikeToolTip({
+                title: $("<h3>").append(
+                    $("<i class='fa fa-circle-o'>"),
+                    " ",
+                    $("<span>").text(identifier.getLabel())
+                ),
+                allowMultiplePopoverDisplayed: true,
+                content: content,
+                trigger: 'manual'
+            });
+            html.popover('show');
+            function identify(){
+                identifier.makeGeneric();
+                this.getController().addIdentification(
+                    identifier
+                );
+                this.getController().setLabel(
+                    identifier.getLabel()
+                );
+            }
         };
 
         api.buildCommonConstructors(api);

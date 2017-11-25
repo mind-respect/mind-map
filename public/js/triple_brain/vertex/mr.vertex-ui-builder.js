@@ -15,7 +15,8 @@ define([
         "triple_brain.center_bubble",
         "triple_brain.mind_map_info",
         "jquery.is-fully-on-screen",
-        "jquery.center-on-screen"
+        "jquery.center-on-screen",
+        "triple_brain.ui_utils"
     ], function ($, EventBus, MindMapTemplate, BubbleFactory, RelativeTreeVertex, VertexUiBuilderCommon, GraphElementHtmlBuilder, GraphElementUi, GraphUi, CenterBubble, MindMapInfo) {
         "use strict";
         var api = {};

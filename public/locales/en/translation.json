@@ -349,7 +349,13 @@
     "identifier": {
       "bubbles": " bubble(s)"
     },
-    "references": " tag(s)"
+    "references": " tag(s)",
+    "afterSelect": {
+      "tag": "tag",
+      "tagAbout": "This will allow you to find all the bubbles that you have tagged with this same tag.",
+      "merge": "merge",
+      "mergeAbout": "You will have access to all the relationships of this bubble and vice versa."
+    }
   },
   "schemaList": {
     "title": "Schemas",
