@@ -147,7 +147,7 @@ define(
                     return;
                 }
                 if ($currentPopover && ($currentPopover.get(0) !== $target.get(0))) {
-                    $currentPopover.popover('toggle');
+                    $currentPopover.popover('hide');
                 }
                 $currentPopover = $target;
             });

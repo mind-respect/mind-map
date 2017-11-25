@@ -13,11 +13,12 @@ define([
         "triple_brain.graph_element_ui",
         "triple_brain.bubble",
         "triple_brain.suggestion_service",
+        "triple_brain.id_uri",
         "mr.loading_flow",
         "jquery.center-on-screen",
         "jquery.max_char"
     ],
-    function (require, $, VertexService, Point, Error, VertexSegments, EventBus, GraphElementUi, Bubble, SuggestionService, LoadingFlow) {
+    function (require, $, VertexService, Point, Error, VertexSegments, EventBus, GraphElementUi, Bubble, SuggestionService, IdUri, LoadingFlow) {
         "use strict";
         var api = {};
         api.getWhenEmptyLabel = function () {
@@ -344,42 +345,52 @@ define([
 
         api.VertexUi.prototype.buildAfterAutocompleteMenu = function (identifier) {
             this.setText(identifier.getLabel());
+            this.getController().setLabel(
+                identifier.getLabel()
+            );
             this.getLabel().maxChar();
             var html = this.getHtml();
             var content = $("<div class='list-group'>").append(
                 $('<a href="#" class="list-group-item">').append(
                     $("<span class='badge'>").text("?").popoverLikeToolTip({
-                        content:$.t('search.afterSelect.tagAbout'),
-                        trigger:"hover"
+                        content: $.t('search.afterSelect.tagAbout'),
+                        trigger: "hover"
                     }),
                     $('<h4 class="list-group-item-heading">').append(
                         $("<i class='fa fa-tag'>"),
                         " ",
                         $("<span>").text($.t('search.afterSelect.tag'))
                     )
-                ).click(function(event){
+                ).click(function (event) {
                     event.preventDefault();
                     event.stopPropagation();
-                    identify.bind(this)();
-                }.bind(this)),
-                $('<a href="#" class="list-group-item">').append(
+                    identify.bind(this)().then(function () {
+                        $(event.target).closest(".popover").popover("hide");
+                    });
+                }.bind(this))
+            );
+            if (IdUri.isGraphElementUriOwnedByCurrentUser(identifier.getExternalResourceUri())) {
+                content.append($('<a href="#" class="list-group-item">').append(
                     $("<span class='badge'>").text("?").popoverLikeToolTip({
-                        content:$.t('search.afterSelect.mergeAbout'),
-                        trigger:"hover"
+                        content: $.t('search.afterSelect.mergeAbout'),
+                        trigger: "hover"
                     }),
                     $('<h4 class="list-group-item-heading">').append(
                         $("<i class='fa fa-handshake-o'>"),
                         " ",
                         $("<span>").text($.t('search.afterSelect.merge'))
                     )
-                ).click((function(event){
-                    event.preventDefault();
-                    event.stopPropagation();
-                    this.getController().convertToDistantBubbleWithUri(
-                        identifier.getExternalResourceUri()
-                    ).fail(identify);
-                }.bind(this)))
-            );
+                    ).click((function (event) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        this.getController().convertToDistantBubbleWithUri(
+                            identifier.getExternalResourceUri()
+                        ).fail(identify.bind(this)).then(function () {
+                            $(event.target).closest(".popover").popover("hide");
+                        });
+                    }.bind(this)))
+                );
+            }
             this.html.popoverLikeToolTip({
                 title: $("<h3>").append(
                     $("<i class='fa fa-circle-o'>"),
@@ -391,13 +402,11 @@ define([
                 trigger: 'manual'
             });
             html.popover('show');
-            function identify(){
+
+            function identify() {
                 identifier.makeGeneric();
-                this.getController().addIdentification(
+                return this.getController().addIdentification(
                     identifier
-                );
-                this.getController().setLabel(
-                    identifier.getLabel()
                 );
             }
         };

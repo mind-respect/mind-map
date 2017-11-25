@@ -15,13 +15,14 @@ define([
     "mr.vertex-ui-builder-common",
     "triple_brain.mind_map_info",
     'triple_brain.identification',
-    'triple_brain.id_uri'
-], function (Scenarios, TestUtils, Mock, SchemaServiceMock, GraphServiceMock, GraphElement, VertexController, VertexService, UserMapAutocompleteProvider, VertexUiBuilderCommon, MindMapInfo, Identification, IdUri) {
+    'triple_brain.vertex_ui'
+], function (Scenarios, TestUtils, Mock, SchemaServiceMock, GraphServiceMock, GraphElement, VertexController, VertexService, UserMapAutocompleteProvider, VertexUiBuilderCommon, MindMapInfo, Identification, VertexUi) {
     "use strict";
     describe("vertex-ui-builder-common", function () {
         beforeEach(function () {
             Mock.applyDefaultMocks();
         });
+
         it("waits for suggestion to be integrated before handling autocomplete select", function () {
             MindMapInfo._setIsViewOnly(false);
             var searchProvider = UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(),
@@ -29,17 +30,18 @@ define([
                     new Scenarios.getSearchResultsForProject().get(),
                     "project"
                 )[0];
-            var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+            var buildAfterAutocompleteMenuSpy = spyOn(VertexUi.VertexUi.prototype, "buildAfterAutocompleteMenu");
             expect(
-                bubble1.getModel().hasIdentifications()
-            ).toBeFalsy();
+                buildAfterAutocompleteMenuSpy.calls.count()
+            ).toBe(0);
+            var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             VertexUiBuilderCommon._labelAutocompleteSelectHandler(
                 bubble1,
                 projectSearchResult
             );
             expect(
-                bubble1.getModel().hasIdentifications()
-            ).toBeTruthy();
+                buildAfterAutocompleteMenuSpy.calls.count()
+            ).toBe(1);
             SchemaServiceMock.getMock(
                 new Scenarios.getProjectSchema().getGraph()
             );
@@ -49,14 +51,14 @@ define([
                 projectSearchResult
             );
             expect(
-                suggestionInTree.getModel().getIdentifiers().length
-            ).toBe(2);
-            var newVertexUi = suggestionInTree.integrate(
+                buildAfterAutocompleteMenuSpy.calls.count()
+            ).toBe(1);
+            suggestionInTree.integrate(
                 TestUtils.generateVertexUri()
             );
             expect(
-                newVertexUi.getModel().getIdentifiers().length
-            ).toBe(3);
+                buildAfterAutocompleteMenuSpy.calls.count()
+            ).toBe(2);
         });
 
         it("in handling autocomplete select does not try to convert to distant bubble if schema", function () {
@@ -129,28 +131,6 @@ define([
             expect(
                 child.text()
             ).toBe("b1");
-        });
-        it("can identify to a vertex using autocomplete", function () {
-            MindMapInfo._setIsViewOnly(false);
-            var otherUserVertexSearchResult = new Scenarios.threeBubblesGraphFork().getCenterAsSearchResult()[0];
-            var otherUserVertexIdentifier = Identification.fromFriendlyResource(
-                otherUserVertexSearchResult.nonFormattedSearchResult.graphElement
-            );
-            var b3 = new Scenarios.threeBubblesGraph().getBubble3InTree();
-            expect(
-                b3.getModel().hasIdentification(
-                    otherUserVertexIdentifier
-                )
-            ).toBeFalsy();
-            VertexUiBuilderCommon._labelAutocompleteSelectHandler(
-                b3,
-                otherUserVertexSearchResult
-            );
-            expect(
-                b3.getModel().hasIdentification(
-                    otherUserVertexIdentifier
-                )
-            ).toBeTruthy();
         });
     });
 });
