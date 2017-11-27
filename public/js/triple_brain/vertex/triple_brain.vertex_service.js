@@ -9,9 +9,10 @@ define([
         "triple_brain.suggestion",
         "triple_brain.graph_element_service",
         "triple_brain.user_service",
-        "triple_brain.friendly_resource_service"
+        "triple_brain.friendly_resource_service",
+        "triple_brain.id_uri"
     ],
-    function ($, EventBus, TripleUiBuilder, Suggestion, GraphElementService, UserService, FriendlyResourceService) {
+    function ($, EventBus, TripleUiBuilder, Suggestion, GraphElementService, UserService, FriendlyResourceService, IdUri) {
         "use strict";
         var api = {};
         api.getByUri = function (uri, callback) {
@@ -151,6 +152,13 @@ define([
                     );
                 }
             );
+        };
+        api.mergeTo = function(vertex, distantVertexUri){
+            return $.ajax({
+                type: 'POST',
+                url: vertex.getUri() + '/mergeTo/' + IdUri.getGraphElementShortIdFromUri(distantVertexUri),
+                dataType: 'json'
+            });
         };
         return api;
         function setCollectionPrivacy(isPublic, vertices) {

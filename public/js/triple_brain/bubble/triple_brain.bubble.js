@@ -69,7 +69,7 @@ define([
             //     });
             //     return;
             // }
-            if(this.isGroupRelation()){
+            if (this.isGroupRelation()) {
                 this.expand();
             }
             if (this.isVertex()) {
@@ -123,7 +123,7 @@ define([
                 this.convertToLeft();
                 $.each(treeContainers, convertTreeStructureToLeft);
             } else {
-                this.visitDescendants(function(descendant){
+                this.visitDescendants(function (descendant) {
                     descendant.convertToRight();
                 });
                 this.convertToRight();
@@ -233,6 +233,12 @@ define([
         api.Bubble.prototype.visitClosestChildVertices = function (visitor) {
             this.visitClosestChildOfType(
                 GraphElementType.Vertex,
+                visitor
+            );
+        };
+        api.Bubble.prototype.visitClosestChildRelations = function (visitor) {
+            this.visitClosestChildOfType(
+                GraphElementType.Relation,
                 visitor
             );
         };

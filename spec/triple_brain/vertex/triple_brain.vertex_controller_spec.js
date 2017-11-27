@@ -434,7 +434,7 @@ define([
             var parentWithSingleChildScenario = new Scenarios.parentWithSingleChildScenario();
             var parent = parentWithSingleChildScenario.getParentInTree();
             GraphServiceMock.getForCentralBubbleUri(
-                parentWithSingleChildScenario.getB1RelatedToParentGraph()
+                parentWithSingleChildScenario.getSubGraphOfB1OnceMergedWithSingleChild()
             );
             var child = parent.getTopMostChildBubble().getTopMostChildBubble();
             child.getController().convertToDistantBubbleWithUri(
@@ -442,15 +442,15 @@ define([
             );
             var b1 = parent.getTopMostChildBubble().getTopMostChildBubble();
             expect(
-                b1.text()
-            ).toBe("b1");
+                b1.getUri()
+            ).toBe(parentWithSingleChildScenario.getB1Uri());
         });
         it("cannot add a relation to existing child", function () {
             MindMapInfo._setIsViewOnly(false);
             var parentWithSingleChildScenario = new Scenarios.parentWithSingleChildScenario();
             var parent = parentWithSingleChildScenario.getParentInTree();
             GraphServiceMock.getForCentralBubbleUri(
-                parentWithSingleChildScenario.getB1RelatedToParentGraph()
+                parentWithSingleChildScenario.getSubGraphOfB1OnceMergedWithSingleChild()
             );
             var child = parent.getTopMostChildBubble().getTopMostChildBubble();
             child.getController().convertToDistantBubbleWithUri(
@@ -471,7 +471,7 @@ define([
             var parentWithSingleChildScenario = new Scenarios.parentWithSingleChildScenario();
             var parent = parentWithSingleChildScenario.getParentInTree();
             var getForCentralBubbleUriSpy = GraphServiceMock.getForCentralBubbleUri(
-                parentWithSingleChildScenario.getB1RelatedToParentGraph()
+                parentWithSingleChildScenario.getSubGraphOfB1OnceMergedWithSingleChild()
             );
             var child = parent.getTopMostChildBubble().getTopMostChildBubble();
             child.getController().convertToDistantBubbleWithUri(
@@ -531,16 +531,6 @@ define([
                 TestUtils.generateEdgeUri()
             )).toBeFalsy();
         });
-        it("cannot convert a bubble to a distant relation if it has children", function () {
-            MindMapInfo._setIsViewOnly(false);
-            var parentWithSingleChildScenario = new Scenarios.parentWithSingleChildScenario();
-            var parent = parentWithSingleChildScenario.getParentInTree();
-            expect(
-                parent.getController().convertToDistantBubbleWithUriCanDo(
-                    parentWithSingleChildScenario.getB1Uri()
-                )
-            ).toBeFalsy();
-        });
 
         it("keeps label of the relation when converting a bubble to a distant bubble", function () {
             var parentWithSingleChildScenario = new Scenarios.parentWithSingleChildScenario();
@@ -551,7 +541,7 @@ define([
             ).toBe("relation");
             var child = relation.getTopMostChildBubble();
             GraphServiceMock.getForCentralBubbleUri(
-                parentWithSingleChildScenario.getB1RelatedToParentGraph()
+                parentWithSingleChildScenario.getSubGraphOfB1OnceMergedWithSingleChild()
             );
             child.getController().convertToDistantBubbleWithUri(
                 parentWithSingleChildScenario.getB1Uri()
@@ -570,7 +560,7 @@ define([
             );
             var child = relation.getTopMostChildBubble();
             GraphServiceMock.getForCentralBubbleUri(
-                parentWithSingleChildScenario.getB1RelatedToParentGraph()
+                parentWithSingleChildScenario.getSubGraphOfB1OnceMergedWithSingleChild()
             );
             child.getController().convertToDistantBubbleWithUri(
                 parentWithSingleChildScenario.getB1Uri()

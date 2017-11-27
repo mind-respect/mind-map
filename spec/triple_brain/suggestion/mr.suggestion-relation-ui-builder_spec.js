@@ -44,10 +44,5 @@ define([
                 locationSuggestion.getSameAs().getUri()
             );
         });
-        it('has suggestion uri as own uri', function () {
-            expect(
-                locationRelationSuggestion.getUri()
-            ).toBe(locationSuggestion.getUri());
-        });
     });
 });

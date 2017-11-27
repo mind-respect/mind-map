@@ -118,7 +118,7 @@ define([
                     parentVertex,
                     serverGraph
                 );
-                deferred.resolve();
+                deferred.resolve(parentVertex);
                 return parentVertex;
             }
         );
@@ -127,7 +127,7 @@ define([
     api.addChildTreeUsingGraph = function (parentVertex, serverGraph) {
         var parentUri = parentVertex.getUri();
         var graphBuilder = GraphUiBuilder.withDefaultHtmlBuilders();
-        var nbRelationsWithGrandParent = removeRelationWithGrandParentFromServerGraph();
+        var nbRelationsWithGrandParent = removeRelationWithGrandParentAndChildFromServerGraph();
         TreeDisplayerCommon.setUiTreeInfoToVertices(
             serverGraph,
             parentUri
@@ -174,12 +174,16 @@ define([
         GraphElementMainMenu.showWholeGraphButtonOnlyIfApplicable(
             GraphElementMainMenu.getExpandAllButton()
         );
-        function removeRelationWithGrandParentFromServerGraph() {
+        function removeRelationWithGrandParentAndChildFromServerGraph() {
             var parentRelation = parentVertex.getRelationWithUiParent();
             var relationWithGrandParentUri = parentRelation.getUri();
             var grandParent = parentVertex.getParentVertex();
             var grandParentUriToCompare = grandParent.getUri();
             var nbRelationsWithGrandParent = 0;
+            var alreadyPresentChildEdgesUri = [];
+            parentVertex.visitClosestChildRelations(function(edge){
+                alreadyPresentChildEdgesUri.push(edge.getUri());
+            });
             serverGraph.edges = getFilteredEdges();
             if (1 === nbRelationsWithGrandParent) {
                 delete serverGraph.vertices[grandParentUriToCompare];
@@ -203,7 +207,10 @@ define([
                         ) !== -1) {
                         nbRelationsWithGrandParent++;
                     }
-                    if (relationWithGrandParentUri !== edgeFacade.getUri()) {
+                    var alreadyChildEdge = alreadyPresentChildEdgesUri.indexOf(
+                        edgeFacade.getUri()
+                    ) !== -1;
+                    if (!alreadyChildEdge && relationWithGrandParentUri !== edgeFacade.getUri()) {
                         filteredEdges[
                             edgeFacade.getUri()
                             ] = edge;

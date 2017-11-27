@@ -62,7 +62,7 @@ define([
             cacheWithUriAsKey = {};
         api.initCache = function (graphElement) {
             cacheWithIdAsKey[graphElement.getId()] = graphElement;
-            updateUriCache(graphElement.getUri(), graphElement);
+            updateUriCache(graphElement.getHtml().data("uri"), graphElement);
         };
         api.withHtml = function (html) {
             return api.withId(
@@ -536,15 +536,11 @@ define([
         return this.isVertexSuggestion() || this.isRelationSuggestion();
     };
     api.GraphElementUi.prototype.setUri = function (uri) {
-        this.html.data(
-            "uri",
-            uri
-        );
+        this.html.data("uri", uri);
+        this.getModel().setUri(uri);
     };
     api.GraphElementUi.prototype.getUri = function () {
-        return this.html.data(
-            "uri"
-        );
+        return this.getModel().getUri();
     };
     api.GraphElementUi.prototype.getInLabelButtonsContainer = function () {
         return this.getHtml().find(

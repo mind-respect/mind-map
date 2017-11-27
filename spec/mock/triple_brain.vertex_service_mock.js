@@ -19,6 +19,9 @@ define([
         spies["makeCollectionPublic"] = api.makeCollectionPublic();
         spies["makePublic"] = api.makePublic();
         spies["makePrivate"] = api.makePrivate();
+        spies["mergeTo"] = spyOn(VertexService, "mergeTo").and.callFake(function () {
+            return $.Deferred().resolve();
+        });
         return spies;
     };
     api.addRelationAndVertexToVertex = function () {

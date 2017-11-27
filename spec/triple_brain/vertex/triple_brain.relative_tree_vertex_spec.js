@@ -247,5 +247,26 @@ define([
                 b2.getNumberOfChild()
             ).toBe(1);
         });
+        describe("mergeTo", function(){
+            it("also changes uri of connected edges source and destination vertices", function(){
+                var b1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
+                var distantVertexUri = TestUtils.generateVertexUri();
+                var r1 = TestUtils.getChildWithLabel(
+                    b1,
+                    "r1"
+                );
+                expect(
+                    r1.getSourceVertex().getUri()
+                ).not.toBe(distantVertexUri);
+                b1.mergeTo(distantVertexUri);
+                r1 = TestUtils.getChildWithLabel(
+                    b1,
+                    "r1"
+                );
+                expect(
+                    r1.getSourceVertex().getUri()
+                ).toBe(distantVertexUri);
+            });
+        });
     });
 });

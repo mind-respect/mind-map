@@ -188,10 +188,10 @@ define([
     };
 
     VertexController.prototype.remove = function (skipConfirmation) {
-        var isPristine = this.getModelArray().every(function(model){
+        var isPristine = this.getModelArray().every(function (model) {
             return model.isPristine();
         });
-        if(skipConfirmation === undefined && isPristine){
+        if (skipConfirmation === undefined && isPristine) {
             skipConfirmation = true;
         }
         if (skipConfirmation) {
@@ -214,7 +214,7 @@ define([
                     this.getUi()
                 );
             return removePromise.then(function () {
-                this.getUiArray().forEach(function(ui){
+                this.getUiArray().forEach(function (ui) {
                     ui.remove();
                 });
                 return true;
@@ -303,7 +303,7 @@ define([
             !this.getModel().isPublic() && this.isOwned()
         );
     };
-    
+
     VertexController.prototype._areAllElementsPublic = function () {
         if (this.isSingle()) {
             return this.getModel().isPublic();
@@ -368,14 +368,14 @@ define([
     VertexController.prototype.becomeParent = function (graphElementUi) {
         var promises = [];
         var uiChild;
-        if(graphElementUi.isGroupRelation()){
+        if (graphElementUi.isGroupRelation()) {
             graphElementUi.expand();
             graphElementUi.visitClosestChildOfType(
                 GraphElementType.Relation,
                 moveEdge.bind(this)
             );
             uiChild = graphElementUi;
-        }else{
+        } else {
             uiChild = graphElementUi.isRelation() ? graphElementUi : graphElementUi.getParentBubble();
             moveEdge.bind(this)(uiChild);
         }
@@ -386,13 +386,14 @@ define([
             );
             this.getModel().incrementNumberOfConnectedEdges();
         }.bind(this));
-        function moveEdge(movedEdge){
+
+        function moveEdge(movedEdge) {
             promises.push(
                 movedEdge.getController().changeEndVertex(
                     this.getUi()
                 )
             );
-            if(!graphElementUi.isGroupRelation()){
+            if (!graphElementUi.isGroupRelation()) {
                 promises.push(
                     movedEdge.getParentBubble().getController().becomeExParent(movedEdge)
                 );
@@ -541,9 +542,6 @@ define([
     };
 
     VertexController.prototype.convertToDistantBubbleWithUriCanDo = function (distantVertexUri) {
-        if (this.getUi().hasChildren()) {
-            return false;
-        }
         if (!IdUri.isGraphElementUriOwnedByCurrentUser(distantVertexUri)) {
             return false;
         }
@@ -569,27 +567,11 @@ define([
             return $.Deferred().reject();
         }
         this.getUi().beforeConvertToDistantBubbleWithUri();
-        var parent = this.getUi().getParentVertex();
-        var relation = this.getUi().getParentBubble();
-        var newTriple;
-        return this.remove(true).then(function () {
-            return parent.getController()._relateToDistantVertexWithUri(
-                distantVertexUri
-            ).then(function (triple) {
-                newTriple = triple;
-            }).then(function () {
-                if (!relation.getModel().isLabelEmpty()) {
-                    return newTriple.edge().getController().setLabel(
-                        relation.getModel().getLabel()
-                    );
-                }
-            }).then(function () {
-                return newTriple.edge().getController().addIdentifiers(
-                    relation.getModel().getIdentifiers()
-                );
-            }).then(function () {
-                this.getUi().afterConvertToDistantBubbleWithUri();
-            }.bind(this));
+        return VertexService.mergeTo(this.getModel(), distantVertexUri).then(function () {
+            this.getUi().mergeTo(distantVertexUri);
+            return GraphDisplayer.addChildTree(this.getUi());
+        }.bind(this)).then(function () {
+            this.getUi().afterConvertToDistantBubbleWithUri();
         }.bind(this));
     };
     VertexController.prototype._relateToDistantVertexWithUri = function (distantVertexUri) {

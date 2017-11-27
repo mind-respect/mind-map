@@ -416,6 +416,11 @@ define([
                     "threeBubblesGraph.subGraphOfB1RelatedToParent"
                 );
             };
+            this.getSubGraphOfB1OnceMergedWithSingleChild = function () {
+                return api._getTestData(
+                    "threeBubblesGraph.subGraphOfB1OnceMergedWithSingleChild"
+                );
+            };
             this.getB1Uri = function () {
                 return uriOfVertexWithLabel(this.getB1RelatedToParentGraph(), "b1");
             };

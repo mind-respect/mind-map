@@ -42,9 +42,7 @@ define([
                 UserMapAutocompleteProvider.toFetchPublicAndUserVerticesExcept(
                     vertex,
                     {
-                        noFilter: function(){
-                            return !this.hasChildren();
-                        }.bind(vertex)
+                        noFilter: true
                     }
                 ),
                 WikidataAutocompleteProvider.build()
