@@ -315,11 +315,11 @@ define([
         };
 
         api.VertexUi.prototype.beforeConvertToDistantBubbleWithUri = function () {
-            LoadingFlow.enter();
+            this.getHiddenRelationsContainer().showLoading();
         };
 
         api.VertexUi.prototype.afterConvertToDistantBubbleWithUri = function () {
-            LoadingFlow.leave();
+            this.getHiddenRelationsContainer().hideLoading();
         };
 
         api.VertexUi.prototype.getDeepestChildDistance = function () {
@@ -364,9 +364,8 @@ define([
                 ).click(function (event) {
                     event.preventDefault();
                     event.stopPropagation();
-                    identify.bind(this)().then(function () {
-                        $(event.target).closest(".popover").popover("hide");
-                    });
+                    $(event.target).closest(".popover").popover("hide");
+                    identify.bind(this)();
                 }.bind(this))
             );
             if (IdUri.isGraphElementUriOwnedByCurrentUser(identifier.getExternalResourceUri())) {
@@ -383,11 +382,10 @@ define([
                     ).click((function (event) {
                         event.preventDefault();
                         event.stopPropagation();
+                        $(event.target).closest(".popover").popover("hide");
                         this.getController().convertToDistantBubbleWithUri(
                             identifier.getExternalResourceUri()
-                        ).fail(identify.bind(this)).then(function () {
-                            $(event.target).closest(".popover").popover("hide");
-                        });
+                        ).fail(identify.bind(this));
                     }.bind(this)))
                 );
             }
