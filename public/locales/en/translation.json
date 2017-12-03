@@ -282,10 +282,10 @@
     }
   },
   "meta_relation": {
-    "remove_tooltip": "remove the relation",
     "deleteMenu": {
-      "association": "association between",
-      "and": "and"
+      "remove": "Remove",
+      "association": "the tag",
+      "and": "to the bubble"
     }
   },
 

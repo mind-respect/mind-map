@@ -284,10 +284,10 @@
     }
   },
   "meta_relation":{
-    "remove_tooltip": "effacer la relation",
     "deleteMenu": {
-      "association": "l'association entre",
-      "and": "et"
+      "remove": "Enlever",
+      "association": "l'étiquette",
+      "and": "à la bulle"
     }
   },
 

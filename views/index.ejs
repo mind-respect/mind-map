@@ -195,7 +195,8 @@
                     <button data-action="collapse" data-combinedShortcut="H" data-icon="fa-leaf"
                             data-additionalClass="fa-strike"
                             class="graph-element-button"></button>
-                    <button data-action="wikipediaLinks" data-icon="fa-wikipedia-w" class="graph-element-button in-label-button"></button>
+                    <button data-action="wikipediaLinks" data-icon="fa-wikipedia-w"
+                            class="graph-element-button in-label-button"></button>
                     <button data-action="identify" data-combinedShortcut="G" data-icon="fa-tag"
                             class="graph-element-button in-label-button"></button>
                     <button data-action="identifyWhenMany" data-combinedShortcut="G" data-icon="fa-tags"
@@ -1149,11 +1150,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">
-                    <span data-i18n="vertex.menu.delete.title_prefix"></span>
-                    <span data-i18n="meta_relation.deleteMenu.association"></span>
-                    <span class="bubble-label"></span>
-                    <span data-i18n="meta_relation.deleteMenu.and"></span>
-                    <span class="meta-label"></span>
+                    <p>
+                        <span data-i18n="meta_relation.deleteMenu.remove"></span>
+                        <span data-i18n="meta_relation.deleteMenu.association"></span>
+                        " <i class="fa fa-tag"></i> <span class="meta-label"></span>"
+                    </p>
+                    <p>
+                        <span data-i18n="meta_relation.deleteMenu.and"></span>
+                        " <i class="fa fa-circle-o bubble-icon"></i>
+                        <span class="bubble-label"></span>"
+                    </p>
                 </h4>
             </div>
             <div class="modal-footer"></div>
