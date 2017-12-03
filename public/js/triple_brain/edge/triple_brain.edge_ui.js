@@ -137,7 +137,10 @@ define([
         };
 
         api.EdgeUi.prototype.getYPosition = function () {
-            return this.getLabel().offset().top;
+            var html = this.isSetAsSameAsGroupRelation() ?
+                this.getHtml().find(".edit-relation-button") :
+                this.getLabel();
+            return html.offset().top;
         };
 
         api.EdgeUi.prototype.getNumberOfHiddenRelations = function () {
