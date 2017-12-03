@@ -13,8 +13,9 @@ define([
     "triple_brain.bubble_factory",
     "triple_brain.graph_displayer",
     "mr.meta_service",
-    "triple_brain.id_uri"
-], function ($, GraphUiBuilder, VertexUiBuilder, EdgeUiBuilder, Edge, IdUri, EventBus, BubbleFactory, GraphDisplayer, MetaService) {
+    "triple_brain.graph_element_main_menu",
+    "triple_brain.selection_handler"
+], function ($, GraphUiBuilder, VertexUiBuilder, EdgeUiBuilder, Edge, IdUri, EventBus, BubbleFactory, GraphDisplayer, MetaService, GraphElementMainMenu, SelectionHandler) {
     "use strict";
     var api = {};
     api.buildFromMetaSubGraph = function (metaSubGraph) {
@@ -106,7 +107,7 @@ define([
                     metaCenter,
                     groupVertexUi
                 );
-                edgeToGroupVertexUi.getLabel().addClass("hidden");
+                edgeToGroupVertexUi.hideLabel();
                 sourceVertexAndEdges.edges.forEach(function (edgeBetweenGroupAndDestination) {
                     edgeBetweenGroupAndDestination.setSourceVertex(
                         groupVertexUi.getModel()
@@ -130,7 +131,7 @@ define([
                         groupVertexUi,
                         destinationVertexUi
                     );
-                    api._setupEdgeUi(edgeBetweenGroupAndDestinationUi);
+                    api._setupMetaEdgeUi(edgeBetweenGroupAndDestinationUi);
                 });
                 if(groupVertexUi.getNumberOfHiddenRelations() > 1){
                     groupVertexUi.collapse();
@@ -150,21 +151,28 @@ define([
                 metaCenter,
                 sourceVertexUi
             );
-            api._setupEdgeUi(edgeUi);
+            api._setupMetaEdgeUi(edgeUi);
         });
         return container;
     };
-    api._setupEdgeUi = function (edgeUi) {
-        edgeUi.getLabel().addClass("hidden");
-        edgeUi.getHtml().prepend("<i class='fa fa-remove remove-relation-button on-edge-button'>").click(function () {
-            var edgeUi = BubbleFactory.fromSubHtml(
-                $(this)
+    api._setupMetaEdgeUi = function (metaEdgeUi) {
+        metaEdgeUi.hideLabel();
+        var edgeHtml = metaEdgeUi.getHtml();
+        var menu = $("<span class='relation-menu menu'>");
+        edgeHtml.append(menu);
+        GraphElementMainMenu.addRelevantButtonsInMenu(
+            menu,
+            metaEdgeUi.getController()
+        );
+        edgeHtml.click(function(){
+            SelectionHandler.setToSingleGraphElement(
+                BubbleFactory.fromHtml(
+                    $(this)
+                )
             );
-            edgeUi.getController().remove();
-        }).attr(
-            "title",
-            api._edgePopoverText
-        ).popoverLikeToolTip();
+        });
+        edgeHtml.find(".connector").addClass("meta-relation-clickable");
+        metaEdgeUi.hideMenu();
     };
     EventBus.subscribe(
         '/event/ui/graph/drawing_info/updated/',

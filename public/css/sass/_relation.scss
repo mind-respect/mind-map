@@ -126,6 +126,19 @@
         border: $edgeSize solid $metaColor;
       }
     }
+    .connector{
+      &.meta-relation-clickable{
+        &:before{
+          //border-top: 3px solid purple;
+          border-bottom: 3px solid purple;
+          //top: 6px;
+          //border-radius: 5px;
+          //padding: 5px 13px;
+          //position: relative;
+          //left: 16px;
+        }
+      }
+    }
   }
   .in-bubble-content {
     $fontSize: 1.05em;
@@ -272,6 +285,9 @@
         }
         .connector{
           width:75px;
+          &:before{
+            left:35px;
+          }
         }
       }
     }

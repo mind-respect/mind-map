@@ -123,9 +123,7 @@ define([
 
         api.EdgeUi.prototype.setAsSameAsGroupRelation = function () {
             if(MindMapInfo.isViewOnly()){
-                this.getHtml().closest(".vertex-tree-container").addClass(
-                    "no-relation-label"
-                );
+                this.hideLabel();
             }
             return this.getHtml().addClass(
                 "same-as-group-relation"
@@ -149,6 +147,12 @@ define([
 
         api.EdgeUi.prototype.getDropContainer = function () {
             return this.html.find('.label-container');
+        };
+
+        api.EdgeUi.prototype.hideLabel = function(){
+            this.getHtml().closest(".vertex-tree-container").addClass(
+                "no-relation-label"
+            );
         };
 
         EventBus.subscribe(

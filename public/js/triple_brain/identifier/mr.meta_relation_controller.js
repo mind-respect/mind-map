@@ -53,6 +53,15 @@ define([
     MetaRelationController.prototype.identifyCanDo = function () {
         return false;
     };
+
+    MetaRelationController.prototype.collapseCanDo = function(){
+        return false;
+    };
+
+    MetaRelationController.prototype.selectTreeCanDo = function () {
+        return false;
+    };
+
     api.MetaRelationController = MetaRelationController;
     return api;
 });
