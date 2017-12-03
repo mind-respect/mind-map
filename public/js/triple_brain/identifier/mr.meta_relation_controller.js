@@ -58,6 +58,10 @@ define([
         return false;
     };
 
+    MetaRelationController.prototype.expandCanDo = function(){
+        return false;
+    };
+
     MetaRelationController.prototype.selectTreeCanDo = function () {
         return false;
     };
