@@ -50,7 +50,7 @@ define([
         return this.graphElements;
     };
     GraphElementController.prototype.getUiArray = function () {
-        if(this.isSingle()){
+        if (this.isSingle()) {
             return [this.graphElements];
         }
         return this.graphElements;
@@ -59,7 +59,7 @@ define([
         return this.getUi().getModel();
     };
     GraphElementController.prototype.getModelArray = function () {
-        return this.getUiArray().map(function(ui){
+        return this.getUiArray().map(function (ui) {
             return ui.getModel();
         });
     };
@@ -160,7 +160,7 @@ define([
         );
     };
 
-    GraphElementController.prototype.visitOtherInstancesCanShowInLabel = function(){
+    GraphElementController.prototype.visitOtherInstancesCanShowInLabel = function () {
         return $.Deferred().resolve(
             this.getUi().hasOtherVisibleInstance()
         );
@@ -172,24 +172,24 @@ define([
             this.getModel().getIdentifiers().length === 1
         );
     };
-    
+
     GraphElementController.prototype.identifyCanShowInLabel = function () {
         return $.Deferred().resolve(
             this.getModel().getIdentifiers().length === 1
         );
     };
-    
+
     GraphElementController.prototype.identifyWhenManyCanDo = function () {
         return this.isSingle() && this.getModel().getIdentifiers().length > 1;
     };
-    
+
     GraphElementController.prototype.identifyWhenMany = GraphElementController.prototype.identify = function () {
         IdentificationMenu.ofGraphElement(
             this.graphElements
         ).create();
     };
 
-    GraphElementController.prototype.identifyWhenManyCanShowInLabel = function(){
+    GraphElementController.prototype.identifyWhenManyCanShowInLabel = function () {
         return $.Deferred().resolve(
             this.getModel().getIdentifiers().length > 1
         );
@@ -415,13 +415,37 @@ define([
         var movedEdge = this.getUi().isVertex() ?
             this.getUi().getParentBubble() :
             this.getUi();
-        var movedVertex = movedEdge.getTopMostChildBubble();
-        var otherVertex = otherEdge.getTopMostChildBubble();
-        movedVertex.getModel().setSortDate(
-            new Date(
-                otherVertex.getModel().getSortDate().getTime() + (isAbove ? -10 : 10)
-            )
+        var movedVertex;
+        var promises = [];
+        var otherVertex;
+        if(otherEdge.isGroupRelation()){
+            otherVertex = isAbove ? otherEdge.getModel().getFirstVertex() : otherEdge.getModel().getLastVertex();
+        }else{
+            otherVertex = otherEdge.getTopMostChildBubble().getModel();
+        }
+        var newSortDate = new Date(
+            otherVertex.getSortDate().getTime() + (isAbove ? - 100 : 100)
         );
+        if (movedEdge.isGroupRelation()) {
+            var index = 1;
+            movedEdge.getModel().getSortedVerticesArrayAtAnyDepth().forEach(function(vertex){
+                vertex.setSortDate(new Date(
+                    newSortDate.getTime() - index
+                ));
+                index++;
+                promises.push(
+                    changeSortDate(vertex)
+                );
+            });
+        } else {
+            movedVertex = movedEdge.getTopMostChildBubble().getModel();
+            movedVertex.setSortDate(
+                newSortDate
+            );
+            promises.push(
+                changeSortDate(movedVertex)
+            );
+        }
         var parentBubble = otherEdge.getParentBubble();
         var addIdentificationPromise = $.Deferred().resolve();
         if (parentBubble.isGroupRelation()) {
@@ -431,18 +455,31 @@ define([
             );
         }
         if (previousParentVertex.getUri() !== otherEdge.getParentVertex().getUri()) {
-            return $.when.apply($, [
-                addIdentificationPromise,
-                movedEdge.getController().changeEndVertex(
-                    otherEdge.getParentVertex()
-                ).then(changeSortDate)
-            ]);
+            promises.push(
+                addIdentificationPromise
+            );
+            if (movedEdge.isGroupRelation()) {
+                movedEdge.expand();
+                movedEdge.visitClosestChildRelations(function (relationUi) {
+                    promises.push(
+                        relationUi.getController().changeEndVertex(
+                            otherEdge.getParentVertex()
+                        )
+                    );
+                });
+            } else {
+                promises.push(
+                    movedEdge.getController().changeEndVertex(
+                        otherEdge.getParentVertex()
+                    )
+                );
+            }
         }
-        return changeSortDate();
+        return $.when.apply($, promises);
 
-        function changeSortDate() {
+        function changeSortDate(vertex) {
             return GraphElementService.changeSortDate(
-                movedVertex.getModel()
+                vertex
             );
         }
     };
@@ -548,7 +585,7 @@ define([
     };
 
     GraphElementController.prototype.deselect = function () {
-        if(this.isMultiple() || this.getUi().isCenterBubble()){
+        if (this.isMultiple() || this.getUi().isCenterBubble()) {
             SelectionHandler.removeAll();
         }
     };

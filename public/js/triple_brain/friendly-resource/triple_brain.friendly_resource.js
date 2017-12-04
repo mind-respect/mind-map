@@ -134,9 +134,11 @@ define([
         return this.friendlyResourceServerFormat;
     };
     api.FriendlyResource.prototype.getCreationDate = function () {
-        return new Date(
-            this.friendlyResourceServerFormat.creationDate
-        );
+        return this.friendlyResourceServerFormat.creationDate === undefined ?
+            new Date() :
+            new Date(
+                this.friendlyResourceServerFormat.creationDate
+            );
     };
     api.FriendlyResource.prototype._buildImages = function () {
         return undefined === this.friendlyResourceServerFormat.images ?

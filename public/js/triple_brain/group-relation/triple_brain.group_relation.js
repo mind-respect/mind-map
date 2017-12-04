@@ -34,6 +34,7 @@ define([
         api.usingIdentifiers = function (identifications) {
             return new GroupRelation(identifications);
         };
+
         function GroupRelation(identifiers) {
             this.identifiers = identifiers;
             this.vertices = {};
@@ -85,7 +86,7 @@ define([
                     );
                 });
             var sorted = {};
-            sortedKeys.forEach(function(sortedKey){
+            sortedKeys.forEach(function (sortedKey) {
                 sorted[sortedKey] = vertices[sortedKey];
             });
             return sorted;
@@ -98,6 +99,13 @@ define([
             return firstTuple.vertex;
         };
 
+        GroupRelation.prototype.getLastVertex = function () {
+            var sortedTuples = this.getSortedVerticesAtAnyDepth();
+            var firstTupleByVertexUid = sortedTuples[Object.keys(sortedTuples)[Object.keys(sortedTuples).length - 1]];
+            var firstTuple = firstTupleByVertexUid[Object.keys(firstTupleByVertexUid)[Object.keys(firstTupleByVertexUid).length - 1]];
+            return firstTuple.vertex;
+        };
+
         GroupRelation.prototype.getSortDate = function () {
             return new Date(0);
         };
@@ -105,7 +113,7 @@ define([
         GroupRelation.prototype.getAnyVertex = function () {
             var verticesWithUri = this.getVertices();
             var verticesWithId = verticesWithUri[Object.keys(verticesWithUri)[0]];
-            if(undefined === verticesWithId){
+            if (undefined === verticesWithId) {
                 return this.getChildGroupRelations()[0].getAnyVertex();
             }
             return verticesWithId[Object.keys(verticesWithId)[0]].vertex;
@@ -130,8 +138,8 @@ define([
             };
         };
         GroupRelation.prototype.visitTuples = function (visitor) {
-            $.each(this.vertices, function(vertexUri, verticesWithSameUri){
-                $.each(verticesWithSameUri, function(vertexHtmlId, tuple){
+            $.each(this.vertices, function (vertexUri, verticesWithSameUri) {
+                $.each(verticesWithSameUri, function (vertexHtmlId, tuple) {
                     visitor(tuple);
                 });
             });
@@ -139,7 +147,7 @@ define([
         GroupRelation.prototype.removeTuple = function (tuple) {
             delete this.vertices[tuple.vertex.getUri()];
         };
-        GroupRelation.prototype.isTrulyAGroupRelation = function(){
+        GroupRelation.prototype.isTrulyAGroupRelation = function () {
             return this.hasMultipleVertices() || this.hasGroupRelationsChild();
         };
         GroupRelation.prototype.hasMultipleVertices = function () {
@@ -150,24 +158,36 @@ define([
         };
         GroupRelation.prototype.getNumberOfVerticesAtAnyDepth = function () {
             var numberOfVertices = this.getNumberOfVertices();
-            this.getChildGroupRelations().forEach(function(childGroupRelation){
+            this.getChildGroupRelations().forEach(function (childGroupRelation) {
                 numberOfVertices += childGroupRelation.getNumberOfVerticesAtAnyDepth();
             });
             return numberOfVertices;
         };
 
         GroupRelation.prototype.getVerticesAtAnyDepth = function () {
-
             var vertices = $.extend(true, {}, this.vertices);
-            this.getChildGroupRelations().forEach(function(childGroupRelation){
+            this.getChildGroupRelations().forEach(function (childGroupRelation) {
                 $.extend(true, vertices, childGroupRelation.getVerticesAtAnyDepth());
+            });
+            return vertices;
+        };
+
+        GroupRelation.prototype.getSortedVerticesArrayAtAnyDepth = function () {
+            var groupRelationVertices = this.getVerticesAtAnyDepth();
+            var vertices = [];
+            Object.keys(groupRelationVertices).forEach(function (vertexUri) {
+                Object.keys(groupRelationVertices[vertexUri]).forEach(function(vertedId){
+                    vertices.push(
+                        groupRelationVertices[vertexUri][vertedId].vertex
+                    );
+                });
             });
             return vertices;
         };
 
         GroupRelation.prototype.getIdentifiersAtAnyDepth = function () {
             var identifiers = [].concat(this.identifiers);
-            this.getChildGroupRelations().forEach(function(childGroupRelation){
+            this.getChildGroupRelations().forEach(function (childGroupRelation) {
                 identifiers = identifiers.concat(childGroupRelation.getIdentifiersAtAnyDepth());
             });
             return identifiers;
@@ -213,12 +233,12 @@ define([
             var doWithTuplesAtThisDepth;
             if (this._hasOneOfTheIdentifiers(groupRelation.getIdentifiers())) {
                 doWithTuplesAtThisDepth = this.addTuple;
-            }else if(groupRelation.isTrulyAGroupRelation() && this._doesOneOfTheChildHasIdentifiers(groupRelation.getIdentifiers())){
+            } else if (groupRelation.isTrulyAGroupRelation() && this._doesOneOfTheChildHasIdentifiers(groupRelation.getIdentifiers())) {
                 doWithTuplesAtThisDepth = this.removeTuple.bind(this);
                 this.addChildGroupRelation(groupRelation);
             }
-            if(doWithTuplesAtThisDepth){
-                groupRelation.visitTuples(function(tuple) {
+            if (doWithTuplesAtThisDepth) {
+                groupRelation.visitTuples(function (tuple) {
                     doWithTuplesAtThisDepth(tuple);
                 }.bind(this));
                 hasIntegrated = true;
@@ -246,9 +266,9 @@ define([
 
         GroupRelation.prototype._doesOneOfTheChildHasIdentifiers = function (identifiers) {
             var has = false;
-            this.visitTuples(function(tuple){
+            this.visitTuples(function (tuple) {
                 var edge = tuple.edge;
-                if(edge.hasAllIdentifiers(identifiers)){
+                if (edge.hasAllIdentifiers(identifiers)) {
                     has = true;
                 }
             });
@@ -259,12 +279,12 @@ define([
         GroupRelation.prototype._containsAllTuplesOfGroupRelation = function (groupRelation) {
             var containsAll = true;
             var presentAtGreaterDepth = false;
-            this.getChildGroupRelations().forEach(function(childGroupRelation){
-                if(childGroupRelation._containsAllTuplesOfGroupRelation(groupRelation)){
+            this.getChildGroupRelations().forEach(function (childGroupRelation) {
+                if (childGroupRelation._containsAllTuplesOfGroupRelation(groupRelation)) {
                     presentAtGreaterDepth = true;
                 }
             });
-            if(!presentAtGreaterDepth){
+            if (!presentAtGreaterDepth) {
                 $.each(groupRelation.getVertices(), function (vertexKey) {
                     if (this.vertices[vertexKey] === undefined) {
                         containsAll = false;

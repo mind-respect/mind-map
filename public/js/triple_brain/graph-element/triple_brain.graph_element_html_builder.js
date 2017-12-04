@@ -112,9 +112,6 @@ define([
             var edge = BubbleFactory.fromHtml(
                 $this.find(".bubble:" + firstOrLast)
             );
-            if(edge.isGroupRelation()){
-                return;
-            }
             if (edge.isVertex()) {
                 edge = edge.getParentBubble();
             }
@@ -138,9 +135,6 @@ define([
             var bubble = BubbleFactory.fromHtml(
                 $(this).find(".bubble:first")
             );
-            if(bubble.isGroupRelation()){
-                return;
-            }
             if (bubble.isVertex()) {
                 bubble = bubble.getParentBubble();
             }

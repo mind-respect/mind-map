@@ -58,6 +58,9 @@ define([
             EdgeUiBuilderCommon.moveInLabelButtonsContainerIfIsToTheLeft(
                 ui
             );
+            GraphElementHtmlBuilder._setupChildrenContainerDragOverAndDrop(
+                ui
+            );
             ui.refreshImages();
             ui.resetOtherInstances();
             ui.reviewInLabelButtonsVisibility();

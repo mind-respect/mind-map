@@ -80,7 +80,7 @@ define([
                 b1Fork.getModel().getLabel()
             ).toBe("b1");
         });
-        describe("collapseCanDo", function(){
+        describe("collapseCanDo", function () {
             it("does not show collapse button to leaves", function () {
                 var scenario = new Scenarios.creationDateScenario();
                 var b1 = scenario.getBubble1InTree();
@@ -163,7 +163,7 @@ define([
                 var otherBubble = scenario.getOtherRelationInTree().getTopMostChildBubble();
                 var groupRelation = scenario.getPossessionAsGroupRelationInTree();
                 groupRelation.expand();
-                otherBubble.moveAbove(
+                otherBubble.getController().moveAbove(
                     groupRelation
                 );
                 var grandParent = otherBubble.getParentBubble().getParentBubble();
@@ -172,6 +172,30 @@ define([
                         scenario.getCenterVertexInTree()
                     )
                 ).toBeTruthy();
+            });
+            it("can move a group relation above a vertex", function () {
+                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+                var otherRelation = scenario.getOtherRelationInTree();
+                var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+                groupRelation.expand();
+                otherRelation.getController().moveAbove(
+                    groupRelation
+                );
+                expect(
+                    groupRelation.getBubbleAbove().text()
+                ).toBe("other relation 2");
+                expect(
+                    groupRelation.getModel().getFirstVertex().getSortDate() > otherRelation.getTopMostChildBubble().getModel().getSortDate()
+                ).toBeTruthy();
+                groupRelation.getController().moveAbove(
+                    otherRelation
+                );
+                expect(
+                    groupRelation.getBubbleAbove().text()
+                ).toBe("Possession");
+                expect(
+                    groupRelation.getModel().getFirstVertex().getSortDate() > otherRelation.getTopMostChildBubble().getModel().getSortDate()
+                ).toBeFalsy();
             });
             it("prevents from moving above self", function () {
                 var scenario = new Scenarios.threeBubblesGraph();
@@ -263,6 +287,50 @@ define([
                 expect(b72.getBubbleAbove().isSameBubble(
                     b73
                 )).toBeTruthy();
+            });
+            it("can move a group relation under another vertex", function () {
+                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+                var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+                groupRelation.expand();
+                var otherVertex = scenario.getOtherRelationInTree().getTopMostChildBubble();
+                var deepVertex;
+                otherVertex.getController().addChild().then(function(tripleUi){
+                    deepVertex = tripleUi.destinationVertex();
+                });
+                expect(
+                    deepVertex.getBubbleUnder().text()
+                ).toBe("");
+                groupRelation.getController().moveUnder(
+                    deepVertex
+                );
+                expect(
+                    deepVertex.getBubbleUnder().text()
+                ).toBe("Possession");
+            });
+            it("preserves the order of vertices under a group relation when moving under another bubble", function () {
+                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+                var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+                groupRelation.expand();
+                var possession3GroupRelation = groupRelation.getTopMostChildBubble();
+                expect(
+                    possession3GroupRelation.isGroupRelation()
+                ).toBeTruthy();
+                var otherVertex = scenario.getOtherRelationInTree().getTopMostChildBubble();
+                var deepVertex;
+                otherVertex.getController().addChild().then(function(tripleUi){
+                    deepVertex = tripleUi.destinationVertex();
+                });
+                var book3 = possession3GroupRelation.getTopMostChildBubble().getTopMostChildBubble();
+                var book3Copy = book3.getBubbleUnder();
+                expect(
+                    book3.getModel().getSortDate() < book3Copy.getModel().getSortDate()
+                ).toBeTruthy();
+                possession3GroupRelation.getController().moveUnder(
+                    deepVertex
+                );
+                expect(
+                    book3.getModel().getSortDate() < book3Copy.getModel().getSortDate()
+                ).toBeTruthy();
             });
         });
 
