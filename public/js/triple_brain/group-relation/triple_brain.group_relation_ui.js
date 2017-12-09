@@ -122,7 +122,7 @@ define([
     };
 
     api.GroupRelationUi.prototype.getTagNumberOfReferences = function(identifier){
-        return identifier.getNbReferences() - this.getModel().getNumberOfVertices();
+        return identifier.getNbReferences() - this.getModel().getNumberOfVerticesAtAnyDepth();
     };
 
     api.GroupRelationUi.prototype.reviewEditButtonDisplay = function () {};
