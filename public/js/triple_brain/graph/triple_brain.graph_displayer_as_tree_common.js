@@ -53,7 +53,6 @@ define([
                     return;
                 }
                 $.each(sortIdentifiersByNumberOfRelationsDesc(sourceVertex.childrenGroupedByIdentifiers), function (identifierKey, tuplesHavingSameIdentifier) {
-
                     var groupRelation = GroupRelation.forTuplesAndIdentifier(
                         tuplesHavingSameIdentifier,
                         this.allIdentifiers[identifierKey]
@@ -145,7 +144,9 @@ define([
             var edgeIdentifications = edge.getIdentifiersIncludingSelf();
             var identifiers = sourceVertex.childrenGroupedByIdentifiers;
             edgeIdentifications.forEach(function (identifier) {
-                this.allIdentifiers[identifier.getExternalResourceUri()] = identifier;
+                if(!this.allIdentifiers[identifier.getExternalResourceUri()]){
+                    this.allIdentifiers[identifier.getExternalResourceUri()] = identifier;
+                }
                 if (undefined === identifiers[identifier.getExternalResourceUri()]) {
                     identifiers[identifier.getExternalResourceUri()] = [];
                 }

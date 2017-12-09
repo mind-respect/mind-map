@@ -87,7 +87,7 @@ define([
             });
             GraphElementMainMenu.defineTooltip(
                 clonedButton,{
-                    trigger:'focus'
+                    trigger:'hover'
                 }
             );
         });

@@ -228,6 +228,11 @@ li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-bu
     width:auto;
     display: inline-block !important;
     background-color: white;
+    .list-group-item>.badge {
+      padding: 3px 8px;
+      font-size:13px;
+      margin-left:5px;
+    }
     &.top{
       .arrow{
         &:after{

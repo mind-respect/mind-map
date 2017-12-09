@@ -55,17 +55,17 @@ define([
         };
         api.EdgeUi.prototype.getDestinationVertex = function () {
             return GraphDisplayer.getVertexSelector().withId(
-                    this.html.data("destination_vertex_id")
-                ) || GraphDisplayer.getMetaUiSelector().withId(
-                    this.html.data("destination_vertex_id")
-                );
+                this.html.data("destination_vertex_id")
+            ) || GraphDisplayer.getMetaUiSelector().withId(
+                this.html.data("destination_vertex_id")
+            );
         };
         api.EdgeUi.prototype.getSourceVertex = function () {
             return GraphDisplayer.getVertexSelector().withId(
                 this.html.data("source_vertex_id")
             ) || GraphDisplayer.getMetaUiSelector().withId(
-                    this.html.data("source_vertex_id")
-                );
+                this.html.data("source_vertex_id")
+            );
         };
         api.EdgeUi.prototype.inverseAbstract = function () {
             var sourceVertexId = this.html.data("source_vertex_id");
@@ -122,7 +122,7 @@ define([
         };
 
         api.EdgeUi.prototype.setAsSameAsGroupRelation = function () {
-            if(MindMapInfo.isViewOnly()){
+            if (MindMapInfo.isViewOnly()) {
                 this.hideLabel();
             }
             return this.getHtml().addClass(
@@ -149,16 +149,29 @@ define([
             return this.html.find('.label-container');
         };
 
-        api.EdgeUi.prototype.hideLabel = function(){
+        api.EdgeUi.prototype.hideLabel = function () {
             this.getHtml().closest(".vertex-tree-container").addClass(
                 "no-relation-label"
             );
         };
 
+        api.EdgeUi.prototype.getTagNumberOfReferences = function (tag) {
+            var parentBubble = this.getParentBubble();
+            if (parentBubble.isGroupRelation()) {
+                if (parentBubble.getModel().hasIdentification(tag)) {
+                    return parentBubble.getTagNumberOfReferences(tag);
+                }
+            }
+            return GraphElementUi.GraphElementUi.prototype.getTagNumberOfReferences.call(
+                this,
+                tag
+            );
+        };
+
         EventBus.subscribe(
             '/event/ui/graph/vertex/privacy/updated',
-            function(event, graphElement){
-                graphElement.applyToConnectedEdges(function(edge){
+            function (event, graphElement) {
+                graphElement.applyToConnectedEdges(function (edge) {
                     edge.reviewInLabelButtonsVisibility();
                 });
             }

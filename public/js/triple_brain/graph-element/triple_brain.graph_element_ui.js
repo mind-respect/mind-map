@@ -755,12 +755,18 @@ define([
         return this.getModel().getComment();
     };
 
+    api.GraphElementUi.prototype.getTagNumberOfReferences = function(identifier){
+        return identifier.getNbReferences() - 1;
+    };
+
     api.GraphElementUi.prototype.identifyWhenManyInLabelButtonContent = api.GraphElementUi.prototype.identifyInLabelButtonContent = function () {
         if (!this.getModel().hasIdentifications()) {
             return "";
         }
         var list = $("<ul  class='list-group'>");
-        this.getModel().getIdentifiers().forEach(function (identifier) {
+        this.getModel().getIdentifiers().sort(function(a, b){
+            return b.getNbReferences() - a.getNbReferences();
+        }).forEach(function (identifier) {
             list.append(
                 $("<a class='list-group-item'>").attr(
                     "href",
@@ -768,14 +774,14 @@ define([
                         identifier.getUri()
                     )
                 ).append(
-                    $("<span class='badge'>").text(identifier.getNbReferences())
+                    $("<span class='badge primary'>").text("+ " + this.getTagNumberOfReferences(identifier))
                 ).append(
                     $("<span>").text(identifier.getLabel())
                 ).mousedown(function () {
                     window.location = $(this).attr("href");
                 })
             );
-        });
+        }.bind(this));
         return list;
     };
 

@@ -677,6 +677,7 @@ li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-bu
 position relative because it gets narrow and misplaced for
 to the right vertices. */ position: relative; }
 .popover.like-tooltip { width: auto; display: inline-block !important; background-color: white; }
+.popover.like-tooltip .list-group-item > .badge { padding: 3px 8px; font-size: 13px; margin-left: 5px; }
 .popover.like-tooltip.top .arrow:after { border-top-color: white; }
 .popover.like-tooltip.right .arrow:after { border-right-color: white; }
 .popover.like-tooltip h3 { display: inline-block; background-color: white; width: auto; border-color: white; color: black; }

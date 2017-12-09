@@ -174,8 +174,28 @@ define([
     };
 
     GraphElementController.prototype.identifyCanShowInLabel = function () {
+        var canShow = this.getModel().getIdentifiers().length === 1;
+        if (canShow) {
+            var tag = this.getModel().getIdentifiers()[0];
+            canShow = this.getUi().getTagNumberOfReferences(
+                tag
+            ) > 1;
+        }
         return $.Deferred().resolve(
-            this.getModel().getIdentifiers().length === 1
+            canShow
+        );
+    };
+
+    GraphElementController.prototype.identifyWhenManyCanShowInLabel = function () {
+        if (this.getModel().getIdentifiers().length < 2) {
+            return $.Deferred().resolve(
+                false
+            );
+        }
+        return $.Deferred().resolve(
+            this.getModel().getIdentifiers().some(function (tag) {
+                return this.getUi().getTagNumberOfReferences(tag) > 1;
+            }.bind(this))
         );
     };
 
@@ -187,12 +207,6 @@ define([
         IdentificationMenu.ofGraphElement(
             this.graphElements
         ).create();
-    };
-
-    GraphElementController.prototype.identifyWhenManyCanShowInLabel = function () {
-        return $.Deferred().resolve(
-            this.getModel().getIdentifiers().length > 1
-        );
     };
 
     GraphElementController.prototype.acceptCanDo = function () {
@@ -418,17 +432,17 @@ define([
         var movedVertex;
         var promises = [];
         var otherVertex;
-        if(otherEdge.isGroupRelation()){
+        if (otherEdge.isGroupRelation()) {
             otherVertex = isAbove ? otherEdge.getModel().getFirstVertex() : otherEdge.getModel().getLastVertex();
-        }else{
+        } else {
             otherVertex = otherEdge.getTopMostChildBubble().getModel();
         }
         var newSortDate = new Date(
-            otherVertex.getSortDate().getTime() + (isAbove ? - 100 : 100)
+            otherVertex.getSortDate().getTime() + (isAbove ? -100 : 100)
         );
         if (movedEdge.isGroupRelation()) {
             var index = 1;
-            movedEdge.getModel().getSortedVerticesArrayAtAnyDepth().forEach(function(vertex){
+            movedEdge.getModel().getSortedVerticesArrayAtAnyDepth().forEach(function (vertex) {
                 vertex.setSortDate(new Date(
                     newSortDate.getTime() - index
                 ));

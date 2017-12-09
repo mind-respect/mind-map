@@ -121,6 +121,10 @@ define([
         return greatest;
     };
 
+    api.GroupRelationUi.prototype.getTagNumberOfReferences = function(identifier){
+        return identifier.getNbReferences() - this.getModel().getNumberOfVertices();
+    };
+
     api.GroupRelationUi.prototype.reviewEditButtonDisplay = function () {};
 
     api.GroupRelationUi.prototype.getModel = api.GroupRelationUi.prototype.getGroupRelation;
