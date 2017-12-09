@@ -13,7 +13,6 @@ define([
         beforeEach(function () {
             Mock.applyDefaultMocks();
         });
-
         it("can identify", function () {
             var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
             var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
@@ -21,41 +20,55 @@ define([
                 possessionInTree.getController().identifyCanDo()
             ).toBeTruthy();
         });
-        it("gives all it's identifiers to the new relation when adding a child", function () {
-            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
-            var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
-            possessionInTree.getModel().addIdentification(
-                TestUtils.dummyIdentifier()
-            );
-            var testWasMade = false;
-            possessionInTree.getController().addChild().then(function (triple) {
+        describe("addChild", function(){
+            it("gives all it's identifiers to the new relation when adding a child", function () {
+                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+                var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
+                possessionInTree.getModel().addIdentification(
+                    TestUtils.dummyIdentifier()
+                );
+                var testWasMade = false;
+                possessionInTree.getController().addChild().then(function (triple) {
+                    expect(
+                        triple.edge().getModel().getIdentifiers().length
+                    ).toBe(2);
+                    testWasMade = true;
+                });
                 expect(
-                    triple.edge().getModel().getIdentifiers().length
-                ).toBe(2);
-                testWasMade = true;
-            });
-            expect(
-                testWasMade
-            ).toBeTruthy();
-        });
-
-        it("makes new child public if parent vertex is public", function () {
-            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
-            var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
-            possessionInTree.getParentVertex().getModel().makePublic();
-            possessionInTree.getModel().addIdentification(
-                TestUtils.dummyIdentifier()
-            );
-            var testWasMade = false;
-            possessionInTree.getController().addChild().then(function (triple) {
-                expect(
-                    triple.destinationVertex().getModel().isPublic()
+                    testWasMade
                 ).toBeTruthy();
-                testWasMade = true;
             });
-            expect(
-                testWasMade
-            ).toBeTruthy();
+            it("makes new child public if parent vertex is public", function () {
+                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+                var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
+                possessionInTree.getParentVertex().getModel().makePublic();
+                possessionInTree.getModel().addIdentification(
+                    TestUtils.dummyIdentifier()
+                );
+                var testWasMade = false;
+                possessionInTree.getController().addChild().then(function (triple) {
+                    expect(
+                        triple.destinationVertex().getModel().isPublic()
+                    ).toBeTruthy();
+                    testWasMade = true;
+                });
+                expect(
+                    testWasMade
+                ).toBeTruthy();
+            });
+            it("updates child in model", function () {
+                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+                var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
+                var nbVerticesBefore = Object.keys(
+                    possessionInTree.getModel().getVertices()
+                ).length;
+                possessionInTree.getController().addChild();
+                expect(
+                    Object.keys(
+                        possessionInTree.getModel().getVertices()
+                    ).length
+                ).toBe(nbVerticesBefore + 1);
+            });
         });
 
         describe("expand", function () {

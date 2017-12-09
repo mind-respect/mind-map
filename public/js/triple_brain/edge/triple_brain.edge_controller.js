@@ -78,6 +78,10 @@ define([
     };
 
     EdgeController.prototype._convertToGroupRelation = function () {
+        var tuple = {
+            edge: this.getModel(),
+            vertex: this.getModel().getDestinationVertex()
+        };
         var parentBubble = this.getUi().getParentBubble();
         if (parentBubble.isGroupRelation()) {
             if (parentBubble.getModel().hasIdentification(this.getModel().buildSelfIdentifier())) {
@@ -95,6 +99,7 @@ define([
             parentBubble,
             this.getUi().isToTheLeft()
         );
+        newGroupRelation.getModel().addTuple(tuple);
         this.getUi().convertToGroupRelation(newGroupRelation);
         return newGroupRelation;
     };

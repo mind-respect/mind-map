@@ -332,6 +332,33 @@ define([
                     book3.getModel().getSortDate() < book3Copy.getModel().getSortDate()
                 ).toBeTruthy();
             });
+            it("can move a vertex above a new group relation", function () {
+                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+                var center = scenario.getCenterVertexInTree();
+                var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+                groupRelation.expand();
+                var relation = scenario.getOtherRelationInTree();
+                var otherVertex = relation.getTopMostChildBubble();
+                relation.getController().addChild();
+                var newGroupRelation = TestUtils.getChildWithLabel(
+                    center,
+                    "other relation 2"
+                );
+                expect(
+                    newGroupRelation.isGroupRelation()
+                ).toBeTruthy();
+                var newVertex;
+                center.getController().addChild().then(function(tripleUi){
+                    newVertex = tripleUi.destinationVertex();
+                });
+                expect(
+                    newVertex.getModel().getSortDate() > otherVertex.getModel().getSortDate()
+                ).toBeTruthy();
+                newVertex.getController().moveAbove(newGroupRelation);
+                expect(
+                    newVertex.getModel().getSortDate() < otherVertex.getModel().getSortDate()
+                ).toBeTruthy();
+            });
         });
 
         it("adds the group relation identifier to a vertex when moving around another vertex that is under a group relation", function () {

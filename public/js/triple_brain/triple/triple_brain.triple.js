@@ -14,6 +14,7 @@ define([], function () {
             destination
         );
     };
+
     function Triple(edge, source, destination) {
         this.source = source;
         this.destination = destination;

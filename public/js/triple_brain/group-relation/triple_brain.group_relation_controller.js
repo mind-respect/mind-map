@@ -39,17 +39,19 @@ define([
 
         GroupRelationController.prototype.addChild = function () {
             var deferred = $.Deferred();
-            var self = this;
             var parentVertex = this.getUi().getParentVertex();
             VertexService.addRelationAndVertexToVertex(
                 parentVertex,
                 this.getUi(),
                 function (triple) {
-                    if (self.getUi().hasVisibleHiddenRelationsContainer()) {
-                        self.expand();
+                    if (this.getUi().hasVisibleHiddenRelationsContainer()) {
+                        this.expand();
                     }
-                    $.each(self.getModel().getIdentifiers(), function(){
-                        var identifier = this;
+                    this.getModel().addTuple({
+                        edge: triple.edge().getModel(),
+                        vertex: triple.destinationVertex().getModel()
+                    });
+                    this.getModel().getIdentifiers().forEach(function (identifier) {
                         identifier.makeSameAs();
                         triple.edge().getController().addIdentification(
                             identifier
@@ -57,23 +59,23 @@ define([
                     });
                     EdgeService.updateLabel(
                         triple.edge(),
-                        self.getModel().getIdentification().getLabel(),
+                        this.getModel().getIdentification().getLabel(),
                         function (edge) {
-                            edge.setText(self.getModel().getIdentification().getLabel());
+                            edge.setText(this.getModel().getIdentification().getLabel());
                             triple.edge().reviewEditButtonDisplay();
-                        }
+                        }.bind(this)
                     );
                     SelectionHandler.setToSingleVertex(
                         triple.destinationVertex()
                     );
-                    if(parentVertex.getModel().isPublic()){
-                        triple.destinationVertex().getController().makePublic().then(function(){
+                    if (parentVertex.getModel().isPublic()) {
+                        triple.destinationVertex().getController().makePublic().then(function () {
                             deferred.resolve(triple);
                         });
-                    }else{
+                    } else {
                         deferred.resolve(triple);
                     }
-                }
+                }.bind(this)
             );
             return deferred.promise();
         };
@@ -81,14 +83,14 @@ define([
         GroupRelationController.prototype.becomeParent = function (graphElementUi) {
             var uiChild;
             var promises = [];
-            if(graphElementUi.isGroupRelation()){
+            if (graphElementUi.isGroupRelation()) {
                 graphElementUi.expand();
                 graphElementUi.visitClosestChildOfType(
                     GraphElementType.Relation,
                     moveEdge.bind(this)
                 );
                 uiChild = graphElementUi;
-            }else{
+            } else {
                 uiChild = graphElementUi.isVertex() ? graphElementUi.getParentBubble() : graphElementUi;
                 moveEdge.bind(this)(
                     uiChild
@@ -96,7 +98,8 @@ define([
             }
             uiChild.moveToParent(this.getUi());
             return $.when.apply($, promises);
-            function moveEdge(movedEdge){
+
+            function moveEdge(movedEdge) {
                 var parentGroupRelation = this.getUi();
                 promises.push(
                     movedEdge.getController().changeEndVertex(

@@ -369,6 +369,20 @@ define([
                     newGroupRelation.getModel().getIdentifiers().length
                 ).toBe(1);
             });
+            it("includes previous vertex in group relation model vertices", function () {
+                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+                var center = scenario.getCenterVertexInTree();
+                scenario.getOtherRelationInTree().getController().addChild();
+                var newGroupRelation = TestUtils.getChildWithLabel(
+                    center,
+                    "other relation 2"
+                );
+                expect(
+                    Object.keys(
+                        newGroupRelation.getModel().getVertices()
+                    ).length
+                ).toBe(2);
+            });
         });
         describe("becomeParent", function(){
             it("adds it's identifiers to the moved edge when becoming a parent", function () {
