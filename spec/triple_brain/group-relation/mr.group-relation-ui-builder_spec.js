@@ -393,14 +393,6 @@ define([
                 possessionInTree.getModel().hasIdentifications()
             ).toBeTruthy();
         });
-        it("shows identify button in label", function () {
-            loadFixtures("graph-element-menu.html");
-            var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
-            var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
-            expect(
-                possessionInTree.getIdentifyButtonInLabel()
-            ).not.toHaveClass("hidden");
-        });
         it("can handle the case where it's a meta relation that is removed", function(){
             var eventBubble = new Scenarios.aroundEventIdentifier().getEventBubbleInTree();
             var metaRelation = eventBubble.getTopMostChildBubble();
