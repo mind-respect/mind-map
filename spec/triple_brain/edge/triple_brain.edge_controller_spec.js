@@ -313,33 +313,6 @@ define([
                 newGroupRelation.isSetAsSameAsGroupRelation()
             ).toBeFalsy();
         });
-        it("adds a child to the parent group relation when adding a child to a relation where the identifier of the parent group relation is self", function () {
-            var scenario = new Scenarios.withRelationsAsIdentifierGraph();
-            var centerBubble = scenario.getCenterInTree();
-            var groupRelation = TestUtils.getChildWithLabel(
-                centerBubble,
-                "original some relation"
-            );
-            expect(
-                groupRelation.isGroupRelation()
-            ).toBeTruthy();
-            groupRelation.expand();
-            var groupRelationNumberOfChild = groupRelation.getNumberOfChild();
-            var originalRelation = TestUtils.getChildWithLabel(
-                groupRelation,
-                "original some relation"
-            );
-            expect(
-                originalRelation.isRelation()
-            ).toBeTruthy();
-            expect(
-                groupRelation.getModel().getIdentification().getExternalResourceUri()
-            ).toBe(originalRelation.getUri());
-            originalRelation.getController().addChild();
-            expect(
-                groupRelation.getNumberOfChild()
-            ).toBe(groupRelationNumberOfChild + 1);
-        });
         describe("addChild", function(){
             it("excludes self identifier when adding a child and already having identifiers", function(){
                 var threeBubblesScenario = new Scenarios.threeBubblesGraph();
@@ -382,6 +355,42 @@ define([
                         newGroupRelation.getModel().getVertices()
                     ).length
                 ).toBe(2);
+            });
+            it("can add child to a relation under a group relation where the external uri is this relation's uri", function () {
+                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+                var center = scenario.getCenterVertexInTree();
+                center.getController().addChild().then(function(tripleUi){
+                    var newEdge = tripleUi.edge();
+                    tripleUi.destinationVertex().getController().setLabel("top vertex");
+                    newEdge.getController().setLabel("parent group relation");
+                    newEdge.getController().addChild();
+                });
+                var parentGroupRelation = TestUtils.getChildWithLabel(
+                    center,
+                    "parent group relation"
+                );
+                var topMostEdge = parentGroupRelation.getTopMostChildBubble();
+                topMostEdge.getController().setLabel("top most edge");
+                expect(
+                    topMostEdge.getUri()
+                ).toBe(parentGroupRelation.getModel().getIdentification().getExternalResourceUri());
+                expect(
+                    parentGroupRelation.getNumberOfChild()
+                ).toBe(3);
+                topMostEdge.getController().addChild();
+                expect(
+                    parentGroupRelation.getNumberOfChild()
+                ).toBe(3);
+                topMostEdge = TestUtils.getChildWithLabel(
+                    parentGroupRelation,
+                    "top most edge"
+                );
+                expect(
+                    topMostEdge.isGroupRelation()
+                ).toBeTruthy();
+                expect(
+                    topMostEdge.getNumberOfChild()
+                ).toBe(3);
             });
         });
         describe("becomeParent", function(){

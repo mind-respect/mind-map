@@ -83,17 +83,22 @@ define([
             vertex: this.getModel().getDestinationVertex()
         };
         var parentBubble = this.getUi().getParentBubble();
-        if (parentBubble.isGroupRelation()) {
-            if (parentBubble.getModel().hasIdentification(this.getModel().buildSelfIdentifier())) {
-                return parentBubble;
+        var groupRelationIdentifiers;
+        if(parentBubble.isGroupRelation()){
+            if(parentBubble.getModel().hasIdentification(this.getModel().buildSelfIdentifier())){
+                groupRelationIdentifiers = [
+                    this.getModel().buildTwiceSelfIdentifier()
+                ];
+            }else{
+                groupRelationIdentifiers = [
+                    this.getModel().buildSelfIdentifier()
+                ];
             }
+        } else{
+            groupRelationIdentifiers = this.getModel().hasIdentifications() ?
+                this.getModel().getIdentifiers() :
+                this.getModel().getIdentifiersIncludingSelf();
         }
-        var identifiers = this.getModel().hasIdentifications() ?
-            this.getModel().getIdentifiers() :
-            this.getModel().getIdentifiersIncludingSelf();
-        var groupRelationIdentifiers = parentBubble.isGroupRelation() ?
-            this.getModel().buildSelfIdentifier() :
-            identifiers;
         var newGroupRelation = GraphDisplayer.addNewGroupRelation(
             groupRelationIdentifiers,
             parentBubble,

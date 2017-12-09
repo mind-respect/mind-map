@@ -129,6 +129,11 @@ define([
             this.identificationServerFormat.externalResourceUri
         );
     };
+
+    api.Identification.prototype.makeExternalUriATwiceReference = function () {
+        this.identificationServerFormat.externalResourceUri = this.identificationServerFormat.externalResourceUri + "/twice";
+    };
+
     api.Identification.prototype.getServerFormat = function () {
         return this.identificationServerFormat;
     };

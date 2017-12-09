@@ -192,6 +192,20 @@ define([
         return identification;
     };
 
+    api.GraphElement.prototype.buildTwiceSelfIdentifier = function () {
+        var identification = Identification.fromFriendlyResource(
+            this
+        );
+        identification.makeExternalUriATwiceReference();
+        identification.setLabel(
+            this.getLabel()
+        );
+        identification.setComment(
+            this.getComment()
+        );
+        return identification;
+    };
+
     api.GraphElement.prototype.isRelatedToIdentifier = function (identification) {
         return identification.getExternalResourceUri() === this.getUri() ||
             this.hasIdentification(identification);
