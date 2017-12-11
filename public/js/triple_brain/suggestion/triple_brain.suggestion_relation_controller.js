@@ -26,5 +26,9 @@ define([
         return false;
     };
 
+    SuggestionRelationController.prototype.addSiblingCanDo = function () {
+        return false;
+    };
+
     return api;
 });
