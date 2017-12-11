@@ -129,30 +129,57 @@
                 <!--</li>-->
                 <!--</ul>-->
                 <!--</li>-->
-                <li id="language-selector-container">
+                <li id="settings-container">
                     <a data-toggle="dropdown">
-                        <span data-i18n="top_menu.language"></span>
-                        <i class="fa fa-globe"></i>
+                        <i class="fa fa-gear"></i>
                     </a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <li>
-                            <a href="" data-lang="en" role="menuitem">
-                                English
+                    <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                        <li class="dropdown-submenu" id="language-selector-container">
+                            <a data-toggle="dropdown">
+                                <i class="fa fa-globe"></i>
+                                <span data-i18n="top_menu.language"></span>
                             </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="" data-lang="en" role="menuitem">
+                                        English
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" data-lang="fr" role="menuitem">
+                                        Français
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
-                            <a href="" data-lang="fr" role="menuitem">
-                                Français
+                            <a href="" role="menuitem" id="backgnd-color-btn">
+                                <i class="fa fa-paint-brush"></i>
+                                <span data-i18n="top_menu.color"></span>
+                            </a>
+                            <ul class="color-picker">
+                                <li class>
+                                    <input id="background-color-picker" type="color" value="#0b46ff">
+                                    <span data-i18n="top_menu.background_color"></span>
+                                </li>
+                                <li>
+                                    <input id="bubbles-color-picker" type="color" value="#F2D9AC">
+                                    <span data-i18n="top_menu.bubbles_color"></span>
+                                </li>
+                                <li>
+                                    <input id="relations-color-picker" type="color" value="#3a87ad">
+                                    <span data-i18n="top_menu.relations_color"></span>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li id="user-menu">
+                            <a href="" role="menuitem" id="disconnect-btn">
+                                <i class="fa fa-sign-out"></i>
+                                <span data-i18n="top_menu.disconnect"></span>
                             </a>
                         </li>
                     </ul>
-                </li>
-                <li class="dropdown" id="user-menu" data-i18n='[title]top_menu.disconnect'>
-                    <a href="" role="menuitem" id="disconnect-btn">
-                        <span>
-                            <i class="fa fa-sign-out"></i>
-                        </span>
-                    </a>
                 </li>
                 <li>
                     <a data-i18n='[href]top_menu.contribute_link'>
@@ -1073,6 +1100,8 @@
         <div class="col-md-1"></div>
     </div>
 </div>
+
+<!--Modals-->
 
 <div class="modal row" id="remove-centers-confirm-menu" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
