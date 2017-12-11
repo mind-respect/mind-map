@@ -173,7 +173,7 @@ define([
         };
 
         GroupRelation.prototype.getSortedVerticesArrayAtAnyDepth = function () {
-            var groupRelationVertices = this.getVerticesAtAnyDepth();
+            var groupRelationVertices = this.getSortedVerticesAtAnyDepth();
             var vertices = [];
             Object.keys(groupRelationVertices).forEach(function (vertexUri) {
                 Object.keys(groupRelationVertices[vertexUri]).forEach(function(vertedId){

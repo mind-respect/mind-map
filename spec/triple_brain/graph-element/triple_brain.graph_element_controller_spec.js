@@ -359,6 +359,28 @@ define([
                     newVertex.getModel().getSortDate() < otherVertex.getModel().getSortDate()
                 ).toBeTruthy();
             });
+            it("can move a group relation between two vertices", function () {
+                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+                var center = scenario.getCenterVertexInTree();
+                center.getController().addChild();
+                center.getController().addChild();
+                var groupRelation = scenario.getPossessionAsGroupRelationInTree();
+                var willBeBubbleAboveGroupRelation = groupRelation.getBubbleUnder();
+                var willBeBubbleUnderGroupRelation = willBeBubbleAboveGroupRelation.getBubbleUnder();
+                expect(
+                    groupRelation.getModel().getFirstVertex().getSortDate() > willBeBubbleAboveGroupRelation.getModel().getSortDate()
+                ).toBeFalsy();
+                expect(
+                    groupRelation.getModel().getLastVertex().getSortDate() < willBeBubbleUnderGroupRelation.getModel().getSortDate()
+                ).toBeTruthy();
+                groupRelation.getController().moveAbove(willBeBubbleUnderGroupRelation);
+                expect(
+                    groupRelation.getModel().getFirstVertex().getSortDate() > willBeBubbleAboveGroupRelation.getModel().getSortDate()
+                ).toBeTruthy();
+                expect(
+                    groupRelation.getModel().getLastVertex().getSortDate() < willBeBubbleUnderGroupRelation.getModel().getSortDate()
+                ).toBeTruthy();
+            });
         });
 
         it("adds the group relation identifier to a vertex when moving around another vertex that is under a group relation", function () {

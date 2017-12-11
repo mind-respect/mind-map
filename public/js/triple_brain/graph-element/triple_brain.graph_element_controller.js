@@ -432,19 +432,20 @@ define([
         var movedVertex;
         var promises = [];
         var otherVertex;
+
         if (otherEdge.isGroupRelation()) {
             otherVertex = isAbove ? otherEdge.getModel().getFirstVertex() : otherEdge.getModel().getLastVertex();
         } else {
             otherVertex = otherEdge.getTopMostChildBubble().getModel();
         }
         var newSortDate = new Date(
-            otherVertex.getSortDate().getTime() + (isAbove ? -100 : 100)
+            otherVertex.getSortDate().getTime() + (isAbove ? -200 : 200)
         );
         if (movedEdge.isGroupRelation()) {
             var index = 1;
             movedEdge.getModel().getSortedVerticesArrayAtAnyDepth().forEach(function (vertex) {
                 vertex.setSortDate(new Date(
-                    newSortDate.getTime() - index
+                    newSortDate.getTime() + index
                 ));
                 index++;
                 promises.push(
