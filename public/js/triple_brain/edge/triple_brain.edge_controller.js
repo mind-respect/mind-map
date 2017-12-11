@@ -52,10 +52,7 @@ define([
     };
 
     EdgeController.prototype.addSiblingCanDo = function () {
-        var controller = this.getUi().getTopMostChildBubble().getController();
-        if(controller.addSiblingCanDo){
-            return controller.addSiblingCanDo();
-        }
+        return this.isSingle() && this.getUi().getTopMostChildBubble().getController().addSiblingCanDo();
     };
 
     EdgeController.prototype.becomeParent = function (graphElementUi) {
