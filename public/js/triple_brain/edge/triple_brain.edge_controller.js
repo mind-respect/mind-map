@@ -9,8 +9,9 @@ define([
     "triple_brain.identification",
     "triple_brain.graph_displayer",
     "mr.bubble_delete_menu",
-    "triple_brain.graph_element_type"
-], function ($, GraphElementController, EdgeService, Identification, GraphDisplayer, BubbleDeleteMenu, GraphElementType) {
+    "triple_brain.graph_element_type",
+    "triple_brain.selection_handler"
+], function ($, GraphElementController, EdgeService, Identification, GraphDisplayer, BubbleDeleteMenu, GraphElementType, SelectionHandler) {
     "use strict";
     var api = {};
     api.RelationController = EdgeController;
@@ -43,7 +44,11 @@ define([
     };
 
     EdgeController.prototype.addSibling = function () {
-        return this.getUi().getTopMostChildBubble().getController().addSibling();
+        return this.getUi().getTopMostChildBubble().getController().addSibling().then(function(triple){
+            SelectionHandler.setToSingleGraphElement(
+                triple.edge()
+            );
+        });
     };
 
     EdgeController.prototype.addSiblingCanDo = function () {

@@ -180,6 +180,7 @@ define([
                 triple.destinationVertex()
             );
             triple.destinationVertex().sideCenterOnScreenWithAnimation();
+            return triple;
         }.bind(this));
     };
 
