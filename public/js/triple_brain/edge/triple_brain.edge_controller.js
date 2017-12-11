@@ -42,6 +42,14 @@ define([
         return deferred.promise();
     };
 
+    EdgeController.prototype.addSibling = function () {
+        return this.getUi().getTopMostChildBubble().getController().addSibling();
+    };
+
+    EdgeController.prototype.addSiblingCanDo = function () {
+        return this.getUi().getTopMostChildBubble().getController().addSiblingCanDo();
+    };
+
     EdgeController.prototype.becomeParent = function (graphElementUi) {
         var promises = [];
         var newGroupRelation = this._convertToGroupRelation();
