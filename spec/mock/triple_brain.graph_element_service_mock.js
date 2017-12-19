@@ -14,6 +14,7 @@ define([
         spies["addIdentification"] = api.addIdentification();
         spies["removeIdentifier"] = api.removeIdentifier();
         spies["changeSortDate"] = api.changeSortDate();
+        spies["changeChildrenIndex"] = api.changeChildrenIndex();
         return spies;
     };
     api.addIdentification = function () {
@@ -35,6 +36,14 @@ define([
         spyOn(
             GraphElementService,
             "changeSortDate"
+        ).and.callFake(function () {
+            return $.Deferred().resolve();
+        });
+    };
+    api.changeChildrenIndex = function(){
+        spyOn(
+            GraphElementService,
+            "changeChildrenIndex"
         ).and.callFake(function () {
             return $.Deferred().resolve();
         });

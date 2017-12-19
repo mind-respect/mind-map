@@ -409,6 +409,18 @@ define([
             }
         };
 
+        api.VertexUi.prototype.buildChildrenIndex = function(){
+            var childrenIndex = {};
+            var index = 0;
+            this.visitClosestChildVertices(function(childVertex){
+                childrenIndex[childVertex.getUri()] = {
+                    index: index
+                };
+                index++;
+            });
+            return childrenIndex;
+        };
+
         api.buildCommonConstructors(api);
         return api;
     }

@@ -173,30 +173,7 @@ define([
                     )
                 ).toBeTruthy();
             });
-            it("can move a group relation above a vertex", function () {
-                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
-                var otherRelation = scenario.getOtherRelationInTree();
-                var groupRelation = scenario.getPossessionAsGroupRelationInTree();
-                groupRelation.expand();
-                otherRelation.getController().moveAbove(
-                    groupRelation
-                );
-                expect(
-                    groupRelation.getBubbleAbove().text()
-                ).toBe("other relation 2");
-                expect(
-                    groupRelation.getModel().getFirstVertex().getSortDate() > otherRelation.getTopMostChildBubble().getModel().getSortDate()
-                ).toBeTruthy();
-                groupRelation.getController().moveAbove(
-                    otherRelation
-                );
-                expect(
-                    groupRelation.getBubbleAbove().text()
-                ).toBe("Possession");
-                expect(
-                    groupRelation.getModel().getFirstVertex().getSortDate() > otherRelation.getTopMostChildBubble().getModel().getSortDate()
-                ).toBeFalsy();
-            });
+
             it("prevents from moving above self", function () {
                 var scenario = new Scenarios.threeBubblesGraph();
                 var b2 = scenario.getBubble2InTree();
@@ -262,6 +239,7 @@ define([
                 var scenario = new Scenarios.creationDateScenario();
                 var b7 = scenario.getBubble7InTree();
                 scenario.expandBubble7(b7);
+                Command._reset();
                 var b72 = TestUtils.getChildWithLabel(
                     b7,
                     "r72"
@@ -306,80 +284,6 @@ define([
                 expect(
                     deepVertex.getBubbleUnder().text()
                 ).toBe("Possession");
-            });
-            it("preserves the order of vertices under a group relation when moving under another bubble", function () {
-                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
-                var groupRelation = scenario.getPossessionAsGroupRelationInTree();
-                groupRelation.expand();
-                var possession3GroupRelation = groupRelation.getTopMostChildBubble();
-                expect(
-                    possession3GroupRelation.isGroupRelation()
-                ).toBeTruthy();
-                var otherVertex = scenario.getOtherRelationInTree().getTopMostChildBubble();
-                var deepVertex;
-                otherVertex.getController().addChild().then(function(tripleUi){
-                    deepVertex = tripleUi.destinationVertex();
-                });
-                var book3 = possession3GroupRelation.getTopMostChildBubble().getTopMostChildBubble();
-                var book3Copy = book3.getBubbleUnder();
-                expect(
-                    book3.getModel().getSortDate() < book3Copy.getModel().getSortDate()
-                ).toBeTruthy();
-                possession3GroupRelation.getController().moveUnder(
-                    deepVertex
-                );
-                expect(
-                    book3.getModel().getSortDate() < book3Copy.getModel().getSortDate()
-                ).toBeTruthy();
-            });
-            it("can move a vertex above a new group relation", function () {
-                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
-                var center = scenario.getCenterVertexInTree();
-                var groupRelation = scenario.getPossessionAsGroupRelationInTree();
-                groupRelation.expand();
-                var relation = scenario.getOtherRelationInTree();
-                var otherVertex = relation.getTopMostChildBubble();
-                relation.getController().addChild();
-                var newGroupRelation = TestUtils.getChildWithLabel(
-                    center,
-                    "other relation 2"
-                );
-                expect(
-                    newGroupRelation.isGroupRelation()
-                ).toBeTruthy();
-                var newVertex;
-                center.getController().addChild().then(function(tripleUi){
-                    newVertex = tripleUi.destinationVertex();
-                });
-                expect(
-                    newVertex.getModel().getSortDate() > otherVertex.getModel().getSortDate()
-                ).toBeTruthy();
-                newVertex.getController().moveAbove(newGroupRelation);
-                expect(
-                    newVertex.getModel().getSortDate() < otherVertex.getModel().getSortDate()
-                ).toBeTruthy();
-            });
-            it("can move a group relation between two vertices", function () {
-                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
-                var center = scenario.getCenterVertexInTree();
-                center.getController().addChild();
-                center.getController().addChild();
-                var groupRelation = scenario.getPossessionAsGroupRelationInTree();
-                var willBeBubbleAboveGroupRelation = groupRelation.getBubbleUnder();
-                var willBeBubbleUnderGroupRelation = willBeBubbleAboveGroupRelation.getBubbleUnder();
-                expect(
-                    groupRelation.getModel().getFirstVertex().getSortDate() > willBeBubbleAboveGroupRelation.getModel().getSortDate()
-                ).toBeFalsy();
-                expect(
-                    groupRelation.getModel().getLastVertex().getSortDate() < willBeBubbleUnderGroupRelation.getModel().getSortDate()
-                ).toBeTruthy();
-                groupRelation.getController().moveAbove(willBeBubbleUnderGroupRelation);
-                expect(
-                    groupRelation.getModel().getFirstVertex().getSortDate() > willBeBubbleAboveGroupRelation.getModel().getSortDate()
-                ).toBeTruthy();
-                expect(
-                    groupRelation.getModel().getLastVertex().getSortDate() < willBeBubbleUnderGroupRelation.getModel().getSortDate()
-                ).toBeTruthy();
             });
         });
 

@@ -150,7 +150,10 @@ define([
         );
     };
     api.GraphUiBuilder.prototype.buildGroupRelations = function (parentModel, parentUi) {
-        sortGroupRelationRootsByIsGroupRelationOrCreationDate(parentModel.groupRelationRoots).forEach(function (groupRelation) {
+        sortGroupRelationRootsByIsGroupRelationOrCreationDate(
+            parentModel.groupRelationRoots,
+            parentModel.getChildrenIndex()
+        ).forEach(function (groupRelation) {
             this.buildGroupRelationToExpandOrNot(
                 groupRelation,
                 parentUi,
@@ -179,7 +182,8 @@ define([
                 );
             }
         }.bind(this));
-        $.each(groupRelation.getSortedVertices(), function (key, verticesWithSameUri) {
+        var parentVertex = parentBubbleUi.isVertex() ? parentBubbleUi : parentBubbleUi.getParentVertex();
+        $.each(groupRelation.getSortedVertices(parentVertex.getModel().getChildrenIndex()), function (key, verticesWithSameUri) {
             $.each(verticesWithSameUri, function (vertexHtmlId, vertexAndEdge) {
                 var vertex = vertexAndEdge.vertex,
                     edge = vertexAndEdge.edge;
@@ -271,13 +275,14 @@ define([
         this.edgeUiBuilder = edgeUiBuilder;
     };
 
-    function sortGroupRelationRootsByIsGroupRelationOrCreationDate(groupRelationRoots) {
+    function sortGroupRelationRootsByIsGroupRelationOrCreationDate(groupRelationRoots, childrenIndex) {
         return groupRelationRoots.sort(function (groupRelationA, groupRelationB) {
-                var vertexA = groupRelationA.getFirstVertex();
-                var vertexB = groupRelationB.getFirstVertex();
+                var vertexA = groupRelationA.getFirstVertex(childrenIndex);
+                var vertexB = groupRelationB.getFirstVertex(childrenIndex);
                 return GraphElement.sortCompare(
                     vertexA,
-                    vertexB
+                    vertexB,
+                    childrenIndex
                 );
             }
         );
