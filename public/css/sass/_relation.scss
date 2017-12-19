@@ -46,7 +46,11 @@
     display: none;
   }
   position: relative;
+
   &.same-as-group-relation {
+    &.selected{
+      color: $selectBubbleColor;
+    }
     .label-container {
       display: none;
     }
@@ -54,6 +58,7 @@
       display: block;
     }
   }
+
   .label {
     border-radius: 0.80em;
     padding-top: 5px;
@@ -146,6 +151,12 @@
       background-color: $edgeColor;
       height: auto;
       font-size: $fontSize;
+      &:hover{
+        background-color: $hoverOverRelationColor;
+      }
+      &.selected{
+        background-color: $selectRelationColor !important;
+      }
     }
     .bubble-label {
       color:white;
@@ -190,8 +201,15 @@
   vertical-align: middle;
 }
 
+.relation.edit{
+  .label.label-info.label-and-buttons{
+    background-color: $enterEditModeRelationColor !important;
+  }
+}
+
 .relation.selected .label {
   //box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb;
+  background-color: $selectRelationColor !important;
   box-shadow: 4px 4px 4px black;
 }
 
