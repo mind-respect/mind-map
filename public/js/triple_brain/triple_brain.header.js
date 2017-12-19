@@ -307,22 +307,27 @@ define([
                     changeBackgroundColor($(this).val());
                 }
             );
-
         }
 
-        function changeBubblesColor(bubblesColor){
-            $("#drawn_graph").css('background', "radial-gradient(rgba(0, 0, 255, 0) 5%, "
-                + bubblesColor + " 100%");
+        function changeBubblesColor(bubblesColor) {
+            $("#drawn_graph").css(
+                'background',
+                "radial-gradient(rgba(0, 0, 255, 0) 5%, " + bubblesColor + " 100%"
+            );
         }
 
-        function changeRelationsColor(relationsColor){
-            $("#drawn_graph").css('background', "radial-gradient(rgba(0, 0, 255, 0) 5%, "
-                + relationsColor + " 100%");
+        function changeRelationsColor(relationsColor) {
+            $("#drawn_graph").css(
+                'background',
+                "radial-gradient(rgba(0, 0, 255, 0) 5%, " + relationsColor + " 100%"
+            );
         }
 
-        function changeBackgroundColor(backgroundColor){
-            $("#drawn_graph").css('background', "radial-gradient(rgba(0, 0, 255, 0) 5%, "
-                + backgroundColor + " 100%");
+        function changeBackgroundColor(backgroundColor) {
+            $("#drawn_graph").css(
+                'background',
+                "radial-gradient(rgba(0, 0, 255, 0) 5%, " + backgroundColor + " 100%"
+            );
         }
     }
 );

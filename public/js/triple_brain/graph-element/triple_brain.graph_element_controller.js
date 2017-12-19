@@ -426,53 +426,29 @@ define([
         } else {
             this.getUi().moveUnder(otherEdge);
         }
+
+        var promises = [
+            GraphElementService.changeChildrenIndex(
+                otherEdge.getParentVertex()
+            ),
+            GraphElementService.changeChildrenIndex(
+                previousParentVertex
+            )
+        ];
         var movedEdge = this.getUi().isVertex() ?
             this.getUi().getParentBubble() :
             this.getUi();
-        var movedVertex;
-        var promises = [];
-        var otherVertex;
-
-        if (otherEdge.isGroupRelation()) {
-            otherVertex = isAbove ? otherEdge.getModel().getFirstVertex() : otherEdge.getModel().getLastVertex();
-        } else {
-            otherVertex = otherEdge.getTopMostChildBubble().getModel();
-        }
-        var newSortDate = new Date(
-            otherVertex.getSortDate().getTime() + (isAbove ? -200 : 200)
-        );
-        if (movedEdge.isGroupRelation()) {
-            var index = 1;
-            movedEdge.getModel().getSortedVerticesArrayAtAnyDepth().forEach(function (vertex) {
-                vertex.setSortDate(new Date(
-                    newSortDate.getTime() + index
-                ));
-                index++;
-                promises.push(
-                    changeSortDate(vertex)
-                );
-            });
-        } else {
-            movedVertex = movedEdge.getTopMostChildBubble().getModel();
-            movedVertex.setSortDate(
-                newSortDate
-            );
-            promises.push(
-                changeSortDate(movedVertex)
-            );
-        }
         var parentBubble = otherEdge.getParentBubble();
-        var addIdentificationPromise = $.Deferred().resolve();
         if (parentBubble.isGroupRelation()) {
             var identification = parentBubble.getGroupRelation().getIdentification();
-            addIdentificationPromise = movedEdge.getController().addIdentification(
-                identification
+            promises.push(
+                movedEdge.getController().addIdentification(
+                    identification
+                )
             );
         }
+
         if (previousParentVertex.getUri() !== otherEdge.getParentVertex().getUri()) {
-            promises.push(
-                addIdentificationPromise
-            );
             if (movedEdge.isGroupRelation()) {
                 movedEdge.expand();
                 movedEdge.visitClosestChildRelations(function (relationUi) {
@@ -491,12 +467,6 @@ define([
             }
         }
         return $.when.apply($, promises);
-
-        function changeSortDate(vertex) {
-            return GraphElementService.changeSortDate(
-                vertex
-            );
-        }
     };
 
     GraphElementController.prototype.becomeExParent = function () {

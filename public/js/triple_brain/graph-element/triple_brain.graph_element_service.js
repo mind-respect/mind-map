@@ -67,5 +67,13 @@ define([
             contentType: 'application/json;charset=utf-8'
         });
     };
+    api.changeChildrenIndex = function (graphElement) {
+        return $.ajax({
+            type: 'POST',
+            url: graphElement.getUri() + "/childrenIndex",
+            data: JSON.stringify(graphElement.buildChildrenIndex()),
+            contentType: 'application/json;charset=utf-8'
+        });
+    };
     return api;
 });

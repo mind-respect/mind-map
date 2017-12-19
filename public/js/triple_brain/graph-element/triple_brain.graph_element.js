@@ -12,17 +12,17 @@ define([
 ], function ($, FriendlyResource, Identification, IdUri, WikidataUri, Wikidata) {
     "use strict";
     var api = {};
-    api.sortCompare = function (a, b) {
-        if (a.getSortDate() === b.getSortDate()) {
-            if (a.getMoveDate() === b.getMoveDate()) {
+    api.sortCompare = function (a, b, childrenIndex) {
+        if (a.getIndex(childrenIndex) === b.getIndex(childrenIndex)) {
+            if (a.getCreationDate() === b.getCreationDate()) {
                 return 0;
             }
-            if (a.getMoveDate() > b.getMoveDate()) {
+            if (a.getCreationDate() < b.getCreationDate()) {
                 return -1;
             }
             return 1;
         }
-        if (a.getSortDate() > b.getSortDate()) {
+        if (a.getIndex(childrenIndex) > b.getIndex(childrenIndex)) {
             return 1;
         }
         return -1;
@@ -96,6 +96,11 @@ define([
             this,
             graphElementServerFormat.friendlyResource
         );
+        if(this.graphElementServerFormat.childrenIndex){
+            this.graphElementServerFormat.childrenIndex = JSON.parse(
+                this.graphElementServerFormat.childrenIndex
+            );
+        }
         this._buildIdentifications();
         // this.wikipediaLinksPromise = this._buildWikidataLinks();
         return this;
@@ -254,6 +259,17 @@ define([
         return new Date(
             this.graphElementServerFormat.sortDate
         );
+    };
+
+    api.GraphElement.prototype.getIndex = function (parentChildrenIndex) {
+        if(!parentChildrenIndex[this.getUri()]){
+            return -1;
+        }
+        return parentChildrenIndex[this.getUri()].index;
+    };
+
+    api.GraphElement.prototype.getChildrenIndex = function () {
+        return this.graphElementServerFormat.childrenIndex || {};
     };
 
     api.GraphElement.prototype.getMoveDate = function () {

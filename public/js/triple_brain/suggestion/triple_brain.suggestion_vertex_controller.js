@@ -127,6 +127,9 @@ define([
         );
         return deferred.promise();
     };
+    SuggestionVertexController.prototype.addSiblingCanDo = function(){
+        return false;
+    };
     api.VertexSuggestionController = SuggestionVertexController;
     return api;
 });

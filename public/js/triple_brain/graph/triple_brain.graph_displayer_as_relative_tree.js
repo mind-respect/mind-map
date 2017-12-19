@@ -402,7 +402,9 @@ define([
             groupRelation,
             groupRelationUi
         );
-        $.each(groupRelation.getSortedVertices(), function (key, verticesWithSameUri) {
+        $.each(groupRelation.getSortedVertices(
+            groupRelationUi.getParentVertex().getModel().getChildrenIndex()
+        ), function (key, verticesWithSameUri) {
             $.each(verticesWithSameUri, function (vertexHtmlId) {
                 VertexUiBuilder.completeBuild(
                     RelativeTreeVertex.withId(vertexHtmlId)

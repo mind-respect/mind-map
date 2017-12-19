@@ -126,5 +126,72 @@ define([
                 centerBubble.isSelected()
             ).toBeTruthy();
         });
+        describe("buildChildrenIndex", function () {
+            it("is in right order", function () {
+                var scenario = new Scenarios.creationDateScenario();
+                var b7 = scenario.getBubble7InTree();
+                scenario.expandBubble7(
+                    b7
+                );
+                var childrenIndexes = b7.buildChildrenIndex();
+                var b71 = TestUtils.getChildWithLabel(
+                    b7,
+                    "r71"
+                ).getTopMostChildBubble();
+                var b72 = TestUtils.getChildWithLabel(
+                    b7,
+                    "r72"
+                ).getTopMostChildBubble();
+                expect(
+                    childrenIndexes[b71.getUri()].index
+                ).toBe(0);
+                expect(
+                    childrenIndexes[b72.getUri()].index
+                ).toBe(1);
+            });
+            it("includes child vertices of inverse relations", function () {
+                var scenario = new Scenarios.creationDateScenario();
+                var b7 = scenario.getBubble7InTree();
+                scenario.expandBubble7(
+                    b7
+                );
+                var childrenIndexes = b7.buildChildrenIndex();
+                var r71 = TestUtils.getChildWithLabel(
+                    b7,
+                    "r71"
+                );
+                r71.inverse();
+                var b71 = r71.getTopMostChildBubble();
+                expect(
+                    childrenIndexes.hasOwnProperty(b71.getUri())
+                ).toBeTruthy()
+            });
+            it("includes child vertices under group relations", function () {
+                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+                var center = scenario.getCenterVertexInTree();
+                var groupRelation = TestUtils.getChildWithLabel(
+                    center,
+                    "Possession"
+                );
+                groupRelation.expand();
+                var groupRelationUnder = groupRelation.getTopMostChildBubble();
+                groupRelationUnder.expand();
+                var vertexUnderDeepGroupRelation = groupRelationUnder.getTopMostChildBubble().getTopMostChildBubble();
+                expect(
+                    vertexUnderDeepGroupRelation.isVertex()
+                ).toBeTruthy();
+                var vertexUnderGroupRelation = groupRelationUnder.getBubbleUnder().getTopMostChildBubble();
+                expect(
+                    vertexUnderGroupRelation.isVertex()
+                ).toBeTruthy();
+                var childrenIndexes = center.buildChildrenIndex();
+                expect(
+                    childrenIndexes.hasOwnProperty(vertexUnderGroupRelation.getUri())
+                ).toBeTruthy();
+                expect(
+                    childrenIndexes.hasOwnProperty(vertexUnderDeepGroupRelation.getUri())
+                ).toBeTruthy()
+            });
+        });
     });
 });

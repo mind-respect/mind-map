@@ -60,15 +60,15 @@ define([
             return this.vertices;
         };
 
-        GroupRelation.prototype.getSortedVerticesAtAnyDepth = function () {
-            return this._getSortedVerticesAtAnyDepthOrNot(true);
+        GroupRelation.prototype.getSortedVerticesAtAnyDepth = function (childrenIndex) {
+            return this._getSortedVerticesAtAnyDepthOrNot(true, childrenIndex);
         };
 
-        GroupRelation.prototype.getSortedVertices = function () {
-            return this._getSortedVerticesAtAnyDepthOrNot(false);
+        GroupRelation.prototype.getSortedVertices = function (childrenIndex) {
+            return this._getSortedVerticesAtAnyDepthOrNot(false, childrenIndex);
         };
 
-        GroupRelation.prototype._getSortedVerticesAtAnyDepthOrNot = function (atAnyDepth) {
+        GroupRelation.prototype._getSortedVerticesAtAnyDepthOrNot = function (atAnyDepth, childrenIndex) {
             var vertices = atAnyDepth ? this.getVerticesAtAnyDepth() : this.vertices;
             var sortedKeys = Object.keys(vertices).sort(
                 function (a, b) {
@@ -82,7 +82,8 @@ define([
                         ].vertex;
                     return GraphElement.sortCompare(
                         vertexA,
-                        vertexB
+                        vertexB,
+                        childrenIndex
                     );
                 });
             var sorted = {};
@@ -92,15 +93,15 @@ define([
             return sorted;
         };
 
-        GroupRelation.prototype.getFirstVertex = function () {
-            var sortedTuples = this.getSortedVerticesAtAnyDepth();
+        GroupRelation.prototype.getFirstVertex = function (childrenIndex) {
+            var sortedTuples = this.getSortedVerticesAtAnyDepth(childrenIndex);
             var firstTupleByVertexUid = sortedTuples[Object.keys(sortedTuples)[0]];
             var firstTuple = firstTupleByVertexUid[Object.keys(firstTupleByVertexUid)[0]];
             return firstTuple.vertex;
         };
 
-        GroupRelation.prototype.getLastVertex = function () {
-            var sortedTuples = this.getSortedVerticesAtAnyDepth();
+        GroupRelation.prototype.getLastVertex = function (childrenIndex) {
+            var sortedTuples = this.getSortedVerticesAtAnyDepth(childrenIndex);
             var firstTupleByVertexUid = sortedTuples[Object.keys(sortedTuples)[Object.keys(sortedTuples).length - 1]];
             var firstTuple = firstTupleByVertexUid[Object.keys(firstTupleByVertexUid)[Object.keys(firstTupleByVertexUid).length - 1]];
             return firstTuple.vertex;
