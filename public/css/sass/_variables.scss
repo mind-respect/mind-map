@@ -19,9 +19,9 @@ $bubbleFontFamily: arial;
 $marginOfHiddenPropertiesToRelation: 25px;
 
 //Bubbles
-$hoverOverBubbleColor: transparent;
-$selectBubbleColor: transparent;
-$enterEditModeColor: transparent;
+$hoverOverBubbleColor: rgba(255, 210, 149, 0.4);
+$selectBubbleColor: rgba(255, 210, 149, 0.7);
+$enterEditModeColor: rgba(175, 106, 30, 0.7);
 
 //Relations
 $hoverOverRelationColor: rgba(68, 201, 251, 0.4);
