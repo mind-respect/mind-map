@@ -493,6 +493,7 @@ button.inactive i { color: red; }
 .vertex.edit .bubble-label { white-space: pre-wrap; }
 .vertex.absolute { white-space: nowrap; position: absolute !important; min-width: 120px; }
 .vertex.includes-vertices .in-bubble-content { padding-bottom: 2em; }
+.vertex .in-bubble-content { background: #00cc00; }
 .vertex .in-bubble-content:hover { background-color: rgba(255, 210, 149, 0.4); }
 .vertex .in-bubble-content .in-label-buttons { margin-left: -24px; padding-left: 0; padding-right: 8px; }
 .vertex.selected { z-index: 12; }

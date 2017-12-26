@@ -307,12 +307,20 @@ define([
                     changeBackgroundColor($(this).val());
                 }
             );
+            $("#bubbles-color-picker").on("change", function () {
+                    changeBubblesColor($(this).val());
+                }
+            );
+            $("#relations-color-picker").on("change", function () {
+                    changeRelationsColor($(this).val());
+                }
+            );
         }
 
         function changeBubblesColor(bubblesColor) {
-            $("#drawn_graph").css(
-                'background',
-                "radial-gradient(rgba(0, 0, 255, 0) 5%, " + bubblesColor + " 100%"
+            $(".vertex .in-bubble-content").css(
+                'background-color',
+                bubblesColor
             );
         }
 

@@ -258,6 +258,9 @@ define([
 
     GraphElementController.prototype.expandDescendantsIfApplicable = function () {
         var deferred = $.Deferred().resolve();
+        if(this.getUi().isCollapsed()){
+            return deferred;
+        }
         if (!this.getUi().hasDescendantsWithHiddenRelations()) {
             return deferred;
         }
