@@ -2,16 +2,6 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
-.center-vertex{
-  .in-bubble-content {
-    background-color: $selectRelationColor;
-
-    &.edit {
-      background-color: black !important;
-    }
-  }
-}
-
 .vertex {
   /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */
   white-space: nowrap;
@@ -41,7 +31,6 @@
   }
   &.edit {
     .in-bubble-content {
-      background-color: $enterEditModeColor !important;
       max-width: 325px;
       width: 325px;
       .in-bubble-note-button {
@@ -89,16 +78,11 @@
     &.center-vertex {
       .in-bubble-content {
         box-shadow: $selectedBoxShadow;
-        background-color: white !important;
+        background-color: transparent !important;
       }
     }
   }
   &.center-vertex {
-    &:hover {
-      .in-bubble-content {
-        background-color: yellow;
-      }
-    }
     .connector {
       height: 0;
       width: 0;

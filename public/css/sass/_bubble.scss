@@ -74,7 +74,6 @@
   &.edit {
     user-select: text;
     cursor: text;
-    //background-color: $enterEditModeColor !important;
     .bubble-label {
       &:after {
         content: "";
