@@ -177,9 +177,9 @@ define([
         var canShow = this.getModel().getIdentifiers().length === 1;
         if (canShow) {
             var tag = this.getModel().getIdentifiers()[0];
-            canShow = this.getUi().getTagNumberOfReferences(
+            canShow = this.getUi().getTagNumberOfOtherReferences(
                 tag
-            ) > 1;
+            ) > 0;
         }
         return $.Deferred().resolve(
             canShow
@@ -194,7 +194,7 @@ define([
         }
         return $.Deferred().resolve(
             this.getModel().getIdentifiers().some(function (tag) {
-                return this.getUi().getTagNumberOfReferences(tag) > 1;
+                return this.getUi().getTagNumberOfOtherReferences(tag) > 0;
             }.bind(this))
         );
     };

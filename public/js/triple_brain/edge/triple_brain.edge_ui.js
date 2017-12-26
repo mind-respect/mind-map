@@ -155,14 +155,14 @@ define([
             );
         };
 
-        api.EdgeUi.prototype.getTagNumberOfReferences = function (tag) {
+        api.EdgeUi.prototype.getTagNumberOfOtherReferences = function (tag) {
             var parentBubble = this.getParentBubble();
             if (parentBubble.isGroupRelation()) {
                 if (parentBubble.getModel().hasIdentification(tag)) {
-                    return parentBubble.getTagNumberOfReferences(tag);
+                    return parentBubble.getTagNumberOfOtherReferences(tag);
                 }
             }
-            return GraphElementUi.GraphElementUi.prototype.getTagNumberOfReferences.call(
+            return GraphElementUi.GraphElementUi.prototype.getTagNumberOfOtherReferences.call(
                 this,
                 tag
             );

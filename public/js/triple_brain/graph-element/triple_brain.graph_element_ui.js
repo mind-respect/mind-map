@@ -755,7 +755,7 @@ define([
         return this.getModel().getComment();
     };
 
-    api.GraphElementUi.prototype.getTagNumberOfReferences = function(identifier){
+    api.GraphElementUi.prototype.getTagNumberOfOtherReferences = function(identifier){
         return identifier.getNbReferences() - 1;
     };
 
@@ -774,7 +774,7 @@ define([
                         identifier.getUri()
                     )
                 ).append(
-                    $("<span class='badge primary'>").text("+ " + this.getTagNumberOfReferences(identifier))
+                    $("<span class='badge primary'>").text("+ " + this.getTagNumberOfOtherReferences(identifier))
                 ).append(
                     $("<span>").text(identifier.getLabel())
                 ).mousedown(function () {
