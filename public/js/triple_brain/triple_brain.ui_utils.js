@@ -12,6 +12,7 @@ define(
     function ($, Point, BubbleFactory, GraphElementButton) {
         "use strict";
         var api = {};
+        var _isChrome;
         avoidMultiplePopoversDisplayedAtTheSameTime();
             $.fn.popoverLikeToolTip = function (options) {
             options = options || {};
@@ -41,6 +42,13 @@ define(
 
         api.isMacintosh = function () {
             return navigator.platform.indexOf('Mac') > -1;
+        };
+
+        api.isChrome = function(){
+            if(_isChrome === undefined){
+                _isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+            }
+            return _isChrome;
         };
 
         api.positionLeft = function (componentToPosition, staticComponent) {

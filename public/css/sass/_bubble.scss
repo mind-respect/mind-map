@@ -2,16 +2,15 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
-#drag-bubble-text-dump {
-  font-size: 30px;
+#drag-bubble-text-for-chrome{
+  font-size: 25px;
   padding: 10px;
   width: auto;
   max-width: 325px;
   text-align: left;
   display: inline-block;
   border-radius: 50px;
-  position: fixed;
-  top: -500px;
+  position: absolute;
 }
 
 .cboxPhoto {
@@ -163,6 +162,7 @@
     &:before {
       content: url('images/icons/vertex/arrowhead_right.svg');
       position: relative;
+      z-index:0;
       top: -11px;
       left: 20px;
     }

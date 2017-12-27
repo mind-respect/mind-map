@@ -438,7 +438,7 @@ button.inactive i { color: red; }
 .vertex-tree-container.no-relation-label > .vertex-container .relation .connector:before { left: 35px; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
-#drag-bubble-text-dump { font-size: 30px; padding: 10px; width: auto; max-width: 325px; text-align: left; display: inline-block; border-radius: 50px; position: fixed; top: -500px; }
+#drag-bubble-text-for-chrome { font-size: 25px; padding: 10px; width: auto; max-width: 325px; text-align: left; display: inline-block; border-radius: 50px; position: absolute; }
 
 .cboxPhoto { max-width: 600px; height: auto !important; }
 
@@ -468,7 +468,7 @@ button.inactive i { color: red; }
 .bubble .arrow { position: absolute; height: 1px; width: 52px; top: 50%; left: -44px; border-top: 3px solid #3a87ad; z-index: -1; }
 .bubble .arrow ~ { background-color: yellow; }
 .bubble .arrow ~ .in-bubble-note-button:not(hidden) { width: 100%; }
-.bubble .arrow:before { content: url("images/icons/vertex/arrowhead_right.svg"); position: relative; top: -11px; left: 20px; }
+.bubble .arrow:before { content: url("images/icons/vertex/arrowhead_right.svg"); position: relative; z-index: 0; top: -11px; left: 20px; }
 .bubble .menu { z-index: 3; margin-top: 5px; position: absolute; white-space: normal; background-color: transparent; opacity: 0.95; left: 0; top: 100%; }
 .bubble .menu ul:first-of-type { padding-left: 5px; }
 .bubble .menu ul { list-style: none; font-family: courier new, monospace; font-size: 18px; padding: 0 5px 0 0; margin: 0 0 0 0; display: inline; float: left; min-width: 12px; }
