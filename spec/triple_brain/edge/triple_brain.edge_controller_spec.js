@@ -47,92 +47,113 @@ define([
                 );
             });
         });
-        it("changes to a group relation when adding a child", function () {
-            var threeBubblesScenario = new Scenarios.threeBubblesGraph();
-            var bubble1 = threeBubblesScenario.getBubble1InTree();
-            expect(
-                TestUtils.getChildWithLabel(bubble1, "r1").isGroupRelation()
-            ).toBeFalsy();
-            MindMapInfo._setIsViewOnly(false);
-            new EdgeController.RelationController(
-                TestUtils.getChildWithLabel(bubble1, "r1")
-            ).addChild();
-            expect(
-                TestUtils.getChildWithLabel(bubble1, "r1").isGroupRelation()
-            ).toBeTruthy();
-        });
-
-        it("after adding a child, the new group relation has the original relation as an identifier", function () {
-            var threeBubblesScenario = new Scenarios.threeBubblesGraph();
-            var bubble1 = threeBubblesScenario.getBubble1InTree();
-            MindMapInfo._setIsViewOnly(false);
-            var relation1 = TestUtils.getChildWithLabel(bubble1, "r1");
-            var relation1Uri = relation1.getUri();
-            new EdgeController.RelationController(
-                relation1
-            ).addChild();
-            var newGroupRelation = TestUtils.getChildWithLabel(bubble1, "r1");
-            var identifierExternalResourceUri = newGroupRelation.getGroupRelation().getIdentification().getExternalResourceUri();
-            expect(
-                identifierExternalResourceUri
-            ).toBe(relation1Uri);
-        });
-
-        it("when a relation has an identifier adding a child changes to a group relation where the identifier is not the relation but the identifier", function () {
-            var threeBubblesScenario = new Scenarios.threeBubblesGraph();
-            var bubble1 = threeBubblesScenario.getBubble1InTree();
-            var relation1 = TestUtils.getChildWithLabel(bubble1, "r1");
-            var karaokeIdentification = new Scenarios.getKaraokeSchemaGraph().getSchemaAsIdentification();
-            relation1.getModel().addIdentification(karaokeIdentification);
-            MindMapInfo._setIsViewOnly(false);
-            new EdgeController.RelationController(
-                relation1
-            ).addChild();
-            var newGroupRelation = TestUtils.getChildWithLabel(bubble1, "karaoke");
-            var identifierExternalResourceUri = newGroupRelation.getGroupRelation().getIdentification().getExternalResourceUri();
-            expect(
-                identifierExternalResourceUri
-            ).toBe(karaokeIdentification.getExternalResourceUri());
-        });
-        it("adds new relation under the group relation when adding a child to a relation under a group relation", function(){
-            MindMapInfo._setIsViewOnly(false);
-            var centerVertex = new Scenarios.GraphWithSimilarRelationsScenario().getCenterVertexInTree();
-            expect(
-                centerVertex.getNumberOfChild()
-            ).toBe(
-                4
-            );
-            var groupRelation = TestUtils.getChildWithLabel(
-                centerVertex,
-                "Possession"
-            );
-            groupRelation.expand();
-            expect(
-                groupRelation.getNumberOfChild()
-            ).toBe(3);
-            var relationUnderGroupRelation = groupRelation.getTopMostChildBubble();
-            relationUnderGroupRelation.getController().addChild();
-            expect(
-                centerVertex.getNumberOfChild()
-            ).toBe(4);
-        });
-        it("adds all the identifiers of the relation to the the new child relation when adding a child", function(){
-            var groupRelation = new Scenarios.GraphWithSimilarRelationsScenario().getPossessionAsGroupRelationInTree();
-            groupRelation.expand();
-            var relationUnderGroupRelation = TestUtils.getChildWithLabel(
-                groupRelation,
-                "Possessed by book 2"
-            );
-            var tested = false;
-            relationUnderGroupRelation.getController().addChild().then(function(triple){
+        describe("addChild", function(){
+            it("changes to a group relation when adding a child", function () {
+                var threeBubblesScenario = new Scenarios.threeBubblesGraph();
+                var bubble1 = threeBubblesScenario.getBubble1InTree();
                 expect(
-                    triple.edge().getModel().getIdentifiers().length
-                ).toBe(2);
-                tested = true;
+                    TestUtils.getChildWithLabel(bubble1, "r1").isGroupRelation()
+                ).toBeFalsy();
+                MindMapInfo._setIsViewOnly(false);
+                new EdgeController.RelationController(
+                    TestUtils.getChildWithLabel(bubble1, "r1")
+                ).addChild();
+                expect(
+                    TestUtils.getChildWithLabel(bubble1, "r1").isGroupRelation()
+                ).toBeTruthy();
             });
-            expect(
-                tested
-            ).toBeTruthy();
+
+            it("after adding a child, the new group relation has the original relation as an identifier", function () {
+                var threeBubblesScenario = new Scenarios.threeBubblesGraph();
+                var bubble1 = threeBubblesScenario.getBubble1InTree();
+                MindMapInfo._setIsViewOnly(false);
+                var relation1 = TestUtils.getChildWithLabel(bubble1, "r1");
+                var relation1Uri = relation1.getUri();
+                new EdgeController.RelationController(
+                    relation1
+                ).addChild();
+                var newGroupRelation = TestUtils.getChildWithLabel(bubble1, "r1");
+                var identifierExternalResourceUri = newGroupRelation.getGroupRelation().getIdentification().getExternalResourceUri();
+                expect(
+                    identifierExternalResourceUri
+                ).toBe(relation1Uri);
+            });
+
+            it("when a relation has an identifier adding a child changes to a group relation where the identifier is not the relation but the identifier", function () {
+                var threeBubblesScenario = new Scenarios.threeBubblesGraph();
+                var bubble1 = threeBubblesScenario.getBubble1InTree();
+                var relation1 = TestUtils.getChildWithLabel(bubble1, "r1");
+                var karaokeIdentification = new Scenarios.getKaraokeSchemaGraph().getSchemaAsIdentification();
+                relation1.getModel().addIdentification(karaokeIdentification);
+                MindMapInfo._setIsViewOnly(false);
+                new EdgeController.RelationController(
+                    relation1
+                ).addChild();
+                var newGroupRelation = TestUtils.getChildWithLabel(bubble1, "karaoke");
+                var identifierExternalResourceUri = newGroupRelation.getGroupRelation().getIdentification().getExternalResourceUri();
+                expect(
+                    identifierExternalResourceUri
+                ).toBe(karaokeIdentification.getExternalResourceUri());
+            });
+            it("adds new relation under the group relation when adding a child to a relation under a group relation", function(){
+                MindMapInfo._setIsViewOnly(false);
+                var centerVertex = new Scenarios.GraphWithSimilarRelationsScenario().getCenterVertexInTree();
+                expect(
+                    centerVertex.getNumberOfChild()
+                ).toBe(
+                    4
+                );
+                var groupRelation = TestUtils.getChildWithLabel(
+                    centerVertex,
+                    "Possession"
+                );
+                groupRelation.expand();
+                expect(
+                    groupRelation.getNumberOfChild()
+                ).toBe(3);
+                var relationUnderGroupRelation = groupRelation.getTopMostChildBubble();
+                relationUnderGroupRelation.getController().addChild();
+                expect(
+                    centerVertex.getNumberOfChild()
+                ).toBe(4);
+            });
+            it("adds all the identifiers of the relation to the the new child relation when adding a child", function(){
+                var groupRelation = new Scenarios.GraphWithSimilarRelationsScenario().getPossessionAsGroupRelationInTree();
+                groupRelation.expand();
+                var relationUnderGroupRelation = TestUtils.getChildWithLabel(
+                    groupRelation,
+                    "Possessed by book 2"
+                );
+                var tested = false;
+                relationUnderGroupRelation.getController().addChild().then(function(triple){
+                    expect(
+                        triple.edge().getModel().getIdentifiers().length
+                    ).toBe(2);
+                    tested = true;
+                });
+                expect(
+                    tested
+                ).toBeTruthy();
+            });
+            it("does not duplicate relations under the new group relation", function(){
+                var scenario = new Scenarios.threeBubblesGraph();
+                var center = scenario.getBubble1InTree();
+                var newRelation;
+                center.getController().addChild().then(function(tripleUi){
+                    newRelation = tripleUi.edge();
+                });
+                newRelation.getController().addChild();
+                var newGroupRelation = TestUtils.getChildWithLabel(
+                    center,
+                    ""
+                );
+                expect(
+                    newGroupRelation.isGroupRelation()
+                ).toBeTruthy();
+                expect(
+                    newGroupRelation.getNumberOfChild()
+                ).toBe(2);
+            });
         });
         it("removes only one relation when removing a relation to a duplicated bubble", function () {
             var graphWithCircularityScenario = new Scenarios.graphWithCircularityScenario();
@@ -376,11 +397,11 @@ define([
                 ).toBe(parentGroupRelation.getModel().getIdentification().getExternalResourceUri());
                 expect(
                     parentGroupRelation.getNumberOfChild()
-                ).toBe(3);
+                ).toBe(2);
                 topMostEdge.getController().addChild();
                 expect(
                     parentGroupRelation.getNumberOfChild()
-                ).toBe(3);
+                ).toBe(2);
                 topMostEdge = TestUtils.getChildWithLabel(
                     parentGroupRelation,
                     "top most edge"
@@ -390,7 +411,7 @@ define([
                 ).toBeTruthy();
                 expect(
                     topMostEdge.getNumberOfChild()
-                ).toBe(3);
+                ).toBe(2);
             });
         });
         describe("becomeParent", function(){

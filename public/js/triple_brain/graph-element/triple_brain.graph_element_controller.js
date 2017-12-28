@@ -258,7 +258,7 @@ define([
 
     GraphElementController.prototype.expandDescendantsIfApplicable = function () {
         var deferred = $.Deferred().resolve();
-        if(this.getUi().isCollapsed()){
+        if (this.getUi().isCollapsed()) {
             return deferred;
         }
         if (!this.getUi().hasDescendantsWithHiddenRelations()) {
@@ -339,6 +339,33 @@ define([
         );
         bubbleCutClipboard = undefined;
         this.getUi().pasteBubble();
+    };
+
+    GraphElementController.prototype.moveUp = function () {
+        var bubbleAbove = this.getUi().getBubbleAbove();
+        if(bubbleAbove.isSameBubble(this.getUi())){
+            return;
+        }
+        if(bubbleAbove.isVertex()){
+            bubbleAbove = bubbleAbove.getParentBubble();
+        }
+        return this.moveAbove(
+            bubbleAbove
+        );
+    };
+
+
+    GraphElementController.prototype.moveDown = function () {
+        var bubbleUnder = this.getUi().getBubbleUnder();
+        if(bubbleUnder.isSameBubble(this.getUi())){
+            return;
+        }
+        if(bubbleUnder.isVertex()){
+            bubbleUnder = bubbleUnder.getParentBubble();
+        }
+        return this.moveUnder(
+            bubbleUnder
+        );
     };
 
     GraphElementController.prototype.moveUnder = function (otherEdge) {

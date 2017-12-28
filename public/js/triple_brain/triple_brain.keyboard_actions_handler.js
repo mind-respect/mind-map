@@ -245,6 +245,12 @@ define([
         actions[minusKeyNumberMac] = {
             action: "zoomOut"
         };
+        actions[upArrowKeyNumber] = {
+            action: "moveUp"
+        };
+        actions[downArrowKeyNumber] = {
+            action: "moveDown"
+        };
         return actions;
     }
 });

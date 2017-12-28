@@ -117,8 +117,8 @@ define([
             parentBubble,
             this.getUi().isToTheLeft()
         );
-        newGroupRelation.getModel().addTuple(tuple);
         this.getUi().convertToGroupRelation(newGroupRelation);
+        newGroupRelation.getModel().addTuple(tuple);
         return newGroupRelation;
     };
 

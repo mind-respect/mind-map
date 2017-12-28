@@ -112,7 +112,6 @@ define([
                 }
             }
             this._resetIsToTheLeft();
-            SelectionHandler.setToSingleGraphElement(this);
             if (isOriginalToTheLeft === this.isToTheLeft()) {
                 return;
             }

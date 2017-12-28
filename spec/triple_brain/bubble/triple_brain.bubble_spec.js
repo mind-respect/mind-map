@@ -327,21 +327,6 @@ define([
                     possessionGroupRelation.isExpanded()
                 ).toBeTruthy();
             });
-            it("selects the moved bubble after it moved", function () {
-                var scenario = new Scenarios.threeBubblesGraph();
-                var relation1 = scenario.getRelation1InTree();
-                var bubble3 = scenario.getBubble3InTree();
-                expect(
-                    SelectionHandler.getNbSelected()
-                ).toBe(0);
-                relation1.moveToParent(bubble3);
-                expect(
-                    SelectionHandler.getNbSelected()
-                ).toBe(1);
-                expect(
-                    SelectionHandler.getSingleElement().getUri()
-                ).toBe(relation1.getUri());
-            });
             it("removes image related to an identification when a relation moved to a group relation that shares that identification", function () {
                 var scenario = new Scenarios.groupRelationWithImage();
                 var centerBubble = scenario.getSomeProject();

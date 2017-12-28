@@ -156,7 +156,7 @@ define([
         graphElementUi.getHtml().prop(
             "draggable",
             "true"
-        ).attr("draggable", "true");
+        );
         graphElementUi.getHtml().on("dragstart", function (event) {
             //event.originalEvent is undefined when using jasmine and v8 :S
             if (event.originalEvent) {
@@ -181,6 +181,9 @@ define([
         }).on(
             "dragend", function (event) {
                 event.preventDefault();
+                if(SelectionHandler.isOnlyASingleBubbleSelected()){
+                    SelectionHandler.getSingleElement().showMenu();
+                }
                 GraphUi.setIsDraggingBubble(false);
                 $("#drag-bubble-text-for-chrome").empty();
                 GraphUi.enableDragScroll();
