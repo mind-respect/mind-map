@@ -200,7 +200,7 @@ define([
     };
     api.GraphElement.prototype.hasIdentification = function (identification) {
         var contains = false;
-        $.each(this.getIdentifiers(), function () {
+        $.each(this.getIdentifiersIncludingSelf(), function () {
             if (this.getExternalResourceUri() === identification.getExternalResourceUri()) {
                 contains = true;
                 return false;
