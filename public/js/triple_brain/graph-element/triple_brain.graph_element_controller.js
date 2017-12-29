@@ -174,9 +174,9 @@ define([
     };
 
     GraphElementController.prototype.identifyCanShowInLabel = function () {
-        var canShow = this.getModel().getIdentifiers().length === 1;
+        var canShow = this.getModel().getRelevantTags().length === 1;
         if (canShow) {
-            var tag = this.getModel().getIdentifiers()[0];
+            var tag = this.getModel().getRelevantTags()[0];
             canShow = this.getUi().getTagNumberOfOtherReferences(
                 tag
             ) > 0;
@@ -187,13 +187,13 @@ define([
     };
 
     GraphElementController.prototype.identifyWhenManyCanShowInLabel = function () {
-        if (this.getModel().getIdentifiers().length < 2) {
+        if (this.getModel().getRelevantTags().length < 2) {
             return $.Deferred().resolve(
                 false
             );
         }
         return $.Deferred().resolve(
-            this.getModel().getIdentifiers().some(function (tag) {
+            this.getModel().getRelevantTags().some(function (tag) {
                 return this.getUi().getTagNumberOfOtherReferences(tag) > 0;
             }.bind(this))
         );

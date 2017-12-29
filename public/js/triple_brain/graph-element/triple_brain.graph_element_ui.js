@@ -760,11 +760,11 @@ define([
     };
 
     api.GraphElementUi.prototype.identifyWhenManyInLabelButtonContent = api.GraphElementUi.prototype.identifyInLabelButtonContent = function () {
-        if (!this.getModel().hasIdentifications()) {
+        if (!this.getModel().hasRelevantTags()) {
             return "";
         }
         var list = $("<ul  class='list-group'>");
-        this.getModel().getIdentifiers().sort(function(a, b){
+        this.getModel().getRelevantTags().sort(function(a, b){
             return b.getNbReferences() - a.getNbReferences();
         }).forEach(function (identifier) {
             list.append(

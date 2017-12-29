@@ -52,7 +52,7 @@ define([
         GroupRelation.prototype.getIdentification = function () {
             return this.identifiers[0];
         };
-        GroupRelation.prototype.getIdentifiers = function () {
+        GroupRelation.prototype.getRelevantTags = GroupRelation.prototype.getIdentifiers = function () {
             return this.identifiers;
         };
 
@@ -75,10 +75,10 @@ define([
                     var vertexAUiInstances = vertices[a];
                     var vertexBUiInstances = vertices[b];
                     var vertexA = vertexAUiInstances[
-                        Object.keys(vertexAUiInstances)
+                        Object.keys(vertexAUiInstances)[0]
                         ].vertex;
                     var vertexB = vertexBUiInstances[
-                        Object.keys(vertexBUiInstances)
+                        Object.keys(vertexBUiInstances)[0]
                         ].vertex;
                     return GraphElement.sortCompare(
                         vertexA,
@@ -192,6 +192,10 @@ define([
                 identifiers = identifiers.concat(childGroupRelation.getIdentifiersAtAnyDepth());
             });
             return identifiers;
+        };
+
+        GroupRelation.prototype.hasRelevantTags = function(){
+            return true;
         };
 
         GroupRelation.prototype.hasIdentifications = function () {
