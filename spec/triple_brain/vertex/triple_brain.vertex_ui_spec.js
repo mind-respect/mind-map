@@ -190,7 +190,32 @@ define([
                 ).toBeTruthy();
                 expect(
                     childrenIndexes.hasOwnProperty(vertexUnderDeepGroupRelation.getUri())
-                ).toBeTruthy()
+                ).toBeTruthy();
+            });
+            it("gives right order for center vertices", function () {
+                var scenario = new Scenarios.threeBubblesGraph();
+                var center = scenario.getBubble1InTree();
+                var b4Uri;
+                center.getController().addChild().then(function (tripleUi) {
+                    b4Uri = tripleUi.destinationVertex().getUri();
+                    tripleUi.destinationVertex().getModel().setLabel("b4");
+                });
+                var childrenIndexes = center.buildChildrenIndex();
+                expect(
+                    childrenIndexes[
+                        scenario.uriOfVertexWithLabel("b2")
+                        ].index
+                ).toBe(0);
+                expect(
+                    childrenIndexes[
+                        scenario.uriOfVertexWithLabel("b3")
+                        ].index
+                ).toBe(1);
+                expect(
+                    childrenIndexes[
+                        b4Uri
+                        ].index
+                ).toBe(2);
             });
         });
     });

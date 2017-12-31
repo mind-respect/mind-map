@@ -12,9 +12,8 @@ define([
         "triple_brain.bubble_factory",
         "triple_brain.selection_handler",
         "triple_brain.center_bubble",
-        "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
-        "mr.loading_flow"
-    ], function ($, EventBus, UiUtils, ImageDisplayer, GraphElementUi, GraphElementType, BubbleFactory, SelectionHandler, CenterBubble, PropertiesIndicator, LoadingFlow) {
+        "triple_brain.ui.vertex_hidden_neighbor_properties_indicator"
+    ], function ($, EventBus, UiUtils, ImageDisplayer, GraphElementUi, GraphElementType, BubbleFactory, SelectionHandler, CenterBubble, PropertiesIndicator) {
         "use strict";
         var api = {};
         api.MoveRelation = {
@@ -41,6 +40,12 @@ define([
                 }
                 return difference;
             });
+        };
+
+        api.getImmediateChildBubbleHtmlForContainer = function (container) {
+            return container.find(
+                "> .vertex-tree-container > .vertex-container > .bubble"
+            );
         };
 
         api.Bubble = function (html) {
@@ -269,7 +274,20 @@ define([
             if (!this.hasChildren()) {
                 return this;
             }
-            var topMostBubbleHtml = this.getChildrenBubblesHtml().filter(
+            var container;
+            if (this.isCenterBubble()) {
+                container = api.getImmediateChildBubbleHtmlForContainer(
+                    CenterBubble.usingBubble(this).getRightContainer()
+                );
+                if (!container.length) {
+                    container = api.getImmediateChildBubbleHtmlForContainer(
+                        CenterBubble.usingBubble(this).getLeftContainer()
+                    );
+                }
+            } else {
+                container = this.getChildrenBubblesHtml();
+            }
+            var topMostBubbleHtml = container.filter(
                 ":first"
             );
             if (topMostBubbleHtml.length === 0) {
@@ -306,6 +324,9 @@ define([
         };
 
         api.Bubble.prototype.visitAllImmediateChild = function (visitor) {
+            if (this.isCenterBubble()) {
+                return this.visitAllImmediateChildAsCenterBubble(visitor);
+            }
             $.each(this.getChildrenBubblesHtml(), function () {
                 return visitor(BubbleFactory.fromHtml(
                     $(this)
@@ -313,9 +334,45 @@ define([
             });
         };
 
+        api.Bubble.prototype.visitAllImmediateChildAsCenterBubble = function (visitor) {
+            var centerBubble = CenterBubble.usingBubble(this);
+            var leftBubblesHtml = api.getImmediateChildBubbleHtmlForContainer(
+                centerBubble.getLeftContainer()
+            );
+            var rightBubblesHtml = api.getImmediateChildBubbleHtmlForContainer(
+                centerBubble.getRightContainer()
+            );
+            var bubbleHtmlAtIndex = {};
+            var childIndex = 0;
+            defineIndexesForContainer(
+                rightBubblesHtml,
+                leftBubblesHtml.length
+            );
+            childIndex = 1;
+            defineIndexesForContainer(
+                leftBubblesHtml,
+                rightBubblesHtml.length
+            );
+            Object.keys(bubbleHtmlAtIndex).sort(function (a, b) {
+                return a - b;
+            }).forEach(function (index) {
+                visitor(
+                    BubbleFactory.fromSubHtml(bubbleHtmlAtIndex[index])
+                );
+            });
+
+            function defineIndexesForContainer(container, nbInOtherContainer) {
+                var currentContainerChildIndex = 0;
+                container.each(function () {
+                    bubbleHtmlAtIndex[childIndex] = $(this);
+                    childIndex += currentContainerChildIndex++ <= nbInOtherContainer ? 2 : 1;
+                });
+            }
+        };
+
         api.Bubble.prototype.getChildrenBubblesHtml = function () {
-            return this.getChildrenContainer().find(
-                "> .vertex-tree-container > .vertex-container > .bubble"
+            return api.getImmediateChildBubbleHtmlForContainer(
+                this.getChildrenContainer()
             );
         };
 
