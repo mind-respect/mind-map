@@ -33,7 +33,9 @@ define([
         api.addRelationAndVertexToVertex = function (vertex, sourceBubble, callback) {
             var isToTheLeft;
             if (vertex.isCenterBubble()) {
-                isToTheLeft = CenterBubble.usingBubble(vertex).shouldAddLeft();
+                isToTheLeft = sourceBubble.isGroupRelation() ?
+                    sourceBubble.isToTheLeft() :
+                    CenterBubble.usingBubble(vertex).shouldAddLeft();
             }
             return $.ajax({
                 type: 'POST',
