@@ -140,6 +140,9 @@ define([
                 this.friendlyResourceServerFormat.creationDate
             );
     };
+    api.FriendlyResource.prototype.isToTheLeft = function(){
+        return undefined;
+    };
     api.FriendlyResource.prototype._buildImages = function () {
         return undefined === this.friendlyResourceServerFormat.images ?
             [] :

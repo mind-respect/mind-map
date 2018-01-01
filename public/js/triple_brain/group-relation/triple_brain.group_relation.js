@@ -280,7 +280,6 @@ define([
             return has;
         };
 
-
         GroupRelation.prototype._containsAllTuplesOfGroupRelation = function (groupRelation) {
             var containsAll = true;
             var presentAtGreaterDepth = false;

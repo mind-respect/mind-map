@@ -310,6 +310,10 @@ define([
         return this.isLabelEmpty() && !this.hasIdentifications();
     };
 
+    api.GraphElement.prototype.isToTheLeft = function(){
+        return undefined;
+    };
+
     // api.GraphElement.prototype._buildWikidataLinks = function () {
     //     var promises = [];
     //     this.getIdentifiers().forEach(function (identifier) {

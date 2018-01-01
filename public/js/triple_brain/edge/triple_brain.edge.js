@@ -12,7 +12,7 @@ define([
     api.fromServerFormat = function (serverFormat) {
         return new api.Edge().init(serverFormat);
     };
-    api.withLabelSelfSourceAndDestinationUri = function(label, uri, sourceUri, destinationUri){
+    api.withLabelSelfSourceAndDestinationUri = function (label, uri, sourceUri, destinationUri) {
         var edge = new api.Edge().init(
             api.buildObjectWithUriOfSelfSourceAndDestinationVertex(
                 uri,
@@ -72,6 +72,7 @@ define([
             this,
             edgeServerFormat.graphElement
         );
+        this.edgeServerFormat = edgeServerFormat;
         return this;
     };
 
@@ -95,7 +96,7 @@ define([
     api.Edge.prototype.isSourceVertex = function (vertex) {
         return this.getSourceVertex().getUri() === vertex.getUri();
     };
-    api.Edge.prototype.isDestinationVertex= function (vertex) {
+    api.Edge.prototype.isDestinationVertex = function (vertex) {
         return this.getDestinationVertex().getUri() === vertex.getUri();
     };
     api.Edge.prototype.isRelatedToVertex = function (vertex) {
@@ -105,6 +106,9 @@ define([
     api.Edge.prototype.getOtherVertex = function (vertex) {
         return this.getSourceVertex().getUri() === vertex.getUri() ?
             this.getDestinationVertex() : this.getSourceVertex();
+    };
+    api.Edge.prototype.isToTheLeft = function () {
+        return this.edgeServerFormat.isToTheLeft;
     };
     return api;
 });

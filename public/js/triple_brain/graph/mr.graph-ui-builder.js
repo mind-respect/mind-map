@@ -51,10 +51,10 @@ define([
         return this.edgeUiBuilder;
     };
 
-    api.GraphUiBuilder.prototype.buildBubbleHtmlIntoContainer = function (serverFormat, parentBubble, builder, htmlId) {
+    api.GraphUiBuilder.prototype.buildBubbleHtmlIntoContainer = function (model, parentBubble, builder, htmlId) {
         api.flagSuggestionsToNotDisplayGivenParentAndChildVertex(
             parentBubble.getModel(),
-            serverFormat
+            model
         );
         var childTreeContainer = RelativeTreeTemplates[
                 "vertex_tree_container"
@@ -62,22 +62,27 @@ define([
             container;
         if (parentBubble.isCenterBubble()) {
             var centerBubble = CenterBubble.usingBubble(parentBubble);
-            var addLeft = undefined === this.forceToTheLeft ?
-                centerBubble.shouldAddLeft() :
-                this.forceToTheLeft;
+            var addLeft;
+            if(this.forceToTheLeft !== undefined){
+                addLeft = this.forceToTheLeft;
+            }else if(model.isToTheLeft() !== undefined){
+                addLeft = model.isToTheLeft();
+            }else{
+                addLeft = centerBubble.shouldAddLeft();
+            }
             container = addLeft ?
                 centerBubble.getLeftContainer() :
                 centerBubble.getRightContainer();
-            serverFormat.isLeftOriented = addLeft;
+            model.isLeftOriented = addLeft;
         } else {
             container = this.childContainer(parentBubble);
-            serverFormat.isLeftOriented = parentBubble.getModel().isLeftOriented;
+            model.isLeftOriented = parentBubble.getModel().isLeftOriented;
         }
         var childVertexHtmlFacade = builder.create(
-            serverFormat,
+            model,
             htmlId
         );
-        childVertexHtmlFacade.setModel(serverFormat);
+        childVertexHtmlFacade.setModel(model);
         container.append(
             childTreeContainer
         ).append("<span class='clear-fix'>");
@@ -88,7 +93,7 @@ define([
             vertexContainer
         );
         childTreeContainer[
-            serverFormat.isLeftOriented ? "append" : "prepend"
+            model.isLeftOriented ? "append" : "prepend"
             ](
             RelativeTreeTemplates[
                 "vertical_border"
@@ -97,7 +102,7 @@ define([
         vertexContainer.append(
             childVertexHtmlFacade.getHtml()
         );
-        this.addChildrenContainerToBubble(childVertexHtmlFacade, serverFormat.isLeftOriented);
+        this.addChildrenContainerToBubble(childVertexHtmlFacade, model.isLeftOriented);
         return childVertexHtmlFacade;
     };
     api.GraphUiBuilder.prototype.addChildrenContainerToBubble = function (vertexHtmlFacade, toLeft) {

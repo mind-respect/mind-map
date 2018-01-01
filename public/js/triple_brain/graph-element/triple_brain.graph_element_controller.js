@@ -451,6 +451,7 @@ define([
     };
 
     GraphElementController.prototype._moveToExecute = function (otherEdge, isAbove, previousParentVertex) {
+        var wasToTheLeft = this.getUi().isToTheLeft();
         if (isAbove) {
             this.getUi().moveAbove(otherEdge);
         } else {
@@ -493,6 +494,19 @@ define([
                     movedEdge.getController().changeEndVertex(
                         otherEdge.getParentVertex()
                     )
+                );
+            }
+        }
+        if(movedEdge.getParentBubble().isCenterBubble() && wasToTheLeft !== movedEdge.isToTheLeft()){
+            if(movedEdge.isGroupRelation()){
+                movedEdge.visitClosestChildRelations(function(childEdge){
+                    promises.push(
+                        childEdge.getController().setIsToTheLeftOrRight()
+                    );
+                });
+            }else{
+                promises.push(
+                    movedEdge.getController().setIsToTheLeftOrRight()
                 );
             }
         }
