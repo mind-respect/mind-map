@@ -177,7 +177,7 @@ define([
             var groupRelationVertices = this.getSortedVerticesAtAnyDepth();
             var vertices = [];
             Object.keys(groupRelationVertices).forEach(function (vertexUri) {
-                Object.keys(groupRelationVertices[vertexUri]).forEach(function(vertedId){
+                Object.keys(groupRelationVertices[vertexUri]).forEach(function (vertedId) {
                     vertices.push(
                         groupRelationVertices[vertexUri][vertedId].vertex
                     );
@@ -194,7 +194,7 @@ define([
             return identifiers;
         };
 
-        GroupRelation.prototype.hasRelevantTags = function(){
+        GroupRelation.prototype.hasRelevantTags = function () {
             return true;
         };
 
@@ -297,6 +297,23 @@ define([
                 }.bind(this));
             }
             return containsAll;
+        };
+
+        GroupRelation.prototype.isToTheLeft = function () {
+            var nbLeft = 0;
+            var nbRight = 0;
+            this.visitTuples(function(tuple){
+                if(tuple.edge.isToTheLeft() === true){
+                    nbLeft++;
+                }
+                if(tuple.edge.isToTheLeft() === false){
+                    nbRight++;
+                }
+            });
+            if(nbLeft === nbRight){
+                return undefined;
+            }
+            return nbLeft > nbRight;
         };
 
         return api;
