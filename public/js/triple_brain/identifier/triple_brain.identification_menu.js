@@ -115,7 +115,7 @@ define([
 
         IdentificationMenu.prototype._addIdentifications = function () {
             this._getMainListHtml().empty();
-            var identifiers = this.graphElement.getModel().getIdentifiers();
+            var identifiers = this.graphElement.getModel().getRelevantTags();
             Object.keys(identifiers).forEach(function(key) {
                 this._addIdentificationAsListElement(
                     identifiers[key]
