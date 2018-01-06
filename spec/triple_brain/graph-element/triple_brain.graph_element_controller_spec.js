@@ -282,7 +282,7 @@ define([
                 groupRelation.expand();
                 var otherVertex = scenario.getOtherRelationInTree().getTopMostChildBubble();
                 var deepVertex;
-                otherVertex.getController().addChild().then(function(tripleUi){
+                otherVertex.getController().addChild().then(function (tripleUi) {
                     deepVertex = tripleUi.destinationVertex();
                 });
                 expect(

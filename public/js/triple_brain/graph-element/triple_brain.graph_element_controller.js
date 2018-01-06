@@ -349,6 +349,11 @@ define([
         if (bubbleAbove.isVertex()) {
             bubbleAbove = bubbleAbove.getParentBubble();
         }
+        if (!bubbleAbove.getParentVertex().isSameBubble(this.getUi().getParentVertex())) {
+            return this.moveBelow(
+                bubbleAbove
+            );
+        }
         return this.moveAbove(
             bubbleAbove
         );
@@ -362,6 +367,11 @@ define([
         }
         if (bubbleUnder.isVertex()) {
             bubbleUnder = bubbleUnder.getParentBubble();
+        }
+        if (!bubbleUnder.getParentVertex().isSameBubble(this.getUi().getParentVertex())) {
+            return this.moveAbove(
+                bubbleUnder
+            );
         }
         return this.moveBelow(
             bubbleUnder
