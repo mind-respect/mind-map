@@ -295,7 +295,7 @@ define([
 
         IdentificationMenu.prototype._setUpAutoComplete = function (identificationTextField) {
             var self = this;
-            identificationTextField.tripleBrainAutocomplete({
+            identificationTextField.mrAutocomplete({
                 select: function (event, ui) {
                     var semanticMenu = $(this).closest(
                         '.identifications'

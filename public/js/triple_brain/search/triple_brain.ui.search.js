@@ -22,7 +22,7 @@ define([
             init();
         });
         function init() {
-            getInput().empty().tripleBrainAutocomplete({
+            getInput().empty().mrAutocomplete({
                 select: function (event, ui) {
                     var elementUri = ui.item.uri;
                     window.location = IdUri.htmlUrlForBubbleUri(

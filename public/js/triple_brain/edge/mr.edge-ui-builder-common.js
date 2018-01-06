@@ -61,7 +61,7 @@ define([
             whenEmptyLabel
         ).appendTo(
             labelAndButtons
-        ).tripleBrainAutocomplete({
+        ).mrAutocomplete({
                 select: function (event, ui) {
                     var edge = BubbleFactory.fromSubHtml(
                         $(this)

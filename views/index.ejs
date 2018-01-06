@@ -259,6 +259,8 @@
                             class="dev-only hidden graph-element-button whole-graph-button"></button>
                     <button data-action="selectTree" data-combinedShortcut="A" data-icon="fa-sitemap"
                             class="graph-element-button whole-graph-button"></button>
+                    <button data-action="merge" data-icon="fa-handshake-o" data-combinedShortcut="M"
+                            class="graph-element-button in-label-button"></button>
                     <button data-action="undo" data-combinedShortcut="Z" data-icon="fa-undo"
                             class="app-button graph-element-button in-label-button"></button>
                     <button data-action="redo" data-combinedShortcut="Y" data-icon="fa-repeat"
@@ -1622,6 +1624,16 @@
             <div class="description"></div>
         </div>
     </div>
+</div>
+<div id="merge-popover" class="hidden">
+    <form class="" role="form">
+        <div class="form-group">
+            <label for="" class="sr-only"
+                   data-i18n="merge.placeholder"></label>
+            <input id="" class="form-control merge-input" type="text"
+                   data-i18n="[placeholder]merge.placeholder">
+        </div>
+    </form>
 </div>
 <footer data-flow="landing" class="hidden"><span class="fa fa-copyright"></span> Copyleft - MindRespect -
     <a data-i18n='[href]top_menu.contribute_link'>

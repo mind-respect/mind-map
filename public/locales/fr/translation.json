@@ -4,7 +4,6 @@
   "modal": {
     "close": "Fermer"
   },
-
   "compare_flow": {
     "title": "Mode comparaison",
     "with_user": "avec",
@@ -212,7 +211,7 @@
         "origin": "source",
         "nb_references": "autre bulle(s) ayant le même étiquette",
         "no_other_references": "Aucune autre bulle avec le même étiquette",
-        "wikidata-indicator":"Wikidata est toujours activé dans le menu d'étiquettes"
+        "wikidata-indicator": "Wikidata est toujours activé dans le menu d'étiquettes"
       }
     }
   },
@@ -278,7 +277,7 @@
     "default": "groupe"
   },
   "identification": {
-    "default":"Méta",
+    "default": "Méta",
     "context": {
       "bubble": "Bulle",
       "with_properties": "avec les propriétés",
@@ -287,18 +286,16 @@
       "destination_bubble": "Bulle destination"
     }
   },
-  "meta_relation":{
+  "meta_relation": {
     "deleteMenu": {
       "remove": "Enlever",
       "association": "l'étiquette",
       "and": "à la bulle"
     }
   },
-
   "meta": {
     "description": "Prise de notes agile, pour un esprit en évolution."
   },
-
   "selection": {
     "group": "grouper"
   },
@@ -337,7 +334,8 @@
     "redo": "Refaire",
     "convertToRelation": "Convertir en relation",
     "convertToGroupRelation": "Convertir en relation groupée",
-    "wikipediaLinks": "En savoir plus sur Wikipédia"
+    "wikipediaLinks": "En savoir plus sur Wikipédia",
+    "merge": "Fusionner"
   },
   "hidden_properties_tooltip": "Expandre (ctrl+E)",
   "hidden_properties_tooltip_forMac": "Expandre (⌘+E)",
@@ -373,7 +371,7 @@
     "2": "les copier",
     "3": "pour les conserver ou les utiliser"
   },
-  "centralBubbles":{
+  "centralBubbles": {
     "center": "Centre",
     "context": "Bulles autour",
     "lastVisit": "Visite",
@@ -386,7 +384,7 @@
       "really": "Voulez-vous vraiment supprimer ça?",
       "info": "Cette action ne supprime pas la bulle(s). Elle pourra toujours être trouvée par la recherche principale et par ses relations."
     },
-    "typeFilter":{
+    "typeFilter": {
       "tag": "Étiquette",
       "vertex": "Bulle",
       "relation": "Relation",
@@ -394,5 +392,10 @@
       "addAll": "Ajouter tout",
       "removeAll": "Enlever tout"
     }
+  },
+  "merge": {
+    "title" : "Fusionner avec ...",
+    "instruction": "Il en résultera une seule bulle qui aura toutes les relations de cette bulle et celles de la bulle que vous aurez sélectionnée.",
+    "placeholder": "Fusionner avec ..."
   }
 }

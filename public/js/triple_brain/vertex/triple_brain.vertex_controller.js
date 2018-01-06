@@ -20,10 +20,13 @@ define([
     "triple_brain.schema_suggestion",
     "triple_brain.event_bus",
     "triple_brain.id_uri",
-    "triple_brain.graph_element_type"
-], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, BubbleDeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, EventBus, IdUri, GraphElementType) {
+    "triple_brain.graph_element_type",
+    "triple_brain.user_map_autocomplete_provider",
+    "jquery.triple_brain.search"
+], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, BubbleDeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, EventBus, IdUri, GraphElementType, UserMapAutocompleteProvider) {
     "use strict";
     var api = {};
+    var isMergePopoverBuilt = false;
 
     function VertexController(vertices) {
         this.vertices = vertices;
@@ -575,6 +578,49 @@ define([
             this.getUi().afterConvertToDistantBubbleWithUri();
         }.bind(this));
     };
+
+
+    VertexController.prototype.mergeTo = function (distantVertexUri) {
+
+    };
+
+    VertexController.prototype.merge = function () {
+        if (!isMergePopoverBuilt) {
+            this.getUi().getHtml().popoverLikeToolTip({
+                animation: false,
+                html: true,
+                title: $('<div>').append($.t("merge.title"), $('<br>'), $("<small>").text($.t("merge.instruction"))),
+                placement: 'auto left',
+                container: '#drawn_graph',
+                trigger: "manual",
+                allowMultiplePopoverDisplayed: true,
+                content: function () {
+                    return $("#merge-popover").html();
+                }
+            });
+        }
+        this.getUi().getHtml().popover("show").popover("show");
+        var searchInput = $('.popover').find("input").empty();
+        if (!searchInput.isMrAutocompleteSetup()) {
+            searchInput.mrAutocomplete({
+                select: function (event, ui) {
+                    event.preventDefault();
+                    this.convertToDistantBubbleWithUri(ui.item.uri);
+                    this.getUi().getHtml().popover("hide");
+                }.bind(this),
+                resultsProviders: [
+                    UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesExcept(
+                        this.getUi(),
+                        {
+                            noFilter: true
+                        }
+                    )
+                ]
+            });
+        }
+        searchInput.focus();
+    };
+
     VertexController.prototype._relateToDistantVertexWithUri = function (distantVertexUri) {
         return EdgeService.addToFarVertex(this.getUi(), distantVertexUri).then(function () {
             return GraphDisplayer.connectVertexToVertexWithUri(

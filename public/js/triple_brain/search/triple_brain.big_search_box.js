@@ -11,7 +11,7 @@ define([
     "use strict";
     var api = {};
     api.setup = function(){
-        getInput().tripleBrainAutocomplete({
+        getInput().mrAutocomplete({
             select : function(event, ui){
                 var uri = ui.item.uri;
                 window.location = IdUri.htmlUrlForBubbleUri(uri);

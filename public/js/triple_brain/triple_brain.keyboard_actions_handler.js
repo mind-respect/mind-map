@@ -1,6 +1,6 @@
- /*
- * Copyright Vincent Blouin under the GPL License version 3
- */
+/*
+* Copyright Vincent Blouin under the GPL License version 3
+*/
 
 define([
     "jquery",
@@ -38,6 +38,7 @@ define([
         yKeyNumber = 89,
         zKeyNumber = 90,
         oKeyNumber = 79,
+        mKeyNumber = 77,
         plusKeyNumber = 107,
         minusKeyNumber = 109,
         plusKeyNumberMac = 187,
@@ -250,6 +251,9 @@ define([
         };
         actions[downArrowKeyNumber] = {
             action: "moveDown"
+        };
+        actions[mKeyNumber] = {
+            action: "merge"
         };
         return actions;
     }

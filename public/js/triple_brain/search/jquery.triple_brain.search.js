@@ -17,8 +17,9 @@ define([
         api = {},
         detailsCache = {},
         referencesText;
-    $.fn.tripleBrainAutocomplete = function (options) {
+    $.fn.mrAutocomplete = function (options) {
         var textInput = $(this);
+        textInput.data("mrAutocomplete", true);
         textInput.on("keydown", function(event) {
             var input = $(this);
             if (!input.is(":focus")) {
@@ -162,6 +163,9 @@ define([
             });
             return listElement.appendTo(ul);
         }
+    };
+    $.fn.isMrAutocompleteSetup = function () {
+        return $(this).data("mrAutocomplete") === true;
     };
     api._onFocusAction = function (searchResult, listElement) {
         $('.autocomplete-element:not(#'+listElement.prop("id") +')').popover('hide');
