@@ -83,7 +83,7 @@ define([
                 )
             );
             promises.push(
-                childRelation.getController().moveUnder(
+                childRelation.getController().moveBelow(
                     parentRelation
                 )
             );
@@ -173,7 +173,7 @@ define([
             this.getUi().getParentVertex(),
             this.getUi().getParentBubble().getParentBubble()
         ).then(function (triple) {
-            triple.edge().getController().moveUnder(
+            triple.edge().getController().moveBelow(
                 this.getUi().getParentBubble()
             );
             SelectionHandler.setToSingleVertex(

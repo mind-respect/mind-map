@@ -123,7 +123,7 @@ define([
             }
             var mouseY = event.pageY;
             if (mouseY > edge.getYPosition()) {
-                dragged.getController().moveUnder(
+                dragged.getController().moveBelow(
                     edge
                 );
             } else {

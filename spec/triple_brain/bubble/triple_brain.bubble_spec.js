@@ -550,7 +550,7 @@ define([
             expect(
                 b72.getBubbleUnder().text()
             ).not.toBe("b74");
-            b72.moveUnder(
+            b72.moveBelow(
                 b73
             );
             expect(

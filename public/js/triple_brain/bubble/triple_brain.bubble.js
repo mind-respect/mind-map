@@ -147,7 +147,7 @@ define([
                 api.MoveRelation.Before
             );
         };
-        api.Bubble.prototype.moveUnder = function (newSibling) {
+        api.Bubble.prototype.moveBelow = function (newSibling) {
             return this.moveTo(
                 newSibling,
                 api.MoveRelation.After

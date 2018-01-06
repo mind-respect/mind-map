@@ -343,10 +343,10 @@ define([
 
     GraphElementController.prototype.moveUp = function () {
         var bubbleAbove = this.getUi().getBubbleAbove();
-        if(bubbleAbove.isSameBubble(this.getUi())){
+        if (bubbleAbove.isSameBubble(this.getUi())) {
             return;
         }
-        if(bubbleAbove.isVertex()){
+        if (bubbleAbove.isVertex()) {
             bubbleAbove = bubbleAbove.getParentBubble();
         }
         return this.moveAbove(
@@ -357,18 +357,25 @@ define([
 
     GraphElementController.prototype.moveDown = function () {
         var bubbleUnder = this.getUi().getBubbleUnder();
-        if(bubbleUnder.isSameBubble(this.getUi())){
+        if (bubbleUnder.isSameBubble(this.getUi())) {
             return;
         }
-        if(bubbleUnder.isVertex()){
+        if (bubbleUnder.isVertex()) {
             bubbleUnder = bubbleUnder.getParentBubble();
         }
-        return this.moveUnder(
+        return this.moveBelow(
             bubbleUnder
         );
     };
 
-    GraphElementController.prototype.moveUnder = function (otherEdge) {
+    GraphElementController.prototype._canMoveAboveOrUnder = function (otherEdge) {
+        var graphElementToCompare = this.getUi().isVertex() ?
+            this.getUi().getParentBubble() :
+            this.getUi();
+        return !graphElementToCompare.isSameUri(otherEdge);
+    };
+
+    GraphElementController.prototype.moveBelow = function (otherEdge) {
         if (!this._canMoveAboveOrUnder(otherEdge)) {
             return $.Deferred().resolve();
         }
@@ -390,13 +397,6 @@ define([
             true,
             previousParentVertex
         );
-    };
-
-    GraphElementController.prototype._canMoveAboveOrUnder = function (otherEdge) {
-        var graphElementToCompare = this.getUi().isVertex() ?
-            this.getUi().getParentBubble() :
-            this.getUi();
-        return !graphElementToCompare.isSameUri(otherEdge);
     };
 
     GraphElementController.prototype._canMoveUnderParent = function (parent) {
@@ -452,31 +452,46 @@ define([
 
     GraphElementController.prototype._moveToExecute = function (otherEdge, isAbove, previousParentVertex) {
         var wasToTheLeft = this.getUi().isToTheLeft();
-        if (isAbove) {
-            this.getUi().moveAbove(otherEdge);
-        } else {
-            this.getUi().moveUnder(otherEdge);
-        }
-
-        var promises = [
-            GraphElementService.changeChildrenIndex(
-                otherEdge.getParentVertex()
-            ),
-            GraphElementService.changeChildrenIndex(
-                previousParentVertex
-            )
-        ];
         var movedEdge = this.getUi().isVertex() ?
             this.getUi().getParentBubble() :
             this.getUi();
+        var promises = [];
+        promises.push(
+            movedEdge.getParentBubble().getController().becomeExParent(movedEdge)
+        );
+        if (isAbove) {
+            this.getUi().moveAbove(otherEdge);
+        } else {
+            this.getUi().moveBelow(otherEdge);
+        }
+        promises.push(
+            GraphElementService.changeChildrenIndex(
+                otherEdge.getParentVertex()
+            )
+        );
+        promises.push(
+            GraphElementService.changeChildrenIndex(
+                previousParentVertex
+            )
+        );
         var parentBubble = otherEdge.getParentBubble();
         if (parentBubble.isGroupRelation()) {
             var identification = parentBubble.getGroupRelation().getIdentification();
-            promises.push(
-                movedEdge.getController().addIdentification(
-                    identification
-                )
-            );
+            if (movedEdge.isGroupRelation()) {
+                movedEdge.visitClosestChildRelations(function (relation) {
+                    promises.push(
+                        relation.getController().addIdentification(
+                            identification
+                        )
+                    );
+                });
+            } else {
+                promises.push(
+                    movedEdge.getController().addIdentification(
+                        identification
+                    )
+                );
+            }
         }
 
         if (previousParentVertex.getUri() !== otherEdge.getParentVertex().getUri()) {
@@ -497,14 +512,14 @@ define([
                 );
             }
         }
-        if(movedEdge.getParentBubble().isCenterBubble() && wasToTheLeft !== movedEdge.isToTheLeft()){
-            if(movedEdge.isGroupRelation()){
-                movedEdge.visitClosestChildRelations(function(childEdge){
+        if (movedEdge.getParentBubble().isCenterBubble() && wasToTheLeft !== movedEdge.isToTheLeft()) {
+            if (movedEdge.isGroupRelation()) {
+                movedEdge.visitClosestChildRelations(function (childEdge) {
                     promises.push(
                         childEdge.getController().setIsToTheLeftOrRight()
                     );
                 });
-            }else{
+            } else {
                 promises.push(
                     movedEdge.getController().setIsToTheLeftOrRight()
                 );
