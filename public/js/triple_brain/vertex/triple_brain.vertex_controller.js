@@ -606,6 +606,7 @@ define([
                 select: function (event, ui) {
                     event.preventDefault();
                     this.convertToDistantBubbleWithUri(ui.item.uri);
+                    this.setLabel(ui.item.label);
                     this.getUi().getHtml().popover("hide");
                 }.bind(this),
                 resultsProviders: [
