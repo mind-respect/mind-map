@@ -612,7 +612,14 @@ define([
                     UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesExcept(
                         this.getUi(),
                         {
-                            noFilter: true
+                            noFilter: true,
+                            additionalFilter: function(searchResults){
+                                return searchResults.filter(function(searchResult){
+                                    return this.convertToDistantBubbleWithUriCanDo(
+                                        searchResult.uri
+                                    );
+                                }.bind(this));
+                            }.bind(this)
                         }
                     )
                 ]
