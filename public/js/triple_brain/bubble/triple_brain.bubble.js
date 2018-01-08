@@ -974,6 +974,12 @@ define([
             return this.html.closest(".vertices-children-container").length === 0;
         };
 
+        api.Bubble.prototype.mergeTo = function (distantUri) {
+            this.removeFromCache();
+            this.getModel().setUri(distantUri);
+            this.initCache();
+        };
+
         function selectNew(newSelectedElement) {
             SelectionHandler.setToSingleGraphElement(
                 newSelectedElement

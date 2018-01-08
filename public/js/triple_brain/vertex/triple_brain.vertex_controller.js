@@ -21,12 +21,10 @@ define([
     "triple_brain.event_bus",
     "triple_brain.id_uri",
     "triple_brain.graph_element_type",
-    "triple_brain.user_map_autocomplete_provider",
     "jquery.triple_brain.search"
 ], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, BubbleDeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, EventBus, IdUri, GraphElementType, UserMapAutocompleteProvider) {
     "use strict";
     var api = {};
-    var isMergePopoverBuilt = false;
 
     function VertexController(vertices) {
         this.vertices = vertices;
@@ -579,54 +577,8 @@ define([
         }.bind(this));
     };
 
-
-    VertexController.prototype.mergeTo = function (distantVertexUri) {
-
-    };
-
-    VertexController.prototype.merge = function () {
-        if (!isMergePopoverBuilt) {
-            this.getUi().getHtml().popoverLikeToolTip({
-                animation: false,
-                html: true,
-                title: $('<div>').append($.t("merge.title"), $('<br>'), $("<small>").text($.t("merge.instruction"))),
-                placement: 'auto left',
-                container: '#drawn_graph',
-                trigger: "manual",
-                allowMultiplePopoverDisplayed: true,
-                content: function () {
-                    return $("#merge-popover").html();
-                }
-            });
-        }
-        this.getUi().getHtml().popover("show").popover("show");
-        var searchInput = $('.popover').find("input").empty();
-        if (!searchInput.isMrAutocompleteSetup()) {
-            searchInput.mrAutocomplete({
-                select: function (event, ui) {
-                    event.preventDefault();
-                    this.convertToDistantBubbleWithUri(ui.item.uri);
-                    this.setLabel(ui.item.label);
-                    this.getUi().getHtml().popover("hide");
-                }.bind(this),
-                resultsProviders: [
-                    UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesExcept(
-                        this.getUi(),
-                        {
-                            noFilter: true,
-                            additionalFilter: function(searchResults){
-                                return searchResults.filter(function(searchResult){
-                                    return this.convertToDistantBubbleWithUriCanDo(
-                                        searchResult.uri
-                                    );
-                                }.bind(this));
-                            }.bind(this)
-                        }
-                    )
-                ]
-            });
-        }
-        searchInput.focus();
+    VertexController.prototype.mergeCanDo = function () {
+        return true;
     };
 
     VertexController.prototype._relateToDistantVertexWithUri = function (distantVertexUri) {

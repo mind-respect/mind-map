@@ -88,24 +88,6 @@ define([
             return this;
         };
 
-        api.RelativeTreeVertex.prototype.mergeTo = function(distantUri){
-            api.removeFromCache(
-                this.getModel().getUri(),
-                this.getId()
-            );
-            VertexUi.removeFromCache(
-                this.getModel().getUri(),
-                this.getId()
-            );
-            this.getModel().setUri(distantUri);
-            api.initCache(
-                this
-            );
-            VertexUi.initCache(
-                this
-            );
-        };
-
         api.RelativeTreeVertex.prototype.visitVerticesChildren = function (visitor) {
             var children = this.getChildrenBubblesHtml();
             $.each(children, function () {
@@ -166,6 +148,14 @@ define([
             VertexUi.removeFromCache(
                 this.getUri(),
                 this.getId()
+            );
+        };
+        api.RelativeTreeVertex.prototype.initCache = function () {
+            api.initCache(
+                this
+            );
+            VertexUi.initCache(
+                this
             );
         };
         api.RelativeTreeVertex.prototype._isRemoved = function () {

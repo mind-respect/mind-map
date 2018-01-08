@@ -16,15 +16,17 @@ define([
     "triple_brain.identification",
     "mr.command",
     "triple_brain.selection_handler",
+    "triple_brain.user_map_autocomplete_provider",
     "bootstrap-wysiwyg",
     "bootstrap",
     "jquery.safer-html",
     "jquery.max_char"
-], function ($, GraphElementType, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu, EdgeService, Identification, Command, SelectionHandler) {
+], function ($, GraphElementType, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu, EdgeService, Identification, Command, SelectionHandler, UserMapAutocompleteProvider) {
     "use strict";
     var api = {},
         bubbleCutClipboard,
         identificationBaseEventBusKey = "/event/ui/graph/identification/";
+    var isMergePopoverBuilt = false;
     EventBus.subscribe(
         '/event/ui/mind_map_info/is_view_only',
         setUpSaveButton
@@ -536,6 +538,58 @@ define([
             }
         }
         return $.when.apply($, promises);
+    };
+
+    GraphElementController.prototype.mergeCanDo = function () {
+        return false;
+    };
+
+    GraphElementController.prototype.merge = function () {
+        if (!isMergePopoverBuilt) {
+            this.getUi().getHtml().popoverLikeToolTip({
+                animation: false,
+                html: true,
+                title: $('<div>').append($.t("merge.title"), $('<br>'), $("<small>").text($.t("merge.instruction"))),
+                placement: 'auto left',
+                container: '#drawn_graph',
+                trigger: "manual",
+                allowMultiplePopoverDisplayed: true,
+                content: function () {
+                    return $("#merge-popover").html();
+                }
+            });
+        }
+        this.getUi().getHtml().popover("show").popover("show");
+        var searchInput = $('.popover').find("input").empty();
+        if (!searchInput.isMrAutocompleteSetup()) {
+            var searchFetcher = this.getUi().isMeta() ?
+                UserMapAutocompleteProvider.toFetchOwnTags :
+                UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesExcept;
+            searchInput.mrAutocomplete({
+                select: function (event, ui) {
+                    event.preventDefault();
+                    this.convertToDistantBubbleWithUri(ui.item.uri);
+                    this.setLabel(ui.item.label);
+                    this.getUi().getHtml().popover("hide");
+                }.bind(this),
+                resultsProviders: [
+                    searchFetcher(
+                        this.getUi(),
+                        {
+                            noFilter: true,
+                            additionalFilter: function (searchResults) {
+                                return searchResults.filter(function (searchResult) {
+                                    return this.convertToDistantBubbleWithUriCanDo(
+                                        searchResult.uri
+                                    );
+                                }.bind(this));
+                            }.bind(this)
+                        }
+                    )
+                ]
+            });
+        }
+        searchInput.focus();
     };
 
     GraphElementController.prototype.becomeExParent = function () {

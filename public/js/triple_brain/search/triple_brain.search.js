@@ -3,17 +3,21 @@
  */
 
 define([
-    "jquery",
-    "triple_brain.user_service"
-],
+        "jquery",
+        "triple_brain.user_service"
+    ],
     function ($, UserService) {
         "use strict";
         var api = {};
-        api.searchForAllOwnResources =  function (searchText) {
+        api.searchForAllOwnResources = function (searchText) {
             return $.ajax({
-                type:'GET',
+                type: 'POST',
+                data: JSON.stringify({
+                    "searchText": searchText
+                }),
+                contentType: 'application/json;charset=utf-8',
                 url: UserService.currentUserUri() +
-                "/search/own_all_resource/auto_complete?text=" + searchText
+                "/search/own_all_resource/auto_complete"
             });
         };
 
@@ -27,55 +31,97 @@ define([
                 searchText
             ).then(successCallback);
         };
-        api.searchForOnlyOwnVerticesAjaxCall = function(searchText){
+        api.searchForOnlyOwnVerticesAjaxCall = function (searchText) {
             return $.ajax({
-                type:'GET',
+                type: 'POST',
+                data: JSON.stringify({
+                    "searchText": searchText
+                }),
+                contentType: 'application/json;charset=utf-8',
                 url: UserService.currentUserUri() +
-                    "/search/own_vertices/auto_complete?text=" + searchText
+                "/search/own_vertices/auto_complete"
             });
         };
-        api.searchForOnlyOwnVerticesAndSchemasAjaxCall = function(searchText){
+        api.searchOwnTags = function (searchText) {
             return $.ajax({
-                type:'GET',
+                type: 'POST',
+                data: JSON.stringify({
+                    "searchText": searchText
+                }),
+                contentType: 'application/json;charset=utf-8',
                 url: UserService.currentUserUri() +
-                    "/search/own_vertices_and_schemas/auto_complete?text=" + searchText
+                "/search/own_tags/auto_complete"
             });
         };
-        api.searchForOwnVerticesAndPublicOnesAjaxCall = function(searchText){
+        api.searchForOnlyOwnTagsAjaxCall = function (searchText) {
             return $.ajax({
-                type:'GET',
+                type: 'POST',
+                data: JSON.stringify({
+                    "searchText": searchText
+                }),
+                contentType: 'application/json;charset=utf-8',
                 url: UserService.currentUserUri() +
-                    "/search/vertices/auto_complete?text=" + searchText
+                "/search/own_tags/auto_complete"
             });
         };
-        api.searchForOwnRelationsAjaxCall = function(searchText){
+        api.searchForOnlyOwnVerticesAndSchemasAjaxCall = function (searchText) {
             return $.ajax({
-                type:'GET',
+                type: 'POST',
+                data: JSON.stringify({
+                    "searchText": searchText
+                }),
+                contentType: 'application/json;charset=utf-8',
                 url: UserService.currentUserUri() +
-                    "/search/relations/auto_complete?text=" + searchText
+                "/search/own_vertices_and_schemas/auto_complete"
             });
         };
-        api.getSearchResultDetails = function(uri, callback){
+        api.searchForOwnVerticesAndPublicOnesAjaxCall = function (searchText) {
+            return $.ajax({
+                type: 'POST',
+                data: JSON.stringify({
+                    "searchText": searchText
+                }),
+                contentType: 'application/json;charset=utf-8',
+                url: UserService.currentUserUri() +
+                "/search/vertices/auto_complete"
+            });
+        };
+        api.searchForOwnRelationsAjaxCall = function (searchText) {
+            return $.ajax({
+                type: 'POST',
+                data: JSON.stringify({
+                    "searchText": searchText
+                }),
+                contentType: 'application/json;charset=utf-8',
+                url: UserService.currentUserUri() +
+                "/search/relations/auto_complete"
+            });
+        };
+        api.getSearchResultDetails = function (uri, callback) {
             return api.getSearchResultDetailsAjaxCall(
                 uri
             ).then(
                 callback
             );
         };
-        api.getSearchResultDetailsAjaxCall = function(uri){
-            var baseUri = UserService.hasCurrentUser()?
+        api.getSearchResultDetailsAjaxCall = function (uri) {
+            var baseUri = UserService.hasCurrentUser() ?
                 UserService.currentUserUri() + "/search/" :
                 "/service/search/";
             return $.ajax({
-                type:'GET',
+                type: 'GET',
                 url: baseUri +
-                    "details?uri=" + uri
+                "details?uri=" + uri
             });
         };
-        api.searchForPublicVerticesAndSchemasAjaxCall = function(searchText){
+        api.searchForPublicVerticesAndSchemasAjaxCall = function (searchText) {
             return $.ajax({
-                type:'GET',
-                url: "/service/search?text=" + searchText
+                type: 'POST',
+                data: JSON.stringify({
+                    "searchText": searchText
+                }),
+                contentType: 'application/json;charset=utf-8',
+                url: "/service/search"
             });
         };
         return api;

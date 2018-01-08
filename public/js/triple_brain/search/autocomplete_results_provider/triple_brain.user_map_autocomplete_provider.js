@@ -39,6 +39,13 @@ define([
             options
         );
     };
+    api.toFetchOwnTags= function (graphElementToIgnore, options) {
+        return new UserMapAutoCompleteProvider(
+            SearchService.searchOwnTags,
+            graphElementToIgnore,
+            options
+        );
+    };
     api.toFetchPublicAndUserVerticesExcept = function (vertexToIgnore, options) {
         return new UserMapAutoCompleteProvider(
             SearchService.searchForOwnVerticesAndPublicOnesAjaxCall,
