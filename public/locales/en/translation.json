@@ -397,7 +397,7 @@
   },
   "merge": {
     "title" : "Merge with ...",
-    "instruction": "This will result in a single bubble that will have all the relationships between this bubble and the bubble you have selected.",
+    "instruction": "This bubble will be removed but all its relationships will move to be added to bubble you will have selected in the search bar below.",
     "placeholder": "Merge with ..."
   }
 }

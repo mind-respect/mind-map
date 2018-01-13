@@ -395,7 +395,7 @@
   },
   "merge": {
     "title" : "Fusionner avec ...",
-    "instruction": "Il en résultera une seule bulle qui aura toutes les relations de cette bulle et celles de la bulle que vous aurez sélectionnée.",
+    "instruction": "Cette bulle s'effacera mais toutes ses relations vont se déplacer pour s'ajouter à la bulle que vous aurez sélectionnée dans la barre de recherche ci-bas.",
     "placeholder": "Fusionner avec ..."
   }
 }

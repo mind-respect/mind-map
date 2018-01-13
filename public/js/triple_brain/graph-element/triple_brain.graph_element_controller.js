@@ -560,7 +560,13 @@ define([
             });
         }
         this.getUi().getHtml().popover("show").popover("show");
-        var searchInput = $('.popover').find("input").empty();
+        $('.popover-title').mousedown(function(event){
+            event.stopPropagation();
+        });
+        var searchInput = $('.popover').find("input").empty().mousedown(function(event){
+            event.stopPropagation();
+            $(this).focus();
+        });
         if (!searchInput.isMrAutocompleteSetup()) {
             var searchFetcher = this.getUi().isMeta() ?
                 UserMapAutocompleteProvider.toFetchOwnTags :
