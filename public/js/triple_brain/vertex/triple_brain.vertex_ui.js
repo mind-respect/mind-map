@@ -413,10 +413,22 @@ define([
         api.VertexUi.prototype.buildChildrenIndex = function(){
             var childrenIndex = {};
             var index = 0;
-            this.visitClosestChildVertices(setChildVertexIndex);
+            this.visitAllImmediateChild(function(child){
+                if(child.isRelation()){
+                    setChildVertexIndex(
+                        child.getModel().getOtherVertex(
+                            this.getModel()
+                        ).getUri()
+                    );
+                }else if(child.isGroupRelation()){
+                    Object.keys(child.buildChildrenIndex()).forEach(function(vertexUri){
+                        setChildVertexIndex(vertexUri);
+                    });
+                }
+            }.bind(this));
             return childrenIndex;
-            function setChildVertexIndex(childVertex){
-                childrenIndex[childVertex.getModel().getUri()] = {
+            function setChildVertexIndex(childVertexUri){
+                childrenIndex[childVertexUri] = {
                     index: index
                 };
                 index++;

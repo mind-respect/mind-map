@@ -192,6 +192,29 @@ define([
                     childrenIndexes.hasOwnProperty(vertexUnderDeepGroupRelation.getUri())
                 ).toBeTruthy();
             });
+            it("includes child vertices under collapsed group relations", function () {
+                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+                var centerVertex = scenario.getCenterVertexInTree();
+                var possession = TestUtils.getChildWithLabel(centerVertex, "Possession");
+                expect(
+                    possession.getNumberOfChild()
+                ).toBe(0);
+                var secondLevelGroupRelation = possession.getTopMostChildBubble();
+                expect(
+                    secondLevelGroupRelation.getNumberOfChild()
+                ).toBe(0);
+                expect(
+                    secondLevelGroupRelation.isGroupRelation()
+                ).toBeTruthy();
+                var deepVertex = secondLevelGroupRelation.getModel().getAnyVertex();
+                var childrenIndexes = centerVertex.buildChildrenIndex();
+                expect(
+                    Object.keys(childrenIndexes).length
+                ).toBe(8);
+                expect(
+                    childrenIndexes.hasOwnProperty(deepVertex.getUri())
+                ).toBeTruthy()
+            });
             it("gives right order for center vertices", function () {
                 var scenario = new Scenarios.threeBubblesGraph();
                 var center = scenario.getBubble1InTree();

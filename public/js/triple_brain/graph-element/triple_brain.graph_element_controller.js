@@ -468,9 +468,11 @@ define([
             this.getUi().getParentBubble() :
             this.getUi();
         var promises = [];
-        promises.push(
-            movedEdge.getParentBubble().getController().becomeExParent(movedEdge)
-        );
+        if(!otherEdge.getParentBubble().isSameUri(movedEdge.getParentBubble())){
+            promises.push(
+                movedEdge.getParentBubble().getController().becomeExParent(movedEdge)
+            );
+        }
         if (isAbove) {
             this.getUi().moveAbove(otherEdge);
         } else {
