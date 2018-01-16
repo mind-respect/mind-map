@@ -148,7 +148,10 @@ define([
                         ).getUri()
                     );
                 } else if (child.isGroupRelation()) {
-                    Object.keys(child.buildChildrenIndex()).forEach(function (vertexUri) {
+                    var grandChildIndex = child.buildChildrenIndex();
+                    Object.keys(grandChildIndex).sort(function (a, b) {
+                        return grandChildIndex[a].index - grandChildIndex[b].index;
+                    }).forEach(function (vertexUri) {
                         setChildVertexIndex(vertexUri);
                     });
                 }

@@ -68,6 +68,25 @@ define([
             return this._getSortedVerticesAtAnyDepthOrNot(false, childrenIndex);
         };
 
+        GroupRelation.prototype.sortedImmediateChild = function (childIndex) {
+            var immediateChild = this.getVerticesAsArray().concat(this.childGroupRelations);
+            return immediateChild.sort(function (a, b) {
+                var graphElementA = a instanceof GroupRelation ?
+                    a.getFirstVertex(childIndex) :
+                    a;
+                var graphElementB = b instanceof GroupRelation ?
+                    b.getFirstVertex(childIndex) :
+                    b;
+                return GraphElement.sortCompare(graphElementA, graphElementB, childIndex);
+            }).map(function (child) {
+                if (child instanceof GroupRelation) {
+                    return child;
+                } else {
+                    return this.vertices[child.getUri()];
+                }
+            }.bind(this));
+        };
+
         GroupRelation.prototype._getSortedVerticesAtAnyDepthOrNot = function (atAnyDepth, childrenIndex) {
             var vertices = atAnyDepth ? this.getVerticesAtAnyDepth() : this.vertices;
             var sortedKeys = Object.keys(vertices).sort(
@@ -169,6 +188,19 @@ define([
             var vertices = $.extend(true, {}, this.vertices);
             this.getChildGroupRelations().forEach(function (childGroupRelation) {
                 $.extend(true, vertices, childGroupRelation.getVerticesAtAnyDepth());
+            });
+            return vertices;
+        };
+
+        GroupRelation.prototype.getVerticesAsArray = function () {
+            var groupRelationVertices = this.getVertices();
+            var vertices = [];
+            Object.keys(groupRelationVertices).forEach(function (vertexUri) {
+                Object.keys(groupRelationVertices[vertexUri]).forEach(function (vertedId) {
+                    vertices.push(
+                        groupRelationVertices[vertexUri][vertedId].vertex
+                    );
+                });
             });
             return vertices;
         };
@@ -302,20 +334,21 @@ define([
         GroupRelation.prototype.isToTheLeft = function () {
             var nbLeft = 0;
             var nbRight = 0;
-            this.visitTuples(function(tuple){
-                if(tuple.edge.isToTheLeft() === true){
+            this.visitTuples(function (tuple) {
+                if (tuple.edge.isToTheLeft() === true) {
                     nbLeft++;
                 }
-                if(tuple.edge.isToTheLeft() === false){
+                if (tuple.edge.isToTheLeft() === false) {
                     nbRight++;
                 }
             });
-            if(nbLeft === nbRight){
+            if (nbLeft === nbRight) {
                 return undefined;
             }
             return nbLeft > nbRight;
         };
 
+        api.GroupRelation = GroupRelation;
         return api;
     }
 );

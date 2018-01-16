@@ -410,24 +410,28 @@ define([
             }
         };
 
-        api.VertexUi.prototype.buildChildrenIndex = function(){
+        api.VertexUi.prototype.buildChildrenIndex = function () {
             var childrenIndex = {};
             var index = 0;
-            this.visitAllImmediateChild(function(child){
-                if(child.isRelation()){
+            this.visitAllImmediateChild(function (child) {
+                if (child.isRelation()) {
                     setChildVertexIndex(
                         child.getModel().getOtherVertex(
                             this.getModel()
                         ).getUri()
                     );
-                }else if(child.isGroupRelation()){
-                    Object.keys(child.buildChildrenIndex()).forEach(function(vertexUri){
+                } else if (child.isGroupRelation()) {
+                    var grandChildIndex = child.buildChildrenIndex();
+                    Object.keys(grandChildIndex).sort(function (a, b) {
+                        return grandChildIndex[a].index - grandChildIndex[b].index;
+                    }).forEach(function (vertexUri) {
                         setChildVertexIndex(vertexUri);
                     });
                 }
             }.bind(this));
             return childrenIndex;
-            function setChildVertexIndex(childVertexUri){
+
+            function setChildVertexIndex(childVertexUri) {
                 childrenIndex[childVertexUri] = {
                     index: index
                 };
