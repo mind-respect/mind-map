@@ -498,6 +498,9 @@ define([
             $html.data("previous_draggable_status")
         );
         this.getInLabelButtonsContainer().removeClass("hidden");
+        if(this.isSelected()){
+            this.showMenu();
+        }
         GraphUi.unlockDragScroll();
         GraphUi.enableDragScroll();
         KeyboardActionsHandler.enable();
