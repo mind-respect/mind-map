@@ -71,7 +71,7 @@ define([
                 'background',
                 "radial-gradient(rgba(0, 0, 255, 0) 5%, " + backgroundColor + " 100%"
             );
-        }
+        };
 
         api.disableDragScroll = function () {
             if(_isDragScrollLocked || !_isDragScrollEnabled){

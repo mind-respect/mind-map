@@ -61,8 +61,6 @@ define([
 
     Vertex.prototype = new GraphElement.GraphElement();
 
-    Vertex.prototype.getColors
-
     Vertex.prototype.hasIncludedGraphElements = function () {
         return Object.keys(this.getIncludedVertices()).length > 0;
     };
