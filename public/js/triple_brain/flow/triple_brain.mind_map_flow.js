@@ -36,15 +36,15 @@ define([
     };
     EventBus.subscribe(
         '/event/ui/user/get_authenticated/success',
-        function(event, authenticatedUser){
+        function (event, authenticatedUser) {
             var isADevUser = [
                 "spdupuis",
                 "vince"
             ].indexOf(authenticatedUser.user_name) !== -1;
             var devOnlyHtml = $(".dev-only");
-            if(isADevUser){
+            if (isADevUser) {
                 devOnlyHtml.removeClass("hidden");
-            }else{
+            } else {
                 devOnlyHtml.remove();
             }
         }
@@ -54,10 +54,6 @@ define([
         function (event, centralBubbleUri) {
             SelectionHandler.removeAll();
             GraphDisplayer.getVertexSelector().visitAllVertices(function (vertex) {
-            console.log("Les couleurs");
-            console.log(vertex.getModel().getColors());
-            console.log("Les étiquettes");
-            console.log(vertex.getModel().getLabel());
                 EventBus.publish(
                     '/event/ui/vertex/visit_after_graph_drawn',
                     vertex
@@ -73,13 +69,11 @@ define([
                 centralBubbleUri
             );
             var backgroundColor = centralBubble.getModel().getColors().background;
-                        debugger;
-
             if (backgroundColor) {
                 GraphUi.changeBackgroundColor(backgroundColor);
             }
             document.title = centralBubble.getTextOrDefault() + " | MindRespect";
-            if(MindMapInfo.isViewOnly()){
+            if (MindMapInfo.isViewOnly()) {
                 GraphUi.getDrawnGraph().find(".bubble").addClass("not-editable");
             }
             if (centralBubble.isSchema() && !MindMapInfo.isViewOnly()) {
@@ -92,11 +86,10 @@ define([
                 "mousedown",
                 function (event) {
                     var clickedOnSomethingInsideABubble = $(event.target).closest(".bubble").length === 1;
-                    if(clickedOnSomethingInsideABubble){
+                    if (clickedOnSomethingInsideABubble) {
                         return;
                     }
-                    if (UiUtils.isMacintosh() ? event.metaKey : event.ctrlKey)
-                    {
+                    if (UiUtils.isMacintosh() ? event.metaKey : event.ctrlKey) {
                         return;
                     }
                     GraphUi.removePopovers();
@@ -146,6 +139,7 @@ define([
                 loadLocaleAndGraph();
             });
         }
+
         function loadLocaleAndGraph() {
             LanguageManager.loadLocaleContent(function () {
                 if (isAnonymous) {

@@ -102,6 +102,11 @@ define([
                 this.graphElementServerFormat.childrenIndex
             );
         }
+        if (this.graphElementServerFormat.colors) {
+            this.graphElementServerFormat.colors = JSON.parse(
+                this.graphElementServerFormat.colors
+            );
+        }
         this._buildIdentifications();
         // this.wikipediaLinksPromise = this._buildWikidataLinks();
         return this;

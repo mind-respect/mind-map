@@ -174,7 +174,6 @@ define([
         };
 
         api.saveColors = function (colors) {
-        debugger;
             return $.ajax({
                 type: 'POST',
                 url: GraphElementUi.getCenterVertexOrSchema().getUri() + '/colors',
