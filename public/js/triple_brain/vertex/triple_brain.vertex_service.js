@@ -11,9 +11,10 @@ define([
         "triple_brain.user_service",
         "triple_brain.friendly_resource_service",
         "triple_brain.id_uri",
-        "triple_brain.center_bubble"
+        "triple_brain.center_bubble",
+        "triple_brain.graph_element_ui"
     ],
-    function ($, EventBus, TripleUiBuilder, Suggestion, GraphElementService, UserService, FriendlyResourceService, IdUri, CenterBubble) {
+    function ($, EventBus, TripleUiBuilder, Suggestion, GraphElementService, UserService, FriendlyResourceService, IdUri, CenterBubble, GraphElementUi) {
         "use strict";
         var api = {};
         api.getByUri = function (uri, callback) {
@@ -171,6 +172,18 @@ define([
                 dataType: 'json'
             });
         };
+
+        api.saveColors = function (colors) {
+        debugger;
+            return $.ajax({
+                type: 'POST',
+                url: GraphElementUi.getCenterVertexOrSchema().getUri() + '/colors',
+                data: JSON.stringify(colors),
+                contentType: 'application/json;charset=utf-8',
+                dataType: 'json'
+            });
+        };
+
         return api;
 
         function setCollectionPrivacy(isPublic, vertices) {

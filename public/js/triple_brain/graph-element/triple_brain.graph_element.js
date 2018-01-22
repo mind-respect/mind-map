@@ -9,6 +9,7 @@ define([
     "triple_brain.id_uri",
     "mr.wikidata_uri",
     "mr.wikidata"
+
 ], function ($, FriendlyResource, Identification, IdUri, WikidataUri, Wikidata) {
     "use strict";
     var api = {};
@@ -291,6 +292,10 @@ define([
             return -1;
         }
         return parentChildrenIndex[this.getUri()].index;
+    };
+
+    api.GraphElement.prototype.getColors = function () {
+        return this.graphElementServerFormat.colors || {};
     };
 
     api.GraphElement.prototype.getChildrenIndex = function () {

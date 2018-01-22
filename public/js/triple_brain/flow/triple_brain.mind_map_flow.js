@@ -54,6 +54,10 @@ define([
         function (event, centralBubbleUri) {
             SelectionHandler.removeAll();
             GraphDisplayer.getVertexSelector().visitAllVertices(function (vertex) {
+            console.log("Les couleurs");
+            console.log(vertex.getModel().getColors());
+            console.log("Les étiquettes");
+            console.log(vertex.getModel().getLabel());
                 EventBus.publish(
                     '/event/ui/vertex/visit_after_graph_drawn',
                     vertex
@@ -68,6 +72,12 @@ define([
             var centralBubble = BubbleFactory.getGraphElementFromUri(
                 centralBubbleUri
             );
+            var backgroundColor = centralBubble.getModel().getColors().background;
+                        debugger;
+
+            if (backgroundColor) {
+                GraphUi.changeBackgroundColor(backgroundColor);
+            }
             document.title = centralBubble.getTextOrDefault() + " | MindRespect";
             if(MindMapInfo.isViewOnly()){
                 GraphUi.getDrawnGraph().find(".bubble").addClass("not-editable");

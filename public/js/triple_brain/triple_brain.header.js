@@ -16,9 +16,11 @@ define([
         "triple_brain.id_uri",
         "triple_brain.language_manager",
         "triple_brain.graph_element_ui",
-        "triple_brain.graph_controller"
+        "triple_brain.graph_ui",
+        "triple_brain.graph_controller",
+        "triple_brain.vertex_service"
     ],
-    function ($, BigSearchBox, LoginHandler, RegisterHandler, SelectionHandler, UserService, GraphDisplayer, MindMapInfo, EventBus, SchemaService, IdUri, LanguageManager, GraphElementUi, GraphController) {
+    function ($, BigSearchBox, LoginHandler, RegisterHandler, SelectionHandler, UserService, GraphDisplayer, MindMapInfo, EventBus, SchemaService, IdUri, LanguageManager, GraphElementUi, GraphUi, GraphController, VertexService) {
         "use strict";
         var api = {};
         api.earlyInit = function () {
@@ -304,15 +306,16 @@ define([
 
         function handleUserColorPreferences() {
             $("#background-color-picker").on("change", function () {
-                    changeBackgroundColor($(this).val());
+                    GraphUi.changeBackgroundColor(this.value);
+                    VertexService.saveColors({background:this.value});
                 }
             );
             $("#bubbles-color-picker").on("change", function () {
-                    changeBubblesColor($(this).val());
+                    changeBubblesColor(this.value);
                 }
             );
             $("#relations-color-picker").on("change", function () {
-                    changeRelationsColor($(this).val());
+                    changeRelationsColor(this.value);
                 }
             );
         }
@@ -331,11 +334,5 @@ define([
             );
         }
 
-        function changeBackgroundColor(backgroundColor) {
-            $("#drawn_graph").css(
-                'background',
-                "radial-gradient(rgba(0, 0, 255, 0) 5%, " + backgroundColor + " 100%"
-            );
-        }
     }
 );

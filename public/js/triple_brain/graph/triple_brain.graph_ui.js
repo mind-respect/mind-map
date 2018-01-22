@@ -66,6 +66,13 @@ define([
             _isDragScrollLocked = false;
         };
 
+        api.changeBackgroundColor = function (backgroundColor) {
+            $("#drawn_graph").css(
+                'background',
+                "radial-gradient(rgba(0, 0, 255, 0) 5%, " + backgroundColor + " 100%"
+            );
+        }
+
         api.disableDragScroll = function () {
             if(_isDragScrollLocked || !_isDragScrollEnabled){
                 return;
