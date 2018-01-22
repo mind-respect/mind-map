@@ -32,10 +32,18 @@ define([
             options
         );
     };
-    api.toFetchOnlyCurrentUserVerticesExcept = function (vertexToIgnore) {
+    api.toFetchOnlyCurrentUserVerticesExcept = function (vertexToIgnore, options) {
         return new UserMapAutoCompleteProvider(
             SearchService.searchForOnlyOwnVerticesAjaxCall,
-            vertexToIgnore
+            vertexToIgnore,
+            options
+        );
+    };
+    api.toFetchOwnTags= function (graphElementToIgnore, options) {
+        return new UserMapAutoCompleteProvider(
+            SearchService.searchOwnTags,
+            graphElementToIgnore,
+            options
         );
     };
     api.toFetchPublicAndUserVerticesExcept = function (vertexToIgnore, options) {
@@ -105,6 +113,9 @@ define([
 
             if (this.shouldFilter()) {
                 formattedResults = this.filterSearchResults(formattedResults);
+            }
+            if(this.options.additionalFilter){
+                formattedResults = this.options.additionalFilter(formattedResults);
             }
             this.sortFormattedResults(formattedResults);
             if(this.options.prioritizeVertex){

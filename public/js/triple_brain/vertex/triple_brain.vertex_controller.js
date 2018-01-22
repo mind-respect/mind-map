@@ -20,8 +20,9 @@ define([
     "triple_brain.schema_suggestion",
     "triple_brain.event_bus",
     "triple_brain.id_uri",
-    "triple_brain.graph_element_type"
-], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, BubbleDeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, EventBus, IdUri, GraphElementType) {
+    "triple_brain.graph_element_type",
+    "jquery.triple_brain.search"
+], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, BubbleDeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, EventBus, IdUri, GraphElementType, UserMapAutocompleteProvider) {
     "use strict";
     var api = {};
 
@@ -83,7 +84,7 @@ define([
                 )
             );
             promises.push(
-                childRelation.getController().moveUnder(
+                childRelation.getController().moveBelow(
                     parentRelation
                 )
             );
@@ -173,7 +174,7 @@ define([
             this.getUi().getParentVertex(),
             this.getUi().getParentBubble().getParentBubble()
         ).then(function (triple) {
-            triple.edge().getController().moveUnder(
+            triple.edge().getController().moveBelow(
                 this.getUi().getParentBubble()
             );
             SelectionHandler.setToSingleVertex(
@@ -575,6 +576,11 @@ define([
             this.getUi().afterConvertToDistantBubbleWithUri();
         }.bind(this));
     };
+
+    VertexController.prototype.mergeCanDo = function () {
+        return true;
+    };
+
     VertexController.prototype._relateToDistantVertexWithUri = function (distantVertexUri) {
         return EdgeService.addToFarVertex(this.getUi(), distantVertexUri).then(function () {
             return GraphDisplayer.connectVertexToVertexWithUri(

@@ -78,6 +78,24 @@ define([
                 url: edge.getUri() + "/destination-vertex/" + IdUri.elementIdFromUri(destinationVertex.getUri())
             }).then(callback);
         };
+        api.setToTheLeft = function (relation) {
+            return $.ajax({
+                type: 'POST',
+                url: relation.getUri() + "/setToTheLeft"
+            });
+        };
+        api.setToTheRight = function (relation) {
+            return $.ajax({
+                type: 'POST',
+                url: relation.getUri() + "/setToTheRight"
+            });
+        };
+        api.unsetToTheLeftOrRight = function (relation) {
+            return $.ajax({
+                type: 'POST',
+                url: relation.getUri() + "/unsetToTheLeftOrRight"
+            });
+        };
         api._add = function (sourceVertexUri, destinationVertexUri) {
             var sourceVertexUriFormatted = IdUri.encodeUri(sourceVertexUri);
             var destinationVertexUriFormatted = IdUri.encodeUri(destinationVertexUri);
@@ -110,6 +128,7 @@ define([
             );
         };
         return api;
+
         function edgesUrl() {
             return UserService.currentUserUri() + "/graph/edge";
         }

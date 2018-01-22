@@ -87,7 +87,7 @@ define([
     };
 
     api.GroupRelationUi.prototype.expand = function () {
-        if(!this.isCollapsed() && !this.isExpanded()){
+        if (!this.isCollapsed() && !this.isExpanded()) {
             GraphDisplayer.expandGroupRelation(
                 this
             );
@@ -105,29 +105,67 @@ define([
         return this.getModel().getIdentifiers()[0];
     };
 
-    api.GroupRelationUi.prototype.getNumberOfHiddenRelations = function(){
+    api.GroupRelationUi.prototype.getNumberOfHiddenRelations = function () {
         return this.getModel().getNumberOfVerticesAtAnyDepth() ||
             this.getNumberOfChildEvenIfHidden();
     };
 
     api.GroupRelationUi.prototype.getGreatestGroupRelationAncestor = function () {
         var greatest = this;
-        do{
+        do {
             var parent = greatest.getParentBubble();
-            if(parent.isGroupRelation()){
+            if (parent.isGroupRelation()) {
                 greatest = parent;
             }
-        }while(parent.isGroupRelation());
+        } while (parent.isGroupRelation());
         return greatest;
     };
 
-    api.GroupRelationUi.prototype.getTagNumberOfReferences = function(identifier){
+    api.GroupRelationUi.prototype.getTagNumberOfOtherReferences = function (identifier) {
         return identifier.getNbReferences() - this.getModel().getNumberOfVerticesAtAnyDepth();
     };
 
-    api.GroupRelationUi.prototype.reviewEditButtonDisplay = function () {};
+    api.GroupRelationUi.prototype.reviewEditButtonDisplay = function () {
+    };
 
     api.GroupRelationUi.prototype.getModel = api.GroupRelationUi.prototype.getGroupRelation;
+
+    api.GroupRelationUi.prototype.buildChildrenIndex = function () {
+        var childrenIndex = {};
+        var index = 0;
+        if (this.getNumberOfChild() === 0) {
+            this.getModel().getSortedVerticesArrayAtAnyDepth(
+                this.getParentVertex().getModel().getChildrenIndex()
+            ).forEach(function (childVertex) {
+                setChildVertexIndex(childVertex.getUri());
+            });
+        } else {
+            this.visitAllImmediateChild(function (child) {
+                if (child.isRelation()) {
+                    setChildVertexIndex(
+                        child.getModel().getOtherVertex(
+                            this.getParentVertex().getModel()
+                        ).getUri()
+                    );
+                } else if (child.isGroupRelation()) {
+                    var grandChildIndex = child.buildChildrenIndex();
+                    Object.keys(grandChildIndex).sort(function (a, b) {
+                        return grandChildIndex[a].index - grandChildIndex[b].index;
+                    }).forEach(function (vertexUri) {
+                        setChildVertexIndex(vertexUri);
+                    });
+                }
+            }.bind(this));
+        }
+        return childrenIndex;
+
+        function setChildVertexIndex(childVertexUri) {
+            childrenIndex[childVertexUri] = {
+                index: index
+            };
+            index++;
+        }
+    };
 
     return api;
 });

@@ -191,6 +191,15 @@ define([
         return identifierWithLabel;
     };
 
+    api.defaultMock = function(api, method){
+        return spyOn(
+            api,
+            method
+        ).and.callFake(function () {
+            return $.Deferred().resolve();
+        });
+    };
+
     return api;
 
     function generateUuid() {

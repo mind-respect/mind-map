@@ -113,7 +113,7 @@ define([
     }
 
     function setupSearch() {
-        getSearchInput().tripleBrainAutocomplete({
+        getSearchInput().mrAutocomplete({
             select: function (event, ui) {
                 api._enterComparisonWithBubbleUri(ui.item.uri);
             },

@@ -15,31 +15,32 @@ define([
     "triple_brain.mind_map_info",
     "mr.suggestion-ui-builder",
     "mr.suggestion-relation-ui-builder",
-    "triple_brain.triple_ui"
-], function ($, RelativeTreeTemplates, CenterBubble, VertexUiBuilder, GroupRelationUiBuilder, EdgeUiBuilder, GraphUi, Identification, GraphElement, MindMapInfo, SuggestionUiBuilder, SuggestionRelationUiBuilder, TripleUi) {
+    "triple_brain.triple_ui",
+    "triple_brain.group_relation"
+], function ($, RelativeTreeTemplates, CenterBubble, VertexUiBuilder, GroupRelationUiBuilder, EdgeUiBuilder, GraphUi, Identification, GraphElement, MindMapInfo, SuggestionUiBuilder, SuggestionRelationUiBuilder, TripleUi, GroupRelation) {
     "use strict";
     var api = {};
-    api.withDefaultHtmlBuilders = function(){
+    api.withDefaultHtmlBuilders = function () {
         return api.usingVertexAndEdgeHtmlBuilder();
     };
-    api.usingVertexUiBuilder = function(vertexUiBuilder){
+    api.usingVertexUiBuilder = function (vertexUiBuilder) {
         return api.usingVertexAndEdgeHtmlBuilder(
             vertexUiBuilder
         );
     };
-    api.usingEdgeUiBuilder = function(edgeUiBuilder){
+    api.usingEdgeUiBuilder = function (edgeUiBuilder) {
         return api.usingVertexAndEdgeHtmlBuilder(
             null,
             edgeUiBuilder
         );
     };
-    api.usingVertexAndEdgeHtmlBuilder = function(vertexUiBuilder, edgeHtmlBuilder){
+    api.usingVertexAndEdgeHtmlBuilder = function (vertexUiBuilder, edgeHtmlBuilder) {
         return new api.GraphUiBuilder(
             vertexUiBuilder || new VertexUiBuilder.VertexUiBuilder(),
             edgeHtmlBuilder || new EdgeUiBuilder.EdgeUiBuilder()
         );
     };
-    api.GraphUiBuilder = function(htmlUiBuilder, edgeUiBuilder){
+    api.GraphUiBuilder = function (htmlUiBuilder, edgeUiBuilder) {
         this.vertexUiBuilder = htmlUiBuilder;
         this.edgeUiBuilder = edgeUiBuilder;
     };
@@ -47,14 +48,14 @@ define([
         this.forceToTheLeft = isToTheLeft;
     };
 
-    api.GraphUiBuilder.prototype.getEdgeUiBuilder = function(){
+    api.GraphUiBuilder.prototype.getEdgeUiBuilder = function () {
         return this.edgeUiBuilder;
     };
 
-    api.GraphUiBuilder.prototype.buildBubbleHtmlIntoContainer = function (serverFormat, parentBubble, builder, htmlId) {
+    api.GraphUiBuilder.prototype.buildBubbleHtmlIntoContainer = function (model, parentBubble, builder, htmlId) {
         api.flagSuggestionsToNotDisplayGivenParentAndChildVertex(
             parentBubble.getModel(),
-            serverFormat
+            model
         );
         var childTreeContainer = RelativeTreeTemplates[
                 "vertex_tree_container"
@@ -62,22 +63,27 @@ define([
             container;
         if (parentBubble.isCenterBubble()) {
             var centerBubble = CenterBubble.usingBubble(parentBubble);
-            var addLeft = undefined === this.forceToTheLeft ?
-                centerBubble.shouldAddLeft() :
-                this.forceToTheLeft;
+            var addLeft;
+            if (this.forceToTheLeft !== undefined) {
+                addLeft = this.forceToTheLeft;
+            } else if (model.isToTheLeft() !== undefined) {
+                addLeft = model.isToTheLeft();
+            } else {
+                addLeft = centerBubble.shouldAddLeft();
+            }
             container = addLeft ?
                 centerBubble.getLeftContainer() :
                 centerBubble.getRightContainer();
-            serverFormat.isLeftOriented = addLeft;
+            model.isLeftOriented = addLeft;
         } else {
             container = this.childContainer(parentBubble);
-            serverFormat.isLeftOriented = parentBubble.getModel().isLeftOriented;
+            model.isLeftOriented = parentBubble.getModel().isLeftOriented;
         }
         var childVertexHtmlFacade = builder.create(
-            serverFormat,
+            model,
             htmlId
         );
-        childVertexHtmlFacade.setModel(serverFormat);
+        childVertexHtmlFacade.setModel(model);
         container.append(
             childTreeContainer
         ).append("<span class='clear-fix'>");
@@ -88,7 +94,7 @@ define([
             vertexContainer
         );
         childTreeContainer[
-            serverFormat.isLeftOriented ? "append" : "prepend"
+            model.isLeftOriented ? "append" : "prepend"
             ](
             RelativeTreeTemplates[
                 "vertical_border"
@@ -97,7 +103,7 @@ define([
         vertexContainer.append(
             childVertexHtmlFacade.getHtml()
         );
-        this.addChildrenContainerToBubble(childVertexHtmlFacade, serverFormat.isLeftOriented);
+        this.addChildrenContainerToBubble(childVertexHtmlFacade, model.isLeftOriented);
         return childVertexHtmlFacade;
     };
     api.GraphUiBuilder.prototype.addChildrenContainerToBubble = function (vertexHtmlFacade, toLeft) {
@@ -170,54 +176,57 @@ define([
             );
         }
         var relationUi;
-        groupRelation.getChildGroupRelations().forEach(function (childGroupRelation) {
-            var childGroupRelationUi = this.buildGroupRelationToExpandOrNot(
-                childGroupRelation,
-                parentBubbleUi,
-                false
-            );
-            if(childGroupRelationUi.isGroupRelation()){
-                GroupRelationUiBuilder.completeBuild(
-                    childGroupRelationUi
-                );
-            }
-        }.bind(this));
         var parentVertex = parentBubbleUi.isVertex() ? parentBubbleUi : parentBubbleUi.getParentVertex();
-        $.each(groupRelation.getSortedVertices(parentVertex.getModel().getChildrenIndex()), function (key, verticesWithSameUri) {
-            $.each(verticesWithSameUri, function (vertexHtmlId, vertexAndEdge) {
-                var vertex = vertexAndEdge.vertex,
-                    edge = vertexAndEdge.edge;
-                relationUi = this.buildBubbleHtmlIntoContainer(
-                    edge,
+        groupRelation.sortedImmediateChild(
+            parentVertex.getModel().getChildrenIndex()
+        ).forEach(function (child) {
+            if (child instanceof GroupRelation.GroupRelation) {
+                var childGroupRelationUi = this.buildGroupRelationToExpandOrNot(
+                    child,
                     parentBubbleUi,
-                    this.edgeUiBuilder
+                    false
                 );
-                var childVertexHtmlFacade = this.buildBubbleHtmlIntoContainer(
-                    vertex,
-                    relationUi,
-                    this.vertexUiBuilder,
-                    vertexHtmlId
-                );
-                this.edgeUiBuilder.getClass().afterChildBuilt(
-                    relationUi,
-                    parentBubbleUi,
-                    childVertexHtmlFacade
-                );
-                var treeContainer = childVertexHtmlFacade.getHtml().closest(
-                    ".vertex-tree-container"
-                );
-                treeContainer[vertex.isLeftOriented ? "prepend" : "append"](
-                    this._buildChildrenHtmlTreeRecursively(
-                        childVertexHtmlFacade
-                    )
-                );
-                if (childVertexHtmlFacade.isVertex() && childVertexHtmlFacade.hasSuggestions() && !childVertexHtmlFacade.hasHiddenRelations()) {
-                    api.addSuggestionsToVertex(
-                        childVertexHtmlFacade.getSuggestions(),
-                        childVertexHtmlFacade
+                if (childGroupRelationUi.isGroupRelation()) {
+                    GroupRelationUiBuilder.completeBuild(
+                        childGroupRelationUi
                     );
                 }
-            }.bind(this));
+            } else {
+                $.each(child, function (vertexHtmlId, vertexAndEdge) {
+                    var vertex = vertexAndEdge.vertex,
+                        edge = vertexAndEdge.edge;
+                    relationUi = this.buildBubbleHtmlIntoContainer(
+                        edge,
+                        parentBubbleUi,
+                        this.edgeUiBuilder
+                    );
+                    var childVertexHtmlFacade = this.buildBubbleHtmlIntoContainer(
+                        vertex,
+                        relationUi,
+                        this.vertexUiBuilder,
+                        vertexHtmlId
+                    );
+                    this.edgeUiBuilder.getClass().afterChildBuilt(
+                        relationUi,
+                        parentBubbleUi,
+                        childVertexHtmlFacade
+                    );
+                    var treeContainer = childVertexHtmlFacade.getHtml().closest(
+                        ".vertex-tree-container"
+                    );
+                    treeContainer[vertex.isLeftOriented ? "prepend" : "append"](
+                        this._buildChildrenHtmlTreeRecursively(
+                            childVertexHtmlFacade
+                        )
+                    );
+                    if (childVertexHtmlFacade.isVertex() && childVertexHtmlFacade.hasSuggestions() && !childVertexHtmlFacade.hasHiddenRelations()) {
+                        api.addSuggestionsToVertex(
+                            childVertexHtmlFacade.getSuggestions(),
+                            childVertexHtmlFacade
+                        );
+                    }
+                }.bind(this));
+            }
         }.bind(this));
         return relationUi;
     };
@@ -245,7 +254,7 @@ define([
         return this.rootBubble;
     };
 
-    api.GraphUiBuilder.prototype.addVertex = function(newVertex, parentBubble) {
+    api.GraphUiBuilder.prototype.addVertex = function (newVertex, parentBubble) {
         newVertex.groupRelationRoots = [];
         return this.buildBubbleHtmlIntoContainer(
             newVertex,
@@ -255,7 +264,7 @@ define([
         );
     };
 
-    api.GraphUiBuilder.prototype.addEdge = function(serverEdge, sourceVertexUi){
+    api.GraphUiBuilder.prototype.addEdge = function (serverEdge, sourceVertexUi) {
         return this.buildBubbleHtmlIntoContainer(
             serverEdge,
             sourceVertexUi,
@@ -263,15 +272,15 @@ define([
         );
     };
 
-    api.GraphUiBuilder.prototype.setVertexUiBuilder = function(vertexUiBuilder){
+    api.GraphUiBuilder.prototype.setVertexUiBuilder = function (vertexUiBuilder) {
         this.vertexUiBuilder = vertexUiBuilder;
     };
 
-    api.GraphUiBuilder.prototype.getVertexUiBuilder = function(){
+    api.GraphUiBuilder.prototype.getVertexUiBuilder = function () {
         return this.vertexUiBuilder;
     };
 
-    api.GraphUiBuilder.prototype.setEdgeUiBuilder = function(edgeUiBuilder){
+    api.GraphUiBuilder.prototype.setEdgeUiBuilder = function (edgeUiBuilder) {
         this.edgeUiBuilder = edgeUiBuilder;
     };
 
@@ -287,7 +296,8 @@ define([
             }
         );
     }
-    api.buildRootBubbleContainer = function() {
+
+    api.buildRootBubbleContainer = function () {
         var verticesContainer = RelativeTreeTemplates[
             "root_vertex_super_container"
             ].merge();
@@ -297,7 +307,7 @@ define([
         return verticesContainer;
     };
 
-    api.addSuggestionsToVertex = function(suggestions, vertex){
+    api.addSuggestionsToVertex = function (suggestions, vertex) {
         if (MindMapInfo.isViewOnly()) {
             return;
         }
@@ -338,7 +348,7 @@ define([
         );
     };
 
-    api.flagSuggestionsToNotDisplayGivenParentAndChildVertex = function(parentVertex, childVertex) {
+    api.flagSuggestionsToNotDisplayGivenParentAndChildVertex = function (parentVertex, childVertex) {
         if (!parentVertex.getSuggestions) {
             return;
         }

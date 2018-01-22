@@ -4,8 +4,9 @@
 
 define([
     "jquery",
-    "triple_brain.identification"
-], function ($, Identification) {
+    "triple_brain.identification",
+    "triple_brain.id_uri"
+], function ($, Identification, IdUri) {
     "use strict";
     var api = {};
     api.getForUri = function(uri){
@@ -17,6 +18,16 @@ define([
             return Identification.fromServerFormat(
                 serverFormat
             );
+        });
+    };
+
+    api.mergeTo = function (identifier, distantTagUri) {
+        return $.ajax({
+            type: 'POST',
+            url: identifier.getUri() + '/mergeTo/' + IdUri.getGraphElementShortIdFromUri(
+                distantTagUri
+            ),
+            dataType: 'json'
         });
     };
     return api;

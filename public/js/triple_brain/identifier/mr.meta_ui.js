@@ -48,7 +48,24 @@ define([
     MetaUi.prototype.getNumberOfHiddenRelations = function () {
         return 0;
     };
-
+    MetaUi.prototype.removeFromCache = function () {
+        api.removeFromCache(
+            this.getUri(),
+            this.getId()
+        );
+        VertexUi.removeFromCache(
+            this.getUri(),
+            this.getId()
+        );
+    };
+    MetaUi.prototype.initCache = function () {
+        api.initCache(
+            this
+        );
+        VertexUi.initCache(
+            this
+        );
+    };
     MetaUi.prototype.wikipediaLinksInLabelButtonContent = function () {
         var list = $("<ul class='list-group'>");
         this.getModel().getWikipediaLink().then(function (link) {

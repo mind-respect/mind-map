@@ -115,7 +115,7 @@ define([
 
         IdentificationMenu.prototype._addIdentifications = function () {
             this._getMainListHtml().empty();
-            var identifiers = this.graphElement.getModel().getIdentifiers();
+            var identifiers = this.graphElement.getModel().getRelevantTags();
             Object.keys(identifiers).forEach(function(key) {
                 this._addIdentificationAsListElement(
                     identifiers[key]
@@ -295,7 +295,7 @@ define([
 
         IdentificationMenu.prototype._setUpAutoComplete = function (identificationTextField) {
             var self = this;
-            identificationTextField.tripleBrainAutocomplete({
+            identificationTextField.mrAutocomplete({
                 select: function (event, ui) {
                     var semanticMenu = $(this).closest(
                         '.identifications'

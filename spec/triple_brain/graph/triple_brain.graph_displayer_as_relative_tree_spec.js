@@ -104,7 +104,7 @@ define([
                 groupRelation.hasVisibleHiddenRelationsContainer()
             ).toBeFalsy();
         });
-        it("contains all connected elements for included graph elements view", function () {
+        xit("contains all connected elements for included graph elements view", function () {
             var mergeBubbleScenario = new Scenarios.mergeBubbleGraph();
             expect(
                 mergeBubbleScenario.getBubble1()

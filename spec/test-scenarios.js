@@ -41,7 +41,7 @@ define([
          because it listens on the event bus and it's used
          for some tests.
          */
-        "test/vendor/jasmine-jquery"
+        "jasmine-jquery"
     ],
     function ($, TestScenarioData, Vertex, Edge, Schema, VertexUiBuilder, EdgeUiBuilder, GroupRelationUiBuilder, SuggestionUiBuilder, SuggestionRelationUiBuilder, SchemaUiBuilder, PropertyUiBuilder, GraphDisplayerAsRelativeTree, Mock, TestUtils, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, EventBus, KeyboardActionsHandler, Suggestion, Identification, FriendlyResource, IdUri, LanguageManager, UiUtils, enTranslation, UserMapAutocompleteProvider, MetaGraph, MetaGraphUi, GraphElementType, SubGraph) {
         "use strict";
@@ -147,6 +147,7 @@ define([
                     getSurroundBubble7Graph()
                 );
             };
+
             function getSurroundBubble7Graph() {
                 return api._getTestData(
                     "creationDate.surroundBubble7Graph"
@@ -233,6 +234,7 @@ define([
                 return treeBuilder.getBubbleWithLabelInTree("merge");
             };
             Mock.setCenterBubbleUriInUrl(this.getMergeBubble().getUri());
+
             function buildIncludedGraphElementsOfBubble(bubble) {
                 return GraphDisplayerAsRelativeTree.buildIncludedGraphElementsView(
                     bubble,
@@ -342,6 +344,9 @@ define([
                     uriOfVertexWithLabel(this.getGraph(), "b2")
                     ]
                 );
+            };
+            this.uriOfVertexWithLabel = function (label) {
+                return uriOfVertexWithLabel(this.getGraph(), label);
             };
             this.getBubble2Ui = function () {
                 return new VertexUiBuilder.VertexUiBuilder().create(
@@ -529,10 +534,10 @@ define([
                     "graphWithHiddenSimilarRelations.b2Graph"
                 );
             };
-            this.getBubble2InTree = function(){
+            this.getBubble2InTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("b2");
             };
-            this.getTshirtGroupRelationInTree = function(){
+            this.getTshirtGroupRelationInTree = function () {
                 return treeBuilder.getRelationWithLabelInTree("T-shirt");
             };
             this.getCenterBubbleUri = function () {
@@ -928,7 +933,7 @@ define([
             };
         };
 
-        api.getMetaCenterChildHavingGroupRelation = function(){
+        api.getMetaCenterChildHavingGroupRelation = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
                 return api._getTestData(
@@ -1085,7 +1090,7 @@ define([
             );
         };
 
-        api.aroundTodoIdentifier = function(){
+        api.aroundTodoIdentifier = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
                 return api._getTestData("centerMetaEventAndTodo.aroundTodo");
@@ -1100,7 +1105,7 @@ define([
             this.getTodoBubbleInTree = function () {
                 return treeBuilder.getBubbleWithLabelInTree("To do");
             };
-            this.expandE3 = function(e3){
+            this.expandE3 = function (e3) {
                 return GraphDisplayerAsRelativeTree.addChildTreeUsingGraph(
                     e3,
                     api._getTestData(
@@ -1281,6 +1286,7 @@ define([
             return data;
         };
         return api;
+
         function uriOfVertexWithLabel(graph, label) {
             var uri;
             $.each(graph.vertices, function (key, value) {
@@ -1366,6 +1372,7 @@ define([
                 }
             );
             return tree;
+
             function getTree() {
                 switch (IdUri.getGraphElementTypeFromUri(centerBubbleUri)) {
                     case GraphElementType.Schema :
@@ -1384,7 +1391,7 @@ define([
                                 graph,
                                 centerBubbleUri
                             )
-                        ).then(function(_container){
+                        ).then(function (_container) {
                             container = _container;
                         });
                         return container;

@@ -134,7 +134,6 @@ define([
             });
             return $.when.apply($, promises);
         };
-
         return api;
     }
 );

@@ -15,13 +15,13 @@ define([
     "triple_brain.graph_element_ui",
     "triple_brain.edge_service",
     "triple_brain.mind_map_info",
-    "triple_brain.id_uri"
-], function ($, EventBus, BubbleFactory, SuggestionService, FriendlyResourceService, GraphElementService, SelectionHandler, GraphUi, GraphElementMainMenu, GraphElementUi, EdgeService, MindMapInfo, IdUri) {
+    "triple_brain.ui_utils"
+], function ($, EventBus, BubbleFactory, SuggestionService, FriendlyResourceService, GraphElementService, SelectionHandler, GraphUi, GraphElementMainMenu, GraphElementUi, EdgeService, MindMapInfo, UiUtils) {
     "use strict";
     var enterKeyCode = 13,
         escapeKeyCode = 27,
         api = {};
-    api.completeBuild = function(graphElementUi){
+    api.completeBuild = function (graphElementUi) {
         graphElementUi.applyToOtherInstances(function (otherInstance) {
             otherInstance.reviewInLabelButtonsVisibility();
         });
@@ -35,7 +35,7 @@ define([
                 var vertexSuggestion = isRelationSuggestion ?
                     elementUi.getTopMostChildBubble() : elementUi;
                 vertexSuggestion.getController().accept().then(function (newElementUi) {
-                    if(elementUi.isSuggestion()){
+                    if (elementUi.isSuggestion()) {
                         SelectionHandler.removeAll();
                     }
                     elementUi = isRelationSuggestion ?
@@ -46,6 +46,7 @@ define([
             } else {
                 doIt();
             }
+
             function doIt() {
                 elementUi.getModel().setLabel(elementUi.text());
                 elementUi.labelUpdateHandle();
@@ -77,7 +78,7 @@ define([
             }
             var clonedButton = button.cloneInto(container);
             var cloneHtml = clonedButton.getHtml();
-            cloneHtml.click(function(){
+            cloneHtml.click(function () {
                 var graphElementUi = BubbleFactory.fromSubHtml(
                     $(this)
                 );
@@ -86,8 +87,8 @@ define([
                 }
             });
             GraphElementMainMenu.defineTooltip(
-                clonedButton,{
-                    trigger:'focus'
+                clonedButton, {
+                    trigger: 'focus'
                 }
             );
         });
@@ -95,7 +96,7 @@ define([
     };
 
     api.integrateIdentifications = function (graphElementUi) {
-        $.each(graphElementUi.getModel().getIdentifiers(), function(){
+        $.each(graphElementUi.getModel().getIdentifiers(), function () {
             graphElementUi.addIdentification(
                 this
             );
@@ -105,6 +106,7 @@ define([
         graphElementUi.getTreeContainer().on("drop", function (event) {
             event.preventDefault();
             event.stopPropagation();
+            $("#drag-bubble-text-for-chrome").empty();
             var $this = $(this);
             $(this).closest(".vertex-tree-container").removeClass("drag-over");
             var firstOrLast = $this.parents(".left-oriented").length > 0 ?
@@ -121,7 +123,7 @@ define([
             }
             var mouseY = event.pageY;
             if (mouseY > edge.getYPosition()) {
-                dragged.getController().moveUnder(
+                dragged.getController().moveBelow(
                     edge
                 );
             } else {
@@ -157,7 +159,7 @@ define([
         );
         graphElementUi.getHtml().on("dragstart", function (event) {
             //event.originalEvent is undefined when using jasmine and v8 :S
-            if(event.originalEvent){
+            if (event.originalEvent) {
                 event.originalEvent.dataTransfer.setData('Text', "dummy data for dragging to work in Firefox");
             }
             var graphElementUi = BubbleFactory.fromHtml(
@@ -169,23 +171,33 @@ define([
             );
             GraphUi.setIsDraggingBubble(true);
             GraphUi.disableDragScroll();
-            var bubbleTextOnlyElement = $('#drag-bubble-text-dump').text(
+            var ghostImage = graphElementUi.getLabel().get(0);
+            $("#drag-bubble-text-for-chrome").text(
                 graphElementUi.getTextOrDefault()
             );
-            if(event.originalEvent){
-                event.originalEvent.dataTransfer.setDragImage(bubbleTextOnlyElement[0], 0, 0);
+            if (event.originalEvent) {
+                event.originalEvent.dataTransfer.setDragImage(ghostImage, 0, 0);
             }
-
         }).on(
             "dragend", function (event) {
                 event.preventDefault();
+                if(SelectionHandler.isOnlyASingleBubbleSelected()){
+                    SelectionHandler.getSingleElement().showMenu();
+                }
                 GraphUi.setIsDraggingBubble(false);
-                var bubble = BubbleFactory.fromHtml(
-                    $(this)
-                );
-                $('#drag-bubble-text-dump').empty();
+                $("#drag-bubble-text-for-chrome").empty();
                 GraphUi.enableDragScroll();
             });
+        if (UiUtils.isChrome()) {
+            /*
+            * In chrome only setDragImage only works for external images but does not work
+            * for dom elements. That's why Im reverting to an old trick for chrome but I would rather
+            * use setDragImage
+            * */
+            graphElementUi.getHtml().on("drag", function (event) {
+                $("#drag-bubble-text-for-chrome").css("top", event.pageY).css("left", event.pageX);
+            });
+        }
     };
     api.setupDrop = function (graphElementUi) {
         if (MindMapInfo.isViewOnly()) {
@@ -225,6 +237,7 @@ define([
             "drop", function (event) {
                 event.preventDefault();
                 event.stopPropagation();
+                $("#drag-bubble-text-for-chrome").empty();
                 GraphUi.enableDragScroll();
                 GraphUi.setIsDraggingBubble(false);
                 var parent = BubbleFactory.fromSubHtml(

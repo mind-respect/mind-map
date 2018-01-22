@@ -101,7 +101,7 @@ define([
                     subGraphServerFormat,
                     uri
                 )
-            ).then(function(){
+            ).then(function () {
                 callback();
             });
         });
@@ -174,6 +174,7 @@ define([
         GraphElementMainMenu.showWholeGraphButtonOnlyIfApplicable(
             GraphElementMainMenu.getExpandAllButton()
         );
+
         function removeRelationWithGrandParentAndChildFromServerGraph() {
             var parentRelation = parentVertex.getRelationWithUiParent();
             var relationWithGrandParentUri = parentRelation.getUri();
@@ -181,7 +182,7 @@ define([
             var grandParentUriToCompare = grandParent.getUri();
             var nbRelationsWithGrandParent = 0;
             var alreadyPresentChildEdgesUri = [];
-            parentVertex.visitClosestChildRelations(function(edge){
+            parentVertex.visitClosestChildRelations(function (edge) {
                 alreadyPresentChildEdgesUri.push(edge.getUri());
             });
             serverGraph.edges = getFilteredEdges();
@@ -358,8 +359,8 @@ define([
     api.getMetaController = function () {
         return MetaController;
     };
-    api.getGroupVertexUnderMetaController = function(){
-      return GroupVertexUnderMetaController;
+    api.getGroupVertexUnderMetaController = function () {
+        return GroupVertexUnderMetaController;
     };
     api.getMetaRelationController = function () {
         return MetaRelationController;
@@ -379,10 +380,10 @@ define([
     api.getMetaUiSelector = function () {
         return MetaUi;
     };
-    api.getGroupVertexUnderMetaUiSelector = function(){
+    api.getGroupVertexUnderMetaUiSelector = function () {
         return GroupVertexUnderMetaUi;
     };
-    api.getMetaUiRelationSelector = function(){
+    api.getMetaUiRelationSelector = function () {
         return MetaRelationUi;
     };
     api.buildIncludedGraphElementsView = function (vertex, container) {
@@ -508,6 +509,7 @@ define([
         var vertices = serverGraph.vertices;
         buildVerticesHtml();
         return verticesContainer;
+
         function buildVerticesHtml() {
             var serverRootVertex = vertexWithId(rootVertexUri);
             graphUiBuilder.buildRootBubble(

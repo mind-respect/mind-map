@@ -126,7 +126,7 @@ define([
             groupRelation.expand();
             var firstChildVertex = groupRelation.getTopMostChildBubble().getTopMostChildBubble().getTopMostChildBubble();
             var secondChildVertex = firstChildVertex.getBubbleUnder();
-            var thirdChildVertex = secondChildVertex.getBubbleUnder();
+            var thirdChildVertex = secondChildVertex.getBubbleUnder().getTopMostChildBubble();
             var listContainer = RelativeTreeVertex.VerticesToHtmlLists([
                 groupRelation.getParentVertex(),
                 firstChildVertex,

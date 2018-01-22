@@ -498,6 +498,9 @@ define([
             $html.data("previous_draggable_status")
         );
         this.getInLabelButtonsContainer().removeClass("hidden");
+        if(this.isSelected()){
+            this.showMenu();
+        }
         GraphUi.unlockDragScroll();
         GraphUi.enableDragScroll();
         KeyboardActionsHandler.enable();
@@ -755,16 +758,16 @@ define([
         return this.getModel().getComment();
     };
 
-    api.GraphElementUi.prototype.getTagNumberOfReferences = function(identifier){
+    api.GraphElementUi.prototype.getTagNumberOfOtherReferences = function(identifier){
         return identifier.getNbReferences() - 1;
     };
 
     api.GraphElementUi.prototype.identifyWhenManyInLabelButtonContent = api.GraphElementUi.prototype.identifyInLabelButtonContent = function () {
-        if (!this.getModel().hasIdentifications()) {
+        if (!this.getModel().hasRelevantTags()) {
             return "";
         }
         var list = $("<ul  class='list-group'>");
-        this.getModel().getIdentifiers().sort(function(a, b){
+        this.getModel().getRelevantTags().sort(function(a, b){
             return b.getNbReferences() - a.getNbReferences();
         }).forEach(function (identifier) {
             list.append(
@@ -774,7 +777,7 @@ define([
                         identifier.getUri()
                     )
                 ).append(
-                    $("<span class='badge primary'>").text("+ " + this.getTagNumberOfReferences(identifier))
+                    $("<span class='badge primary'>").text("+ " + this.getTagNumberOfOtherReferences(identifier))
                 ).append(
                     $("<span>").text(identifier.getLabel())
                 ).mousedown(function () {

@@ -12,13 +12,14 @@ define([
         "triple_brain.event_bus",
         "triple_brain.graph_element_ui",
         "triple_brain.bubble",
+        "triple_brain.center_bubble",
+        "triple_brain.bubble_factory",
         "triple_brain.suggestion_service",
         "triple_brain.id_uri",
-        "mr.loading_flow",
         "jquery.center-on-screen",
         "jquery.max_char"
     ],
-    function (require, $, VertexService, Point, Error, VertexSegments, EventBus, GraphElementUi, Bubble, SuggestionService, IdUri, LoadingFlow) {
+    function (require, $, VertexService, Point, Error, VertexSegments, EventBus, GraphElementUi, Bubble, CenterBubble, BubbleFactory, SuggestionService, IdUri) {
         "use strict";
         var api = {};
         api.getWhenEmptyLabel = function () {
@@ -409,16 +410,33 @@ define([
             }
         };
 
-        api.VertexUi.prototype.buildChildrenIndex = function(){
+        api.VertexUi.prototype.buildChildrenIndex = function () {
             var childrenIndex = {};
             var index = 0;
-            this.visitClosestChildVertices(function(childVertex){
-                childrenIndex[childVertex.getUri()] = {
+            this.visitAllImmediateChild(function (child) {
+                if (child.isRelation()) {
+                    setChildVertexIndex(
+                        child.getModel().getOtherVertex(
+                            this.getModel()
+                        ).getUri()
+                    );
+                } else if (child.isGroupRelation()) {
+                    var grandChildIndex = child.buildChildrenIndex();
+                    Object.keys(grandChildIndex).sort(function (a, b) {
+                        return grandChildIndex[a].index - grandChildIndex[b].index;
+                    }).forEach(function (vertexUri) {
+                        setChildVertexIndex(vertexUri);
+                    });
+                }
+            }.bind(this));
+            return childrenIndex;
+
+            function setChildVertexIndex(childVertexUri) {
+                childrenIndex[childVertexUri] = {
                     index: index
                 };
                 index++;
-            });
-            return childrenIndex;
+            }
         };
 
         api.buildCommonConstructors(api);

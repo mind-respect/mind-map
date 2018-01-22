@@ -44,7 +44,7 @@ define([
     };
 
     EdgeController.prototype.addSibling = function () {
-        return this.getUi().getTopMostChildBubble().getController().addSibling().then(function(triple){
+        return this.getUi().getTopMostChildBubble().getController().addSibling().then(function (triple) {
             SelectionHandler.setToSingleGraphElement(
                 triple.edge()
             );
@@ -61,19 +61,20 @@ define([
         graphElementUi.moveToParent(
             newGroupRelation
         );
-        if(graphElementUi.isGroupRelation()){
+        if (graphElementUi.isGroupRelation()) {
             graphElementUi.expand();
             graphElementUi.visitClosestChildOfType(
                 GraphElementType.Relation,
                 moveEdge.bind(this)
             );
-        }else if(graphElementUi.isVertex()){
+        } else if (graphElementUi.isVertex()) {
             moveEdge.bind(this)(graphElementUi.getParentBubble());
-        }else{
+        } else {
             moveEdge.bind(this)(graphElementUi);
         }
         return $.when.apply($, promises);
-        function moveEdge(movedEdge){
+
+        function moveEdge(movedEdge) {
             var identifiers = this.getModel().hasIdentifications() ?
                 this.getModel().getIdentifiers() :
                 this.getModel().getIdentifiersIncludingSelf();
@@ -97,17 +98,17 @@ define([
         };
         var parentBubble = this.getUi().getParentBubble();
         var groupRelationIdentifiers;
-        if(parentBubble.isGroupRelation()){
-            if(parentBubble.getModel().hasIdentification(this.getModel().buildSelfIdentifier())){
+        if (parentBubble.isGroupRelation()) {
+            if (parentBubble.getModel().hasIdentification(this.getModel().buildSelfIdentifier())) {
                 groupRelationIdentifiers = [
                     this.getModel().buildTwiceSelfIdentifier()
                 ];
-            }else{
+            } else {
                 groupRelationIdentifiers = [
                     this.getModel().buildSelfIdentifier()
                 ];
             }
-        } else{
+        } else {
             groupRelationIdentifiers = this.getModel().hasIdentifications() ?
                 this.getModel().getIdentifiers() :
                 this.getModel().getIdentifiersIncludingSelf();
@@ -117,8 +118,8 @@ define([
             parentBubble,
             this.getUi().isToTheLeft()
         );
-        newGroupRelation.getModel().addTuple(tuple);
         this.getUi().convertToGroupRelation(newGroupRelation);
+        newGroupRelation.getModel().addTuple(tuple);
         return newGroupRelation;
     };
 
@@ -225,5 +226,16 @@ define([
             );
         }
     };
+
+    EdgeController.prototype.setIsToTheLeftOrRight = function () {
+        return this.getUi().isToTheLeft() ?
+            EdgeService.setToTheLeft(
+                this.getModel()
+            ) :
+            EdgeService.setToTheRight(
+                this.getModel()
+            );
+    };
+
     return api;
 });

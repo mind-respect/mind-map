@@ -66,7 +66,6 @@ router.get('/schemas', function (req, res, next) {
         }
     );
 });
-
 //router.post('/node-service/html-to-image', function (req, res, next) {
 //    var filePath = "public/export/image-" + uuid.v4()  + ".png";
 //    webshot(

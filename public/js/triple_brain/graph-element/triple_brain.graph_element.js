@@ -96,7 +96,7 @@ define([
             this,
             graphElementServerFormat.friendlyResource
         );
-        if(this.graphElementServerFormat.childrenIndex){
+        if (this.graphElementServerFormat.childrenIndex) {
             this.graphElementServerFormat.childrenIndex = JSON.parse(
                 this.graphElementServerFormat.childrenIndex
             );
@@ -133,7 +133,7 @@ define([
     };
     api.GraphElement.prototype.getIdentifierHavingExternalUri = function (externalUri) {
         var identification = false;
-        $.each(this.getIdentifiers(), function () {
+        $.each(this.getIdentifiersIncludingSelf(), function () {
             if (this.getExternalResourceUri() === externalUri) {
                 identification = this;
                 return false;
@@ -153,12 +153,37 @@ define([
     };
 
     api.GraphElement.prototype.getIdentifiersIncludingSelf = function () {
-        var identifiers = this.getIdentifiers();
-        var selfIdentifier = this.buildSelfIdentifier();
-        if (!this.hasIdentification(selfIdentifier)) {
-            identifiers.push(selfIdentifier);
+        var identifiers = [];
+        var isSelfTagAlreadyIncluded = false;
+        this.identifiers.forEach(function (identifier) {
+            if (identifier.getExternalResourceUri() === this.getUri()) {
+                isSelfTagAlreadyIncluded = true;
+            }
+            identifiers.push(identifier);
+        }.bind(this));
+        if(!isSelfTagAlreadyIncluded){
+            identifiers.push(
+                this.buildSelfIdentifier()
+            );
         }
         return identifiers;
+    };
+
+    api.GraphElement.prototype.hasRelevantTags = function () {
+        return this.getRelevantTags().length > 0 ;
+    };
+
+    api.GraphElement.prototype.getRelevantTags = function () {
+        return this.getIdentifiersIncludingSelf().filter(function(tag){
+            return tag.getNbReferences() > 0;
+        });
+    };
+
+    api.GraphElement.prototype.getSelfTag = function () {
+        var selfTag = this.getIdentifierHavingExternalUri(
+            this.getUri()
+        );
+        return selfTag ? selfTag : this.buildSelfIdentifier();
     };
 
     api.GraphElement.prototype._buildIdentifications = function () {
@@ -175,7 +200,7 @@ define([
     };
     api.GraphElement.prototype.hasIdentification = function (identification) {
         var contains = false;
-        $.each(this.getIdentifiers(), function () {
+        $.each(this.getIdentifiersIncludingSelf(), function () {
             if (this.getExternalResourceUri() === identification.getExternalResourceUri()) {
                 contains = true;
                 return false;
@@ -262,7 +287,7 @@ define([
     };
 
     api.GraphElement.prototype.getIndex = function (parentChildrenIndex) {
-        if(!parentChildrenIndex[this.getUri()]){
+        if (!parentChildrenIndex[this.getUri()]) {
             return -1;
         }
         return parentChildrenIndex[this.getUri()].index;
@@ -283,6 +308,10 @@ define([
 
     api.GraphElement.prototype.isPristine = function () {
         return this.isLabelEmpty() && !this.hasIdentifications();
+    };
+
+    api.GraphElement.prototype.isToTheLeft = function(){
+        return undefined;
     };
 
     // api.GraphElement.prototype._buildWikidataLinks = function () {

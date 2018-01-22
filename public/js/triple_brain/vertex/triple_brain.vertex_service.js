@@ -10,9 +10,10 @@ define([
         "triple_brain.graph_element_service",
         "triple_brain.user_service",
         "triple_brain.friendly_resource_service",
-        "triple_brain.id_uri"
+        "triple_brain.id_uri",
+        "triple_brain.center_bubble"
     ],
-    function ($, EventBus, TripleUiBuilder, Suggestion, GraphElementService, UserService, FriendlyResourceService, IdUri) {
+    function ($, EventBus, TripleUiBuilder, Suggestion, GraphElementService, UserService, FriendlyResourceService, IdUri, CenterBubble) {
         "use strict";
         var api = {};
         api.getByUri = function (uri, callback) {
@@ -30,10 +31,20 @@ define([
             }).then(callback);
         };
         api.addRelationAndVertexToVertex = function (vertex, sourceBubble, callback) {
+            var isToTheLeft;
+            if (vertex.isCenterBubble()) {
+                isToTheLeft = sourceBubble.isGroupRelation() ?
+                    sourceBubble.isToTheLeft() :
+                    CenterBubble.usingBubble(vertex).shouldAddLeft();
+            }
             return $.ajax({
                 type: 'POST',
                 url: vertex.getUri(),
-                dataType: 'json'
+                dataType: 'json',
+                data: JSON.stringify({
+                    toTheLeft: isToTheLeft
+                }),
+                contentType: 'application/json;charset=utf-8'
             }).done(function (tripleJson) {
                 api._addRelationAndVertexToVertexCallback(
                     tripleJson,
@@ -153,7 +164,7 @@ define([
                 }
             );
         };
-        api.mergeTo = function(vertex, distantVertexUri){
+        api.mergeTo = function (vertex, distantVertexUri) {
             return $.ajax({
                 type: 'POST',
                 url: vertex.getUri() + '/mergeTo/' + IdUri.getGraphElementShortIdFromUri(distantVertexUri),
@@ -161,6 +172,7 @@ define([
             });
         };
         return api;
+
         function setCollectionPrivacy(isPublic, vertices) {
             return $.ajax({
                 type: isPublic ? 'POST' : 'DELETE',

@@ -335,7 +335,8 @@
     "redo": "Redo",
     "convertToRelation": "Convert to relation",
     "convertToGroupRelation": "Convert to group relation",
-    "wikipediaLinks": "Learn more on Wikipedia"
+    "wikipediaLinks": "Learn more on Wikipedia",
+    "merge": "Merge"
   },
   "hidden_properties_tooltip": "Expand (ctrl+E)",
   "hidden_properties_tooltip_forMac": "Expand (⌘+E)",
@@ -393,5 +394,10 @@
       "addAll": "Add All",
       "removeAll": "Remove All"
     }
+  },
+  "merge": {
+    "title" : "Merge with ...",
+    "instruction": "This bubble will be removed but all its relationships will move to be added to bubble you will have selected in the search bar below.",
+    "placeholder": "Merge with ..."
   }
 }

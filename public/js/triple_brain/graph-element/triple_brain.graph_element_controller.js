@@ -16,15 +16,17 @@ define([
     "triple_brain.identification",
     "mr.command",
     "triple_brain.selection_handler",
+    "triple_brain.user_map_autocomplete_provider",
     "bootstrap-wysiwyg",
     "bootstrap",
     "jquery.safer-html",
     "jquery.max_char"
-], function ($, GraphElementType, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu, EdgeService, Identification, Command, SelectionHandler) {
+], function ($, GraphElementType, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu, EdgeService, Identification, Command, SelectionHandler, UserMapAutocompleteProvider) {
     "use strict";
     var api = {},
         bubbleCutClipboard,
         identificationBaseEventBusKey = "/event/ui/graph/identification/";
+    var isMergePopoverBuilt = false;
     EventBus.subscribe(
         '/event/ui/mind_map_info/is_view_only',
         setUpSaveButton
@@ -174,12 +176,12 @@ define([
     };
 
     GraphElementController.prototype.identifyCanShowInLabel = function () {
-        var canShow = this.getModel().getIdentifiers().length === 1;
+        var canShow = this.getModel().getRelevantTags().length === 1;
         if (canShow) {
-            var tag = this.getModel().getIdentifiers()[0];
-            canShow = this.getUi().getTagNumberOfReferences(
+            var tag = this.getModel().getRelevantTags()[0];
+            canShow = this.getUi().getTagNumberOfOtherReferences(
                 tag
-            ) > 1;
+            ) > 0;
         }
         return $.Deferred().resolve(
             canShow
@@ -187,14 +189,14 @@ define([
     };
 
     GraphElementController.prototype.identifyWhenManyCanShowInLabel = function () {
-        if (this.getModel().getIdentifiers().length < 2) {
+        if (this.getModel().getRelevantTags().length < 2) {
             return $.Deferred().resolve(
                 false
             );
         }
         return $.Deferred().resolve(
-            this.getModel().getIdentifiers().some(function (tag) {
-                return this.getUi().getTagNumberOfReferences(tag) > 1;
+            this.getModel().getRelevantTags().some(function (tag) {
+                return this.getUi().getTagNumberOfOtherReferences(tag) > 0;
             }.bind(this))
         );
     };
@@ -258,7 +260,7 @@ define([
 
     GraphElementController.prototype.expandDescendantsIfApplicable = function () {
         var deferred = $.Deferred().resolve();
-        if(this.getUi().isCollapsed()){
+        if (this.getUi().isCollapsed()) {
             return deferred;
         }
         if (!this.getUi().hasDescendantsWithHiddenRelations()) {
@@ -341,7 +343,51 @@ define([
         this.getUi().pasteBubble();
     };
 
-    GraphElementController.prototype.moveUnder = function (otherEdge) {
+    GraphElementController.prototype.moveUp = function () {
+        var bubbleAbove = this.getUi().getBubbleAbove();
+        if (bubbleAbove.isSameBubble(this.getUi())) {
+            return;
+        }
+        if (bubbleAbove.isVertex()) {
+            bubbleAbove = bubbleAbove.getParentBubble();
+        }
+        if (!bubbleAbove.getParentVertex().isSameBubble(this.getUi().getParentVertex())) {
+            return this.moveBelow(
+                bubbleAbove
+            );
+        }
+        return this.moveAbove(
+            bubbleAbove
+        );
+    };
+
+
+    GraphElementController.prototype.moveDown = function () {
+        var bubbleUnder = this.getUi().getBubbleUnder();
+        if (bubbleUnder.isSameBubble(this.getUi())) {
+            return;
+        }
+        if (bubbleUnder.isVertex()) {
+            bubbleUnder = bubbleUnder.getParentBubble();
+        }
+        if (!bubbleUnder.getParentVertex().isSameBubble(this.getUi().getParentVertex())) {
+            return this.moveAbove(
+                bubbleUnder
+            );
+        }
+        return this.moveBelow(
+            bubbleUnder
+        );
+    };
+
+    GraphElementController.prototype._canMoveAboveOrUnder = function (otherEdge) {
+        var graphElementToCompare = this.getUi().isVertex() ?
+            this.getUi().getParentBubble() :
+            this.getUi();
+        return !graphElementToCompare.isSameUri(otherEdge);
+    };
+
+    GraphElementController.prototype.moveBelow = function (otherEdge) {
         if (!this._canMoveAboveOrUnder(otherEdge)) {
             return $.Deferred().resolve();
         }
@@ -363,13 +409,6 @@ define([
             true,
             previousParentVertex
         );
-    };
-
-    GraphElementController.prototype._canMoveAboveOrUnder = function (otherEdge) {
-        var graphElementToCompare = this.getUi().isVertex() ?
-            this.getUi().getParentBubble() :
-            this.getUi();
-        return !graphElementToCompare.isSameUri(otherEdge);
     };
 
     GraphElementController.prototype._canMoveUnderParent = function (parent) {
@@ -424,31 +463,49 @@ define([
     };
 
     GraphElementController.prototype._moveToExecute = function (otherEdge, isAbove, previousParentVertex) {
-        if (isAbove) {
-            this.getUi().moveAbove(otherEdge);
-        } else {
-            this.getUi().moveUnder(otherEdge);
-        }
-
-        var promises = [
-            GraphElementService.changeChildrenIndex(
-                otherEdge.getParentVertex()
-            ),
-            GraphElementService.changeChildrenIndex(
-                previousParentVertex
-            )
-        ];
+        var wasToTheLeft = this.getUi().isToTheLeft();
         var movedEdge = this.getUi().isVertex() ?
             this.getUi().getParentBubble() :
             this.getUi();
+        var promises = [];
+        if(!otherEdge.getParentBubble().isSameUri(movedEdge.getParentBubble())){
+            promises.push(
+                movedEdge.getParentBubble().getController().becomeExParent(movedEdge)
+            );
+        }
+        if (isAbove) {
+            this.getUi().moveAbove(otherEdge);
+        } else {
+            this.getUi().moveBelow(otherEdge);
+        }
+        promises.push(
+            GraphElementService.changeChildrenIndex(
+                otherEdge.getParentVertex()
+            )
+        );
+        promises.push(
+            GraphElementService.changeChildrenIndex(
+                previousParentVertex
+            )
+        );
         var parentBubble = otherEdge.getParentBubble();
         if (parentBubble.isGroupRelation()) {
             var identification = parentBubble.getGroupRelation().getIdentification();
-            promises.push(
-                movedEdge.getController().addIdentification(
-                    identification
-                )
-            );
+            if (movedEdge.isGroupRelation()) {
+                movedEdge.visitClosestChildRelations(function (relation) {
+                    promises.push(
+                        relation.getController().addIdentification(
+                            identification
+                        )
+                    );
+                });
+            } else {
+                promises.push(
+                    movedEdge.getController().addIdentification(
+                        identification
+                    )
+                );
+            }
         }
 
         if (previousParentVertex.getUri() !== otherEdge.getParentVertex().getUri()) {
@@ -469,7 +526,78 @@ define([
                 );
             }
         }
+        if (movedEdge.getParentBubble().isCenterBubble() && wasToTheLeft !== movedEdge.isToTheLeft()) {
+            if (movedEdge.isGroupRelation()) {
+                movedEdge.visitClosestChildRelations(function (childEdge) {
+                    promises.push(
+                        childEdge.getController().setIsToTheLeftOrRight()
+                    );
+                });
+            } else {
+                promises.push(
+                    movedEdge.getController().setIsToTheLeftOrRight()
+                );
+            }
+        }
         return $.when.apply($, promises);
+    };
+
+    GraphElementController.prototype.mergeCanDo = function () {
+        return false;
+    };
+
+    GraphElementController.prototype.merge = function () {
+        if (!isMergePopoverBuilt) {
+            this.getUi().getHtml().popoverLikeToolTip({
+                animation: false,
+                html: true,
+                title: $('<div>').append($.t("merge.title"), $('<br>'), $("<small>").text($.t("merge.instruction"))),
+                placement: 'auto left',
+                container: '#drawn_graph',
+                trigger: "manual",
+                allowMultiplePopoverDisplayed: true,
+                content: function () {
+                    return $("#merge-popover").html();
+                }
+            });
+        }
+        this.getUi().getHtml().popover("show").popover("show");
+        $('.popover-title').mousedown(function(event){
+            event.stopPropagation();
+        });
+        var searchInput = $('.popover').find("input").empty().mousedown(function(event){
+            event.stopPropagation();
+            $(this).focus();
+        });
+        if (!searchInput.isMrAutocompleteSetup()) {
+            var searchFetcher = this.getUi().isMeta() ?
+                UserMapAutocompleteProvider.toFetchOwnTags :
+                UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesExcept;
+            searchInput.mrAutocomplete({
+                select: function (event, ui) {
+                    event.preventDefault();
+                    this.convertToDistantBubbleWithUri(ui.item.uri);
+                    this.setLabel(ui.item.label);
+                    this.getUi().getHtml().popover("hide");
+                }.bind(this),
+                resultsProviders: [
+                    searchFetcher(
+                        this.getUi(),
+                        {
+                            noFilter: true,
+                            additionalFilter: function (searchResults) {
+                                return searchResults.filter(function (searchResult) {
+                                    return this.convertToDistantBubbleWithUriCanDo(
+                                        searchResult.uri
+                                    );
+                                }.bind(this));
+                            }.bind(this)
+                        }
+                    )
+                ]
+            });
+        }
+        searchInput.focus();
     };
 
     GraphElementController.prototype.becomeExParent = function () {

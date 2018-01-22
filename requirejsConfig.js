@@ -32,6 +32,7 @@ module.exports = {
         "jquery.i18next": "vendor/i18next.amd.withJQuery-1.6.3",
         "bootstrap-table": "jquery/bootstrap-table",
         "bootstrap-table-lang": "jquery/bootstrap-table-zh-CN.min",
+        "jasmine-jquery": "../../spec/vendor/jasmine-jquery",
 
         /*
          Bootstrap
@@ -286,6 +287,7 @@ module.exports = {
         "bootstrap": ["jquery"],
         "bootstrap-datepicker": ["bootstrap"],
         "bootstrap-wysiwyg": ["jquery", "bootstrap", "jquery.hotkeys", "google-code-prettify"],
-        "bootstrap-table": ["jquery", "bootstrap"]
+        "bootstrap-table": ["jquery", "bootstrap"],
+        "jasmine-jquery" : ["jquery"]
     }
 };
