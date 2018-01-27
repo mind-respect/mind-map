@@ -68,9 +68,11 @@ define([
             var centralBubble = BubbleFactory.getGraphElementFromUri(
                 centralBubbleUri
             );
-            var backgroundColor = centralBubble.getModel().getColors().background;
-            if (backgroundColor) {
-                GraphUi.changeBackgroundColor(backgroundColor);
+            if(centralBubble.isVertex()){
+                var backgroundColor = centralBubble.getModel().getColors().background;
+                if (backgroundColor) {
+                    GraphUi.changeBackgroundColor(backgroundColor);
+                }
             }
             document.title = centralBubble.getTextOrDefault() + " | MindRespect";
             if (MindMapInfo.isViewOnly()) {
