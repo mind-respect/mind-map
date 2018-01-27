@@ -18,7 +18,8 @@
       "usernameForBublGuru",
       "graphElementShortIdForBublGuru",
       "bublGuruFlow",
-      "diff_match_patch"
+      "diff_match_patch",
+      "Promise"
     ],
     "browser": true,
     "funcscope": true,

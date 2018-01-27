@@ -8,9 +8,10 @@ define([
         "triple_brain.edge_service",
         "triple_brain.graph_element_controller",
         "triple_brain.selection_handler",
-        "triple_brain.graph_element_type"
+        "triple_brain.graph_element_type",
+        "triple_brain.graph_element_service"
     ],
-    function ($, VertexService, EdgeService, GraphElementController, SelectionHandler, GraphElementType) {
+    function ($, VertexService, EdgeService, GraphElementController, SelectionHandler, GraphElementType, GraphElementService) {
         "use strict";
         var api = {};
         api.GroupRelationController = GroupRelationController;
@@ -38,46 +39,47 @@ define([
         };
 
         GroupRelationController.prototype.addChild = function () {
-            var deferred = $.Deferred();
             var parentVertex = this.getUi().getParentVertex();
-            VertexService.addRelationAndVertexToVertex(
+            var triple;
+            return VertexService.addRelationAndVertexToVertex(
                 parentVertex,
-                this.getUi(),
-                function (triple) {
-                    if (this.getUi().hasVisibleHiddenRelationsContainer()) {
-                        this.expand();
-                    }
-                    this.getModel().addTuple({
-                        edge: triple.edge().getModel(),
-                        vertex: triple.destinationVertex().getModel()
-                    });
-                    this.getModel().getIdentifiers().forEach(function (identifier) {
-                        identifier.makeSameAs();
-                        triple.edge().getController().addIdentification(
-                            identifier
-                        );
-                    });
-                    EdgeService.updateLabel(
-                        triple.edge(),
-                        this.getModel().getIdentification().getLabel(),
-                        function (edge) {
-                            edge.setText(this.getModel().getIdentification().getLabel());
-                            triple.edge().reviewEditButtonDisplay();
-                        }.bind(this)
+                this.getUi()
+            ).then(function (_triple) {
+                triple = _triple;
+                if (this.getUi().hasVisibleHiddenRelationsContainer()) {
+                    this.expand();
+                }
+                this.getModel().addTuple({
+                    edge: triple.edge().getModel(),
+                    vertex: triple.destinationVertex().getModel()
+                });
+                this.getModel().getIdentifiers().forEach(function (identifier) {
+                    identifier.makeSameAs();
+                    triple.edge().getController().addIdentification(
+                        identifier
                     );
-                    SelectionHandler.setToSingleVertex(
-                        triple.destinationVertex()
-                    );
-                    if (parentVertex.getModel().isPublic()) {
-                        triple.destinationVertex().getController().makePublic().then(function () {
-                            deferred.resolve(triple);
-                        });
-                    } else {
-                        deferred.resolve(triple);
-                    }
-                }.bind(this)
-            );
-            return deferred.promise();
+                });
+                EdgeService.updateLabel(
+                    triple.edge(),
+                    this.getModel().getIdentification().getLabel(),
+                    function (edge) {
+                        edge.setText(this.getModel().getIdentification().getLabel());
+                        triple.edge().reviewEditButtonDisplay();
+                    }.bind(this)
+                );
+                SelectionHandler.setToSingleVertex(
+                    triple.destinationVertex()
+                );
+                if (parentVertex.getModel().isPublic()) {
+                    return triple.destinationVertex().getController().makePublic();
+                }
+            }.bind(this)).then(function () {
+                return GraphElementService.changeChildrenIndex(
+                    triple.sourceVertex()
+                );
+            }).then(function () {
+                return triple;
+            });
         };
 
         GroupRelationController.prototype.becomeParent = function (graphElementUi) {

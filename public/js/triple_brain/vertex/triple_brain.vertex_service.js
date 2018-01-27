@@ -31,37 +31,37 @@ define([
                 dataType: 'json'
             }).then(callback);
         };
-        api.addRelationAndVertexToVertex = function (vertex, sourceBubble, callback) {
+        api.addRelationAndVertexToVertex = function (vertex, sourceBubble) {
             var isToTheLeft;
             if (vertex.isCenterBubble()) {
                 isToTheLeft = sourceBubble.isGroupRelation() ?
                     sourceBubble.isToTheLeft() :
                     CenterBubble.usingBubble(vertex).shouldAddLeft();
             }
-            return $.ajax({
-                type: 'POST',
-                url: vertex.getUri(),
-                dataType: 'json',
-                data: JSON.stringify({
-                    toTheLeft: isToTheLeft
-                }),
-                contentType: 'application/json;charset=utf-8'
-            }).done(function (tripleJson) {
-                api._addRelationAndVertexToVertexCallback(
-                    tripleJson,
-                    sourceBubble,
-                    callback
-                );
+            return new Promise(function (resolve) {
+                $.ajax({
+                    type: 'POST',
+                    url: vertex.getUri(),
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        toTheLeft: isToTheLeft
+                    }),
+                    contentType: 'application/json;charset=utf-8'
+                }).then(function (tripleJson) {
+                    api._addRelationAndVertexToVertexCallback(
+                        tripleJson,
+                        sourceBubble,
+                        resolve
+                    );
+                });
             });
         };
-        api._addRelationAndVertexToVertexCallback = function (tripleJson, sourceBubble, callback) {
+        api._addRelationAndVertexToVertexCallback = function (tripleJson, sourceBubble, resolve) {
             var triple = TripleUiBuilder.createIntoSourceBubble(
                 sourceBubble,
                 tripleJson
             );
-            if (callback !== undefined) {
-                callback(triple, tripleJson);
-            }
+            resolve(triple);
             EventBus.publish(
                 '/event/ui/graph/vertex_and_relation/added/',
                 [triple, tripleJson]

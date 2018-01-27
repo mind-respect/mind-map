@@ -11,7 +11,7 @@ define([
 ], function ($, VertexService, Edge, Vertex, TestUtils) {
     "use strict";
     var api = {};
-    api.applyDefaultMocks = function(){
+    api.applyDefaultMocks = function () {
         var spies = {};
         spies["addRelationAndVertexToVertex"] = api.addRelationAndVertexToVertex();
         spies["remove"] = api.remove();
@@ -25,7 +25,8 @@ define([
         return spies;
     };
     api.addRelationAndVertexToVertex = function () {
-        return spyOn(VertexService, "addRelationAndVertexToVertex").and.callFake(function (vertex, sourceBubble, callback) {
+        return spyOn(VertexService, "addRelationAndVertexToVertex").and.callFake(function (vertex, sourceBubble) {
+            var deferred = $.Deferred();
             var tripleJson = {};
             tripleJson.source_vertex = vertex.getModel().vertexServerFormat;
             var newVertexUri = TestUtils.generateVertexUri();
@@ -38,8 +39,9 @@ define([
             VertexService._addRelationAndVertexToVertexCallback(
                 tripleJson,
                 sourceBubble,
-                callback
+                deferred.resolve
             );
+            return deferred.promise();
         });
     };
     api.remove = api.removeVertex = function () {

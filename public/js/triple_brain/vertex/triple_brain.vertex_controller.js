@@ -598,25 +598,28 @@ define([
             uiParent.getController().expand().then(doIt);
 
         function doIt() {
-            var deferred = $.Deferred();
-            VertexService.addRelationAndVertexToVertex(
+            var triple;
+            return VertexService.addRelationAndVertexToVertex(
                 realParent,
-                uiParent,
-                function (triple) {
+                uiParent
+            ).then(function (_triple) {
+                    triple = _triple;
                     triple.destinationVertex().getModel().incrementNumberOfConnectedEdges();
                     SelectionHandler.setToSingleGraphElement(
                         triple.destinationVertex()
                     );
                     triple.sourceVertex().getModel().incrementNumberOfConnectedEdges();
                     if (realParent.getModel().isPublic()) {
-                        triple.destinationVertex().getController().makePublic().then(function () {
-                            deferred.resolve(triple);
-                        });
+                        return triple.destinationVertex().getController().makePublic();
                     }
-                    return deferred.resolve(triple);
                 }
-            );
-            return deferred.promise();
+            ).then(function(){
+                return GraphElementService.changeChildrenIndex(
+                    triple.sourceVertex()
+                );
+            }).then(function(){
+                return triple;
+            });
         }
     };
     api.VertexController = VertexController;
