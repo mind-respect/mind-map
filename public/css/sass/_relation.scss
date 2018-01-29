@@ -9,6 +9,7 @@ $withoutTextPadding: 5px 8px 5px 8px;
     &:empty:not(:focus) {
       max-width:100%;
       transition: all 0.2s;
+      line-height:0;
       &:after {
         content: "";
       }
@@ -21,6 +22,7 @@ $withoutTextPadding: 5px 8px 5px 8px;
       .bubble-label {
         &:empty {
           padding: $withTextPadding;
+          line-height:inherit;
           //transition: padding 1s ease-in;
         }
       }

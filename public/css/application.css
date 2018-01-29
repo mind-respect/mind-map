@@ -166,7 +166,9 @@ footer > a:hover { background-color: black !important; color: white !important; 
 .security-form a { float: left; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
-#drawn_graph { position: absolute; background: radial-gradient(rgba(0, 0, 255, 0) 5%, #1e87af 100%); }
+#drawn_graph { position: absolute; background: radial-gradient(at 5000px at 5000px, rgba(0, 0, 255, 0) 5%, #1e87af 100%); background: -webkit-radial-gradient(5000px, rgba(0, 0, 255, 0) 5%, #1E87AF 100%); }
+
+.vertices-children-container.left-oriented:before { margin-left: 4000px; content: " "; height: 100%; }
 
 .vertices-children-container { display: table-cell; vertical-align: middle; }
 
@@ -373,10 +375,10 @@ button.inactive i { color: red; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .relation.bubble { position: relative; }
-.relation.bubble .bubble-label:empty:not(:focus) { max-width: 100%; transition: all 0.2s; }
+.relation.bubble .bubble-label:empty:not(:focus) { max-width: 100%; transition: all 0.2s; line-height: 0; }
 .relation.bubble .bubble-label:empty:not(:focus):after { content: ""; }
 .relation.bubble.selected .label { box-shadow: 4px 4px 4px black; }
-.relation.bubble.selected .label .bubble-label:empty { padding: 5px 15px 5px 15px; }
+.relation.bubble.selected .label .bubble-label:empty { padding: 5px 15px 5px 15px; line-height: inherit; }
 .relation.bubble.inverse .connector { width: 51px; left: -44px; }
 .relation.bubble.inverse .connector:before { content: url(images/icons/vertex/arrowhead_left.svg); position: relative; top: -11px; left: 20px; }
 .relation.bubble .hidden-properties-content { margin-left: 25px; }
