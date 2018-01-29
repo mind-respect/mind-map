@@ -1,12 +1,37 @@
 /*
  * Copyright Vincent Blouin under the GPL License version 3
  */
+
+$withTextPadding: 5px 15px 5px 15px;
+$withoutTextPadding: 5px 8px 5px 8px;
 .relation.bubble {
-  &.inverse{
+  .bubble-label {
+    &:empty:not(:focus) {
+      max-width:100%;
+      transition: all 0.2s;
+      &:after {
+        content: "";
+      }
+    }
+  }
+
+  &.selected {
+    .label {
+      box-shadow: 4px 4px 4px black;
+      .bubble-label {
+        &:empty {
+          padding: $withTextPadding;
+          //transition: padding 1s ease-in;
+        }
+      }
+    }
+  }
+
+  &.inverse {
     .connector {
       width: 51px;
       left: -44px;
-      &:before{
+      &:before {
         content: url(images/icons/vertex/arrowhead_left.svg);
         position: relative;
         top: -11px;
@@ -14,10 +39,10 @@
       }
     }
   }
-  .hidden-properties-content{
+  .hidden-properties-content {
     margin-left: $marginOfHiddenPropertiesToRelation;
   }
-  &.compare-add, &.compare-add.inverse, &.compare-add.suggestion{
+  &.compare-add, &.compare-add.inverse, &.compare-add.suggestion {
     .in-bubble-content .label-info {
       color: black;
       .bubble-label {
@@ -38,7 +63,7 @@
       }
     }
   }
-  .on-edge-button{
+  .on-edge-button {
     font-size: 1.50em;
     cursor: pointer;
   }
@@ -48,23 +73,42 @@
   position: relative;
 
   &.same-as-group-relation {
-    &.selected{
-      color: $selectBubbleColor;
+    .label{
+      padding:0;
     }
-    .label-container {
-      display: none;
+    &.selected {
+      .label-container {
+        .label {
+          .bubble-label {
+            padding: $withTextPadding;
+            visibility: visible;
+            text-indent: inherit;
+            margin-top:0;
+            line-height:inherit;
+            -webkit-transition: padding 0.2s;
+            transition: padding  0.2s;
+          }
+        }
+      }
     }
-    .edit-relation-button {
-      display: block;
+    .label-container .label .bubble-label {
+      visibility: hidden;
+      text-indent: -9999px;
+      margin-top:-200px;
+      line-height:0;
+      padding: $withoutTextPadding;
     }
   }
 
   .label {
     border-radius: 0.80em;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding: 0;
+    .bubble-label {
+      padding: $withTextPadding;
+      &:empty {
+        padding: $withoutTextPadding;
+      }
+    }
   }
   .menu {
     background-color: transparent;
@@ -85,10 +129,10 @@
     }
   }
 
-  &.suggestion{
-    &.selected, &.single-selected{
+  &.suggestion {
+    &.selected, &.single-selected {
       .bubble-label {
-        color:black;
+        color: black;
         &:after {
           color: black;
         }
@@ -96,7 +140,7 @@
     }
     .in-bubble-content {
       border: none;
-      .bubble-label{
+      .bubble-label {
         color: black;
       }
       .label-info {
@@ -106,24 +150,24 @@
       }
     }
   }
-  &.suggestion{
-    .bubble-label{
-      color:black;
+  &.suggestion {
+    .bubble-label {
+      color: black;
     }
     .in-bubble-content .label-info {
       border: $edgeSize dotted $suggestionColor;
     }
   }
-  &.meta-relation{
-    .image_container{
-      display:none;
+  &.meta-relation {
+    .image_container {
+      display: none;
     }
     .label-container {
       display: none;
     }
     .remove-relation-button {
       display: block;
-      font-size:1.15em;
+      font-size: 1.15em;
     }
     .in-bubble-content {
       border: none;
@@ -131,9 +175,9 @@
         border: $edgeSize solid $metaColor;
       }
     }
-    .connector{
-      &.meta-relation-clickable{
-        &:before{
+    .connector {
+      &.meta-relation-clickable {
+        &:before {
           //border-top: 3px solid purple;
           border-bottom: 3px solid purple;
           //top: 6px;
@@ -153,7 +197,7 @@
       font-size: $fontSize;
     }
     .bubble-label {
-      color:white;
+      color: white;
       display: inline-block;
       font-family: helvetica;
       font-size: $fontSize;
@@ -193,11 +237,6 @@
   margin-right: 0;
   margin-left: 0;
   vertical-align: middle;
-}
-
-.relation.selected .label {
-  //box-shadow: 0 0 8px #3005bb, inset 0 0 6px #3005bb;
-  box-shadow: 4px 4px 4px black;
 }
 
 .relation input {
@@ -281,17 +320,17 @@
 //  border-color: red;
 //}
 
-.vertex-tree-container{
-  &.no-relation-label{
-    >.vertex-container{
-      .relation{
-        .label-container{
-          display:none;
+.vertex-tree-container {
+  &.no-relation-label {
+    > .vertex-container {
+      .relation {
+        .label-container {
+          display: none;
         }
-        .connector{
-          width:75px;
-          &:before{
-            left:35px;
+        .connector {
+          width: 75px;
+          &:before {
+            left: 35px;
           }
         }
       }

@@ -76,7 +76,7 @@ define([
                 '/event/ui/html/edge/created/',
                 ui
             );
-            ui.reviewEditButtonDisplay();
+            ui.reviewIsSameAsGroupRelation();
             GraphElementHtmlBuilder.completeBuild(
                 ui
             );
@@ -121,11 +121,6 @@ define([
             edgeUi.addImages(
                 this.edgeServer.getImages()
             );
-            if (!MindMapInfo.isViewOnly()) {
-                addEditButton(
-                    edgeUi
-                );
-            }
             return edgeUi;
         };
 
@@ -133,18 +128,6 @@ define([
             return api;
         };
 
-        function addEditButton(edge) {
-            edge.getHtml().prepend("<i class='fa fa-pencil edit-relation-button on-edge-button'>").click(function () {
-                var edge = BubbleFactory.fromSubHtml(
-                    $(this)
-                );
-                if(!edge.isSetAsSameAsGroupRelation()){
-                    return;
-                }
-                edge.setAsNotSameAsGroupRelation();
-                edge.focus();
-            });
-        }
 
         function buildMenu(edge) {
             var edgeHtml = edge.getHtml(),

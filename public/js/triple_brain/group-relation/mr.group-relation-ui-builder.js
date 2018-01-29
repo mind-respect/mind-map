@@ -38,7 +38,7 @@ define([
                 groupRelationUi
             );
             groupRelationUi.reviewInLabelButtonsVisibility();
-            groupRelationUi.reviewEditButtonDisplay();
+            groupRelationUi.reviewIsSameAsGroupRelation();
             if (!MindMapInfo.isViewOnly()) {
                 GraphElementHtmlBuilder.setupDrag(
                     groupRelationUi

@@ -125,7 +125,7 @@ define([
         return identifier.getNbReferences() - this.getModel().getNumberOfVerticesAtAnyDepth();
     };
 
-    api.GroupRelationUi.prototype.reviewEditButtonDisplay = function () {
+    api.GroupRelationUi.prototype.reviewIsSameAsGroupRelation = function () {
     };
 
     api.GroupRelationUi.prototype.getModel = api.GroupRelationUi.prototype.getGroupRelation;

@@ -501,6 +501,9 @@ define([
         if(this.isSelected()){
             this.showMenu();
         }
+        if(this.isRelation()){
+            this.reviewIsSameAsGroupRelation();
+        }
         GraphUi.unlockDragScroll();
         GraphUi.enableDragScroll();
         KeyboardActionsHandler.enable();

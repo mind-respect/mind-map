@@ -91,7 +91,7 @@ define([
                 ".label-and-buttons"
             );
         };
-        api.TreeEdge.prototype.reviewEditButtonDisplay = function () {
+        api.TreeEdge.prototype.reviewIsSameAsGroupRelation = function () {
             var parentBubble = this.getParentBubble();
             if (!parentBubble.isGroupRelation()) {
                 this.setAsNotSameAsGroupRelation();
@@ -109,7 +109,7 @@ define([
                 this,
                 identifier
             );
-            this.reviewEditButtonDisplay();
+            this.reviewIsSameAsGroupRelation();
         };
 
         api.TreeEdge.prototype.setText = function(text){
@@ -117,7 +117,7 @@ define([
                 this,
                 text
             );
-            this.reviewEditButtonDisplay();
+            this.reviewIsSameAsGroupRelation();
         };
 
         api.TreeEdge.prototype.remove = function () {
@@ -151,7 +151,7 @@ define([
                 relation
             );
             this._removeParentGroupRelationIfItsALeaf(previousParentBubble);
-            this.reviewEditButtonDisplay();
+            this.reviewIsSameAsGroupRelation();
         };
 
         api.TreeEdge.prototype.convertToGroupRelation = function (newGroupRelation) {

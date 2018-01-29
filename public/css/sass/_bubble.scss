@@ -83,9 +83,10 @@
   .bubble-label {
     color:black;
     &:empty:not(:focus) {
+      max-width:100%;
+      transition: all 0.3s;
       &:after {
         content: attr(data-placeholder);
-        color: grey;
         font-style: italic;
         font-family: $bubbleFontFamily;
         font-size: calc(1em);

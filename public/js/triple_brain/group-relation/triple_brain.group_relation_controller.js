@@ -64,7 +64,7 @@ define([
                     this.getModel().getIdentification().getLabel(),
                     function (edge) {
                         edge.setText(this.getModel().getIdentification().getLabel());
-                        triple.edge().reviewEditButtonDisplay();
+                        triple.edge().reviewIsSameAsGroupRelation();
                     }.bind(this)
                 );
                 SelectionHandler.setToSingleVertex(
