@@ -773,7 +773,11 @@ define([
             };
             this.getAnySuggestionInTree = function () {
                 var eventBubble = this.getVertexUi();
-                return eventBubble.getTopMostChildBubble().getTopMostChildBubble();
+                var anyChildSuggestion;
+                eventBubble.visitClosestChildInTypes([GraphElementType.RelationSuggestion], function(relationSuggestion){
+                    anyChildSuggestion = relationSuggestion.getTopMostChildBubble();
+                });
+                return anyChildSuggestion;
             };
             this.getOneSuggestion = function () {
                 return this.getVertex().getSuggestions()[0];

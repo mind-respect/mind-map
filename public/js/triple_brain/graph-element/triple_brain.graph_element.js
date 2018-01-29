@@ -9,7 +9,6 @@ define([
     "triple_brain.id_uri",
     "mr.wikidata_uri",
     "mr.wikidata"
-
 ], function ($, FriendlyResource, Identification, IdUri, WikidataUri, Wikidata) {
     "use strict";
     var api = {};
