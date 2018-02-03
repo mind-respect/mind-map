@@ -176,6 +176,16 @@ define([
     };
 
     GraphElementController.prototype.identifyCanShowInLabel = function () {
+        if (this.getModel().isLabelEmpty()) {
+            return $.Deferred().resolve(
+                false
+            );
+        }
+        if (this.getUi().isRelation() && this.getUi().isSetAsSameAsGroupRelation()) {
+            return $.Deferred().resolve(
+                false
+            );
+        }
         var canShow = this.getModel().getRelevantTags().length === 1;
         if (canShow) {
             var tag = this.getModel().getRelevantTags()[0];
@@ -189,6 +199,16 @@ define([
     };
 
     GraphElementController.prototype.identifyWhenManyCanShowInLabel = function () {
+        if (this.getModel().isLabelEmpty()) {
+            return $.Deferred().resolve(
+                false
+            );
+        }
+        if (this.getUi().isRelation() && this.getUi().isSetAsSameAsGroupRelation()) {
+            return $.Deferred().resolve(
+                false
+            );
+        }
         if (this.getModel().getRelevantTags().length < 2) {
             return $.Deferred().resolve(
                 false
@@ -468,7 +488,7 @@ define([
             this.getUi().getParentBubble() :
             this.getUi();
         var promises = [];
-        if(!otherEdge.getParentBubble().isSameUri(movedEdge.getParentBubble())){
+        if (!otherEdge.getParentBubble().isSameUri(movedEdge.getParentBubble())) {
             promises.push(
                 movedEdge.getParentBubble().getController().becomeExParent(movedEdge)
             );
@@ -562,10 +582,10 @@ define([
             });
         }
         this.getUi().getHtml().popover("show").popover("show");
-        $('.popover-title').mousedown(function(event){
+        $('.popover-title').mousedown(function (event) {
             event.stopPropagation();
         });
-        var searchInput = $('.popover').find("input").empty().mousedown(function(event){
+        var searchInput = $('.popover').find("input").empty().mousedown(function (event) {
             event.stopPropagation();
             $(this).focus();
         });
