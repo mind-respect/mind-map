@@ -464,7 +464,7 @@ define([
             var centerVertex = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();
             var suggestionVertex = TestUtils.getChildWithLabel(
                 centerVertex,
-                "People involved"
+                "Start date"
             ).getTopMostChildBubble();
             expect(
                 suggestionVertex.isToTheLeft()
@@ -593,7 +593,7 @@ define([
                 centerBubble.hasChildren()
             ).toBeFalsy();
         });
-        it("can expand child of meta center having a group relation as a child", function(){
+        it("can expand child of meta center having a group relation as a child", function () {
             var scenario = new Scenarios.getMetaCenterChildHavingGroupRelation();
             var b1 = scenario.getB1InTree();
             expect(
@@ -611,6 +611,73 @@ define([
                 groupRelation.getNumberOfChild()
             ).toBe(2);
         });
+        it("can have three level deep group relation", function () {
+            var scenario = new Scenarios.threeLevelDeepGroupRelation();
+            var center = scenario.centerInTree();
+            expect(
+                center.getNumberOfChild()
+            ).toBe(1);
+            var region = TestUtils.getChildWithLabel(
+                center,
+                "region"
+            );
+            expect(
+                region.isGroupRelation()
+            ).toBeTruthy();
+            region.expand();
+            expect(
+                region.getNumberOfChild()
+            ).toBe(1);
+            var subRegion = TestUtils.getChildWithLabel(
+                region,
+                "sub-region"
+            );
+            subRegion.expand();
+            expect(
+                subRegion.getNumberOfChild()
+            ).toBe(2);
+            var subRegionA = TestUtils.getChildWithLabel(
+                subRegion,
+                "sub-region-a"
+            );
+            subRegionA.expand();
+            expect(
+                subRegionA.getNumberOfChild()
+            ).toBe(2);
+            expect(
+                TestUtils.hasChildWithLabel(
+                    subRegionA,
+                    "r1"
+                )
+            ).toBeTruthy();
+            expect(
+                TestUtils.hasChildWithLabel(
+                    subRegionA,
+                    "r2"
+                )
+            ).toBeTruthy();
+            var subRegionB = TestUtils.getChildWithLabel(
+                subRegion,
+                "sub-region-b"
+            );
+            subRegionB.expand();
+            expect(
+                subRegionB.getNumberOfChild()
+            ).toBe(2);
+            expect(
+                TestUtils.hasChildWithLabel(
+                    subRegionB,
+                    "r3"
+                )
+            ).toBeTruthy();
+            expect(
+                TestUtils.hasChildWithLabel(
+                    subRegionB,
+                    "r4"
+                )
+            ).toBeTruthy();
+        });
+
         function getNumberOfHiddenPropertiesContainer(bubble) {
             return bubble.getHtml().find(
                 ".hidden-properties-container"

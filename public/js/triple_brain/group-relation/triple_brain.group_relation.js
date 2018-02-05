@@ -273,6 +273,8 @@ define([
             } else if (groupRelation.isTrulyAGroupRelation() && this._doesOneOfTheChildHasIdentifiers(groupRelation.getIdentifiers())) {
                 doWithTuplesAtThisDepth = this.removeTuple.bind(this);
                 this.addChildGroupRelation(groupRelation);
+            } else if (this.integrateGroupRelationToChildGroupRelations(groupRelation)) {
+                hasIntegrated = true;
             }
             if (doWithTuplesAtThisDepth) {
                 groupRelation.visitTuples(function (tuple) {
@@ -280,6 +282,16 @@ define([
                 }.bind(this));
                 hasIntegrated = true;
             }
+            return hasIntegrated;
+        };
+
+        GroupRelation.prototype.integrateGroupRelationToChildGroupRelations = function (groupRelation) {
+            var hasIntegrated = false;
+            this.getChildGroupRelations().forEach(function (childGroupRelation) {
+                if (childGroupRelation.integrateGroupRelationToTreeIfApplicable(groupRelation)) {
+                    hasIntegrated = true;
+                }
+            });
             return hasIntegrated;
         };
 

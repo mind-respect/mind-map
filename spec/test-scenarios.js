@@ -270,6 +270,21 @@ define([
             Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
         };
 
+        api.threeLevelDeepGroupRelation = function () {
+            var treeBuilder = new TreeBuilder(this);
+            this.getGraph = function () {
+                return api._getTestData("threeLevelDeepGroupRelation");
+            };
+
+            this.centerInTree = function () {
+                return treeBuilder.getBubbleWithLabelInTree("fast charging station");
+            };
+            this.getCenterBubbleUri = function () {
+                return uriOfVertexWithLabel(this.getGraph(), "fast charging station");
+            };
+            Mock.setCenterBubbleUriInUrl(this.getCenterBubbleUri());
+        };
+
         api.threeBubblesGraph = function () {
             var treeBuilder = new TreeBuilder(this);
             this.getGraph = function () {
@@ -774,7 +789,7 @@ define([
             this.getAnySuggestionInTree = function () {
                 var eventBubble = this.getVertexUi();
                 var anyChildSuggestion;
-                eventBubble.visitClosestChildInTypes([GraphElementType.RelationSuggestion], function(relationSuggestion){
+                eventBubble.visitClosestChildInTypes([GraphElementType.RelationSuggestion], function (relationSuggestion) {
                     anyChildSuggestion = relationSuggestion.getTopMostChildBubble();
                 });
                 return anyChildSuggestion;
