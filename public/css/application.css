@@ -375,6 +375,7 @@ button.inactive i { color: red; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .relation.bubble { position: relative; }
+.relation.bubble.empty-label:not(.selected) .in-label-buttons { display: none !important; }
 .relation.bubble .bubble-label:empty:not(:focus) { max-width: 100%; transition: all 0.2s; line-height: 0; }
 .relation.bubble .bubble-label:empty:not(:focus):after { content: ""; }
 .relation.bubble.selected .label { box-shadow: 4px 4px 4px black; }

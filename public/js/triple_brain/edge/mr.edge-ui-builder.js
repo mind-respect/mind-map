@@ -77,6 +77,9 @@ define([
                 ui
             );
             ui.reviewIsSameAsGroupRelation();
+            if (ui.isSetAsSameAsGroupRelation()) {
+                ui.getHtml().addClass("empty-label");
+            }
             GraphElementHtmlBuilder.completeBuild(
                 ui
             );
@@ -124,7 +127,7 @@ define([
             return edgeUi;
         };
 
-        api.EdgeUiBuilder.prototype.getClass = function(){
+        api.EdgeUiBuilder.prototype.getClass = function () {
             return api;
         };
 

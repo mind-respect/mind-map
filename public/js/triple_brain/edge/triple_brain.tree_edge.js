@@ -6,15 +6,16 @@ define([
         "jquery",
         "triple_brain.edge_ui",
         "triple_brain.bubble",
-        "triple_brain.object_utils"
+        "triple_brain.object_utils",
+        "triple_brain.graph_element_ui"
     ],
-    function ($, EdgeUi, Bubble, ObjectUtils) {
+    function ($, EdgeUi, Bubble, ObjectUtils, GraphElementUi) {
         "use strict";
         var api = {};
 
         EdgeUi.buildCommonConstructors(api);
 
-        api.createFromHtml = function(html){
+        api.createFromHtml = function (html) {
             var treeEdge = new api.TreeEdge().init(
                 html
             );
@@ -58,7 +59,7 @@ define([
                 destination_vertex_id: this.getDestinationVertex().getId()
             };
         };
-        
+
         api.TreeEdge.prototype.inverse = function () {
             var isInverse = this.isInverse();
             this.html[
@@ -104,7 +105,7 @@ define([
             this.setAsSameAsGroupRelation();
         };
 
-        api.TreeEdge.prototype.removeIdentifier = function(identifier){
+        api.TreeEdge.prototype.removeIdentifier = function (identifier) {
             Bubble.Bubble.prototype.removeIdentifier.call(
                 this,
                 identifier
@@ -112,7 +113,7 @@ define([
             this.reviewIsSameAsGroupRelation();
         };
 
-        api.TreeEdge.prototype.setText = function(text){
+        api.TreeEdge.prototype.setText = function (text) {
             Bubble.Bubble.prototype.setText.call(
                 this,
                 text
@@ -137,13 +138,13 @@ define([
             this._removeParentGroupRelationIfItsALeaf(parentBubble);
         };
 
-        api.TreeEdge.prototype._removeParentGroupRelationIfItsALeaf = function(parentBubble){
-            if(parentBubble.isGroupRelation() && parentBubble.isALeaf()){
+        api.TreeEdge.prototype._removeParentGroupRelationIfItsALeaf = function (parentBubble) {
+            if (parentBubble.isGroupRelation() && parentBubble.isALeaf()) {
                 parentBubble.remove();
             }
         };
 
-        api.TreeEdge.prototype.moveTo = function(otherBubble, relation){
+        api.TreeEdge.prototype.moveTo = function (otherBubble, relation) {
             var previousParentBubble = this.getParentBubble();
             Bubble.Bubble.prototype.moveTo.call(
                 this,
@@ -158,6 +159,17 @@ define([
             newGroupRelation.moveAbove(this);
             this.moveToParent(
                 newGroupRelation
+            );
+        };
+
+        api.TreeEdge.prototype.leaveEditMode = function () {
+            if (this.isSetAsSameAsGroupRelation()) {
+                this.getHtml().addClass("empty-label");
+            } else {
+                this.getHtml().removeClass("empty-label");
+            }
+            GraphElementUi.GraphElementUi.prototype.leaveEditMode.call(
+                this
             );
         };
 

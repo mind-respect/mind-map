@@ -22,6 +22,9 @@ define([
         escapeKeyCode = 27,
         api = {};
     api.completeBuild = function (graphElementUi) {
+        if(graphElementUi.getModel().isLabelEmpty()){
+            graphElementUi.getHtml().addClass("empty-label");
+        }
         graphElementUi.applyToOtherInstances(function (otherInstance) {
             otherInstance.reviewInLabelButtonsVisibility();
         });

@@ -176,16 +176,6 @@ define([
     };
 
     GraphElementController.prototype.identifyCanShowInLabel = function () {
-        if (this.getModel().isLabelEmpty()) {
-            return $.Deferred().resolve(
-                false
-            );
-        }
-        if (this.getUi().isRelation() && this.getUi().isSetAsSameAsGroupRelation()) {
-            return $.Deferred().resolve(
-                false
-            );
-        }
         var canShow = this.getModel().getRelevantTags().length === 1;
         if (canShow) {
             var tag = this.getModel().getRelevantTags()[0];
@@ -199,16 +189,6 @@ define([
     };
 
     GraphElementController.prototype.identifyWhenManyCanShowInLabel = function () {
-        if (this.getModel().isLabelEmpty()) {
-            return $.Deferred().resolve(
-                false
-            );
-        }
-        if (this.getUi().isRelation() && this.getUi().isSetAsSameAsGroupRelation()) {
-            return $.Deferred().resolve(
-                false
-            );
-        }
         if (this.getModel().getRelevantTags().length < 2) {
             return $.Deferred().resolve(
                 false

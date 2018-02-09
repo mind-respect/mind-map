@@ -5,6 +5,15 @@
 $withTextPadding: 5px 15px 5px 15px;
 $withoutTextPadding: 5px 8px 5px 8px;
 .relation.bubble {
+
+  &.empty-label {
+    &:not(.selected){
+      .in-label-buttons {
+        display: none !important;
+      }
+    }
+  }
+
   .bubble-label {
     &:empty:not(:focus) {
       max-width:100%;

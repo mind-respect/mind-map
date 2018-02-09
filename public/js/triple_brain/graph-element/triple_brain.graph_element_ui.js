@@ -483,6 +483,11 @@ define([
     };
     api.GraphElementUi.prototype.leaveEditMode = function () {
         var $label = this.getLabel();
+        if (this.getModel().isLabelEmpty()) {
+            this.getHtml().addClass("empty-label");
+        } else {
+            this.getHtml().removeClass("empty-label");
+        }
         $label.attr(
             "contenteditable",
             "false"
@@ -498,10 +503,10 @@ define([
             $html.data("previous_draggable_status")
         );
         this.getInLabelButtonsContainer().removeClass("hidden");
-        if(this.isSelected()){
+        if (this.isSelected()) {
             this.showMenu();
         }
-        if(this.isRelation()){
+        if (this.isRelation()) {
             this.reviewIsSameAsGroupRelation();
         }
         GraphUi.unlockDragScroll();
@@ -761,7 +766,7 @@ define([
         return this.getModel().getComment();
     };
 
-    api.GraphElementUi.prototype.getTagNumberOfOtherReferences = function(identifier){
+    api.GraphElementUi.prototype.getTagNumberOfOtherReferences = function (identifier) {
         return identifier.getNbReferences() - 1;
     };
 
@@ -770,7 +775,7 @@ define([
             return "";
         }
         var list = $("<ul  class='list-group'>");
-        this.getModel().getRelevantTags().sort(function(a, b){
+        this.getModel().getRelevantTags().sort(function (a, b) {
             return b.getNbReferences() - a.getNbReferences();
         }).forEach(function (identifier) {
             list.append(

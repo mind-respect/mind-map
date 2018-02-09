@@ -2,7 +2,7 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
-#drag-bubble-text-for-chrome{
+#drag-bubble-text-for-chrome {
   font-size: 25px;
   padding: 10px;
   width: auto;
@@ -22,6 +22,7 @@
   z-index: 5;
   cursor: default;
   display: table;
+
   &.drag-over {
     .in-bubble-content {
       border: 3px dashed red;
@@ -81,9 +82,9 @@
   }
   white-space: nowrap;
   .bubble-label {
-    color:black;
+    color: black;
     &:empty:not(:focus) {
-      max-width:100%;
+      max-width: 100%;
       transition: all 0.3s;
       &:after {
         content: attr(data-placeholder);
