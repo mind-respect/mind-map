@@ -21,8 +21,11 @@
 }
 .relation .in-label-buttons button.graph-element-button{
   &.visit-other-instances{
+    i{
+      top:51%;
+    }
     .fa-stack-text {
-      margin-top: 12px;
+      margin-top: 13px;
     }
   }
 }
@@ -32,12 +35,12 @@
       margin-right: 5px !important;
       margin-top:-20px !important;
       .fa-stack-2x {
-        font-size:1.6em;
+        font-size:1.3em;
         top:44%;
       }
       .fa-stack-text {
-        margin-top: 15px;
-        font-size:16px;
+        margin-top: 11px;
+        font-size:15px;
       }
       &:focus{
         outline:none;
@@ -51,10 +54,6 @@
         color:#E65100 !important;
       }
       margin-right: 5px !important;
-      .fa-stack-2x {
-        font-size:1.6em;
-        top:44%;
-      }
     }
   }
 }
