@@ -33,6 +33,7 @@ define([
         };
         api.reset = function () {
             initButtons();
+
             function initButtons() {
                 api.visitButtons(function (button) {
                     setIcon(button);
@@ -95,6 +96,7 @@ define([
         api.defineTooltip = function (button, options) {
             preventNativeTooltip();
             button.getHtml().popoverLikeToolTip(options);
+
             function preventNativeTooltip() {
                 button.getHtml().hover(
                     function (event) {
@@ -116,8 +118,12 @@ define([
                 )
             );
         };
-        api.visitButtons = function (visitor) {
-            $.each(getButtonsHtml(), function () {
+        api.visitButtons = function (visitor, inverse) {
+            var buttonsHtml = getButtonsHtml();
+            if (inverse) {
+                buttonsHtml = $(buttonsHtml.get().reverse());
+            }
+            buttonsHtml.each(function () {
                 visitor(
                     GraphElementButton.fromHtml(
                         $(this)

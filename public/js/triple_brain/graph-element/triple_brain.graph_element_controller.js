@@ -149,22 +149,22 @@ define([
     };
 
     GraphElementController.prototype.visitOtherInstancesCanDo = function () {
-        return this.isSingle() && this.graphElements.hasOtherInstances();
+        return false;
     };
 
-    GraphElementController.prototype.visitOtherInstances = function () {
+    GraphElementController.prototype.visitOtherInstancesCanShowInLabel = function () {
+        return $.Deferred().resolve(
+            this.getUi().hasOtherVisibleInstance()
+        );
+    };
+
+    GraphElementController.prototype.visitOtherInstancesInLabelClick = function () {
         var otherInstance = this.graphElements.getOtherInstances()[0];
         $(
             otherInstance.getHtml()
         ).centerOnScreenWithAnimation();
         SelectionHandler.setToSingleGraphElement(
             otherInstance
-        );
-    };
-
-    GraphElementController.prototype.visitOtherInstancesCanShowInLabel = function () {
-        return $.Deferred().resolve(
-            this.getUi().hasOtherVisibleInstance()
         );
     };
 

@@ -19,6 +19,45 @@
     width: 0;
   }
 }
+.relation .in-label-buttons button.graph-element-button{
+  &.visit-other-instances{
+    .fa-stack-text {
+      margin-top: 12px;
+    }
+  }
+}
+.in-label-buttons{
+  button.graph-element-button {
+    &.visit-other-instances{
+      margin-right: 5px !important;
+      margin-top:-20px !important;
+      .fa-stack-2x {
+        font-size:1.6em;
+        top:44%;
+      }
+      .fa-stack-text {
+        margin-top: 15px;
+        font-size:16px;
+      }
+      &:focus{
+        outline:none;
+        i{
+          border:1px solid #4D90FE;
+          -webkit-box-shadow: 0px 0px 5px  #4D90FE;
+          box-shadow: 0px 0px 5px  #4D90FE;
+        }
+      }
+      i{
+        color:#E65100 !important;
+      }
+      margin-right: 5px !important;
+      .fa-stack-2x {
+        font-size:1.6em;
+        top:44%;
+      }
+    }
+  }
+}
 
 button.graph-element-button {
   position: relative;
@@ -39,6 +78,16 @@ button.graph-element-button {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
   &:hover {
     background-image: linear-gradient(to bottom, #fff, #CDCDCD);
+  }
+  .stacked-icons {
+    margin-top: 20px;
+    text-align: center;
+  }
+  .fa-stack {
+    vertical-align: inherit;
+  }
+  .fa-stack + .fa-stack {
+    margin-left: .3em;
   }
 }
 

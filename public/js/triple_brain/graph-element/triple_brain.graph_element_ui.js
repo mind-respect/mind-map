@@ -190,6 +190,11 @@ define([
                 elementWithSameUri
             );
         });
+        otherInstances.forEach(function(otherInstance){
+            otherInstance.getHtml().find(".nb-other-instances").text(
+                otherInstances.length
+            );
+        });
         this.html.data(
             otherInstancesKey,
             otherInstances

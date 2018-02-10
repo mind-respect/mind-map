@@ -79,14 +79,22 @@ define([
             if (!button.canBeInLabel()) {
                 return;
             }
-            var clonedButton = button.cloneInto(container);
+            var clonedButton = button.cloneInto(
+                container
+            );
             var cloneHtml = clonedButton.getHtml();
             cloneHtml.click(function () {
+                var button = $(this);
                 var graphElementUi = BubbleFactory.fromSubHtml(
-                    $(this)
+                    button
                 );
                 if (!graphElementUi.isSelected()) {
                     SelectionHandler.addGraphElement(graphElementUi);
+                }
+                var inLabelButtonClickMethodName = button.data("action") + "InLabelClick";
+                var controller = graphElementUi.getController();
+                if(controller[inLabelButtonClickMethodName]){
+                    controller[inLabelButtonClickMethodName]();
                 }
             });
             GraphElementMainMenu.defineTooltip(
@@ -94,7 +102,7 @@ define([
                     trigger: 'focus'
                 }
             );
-        });
+        }, graphElementUi.getModel().isLeftOriented);
         return container;
     };
 
