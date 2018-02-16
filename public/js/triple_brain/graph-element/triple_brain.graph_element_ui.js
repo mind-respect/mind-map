@@ -190,7 +190,7 @@ define([
                 elementWithSameUri
             );
         });
-        otherInstances.forEach(function(otherInstance){
+        otherInstances.forEach(function (otherInstance) {
             otherInstance.getHtml().find(".nb-other-instances").text(
                 otherInstances.length
             );
@@ -799,6 +799,49 @@ define([
             );
         }.bind(this));
         return list;
+    };
+
+    api.GraphElementUi.prototype.showLinesToSimilarInstances = function () {
+        var basePosition = this.getSameInstanceButtonPosition();
+        var svgStr = '<svg style="position:absolute;overflow:visible; top:0; left:0; height:100%; width:100%" version="1.1" xmlns="http://www.w3.org/2000/svg">';
+        // var svg = $(document.createElementNS("http://www.w3.org/2000/svg", "svg"));
+        // svg.attr(
+        //     "style",
+        //     "position:absolute;overflow:visible; top:0; left:0; height:100%; width:100%"
+        // );
+        // var svg = $(
+        //     '<svg id="svg-lines" style="position:absolute;overflow:visible; top:0; left:0; height:100%; width:100%" version="1.1" xmlns="http://www.w3.org/2000/svg">'
+        // );
+        this.getOtherInstances().forEach(function (otherInstance) {
+            var otherPosition = otherInstance.getSameInstanceButtonPosition();
+            var yControllPointVariation = -75;
+            if(otherPosition.top < basePosition.top){
+                yControllPointVariation *= -1;
+            }
+            var xControllPointVariation = 0;
+            var path = '<path d="M' + basePosition.left + "," + basePosition.top + " C";
+            path += basePosition.left + xControllPointVariation + "," + (basePosition.top + yControllPointVariation) + " ";
+            path += otherPosition.left - xControllPointVariation + "," + (otherPosition.top + yControllPointVariation) + " ";
+            path += otherPosition.left + "," + otherPosition.top + '" ';
+            path += 'fill="none" stroke="#E65100" stroke-dasharray="5, 5" stroke-width="2px"/>';
+            svgStr += path;
+        });
+        svgStr += "</svg>";
+        return $("#svg-container").empty().append(
+            svgStr
+        );
+    };
+
+    api.GraphElementUi.prototype.getSameInstanceButtonPosition = function () {
+        var otherInstancesButton = this.getHtml().find(".in-label-buttons .nb-other-instances");
+        var position = otherInstancesButton.offset();
+        position.left += 10;
+        // position.left += otherInstancesButton.width() + 5;
+        position.top += otherInstancesButton.height() / 2;
+        position.left = Math.round(position.left);
+        position.top = Math.round(position.top);
+        otherInstancesButton.css("visibility", "hidden");
+        return position;
     };
 
     EventBus.subscribe(

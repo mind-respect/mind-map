@@ -159,13 +159,14 @@ define([
     };
 
     GraphElementController.prototype.visitOtherInstancesInLabelClick = function () {
-        var otherInstance = this.graphElements.getOtherInstances()[0];
-        $(
-            otherInstance.getHtml()
-        ).centerOnScreenWithAnimation();
-        SelectionHandler.setToSingleGraphElement(
-            otherInstance
-        );
+        this.getUi().showLinesToSimilarInstances();
+        // var otherInstance = this.graphElements.getOtherInstances()[0];
+        // $(
+        //     otherInstance.getHtml()
+        // ).centerOnScreenWithAnimation();
+        // SelectionHandler.setToSingleGraphElement(
+        //     otherInstance
+        // );
     };
 
     GraphElementController.prototype.identifyCanDo = function () {
