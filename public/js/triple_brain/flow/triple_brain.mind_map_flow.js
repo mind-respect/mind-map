@@ -21,8 +21,9 @@ define([
     "triple_brain.bubble_factory",
     "triple_brain.identification_menu",
     "triple_brain.image_menu",
+    "triple_brain.graph_element_ui",
     "triple_brain.other_user_flow"
-], function ($, UiUtils, UserService, EventBus, Header, SelectionHandler, GraphDisplayer, GraphDisplayerFactory, MindMapInfo, GraphElementMainMenu, GraphUi, LanguageManager, IdUriUtils, BubbleCloudFlow, Flow, BubbleFactory, IdentificationMenu, ImageMenu, html2canvas) {
+], function ($, UiUtils, UserService, EventBus, Header, SelectionHandler, GraphDisplayer, GraphDisplayerFactory, MindMapInfo, GraphElementMainMenu, GraphUi, LanguageManager, IdUriUtils, BubbleCloudFlow, Flow, BubbleFactory, IdentificationMenu, ImageMenu, GraphElementUi, html2canvas) {
     "use strict";
     var api = {};
     api.enterBubbleCloud = function () {
@@ -68,7 +69,7 @@ define([
             var centralBubble = BubbleFactory.getGraphElementFromUri(
                 centralBubbleUri
             );
-            if(centralBubble.isVertex()){
+            if (centralBubble.isVertex()) {
                 var backgroundColor = centralBubble.getModel().getColors().background;
                 if (backgroundColor) {
                     GraphUi.changeBackgroundColor(backgroundColor);
@@ -87,14 +88,20 @@ define([
             GraphUi.getDrawnGraph().on(
                 "mousedown",
                 function (event) {
-                    var clickedOnSomethingInsideABubble = $(event.target).closest(".bubble").length === 1;
+                    var whatGotClicked = $(event.target);
+                    var clickedOnOtherInstancesButton = whatGotClicked.closest(".visit-other-instances").length === 1;
+                    if (clickedOnOtherInstancesButton) {
+                        return;
+                    }
+                    GraphElementUi.resetOtherInstancesDisplay();
+                    var clickedOnSomethingInsideABubble = whatGotClicked.closest(".bubble").length === 1;
                     if (clickedOnSomethingInsideABubble) {
                         return;
                     }
+                    GraphUi.removePopovers();
                     if (UiUtils.isMacintosh() ? event.metaKey : event.ctrlKey) {
                         return;
                     }
-                    GraphUi.removePopovers();
                     SelectionHandler.removeAll();
                 }
             );

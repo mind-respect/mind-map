@@ -102,6 +102,7 @@ define([
         };
         api.EdgeUi.prototype.deselect = function () {
             this.html.removeClass("selected");
+            GraphElementUi.resetOtherInstancesDisplay();
             this.removeSingleSelected();
             this.hideMenu();
         };

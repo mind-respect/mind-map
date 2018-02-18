@@ -296,6 +296,7 @@ define([
 
         api.VertexUi.prototype.deselect = function () {
             this.html.removeClass("selected");
+            GraphElementUi.resetOtherInstancesDisplay();
             this.removeSingleSelected();
             this.hideButtons();
         };

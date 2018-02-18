@@ -160,13 +160,6 @@ define([
 
     GraphElementController.prototype.visitOtherInstancesInLabelClick = function () {
         this.getUi().showLinesToSimilarInstances();
-        // var otherInstance = this.graphElements.getOtherInstances()[0];
-        // $(
-        //     otherInstance.getHtml()
-        // ).centerOnScreenWithAnimation();
-        // SelectionHandler.setToSingleGraphElement(
-        //     otherInstance
-        // );
     };
 
     GraphElementController.prototype.identifyCanDo = function () {
