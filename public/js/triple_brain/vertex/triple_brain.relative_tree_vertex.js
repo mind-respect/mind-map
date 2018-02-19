@@ -262,7 +262,6 @@ define([
             if (!sourceBubble.isVertex()) {
                 return;
             }
-            triple.destinationVertex().resetOtherInstances();
             sourceBubble.applyToOtherInstances(function (otherInstance) {
                 TripleUiBuilder.createUsingServerTriple(
                     otherInstance,
@@ -270,6 +269,8 @@ define([
                 );
                 otherInstance.resetOtherInstances();
             });
+            triple.destinationVertex().resetOtherInstances();
+            triple.destinationVertex().reviewInLabelButtonsVisibility(true);
         }
 
         return api;

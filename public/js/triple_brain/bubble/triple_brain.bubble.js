@@ -898,10 +898,7 @@ define([
                 }
             });
             this.visitDescendants(function (descendant) {
-                descendant.reviewInLabelButtonsVisibility();
-                descendant.applyToOtherInstances(function () {
-                    descendant.reviewInLabelButtonsVisibility();
-                });
+                descendant.reviewInLabelButtonsVisibility(true);
             });
             if (!avoidScreenCenter) {
                 this.sideCenterOnScreenWithAnimation();
