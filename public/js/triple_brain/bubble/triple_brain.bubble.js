@@ -976,6 +976,7 @@ define([
 
         api.Bubble.prototype.mergeTo = function (distantUri) {
             this.removeFromCache();
+            this.getHtml().data("uri", distantUri);
             this.getModel().setUri(distantUri);
             this.initCache();
         };

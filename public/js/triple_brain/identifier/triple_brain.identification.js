@@ -233,5 +233,8 @@ define([
     api.Identification.prototype.getWikipediaLink = function () {
         return this.wikipediaLinkPromise;
     };
+    api.Identification.prototype.isPristine = function(){
+        return false;
+    };
     return api;
 });

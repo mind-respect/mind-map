@@ -61,6 +61,7 @@ define([
             return false;
         }
         var parentBubble = this.getUi().getParentBubble();
+
         if (!parentBubble.isRelation() || !parentBubble.getModel().isPristine()) {
             return false;
         }

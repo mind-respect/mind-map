@@ -321,6 +321,8 @@ define([
         };
 
         api.VertexUi.prototype.afterConvertToDistantBubbleWithUri = function () {
+            this.resetOtherInstances();
+            this.reviewInLabelButtonsVisibility(true);
             this.getHiddenRelationsContainer().hideLoading();
         };
 

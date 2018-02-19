@@ -811,7 +811,7 @@ define([
         var svgStr = '<svg style="position:absolute;overflow:visible; top:0; left:0; height:100%; width:100%" version="1.1" xmlns="http://www.w3.org/2000/svg">';
         this.getOtherInstances().forEach(function (otherInstance) {
             var otherPosition = otherInstance.getOtherInstancesButtonPosition();
-            otherInstance.getOtherInstancesButton().css("visibility", "hidden");
+            otherInstance.getInsideOtherInstancesButton().css("visibility", "hidden");
             var areTheyClose = Math.abs(otherPosition.left - basePosition.left) < 400;
             var yControllPointVariation = areTheyClose ? 15 : 75;
             if (otherPosition.top < basePosition.top) {
@@ -826,14 +826,14 @@ define([
             svgStr += path;
         });
         svgStr += "</svg>";
-        this.getOtherInstancesButton().css("visibility", "hidden");
+        this.getInsideOtherInstancesButton().css("visibility", "hidden");
         return $("#svg-container").empty().append(
             svgStr
         );
     };
 
     api.GraphElementUi.prototype.getOtherInstancesButtonPosition = function () {
-        var otherInstancesButton = this.getOtherInstancesButton();
+        var otherInstancesButton = this.getInsideOtherInstancesButton();
         var position = otherInstancesButton.offset();
         position.left += otherInstancesButton.width() / 2;
         position.top += otherInstancesButton.height() / 2;
@@ -842,7 +842,7 @@ define([
         return position;
     };
 
-    api.GraphElementUi.prototype.getOtherInstancesButton = function () {
+    api.GraphElementUi.prototype.getInsideOtherInstancesButton = function () {
         return this.getHtml().find(".in-label-buttons .nb-other-instances");
     };
 
