@@ -84,6 +84,7 @@
   .bubble-label {
     color: black;
     &:empty:not(:focus) {
+      color: grey;
       max-width: 100%;
       transition: all 0.3s;
       &:after {

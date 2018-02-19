@@ -475,7 +475,7 @@ button.inactive i { color: red; }
 .bubble.edit { user-select: text; cursor: text; }
 .bubble.edit .bubble-label:after { content: ""; }
 .bubble .bubble-label { color: black; outline: 0 solid transparent; border: none; font-family: arial; font-size: 14px; width: auto; display: table-cell; white-space: pre; }
-.bubble .bubble-label:empty:not(:focus) { max-width: 100%; transition: all 0.3s; }
+.bubble .bubble-label:empty:not(:focus) { color: grey; max-width: 100%; transition: all 0.3s; }
 .bubble .bubble-label:empty:not(:focus):after { content: attr(data-placeholder); font-style: italic; font-family: arial; font-size: calc(1em); }
 .bubble .bubble-label del { text-decoration: none; }
 .bubble .bubble-label[contenteditable='true']:before { content: "\feff "; }
