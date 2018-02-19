@@ -3,8 +3,10 @@
  */
 
 define([
-    "mr.command"
-], function (Command) {
+    "mr.command",
+    "triple_brain.graph_ui"
+
+], function (Command, GraphUi) {
     "use strict";
     var api = {};
     api.undoCanDo = function(){
@@ -22,5 +24,20 @@ define([
     api.getUi = function () {
         return [];
     };
+    api.find = function () {
+    debugger;
+        $("#vertex-search-input").focus();
+    };
+    api.zoomIn = function () {
+        GraphUi.zoom(
+            0.1
+        );
+    };
+    api.zoomOut = function () {
+        GraphUi.zoom(
+            -0.1
+        );
+    };
+
     return api;
 });

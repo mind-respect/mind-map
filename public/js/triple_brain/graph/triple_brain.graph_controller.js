@@ -60,17 +60,6 @@ define([
         return VertexUi.getNumber() > SelectionHandler.getNbSelectedVertices();
     };
 
-    api.zoomIn = function () {
-        GraphUi.zoom(
-            0.1
-        );
-    };
-    api.zoomOut = function () {
-        GraphUi.zoom(
-            -0.1
-        );
-    };
-
     api.getUi = function () {
         return [];
     };

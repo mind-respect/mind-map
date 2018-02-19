@@ -28,6 +28,7 @@ define([
         aKeyNumber = 65,
         dKeyNumber = 68,
         eKeyNumber = 69,
+        fKeyNumber = 70,
         hKeyNumber = 72,
         iKeyNumber = 73,
         pKeyNumber = 80,
@@ -94,7 +95,7 @@ define([
     }
 
     function keyDownHandler(event) {
-        // console.log(event.which);
+//         console.log(event.which);
         var target = $(event.target),
             isWorkingOnSomething = !target.is("body") && !target.is("button");
         var isCombineKeyPressed = UiUtils.isMacintosh() ? event.metaKey : event.ctrlKey;
@@ -235,16 +236,20 @@ define([
             action: "convertToGroupRelation"
         }];
         actions[plusKeyNumber] = {
-            action: "zoomIn"
+            action: "zoomIn",
+            isForAppController: true
         };
         actions[plusKeyNumberMac] = {
-            action: "zoomIn"
+            action: "zoomIn",
+            isForAppController: true
         };
         actions[minusKeyNumber] = {
-            action: "zoomOut"
+            action: "zoomOut",
+            isForAppController: true
         };
         actions[minusKeyNumberMac] = {
-            action: "zoomOut"
+            action: "zoomOut",
+            isForAppController: true
         };
         actions[upArrowKeyNumber] = {
             action: "moveUp"
@@ -255,6 +260,10 @@ define([
         actions[mKeyNumber] = {
             action: "merge"
         };
+         actions[fKeyNumber] = {
+            action: "find",
+            isForAppController: true
+         };
         return actions;
     }
 });
