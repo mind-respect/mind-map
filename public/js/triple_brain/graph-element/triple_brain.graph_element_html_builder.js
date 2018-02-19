@@ -68,6 +68,13 @@ define([
                     $(this).blur();
                 }
             }
+            var ui = BubbleFactory.fromSubHtml(
+                $(this)
+            );
+            var text = ui.text();
+            ui.applyToOtherInstances(function(otherInstance){
+                otherInstance.setText(text);
+            });
         });
     };
 
