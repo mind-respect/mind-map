@@ -300,7 +300,6 @@ define([
             this.html.removeClass("selected");
             GraphElementUi.resetOtherInstancesDisplay();
             this.removeSingleSelected();
-            this.hideButtons();
         };
         api.VertexUi.prototype.select = function () {
             this.html.addClass("selected");
