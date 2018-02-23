@@ -21,6 +21,7 @@ define([
         EventBus.subscribe('/event/ui/flow/landing', function () {
             init();
         });
+
         function init() {
             getInput().empty().mrAutocomplete({
                 select: function (event, ui) {
@@ -35,7 +36,7 @@ define([
                         prioritizeVertex: true
                     })
                 ]
-            }).click(function(){
+            }).click(function () {
                 $(this).val("");
             });
         }

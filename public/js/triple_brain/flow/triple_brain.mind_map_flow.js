@@ -22,8 +22,9 @@ define([
     "triple_brain.identification_menu",
     "triple_brain.image_menu",
     "triple_brain.graph_element_ui",
+    "mr.app_controller",
     "triple_brain.other_user_flow"
-], function ($, UiUtils, UserService, EventBus, Header, SelectionHandler, GraphDisplayer, GraphDisplayerFactory, MindMapInfo, GraphElementMainMenu, GraphUi, LanguageManager, IdUriUtils, BubbleCloudFlow, Flow, BubbleFactory, IdentificationMenu, ImageMenu, GraphElementUi, html2canvas) {
+], function ($, UiUtils, UserService, EventBus, Header, SelectionHandler, GraphDisplayer, GraphDisplayerFactory, MindMapInfo, GraphElementMainMenu, GraphUi, LanguageManager, IdUriUtils, BubbleCloudFlow, Flow, BubbleFactory, IdentificationMenu, ImageMenu, GraphElementUi, AppController, html2canvas) {
     "use strict";
     var api = {};
     api.enterBubbleCloud = function () {
@@ -122,7 +123,7 @@ define([
             GraphUi.initDragScroll();
             GraphUi.enableDragScroll();
             SelectionHandler.setToSingleVertex(centralBubble);
-            GraphDisplayer.getGraphMenuHandler().zoomOut();
+            AppController.zoomOut();
             EventBus.publish('/event/ui/graph/drawn');
             // html2canvas(document.body).then(function(canvas) {
             //     document.body.innerHTML = canvas;

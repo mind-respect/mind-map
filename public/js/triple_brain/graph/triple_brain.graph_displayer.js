@@ -172,6 +172,9 @@ define([
         api.getGraphMenuHandler = function () {
             return _implementation.getGraphMenuHandler();
         };
+        api.getAppController = function(){
+            return _implementation.getAppController();
+        };
         api.getMetaController = function () {
             return _implementation.getMetaController();
         };

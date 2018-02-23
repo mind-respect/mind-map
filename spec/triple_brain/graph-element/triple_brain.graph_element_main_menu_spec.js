@@ -27,7 +27,7 @@ define([
                 getAWholeGraphButton()
             );
             expect(
-                clickHandler.hasOwnProperty("zoomIn")
+                clickHandler.hasOwnProperty("selectTree")
             ).toBeTruthy();
             SelectionHandler.setToSingleGraphElement(
                 bubble
@@ -36,7 +36,7 @@ define([
                 getAWholeGraphButton()
             );
             expect(
-                clickHandler.hasOwnProperty("zoomIn")
+                clickHandler.hasOwnProperty("selectTree")
             ).toBeTruthy();
         });
         it("updates buttons visibility when suggestions are changed", function () {

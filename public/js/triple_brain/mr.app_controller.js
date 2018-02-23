@@ -3,29 +3,28 @@
  */
 
 define([
+    "jquery",
     "mr.command",
     "triple_brain.graph_ui"
-
-], function (Command, GraphUi) {
+], function ($, Command, GraphUi) {
     "use strict";
     var api = {};
-    api.undoCanDo = function(){
+    api.undoCanDo = function () {
         return Command.canUndo();
     };
-    api.undo = function(){
+    api.undo = function () {
         Command.undo();
     };
-    api.redo = function(){
+    api.redo = function () {
         Command.redo();
     };
-    api.redoCanDo = function(){
+    api.redoCanDo = function () {
         return Command.canRedo();
     };
     api.getUi = function () {
         return [];
     };
     api.find = function () {
-    debugger;
         $("#vertex-search-input").focus();
     };
     api.zoomIn = function () {
