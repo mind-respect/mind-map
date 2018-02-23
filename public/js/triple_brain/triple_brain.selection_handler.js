@@ -50,6 +50,10 @@ define([
     };
 
     api.setToSingleVertex = function (vertex) {
+        if (api.getNbSelectedVertices() === 1 && api.getSingleElement().getId() === vertex.getId()){
+        return;
+    };
+
         deselectAll();
         api.addVertex(vertex);
         vertex.makeSingleSelected();
