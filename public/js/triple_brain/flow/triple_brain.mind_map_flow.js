@@ -169,6 +169,7 @@ define([
                 GraphElementMainMenu._getMenu().removeClass("hidden");
                 GraphElementMainMenu.reset();
                 IdentificationMenu.setup();
+                GraphElementMainMenu.reviewButtonsVisibility();
                 ImageMenu.setup();
             });
         }
