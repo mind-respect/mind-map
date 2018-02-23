@@ -173,6 +173,12 @@ define([
                 vertexMenu,
                 this.vertexUi
             );
+            this.html[0].addEventListener('contextmenu', function(ev) {
+                 ev.preventDefault();
+                 BubbleFactory.fromHtml($(this)).showButtons();
+                 return false;
+                }, false
+            );
             return vertexMenu;
         };
         return api;

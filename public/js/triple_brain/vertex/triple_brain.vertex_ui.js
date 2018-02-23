@@ -11,6 +11,7 @@ define([
         "triple_brain.ui.vertex_segments",
         "triple_brain.event_bus",
         "triple_brain.graph_element_ui",
+        'triple_brain.graph_element_main_menu',
         "triple_brain.bubble",
         "triple_brain.center_bubble",
         "triple_brain.bubble_factory",
@@ -19,7 +20,7 @@ define([
         "jquery.center-on-screen",
         "jquery.max_char"
     ],
-    function (require, $, VertexService, Point, Error, VertexSegments, EventBus, GraphElementUi, Bubble, CenterBubble, BubbleFactory, SuggestionService, IdUri) {
+    function (require, $, VertexService, Point, Error, VertexSegments, EventBus, GraphElementUi, GraphElementMainMenu, Bubble, CenterBubble, BubbleFactory, SuggestionService, IdUri) {
         "use strict";
         var api = {};
         api.getWhenEmptyLabel = function () {
@@ -154,6 +155,7 @@ define([
         };
         api.VertexUi.prototype.showMenu = function () {
             this.getMenuHtml().removeClass("hidden");
+            GraphElementMainMenu.reviewButtonsVisibility();
         };
         api.VertexUi.prototype.connectedEdges = function () {
             var edgesConnectedToVertex = [];
@@ -305,7 +307,6 @@ define([
         };
         api.VertexUi.prototype.makeSingleSelected = function () {
             this.html.addClass("single-selected");
-            this.showButtons();
         };
 
         api.VertexUi.prototype.getMenuHtml = function () {

@@ -220,8 +220,6 @@ define([
             return currentController;
         };
 
-        EventBus.subscribe("/event/ui/selection/changed", api.reviewButtonsVisibility);
-        EventBus.subscribe('/event/ui/graph/vertex/suggestions/updated', api.reviewButtonsVisibility);
         EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function () {
             if (!MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
                 api._getMenu().addClass("hidden");
