@@ -24,7 +24,6 @@ define([
             api.addVertex(vertex, onlyPrepare);
         });
         GraphUi.getDrawnGraph().reattach();
-        api.reflectSelectionChange();
     };
 
     api.selectAllRelationsOnly = function(){
@@ -35,7 +34,6 @@ define([
             api.addRelation(edge, onlyPrepare);
         });
         GraphUi.getDrawnGraph().reattach();
-        api.reflectSelectionChange();
     };
 
     api.setToSingleGraphElement = function (graphElement) {
@@ -55,14 +53,12 @@ define([
         deselectAll();
         api.addVertex(vertex);
         vertex.makeSingleSelected();
-        api.reflectSelectionChange();
     };
 
     api.setToSingleRelation = function (relation) {
         deselectAll();
         api.addRelation(relation);
         relation.makeSingleSelected();
-        api.reflectSelectionChange();
     };
 
     api.addGraphElement = function (graphElement, onlyPrepare) {
@@ -79,39 +75,30 @@ define([
         return api.addVertex;
     };
 
-    api.addRelation = function (relation, onlyPrepare) {
+    api.addRelation = function (relation) {
         if(api.isOnlyASingleBubbleSelected()){
             api.getSingleElement().removeSingleSelected();
         }
         relation.select();
         selectedRelations.push(relation);
-        if(!onlyPrepare){
-            api.reflectSelectionChange();
-        }
     };
 
-    api.addVertex = function (vertex, onlyPrepare) {
+    api.addVertex = function (vertex) {
         if(api.isOnlyASingleBubbleSelected()){
             api.getSingleElement().removeSingleSelected();
         }
         vertex.select();
         selectedVertices.push(vertex);
-        if(!onlyPrepare){
-            api.reflectSelectionChange();
-        }
     };
     api.removeVertex = function (vertex) {
         deselectGraphElement(vertex, selectedVertices);
-        api.reflectSelectionChange();
     };
     api.removeRelation = function (relation) {
         deselectGraphElement(relation, selectedRelations);
-        api.reflectSelectionChange();
     };
 
     api.removeAll = function () {
         deselectAll();
-        api.reflectSelectionChange();
     };
 
     api.getSelectedVertices = function () {
@@ -151,12 +138,6 @@ define([
         return 0 === api.getNbSelected();
     };
 
-    api.reflectSelectionChange = function() {
-        EventBus.publish(
-            "/event/ui/selection/changed",
-            api
-        );
-    };
     EventBus.subscribe("/event/ui/graph/reset", deselectAll);
     return api;
 
