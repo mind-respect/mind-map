@@ -7,13 +7,13 @@ define([
     "triple_brain.schema_ui",
     "triple_brain.mind_map_info",
     "mr.vertex-ui-builder-common",
-    "triple_brain.graph_element_html_builder",
+    "mr.graph-element-ui-builder",
     "triple_brain.graph_element_main_menu",
     "triple_brain.schema_controller",
     "triple_brain.relative_tree_vertex",
     "triple_brain.graph_ui",
     "triple_brain.event_bus"
-], function($, SchemaUi, MindMapInfo, VertexUiBuilderCommon, GraphElementHtmlBuilder, GraphElementMainMenu, SchemaController, RelativeTreeVertex, GraphUi, EventBus){
+], function($, SchemaUi, MindMapInfo, VertexUiBuilderCommon, GraphElementUiBuilder, GraphElementMainMenu, SchemaController, RelativeTreeVertex, GraphUi, EventBus){
     "use strict";
     var api = {};
 
@@ -22,7 +22,7 @@ define([
             return;
         }
         var schema = SchemaUi.get();
-        GraphElementHtmlBuilder.integrateIdentifications(
+        GraphElementUiBuilder.integrateIdentifications(
             schema
         );
         schema.refreshImages();

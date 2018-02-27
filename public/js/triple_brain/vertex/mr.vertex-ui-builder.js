@@ -9,7 +9,7 @@ define([
         "triple_brain.bubble_factory",
         "triple_brain.relative_tree_vertex",
         "mr.vertex-ui-builder-common",
-        "triple_brain.graph_element_html_builder",
+        "mr.graph-element-ui-builder",
         "triple_brain.graph_element_ui",
         "triple_brain.graph_ui",
         "triple_brain.center_bubble",
@@ -17,7 +17,7 @@ define([
         "jquery.is-fully-on-screen",
         "jquery.center-on-screen",
         "triple_brain.ui_utils"
-    ], function ($, EventBus, MindMapTemplate, BubbleFactory, RelativeTreeVertex, VertexUiBuilderCommon, GraphElementHtmlBuilder, GraphElementUi, GraphUi, CenterBubble, MindMapInfo) {
+    ], function ($, EventBus, MindMapTemplate, BubbleFactory, RelativeTreeVertex, VertexUiBuilderCommon, GraphElementUiBuilder, GraphElementUi, GraphUi, CenterBubble, MindMapInfo) {
         "use strict";
         var api = {};
         api.withOptions = function (options) {
@@ -27,7 +27,7 @@ define([
         };
         api.completeBuild = function (vertexUi) {
             if (!vertexUi.isMeta()) {
-                GraphElementHtmlBuilder.integrateIdentifications(
+                GraphElementUiBuilder.integrateIdentifications(
                     vertexUi
                 );
             }
@@ -48,9 +48,9 @@ define([
             }
             vertexUi.reviewInLabelButtonsVisibility();
             if (!MindMapInfo.isViewOnly() && !vertexUi.isCenterBubble()) {
-                GraphElementHtmlBuilder.setupDrag(vertexUi);
+                GraphElementUiBuilder.setupDrag(vertexUi);
             }
-            GraphElementHtmlBuilder._setupChildrenContainerDragOverAndDrop(vertexUi);
+            GraphElementUiBuilder._setupChildrenContainerDragOverAndDrop(vertexUi);
             var parentVertex = vertexUi.getParentVertex();
             if (parentVertex.isCenterBubble()) {
                 CenterBubble.usingBubble(
@@ -60,7 +60,7 @@ define([
             RelativeTreeVertex.setupVertexCopyButton(
                 vertexUi
             );
-            GraphElementHtmlBuilder.completeBuild(
+            GraphElementUiBuilder.completeBuild(
                 vertexUi
             );
             EventBus.publish(
@@ -125,7 +125,7 @@ define([
                     label.html()
                 )
             );
-            GraphElementHtmlBuilder.setupDrop(
+            GraphElementUiBuilder.setupDrop(
                 this.vertexUi
             );
 
@@ -173,11 +173,8 @@ define([
                 vertexMenu,
                 this.vertexUi
             );
-            this.html[0].addEventListener('contextmenu', function(ev) {
-                 ev.preventDefault();
-                 BubbleFactory.fromHtml($(this)).showButtons();
-                 return false;
-                }, false
+            GraphElementUiBuilder.setupContextMenu(
+                this.vertexUi
             );
             return vertexMenu;
         };

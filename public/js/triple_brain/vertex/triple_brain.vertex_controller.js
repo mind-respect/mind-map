@@ -579,7 +579,7 @@ define([
     };
 
     VertexController.prototype.mergeCanDo = function () {
-        return true;
+        return this.isSingle();
     };
 
     VertexController.prototype._relateToDistantVertexWithUri = function (distantVertexUri) {

@@ -5,12 +5,12 @@
 define([
     "jquery",
     "triple_brain.property_ui",
-    "triple_brain.graph_element_html_builder",
+    "mr.graph-element-ui-builder",
     "mr.edge-ui-builder-common",
     "triple_brain.graph_element_main_menu",
     "triple_brain.graph_displayer",
     "triple_brain.event_bus"
-], function ($, PropertyUi, GraphElementHtmlBuilder, EdgeUiBuilderCommon, GraphElementMainMenu, GraphDisplayer, EventBus) {
+], function ($, PropertyUi, GraphElementUiBuilder, EdgeUiBuilderCommon, GraphElementMainMenu, GraphDisplayer, EventBus) {
     "use strict";
     var api = {};
 
@@ -18,7 +18,7 @@ define([
         EdgeUiBuilderCommon.moveInLabelButtonsContainerIfIsToTheLeft(
             property
         );
-        GraphElementHtmlBuilder.integrateIdentifications(
+        GraphElementUiBuilder.integrateIdentifications(
             property
         );
         property.refreshImages();

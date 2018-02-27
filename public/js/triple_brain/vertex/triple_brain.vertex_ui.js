@@ -150,13 +150,6 @@ define([
         api.VertexUi.prototype.showButtons = function () {
             this.showMenu();
         };
-        api.VertexUi.prototype.hideMenu = function () {
-            this.getMenuHtml().addClass("hidden");
-        };
-        api.VertexUi.prototype.showMenu = function () {
-            this.getMenuHtml().removeClass("hidden");
-            GraphElementMainMenu.reviewButtonsVisibility();
-        };
         api.VertexUi.prototype.connectedEdges = function () {
             var edgesConnectedToVertex = [];
             this.visitConnectedEdges(function (edge) {
@@ -302,12 +295,6 @@ define([
             this.removeSingleSelected();
             this.hideButtons();
 
-        };
-        api.VertexUi.prototype.select = function () {
-            this.html.addClass("selected");
-        };
-        api.VertexUi.prototype.makeSingleSelected = function () {
-            this.html.addClass("single-selected");
         };
 
         api.VertexUi.prototype.getMenuHtml = function () {

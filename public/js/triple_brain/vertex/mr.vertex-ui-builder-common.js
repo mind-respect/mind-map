@@ -16,14 +16,14 @@ define([
     "triple_brain.mind_map_info",
     "triple_brain.selection_handler",
     "triple_brain.schema_suggestion",
-    "triple_brain.graph_element_html_builder",
+    "mr.graph-element-ui-builder",
     "triple_brain.bubble_factory",
     "triple_brain.graph_element_ui",
     "triple_brain.point",
     "jquery.triple_brain.search",
     "jquery.max_char",
     "jquery.safer-html"
-], function ($, UiUtils, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, WikidataAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, GraphElementHtmlBuilder, BubbleFactory, GraphElementUi, Point) {
+], function ($, UiUtils, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, WikidataAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, GraphElementUiBuilder, BubbleFactory, GraphElementUi, Point) {
     "use strict";
     var api = {};
     api.applyAutoCompleteIdentificationToLabelInput = function (input) {
@@ -83,7 +83,7 @@ define([
             "data-placeholder",
             uiSelector.getWhenEmptyLabel()
         ).maxChar().appendTo(inContentContainer);
-        GraphElementHtmlBuilder.setUpLabel(label);
+        GraphElementUiBuilder.setUpLabel(label);
         api.applyAutoCompleteIdentificationToLabelInput(
             label
         );
@@ -112,7 +112,7 @@ define([
         }
     };
     api.buildInLabelButtons = function (vertex) {
-        var inLabelButtons = GraphElementHtmlBuilder.buildInLabelButtons(vertex);
+        var inLabelButtons = GraphElementUiBuilder.buildInLabelButtons(vertex);
         vertex.getLabel().before(
             inLabelButtons
         );

@@ -199,82 +199,165 @@
     </div>
     <!-- /.container -->
 </nav>
-<nav class="navbar navbar-default navbar-lower hidden" role="navigation" id="whole-graph-buttons-container">
+<!--<nav class="navbar navbar-default navbar-lower hidden" role="navigation" id="whole-graph-buttons-container">-->
+    <!--<div class="container">-->
+        <!--<div class="collapse navbar-collapse collapse-buttons">-->
+            <!--<div class="navbar-form navbar-left" role="search">-->
+                <!--<div id="graph-element-menu" class="main-panel hidden-sm hidden-xs hidden" data-flow="mindMap">-->
+                    <!---->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</nav>-->
+<div id="graph-element-menu">
     <div class="container">
-        <div class="collapse navbar-collapse collapse-buttons">
-            <div class="navbar-form navbar-left" role="search">
-                <div id="graph-element-menu" class="main-panel hidden-sm hidden-xs hidden" data-flow="mindMap">
-                    <button data-action="accept" data-icon="fa-check"
-                            class="graph-element-button in-label-button"></button>
-                    <button data-action="addChild" data-icon="fa-arrow-right" class="graph-element-button"></button>
-                    <button data-action="addSibling" data-icon="fa-arrow-down" class="graph-element-button"></button>
-                    <button data-action="copy" data-icon="fa-copy" class="graph-element-button clipboard-copy-button"
-                            data-clipboard-action="copy" data-clipboard-target="#tree-list-copy-dump"></button>
-                    <button data-action="subElements" data-icon="fa-expand" class="graph-element-button"></button>
-                    <button data-action="reverseToRight" data-combinedShortcut="I" data-icon="fa-share"
-                            class="graph-element-button"></button>
-                    <button data-action="reverseToLeft" data-combinedShortcut="I" data-icon="fa-reply"
-                            class="graph-element-button"></button>
-                    <button data-action="center" data-combinedShortcut="0" data-icon="fa-bullseye"
-                            class="graph-element-button"></button>
-                    <button data-action="expand" data-combinedShortcut="E" data-icon="fa-leaf"
-                            class="graph-element-button"></button>
-                    <button data-action="collapse" data-combinedShortcut="H" data-icon="fa-leaf"
-                            data-additionalClass="fa-strike"
-                            class="graph-element-button"></button>
-                    <button data-action="wikipediaLinks" data-icon="fa-wikipedia-w"
-                            class="graph-element-button in-label-button"></button>
-                    <button data-action="visitOtherInstances"
-                            class="graph-element-button in-label-button visit-other-instances">
+        <div>
+            <div class="main-panel hidden-sm hidden-xs hidden" data-flow="mindMap">
+                <button data-action="accept"
+                        class="graph-element-button in-label-button">
+                    <i class="fa fa-check"></i>
+                </button>
+                <button data-action="addChild" class="graph-element-button">
+                    <i class="fa fa-arrow-right"></i>
+                </button>
+                <button data-action="accept"
+                        class="graph-element-button in-label-button">
+                    <i class="fa fa-check"></i>
+                </button>
+                <button data-action="addSibling" class="graph-element-button">
+                    <i class="fa fa-arrow-down"></i>
+                </button>
+                <button data-action="copy" class="graph-element-button clipboard-copy-button"
+                        data-clipboard-action="copy" data-clipboard-target="#tree-list-copy-dump">
+                    <i class="fa fa-copy"></i>
+                </button>
+                <button data-action="subElements" class="graph-element-button">
+                    <i class="fa fa-expand"></i>
+                </button>
+                <button data-action="reverseToRight" data-combinedShortcut="I"
+                        class="graph-element-button">
+                    <i class="fa fa-share"></i>
+                </button>
+                <button data-action="reverseToLeft" data-combinedShortcut="I"
+                        class="graph-element-button">
+                    <i class="fa fa-reply"></i>
+                </button>
+                <button data-action="center" data-combinedShortcut="0"
+                        class="graph-element-button">
+                    <i class="fa fa-bullseye"></i>
+                </button>
+                <button data-action="expand" data-combinedShortcut="E"
+                        class="graph-element-button">
+                    <i class="fa fa-leaf"></i>
+                </button>
+                <button data-action="collapse" data-combinedShortcut="H"
+                        class="graph-element-button">
+                    <i class="fa fa-leaf fa-strike"></i>
+                </button>
+                <button data-action="wikipediaLinks"
+                        class="graph-element-button in-label-button">
+                    <i class="fa fa-wikipedia-w"></i>
+                </button>
+                <button data-action="visitOtherInstances"
+                        class="graph-element-button in-label-button visit-other-instances">
                             <span class="fa-stack fa-1x" style="">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <strong class="fa-stack-1x fa-stack-text fa-inverse nb-other-instances"></strong>
                             </span>
-                    </button>
-                    <button data-action="identify" data-combinedShortcut="G" data-icon="fa-tag"
-                            class="graph-element-button in-label-button"></button>
-                    <button data-action="identifyWhenMany" data-combinedShortcut="G" data-icon="fa-tags"
-                            class="graph-element-button in-label-button"></button>
-                    <button data-action="suggestions" data-combinedShortcut="S" data-icon="fa-lightbulb-o"
-                            class="suggestion graph-element-button"></button>
-                    <button data-action="note" data-combinedShortcut="D" data-icon="fa-book"
-                            class="note-button graph-element-button in-label-button"></button>
-                    <button data-action="images" data-icon="fa-picture-o" class="graph-element-button"></button>
-                    <button data-action="paste" data-combinedShortcut="V" data-icon="fa-paste"
-                            class="graph-element-button"></button>
-                    <button data-action="cut" data-combinedShortcut="X" data-icon="fa-cut"
-                            class="graph-element-button"></button>
-                    <button data-action="makePublic" data-combinedShortcut="P" data-icon="fa-unlock"
-                            class="graph-element-button in-label-button"></button>
-                    <button data-action="makePrivate" data-combinedShortcut="P" data-icon="fa-lock"
-                            class="graph-element-button in-label-button"></button>
-                    <button data-action="group" data-icon="fa-compress" class="dev-only graph-element-button"></button>
-                    <button data-action="remove" data-icon="fa-trash-o" class="graph-element-button"></button>
-                    <button data-action="convertToRelation" data-combinedShortcut="O" data-icon="fa-arrows-h"
-                            class="graph-element-button"></button>
-                    <button data-action="convertToGroupRelation" data-combinedShortcut="O" data-icon="fa-arrows-h"
-                            class="graph-element-button"></button>
-                    <button data-action="expandAll" data-icon="fa-leaf"
-                            class="graph-element-button whole-graph-button"></button>
-                    <button data-action="zoomIn" data-combinedShortcut="&plus;" data-icon="fa-search-plus"
-                            class="graph-element-button app-button"></button>
-                    <button data-action="zoomOut" data-combinedShortcut="&minus;" data-icon="fa-search-minus"
-                            class="graph-element-button app-button"></button>
-                    <button data-action="compare" data-icon="fa-balance-scale"
-                            class="dev-only hidden graph-element-button whole-graph-button"></button>
-                    <button data-action="selectTree" data-combinedShortcut="A" data-icon="fa-sitemap"
-                            class="graph-element-button whole-graph-button"></button>
-                    <button data-action="merge" data-icon="fa-handshake-o" data-combinedShortcut="M"
-                            class="graph-element-button in-label-button"></button>
-                    <button data-action="undo" data-combinedShortcut="Z" data-icon="fa-undo"
-                            class="app-button graph-element-button in-label-button"></button>
-                    <button data-action="redo" data-combinedShortcut="Y" data-icon="fa-repeat"
-                            class="app-button graph-element-button in-label-button"></button>
-                </div>
+                </button>
+                <button data-action="identify" data-combinedShortcut="G"
+                        class="graph-element-button in-label-button">
+                    <i class="fa fa-tag"></i>
+                </button>
+                <button data-action="identifyWhenMany" data-combinedShortcut="G"
+                        class="graph-element-button in-label-button">
+                    <i class="fa fa-tags"></i>
+                </button>
+                <button data-action="suggestions" data-combinedShortcut="S"
+                        class="suggestion graph-element-button">
+                    <i class="fa fa-lightbulb-o"></i>
+                </button>
+                <button data-action="note" data-combinedShortcut="D"
+                        class="note-button graph-element-button in-label-button">
+                    <i class="fa fa-book"></i>
+                </button>
+                <button data-action="images" class="graph-element-button">
+                    <i class="fa fa-picture-o"></i>
+                </button>
+                <button data-action="paste" data-combinedShortcut="V"
+                        class="graph-element-button">
+                    <i class="fa fa-paste"></i>
+                </button>
+                <button data-action="cut" data-combinedShortcut="X"
+                        class="graph-element-button">
+                    <i class="fa fa-cut"></i>
+                </button>
+                <button data-action="makePublic" data-combinedShortcut="P"
+                        class="graph-element-button in-label-button">
+                    <i class="fa fa-unlock"></i>
+                </button>
+                <button data-action="makePrivate" data-combinedShortcut="P"
+                        class="graph-element-button in-label-button">
+                    <i class="fa fa-lock"></i>
+                </button>
+                <button data-action="group" class="dev-only graph-element-button">
+                    <i class="fa fa-compress"></i>
+                </button>
+                <button data-action="remove" class="graph-element-button">
+                    <i class="fa fa-trash-o"></i>
+                </button>
+                <button data-action="convertToRelation" data-combinedShortcut="O"
+                        class="graph-element-button">
+                    <i class="fa fa-arrows-h"></i>
+                </button>
+                <button data-action="convertToGroupRelation" data-combinedShortcut="O"
+                        class="graph-element-button">
+                    <i class="fa fa-arrows-h"></i>
+                </button>
+                <button data-action="selectTree" data-combinedShortcut="A"
+                        class="graph-element-button whole-graph-button">
+                    <i class="fa fa-sitemap"></i>
+                </button>
+                <button data-action="merge" data-combinedShortcut="M"
+                        class="graph-element-button in-label-button">
+                    <i class="fa fa-handshake-o"></i>
+                </button>
             </div>
         </div>
     </div>
-</nav>
+</div>
+<div id="graph-menu">
+    <div class="container">
+        <div>
+            <div class="main-panel hidden-sm hidden-xs hidden" data-flow="mindMap">
+                <button data-action="expandAll"
+                        class="graph-element-button whole-graph-button">
+                    <i class="fa fa-leaf"></i>
+                </button>
+                <button data-action="zoomIn" data-combinedShortcut="&plus;"
+                        class="graph-element-button app-button">
+                    <i class="fa fa-search-plus"></i>
+                </button>
+                <button data-action="zoomOut" data-combinedShortcut="&minus;"
+                        class="graph-element-button app-button">
+                    <i class="fa fa-search-minus"></i>
+                </button>
+                <button data-action="compare" class="dev-only hidden graph-element-button whole-graph-button">
+                    <i class="fa fa-balance-scale"></i>
+                </button>
+                <button data-action="undo" data-combinedShortcut="Z"
+                        class="app-button graph-element-button in-label-button">
+                    <i class="fa fa-undo"></i>
+                </button>
+                <button data-action="redo" data-combinedShortcut="Y"
+                        class="app-button graph-element-button in-label-button">
+                    <i class="fa fa-repeat"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container">
     <div class="page-header hidden row" id="app-presentation" data-flow="landing">
         <div class="background"></div>

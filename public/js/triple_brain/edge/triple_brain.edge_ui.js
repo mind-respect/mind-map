@@ -12,9 +12,10 @@ define([
         "triple_brain.selection_handler",
         "triple_brain.graph_element_ui",
         "triple_brain.bubble",
-        "triple_brain.mind_map_info"
+        "triple_brain.mind_map_info",
+        'triple_brain.graph_element_main_menu'
     ],
-    function ($, GraphUi, EventBus, GraphDisplayer, EdgeService, GraphElementButton, SelectionHandler, GraphElementUi, Bubble, MindMapInfo) {
+    function ($, GraphUi, EventBus, GraphDisplayer, EdgeService, GraphElementButton, SelectionHandler, GraphElementUi, Bubble, MindMapInfo, GraphElementMainMenu) {
         "use strict";
         var api = {};
         api.getWhenEmptyLabel = function () {
@@ -83,31 +84,15 @@ define([
             return EdgeService;
         };
 
-        api.EdgeUi.prototype.showMenu = function () {
-            this.getMenuHtml().show();
-        };
-        api.EdgeUi.prototype.hideMenu = function () {
-            this.getMenuHtml().hide();
-        };
         api.EdgeUi.prototype.getHtml = function () {
             return this.html;
         };
 
-        api.EdgeUi.prototype.select = function () {
-            this.html.addClass("selected");
-        };
-        api.EdgeUi.prototype.makeSingleSelected = function () {
-            this.html.addClass("single-selected");
-            this.showMenu();
-        };
         api.EdgeUi.prototype.deselect = function () {
             this.html.removeClass("selected");
             GraphElementUi.resetOtherInstancesDisplay();
             this.removeSingleSelected();
             this.hideMenu();
-        };
-        api.EdgeUi.prototype.isSelected = function () {
-            return this.html.hasClass("selected");
         };
 
         api.EdgeUi.prototype.isSetAsSameAsGroupRelation = function () {

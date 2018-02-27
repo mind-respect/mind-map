@@ -22,7 +22,7 @@ define([
         escapeKeyCode = 27,
         api = {};
     api.completeBuild = function (graphElementUi) {
-        if(graphElementUi.getModel().isLabelEmpty()){
+        if (graphElementUi.getModel().isLabelEmpty()) {
             graphElementUi.getHtml().addClass("empty-label");
         }
         graphElementUi.applyToOtherInstances(function (otherInstance) {
@@ -72,7 +72,7 @@ define([
                 $(this)
             );
             var text = ui.text();
-            ui.applyToOtherInstances(function(otherInstance){
+            ui.applyToOtherInstances(function (otherInstance) {
                 otherInstance.setText(text);
             });
         });
@@ -82,7 +82,7 @@ define([
         var container = $(
             "<div class='in-label-buttons'>"
         );
-        GraphElementMainMenu.visitButtons(function (button) {
+        GraphElementMainMenu.visitGraphElementButtons(function (button) {
             if (!button.canBeInLabel()) {
                 return;
             }
@@ -100,7 +100,7 @@ define([
                 }
                 var inLabelButtonClickMethodName = button.data("action") + "InLabelClick";
                 var controller = graphElementUi.getController();
-                if(controller[inLabelButtonClickMethodName]){
+                if (controller[inLabelButtonClickMethodName]) {
                     controller[inLabelButtonClickMethodName]();
                 }
             });
@@ -120,6 +120,16 @@ define([
             );
         });
     };
+
+    api.setupContextMenu = function (graphElementUi) {
+        graphElementUi.getHtml()[0].addEventListener('contextmenu', function(ev) {
+                ev.preventDefault();
+                BubbleFactory.fromHtml($(this)).showMenu();
+                return false;
+            }, false
+        );
+    };
+
     api._setupChildrenContainerDragOverAndDrop = function (graphElementUi) {
         graphElementUi.getTreeContainer().on("drop", function (event) {
             event.preventDefault();
@@ -199,9 +209,6 @@ define([
         }).on(
             "dragend", function (event) {
                 event.preventDefault();
-                if(SelectionHandler.isOnlyASingleBubbleSelected()){
-                    SelectionHandler.getSingleElement().showMenu();
-                }
                 GraphUi.setIsDraggingBubble(false);
                 $("#drag-bubble-text-for-chrome").empty();
                 GraphUi.enableDragScroll();

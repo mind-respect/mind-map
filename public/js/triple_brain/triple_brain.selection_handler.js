@@ -16,21 +16,21 @@ define([
     var selectedRelations = [];
     var selectedVertices = [];
 
-    api.selectAllVerticesOnly = function(){
+    api.selectAllVerticesOnly = function () {
         GraphUi.getDrawnGraph().detachTemp();
         deselectAll();
         var onlyPrepare = true;
-        GraphDisplayer.getVertexSelector().visitAllVertices(function(vertex){
+        GraphDisplayer.getVertexSelector().visitAllVertices(function (vertex) {
             api.addVertex(vertex, onlyPrepare);
         });
         GraphUi.getDrawnGraph().reattach();
     };
 
-    api.selectAllRelationsOnly = function(){
+    api.selectAllRelationsOnly = function () {
         GraphUi.getDrawnGraph().detachTemp();
         deselectAll();
         var onlyPrepare = true;
-        GraphDisplayer.getEdgeSelector().visitAllEdges(function(edge){
+        GraphDisplayer.getEdgeSelector().visitAllEdges(function (edge) {
             api.addRelation(edge, onlyPrepare);
         });
         GraphUi.getDrawnGraph().reattach();
@@ -43,23 +43,25 @@ define([
         centerBubbleIfApplicable(graphElement);
     };
 
-    api._getSetterFromGraphElement = function(graphElement){
+    api._getSetterFromGraphElement = function (graphElement) {
         return graphElement.isEdge() ?
             api.setToSingleRelation :
             api.setToSingleVertex;
     };
 
     api.setToSingleVertex = function (vertex) {
-        if (api.getNbSelectedVertices() === 1 && api.getSingleElement().getId() === vertex.getId()){
-        return;
-    };
-
+        if (api.getNbSelectedElements() === 1 && api.getSingleElement().getId() === vertex.getId()) {
+            return;
+        }
         deselectAll();
         api.addVertex(vertex);
         vertex.makeSingleSelected();
     };
 
     api.setToSingleRelation = function (relation) {
+        if (api.getNbSelectedElements() === 1 && api.getSingleElement().getId() === relation.getId()) {
+            return;
+        }
         deselectAll();
         api.addRelation(relation);
         relation.makeSingleSelected();
@@ -72,15 +74,15 @@ define([
         );
     };
 
-    api._getAdderFromGraphElement = function(graphElement){
-        if(graphElement.isEdge()){
+    api._getAdderFromGraphElement = function (graphElement) {
+        if (graphElement.isEdge()) {
             return api.addRelation;
         }
         return api.addVertex;
     };
 
     api.addRelation = function (relation) {
-        if(api.isOnlyASingleBubbleSelected()){
+        if (api.isOnlyASingleBubbleSelected()) {
             api.getSingleElement().removeSingleSelected();
         }
         relation.select();
@@ -88,7 +90,7 @@ define([
     };
 
     api.addVertex = function (vertex) {
-        if(api.isOnlyASingleBubbleSelected()){
+        if (api.isOnlyASingleBubbleSelected()) {
             api.getSingleElement().removeSingleSelected();
         }
         vertex.select();
@@ -126,19 +128,19 @@ define([
     api.getSingleElement = function () {
         return api.getSelectedBubbles()[0];
     };
-    api.getSelectedElements = api.getSelectedBubbles = function(){
+    api.getSelectedElements = api.getSelectedBubbles = function () {
         return selectedRelations.concat(
             selectedVertices
         );
     };
-    api.getNbSelected = api.getNbSelectedElements = function(){
+    api.getNbSelected = api.getNbSelectedElements = function () {
         return selectedVertices.length + selectedRelations.length;
     };
-    api.isOnlyASingleBubbleSelected = api.isOnlyASingleElementSelected = function(){
+    api.isOnlyASingleBubbleSelected = api.isOnlyASingleElementSelected = function () {
         return 1 === api.getNbSelectedElements();
     };
 
-    api.isEmpty = function(){
+    api.isEmpty = function () {
         return 0 === api.getNbSelected();
     };
 
@@ -153,14 +155,14 @@ define([
     }
 
     function deselectAll() {
-        api.getSelectedElements().forEach(function(graphElement){
+        api.getSelectedElements().forEach(function (graphElement) {
             graphElement.deselect();
         });
         selectedVertices = [];
         selectedRelations = [];
     }
 
-    function deselectGraphElement(toDeselect, graphElements){
+    function deselectGraphElement(toDeselect, graphElements) {
         toDeselect.deselect();
         var uriToRemove = toDeselect.getUri();
         for (var i = graphElements.length - 1; i >= 0; i--) {

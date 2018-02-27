@@ -8,11 +8,11 @@ define([
         "triple_brain.graph_displayer",
         "triple_brain.graph_element_main_menu",
         "mr.edge-ui-builder-common",
-        "triple_brain.graph_element_html_builder",
+        "mr.graph-element-ui-builder",
         "triple_brain.bubble_factory",
         "triple_brain.mind_map_info"
     ],
-    function ($, EventBus, GraphDisplayer, GraphElementMainMenu, EdgeUiBuilderCommon, GraphElementHtmlBuilder, BubbleFactory, MindMapInfo) {
+    function ($, EventBus, GraphDisplayer, GraphElementMainMenu, EdgeUiBuilderCommon, GraphElementUiBuilder, BubbleFactory, MindMapInfo) {
         "use strict";
         var api = {};
         api.withOptions = function (options) {
@@ -40,7 +40,7 @@ define([
                 ui.inverse();
             }
             if (!MindMapInfo.isViewOnly()) {
-                GraphElementHtmlBuilder.setupDrag(ui);
+                GraphElementUiBuilder.setupDrag(ui);
             }
             model.setSourceVertex(
                 isInverse ?
@@ -52,13 +52,13 @@ define([
                     parentVertexUi.getModel() :
                     childUi.getModel()
             );
-            GraphElementHtmlBuilder.integrateIdentifications(
+            GraphElementUiBuilder.integrateIdentifications(
                 ui
             );
             EdgeUiBuilderCommon.moveInLabelButtonsContainerIfIsToTheLeft(
                 ui
             );
-            GraphElementHtmlBuilder._setupChildrenContainerDragOverAndDrop(
+            GraphElementUiBuilder._setupChildrenContainerDragOverAndDrop(
                 ui
             );
             ui.refreshImages();
@@ -69,7 +69,7 @@ define([
             }
             var propertiesIndicator = ui.buildHiddenNeighborPropertiesIndicator();
             propertiesIndicator.hide();
-            GraphElementHtmlBuilder.setupDrop(
+            GraphElementUiBuilder.setupDrop(
                 ui
             );
             EventBus.publish(
@@ -80,7 +80,7 @@ define([
             if (ui.isSetAsSameAsGroupRelation()) {
                 ui.getHtml().addClass("empty-label");
             }
-            GraphElementHtmlBuilder.completeBuild(
+            GraphElementUiBuilder.completeBuild(
                 ui
             );
         };
@@ -140,6 +140,7 @@ define([
                 menu,
                 edge.getController()
             );
+            GraphElementUiBuilder.setupContextMenu(edge);
         }
 
         return api;

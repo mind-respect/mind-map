@@ -74,11 +74,6 @@ define([
             "data-combinedShortcut"
         );
     };
-    GraphElementButton.prototype.getIconClass = function () {
-        return this.html.attr(
-            "data-icon"
-        );
-    };
     GraphElementButton.prototype.getAdditionalClasses = function () {
         return this.html.attr(
             "data-additionalClass"

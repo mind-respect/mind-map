@@ -16,7 +16,8 @@ define([
     ], function ($, GraphDisplayer, EventBus, SelectionHandler, GraphElementButton, MindMapInfo, UiUtils, AppController) {
         "use strict";
         var api = {},
-            _menu;
+            _graphElementMenu,
+            _graphMenu;
         api.addRelevantButtonsInMenu = function (menuContainer, controller) {
             api.visitButtons(function (button) {
                 if (!button.canActionBePossiblyMade(controller)) {
@@ -29,33 +30,17 @@ define([
                 api.defineTooltip(
                     clone
                 );
-            });
+            }, false, getGraphElementButtons());
         };
         api.reset = function () {
             initButtons();
 
             function initButtons() {
                 api.visitButtons(function (button) {
-                    setIcon(button);
                     api.applyActionOnClick(button);
                     setTitle(button);
                     api.defineTooltip(button);
                 });
-
-                function setIcon(button) {
-                    var icon = $("<i>").addClass(
-                        "fa " + button.getIconClass()
-                    );
-                    icon.addClass(
-                        button.getAdditionalClasses()
-                    );
-                    if (button.getHtml().hasClass("icon-flip-horizontal")) {
-                        icon.addClass(
-                            "fa-flip-vertical"
-                        );
-                    }
-                    icon.appendTo(button.getHtml());
-                }
 
                 function setTitle(button) {
                     var title = $.i18n.translate("menu-button." + button.getAction());
@@ -113,13 +98,20 @@ define([
 
         api._getButtonHavingAction = function (action) {
             return GraphElementButton.fromHtml(
-                api._getMenu().find(
+                api._getGraphElementMenu().find(
                     "button[data-action=" + action + "]"
                 )
             );
         };
-        api.visitButtons = function (visitor, inverse) {
-            var buttonsHtml = getButtonsHtml();
+        api.visitGraphElementButtons = function(visitor, inverse){
+            return api.visitButtons(
+                visitor,
+                inverse,
+                getGraphElementButtons()
+            )
+        };
+        api.visitButtons = function (visitor, inverse, buttonsHtml) {
+            buttonsHtml = buttonsHtml || getButtonsHtml();
             if (inverse) {
                 buttonsHtml = $(buttonsHtml.get().reverse());
             }
@@ -187,11 +179,18 @@ define([
             return api._currentClickHandler;
         };
 
-        api._getMenu = function () {
-            if (!_menu || _menu.length === 0) {
-                _menu = $("#graph-element-menu");
+        api._getGraphElementMenu = function () {
+            if (!_graphElementMenu || _graphElementMenu.length === 0) {
+                _graphElementMenu = $("#graph-element-menu");
             }
-            return _menu;
+            return _graphElementMenu;
+        };
+
+        api._getGraphMenu = function () {
+            if (!_graphMenu || _graphMenu.length === 0) {
+                _graphMenu = $("#graph-menu");
+            }
+            return _graphMenu;
         };
 
         api.getControllerFromCurrentSelection = function () {
@@ -222,14 +221,20 @@ define([
 
         EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function () {
             if (!MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
-                api._getMenu().addClass("hidden");
+                api._getGraphElementMenu().addClass("hidden");
             }
         });
 
         return api;
 
         function getButtonsHtml() {
-            return api._getMenu().find("> button");
+            return api._getGraphElementMenu().add(
+                api._getGraphMenu()
+            ).find("button");
+        }
+
+        function getGraphElementButtons() {
+            return api._getGraphElementMenu().find("button");
         }
 
         function updateCurrentClickHandler() {

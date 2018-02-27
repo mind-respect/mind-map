@@ -386,6 +386,26 @@ define([
             ]();
     };
 
+    api.GraphElementUi.prototype.select = function () {
+        this.html.addClass("selected");
+    };
+
+    api.GraphElementUi.prototype.isSelected = function () {
+        return this.html.hasClass("selected");
+    };
+
+    api.GraphElementUi.prototype.makeSingleSelected = function () {
+        this.html.addClass("single-selected");
+    };
+
+    api.GraphElementUi.prototype.hideMenu = function () {
+        this.getMenuHtml().addClass("hidden");
+    };
+    api.GraphElementUi.prototype.showMenu = function () {
+        this.getMenuHtml().removeClass("hidden");
+        GraphElementMainMenu.reviewButtonsVisibility();
+    };
+
     api.GraphElementUi.prototype.rightActionForType = function (vertexAction, edgeAction, groupRelationAction, schemaAction, propertyAction, suggestionVertexAction, suggestionRelationAction, metaAction, metaRelationAction) {
         switch (this.getGraphElementType()) {
             case api.Types.Vertex :
@@ -513,9 +533,6 @@ define([
             $html.data("previous_draggable_status")
         );
         this.getInLabelButtonsContainer().removeClass("hidden");
-        if (this.isSelected()) {
-            this.showMenu();
-        }
         if (this.isRelation()) {
             this.reviewIsSameAsGroupRelation();
         }

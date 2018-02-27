@@ -5,13 +5,13 @@
 define([
     "jquery",
     "mr.vertex-ui-builder-common",
-    "triple_brain.graph_element_html_builder",
+    "mr.graph-element-ui-builder",
     "triple_brain.suggestion_bubble_ui",
     "triple_brain.graph_element_main_menu",
     "triple_brain.graph_ui",
     "triple_brain.identification",
     "triple_brain.event_bus"
-], function ($, VertexUiBuilderCommon, GraphElementHtmlBuilder, SuggestionBubbleUi, GraphElementMainMenu, GraphUi, Identification, EventBus) {
+], function ($, VertexUiBuilderCommon, GraphElementUiBuilder, SuggestionBubbleUi, GraphElementMainMenu, GraphUi, Identification, EventBus) {
     "use strict";
     var api = {};
     api.completeBuild = function (suggestionUi) {

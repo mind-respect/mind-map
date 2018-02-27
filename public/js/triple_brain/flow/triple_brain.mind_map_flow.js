@@ -115,11 +115,11 @@ define([
             * otherwise center bubble is top centered
             */
             centralBubble.scrollTo();
-            $('#whole-graph-buttons-container').removeClass(
-                "hidden"
-            ).affix({
-                offset: {top: 50}
-            });
+            // $('#whole-graph-buttons-container').removeClass(
+            //     "hidden"
+            // ).affix({
+            //     offset: {top: 50}
+            // });
             GraphUi.initDragScroll();
             GraphUi.enableDragScroll();
             SelectionHandler.setToSingleVertex(centralBubble);
@@ -166,7 +166,7 @@ define([
                 GraphDisplayer.displayForBubbleWithUri(
                     MindMapInfo.getCenterBubbleUri()
                 );
-                GraphElementMainMenu._getMenu().removeClass("hidden");
+                GraphElementMainMenu._getGraphElementMenu().removeClass("hidden");
                 GraphElementMainMenu.reset();
                 IdentificationMenu.setup();
                 GraphElementMainMenu.reviewButtonsVisibility();

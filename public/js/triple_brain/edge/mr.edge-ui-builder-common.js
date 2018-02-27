@@ -12,9 +12,9 @@ define([
     "triple_brain.identification",
     "triple_brain.user_map_autocomplete_provider",
     "triple_brain.suggestion_service",
-    "triple_brain.graph_element_html_builder",
+    "mr.graph-element-ui-builder",
     "triple_brain.bubble_factory"
-], function ($, UiUtils, MindMapInfo, FriendlyResourceService, SelectionHandler, RelativeTreeTemplates, Identification, UserMapAutocompleteProvider, SuggestionService, GraphElementHtmlBuilder, BubbleFactory) {
+], function ($, UiUtils, MindMapInfo, FriendlyResourceService, SelectionHandler, RelativeTreeTemplates, Identification, UserMapAutocompleteProvider, SuggestionService, GraphElementUiBuilder, BubbleFactory) {
     "use strict";
     var api = {};
     api.moveInLabelButtonsContainerIfIsToTheLeft = function (edge) {
@@ -103,11 +103,11 @@ define([
                 }
             );
         }
-        GraphElementHtmlBuilder.setUpLabel(label);
+        GraphElementUiBuilder.setUpLabel(label);
         return label;
     };
     api.buildInLabelButtons = function (edge) {
-        var inLabelButtons = GraphElementHtmlBuilder.buildInLabelButtons(edge);
+        var inLabelButtons = GraphElementUiBuilder.buildInLabelButtons(edge);
         edge.getLabelAndButtonsContainer().prepend(
             inLabelButtons
         );

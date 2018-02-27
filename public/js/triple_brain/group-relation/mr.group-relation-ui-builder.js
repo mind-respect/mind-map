@@ -13,12 +13,12 @@ define([
         "triple_brain.graph_displayer",
         "triple_brain.event_bus",
         "triple_brain.identification",
-        "triple_brain.graph_element_html_builder",
+        "mr.graph-element-ui-builder",
         "mr.edge-ui-builder-common",
         "triple_brain.mind_map_info",
         "triple_brain.bubble_factory"
     ],
-    function ($, RelativeTreeTemplates, PropertiesIndicator, GroupRelationUi, GroupRelation, SelectionHandler, GraphElementMainMenu, GraphDisplayer, EventBus, Identification, GraphElementHtmlBuilder, EdgeUiBuilderCommon, MindMapInfo, BubbleFactory) {
+    function ($, RelativeTreeTemplates, PropertiesIndicator, GroupRelationUi, GroupRelation, SelectionHandler, GraphElementMainMenu, GraphDisplayer, EventBus, Identification, GraphElementUiBuilder, EdgeUiBuilderCommon, MindMapInfo, BubbleFactory) {
         "use strict";
         var api = {},
             NUMBER_OF_SIBLINGS_UNDER_WHICH_YOU_SHOULD_EXPAND = 4;
@@ -34,13 +34,13 @@ define([
                     groupRelationUi
                 );
             }
-            GraphElementHtmlBuilder._setupChildrenContainerDragOverAndDrop(
+            GraphElementUiBuilder._setupChildrenContainerDragOverAndDrop(
                 groupRelationUi
             );
             groupRelationUi.reviewInLabelButtonsVisibility();
             groupRelationUi.reviewIsSameAsGroupRelation();
             if (!MindMapInfo.isViewOnly()) {
-                GraphElementHtmlBuilder.setupDrag(
+                GraphElementUiBuilder.setupDrag(
                     groupRelationUi
                 );
             }
@@ -80,8 +80,8 @@ define([
             EdgeUiBuilderCommon.buildInLabelButtons(
                 groupRelationUi
             );
-            groupRelationUi.hideButtons();
-            GraphElementHtmlBuilder.setupDrop(
+            groupRelationUi.hideMenu();
+            GraphElementUiBuilder.setupDrop(
                 groupRelationUi
             );
             return groupRelationUi;
@@ -100,6 +100,7 @@ define([
                 ](
                 menu
             );
+            GraphElementUiBuilder.setupContextMenu(groupRelationUi);
         };
 
         api.GroupRelationUiBuilder.prototype._addLabel = function () {
@@ -144,7 +145,7 @@ define([
                 );
             }
             labelAndButtons.appendTo(container);
-            GraphElementHtmlBuilder.setUpLabel(labelHtml);
+            GraphElementUiBuilder.setUpLabel(labelHtml);
         };
 
         api.GroupRelationUiBuilder.prototype._addArrow = function () {

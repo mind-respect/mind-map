@@ -60,26 +60,10 @@ define([
         return this.html;
     };
 
-    api.GroupRelationUi.prototype.select = function () {
-        this.html.addClass("selected");
-    };
     api.GroupRelationUi.prototype.deselect = function () {
         this.html.removeClass("selected");
         this.html.removeClass("single-selected");
-        this.hideButtons();
-    };
-
-    api.GroupRelationUi.prototype.makeSingleSelected = function () {
-        this.html.addClass("single-selected");
-        this.showButtons();
-    };
-
-    api.GroupRelationUi.prototype.showButtons = function () {
-        this.getMenuHtml().show();
-    };
-
-    api.GroupRelationUi.prototype.hideButtons = function () {
-        this.getMenuHtml().hide();
+        this.hideMenu();
     };
 
     api.GroupRelationUi.prototype.getMenuHtml = function () {
