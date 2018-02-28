@@ -6,14 +6,16 @@ define([
     "test/test-scenarios",
     "test/test-utils",
     'test/mock',
-    "triple_brain.graph_element"
-], function (Scenarios, TestUtils, Mock, GraphElement) {
+    "triple_brain.graph_element",
+    "triple_brain.mind_map_info"
+], function (Scenarios, TestUtils, Mock, GraphElement, MindMapInfo) {
     "use strict";
     describe("graph_element", function () {
         beforeEach(function () {
             Mock.applyDefaultMocks();
         });
         it("takes the type and same as of a suggestion and sets them as identifications", function(){
+            MindMapInfo._setIsViewOnly(false);
             var vertexSuggestionInTree = new Scenarios.oneBubbleHavingSuggestionsGraph().getAnySuggestionInTree();
             var graphElement = GraphElement.fromSuggestionAndElementUri(
                 vertexSuggestionInTree.getSuggestion(),
