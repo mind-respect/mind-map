@@ -131,6 +131,7 @@ define([
         }else if(MindMapInfo.isInCompareMode()){
             vertexUi.setAsComparisonSuggestionToRemove();
         }
+        SelectionHandler.removeAll();
         SelectionHandler.setToSingleGraphElement(vertexUi);
         EventBus.publish(
             '/event/ui/html/vertex/created/',

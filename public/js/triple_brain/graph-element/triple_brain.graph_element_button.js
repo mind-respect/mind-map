@@ -4,9 +4,8 @@
 
 define([
     "jquery",
-    "triple_brain.bubble_factory",
-    "triple_brain.mind_map_info"
-], function ($, BubbleFactory, MindMapInfo) {
+    "triple_brain.bubble_factory"
+], function ($, BubbleFactory) {
     "use strict";
     var api = {};
     api.fromHtml = function (html) {
@@ -26,15 +25,27 @@ define([
         var buttonHtml = this.getHtml();
         var onlyOneSelected = !Array.isArray(selected);
         if (onlyOneSelected) {
-            buttonHtml = selected.getSimilarButtonHtml(this);
+            var inLabelButtonHtml = selected.getSimilarButtonHtml(this);
+            inLabelButtonHtml.removeClass("disabled");
+            inLabelButtonHtml[
+                canActionBePerformed ?
+                    "removeClass" : "addClass"
+                ]("hidden");
         }
         else if (!this.isForWholeGraph()) {
             this._hideMenuForGraphElements(selected);
         }
-        buttonHtml[
-            canActionBePerformed ?
-                "removeClass" : "addClass"
-            ]("hidden");
+        if(this.canActionBePossiblyMade(controller)){
+            buttonHtml.removeClass("hidden");
+            buttonHtml[
+                canActionBePerformed ?
+                    "removeClass" : "addClass"
+                ]("disabled");
+        }else{
+            buttonHtml.removeClass("disabled");
+            buttonHtml.addClass("hidden");
+        }
+
     };
     GraphElementButton.prototype.canActionBePossiblyMade = function (controller) {
         return controller[
@@ -116,6 +127,9 @@ define([
         return BubbleFactory.fromHtml(
             this._getParentBubbleHtml()
         );
+    };
+    GraphElementButton.prototype.isDisabled = function(){
+        return this.html.hasClass("disabled");
     };
     GraphElementButton.prototype._getParentBubbleHtml = function () {
         return this.html.closest(".bubble");

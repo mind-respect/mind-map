@@ -94,16 +94,14 @@ define([
                     if (clickedOnOtherInstancesButton) {
                         return;
                     }
-                    GraphElementUi.resetOtherInstancesDisplay();
                     var clickedOnSomethingInsideABubble = whatGotClicked.closest(".bubble").length === 1;
                     if (clickedOnSomethingInsideABubble) {
                         return;
                     }
                     GraphUi.removePopovers();
-                    if (UiUtils.isMacintosh() ? event.metaKey : event.ctrlKey) {
-                        return;
-                    }
-                    SelectionHandler.removeAll();
+                    SelectionHandler.getSelectedBubbles().forEach(function(bubble){
+                        bubble.hideMenu();
+                    });
                 }
             );
             $("body").removeClass(
@@ -169,7 +167,7 @@ define([
                 GraphElementMainMenu._getGraphElementMenu().removeClass("hidden");
                 GraphElementMainMenu.reset();
                 IdentificationMenu.setup();
-                GraphElementMainMenu.reviewButtonsVisibility();
+                GraphElementMainMenu.reviewAppButtonsDisplay();
                 ImageMenu.setup();
             });
         }

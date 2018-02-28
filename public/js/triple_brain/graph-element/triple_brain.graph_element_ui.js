@@ -403,7 +403,7 @@ define([
     };
     api.GraphElementUi.prototype.showMenu = function () {
         this.getMenuHtml().removeClass("hidden");
-        GraphElementMainMenu.reviewButtonsVisibility();
+        GraphElementMainMenu.reviewInBubbleButtonsDisplay(this, this.getController());
     };
 
     api.GraphElementUi.prototype.rightActionForType = function (vertexAction, edgeAction, groupRelationAction, schemaAction, propertyAction, suggestionVertexAction, suggestionRelationAction, metaAction, metaRelationAction) {
@@ -870,11 +870,6 @@ define([
         }
     );
 
-    EventBus.subscribe(
-        '/event/ui/graph/drawn',
-        function () {
-            GraphElementMainMenu.reviewButtonsVisibility();
-        });
     return api;
 
     function initMenuHandlerGetters() {

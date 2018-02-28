@@ -223,10 +223,12 @@ define([
                 this.getModel().getSuggestions(),
                 this
             );
+            GraphElementMainMenu.reviewButtonsVisibility();
             this.centerOnScreen();
         };
         api.VertexUi.prototype.setSuggestions = function (suggestions) {
             this.getModel().setSuggestions(suggestions);
+            GraphElementMainMenu.reviewButtonsVisibility();
         };
 
         api.VertexUi.prototype.serverFacade = function () {

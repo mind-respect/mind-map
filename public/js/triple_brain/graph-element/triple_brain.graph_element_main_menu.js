@@ -6,18 +6,18 @@ define([
         "jquery",
         "triple_brain.graph_displayer",
         "triple_brain.event_bus",
-        "triple_brain.selection_handler",
         "triple_brain.graph_element_button",
         "triple_brain.mind_map_info",
         "triple_brain.ui_utils",
         "mr.app_controller",
         "jquery.i18next",
         "bootstrap"
-    ], function ($, GraphDisplayer, EventBus, SelectionHandler, GraphElementButton, MindMapInfo, UiUtils, AppController) {
+    ], function ($, GraphDisplayer, EventBus, GraphElementButton, MindMapInfo, UiUtils, AppController) {
         "use strict";
         var api = {},
             _graphElementMenu,
-            _graphMenu;
+            _graphMenu,
+            _possibleInLabelMenu;
         api.addRelevantButtonsInMenu = function (menuContainer, controller) {
             api.visitButtons(function (button) {
                 if (!button.canActionBePossiblyMade(controller)) {
@@ -63,18 +63,17 @@ define([
                     var button = GraphElementButton.fromHtml(
                         $(this)
                     );
+                    if(button.isDisabled()){
+                        return;
+                    }
                     var isInBubble = button.isInBubble();
-                    var graphElements = isInBubble ?
-                        button.getParentBubble() :
-                        SelectionHandler.getOneOrArrayOfSelected();
-
                     var controller = isInBubble ?
-                        graphElements.getController() :
+                        button.getParentBubble().getController() :
                         api._getCurrentClickHandler(button);
                     controller[
                         button.getAction()
                         ]();
-                    api.reviewButtonsVisibility();
+                    api.reviewButtonsVisibility(controller.getUi(), controller);
                 }
             );
         };
@@ -103,12 +102,19 @@ define([
                 )
             );
         };
-        api.visitGraphElementButtons = function(visitor, inverse){
+        api.visitGraphElementButtons = function (visitor, inverse) {
             return api.visitButtons(
                 visitor,
                 inverse,
                 getGraphElementButtons()
-            )
+            );
+        };
+        api.visitInLabelPossibleButtons = function (visitor, inverse) {
+            return api.visitButtons(
+                visitor,
+                inverse,
+                getInLabelPossibleButtons()
+            );
         };
         api.visitButtons = function (visitor, inverse, buttonsHtml) {
             buttonsHtml = buttonsHtml || getButtonsHtml();
@@ -124,15 +130,15 @@ define([
             });
         };
 
-        api.onlyShowButtonsIfApplicable = function (controller, graphElement) {
+        api.onlyShowButtonsIfApplicable = function (controller, graphElement, buttonsHtml) {
             api.visitButtons(function (button) {
                 if (button.isForWholeGraph()) {
-                    api.showWholeGraphButtonOnlyIfApplicable(
+                    return api.showWholeGraphButtonOnlyIfApplicable(
                         button
                     );
                 }
                 if (button.isForApp()) {
-                    api.showAppButtonOnlyIfApplicable(
+                    return api.showAppButtonOnlyIfApplicable(
                         button
                     );
                 }
@@ -140,7 +146,7 @@ define([
                     controller,
                     graphElement
                 );
-            });
+            }, false, buttonsHtml);
         };
 
         api.showWholeGraphButtonOnlyIfApplicable = function (button) {
@@ -155,28 +161,47 @@ define([
             );
         };
 
-        api.reviewButtonsVisibility = function () {
-            var controller = updateCurrentClickHandler();
-            var selected = 1 === SelectionHandler.getNbSelected() ?
-                SelectionHandler.getSingleElement() :
-                SelectionHandler.getSelectedElements();
+        api.reviewButtonsVisibility = function (bubbles, controller) {
+            controller = controller || api._currentController;
+            bubbles = bubbles || controller.getUi();
+            api.reviewOutOfBubbleButtonsDisplay(bubbles, controller);
+            api.reviewInBubbleButtonsDisplay(bubbles, controller);
+            api.reviewAppButtonsDisplay();
+        };
+
+        api.reviewOutOfBubbleButtonsDisplay = function (bubbles, controller) {
+            api._currentController = controller;
             api.onlyShowButtonsIfApplicable(
                 controller,
-                selected
+                bubbles,
+                getGraphElementButtons()
+            );
+        };
+
+        api.reviewInBubbleButtonsDisplay = function (bubbles, controller) {
+            api._currentController = controller;
+            api.onlyShowButtonsIfApplicable(
+                controller,
+                bubbles
+            );
+        };
+
+        api.reviewAppButtonsDisplay = function () {
+            api.onlyShowButtonsIfApplicable(
+                GraphDisplayer.getGraphMenuHandler(),
+                [],
+                getGraphButtons()
             );
         };
 
         api._getCurrentClickHandler = function (button) {
-            if (button !== undefined) {
-                if (button.isForWholeGraph()) {
-                    return GraphDisplayer.getGraphMenuHandler();
-                }
-                if (button.isForApp()) {
-                    return AppController;
-                }
+            if (button.isForWholeGraph()) {
+                return GraphDisplayer.getGraphMenuHandler();
             }
-
-            return api._currentClickHandler;
+            if (button.isForApp()) {
+                return AppController;
+            }
+            return api._currentController;
         };
 
         api._getGraphElementMenu = function () {
@@ -193,30 +218,11 @@ define([
             return _graphMenu;
         };
 
-        api.getControllerFromCurrentSelection = function () {
-            var nbSelectedGraphElements = SelectionHandler.getNbSelected();
-            var currentController;
-            if (0 === nbSelectedGraphElements) {
-                currentController = GraphDisplayer.getGraphMenuHandler();
-            } else if (1 === nbSelectedGraphElements) {
-                currentController = SelectionHandler.getSingleElement().getController();
-            } else {
-                var anyElement = SelectionHandler.getSingleElement();
-                var anyElementType = anyElement.getGraphElementType();
-                var areAllElementsOfSameType = true;
-                SelectionHandler.getSelectedElements().forEach(function (selectedElement) {
-                    if (selectedElement.getGraphElementType() !== anyElementType) {
-                        areAllElementsOfSameType = false;
-                    }
-                });
-                var graphElementControllerClass = GraphDisplayer.getGraphElementMenuHandler();
-                currentController = areAllElementsOfSameType ? anyElement.getControllerWithElements(
-                    SelectionHandler.getSelectedElements()
-                ) : new graphElementControllerClass.GraphElementController(
-                    SelectionHandler.getSelectedElements()
-                );
+        api._getPossibleInLabelMenu = function () {
+            if (!_possibleInLabelMenu || _possibleInLabelMenu.length === 0) {
+                _possibleInLabelMenu = $("#in-label-btns");
             }
-            return currentController;
+            return _possibleInLabelMenu;
         };
 
         EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function () {
@@ -237,16 +243,12 @@ define([
             return api._getGraphElementMenu().find("button");
         }
 
-        function updateCurrentClickHandler() {
-            var currentClickHandler = api.getControllerFromCurrentSelection();
-            setCurrentClickHandler(
-                currentClickHandler
-            );
-            return currentClickHandler;
+        function getGraphButtons() {
+            return api._getGraphMenu().find("button");
         }
 
-        function setCurrentClickHandler(currentClickHandler) {
-            api._currentClickHandler = currentClickHandler;
+        function getInLabelPossibleButtons(){
+            return api._getPossibleInLabelMenu().find("button");
         }
     }
 );

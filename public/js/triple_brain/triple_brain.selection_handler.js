@@ -3,14 +3,16 @@
  */
 
 define([
+    "require",
     "jquery",
     "triple_brain.graph_ui",
     "triple_brain.scroll_on_mouse_frontier",
     "triple_brain.ui_utils",
     "triple_brain.graph_displayer",
+    "triple_brain.graph_element_main_menu",
     "triple_brain.event_bus",
     'jquery.performance'
-], function ($, GraphUi, ScrollOnMouseFrontier, UiUtils, GraphDisplayer, EventBus) {
+], function (require, $, GraphUi, ScrollOnMouseFrontier, UiUtils, GraphDisplayer, GraphElementMainMenu, EventBus) {
     "use strict";
     var api = {};
     var selectedRelations = [];
@@ -87,6 +89,7 @@ define([
         }
         relation.select();
         selectedRelations.push(relation);
+        api._reviewMenu();
     };
 
     api.addVertex = function (vertex) {
@@ -95,6 +98,7 @@ define([
         }
         vertex.select();
         selectedVertices.push(vertex);
+        api._reviewMenu();
     };
     api.removeVertex = function (vertex) {
         deselectGraphElement(vertex, selectedVertices);
@@ -105,6 +109,7 @@ define([
 
     api.removeAll = function () {
         deselectAll();
+        api._reviewMenu();
     };
 
     api.getSelectedVertices = function () {
@@ -144,6 +149,40 @@ define([
         return 0 === api.getNbSelected();
     };
 
+    api.getControllerFromCurrentSelection = function () {
+        var nbSelectedGraphElements = api.getNbSelected();
+        var currentController;
+        if (0 === nbSelectedGraphElements) {
+            currentController = GraphDisplayer.getGraphMenuHandler();
+        } else if (1 === nbSelectedGraphElements) {
+            currentController = api.getSingleElement().getController();
+        } else {
+            var anyElement = api.getSingleElement();
+            var anyElementType = anyElement.getGraphElementType();
+            var areAllElementsOfSameType = true;
+            api.getSelectedElements().forEach(function (selectedElement) {
+                if (selectedElement.getGraphElementType() !== anyElementType) {
+                    areAllElementsOfSameType = false;
+                }
+            });
+            var graphElementControllerClass = GraphDisplayer.getGraphElementMenuHandler();
+            currentController = areAllElementsOfSameType ? anyElement.getControllerWithElements(
+                api.getSelectedElements()
+            ) : new graphElementControllerClass.GraphElementController(
+                api.getSelectedElements()
+            );
+        }
+        return currentController;
+    };
+
+    api._reviewMenu = function () {
+        GraphElementMainMenu.reviewOutOfBubbleButtonsDisplay(
+            api.getSelectedBubbles(),
+            api.getControllerFromCurrentSelection()
+        );
+        require("triple_brain.graph_element_ui").resetOtherInstancesDisplay();
+    };
+
     EventBus.subscribe("/event/ui/graph/reset", deselectAll);
     return api;
 
@@ -160,6 +199,7 @@ define([
         });
         selectedVertices = [];
         selectedRelations = [];
+        api._reviewMenu();
     }
 
     function deselectGraphElement(toDeselect, graphElements) {
@@ -171,5 +211,6 @@ define([
                 return;
             }
         }
+        api._reviewMenu();
     }
 });

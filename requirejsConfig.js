@@ -102,7 +102,7 @@ module.exports = {
         "triple_brain.graph_element_button": "triple_brain/graph-element/triple_brain.graph_element_button",
         "triple_brain.graph_element_main_menu": "triple_brain/graph-element/triple_brain.graph_element_main_menu",
         "triple_brain.graph_element_menu": "triple_brain/graph-element/triple_brain.graph_element_menu",
-        "mr.graph-element-ui-builder": "triple_brain/graph-element/mr.graph-element-ui-builder.js",
+        "mr.graph-element-ui-builder": "triple_brain/graph-element/mr.graph-element-ui-builder",
         "triple_brain.graph_element_type": "triple_brain/graph-element/triple_brain.graph_element_type",
 
         /*

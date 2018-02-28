@@ -53,10 +53,6 @@ define([
             bubble.setSuggestions(
                 suggestions
             );
-            EventBus.publish(
-                '/event/ui/graph/vertex/suggestions/updated',
-                [bubble, suggestions]
-            );
             expect(
                 bubble.getButtonHtmlHavingAction("suggestions")
             ).not.toHaveClass("hidden");
@@ -84,7 +80,7 @@ define([
             SelectionHandler.addVertex(b1);
             SelectionHandler.addVertex(b2);
             expect(
-                GraphElementMainMenu._getCurrentClickHandler() instanceof VertexController.VertexController
+                GraphElementMainMenu._currentController instanceof VertexController.VertexController
             ).toBeTruthy();
         });
         it("sets the correct controller when multiple selected elements are all relations", function () {
@@ -101,7 +97,7 @@ define([
             SelectionHandler.addRelation(r1);
             SelectionHandler.addRelation(r2);
             expect(
-                GraphElementMainMenu._getCurrentClickHandler() instanceof EdgeController.RelationController
+                GraphElementMainMenu._currentController instanceof EdgeController.RelationController
             ).toBeTruthy();
         });
         it("sets the correct controller when multiple selected elements are different types of graph elements", function () {
@@ -114,7 +110,7 @@ define([
             SelectionHandler.addVertex(b1);
             SelectionHandler.addRelation(r1);
             expect(
-                GraphElementMainMenu._getCurrentClickHandler() instanceof GraphElementController.GraphElementController
+                GraphElementMainMenu._currentController instanceof GraphElementController.GraphElementController
             ).toBeTruthy();
         });
         function getAWholeGraphButton() {

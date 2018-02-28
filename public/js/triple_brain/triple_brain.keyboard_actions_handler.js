@@ -7,10 +7,9 @@ define([
     "triple_brain.event_bus",
     "triple_brain.selection_handler",
     "triple_brain.mind_map_info",
-    "triple_brain.graph_element_main_menu",
     "triple_brain.ui_utils",
     "mr.app_controller"
-], function ($, EventBus, SelectionHandler, MindMapInfo, GraphElementMainMenu, UiUtils, AppController) {
+], function ($, EventBus, SelectionHandler, MindMapInfo, UiUtils, AppController) {
     "use strict";
 
     var api = {},
@@ -141,7 +140,7 @@ define([
         if (feature.isForAppController) {
             controller = AppController;
         } else {
-            controller = GraphElementMainMenu.getControllerFromCurrentSelection();
+            controller = SelectionHandler.getControllerFromCurrentSelection();
         }
         if (controller[feature.action] === undefined) {
             return;

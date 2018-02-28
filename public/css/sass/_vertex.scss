@@ -77,7 +77,7 @@
     }
     &.center-vertex {
       .in-bubble-content {
-        box-shadow: $selectedBoxShadow;
+        box-shadow: $selectedBoxShadow !important;
         background-color: transparent !important;
       }
     }

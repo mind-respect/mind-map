@@ -82,7 +82,7 @@ define([
         var container = $(
             "<div class='in-label-buttons'>"
         );
-        GraphElementMainMenu.visitGraphElementButtons(function (button) {
+        GraphElementMainMenu.visitInLabelPossibleButtons(function (button) {
             if (!button.canBeInLabel()) {
                 return;
             }

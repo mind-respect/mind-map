@@ -12,31 +12,31 @@ define([
 ], function (Scenarios, GraphElementButton, GraphElementMainMenu, VertexController, MindMapInfo, SelectionHandler) {
     "use strict";
     describe("graph_element_button", function () {
-        it("main menu button remains hidden if only one bubble is selected", function () {
+        it("main menu button remains disabled if only one bubble is selected", function () {
             loadFixtures('graph-element-menu.html');
             MindMapInfo._setIsViewOnly(false);
             var scenario = new Scenarios.threeBubblesGraph();
             var bubble1 = scenario.getBubble1InTree();
             GraphElementMainMenu.reset();
-            var makePublicButton = GraphElementMainMenu._getButtonHavingAction(
-                "makePublic"
+            var makePrivate = GraphElementMainMenu._getButtonHavingAction(
+                "makePrivate"
             );
-            makePublicButton.showOnlyIfApplicable(
+            makePrivate.showOnlyIfApplicable(
                 bubble1.getController(),
                 bubble1
             );
             expect(
-                makePublicButton.getHtml()
-            ).toHaveClass("hidden");
+                makePrivate.getHtml()
+            ).toHaveClass("disabled");
             var bubble2 = scenario.getBubble2InTree();
-            makePublicButton.showOnlyIfApplicable(
+            makePrivate.showOnlyIfApplicable(
                 new VertexController.VertexController(
                     [bubble1, bubble2]
                 )
             );
             expect(
-                makePublicButton.getHtml()
-            ).not.toHaveClass("hidden");
+                makePrivate.getHtml()
+            ).toHaveClass("disabled");
         });
         /*could not make the test pass even though it works in reality*/
         // it("expand all button is hidden if there's nothing to expand", function () {

@@ -670,7 +670,7 @@ define([
                 ).toBeFalsy();
             });
         });
-        it("hides the collapse button right away after collapse and shows the expand button", function () {
+        it("disables the collapse button right away after collapse and enables the expand button", function () {
             loadFixtures('graph-element-menu.html');
             var scenario = new Scenarios.threeBubblesGraph();
             var b2 = scenario.getBubble2InTree();
@@ -679,7 +679,7 @@ define([
             var collapseButton = b2.getButtonHtmlHavingAction("collapse");
             expect(
                 collapseButton
-            ).not.toHaveClass("hidden");
+            ).not.toHaveClass("disabled");
             var expandButton = b2.getButtonHtmlHavingAction("expand");
             expect(
                 expandButton
@@ -688,11 +688,11 @@ define([
             collapseButton = b2.getButtonHtmlHavingAction("collapse");
             expect(
                 collapseButton
-            ).toHaveClass("hidden");
+            ).toHaveClass("disabled");
             expandButton = b2.getButtonHtmlHavingAction("expand");
             expect(
                 expandButton
-            ).not.toHaveClass("hidden");
+            ).not.toHaveClass("disabled");
         });
         it("hides the hidden relation container after expand", function () {
             var scenario = new Scenarios.threeBubblesGraph();
@@ -707,7 +707,7 @@ define([
                 b2.getHiddenRelationsContainer().isVisible()
             ).toBeFalsy();
         });
-        it("hides the expand button right away after expand and shows the collapse button", function () {
+        it("disables the expand button right away after expand and enablesthe collapse button", function () {
             loadFixtures('graph-element-menu.html');
             var scenario = new Scenarios.threeBubblesGraph();
             var b2 = scenario.getBubble2InTree();
@@ -718,19 +718,19 @@ define([
             b2.collapse();
             expect(
                 collapseButton
-            ).toHaveClass("hidden");
+            ).toHaveClass("disabled");
             expect(
                 expandButton
-            ).not.toHaveClass("hidden");
+            ).not.toHaveClass("disabled");
             b2.expand();
             collapseButton = b2.getButtonHtmlHavingAction("collapse");
             expect(
                 collapseButton
-            ).not.toHaveClass("hidden");
+            ).not.toHaveClass("disabled");
             expandButton = b2.getButtonHtmlHavingAction("expand");
             expect(
                 expandButton
-            ).toHaveClass("hidden");
+            ).toHaveClass("disabled");
         });
         // it("displays the hidden relations container after collapse", function () {
         //     var scenario = new Scenarios.threeBubblesGraph();

@@ -303,7 +303,7 @@ footer > a:hover { background-color: black !important; color: white !important; 
 .in-label-buttons button.graph-element-button.visit-other-instances:focus i { border: 1px solid #4D90FE; -webkit-box-shadow: 0px 0px 5px #4D90FE; box-shadow: 0px 0px 5px #4D90FE; }
 .in-label-buttons button.graph-element-button.visit-other-instances i { color: #E65100 !important; }
 
-button.graph-element-button { position: relative; font-size: 1.4em; margin-bottom: 5px; margin-right: 3px; line-height: 20px; color: #333; text-align: center; text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); background-image: linear-gradient(to bottom, #fff, #e6e6e6); background-repeat: repeat-x; border-bottom-color: #b3b3b3; border: 1px solid #ccc; border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25); -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); }
+button.graph-element-button { position: relative; font-size: 1.4em; margin-bottom: 5px; margin-right: 3px; line-height: 20px; color: #333; text-align: center; background-color: transparent; border: none; }
 button.graph-element-button:hover { background-image: linear-gradient(to bottom, #fff, #CDCDCD); }
 button.graph-element-button .stacked-icons { margin-top: 20px; text-align: center; }
 button.graph-element-button .fa-stack { vertical-align: inherit; }
@@ -312,7 +312,11 @@ button.graph-element-button .fa-stack + .fa-stack { margin-left: .3em; }
 .graph-element-button { width: 40px; height: 40px; font-size: 1.2em; }
 .graph-element-button i { top: 25%; }
 
-.menu { width: 180px; }
+.bubble .menu { width: 180px; z-index: 3; margin-top: 5px; position: absolute; white-space: normal; background-color: white; opacity: 0.95; left: 0; top: 100%; }
+.bubble .menu ul:first-of-type { padding-left: 5px; }
+.bubble .menu ul { list-style: none; font-family: courier new, monospace; font-size: 18px; padding: 0 5px 0 0; margin: 0 0 0 0; display: inline; float: left; min-width: 12px; }
+.bubble .menu input { float: left; background-color: transparent; background-position: center; padding-left: 2px; padding-right: 2px; margin: 0; display: table; border: 1px solid #e30613; font-weight: bold; font-size: 19px; min-width: 25px; min-height: 14px; margin-top: 0px; }
+.bubble .menu .ui-button { float: left; background-color: white; }
 
 button.add-button-in-list { color: green; font-weight: bold; font-size: 2em; margin-bottom: 0.2em; float: left; border: none; background-color: transparent; }
 button.add-button-in-list:hover { color: #00d100; }
@@ -339,6 +343,8 @@ button.inactive i { color: red; }
 
 .popover-content ul { list-style: none; padding-left: 0; }
 .popover-content:empty { padding: 0; }
+
+button.disabled i { opacity: 0.6; cursor: not-allowed; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .ui-dialog-titlebar { text-align: center; }
@@ -491,11 +497,6 @@ button.inactive i { color: red; }
 .bubble .arrow ~ { background-color: yellow; }
 .bubble .arrow ~ .in-bubble-note-button:not(hidden) { width: 100%; }
 .bubble .arrow:before { content: url("images/icons/vertex/arrowhead_right.svg"); position: relative; top: -11px; left: 20px; }
-.bubble .menu { z-index: 3; margin-top: 5px; position: absolute; white-space: normal; background-color: transparent; opacity: 0.95; left: 0; top: 100%; }
-.bubble .menu ul:first-of-type { padding-left: 5px; }
-.bubble .menu ul { list-style: none; font-family: courier new, monospace; font-size: 18px; padding: 0 5px 0 0; margin: 0 0 0 0; display: inline; float: left; min-width: 12px; }
-.bubble .menu input { float: left; background-color: transparent; background-position: center; padding-left: 2px; padding-right: 2px; margin: 0; display: table; border: 1px solid #e30613; font-weight: bold; font-size: 19px; min-width: 25px; min-height: 14px; margin-top: 0px; }
-.bubble .menu .ui-button { float: left; background-color: white; }
 .bubble.inverse .arrow:before { content: ""; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
@@ -512,7 +513,7 @@ button.inactive i { color: red; }
 .vertex .in-bubble-content .in-label-buttons { margin-left: -24px; padding-left: 0; padding-right: 8px; }
 .vertex.selected { z-index: 12; }
 .vertex.selected .in-bubble-content { background-color: transparent; box-shadow: -5px 5px 5px black; }
-.vertex.selected.center-vertex .in-bubble-content { box-shadow: -5px 5px 5px black; background-color: transparent !important; }
+.vertex.selected.center-vertex .in-bubble-content { box-shadow: -5px 5px 5px black !important; background-color: transparent !important; }
 .vertex.center-vertex .connector { height: 0; width: 0; }
 .vertex.center-vertex .arrow { height: 0; width: 0; top: 0; left: 0; border-top: none; }
 .vertex.center-vertex .arrow:before { content: ""; }

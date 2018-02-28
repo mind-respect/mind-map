@@ -1,12 +1,12 @@
 #graph-menu {
-  position:fixed;
-  bottom:25px;
+  position: fixed;
+  bottom: 25px;
   z-index: 99;
 }
 
-#graph-element-menu{
-  position:fixed;
-  top:75px;
+#graph-element-menu {
+  position: fixed;
+  top: 75px;
   z-index: 99;
 }
 
@@ -80,15 +80,17 @@ button.graph-element-button {
   line-height: 20px;
   color: #333;
   text-align: center;
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
-  background-image: linear-gradient(to bottom, #fff, #e6e6e6);
-  background-repeat: repeat-x;
-  border-bottom-color: #b3b3b3;
-  border: 1px solid #ccc;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  background-color: transparent;
+  border: none;
+  //text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+  //background-image: linear-gradient(to bottom, #fff, #e6e6e6);
+  //background-repeat: repeat-x;
+  //border-bottom-color: #b3b3b3;
+  //border: 1px solid #ccc;
+  //border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  //-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  //-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  //box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
   &:hover {
     background-image: linear-gradient(to bottom, #fff, #CDCDCD);
   }
@@ -114,8 +116,48 @@ $buttonSize: 40px;
   }
 }
 
-.menu {
+.bubble .menu {
   width: 180px;
+  z-index: 3;
+  margin-top: 5px;
+  position: absolute;
+  white-space: normal;
+  background-color: white;
+  opacity: 0.95;
+  left: 0;
+  top: 100%;
+  ul:first-of-type {
+    padding-left: 5px;
+  }
+  ul {
+    list-style: none;
+    font-family: courier new, monospace;
+    font-size: 18px;
+    padding: 0 5px 0 0;
+    margin: 0 0 0 0;
+    display: inline;
+    float: left;
+    min-width: 12px;
+  }
+  input {
+    float: left;
+    background-color: transparent;
+    background-position: center;
+    padding-left: 2px;
+    padding-right: 2px;
+    margin: 0;
+    display: table;
+    border: 1px solid #e30613;
+    font-weight: bold;
+    font-size: 19px;
+    min-width: 25px;
+    min-height: 14px;
+    margin-top: 0px;
+  }
+  .ui-button {
+    float: left;
+    background-color: white;
+  }
 }
 
 button {
@@ -210,4 +252,9 @@ button.inactive i {
   &:empty {
     padding: 0;
   }
+}
+
+button.disabled i {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
