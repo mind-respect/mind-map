@@ -25,9 +25,12 @@
   //background-color: #1eaf47;
   //background-color: #1e87af1f;
   //border: 1px solid black;
-  opacity: 0.91;
   -moz-border-radius: 15px;
   cursor: default;
+  background-color: #f7fafc;
+  button{
+    color: black;
+  }
 }
 
 //#graph-element-menu {
@@ -277,7 +280,8 @@ button.inactive i {
   }
 }
 
-button.disabled i {
-  opacity: 0.6;
+button.disabled {
+  opacity: 1;
   cursor: not-allowed;
+  color:#c0c0c1;
 }

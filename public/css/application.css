@@ -296,7 +296,8 @@ footer > a:hover { background-color: black !important; color: white !important; 
 
 #graph-element-menu { position: fixed; top: 57px; z-index: 99; width: 100%; }
 
-.main-panel { z-index: 12; opacity: 0.91; -moz-border-radius: 15px; cursor: default; }
+.main-panel { z-index: 12; -moz-border-radius: 15px; cursor: default; background-color: #f7fafc; }
+.main-panel button { color: black; }
 
 #whole-graph-buttons-container { width: 0; }
 #whole-graph-buttons-container .container { width: 0; }
@@ -352,7 +353,7 @@ button.inactive i { color: red; }
 .popover-content ul { list-style: none; padding-left: 0; }
 .popover-content:empty { padding: 0; }
 
-button.disabled i { opacity: 0.6; cursor: not-allowed; }
+button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .ui-dialog-titlebar { text-align: center; }
