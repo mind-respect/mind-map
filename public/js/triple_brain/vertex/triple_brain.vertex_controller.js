@@ -186,6 +186,8 @@ define([
         }.bind(this));
     };
 
+    VertexController.prototype.removeManyIsPossible = true;
+
     VertexController.prototype.removeCanDo = function () {
         return this.isOwned();
     };
@@ -244,6 +246,8 @@ define([
     };
 
 
+    VertexController.prototype.makePrivateManyIsPossible = true;
+
     VertexController.prototype.makePrivateCanDo = function () {
         return this.isOwned() && (
             (this.isMultiple() && !this._areAllElementsPrivate()) || (
@@ -292,6 +296,8 @@ define([
             });
         }
     };
+
+    VertexController.prototype.makePublicManyIsPossible = true;
 
     VertexController.prototype.makePublicCanDo = function () {
         return this.isOwned() && (
@@ -470,6 +476,8 @@ define([
             );
         }
     };
+
+    VertexController.prototype.copyManyIsPossible = true;
 
     VertexController.prototype.copyCanDo = function () {
         return !this.isSingle() || "" !== this.getUi().text();

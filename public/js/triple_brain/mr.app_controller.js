@@ -38,5 +38,9 @@ define([
         );
     };
 
+    api.isMultiple = function(){
+        return false;
+    };
+
     return api;
 });

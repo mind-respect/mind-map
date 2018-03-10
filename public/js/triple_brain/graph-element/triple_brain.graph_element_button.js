@@ -13,6 +13,7 @@ define([
             html
         );
     };
+
     function GraphElementButton(html) {
         this.html = html;
     }
@@ -35,13 +36,20 @@ define([
         else if (!this.isForWholeGraph()) {
             this._hideMenuForGraphElements(selected);
         }
-        if(this.canActionBePossiblyMade(controller)){
+        if (this.canActionBePossiblyMade(controller)) {
             buttonHtml.removeClass("hidden");
-            buttonHtml[
-                canActionBePerformed ?
-                    "removeClass" : "addClass"
-                ]("disabled");
-        }else{
+            if (controller.isMultiple() && !this.canActionBePossiblyMadeIfMultiple(controller)){
+                buttonHtml[
+                    canActionBePerformed ?
+                        "removeClass" : "addClass"
+                    ]("hidden");
+            }else{
+                buttonHtml[
+                    canActionBePerformed ?
+                        "removeClass" : "addClass"
+                    ]("disabled");
+            }
+        } else {
             buttonHtml.removeClass("disabled");
             buttonHtml.addClass("hidden");
         }
@@ -49,9 +57,16 @@ define([
     };
     GraphElementButton.prototype.canActionBePossiblyMade = function (controller) {
         return controller[
-                this.getAction()
-                ] !== undefined;
+            this.getAction()
+            ] !== undefined;
     };
+
+    GraphElementButton.prototype.canActionBePossiblyMadeIfMultiple = function (controller) {
+        return controller[
+        this.getAction() + "ManyIsPossible"
+            ] === true;
+    };
+
     GraphElementButton.prototype.canActionBePerformedWithController = function (controller) {
         if (!this.canActionBePossiblyMade(controller)) {
             return false;
@@ -75,6 +90,8 @@ define([
     GraphElementButton.prototype.isForApp = function () {
         return this.html.hasClass("app-button");
     };
+
+
     GraphElementButton.prototype.getAction = function () {
         return this.html.attr(
             "data-action"
@@ -111,7 +128,7 @@ define([
     };
     GraphElementButton.prototype.shouldBeVisibleInGraphElementLabel = function (graphElementUi) {
         var controller = graphElementUi.getController();
-        var canShowActionButtonInLabel = controller[this.getAction()+ "CanShowInLabel"];
+        var canShowActionButtonInLabel = controller[this.getAction() + "CanShowInLabel"];
         return canShowActionButtonInLabel === undefined ? $.Deferred().resolve(false) : canShowActionButtonInLabel.bind(controller)();
     };
     GraphElementButton.prototype._hideMenuForGraphElements = function (elements) {
@@ -128,7 +145,7 @@ define([
             this._getParentBubbleHtml()
         );
     };
-    GraphElementButton.prototype.isDisabled = function(){
+    GraphElementButton.prototype.isDisabled = function () {
         return this.html.hasClass("disabled");
     };
     GraphElementButton.prototype._getParentBubbleHtml = function () {

@@ -20,8 +20,9 @@ define([
     "triple_brain.friendly_resource_service",
     "triple_brain.edge_service",
     "triple_brain.search",
-    "triple_brain.id_uri"
-], function ($, TestUtils, UserServiceMock, EdgeServiceMock, VertexServiceMock, GraphElementServiceMock, FriendlyResourceServiceMock, WikidataMock, BubbleDeleteMenuMock, MindMapInfo, SuggestionService, GraphService, SchemaService, VertexService, FriendlyResourceService, EdgeService, SearchService, IdUri) {
+    "triple_brain.id_uri",
+    "triple_brain.selection_handler"
+], function ($, TestUtils, UserServiceMock, EdgeServiceMock, VertexServiceMock, GraphElementServiceMock, FriendlyResourceServiceMock, WikidataMock, BubbleDeleteMenuMock, MindMapInfo, SuggestionService, GraphService, SchemaService, VertexService, FriendlyResourceService, EdgeService, SearchService, IdUri, SelectionHandler) {
     "use strict";
     var api = {};
     var spies = {};
@@ -93,6 +94,7 @@ define([
             mocker: BubbleDeleteMenuMock,
             spies: BubbleDeleteMenuMock.applyDefaultMocks()
         };
+        SelectionHandler.removeAll();
     };
     api.getSpy = function (object, method) {
         return spies[object].spies[method];

@@ -63,6 +63,10 @@ define([
     api.getUi = function () {
         return [];
     };
+
+    api.isMultiple = function(){
+        return false;
+    };
+
     return api;
 });
- 
