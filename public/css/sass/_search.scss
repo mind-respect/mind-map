@@ -4,7 +4,7 @@
 
 @media (max-width: 767px) {
   #header-search-form {
-    padding-left: 3ù0px;
+    padding-left: 30px;
   }
 }
 
@@ -120,5 +120,18 @@ $zIndex:2000;
         content: " ..."
       }
     }
+  }
+}
+
+.search-box{
+  background:none;
+  border: 1px solid #ebebeb;
+  &:hover{
+    background:none;
+    border: 1px solid #ebebeb;
+  }
+  &:focus{
+    background:none;
+    border: 1px solid #ebebeb;
   }
 }
