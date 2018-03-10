@@ -290,11 +290,10 @@ footer > a:hover { background-color: black !important; color: white !important; 
 .search-box:hover { background: none; border: 1px solid #ebebeb; }
 .search-box:focus { background: none; border: 1px solid #ebebeb; }
 
-#graph-menu { position: fixed; bottom: 25px; z-index: 99; top: 102px; height: 100%; }
+#graph-menu { position: fixed; bottom: 25px; z-index: 99; top: 102px; }
 #graph-menu button { display: block; }
-#graph-menu .main-panel { height: 100%; }
 
-#graph-element-menu { position: fixed; top: 57px; z-index: 99; width: 100%; }
+#graph-element-menu { position: fixed; top: 57px; z-index: 99; }
 
 .main-panel { z-index: 12; -moz-border-radius: 15px; cursor: default; background-color: #f7fafc; }
 .main-panel button { color: black; }
