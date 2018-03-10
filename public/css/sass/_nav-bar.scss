@@ -1,16 +1,19 @@
 $bgDefault      : #071f79;
 $bgHighlight    : #121D46;
 $bgHighlight    : rgba(18, 29, 70, 0.4);
-$colDefault     : #ffffff;
-$colHighlight   : #ffffff;
+$colDefault     : black;
+$colHighlight   :   white;
 $dropDown       : false;
+$border : 2px solid $red;
 
 .navbar-default {
   border:none;
+  border-bottom:$border;
   background-image: none;
   //background-image: linear-gradient(to bottom,#fff, #7297ff);
   //background: linear-gradient(to bottom, #1e5799 0%,#2989d8 100%);
-  background-color:rgba(0, 0, 0, 0.3);
+  //background-color:rgba(0, 0, 0, 0.3);
+  background-color:white;
   //background-color:#7281b3;
   //background-color: $bgDefault;
   //border-color: $bgHighlight;

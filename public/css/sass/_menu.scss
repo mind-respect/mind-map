@@ -2,12 +2,32 @@
   position: fixed;
   bottom: 25px;
   z-index: 99;
+  top: 102px;
+  button{
+    display:block;
+  }
+  height:100%;
+  .main-panel{
+    height:100%;
+  }
+
 }
 
 #graph-element-menu {
   position: fixed;
-  top: 75px;
+  top: 57px;
   z-index: 99;
+  width:100%;
+}
+
+.main-panel {
+  z-index: 12;
+  //background-color: #1eaf47;
+  //background-color: #1e87af1f;
+  //border: 1px solid black;
+  opacity: 0.91;
+  -moz-border-radius: 15px;
+  cursor: default;
 }
 
 //#graph-element-menu {
@@ -91,8 +111,11 @@ button.graph-element-button {
   //-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
   //-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
   //box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-  &:hover {
-    background-image: linear-gradient(to bottom, #fff, #CDCDCD);
+  &:hover:not(.disabled) {
+    //background-image: linear-gradient(to bottom, #fff, #CDCDCD);
+    //background-color:#f44c4c;
+    background-color:$red;
+    color:white;
   }
   .stacked-icons {
     margin-top: 20px;
