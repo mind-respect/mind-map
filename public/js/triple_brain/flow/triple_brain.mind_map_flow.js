@@ -113,11 +113,11 @@ define([
             * otherwise center bubble is top centered
             */
             centralBubble.scrollTo();
-            $('#graph-element-menu').removeClass(
-                "hidden"
-            ).affix({
-                offset: {top: 57}
-            });
+            // $('#graph-element-menu').removeClass(
+            //     "hidden"
+            // ).affix({
+            //     offset: {top: 57}
+            // });
             GraphUi.initDragScroll();
             GraphUi.enableDragScroll();
             SelectionHandler.setToSingleVertex(centralBubble);

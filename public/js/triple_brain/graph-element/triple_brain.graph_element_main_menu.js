@@ -63,7 +63,7 @@ define([
                     var button = GraphElementButton.fromHtml(
                         $(this)
                     );
-                    if(button.isDisabled()){
+                    if (button.isDisabled()) {
                         return;
                     }
                     var isInBubble = button.isInBubble();
@@ -73,7 +73,11 @@ define([
                     controller[
                         button.getAction()
                         ]();
-                    api.reviewButtonsVisibility(controller.getUi(), controller);
+                    if (button.isForGraphElements()) {
+                        api.reviewButtonsVisibility(controller.getUi(), controller);
+                    } else {
+                        api.reviewButtonsVisibility();
+                    }
                 }
             );
         };
@@ -247,7 +251,7 @@ define([
             return api._getGraphMenu().find("button");
         }
 
-        function getInLabelPossibleButtons(){
+        function getInLabelPossibleButtons() {
             return api._getPossibleInLabelMenu().find("button");
         }
     }

@@ -91,6 +91,9 @@ define([
         return this.html.hasClass("app-button");
     };
 
+    GraphElementButton.prototype.isForGraphElements = function(){
+        return !this.isForWholeGraph() && !this.isForApp();
+    };
 
     GraphElementButton.prototype.getAction = function () {
         return this.html.attr(
