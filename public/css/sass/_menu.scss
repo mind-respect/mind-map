@@ -72,6 +72,9 @@
 
 .in-label-buttons {
   button.graph-element-button {
+    &:hover:not(.disabled){
+      color:$red2;
+    }
     &.visit-other-instances {
       margin-right: 5px !important;
       margin-top: -20px !important;
@@ -109,6 +112,7 @@ button.graph-element-button {
   text-align: center;
   background-color: transparent;
   border: none;
+  outline-width: 0;
   //text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
   //background-image: linear-gradient(to bottom, #fff, #e6e6e6);
   //background-repeat: repeat-x;
