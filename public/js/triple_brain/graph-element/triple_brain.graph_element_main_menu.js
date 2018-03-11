@@ -146,6 +146,9 @@ define([
                         button
                     );
                 }
+                button.changeIfGraphElementUiLeftOrRight(
+                    controller
+                );
                 button.showOnlyIfApplicable(
                     controller,
                     graphElement

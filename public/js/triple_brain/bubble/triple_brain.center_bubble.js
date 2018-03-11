@@ -79,23 +79,6 @@ define([
             return this._rightContainer;
         };
 
-        CenterBubble.prototype.reviewAddBubbleButtonDirection = function () {
-            return this.shouldAddLeft() ?
-                this.makeAddChildButtonPointLeft() :
-                this.makeAddChildButtonPointRight();
-        };
-
-        CenterBubble.prototype.makeAddChildButtonPointLeft = function () {
-            this.bubble.getAddChildButton().addClass(
-                "left"
-            );
-        };
-        CenterBubble.prototype.makeAddChildButtonPointRight = function () {
-            this.bubble.getAddChildButton().removeClass(
-                "left"
-            );
-        };
-
         CenterBubble.prototype._getTopMostChildToRightContainer = function () {
             return this.getRightContainer().find(
                 ">.vertex-tree-container:first >.vertex-container"

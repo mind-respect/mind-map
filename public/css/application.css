@@ -290,12 +290,12 @@ footer > a:hover { background-color: black !important; color: white !important; 
 .search-box:hover { background: none; border: 1px solid #ebebeb; }
 .search-box:focus { background: none; border: 1px solid #ebebeb; }
 
-#graph-menu { position: fixed; bottom: 25px; z-index: 99; top: 102px; }
+#graph-menu { position: fixed; bottom: 25px; z-index: 99; top: 112px; overflow-x: hidden; overflow-y: hidden; }
 #graph-menu button { display: block; }
 
 #graph-element-menu { position: fixed; top: 57px; z-index: 99; }
 
-.main-panel { z-index: 12; -moz-border-radius: 15px; cursor: default; background-color: #f7fafc; }
+.main-panel { z-index: 12; -moz-border-radius: 15px; cursor: default; background-color: #f7fafc; position: relative; overflow-x: hidden; overflow-y: hidden; }
 .main-panel button { color: black; }
 
 #whole-graph-buttons-container { width: 0; }
@@ -311,16 +311,16 @@ footer > a:hover { background-color: black !important; color: white !important; 
 .in-label-buttons button.graph-element-button.visit-other-instances:focus i { border: 1px solid #4D90FE; -webkit-box-shadow: 0px 0px 5px #4D90FE; box-shadow: 0px 0px 5px #4D90FE; }
 .in-label-buttons button.graph-element-button.visit-other-instances i { color: #E65100 !important; }
 
-button.graph-element-button { position: relative; font-size: 1.4em; margin-bottom: 5px; margin-right: 3px; line-height: 20px; color: #333; text-align: center; background-color: transparent; border: none; }
+button.graph-element-button { position: relative; font-size: 1.6em; margin-bottom: 5px; margin-right: 3px; line-height: 20px; color: #333; text-align: center; background-color: transparent; border: none; }
 button.graph-element-button:hover:not(.disabled) { background-color: #c00000; color: white; }
 button.graph-element-button .stacked-icons { margin-top: 20px; text-align: center; }
 button.graph-element-button .fa-stack { vertical-align: inherit; }
 button.graph-element-button .fa-stack + .fa-stack { margin-left: .3em; }
 
-.graph-element-button { width: 40px; height: 40px; font-size: 1.2em; }
+.graph-element-button { width: 50px; height: 50px; }
 .graph-element-button i { top: 25%; }
 
-.bubble .menu { width: 180px; z-index: 3; margin-top: 5px; position: absolute; white-space: normal; background-color: white; opacity: 0.95; left: 0; top: 100%; }
+.bubble .menu { width: 213px; z-index: 3; margin-top: 5px; position: absolute; white-space: normal; background-color: white; opacity: 0.95; left: 0; top: 100%; }
 .bubble .menu ul:first-of-type { padding-left: 5px; }
 .bubble .menu ul { list-style: none; font-family: courier new, monospace; font-size: 18px; padding: 0 5px 0 0; margin: 0 0 0 0; display: inline; float: left; min-width: 12px; }
 .bubble .menu input { float: left; background-color: transparent; background-position: center; padding-left: 2px; padding-right: 2px; margin: 0; display: table; border: 1px solid #e30613; font-weight: bold; font-size: 19px; min-width: 25px; min-height: 14px; margin-top: 0px; }
@@ -345,7 +345,7 @@ button.inactive i { color: red; }
 
 .fa.fa-strike:after { content: ""; position: absolute; width: 3px; height: 117.421356%; top: -6.710678%; display: block; background: darkslategray; opacity: 0.5; left: 50%; transform: translate(-50%, 0) rotate(-45deg); }
 
-[data-action=addChild].left .fa-arrow-right { transform: rotate(180deg); }
+.fa.fa-rotate { transform: rotate(180deg); }
 
 .popover-title { font-weight: bold; }
 

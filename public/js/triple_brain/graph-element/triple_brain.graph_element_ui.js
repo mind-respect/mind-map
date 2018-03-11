@@ -14,11 +14,12 @@ define([
     "triple_brain.graph_ui",
     "triple_brain.keyboard_actions_handler",
     "triple_brain.id_uri",
+    "triple_brain.center_bubble",
     "jquery.focus-end",
     "jquery.center-on-screen",
     "jquery.safer-html",
     "jquery.max_char"
-], function ($, GraphDisplayer, GraphElementMainMenu, GraphElementButton, GraphElementType, EventBus, MindMapInfo, SelectionHandler, GraphUi, KeyboardActionsHandler, IdUri) {
+], function ($, GraphDisplayer, GraphElementMainMenu, GraphElementButton, GraphElementType, EventBus, MindMapInfo, SelectionHandler, GraphUi, KeyboardActionsHandler, IdUri, CenterBubble) {
     "use strict";
     var api = {},
         otherInstancesKey = "otherInstances",
@@ -747,6 +748,10 @@ define([
         if (SelectionHandler.isEmpty()) {
             SelectionHandler.setToSingleGraphElement(this);
         }
+        GraphElementMainMenu.reviewButtonsVisibility(
+            this,
+            this.getController()
+        );
     };
 
     api.GraphElementUi.prototype.removeSingleSelected = function () {
@@ -861,6 +866,26 @@ define([
 
     api.GraphElementUi.prototype.getInsideOtherInstancesButton = function () {
         return this.getHtml().find(".in-label-buttons .nb-other-instances");
+    };
+
+    api.GraphElementUi.prototype.addChildStyleButton = function (button) {
+        var addToTheLeft;
+        if (this.isCenterBubble()) {
+            var centerBubble = CenterBubble.usingBubble(
+                this
+            );
+            addToTheLeft = centerBubble.shouldAddLeft();
+        } else {
+            addToTheLeft = this.isToTheLeft();
+        }
+        button.getHtml().find("i")[
+            addToTheLeft ? "addClass" : "removeClass"
+            ]("fa-rotate");
+
+    };
+
+    api.GraphElementUi.prototype.addChildRightButton = function (button) {
+        button.getHtml().find("i").removeClass("fa-rotate");
     };
 
     EventBus.subscribe(

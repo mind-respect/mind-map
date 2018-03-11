@@ -162,6 +162,10 @@ define([
         this.getUi().showLinesToSimilarInstances();
     };
 
+    GraphElementController.prototype.identifyHideIfDisabled = function () {
+        return true;
+    };
+
     GraphElementController.prototype.identifyCanDo = function () {
         return this.isSingle() && (
             (this.isOwned() && !this.getModel().hasIdentifications()) ||
@@ -180,6 +184,10 @@ define([
         return $.Deferred().resolve(
             canShow
         );
+    };
+
+    GraphElementController.prototype.identifyWhenManyHideIfDisabled = function () {
+        return true;
     };
 
     GraphElementController.prototype.identifyWhenManyCanShowInLabel = function () {

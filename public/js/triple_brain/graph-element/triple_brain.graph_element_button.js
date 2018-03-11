@@ -38,16 +38,17 @@ define([
         }
         if (this.canActionBePossiblyMade(controller)) {
             buttonHtml.removeClass("hidden");
-            if (controller.isMultiple() && !this.canActionBePossiblyMadeIfMultiple(controller)){
+            if (!this.canActionBePossiblyMadeIfMultiple(controller)) {
                 buttonHtml[
                     canActionBePerformed ?
                         "removeClass" : "addClass"
                     ]("hidden");
-            }else{
+            } else {
+                var className = this.hideIfDisabled(controller) ? "hidden" : "disabled";
                 buttonHtml[
                     canActionBePerformed ?
                         "removeClass" : "addClass"
-                    ]("disabled");
+                    ](className);
             }
         } else {
             buttonHtml.removeClass("disabled");
@@ -62,7 +63,7 @@ define([
     };
 
     GraphElementButton.prototype.canActionBePossiblyMadeIfMultiple = function (controller) {
-        return controller[
+        return !controller.isMultiple() || controller[
         this.getAction() + "ManyIsPossible"
             ] === true;
     };
@@ -91,7 +92,7 @@ define([
         return this.html.hasClass("app-button");
     };
 
-    GraphElementButton.prototype.isForGraphElements = function(){
+    GraphElementButton.prototype.isForGraphElements = function () {
         return !this.isForWholeGraph() && !this.isForApp();
     };
 
@@ -151,6 +152,28 @@ define([
     GraphElementButton.prototype.isDisabled = function () {
         return this.html.hasClass("disabled");
     };
+
+    GraphElementButton.prototype.hideIfDisabled = function (controller) {
+        var action = controller[
+        this.getAction() + "HideIfDisabled"
+            ];
+        return action && action() === true;
+    };
+
+    GraphElementButton.prototype.changeIfGraphElementUiLeftOrRight = function (controller) {
+        if(controller.isMultiple()){
+            return;
+        }
+        var graphElementUi = controller.getUi();
+        if(graphElementUi.length === 0){
+            return;
+        }
+        var action = graphElementUi[this.getAction() + "StyleButton"];
+        if (action) {
+            action.call(graphElementUi, this);
+        }
+    };
+
     GraphElementButton.prototype._getParentBubbleHtml = function () {
         return this.html.closest(".bubble");
     };

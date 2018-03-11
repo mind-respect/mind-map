@@ -222,18 +222,5 @@ define([
                 child.hasHiddenRelationsContainer()
             ).toBeTruthy();
         });
-        it("sets the direction of the 'add child arrow' of the center vertex correctly each time a vertex is added", function () {
-            loadFixtures('graph-element-menu.html');
-            var scenario = new Scenarios.threeBubblesGraph();
-            var centerBubble = scenario.getCenterBubbleInTree();
-            MindMapInfo._setIsViewOnly(false);
-            expect(
-                centerBubble.getAddChildButton()
-            ).not.toHaveClass("left");
-            centerBubble.getController().addChild();
-            expect(
-                centerBubble.getAddChildButton()
-            ).toHaveClass("left");
-        });
     });
 });

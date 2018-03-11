@@ -288,6 +288,7 @@ module.exports = {
         "bootstrap-datepicker": ["bootstrap"],
         "bootstrap-wysiwyg": ["jquery", "bootstrap", "jquery.hotkeys", "google-code-prettify"],
         "bootstrap-table": ["jquery", "bootstrap"],
-        "jasmine-jquery" : ["jquery"]
+        "jasmine-jquery" : ["jquery"],
+        "ekko-lightbox" : ["jquery"]
     }
 };

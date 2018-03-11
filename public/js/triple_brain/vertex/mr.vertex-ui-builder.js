@@ -51,12 +51,6 @@ define([
                 GraphElementUiBuilder.setupDrag(vertexUi);
             }
             GraphElementUiBuilder._setupChildrenContainerDragOverAndDrop(vertexUi);
-            var parentVertex = vertexUi.getParentVertex();
-            if (parentVertex.isCenterBubble()) {
-                CenterBubble.usingBubble(
-                    parentVertex
-                ).reviewAddBubbleButtonDirection();
-            }
             RelativeTreeVertex.setupVertexCopyButton(
                 vertexUi
             );

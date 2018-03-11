@@ -40,8 +40,8 @@ define([
         '/event/ui/user/get_authenticated/success',
         function (event, authenticatedUser) {
             var isADevUser = [
-                "spdupuis",
-                "vince"
+                "",
+                ""
             ].indexOf(authenticatedUser.user_name) !== -1;
             var devOnlyHtml = $(".dev-only");
             if (isADevUser) {

@@ -2,7 +2,7 @@
   position: fixed;
   bottom: 25px;
   z-index: 99;
-  top: 102px;
+  top: 112px;
   button{
     display:block;
   }
@@ -10,7 +10,8 @@
   .main-panel{
     //height:100%;
   }
-
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 #graph-element-menu {
@@ -31,6 +32,9 @@
   button{
     color: black;
   }
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 //#graph-element-menu {
@@ -97,7 +101,7 @@
 
 button.graph-element-button {
   position: relative;
-  font-size: 1.4em;
+  font-size: 1.6em;
   margin-bottom: 5px;
   margin-right: 3px;
   line-height: 20px;
@@ -132,18 +136,17 @@ button.graph-element-button {
   }
 }
 
-$buttonSize: 40px;
+$buttonSize: 50px;
 .graph-element-button {
   width: $buttonSize;
   height: $buttonSize;
-  font-size: 1.2em;
   i {
     top: 25%;
   }
 }
 
 .bubble .menu {
-  width: 180px;
+  width: 213px;
   z-index: 3;
   margin-top: 5px;
   position: absolute;
@@ -262,7 +265,7 @@ button.inactive i {
   transform: translate(-50%, 0) rotate(-45deg);
 }
 
-[data-action=addChild].left .fa-arrow-right {
+.fa.fa-rotate{
   transform: rotate(180deg);
 }
 
