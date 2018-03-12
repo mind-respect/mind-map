@@ -297,8 +297,8 @@ footer > a:hover { background-color: black !important; color: white !important; 
 
 #graph-element-menu { position: fixed; top: 57px; z-index: 99; }
 
-.main-panel { z-index: 12; -moz-border-radius: 15px; cursor: default; background-color: #f7fafc; position: relative; overflow-x: hidden; overflow-y: hidden; }
-.main-panel button { color: black; }
+.menu-panel { z-index: 12; -moz-border-radius: 15px; cursor: default; background-color: transparent; position: relative; overflow-x: hidden; overflow-y: hidden; }
+.menu-panel button { color: black; }
 
 #whole-graph-buttons-container { width: 0; }
 #whole-graph-buttons-container .container { width: 0; }

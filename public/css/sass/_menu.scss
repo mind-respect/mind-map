@@ -7,7 +7,7 @@
     display:block;
   }
   //height:100%;
-  .main-panel{
+  .menu-panel{
     //height:100%;
   }
   overflow-x: hidden;
@@ -21,14 +21,14 @@
   //width:100%;
 }
 
-.main-panel {
+.menu-panel {
   z-index: 12;
   //background-color: #1eaf47;
   //background-color: #1e87af1f;
   //border: 1px solid black;
   -moz-border-radius: 15px;
   cursor: default;
-  background-color: #f7fafc;
+  background-color: transparent;
   button{
     color: black;
   }

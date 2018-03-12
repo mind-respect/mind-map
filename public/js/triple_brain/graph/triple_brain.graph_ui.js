@@ -58,30 +58,30 @@ define([
             return "bubble-ui-id-" + _bubbleIdCounter;
         };
 
-        api.lockDragScroll = function(){
+        api.lockDragScroll = function () {
             _isDragScrollLocked = true;
         };
 
-        api.unlockDragScroll = function(){
+        api.unlockDragScroll = function () {
             _isDragScrollLocked = false;
         };
 
         api.changeBackgroundColor = function (backgroundColor) {
             $("#drawn_graph").css(
                 'background',
-                "radial-gradient(rgba(0, 0, 255, 0) 5%, " + backgroundColor + " 100%"
+                "radial-gradient(rgba(0, 0, 0, 0) -10%, " + backgroundColor + " 100%"
             );
         };
 
         api.disableDragScroll = function () {
-            if(_isDragScrollLocked || !_isDragScrollEnabled){
+            if (_isDragScrollLocked || !_isDragScrollEnabled) {
                 return;
             }
             DragScroll.disable();
             _isDragScrollEnabled = false;
         };
         api.enableDragScroll = function () {
-            if(_isDragScrollLocked || _isDragScrollEnabled){
+            if (_isDragScrollLocked || _isDragScrollEnabled) {
                 return;
             }
             DragScroll.enable();
@@ -106,10 +106,11 @@ define([
         api.setIsDraggingBubble = function (isDragging) {
             return api.getDrawnGraph().data("isDraggingBubble", isDragging);
         };
-        api.removePopovers = function(){
+        api.removePopovers = function () {
             $(".popover").remove();
         };
         return api;
+
         function getSchemaInstructions() {
             return $("#schema-instructions");
         }
