@@ -118,7 +118,7 @@ body {
   top: 10%;
   width: 100%;
   .well {
-    background:rgba(245,245,245, 0.3);
+    background: rgba(245, 245, 245, 0.3);
   }
 }
 
@@ -144,7 +144,7 @@ body {
 #drawn_graph {
   position: absolute;
   padding: 100%;
-  top:0;
+  top: 0;
 }
 
 a, input[type=button].link-like-button, button.link-like-button {
@@ -191,15 +191,14 @@ li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-bu
 .hidden-properties-container {
   z-index: 3;
   min-width: 25px;
-  cursor:pointer;
+  cursor: pointer;
   font-size: 22px;
   font-weight: bold;
   color: $red2;
-  .loading{
-    font-size:22px;
+  .loading {
+    font-size: 22px;
   }
 }
-
 
 .link-like-button {
   border-style: none;
@@ -209,67 +208,68 @@ li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-bu
   font-weight: normal;
 }
 
-.popover{
+.popover {
   /*
   position relative because it gets narrow and misplaced for
   to the right vertices.
    */
-  position:relative;
-  &.like-tooltip{
-    width:auto;
+  position: relative;
+  &.like-tooltip {
+    width: auto;
     display: inline-block !important;
     background-color: white;
-    .list-group-item>.badge {
+    .list-group-item > .badge {
       padding: 3px 8px;
-      font-size:13px;
-      margin-left:5px;
+      font-size: 13px;
+      margin-left: 5px;
     }
-    &.top{
-      .arrow{
-        &:after{
-          border-top-color:white;
+    &.top {
+      .arrow {
+        &:after {
+          border-top-color: white;
         }
       }
     }
-    &.right{
-      .arrow{
-        &:after{
-          border-right-color:white;
+    &.right {
+      .arrow {
+        &:after {
+          border-right-color: white;
         }
       }
     }
 
-    h3{
+    h3 {
       display: inline-block;
-      background-color:white;
-      width:auto;
-      border-color:white;
-      color:black;
-      small{
-        font-size:13px;
+      background-color: white;
+      width: auto;
+      border-color: white;
+      color: black;
+      small {
+        font-size: 13px;
       }
     }
   }
 }
-.ui-autocomplete{
-  cursor:pointer;
-  width:200px;
-  height:auto;
-  max-height:250px;
-  position:absolute;
-  li.autocomplete-element{
-    &.focus, &:hover{
-      background-color:#f5f5f5;
+
+.ui-autocomplete {
+  cursor: pointer;
+  width: 200px;
+  height: auto;
+  max-height: 250px;
+  position: absolute;
+  li.autocomplete-element {
+    &.focus, &:hover {
+      background-color: #f5f5f5;
     }
   }
 }
 
-.not-editable .bubble.single-selected .bubble-label{
-    &:after {
-      content: "";
-      color: grey;
-      font-style: italic;
-    }
+.not-editable .bubble.single-selected .bubble-label {
+  &:after {
+    content: "";
+    color: grey;
+    font-style: italic;
+  }
 }
 
 .overlay {
@@ -281,18 +281,19 @@ li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-bu
   bottom: 0;
   left: 0;
   opacity: 0.65;
-  width:100%;
-  height:100%;
-  z-index:999;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
 }
-body > .loading:not(.sr-only){
-  text-align:center;
-  left:50%;
-  top:50%;
-  position:fixed;
-  color:white;
-  font-weight:bold;
-  z-index:1000;
+
+body > .loading:not(.sr-only) {
+  text-align: center;
+  left: 50%;
+  top: 50%;
+  position: fixed;
+  color: white;
+  font-weight: bold;
+  z-index: 1000;
 }
 
 input[type=checkbox].form-control {

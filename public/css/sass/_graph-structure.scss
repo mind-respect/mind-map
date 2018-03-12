@@ -25,6 +25,14 @@ $connectorRadius: 25px;
   }
 }
 
+.vertices-children-container.right-oriented {
+  &:before {
+    margin-right: 4000px;
+    content: " ";
+    height: 100%;
+  }
+}
+
 .vertices-children-container {
   display: table-cell;
   vertical-align: middle;
