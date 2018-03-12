@@ -166,11 +166,11 @@ footer > a:hover { background-color: black !important; color: white !important; 
 .security-form a { float: left; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
-#drawn_graph { position: absolute; background: radial-gradient(at 5750px at 5750px, rgba(0, 0, 255, 0) 5%, #1e87af 100%); background: -webkit-radial-gradient(5750px, rgba(0, 0, 255, 0) 5%, #1E87AF 100%); }
+#drawn_graph { position: absolute; background: radial-gradient(at 4250px at 4250px, rgba(0, 0, 255, 0) 5%, #1e87af 100%); background: -webkit-radial-gradient(4250px, rgba(0, 0, 255, 0) 5%, #1E87AF 100%); }
 
-.vertices-children-container.left-oriented:before { margin-left: 4000px; content: " "; height: 100%; }
+.vertices-children-container.left-oriented:before { margin-left: 2225px; content: " "; height: 100%; }
 
-.vertices-children-container.right-oriented:before { margin-right: 4000px; content: " "; height: 100%; }
+.vertices-children-container.right-oriented:before { margin-right: 2225px; content: " "; height: 100%; }
 
 .vertices-children-container { display: table-cell; vertical-align: middle; }
 

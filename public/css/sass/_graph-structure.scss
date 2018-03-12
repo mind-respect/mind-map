@@ -11,15 +11,15 @@ $connectorRadius: 25px;
   //background: radial-gradient(rgba(0, 0, 255, 0) 5%, #084A62 100%);
   //background: radial-gradient(rgba(0, 0, 255, 0) 5%, #44C9FB 100%);
   //background: radial-gradient(rgba(0, 0, 255, 0) 5%, #623300 100%);
-  background: radial-gradient(at 5750px, rgba(0, 0, 255, 0) 5%, #1E87AF 100%);
-  background: -webkit-radial-gradient(5750px, rgba(0, 0, 255, 0) 5%, #1E87AF 100%);
+  background: radial-gradient(at 4250px, rgba(0, 0, 255, 0) 5%, #1E87AF 100%);
+  background: -webkit-radial-gradient(4250px, rgba(0, 0, 255, 0) 5%, #1E87AF 100%);
   //background: radial-gradient(rgba(0, 0, 255, 0) 5%, #AF6A1E 100%);
 
 }
 
 .vertices-children-container.left-oriented {
   &:before {
-    margin-left: 4000px;
+    margin-left: 2225px;
     content: " ";
     height: 100%;
   }
@@ -27,7 +27,7 @@ $connectorRadius: 25px;
 
 .vertices-children-container.right-oriented {
   &:before {
-    margin-right: 4000px;
+    margin-right: 2225px;
     content: " ";
     height: 100%;
   }
