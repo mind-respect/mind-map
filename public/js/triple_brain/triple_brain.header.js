@@ -18,9 +18,10 @@ define([
         "triple_brain.graph_element_ui",
         "triple_brain.graph_ui",
         "triple_brain.graph_controller",
-        "triple_brain.vertex_service"
+        "triple_brain.vertex_service",
+        "triple_brain.ui_utils"
     ],
-    function ($, BigSearchBox, LoginHandler, RegisterHandler, SelectionHandler, UserService, GraphDisplayer, MindMapInfo, EventBus, SchemaService, IdUri, LanguageManager, GraphElementUi, GraphUi, GraphController, VertexService) {
+    function ($, BigSearchBox, LoginHandler, RegisterHandler, SelectionHandler, UserService, GraphDisplayer, MindMapInfo, EventBus, SchemaService, IdUri, LanguageManager, GraphElementUi, GraphUi, GraphController, VertexService, UiUtils) {
         "use strict";
         var api = {};
         api.earlyInit = function () {
@@ -137,6 +138,11 @@ define([
             ).on(
                 "click",
                 createNewConcept
+            ).append(
+                $("<small class='text-muted short-cut'>").text(
+                    UiUtils.isMacintosh() ? " (⌘" : " (ctrl+" +
+                        'b)'
+                )
             );
         }
 
@@ -307,7 +313,7 @@ define([
         function handleUserColorPreferences() {
             $("#background-color-picker").on("change", function () {
                     GraphUi.changeBackgroundColor(this.value);
-                    VertexService.saveColors({background:this.value});
+                    VertexService.saveColors({background: this.value});
                 }
             );
             $("#bubbles-color-picker").on("change", function () {

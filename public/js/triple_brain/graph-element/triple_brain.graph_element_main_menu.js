@@ -9,10 +9,9 @@ define([
         "triple_brain.graph_element_button",
         "triple_brain.mind_map_info",
         "triple_brain.ui_utils",
-        "mr.app_controller",
         "jquery.i18next",
         "bootstrap"
-    ], function ($, GraphDisplayer, EventBus, GraphElementButton, MindMapInfo, UiUtils, AppController) {
+    ], function ($, GraphDisplayer, EventBus, GraphElementButton, MindMapInfo, UiUtils) {
         "use strict";
         var api = {},
             _graphElementMenu,
@@ -164,7 +163,7 @@ define([
 
         api.showAppButtonOnlyIfApplicable = function (button) {
             button.showOnlyIfApplicable(
-                AppController
+                GraphDisplayer.getAppController()
             );
         };
 
@@ -206,7 +205,7 @@ define([
                 return GraphDisplayer.getGraphMenuHandler();
             }
             if (button.isForApp()) {
-                return AppController;
+                return GraphDisplayer.getAppController();
             }
             return api._currentController;
         };

@@ -5,8 +5,13 @@
 define([
     "jquery",
     "mr.command",
-    "triple_brain.graph_ui"
-], function ($, Command, GraphUi) {
+    "triple_brain.graph_ui",
+    "triple_brain.vertex_service",
+    "triple_brain.mind_map_info",
+    "triple_brain.graph_displayer",
+    "triple_brain.vertex",
+    "triple_brain.id_uri"
+], function ($, Command, GraphUi, VertexService, MindMapInfo, GraphDisplayer, Vertex, IdUri) {
     "use strict";
     var api = {};
     api.undoCanDo = function () {
@@ -36,6 +41,21 @@ define([
         GraphUi.zoom(
             -0.1
         );
+    };
+
+    api.createVertex = function () {
+        VertexService.createVertex(function (newVertex) {
+            var serverFormatFacade = Vertex.fromServerFormat(
+                newVertex
+            );
+            if (MindMapInfo.isTagCloudFlow() || MindMapInfo.isAuthenticatedLandingPageFlow()) {
+                window.location = IdUri.htmlUrlForBubbleUri(serverFormatFacade.getUri());
+                return;
+            }
+            GraphDisplayer.displayUsingCentralBubbleUri(
+                serverFormatFacade.getUri()
+            );
+        });
     };
 
     api.isMultiple = function(){

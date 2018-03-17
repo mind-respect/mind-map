@@ -8,8 +8,8 @@ define([
     "triple_brain.selection_handler",
     "triple_brain.mind_map_info",
     "triple_brain.ui_utils",
-    "mr.app_controller"
-], function ($, EventBus, SelectionHandler, MindMapInfo, UiUtils, AppController) {
+    "triple_brain.graph_displayer"
+], function ($, EventBus, SelectionHandler, MindMapInfo, UiUtils, GraphDisplayer) {
     "use strict";
 
     var api = {},
@@ -43,6 +43,7 @@ define([
         minusKeyNumber = 109,
         plusKeyNumberMac = 187,
         minusKeyNumberMac = 189,
+        bKeyNumber = 66,
 
         nonCtrlPlusActions = defineNonCtrlPlusKeysAndTheirActions(),
         ctrlPlusActions = defineCtrlPlusKeysAndTheirActions();
@@ -138,7 +139,7 @@ define([
     function executeFeature(feature, event) {
         var controller;
         if (feature.isForAppController) {
-            controller = AppController;
+            controller = GraphDisplayer.getAppController();
         } else {
             controller = SelectionHandler.getControllerFromCurrentSelection();
         }
@@ -259,10 +260,14 @@ define([
         actions[mKeyNumber] = {
             action: "merge"
         };
-         actions[fKeyNumber] = {
+        actions[fKeyNumber] = {
             action: "find",
             isForAppController: true
-         };
+        };
+        actions[bKeyNumber] = {
+            action: "createVertex",
+            isForAppController: true
+        };
         return actions;
     }
 });
