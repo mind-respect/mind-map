@@ -117,6 +117,10 @@ define([
         });
     };
 
+    GraphElementController.prototype.focusCanDo = function () {
+        return this.isOwned() && this.isSingle();
+    };
+
     GraphElementController.prototype.focus = function () {
         this.getUi().focus();
     };
