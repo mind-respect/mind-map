@@ -17,11 +17,10 @@ define([
         "triple_brain.language_manager",
         "triple_brain.graph_element_ui",
         "triple_brain.graph_ui",
-        "triple_brain.graph_controller",
         "triple_brain.vertex_service",
         "triple_brain.ui_utils"
     ],
-    function ($, BigSearchBox, LoginHandler, RegisterHandler, SelectionHandler, UserService, GraphDisplayer, MindMapInfo, EventBus, SchemaService, IdUri, LanguageManager, GraphElementUi, GraphUi, GraphController, VertexService, UiUtils) {
+    function ($, BigSearchBox, LoginHandler, RegisterHandler, SelectionHandler, UserService, GraphDisplayer, MindMapInfo, EventBus, SchemaService, IdUri, LanguageManager, GraphElementUi, GraphUi, VertexService, UiUtils) {
         "use strict";
         var api = {};
         api.earlyInit = function () {
@@ -203,7 +202,7 @@ define([
 
         function createNewConcept(event) {
             event.preventDefault();
-            GraphController.createVertex();
+            GraphDisplayer.getAppController().createVertex();
         }
 
         function setUpShareLinkButton() {
