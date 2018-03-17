@@ -487,7 +487,7 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .bubble.view-only .arrow:before { left: 0; }
 .bubble .in-bubble-content { position: relative; z-index: 3; }
 .bubble .in-bubble-content .in-label-buttons { display: inline-block; white-space: nowrap; }
-.bubble .in-bubble-content .in-label-buttons button { display: inline-block; background: none; border: none; box-shadow: none; font-size: 20px; margin: -6px; }
+.bubble .in-bubble-content .in-label-buttons button { width: 37px; height: 37px; height: auto; display: inline-block; background: none; border: none; box-shadow: none; font-size: 20px; margin: -6px; }
 .bubble .in-bubble-content .in-label-buttons button[data-action=makePublic] i:before { content: "\f023"; }
 .bubble .in-bubble-content .in-label-buttons button[data-action=makePrivate] i:before { content: "\f09c"; }
 .bubble.edit { user-select: text; cursor: text; }

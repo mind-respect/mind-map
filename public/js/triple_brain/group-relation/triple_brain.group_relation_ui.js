@@ -79,6 +79,10 @@ define([
         TreeEdge.TreeEdge.prototype.expand.apply(
             this
         );
+        this.visitClosestChildVertices(function (vertexUi) {
+            vertexUi.resetOtherInstances();
+            vertexUi.reviewInLabelButtonsVisibility(true);
+        });
     };
 
     api.GroupRelationUi.prototype.hasHiddenRelations = function () {
