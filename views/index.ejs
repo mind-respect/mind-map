@@ -92,7 +92,7 @@
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                         <li>
                             <a href="" id="create-concept" class="create icon" role="menuitem"
-                               >
+                            >
                                 <span data-i18n='top_menu.create'></span>
                             </a>
                         </li>
@@ -135,46 +135,17 @@
                     <a data-toggle="dropdown">
                         <i class="fa fa-gear"></i>
                     </a>
-                    <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-                        <li class="dropdown-submenu" id="language-selector-container">
-                            <a data-toggle="dropdown">
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" id="language-selector-container">
+                        <li class="">
+                            <a data-lang="fr" href="" role="menuitem">
                                 <i class="fa fa-globe"></i>
-                                <span data-i18n="top_menu.language"></span>
+                                <span>Français</span>
                             </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="" data-lang="en" role="menuitem">
-                                        English
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="" data-lang="fr" role="menuitem">
-                                        Français
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="" role="menuitem" id="backgnd-color-btn">
-                                <i class="fa fa-paint-brush"></i>
-                                <span data-i18n="top_menu.color"></span>
+                            <a data-lang="en" href="" role="menuitem">
+                                <i class="fa fa-globe"></i>
+                                <span>English</span>
                             </a>
-                            <ul class="color-picker">
-                                <li class>
-                                    <input id="background-color-picker" type="color" value="#0b46ff">
-                                    <span data-i18n="top_menu.background_color"></span>
-                                </li>
-                                <li>
-                                    <input id="bubbles-color-picker" type="color" value="#F2D9AC">
-                                    <span data-i18n="top_menu.bubbles_color"></span>
-                                </li>
-                                <li>
-                                    <input id="relations-color-picker" type="color" value="#3a87ad">
-                                    <span data-i18n="top_menu.relations_color"></span>
-                                </li>
-                            </ul>
                         </li>
-
                         <li id="user-menu">
                             <a href="" role="menuitem" id="disconnect-btn">
                                 <i class="fa fa-sign-out"></i>
@@ -361,7 +332,7 @@
                 class="graph-element-button whole-graph-button">
             <i class="fa fa-leaf"></i>
         </button>
-        <button data-action="selectTree" data-combinedShortcut="A"
+        <button data-action="selectAllBubbles" data-combinedShortcut="A"
                 class="graph-element-button whole-graph-button">
             <i class="fa fa-sitemap"></i>
         </button>
@@ -369,13 +340,18 @@
             <i class="fa fa-balance-scale"></i>
         </button>
         <button data-action="undo" data-combinedShortcut="Z"
-                class="app-button graph-element-button in-label-button">
+                class="app-button graph-element-button">
             <i class="fa fa-undo"></i>
         </button>
         <button data-action="redo" data-combinedShortcut="Y"
-                class="app-button graph-element-button in-label-button">
+                class="app-button graph-element-button">
             <i class="fa fa-repeat"></i>
         </button>
+        <button data-action="changeBackgroundColor"
+                class="app-button graph-element-button">
+            <i class="fa fa-paint-brush"></i>
+        </button>
+        <input id="background-color-picker" class="hidden" type="color" value="#0b46ff">
     </div>
 </div>
 <div class="container">

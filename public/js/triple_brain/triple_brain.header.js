@@ -35,7 +35,6 @@ define([
 
         api.commonSetupForAuthenticated = function () {
             api._commonSetup();
-            handleUserColorPreferences();
             getMyBubblesSearchInput().removeClass("hidden");
             getMyBubblesSearchInputLabel().removeClass("hidden");
             handleCreateNewConceptButton();
@@ -219,7 +218,7 @@ define([
 
         function setupLanguagePicker() {
             getLanguagePickerContainer().find(
-                "a[data-lang=" + LanguageManager.getBrowserLocale() + "]"
+                "[data-lang=" + LanguageManager.getBrowserLocale() + "]"
             ).addClass("current");
             getLanguagePickerContainer().find("li a").click(function (event) {
                 event.preventDefault();
@@ -308,36 +307,5 @@ define([
         function getLanguagePickerContainer() {
             return $("#language-selector-container");
         }
-
-        function handleUserColorPreferences() {
-            $("#background-color-picker").on("change", function () {
-                    GraphUi.changeBackgroundColor(this.value);
-                    VertexService.saveColors({background: this.value});
-                }
-            );
-            $("#bubbles-color-picker").on("change", function () {
-                    changeBubblesColor(this.value);
-                }
-            );
-            $("#relations-color-picker").on("change", function () {
-                    changeRelationsColor(this.value);
-                }
-            );
-        }
-
-        function changeBubblesColor(bubblesColor) {
-            $(".vertex .in-bubble-content").css(
-                'background-color',
-                bubblesColor
-            );
-        }
-
-        function changeRelationsColor(relationsColor) {
-            $("#drawn_graph").css(
-                'background',
-                "radial-gradient(rgba(0, 0, 255, 0) 5%, " + relationsColor + " 100%"
-            );
-        }
-
     }
 );

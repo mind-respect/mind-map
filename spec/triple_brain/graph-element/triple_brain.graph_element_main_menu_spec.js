@@ -27,7 +27,7 @@ define([
                 getAWholeGraphButton()
             );
             expect(
-                clickHandler.hasOwnProperty("selectTree")
+                clickHandler.hasOwnProperty("selectAllBubbles")
             ).toBeTruthy();
             SelectionHandler.setToSingleGraphElement(
                 bubble
@@ -36,7 +36,7 @@ define([
                 getAWholeGraphButton()
             );
             expect(
-                clickHandler.hasOwnProperty("selectTree")
+                clickHandler.hasOwnProperty("selectAllBubbles")
             ).toBeTruthy();
         });
         it("updates buttons visibility when suggestions are changed", function () {

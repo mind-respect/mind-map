@@ -57,10 +57,23 @@ define([
             );
         });
     };
+    api.changeBackgroundColorCanDo = function () {
+        return !MindMapInfo.isViewOnly();
+    };
 
-    api.isMultiple = function(){
+    api.changeBackgroundColor = function () {
+        $("#background-color-picker").click();
+    };
+
+    api.isMultiple = function () {
         return false;
     };
+
+    $("#background-color-picker").on("change", function () {
+            GraphUi.changeBackgroundColor(this.value);
+            VertexService.saveColors({background: this.value});
+        }
+    );
 
     return api;
 });

@@ -31,7 +31,7 @@ define([
         CompareFlow.enter();
     };
 
-    api.selectTree = function () {
+    api.selectAllBubbles = function () {
         GraphElementUi.getCenterBubble().selectTree();
     };
 

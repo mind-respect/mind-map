@@ -21,13 +21,6 @@
 .navbar-default .dropdown-menu { border: none !important; border-radius: 10px 10px; border-radius-top-left: 10px !important; background-color: rgba(254, 254, 254, 0.7); left: inherit !important; margin-top: 3px !important; margin-right: 4px !important; left: inherit !important; }
 .navbar-default .dropdown-menu a:hover { background-color: black !important; color: white !important; }
 .navbar-default .dropdown-menu ul.color-picker { list-style: none !important; }
-.navbar-default .dropdown-submenu { position: relative; }
-.navbar-default .dropdown-submenu > .dropdown-menu { top: 0; left: 100%; margin-top: -6px; margin-left: -1px; -webkit-border-radius: 0 6px 6px 6px; -moz-border-radius: 0 6px 6px; border-radius: 0 6px 6px 6px; }
-.navbar-default .dropdown-submenu:hover > .dropdown-menu { display: block; }
-.navbar-default .dropdown-submenu > a:after { display: block; content: " "; float: right; width: 0; height: 0; border-color: transparent; border-style: solid; border-width: 5px 0 5px 5px; border-left-color: #ccc; margin-top: 5px; margin-right: -10px; }
-.navbar-default .dropdown-submenu:hover > a:after { border-left-color: #fff; }
-.navbar-default .dropdown-submenu.pull-left { float: none; }
-.navbar-default .dropdown-submenu.pull-left > .dropdown-menu { left: 100% !important; margin-left: 10px; -webkit-border-radius: 6px 0 6px 6px; -moz-border-radius: 6px 0 6px 6px; border-radius: 6px 0 6px 6px; }
 
 @media (max-width: 992px) { .navbar-header { float: none; padding: 20px; }
   .navbar-left, .navbar-right { float: none !important; }
@@ -84,6 +77,8 @@ body.mind-map-flow { margin-top: 50px; }
 .search-box:not(:focus) { text-indent: -5000px; }
 
 .search-icon { position: relative; left: -30px; cursor: pointer; }
+
+[data-lang].current { display: none; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 a:hover { text-decoration: none; }
