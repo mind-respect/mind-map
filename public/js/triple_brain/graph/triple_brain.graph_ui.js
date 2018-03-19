@@ -67,6 +67,7 @@ define([
         };
 
         api.changeBackgroundColor = function (backgroundColor) {
+            $("#background-color-picker").val(backgroundColor);
             $("#drawn_graph").css(
                 'background',
                 "radial-gradient(rgba(0, 0, 0, 0) -10%, " + backgroundColor + " 100%"
