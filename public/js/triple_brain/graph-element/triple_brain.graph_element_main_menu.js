@@ -72,6 +72,9 @@ define([
                     controller[
                         button.getAction()
                         ]();
+                    if (!isInBubble) {
+                        controller = api._getCurrentClickHandler(button);
+                    }
                     if (button.isForGraphElements()) {
                         api.reviewButtonsVisibility(controller.getUi(), controller);
                     } else {
