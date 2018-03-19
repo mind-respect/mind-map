@@ -49,9 +49,9 @@ define([
         api.VertexUi.prototype.remove = function (bubbleAbove, bubbleUnder) {
             var parentBubble = this._getParentBubbleToSelectAfterRemove();
             var bubbleToSelect = parentBubble;
-            if (!bubbleUnder.isSameBubble(this)) {
+            if (!bubbleUnder.isSameBubble(this) && bubbleUnder.isClosestAncestor(parentBubble)) {
                 bubbleToSelect = bubbleUnder;
-            } else if (!bubbleAbove.isSameBubble(this)) {
+            } else if (!bubbleAbove.isSameBubble(this) && bubbleAbove.isClosestAncestor(parentBubble)) {
                 bubbleToSelect = bubbleAbove;
             }
             this.removeConnectedEdges();

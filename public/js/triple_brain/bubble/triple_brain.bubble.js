@@ -576,9 +576,7 @@ define([
         api.Bubble.prototype.remove = function (ancestor, bubbleToSelect) {
             this._removeHideOrShow("remove");
             this.removeHiddenRelationsContainer();
-            var sharesSameAncestor = bubbleToSelect && bubbleToSelect.getClosestParentInTypes(
-                [ancestor.getGraphElementType()]
-            ).isSameBubble(ancestor);
+            var sharesSameAncestor = bubbleToSelect && bubbleToSelect.isClosestAncestor(ancestor);
             if (!sharesSameAncestor) {
                 bubbleToSelect = ancestor;
             }
@@ -587,6 +585,12 @@ define([
                     bubbleToSelect
                 );
             }
+        };
+
+        api.Bubble.prototype.isClosestAncestor = function(ancestor){
+            return this.getClosestParentInTypes(
+                [ancestor.getGraphElementType()]
+            ).isSameBubble(ancestor);
         };
 
         api.Bubble.prototype.show = function () {
