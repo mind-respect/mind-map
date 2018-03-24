@@ -20,9 +20,8 @@ define([
     "triple_brain.schema_suggestion",
     "triple_brain.event_bus",
     "triple_brain.id_uri",
-    "triple_brain.graph_element_type",
     "jquery.triple_brain.search"
-], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, BubbleDeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, EventBus, IdUri, GraphElementType, UserMapAutocompleteProvider) {
+], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, BubbleDeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, EventBus, IdUri, GraphElementType) {
     "use strict";
     var api = {};
 
@@ -589,7 +588,7 @@ define([
     };
 
     VertexController.prototype.mergeCanDo = function () {
-        return this.isSingle();
+        return this.isSingle() && this.isOwned();
     };
 
     VertexController.prototype._relateToDistantVertexWithUri = function (distantVertexUri) {

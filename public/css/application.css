@@ -352,6 +352,8 @@ button.inactive i { color: red; }
 
 button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 
+.not-editable button.disabled { display: none !important; }
+
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .ui-dialog-titlebar { text-align: center; }
 

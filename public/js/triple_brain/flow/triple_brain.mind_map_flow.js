@@ -79,6 +79,7 @@ define([
             document.title = centralBubble.getTextOrDefault() + " | MindRespect";
             if (MindMapInfo.isViewOnly()) {
                 GraphUi.getDrawnGraph().find(".bubble").addClass("not-editable");
+                $("body").addClass("not-editable");
             }
             if (centralBubble.isSchema() && !MindMapInfo.isViewOnly()) {
                 GraphUi.showSchemaInstructions();

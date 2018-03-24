@@ -292,3 +292,9 @@ button.disabled {
   cursor: not-allowed;
   color:#c0c0c1;
 }
+
+.not-editable{
+  button.disabled {
+    display:none !important;
+  }
+}

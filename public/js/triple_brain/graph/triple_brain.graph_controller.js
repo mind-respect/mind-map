@@ -9,8 +9,9 @@ define([
     "triple_brain.vertex_ui",
     "triple_brain.graph_element_ui",
     "triple_brain.group_relation_ui",
-    "triple_brain.compare_flow"
-], function ($, SelectionHandler, GraphUi, VertexUi, GraphElementUi, GroupRelationUi, CompareFlow) {
+    "triple_brain.compare_flow",
+    "triple_brain.mind_map_info"
+], function ($, SelectionHandler, GraphUi, VertexUi, GraphElementUi, GroupRelationUi, CompareFlow, MindMapInfo) {
     "use strict";
     var api = {};
     api.expandAllCanDo = function () {
@@ -27,6 +28,11 @@ define([
     api.expandAll = function () {
         GraphElementUi.getCenterBubble().getController().expand();
     };
+
+    api.compareCanDo = function(){
+        return !MindMapInfo.isViewOnly();
+    };
+
     api.compare = function () {
         CompareFlow.enter();
     };
