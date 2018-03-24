@@ -297,6 +297,9 @@ define([
             var self = this;
             identificationTextField.mrAutocomplete({
                 select: function (event, ui) {
+                    if(event.keyCode === 13){
+                        return;
+                    }
                     var semanticMenu = $(this).closest(
                         '.identifications'
                         ),

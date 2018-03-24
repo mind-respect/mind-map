@@ -181,7 +181,9 @@ define([
             SelectionHandler.setToSingleVertex(
                 triple.destinationVertex()
             );
-            triple.destinationVertex().sideCenterOnScreenWithAnimation();
+            if(!triple.destinationVertex().getHtml().isFullyOnScreen()){
+                triple.destinationVertex().sideCenterOnScreenWithAnimation();
+            }
             return triple;
         }.bind(this));
     };

@@ -31,6 +31,9 @@ define([
         input.mrAutocomplete({
             select: function (event, ui) {
                 event.preventDefault();
+                if(event.keyCode === 13){
+                    return;
+                }
                 api._labelAutocompleteSelectHandler(
                     BubbleFactory.fromSubHtml(
                         $(this)

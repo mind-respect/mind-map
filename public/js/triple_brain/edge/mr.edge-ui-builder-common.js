@@ -63,6 +63,9 @@ define([
             labelAndButtons
         ).mrAutocomplete({
                 select: function (event, ui) {
+                    if(event.keyCode === 13){
+                        return;
+                    }
                     var edge = BubbleFactory.fromSubHtml(
                         $(this)
                     );

@@ -582,6 +582,9 @@ define([
             searchInput.mrAutocomplete({
                 select: function (event, ui) {
                     event.preventDefault();
+                    if(event.keyCode === 13){
+                        return;
+                    }
                     this.convertToDistantBubbleWithUri(ui.item.uri);
                     this.setLabel(ui.item.label);
                     this.getUi().getHtml().popover("hide");
