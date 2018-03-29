@@ -107,8 +107,13 @@ define([
         return this.getSourceVertex().getUri() === vertex.getUri() ?
             this.getDestinationVertex() : this.getSourceVertex();
     };
-    api.Edge.prototype.isToTheLeft = function () {
-        return this.edgeServerFormat.isToTheLeft;
+    api.Edge.prototype.isToTheLeft = function (centerVertex) {
+        var childVertex = this.getOtherVertex(centerVertex);
+        var childVertexIndex = centerVertex.getChildrenIndex()[childVertex.getUri()];
+        if (childVertexIndex === undefined) {
+            return undefined;
+        }
+        return childVertexIndex.toTheLeft;
     };
     return api;
 });

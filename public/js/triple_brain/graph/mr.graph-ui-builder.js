@@ -66,8 +66,8 @@ define([
             var addLeft;
             if (this.forceToTheLeft !== undefined) {
                 addLeft = this.forceToTheLeft;
-            } else if (model.isToTheLeft() !== undefined) {
-                addLeft = model.isToTheLeft();
+            } else if (parentBubble.isVertex() && model.isToTheLeft(parentBubble.getModel()) !== undefined) {
+                addLeft = model.isToTheLeft(parentBubble.getModel());
             } else {
                 addLeft = centerBubble.shouldAddLeft();
             }

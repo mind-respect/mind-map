@@ -409,25 +409,31 @@ define([
             var index = 0;
             this.visitAllImmediateChild(function (child) {
                 if (child.isRelation()) {
-                    setChildVertexIndex(
-                        child.getModel().getOtherVertex(
-                            this.getModel()
-                        ).getUri()
+                    setChildVertexIndex.bind(this)(
+                        child.getOtherVertex(
+                            this
+                        ).getModel().getUri(),
+                        child.isToTheLeft()
                     );
                 } else if (child.isGroupRelation()) {
                     var grandChildIndex = child.buildChildrenIndex();
                     Object.keys(grandChildIndex).sort(function (a, b) {
                         return grandChildIndex[a].index - grandChildIndex[b].index;
                     }).forEach(function (vertexUri) {
-                        setChildVertexIndex(vertexUri);
-                    });
+                        setChildVertexIndex.bind(this)(vertexUri, child.isToTheLeft());
+                    }.bind(this));
                 }
             }.bind(this));
             return childrenIndex;
 
-            function setChildVertexIndex(childVertexUri) {
+            function setChildVertexIndex(childVertexUri, isToTheLeft) {
+                var previousValue = this.getModel().getChildrenIndex()[childVertexUri];
+                if (!this.isCenterBubble() && previousValue) {
+                    isToTheLeft = previousValue.toTheLeft;
+                }
                 childrenIndex[childVertexUri] = {
-                    index: index
+                    index: index,
+                    toTheLeft: isToTheLeft
                 };
                 index++;
             }

@@ -75,8 +75,9 @@ define([
                     if (!isInBubble) {
                         controller = api._getCurrentClickHandler(button);
                     }
-                    if (button.isForGraphElements()) {
-                        api.reviewButtonsVisibility(controller.getUi(), controller);
+                    var ui = controller.getUi();
+                    if (button.isForGraphElements() && ui.length > 0) {
+                        api.reviewButtonsVisibility(ui, controller);
                     } else {
                         api.reviewButtonsVisibility();
                     }

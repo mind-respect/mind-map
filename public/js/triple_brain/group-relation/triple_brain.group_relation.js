@@ -343,14 +343,14 @@ define([
             return containsAll;
         };
 
-        GroupRelation.prototype.isToTheLeft = function () {
+        GroupRelation.prototype.isToTheLeft = function (centerBubble) {
             var nbLeft = 0;
             var nbRight = 0;
             this.visitTuples(function (tuple) {
-                if (tuple.edge.isToTheLeft() === true) {
+                if (tuple.edge.isToTheLeft(centerBubble) === true) {
                     nbLeft++;
                 }
-                if (tuple.edge.isToTheLeft() === false) {
+                if (tuple.edge.isToTheLeft(centerBubble) === false) {
                     nbRight++;
                 }
             });

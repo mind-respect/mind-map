@@ -11,7 +11,7 @@ define([
         "use strict";
         var api = {};
         api.getForCentralBubbleUri = function (centralBubbleUri, callback, errorCallback) {
-            $.ajax({
+            return $.ajax({
                 type: 'GET',
                 url: api.graphUriForCentralBubbleUri(centralBubbleUri)
             }).done(callback).fail(errorCallback);

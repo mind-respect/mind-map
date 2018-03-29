@@ -21,12 +21,12 @@ define([
             return _implementation.name();
         };
         api.displayUsingCentralBubble = function (centralBubble) {
-            api.displayUsingCentralBubbleUri(
+            return api.displayUsingCentralBubbleUri(
                 centralBubble.getUri()
             );
         };
         api.displayUsingCentralBubbleUri = function (centralVertexUri, errorCallback) {
-            displayUsingBubbleUri(
+            return displayUsingBubbleUri(
                 centralVertexUri,
                 _implementation.displayForBubbleWithUri,
                 errorCallback
@@ -239,15 +239,18 @@ define([
                     IdUri.htmlUrlForBubbleUri(centralBubbleUri)
                 );
             }
+            var deferred = $.Deferred();
             displayer(
                 centralBubbleUri,
                 function () {
                     publishDrawingInfoUpdated(
                         centralBubbleUri
                     );
+                    deferred.resolve();
                 },
                 errorCallback
             );
+            return deferred.promise();
         }
     }
 );

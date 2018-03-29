@@ -17,11 +17,12 @@ define([
     "mr.command",
     "triple_brain.selection_handler",
     "triple_brain.user_map_autocomplete_provider",
+    "triple_brain.bubble_factory",
     "bootstrap-wysiwyg",
     "bootstrap",
     "jquery.safer-html",
     "jquery.max_char"
-], function ($, GraphElementType, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu, EdgeService, Identification, Command, SelectionHandler, UserMapAutocompleteProvider) {
+], function ($, GraphElementType, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu, EdgeService, Identification, Command, SelectionHandler, UserMapAutocompleteProvider, BubbleFactory) {
     "use strict";
     var api = {},
         bubbleCutClipboard,
@@ -147,9 +148,18 @@ define([
     };
 
     GraphElementController.prototype.center = function () {
-        GraphDisplayer.displayUsingCentralBubble(
+        return GraphDisplayer.displayUsingCentralBubble(
             this.getUi()
-        );
+        ).then(function () {
+            if (!this.isOwned() || !this.getUi().isVertex()) {
+                return;
+            }
+            return GraphElementService.changeChildrenIndex(
+                GraphDisplayer.getVertexSelector().withUri(
+                    this.getModel().getUri()
+                )[0]
+            );
+        }.bind(this));
     };
 
     GraphElementController.prototype.visitOtherInstancesCanDo = function () {
@@ -532,19 +542,6 @@ define([
                 );
             }
         }
-        if (movedEdge.getParentBubble().isCenterBubble() && wasToTheLeft !== movedEdge.isToTheLeft()) {
-            if (movedEdge.isGroupRelation()) {
-                movedEdge.visitClosestChildRelations(function (childEdge) {
-                    promises.push(
-                        childEdge.getController().setIsToTheLeftOrRight()
-                    );
-                });
-            } else {
-                promises.push(
-                    movedEdge.getController().setIsToTheLeftOrRight()
-                );
-            }
-        }
         return $.when.apply($, promises);
     };
 
@@ -582,7 +579,7 @@ define([
             searchInput.mrAutocomplete({
                 select: function (event, ui) {
                     event.preventDefault();
-                    if(event.keyCode === 13){
+                    if (event.keyCode === 13) {
                         return;
                     }
                     this.convertToDistantBubbleWithUri(ui.item.uri);

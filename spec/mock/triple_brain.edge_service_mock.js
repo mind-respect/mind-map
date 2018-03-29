@@ -16,9 +16,6 @@ define([
         spies["inverse"] = api.inverse();
         spies["changeSourceVertex"] = api.changeSourceVertex();
         spies["changeDestinationVertex"] = api.changeDestinationVertex();
-        spies["setToTheLeft"] =  TestUtils.defaultMock(EdgeService, "setToTheLeft");
-        spies["setToTheRight"] =  TestUtils.defaultMock(EdgeService, "setToTheRight");
-        spies["unsetToTheLeftOrRight"] =  TestUtils.defaultMock(EdgeService, "unsetToTheLeftOrRight");
         return spies;
     };
     api.remove = function () {

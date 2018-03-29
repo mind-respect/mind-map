@@ -68,6 +68,10 @@ define([
                 this.html.data("source_vertex_id")
             );
         };
+        api.EdgeUi.prototype.getOtherVertex = function (vertex) {
+            return this.getParentBubble().isSameBubble(vertex) ?
+                this.getTopMostChildBubble() : this.getParentBubble();
+        };
         api.EdgeUi.prototype.inverseAbstract = function () {
             var sourceVertexId = this.html.data("source_vertex_id");
             var destinationVertexId = this.html.data("destination_vertex_id");

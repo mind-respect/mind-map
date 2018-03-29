@@ -63,6 +63,7 @@ define([
     KeyboardActionsHandler.init();
     var api = {};
     api.displayForBubbleWithUri = function (centralBubbleUri, callback, errorCallback) {
+        var deferred = $.Deferred();
         GraphService.getForCentralBubbleUri(
             centralBubbleUri,
             function (graph) {
@@ -81,9 +82,11 @@ define([
                     centralBubbleUri
                 );
                 callback();
+                deferred.resolve();
             },
             errorCallback
         );
+        return deferred.resolve();
     };
     api.displayForSchemaWithUri = function (uri, callback) {
         SchemaService.get(uri, function (schemaFromServer) {

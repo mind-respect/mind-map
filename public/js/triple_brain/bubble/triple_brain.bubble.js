@@ -587,7 +587,7 @@ define([
             }
         };
 
-        api.Bubble.prototype.isClosestAncestor = function(ancestor){
+        api.Bubble.prototype.isClosestAncestor = function (ancestor) {
             return this.getClosestParentInTypes(
                 [ancestor.getGraphElementType()]
             ).isSameBubble(ancestor);
