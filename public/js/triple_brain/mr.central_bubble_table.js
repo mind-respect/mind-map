@@ -9,14 +9,14 @@ define([
     "mr.ask_modal",
     "triple_brain.center_graph_element_service",
     "triple_brain.event_bus",
-    "triple_brain.graph_controller",
+    "mr.app_controller",
     "triple_brain.user_service",
     "triple_brain.graph_element_type",
     "moment",
     "bootstrap-table",
     "jquery.i18next"
 
-], function ($, IdUri, AskModal, CenterGraphElementService, EventBus, GraphController, UserService, GraphElementType, Moment) {
+], function ($, IdUri, AskModal, CenterGraphElementService, EventBus, AppController, UserService, GraphElementType, Moment) {
     "use strict";
     var _elements,
         _container,
@@ -245,7 +245,7 @@ define([
 
     function createNewConcept(event) {
         event.preventDefault();
-        GraphController.createVertex();
+        AppController.createVertex();
     }
 
     function removeCenterBtnClick() {
