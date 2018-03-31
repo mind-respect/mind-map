@@ -21,15 +21,17 @@ define([
     function ($, RelativeTreeTemplates, PropertiesIndicator, GroupRelationUi, GroupRelation, SelectionHandler, GraphElementMainMenu, GraphDisplayer, EventBus, Identification, GraphElementUiBuilder, EdgeUiBuilderCommon, MindMapInfo, BubbleFactory) {
         "use strict";
         var api = {},
-            NUMBER_OF_SIBLINGS_UNDER_WHICH_YOU_SHOULD_EXPAND = 4;
+            NUMBER_OF_SIBLINGS_UNDER_WHICH_YOU_SHOULD_EXPAND = 4,
+            NUMBER_OF_CHILDREN_UNDER_WHICH_YOU_SHOULD_EXPAND = 6;
         api.completeBuild = function (groupRelationUi) {
             groupRelationUi.buildHiddenNeighborPropertiesIndicator();
             groupRelationUi.addIdentification(
                 groupRelationUi.getModel().getIdentification()
             );
             groupRelationUi.refreshImages();
-            var shouldExpand = groupRelationUi.getParentBubble().getNumberOfChild() < NUMBER_OF_SIBLINGS_UNDER_WHICH_YOU_SHOULD_EXPAND;
-            if (shouldExpand) {
+            var hasFewEnoughSiblingsToExpandAutomatically = groupRelationUi.getParentBubble().getNumberOfChild() < NUMBER_OF_SIBLINGS_UNDER_WHICH_YOU_SHOULD_EXPAND;
+            var hasFewEnoughChildrenToExpandAutomatically = groupRelationUi.getModel().getNumberOfVertices() < NUMBER_OF_CHILDREN_UNDER_WHICH_YOU_SHOULD_EXPAND;
+            if (hasFewEnoughSiblingsToExpandAutomatically && hasFewEnoughChildrenToExpandAutomatically) {
                 GraphDisplayer.expandGroupRelation(
                     groupRelationUi
                 );
@@ -51,7 +53,8 @@ define([
             // });
         };
 
-        api.GroupRelationUiBuilder = function() {};
+        api.GroupRelationUiBuilder = function () {
+        };
 
         api.GroupRelationUiBuilder.prototype.create = function (serverFacade) {
             this.serverFacade = serverFacade;
@@ -135,7 +138,7 @@ define([
                         var groupRelation = BubbleFactory.fromSubHtml(
                             $(this)
                         );
-                        if(groupRelation.isInEditMode()){
+                        if (groupRelation.isInEditMode()) {
                             return;
                         }
                         groupRelation.deselect();
@@ -218,7 +221,7 @@ define([
         EventBus.subscribe(
             "/event/ui/graph/identification/removed",
             function (event, graphElement, identification) {
-                if(graphElement.isRemoved()){
+                if (graphElement.isRemoved()) {
                     return;
                 }
                 var parentBubble = graphElement.getParentBubble();
