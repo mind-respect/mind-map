@@ -74,6 +74,8 @@ define([
                 var backgroundColor = centralBubble.getModel().getColors().background;
                 if (backgroundColor) {
                     GraphUi.changeBackgroundColor(backgroundColor);
+                }else{
+                    GraphUi.resetBackGroundColor();
                 }
             }
             document.title = centralBubble.getTextOrDefault() + " | MindRespect";

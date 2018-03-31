@@ -74,6 +74,13 @@ define([
             );
         };
 
+        api.resetBackGroundColor = function () {
+            $("#drawn_graph").css(
+                'background',
+                "radial-gradient(at 4250px, rgba(0, 0, 255, 0) 5%, #1E87AF 100%)"
+            );
+        };
+
         api.disableDragScroll = function () {
             if (_isDragScrollLocked || !_isDragScrollEnabled) {
                 return;
