@@ -38,7 +38,7 @@ define([
         }
         if (this.canActionBePossiblyMade(controller)) {
             buttonHtml.removeClass("hidden");
-            if (!this.canActionBePossiblyMadeIfMultiple(controller)) {
+            if (!this.canActionBePossiblyMadeIfMultiple(controller) || !this.canActionBePossiblyMadeIfSingle(controller)) {
                 buttonHtml[
                     canActionBePerformed ?
                         "removeClass" : "addClass"
@@ -65,6 +65,12 @@ define([
     GraphElementButton.prototype.canActionBePossiblyMadeIfMultiple = function (controller) {
         return !controller.isMultiple() || controller[
         this.getAction() + "ManyIsPossible"
+            ] === true;
+    };
+
+    GraphElementButton.prototype.canActionBePossiblyMadeIfSingle = function (controller) {
+        return !controller.isSingle() || controller[
+        this.getAction() + "SingleIsPossible"
             ] === true;
     };
 
@@ -161,11 +167,11 @@ define([
     };
 
     GraphElementButton.prototype.changeIfGraphElementUiLeftOrRight = function (controller) {
-        if(controller.isMultiple()){
+        if (controller.isMultiple()) {
             return;
         }
         var graphElementUi = controller.getUi();
-        if(graphElementUi.length === 0){
+        if (graphElementUi.length === 0) {
             return;
         }
         var action = graphElementUi[this.getAction() + "StyleButton"];

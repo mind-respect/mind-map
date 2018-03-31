@@ -53,5 +53,9 @@ define([
         return false;
     };
 
+    api.isSingle = function () {
+        return false;
+    };
+
     return api;
 });

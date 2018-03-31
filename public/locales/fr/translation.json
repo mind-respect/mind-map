@@ -337,7 +337,12 @@
     "convertToRelation": "Convertir en relation",
     "convertToGroupRelation": "Convertir en relation groupée",
     "wikipediaLinks": "En savoir plus sur Wikipédia",
-    "merge": "Fusionner"
+    "merge": "Fusionner",
+    "list": "Voir la sélection sous forme de liste"
+  },
+  "toList": {
+    "title": "Liste",
+    "copy": "copier"
   },
   "hidden_properties_tooltip": "Expandre (ctrl+E)",
   "hidden_properties_tooltip_forMac": "Expandre (⌘+E)",
@@ -396,7 +401,7 @@
     }
   },
   "merge": {
-    "title" : "Fusionner avec ...",
+    "title": "Fusionner avec ...",
     "instruction": "Cette bulle s'effacera mais toutes ses relations vont se déplacer pour s'ajouter à la bulle que vous aurez sélectionnée dans la barre de recherche ci-bas.",
     "placeholder": "Fusionner avec ..."
   }

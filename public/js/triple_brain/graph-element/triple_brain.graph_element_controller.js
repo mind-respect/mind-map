@@ -17,12 +17,12 @@ define([
     "mr.command",
     "triple_brain.selection_handler",
     "triple_brain.user_map_autocomplete_provider",
-    "triple_brain.bubble_factory",
+    "mr.to-list",
     "bootstrap-wysiwyg",
     "bootstrap",
     "jquery.safer-html",
     "jquery.max_char"
-], function ($, GraphElementType, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu, EdgeService, Identification, Command, SelectionHandler, UserMapAutocompleteProvider, BubbleFactory) {
+], function ($, GraphElementType, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu, EdgeService, Identification, Command, SelectionHandler, UserMapAutocompleteProvider, ToList) {
     "use strict";
     var api = {},
         bubbleCutClipboard,
@@ -710,6 +710,22 @@ define([
         if (this.isMultiple() || this.getUi().isCenterBubble()) {
             SelectionHandler.removeAll();
         }
+    };
+
+    GraphElementController.prototype.listManyIsPossible = true;
+
+    GraphElementController.prototype.listSingleIsPossible = false;
+
+    GraphElementController.prototype.listCanDo = function () {
+        return this.isMultiple();
+    };
+
+    GraphElementController.prototype.list = function () {
+        ToList.showForList(
+            GraphDisplayer.getVertexSelector().VerticesToHtmlLists(
+                SelectionHandler.getSelectedVertices()
+            )
+        );
     };
 
     setUpCancelButton();

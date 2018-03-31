@@ -201,6 +201,11 @@ li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-bu
   }
 }
 
+.modal-body{
+  .link-like-button {
+    font-size: 1em;
+  }
+}
 .link-like-button {
   border-style: none;
   font-size: 0.7em;

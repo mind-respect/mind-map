@@ -228,6 +228,7 @@ module.exports = {
         /*
          Misc
          */
+        "mr.to-list": "triple_brain/mr.to-list",
         "triple_brain.mind_map_info": "triple_brain/triple_brain.mind_map_info",
         "triple_brain.modules": "triple_brain/triple_brain.modules",
         "triple_brain.module.date_picker": "module/date_picker/triple_brain.module.date_picker",
@@ -288,7 +289,7 @@ module.exports = {
         "bootstrap-datepicker": ["bootstrap"],
         "bootstrap-wysiwyg": ["jquery", "bootstrap", "jquery.hotkeys", "google-code-prettify"],
         "bootstrap-table": ["jquery", "bootstrap"],
-        "jasmine-jquery" : ["jquery"],
-        "ekko-lightbox" : ["jquery"]
+        "jasmine-jquery": ["jquery"],
+        "ekko-lightbox": ["jquery"]
     }
 };

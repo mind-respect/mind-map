@@ -554,6 +554,11 @@ define([
             types
         ) !== -1;
     };
+    api.GraphElementUi.prototype.isATypeOfEdge = function(){
+        return this.isInTypes(
+            GraphElementType.getEdgeTypes()
+        );
+    };
     api.GraphElementUi.prototype.getHtml = function () {
         return this.html;
     };

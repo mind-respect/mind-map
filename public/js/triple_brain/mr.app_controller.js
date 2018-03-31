@@ -69,6 +69,10 @@ define([
         return false;
     };
 
+    api.isSingle = function () {
+        return false;
+    };
+
     $("#background-color-picker").on("change", function () {
             GraphUi.changeBackgroundColor(this.value);
             VertexService.saveColors({background: this.value});

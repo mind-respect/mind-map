@@ -38,36 +38,72 @@ define([
             );
         };
         api.VerticesToHtmlLists = function (vertices) {
-            var integratedVerticesId = {};
             var lists = $("<div>");
+            var verticesInListById = {};
+            vertices.forEach(function (vertex) {
+                verticesInListById[vertex.getId()] = {};
+            });
             Bubble.sortBubblesByNumberOfParentVerticesAscending(vertices).forEach(function (vertex) {
-                if (integratedVerticesId[vertex.getId()]) {
+                if (!shouldIntegrateVertex(vertex)) {
                     return;
                 }
                 lists.append(
-                    integrateVertex(vertex, true)
+                    integrateBubble(vertex, true)
                 );
             });
             return lists;
-            function integrateVertex(vertex, isARoot) {
+
+            function integrateBubble(bubble, isARoot) {
                 var html = $(
                     isARoot ? "<div>" : "<li>"
-                ).append(vertex.text());
+                ).append(bubble.text());
                 var ul = $("<ul>");
-                var hasChildInList = false;
-                vertices.forEach(function (otherVertex) {
-                    if (vertex.isVertexAChild(otherVertex)) {
+                bubble.visitAllImmediateChild(function (child) {
+                    if (child.isGroupRelation() && !child.getModel().isLabelEmpty()) {
                         ul.append(
-                            integrateVertex(otherVertex, false)
+                            integrateBubble(child, false)
                         );
-                        hasChildInList = true;
+                    } else if (child.isATypeOfEdge()) {
+                        var childVertex = child.getTopMostChildBubble();
+                        if (!shouldIntegrateVertex(childVertex)) {
+                            return;
+                        }
+                        var container = ul;
+                        if (!child.getModel().isLabelEmpty() && !child.isSetAsSameAsGroupRelation()) {
+                            ul.append(
+                                $("<li>").text(child.text())
+                            );
+                            container = $("<ul>").appendTo(ul);
+                        }
+                        container.append(
+                            integrateBubble(childVertex, false)
+                        );
+                    } else if (child.isVertex() && shouldIntegrateVertex(child)) {
+                        ul.append(
+                            integrateBubble(child, false)
+                        );
                     }
                 });
-                if(hasChildInList){
+                // vertices.forEach(function (otherVertex) {
+                //     if (bubble.isVertexAChild(otherVertex)) {
+                //         var relation = otherVertex.getParentBubble();
+                //         if (relation.getModel().isLabelEmpty()) {
+                //             ul.append()
+                //         }
+                //
+                //     }
+                // });
+                if (ul.find("li").length > 0) {
                     html.append(ul);
                 }
-                integratedVerticesId[vertex.getId()] = true;
+                if (verticesInListById[bubble.getId()]) {
+                    verticesInListById[bubble.getId()].isIntegrated = true;
+                }
                 return html;
+            }
+
+            function shouldIntegrateVertex(vertex) {
+                return verticesInListById[vertex.getId()] && !verticesInListById[vertex.getId()].isIntegrated;
             }
         };
         api = ObjectUtils.makeChildInheritParent(
@@ -172,17 +208,17 @@ define([
 
         api.RelativeTreeVertex.prototype.hasHiddenRelations = function () {
             return !this.isCenterBubble() && MindMapInfo.isViewOnly() ?
-                        this._hasPublicHiddenRelations() :
-                        this.getNumberOfHiddenRelations() > 0;
+                this._hasPublicHiddenRelations() :
+                this.getNumberOfHiddenRelations() > 0;
 
         };
-        api.RelativeTreeVertex.prototype.getNumberOfHiddenRelations = function(){
-            if(this.isALeaf()){
+        api.RelativeTreeVertex.prototype.getNumberOfHiddenRelations = function () {
+            if (this.isALeaf()) {
                 var parentBubble = this.getParentBubble();
-                if(parentBubble.getParentBubble().isGroupVertexUnderMeta()){
+                if (parentBubble.getParentBubble().isGroupVertexUnderMeta()) {
                     return this.getModel().getNumberOfConnectedEdges() - 2;
                 }
-                if(parentBubble.isMetaRelation()){
+                if (parentBubble.isMetaRelation()) {
                     return this.getModel().getNumberOfConnectedEdges();
                 }
                 return this.getModel().getNumberOfConnectedEdges() - 1;
@@ -191,8 +227,8 @@ define([
         };
         api.RelativeTreeVertex.prototype._hasPublicHiddenRelations = function () {
             return this.getModel().getNbPublicNeighbors() > (
-                    this.getParentVertex().getModel().isPublic() ? 1 : 0
-                );
+                this.getParentVertex().getModel().isPublic() ? 1 : 0
+            );
         };
         api.RelativeTreeVertex.prototype.isVertexAChild = function (otherVertex) {
             return !otherVertex.isCenterBubble() &&
@@ -200,9 +236,9 @@ define([
                 otherVertex.getParentVertex().isSameBubble(this);
         };
 
-        api.setupVertexCopyButton = function(vertex){
+        api.setupVertexCopyButton = function (vertex) {
             var button = vertex.getButtonHtmlHavingAction("copy");
-            if(button.length === 0){
+            if (button.length === 0) {
                 return;
             }
             api.setupCopyButton(
@@ -210,7 +246,7 @@ define([
             );
         };
 
-        api.setupCopyButton = function(button){
+        api.setupCopyButton = function (button) {
             var clipboard = new Clipboard(
                 button, {
                     target: function () {
@@ -224,7 +260,7 @@ define([
                     }
                 }
             );
-            clipboard.on("success", function(){
+            clipboard.on("success", function () {
                 $("#tree-list-copy-dump").empty();
             });
         };
@@ -235,28 +271,29 @@ define([
         );
         EventBus.subscribe('/event/ui/graph/drawn', function () {
             var expandCalls = [];
-            api.visitAllVertices(function(vertexUi){
-                if(vertexUi.getModel().hasOnlyOneHiddenChild() && !vertexUi.isExpanded()){
+            api.visitAllVertices(function (vertexUi) {
+                if (vertexUi.getModel().hasOnlyOneHiddenChild() && !vertexUi.isExpanded()) {
                     expandCalls.push(
                         vertexUi.getController().expand(true)
                     );
                 }
             });
-            $.when.apply($, expandCalls).then(function(){
+            $.when.apply($, expandCalls).then(function () {
                 GraphElementUi.getCenterVertexOrSchema().sideCenterOnScreenWithAnimation();
             });
             setupCopyButtons();
         });
 
-        function setupCopyButtons(){
+        function setupCopyButtons() {
             var copyButton = $('.clipboard-copy-button')[0];
             if (!copyButton) {
                 return;
             }
-            $.each($('.clipboard-copy-button'), function(){
-               api.setupCopyButton(this);
+            $.each($('.clipboard-copy-button'), function () {
+                api.setupCopyButton(this);
             });
         }
+
         function vertexAndRelationAddedHandler(event, triple, tripleJson) {
             var sourceBubble = triple.sourceVertex();
             if (!sourceBubble.isVertex()) {

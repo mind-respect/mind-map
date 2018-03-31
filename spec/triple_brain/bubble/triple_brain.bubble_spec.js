@@ -679,7 +679,7 @@ define([
             var collapseButton = b2.getButtonHtmlHavingAction("collapse");
             expect(
                 collapseButton
-            ).not.toHaveClass("disabled");
+            ).not.toHaveClass("hidden");
             var expandButton = b2.getButtonHtmlHavingAction("expand");
             expect(
                 expandButton
@@ -688,11 +688,11 @@ define([
             collapseButton = b2.getButtonHtmlHavingAction("collapse");
             expect(
                 collapseButton
-            ).toHaveClass("disabled");
+            ).toHaveClass("hidden");
             expandButton = b2.getButtonHtmlHavingAction("expand");
             expect(
                 expandButton
-            ).not.toHaveClass("disabled");
+            ).not.toHaveClass("hidden");
         });
         it("hides the hidden relation container after expand", function () {
             var scenario = new Scenarios.threeBubblesGraph();
@@ -718,19 +718,19 @@ define([
             b2.collapse();
             expect(
                 collapseButton
-            ).toHaveClass("disabled");
+            ).toHaveClass("hidden");
             expect(
                 expandButton
-            ).not.toHaveClass("disabled");
+            ).not.toHaveClass("hidden");
             b2.expand();
             collapseButton = b2.getButtonHtmlHavingAction("collapse");
             expect(
                 collapseButton
-            ).not.toHaveClass("disabled");
+            ).not.toHaveClass("hidden");
             expandButton = b2.getButtonHtmlHavingAction("expand");
             expect(
                 expandButton
-            ).toHaveClass("disabled");
+            ).toHaveClass("hidden");
         });
         // it("displays the hidden relations container after collapse", function () {
         //     var scenario = new Scenarios.threeBubblesGraph();

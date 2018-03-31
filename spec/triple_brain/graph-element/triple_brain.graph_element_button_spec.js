@@ -27,7 +27,7 @@ define([
             );
             expect(
                 makePrivate.getHtml()
-            ).toHaveClass("disabled");
+            ).toHaveClass("hidden");
             var bubble2 = scenario.getBubble2InTree();
             makePrivate.showOnlyIfApplicable(
                 new VertexController.VertexController(

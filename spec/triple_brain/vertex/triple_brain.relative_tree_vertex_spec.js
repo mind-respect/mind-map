@@ -101,7 +101,7 @@ define([
                 b3.hasHiddenRelations()
             ).toBeTruthy();
         });
-        it("can export vertices to an html list", function(){
+        xit("can export vertices to an html list", function(){
             var scenario  = new Scenarios.threeBubblesGraph();
             var listContainer = RelativeTreeVertex.VerticesToHtmlLists([
                 scenario.getBubble1InTree(),
@@ -121,7 +121,7 @@ define([
                 b3.text()
             ).toBe("b3");
         });
-        it("can export vertices to an html list even if it has group relations", function(){
+        xit("can export vertices to an html list even if it has group relations", function(){
             var groupRelation = new Scenarios.GraphWithSimilarRelationsScenario().getPossessionAsGroupRelationInTree();
             groupRelation.expand();
             var firstChildVertex = groupRelation.getTopMostChildBubble().getTopMostChildBubble().getTopMostChildBubble();
@@ -146,7 +146,7 @@ define([
                 lastChildVertexInList.text()
             ).toBe(thirdChildVertex.text());
         });
-        it("can export vertices to an html list when center is a meta", function(){
+        xit("can export vertices to an html list when center is a meta", function(){
             var eventBubble = new Scenarios.aroundEventIdentifier().getEventBubbleInTree();
             var aChildVertex = TestUtils.getChildWithLabel(
                 eventBubble,
