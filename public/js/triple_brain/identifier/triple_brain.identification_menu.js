@@ -32,8 +32,8 @@ define([
             return new IdentificationMenu(graphElementUi);
         };
 
-        api.setup = function(){
-            if(MindMapInfo.isViewOnly()){
+        api.setup = function () {
+            if (MindMapInfo.isViewOnly()) {
                 return;
             }
         };
@@ -84,6 +84,7 @@ define([
             }
             li.appendTo(container);
         };
+
         function IdentificationMenu(graphElement) {
             this.graphElement = graphElement;
             this.isViewOnly = MindMapInfo.isViewOnly() || graphElement.isGroupRelation();
@@ -94,6 +95,12 @@ define([
             this.html = modal.find(".identifications");
             this._buildMenu();
             this.html.data("graphElement", this.graphElement);
+            modal.on('shown.bs.modal', function () {
+                this.identificationTextField.autocomplete(
+                    'search',
+                    this.graphElement.text()
+                );
+            }.bind(this));
             modal.modal();
             modal.find(".bubble-label").text(
                 this.graphElement.text()
@@ -116,7 +123,7 @@ define([
         IdentificationMenu.prototype._addIdentifications = function () {
             this._getMainListHtml().empty();
             var identifiers = this.graphElement.getModel().getRelevantTags();
-            Object.keys(identifiers).forEach(function(key) {
+            Object.keys(identifiers).forEach(function (key) {
                 this._addIdentificationAsListElement(
                     identifiers[key]
                 );
@@ -215,6 +222,7 @@ define([
                 )
             );
             return deferred.promise();
+
             function buildTitleWithUrl(url) {
                 var anchor = $("<a target=_blank>").prop(
                     "href",
@@ -289,7 +297,7 @@ define([
             identificationTextField.val("");
             this._setUpAutoComplete(identificationTextField);
             this.identificationTextField = identificationTextField;
-            this.identificationTextField.attr('tabindex',-1);
+            this.identificationTextField.attr('tabindex', -1);
             return identificationTextField;
         };
 
@@ -310,6 +318,9 @@ define([
                     this._getResultsProvidersForVertex() :
                     this._getResultsProvidersForRelations()
             });
+            identificationTextField.val(
+                this.graphElement.text()
+            );
         };
 
         IdentificationMenu.prototype._handleSelectIdentification = function (searchResult, graphElement) {
@@ -335,6 +346,7 @@ define([
                 identify();
             }
             return identifier;
+
             function identify() {
                 graphElement.getController().addIdentification(
                     identifier
@@ -349,7 +361,7 @@ define([
         IdentificationMenu.prototype._getResultsProvidersForVertex = function () {
             return [
                 UserMapAutocompleteProvider.toFetchPublicAndUserVerticesExcept(this.graphElement),
-                WikidataAutocompleteProvider.buildWithIsActiveCondition(function(){
+                WikidataAutocompleteProvider.buildWithIsActiveCondition(function () {
                     return true;
                 })
             ];
@@ -387,7 +399,7 @@ define([
             );
             return container;
         };
-        api._getModal = function(){
+        api._getModal = function () {
             return $("#identifiers-menu");
         };
         api._getModal().on('shown.bs.modal', function () {
