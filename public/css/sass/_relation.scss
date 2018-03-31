@@ -5,9 +5,13 @@
 $withTextPadding: 5px 15px 5px 15px;
 $withoutTextPadding: 5px 8px 5px 8px;
 .relation.bubble {
-
+  /*
+    padding is to make it easier for drag and drop
+  */
+  padding-top: 10px;
+  padding-bottom: 10px;
   &.empty-label {
-    &:not(.selected){
+    &:not(.selected) {
       .in-label-buttons {
         display: none !important;
       }
@@ -16,9 +20,9 @@ $withoutTextPadding: 5px 8px 5px 8px;
 
   .bubble-label {
     &:empty:not(:focus) {
-      max-width:100%;
+      max-width: 100%;
       transition: all 0.2s;
-      line-height:0;
+      line-height: 0;
       &:after {
         content: "";
       }
@@ -31,7 +35,7 @@ $withoutTextPadding: 5px 8px 5px 8px;
       .bubble-label {
         &:empty {
           padding: $withTextPadding;
-          line-height:inherit;
+          line-height: inherit;
           //transition: padding 1s ease-in;
         }
       }
@@ -84,8 +88,8 @@ $withoutTextPadding: 5px 8px 5px 8px;
   position: relative;
 
   &.same-as-group-relation {
-    .label{
-      padding:0;
+    .label {
+      padding: 0;
     }
     &.selected {
       .label-container {
@@ -94,10 +98,10 @@ $withoutTextPadding: 5px 8px 5px 8px;
             padding: $withTextPadding;
             visibility: visible;
             text-indent: inherit;
-            margin-top:0;
-            line-height:inherit;
+            margin-top: 0;
+            line-height: inherit;
             -webkit-transition: padding 0.2s;
-            transition: padding  0.2s;
+            transition: padding 0.2s;
           }
         }
       }
@@ -105,8 +109,8 @@ $withoutTextPadding: 5px 8px 5px 8px;
     .label-container .label .bubble-label {
       visibility: hidden;
       text-indent: -9999px;
-      margin-top:-200px;
-      line-height:0;
+      margin-top: -200px;
+      line-height: 0;
       padding: $withoutTextPadding;
     }
   }

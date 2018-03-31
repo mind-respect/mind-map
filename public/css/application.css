@@ -178,7 +178,7 @@ footer > a:hover { background-color: black !important; color: white !important; 
 
 .clear-fix { clear: both; display: block; height: 0; width: 0; padding: 0; margin: 0; }
 
-.vertex-container { display: table-cell; vertical-align: middle; padding-top: 5px; padding-bottom: 5px; }
+.vertex-container { display: table-cell; vertical-align: middle; padding-top: 10px; padding-bottom: 10px; }
 
 .vertex.view-only { margin-top: 2em; margin-bottom: 2em; }
 
@@ -402,7 +402,8 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .ui-dialog-content a:hover { color: #47A3FF; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
-.relation.bubble { position: relative; }
+.relation.bubble { /* padding is to make it easier for drag and drop
+*/ padding-top: 10px; padding-bottom: 10px; position: relative; }
 .relation.bubble.empty-label:not(.selected) .in-label-buttons { display: none !important; }
 .relation.bubble .bubble-label:empty:not(:focus) { max-width: 100%; transition: all 0.2s; line-height: 0; }
 .relation.bubble .bubble-label:empty:not(:focus):after { content: ""; }
@@ -419,7 +420,7 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .relation.bubble .on-edge-button { font-size: 1.50em; cursor: pointer; }
 .relation.bubble .edit-relation-button { display: none; }
 .relation.bubble.same-as-group-relation .label { padding: 0; }
-.relation.bubble.same-as-group-relation.selected .label-container .label .bubble-label { padding: 5px 15px 5px 15px; visibility: visible; text-indent: inherit; margin-top: 0; line-height: inherit; -webkit-transition: padding 0.2s; transition: padding  0.2s; }
+.relation.bubble.same-as-group-relation.selected .label-container .label .bubble-label { padding: 5px 15px 5px 15px; visibility: visible; text-indent: inherit; margin-top: 0; line-height: inherit; -webkit-transition: padding 0.2s; transition: padding 0.2s; }
 .relation.bubble.same-as-group-relation .label-container .label .bubble-label { visibility: hidden; text-indent: -9999px; margin-top: -200px; line-height: 0; padding: 5px 8px 5px 8px; }
 .relation.bubble .label { border-radius: 0.80em; padding: 0; }
 .relation.bubble .label .bubble-label { padding: 5px 15px 5px 15px; }
