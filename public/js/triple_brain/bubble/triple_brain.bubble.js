@@ -904,10 +904,10 @@ define([
             this.visitDescendants(function (descendant) {
                 descendant.reviewInLabelButtonsVisibility(true);
             });
-            if (!avoidScreenCenter && !this.getChildrenContainer().isFullyOnScreen()) {
+            if (!avoidScreenCenter && !isChildExpand && !this.getChildrenContainer().isFullyOnScreen()) {
                 this.sideCenterOnScreenWithAnimation();
+                SelectionHandler.setToSingleGraphElement(this);
             }
-            SelectionHandler.setToSingleGraphElement(this);
             this.reviewMenuButtonsVisibility();
         };
 
