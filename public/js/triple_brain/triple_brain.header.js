@@ -136,11 +136,10 @@ define([
             ).on(
                 "click",
                 createNewConcept
-            ).append(
-                $("<small class='text-muted short-cut'>").text(
-                    UiUtils.isMacintosh() ? " (⌘" : " (ctrl+" +
-                        'b)'
-                )
+            ).find(
+                ".ctrl"
+            ).text(
+                UiUtils.isMacintosh() ? "⌘" : "ctrl"
             );
         }
 
