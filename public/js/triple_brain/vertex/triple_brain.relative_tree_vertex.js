@@ -68,16 +68,20 @@ define([
                         if (!shouldIntegrateVertex(childVertex)) {
                             return;
                         }
-                        var container = ul;
                         if (!child.getModel().isLabelEmpty() && !child.isSetAsSameAsGroupRelation()) {
                             ul.append(
-                                $("<li>").text(child.text())
+                                $("<li>").append(
+                                    $("<em>").text("(" + child.text() + ")"),
+                                    "  ",
+                                    childVertex.text()
+                                )
                             );
-                            container = $("<ul>").appendTo(ul);
+                            verticesInListById[childVertex.getId()].isIntegrated = true;
+                        } else {
+                            ul.append(
+                                integrateBubble(childVertex, false)
+                            );
                         }
-                        container.append(
-                            integrateBubble(childVertex, false)
-                        );
                     } else if (child.isVertex() && shouldIntegrateVertex(child)) {
                         ul.append(
                             integrateBubble(child, false)
