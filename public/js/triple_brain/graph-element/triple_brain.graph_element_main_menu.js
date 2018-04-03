@@ -138,6 +138,7 @@ define([
         };
 
         api.onlyShowButtonsIfApplicable = function (controller, graphElement, buttonsHtml) {
+            var nbVisibleButton = 0;
             api.visitButtons(function (button) {
                 if (button.isForWholeGraph()) {
                     return api.showWholeGraphButtonOnlyIfApplicable(
@@ -152,11 +153,14 @@ define([
                 button.changeIfGraphElementUiLeftOrRight(
                     controller
                 );
-                button.showOnlyIfApplicable(
-                    controller,
-                    graphElement
-                );
+                if (button.showOnlyIfApplicable(
+                        controller,
+                        graphElement
+                    )) {
+                    nbVisibleButton++;
+                }
             }, false, buttonsHtml);
+            return nbVisibleButton;
         };
 
         api.showWholeGraphButtonOnlyIfApplicable = function (button) {
@@ -188,11 +192,11 @@ define([
             );
         };
 
-        api.reviewInBubbleButtonsDisplay = function (bubbles, controller) {
+        api.reviewInBubbleButtonsDisplay = function (bubble, controller) {
             api._currentController = controller;
             api.onlyShowButtonsIfApplicable(
                 controller,
-                bubbles
+                bubble
             );
         };
 

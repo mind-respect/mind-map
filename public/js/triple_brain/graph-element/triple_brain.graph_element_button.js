@@ -43,16 +43,19 @@ define([
                     canActionBePerformed ?
                         "removeClass" : "addClass"
                     ]("hidden");
+                return canActionBePerformed;
             } else {
                 var className = this.hideIfDisabled(controller) ? "hidden" : "disabled";
                 buttonHtml[
                     canActionBePerformed ?
                         "removeClass" : "addClass"
                     ](className);
+                return canActionBePerformed;
             }
         } else {
             buttonHtml.removeClass("disabled");
             buttonHtml.addClass("hidden");
+            return false;
         }
 
     };

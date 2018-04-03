@@ -533,7 +533,7 @@ define([
             "draggable",
             $html.data("previous_draggable_status")
         );
-        this.getInLabelButtonsContainer().removeClass("hidden");
+        this.reviewInLabelButtonsVisibility();
         if (this.isRelation()) {
             this.reviewIsSameAsGroupRelation();
         }
@@ -554,7 +554,7 @@ define([
             types
         ) !== -1;
     };
-    api.GraphElementUi.prototype.isATypeOfEdge = function(){
+    api.GraphElementUi.prototype.isATypeOfEdge = function () {
         return this.isInTypes(
             GraphElementType.getEdgeTypes()
         );
@@ -606,6 +606,10 @@ define([
             return;
         }
         $.when.apply($, promises).then(function () {
+            var notHiddenButton = this.getInLabelButtonsContainer().find("button:not(.hidden)");
+            this.getInLabelButtonsContainer()[notHiddenButton.length > 0 ? 'removeClass' : 'addClass'](
+                'hidden'
+            );
             this.applyToOtherInstances(function (otherInstance) {
                 otherInstance.reviewInLabelButtonsVisibility(false);
             });

@@ -88,15 +88,6 @@ define([
                         );
                     }
                 });
-                // vertices.forEach(function (otherVertex) {
-                //     if (bubble.isVertexAChild(otherVertex)) {
-                //         var relation = otherVertex.getParentBubble();
-                //         if (relation.getModel().isLabelEmpty()) {
-                //             ul.append()
-                //         }
-                //
-                //     }
-                // });
                 if (ul.find("li").length > 0) {
                     html.append(ul);
                 }

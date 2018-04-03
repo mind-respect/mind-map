@@ -46,6 +46,9 @@ define([
                     groupRelationUi
                 );
             }
+            EdgeUiBuilderCommon.moveInLabelButtonsContainerIfIsToTheLeft(
+                groupRelationUi
+            );
             // groupRelationUi.visitAllChild(function(child){
             //     if(child.isGroupRelation()){
             //         api.completeBuild(child);

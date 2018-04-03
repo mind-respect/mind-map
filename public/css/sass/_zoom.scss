@@ -2,8 +2,6 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
-$verticalPaddingRatio: 1.5;
-
 //$editWidth: 200; //vm;
 //$editWidth: 1500; //px;
 //$editWidth: 60; //rem;
@@ -23,10 +21,9 @@ $horizontalPaddingHighest: 3.5;
           }
         }
         .in-bubble-content {
-          $verticalPadding: $horizontalPadding * $verticalPaddingRatio;
           padding: calc(0.5em + #{$horizontalPadding}vw);
-          padding-bottom: calc(0.5em + #{$verticalPadding}vh);
-          padding-top: calc(0.5em + #{$verticalPadding}vh);
+          padding-bottom: 0.5em;
+          padding-top: 0.5em;
           $buttonExtraSize: max(0, 1.5 - $i * 0.3);
           $buttonSize: calc(30px + #{$buttonExtraSize}vw);
           $fontSizeExtra: max(0, 0.5 - $i * 0.1);

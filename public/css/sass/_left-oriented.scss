@@ -24,7 +24,7 @@
       }
     }
   }
-  .relation {
+  .relation.bubble {
     .hidden-properties-content{
       margin-left: 0;
       margin-right: $marginOfHiddenPropertiesToRelation;
@@ -38,9 +38,11 @@
       }
     }
     .in-bubble-content{
-      .in-bubble-note-button {
+      .in-label-buttons {
         left:auto;
         right:-32px;
+        margin-left:0;
+        margin-right:7px;
       }
     }
     .label-container {
@@ -60,7 +62,6 @@
   }
   .group-relation .label {
     margin-right: 0;
-    margin-left: 0.3em;
   }
   .bubble {
     .arrow {

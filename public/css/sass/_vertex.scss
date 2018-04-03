@@ -58,7 +58,7 @@
     }
     .in-label-buttons{
       margin-left:-24px;
-      padding-left:0;
+      padding-left:$inLabelButtonsPadding;
       padding-right:$inLabelButtonsPadding;
     }
     //box-shadow: inset 0px 1px 200px 1rem #E3E300 !important;
@@ -70,7 +70,7 @@
   }
   &.selected {
     z-index: 12;
-    $selectedBoxShadow: -5px 5px 5px black;
+    $selectedBoxShadow: -3px 3px 3px black;
     .in-bubble-content {
       background-color: $selectBubbleColor;
       box-shadow:$selectedBoxShadow;
@@ -148,7 +148,6 @@
     padding: 1em;
     padding-bottom: 0.7em;
     padding-top: 0.7em;
-    margin-left: 0.3em;
     display: table;
     > * {
       display: table-cell;

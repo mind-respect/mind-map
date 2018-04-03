@@ -18,6 +18,14 @@ $withoutTextPadding: 5px 8px 5px 8px;
     }
   }
 
+  &:not(.edit) {
+    .label {
+      .bubble-label {
+        padding: 5px 10px 5px 10px;
+      }
+    }
+  }
+
   .bubble-label {
     &:empty:not(:focus) {
       max-width: 100%;
@@ -31,7 +39,7 @@ $withoutTextPadding: 5px 8px 5px 8px;
 
   &.selected {
     .label {
-      box-shadow: 4px 4px 4px black;
+      box-shadow: 3px 3px 4px black;
       .bubble-label {
         &:empty {
           padding: $withTextPadding;
@@ -228,6 +236,7 @@ $withoutTextPadding: 5px 8px 5px 8px;
     }
     .in-label-buttons {
       display: inline-block;
+      margin-left:7px;
       button {
         font-size: 18px;
         margin-top: -13px;
@@ -314,7 +323,6 @@ $withoutTextPadding: 5px 8px 5px 8px;
   }
   .in-bubble-content {
     .bubble-label {
-      margin-right: 0.3em;
       z-index: 1;
     }
   }
