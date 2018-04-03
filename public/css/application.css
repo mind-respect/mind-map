@@ -225,10 +225,11 @@ footer > a:hover { background-color: black !important; color: white !important; 
 .left-oriented .vertex.inverse .arrow { left: auto; }
 .left-oriented .vertex.selected .in-bubble-content { box-shadow: 5px 5px 5px black; }
 .left-oriented .vertex .in-bubble-content .in-label-buttons { margin-right: -32px; margin-left: auto; padding-left: 8px; }
-.left-oriented .relation.bubble .hidden-properties-content { margin-left: 0; margin-right: 25px; }
-.left-oriented .relation.bubble.public .label-container:after { right: auto; left: 4px; }
-.left-oriented .relation.bubble .in-bubble-content .in-label-buttons { left: auto; right: -32px; margin-left: 0; margin-right: 7px; }
-.left-oriented .relation.bubble .label-container { padding-left: 0; padding-right: 6px; }
+.left-oriented .relation.bubble:not(.same-as-group-relation):not(.edit) .label .bubble-label:not(:empty) { padding: 5px 10px 5px 10px; }
+.left-oriented .relation.bubble:not(.same-as-group-relation) .hidden-properties-content { margin-left: 0; margin-right: 25px; }
+.left-oriented .relation.bubble:not(.same-as-group-relation).public .label-container:after { right: auto; left: 4px; }
+.left-oriented .relation.bubble:not(.same-as-group-relation) .in-bubble-content .in-label-buttons { left: auto; right: -32px; margin-left: -7px; margin-right: 7px; }
+.left-oriented .relation.bubble:not(.same-as-group-relation) .label-container { padding-left: 0; padding-right: 6px; }
 .left-oriented .property.public .label-container:after { right: auto; left: -16px; }
 .left-oriented .group-relation .label { margin-right: 0; }
 .left-oriented .bubble .arrow { left: auto; width: 57px; margin-left: -3px; }
@@ -409,7 +410,7 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .relation.bubble .bubble-label:empty:not(:focus) { max-width: 100%; transition: all 0.2s; line-height: 0; }
 .relation.bubble .bubble-label:empty:not(:focus):after { content: ""; }
 .relation.bubble.selected .label { box-shadow: 3px 3px 4px black; }
-.relation.bubble.selected .label .bubble-label:empty { padding: 5px 15px 5px 15px; line-height: inherit; }
+.relation.bubble.selected .label .bubble-label:empty { padding: 5px 10px 5px 10px; line-height: inherit; }
 .relation.bubble.inverse .connector { width: 51px; left: -44px; }
 .relation.bubble.inverse .connector:before { content: url(images/icons/vertex/arrowhead_left.svg); position: relative; top: -11px; left: 20px; }
 .relation.bubble .hidden-properties-content { margin-left: 25px; }
@@ -421,11 +422,11 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .relation.bubble .on-edge-button { font-size: 1.50em; cursor: pointer; }
 .relation.bubble .edit-relation-button { display: none; }
 .relation.bubble.same-as-group-relation .label { padding: 0; }
-.relation.bubble.same-as-group-relation.selected .label-container .label .bubble-label { padding: 5px 15px 5px 15px; visibility: visible; text-indent: inherit; margin-top: 0; line-height: inherit; -webkit-transition: padding 0.2s; transition: padding 0.2s; }
-.relation.bubble.same-as-group-relation .label-container .label .bubble-label { visibility: hidden; text-indent: -9999px; margin-top: -200px; line-height: 0; padding: 5px 8px 5px 8px; }
+.relation.bubble.same-as-group-relation.selected .label-container .label .bubble-label { padding: 5px 10px 5px 10px; visibility: visible; text-indent: inherit; margin-top: 0; line-height: inherit; -webkit-transition: padding 0.2s; transition: padding 0.2s; }
+.relation.bubble.same-as-group-relation .label-container .label .bubble-label { visibility: hidden; text-indent: -9999px; margin-top: -200px; line-height: 0; padding: 1px 7px 1px 7px; }
 .relation.bubble .label { border-radius: 0.80em; padding: 0; }
-.relation.bubble .label .bubble-label { padding: 5px 15px 5px 15px; }
-.relation.bubble .label .bubble-label:empty { padding: 5px 8px 5px 8px; }
+.relation.bubble .label .bubble-label { padding: 5px 10px 5px 10px; }
+.relation.bubble .label .bubble-label:empty { padding: 1px 7px 1px 7px; }
 .relation.bubble .menu { background-color: transparent; z-index: 11; margin-left: 5px; }
 .relation.bubble .label-container { display: table-cell; padding-left: 6px; position: relative; }
 .relation.bubble.selected:not(.not-editable) .bubble-label:empty:not(:focus):after { color: white; }
@@ -447,7 +448,7 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .relation.bubble .in-bubble-content .bubble-label:not(:focus):after { color: white; }
 .relation.bubble .in-bubble-content .bubble-label:empty:not(:focus):after { color: white; }
 .relation.bubble .in-bubble-content del, .relation.bubble .in-bubble-content ins { color: black; }
-.relation.bubble .in-bubble-content .in-label-buttons { display: inline-block; margin-left: 7px; }
+.relation.bubble .in-bubble-content .in-label-buttons { display: inline-block; margin-left: 7px; margin-right: -7px; }
 .relation.bubble .in-bubble-content .in-label-buttons button { font-size: 18px; margin-top: -13px; margin-bottom: -13px; }
 .relation.bubble .in-bubble-content .in-label-buttons button i { text-shadow: 0 1px 1px rgba(0, 0, 0, 0.75); color: white; }
 .relation.bubble .ui-button { width: 1.7em; height: 1.8em; margin: 0; }
