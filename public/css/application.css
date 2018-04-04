@@ -223,7 +223,7 @@ footer > a:hover { background-color: black !important; color: white !important; 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .left-oriented [data-action=addChild] .fa-arrow-right { transform: rotate(180deg); }
 .left-oriented .vertex.inverse .arrow { left: auto; }
-.left-oriented .vertex.selected .in-bubble-content { box-shadow: 5px 5px 5px black; }
+.left-oriented .vertex.selected .in-bubble-content { box-shadow: 3px 3px 3px black; }
 .left-oriented .vertex .in-bubble-content .in-label-buttons { margin-right: -32px; margin-left: auto; padding-left: 8px; }
 .left-oriented .relation.bubble:not(.same-as-group-relation):not(.edit) .label .bubble-label:not(:empty) { padding: 5px 10px 5px 10px; }
 .left-oriented .relation.bubble:not(.same-as-group-relation) .hidden-properties-content { margin-left: 0; margin-right: 25px; }
