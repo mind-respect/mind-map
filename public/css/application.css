@@ -303,6 +303,7 @@ footer > a:hover { background-color: black !important; color: white !important; 
 .relation .in-label-buttons button.graph-element-button.visit-other-instances .fa-stack-text { margin-top: 13px; }
 
 .in-label-buttons button.graph-element-button:hover:not(.disabled) { color: #a72121; }
+.in-label-buttons button.graph-element-button i { font-size: 0.85em; color: gray; }
 .in-label-buttons button.graph-element-button.visit-other-instances { margin-right: 5px !important; margin-top: -20px !important; margin-right: 5px !important; }
 .in-label-buttons button.graph-element-button.visit-other-instances .fa-stack-2x { font-size: 1.3em; top: 44%; }
 .in-label-buttons button.graph-element-button.visit-other-instances .fa-stack-text { margin-top: 11px; font-size: 15px; }

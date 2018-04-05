@@ -3,11 +3,11 @@
   bottom: 25px;
   z-index: 99;
   top: 112px;
-  button{
-    display:block;
+  button {
+    display: block;
   }
   //height:100%;
-  .menu-panel{
+  .menu-panel {
     //height:100%;
   }
   overflow-x: hidden;
@@ -29,7 +29,7 @@
   -moz-border-radius: 15px;
   cursor: default;
   background-color: transparent;
-  button{
+  button {
     color: black;
   }
   position: relative;
@@ -72,8 +72,12 @@
 
 .in-label-buttons {
   button.graph-element-button {
-    &:hover:not(.disabled){
-      color:$red2;
+    &:hover:not(.disabled) {
+      color: $red2;
+    }
+    i{
+      font-size: 0.85em;
+      color: gray;
     }
     &.visit-other-instances {
       margin-right: 5px !important;
@@ -125,8 +129,8 @@ button.graph-element-button {
   &:hover:not(.disabled) {
     //background-image: linear-gradient(to bottom, #fff, #CDCDCD);
     //background-color:#f44c4c;
-    background-color:$red;
-    color:white;
+    background-color: $red;
+    color: white;
   }
   .stacked-icons {
     margin-top: 20px;
@@ -269,7 +273,7 @@ button.inactive i {
   transform: translate(-50%, 0) rotate(-45deg);
 }
 
-.fa.fa-rotate{
+.fa.fa-rotate {
   transform: rotate(180deg);
 }
 
@@ -290,11 +294,11 @@ button.inactive i {
 button.disabled {
   opacity: 1;
   cursor: not-allowed;
-  color:#c0c0c1;
+  color: #c0c0c1;
 }
 
-.not-editable{
+.not-editable {
   button.disabled {
-    display:none !important;
+    display: none !important;
   }
 }
