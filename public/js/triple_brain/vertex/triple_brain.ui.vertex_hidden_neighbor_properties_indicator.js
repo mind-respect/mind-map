@@ -70,6 +70,9 @@ define([
             this._getContent().text(
                 this.buildContent()
             );
+            if (this.bubble.getNumberOfHiddenRelations() <= 0) {
+                this.hide();
+            }
         };
 
         HiddenNeighborPropertiesIndicator.prototype.remove = function () {
