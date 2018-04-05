@@ -21,7 +21,7 @@ $horizontalPaddingHighest: 3.5;
           }
         }
         .in-bubble-content {
-          padding: calc(0.5em + #{$horizontalPadding}vw);
+          padding: 1em;
           padding-bottom: 0.5em;
           padding-top: 0.5em;
           $buttonExtraSize: max(0, 1.5 - $i * 0.3);
