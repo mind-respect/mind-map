@@ -623,7 +623,7 @@ define([
         };
 
         api.Bubble.prototype.showHiddenRelationsContainer = function () {
-            if (this.hasHiddenRelationsContainer() && this.isCollapsed()) {
+            if (this.hasHiddenRelationsContainer() && this.isCollapsed() && this.getNumberOfHiddenRelations() > 0) {
                 this.getHiddenRelationsContainer().show();
             }
         };
