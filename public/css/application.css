@@ -404,7 +404,11 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .relation.bubble { /* padding is to make it easier for drag and drop
-*/ padding-top: 10px; padding-bottom: 10px; position: relative; }
+*/ padding-top: 10px; padding-bottom: 10px; /*
+z-index: 4 is one less to general bubble
+to make it that relations's connector are under the arrows
+of left oriented graphs
+*/ z-index: 4; position: relative; }
 .relation.bubble.empty-label:not(.selected) .in-label-buttons { display: none !important; }
 .relation.bubble:not(.edit) .label .bubble-label { padding: 5px 10px 5px 10px; }
 .relation.bubble .bubble-label:empty:not(:focus) { max-width: 100%; transition: all 0.2s; line-height: 0; }
