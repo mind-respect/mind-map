@@ -18,7 +18,7 @@
     }
     .in-bubble-content {
       .in-label-buttons{
-        margin-right:-24px;
+        margin-right:$margin-buttons;
         margin-left:auto;
         padding-left:$inLabelButtonsPadding;
       }

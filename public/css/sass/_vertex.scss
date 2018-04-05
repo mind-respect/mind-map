@@ -57,7 +57,7 @@
       background-color: $hoverOverBubbleColor;
     }
     .in-label-buttons{
-      margin-left:-24px;
+      margin-left:$margin-buttons;
       padding-left:$inLabelButtonsPadding;
       padding-right:$inLabelButtonsPadding;
     }
