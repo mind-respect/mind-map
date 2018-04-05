@@ -324,7 +324,7 @@ $withoutTextPadding: 1px 7px 1px 7px;
   &.selected {
     .in-bubble-content {
       .label {
-        box-shadow: 5px 5px 5px black;
+        box-shadow: $bubble-box-shadow;
       }
     }
   }
