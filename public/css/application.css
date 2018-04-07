@@ -639,7 +639,7 @@ of left oriented graphs
 #word-cloud .context a.empty:before { content: "..."; color: black; }
 #word-cloud .select-checkbox { text-align: center; }
 #word-cloud th { font-size: 0.6em; color: #656464; }
-#word-cloud td { text-align: left; color: black; cursor: pointer; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-size: 0.6em; }
+#word-cloud td { vertical-align: middle; text-align: left; color: black; cursor: pointer; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-size: 0.6em; }
 #word-cloud td a.empty { color: transparent !important; }
 #word-cloud td.bubble-label a { overflow: hidden; text-overflow: ellipsis; font-weight: bold; }
 #word-cloud td.bubble-label a .reference.badge { font-size: 0.8em; margin-left: 5px; }
