@@ -349,6 +349,7 @@ button.inactive i { color: red; }
 
 .popover-title { font-weight: bold; }
 
+.popover-content span.badge.primary { background-color: #a72121; }
 .popover-content ul { list-style: none; padding-left: 0; }
 .popover-content:empty { padding: 0; }
 
@@ -725,8 +726,6 @@ li a.remove-button-in-list, li button.remove-button-in-list, h3 button.remove-bu
 .hidden-properties-container .loading { font-size: 22px; }
 
 .modal-body .link-like-button { font-size: 1em; }
-
-#list-modal .list-content-container { overflow-y: scroll; }
 
 .link-like-button { border-style: none; font-size: 0.7em; padding: 0 0 0 0; background-color: transparent; font-weight: normal; }
 
