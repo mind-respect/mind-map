@@ -224,7 +224,7 @@ footer > a:hover { background-color: black !important; color: white !important; 
 .left-oriented [data-action=addChild] .fa-arrow-right { transform: rotate(180deg); }
 .left-oriented .vertex.inverse .arrow { left: auto; }
 .left-oriented .vertex.selected .in-bubble-content { box-shadow: 3px 3px 3px black; }
-.left-oriented .vertex .in-bubble-content .in-label-buttons { margin-right: -16px; margin-left: auto; padding-left: 8px; }
+.left-oriented .vertex .in-bubble-content .in-label-buttons { margin-right: -16px; margin-left: auto; padding-left: 2px; }
 .left-oriented .relation.bubble:not(.same-as-group-relation):not(.edit) .label .bubble-label:not(:empty) { padding: 5px 10px 5px 10px; }
 .left-oriented .relation.bubble:not(.same-as-group-relation) .hidden-properties-content { margin-left: 0; margin-right: 25px; }
 .left-oriented .relation.bubble:not(.same-as-group-relation).public .label-container:after { right: auto; left: 4px; }
@@ -526,7 +526,7 @@ of left oriented graphs
 .vertex.absolute { white-space: nowrap; position: absolute !important; min-width: 120px; }
 .vertex.includes-vertices .in-bubble-content { padding-bottom: 2em; }
 .vertex .in-bubble-content:hover { background-color: transparent; }
-.vertex .in-bubble-content .in-label-buttons { margin-left: -16px; padding-left: 8px; padding-right: 8px; }
+.vertex .in-bubble-content .in-label-buttons { margin-left: -16px; padding-left: 8px; padding-right: 2px; }
 .vertex.selected { z-index: 12; }
 .vertex.selected .in-bubble-content { background-color: transparent; box-shadow: -3px 3px 3px black; }
 .vertex.selected.center-vertex .in-bubble-content { box-shadow: -3px 3px 3px black !important; background-color: transparent !important; }
