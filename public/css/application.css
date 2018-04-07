@@ -634,7 +634,7 @@ of left oriented graphs
 #word-cloud table, #word-cloud table * { cursor: pointer; }
 #word-cloud .last-visit { width: 10%; white-space: normal; }
 #word-cloud .bubble-label, #word-cloud .context { text-overflow: ellipsis; }
-#word-cloud .bubble-label { width: 30%; }
+#word-cloud .bubble-label { width: 30%; white-space: normal; }
 #word-cloud .context { width: 60%; }
 #word-cloud .context a.empty:before { content: "..."; color: black; }
 #word-cloud .select-checkbox { text-align: center; }
