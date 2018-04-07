@@ -36,6 +36,13 @@ define([
                 });
             };
         };
+        api.getAllVertices = function () {
+            var vertices = [];
+            api.visitAllVertices(function (vertex) {
+                vertices.push(vertex);
+            });
+            return vertices;
+        };
         api.VertexUi = function (html) {
             this.html = html;
         };

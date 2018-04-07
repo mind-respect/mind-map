@@ -10,8 +10,9 @@ define([
     "triple_brain.mind_map_info",
     "triple_brain.graph_displayer",
     "triple_brain.vertex",
-    "triple_brain.id_uri"
-], function ($, Command, GraphUi, VertexService, MindMapInfo, GraphDisplayer, Vertex, IdUri) {
+    "triple_brain.id_uri",
+    "mr.to-list"
+], function ($, Command, GraphUi, VertexService, MindMapInfo, GraphDisplayer, Vertex, IdUri, ToList) {
     "use strict";
     var api = {};
     api.undoCanDo = function () {
@@ -63,6 +64,14 @@ define([
 
     api.changeBackgroundColor = function () {
         $("#background-color-picker").click();
+    };
+
+    api.list = function () {
+        ToList.showForList(
+            GraphDisplayer.getVertexSelector().VerticesToHtmlLists(
+                GraphDisplayer.getVertexSelector().getAllVertices()
+            )
+        );
     };
 
     api.isMultiple = function () {
