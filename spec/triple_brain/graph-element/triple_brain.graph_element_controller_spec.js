@@ -426,12 +426,19 @@ define([
             });
         });
         describe("_canMoveUnderParent", function () {
-            it("return false if already is parent", function () {
+            it("return false if it's parent vertex", function () {
                 var scenario = new Scenarios.threeBubblesGraph();
                 var bubble1 = scenario.getBubble1InTree();
                 var bubble2 = scenario.getBubble2InTree();
                 expect(
                     bubble2.getController()._canMoveUnderParent(bubble1)
+                ).toBe(false);
+            });
+            it("return false if it's parent relation", function () {
+                var scenario = new Scenarios.threeBubblesGraph();
+                var bubble2 = scenario.getBubble2InTree();
+                expect(
+                    bubble2.getController()._canMoveUnderParent(bubble2.getParentBubble())
                 ).toBe(false);
             });
         });
