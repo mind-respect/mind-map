@@ -56,7 +56,7 @@ define([
             function integrateBubble(bubble, isARoot) {
                 var html = $(
                     isARoot ? "<div>" : "<li>"
-                ).append(bubble.text());
+                ).append(bubble.textHtml());
                 var ul = $("<ul>");
                 bubble.visitAllImmediateChild(function (child) {
                     if (child.isGroupRelation() && !child.getModel().isLabelEmpty()) {
@@ -71,9 +71,9 @@ define([
                         if (!child.getModel().isLabelEmpty() && !child.isSetAsSameAsGroupRelation()) {
                             ul.append(
                                 $("<li>").append(
-                                    $("<em>").text("(" + child.text() + ")"),
+                                    $("<em>").html("(" + child.textHtml() + ")"),
                                     "  ",
-                                    childVertex.text()
+                                    childVertex.textHtml()
                                 )
                             );
                             verticesInListById[childVertex.getId()].isIntegrated = true;

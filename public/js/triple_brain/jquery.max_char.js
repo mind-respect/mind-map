@@ -17,7 +17,7 @@ define([
         ));
         return $this;
     };
-    $.maxCharText = function(text, maxChars){
+    $.maxCharText = function (text, maxChars) {
         if (undefined === maxChars) {
             maxChars = defaultMaxChar;
         }
@@ -27,7 +27,7 @@ define([
         for (; lastIndexOfNewLine < text.length;) {
             var line = text.substring(
                 lastIndexOfNewLine,
-                    lastIndexOfNewLine + maxChars
+                lastIndexOfNewLine + maxChars
                 ),
                 indexOfSpaceInLine = line.lastIndexOf(" ") + 1;
             if (0 === indexOfSpaceInLine && line.length >= maxChars) {
@@ -54,6 +54,13 @@ define([
     $.fn.maxCharCleanText = function () {
         var $this = $(this);
         return $this.text().replace(
+            /\n/g,
+            ''
+        );
+    };
+    $.fn.maxCharCleanHtml = function () {
+        var $this = $(this);
+        return $this.html().replace(
             /\n/g,
             ''
         );

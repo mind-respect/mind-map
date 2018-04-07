@@ -49,6 +49,11 @@ define([
         api.TreeEdge.prototype.text = function () {
             return this.getLabel().text();
         };
+
+        api.TreeEdge.prototype.textHtml = function () {
+            return this.getLabel().html();
+        };
+
         api.TreeEdge.prototype.childVertexInDisplay = function () {
             return this.getTopMostChildBubble();
         };

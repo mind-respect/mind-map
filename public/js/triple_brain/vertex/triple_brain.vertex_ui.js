@@ -192,6 +192,10 @@ define([
             return this.getLabel().maxCharCleanText();
         };
 
+        api.VertexUi.prototype.textHtml = function () {
+            return this.getLabel().maxCharCleanHtml();
+        };
+
         api.VertexUi.prototype.removeConnectedEdges = function () {
             this.applyToConnectedEdges(function (edge) {
                 edge.removeFromCache();
