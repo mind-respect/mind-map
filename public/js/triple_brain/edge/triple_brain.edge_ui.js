@@ -106,6 +106,9 @@ define([
         };
 
         api.EdgeUi.prototype.setAsNotSameAsGroupRelation = function () {
+            if (!this.getModel().isLabelEmpty()) {
+                this.getHtml().removeClass("empty-label");
+            }
             return this.getHtml().removeClass(
                 "same-as-group-relation"
             );
@@ -115,7 +118,7 @@ define([
             if (MindMapInfo.isViewOnly()) {
                 this.hideLabel();
             }
-            return this.getHtml().addClass(
+            return this.getHtml().addClass("empty-label").addClass(
                 "same-as-group-relation"
             );
         };

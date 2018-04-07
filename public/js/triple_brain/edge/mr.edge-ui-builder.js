@@ -77,9 +77,6 @@ define([
                 ui
             );
             ui.reviewIsSameAsGroupRelation();
-            if (ui.isSetAsSameAsGroupRelation()) {
-                ui.getHtml().addClass("empty-label");
-            }
             GraphElementUiBuilder.completeBuild(
                 ui
             );
