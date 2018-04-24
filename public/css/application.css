@@ -184,12 +184,15 @@ footer > a:hover { background-color: black !important; color: white !important; 
 
 /*BORDER*/
 .left-oriented.vertices-children-container .vertex-tree-container > .vertex-container .relation.inverse .connector, .left-oriented .vertices-children-container .vertex-tree-container > .vertex-container .relation.inverse .connector { left: auto; right: -44px; }
+.left-oriented.vertices-children-container .vertex-tree-container > .vertex-container .property .arrow, .left-oriented.vertices-children-container .vertex-tree-container > .vertex-container .group-relation .arrow, .left-oriented .vertices-children-container .vertex-tree-container > .vertex-container .property .arrow, .left-oriented .vertices-children-container .vertex-tree-container > .vertex-container .group-relation .arrow { left: auto; right: -26px; }
 .left-oriented.vertices-children-container .vertex-tree-container:first-child > .vertex-container .property .arrow, .left-oriented.vertices-children-container .vertex-tree-container:first-child > .vertex-container .group-relation .arrow, .left-oriented .vertices-children-container .vertex-tree-container:first-child > .vertex-container .property .arrow, .left-oriented .vertices-children-container .vertex-tree-container:first-child > .vertex-container .group-relation .arrow { border-top-left-radius: 0; border-top-right-radius: 25px; }
 .left-oriented.vertices-children-container .vertex-tree-container:first-child > .vertex-container .relation .connector, .left-oriented .vertices-children-container .vertex-tree-container:first-child > .vertex-container .relation .connector { border-top-left-radius: 0; }
 .left-oriented.vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .property .arrow, .left-oriented.vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .group-relation .arrow, .left-oriented .vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .property .arrow, .left-oriented .vertices-children-container .vertex-tree-container:first-child:last-of-type > .vertex-container .group-relation .arrow { border-top-right-radius: 0; border-top-left-radius: 0; }
 .left-oriented.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow, .left-oriented.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow, .left-oriented .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow, .left-oriented .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow { border-top: none; top: calc(50% - 18px); border-bottom: 3px solid #3a87ad; border-bottom-left-radius: 0; border-bottom-right-radius: 25px; }
 .left-oriented.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .relation .connector, .left-oriented .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .relation .connector { border-bottom-left-radius: 0; }
 
+.right-oriented.vertices-children-container .vertex-tree-container > .vertex-container .property .arrow, .right-oriented.vertices-children-container .vertex-tree-container > .vertex-container .group-relation .arrow, .right-oriented .vertices-children-container .vertex-tree-container > .vertex-container .property .arrow, .right-oriented .vertices-children-container .vertex-tree-container > .vertex-container .group-relation .arrow { left: -24px; }
+.right-oriented.vertices-children-container .vertex-tree-container:first-child > .vertex-container .property .arrow, .right-oriented.vertices-children-container .vertex-tree-container:first-child > .vertex-container .group-relation .arrow, .right-oriented .vertices-children-container .vertex-tree-container:first-child > .vertex-container .property .arrow, .right-oriented .vertices-children-container .vertex-tree-container:first-child > .vertex-container .group-relation .arrow { left: -26px; }
 .right-oriented.vertices-children-container .vertex-tree-container:first-child > .vertex-container .relation.inverse .connector, .right-oriented .vertices-children-container .vertex-tree-container:first-child > .vertex-container .relation.inverse .connector { left: -41px; }
 .right-oriented.vertices-children-container .vertex-tree-container:first-child > .vertex-container .relation .connector, .right-oriented .vertices-children-container .vertex-tree-container:first-child > .vertex-container .relation .connector { border-top-right-radius: 0; }
 .right-oriented.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .relation.inverse .connector, .right-oriented .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .relation.inverse .connector { left: -41px; }
@@ -247,7 +250,6 @@ footer > a:hover { background-color: black !important; color: white !important; 
 .left-oriented .arrow { left: auto; width: 57px; margin-left: -3px; }
 .left-oriented .arrow:before { content: url("images/icons/vertex/arrowhead_left.svg"); }
 .left-oriented .arrow.inverse { left: auto; }
-.left-oriented .group-relation .arrow, .left-oriented .property .arrow { left: auto; right: -26px; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .frontier { position: fixed; background-color: transparent; z-index: 0; }
@@ -470,7 +472,7 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .bubble.property { margin-top: 1em; margin-bottom: 1em; }
 .bubble.property input.edge-label { background-color: #f5f5f5; font-size: 13px; }
 .bubble.property .relation-menu { left: 0; }
-.bubble.property .arrow { left: -26px; padding-top: 10px; padding-bottom: 10px; top: calc(50% - 5px); }
+.bubble.property .arrow { padding-top: 10px; padding-bottom: 10px; top: calc(50% - 5px); }
 .bubble.property .arrow:before { top: -50%; position: absolute; left: 26px; }
 
 .bubble.group-relation { white-space: nowrap; }
@@ -514,7 +516,7 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .bubble .image_container:empty { min-width: 0; }
 .bubble .edge-label { display: inline; }
 .bubble .connector { position: absolute; height: 22px; border-top: 3px solid #3a87ad; top: calc(50% - 2px); width: 32px; left: -25px; z-index: -1; }
-.bubble .arrow { position: absolute; height: 1px; width: 52px; top: 50%; left: -26px; border-top: 3px solid #3a87ad; z-index: -1; }
+.bubble .arrow { position: absolute; height: 1px; width: 52px; top: 50%; border-top: 3px solid #3a87ad; z-index: -1; }
 .bubble .arrow ~ { background-color: yellow; }
 .bubble .arrow ~ .in-bubble-note-button:not(hidden) { width: 100%; }
 .bubble .arrow:before { content: url("images/icons/vertex/arrowhead_right.svg"); position: relative; top: -11px; left: 20px; }

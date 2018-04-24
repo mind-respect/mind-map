@@ -94,6 +94,12 @@ $connectorRadius: 25px;
             right: -44px;
           }
         }
+        .property, .group-relation {
+          .arrow {
+            left: auto;
+            right: $groupRelationArrowDistance;
+          }
+        }
       }
       &:first-child {
         > .vertex-container {
@@ -143,8 +149,20 @@ $connectorRadius: 25px;
 .right-oriented {
   &.vertices-children-container, .vertices-children-container {
     .vertex-tree-container {
+      > .vertex-container {
+        .property, .group-relation {
+          .arrow {
+            left: $groupRelationArrowDistance + 2
+          }
+        }
+      }
       &:first-child {
         > .vertex-container {
+          .property, .group-relation {
+            .arrow {
+              left: $groupRelationArrowDistance
+            }
+          }
           .relation {
             &.inverse .connector {
               left: -41px;
