@@ -146,7 +146,7 @@ $connectorRadius: 25px;
       &:first-child {
         > .vertex-container {
           .relation {
-            &.inverse .connector{
+            &.inverse .connector {
               left: -41px;
             }
             .connector {
@@ -158,7 +158,7 @@ $connectorRadius: 25px;
       &:last-of-type {
         > .vertex-container {
           .relation {
-            &.inverse .connector{
+            &.inverse .connector {
               left: -41px;
             }
             .connector {
@@ -180,6 +180,8 @@ $connectorRadius: 25px;
     > .vertical-border-second {
       border-top-right-radius: $verticalBorderRadius;
       border-top-left-radius: $verticalBorderRadius;
+      height: calc(50% + 3px);
+      margin-top: -4px;
     }
     > .vertex-container {
       .connector {
@@ -188,6 +190,7 @@ $connectorRadius: 25px;
       .property, .group-relation {
         .arrow {
           border-top-left-radius: $connectorRadius;
+          margin-top: -3px;
         }
       }
     }
@@ -210,6 +213,9 @@ $connectorRadius: 25px;
     }
   }
   &:last-of-type {
+    .arrow.vertex {
+      margin-top: -3px;
+    }
     > .vertex-container {
       > .vertex:before {
         border-left: none;
@@ -219,7 +225,7 @@ $connectorRadius: 25px;
         border-radius: $connectorRadius;
         border-bottom: $edgeStyle;
         border-top: none;
-        top: calc(50% - #{$relationConnectorHeight});
+        top: calc(50% - #{$relationConnectorHeight} + 1px);
         &:before {
           top: 11px;
         }
@@ -230,12 +236,13 @@ $connectorRadius: 25px;
           top: calc(50% - 18px);
           border-bottom: $edgeStyle;
           border-bottom-left-radius: $connectorRadius;
+          margin-top: 2px;
         }
       }
       .property {
         .arrow {
           &:before {
-            top: calc(50% + 1px);
+            top: calc(50% + 2px);
             position: relative;
           }
         }
@@ -244,6 +251,7 @@ $connectorRadius: 25px;
     > .vertical-border-first {
       border-bottom-right-radius: $verticalBorderRadius;
       border-bottom-left-radius: $verticalBorderRadius;
+      height: calc(50% + 1px);
     }
     > .vertical-border-second {
       border-left: none;
@@ -253,15 +261,15 @@ $connectorRadius: 25px;
       border-left: none;
       border-right: none;
     }
-    > .vertices-children-container > .vertex-tree-container > .vertex-container > .vertex > .arrow{
-        top:calc(50% - 3px);
+    > .vertices-children-container > .vertex-tree-container > .vertex-container > .vertex > .arrow {
+      top: calc(50% - 3px);
     }
   }
 }
 
 .vertical-border {
   display: table;
-  height: 50%;
+  height: calc(50% + 2px);
   border-left: $edgeStyle;
   padding-right: 40px;
 }
@@ -279,4 +287,39 @@ $connectorRadius: 25px;
   height: 0;
   padding: 0;
   width: $edgeSize;
+}
+
+.arrow {
+  height: 1px;
+  width: 52px;
+  margin-left: -1px;
+  top: 50%;
+  display: table;
+  border-top: $edgeStyle;
+  z-index: 3;
+  ~ {
+    background-color: yellow;
+  }
+  ~ .in-bubble-note-button:not(hidden) {
+    width: 100%;
+  }
+  &:before {
+    content: url('images/icons/vertex/arrowhead_right.svg');
+    position: relative;
+    top: -11px;
+    left: 20px;
+  }
+  &.property, &.group-relation {
+    border-top-left-radius: 0;
+    border-top-right-radius: $connectorRadius;
+  }
+  &.vertex {
+    margin-right: -7px;
+    &.inverse:before {
+      content: "";
+    }
+  }
+  &.small {
+    width: 35px !important;
+  }
 }

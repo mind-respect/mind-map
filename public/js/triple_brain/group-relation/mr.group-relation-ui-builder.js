@@ -54,6 +54,9 @@ define([
             //         api.completeBuild(child);
             //     }
             // });
+            groupRelationUi.getHtml().closest(
+                ".vertex-tree-container"
+            ).find("> .vertical-border,> .arrow").addClass("small");
         };
 
         api.GroupRelationUiBuilder = function () {

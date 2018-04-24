@@ -74,7 +74,7 @@ define([
                 ]("inverse");
             this.getHtml().closest(
                 ".vertex-tree-container"
-            ).find("> .vertical-border")[
+            ).find("> .vertical-border,> .arrow")[
                 isInverse ?
                     "addClass" :
                     "removeClass"

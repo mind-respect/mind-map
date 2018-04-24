@@ -134,9 +134,6 @@ define([
             this.vertexUi.addImages(
                 this.serverFacade.getImages()
             );
-            this.vertexUi.getHtml().append(
-                $("<span class='arrow'>")
-            );
             EventBus.publish(
                 '/event/ui/html/vertex/created/',
                 this.vertexUi

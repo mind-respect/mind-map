@@ -2,8 +2,6 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
-
-
 #drag-bubble-text-for-chrome {
   font-size: 25px;
   padding: 10px;
@@ -54,9 +52,9 @@
       display: inline-block;
       white-space: nowrap;
       button {
-        width:37px;
-        height:37px;
-        height:auto;
+        width: 37px;
+        height: 37px;
+        height: auto;
         display: inline-block;
         background: none;
         border: none;
@@ -147,7 +145,7 @@
     position: absolute;
     height: $relationConnectorHeight;
     border-top: $edgeStyle;
-    top: 50%;
+    top: calc(50% - 2px);
     width: 32px;
     left: -25px;
     z-index: -1;
@@ -158,7 +156,7 @@
     height: 1px;
     width: 52px;
     top: 50%;
-    left: -44px;
+    left: $groupRelationArrowDistance;
     border-top: $edgeStyle;
     z-index: -1;
     ~ {
@@ -172,12 +170,6 @@
       position: relative;
       top: -11px;
       left: 20px;
-    }
-  }
-
-  &.inverse {
-    .arrow:before {
-      content: "";
     }
   }
 }

@@ -35,7 +35,7 @@ define([
             );
             ui.getHtml().closest(
                 ".vertex-tree-container"
-            ).find("> .vertical-border").addClass("small");
+            ).find("> .vertical-border, > .arrow").addClass("small");
             if (isInverse) {
                 ui.inverse();
             }

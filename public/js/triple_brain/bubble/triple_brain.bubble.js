@@ -767,7 +767,7 @@ define([
         };
 
         api.Bubble.prototype.getArrowHtml = function () {
-            return this.html.find(".arrow");
+            return this.html.closest(".vertex-tree-container").find(">.arrow");
         };
 
         api.Bubble.prototype.centerOnScreen = function () {

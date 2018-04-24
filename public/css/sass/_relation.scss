@@ -10,12 +10,11 @@ $withoutTextPadding: 1px 7px 1px 7px;
   */
   padding-top: 10px;
   padding-bottom: 10px;
-  /*
-  z-index: 4 is one less to general bubble
-  to make it that relations's connector are under the arrows
-  of left oriented graphs
-  */
-  z-index: 4;
+
+  z-index: 5;
+  .arrow {
+    width: 35px !important;
+  }
   &.empty-label {
     &:not(.selected) {
       .in-label-buttons {
@@ -300,8 +299,7 @@ $withoutTextPadding: 1px 7px 1px 7px;
     left: 0;
   }
   .arrow {
-    width: 60px;
-    left: -45px;
+    left: $groupRelationArrowDistance;
     padding-top: 10px;
     padding-bottom: 10px;
     top: calc(50% - 5px);

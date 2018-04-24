@@ -110,11 +110,21 @@ define([
         var childrenContainer = $(RelativeTreeTemplates[
             "vertices_children_container"
             ].merge());
-        vertexHtmlFacade.getHtml().closest(
+        var treeContainer = vertexHtmlFacade.getHtml().closest(
             ".vertex-tree-container, .root-vertex-super-container"
         )[
             toLeft && vertexHtmlFacade ? "prepend" : "append"
             ](childrenContainer);
+        if ((vertexHtmlFacade.isVertex() && !vertexHtmlFacade.isCenterBubble())) {
+            treeContainer.find("> .vertical-border-first").after(
+                $("<span class='arrow'>").addClass(vertexHtmlFacade.getGraphElementType().replace("_", "-"))
+            );
+        }
+        // if(vertexHtmlFacade.isEdge()){
+        //     treeContainer.find("> .vertical-border-first").after(
+        //         "<span class='connector'>"
+        //     );
+        // }
         return childrenContainer;
     };
     api.GraphUiBuilder.prototype.childContainer = function (bubbleUi) {

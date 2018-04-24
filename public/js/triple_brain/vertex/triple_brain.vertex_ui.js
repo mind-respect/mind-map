@@ -290,10 +290,11 @@ define([
                     "removeClass" :
                     "addClass"
                 ]("inverse");
+            this.getArrowHtml().addClass('inverse');
             var verticalBorders = this.getHtml().closest(
                 ".vertex-tree-container"
             ).find(
-                "> .vertical-border"
+                "> .vertical-border,> .arrow"
             );
             verticalBorders[
                 isInverse ?

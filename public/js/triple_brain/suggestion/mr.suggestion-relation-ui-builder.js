@@ -10,13 +10,13 @@ define([
 ], function ($, EdgeUiBuilderCommon, SuggestionRelationUi, GraphElementMainMenu) {
     "use strict";
     var api = {};
-    
+
     api.afterChildBuilt = function(suggestionRelationUi){
         var propertiesIndicator = suggestionRelationUi.buildHiddenNeighborPropertiesIndicator();
         propertiesIndicator.hide();
         suggestionRelationUi.getHtml().closest(
             ".vertex-tree-container"
-        ).find("> .vertical-border").addClass("small");
+        ).find("> .vertical-border,> .arrow").addClass("small");
     };
 
     api.SuggestionRelationUiBuilder = function() {};

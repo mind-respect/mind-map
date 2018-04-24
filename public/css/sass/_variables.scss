@@ -2,6 +2,10 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
+$red: #c00000;
+$red2: #a72121;
+$red3: #c06056;
+
 $edgeSize: 3px;
 $edgeColor: #3a87ad;
 $edgeInverseColor: darkslateblue;
@@ -31,7 +35,5 @@ $buttons-next-to-label-padding: 2px;
 $hoverOverRelationColor: rgba(68, 201, 251, 0.4);
 $selectRelationColor: rgba(68, 201, 251, 0.7);
 $enterEditModeRelationColor: rgba(8, 74, 98, 0.7);
+$groupRelationArrowDistance: -26px;
 
-$red: #c00000;
-$red2: #a72121;
-$red3: #c06056;
