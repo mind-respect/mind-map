@@ -58,12 +58,12 @@ $withoutTextPadding: 1px 7px 1px 7px;
   &.inverse {
     .connector {
       width: 51px;
-      left: -44px;
+      left: $relationConnectorDistance;
       &:before {
         content: url(images/icons/vertex/arrowhead_left.svg);
         position: relative;
-        top: -11px;
-        left: 20px;
+        top: $arrowTop;
+        left: $arrowLeft;
       }
     }
   }

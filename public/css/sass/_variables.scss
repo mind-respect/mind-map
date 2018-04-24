@@ -6,8 +6,8 @@ $red: #c00000;
 $red2: #a72121;
 $red3: #c06056;
 
-$edgeSize: 3px;
-$edgeColor: #3a87ad;
+$edgeSize: 0.15em;
+$edgeColor: rgba(58, 135, 173, 1);
 $edgeInverseColor: darkslateblue;
 $edgeStyle: $edgeSize solid $edgeColor;
 $linksColor: #00005a;
@@ -35,5 +35,8 @@ $buttons-next-to-label-padding: 2px;
 $hoverOverRelationColor: rgba(68, 201, 251, 0.4);
 $selectRelationColor: rgba(68, 201, 251, 0.7);
 $enterEditModeRelationColor: rgba(8, 74, 98, 0.7);
-$groupRelationArrowDistance: -26px;
+$groupRelationArrowDistance: -23px;
+$relationConnectorDistance: -41px;
 
+$arrowTop: -10px;
+$arrowLeft: 20px;

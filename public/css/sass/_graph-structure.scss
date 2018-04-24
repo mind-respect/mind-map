@@ -91,7 +91,7 @@ $connectorRadius: 25px;
         .relation.inverse {
           .connector {
             left: auto;
-            right: -44px;
+            right: $relationConnectorDistance + 2;
           }
         }
         .property, .group-relation {
@@ -190,6 +190,9 @@ $connectorRadius: 25px;
 }
 
 .vertices-children-container .vertex-tree-container {
+  > .vertices-children-container > .vertex-tree-container > .arrow.vertex {
+    margin-top: -3px;
+  }
   &:first-child {
     > .vertical-border-first {
       border-left: none;
@@ -231,8 +234,8 @@ $connectorRadius: 25px;
     }
   }
   &:last-of-type {
-    .arrow.vertex {
-      margin-top: -3px;
+    > .vertices-children-container > .vertex-tree-container > .arrow.vertex {
+      margin-top: -1px;
     }
     > .vertex-container {
       > .vertex:before {
@@ -324,8 +327,8 @@ $connectorRadius: 25px;
   &:before {
     content: url('images/icons/vertex/arrowhead_right.svg');
     position: relative;
-    top: -11px;
-    left: 20px;
+    top: $arrowTop;
+    left: $arrowLeft;
   }
   &.property, &.group-relation {
     border-top-left-radius: 0;
