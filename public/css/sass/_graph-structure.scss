@@ -248,7 +248,7 @@ $connectorRadius: 25px;
         border-top: none;
         top: calc(50% - #{$relationConnectorHeight} + 1px);
         &:before {
-          top: 11px;
+          top: 12px;
         }
       }
       .property, .group-relation {

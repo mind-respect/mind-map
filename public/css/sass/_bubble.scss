@@ -167,8 +167,8 @@
     &:before {
       content: url('images/icons/vertex/arrowhead_right.svg');
       position: relative;
-      top: -11px;
-      left: 20px;
+      top: $arrowTop;
+      left: $arrowLeft;
     }
   }
 }

@@ -209,7 +209,7 @@ footer > a:hover { background-color: black !important; color: white !important; 
 .vertices-children-container .vertex-tree-container:last-of-type > .vertices-children-container > .vertex-tree-container > .arrow.vertex { margin-top: -1px; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container > .vertex:before { border-left: none; border-right: none; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .connector { border-radius: 25px; border-bottom: 0.15em solid #3a87ad; border-top: none; top: calc(50% - 22px + 1px); }
-.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .connector:before { top: 11px; }
+.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .connector:before { top: 12px; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow, .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .group-relation .arrow { border-top: none; top: calc(50% - 18px); border-bottom: 0.15em solid #3a87ad; border-bottom-left-radius: 25px; margin-top: 2px; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .property .arrow:before { top: calc(50% + 2px); position: relative; }
 .vertices-children-container .vertex-tree-container:last-of-type > .vertical-border-first { border-bottom-right-radius: 18px; border-bottom-left-radius: 18px; height: calc(50% + 1px); }
@@ -520,7 +520,7 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .bubble .arrow { position: absolute; height: 1px; width: 52px; top: 50%; border-top: 0.15em solid #3a87ad; z-index: -1; }
 .bubble .arrow ~ { background-color: yellow; }
 .bubble .arrow ~ .in-bubble-note-button:not(hidden) { width: 100%; }
-.bubble .arrow:before { content: url("images/icons/vertex/arrowhead_right.svg"); position: relative; top: -11px; left: 20px; }
+.bubble .arrow:before { content: url("images/icons/vertex/arrowhead_right.svg"); position: relative; top: -10px; left: 20px; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .vertex { /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */ white-space: nowrap; }
