@@ -44,7 +44,7 @@ define([
         plusKeyNumberMac = 187,
         minusKeyNumberMac = 189,
         bKeyNumber = 66,
-
+        lKeyNumber = 76,
         nonCtrlPlusActions = defineNonCtrlPlusKeysAndTheirActions(),
         ctrlPlusActions = defineCtrlPlusKeysAndTheirActions();
 
@@ -95,7 +95,7 @@ define([
     }
 
     function keyDownHandler(event) {
-//         console.log(event.which);
+        // console.log(event.which);
         var target = $(event.target),
             isWorkingOnSomething = !target.is("body") && !target.is("button");
         var isCombineKeyPressed = UiUtils.isMacintosh() ? event.metaKey : event.ctrlKey;
@@ -267,6 +267,9 @@ define([
         actions[bKeyNumber] = {
             action: "createVertex",
             isForAppController: true
+        };
+        actions[lKeyNumber] = {
+            action: "list"
         };
         return actions;
     }
