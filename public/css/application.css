@@ -510,6 +510,7 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .bubble .bubble-label:empty:not(:focus):after { content: attr(data-placeholder); font-style: italic; font-family: arial; font-size: calc(1em); }
 .bubble .bubble-label del { text-decoration: none; }
 .bubble .bubble-label[contenteditable='true']:before { content: "\feff "; }
+.bubble.selected .in-bubble-content { background-color: white !important; }
 .bubble.selected:not(.not-editable) { z-index: 11; }
 .bubble.selected:not(.not-editable) .bubble-label:empty:not(:focus):after { content: attr(data-placeholder); color: grey; font-family: arial; font-style: italic; }
 .bubble.selected:not(.not-editable) .in-bubble-content { z-index: 5; }
