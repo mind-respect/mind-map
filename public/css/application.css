@@ -505,14 +505,13 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .bubble .in-bubble-content .in-label-buttons button[data-action=makePrivate] i:before { content: "\f09c"; }
 .bubble.edit { user-select: text; cursor: text; }
 .bubble.edit .bubble-label:after { content: ""; }
-.bubble .bubble-label { color: black; outline: 0 solid transparent; border: none; font-family: arial; font-size: 14px; width: auto; display: table-cell; white-space: pre; }
+.bubble .bubble-label { color: black; outline: 0 solid transparent; border: none; font-family: Enriqueta; font-size: 14px; width: auto; display: table-cell; white-space: pre; }
 .bubble .bubble-label:empty:not(:focus) { color: grey; max-width: 100%; transition: all 0.3s; }
-.bubble .bubble-label:empty:not(:focus):after { content: attr(data-placeholder); font-style: italic; font-family: arial; font-size: calc(1em); }
+.bubble .bubble-label:empty:not(:focus):after { content: attr(data-placeholder); font-style: italic; font-family: Enriqueta; font-size: calc(1em); }
 .bubble .bubble-label del { text-decoration: none; }
 .bubble .bubble-label[contenteditable='true']:before { content: "\feff "; }
-.bubble.selected .in-bubble-content { background-color: white !important; }
 .bubble.selected:not(.not-editable) { z-index: 11; }
-.bubble.selected:not(.not-editable) .bubble-label:empty:not(:focus):after { content: attr(data-placeholder); color: grey; font-family: arial; font-style: italic; }
+.bubble.selected:not(.not-editable) .bubble-label:empty:not(:focus):after { content: attr(data-placeholder); color: grey; font-family: Enriqueta; font-style: italic; }
 .bubble.selected:not(.not-editable) .in-bubble-content { z-index: 5; }
 .bubble .image_container { z-index: 3; position: relative; min-width: 60px; text-align: right; }
 .bubble .image_container:empty { min-width: 0; }
@@ -538,6 +537,7 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .vertex.selected { z-index: 12; }
 .vertex.selected .in-bubble-content { background-color: transparent; box-shadow: -3px 3px 3px black; }
 .vertex.selected.center-vertex .in-bubble-content { box-shadow: -3px 3px 3px black !important; background-color: transparent !important; }
+.vertex.center-vertex { padding-top: 15px; }
 .vertex.center-vertex .connector { height: 0; width: 0; }
 .vertex.center-vertex .arrow { height: 0; width: 0; top: 0; left: 0; border-top: none; }
 .vertex.center-vertex .arrow:before { content: ""; }

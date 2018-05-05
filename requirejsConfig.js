@@ -245,6 +245,7 @@ module.exports = {
         "triple_brain.transform_matrix_2d": "triple_brain/triple_brain.transform_matrix_2d",
         "triple_brain.error": "triple_brain/triple_brain.error",
         "mr.ask_modal": "triple_brain/mr.ask_modal",
+        "mr.color": "triple_brain/mr.color",
 
         "mr.central_bubble_table": "triple_brain/mr.central_bubble_table",
         "mr.center_graph_element": "triple_brain/mr.center_graph_element",

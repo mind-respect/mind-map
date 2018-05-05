@@ -17,10 +17,11 @@ define([
         "triple_brain.bubble_factory",
         "triple_brain.suggestion_service",
         "triple_brain.id_uri",
+        "triple_brain.graph_ui",
         "jquery.center-on-screen",
         "jquery.max_char"
     ],
-    function (require, $, VertexService, Point, Error, VertexSegments, EventBus, GraphElementUi, GraphElementMainMenu, Bubble, CenterBubble, BubbleFactory, SuggestionService, IdUri) {
+    function (require, $, VertexService, Point, Error, VertexSegments, EventBus, GraphElementUi, GraphElementMainMenu, Bubble, CenterBubble, BubbleFactory, SuggestionService, IdUri, GraphUi) {
         "use strict";
         var api = {};
         api.getWhenEmptyLabel = function () {
@@ -449,6 +450,26 @@ define([
                 };
                 index++;
             }
+        };
+
+        api.VertexUi.prototype.makeSingleSelected = function () {
+            GraphElementUi.GraphElementUi.prototype.makeSingleSelected.call(
+                this
+            );
+            this.html.find(".in-bubble-content").css(
+                "background-color",
+                GraphUi.getSelectedBubbleBackgroundColor()
+            );
+        };
+
+        api.VertexUi.prototype.removeSingleSelected = function () {
+            GraphElementUi.GraphElementUi.prototype.removeSingleSelected.call(
+                this
+            );
+            this.html.find(".in-bubble-content").css(
+                "background-color",
+                "transparent"
+            );
         };
 
         api.buildCommonConstructors(api);

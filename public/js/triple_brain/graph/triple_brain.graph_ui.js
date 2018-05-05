@@ -4,16 +4,20 @@
 
 define([
         "jquery",
-        "dragscroll"
+        "dragscroll",
+        "mr.color"
     ],
-    function ($, DragScroll) {
+    function ($, DragScroll, Color) {
         "use strict";
+        var DEFAULT_BACKGROUND_COLOR = "#1E87AF";
         var api = {},
             _drawnGraph,
             _topLayer,
             _bubbleIdCounter = 0,
             _isDragScrollEnabled = false,
-            _isDragScrollLocked = false;
+            _isDragScrollLocked = false,
+            _backgroundColor = DEFAULT_BACKGROUND_COLOR,
+            _selectedBackgroundColor;
         api.initDragScroll = function () {
             var $body = $('body');
             var $toDragScroll = $body.scrollLeft() > 0 ? $body : $('html');
@@ -67,6 +71,8 @@ define([
         };
 
         api.changeBackgroundColor = function (backgroundColor) {
+            _backgroundColor = backgroundColor;
+            api.defineSelectedBackgroundColor();
             $("#background-color-picker").val(backgroundColor);
             $("#drawn_graph").css(
                 'background',
@@ -75,10 +81,19 @@ define([
         };
 
         api.resetBackGroundColor = function () {
-            $("#drawn_graph").css(
-                'background',
-                "radial-gradient(at 4250px, rgba(0, 0, 255, 0) 5%, #1E87AF 100%)"
-            );
+            api.changeBackgroundColor(DEFAULT_BACKGROUND_COLOR);
+        };
+
+        api.defineSelectedBackgroundColor = function () {
+            var hsl = Color.hex2Hsl(_backgroundColor);
+            _selectedBackgroundColor = 'hsl(' + hsl.h + ', ' + hsl.s + '%, ' + 96 + '%)';
+        };
+
+        api.getSelectedBubbleBackgroundColor = function () {
+            if(!_selectedBackgroundColor){
+                api.defineSelectedBackgroundColor();
+            }
+            return _selectedBackgroundColor;
         };
 
         api.disableDragScroll = function () {

@@ -105,7 +105,7 @@
     }
     outline: 0 solid transparent;
     border: none;
-    font-family: arial;
+    font-family: $bubbleFontFamily;
     font-size: 14px;
     width: auto;
     display: table-cell;
@@ -116,7 +116,7 @@
   margin: 0 0 0 0;
   &.selected {
     .in-bubble-content {
-      background-color: white !important;
+      //background-color: attr(data-background-selected) !important;
     }
   }
   &.selected:not(.not-editable) {
