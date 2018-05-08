@@ -101,6 +101,7 @@ define([
                     if (clickedOnSomethingInsideABubble) {
                         return;
                     }
+                    $("#font-picker").addClass('hidden');
                     GraphUi.removePopovers();
                     SelectionHandler.getSelectedBubbles().forEach(function(bubble){
                         bubble.hideMenu();

@@ -13,6 +13,7 @@ module.exports = {
         "diff_match_patch": "vendor/diff_match_patch_uncompressed",
         "clipboard": "vendor/clipboard",
         "intro": "vendor/node_modules/intro.js/intro",
+        "font-picker": "vendor/node_modules/font-picker/lib/font-picker",
         // "html2canvas": "vendor/node_modules/html2canvas/dist/html2canvas",
         /*
          Jquery

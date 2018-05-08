@@ -15,16 +15,18 @@ define([
     "triple_brain.keyboard_actions_handler",
     "triple_brain.id_uri",
     "triple_brain.center_bubble",
+    "font-picker",
     "jquery.focus-end",
     "jquery.center-on-screen",
     "jquery.safer-html",
     "jquery.max_char"
-], function ($, GraphDisplayer, GraphElementMainMenu, GraphElementButton, GraphElementType, EventBus, MindMapInfo, SelectionHandler, GraphUi, KeyboardActionsHandler, IdUri, CenterBubble) {
+], function ($, GraphDisplayer, GraphElementMainMenu, GraphElementButton, GraphElementType, EventBus, MindMapInfo, SelectionHandler, GraphUi, KeyboardActionsHandler, IdUri, CenterBubble, FontPicker) {
     "use strict";
     var api = {},
         otherInstancesKey = "otherInstances",
         textBeforeModificationKey = "textBeforeModification",
-        _centralBubble;
+        _centralBubble,
+        fontPicker;
     api.Types = GraphElementType;
     var controllerGetters = {},
         selectors = {};
@@ -61,7 +63,7 @@ define([
         if (centerBubble.isCenterVertexSchemaOrMeta()) {
             return centerBubble;
         }
-        return centerBubble.getParentBubble();
+        return centerBubble.getParentVertex();
     };
     api.buildCommonConstructors = function (api) {
         var cacheWithIdAsKey = {},
@@ -214,6 +216,28 @@ define([
         _centralBubble = this;
         this.html.addClass('center-vertex');
         this.hideCenterButton();
+        var font = api.getCenterVertexOrSchema().getModel().getFont();
+        var isTesting = window.mindRespectConfig.googleFontsApiKey === "testing";
+        if (!fontPicker && !isTesting) {
+            fontPicker = new FontPicker.FontPicker(
+                window.mindRespectConfig.googleFontsApiKey,
+                font.family,
+                {
+                    limit: 500
+                },
+                function (font) {
+                    api.getCenterVertexOrSchema().getController().setFont(font);
+                }
+            );
+        } else if (!isTesting) {
+            fontPicker.setActiveFont(font.family);
+        }
+        GraphDisplayer.getVertexSelector().visitAll(function(vertexUi){
+            vertexUi.refreshFont(font);
+        });
+        api.visitAll(function (graphElementUi) {
+            graphElementUi.refreshFont(font);
+        });
     };
 
     api.GraphElementUi.prototype.setAsNonCentral = function () {
@@ -895,6 +919,14 @@ define([
 
     api.GraphElementUi.prototype.addChildRightButton = function (button) {
         button.getHtml().find("i").removeClass("fa-rotate");
+    };
+
+    api.GraphElementUi.prototype.refreshFont = function (font) {
+        font = font || api.getCenterVertexOrSchema().getModel().getFont();
+        this.html.find(".bubble-label").css(
+            "font-family",
+            font.family
+        );
     };
 
     EventBus.subscribe(

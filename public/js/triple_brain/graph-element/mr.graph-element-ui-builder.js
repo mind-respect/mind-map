@@ -28,6 +28,9 @@ define([
         graphElementUi.applyToOtherInstances(function (otherInstance) {
             otherInstance.reviewInLabelButtonsVisibility();
         });
+        if(GraphElementUi.hasCenterBubble()){
+            graphElementUi.refreshFont();
+        }
     };
     api.setUpLabel = function (label) {
         label.blur(function (event) {

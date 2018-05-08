@@ -46,6 +46,9 @@ define([
     function ($, TestScenarioData, Vertex, Edge, Schema, VertexUiBuilder, EdgeUiBuilder, GroupRelationUiBuilder, SuggestionUiBuilder, SuggestionRelationUiBuilder, SchemaUiBuilder, PropertyUiBuilder, GraphDisplayerAsRelativeTree, Mock, TestUtils, BubbleFactory, GraphDisplayer, GraphDisplayerFactory, TreeDisplayerCommon, EventBus, KeyboardActionsHandler, Suggestion, Identification, FriendlyResource, IdUri, LanguageManager, UiUtils, enTranslation, UserMapAutocompleteProvider, MetaGraph, MetaGraphUi, GraphElementType, SubGraph) {
         "use strict";
         KeyboardActionsHandler._ctrlKeyNumber = 17;
+        window.mindRespectConfig = {
+            googleFontsApiKey : "testing"
+        };
         UiUtils.isMacintosh = function () {
             return false;
         };

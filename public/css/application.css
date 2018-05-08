@@ -367,6 +367,8 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 
 .not-editable button.disabled { display: none !important; }
 
+#font-picker { position: absolute; }
+
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .ui-dialog-titlebar { text-align: center; }
 

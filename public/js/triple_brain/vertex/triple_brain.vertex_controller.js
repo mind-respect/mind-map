@@ -18,10 +18,11 @@ define([
     "triple_brain.identification",
     "triple_brain.graph_element_service",
     "triple_brain.schema_suggestion",
+    "triple_brain.graph_element_ui",
     "triple_brain.event_bus",
     "triple_brain.id_uri",
     "jquery.triple_brain.search"
-], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, BubbleDeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, EventBus, IdUri, GraphElementType) {
+], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, BubbleDeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, GraphElementUi, EventBus, IdUri, GraphElementType) {
     "use strict";
     var api = {};
 
@@ -180,7 +181,7 @@ define([
             SelectionHandler.setToSingleVertex(
                 triple.destinationVertex()
             );
-            if(!triple.destinationVertex().getHtml().isFullyOnScreen()){
+            if (!triple.destinationVertex().getHtml().isFullyOnScreen()) {
                 triple.destinationVertex().sideCenterOnScreenWithAnimation();
             }
             return triple;
@@ -623,15 +624,26 @@ define([
                         return triple.destinationVertex().getController().makePublic();
                     }
                 }
-            ).then(function(){
+            ).then(function () {
                 return GraphElementService.changeChildrenIndex(
                     triple.sourceVertex()
                 );
-            }).then(function(){
+            }).then(function () {
                 return triple;
             });
         }
     };
+
+    VertexController.prototype.setFont = function (font) {
+        GraphElementUi.getCenterVertexOrSchema().getModel().setFont(font);
+        GraphElementUi.visitAll(function (graphElementUi) {
+            graphElementUi.refreshFont(font);
+        });
+        return VertexService.saveFont({
+            family: font.family
+        });
+    };
+
     api.VertexController = VertexController;
     return api;
 });

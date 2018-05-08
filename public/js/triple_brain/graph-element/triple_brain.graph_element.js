@@ -106,6 +106,11 @@ define([
                 this.graphElementServerFormat.colors
             );
         }
+        if(this.graphElementServerFormat.font){
+            this.graphElementServerFormat.font = JSON.parse(
+                this.graphElementServerFormat.font
+            );
+        }
         this._buildIdentifications();
         // this.wikipediaLinksPromise = this._buildWikidataLinks();
         return this;
@@ -166,7 +171,7 @@ define([
             }
             identifiers.push(identifier);
         }.bind(this));
-        if(!isSelfTagAlreadyIncluded){
+        if (!isSelfTagAlreadyIncluded) {
             identifiers.push(
                 this.buildSelfIdentifier()
             );
@@ -175,11 +180,11 @@ define([
     };
 
     api.GraphElement.prototype.hasRelevantTags = function () {
-        return this.getRelevantTags().length > 0 ;
+        return this.getRelevantTags().length > 0;
     };
 
     api.GraphElement.prototype.getRelevantTags = function () {
-        return this.getIdentifiersIncludingSelf().filter(function(tag){
+        return this.getIdentifiersIncludingSelf().filter(function (tag) {
             return tag.getNbReferences() > 0;
         });
     };
@@ -302,6 +307,16 @@ define([
         return this.graphElementServerFormat.colors || {};
     };
 
+    api.GraphElement.prototype.setFont = function (font) {
+        return this.graphElementServerFormat.font = font;
+    };
+
+    api.GraphElement.prototype.getFont = function () {
+        return this.graphElementServerFormat.font || {
+            family: 'IBM Plex Sans'
+        };
+    };
+
     api.GraphElement.prototype.getChildrenIndex = function () {
         return this.graphElementServerFormat.childrenIndex || {};
     };
@@ -319,7 +334,7 @@ define([
         return this.isLabelEmpty() && !this.hasIdentifications();
     };
 
-    api.GraphElement.prototype.isToTheLeft = function(){
+    api.GraphElement.prototype.isToTheLeft = function () {
         return undefined;
     };
 

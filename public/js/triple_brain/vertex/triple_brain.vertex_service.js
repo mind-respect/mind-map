@@ -183,6 +183,16 @@ define([
             });
         };
 
+        api.saveFont = function (font) {
+            return $.ajax({
+                type: 'POST',
+                url: GraphElementUi.getCenterVertexOrSchema().getUri() + '/font',
+                data: JSON.stringify(font),
+                contentType: 'application/json;charset=utf-8',
+                dataType: 'json'
+            });
+        };
+
         return api;
 
         function setCollectionPrivacy(isPublic, vertices) {

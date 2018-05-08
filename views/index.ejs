@@ -10,7 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0">
     <title data-i18n="landing.title"></title>
     <script>
-        var requireJsConfig = <%- JSON.stringify(requireJsConfig) %>
+        var requireJsConfig = <%- JSON.stringify(requireJsConfig) %>;
+        var mindRespectConfig = <%- JSON.stringify(config) %>;
     </script>
     <link rel="icon" href="/css/images/logo_tete.png">
     <link href='https://fonts.googleapis.com/css?family=Enriqueta' rel='stylesheet'>
@@ -327,7 +328,7 @@
     </div>
 </div>
 <div id="graph-menu">
-    <div class="menu-panel hidden-sm hidden-xs hidden" data-flow="mindMap">
+    <span class="menu-panel hidden-sm hidden-xs hidden" data-flow="mindMap">
         <button data-action="zoomIn" data-combinedShortcut="&plus;"
                 class="graph-element-button app-button">
             <i class="fa fa-search-plus"></i>
@@ -354,6 +355,11 @@
         <button data-action="redo" data-combinedShortcut="Y"
                 class="app-button graph-element-button">
             <i class="fa fa-repeat"></i>
+        </button>
+        <button data-action="fontPicker"
+                id="font-btn"
+                class="graph-element-button app-button">
+            <i class="fa fa-font"></i>
         </button>
         <button data-action="changeBackgroundColor"
                 class="app-button graph-element-button">
@@ -1616,6 +1622,26 @@
         </div>
     </div>
 </div>
+<div class="modal fade row" id="font-modal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span
+                        aria-hidden="true">&times;</span><span
+                        class="sr-only" data-i18n="modal.close"></span></button>
+                <h4 class="modal-title" data-i18n="toList.title"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 list-content-container">
+                        <!--<div id="font-picker"></div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="font-picker" class="hidden"></div>
 <div class="modal fade row" id="bubble-note-modal" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -1757,6 +1783,9 @@
         </div>
     </form>
 </div>
+<!--<div id="font-popover" class="hidden">-->
+    <!--<div id="font-picker"></div>-->
+<!--</div>-->
 <footer data-flow="landing" class="hidden"><span class="fa fa-copyright"></span> Copyleft - MindRespect -
     <a data-i18n='[href]top_menu.contribute_link'>
         <span data-i18n='top_menu.contribute'></span>
