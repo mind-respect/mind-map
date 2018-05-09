@@ -11,9 +11,8 @@ define([
     "triple_brain.graph_displayer",
     "triple_brain.vertex",
     "triple_brain.id_uri",
-    "mr.to-list",
-    "triple_brain.selection_handler"
-], function ($, Command, GraphUi, VertexService, MindMapInfo, GraphDisplayer, Vertex, IdUri, ToList, SelectionHandler) {
+    "mr.to-list"
+], function ($, Command, GraphUi, VertexService, MindMapInfo, GraphDisplayer, Vertex, IdUri, ToList) {
     "use strict";
     var api = {};
     api.undoCanDo = function () {
@@ -84,13 +83,14 @@ define([
     };
 
     api.fontPicker = function () {
-        SelectionHandler.removeAll();
         var offset = $("#font-btn").offset();
-        $("#font-picker").removeClass(
+        var $fontPicker = $("#font-picker");
+        $fontPicker.removeClass(
             'hidden'
         ).css({top: offset.top +12, left: offset.left + 44, position:'absolute'}).find(
             "button, ul"
         ).addClass('expanded');
+        $fontPicker.find("input").val('').focus().keyup();
     };
 
     $("#background-color-picker").on("change", function () {

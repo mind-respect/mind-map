@@ -368,6 +368,10 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .not-editable button.disabled { display: none !important; }
 
 #font-picker { position: absolute; }
+#font-picker button.dropdown-button { background-color: #c00000; color: white; }
+#font-picker ul { background: none; background-color: white; }
+#font-picker .active-font { background-color: #c00000; color: white; }
+#font-picker .dropdown-icon { display: none; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .ui-dialog-titlebar { text-align: center; }

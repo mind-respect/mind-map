@@ -107,7 +107,7 @@
     "email": "Email",
     "password": "Password",
     "retype_password": "Retype Password",
-    "register": "Register",
+    "register": "Create your account",
     "login": "I have an account, log me in !",
     "language": {
       "selected_languages": "Languages I understand in order of preference",
@@ -195,7 +195,8 @@
     "select": "select"
   },
   "left_menu": {
-    "search": "Search for bubbles"
+    "search": "Search for bubbles",
+    "filterFonts" : "Search a font"
   },
   "edge": {
     "default": "relate"
@@ -339,7 +340,8 @@
     "convertToGroupRelation": "Convert to group relation",
     "wikipediaLinks": "Learn more on Wikipedia",
     "merge": "Merge",
-    "list": "See the selection as a list"
+    "list": "See the selection as a list",
+    "fontPicker": "Font picker"
   },
   "toList": {
     "title": "List",

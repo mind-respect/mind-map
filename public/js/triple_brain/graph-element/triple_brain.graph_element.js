@@ -12,6 +12,9 @@ define([
 ], function ($, FriendlyResource, Identification, IdUri, WikidataUri, Wikidata) {
     "use strict";
     var api = {};
+    api.DEFAULT_FONT = {
+        family: 'IBM Plex Sans'
+    };
     api.sortCompare = function (a, b, childrenIndex) {
         if (a.getIndex(childrenIndex) === b.getIndex(childrenIndex)) {
             if (a.getCreationDate() === b.getCreationDate()) {
@@ -106,7 +109,7 @@ define([
                 this.graphElementServerFormat.colors
             );
         }
-        if(this.graphElementServerFormat.font){
+        if (this.graphElementServerFormat.font) {
             this.graphElementServerFormat.font = JSON.parse(
                 this.graphElementServerFormat.font
             );
@@ -312,9 +315,7 @@ define([
     };
 
     api.GraphElement.prototype.getFont = function () {
-        return this.graphElementServerFormat.font || {
-            family: 'IBM Plex Sans'
-        };
+        return this.graphElementServerFormat.font || api.DEFAULT_FONT;
     };
 
     api.GraphElement.prototype.getChildrenIndex = function () {

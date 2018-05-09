@@ -639,6 +639,7 @@ define([
         GraphElementUi.visitAll(function (graphElementUi) {
             graphElementUi.refreshFont(font);
         });
+        $("#font-picker").addClass("hidden");
         return VertexService.saveFont({
             family: font.family
         });

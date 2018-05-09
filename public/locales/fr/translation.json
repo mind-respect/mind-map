@@ -189,14 +189,15 @@
     },
     "connect": "Connexion",
     "login": "Se connecter",
-    "register": "Essayer",
+    "register": "Créer votre compte",
     "language": "Langue "
   },
   "top_center_menu": {
     "select": "sélection"
   },
   "left_menu": {
-    "search": "Rechercher des bulles"
+    "search": "Rechercher des bulles",
+    "filterFonts" : "Chercher une police"
   },
   "edge": {
     "default": "relie"
@@ -338,7 +339,8 @@
     "convertToGroupRelation": "Convertir en relation groupée",
     "wikipediaLinks": "En savoir plus sur Wikipédia",
     "merge": "Fusionner",
-    "list": "Voir la sélection sous forme de liste"
+    "list": "Voir la sélection sous forme de liste",
+    "fontPicker": "Sélecteur de polices"
   },
   "toList": {
     "title": "Liste",

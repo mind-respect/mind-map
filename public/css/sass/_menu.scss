@@ -308,4 +308,19 @@ button.disabled {
 
 #font-picker{
   position:absolute;
+  button.dropdown-button{
+    background-color:$red;
+    color: white;
+  }
+  ul{
+    background:none;
+    background-color:white;
+  }
+  .active-font{
+    background-color:$red;
+    color: white;
+  }
+  .dropdown-icon{
+    display:none;
+  }
 }
