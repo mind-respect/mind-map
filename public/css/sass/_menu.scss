@@ -315,12 +315,11 @@ button.disabled {
   ul{
     background:none;
     background-color:white;
+    //max-height to prevent list from collapsing
+    max-height: 200px !important;
   }
   .active-font{
     background-color:$red;
     color: white;
-  }
-  .dropdown-icon{
-    display:none;
   }
 }

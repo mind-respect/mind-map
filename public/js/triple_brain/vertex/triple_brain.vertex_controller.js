@@ -19,10 +19,11 @@ define([
     "triple_brain.graph_element_service",
     "triple_brain.schema_suggestion",
     "triple_brain.graph_element_ui",
+    "triple_brain.graph_element",
     "triple_brain.event_bus",
     "triple_brain.id_uri",
     "jquery.triple_brain.search"
-], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, BubbleDeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, GraphElementUi, EventBus, IdUri, GraphElementType) {
+], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, BubbleDeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, GraphElementUi, EventBus, IdUri, GraphElementType, GraphElement) {
     "use strict";
     var api = {};
 
@@ -635,11 +636,9 @@ define([
     };
 
     VertexController.prototype.setFont = function (font) {
-        GraphElementUi.getCenterVertexOrSchema().getModel().setFont(font);
-        GraphElementUi.visitAll(function (graphElementUi) {
-            graphElementUi.refreshFont(font);
-        });
-        $("#font-picker").addClass("hidden");
+        var centerVertex = GraphElementUi.getCenterVertexOrSchema();
+        centerVertex.getModel().setFont(font);
+        centerVertex.setCenterBubbleFont(font);
         return VertexService.saveFont({
             family: font.family
         });

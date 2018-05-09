@@ -232,11 +232,11 @@ define([
                 }
             );
             $fontPicker.find("> .dropdown-button").append(
-                $("<i class='fa fa-remove'>").click(function () {
+                $("<i class='remove-btn fa fa-remove'>").click(function () {
                     api.getCenterVertexOrSchema().getController().setFont(GraphElement.DEFAULT_FONT);
                     fontPicker.setActiveFont(GraphElement.DEFAULT_FONT.family);
                 })
-            );
+            ).find('.dropdown-icon').remove();
             var input = $('<input type="text" class="form-control"/>').attr(
                 'placeholder',
                 $.t('left_menu.filterFonts')
@@ -262,16 +262,13 @@ define([
                     $('<i class="glyphicon glyphicon-search form-control-feedback">')
                 )
             );
-
         } else if (!isTesting) {
             fontPicker.setActiveFont(font.family);
         }
         GraphDisplayer.getVertexSelector().visitAll(function (vertexUi) {
             vertexUi.refreshFont(font);
         });
-        api.visitAll(function (graphElementUi) {
-            graphElementUi.refreshFont(font);
-        });
+        this.setCenterBubbleFont(font);
     };
 
     api.GraphElementUi.prototype.setAsNonCentral = function () {
@@ -961,6 +958,20 @@ define([
             "font-family",
             font.family
         );
+    };
+
+    api.GraphElementUi.prototype.setCenterBubbleFont = function (font) {
+        api.visitAll(function (graphElementUi) {
+            graphElementUi.refreshFont(font);
+        });
+        var $fontPicker = $("#font-picker");
+        $fontPicker.addClass("hidden");
+        var removeBtn = $fontPicker.find("> button >.remove-btn");
+        if (GraphElement.DEFAULT_FONT.family === font.family) {
+            removeBtn.addClass('hidden');
+        } else {
+            removeBtn.removeClass('hidden');
+        }
     };
 
     EventBus.subscribe(
