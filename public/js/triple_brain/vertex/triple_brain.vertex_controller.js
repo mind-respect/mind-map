@@ -19,11 +19,10 @@ define([
     "triple_brain.graph_element_service",
     "triple_brain.schema_suggestion",
     "triple_brain.graph_element_ui",
-    "triple_brain.graph_element",
     "triple_brain.event_bus",
     "triple_brain.id_uri",
     "jquery.triple_brain.search"
-], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, BubbleDeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, GraphElementUi, EventBus, IdUri, GraphElementType, GraphElement) {
+], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, BubbleDeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, GraphElementUi, EventBus, IdUri, GraphElementType) {
     "use strict";
     var api = {};
 
