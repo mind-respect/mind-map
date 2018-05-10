@@ -93,7 +93,6 @@
       &:after {
         content: attr(data-placeholder);
         font-style: italic;
-        font-family: $bubbleFontFamily;
         font-size: calc(1em);
       }
     }
@@ -105,7 +104,6 @@
     }
     outline: 0 solid transparent;
     border: none;
-    font-family: $bubbleFontFamily;
     font-size: 14px;
     width: auto;
     display: table-cell;
@@ -124,7 +122,6 @@
       &:empty:not(:focus):after {
         content: attr(data-placeholder);
         color: grey;
-        font-family: $bubbleFontFamily;
         font-style: italic;
       }
     }

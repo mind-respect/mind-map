@@ -227,7 +227,6 @@ $withoutTextPadding: 1px 7px 1px 7px;
     .bubble-label {
       color: white;
       display: inline-block;
-      font-family: helvetica;
       font-size: $fontSize;
       &:not(:focus):after {
         color: white;
@@ -275,7 +274,6 @@ $withoutTextPadding: 1px 7px 1px 7px;
   border-color: $edgeColor;
   padding: 0;
   outline: none;
-  font-family: courier new, monospace;
   font-size: 14px;
   vertical-align: middle;
   background-color: transparent;
