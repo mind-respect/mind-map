@@ -112,21 +112,12 @@ define([
                 "hidden"
             ).addClass("mind-map-flow");
 
-            /*
-            * scrollTo center bubble before affix whole-graph-buttons-container
-            * otherwise center bubble is top centered
-            */
-            centralBubble.scrollTo();
-            // $('#graph-element-menu').removeClass(
-            //     "hidden"
-            // ).affix({
-            //     offset: {top: 57}
-            // });
             GraphUi.initDragScroll();
             GraphUi.enableDragScroll();
             SelectionHandler.setToSingleVertex(centralBubble);
             AppController.zoomOut();
             EventBus.publish('/event/ui/graph/drawn');
+            centralBubble.scrollTo();
             // html2canvas(document.body).then(function(canvas) {
             //     document.body.innerHTML = canvas;
             // });
