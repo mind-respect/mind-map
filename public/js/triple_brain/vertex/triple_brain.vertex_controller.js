@@ -169,7 +169,9 @@ define([
     VertexController.prototype.addSibling = function () {
         if (this.getUi().isImmediateChildOfGroupRelation()) {
             var groupRelation = this.getUi().getParentBubble().getParentBubble();
-            return groupRelation.getController().addChild();
+            return groupRelation.getController().addChild(
+                this.getUi().getParentBubble()
+            );
         }
         return this._addChildToRealAndUiParent(
             this.getUi().getParentVertex(),

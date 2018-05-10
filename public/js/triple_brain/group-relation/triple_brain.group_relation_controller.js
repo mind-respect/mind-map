@@ -38,7 +38,7 @@ define([
             return false;
         };
 
-        GroupRelationController.prototype.addChild = function () {
+        GroupRelationController.prototype.addChild = function (edgeOver) {
             var parentVertex = this.getUi().getParentVertex();
             var triple;
             return VertexService.addRelationAndVertexToVertex(
@@ -74,6 +74,9 @@ define([
                     return triple.destinationVertex().getController().makePublic();
                 }
             }.bind(this)).then(function () {
+                if (edgeOver) {
+                    triple.edge().moveBelow(edgeOver);
+                }
                 return GraphElementService.changeChildrenIndex(
                     triple.sourceVertex()
                 );
