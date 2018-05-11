@@ -43,7 +43,8 @@ define([
             var triple;
             return VertexService.addRelationAndVertexToVertex(
                 parentVertex,
-                this.getUi()
+                this.getUi(),
+                edgeOver
             ).then(function (_triple) {
                 triple = _triple;
                 if (this.getUi().hasVisibleHiddenRelationsContainer()) {
@@ -59,24 +60,26 @@ define([
                         identifier
                     );
                 });
-                EdgeService.updateLabel(
-                    triple.edge(),
-                    this.getModel().getIdentification().getLabel(),
-                    function (edge) {
-                        edge.setText(this.getModel().getIdentification().getLabel());
+                var promises = [
+                    EdgeService.updateLabel(
+                        triple.edge(),
+                        this.getModel().getIdentification().getLabel()
+                    ).then(function () {
+                        triple.edge().setText(this.getModel().getIdentification().getLabel());
                         triple.edge().reviewIsSameAsGroupRelation();
-                    }.bind(this)
-                );
-                SelectionHandler.setToSingleVertex(
-                    triple.destinationVertex()
-                );
+                    }.bind(this))
+                ];
                 if (parentVertex.getModel().isPublic()) {
-                    return triple.destinationVertex().getController().makePublic();
+                    promises.push(
+                        triple.destinationVertex().getController().makePublic()
+                    );
                 }
+                return $.when.apply($, promises);
             }.bind(this)).then(function () {
                 if (edgeOver) {
                     triple.edge().moveBelow(edgeOver);
                 }
+                triple.sourceVertex().tripleAdded(triple);
                 return GraphElementService.changeChildrenIndex(
                     triple.sourceVertex()
                 );

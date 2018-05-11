@@ -59,7 +59,7 @@ define([
                 if (!elementUi.hasTextChangedAfterModification()) {
                     return;
                 }
-                FriendlyResourceService.updateLabel(
+                return FriendlyResourceService.updateLabel(
                     elementUi,
                     elementUi.getModel().getLabel()
                 );

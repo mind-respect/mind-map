@@ -161,7 +161,6 @@ define([
         };
 
         api.TreeEdge.prototype.convertToGroupRelation = function (newGroupRelation) {
-            newGroupRelation.moveAbove(this);
             this.moveToParent(
                 newGroupRelation
             );

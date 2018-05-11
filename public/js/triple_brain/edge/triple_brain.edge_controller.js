@@ -116,7 +116,8 @@ define([
         var newGroupRelation = GraphDisplayer.addNewGroupRelation(
             groupRelationIdentifiers,
             parentBubble,
-            this.getUi().isToTheLeft()
+            this.getUi().isToTheLeft(),
+            this.getUi()
         );
         this.getUi().convertToGroupRelation(newGroupRelation);
         newGroupRelation.getModel().addTuple(tuple);

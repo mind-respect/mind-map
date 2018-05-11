@@ -72,16 +72,6 @@ define([
         getCompareFlowWarning().addClass("hidden");
     };
     EventBus.subscribe("/event/ui/graph/drawn", setup);
-    EventBus.subscribe(
-        '/event/ui/graph/vertex_and_relation/added/',
-        function (event, triple) {
-            if (!MindMapInfo.isInCompareMode()) {
-                return;
-            }
-            triple.edge().setAsComparisonSuggestionToRemove();
-            triple.destinationVertex().setAsComparisonSuggestionToRemove();
-        }
-    );
     function setup() {
         setupDefaultCompare();
         setupSearch();

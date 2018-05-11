@@ -15,12 +15,15 @@ define([
             tripleJson
         );
     };
-    api.createIntoSourceBubble = function (sourceBubble, tripleJson) {
-        return GraphDisplayer.addEdgeAndVertex(
+    api.createIntoSourceBubble = function (sourceBubble, tripleJson, relationOver) {
+        var triple = GraphDisplayer.addEdgeAndVertex(
             sourceBubble,
             Edge.fromServerFormat(tripleJson.edge),
-            Vertex.fromServerFormat(tripleJson.end_vertex)
+            Vertex.fromServerFormat(tripleJson.end_vertex),
+            relationOver
         );
+        triple.setServerFormat(tripleJson);
+        return triple;
     };
     return api;
 });

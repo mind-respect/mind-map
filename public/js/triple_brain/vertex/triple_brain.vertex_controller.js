@@ -167,27 +167,18 @@ define([
     };
 
     VertexController.prototype.addSibling = function () {
+        var edgeOver = this.getUi().getParentBubble();
         if (this.getUi().isImmediateChildOfGroupRelation()) {
             var groupRelation = this.getUi().getParentBubble().getParentBubble();
             return groupRelation.getController().addChild(
-                this.getUi().getParentBubble()
+                edgeOver
             );
         }
         return this._addChildToRealAndUiParent(
             this.getUi().getParentVertex(),
-            this.getUi().getParentBubble().getParentBubble()
-        ).then(function (triple) {
-            triple.edge().getController().moveBelow(
-                this.getUi().getParentBubble()
-            );
-            SelectionHandler.setToSingleVertex(
-                triple.destinationVertex()
-            );
-            if (!triple.destinationVertex().getHtml().isFullyOnScreen()) {
-                triple.destinationVertex().sideCenterOnScreenWithAnimation();
-            }
-            return triple;
-        }.bind(this));
+            this.getUi().getParentBubble().getParentBubble(),
+            edgeOver
+        );
     };
 
     VertexController.prototype.removeManyIsPossible = true;
@@ -602,7 +593,7 @@ define([
             );
         }.bind(this));
     };
-    VertexController.prototype._addChildToRealAndUiParent = function (realParent, uiParent) {
+    VertexController.prototype._addChildToRealAndUiParent = function (realParent, uiParent, edgeOver) {
         if (uiParent === undefined) {
             uiParent = realParent;
         }
@@ -614,19 +605,18 @@ define([
             var triple;
             return VertexService.addRelationAndVertexToVertex(
                 realParent,
-                uiParent
+                uiParent,
+                edgeOver
             ).then(function (_triple) {
                     triple = _triple;
                     triple.destinationVertex().getModel().incrementNumberOfConnectedEdges();
-                    SelectionHandler.setToSingleGraphElement(
-                        triple.destinationVertex()
-                    );
                     triple.sourceVertex().getModel().incrementNumberOfConnectedEdges();
                     if (realParent.getModel().isPublic()) {
                         return triple.destinationVertex().getController().makePublic();
                     }
                 }
             ).then(function () {
+                triple.sourceVertex().tripleAdded(triple);
                 return GraphElementService.changeChildrenIndex(
                     triple.sourceVertex()
                 );

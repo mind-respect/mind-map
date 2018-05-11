@@ -74,11 +74,12 @@ define([
             );
         };
 
-        api.addEdgeAndVertex = function (sourceBubbleUi, edge, destinationVertex) {
+        api.addEdgeAndVertex = function (sourceBubbleUi, edge, destinationVertex, relationOver) {
             return _implementation.addEdgeAndVertex(
                 sourceBubbleUi,
                 edge,
-                destinationVertex
+                destinationVertex,
+                relationOver
             );
         };
         api.addSuggestionToSourceVertex = function (suggestion, parentVertexUi) {
@@ -197,11 +198,12 @@ define([
             GraphUi.removePopovers();
         };
 
-        api.addNewGroupRelation = function (identifiers, parentBubble, addToLeft) {
+        api.addNewGroupRelation = function (identifiers, parentBubble, addToLeft, previousEdge) {
             return _implementation.addNewGroupRelation(
                 identifiers,
                 parentBubble,
-                addToLeft
+                addToLeft,
+                previousEdge
             );
         };
 

@@ -238,16 +238,14 @@ define([
     };
 
     GraphElementController.prototype.accept = function () {
-        var self = this;
         var comparedWithLabel = this.getUi().getComparedWith().getLabel();
-        FriendlyResourceService.updateLabel(
+        return FriendlyResourceService.updateLabel(
             this.getUi(),
-            comparedWithLabel,
-            function () {
-                self.getUi().getModel().setLabel(comparedWithLabel);
-                self.getUi().labelUpdateHandle();
-            }
-        );
+            comparedWithLabel
+        ).then(function () {
+            this.getUi().getModel().setLabel(comparedWithLabel);
+            this.getUi().labelUpdateHandle();
+        }.bind(this));
     };
 
     GraphElementController.prototype.expandCanDo = function () {

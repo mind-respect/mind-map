@@ -31,42 +31,22 @@ define([
                 dataType: 'json'
             }).then(callback);
         };
-        api.addRelationAndVertexToVertex = function (vertex, sourceBubble) {
-            var isToTheLeft;
-            if (vertex.isCenterBubble()) {
-                isToTheLeft = sourceBubble.isGroupRelation() ?
-                    sourceBubble.isToTheLeft() :
-                    CenterBubble.usingBubble(vertex).shouldAddLeft();
-            }
-            return new Promise(function (resolve) {
-                $.ajax({
-                    type: 'POST',
-                    url: vertex.getUri(),
-                    dataType: 'json',
-                    data: JSON.stringify({
-                        toTheLeft: isToTheLeft
-                    }),
-                    contentType: 'application/json;charset=utf-8'
-                }).then(function (tripleJson) {
-                    api._addRelationAndVertexToVertexCallback(
-                        tripleJson,
-                        sourceBubble,
-                        resolve
-                    );
-                });
+        api.addRelationAndVertexToVertex = function (vertex, sourceBubble, relationOver) {
+            return $.ajax({
+                type: 'POST',
+                url: vertex.getUri(),
+                data: JSON.stringify({}),
+                dataType: 'json',
+                contentType: 'application/json;charset=utf-8'
+            }).then(function (tripleJson) {
+                return TripleUiBuilder.createIntoSourceBubble(
+                    sourceBubble,
+                    tripleJson,
+                    relationOver
+                );
             });
         };
-        api._addRelationAndVertexToVertexCallback = function (tripleJson, sourceBubble, resolve) {
-            var triple = TripleUiBuilder.createIntoSourceBubble(
-                sourceBubble,
-                tripleJson
-            );
-            resolve(triple);
-            EventBus.publish(
-                '/event/ui/graph/vertex_and_relation/added/',
-                [triple, tripleJson]
-            );
-        };
+
         api.remove = function (vertex) {
             return $.ajax({
                 type: 'DELETE',

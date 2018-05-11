@@ -2,8 +2,7 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
-define([
-    ],
+define([],
     function () {
         "use strict";
         var api = {};
@@ -16,6 +15,12 @@ define([
             };
             this.destinationVertex = function () {
                 return destinationVertexUi;
+            };
+            this.setServerFormat = function (serverFormat) {
+                this.serverFormat = serverFormat;
+            };
+            this.getServerFormat = function () {
+                return this.serverFormat;
             };
         };
         return api;

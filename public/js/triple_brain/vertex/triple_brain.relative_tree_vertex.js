@@ -220,6 +220,27 @@ define([
             }
             return 0;
         };
+
+        api.RelativeTreeVertex.prototype.tripleAdded = function (triple) {
+            Bubble.Bubble.prototype.tripleAdded.call(
+                this,
+                triple
+            );
+            var sourceBubble = triple.sourceVertex();
+            if (!sourceBubble.isVertex()) {
+                return;
+            }
+            sourceBubble.applyToOtherInstances(function (otherInstance) {
+                TripleUiBuilder.createUsingServerTriple(
+                    otherInstance,
+                    triple.getServerFormat()
+                );
+                otherInstance.resetOtherInstances();
+            });
+            triple.destinationVertex().resetOtherInstances();
+            triple.destinationVertex().reviewInLabelButtonsVisibility(true);
+        };
+
         api.RelativeTreeVertex.prototype._hasPublicHiddenRelations = function () {
             return this.getModel().getNbPublicNeighbors() > (
                 this.getParentVertex().getModel().isPublic() ? 1 : 0
@@ -260,10 +281,6 @@ define([
             });
         };
 
-        EventBus.subscribe(
-            '/event/ui/graph/vertex_and_relation/added/',
-            vertexAndRelationAddedHandler
-        );
         EventBus.subscribe('/event/ui/graph/drawn', function () {
             var expandCalls = [];
             api.visitAllVertices(function (vertexUi) {
@@ -287,22 +304,6 @@ define([
             $.each($('.clipboard-copy-button'), function () {
                 api.setupCopyButton(this);
             });
-        }
-
-        function vertexAndRelationAddedHandler(event, triple, tripleJson) {
-            var sourceBubble = triple.sourceVertex();
-            if (!sourceBubble.isVertex()) {
-                return;
-            }
-            sourceBubble.applyToOtherInstances(function (otherInstance) {
-                TripleUiBuilder.createUsingServerTriple(
-                    otherInstance,
-                    tripleJson
-                );
-                otherInstance.resetOtherInstances();
-            });
-            triple.destinationVertex().resetOtherInstances();
-            triple.destinationVertex().reviewInLabelButtonsVisibility(true);
         }
 
         return api;

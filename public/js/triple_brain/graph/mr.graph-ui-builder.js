@@ -52,7 +52,7 @@ define([
         return this.edgeUiBuilder;
     };
 
-    api.GraphUiBuilder.prototype.buildBubbleHtmlIntoContainer = function (model, parentBubble, builder, htmlId) {
+    api.GraphUiBuilder.prototype.buildBubbleHtmlIntoContainer = function (model, parentBubble, builder, htmlId, bubbleAbove) {
         api.flagSuggestionsToNotDisplayGivenParentAndChildVertex(
             parentBubble.getModel(),
             model
@@ -66,6 +66,8 @@ define([
             var addLeft;
             if (this.forceToTheLeft !== undefined) {
                 addLeft = this.forceToTheLeft;
+            } else if(bubbleAbove){
+                addLeft = bubbleAbove.isToTheLeft();
             } else if (parentBubble.isVertex() && model.isToTheLeft(parentBubble.getModel()) !== undefined) {
                 addLeft = model.isToTheLeft(parentBubble.getModel());
             } else {
@@ -84,9 +86,17 @@ define([
             htmlId
         );
         childVertexHtmlFacade.setModel(model);
-        container.append(
-            childTreeContainer
-        ).append("<span class='clear-fix'>");
+        if (bubbleAbove) {
+            container.find('> .vertex-tree-container:eq(' + bubbleAbove.getUiIndexInTree() + ')').after(
+                childTreeContainer
+            ).after(
+                "<span class='clear-fix'>"
+            );
+        } else {
+            container.append(
+                childTreeContainer
+            ).append("<span class='clear-fix'>");
+        }
         var vertexContainer = RelativeTreeTemplates[
             "vertex_container"
             ].merge();
@@ -274,11 +284,13 @@ define([
         );
     };
 
-    api.GraphUiBuilder.prototype.addEdge = function (serverEdge, sourceVertexUi) {
+    api.GraphUiBuilder.prototype.addEdge = function (serverEdge, sourceVertexUi, edgeAbove) {
         return this.buildBubbleHtmlIntoContainer(
             serverEdge,
             sourceVertexUi,
-            this.edgeUiBuilder
+            this.edgeUiBuilder,
+            undefined,
+            edgeAbove
         );
     };
 

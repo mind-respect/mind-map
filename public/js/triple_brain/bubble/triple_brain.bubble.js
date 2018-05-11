@@ -12,8 +12,9 @@ define([
         "triple_brain.bubble_factory",
         "triple_brain.selection_handler",
         "triple_brain.center_bubble",
-        "triple_brain.ui.vertex_hidden_neighbor_properties_indicator"
-    ], function ($, EventBus, UiUtils, ImageDisplayer, GraphElementUi, GraphElementType, BubbleFactory, SelectionHandler, CenterBubble, PropertiesIndicator) {
+        "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
+        "triple_brain.mind_map_info"
+    ], function ($, EventBus, UiUtils, ImageDisplayer, GraphElementUi, GraphElementType, BubbleFactory, SelectionHandler, CenterBubble, PropertiesIndicator, MindMapInfo) {
         "use strict";
         var api = {};
         api.MoveRelation = {
@@ -393,7 +394,7 @@ define([
             return this.getHtml().closest(
                 ".vertex-tree-container"
             ).prevAll(
-                ".vertex-tree-container:first"
+                ".vertex-tree-container"
             ).length;
         };
 
@@ -401,6 +402,9 @@ define([
             return this._getIndexInTreeInTypes(
                 [this.getGraphElementType()]
             );
+        };
+        api.Bubble.prototype.getUiIndexInTree = function () {
+            return this.getNumberOfSiblingsAbove();
         };
         api.Bubble.prototype._getIndexInTreeInTypes = function (graphElementTypes) {
             var index = -1;
@@ -982,22 +986,24 @@ define([
             this.initCache();
         };
 
+        api.Bubble.prototype.tripleAdded = function (triple) {
+            triple.sourceVertex().hideHiddenRelationsContainer();
+            var destinationHtml = triple.destinationVertex().getHtml();
+            if (!UiUtils.isElementFullyOnScreen(destinationHtml)) {
+                destinationHtml.centerOnScreenWithAnimation();
+            }
+            SelectionHandler.setToSingleGraphElement(triple.destinationVertex());
+            if (MindMapInfo.isInCompareMode()) {
+                triple.edge().setAsComparisonSuggestionToRemove();
+                triple.destinationVertex().setAsComparisonSuggestionToRemove();
+            }
+        };
+
         function selectNew(newSelectedElement) {
             SelectionHandler.setToSingleGraphElement(
                 newSelectedElement
             );
         }
-
-        EventBus.subscribe(
-            '/event/ui/graph/vertex_and_relation/added/',
-            function (event, triple, tripleJson) {
-                triple.sourceVertex().hideHiddenRelationsContainer();
-                var destinationHtml = triple.destinationVertex().getHtml();
-                if (!UiUtils.isElementFullyOnScreen(destinationHtml)) {
-                    destinationHtml.centerOnScreenWithAnimation();
-                }
-            }
-        );
         return api;
     }
 )

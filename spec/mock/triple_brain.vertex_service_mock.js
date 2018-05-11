@@ -7,8 +7,9 @@ define([
     "triple_brain.vertex_service",
     "triple_brain.edge",
     "triple_brain.vertex",
-    "test/test-utils"
-], function ($, VertexService, Edge, Vertex, TestUtils) {
+    "test/test-utils",
+    "triple_brain.triple_ui_builder"
+], function ($, VertexService, Edge, Vertex, TestUtils, TripleUiBuilder) {
     "use strict";
     var api = {};
     api.applyDefaultMocks = function () {
@@ -25,8 +26,7 @@ define([
         return spies;
     };
     api.addRelationAndVertexToVertex = function () {
-        return spyOn(VertexService, "addRelationAndVertexToVertex").and.callFake(function (vertex, sourceBubble) {
-            var deferred = $.Deferred();
+        return spyOn(VertexService, "addRelationAndVertexToVertex").and.callFake(function (vertex, sourceBubble, relationOver) {
             var tripleJson = {};
             tripleJson.source_vertex = vertex.getModel().vertexServerFormat;
             var newVertexUri = TestUtils.generateVertexUri();
@@ -36,12 +36,13 @@ define([
                 vertex.getUri(),
                 newVertexUri
             );
-            VertexService._addRelationAndVertexToVertexCallback(
-                tripleJson,
-                sourceBubble,
-                deferred.resolve
+            return $.Deferred().resolve(
+                TripleUiBuilder.createIntoSourceBubble(
+                    sourceBubble,
+                    tripleJson,
+                    relationOver
+                )
             );
-            return deferred.promise();
         });
     };
     api.remove = api.removeVertex = function () {

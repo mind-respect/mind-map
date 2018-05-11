@@ -273,12 +273,12 @@ define([
         return false;
     };
 
-    api.addEdgeAndVertex = function (sourceBubbleUi, edge, destinationVertex) {
+    api.addEdgeAndVertex = function (sourceBubbleUi, edge, destinationVertex, relationOver) {
         var graphUiBuilder = GraphUiBuilder.withDefaultHtmlBuilders();
         var edgeUi = graphUiBuilder.addEdge(
             edge,
             sourceBubbleUi,
-            EdgeBuilder
+            relationOver
         );
         var destinationVertexUi = graphUiBuilder.addVertex(
             destinationVertex,
@@ -425,7 +425,7 @@ define([
         );
     };
 
-    api.addNewGroupRelation = function (identifiers, parentBubble, addToLeft) {
+    api.addNewGroupRelation = function (identifiers, parentBubble, addToLeft, previousEdge) {
         var graphUiBuilder = GraphUiBuilder.withDefaultHtmlBuilders();
         graphUiBuilder.setDirectionAroundCenter(
             addToLeft
@@ -433,7 +433,9 @@ define([
         var newGroupRelation = graphUiBuilder.buildBubbleHtmlIntoContainer(
             GroupRelation.usingIdentification(identifiers),
             parentBubble,
-            new GroupRelationUiBuilder.GroupRelationUiBuilder()
+            new GroupRelationUiBuilder.GroupRelationUiBuilder(),
+            undefined,
+            previousEdge
         );
         GroupRelationUiBuilder.completeBuild(newGroupRelation);
         return newGroupRelation;
