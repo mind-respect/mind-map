@@ -11,8 +11,9 @@ define([
     "triple_brain.graph_displayer",
     "triple_brain.vertex",
     "triple_brain.id_uri",
-    "mr.to-list"
-], function ($, Command, GraphUi, VertexService, MindMapInfo, GraphDisplayer, Vertex, IdUri, ToList) {
+    "mr.to-list",
+    "triple_brain.graph_element_ui"
+], function ($, Command, GraphUi, VertexService, MindMapInfo, GraphDisplayer, Vertex, IdUri, ToList, GraphElementUi) {
     "use strict";
     var api = {};
     api.undoCanDo = function () {
@@ -59,7 +60,9 @@ define([
         });
     };
     api.changeBackgroundColorCanDo = function () {
-        return !MindMapInfo.isViewOnly();
+        return !MindMapInfo.isViewOnly() &&
+            GraphElementUi.hasCenterBubble() &&
+            GraphElementUi.getCenterVertexOrSchema().isVertex();
     };
 
     api.changeBackgroundColor = function () {
@@ -82,12 +85,18 @@ define([
         return false;
     };
 
+    api.fontPickerCanDo = function () {
+        return !MindMapInfo.isViewOnly() &&
+            GraphElementUi.hasCenterBubble() &&
+            GraphElementUi.getCenterVertexOrSchema().isVertex();
+    };
+
     api.fontPicker = function () {
         var offset = $("#font-btn").offset();
         var $fontPicker = $("#font-picker");
         $fontPicker.removeClass(
             'hidden'
-        ).css({top: offset.top +12, left: offset.left + 44, position:'absolute'}).find(
+        ).css({top: offset.top + 12, left: offset.left + 44, position: 'absolute'}).find(
             "button, ul"
         ).addClass('expanded');
         $fontPicker.find("input").val('').focus().keyup();

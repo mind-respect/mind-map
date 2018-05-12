@@ -70,14 +70,6 @@ define([
             var centralBubble = BubbleFactory.getGraphElementFromUri(
                 centralBubbleUri
             );
-            if (centralBubble.isVertex()) {
-                var backgroundColor = centralBubble.getModel().getColors().background;
-                if (backgroundColor) {
-                    GraphUi.changeBackgroundColor(backgroundColor);
-                }else{
-                    GraphUi.resetBackGroundColor();
-                }
-            }
             document.title = centralBubble.getTextOrDefault() + " | MindRespect";
             if (MindMapInfo.isViewOnly()) {
                 GraphUi.getDrawnGraph().find(".bubble").addClass("not-editable");
@@ -89,6 +81,16 @@ define([
                 GraphUi.hideSchemaInstructions();
             }
             centralBubble.setAsCentral();
+            if (GraphElementUi.getCenterVertexOrSchema().isVertex()) {
+                var backgroundColor = centralBubble.getModel().getColors().background;
+                if (backgroundColor) {
+                    GraphUi.changeBackgroundColor(backgroundColor);
+                }else{
+                    GraphUi.resetBackGroundColor();
+                }
+            }else{
+                GraphUi.resetBackGroundColor();
+            }
             GraphUi.getDrawnGraph().on(
                 "mousedown",
                 function (event) {
@@ -118,6 +120,7 @@ define([
             AppController.zoomOut();
             EventBus.publish('/event/ui/graph/drawn');
             centralBubble.scrollTo();
+            GraphElementMainMenu.reviewAppButtonsDisplay();
             // html2canvas(document.body).then(function(canvas) {
             //     document.body.innerHTML = canvas;
             // });

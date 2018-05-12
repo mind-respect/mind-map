@@ -236,5 +236,11 @@ define([
     api.Identification.prototype.isPristine = function(){
         return false;
     };
+
+    api.Identification.prototype.getFont = function(){
+        return {
+            family: 'IBM Plex Sans'
+        };
+    };
     return api;
 });
