@@ -954,7 +954,7 @@ define([
 
     api.GraphElementUi.prototype.refreshFont = function (font) {
         font = font || api.getCenterVertexOrSchema().getModel().getFont();
-        this.html.find(".bubble-label").css(
+        this.html.css(
             "font-family",
             font.family
         );
