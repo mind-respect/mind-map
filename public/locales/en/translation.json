@@ -152,6 +152,7 @@
     "repeat": "Retype password",
     "submit": "Change",
     "success": "Password changed",
+    "goToLogin": "Go to login page",
     "error": {
       "match": "Passwords don't match",
       "too_short": "The password must have a minimum of 6 characters",

@@ -5,16 +5,17 @@
 define([
     "jquery",
     "triple_brain.user_service",
+    "triple_brain.login_handler",
     "jquery.url",
     "bootstrap"
-], function ($, UserService) {
+], function ($, UserService, LoginHandler) {
     "use strict";
     var api = {};
-    api.enterFlow = function(){
+    api.enterFlow = function () {
         getChangePasswordPage().modal('show');
-        getSubmitButton().click(function(){
+        getSubmitButton().click(function () {
             hideAllMessages();
-            if(!doPasswordsMatch()){
+            if (!doPasswordsMatch()) {
                 $("#change-password-dont-match").removeClass("hidden");
                 return;
             }
@@ -27,55 +28,68 @@ define([
             );
         });
         getCancelButton().click(closeModal);
+        $("#change-password-go-to-login").click(function (event) {
+            event.preventDefault();
+            closeModal();
+            LoginHandler.showModal();
+        });
     };
-    api.isChangePasswordFlow = function(){
+    api.isChangePasswordFlow = function () {
         return $.url().param("reset-token") !== undefined;
     };
     return api;
 
-    function changePasswordSuccess(){
+    function changePasswordSuccess() {
         hideAllMessages();
         $("#change-password-success").removeClass("hidden");
+        $("#change-password-go-to-login").removeClass("hidden");
+        getSubmitButton().addClass("hidden");
+        $("#change-password-form").addClass("hidden");
     }
 
-    function changePasswordError(xhr){
+    function changePasswordError(xhr) {
         hideAllMessages();
         var badRequestCode = 400;
-        if(badRequestCode === xhr.status){
+        if (badRequestCode === xhr.status) {
             $("#change-password-too-short").removeClass("hidden");
             return;
         }
         $("#change-password-wrong").removeClass("hidden");
     }
 
-    function hideAllMessages(){
+    function hideAllMessages() {
         getMessages().addClass("hidden");
     }
 
-    function getMessages(){
+    function getMessages() {
         return getChangePasswordPage().find(".alert");
     }
 
-    function doPasswordsMatch(){
+    function doPasswordsMatch() {
         return getPasswordInput().val().trim() === getPasswordRepeatInput().val().trim();
     }
 
-    function getPasswordInput(){
+    function getPasswordInput() {
         return $("#change-password-input");
     }
-    function getPasswordRepeatInput(){
+
+    function getPasswordRepeatInput() {
         return $("#change-password-repeat-input");
     }
-    function getChangePasswordPage(){
+
+    function getChangePasswordPage() {
         return $("#change-password-page");
     }
-    function getSubmitButton(){
+
+    function getSubmitButton() {
         return $("#forgot-password-submit");
     }
-    function getToken(){
+
+    function getToken() {
         return $.url().param("reset-token");
     }
-    function getEmail(){
+
+    function getEmail() {
         return $.url().param("email");
     }
 

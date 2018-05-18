@@ -108,7 +108,7 @@
     "password": "Mot de passe",
     "retype_password": "Retaper le mot de passe",
     "register": "Enregistrer",
-    "login": "s'authentifier",
+    "login": "se connecter",
     "language": {
       "selected_languages": "Langues que je connais en ordre de préférence",
       "more_languages": "Ajouter langue(s)",
@@ -128,11 +128,11 @@
     }
   },
   "login": {
-    "title": "S'authentifier",
+    "title": "Vous connecter",
     "email": "Courriel",
     "username": "Nom d'usager (nom public)",
     "password": "Mot de passe",
-    "login": "Authentifier",
+    "login": "Connecter",
     "register": "S'enregistrer",
     "about": "à propos",
     "error": "Courriel ou mot de passe invalide(s)",
@@ -152,6 +152,7 @@
     "repeat": "Répéter le mot de passe",
     "submit": "Modifier",
     "success": "Mot de passe modifié",
+    "goToLogin": "Rendez-vous à la page de connexion",
     "error": {
       "match": "Les mots de passe ne sont pas pareil",
       "too_short": "Le mot de passe requiert un minimum de 6 caractères",
