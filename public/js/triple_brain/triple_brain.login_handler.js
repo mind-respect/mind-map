@@ -8,9 +8,10 @@ define([
         "triple_brain.language_manager",
         "triple_brain.id_uri",
         "mr.loading_flow",
+        "mr.forgot-password-flow",
         "bootstrap"
     ],
-    function ($, UserService, LanguageManager, IdUri, LoadingFlow) {
+    function ($, UserService, LanguageManager, IdUri, LoadingFlow, ForgotPasswordFlow) {
         "use strict";
         var api = {};
         api.setupModal = function () {
@@ -19,6 +20,9 @@ define([
             ).setup();
         };
         api.showModal = function () {
+            if(history.state !== 'login'){
+                history.pushState('login', null, '/login');
+            }
             getModalSection().modal();
         };
 
@@ -74,30 +78,11 @@ define([
         };
 
         LoginForm.prototype.handleForgotPassword = function () {
-            var self = this;
-            this.getForgotPasswordButton().click(function (event) {
+            $("#forgotPasswordLink").click(function(event){
                 event.preventDefault();
-                self.hideAllMessages();
-                var email = self.getEmailField().val().trim();
-                if ("" === email) {
-                    self.getMandatoryEmailErrorMessage().removeClass("hidden");
-                    return;
-                }
-                UserService.resetPassword(
-                    email,
-                    success,
-                    error
-                );
+                closeModal(true);
+                ForgotPasswordFlow.enter();
             });
-            function success() {
-                self.container.find(
-                    ".forgot-password-email-sent"
-                ).removeClass("hidden");
-            }
-
-            function error() {
-                self.getInexistentEmailErrorMessage().removeClass("hidden");
-            }
         };
 
         LoginForm.prototype.submitWhenPressingEnter = function () {
@@ -170,9 +155,6 @@ define([
             return this.container.find(".register-link");
         };
 
-        LoginForm.prototype.getForgotPasswordButton = function () {
-            return this.container.find(".forgot-password-link");
-        };
 
         LoginForm.prototype.getMandatoryEmailErrorMessage = function () {
             return this._getErrorWithName("mandatory_email");
@@ -202,7 +184,10 @@ define([
             return getModalSection().find(".cancel");
         }
 
-        function closeModal() {
+        function closeModal(skipPushState) {
+            if(skipPushState !== true){
+                history.pushState('landing', null, '/');
+            }
             getModalSection().modal("hide");
         }
 

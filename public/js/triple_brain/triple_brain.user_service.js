@@ -37,7 +37,7 @@ define([
             return authenticatedUserInCache !== undefined;
         };
         api.authenticate = function (loginInfo, callback, errorCallback) {
-            $.ajax({
+            return $.ajax({
                 type: 'POST',
                 data: JSON.stringify(loginInfo),
                 url: sessionResourceUrl,
@@ -46,7 +46,7 @@ define([
                 .fail(errorCallback);
         };
         api.register = function (userObject, successCallback, errorCallback) {
-            $.ajax({
+            return $.ajax({
                 type: 'POST',
                 url: usersResourceUrl,
                 data: JSON.stringify(userObject),
@@ -59,7 +59,7 @@ define([
                 });
         };
         api.authenticatedUser = function (callback) {
-            $.ajax({
+            return $.ajax({
                 type: 'GET',
                 url: sessionResourceUrl
             }).done(function (authenticatedUser) {
@@ -81,7 +81,7 @@ define([
             });
         };
         api.isAuthenticated = function (isAuthenticatedCallBack, isNotAuthenticatedCallBack) {
-            $.ajax({
+            return $.ajax({
                 type: 'GET',
                 url: usersResourceUrl + "is_authenticated"
             }).done(function (isAuthenticated) {
@@ -93,13 +93,13 @@ define([
             }).fail(isNotAuthenticatedCallBack);
         };
         api.logout = function (successCallBack) {
-            $.ajax({
+            return $.ajax({
                 type: 'DELETE',
                 url: sessionResourceUrl
             }).done(successCallBack);
         };
         api.resetPassword = function (email, callback, errorCallback) {
-            $.ajax({
+            return $.ajax({
                 type: 'POST',
                 url: "/service/reset-password",
                 contentType: 'application/json',
@@ -107,7 +107,7 @@ define([
             }).done(callback).fail(errorCallback);
         };
         api.changePassword = function (password, email, token, callback, errorCallback) {
-            $.ajax({
+            return $.ajax({
                 type: 'POST',
                 url: "/service/users/password",
                 contentType: 'application/json',

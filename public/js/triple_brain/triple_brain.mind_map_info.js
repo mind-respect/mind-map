@@ -23,10 +23,10 @@ define([
             return IdUri.getGraphElementUriInUrl() !== undefined;
         };
         api.isLandingPageFlow = function () {
-            return "landing" === bublGuruFlow;
+            return "landing" === mrFlow;
         };
         api.isSchemaListFlow = function () {
-            return "schemaList" === bublGuruFlow;
+            return "schemaList" === mrFlow;
         };
         api.getCenterBubbleUri = function () {
             return IdUri.getGraphElementUriInUrl();

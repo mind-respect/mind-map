@@ -11,7 +11,7 @@ define([
     "use strict";
     var api = {};
     api.enterFlow = function(){
-        getChangePasswordPage().removeClass("hidden");
+        getChangePasswordPage().modal('show');
         getSubmitButton().click(function(){
             hideAllMessages();
             if(!doPasswordsMatch()){
@@ -26,6 +26,7 @@ define([
                 changePasswordError
             );
         });
+        getCancelButton().click(closeModal);
     };
     api.isChangePasswordFlow = function(){
         return $.url().param("reset-token") !== undefined;
@@ -76,5 +77,14 @@ define([
     }
     function getEmail(){
         return $.url().param("email");
+    }
+
+    function getCancelButton() {
+        return getChangePasswordPage().find(".cancel");
+    }
+
+    function closeModal() {
+        history.replaceState('landing', null, '/');
+        getChangePasswordPage().modal("hide");
     }
 });

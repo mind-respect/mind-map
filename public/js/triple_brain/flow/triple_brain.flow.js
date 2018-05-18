@@ -9,7 +9,7 @@ define([
     "use strict";
     var api = {};
     api.isBubbleCloudFlow = function(){
-        return "centersCloud" === bublGuruFlow;
+        return "centersCloud" === mrFlow;
     };
     api.publishFlow = function(flow){
         EventBus.publish(

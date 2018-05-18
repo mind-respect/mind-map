@@ -12,8 +12,11 @@ define([
     "triple_brain.flow",
     "triple_brain.id_uri",
     "triple_brain.user_service",
+    "triple_brain.login_handler",
+    "triple_brain.register_handler",
+    "mr.forgot-password-flow",
     "ekko-lightbox"
-], function ($, LanguageManager, MindMapInfo, GraphDisplayer, GraphDisplayerFactory, GraphElementMainMenu, Flow, IdUri, UserService) {
+], function ($, LanguageManager, MindMapInfo, GraphDisplayer, GraphDisplayerFactory, GraphElementMainMenu, Flow, IdUri, UserService, LoginHandler, RegisterHandler, ForgotPasswordFlow) {
     "use strict";
     var api = {};
     api.enterForAuthenticated = function () {
@@ -36,6 +39,11 @@ define([
         setUpFeatures();
         $(".frontier").remove();
         Flow.publishFlow("landing");
+        enterSubFlow(mrSubFlow);
+    };
+    window.onpopstate = function(event) {
+        $('.modal').modal('hide');
+        enterSubFlow(event.state);
     };
     return api;
 
@@ -66,5 +74,16 @@ define([
 
     function modalResource(image) {
         image.ekkoLightbox({});
+    }
+    function enterSubFlow(subFlow){
+        if(subFlow === "login"){
+            return LoginHandler.showModal();
+        }
+        if(subFlow === "register"){
+            return RegisterHandler.showModal();
+        }
+        if(subFlow === "forgot-password"){
+            return ForgotPasswordFlow.enter();
+        }
     }
 });

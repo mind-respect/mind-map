@@ -19,6 +19,9 @@ define([
             ).setup();
         };
         api.showModal = function () {
+            if(history.state !== 'register'){
+                history.pushState('register', null, '/register');
+            }
             getModalSection().modal();
         };
 
@@ -186,6 +189,7 @@ define([
         }
 
         function closeModal() {
+            history.pushState('landing', null, '/');
             getModalSection().modal("hide");
         }
 

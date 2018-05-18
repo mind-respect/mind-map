@@ -264,6 +264,7 @@ module.exports = {
         "triple_brain.user_service": "triple_brain/triple_brain.user_service",
         "triple_brain.login_handler": "triple_brain/triple_brain.login_handler",
         "triple_brain.register_handler": "triple_brain/triple_brain.register_handler",
+        "mr.forgot-password-flow": "triple_brain/mr.forgot-password-flow",
         "triple_brain.change_password": "triple_brain/triple_brain.change_password",
         "triple_brain.event_bus": "triple_brain/triple_brain.event_bus"
     },

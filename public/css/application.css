@@ -696,6 +696,11 @@ body.print nav.navbar { display: none; }
 .navbar li a:hover .short-cut { color: white; }
 .navbar .short-cut { color: #777; }
 
+/*!
+ * Copyright Vincent Blouin under the GPL License version 3
+ */
+form.well { margin-bottom: 0; padding-bottom: 0; }
+
 html { font-size: 93.8%; }
 
 body.no-scroll { overflow: hidden; }

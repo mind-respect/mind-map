@@ -1,75 +1,92 @@
 var express = require('express');
 var router = express.Router();
 var isDebug = 'development' === process.env.debug;
+const extend = require('util')._extend;
 const requireJsConfig = require("../requirejsConfig");
-var bublGuruFlow = "";
 const config = require('../config.json');
 //var webshot = require('webshot');
 //var uuid = require("node-uuid");
+const defaults = {
+    isDebug: isDebug,
+    bust: process.env.bust,
+    usernameForBublGuru: '',
+    graphElementTypeForBublGuru: '',
+    graphElementShortIdForBublGuru: '',
+    mrFlow: '',
+    mrSubFlow: '',
+    requireJsConfig: requireJsConfig,
+    config: config
+};
 router.get('/', function (req, res, next) {
     res
         .render(
-        'index',
-        {
-            isDebug: isDebug,
-            bust: process.env.bust,
-            usernameForBublGuru : "",
-            graphElementTypeForBublGuru: "",
-            graphElementShortIdForBublGuru : "",
-            bublGuruFlow: "landing",
-            requireJsConfig: requireJsConfig,
-            config: config
-        }
-    );
+            'index',
+            useOptions({
+                mrFlow: 'landing'
+            })
+        );
+});
+router.get('/login', function (req, res, next) {
+    res
+        .render(
+            'index',
+            useOptions({
+                mrFlow: 'landing',
+                mrSubFlow: 'login'
+            })
+        );
+});
+router.get('/register', function (req, res, next) {
+    res
+        .render(
+            'index',
+            useOptions({
+                mrFlow: 'landing',
+                mrSubFlow: 'register'
+            })
+        );
+});
+router.get('/forgot-password', function (req, res, next) {
+    res
+        .render(
+            'index',
+            useOptions({
+                mrFlow: 'landing',
+                mrSubFlow: 'forgot-password'
+            })
+        );
 });
 router.get('/user/:username', function (req, res, next) {
     res
         .render(
-        'index',
-        {
-            isDebug: isDebug,
-            bust: process.env.bust,
-            usernameForBublGuru : req.params.username,
-            graphElementTypeForBublGuru: "",
-            graphElementShortIdForBublGuru : "",
-            bublGuruFlow: "centersCloud",
-            requireJsConfig: requireJsConfig,
-            config: config
-        }
-    );
+            'index',
+            useOptions({
+                usernameForBublGuru: req.params.username,
+                mrFlow: 'centersCloud',
+                mrSubFlow: 'forgot-password'
+            })
+        );
 });
 router.get('/user/:username/graph/:graphElementType/:graphElementShortId', function (req, res, next) {
     res
         .render(
-        'index',
-        {
-            isDebug: isDebug,
-            bust: process.env.bust,
-            usernameForBublGuru : req.params.username,
-            graphElementTypeForBublGuru : req.params.graphElementType,
-            graphElementShortIdForBublGuru : req.params.graphElementShortId,
-            bublGuruFlow: bublGuruFlow,
-            requireJsConfig: requireJsConfig,
-            config: config
-        }
-    );
+            'index',
+            useOptions({
+                usernameForBublGuru: req.params.username,
+                graphElementTypeForBublGuru: req.params.graphElementType,
+                graphElementShortIdForBublGuru: req.params.graphElementShortId,
+            })
+        );
 });
 
 router.get('/schemas', function (req, res, next) {
     res
         .render(
-        'index',
-        {
-            isDebug: isDebug,
-            bust: process.env.bust,
-            usernameForBublGuru : "",
-            graphElementTypeForBublGuru : "",
-            graphElementShortIdForBublGuru : "",
-            bublGuruFlow: "schemaList",
-            requireJsConfig: requireJsConfig,
-            config: config
-        }
-    );
+            'index',
+            useOptions({
+                mrFlow: "schemaList"
+            })
+        );
 });
 //router.post('/node-service/html-to-image', function (req, res, next) {
 //    var filePath = "public/export/image-" + uuid.v4()  + ".png";
@@ -85,5 +102,13 @@ router.get('/schemas', function (req, res, next) {
 //    });
 //    res.send(req.body.html);
 //});
+
+function useOptions(options) {
+    return Object.assign(
+        {},
+        defaults,
+        options
+    )
+}
 
 module.exports = router;

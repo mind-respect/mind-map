@@ -136,10 +136,13 @@
     "register": "S'enregistrer",
     "about": "à propos",
     "error": "Courriel ou mot de passe invalide(s)",
-    "stay": "Rester connecté"
+    "stay": "Rester connecté",
+    "forgotPassword": "Mot de passe oublié"
   },
-  "forgot_password": {
-    "button": "Mot de passe oublié",
+  "forgotPassword": {
+    "title": "Envoyer un courriel pour modifier votre mot de passe",
+    "email": "Votre courriel",
+    "button": "Envoyer",
     "success": "Les instructions pour modifier votre mot de passe vous ont été envoyé par courriel",
     "error": "Aucun compte n'est relié à ce courriel"
   },
@@ -197,7 +200,7 @@
   },
   "left_menu": {
     "search": "Rechercher des bulles",
-    "filterFonts" : "Chercher une police"
+    "filterFonts": "Chercher une police"
   },
   "edge": {
     "default": "relie"

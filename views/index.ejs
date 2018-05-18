@@ -97,7 +97,9 @@
                             >
                                 <span data-i18n='top_menu.create'></span>
                                 <small class='text-muted short-cut'>
-                                    (<small class="ctrl"></small>+b)
+                                    (
+                                    <small class="ctrl"></small>
+                                    +b)
                                 </small>
                             </a>
                         </li>
@@ -140,7 +142,8 @@
                     <a data-toggle="dropdown">
                         <i class="fa fa-gear"></i>
                     </a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" id="language-selector-container">
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu"
+                        id="language-selector-container">
                         <li class="">
                             <a data-lang="fr" href="" role="menuitem">
                                 <i class="fa fa-globe"></i>
@@ -328,7 +331,7 @@
     </div>
 </div>
 <div id="graph-menu">
-    <span class="menu-panel hidden-sm hidden-xs hidden" data-flow="mindMap">
+    <div class="menu-panel hidden-sm hidden-xs hidden" data-flow="mindMap">
         <button data-action="zoomIn" data-combinedShortcut="&plus;"
                 class="graph-element-button app-button">
             <i class="fa fa-search-plus"></i>
@@ -416,62 +419,14 @@
         </div>
         <div class="col-md-3"></div>
     </div>
-    <div class="hidden row" id="change-password-page">
-        <div class="col-lg-4">
-        </div>
-        <div class="col-lg-4 well well-lg">
-            <div>
-                <h4 data-i18n="change_password.title"></h4>
-            </div>
-            <div>
-                <div id="change-password-dont-match"
-                     class="alert alert-danger hidden"
-                     data-i18n="change_password.error.match" role="alert">
-                </div>
-                <div id="change-password-success"
-                     class="alert alert-success hidden"
-                     data-i18n="change_password.success" role="alert">
-                </div>
-                <div id="change-password-too-short"
-                     class="alert alert-danger hidden"
-                     data-i18n="change_password.error.too_short" role="alert">
-                </div>
-                <div id="change-password-wrong"
-                     class="alert alert-danger hidden"
-                     data-i18n="change_password.error.wrong" role="alert">
-                </div>
-                <form id="change-password-form" class="security-form" role="form">
-                    <div class="form-group">
-                        <label for="change-password-input" class="sr-only"
-                               data-i18n="change_password.input"></label>
-                        <input id="change-password-input" class="form-control" type="password"
-                               data-i18n="[placeholder]change_password.input">
-                    </div>
-                    <div class="form-group">
-                        <label for="change-password-repeat-input" class="sr-only"
-                               data-i18n="change_password.repeat"></label>
-                        <input id="change-password-repeat-input" class="form-control" type="password"
-                               data-i18n="[placeholder]change_password.repeat"/>
-                    </div>
-                </form>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <button id="forgot-password-submit" type="button" class="btn btn-primary"
-                            data-i18n="change_password.submit"></button>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
-        </div>
-    </div>
 
     <div class="row hidden" id="welcome-content" data-flow="landing">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12" style="margin-bottom:21px;">
                     <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/nK3dSxvRHvc"></iframe>
+                        <iframe class="embed-responsive-item"
+                                src="https://www.youtube.com/embed/nK3dSxvRHvc"></iframe>
                     </div>
                 </div>
             </div>
@@ -1162,7 +1117,8 @@
                         <label for="filter-checkbox-meta" data-i18n="[title]centralBubbles.typeFilter.tag">
                             <i class="fa fa-tag"></i>
                             <input id="filter-checkbox-meta" data-filter-name="meta"
-                                   class="form-control checkbox filter-type-checkbox" name="filterTags" type="checkbox"
+                                   class="form-control checkbox filter-type-checkbox" name="filterTags"
+                                   type="checkbox"
                                    checked="checked">
                         </label>
                         <label for="filter-checkbox-vertex" data-i18n="[title]centralBubbles.typeFilter.vertex">
@@ -1404,8 +1360,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span
-                            aria-hidden="true">&times;</span><span
-                            class="sr-only">Close</span></button>
+                        aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title" data-i18n="login.title"></h4>
             </div>
             <div class="modal-body">
@@ -1439,15 +1395,112 @@
                             <span data-i18n="login.stay"></span>
                         </label>
                     </div>
+                    <label>
+                        <a href="#" data-i18n="login.forgotPassword" id="forgotPasswordLink"></a>
+                    </label>
                 </form>
             </div>
             <div class="modal-footer">
                 <div class="col-lg-12 text-center">
-                    <button type="button" class="login-button btn btn-success"
+                    <button type="button" class="login-button btn btn-success pull-left"
                             data-i18n="login.login"></button>
-                    <button type="button" class="forgot-password-link btn btn-primary"
-                            data-i18n="forgot_password.button"></button>
-                    <button type="button" class="cancel btn btn-danger"
+                    <button type="button" class="cancel btn btn-danger pull-right"
+                            data-i18n="cancel"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="security-form-wrapper modal fade row" id="change-password-page" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span
+                        aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 data-i18n="change_password.title"></h4>
+            </div>
+            <div class="modal-body">
+                <div id="change-password-dont-match"
+                     class="alert alert-danger hidden"
+                     data-i18n="change_password.error.match" role="alert">
+                </div>
+                <div id="change-password-success"
+                     class="alert alert-success hidden"
+                     data-i18n="change_password.success" role="alert">
+                </div>
+                <div id="change-password-too-short"
+                     class="alert alert-danger hidden"
+                     data-i18n="change_password.error.too_short" role="alert">
+                </div>
+                <div id="change-password-wrong"
+                     class="alert alert-danger hidden"
+                     data-i18n="change_password.error.wrong" role="alert">
+                </div>
+                <form id="change-password-form" class="security-form" role="form">
+                    <div class="form-group">
+                        <label for="change-password-input" class="sr-only"
+                               data-i18n="change_password.input"></label>
+                        <input id="change-password-input" class="form-control" type="password"
+                               data-i18n="[placeholder]change_password.input">
+                    </div>
+                    <div class="form-group">
+                        <label for="change-password-repeat-input" class="sr-only"
+                               data-i18n="change_password.repeat"></label>
+                        <input id="change-password-repeat-input" class="form-control" type="password"
+                               data-i18n="[placeholder]change_password.repeat"/>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="col-lg-12">
+                    <button id="forgot-password-submit" type="button" class="btn btn-primary pull-left"
+                            data-i18n="change_password.submit"></button>
+                    <button type="button" class="cancel btn btn-danger pull-right"
+                            data-i18n="cancel"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="security-form-wrapper modal fade row" id="forgot-password-page-modal" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span
+                        aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" data-i18n="forgotPassword.title"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="forgot-password-email-sent alert alert-success hidden"
+                     data-i18n="forgotPassword.success" role="alert">
+                </div>
+                <div data-error="inexistent-email"
+                     class="alert alert-danger hidden"
+                     data-i18n="forgotPassword.error" role="alert">
+                </div>
+                <form class="forgot-password-form security-form well" role="form">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">@</div>
+                            <label for="change-password-email" class="sr-only" data-i18n="login.email"></label>
+                            <input id="change-password-email" class="login-email form-control" name="email"
+                                   type="email"
+                                   data-i18n="[placeholder]forgotPassword.email">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="col-lg-12 text-center">
+                    <button type="button" class="forgot-password-button btn btn-primary pull-left"
+                            data-i18n="forgotPassword.button"></button>
+                    <button type="button" class="cancel btn btn-danger pull-right"
                             data-i18n="cancel"></button>
                 </div>
             </div>
@@ -1460,8 +1513,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span
-                            aria-hidden="true">&times;</span><span
-                            class="sr-only">Close</span></button>
+                        aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title" data-i18n="login.register"></h4>
             </div>
             <div class="modal-body">
@@ -1508,18 +1561,12 @@
                      class="alert alert-danger hidden"
                      data-i18n="register.error.password_too_short" role="alert">
                 </div>
-                <div data-error="inexistent-email"
-                     class="alert alert-danger hidden"
-                     data-i18n="forgot_password.error" role="alert">
-                </div>
-                <div class="forgot-password-email-sent alert alert-success hidden"
-                     data-i18n="forgot_password.success" role="alert">
-                </div>
                 <form class="login-form security-form well" role="form">
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon"><i class="glyphicon glyphicon-user"></i></div>
-                            <label for="register-username-modal" class="sr-only" data-i18n="login.email"></label>
+                            <label for="register-username-modal" class="sr-only"
+                                   data-i18n="login.email"></label>
                             <input id="register-username-modal" class="login-username form-control" name="email"
                                    type="email"
                                    data-i18n="[placeholder]login.username">
@@ -1537,8 +1584,10 @@
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon"><i class="fa fa-key"></i></div>
-                            <label for="register-password-modal" class="sr-only" data-i18n="login.password"></label>
-                            <input id="register-password-modal" class="login-password form-control" name="password"
+                            <label for="register-password-modal" class="sr-only"
+                                   data-i18n="login.password"></label>
+                            <input id="register-password-modal" class="login-password form-control"
+                                   name="password"
                                    type="password"
                                    data-i18n="[placeholder]login.password"/>
                         </div>
@@ -1555,9 +1604,9 @@
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <button type="button" class="register-link btn btn-success"
+                        <button type="button" class="register-link btn btn-success pull-left"
                                 data-i18n="login.register"></button>
-                        <button type="button" class="cancel btn btn-danger"
+                        <button type="button" class="cancel btn btn-danger pull-right"
                                 data-i18n="cancel"></button>
                     </div>
                 </div>
@@ -1570,8 +1619,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span
-                            aria-hidden="true">&times;</span><span
-                            class="sr-only" data-i18n="modal.close"></span></button>
+                        aria-hidden="true">&times;</span><span
+                        class="sr-only" data-i18n="modal.close"></span></button>
                 <h4 class="modal-title" data-i18n="compare_menu.title"></h4>
             </div>
             <div class="modal-body">
@@ -1604,8 +1653,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span
-                            aria-hidden="true">&times;</span><span
-                            class="sr-only" data-i18n="modal.close"></span></button>
+                        aria-hidden="true">&times;</span><span
+                        class="sr-only" data-i18n="modal.close"></span></button>
                 <h4 class="modal-title" data-i18n="toList.title"></h4>
             </div>
             <div class="modal-body">
@@ -1647,10 +1696,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span
-                            aria-hidden="true">&times;</span><span
-                            class="sr-only" data-i18n="modal.close"></span></button>
+                        aria-hidden="true">&times;</span><span
+                        class="sr-only" data-i18n="modal.close"></span></button>
                 <h4 class="modal-title">
-                    <span data-i18n="vertex.menu.note.title_prefix"></span><span class='bubble-label-in-title'></span>
+                    <span data-i18n="vertex.menu.note.title_prefix"></span><span
+                        class='bubble-label-in-title'></span>
                 </h4>
             </div>
             <div class="modal-body">
@@ -1659,8 +1709,9 @@
                         <div class="btn-toolbar" data-role="editor-toolbar"
                              data-target="#editor">
                             <div class="btn-group">
-                                <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Font Size"><i
-                                            class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
+                                <a class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                   title="Font Size"><i
+                                        class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a data-edit="fontSize 5" class="fs-Five">Huge</a></li>
                                     <li><a data-edit="fontSize 3" class="fs-Three">Normal</a></li>
@@ -1669,37 +1720,43 @@
                             </div>
                             <div class="btn-group">
                                 <a class="btn btn-default" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i
-                                            class="fa fa-bold"></i></a>
+                                        class="fa fa-bold"></i></a>
                                 <a class="btn btn-default" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i
-                                            class="fa fa-italic"></i></a>
+                                        class="fa fa-italic"></i></a>
                                 <a class="btn btn-default" data-edit="strikethrough" title="Strikethrough"><i
-                                            class="fa fa-strikethrough"></i></a>
+                                        class="fa fa-strikethrough"></i></a>
                                 <a class="btn btn-default" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i
-                                            class="fa fa-underline"></i></a>
+                                        class="fa fa-underline"></i></a>
                             </div>
                             <div class="btn-group">
-                                <a class="btn btn-default" data-edit="insertunorderedlist" title="Bullet list"><i
-                                            class="fa fa-list-ul"></i></a>
+                                <a class="btn btn-default" data-edit="insertunorderedlist"
+                                   title="Bullet list"><i
+                                        class="fa fa-list-ul"></i></a>
                                 <a class="btn btn-default" data-edit="insertorderedlist" title="Number list"><i
-                                            class="fa fa-list-ol"></i></a>
-                                <a class="btn btn-default" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i
-                                            class="fa fa-outdent"></i></a>
+                                        class="fa fa-list-ol"></i></a>
+                                <a class="btn btn-default" data-edit="outdent"
+                                   title="Reduce indent (Shift+Tab)"><i
+                                        class="fa fa-outdent"></i></a>
                                 <a class="btn btn-default" data-edit="indent" title="Indent (Tab)"><i
-                                            class="fa fa-indent"></i></a>
+                                        class="fa fa-indent"></i></a>
                             </div>
                             <div class="btn-group">
-                                <a class="btn btn-default" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i
-                                            class="fa fa-align-left"></i></a>
-                                <a class="btn btn-default" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i
-                                            class="fa fa-align-center"></i></a>
-                                <a class="btn btn-default" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i
-                                            class="fa fa-align-right"></i></a>
+                                <a class="btn btn-default" data-edit="justifyleft"
+                                   title="Align Left (Ctrl/Cmd+L)"><i
+                                        class="fa fa-align-left"></i></a>
+                                <a class="btn btn-default" data-edit="justifycenter"
+                                   title="Center (Ctrl/Cmd+E)"><i
+                                        class="fa fa-align-center"></i></a>
+                                <a class="btn btn-default" data-edit="justifyright"
+                                   title="Align Right (Ctrl/Cmd+R)"><i
+                                        class="fa fa-align-right"></i></a>
                                 <a class="btn btn-default" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i
-                                            class="fa fa-align-justify"></i></a>
+                                        class="fa fa-align-justify"></i></a>
                             </div>
                             <div class="btn-group">
-                                <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i
-                                            class="fa fa-link"></i></a>
+                                <a class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                   title="Hyperlink"><i
+                                        class="fa fa-link"></i></a>
 
                                 <div class="dropdown-menu input-append">
                                     <input placeholder="URL" type="text" data-edit="createLink"/>
@@ -1708,15 +1765,15 @@
                             </div>
                             <div class="btn-group">
                                 <a class="btn btn-default" data-edit="unlink" title="Remove Hyperlink"><i
-                                            class="fa fa-unlink"></i></a>
+                                        class="fa fa-unlink"></i></a>
                             </div>
                             <div class="btn-group">
                                 <a class="btn btn-default" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i
-                                            class="fa fa-undo"></i></a>
+                                        class="fa fa-undo"></i></a>
                                 <a class="btn btn-default" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i
-                                            class="fa fa-repeat"></i></a>
+                                        class="fa fa-repeat"></i></a>
                                 <a class="btn btn-default" data-edit="html" title="Clear Formatting"><i
-                                            class='glyphicon glyphicon-pencil'></i></a>
+                                        class='glyphicon glyphicon-pencil'></i></a>
                             </div>
                         </div>
                         <div id="editor" class="editor"></div>
@@ -1784,7 +1841,7 @@
     </form>
 </div>
 <!--<div id="font-popover" class="hidden">-->
-    <!--<div id="font-picker"></div>-->
+<!--<div id="font-picker"></div>-->
 <!--</div>-->
 <footer data-flow="landing" class="hidden"><span class="fa fa-copyright"></span> Copyleft - MindRespect -
     <a data-i18n='[href]top_menu.contribute_link'>
@@ -1798,7 +1855,8 @@
     var usernameForBublGuru = "<%= usernameForBublGuru %>";
     var graphElementTypeForBublGuru = "<%= graphElementTypeForBublGuru %>";
     var graphElementShortIdForBublGuru = "<%= graphElementShortIdForBublGuru %>";
-    var bublGuruFlow = "<%= bublGuruFlow %>";
+    var mrFlow = "<%= mrFlow || '' %>";
+    var mrSubFlow = "<%= mrSubFlow || '' %>";
 </script>
 <% if(isDebug){ %>
 <script src="/js/common-boot.js"></script>
