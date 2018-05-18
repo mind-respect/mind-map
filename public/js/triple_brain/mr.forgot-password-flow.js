@@ -42,6 +42,7 @@ define([
                 "click",
                 function (event) {
                     event.preventDefault();
+                    this.getForgotPasswordButton().attr('disabled', 'disabled');
                     this.hideAllMessages();
                     var email = this.getEmailField().val().trim();
                     if ("" === email) {
@@ -60,6 +61,7 @@ define([
                     }
 
                     function error() {
+                        this.getForgotPasswordButton().removeAttr('disabled', 'disabled');
                         this.getInexistentEmailErrorMessage().removeClass("hidden");
                     }
                 }.bind(this));

@@ -14,6 +14,7 @@ define([
     api.enterFlow = function () {
         getChangePasswordPage().modal('show');
         getSubmitButton().click(function () {
+            getSubmitButton().attr('disabled', 'disabled');
             hideAllMessages();
             if (!doPasswordsMatch()) {
                 $("#change-password-dont-match").removeClass("hidden");
@@ -55,6 +56,7 @@ define([
             return;
         }
         $("#change-password-wrong").removeClass("hidden");
+        getSubmitButton().removeAttr('disabled', 'disabled');
     }
 
     function hideAllMessages() {
