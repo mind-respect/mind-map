@@ -42,21 +42,17 @@ define([
                 "click",
                 function (event) {
                     event.preventDefault();
-                    this.getForgotPasswordButton().click(function (event) {
-                        event.preventDefault();
-                        this.hideAllMessages();
-                        var email = this.getEmailField().val().trim();
-                        if ("" === email) {
-                            this.getMandatoryEmailErrorMessage().removeClass("hidden");
-                            return;
-                        }
-                        UserService.resetPassword(
-                            email,
-                            success.bind(this),
-                            error.bind(this)
-                        );
-                    }.bind(this));
-
+                    this.hideAllMessages();
+                    var email = this.getEmailField().val().trim();
+                    if ("" === email) {
+                        this.getMandatoryEmailErrorMessage().removeClass("hidden");
+                        return;
+                    }
+                    UserService.resetPassword(
+                        email,
+                        success.bind(this),
+                        error.bind(this)
+                    );
                     function success() {
                         this.container.find(
                             ".forgot-password-email-sent"
