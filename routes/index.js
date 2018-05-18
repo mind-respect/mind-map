@@ -17,6 +17,15 @@ const defaults = {
     requireJsConfig: requireJsConfig,
     config: config
 };
+
+function useOptions(options) {
+    return Object.assign(
+        {},
+        defaults,
+        options
+    )
+}
+
 router.get('/', function (req, res, next) {
     res
         .render(
@@ -102,13 +111,5 @@ router.get('/schemas', function (req, res, next) {
 //    });
 //    res.send(req.body.html);
 //});
-
-function useOptions(options) {
-    return Object.assign(
-        {},
-        defaults,
-        options
-    )
-}
 
 module.exports = router;
