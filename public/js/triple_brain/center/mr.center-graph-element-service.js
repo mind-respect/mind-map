@@ -15,12 +15,12 @@ define([
             dataType: 'json'
         });
     };
-    api.getPublicOnlyForUsername = function(username, callback){
+    api.getPublicOnlyForUsername = function(username){
         return $.ajax({
             method: 'GET',
             url: UserService.getUsersResourceUrl() + username + "/center-elements/public",
             dataType: 'json'
-        }).then(callback);
+        });
     };
     api.removeCentersWithUri = function(centersUri){
         return $.ajax({

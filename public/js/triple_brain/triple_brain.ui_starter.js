@@ -17,14 +17,14 @@ define(
         "triple_brain.graph_displayer",
         "triple_brain.graph_displayer_factory",
         "triple_brain.flow",
-        "triple_brain.bubble_cloud_flow",
+        "mr.connected-home-flow",
         "mr.wikidata",
         "triple_brain.ui.search",
         "triple_brain.modules",
         "jquery.lazyload",
         "intro"
     ],
-    function ($, MindMapFlow, UserService, MindMapInfo, LandingPageFlow, SchemaListFlow, ChangePassword, LoginHandler, RegisterHandler, Header, GraphDisplayer, GraphDisplayerFactory, Flow, BubbleCloudFlow) {
+    function ($, MindMapFlow, UserService, MindMapInfo, LandingPageFlow, SchemaListFlow, ChangePassword, LoginHandler, RegisterHandler, Header, GraphDisplayer, GraphDisplayerFactory, Flow, ConnectedHomeFlow) {
         "use strict";
         var api = {};
         api.start = function () {
@@ -40,8 +40,8 @@ define(
                 callBackWhenNotAuthenticated
             );
         };
-        api.enterBubbleCloudFlow = function () {
-            MindMapFlow.enterBubbleCloud();
+        api.enterConnectedHomeFlow = function () {
+            MindMapFlow.enterConnectedHomeFlow();
         };
 
         return api;
@@ -61,7 +61,7 @@ define(
                     SchemaListFlow.enter();
                     return;
                 }
-                MindMapFlow.enterBubbleCloud();
+                MindMapFlow.enterConnectedHomeFlow();
             });
         }
 
@@ -77,8 +77,8 @@ define(
             }
             else if (MindMapInfo.isSchemaListFlow()) {
                 SchemaListFlow.enter();
-            } else if (Flow.isBubbleCloudFlow()) {
-                BubbleCloudFlow.enter();
+            } else if (Flow.isConnectedHomeFlow()) {
+                ConnectedHomeFlow.enter();
             }
             else {
                 MindMapFlow.enterMindMapForAnonymousUser();

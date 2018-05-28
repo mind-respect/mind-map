@@ -11,7 +11,7 @@ define([
         "triple_brain.wikidata_autocomplete_provider",
         "triple_brain.user_map_autocomplete_provider",
         "triple_brain.graph_element_menu",
-        "triple_brain.search",
+        "mr.search-service",
         "triple_brain.identification_context",
         "triple_brain.search_result",
         "triple_brain.mind_map_info",

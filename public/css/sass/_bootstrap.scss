@@ -6,3 +6,42 @@ form.well{
   margin-bottom:0;
   padding-bottom:0;
 }
+
+.nav-tabs {
+  a{
+    font-size: 16px;
+    color:black;
+    font-weight:bold;
+  }
+  //li.active {
+  //  a{
+  //    color: white;
+  //    background-color: $red !important;
+  //  }
+  //}
+  li:hover{
+    a{
+      border-width:1px !important;
+      border-color: $red;
+    }
+  }
+  li:not(.active):hover {
+    a{
+      color: white !important;
+      background-color: $red !important;
+    }
+  }
+}
+
+.nav-tabs>.active>a, .nav-tabs>.active>a:hover, .nav-tabs>.active>a:focus {
+  border-color: $red !important;
+  border-width:1px !important;;
+  border-bottom-color: transparent !important;
+}
+.nav-tabs> li > a {
+  border-width:1px !important;
+  //border-bottom: 1px solid $red !important;
+}
+.nav-tabs{
+  border-bottom: 1px solid $red;
+}

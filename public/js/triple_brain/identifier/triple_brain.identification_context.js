@@ -4,7 +4,7 @@
 
 define([
     "jquery",
-    "triple_brain.search",
+    "mr.search-service",
     "triple_brain.graph_displayer",
     "triple_brain.search_result",
     "triple_brain.graph_element_type",

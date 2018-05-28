@@ -192,8 +192,8 @@
       "relations": "les relations"
     },
     "connect": "Connexion",
-    "login": "Se connecter",
-    "register": "Créer votre compte",
+    "login": "connecter",
+    "register": "s'inscrire",
     "language": "Langue "
   },
   "top_center_menu": {
@@ -404,7 +404,17 @@
       "bubbleType": "Type de bulle",
       "addAll": "Ajouter tout",
       "removeAll": "Enlever tout"
+    },
+    "tabs":{
+      "friends" : "AMIS"
     }
+  },
+  "friends":{
+      "search": "Usagers de Mind Respect",
+      "addFriend": "Ajouter comme ami",
+      "waiting": "Requête d'amitié en attente",
+      "confirmed": "Ami",
+      "confirm": "Confirmer la demande d'amitié"
   },
   "merge": {
     "title": "Fusionner avec ...",

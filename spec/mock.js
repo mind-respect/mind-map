@@ -19,7 +19,7 @@ define([
     "triple_brain.vertex_service",
     "triple_brain.friendly_resource_service",
     "triple_brain.edge_service",
-    "triple_brain.search",
+    "mr.search-service",
     "triple_brain.id_uri",
     "triple_brain.selection_handler"
 ], function ($, TestUtils, UserServiceMock, EdgeServiceMock, VertexServiceMock, GraphElementServiceMock, FriendlyResourceServiceMock, WikidataMock, BubbleDeleteMenuMock, MindMapInfo, SuggestionService, GraphService, SchemaService, VertexService, FriendlyResourceService, EdgeService, SearchService, IdUri, SelectionHandler) {

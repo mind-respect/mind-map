@@ -71,8 +71,19 @@ router.get('/user/:username', function (req, res, next) {
             'index',
             useOptions({
                 usernameForBublGuru: req.params.username,
-                mrFlow: 'centersCloud',
-                mrSubFlow: 'forgot-password'
+                mrFlow: 'connectedHome',
+                mrSubFlow: 'centerBubbles'
+            })
+        );
+});
+router.get('/user/:username/friends', function (req, res, next) {
+    res
+        .render(
+            'index',
+            useOptions({
+                usernameForBublGuru: req.params.username,
+                mrFlow: 'connectedHome',
+                mrSubFlow: 'friends'
             })
         );
 });

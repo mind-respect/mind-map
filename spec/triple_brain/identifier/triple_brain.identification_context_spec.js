@@ -5,7 +5,7 @@
 define([
     'triple_brain.identification_context',
     'triple_brain.user_map_autocomplete_provider',
-    'triple_brain.search',
+    'mr.search-service',
     "triple_brain.graph_element_type",
     'test/test-scenarios',
     'test/mock'

@@ -118,6 +118,16 @@ define([
                 })
             }).done(callback).fail(errorCallback);
         };
+        api.search = function (searchText) {
+            return $.ajax({
+                type: 'POST',
+                data: JSON.stringify({
+                    "searchText": searchText
+                }),
+                contentType: 'application/json;charset=utf-8',
+                url: api.currentUserUri() + "/search-users"
+            });
+        };
         return api;
     }
 );

@@ -54,20 +54,20 @@ module.exports = {
         "triple_brain.flow": "triple_brain/flow/triple_brain.flow",
         "triple_brain.mind_map_flow": "triple_brain/flow/triple_brain.mind_map_flow",
         "triple_brain.other_user_flow": "triple_brain/flow/triple_brain.other_user_flow",
-        "triple_brain.bubble_cloud_flow": "triple_brain/flow/triple_brain.bubble_cloud_flow",
         "triple_brain.landing_page_flow": "triple_brain/flow/triple_brain.landing_page_flow",
         "triple_brain.schema_list_flow": "triple_brain/flow/triple_brain.schema_list_flow",
-
+        "mr.connected-home-flow": "triple_brain/flow/mr.connected-home-flow",
+        "mr.loading_flow": "triple_brain/flow/mr.loading_flow",
         /*
          Search
          */
         "jquery.triple_brain.search": "triple_brain/search/jquery.triple_brain.search",
         "triple_brain.big_search_box": "triple_brain/search/triple_brain.big_search_box",
         "triple_brain.search_result": "triple_brain/search/triple_brain.search_result",
-        "triple_brain.search": "triple_brain/search/triple_brain.search",
+        "mr.search-service": "triple_brain/search/mr.search-service",
         "triple_brain.ui.search": "triple_brain/search/triple_brain.ui.search",
-        "triple_brain.user_map_autocomplete_provider": "triple_brain/search/autocomplete_results_provider/triple_brain.user_map_autocomplete_provider",
-        "triple_brain.wikidata_autocomplete_provider": "triple_brain/search/autocomplete_results_provider/triple_brain.wikidata_autocomplete_provider",
+        "triple_brain.user_map_autocomplete_provider": "triple_brain/search/provider/triple_brain.user_map_autocomplete_provider",
+        "triple_brain.wikidata_autocomplete_provider": "triple_brain/search/provider/triple_brain.wikidata_autocomplete_provider",
 
         /*
          Compare
@@ -227,6 +227,19 @@ module.exports = {
         "triple_brain.friendly_resource": "triple_brain/friendly-resource/triple_brain.friendly_resource",
 
         /*
+        Central bubbles
+         */
+        "mr.centers-flow": "triple_brain/center/mr.centers-flow",
+        "mr.center-graph-element": "triple_brain/center/mr.center-graph-element",
+        "mr.center-graph-element-service": "triple_brain/center/mr.center-graph-element-service",
+
+        /*
+        Friend
+         */
+        "mr.friends-flow": "triple_brain/friend/mr.friends-flow",
+        "mr.friend-service": "triple_brain/friend/mr.friend-service",
+
+        /*
          Misc
          */
         "mr.to-list": "triple_brain/mr.to-list",
@@ -234,7 +247,6 @@ module.exports = {
         "triple_brain.modules": "triple_brain/triple_brain.modules",
         "triple_brain.module.date_picker": "module/date_picker/triple_brain.module.date_picker",
         "mr.command": "triple_brain/mr.command",
-        "mr.loading_flow": "triple_brain/mr.loading_flow",
         "mr.app_controller": "triple_brain/mr.app_controller",
         "triple_brain.template": "triple_brain/triple_brain.template",
         "triple_brain.keyboard_actions_handler": "triple_brain/triple_brain.keyboard_actions_handler",
@@ -247,10 +259,6 @@ module.exports = {
         "triple_brain.error": "triple_brain/triple_brain.error",
         "mr.ask_modal": "triple_brain/mr.ask_modal",
         "mr.color": "triple_brain/mr.color",
-
-        "mr.central_bubble_table": "triple_brain/mr.central_bubble_table",
-        "mr.center_graph_element": "triple_brain/mr.center_graph_element",
-        "triple_brain.center_graph_element_service": "triple_brain/triple_brain.center_graph_element_service",
 
         "triple_brain.object_utils": "triple_brain/triple_brain.object_utils",
         "triple_brain.selection_handler": "triple_brain/triple_brain.selection_handler",

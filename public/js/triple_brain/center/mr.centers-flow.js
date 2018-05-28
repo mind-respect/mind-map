@@ -1,13 +1,13 @@
 /*
  * Copyright Vincent Blouin under the GPL License version 3
- * forked from https://github.com/sebhildebrandt/reveal.js-tagcloud-plugin
  */
 
 define([
     "jquery",
     "triple_brain.id_uri",
     "mr.ask_modal",
-    "triple_brain.center_graph_element_service",
+    "mr.center-graph-element-service",
+    "mr.center-graph-element",
     "triple_brain.event_bus",
     "mr.app_controller",
     "triple_brain.user_service",
@@ -15,45 +15,75 @@ define([
     "moment",
     "bootstrap-table",
     "jquery.i18next"
-
-], function ($, IdUri, AskModal, CenterGraphElementService, EventBus, AppController, UserService, GraphElementType, Moment) {
+], function ($, IdUri, AskModal, CenterGraphElementService, CenterGraphElement, EventBus, AppController, UserService, GraphElementType, Moment) {
     "use strict";
     var _elements,
         _container,
+        _isOwner,
         tableData = [],
         checkedCenters = [],
         table = $('#word-cloud-table');
-    return {
-        buildFromElementsInContainer: function (elements, container) {
-            _elements = elements;
-            _container = container;
-            buildHtml();
-            setTitle();
-            handleRemoveCenterBtnClick();
-            handleCreateNewConceptButton();
-            hideElementsForOwnerOnlyIfApplicable();
-            setupTypeFilters();
-            EventBus.subscribe("localized-text-loaded", function () {
-                $(".fixed-table-toolbar .search input").attr(
-                    "data-i18n",
-                    "[placeholder]centralBubbles.filter"
-                );
-                _container.find("th.bubble-label .th-inner").attr(
-                    "data-i18n",
-                    "centralBubbles.center"
-                );
-                _container.find("th.context .th-inner").attr(
-                    "data-i18n",
-                    "centralBubbles.context"
-                );
-                _container.find("th.last-visit .th-inner").attr(
-                    "data-i18n",
-                    "centralBubbles.lastVisit"
-                );
-                _container.i18n();
-            });
+    var api = {};
+    api.enter = function(isOwner){
+        _isOwner = isOwner;
+        getWordsContainer().removeClass("hidden");
+        if (isOwner) {
+            return CenterGraphElementService.getPublicAndPrivate().then(api.setupCenterGraphElements);
+        } else {
+            return CenterGraphElementService.getPublicOnlyForUsername(
+                usernameForBublGuru
+            ).then(api.setupCenterGraphElements);
         }
     };
+    api.setupCenterGraphElements = function(centers){
+        var centerGraphElements = CenterGraphElement.fromServerFormat(centers);
+        if (centerGraphElements.length === 0 && _isOwner) {
+            UserService.getDefaultVertexUri(UserService.authenticatedUserInCache().user_name, function (uri) {
+                window.location = IdUri.htmlUrlForBubbleUri(uri);
+            });
+            return;
+        }
+        if (centerGraphElements.length === 1 && _isOwner) {
+            window.location = IdUri.htmlUrlForBubbleUri(centerGraphElements[0].getUri());
+            return;
+        }
+        api.buildFromElementsInContainer(
+            centerGraphElements,
+            getWordsContainer()
+        );
+    };
+    api.buildFromElementsInContainer = function (elements, container) {
+        _elements = elements;
+        _container = container;
+        buildHtml();
+        setTitle();
+        handleRemoveCenterBtnClick();
+        handleCreateNewConceptButton();
+        hideElementsForOwnerOnlyIfApplicable();
+        setupTypeFilters();
+        EventBus.subscribe("localized-text-loaded", function () {
+            $(".fixed-table-toolbar .search input").attr(
+                "data-i18n",
+                "[placeholder]centralBubbles.filter"
+            );
+            _container.find("th.bubble-label .th-inner").attr(
+                "data-i18n",
+                "centralBubbles.center"
+            );
+            _container.find("th.context .th-inner").attr(
+                "data-i18n",
+                "centralBubbles.context"
+            );
+            _container.find("th.last-visit .th-inner").attr(
+                "data-i18n",
+                "centralBubbles.lastVisit"
+            );
+            _container.i18n();
+        });
+    };
+    return api;
+
+
 
     function buildHtml() {
         _elements.forEach(function (element) {
@@ -211,13 +241,10 @@ define([
 
     function setTitle() {
         document.title = IdUri.currentUsernameInUrl() + " | MindRespect";
-        _container.siblings("h2").text(
-            IdUri.currentUsernameInUrl()
-        );
     }
 
     function hideElementsForOwnerOnlyIfApplicable() {
-        if (IdUri.currentUsernameInUrl() === UserService.authenticatedUserInCache().user_name) {
+        if (UserService.hasCurrentUser() && IdUri.currentUsernameInUrl() === UserService.authenticatedUserInCache().user_name) {
             $(".owner-only").removeClass("hidden");
         }
     }
@@ -349,5 +376,9 @@ define([
         return _container.find(
             $("input.filter-type-checkbox")
         );
+    }
+
+    function getWordsContainer() {
+        return $("#word-cloud");
     }
 });

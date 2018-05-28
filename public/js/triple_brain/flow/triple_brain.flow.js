@@ -8,8 +8,8 @@ define([
 ], function ($, EventBus) {
     "use strict";
     var api = {};
-    api.isBubbleCloudFlow = function(){
-        return "centersCloud" === mrFlow;
+    api.isConnectedHomeFlow = function(){
+        return "connectedHome" === mrFlow;
     };
     api.publishFlow = function(flow){
         EventBus.publish(

@@ -11,8 +11,10 @@
     <title data-i18n="landing.title"></title>
     <script>
         history.scrollRestoration = "manual"
-        var requireJsConfig = <%- JSON.stringify(requireJsConfig) %>;
-        var mindRespectConfig = <%- JSON.stringify(config) %>;
+        var requireJsConfig =
+        <%-JSON.stringify(requireJsConfig) %>;
+        var mindRespectConfig =
+        <%-JSON.stringify(config) %>;
     </script>
     <link rel="icon" href="/css/images/logo_tete.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -71,21 +73,12 @@
                         </label>
                     </form>
                 </li>
-                <li class="dropdown">
-                    <a data-toggle="dropdown" id="connect-menu-button">
-                        <span data-i18n="top_menu.connect"></span>
-                        <i class="fa fa-user-circle-o"></i>
-                    </a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <li>
-                            <a href="#" id="login-button" data-i18n="top_menu.login"></a>
-                        </li>
-                        <li>
-                            <a href="#" id="register-button" data-i18n="top_menu.register"></a>
-                        </li>
-                    </ul>
+                <li>
+                    <a href="#" id="login-button" data-i18n="top_menu.login"></a>
                 </li>
-
+                <li>
+                    <a href="#" id="register-button" data-i18n="top_menu.register"></a>
+                </li>
                 <li class="dropdown" id="bubble-menu">
                     <a data-toggle="dropdown">
                         <span data-i18n='top_menu.bubble'></span>
@@ -1104,13 +1097,33 @@
         </div>
     </div>
 </div>
-<div class="row hidden" id="word-cloud-container">
-    <div class="background"></div>
-    <div class="row content">
+<div class="row hidden" id="connected-home-flow">
+    <div class="row">
         <div class="col-md-1"></div>
-        <div class="col-md-10">
-            <h2 class="text-center user-name-on-background"></h2>
-            <div id="word-cloud">
+        <div class="col-md-10 page-box" id="connected-home-flow-content">
+            <ul class="nav nav-tabs">
+                <li role="presentation" id="your-bubbles-tab">
+                    <a href="#">
+                        <span class="username"></span>
+                        <!--<i class="fa fa-user"></i>-->
+                    </a>
+                </li>
+                <li role="presentation" id="friends-tab">
+                    <a href="#">
+                        <span data-i18n="centralBubbles.tabs.friends"></span>
+                        <!--<i class="fa fa-users"></i>-->
+                    </a>
+                </li>
+            </ul>
+            <div id="word-cloud" class="hidden subflow">
+                <!--<div class="row" style="margin-top:10px;">-->
+                    <!--<div class="col-md-12">-->
+                        <!--<button type="button" class="btn btn-danger"-->
+                                <!--id="add-friend-btn"-->
+                                <!--data-i18n="centralBubbles.addFriend">-->
+                        <!--</button>-->
+                    <!--</div>-->
+                <!--</div>-->
                 <div class="row typeFilters">
                     <div class="col-md-12">
                         <strong data-i18n="centralBubbles.typeFilter.bubbleType"></strong>
@@ -1143,6 +1156,7 @@
                                    class="hidden"></a>
                             </li>
                         </ul>
+                        <%- include addFriend.ejs %>
                     </div>
                 </div>
                 <div id="word-cloud-header">
@@ -1159,12 +1173,53 @@
                 </div>
                 <table class="table-responsive" id="word-cloud-table"></table>
             </div>
+            <div id="friends-subflow" class="hidden subflow">
+                <div class="row" style="margin-top:10px;">
+                        <div class="col-md-12">
+                            <%- include addFriend.ejs %>
+                            <form class="" role="search">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-users"></i>
+                                        </div>
+                                        <input id="search-friends" class="form-control" type="text"
+                                               data-i18n="[placeholder]friends.search"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
         </div>
         <div class="col-md-1"></div>
     </div>
 </div>
 
 <!--Modals-->
+
+<div class="modal row" id="add-friend-confirm-modal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span data-i18n="centralBubbles.confirmRemove.title"></span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <strong class="multiple-flow hidden" data-i18n="vertex.menu.delete.multiple"></strong>
+                <ul id="remove-centers-list">
+                    <li data-i18n="centralBubbles.confirmRemove.info"></li>
+                </ul>
+                <strong data-i18n="centralBubbles.confirmRemove.really"></strong>
+                <p>
+                    <em data-i18n="centralBubbles.confirmRemove.info"></em>
+                </p>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
 
 <div class="modal row" id="remove-centers-confirm-menu" role="dialog" aria-hidden="true">
     <div class="modal-dialog">

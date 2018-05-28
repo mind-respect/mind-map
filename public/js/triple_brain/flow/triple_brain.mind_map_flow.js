@@ -16,7 +16,7 @@ define([
     "triple_brain.graph_ui",
     "triple_brain.language_manager",
     "triple_brain.id_uri",
-    "triple_brain.bubble_cloud_flow",
+    "mr.connected-home-flow",
     "triple_brain.flow",
     "triple_brain.bubble_factory",
     "triple_brain.identification_menu",
@@ -24,10 +24,10 @@ define([
     "triple_brain.graph_element_ui",
     "mr.app_controller",
     "triple_brain.other_user_flow"
-], function ($, UiUtils, UserService, EventBus, Header, SelectionHandler, GraphDisplayer, GraphDisplayerFactory, MindMapInfo, GraphElementMainMenu, GraphUi, LanguageManager, IdUriUtils, BubbleCloudFlow, Flow, BubbleFactory, IdentificationMenu, ImageMenu, GraphElementUi, AppController, html2canvas) {
+], function ($, UiUtils, UserService, EventBus, Header, SelectionHandler, GraphDisplayer, GraphDisplayerFactory, MindMapInfo, GraphElementMainMenu, GraphUi, LanguageManager, IdUriUtils, ConnectedHomeFlow, Flow, BubbleFactory, IdentificationMenu, ImageMenu, GraphElementUi, AppController, html2canvas) {
     "use strict";
     var api = {};
-    api.enterBubbleCloud = function () {
+    api.enterConnectedHomeFlow = function () {
         setupMindMap(false, true);
     };
     api.enterMindMapForAuthenticatedUser = function () {
@@ -155,7 +155,7 @@ define([
                 }
                 translateText();
                 if (isTagCloudFlow) {
-                    BubbleCloudFlow.enter();
+                    ConnectedHomeFlow.enter();
                     return;
                 }
                 Flow.showOnlyFlow("mindMap");

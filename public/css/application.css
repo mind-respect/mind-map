@@ -8,7 +8,7 @@
 .navbar-default .navbar-brand { color: black; }
 .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus { background-color: transparent !important; color: white; }
 .navbar-default .navbar-text { color: black; }
-.navbar-default .navbar-nav > li > a { margin-right: 5px; margin-top: 3px; cursor: pointer; font-size: 1.2em; color: black; }
+.navbar-default .navbar-nav > li > a { margin-right: 5px; text-transform: uppercase; margin-top: 3px; cursor: pointer; font-size: 1.2em; color: black; }
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus { color: white; background-color: rgba(18, 29, 70, 0.4); }
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus { background-image: none; color: white; background-color: rgba(254, 254, 254, 0.8) !important; border-radius: 10px 10px 0px 0px; color: black !important; }
 .navbar-default .navbar-toggle { border-color: rgba(18, 29, 70, 0.4); }
@@ -297,6 +297,8 @@ footer > a:hover { background-color: black !important; color: white !important; 
 .search-box { background: none; border: 1px solid #ebebeb; }
 .search-box:hover { background: none; border: 1px solid #ebebeb; }
 .search-box:focus { background: none; border: 1px solid #ebebeb; }
+
+.ui-helper-hidden-accessible { display: none !important; }
 
 #graph-menu { position: fixed; bottom: 25px; z-index: 99; top: 112px; overflow-x: hidden; overflow-y: hidden; }
 #graph-menu button { display: block; }
@@ -633,13 +635,11 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .zoom-scale-1 .in-bubble-content { zoom: 500%; -moz-transform: scale(5); }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
-.user-name-on-background { margin-top: 40px; }
+#connected-home-flow .background { position: absolute; background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("images/neurons-440660-white3.jpg"); left: 0; width: 100%; min-height: 200px; }
 
-#word-cloud-container .background { position: absolute; background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("images/neurons-440660-white3.jpg"); left: 0; width: 100%; min-height: 200px; }
-#word-cloud-container .content { margin-top: 3%; }
-#word-cloud-container h2.user-name-on-background { font-weight: bold; font-size: 2rem; color: white; }
+#connected-home-flow-content { margin-top: 3%; padding: 1em; }
 
-#word-cloud { margin-top: 3%; text-align: left; padding: 1em; }
+#word-cloud { text-align: left; }
 #word-cloud button.remove, #word-cloud button.create { margin-top: 10px; }
 #word-cloud button.create { margin-right: 10px; }
 #word-cloud table { font-size: 30px; table-layout: fixed; word-wrap: break-word; }
@@ -666,8 +666,7 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 #word-cloud .typeFilters { margin-top: 20px; }
 #word-cloud .typeFilters ul { display: inline-block; }
 
-@media (max-width: 992px) { .user-name-on-background { margin-top: 100px; }
-  #word-cloud { margin-top: 7%; } }
+@media (max-width: 992px) { #connected-home-flow-content { margin-top: 7%; } }
 /* Copyright Vincent Blouin under the GPL License version 3 */
 #schemas-container { margin-top: 5%; }
 #schemas-container li { font-size: 1.75em; }
@@ -696,13 +695,27 @@ body.print nav.navbar { display: none; }
 .navbar li a:hover .short-cut { color: white; }
 .navbar .short-cut { color: #777; }
 
+/* Copyright Vincent Blouin under the GPL License version 3 */
+.friend-label { font-size: 13px; }
+
 /*!
  * Copyright Vincent Blouin under the GPL License version 3
  */
 form.well { margin-bottom: 0; padding-bottom: 0; }
 
+.nav-tabs a { font-size: 16px; color: black; font-weight: bold; }
+.nav-tabs li:hover a { border-width: 1px !important; border-color: #c00000; }
+.nav-tabs li:not(.active):hover a { color: white !important; background-color: #c00000 !important; }
+
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover, .nav-tabs > .active > a:focus { border-color: #c00000 !important; border-width: 1px !important; border-bottom-color: transparent !important; }
+
+.nav-tabs > li > a { border-width: 1px !important; }
+
+.nav-tabs { border-bottom: 1px solid #c00000; }
+
 html { font-size: 93.8%; }
 
+body { background-color: #fafafa; }
 body.no-scroll { overflow: hidden; }
 
 @media screen and (min-width: 600px) { html { font-size: 100%; } }
@@ -767,3 +780,5 @@ to the right vertices. */ position: relative; }
 body > .loading:not(.sr-only) { text-align: center; left: 50%; top: 50%; position: fixed; color: white; font-weight: bold; z-index: 1000; }
 
 input[type=checkbox].form-control { width: 25px; height: 25px; display: inline-block; vertical-align: -8px; }
+
+.page-box { background-color: white; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12) !important; }

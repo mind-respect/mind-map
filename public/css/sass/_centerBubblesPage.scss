@@ -2,11 +2,7 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
-.user-name-on-background {
-  margin-top: 40px;
-}
-
-#word-cloud-container {
+#connected-home-flow {
   .background {
     position: absolute;
     background-image: linear-gradient(
@@ -18,22 +14,15 @@
     width: 100%;
     min-height: 200px;
   }
-  .content {
-    margin-top: 3%;
-  }
-  h2.user-name-on-background {
-    font-weight: bold;
-    font-size: 2rem;
-    color: white;
-  }
 }
 
 $tagCloudFontSize: 0.6em;
-#word-cloud {
+#connected-home-flow-content{
   margin-top: 3%;
-  text-align: left;
   padding: 1em;
-
+}
+#word-cloud {
+  text-align: left;
   button.remove, button.create{
     margin-top: 10px;
   }
@@ -160,15 +149,7 @@ $tagCloudFontSize: 0.6em;
 }
 
 @media (max-width: 992px) {
-  body {
-    //margin-right: 0px !important;
-    //margin-left: 0px !important;
-  }
-  .user-name-on-background {
-    margin-top: 100px;
-  }
-
-  #word-cloud {
+  #connected-home-flow-content {
     margin-top: 7%;
   }
 }

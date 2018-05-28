@@ -4,7 +4,7 @@
 
 define([
     "jquery",
-    "triple_brain.search",
+    "mr.search-service",
     "triple_brain.graph_element_type",
     "triple_brain.identification_context",
     "triple_brain.id_uri",
@@ -19,6 +19,7 @@ define([
             options
         );
     };
+
     api.toFetchOnlyCurrentUserVertices = function () {
         return new UserMapAutoCompleteProvider(
             SearchService.searchForOnlyOwnVerticesAjaxCall,

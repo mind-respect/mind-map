@@ -191,8 +191,8 @@
       "relations": "relations"
     },
     "connect": "Connection",
-    "login": "Login",
-    "register": "Try it",
+    "login": "login",
+    "register": "register",
     "language": "Language"
   },
   "top_center_menu": {
@@ -406,7 +406,17 @@
       "bubbleType": "Bubble type",
       "addAll": "Add All",
       "removeAll": "Remove All"
+    },
+    "tabs":{
+      "friends" : "FRIENDS"
     }
+  },
+  "friends":{
+    "search": "Users of Mind Respect",
+    "addFriend": "Add as friend",
+    "waiting": "Friendship request pending",
+    "confirmed": "Friend",
+    "confirm": "Confirm friendship request"
   },
   "merge": {
     "title" : "Merge with ...",

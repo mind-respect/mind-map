@@ -40,7 +40,8 @@ define([
             handleCreateNewConceptButton();
             handleCreateNewSchemaButton();
             handleDisconnectButton();
-            getConnectMenuButton().addClass("hidden");
+            getLoginButton().addClass("hidden");
+            getRegisterButton().addClass("hidden");
             handleYourCentralButtons();
             getBubbleMenu().removeClass("hidden");
             getCreateSchemaButton().removeClass("hidden");
@@ -54,6 +55,8 @@ define([
             api._commonSetup();
             getBubbleMenu().addClass("hidden");
             getCreateSchemaButton().addClass("hidden");
+            getLoginButton().removeClass("hidden");
+            getRegisterButton().removeClass("hidden");
             getLandingPageSearchInput().removeClass("hidden");
             getLandingPageSearchInputLabel().removeClass("hidden");
             getDisconnectButton().addClass("hidden");
@@ -160,14 +163,16 @@ define([
             ).removeClass("hidden");
             getLoginButton().add(
                 getLoginButtonOnPage()
-            ).click(
-                LoginHandler.showModal
-            );
+            ).click(function (event) {
+                event.preventDefault();
+                LoginHandler.showModal();
+            });
             getRegisterButton().add(
                 getRegisterButtonOnPage()
-            ).click(
-                RegisterHandler.showModal
-            );
+            ).click(function (event) {
+                event.preventDefault();
+                RegisterHandler.showModal();
+            });
         }
 
         function handleYourCentralButtons() {
