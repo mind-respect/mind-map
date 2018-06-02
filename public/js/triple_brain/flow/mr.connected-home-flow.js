@@ -23,7 +23,7 @@ define([
         var $yourBubblesTab = $("#your-bubbles-tab");
         $yourBubblesTab.click(function (event) {
             event.preventDefault();
-            enterSubFlow("connectedHome");
+            enterSubFlow("centerBubbles");
         });
         $("#friends-tab").click(function (event) {
             event.preventDefault();
