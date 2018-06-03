@@ -11,10 +11,8 @@
     <title data-i18n="landing.title"></title>
     <script>
         history.scrollRestoration = "manual"
-        var requireJsConfig =
-        <%-JSON.stringify(requireJsConfig) %>;
-        var mindRespectConfig =
-        <%-JSON.stringify(config) %>;
+        var requireJsConfig = <%- JSON.stringify(requireJsConfig) %>;
+        var mindRespectConfig = <%- JSON.stringify(config) %>;
     </script>
     <link rel="icon" href="/css/images/logo_tete.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -1117,12 +1115,12 @@
             </ul>
             <div id="word-cloud" class="hidden subflow">
                 <!--<div class="row" style="margin-top:10px;">-->
-                    <!--<div class="col-md-12">-->
-                        <!--<button type="button" class="btn btn-danger"-->
-                                <!--id="add-friend-btn"-->
-                                <!--data-i18n="centralBubbles.addFriend">-->
-                        <!--</button>-->
-                    <!--</div>-->
+                <!--<div class="col-md-12">-->
+                <!--<button type="button" class="btn btn-danger"-->
+                <!--id="add-friend-btn"-->
+                <!--data-i18n="centralBubbles.addFriend">-->
+                <!--</button>-->
+                <!--</div>-->
                 <!--</div>-->
                 <div class="row typeFilters">
                     <div class="col-md-12">
@@ -1175,22 +1173,28 @@
             </div>
             <div id="friends-subflow" class="hidden subflow">
                 <div class="row" style="margin-top:10px;">
-                        <div class="col-md-12">
-                            <%- include addFriend.ejs %>
-                            <form class="" role="search">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <div class="input-group-addon">
-                                            <i class="fa fa-users"></i>
-                                        </div>
-                                        <input id="search-friends" class="form-control" type="text"
-                                               data-i18n="[placeholder]friends.search"/>
+                    <div class="col-md-12">
+                        <%- include addFriend.ejs %>
+                        <form class="" role="search">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-users"></i>
                                     </div>
+                                    <input id="search-friends" class="form-control" type="text"
+                                           data-i18n="[placeholder]friends.search"/>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4 data-i18n="friends.friends"></h4>
+                        <ul id="friends-list"></ul>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-md-1"></div>
     </div>

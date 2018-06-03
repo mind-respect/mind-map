@@ -414,7 +414,8 @@
       "addFriend": "Ajouter comme ami",
       "waiting": "Requête d'amitié en attente",
       "confirmed": "Ami",
-      "confirm": "Confirmer la demande d'amitié"
+      "confirm": "Confirmer la demande d'amitié",
+      "friends": "Amis"
   },
   "merge": {
     "title": "Fusionner avec ...",

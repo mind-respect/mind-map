@@ -8,6 +8,15 @@ define([
 ], function ($, UserService) {
     "use strict";
     var api = {};
+    api.list = function () {
+        return $.ajax({
+            method: 'GET',
+            url: UserService.currentUserUri() + "/friends",
+            contentType: 'application/json'
+        }).then(function (friends) {
+            return JSON.parse(friends);
+        });
+    };
     api.addFriend = function (username) {
         return $.ajax({
             method: 'POST',
@@ -30,7 +39,7 @@ define([
             contentType: 'application/json'
         });
     };
-    api.getStatusWithUser = function(username){
+    api.getStatusWithUser = function (username) {
         return $.ajax({
             method: 'GET',
             url: UserService.currentUserUri() + "/friends/" + username + "/status",

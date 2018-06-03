@@ -416,7 +416,8 @@
     "addFriend": "Add as friend",
     "waiting": "Friendship request pending",
     "confirmed": "Friend",
-    "confirm": "Confirm friendship request"
+    "confirm": "Confirm friendship request",
+    "friends": "Friends"
   },
   "merge": {
     "title" : "Merge with ...",

@@ -5,17 +5,23 @@
 define([
     "jquery",
     "triple_brain.user_service",
+    "mr.friend-service",
     "jquery-ui"
-], function ($, UserService) {
+], function ($, UserService, FriendService) {
     "use strict";
     var api = {};
-    api.enter = function () {
+    var _isOwner;
+    api.enter = function (isOwner) {
+        _isOwner = isOwner;
         setupAutocomplete();
-        return $.Deferred().resolve();
+        return buildFriendsList();
     };
     return api;
 
     function setupAutocomplete() {
+        if (!_isOwner) {
+            return getSearchInput().closest('form').addClass("hidden");
+        }
         getSearchInput().autocomplete({
             source: function (request, response) {
                 var searchTerm = request.term;
@@ -32,10 +38,26 @@ define([
             classes: {
                 "ui-autocomplete": "list-group"
             },
-            select: function(event, ui){
+            select: function (event, ui) {
                 window.location = "/user/" + ui.item.user.username;
             }
         }).data("ui-autocomplete")._renderItem = renderItemCustom;
+    }
+
+    function buildFriendsList() {
+        return FriendService.list().then(function (friends) {
+            var list = $("#friends-list").empty();
+            Object.keys(friends).forEach(function (uri) {
+                var username = friends[uri].username;
+                list.append(
+                    $("<li>").append(
+                        $("<a href='/user/" + username + "'>").append(
+                            username
+                        )
+                    )
+                );
+            });
+        });
     }
 
     function getSearchInput() {

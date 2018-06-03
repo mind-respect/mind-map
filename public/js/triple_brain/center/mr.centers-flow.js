@@ -86,6 +86,7 @@ define([
 
 
     function buildHtml() {
+        tableData = [];
         _elements.forEach(function (element) {
             tableData.push({
                 uri: element.getUri(),
