@@ -677,15 +677,15 @@ define([
         );
     };
 
-    api.GraphElementUi.prototype.getMakePublicButtonInBubbleContent = function () {
+    api.GraphElementUi.prototype.publicButtonInBubbleContent = function () {
         return this.getInLabelButtonsContainer().find(
-            "[data-action=makePublic]"
+            "[data-action=publicShareLevel]"
         );
     };
 
-    api.GraphElementUi.prototype.getMakePrivateButtonInBubbleContent = function () {
+    api.GraphElementUi.prototype.getPrivateButtonInBubbleContent = function () {
         return this.getInLabelButtonsContainer().find(
-            "[data-action=makePrivate]"
+            "[data-action=privateShareLevel]"
         );
     };
 

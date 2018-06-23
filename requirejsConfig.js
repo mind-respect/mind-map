@@ -11,7 +11,7 @@ module.exports = {
         "md5": "vendor/md5.min",
         "polyk": "vendor/polyk",
         "diff_match_patch": "vendor/diff_match_patch_uncompressed",
-        "clipboard": "vendor/clipboard",
+        "clipboard": "vendor/node_modules/clipboard/dist/clipboard",
         "intro": "vendor/node_modules/intro.js/intro",
         "font-picker": "vendor/node_modules/font-picker/lib/font-picker",
         // "html2canvas": "vendor/node_modules/html2canvas/dist/html2canvas",
@@ -123,6 +123,7 @@ module.exports = {
         "triple_brain.relative_tree_vertex": "triple_brain/vertex/triple_brain.relative_tree_vertex",
         "mr.group-vertex-under-meta-ui": "triple_brain/vertex/mr.group-vertex-under-meta-ui",
         "mr.group-vertex-under-meta_controller": "triple_brain/vertex/mr.group-vertex-under-meta_controller",
+        "mr.share-level": "triple_brain/vertex/mr.share-level",
 
         /*
          Suggestion

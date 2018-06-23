@@ -37,7 +37,7 @@
 <div id="overlay" class="overlay hidden"></div>
 <i class="loading hidden fa fa-refresh fa-spin fa-4x fa-fw"></i>
 <span class="loading sr-only hidden" data-i18n="loading"></span>
-<div id="tree-list-copy-dump"></div>
+<div id="copy-dump"></div>
 <div id="drag-bubble-text-for-chrome"></div>
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div>
@@ -210,13 +210,17 @@
             class="note-button graph-element-button in-label-button">
         <i class="fa fa-book"></i>
     </button>
-    <button data-action="makePublic" data-combinedShortcut="P"
-            class="graph-element-button in-label-button">
-        <i class="fa fa-unlock"></i>
-    </button>
-    <button data-action="makePrivate" data-combinedShortcut="P"
+    <button data-action="privateShareLevel"
             class="graph-element-button in-label-button">
         <i class="fa fa-lock"></i>
+    </button>
+    <button data-action="publicShareLevel"
+            class="graph-element-button in-label-button">
+        <i class="fa fa-globe"></i>
+    </button>
+    <button data-action="friendsShareLevel"
+            class="graph-element-button in-label-button">
+        <i class="fa fa-users"></i>
     </button>
 </div>
 <div id="graph-element-menu">
@@ -254,6 +258,10 @@
                 class="graph-element-button">
             <i class="fa fa-tags"></i>
         </button>
+        <button data-action="share"
+                class="graph-element-button">
+            <i class="fa fa-users"></i>
+        </button>
         <button data-action="makePrivate" data-combinedShortcut="P"
                 class="graph-element-button">
             <i class="fa fa-lock"></i>
@@ -263,7 +271,7 @@
             <i class="fa fa-unlock"></i>
         </button>
         <button data-action="copy" class="graph-element-button clipboard-copy-button"
-                data-clipboard-action="copy" data-clipboard-target="#tree-list-copy-dump">
+                data-clipboard-action="copy" data-clipboard-target="#copy-dump">
             <i class="fa fa-copy"></i>
         </button>
         <button data-action="cut" data-combinedShortcut="X"
@@ -1202,7 +1210,7 @@
 
 <!--Modals-->
 
-<div class="modal row" id="add-friend-confirm-modal" role="dialog" aria-hidden="true">
+<div class="modal row" id="remove-centers-confirm-menu" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -1225,25 +1233,65 @@
     </div>
 </div>
 
-<div class="modal row" id="remove-centers-confirm-menu" role="dialog" aria-hidden="true">
+<div class="modal row" id="share-menu" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">
-                    <span data-i18n="centralBubbles.confirmRemove.title"></span>
-                </h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="row vh-center">
+                    <div class="col-md-4 text-center">
+                        <h4 class="modal-title" data-i18n="share.title"></h4>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="text-center alert alert-success hidden" id="share-menu-copy-success" role="alert" data-i18n="share.linkCopySuccess"></div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <button id="copy-share-link" class="btn btn-default">
+                            <span data-i18n="share.getShareableLink"></span>
+                            <i class="fa fa-link"></i>
+                        </button>
+                    </div>
+                </div>
+
             </div>
             <div class="modal-body">
-                <strong class="multiple-flow hidden" data-i18n="vertex.menu.delete.multiple"></strong>
-                <ul id="remove-centers-list">
-                    <li data-i18n="centralBubbles.confirmRemove.info"></li>
-                </ul>
-                <strong data-i18n="centralBubbles.confirmRemove.really"></strong>
-                <p>
-                    <em data-i18n="centralBubbles.confirmRemove.info"></em>
-                </p>
+                <strong class="multiple-flow hidden" data-i18n="share.multiple"></strong>
+                <ul id="share-list"></ul>
+                <div class="row vh-center">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-9">
+                        <form class="" role="search">
+                            <label class="radio-container">
+                                <i class="fa fa-lock"></i>
+                                <span data-i18n="share.private"></span>
+                                <input type="radio" name="shareLevel" value="private">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="radio-container">
+                                <i class="fa fa-users"></i>
+                                <span data-i18n="share.friends"></span>
+                                <input type="radio" name="shareLevel" value="friends">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="radio-container">
+                                <i class="fa fa-globe"></i>
+                                <span data-i18n="share.publicWithLink"></span>
+                                <input type="radio" name="shareLevel" value="public_with_link">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="radio-container">
+                                <i class="fa fa-globe"></i>
+                                <span data-i18n="share.public"></span>
+                                <input type="radio" name="shareLevel" value="public">
+                                <span class="checkmark"></span>
+                            </label>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="modal-footer"></div>
+            <div class="modal-footer text-right">
+                <button data-dismiss="modal" class="btn btn-default" data-i18n="modal.close"></button>
+            </div>
         </div>
     </div>
 </div>

@@ -93,6 +93,16 @@ define([
         return this.getSourceVertex().isPublic() &&
             this.getDestinationVertex().isPublic();
     };
+    api.Edge.prototype.isPrivate = function () {
+        return this.getSourceVertex().isPrivate() ||
+            this.getDestinationVertex().isPrivate();
+    };
+
+    api.Edge.prototype.isFriendsOnly = function () {
+        return this.getSourceVertex().isFriendsOnly() &&
+            this.getDestinationVertex().isFriendsOnly();
+    };
+
     api.Edge.prototype.isSourceVertex = function (vertex) {
         return this.getSourceVertex().getUri() === vertex.getUri();
     };

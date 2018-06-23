@@ -26,13 +26,17 @@
             class="note-button graph-element-button in-label-button">
         <i class="fa fa-book"></i>
     </button>
-    <button data-action="makePublic" data-combinedShortcut="P"
-            class="graph-element-button in-label-button">
-        <i class="fa fa-unlock"></i>
-    </button>
-    <button data-action="makePrivate" data-combinedShortcut="P"
+    <button data-action="privateShareLevel"
             class="graph-element-button in-label-button">
         <i class="fa fa-lock"></i>
+    </button>
+    <button data-action="publicShareLevel"
+            class="graph-element-button in-label-button">
+        <i class="fa fa-globe"></i>
+    </button>
+    <button data-action="friendsShareLevel"
+            class="graph-element-button in-label-button">
+        <i class="fa fa-users"></i>
     </button>
 </div>
 <div id="graph-element-menu">
@@ -79,7 +83,7 @@
             <i class="fa fa-unlock"></i>
         </button>
         <button data-action="copy" class="graph-element-button clipboard-copy-button"
-                data-clipboard-action="copy" data-clipboard-target="#tree-list-copy-dump">
+                data-clipboard-action="copy" data-clipboard-target="#copy-dump">
             <i class="fa fa-copy"></i>
         </button>
         <button data-action="cut" data-combinedShortcut="X"

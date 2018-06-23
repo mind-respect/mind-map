@@ -211,11 +211,11 @@ define([
             var bubble1 = scenario.getBubble1InTree();
             bubble1.reviewInLabelButtonsVisibility();
             expect(
-                bubble1.getMakePrivateButtonInBubbleContent().hasClass("hidden")
-            ).toBeTruthy();
-            expect(
-                bubble1.getMakePublicButtonInBubbleContent().hasClass("hidden")
+                bubble1.getPrivateButtonInBubbleContent().hasClass("hidden")
             ).toBeFalsy();
+            expect(
+                bubble1.publicButtonInBubbleContent().hasClass("hidden")
+            ).toBeTruthy();
             new VertexController.VertexController(
                 [
                     bubble1,
@@ -223,11 +223,11 @@ define([
                 ]
             ).makePublic();
             expect(
-                bubble1.getMakePrivateButtonInBubbleContent().hasClass("hidden")
-            ).toBeFalsy();
+                bubble1.getPrivateButtonInBubbleContent().hasClass("hidden")
+            ).toBeTruthy();
             expect(
-                bubble1.getMakePublicButtonInBubbleContent().hasClass("hidden")
-            ).toBeTruthy()
+                bubble1.publicButtonInBubbleContent().hasClass("hidden")
+            ).toBeFalsy();
             new VertexController.VertexController(
                 [
                     bubble1,
@@ -235,11 +235,11 @@ define([
                 ]
             ).makePrivate();
             expect(
-                bubble1.getMakePrivateButtonInBubbleContent().hasClass("hidden")
-            ).toBeTruthy();
-            expect(
-                bubble1.getMakePublicButtonInBubbleContent().hasClass("hidden")
+                bubble1.getPrivateButtonInBubbleContent().hasClass("hidden")
             ).toBeFalsy();
+            expect(
+                bubble1.publicButtonInBubbleContent().hasClass("hidden")
+            ).toBeTruthy();
         });
         it("expands the bubble when adding child", function () {
             var scenario = new Scenarios.threeBubblesGraph();

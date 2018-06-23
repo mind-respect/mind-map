@@ -3,156 +3,176 @@
  */
 
 define([
-    "jquery",
-    "triple_brain.graph_element",
-    "triple_brain.edge",
-    "triple_brain.suggestion"
-], function ($, GraphElement, Edge, Suggestion) {
-    "use strict";
-    var api = {};
-    api.fromServerFormat = function (serverFormat) {
-        return new Vertex(
-            serverFormat
-        );
-    };
-    api.withUri = function (uri) {
-        return new Vertex(
-            api.buildServerFormatFromUri(
-                uri
-            )
-        );
-    };
-    api.buildServerFormatFromUri = function(uri){
-        return {
-            vertex:{
-                graphElement: GraphElement.buildObjectWithUri(uri),
-                includedEdges:{},
-                includedVertices:{},
-                isPublic:false,
-                suggestions:{}
-            }
+        "jquery",
+        "triple_brain.graph_element",
+        "triple_brain.edge",
+        "triple_brain.suggestion",
+        "mr.share-level"
+    ], function ($, GraphElement, Edge, Suggestion, ShareLevel) {
+        "use strict";
+        var api = {};
+        api.fromServerFormat = function (serverFormat) {
+            return new Vertex(
+                serverFormat
+            );
         };
-    };
-    api.buildServerFormatFromUi = function (vertexUi) {
-        return {
-            vertex:{
-                graphElement: GraphElement.buildServerFormatFromUi(
-                    vertexUi
-                ),
-                includedEdges:{},
-                includedVertices:{},
-                isPublic:vertexUi.getModel().isPublic(),
-                numberOfConnectedEdges: vertexUi.connectedEdges().length,
-                suggestions:{}
-            }
+        api.withUri = function (uri) {
+            return new Vertex(
+                api.buildServerFormatFromUri(
+                    uri
+                )
+            );
         };
-    };
-    function Vertex(vertexServerFormat) {
-        this.vertexServerFormat = vertexServerFormat;
-        this.vertexServerFormat.vertex.numberOfConnectedEdges = this.vertexServerFormat.vertex.numberOfConnectedEdges || 0;
-        this._includedVertices = this._buildIncludedVertices();
-        this._includedEdges = this._buildIncludedEdges();
-        this._suggestions = this._buildSuggestions();
-        GraphElement.GraphElement.apply(
-            this
-        );
-        this.init(vertexServerFormat.vertex.graphElement);
-    }
+        api.buildServerFormatFromUri = function (uri) {
+            return {
+                vertex: {
+                    graphElement: GraphElement.buildObjectWithUri(uri),
+                    includedEdges: {},
+                    includedVertices: {},
+                    shareLevel: ShareLevel.PRIVATE,
+                    suggestions: {}
+                }
+            };
+        };
+        api.buildServerFormatFromUi = function (vertexUi) {
+            return {
+                vertex: {
+                    graphElement: GraphElement.buildServerFormatFromUi(
+                        vertexUi
+                    ),
+                    includedEdges: {},
+                    includedVertices: {},
+                    isPublic: vertexUi.getModel().isPublic(),
+                    numberOfConnectedEdges: vertexUi.connectedEdges().length,
+                    suggestions: {}
+                }
+            };
+        };
 
-    Vertex.prototype = new GraphElement.GraphElement();
+        function Vertex(vertexServerFormat) {
+            this.vertexServerFormat = vertexServerFormat;
+            this.vertexServerFormat.vertex.numberOfConnectedEdges = this.vertexServerFormat.vertex.numberOfConnectedEdges || 0;
+            this._includedVertices = this._buildIncludedVertices();
+            this._includedEdges = this._buildIncludedEdges();
+            this._suggestions = this._buildSuggestions();
+            GraphElement.GraphElement.apply(
+                this
+            );
+            this.init(vertexServerFormat.vertex.graphElement);
+        }
 
-    Vertex.prototype.hasIncludedGraphElements = function () {
-        return Object.keys(this.getIncludedVertices()).length > 0;
-    };
+        Vertex.prototype = new GraphElement.GraphElement();
 
-    Vertex.prototype.getIncludedVertices = function () {
-        return this._includedVertices;
-    };
-    Vertex.prototype.getIncludedEdges = function () {
-        return this._includedEdges;
-    };
-    Vertex.prototype.setSuggestions = function (suggestions) {
-        return this._suggestions = suggestions;
-    };
-    Vertex.prototype.getSuggestions = function () {
-        return this._suggestions;
-    };
-    Vertex.prototype.getNumberOfConnectedEdges = function () {
-        return this.vertexServerFormat.vertex.numberOfConnectedEdges;
-    };
+        Vertex.prototype.hasIncludedGraphElements = function () {
+            return Object.keys(this.getIncludedVertices()).length > 0;
+        };
 
-    Vertex.prototype.getNumberOfChild = function () {
-        return this.getNumberOfConnectedEdges() - 1;
-    };
+        Vertex.prototype.getIncludedVertices = function () {
+            return this._includedVertices;
+        };
+        Vertex.prototype.getIncludedEdges = function () {
+            return this._includedEdges;
+        };
+        Vertex.prototype.setSuggestions = function (suggestions) {
+            return this._suggestions = suggestions;
+        };
+        Vertex.prototype.getSuggestions = function () {
+            return this._suggestions;
+        };
+        Vertex.prototype.getNumberOfConnectedEdges = function () {
+            return this.vertexServerFormat.vertex.numberOfConnectedEdges;
+        };
 
-    Vertex.prototype.incrementNumberOfConnectedEdges = function () {
-        this.vertexServerFormat.vertex.numberOfConnectedEdges++;
-    };
+        Vertex.prototype.getNumberOfChild = function () {
+            return this.getNumberOfConnectedEdges() - 1;
+        };
 
-    Vertex.prototype.decrementNumberOfConnectedEdges = function () {
-        this.vertexServerFormat.vertex.numberOfConnectedEdges--;
-    };
+        Vertex.prototype.incrementNumberOfConnectedEdges = function () {
+            this.vertexServerFormat.vertex.numberOfConnectedEdges++;
+        };
 
-    Vertex.prototype.getNbPublicNeighbors = function () {
-        return this.vertexServerFormat.vertex.nbPublicNeighbors;
-    };
+        Vertex.prototype.decrementNumberOfConnectedEdges = function () {
+            this.vertexServerFormat.vertex.numberOfConnectedEdges--;
+        };
 
-    Vertex.prototype.hasOnlyOneHiddenChild = function () {
-        return 2 === this.getNumberOfConnectedEdges();
-    };
+        Vertex.prototype.getNbPublicNeighbors = function () {
+            return this.vertexServerFormat.vertex.nbPublicNeighbors;
+        };
 
-    Vertex.prototype.isPublic = function () {
-        return this.vertexServerFormat.vertex.isPublic;
-    };
+        Vertex.prototype.hasOnlyOneHiddenChild = function () {
+            return 2 === this.getNumberOfConnectedEdges();
+        };
 
-    Vertex.prototype.makePrivate = function () {
-        return this.vertexServerFormat.vertex.isPublic = false;
-    };
+        Vertex.prototype.isPublic = function () {
+            return this.getShareLevel() === ShareLevel.PUBLIC ||
+                this.getShareLevel() === ShareLevel.PUBLIC_WITH_LINK;
+        };
 
-    Vertex.prototype.makePublic = function () {
-        return this.vertexServerFormat.vertex.isPublic = true;
-    };
+        Vertex.prototype.isPrivate = function () {
+            return this.getShareLevel() === ShareLevel.PRIVATE;
+        };
 
-    Vertex.prototype._buildIncludedEdges = function () {
-        var includedEdges = {};
-        if (this.vertexServerFormat.vertex.includedEdges === undefined) {
+        Vertex.prototype.isFriendsOnly = function () {
+            return this.getShareLevel() === ShareLevel.FRIENDS;
+        };
+
+        Vertex.prototype.getShareLevel = function () {
+            return this.vertexServerFormat.vertex.shareLevel;
+        };
+
+        Vertex.prototype.makePrivate = function () {
+            this.setShareLevel(ShareLevel.PRIVATE);
+        };
+
+        Vertex.prototype.makePublic = function () {
+            this.setShareLevel(ShareLevel.PUBLIC);
+        };
+
+        Vertex.prototype.setShareLevel = function (shareLevel) {
+            this.vertexServerFormat.vertex.shareLevel = shareLevel;
+        };
+
+        Vertex.prototype._buildIncludedEdges = function () {
+            var includedEdges = {};
+            if (this.vertexServerFormat.vertex.includedEdges === undefined) {
+                return includedEdges;
+            }
+            $.each(this.vertexServerFormat.vertex.includedEdges, function (key, value) {
+                includedEdges[key] = Edge.fromServerFormat(
+                    value
+                );
+            });
             return includedEdges;
-        }
-        $.each(this.vertexServerFormat.vertex.includedEdges, function (key, value) {
-            includedEdges[key] = Edge.fromServerFormat(
-                value
-            );
-        });
-        return includedEdges;
-    };
+        };
 
-    Vertex.prototype._buildIncludedVertices = function () {
-        var includedVertices = {};
-        if (this.vertexServerFormat.vertex.includedVertices === undefined) {
+        Vertex.prototype._buildIncludedVertices = function () {
+            var includedVertices = {};
+            if (this.vertexServerFormat.vertex.includedVertices === undefined) {
+                return includedVertices;
+            }
+            $.each(this.vertexServerFormat.vertex.includedVertices, function (key, value) {
+                includedVertices[key] = api.fromServerFormat(
+                    value
+                );
+            });
             return includedVertices;
-        }
-        $.each(this.vertexServerFormat.vertex.includedVertices, function (key, value) {
-            includedVertices[key] = api.fromServerFormat(
-                value
+        };
+
+        Vertex.prototype._buildSuggestions = function () {
+            var suggestions = [];
+            if (this.vertexServerFormat.vertex.suggestions === undefined) {
+                return suggestions;
+            }
+            return Suggestion.fromServerArray(
+                this.vertexServerFormat.vertex.suggestions
             );
-        });
-        return includedVertices;
-    };
+        };
+        Vertex.prototype.addSuggestions = function (suggestions) {
+            this._suggestions = this._suggestions.concat(
+                suggestions
+            );
+        };
 
-    Vertex.prototype._buildSuggestions = function () {
-        var suggestions = [];
-        if (this.vertexServerFormat.vertex.suggestions === undefined) {
-            return suggestions;
-        }
-        return Suggestion.fromServerArray(
-            this.vertexServerFormat.vertex.suggestions
-        );
-    };
-    Vertex.prototype.addSuggestions = function(suggestions){
-        this._suggestions = this._suggestions.concat(
-            suggestions
-        );
-    };
-
-    return api;
-});
+        return api;
+    }
+);

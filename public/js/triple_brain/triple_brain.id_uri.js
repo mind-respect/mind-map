@@ -25,7 +25,7 @@ define([
             var segments = $.url(uri).segment();
             return segments[2];
         };
-        api.currentUsernameInUrl = function(){
+        api.currentUsernameInUrl = function () {
             return $.url(
                 window.location.href
             ).segment()[1];
@@ -47,23 +47,23 @@ define([
         };
         api.isEdgeUri = function (uri) {
             return GraphElementType.Relation === api.getGraphElementTypeFromUri(
-                    uri
-                );
+                uri
+            );
         };
         api.isPropertyUri = function (uri) {
             return GraphElementType.Property === api.getGraphElementTypeFromUri(
-                    uri
-                );
+                uri
+            );
         };
         api.isVertexUri = function (uri) {
             return GraphElementType.Vertex === api.getGraphElementTypeFromUri(
-                    uri
-                );
+                uri
+            );
         };
         api.isMetaUri = function (uri) {
             return GraphElementType.Meta === api.getGraphElementTypeFromUri(
-                    uri
-                );
+                uri
+            );
         };
         api.schemaUriOfProperty = function (propertyUri) {
             return propertyUri.substr(
@@ -166,6 +166,9 @@ define([
             return "/service/users/" + api._getUsernameInUrl() +
                 "/graph/" + window.graphElementTypeForBublGuru + "/" + api._getGraphElementShortIdFromUrl();
         };
+        api.absoluteUrlForBubbleUri = function (graphElementUri) {
+            return window.location.protocol + "//" + window.location.host + api.htmlUrlForBubbleUri(graphElementUri);
+        };
         api.htmlUrlForBubbleUri = function (graphElementUri) {
             if (api.isPropertyUri(graphElementUri)) {
                 graphElementUri = api.schemaUriOfProperty(graphElementUri);
@@ -178,8 +181,8 @@ define([
 
         api._hasParamAtIndex = function (index) {
             return decodeURIComponent(
-                    window.location.pathname
-                ).split("/").length >= index + 1;
+                window.location.pathname
+            ).split("/").length >= index + 1;
         };
         api._getUrlParamAtIndex = function (index) {
             return decodeURIComponent(

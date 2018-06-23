@@ -2,7 +2,8 @@
   "locale": "fr",
   "loading": "Chargement...",
   "modal": {
-    "close": "Fermer"
+    "close": "Fermer",
+    "finish": "Terminer"
   },
   "compare_flow": {
     "title": "Mode comparaison",
@@ -344,7 +345,8 @@
     "wikipediaLinks": "En savoir plus sur Wikipédia",
     "merge": "Fusionner",
     "list": "Voir la sélection sous forme de liste",
-    "fontPicker": "Sélecteur de polices"
+    "fontPicker": "Sélecteur de polices",
+    "share": "Partager"
   },
   "toList": {
     "title": "Liste",
@@ -405,21 +407,31 @@
       "addAll": "Ajouter tout",
       "removeAll": "Enlever tout"
     },
-    "tabs":{
-      "friends" : "AMIS"
+    "tabs": {
+      "friends": "AMIS"
     }
   },
-  "friends":{
-      "search": "Usagers de Mind Respect",
-      "addFriend": "Ajouter comme ami",
-      "waiting": "Requête d'amitié en attente",
-      "confirmed": "Ami",
-      "confirm": "Confirmer la demande d'amitié",
-      "friends": "Amis"
+  "friends": {
+    "search": "Usagers de Mind Respect",
+    "addFriend": "Ajouter comme ami",
+    "waiting": "Requête d'amitié en attente",
+    "confirmed": "Ami",
+    "confirm": "Confirmer la demande d'amitié",
+    "friends": "Amis"
   },
   "merge": {
     "title": "Fusionner avec ...",
     "instruction": "Cette bulle s'effacera mais toutes ses relations vont se déplacer pour s'ajouter à la bulle que vous aurez sélectionnée dans la barre de recherche ci-bas.",
     "placeholder": "Fusionner avec ..."
+  },
+  "share": {
+    "title": "Partager avec d'autres",
+    "getShareableLink": "Lien partagable",
+    "linkCopySuccess": "Lien copié dans le presse-papiers",
+    "multiple": "Toutes ces bulles",
+    "private": "Privé",
+    "friends": "Amis seulement",
+    "publicWithLink": "Public pour toute personne ayant le lien",
+    "public": "Public sur le web"
   }
 }

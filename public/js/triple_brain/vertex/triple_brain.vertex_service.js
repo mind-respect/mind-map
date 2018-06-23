@@ -116,6 +116,27 @@ define([
                 vertexUi
             );
         };
+        api.setShareLevel = function (shareLevel, vertex) {
+            return $.ajax({
+                method: 'POST',
+                url: vertex.getUri() + "/shareLevel",
+                data: JSON.stringify({
+                    shareLevel: shareLevel
+                }),
+                contentType: 'application/json'
+            });
+        };
+        api.setCollectionShareLevel = function (shareLevel, vertices) {
+            return $.ajax({
+                method: 'POST',
+                url: getVerticesUrl() + '/collection/share-level',
+                data: JSON.stringify({
+                    shareLevel: shareLevel,
+                    verticesUri: verticesUriFromVertices(vertices)
+                }),
+                contentType: 'application/json;charset=utf-8'
+            });
+        };
         api.makeCollectionPrivate = function (vertices) {
             return setCollectionPrivacy(
                 false,

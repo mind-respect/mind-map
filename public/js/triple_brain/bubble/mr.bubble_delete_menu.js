@@ -9,7 +9,7 @@ define([
     function ($, AskModal) {
         "use strict";
         var api = {};
-        api.forVertices = function (vertices) {
+    api.forVertices = function (vertices) {
             return new DeleteMenu(
                 vertices
             );

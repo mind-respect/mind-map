@@ -76,6 +76,7 @@ define([
             this.getModel().hasComment()
         );
     };
+
     GraphElementController.prototype.setLabel = function (newLabel) {
         this.getUi().getModel().setLabel(
             newLabel

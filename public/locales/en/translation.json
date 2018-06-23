@@ -2,7 +2,8 @@
   "locale": "en",
   "loading": "Loading...",
   "modal": {
-    "close": "Close"
+    "close": "Close",
+    "finish": "Finish"
   },
   "compare_flow": {
     "title": "Comparison mode",
@@ -345,7 +346,8 @@
     "wikipediaLinks": "Learn more on Wikipedia",
     "merge": "Merge",
     "list": "See the selection as a list",
-    "fontPicker": "Font picker"
+    "fontPicker": "Font picker",
+    "share": "Share"
   },
   "toList": {
     "title": "List",
@@ -423,5 +425,15 @@
     "title" : "Merge with ...",
     "instruction": "This bubble will be removed but all its relationships will move to be added to bubble you will have selected in the search bar below.",
     "placeholder": "Merge with ..."
+  },
+  "share": {
+    "title": "Share with others",
+    "getShareableLink": "Shareable link",
+    "linkCopySuccess": "Link copied to clipboard",
+    "multiple": "All these bubbles",
+    "private": "Private",
+    "friends": "Friends only",
+    "publicWithLink": "Public for anyone with the link",
+    "public": "Public on the web"
   }
 }

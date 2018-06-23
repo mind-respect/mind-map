@@ -14,11 +14,13 @@ define([
         "triple_brain.mind_map_info",
         "clipboard",
         "triple_brain.bubble",
-        "triple_brain.graph_element_ui"
+        "triple_brain.graph_element_ui",
+        "triple_brain.id_uri"
     ],
-    function ($, VertexUi, EventBus, TreeEdge, ObjectUtils, TripleUiBuilder, SelectionHandler, BubbleFactory, MindMapInfo, Clipboard, Bubble, GraphElementUi) {
+    function ($, VertexUi, EventBus, TreeEdge, ObjectUtils, TripleUiBuilder, SelectionHandler, BubbleFactory, MindMapInfo, Clipboard, Bubble, GraphElementUi, IdUri) {
         "use strict";
         var api = {};
+        var _shareMenuBuilt = false;
         VertexUi.buildCommonConstructors(api);
         api.createFromHtml = function (html) {
             var vertex = new api.RelativeTreeVertex().init(
@@ -266,7 +268,7 @@ define([
             var clipboard = new Clipboard(
                 button, {
                     target: function () {
-                        var treeListCopyDump = $("#tree-list-copy-dump");
+                        var treeListCopyDump = $("#copy-dump");
                         treeListCopyDump.html(
                             api.VerticesToHtmlLists(
                                 SelectionHandler.getSelectedVertices()
@@ -277,7 +279,7 @@ define([
                 }
             );
             clipboard.on("success", function () {
-                $("#tree-list-copy-dump").empty();
+                $("#copy-dump").empty();
             });
         };
 
@@ -294,6 +296,10 @@ define([
                 GraphElementUi.getCenterVertexOrSchema().sideCenterOnScreenWithAnimation();
             });
             setupCopyButtons();
+            if(!_shareMenuBuilt){
+                setupShareMenu();
+                _shareMenuBuilt = true;
+            }
         });
 
         function setupCopyButtons() {
@@ -307,5 +313,40 @@ define([
         }
 
         return api;
+
+        function setupShareMenu() {
+            $("#share-menu-copy-success").addClass("hidden");
+            var $shareMenu = $("#share-menu");
+            var $copyShareLinkBtn = $("#copy-share-link").prop('disabled', false);
+            debugger;
+            var clipboard = new Clipboard(
+                $copyShareLinkBtn[0], {
+                    target: function () {
+                        var treeListCopyDump = $("#copy-dump");
+                        treeListCopyDump.text(
+                            IdUri.absoluteUrlForBubbleUri(
+                                SelectionHandler.getSingleElement().getModel().getUri()
+                            )
+                        );
+                        return treeListCopyDump[0];
+                    }.bind(this)
+                }
+            );
+            clipboard.on("success", function () {
+                $("#copy-dump").empty();
+                $("#share-menu-copy-success").removeClass("hidden");
+            });
+            var $radios = $shareMenu.find("input[name=shareLevel]");
+            $radios.change(function () {
+                if (this.value === "private") {
+                    $copyShareLinkBtn.prop('disabled', true);
+                } else {
+                    $copyShareLinkBtn.prop('disabled', false);
+                }
+                SelectionHandler.getControllerFromCurrentSelection().setShareLevel(this.value).then(function () {
+                    $shareMenu.modal('hide');
+                });
+            });
+        }
     }
 );

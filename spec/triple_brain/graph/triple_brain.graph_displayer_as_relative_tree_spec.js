@@ -464,7 +464,7 @@ define([
             var centerVertex = new Scenarios.oneBubbleHavingSuggestionsGraph().getVertexUi();
             var suggestionVertex = TestUtils.getChildWithLabel(
                 centerVertex,
-                "Start date"
+                "People involved"
             ).getTopMostChildBubble();
             expect(
                 suggestionVertex.isToTheLeft()

@@ -319,3 +319,12 @@ input[type=checkbox].form-control {
   background-color:white;
   box-shadow: $borderBoxShadow;
 }
+
+/*
+vertical-horizontal-center
+*/
+.vh-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -21,8 +21,10 @@ define([
     "triple_brain.graph_element_ui",
     "triple_brain.event_bus",
     "triple_brain.id_uri",
+    "triple_brain.graph_element_type",
+    "mr.share-level",
     "jquery.triple_brain.search"
-], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, BubbleDeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, GraphElementUi, EventBus, IdUri, GraphElementType) {
+], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, BubbleDeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, GraphElementUi, EventBus, IdUri, GraphElementType, ShareLevel) {
     "use strict";
     var api = {};
 
@@ -251,9 +253,21 @@ define([
         );
     };
 
-    VertexController.prototype.makePrivateCanShowInLabel = function () {
+    VertexController.prototype.privateShareLevelCanShowInLabel = function () {
         return $.Deferred().resolve(
-            this.getModel().isPublic() && this.isOwned()
+            this.getModel().isPrivate()
+        );
+    };
+
+    VertexController.prototype.publicShareLevelCanShowInLabel = function () {
+        return $.Deferred().resolve(
+            this.getModel().isPublic()
+        );
+    };
+
+    VertexController.prototype.friendsShareLevelCanShowInLabel = function () {
+        return $.Deferred().resolve(
+            this.getModel().isFriendsOnly()
         );
     };
 
@@ -309,29 +323,40 @@ define([
     };
 
     VertexController.prototype._areAllElementsPublic = function () {
-        if (this.isSingle()) {
-            return this.getModel().isPublic();
-        }
-        var allPublic = true;
-        this.getUi().forEach(function (ui) {
-            if (!ui.getModel().isPublic()) {
-                allPublic = false;
-            }
-        });
-        return allPublic;
+        return this._areAllElementsInShareLevels([
+            ShareLevel.PUBLIC_WITH_LINK,
+            ShareLevel.PUBLIC
+        ]);
     };
 
     VertexController.prototype._areAllElementsPrivate = function () {
+        return this._areAllElementsInShareLevels([
+            ShareLevel.PRIVATE
+        ]);
+    };
+
+    VertexController.prototype._areAllElementsFriendsOnly = function () {
+        return this._areAllElementsInShareLevels([
+            ShareLevel.FRIENDS
+        ]);
+    };
+
+    VertexController.prototype._areAllElementsInShareLevels = function (shareLevels) {
         if (this.isSingle()) {
-            return !this.getModel().isPublic();
+            return shareLevels.indexOf(
+                this.getModel().getShareLevel()
+            ) !== -1;
         }
-        var allPrivate = true;
+        var allInShareLevel = true;
         this.getUi().forEach(function (ui) {
-            if (ui.getModel().isPublic()) {
-                allPrivate = false;
+            var isInShareLevel = shareLevels.indexOf(
+                ui.getModel().getShareLevel()
+            ) !== -1;
+            if (!isInShareLevel) {
+                allInShareLevel = false;
             }
         });
-        return allPrivate;
+        return allInShareLevel;
     };
 
     VertexController.prototype.makePublic = function () {
@@ -367,6 +392,53 @@ define([
                 });
             });
         }
+    };
+
+    VertexController.prototype.share = function () {
+        var $shareMenu = $("#share-menu");
+        var $shareList = $("#share-list").empty();
+        var $copyShareLink = $("#copy-share-link");
+        this.getUiArray().forEach(function (bubble) {
+            $shareList.append(
+                $("<li>").text(bubble.text())
+            );
+        });
+        $shareMenu.find(".multiple-flow")[
+            this.isMultiple() ? 'removeClass' : 'addClass'
+            ]("hidden");
+        $copyShareLink[this.isMultiple() ? 'addClass' : 'removeClass'](
+            "hidden"
+        );
+        var $radios = $shareMenu.find("input[name=shareLevel]");
+        if (this._areAllElementsPrivate()) {
+            $radios.val(["private"]);
+            $copyShareLink.prop('disabled', true);
+        } else if (this._areAllElementsFriendsOnly()) {
+            $radios.val(["friends"]);
+        } else if (this._areAllElementsInShareLevels([ShareLevel.PUBLIC_WITH_LINK])) {
+            $radios.val(["public_with_link"]);
+        }
+        else if (this._areAllElementsInShareLevels([ShareLevel.PUBLIC])) {
+            $radios.val(["public"]);
+        } else {
+            $radios.val([""]);
+        }
+        $shareMenu.modal();
+    };
+
+    VertexController.prototype.setShareLevel = function (shareLevel) {
+        var promise = this.isMultiple() ?
+            VertexService.setCollectionShareLevel(
+                shareLevel, this.getUi()
+            ) : VertexService.setShareLevel(
+                shareLevel, this.getUi()
+            );
+        return promise.then(function () {
+            this.getUiArray().forEach(function (vertexUi) {
+                vertexUi.getModel().setShareLevel(shareLevel.toUpperCase());
+                vertexUi.reviewInLabelButtonsVisibility(true);
+            });
+        }.bind(this));
     };
 
     VertexController.prototype.becomeParent = function (graphElementUi) {
