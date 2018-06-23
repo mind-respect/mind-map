@@ -318,7 +318,6 @@ define([
             $("#share-menu-copy-success").addClass("hidden");
             var $shareMenu = $("#share-menu");
             var $copyShareLinkBtn = $("#copy-share-link").prop('disabled', false);
-            debugger;
             var clipboard = new Clipboard(
                 $copyShareLinkBtn[0], {
                     target: function () {
