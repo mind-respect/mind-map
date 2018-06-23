@@ -60,7 +60,7 @@ define([
                     ).text();
                     expect(
                         hiddenRelationsText
-                    ).toBe("+ 2");
+                    ).toBe("... 2");
                 });
             });
         });

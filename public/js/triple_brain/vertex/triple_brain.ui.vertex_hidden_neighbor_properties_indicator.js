@@ -60,7 +60,7 @@ define([
 
         HiddenNeighborPropertiesIndicator.prototype.buildContent = function () {
             var isLeftOriented = this.bubble.isToTheLeft();
-            var plusSign = "+";
+            var plusSign = "...";
             var numberOfHiddenRelations = this.bubble.getNumberOfHiddenRelations();
             return (isLeftOriented ? numberOfHiddenRelations : plusSign) +
                 " " + (isLeftOriented ? plusSign : numberOfHiddenRelations);

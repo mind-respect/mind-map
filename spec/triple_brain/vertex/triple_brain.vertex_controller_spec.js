@@ -686,7 +686,7 @@ define([
                 newChild.collapse();
                 expect(
                     newChild.getHiddenRelationsContainer().getHtml().text()
-                ).toBe("+ 1");
+                ).toBe("... 1");
             });
             it("can become parent of a group relation", function () {
                 var scenario = new Scenarios.GraphWithSimilarRelationsScenario();

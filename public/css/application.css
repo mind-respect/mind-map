@@ -239,7 +239,7 @@ footer > a:hover { background-color: black !important; color: white !important; 
 .left-oriented .vertex.selected .in-bubble-content { box-shadow: 3px 3px 3px black; }
 .left-oriented .vertex .in-bubble-content .in-label-buttons { margin-right: -16px; margin-left: auto; padding-left: 2px; }
 .left-oriented .relation.bubble:not(.same-as-group-relation):not(.edit) .label .bubble-label:not(:empty) { padding: 5px 10px 5px 10px; }
-.left-oriented .relation.bubble:not(.same-as-group-relation) .hidden-properties-content { margin-left: 0; margin-right: 25px; }
+.left-oriented .relation.bubble:not(.same-as-group-relation) .hidden-properties-content { margin-left: 0; margin-right: 15px; }
 .left-oriented .relation.bubble:not(.same-as-group-relation).public .label-container:after { right: auto; left: 4px; }
 .left-oriented .relation.bubble:not(.same-as-group-relation) .in-bubble-content .in-label-buttons { left: auto; right: -32px; margin-left: -7px; margin-right: 7px; }
 .left-oriented .relation.bubble:not(.same-as-group-relation) .label-container { padding-left: 0; padding-right: 6px; }
@@ -433,7 +433,7 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .relation.bubble.selected .label .bubble-label:empty { padding: 5px 10px 5px 10px; line-height: inherit; }
 .relation.bubble.inverse .connector { width: 51px; left: -41px; }
 .relation.bubble.inverse .connector:before { content: url(images/icons/vertex/arrowhead_left.svg); position: relative; top: -10px; left: 20px; }
-.relation.bubble .hidden-properties-content { margin-left: 25px; }
+.relation.bubble .hidden-properties-content { margin-left: 15px; }
 .relation.bubble.compare-add .in-bubble-content .label-info, .relation.bubble.compare-add.inverse .in-bubble-content .label-info, .relation.bubble.compare-add.suggestion .in-bubble-content .label-info { color: black; }
 .relation.bubble.compare-add .in-bubble-content .label-info .bubble-label, .relation.bubble.compare-add.inverse .in-bubble-content .label-info .bubble-label, .relation.bubble.compare-add.suggestion .in-bubble-content .label-info .bubble-label { color: black; }
 .relation.bubble.compare-add .in-bubble-content .label-info .bubble-label:empty:not(:focus):after, .relation.bubble.compare-add.inverse .in-bubble-content .label-info .bubble-label:empty:not(:focus):after, .relation.bubble.compare-add.suggestion .in-bubble-content .label-info .bubble-label:empty:not(:focus):after { color: grey; }
