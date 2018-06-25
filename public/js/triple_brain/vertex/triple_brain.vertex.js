@@ -95,8 +95,28 @@ define([
             this.vertexServerFormat.vertex.numberOfConnectedEdges--;
         };
 
+        Vertex.prototype.incrementNbPublicNeighbors = function () {
+            this.vertexServerFormat.vertex.nbPublicNeighbors++;
+        };
+
+        Vertex.prototype.decrementNbPublicNeighbors = function () {
+            this.vertexServerFormat.vertex.nbPublicNeighbors--;
+        };
+
         Vertex.prototype.getNbPublicNeighbors = function () {
             return this.vertexServerFormat.vertex.nbPublicNeighbors;
+        };
+
+        Vertex.prototype.getNbFriendNeighbors = function () {
+            return this.vertexServerFormat.vertex.nbFriendNeighbors;
+        };
+
+        Vertex.prototype.incrementNbFriendNeighbors = function () {
+            this.vertexServerFormat.vertex.nbFriendNeighbors++;
+        };
+
+        Vertex.prototype.decrementNbFriendNeigbors = function () {
+            this.vertexServerFormat.vertex.nbFriendNeighbors--;
         };
 
         Vertex.prototype.hasOnlyOneHiddenChild = function () {

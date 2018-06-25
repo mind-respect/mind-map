@@ -7,15 +7,17 @@ define([
         "triple_brain.id_uri",
         "triple_brain.user_service",
         "triple_brain.event_bus",
+        "mr.friend-service",
         "jquery.url"
     ],
-    function ($, IdUri, UserService, EventBus) {
+    function ($, IdUri, UserService, EventBus, FriendService) {
         "use strict";
         var api = {},
             _isViewOnly,
             _isAnonymous,
             _isTagCloudFlow = false,
-            _isAuthenticatedLandingPageFlow = false;
+            _isAuthenticatedLandingPageFlow = false,
+            _isFriend = false;
         api.defaultVertexUri = function () {
             return UserService.currentUserUri() + '/graph/vertex/any';
         };
@@ -32,10 +34,10 @@ define([
             return IdUri.getGraphElementUriInUrl();
         };
         api.isViewOnly = function () {
-            api.defineIsViewOnlyIfItsUndefined();
+            api.defineIsViewOnly();
             return _isViewOnly;
         };
-        api.defineIsViewOnlyIfItsUndefined = function () {
+        api.defineIsViewOnly = function () {
             if (_isViewOnly !== undefined) {
                 return;
             }
@@ -43,10 +45,23 @@ define([
                 false : _isAnonymous || !IdUri.isGraphElementUriOwnedByCurrentUser(
                 IdUri.getGraphElementUriInUrl()
             );
+
             EventBus.publish(
                 '/event/ui/mind_map_info/is_view_only',
                 [_isViewOnly]
             );
+        };
+
+        api.defineIsFriend = function () {
+            return FriendService.getStatusWithUser(
+                IdUri.currentUsernameInUrl()
+            ).then(function (status) {
+                _isFriend = status.status === 'confirmed';
+            });
+        };
+
+        api.isFriend = function () {
+            return _isFriend;
         };
 
         api.setIsTagCloudFlow = function (isTagCloudFlow) {
@@ -80,7 +95,7 @@ define([
             var $compareFlowWarning = $(
                 "#compare-flow-warning"
             );
-            return $compareFlowWarning.length > 0  && !$compareFlowWarning.hasClass(
+            return $compareFlowWarning.length > 0 && !$compareFlowWarning.hasClass(
                 "hidden"
             );
         };

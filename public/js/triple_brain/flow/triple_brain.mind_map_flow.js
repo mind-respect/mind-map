@@ -85,10 +85,10 @@ define([
                 var backgroundColor = centralBubble.getModel().getColors().background;
                 if (backgroundColor) {
                     GraphUi.changeBackgroundColor(backgroundColor);
-                }else{
+                } else {
                     GraphUi.resetBackGroundColor();
                 }
-            }else{
+            } else {
                 GraphUi.resetBackGroundColor();
             }
             GraphUi.getDrawnGraph().on(
@@ -105,7 +105,7 @@ define([
                     }
                     $("#font-picker").addClass('hidden');
                     GraphUi.removePopovers();
-                    SelectionHandler.getSelectedBubbles().forEach(function(bubble){
+                    SelectionHandler.getSelectedBubbles().forEach(function (bubble) {
                         bubble.hideMenu();
                     });
                 }
@@ -141,8 +141,8 @@ define([
             loadLocaleAndGraph();
         } else {
             UserService.authenticatedUser(function () {
-                MindMapInfo.defineIsViewOnlyIfItsUndefined();
-                loadLocaleAndGraph();
+                MindMapInfo.defineIsViewOnly();
+                MindMapInfo.defineIsFriend().then(loadLocaleAndGraph);
             });
         }
 

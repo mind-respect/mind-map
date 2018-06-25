@@ -13,8 +13,6 @@ define([
             method: 'GET',
             url: UserService.currentUserUri() + "/friends",
             contentType: 'application/json'
-        }).then(function (friends) {
-            return JSON.parse(friends);
         });
     };
     api.addFriend = function (username) {

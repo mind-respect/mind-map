@@ -186,7 +186,7 @@ define([
             b2.getController().addChild().done(function (triple) {
                 hasVisited = true;
                 expect(
-                    triple.destinationVertex().getModel
+                    triple.destinationVertex().getModel().isPublic()
                 ).toBeTruthy();
             });
             expect(

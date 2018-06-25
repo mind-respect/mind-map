@@ -204,21 +204,30 @@ define([
         };
 
         api.RelativeTreeVertex.prototype.hasHiddenRelations = function () {
-            return !this.isCenterBubble() && MindMapInfo.isViewOnly() ?
-                this._hasPublicHiddenRelations() :
-                this.getNumberOfHiddenRelations() > 0;
+            return this.getNumberOfHiddenRelations() > 0;
 
         };
         api.RelativeTreeVertex.prototype.getNumberOfHiddenRelations = function () {
+            if (this.isCenterBubble()) {
+                return 0;
+            }
+            var nbNeighbors;
+            if (MindMapInfo.isFriend()) {
+                nbNeighbors = this.getModel().getNbFriendNeighbors() + this.getModel().getNbPublicNeighbors();
+            } else if (MindMapInfo.isViewOnly()) {
+                nbNeighbors = this.getModel().getNbPublicNeighbors();
+            } else {
+                nbNeighbors = this.getModel().getNumberOfConnectedEdges();
+            }
             if (this.isALeaf()) {
                 var parentBubble = this.getParentBubble();
                 if (parentBubble.getParentBubble().isGroupVertexUnderMeta()) {
-                    return this.getModel().getNumberOfConnectedEdges() - 2;
+                    return nbNeighbors - 2;
                 }
                 if (parentBubble.isMetaRelation()) {
-                    return this.getModel().getNumberOfConnectedEdges();
+                    return nbNeighbors;
                 }
-                return this.getModel().getNumberOfConnectedEdges() - 1;
+                return nbNeighbors - 1;
             }
             return 0;
         };
@@ -296,7 +305,7 @@ define([
                 GraphElementUi.getCenterVertexOrSchema().sideCenterOnScreenWithAnimation();
             });
             setupCopyButtons();
-            if(!_shareMenuBuilt){
+            if (!_shareMenuBuilt) {
                 setupShareMenu();
                 _shareMenuBuilt = true;
             }

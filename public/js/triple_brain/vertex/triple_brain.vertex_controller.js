@@ -427,6 +427,14 @@ define([
     };
 
     VertexController.prototype.setShareLevel = function (shareLevel) {
+        this.getUiArray().forEach(function (vertexUi) {
+            if (vertexUi.getModel().isPublic()) {
+                vertexUi.getParentVertex().getModel().decrementNbPublicNeighbors();
+            }
+            if (vertexUi.getModel().isFriendsOnly()) {
+                vertexUi.getParentVertex().getModel().decrementNbFriendNeigbors();
+            }
+        });
         var promise = this.isMultiple() ?
             VertexService.setCollectionShareLevel(
                 shareLevel, this.getUi()
@@ -435,6 +443,12 @@ define([
             );
         return promise.then(function () {
             this.getUiArray().forEach(function (vertexUi) {
+                if (ShareLevel.isPublic(shareLevel)) {
+                    vertexUi.getParentVertex().getModel().incrementNbPublicNeighbors();
+                }
+                if (shareLevel === ShareLevel.FRIENDS) {
+                    vertexUi.getParentVertex().getModel().incrementNbFriendNeighbors();
+                }
                 vertexUi.getModel().setShareLevel(shareLevel.toUpperCase());
                 vertexUi.reviewInLabelButtonsVisibility(true);
             });
@@ -683,9 +697,12 @@ define([
                     triple = _triple;
                     triple.destinationVertex().getModel().incrementNumberOfConnectedEdges();
                     triple.sourceVertex().getModel().incrementNumberOfConnectedEdges();
-                    if (realParent.getModel().isPublic()) {
-                        return triple.destinationVertex().getController().makePublic();
+                    if (ShareLevel.PRIVATE === realParent.getModel().getShareLevel()) {
+                        return;
                     }
+                    return triple.destinationVertex().getController().setShareLevel(
+                        realParent.getModel().getShareLevel()
+                    );
                 }
             ).then(function () {
                 triple.sourceVertex().tripleAdded(triple);

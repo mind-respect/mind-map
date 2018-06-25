@@ -23,6 +23,9 @@ define([
         spies["mergeTo"] = spyOn(VertexService, "mergeTo").and.callFake(function () {
             return $.Deferred().resolve();
         });
+        spies["setShareLevel"] = spyOn(VertexService, "setShareLevel").and.callFake(function () {
+            return $.Deferred().resolve();
+        });
         return spies;
     };
     api.addRelationAndVertexToVertex = function () {

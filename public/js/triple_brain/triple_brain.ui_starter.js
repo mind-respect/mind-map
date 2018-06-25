@@ -48,18 +48,15 @@ define(
 
         function callbackWhenUserAuthenticated() {
             if (MindMapInfo.isCenterBubbleUriDefinedInUrl()) {
-                MindMapFlow.enterMindMapForAuthenticatedUser();
-                return;
+                return MindMapFlow.enterMindMapForAuthenticatedUser();
             }
             UserService.authenticatedUser(function () {
                 Header.commonSetupForAuthenticated();
                 if (MindMapInfo.isLandingPageFlow()) {
-                    LandingPageFlow.enterForAuthenticated();
-                    return;
+                    return LandingPageFlow.enterForAuthenticated();
                 }
                 if (MindMapInfo.isSchemaListFlow()) {
-                    SchemaListFlow.enter();
-                    return;
+                    return SchemaListFlow.enter();
                 }
                 MindMapFlow.enterConnectedHomeFlow();
             });
