@@ -560,8 +560,8 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 
 .included-vertices-container .layout { position: absolute; }
 
-.vertex-tree-container.no-relation-label > .vertices-children-container > .vertex-tree-container > .vertex-container .vertex .arrow { border-top: none; }
-.vertex-tree-container.no-relation-label > .vertices-children-container > .vertex-tree-container > .vertex-container .vertex .arrow:before { top: -9px; }
+.vertex-tree-container.no-relation-label > .vertices-children-container > .vertex-tree-container > .vertex.arrow { border-top: none; margin-top: -2px; }
+.vertex-tree-container.no-relation-label > .vertices-children-container > .vertex-tree-container > .vertex.arrow:before { top: -9px; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 [data-zoom="0"] .vertex.edit .in-bubble-content { width: 70vw; max-width: 70vw; }

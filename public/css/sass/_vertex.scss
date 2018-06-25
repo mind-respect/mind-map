@@ -6,8 +6,8 @@
   /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */
   white-space: nowrap;
 
-  &.inverse{
-    .arrow{
+  &.inverse {
+    .arrow {
       width: 47px;
       left: -37px;
     }
@@ -22,7 +22,7 @@
     }
   }
 
-  &.suggestion{
+  &.suggestion {
     .in-bubble-content {
       border: $edgeSize dotted $suggestionColor;
       color: black;
@@ -53,13 +53,13 @@
     }
   }
   .in-bubble-content {
-    &:hover{
+    &:hover {
       background-color: $hoverOverBubbleColor;
     }
-    .in-label-buttons{
-      margin-left:$margin-buttons;
-      padding-left:$inLabelButtonsPadding;
-      padding-right:$buttons-next-to-label-padding;
+    .in-label-buttons {
+      margin-left: $margin-buttons;
+      padding-left: $inLabelButtonsPadding;
+      padding-right: $buttons-next-to-label-padding;
     }
     //box-shadow: inset 0px 1px 200px 1rem #E3E300 !important;
     //-webkit-box-shadow: inset 0px 1px 100px -1px #E3E300;
@@ -73,7 +73,7 @@
     $selectedBoxShadow: -3px 3px 3px black;
     .in-bubble-content {
       background-color: $selectBubbleColor;
-      box-shadow:$selectedBoxShadow;
+      box-shadow: $selectedBoxShadow;
     }
     &.center-vertex {
       .in-bubble-content {
@@ -195,16 +195,13 @@
   }
 }
 
-.vertex-tree-container{
-  &.no-relation-label{
-    > .vertices-children-container > .vertex-tree-container > .vertex-container{
-      .vertex {
-        .arrow{
-          border-top: none;
-          &:before{
-            top:-9px;
-          }
-        }
+.vertex-tree-container {
+  &.no-relation-label {
+    > .vertices-children-container > .vertex-tree-container > .vertex.arrow {
+      border-top: none;
+      margin-top: -2px;
+      &:before {
+        top: -9px;
       }
     }
   }
