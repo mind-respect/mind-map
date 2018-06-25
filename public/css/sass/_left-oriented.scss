@@ -6,6 +6,13 @@
     transform: rotate(180deg);
   }
   .vertex {
+    &.edit {
+      .in-bubble-content {
+        .bubble-label {
+          padding-left: 0;
+        }
+      }
+    }
     &.selected {
       .in-bubble-content {
         box-shadow: $bubble-box-shadow

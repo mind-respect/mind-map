@@ -31,14 +31,13 @@
   }
   &.edit {
     .in-bubble-content {
-      max-width: 325px;
-      width: 325px;
       .in-bubble-note-button {
         display: none;
       }
-    }
-    .bubble-label {
-      white-space: pre-wrap;
+      .bubble-label {
+        white-space: pre-wrap;
+        padding-left: 25px;
+      }
     }
   }
   &.absolute {
@@ -146,15 +145,13 @@
     //filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff2cb', endColorstr='#ffebaf',GradientType=0 ); /* IE6-9 */
 
     white-space: normal;
-    padding: 1em;
+    padding-left:20px !important;
+    padding-right:20px !important;
     padding-bottom: 0.7em;
     padding-top: 0.7em;
     display: table;
     > * {
       display: table-cell;
-    }
-    .bubble-label {
-      padding: 0;
     }
     .in-bubble-note-button {
       display: block;

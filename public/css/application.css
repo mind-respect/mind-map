@@ -236,6 +236,7 @@ footer > a:hover { background-color: black !important; color: white !important; 
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .left-oriented [data-action=addChild] .fa-arrow-right { transform: rotate(180deg); }
+.left-oriented .vertex.edit .in-bubble-content .bubble-label { padding-left: 0; }
 .left-oriented .vertex.selected .in-bubble-content { box-shadow: 3px 3px 3px black; }
 .left-oriented .vertex .in-bubble-content .in-label-buttons { margin-right: -16px; margin-left: auto; padding-left: 2px; }
 .left-oriented .relation.bubble:not(.same-as-group-relation):not(.edit) .label .bubble-label:not(:empty) { padding: 5px 10px 5px 10px; }
@@ -534,9 +535,8 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .vertex.inverse .arrow { width: 47px; left: -37px; }
 .vertex.meta .in-bubble-content { border-radius: 5px; border: 0.15em solid purple; color: black; text-shadow: none; }
 .vertex.suggestion .in-bubble-content { border: 0.15em dotted darkgreen; color: black; text-shadow: none; }
-.vertex.edit .in-bubble-content { max-width: 325px; width: 325px; }
 .vertex.edit .in-bubble-content .in-bubble-note-button { display: none; }
-.vertex.edit .bubble-label { white-space: pre-wrap; }
+.vertex.edit .in-bubble-content .bubble-label { white-space: pre-wrap; padding-left: 25px; }
 .vertex.absolute { white-space: nowrap; position: absolute !important; min-width: 120px; }
 .vertex.includes-vertices .in-bubble-content { padding-bottom: 2em; }
 .vertex .in-bubble-content:hover { background-color: transparent; }
@@ -552,9 +552,8 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .vertex.center-vertex:not(.meta) .in-bubble-content { box-shadow: -1px -2px 1px midnightblue; }
 .vertex .included-graph-elements-flag { position: absolute; top: 25px; left: 30%; font-weight: bold; }
 .vertex .included-graph-elements-flag { z-index: 3; }
-.vertex .in-bubble-content { border-radius: 50px; /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c3d9ff+0,b1c8ef+41,98b0d9+100;Lavender+3D */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#daeef6+0,96ddf2+50,ddeff7+100 */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffedb7+0,ffe28d+100 */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fff2cb+0,ffebaf+100 */ white-space: normal; padding: 1em; padding-bottom: 0.7em; padding-top: 0.7em; display: table; }
+.vertex .in-bubble-content { border-radius: 50px; /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c3d9ff+0,b1c8ef+41,98b0d9+100;Lavender+3D */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#daeef6+0,96ddf2+50,ddeff7+100 */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffedb7+0,ffe28d+100 */ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fff2cb+0,ffebaf+100 */ white-space: normal; padding-left: 20px !important; padding-right: 20px !important; padding-bottom: 0.7em; padding-top: 0.7em; display: table; }
 .vertex .in-bubble-content > * { display: table-cell; }
-.vertex .in-bubble-content .bubble-label { padding: 0; }
 .vertex .in-bubble-content .in-bubble-note-button { display: block; }
 .vertex .ui-button { width: 1.7em; height: 1.8em; margin-right: 0; font-size: 1.1em; padding: 0; }
 
