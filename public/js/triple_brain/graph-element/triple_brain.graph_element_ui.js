@@ -562,7 +562,6 @@ define([
         ).removeAttr(
             "draggable"
         );
-        this.getInLabelButtonsContainer().addClass("hidden");
         GraphUi.disableDragScroll();
         GraphUi.lockDragScroll();
         KeyboardActionsHandler.disable();

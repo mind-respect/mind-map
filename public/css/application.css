@@ -536,7 +536,7 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .vertex.meta .in-bubble-content { border-radius: 5px; border: 0.15em solid purple; color: black; text-shadow: none; }
 .vertex.suggestion .in-bubble-content { border: 0.15em dotted darkgreen; color: black; text-shadow: none; }
 .vertex.edit .in-bubble-content .in-bubble-note-button { display: none; }
-.vertex.edit .in-bubble-content .bubble-label { white-space: pre-wrap; padding-left: 25px; }
+.vertex.edit .in-bubble-content .bubble-label { white-space: pre-wrap; width: 100%; }
 .vertex.absolute { white-space: nowrap; position: absolute !important; min-width: 120px; }
 .vertex.includes-vertices .in-bubble-content { padding-bottom: 2em; }
 .vertex .in-bubble-content:hover { background-color: transparent; }
