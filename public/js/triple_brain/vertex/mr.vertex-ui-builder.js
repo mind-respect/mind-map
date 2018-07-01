@@ -179,14 +179,11 @@ define([
             );
             var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
             var hasLink = false;
-            var htmlWithLink = htmlContent.replace(urlRegex, function (url, b, c) {
+            return htmlContent.replace(urlRegex, function (url, b, c) {
                 var url2 = (c === 'www.') ? 'http://' + url : url;
                 hasLink = true;
                 return '<a href="' + url2 + '" target="_blank">' + url + '</a>';
             });
-            return $.maxCharText(
-                htmlWithLink
-            );
         }
     }
 );

@@ -23,8 +23,9 @@ define([
     "triple_brain.id_uri",
     "triple_brain.graph_element_type",
     "mr.share-level",
+    "triple_brain.graph_ui",
     "jquery.triple_brain.search"
-], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, BubbleDeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, GraphElementUi, EventBus, IdUri, GraphElementType, ShareLevel) {
+], function ($, VertexService, EdgeService, SelectionHandler, GraphDisplayer, GraphElementController, BubbleDeleteMenu, EdgeUi, ImageMenu, IncludedGraphElementsMenu, VertexUi, Vertex, Identification, GraphElementService, SchemaSuggestion, GraphElementUi, EventBus, IdUri, GraphElementType, ShareLevel, GraphUi) {
     "use strict";
     var api = {};
 
@@ -698,8 +699,11 @@ define([
                     triple.destinationVertex().getModel().incrementNumberOfConnectedEdges();
                     triple.sourceVertex().getModel().incrementNumberOfConnectedEdges();
                     if (ShareLevel.PRIVATE === realParent.getModel().getShareLevel()) {
+                        triple.destinationVertex().getModel().setShareLevel(ShareLevel.PRIVATE);
+                        triple.destinationVertex().reviewInLabelButtonsVisibility();
                         return;
                     }
+                    // GraphUi.refreshWidth();
                     return triple.destinationVertex().getController().setShareLevel(
                         realParent.getModel().getShareLevel()
                     );

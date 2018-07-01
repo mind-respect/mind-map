@@ -18,6 +18,30 @@ define([
             _isDragScrollLocked = false,
             _backgroundColor = DEFAULT_BACKGROUND_COLOR,
             _selectedBackgroundColor;
+
+        api.refreshWidth = function () {
+            var $leftContainer = $(".vertices-children-container.left-oriented");
+            var $rightContainer = $(".vertices-children-container.right-oriented");
+            var leftWidth = $leftContainer.find(".bubble").length * 750 +  2225;
+            var rightWidth = $rightContainer.find(".bubble").length * 750 + 2225;
+            $("#drawn_graph").css(
+                "width",
+                ((leftWidth + rightWidth) * 2) + "px"
+            );
+            $(".root-vertex-super-container").css(
+                "width",
+                (leftWidth + rightWidth + 800) + "px"
+            );
+            $leftContainer.css(
+                "width",
+                leftWidth
+            );
+            $rightContainer.css(
+                "width",
+                rightWidth
+            );
+        };
+
         api.initDragScroll = function () {
             var $body = $('body');
             var $toDragScroll = $body.scrollLeft() > 0 ? $body : $('html');
@@ -90,7 +114,7 @@ define([
         };
 
         api.getSelectedBubbleBackgroundColor = function () {
-            if(!_selectedBackgroundColor){
+            if (!_selectedBackgroundColor) {
                 api.defineSelectedBackgroundColor();
             }
             return _selectedBackgroundColor;

@@ -14,12 +14,13 @@ $horizontalPaddingHighest: 3.5;
     $horizontalPadding: max(1, $horizontalPaddingHighest - ($i * 1.1));
     [data-zoom="#{$i}"] {
       .vertex {
-        &.edit {
-          .in-bubble-content {
-            width: ($editWidth - ($i * 5)) + vw;
-            max-width: ($editWidth - ($i * 5)) + vw;
+        .in-bubble-content {
+          max-width: 500px;
+          .bubble-label {
+            white-space: pre-wrap;
           }
         }
+
         .in-bubble-content {
           padding: 1em;
           padding-bottom: 0.5em;

@@ -18,8 +18,7 @@ define([
         "triple_brain.suggestion_service",
         "triple_brain.id_uri",
         "triple_brain.graph_ui",
-        "jquery.center-on-screen",
-        "jquery.max_char"
+        "jquery.center-on-screen"
     ],
     function (require, $, VertexService, Point, Error, VertexSegments, EventBus, GraphElementUi, GraphElementMainMenu, Bubble, CenterBubble, BubbleFactory, SuggestionService, IdUri, GraphUi) {
         "use strict";
@@ -190,11 +189,11 @@ define([
             }
         };
         api.VertexUi.prototype.text = function () {
-            return this.getLabel().maxCharCleanText();
+            return this.getLabel().text();
         };
 
         api.VertexUi.prototype.textHtml = function () {
-            return this.getLabel().maxCharCleanHtml();
+            return this.getLabel();
         };
 
         api.VertexUi.prototype.removeConnectedEdges = function () {
@@ -356,7 +355,7 @@ define([
             this.getController().setLabel(
                 identifier.getLabel()
             );
-            this.getLabel().maxChar();
+            this.getLabel();
             var html = this.getHtml();
             var content = $("<div class='list-group'>").append(
                 $('<a href="#" class="list-group-item">').append(

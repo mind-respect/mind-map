@@ -13,8 +13,9 @@ define([
         "triple_brain.selection_handler",
         "triple_brain.center_bubble",
         "triple_brain.ui.vertex_hidden_neighbor_properties_indicator",
-        "triple_brain.mind_map_info"
-    ], function ($, EventBus, UiUtils, ImageDisplayer, GraphElementUi, GraphElementType, BubbleFactory, SelectionHandler, CenterBubble, PropertiesIndicator, MindMapInfo) {
+        "triple_brain.mind_map_info",
+        "triple_brain.graph_ui"
+    ], function ($, EventBus, UiUtils, ImageDisplayer, GraphElementUi, GraphElementType, BubbleFactory, SelectionHandler, CenterBubble, PropertiesIndicator, MindMapInfo, GraphUi) {
         "use strict";
         var api = {};
         api.MoveRelation = {
@@ -584,6 +585,7 @@ define([
             if (!sharesSameAncestor) {
                 bubbleToSelect = ancestor;
             }
+            GraphUi.refreshWidth();
             if (bubbleToSelect) {
                 SelectionHandler.setToSingleGraphElement(
                     bubbleToSelect
@@ -872,6 +874,7 @@ define([
                     child.collapse();
                 }
             });
+            // GraphUi.refreshWidth();
             this.centerOnScreenWithAnimation();
         };
 
@@ -908,6 +911,7 @@ define([
             this.visitDescendants(function (descendant) {
                 descendant.reviewInLabelButtonsVisibility(true);
             });
+            // GraphUi.refreshWidth();
             if (!avoidScreenCenter && !isChildExpand && !this.getChildrenContainer().isFullyOnScreen()) {
                 this.sideCenterOnScreenWithAnimation();
                 SelectionHandler.setToSingleGraphElement(this);
@@ -989,6 +993,7 @@ define([
         api.Bubble.prototype.tripleAdded = function (triple) {
             triple.sourceVertex().hideHiddenRelationsContainer();
             var destinationHtml = triple.destinationVertex().getHtml();
+            // GraphUi.refreshWidth();
             if (!UiUtils.isElementFullyOnScreen(destinationHtml)) {
                 destinationHtml.centerOnScreenWithAnimation();
             }
@@ -1004,6 +1009,7 @@ define([
                 newSelectedElement
             );
         }
+
         return api;
     }
 )

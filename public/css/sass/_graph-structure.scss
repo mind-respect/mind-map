@@ -7,12 +7,20 @@ $connectorRadius: 25px;
 
 #drawn_graph {
   position: absolute;
+  padding: 100%;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  //display:flex !important;
+  //justify-items: center !important;;
+  //align-items: center !important;;
   //background: radial-gradient(rgba(0, 0, 255, 0) 5%, #0b46ff 100%);
   //background: radial-gradient(rgba(0, 0, 255, 0) 5%, #084A62 100%);
   //background: radial-gradient(rgba(0, 0, 255, 0) 5%, #44C9FB 100%);
   //background: radial-gradient(rgba(0, 0, 255, 0) 5%, #623300 100%);
-  background: radial-gradient(at 4250px, rgba(0, 0, 255, 0) 5%, #1E87AF 100%);
-  background: -webkit-radial-gradient(4250px, rgba(0, 0, 255, 0) 5%, #1E87AF 100%);
+  //background: radial-gradient(at 4250px, rgba(0, 0, 255, 0) 5%, #1E87AF 100%);
+  //background: -webkit-radial-gradient(4250px, rgba(0, 0, 255, 0) 5%, #1E87AF 100%);
   //background: radial-gradient(rgba(0, 0, 255, 0) 5%, #AF6A1E 100%);
 
 }

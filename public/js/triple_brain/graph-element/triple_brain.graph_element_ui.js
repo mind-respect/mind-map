@@ -19,8 +19,7 @@ define([
     "triple_brain.graph_element",
     "jquery.focus-end",
     "jquery.center-on-screen",
-    "jquery.safer-html",
-    "jquery.max_char"
+    "jquery.safer-html"
 ], function ($, GraphDisplayer, GraphElementMainMenu, GraphElementButton, GraphElementType, EventBus, MindMapInfo, SelectionHandler, GraphUi, KeyboardActionsHandler, IdUri, CenterBubble, FontPicker, GraphElement) {
     "use strict";
     var api = {},
@@ -526,7 +525,6 @@ define([
         this.editMode();
         this._setTextBeforeModification();
         var label = this.getLabel();
-        label.maxCharCleanTextApply();
         if (clickPosition) {
             label.focusAtPosition(clickPosition);
         } else {
@@ -797,7 +795,6 @@ define([
             document.title = this.getTextOrDefault();
         }
         this.leaveEditMode();
-        this.getLabel().maxChar();
         this.getHtml().centerOnScreen();
         if (this.shouldCompare()) {
             this.refreshLabelComparison();

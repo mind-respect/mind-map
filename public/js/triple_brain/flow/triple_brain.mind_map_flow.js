@@ -110,6 +110,7 @@ define([
                     });
                 }
             );
+            GraphUi.refreshWidth();
             $("body").removeClass(
                 "hidden"
             ).addClass("mind-map-flow");

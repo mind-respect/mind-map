@@ -101,6 +101,14 @@ $withoutTextPadding: 1px 7px 1px 7px;
   position: relative;
 
   &.same-as-group-relation {
+    .label-container .label .bubble-label {
+      visibility: hidden;
+      white-space: nowrap;
+      text-indent: -9999px;
+      margin-top: -200px;
+      line-height: 0;
+      padding: $withoutTextPadding;
+    }
     .label {
       padding: 0;
     }
@@ -118,13 +126,6 @@ $withoutTextPadding: 1px 7px 1px 7px;
           }
         }
       }
-    }
-    .label-container .label .bubble-label {
-      visibility: hidden;
-      text-indent: -9999px;
-      margin-top: -200px;
-      line-height: 0;
-      padding: $withoutTextPadding;
     }
   }
 
@@ -224,7 +225,10 @@ $withoutTextPadding: 1px 7px 1px 7px;
       height: auto;
       font-size: $fontSize;
     }
+    max-width: 250px;
     .bubble-label {
+      text-align: center;
+      white-space: pre-wrap;
       color: white;
       display: inline-block;
       font-size: $fontSize;

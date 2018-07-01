@@ -42,7 +42,6 @@ module.exports = {
         "bootstrap-datepicker": "vendor/bootstrap/bootstrap-datepicker",
         //"bootstrap-modal-carousel" : "vendor/bootstrap/bootstrap-modal-carousel",
         "ekko-lightbox": "vendor/node_modules/ekko-lightbox/dist/ekko-lightbox",
-        "jquery.max_char": "triple_brain/jquery.max_char",
         "jquery.hotkeys": "jquery/jquery.hotkeys",
         "google-code-prettify": "vendor/node_modules/google-code-prettify/bin/prettify.min",
         "bootstrap-wysiwyg": "jquery/bootstrap-wysiwyg.min",

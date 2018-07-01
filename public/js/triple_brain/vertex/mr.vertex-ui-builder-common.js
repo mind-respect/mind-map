@@ -21,7 +21,6 @@ define([
     "triple_brain.graph_element_ui",
     "triple_brain.point",
     "jquery.triple_brain.search",
-    "jquery.max_char",
     "jquery.safer-html"
 ], function ($, UiUtils, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, WikidataAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, GraphElementUiBuilder, BubbleFactory, GraphElementUi, Point) {
     "use strict";
@@ -85,7 +84,7 @@ define([
         ).attr(
             "data-placeholder",
             uiSelector.getWhenEmptyLabel()
-        ).maxChar().appendTo(inContentContainer);
+        ).appendTo(inContentContainer);
         GraphElementUiBuilder.setUpLabel(label);
         api.applyAutoCompleteIdentificationToLabelInput(
             label

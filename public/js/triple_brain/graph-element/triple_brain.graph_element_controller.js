@@ -20,8 +20,7 @@ define([
     "mr.to-list",
     "bootstrap-wysiwyg",
     "bootstrap",
-    "jquery.safer-html",
-    "jquery.max_char"
+    "jquery.safer-html"
 ], function ($, GraphElementType, GraphElementService, FriendlyResourceService, GraphDisplayer, MindMapInfo, EventBus, GraphUi, IdentificationMenu, EdgeService, Identification, Command, SelectionHandler, UserMapAutocompleteProvider, ToList) {
     "use strict";
     var api = {},
@@ -339,9 +338,7 @@ define([
         var separator = "" === this.getUi().text().trim() ?
             "" : " ";
         this.setLabel(
-            $.maxCharText(
-                this.getModel().getLabel() + separator + clipText
-            )
+            this.getModel().getLabel() + separator + clipText
         );
         this.getUi().getLabel().blur();
         this.getUi().pasteText();

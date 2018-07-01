@@ -144,11 +144,6 @@ body {
   border-radius: 20px;
 }
 
-#drawn_graph {
-  position: absolute;
-  padding: 100%;
-  top: 0;
-}
 
 a, input[type=button].link-like-button, button.link-like-button {
   color: $linksColor;
@@ -327,4 +322,12 @@ vertical-horizontal-center
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.root-vertex-super-container{
+  width:100%;
+  height:100%;
+  //padding-top:50%;
+  //padding-bottom:50%;
+  table-layout: fixed
 }
