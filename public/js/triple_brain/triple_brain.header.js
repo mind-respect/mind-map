@@ -42,8 +42,9 @@ define([
             handleDisconnectButton();
             getLoginButton().addClass("hidden");
             getRegisterButton().addClass("hidden");
+            getAllYourBubblesButton().text(UserService.authenticatedUserInCache().user_name);
             handleYourCentralButtons();
-            getBubbleMenu().removeClass("hidden");
+            getCreateBubbleButton().removeClass("hidden");
             getCreateSchemaButton().removeClass("hidden");
             if (MindMapInfo.isLandingPageFlow()) {
                 getSelectButton().addClass("hidden");
@@ -53,7 +54,7 @@ define([
 
         api.commonSetupForAnonymous = function () {
             api._commonSetup();
-            getBubbleMenu().addClass("hidden");
+            getCreateBubbleButton().addClass("hidden");
             getCreateSchemaButton().addClass("hidden");
             getLoginButton().removeClass("hidden");
             getRegisterButton().removeClass("hidden");
@@ -64,6 +65,8 @@ define([
             getAllYourBubblesButton().addClass("hidden");
             handleLoginRegisterButtons();
             getYourCentralButtonOnPage().addClass("hidden");
+            $("#language-when-anonymous").removeClass("hidden");
+            $("#settings-container").addClass("hidden");
         };
         api._commonSetup = function () {
             setupLanguagePicker();
@@ -91,10 +94,6 @@ define([
                 event.stopPropagation();
                 SelectionHandler.selectAllRelationsOnly();
             });
-        }
-
-        function getBubbleMenu() {
-            return $("#bubble-menu");
         }
 
         function getSchemaMenu() {
@@ -309,7 +308,7 @@ define([
         }
 
         function getLanguagePickerContainer() {
-            return $("#language-selector-container");
+            return $(".language-selector-container");
         }
     }
 );

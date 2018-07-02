@@ -97,7 +97,7 @@ define([
     function keyDownHandler(event) {
         // console.log(event.which);
         var target = $(event.target),
-            isWorkingOnSomething = !target.is("body") && !target.is("button");
+            isWorkingOnSomething = !target.is("body") && !target.is("button") && !target.is("a");
         var isCombineKeyPressed = UiUtils.isMacintosh() ? event.metaKey : event.ctrlKey;
         if (isWorkingOnSomething) {
             if (event.keyCode === escapeKeyNumber) {

@@ -46,7 +46,7 @@ define([
     };
 
     api.createVertex = function () {
-        VertexService.createVertex(function (newVertex) {
+        return VertexService.createVertex().then(function (newVertex) {
             var serverFormatFacade = Vertex.fromServerFormat(
                 newVertex
             );

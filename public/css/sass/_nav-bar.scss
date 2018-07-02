@@ -26,6 +26,9 @@ $border : 2px solid $red;
     color: $colDefault; }
   .navbar-nav {
     > li {
+      &:last-of-type{
+        margin-right:15px;
+      }
       > a {
         margin-right: 5px;
         text-transform: uppercase;

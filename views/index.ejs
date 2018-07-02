@@ -77,30 +77,19 @@
                 <li>
                     <a href="#" id="register-button" data-i18n="top_menu.register"></a>
                 </li>
-                <li class="dropdown" id="bubble-menu">
-                    <a data-toggle="dropdown">
-                        <span data-i18n='top_menu.bubble'></span>
-                        <i class="fa fa-circle-o"></i>
+                <li>
+                    <a href="/" id="all-your-bubbles-button"></a>
+                </li>
+                <li>
+                    <a href="#" class="create icon" role="menuitem" id="create-concept" data-i18n="[title]centralBubbles.createInfo">
+                        <i class="fa fa-plus"></i>
+                        <span data-i18n='top_menu.create'></span>
                     </a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <li>
-                            <a href="" id="create-concept" class="create icon" role="menuitem"
-                            >
-                                <span data-i18n='top_menu.create'></span>
-                                <small class='text-muted short-cut'>
-                                    (
-                                    <small class="ctrl"></small>
-                                    +b)
-                                </small>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="/" id="all-your-bubbles-button">
-                                <i class="fa fa-code-fork"></i>
-                                <span data-i18n='top_menu.central'></span>
-                            </a>
-                        </li>
-                    </ul>
+                    <!--<small class='text-muted short-cut'>-->
+                        <!--(-->
+                        <!--<small class="ctrl"></small>-->
+                        <!--+b)-->
+                    <!--</small>-->
                 </li>
                 <li class="dev-only hidden dropdown" id="schema-menu">
                     <a data-toggle="dropdown">
@@ -131,10 +120,9 @@
                 <!--</li>-->
                 <li id="settings-container">
                     <a data-toggle="dropdown">
-                        <i class="fa fa-gear"></i>
+                        <i class="fa fa-user-circle"></i>
                     </a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu"
-                        id="language-selector-container">
+                    <ul class="dropdown-menu language-selector-container" role="menu" aria-labelledby="dropdownMenu">
                         <li class="">
                             <a data-lang="fr" href="" role="menuitem">
                                 <i class="fa fa-globe"></i>
@@ -151,12 +139,22 @@
                                 <span data-i18n="top_menu.disconnect"></span>
                             </a>
                         </li>
+                        <li>
+                            <a data-i18n='[href]top_menu.contribute_link'>
+                                <span data-i18n='top_menu.contribute'></span>
+                                <i class="fa fa-code"></i>
+                            </a>
+                        </li>
                     </ul>
                 </li>
-                <li>
-                    <a data-i18n='[href]top_menu.contribute_link'>
-                        <span data-i18n='top_menu.contribute'></span>
-                        <i class="fa fa-code"></i>
+                <li id="language-when-anonymous" class="hidden language-selector-container">
+                    <a data-lang="fr" href="" role="menuitem">
+                        <i class="fa fa-globe"></i>
+                        <span>Français</span>
+                    </a>
+                    <a data-lang="en" href="" role="menuitem">
+                        <i class="fa fa-globe"></i>
+                        <span>English</span>
                     </a>
                 </li>
                 <li data-i18n="[title]top_menu.share">

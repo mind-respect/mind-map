@@ -24,12 +24,12 @@ define([
                 dataType: 'json'
             }).then(callback);
         };
-        api.createVertex = function (callback) {
+        api.createVertex = function () {
             return $.ajax({
                 type: 'POST',
                 url: getVerticesUrl(),
                 dataType: 'json'
-            }).then(callback);
+            });
         };
         api.addRelationAndVertexToVertex = function (vertex, sourceBubble, relationOver) {
             return $.ajax({
