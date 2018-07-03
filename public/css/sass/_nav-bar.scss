@@ -25,10 +25,8 @@ $border : 2px solid $red;
   .navbar-text {
     color: $colDefault; }
   .navbar-nav {
+    margin-right:15px;
     > li {
-      &:last-of-type{
-        margin-right:15px;
-      }
       > a {
         margin-right: 5px;
         text-transform: uppercase;

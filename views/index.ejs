@@ -83,7 +83,7 @@
                 <li>
                     <a href="#" class="create icon" role="menuitem" id="create-concept" data-i18n="[title]centralBubbles.createInfo">
                         <i class="fa fa-plus"></i>
-                        <span data-i18n='top_menu.create'></span>
+                        <span data-i18n='top_menu.bubble'></span>
                     </a>
                     <!--<small class='text-muted short-cut'>-->
                         <!--(-->
@@ -147,6 +147,12 @@
                         </li>
                     </ul>
                 </li>
+                <li data-i18n="[title]top_menu.share" class="hidden">
+                    <a class="hidden" id="share-link" href="#" target="_blank">
+                        <i class="fa fa-share-alt"></i>
+                    </a>
+                    <input type="text" class="hidden form-control input-lg" id="share-link-input">
+                </li>
                 <li id="language-when-anonymous" class="hidden language-selector-container">
                     <a data-lang="fr" href="" role="menuitem">
                         <i class="fa fa-globe"></i>
@@ -156,12 +162,6 @@
                         <i class="fa fa-globe"></i>
                         <span>English</span>
                     </a>
-                </li>
-                <li data-i18n="[title]top_menu.share">
-                    <a class="hidden" id="share-link" href="#" target="_blank">
-                        <i class="fa fa-share-alt"></i>
-                    </a>
-                    <input type="text" class="hidden form-control input-lg" id="share-link-input">
                 </li>
             </ul>
         </div>
