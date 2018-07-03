@@ -585,7 +585,7 @@ define([
             if (!sharesSameAncestor) {
                 bubbleToSelect = ancestor;
             }
-            GraphUi.refreshWidth();
+            // GraphUi.refreshWidth();
             if (bubbleToSelect) {
                 SelectionHandler.setToSingleGraphElement(
                     bubbleToSelect
