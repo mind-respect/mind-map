@@ -1,40 +1,45 @@
-$bgDefault      : #071f79;
-$bgHighlight    : #121D46;
-$bgHighlight    : rgba(18, 29, 70, 0.4);
-$colDefault     : black;
-$colHighlight   :   white;
-$dropDown       : false;
-$border : 2px solid $red;
+$bgDefault: #071f79;
+$bgHighlight: #121D46;
+$bgHighlight: rgba(18, 29, 70, 0.4);
+$colDefault: black;
+$colHighlight: white;
+$dropDown: false;
+$border: 2px solid $red;
 
 .navbar-default {
-  border:none;
-  border-bottom:$border;
+  border: none;
+  border-bottom: $border;
   background-image: none;
   //background-image: linear-gradient(to bottom,#fff, #7297ff);
   //background: linear-gradient(to bottom, #1e5799 0%,#2989d8 100%);
   //background-color:rgba(0, 0, 0, 0.3);
-  background-color:white;
+  background-color: white;
   //background-color:#7281b3;
   //background-color: $bgDefault;
   //border-color: $bgHighlight;
   .navbar-brand {
     color: $colDefault;
     &:hover, &:focus {
-      background-color: transparent !important;
-      color: $colHighlight; }}
+      background-color: transparent;
+      color: $colHighlight;
+    }
+  }
   .navbar-text {
-    color: $colDefault; }
+    color: $colDefault;
+  }
   .navbar-nav {
-    margin-right:15px;
+    margin-right: 15px;
     > li {
       > a {
         margin-right: 5px;
         text-transform: uppercase;
         margin-top: 3px;
-        cursor:pointer;
-        font-size:1.2em;
+        cursor: pointer;
+        font-size: 1.2em;
         color: $colDefault;
-        &:hover,  &:focus {
+        &:hover, &:focus {
+          background-color: $red;
+          color: white;
         }
       }
       @if $dropDown {
@@ -42,29 +47,41 @@ $border : 2px solid $red;
           background-color: $bgDefault;
           > li > a {
             color: $colDefault;
-            &:hover,  &:focus {
+            &:hover, &:focus {
               color: $colHighlight;
-              background-color: $bgHighlight; }}
+              background-color: $bgHighlight;
+            }
+          }
           .divider {
-            background-color: $bgHighlight;}}}
+            background-color: $bgHighlight;
+          }
+        }
+      }
     }
     > .active {
       > a, > a:hover, > a:focus {
         color: $colHighlight;
-        background-color: $bgHighlight; }}
+        background-color: $bgHighlight;
+      }
+    }
     > .open {
       > a, > a:hover, > a:focus {
-        background-image:none;
+        background-image: none;
         color: $colHighlight;
-        background-color: rgba(254, 254, 254, 0.8) !important;
         border-radius: 10px 10px 0px 0px;
-        color: black !important; }}}
+        color: black
+      }
+    }
+  }
   .navbar-toggle {
     border-color: $bgHighlight;
     &:hover, &:focus {
-      background-color: $bgHighlight; }
+      background-color: $bgHighlight;
+    }
     .icon-bar {
-      background-color: $colDefault; }}
+      background-color: $colDefault;
+    }
+  }
   .navbar-collapse,
   .navbar-form {
     border-color: $colDefault;
@@ -77,11 +94,11 @@ $border : 2px solid $red;
   }
 
   a:hover {
-    background-color: rgba(254, 254, 254, 0.8) !important;
+    background-color: rgba(254, 254, 254, 0.8);
     //border: 3px solid rgba(254, 254, 254, 0.7);
     border-radius: 10px 10px 10px 10px;
-    color: black ;
-    text-decoration: none ;
+    color: black;
+    text-decoration: none;
   }
 
   .dropdown-menu {
@@ -99,7 +116,7 @@ $border : 2px solid $red;
         color: white !important;
       }
     }
-    ul.color-picker{
+    ul.color-picker {
       list-style: none !important;
     }
   }
@@ -110,7 +127,7 @@ $border : 2px solid $red;
     float: none;
     padding: 20px;
   }
-  .navbar-left,.navbar-right {
+  .navbar-left, .navbar-right {
     float: none !important;
   }
   .navbar-toggle {
@@ -118,30 +135,30 @@ $border : 2px solid $red;
   }
   .navbar-collapse {
     border-top: 1px solid transparent;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
   .navbar-fixed-top {
     top: 0;
     border-width: 0 0 1px;
   }
   .navbar-collapse.collapse {
-    display: none!important;
+    display: none !important;
   }
   .navbar-nav {
-    float: none!important;
+    float: none !important;
     margin-top: 7.5px;
   }
-  .navbar-nav>li {
+  .navbar-nav > li {
     float: none;
   }
-  .navbar-nav>li>a {
+  .navbar-nav > li > a {
     padding-top: 10px;
     padding-bottom: 10px;
   }
-  .collapse.in{
-    display:block !important;
+  .collapse.in {
+    display: block !important;
   }
-  #header-search-form{
+  #header-search-form {
     margin: 15px;
   }
 }
@@ -152,88 +169,93 @@ $border : 2px solid $red;
       color: $colDefault;
       margin: 30px;
       &:hover, &:focus {
-        color: $colHighlight; }}
+        color: $colHighlight;
+      }
+    }
     > .active {
       > a, > a:hover, > a:focus {
         color: $colHighlight;
-        background-color: $bgHighlight; }}}
-  .navbar-header{
+        background-color: $bgHighlight;
+      }
+    }
+  }
+  .navbar-header {
     padding: 20px;
   }
 
- .navbar-right{
+  .navbar-right {
     padding-left: 30px;
   }
-  .navbar-form{
+  .navbar-form {
     margin-left: 25px;
   }
-  #header-search-form{
+  #header-search-form {
     border: none;
     margin: 15px;
   }
 }
 
-#share-link{
-  font-size:1.2em;
-  i{
-    text-shadow:none;
+#share-link {
+  font-size: 1.2em;
+  i {
+    text-shadow: none;
   }
 }
 
-.navbar-form{
-  margin-top:2px;
+.navbar-form {
+  margin-top: 2px;
 }
 
-.logo-navbar{
+.logo-navbar {
   height: 220%;
   margin-top: -7px;
   width: auto;
 }
 
 .navbar-nav .dropdown-menu a {
-  font-size:1.2em;
+  font-size: 1.2em;
   cursor: pointer;
-  &.icon{
+  &.icon {
     &:before {
       font-family: FontAwesome;
       margin-right: 5px;
     }
   }
-  &.view{
-    &:before{
-      content:"\f06e"; /*eye*/
+  &.view {
+    &:before {
+      content: "\f06e"; /*eye*/
     }
   }
-  &.create{
-    &:before{
-      content:"\f067"; /*plus*/
+  &.create {
+    &:before {
+      content: "\f067"; /*plus*/
     }
   }
 }
 
-body.mind-map-flow{
+body.mind-map-flow {
   margin-top: 50px;
 }
 
-.divide-nav{
+.divide-nav {
   height: 50px;
   //background-color: #428bca;
 }
 
-.divide-text{
-  color:#fff;
+.divide-text {
+  color: #fff;
   line-height: 20px;
-  font-size:20px;
+  font-size: 20px;
   padding: 15px 0;
 }
 
 .affix {
   top: 50px;
-  width:100%;
+  width: 100%;
   z-index: 1000;
 }
 
-.filler{
+.filler {
   min-height: 2000px;
 }
 
@@ -241,34 +263,41 @@ body.mind-map-flow{
   padding-left: 0;
 }
 
-.navbar-collapse{
-  padding-left:0;
+.navbar-collapse {
+  padding-left: 0;
 }
 
-.navbar-lower{
-  background-color:transparent;
-  box-shadow:none;
+.navbar-lower {
+  background-color: transparent;
+  box-shadow: none;
 }
+
 $tl: 0.5s; // transition length
 
 .search-box {
-  margin-top:6px;
+  margin-top: 6px;
   transition: width $tl, border-radius $tl, background $tl, box-shadow $tl;
-  width: 40px;height: 40px;
+  width: 40px;
+  height: 40px;
   //border-radius: 20px;
   border: none;
   cursor: pointer;
   background: rgb(235, 235, 235);
-  & + label .search-icon {    color: black    }
+  & + label .search-icon {
+    color: black
+  }
   &:hover {
     color: white;
     background: rgb(200, 200, 200);
     box-shadow: 0 0 0 5px rgb(61, 71, 82);
-    & + label .search-icon {    color: white    }
+    & + label .search-icon {
+      color: white
+    }
   }
   &:focus {
-    transition: width $tl cubic-bezier(0,1,0,1), border-radius $tl, background $tl;
-    border: none;outline: none;
+    transition: width $tl cubic-bezier(0, 1, 0, 1), border-radius $tl, background $tl;
+    border: none;
+    outline: none;
     box-shadow: none;
     padding-left: 15px;
     cursor: text;
@@ -276,9 +305,14 @@ $tl: 0.5s; // transition length
     border-radius: auto;
     background: rgb(235, 235, 235);
     color: black;
-    & + label .search-icon {    color: black;    }
+    & + label .search-icon {
+      color: black;
+    }
   }
-  &:not(:focus) {    text-indent:-5000px;    } // for more-graceful falling back (:not browsers likely support indent)
+  &:not(:focus) {
+    text-indent: -5000px;
+  }
+  // for more-graceful falling back (:not browsers likely support indent)
 }
 
 .search-icon {
@@ -287,6 +321,6 @@ $tl: 0.5s; // transition length
   cursor: pointer;
 }
 
-[data-lang].current{
-  display:none;
+[data-lang].current {
+  display: none;
 }
