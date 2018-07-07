@@ -5,8 +5,6 @@
 .vertical-align { display: flex; align-items: center; }
 
 .navbar-default { border: none; border-bottom: 2px solid #c00000; background-image: none; background-color: white; }
-.navbar-default .navbar-brand { color: black; }
-.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus { background-color: transparent; color: white; }
 .navbar-default .navbar-text { color: black; }
 .navbar-default .navbar-nav { margin-right: 15px; }
 .navbar-default .navbar-nav > li > a { margin-right: 5px; text-transform: uppercase; margin-top: 3px; cursor: pointer; font-size: 1.2em; color: black; }
@@ -47,7 +45,9 @@
 
 .navbar-form { margin-top: 2px; }
 
-.logo-navbar { height: 220%; margin-top: -7px; width: auto; }
+.navbar-brand:hover .logo-navbar { background: url("/css/images/logo-horizontal-red-small.png"); }
+
+.logo-navbar { min-width: 223px; min-height: 44px; margin-top: -7px; width: auto; background: url("/css/images/logo-horizontal-black-small.png"); }
 
 .navbar-nav .dropdown-menu a { font-size: 1.2em; cursor: pointer; }
 .navbar-nav .dropdown-menu a.icon:before { font-family: FontAwesome; margin-right: 5px; }

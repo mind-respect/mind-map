@@ -17,13 +17,6 @@ $border: 2px solid $red;
   //background-color:#7281b3;
   //background-color: $bgDefault;
   //border-color: $bgHighlight;
-  .navbar-brand {
-    color: $colDefault;
-    &:hover, &:focus {
-      background-color: transparent;
-      color: $colHighlight;
-    }
-  }
   .navbar-text {
     color: $colDefault;
   }
@@ -206,10 +199,20 @@ $border: 2px solid $red;
   margin-top: 2px;
 }
 
+.navbar-brand {
+  &:hover {
+    .logo-navbar{
+      background: url('/css/images/logo-horizontal-red-small.png');
+    }
+  }
+}
+
 .logo-navbar {
-  height: 220%;
+  min-width: 223px;
+  min-height: 44px;
   margin-top: -7px;
   width: auto;
+  background: url('/css/images/logo-horizontal-black-small.png');
 }
 
 .navbar-nav .dropdown-menu a {
