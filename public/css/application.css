@@ -746,7 +746,7 @@ https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_custom_radio */
 .radio-container:hover input ~ .checkmark { background-color: #ccc; }
 
 /* When the radio button is checked, add a blue background */
-.radio-container input:checked ~ .checkmark { background-color: #2196F3; }
+.radio-container input:checked ~ .checkmark { background-color: #c00000; }
 
 /* Create the indicator (the dot/circle - hidden when not checked) */
 .checkmark:after { content: ""; position: absolute; display: none; }
@@ -762,6 +762,8 @@ https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_custom_radio */
 .form-control:focus { border: none; box-shadow: none; border-bottom: 1px solid #c00000; }
 
 .input-group-addon { border: none; background-color: transparent; }
+
+.btn-danger { background-color: #c00000; }
 
 html { font-size: 93.8%; }
 

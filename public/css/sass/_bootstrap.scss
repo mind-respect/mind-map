@@ -92,7 +92,7 @@ https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_custom_radio
 
 /* When the radio button is checked, add a blue background */
 .radio-container input:checked ~ .checkmark {
-  background-color: #2196F3;
+  background-color: $red;
 }
 
 /* Create the indicator (the dot/circle - hidden when not checked) */
@@ -140,4 +140,8 @@ https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_custom_radio
   //border-bottom: 1px solid gray;
   //border-radius: 0;
   //padding-bottom: 15px;
+}
+
+.btn-danger{
+  background-color:$red;
 }
