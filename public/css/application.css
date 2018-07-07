@@ -100,7 +100,6 @@ footer > a:hover { background-color: black !important; color: white !important; 
 #app-presentation .jumbotron h2, #app-presentation .jumbotron p { padding: 10px; color: white; font-size: 2rem; }
 #app-presentation .jumbotron p { font-size: 1.2rem; }
 #app-presentation .jumbotron button { width: auto; text-transform: capitalize; }
-#app-presentation .jumbotron .fa { font-size: 125%; margin-bottom: 10px; }
 
 #welcome-content { font-size: 18px; }
 #welcome-content .well { background-color: #d9534f; border: 1px solid #d43f3a; color: white; background-image: none; font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif; }

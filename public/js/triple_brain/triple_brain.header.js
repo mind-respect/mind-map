@@ -49,7 +49,7 @@ define([
             if (MindMapInfo.isLandingPageFlow()) {
                 getSelectButton().addClass("hidden");
             }
-            getYourCentralButtonOnPage().removeClass("hidden");
+            getYourCentralButtonOnPage().removeClass("hidden").find(".username").text(UserService.authenticatedUserInCache().user_name.toUpperCase());
         };
 
         api.commonSetupForAnonymous = function () {
