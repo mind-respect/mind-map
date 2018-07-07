@@ -133,7 +133,7 @@
     "email": "Courriel",
     "username": "Nom d'usager (nom public)",
     "password": "Mot de passe",
-    "login": "Connecter",
+    "login": "Se connecter",
     "register": "S'enregistrer",
     "about": "à propos",
     "error": "Courriel ou mot de passe invalide(s)",
@@ -193,7 +193,7 @@
       "relations": "les relations"
     },
     "connect": "Connexion",
-    "login": "connecter",
+    "login": "Se connecter",
     "register": "s'inscrire",
     "language": "Langue "
   },
