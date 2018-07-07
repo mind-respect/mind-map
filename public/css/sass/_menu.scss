@@ -242,15 +242,15 @@ button {
 }
 
 i.active {
-  color: green;
+  color: $red;
 }
 
 button.active i {
-  color: green;
+  color: $red;
 }
 
 button.inactive i {
-  color: red;
+  color: $blue;
 }
 
 .icon-flip-horizontal {

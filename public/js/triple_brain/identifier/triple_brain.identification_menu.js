@@ -376,7 +376,7 @@ define([
         IdentificationMenu.prototype._makeRemoveButton = function () {
             var container = $("<span class='pull-right'>");
             var button = $(
-                "<button class='btn remove-btn'>"
+                "<button class='btn remove-btn btn-primary'>"
             ).append(
                 "<i class='fa fa-trash-o'>"
             ).appendTo(container).click(

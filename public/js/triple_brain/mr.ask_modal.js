@@ -30,7 +30,7 @@ define([
     };
     AskModal.prototype.setupConfirmButton = function () {
         var confirmButton = $(
-            "<button type='button' class='confirm btn btn-danger' tabindex='-1'>"
+            "<button type='button' class='confirm btn btn-danger pull-left' tabindex='-1'>"
             ).append(
                 $("<i class='fa fa-trash-o'>"),
                 " ",
@@ -54,7 +54,7 @@ define([
 
     AskModal.prototype.setupClose = function () {
         var closeButton = $(
-            "<button type='button' class='cancel btn btn-success' data-i18n='vertex.menu.delete.button.cancel'>"
+            "<button type='button' class='cancel btn btn-default pull-right' data-i18n='vertex.menu.delete.button.cancel'>"
         ).appendTo(this.footer);
         closeButton.on('hidden.bs.modal', function () {
             if(!this.deferred.state()){

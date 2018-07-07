@@ -12,7 +12,7 @@
     <script>
         history.scrollRestoration = "manual"
         var requireJsConfig = <%- JSON.stringify(requireJsConfig) %>;
-        var mindRespectConfig = <%- JSON.stringify(config) %>;
+        var mindRespectConfig =<%- JSON.stringify(config) %>;
     </script>
     <link rel="icon" href="/css/images/logo_tete.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -84,14 +84,15 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="create icon" role="menuitem" id="create-concept" data-i18n="[title]centralBubbles.createInfo">
+                    <a href="#" class="create icon" role="menuitem" id="create-concept"
+                       data-i18n="[title]centralBubbles.createInfo">
                         <i class="fa fa-plus"></i>
                         <span data-i18n='top_menu.bubble'></span>
                     </a>
                     <!--<small class='text-muted short-cut'>-->
-                        <!--(-->
-                        <!--<small class="ctrl"></small>-->
-                        <!--+b)-->
+                    <!--(-->
+                    <!--<small class="ctrl"></small>-->
+                    <!--+b)-->
                     <!--</small>-->
                 </li>
                 <li class="dev-only hidden dropdown" id="schema-menu">
@@ -385,7 +386,19 @@
                     <h2 class="center-block">
                         <span data-i18n="landing.slogan"></span>
                     </h2>
+                    <div class="clear-fix"></div>
                     <p data-i18n="landing.description"></p>
+                    <button id="register-button-on-page" type="button" class="btn btn-danger hidden"
+                            style="margin-right:100px;"
+                            data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false"
+                            data-i18n="top_menu.register"
+                    ></button>
+                    <button id="login-button-on-page" type="button" class="btn btn-primary hidden"
+                            data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false"
+                            data-i18n="top_menu.login"
+                    ></button>
                     <!--<a href='http://example.com/' data-intro='Hello step one!'>lalala</a>-->
 
                     <div>
@@ -397,16 +410,6 @@
                         <!--<li><a href="#" id="login-button-in-page" data-i18n="top_menu.login"></a>-->
                         <!--</li>-->
                         <!--</ul>-->
-                        <button id="register-button-on-page" type="button" class="btn btn-primary hidden"
-                                data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false"
-                                data-i18n="top_menu.register"
-                        ></button>
-                        <button id="login-button-on-page" type="button" class="btn btn-success hidden"
-                                data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false"
-                                data-i18n="top_menu.login"
-                        ></button>
                         <a id="central-button-on-page" href="" class="hidden">
                             <button type="button" class="btn btn-danger" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false"
@@ -1215,6 +1218,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">
                     <span data-i18n="centralBubbles.confirmRemove.title"></span>
                 </h4>
@@ -1244,7 +1248,8 @@
                         <h4 class="modal-title" data-i18n="share.title"></h4>
                     </div>
                     <div class="col-md-4 text-center">
-                        <div class="text-center alert alert-success hidden" id="share-menu-copy-success" role="alert" data-i18n="share.linkCopySuccess"></div>
+                        <div class="text-center alert alert-success hidden" id="share-menu-copy-success" role="alert"
+                             data-i18n="share.linkCopySuccess"></div>
                     </div>
                     <div class="col-md-4 text-center">
                         <button id="copy-share-link" class="btn btn-default">
@@ -1298,12 +1303,19 @@
 </div>
 
 <div class="row hidden" data-flow="schemaList" id="schemas-container">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-        <h2 data-i18n="schemaList.title" class="text-center"></h2>
-        <div class="row list"></div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <h2 data-i18n="schemaList.title" class="text-center"></h2>
+                <div class="row list"></div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
     </div>
-    <div class="col-md-2"></div>
 </div>
 
 <div class="modal fade row" id="not-allowed-modal" role="dialog" aria-hidden="true">
@@ -1326,6 +1338,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">
                     <span data-i18n="vertex.menu.delete.title_prefix"></span>
                     <span class="bubble-label"></span>
@@ -1349,6 +1362,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">
                     <p>
                         <span data-i18n="meta_relation.deleteMenu.remove"></span>
@@ -1372,6 +1386,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">
                     <span data-i18n="graph_element.menu.identification.title_prefix"></span>
                     <span class="bubble-label"></span>
@@ -1398,7 +1413,7 @@
             </div>
             <div class="modal-footer">
                 <div class="col-lg-12 text-center">
-                    <button type="button" class="cancel btn btn-success"
+                    <button type="button" class="cancel btn btn-default pull-right"
                             data-i18n="modal.close"></button>
                 </div>
             </div>
@@ -1411,6 +1426,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">
                     <span data-i18n="vertex.menu.image.title"></span>
                     <span data-i18n="vertex.menu.image.title_prefix"></span>
@@ -1439,7 +1455,7 @@
             </div>
             <div class="modal-footer">
                 <div class="col-lg-12 text-center">
-                    <button type="button" class="cancel btn btn-success"
+                    <button type="button" class="cancel btn btn-default pull-right"
                             data-i18n="modal.close"></button>
                 </div>
             </div>
@@ -1451,6 +1467,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title" data-i18n="non_existent.title"></h4>
             </div>
             <div class="modal-body">
@@ -1510,9 +1527,9 @@
             </div>
             <div class="modal-footer">
                 <div class="col-lg-12 text-center">
-                    <button type="button" class="login-button btn btn-success pull-left"
+                    <button type="button" class="login-button btn btn-danger pull-left"
                             data-i18n="login.login"></button>
-                    <button type="button" class="cancel btn btn-danger pull-right"
+                    <button type="button" class="cancel btn btn-default pull-right"
                             data-i18n="cancel"></button>
                 </div>
             </div>
@@ -1568,7 +1585,7 @@
                 <div class="col-lg-12">
                     <button id="forgot-password-submit" type="button" class="btn btn-primary pull-left"
                             data-i18n="change_password.submit"></button>
-                    <button type="button" class="cancel btn btn-danger pull-right"
+                    <button type="button" class="cancel btn btn-default pull-right"
                             data-i18n="cancel"></button>
                 </div>
             </div>
@@ -1608,9 +1625,9 @@
             </div>
             <div class="modal-footer">
                 <div class="col-lg-12 text-center">
-                    <button type="button" class="forgot-password-button btn btn-primary pull-left"
+                    <button type="button" class="forgot-password-button btn btn-danger pull-left"
                             data-i18n="forgotPassword.button"></button>
-                    <button type="button" class="cancel btn btn-danger pull-right"
+                    <button type="button" class="cancel btn btn-default pull-right"
                             data-i18n="cancel"></button>
                 </div>
             </div>
@@ -1714,9 +1731,9 @@
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <button type="button" class="register-link btn btn-success pull-left"
+                        <button type="button" class="register-link btn btn-danger pull-left"
                                 data-i18n="login.register"></button>
-                        <button type="button" class="cancel btn btn-danger pull-right"
+                        <button type="button" class="cancel btn btn-default pull-right"
                                 data-i18n="cancel"></button>
                     </div>
                 </div>
@@ -1892,9 +1909,9 @@
             </div>
             <div class="modal-footer">
                 <div class="col-lg-12 text-center">
-                    <button type="button" class="save btn btn-success"
+                    <button type="button" class="save btn btn-danger pull-left"
                             data-i18n="vertex.menu.note.update"></button>
-                    <button type="button" class="cancel btn btn-danger"
+                    <button type="button" class="cancel btn btn-default pull-right"
                             data-i18n="vertex.menu.note.cancel"></button>
 
                 </div>
@@ -1906,6 +1923,9 @@
      aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12 text-center">
@@ -1920,6 +1940,9 @@
      aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12 text-center">

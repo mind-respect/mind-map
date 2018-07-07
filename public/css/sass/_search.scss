@@ -126,6 +126,7 @@ $zIndex:2000;
 .search-box{
   background:none;
   border: 2px solid black;
+  border-radius:25px;
   &:hover{
     background:none;
     border: 1px solid #ebebeb;
@@ -140,7 +141,4 @@ $zIndex:2000;
 
 .ui-helper-hidden-accessible{
   display:none !important;
-}
-#vertex-search-input{
-  border-radius:25px;
 }
