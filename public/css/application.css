@@ -21,7 +21,7 @@
 .navbar-default .navbar-link:hover { color: white; }
 .navbar-default a:hover { background-color: rgba(254, 254, 254, 0.8); border-radius: 10px 10px 10px 10px; color: black; text-decoration: none; }
 .navbar-default .dropdown-menu { border: none !important; border-radius: 10px 10px; border-radius-top-left: 10px !important; background-color: rgba(254, 254, 254, 0.7); left: inherit !important; margin-top: 3px !important; margin-right: 4px !important; left: inherit !important; }
-.navbar-default .dropdown-menu a:hover { background-color: black !important; color: white !important; }
+.navbar-default .dropdown-menu a:hover { background-color: #c00000; color: white !important; }
 .navbar-default .dropdown-menu ul.color-picker { list-style: none !important; }
 
 @media (max-width: 992px) { .navbar-header { float: none; padding: 20px; }
@@ -298,8 +298,8 @@ footer > a:hover { background-color: black !important; color: white !important; 
 .distinguish-vertex .distinguish-vertex-item:last-of-type:after { content: " ..."; }
 
 .search-box { background: none; border: 2px solid black; }
-.search-box:hover { background: none; border: 1px solid #ebebeb; }
-.search-box:focus { background: none; border: 1px solid #ebebeb; }
+.search-box:hover { background: none; border: 1px solid #ebebeb; box-shadow: 0 0 0 5px #c00000; }
+.search-box:focus { background: none; border: 1px solid #c00000; box-shadow: none; }
 
 .ui-helper-hidden-accessible { display: none !important; }
 
@@ -661,7 +661,7 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 #word-cloud table, #word-cloud table * { cursor: pointer; }
 #word-cloud .last-visit { width: 10%; white-space: normal; }
 #word-cloud .bubble-label, #word-cloud .context { text-overflow: ellipsis; }
-#word-cloud .bubble-label { width: 30%; white-space: normal; }
+#word-cloud .bubble-label { width: 30%; white-space: normal; border-left: 1px solid #c00000; }
 #word-cloud .context { width: 60%; }
 #word-cloud .context a.empty:before { content: "..."; color: black; }
 #word-cloud .select-checkbox { text-align: center; }
@@ -682,6 +682,8 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 #word-cloud .typeFilters ul { display: inline-block; }
 
 @media (max-width: 992px) { #connected-home-flow-content { margin-top: 7%; } }
+table.red-border { border: 1px solid #c00000 !important; }
+
 /* Copyright Vincent Blouin under the GPL License version 3 */
 #schemas-container { margin-top: 5%; }
 #schemas-container li { font-size: 1.75em; }
@@ -754,6 +756,12 @@ https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_custom_radio */
 
 /* Style the indicator (dot/circle) */
 .radio-container .checkmark:after { top: 9px; left: 9px; width: 8px; height: 8px; border-radius: 50%; background: white; }
+
+.form-control { border: none; box-shadow: none; border-radius: 0; border-bottom: 1px solid gray; }
+.form-control:hover { border-bottom: 1px solid black; }
+.form-control:focus { border: none; box-shadow: none; border-bottom: 1px solid #c00000; }
+
+.input-group-addon { border: none; background-color: transparent; }
 
 html { font-size: 93.8%; }
 

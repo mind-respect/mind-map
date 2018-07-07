@@ -20,6 +20,7 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.min.css"/>
     <link rel="stylesheet" href="/js/vendor/node_modules/ekko-lightbox/dist/ekko-lightbox.css"/>
     <link rel="stylesheet" href="/css/twitter_bootstrap/bootstrap-modal-carousel.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
     <link rel="stylesheet" href="/css/jquery/colorbox/colorbox.css"/>
     <link rel="stylesheet" href="https://cdn.bootcss.com/intro.js/2.8.0-alpha.1/introjs.min.css"/>
     <link rel="stylesheet" href="/css/application.css"/>
@@ -28,7 +29,6 @@
     <link rel="stylesheet" href="/css/timeline.css"/>
     <!--Modules-->
     <link rel="stylesheet" href="/js/module/date_picker/date-picker.css"/>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
     <!-- Latest compiled and minified CSS -->
 
     <script src="/js/vendor/node_modules/requirejs/require.js"></script>
@@ -78,7 +78,10 @@
                     <a href="#" id="register-button" data-i18n="top_menu.register"></a>
                 </li>
                 <li>
-                    <a href="/" id="all-your-bubbles-button"></a>
+                    <a href="/" id="all-your-bubbles-button">
+                        <i class="fa fa-home"></i>
+                        <span class="username"></span>
+                    </a>
                 </li>
                 <li>
                     <a href="#" class="create icon" role="menuitem" id="create-concept" data-i18n="[title]centralBubbles.createInfo">
@@ -1175,7 +1178,7 @@
                         <i class="fa fa-trash"></i>
                     </button>
                 </div>
-                <table class="table-responsive" id="word-cloud-table"></table>
+                <table class="table-responsive red-border" id="word-cloud-table"></table>
             </div>
             <div id="friends-subflow" class="hidden subflow">
                 <div class="row" style="margin-top:10px;">

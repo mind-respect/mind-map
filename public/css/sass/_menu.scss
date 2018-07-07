@@ -73,11 +73,11 @@
 .in-label-buttons {
   button.graph-element-button {
     &:hover:not(.disabled) {
-      color: $red2;
+      color: $red-dark;
     }
     i {
       font-size: 0.85em;
-      color: $red3;
+      color: $red-light;
     }
     &.visit-other-instances {
       margin-right: 5px !important;
@@ -283,7 +283,7 @@ button.inactive i {
 
 .popover-content {
   span.badge.primary {
-    background-color: $red2;
+    background-color: $red-dark;
   }
   ul {
     list-style: none;

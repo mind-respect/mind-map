@@ -42,7 +42,7 @@ define([
             handleDisconnectButton();
             getLoginButton().addClass("hidden");
             getRegisterButton().addClass("hidden");
-            getAllYourBubblesButton().text(UserService.authenticatedUserInCache().user_name);
+            getAllYourBubblesButton().find(".username").text(UserService.authenticatedUserInCache().user_name);
             handleYourCentralButtons();
             getCreateBubbleButton().removeClass("hidden");
             getCreateSchemaButton().removeClass("hidden");

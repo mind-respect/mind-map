@@ -129,10 +129,12 @@ $zIndex:2000;
   &:hover{
     background:none;
     border: 1px solid #ebebeb;
+    box-shadow: 0 0 0 5px $red;
   }
   &:focus{
     background:none;
-    border: 1px solid #ebebeb;
+    border: 1px solid $red;
+    box-shadow: none;
   }
 }
 

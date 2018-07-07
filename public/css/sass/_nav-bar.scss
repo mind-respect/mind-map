@@ -112,7 +112,7 @@ $border: 2px solid $red;
     left: inherit !important;
     a {
       &:hover {
-        background-color: black !important;
+        background-color: $red;
         color: white !important;
       }
     }

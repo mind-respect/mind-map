@@ -2,16 +2,16 @@
  * Copyright Vincent Blouin under the GPL License version 3
  */
 
-form.well{
-  margin-bottom:0;
-  padding-bottom:0;
+form.well {
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 .nav-tabs {
-  a{
+  a {
     font-size: 16px;
-    color:black;
-    font-weight:bold;
+    color: black;
+    font-weight: bold;
   }
   //li.active {
   //  a{
@@ -19,30 +19,32 @@ form.well{
   //    background-color: $red !important;
   //  }
   //}
-  li:hover{
-    a{
-      border-width:1px !important;
+  li:hover {
+    a {
+      border-width: 1px !important;
       border-color: $red;
     }
   }
   li:not(.active):hover {
-    a{
+    a {
       color: white !important;
       background-color: $red !important;
     }
   }
 }
 
-.nav-tabs>.active>a, .nav-tabs>.active>a:hover, .nav-tabs>.active>a:focus {
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover, .nav-tabs > .active > a:focus {
   border-color: $red !important;
-  border-width:1px !important;;
+  border-width: 1px !important;;
   border-bottom-color: transparent !important;
 }
-.nav-tabs> li > a {
-  border-width:1px !important;
+
+.nav-tabs > li > a {
+  border-width: 1px !important;
   //border-bottom: 1px solid $red !important;
 }
-.nav-tabs{
+
+.nav-tabs {
   border-bottom: 1px solid $red;
 }
 
@@ -113,4 +115,29 @@ https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_custom_radio
   height: 8px;
   border-radius: 50%;
   background: white;
+}
+
+.form-control {
+  //border-color: $red;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  border-bottom: 1px solid gray;
+  &:hover {
+    border-bottom: 1px solid black;
+  }
+  &:focus {
+    border: none;
+    //box-shadow: inset 0 1px 1px $red-light, 0 0 8px #a94442;
+    box-shadow: none;
+    border-bottom: 1px solid $red;
+  }
+}
+
+.input-group-addon {
+  border: none;
+  background-color: transparent;
+  //border-bottom: 1px solid gray;
+  //border-radius: 0;
+  //padding-bottom: 15px;
 }
