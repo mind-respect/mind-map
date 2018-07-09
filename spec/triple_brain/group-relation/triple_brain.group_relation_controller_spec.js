@@ -6,7 +6,7 @@ define([
     'test/test-scenarios',
     'test/test-utils',
     'test/mock',
-    "test/mock/triple_brain.graph_service_mock",
+    "test/mock/triple_brain.graph_service_mock"
 ], function (Scenarios, TestUtils, Mock, GraphServiceMock) {
     "use strict";
     describe("group_relation_controller", function () {
@@ -20,7 +20,7 @@ define([
                 possessionInTree.getController().identifyCanDo()
             ).toBeTruthy();
         });
-        describe("addChild", function(){
+        describe("addChild", function () {
             it("gives all it's identifiers to the new relation when adding a child", function () {
                 var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
                 var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
@@ -68,6 +68,18 @@ define([
                         possessionInTree.getModel().getVertices()
                     ).length
                 ).toBe(nbVerticesBefore + 1);
+            });
+            it("adds new child at the bottom of the others when not expanded", function () {
+                var scenario = new Scenarios.GraphWithSimilarRelationsScenario();
+                var possessionInTree = scenario.getPossessionAsGroupRelationInTree();
+                expect(
+                    possessionInTree.hasVisibleHiddenRelationsContainer()
+                ).toBeTruthy();
+                var newChildVertex;
+                possessionInTree.getController().addChild().then(function (triple) {
+                    newChildVertex = triple.destinationVertex();
+                });
+                expect(newChildVertex.getIndexInTree()).toBe(5);
             });
         });
 

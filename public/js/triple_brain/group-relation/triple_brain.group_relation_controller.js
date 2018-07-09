@@ -41,15 +41,15 @@ define([
         GroupRelationController.prototype.addChild = function (edgeOver) {
             var parentVertex = this.getUi().getParentVertex();
             var triple;
+            if (this.getUi().hasVisibleHiddenRelationsContainer()) {
+                this.expand();
+            }
             return VertexService.addRelationAndVertexToVertex(
                 parentVertex,
                 this.getUi(),
                 edgeOver
             ).then(function (_triple) {
                 triple = _triple;
-                if (this.getUi().hasVisibleHiddenRelationsContainer()) {
-                    this.expand();
-                }
                 this.getModel().addTuple({
                     edge: triple.edge().getModel(),
                     vertex: triple.destinationVertex().getModel()
