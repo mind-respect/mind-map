@@ -54,7 +54,7 @@ define([
                 window.location = IdUri.htmlUrlForBubbleUri(serverFormatFacade.getUri());
                 return;
             }
-            GraphDisplayer.displayUsingCentralBubbleUri(
+            return GraphDisplayer.displayUsingCentralBubbleUri(
                 serverFormatFacade.getUri()
             );
         });

@@ -355,6 +355,8 @@
   "hidden_properties_tooltip": "Expandre (ctrl+E)",
   "hidden_properties_tooltip_forMac": "Expandre (⌘+E)",
   "search": {
+    "no_result": "Pas de résultats.",
+    "no_result_create": "Créer la bulle",
     "big": {
       "placeholder": "Chercher des bulles"
     },

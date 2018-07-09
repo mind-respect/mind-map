@@ -10,20 +10,20 @@ define([
 ], function ($, UserMapAutocompleteProvider, IdUri) {
     "use strict";
     var api = {};
-    api.setup = function(){
+    api.setup = function () {
         getInput().mrAutocomplete({
-            select : function(event, ui){
-                var uri = ui.item.uri;
-                window.location = IdUri.htmlUrlForBubbleUri(uri);
+            select: function (event, ui) {
+                window.location = IdUri.htmlUrlForBubbleUri(ui.item.uri);
             },
-            resultsProviders : [
+            resultsProviders: [
                 UserMapAutocompleteProvider.toFetchPublicResources()
             ]
         });
 
     };
     return api;
-    function getInput(){
+
+    function getInput() {
         return $("#landing-page-search");
     }
 });

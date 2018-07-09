@@ -356,6 +356,8 @@
   "hidden_properties_tooltip": "Expand (ctrl+E)",
   "hidden_properties_tooltip_forMac": "Expand (⌘+E)",
   "search": {
+    "no_result": "No results",
+    "no_result_create": "Create bubble",
     "big": {
       "placeholder": "Search bubbles"
     },

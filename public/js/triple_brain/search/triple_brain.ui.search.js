@@ -8,9 +8,10 @@ define([
         "triple_brain.graph_displayer",
         "triple_brain.user_map_autocomplete_provider",
         "triple_brain.event_bus",
-        "triple_brain.mind_map_info"
+        "triple_brain.mind_map_info",
+        "triple_brain.graph_element_ui"
     ],
-    function ($, IdUri, GraphDisplayer, UserMapAutocompleteProvider, EventBus, MindMapInfo) {
+    function ($, IdUri, GraphDisplayer, UserMapAutocompleteProvider, EventBus, MindMapInfo, GraphElementUi) {
         "use strict";
         EventBus.subscribe('/event/ui/mind_map_info/is_view_only', function () {
             if (MindMapInfo.isAnonymous()) {
@@ -25,9 +26,16 @@ define([
         function init() {
             getInput().empty().mrAutocomplete({
                 select: function (event, ui) {
-                    var elementUri = ui.item.uri;
+                    if (ui.item.uri === "create") {
+                        event.preventDefault();
+                        return GraphDisplayer.getAppController().createVertex().then(function () {
+                            GraphElementUi.getCenterVertexOrSchema().getController().setLabel(
+                                ui.item.searchTerm
+                            );
+                        });
+                    }
                     window.location = IdUri.htmlUrlForBubbleUri(
-                        elementUri
+                        ui.item.uri
                     );
                 },
                 resultsProviders: [

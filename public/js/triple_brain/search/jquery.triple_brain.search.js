@@ -8,7 +8,8 @@ define([
     "triple_brain.event_bus",
     "triple_brain.id_uri",
     "triple_brain.bubble_factory",
-    "jquery-ui"
+    "jquery-ui",
+    "jquery.i18next"
 ], function ($, GraphUi, EventBus, IdUri, BubbleFactory) {
     "use strict";
     var enterKeyCode = 13,
@@ -20,19 +21,19 @@ define([
     $.fn.mrAutocomplete = function (options) {
         var textInput = $(this);
         textInput.data("mrAutocomplete", true);
-        textInput.on("keydown", function(event) {
+        textInput.on("keydown", function (event) {
             var input = $(this);
             if (!input.is(":focus")) {
                 return;
             }
-            if(input.is("textarea") || input.is("[contenteditable]")){
+            if (input.is("textarea") || input.is("[contenteditable]")) {
                 /*
                  unfortunately we need to disable traversing autocomplete
                  suggestions with up and down arrow keys when using textarea or contenteditable
                  because otherwise we can't use up and down keys to change the line
                  of the caret position.
                  */
-                if([downArrowKeyCode, upArrowKeyCode].indexOf(event.which) !== -1){
+                if ([downArrowKeyCode, upArrowKeyCode].indexOf(event.which) !== -1) {
                     event.stopImmediatePropagation();
                 }
                 /*
@@ -75,6 +76,7 @@ define([
             }
         });
         return this;
+
         function getAutocompleteOptions() {
             return {
                 source: function (request, response) {
@@ -97,8 +99,17 @@ define([
                     $.when.apply(
                         $, providerPromises
                     ).then(function () {
+                        if (!searchResults.length) {
+                            searchResults.push({
+                                label: $.t("search.no_result"),
+                                somethingToDistinguish: $.t("search.no_result_create") + " \"" + searchTerm + "\"",
+                                uri: "create",
+                                searchTerm: searchTerm
+                            });
+                        }
                         response(searchResults);
                     });
+
                     function getResultsOfProvider(provider) {
                         return provider.getFetchMethod(
                             searchTerm
@@ -136,10 +147,22 @@ define([
 
         function renderItemCustom(ul, item) {
             var icon;
-            if(IdUri.isVertexUri(item.uri)){icon = "fa-circle-o";}
-            else if (IdUri.isMetaUri(item.uri)){icon = "fa-tag";}
-            else if (IdUri.isEdgeUri(item.uri)){icon = "fa-arrows-h";}
-            else {icon = "fa-wikipedia-w";}
+            var isNoResultsFlow = item.uri === "create";
+            if (isNoResultsFlow) {
+                icon = "fa-plus";
+            }
+            else if (IdUri.isVertexUri(item.uri)) {
+                icon = "fa-circle-o";
+            }
+            else if (IdUri.isMetaUri(item.uri)) {
+                icon = "fa-tag";
+            }
+            else if (IdUri.isEdgeUri(item.uri)) {
+                icon = "fa-arrows-h";
+            }
+            else {
+                icon = "fa-wikipedia-w";
+            }
 
             var listElement = $("<li class='list-group-item autocomplete-element'>").append(
                 $("<i class='fa pull-right'>").addClass(icon),
@@ -147,20 +170,22 @@ define([
                 $("<p class='list-group-item-text'>").append(item.somethingToDistinguish)
             ).uniqueId();
             listElement.data("searchResult", item);
-            listElement.popover({
-                animation:false,
-                html: true,
-                placement:'auto left',
-                container:'body',
-                trigger: "manual",
-                content: function () {
-                    return buildDescriptionPanelHtml(
-                        api.getCachedDetailsOfSearchResult(
-                            $(this).data("searchResult")
-                        )
-                    );
-                }
-            });
+            if (!isNoResultsFlow) {
+                listElement.popover({
+                    animation: false,
+                    html: true,
+                    placement: 'auto left',
+                    container: 'body',
+                    trigger: "manual",
+                    content: function () {
+                        return buildDescriptionPanelHtml(
+                            api.getCachedDetailsOfSearchResult(
+                                $(this).data("searchResult")
+                            )
+                        );
+                    }
+                });
+            }
             return listElement.appendTo(ul);
         }
     };
@@ -168,7 +193,10 @@ define([
         return $(this).data("mrAutocomplete") === true;
     };
     api._onFocusAction = function (searchResult, listElement) {
-        $('.autocomplete-element:not(#'+listElement.prop("id") +')').popover('hide');
+        if (searchResult.uri === "create") {
+            return;
+        }
+        $('.autocomplete-element:not(#' + listElement.prop("id") + ')').popover('hide');
         var getMoreInfoPromise = api.hasCachedDetailsForSearchResult(searchResult) ?
             $.Deferred().resolve(api.getCachedDetailsOfSearchResult(searchResult)) :
             searchResult.provider.getMoreInfoForSearchResult(searchResult);
@@ -189,6 +217,7 @@ define([
     });
 
     return api;
+
     function removeSearchFlyout() {
         $('.autocomplete-element').popover('hide');
     }
