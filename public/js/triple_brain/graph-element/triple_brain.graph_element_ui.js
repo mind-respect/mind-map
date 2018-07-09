@@ -371,6 +371,10 @@ define([
     };
 
     api.GraphElementUi.prototype.reviewMenuButtonsVisibility = function () {
+        GraphElementMainMenu.reviewOutOfBubbleButtonsDisplay(
+            [this],
+            this.getController()
+        );
         this.visitMenuButtons(function (button) {
             button.showOnlyIfApplicable(
                 this.getController(),
