@@ -41,7 +41,7 @@ define([
                 );
             },
             resultsProviders: [
-                UserMapAutocompleteProvider.toFetchPublicAndUserVerticesExcept(
+                UserMapAutocompleteProvider.toFetchOnlyCurrentUserVerticesAndSchemas(
                     vertex,
                     {
                         noFilter: true
