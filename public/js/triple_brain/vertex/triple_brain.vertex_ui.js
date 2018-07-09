@@ -193,7 +193,7 @@ define([
         };
 
         api.VertexUi.prototype.textHtml = function () {
-            return this.getLabel();
+            return this.getLabel().getHtml();
         };
 
         api.VertexUi.prototype.removeConnectedEdges = function () {
