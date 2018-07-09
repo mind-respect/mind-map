@@ -455,7 +455,7 @@ define([
             GraphElementUi.GraphElementUi.prototype.makeSingleSelected.call(
                 this
             );
-            this.html.find(".in-bubble-content").css(
+            this.html.find(".in-bubble-content, .menu").css(
                 "background-color",
                 GraphUi.getSelectedBubbleBackgroundColor()
             );
