@@ -99,7 +99,7 @@ define([
                     $.when.apply(
                         $, providerPromises
                     ).then(function () {
-                        if (!searchResults.length) {
+                        if (options.createBubbleIfNoResults && !searchResults.length) {
                             searchResults.push({
                                 label: $.t("search.no_result"),
                                 somethingToDistinguish: $.t("search.no_result_create") + " \"" + searchTerm + "\"",

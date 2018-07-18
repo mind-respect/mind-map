@@ -85,6 +85,7 @@
   }
   white-space: nowrap;
   .bubble-label {
+    text-align: center;
     color: black;
     &:empty:not(:focus) {
       color: grey;

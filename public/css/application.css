@@ -513,7 +513,7 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .bubble .in-bubble-content .in-label-buttons button[data-action=makePrivate] i:before { content: "\f09c"; }
 .bubble.edit { user-select: text; cursor: text; }
 .bubble.edit .bubble-label:after { content: ""; }
-.bubble .bubble-label { color: black; outline: 0 solid transparent; border: none; font-size: 14px; width: auto; display: table-cell; white-space: pre; }
+.bubble .bubble-label { text-align: center; color: black; outline: 0 solid transparent; border: none; font-size: 14px; width: auto; display: table-cell; white-space: pre; }
 .bubble .bubble-label:empty:not(:focus) { color: grey; max-width: 100%; transition: all 0.3s; }
 .bubble .bubble-label:empty:not(:focus):after { content: attr(data-placeholder); font-style: italic; font-size: calc(1em); }
 .bubble .bubble-label del { text-decoration: none; }

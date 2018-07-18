@@ -25,6 +25,7 @@ define([
 
         function init() {
             getInput().empty().mrAutocomplete({
+                createBubbleIfNoResults:true,
                 select: function (event, ui) {
                     if (ui.item.uri === "create") {
                         event.preventDefault();
