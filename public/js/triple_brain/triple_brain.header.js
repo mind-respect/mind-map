@@ -220,9 +220,7 @@ define([
         }
 
         function setupLanguagePicker() {
-            getLanguagePickerContainer().find(
-                "[data-lang=" + LanguageManager.getBrowserLocale() + "]"
-            ).addClass("current");
+            $("[data-lang=" + LanguageManager.getBrowserLocale() + "]").addClass("current");
             getLanguagePickerContainer().find("a").click(function (event) {
                 event.preventDefault();
                 LanguageManager.changeLanguage(
