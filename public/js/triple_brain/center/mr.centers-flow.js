@@ -65,9 +65,15 @@ define([
         centerGraphElements.sort(function (a, b) {
             var aDate = a.getLastCenterDate().getTime();
             var bDate = b.getLastCenterDate().getTime();
-            if (aDate < bDate) return 1;
-            else if (aDate > bDate) return -1;
-            else return 0;
+            if (aDate < bDate) {
+                return 1;
+            }
+            else if (aDate > bDate) {
+                return -1;
+            }
+            else {
+                return 0;
+            }
         }).forEach(function (center) {
             var mapColor = center.getColors().background || DEFAULT_BACKGROUND_COLOR;
             var backgroundColor = Color.getBackgroundColorForColor(mapColor);
@@ -428,7 +434,7 @@ define([
             } else {
                 $(this).addClass("hidden");
             }
-        })
+        });
         table.bootstrapTable('filterBy', {
             "graphElementType": typesToFilter
         });
@@ -489,7 +495,7 @@ define([
         $("#centers-to-list").off(enterTableFlow).click(enterTableFlow);
         $("#centers-search-filter").on("keyup", function () {
             var searchValue = $(this).val();
-            $(".fixed-table-toolbar .search input").val(searchValue).keyup()
+            $(".fixed-table-toolbar .search input").val(searchValue).keyup();
             $connectedHomeContainer.find(".center-card-container").each(function () {
                 var center = $(this).data("center");
                 var inLabel = center.getLabel().toLowerCase().indexOf(searchValue.toLowerCase()) > -1;
@@ -499,7 +505,7 @@ define([
                 } else {
                     $(this).addClass("hidden");
                 }
-            })
+            });
         });
     }
 
@@ -546,7 +552,7 @@ define([
                 if (containerCenterUri === centerUri) {
                     $centerContainer.remove();
                 }
-            })
+            });
         });
     }
 });
