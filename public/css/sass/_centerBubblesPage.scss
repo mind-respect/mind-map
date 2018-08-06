@@ -3,6 +3,9 @@
  */
 
 #connected-home-flow {
+  .fixed-table-toolbar {
+    margin-bottom: 36px;
+  }
   .background {
     position: absolute;
     background-image: linear-gradient(
@@ -22,9 +25,13 @@ $tagCloudFontSize: 0.6em;
   padding: 1em;
 }
 
+#remove-center-btn {
+  margin-top: 10px;
+}
+
 #word-cloud {
   text-align: left;
-  button.remove, button.create {
+  button.create {
     margin-top: 10px;
   }
 
@@ -93,8 +100,10 @@ $tagCloudFontSize: 0.6em;
       }
     }
     &.context {
-      .grid {
-        .grid-item {
+      .around-list {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        .around-list-item {
           float: left;
           max-width: 50%; // 200% / 4 items (2 lines / 4 items) but reserve some extra space for padding etc
           overflow: hidden;
@@ -109,8 +118,6 @@ $tagCloudFontSize: 0.6em;
             }
           }
         }
-        overflow: hidden;
-        text-overflow: ellipsis;
       }
     }
 
@@ -165,6 +172,16 @@ table.red-border {
   border: 1px solid $red !important;
 }
 
+.card.red-border {
+  box-shadow: 0 1px 3px 0 $red-light, 0 0 0 1px $red-dark;
+  &:hover {
+    box-shadow: 0 3px 9px 0 $red-light, 0 0 0 1px $red-dark;
+  }
+  .card-block {
+    //border-top-color: $red-light;
+  }
+}
+
 //table.red-border > tbody > tr > td:first-child, .red-border > tbody > tr > th, .red-border > tfoot > tr > td, .red-border > tfoot > tr > th, .red-border > thead > tr > td, .red-border > thead > tr > th {
 //    border-left: 1px solid $red-dark !important;
 //}
@@ -196,3 +213,57 @@ table.red-border {
 //.fixed-table-container tbody td {
 //  border-left-color:$red-light
 //}
+
+#centers-search-filter {
+  margin-top: 9px;
+}
+
+#grid-flow-container {
+  $fontSize: 15px;
+  .card {
+    font-size: $fontSize;
+    .title {
+      font-size: $fontSize;
+    }
+    margin-top: 15px;
+    margin-right: 20px;
+  }
+  .card-block {
+    //background-color: hsl(197, 71%, 96%);
+  }
+  .around-list {
+    //  text-align: center;
+    //  color: dimgrey;
+    .around-list-item {
+      text-align: center;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow-x: hidden;
+      display:block;
+      //margin-right: 10px;
+      //&:after {
+      //  content: " ● ";
+      //  font-size: 12px;
+      //}
+      //&:last-of-type {
+      //  &:after {
+      //    content: " ..."
+      //  }
+      //}
+    }
+    &.empty {
+      text-align: center;
+      &:before {
+        content: "...";
+      }
+    }
+  }
+  .card-footer {
+    background-color: transparent;
+  }
+}
+
+.center-card-container {
+  padding-left: 0;
+  padding-right: 0;
+}

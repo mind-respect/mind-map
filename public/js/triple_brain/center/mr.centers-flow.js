@@ -13,10 +13,12 @@ define([
     "triple_brain.user_service",
     "triple_brain.graph_element_type",
     "moment",
+    "mr.color",
     "bootstrap-table",
     "jquery.i18next"
-], function ($, IdUri, AskModal, CenterGraphElementService, CenterGraphElement, EventBus, AppController, UserService, GraphElementType, Moment) {
+], function ($, IdUri, AskModal, CenterGraphElementService, CenterGraphElement, EventBus, AppController, UserService, GraphElementType, Moment, Color) {
     "use strict";
+    var DEFAULT_BACKGROUND_COLOR = "#1E87AF";
     var _elements,
         _container,
         _isOwner,
@@ -24,9 +26,11 @@ define([
         checkedCenters = [],
         table = $('#word-cloud-table');
     var api = {};
-    api.enter = function(isOwner){
+    var $connectedHomeContainer = getConnectedHomeContainer();
+    api.enter = function (isOwner) {
         _isOwner = isOwner;
         getWordsContainer().removeClass("hidden");
+        setupDisplays();
         if (isOwner) {
             return CenterGraphElementService.getPublicAndPrivate().then(api.setupCenterGraphElements);
         } else {
@@ -35,7 +39,7 @@ define([
             ).then(api.setupCenterGraphElements);
         }
     };
-    api.setupCenterGraphElements = function(centers){
+    api.setupCenterGraphElements = function (centers) {
         var centerGraphElements = CenterGraphElement.fromServerFormat(centers);
         if (centerGraphElements.length === 0 && _isOwner) {
             UserService.getDefaultVertexUri(UserService.authenticatedUserInCache().user_name, function (uri) {
@@ -51,6 +55,83 @@ define([
             centerGraphElements,
             getWordsContainer()
         );
+        api.buildCenterElementsInGrid(
+            centerGraphElements
+        );
+        enterGridFlow();
+    };
+    api.buildCenterElementsInGrid = function (centerGraphElements) {
+        var container = $("#grid-flow-container").find(".row");
+        centerGraphElements.sort(function (a, b) {
+            var aDate = a.getLastCenterDate().getTime();
+            var bDate = b.getLastCenterDate().getTime();
+            if (aDate < bDate) return 1;
+            else if (aDate > bDate) return -1;
+            else return 0;
+        }).forEach(function (center) {
+            var mapColor = center.getColors().background || DEFAULT_BACKGROUND_COLOR;
+            var backgroundColor = Color.getBackgroundColorForColor(mapColor);
+            container.append(
+                $('<div class="col-sm-6 col-md-4 col-lg-2 mt-4 center-card-container">').data(
+                    "center", center
+                ).append(
+                    $("<div class='card red-border'>").append(
+                        buildAnchorForElement(center).append(
+                            $('<div class="card-text text-center">').append(
+                                $("<i class='pull-left fa' style='margin-left:10px;'>").addClass(
+                                    getIconClassFromElementUri(center.getUri())
+                                ),
+                                $('<h5 class="title text-bold" style="margin-right:10px;">').text(
+                                    center.getLabel()
+                                )
+                            ),
+                            $("<div class='card-block card-text'>").append(
+                                getContextCellContentForElement(center, true)
+                            ).css(
+                                "background-color", backgroundColor
+                            )
+                        ),
+                        $('<div class="card-footer v-center">').append(
+                            new Moment(center.getLastCenterDate()).fromNow(),
+                            $('<div class="spacer">'),
+                            // $('<i class="fa fa-ellipsis-v icon-btn">'),
+                            $('<a href="#">').append(
+                                $('<i class="fa fa-trash" style="color: rgba(0, 0, 0, 0.4);">')
+                            ).click(function (event) {
+                                event.preventDefault();
+                                var container = $(this).closest('.center-card-container');
+                                var centers = [
+                                    container.data("center")
+                                ];
+                                var centersUri = centers.map(function (center) {
+                                    return center.getUri();
+                                });
+                                askToRemoveCenters(centers).then(function () {
+                                    removeUrisFromUi(centersUri);
+                                    return CenterGraphElementService.removeCentersWithUri(
+                                        centersUri
+                                    );
+                                });
+                            })
+                            // $('<button type="button" class="owner-only remove remove-center-btn btn btn-primary pull-right small" data-i18n="[title]centralBubbles.removeInfo">').append(
+                            //     $('<i class="fa fa-trash">')
+                            // )
+                        )
+                    )
+                )
+            )
+            ;
+            // tableData.push({
+            //     uri: element.getUri(),
+            //     centerElement: element,
+            //     bubbleLabel: getLabelCellContentForElement(element),
+            //     bubbleLabelValue: element.getLabel(),
+            //     graphElementType: IdUri.getGraphElementTypeFromUri(element.getUri()),
+            //     context: getContextCellContentForElement(element),
+            //     lastVisit: getLastVisitCellContentForElement(element),
+            //     lastVisitValue: element.getLastCenterDate().getTime()
+            // });
+        });
     };
     api.buildFromElementsInContainer = function (elements, container) {
         _elements = elements;
@@ -84,7 +165,6 @@ define([
     return api;
 
 
-
     function buildHtml() {
         tableData = [];
         _elements.forEach(function (element) {
@@ -106,11 +186,9 @@ define([
             sortOrder: "desc",
             searchAlign: 'left',
             onPostHeader: function () {
-                $(".fixed-table-toolbar .search input").attr(
-                    "placeholder",
-                    $.t("centralBubbles.filter")
+                $(".fixed-table-toolbar .search input").addClass(
+                    "hidden"
                 );
-                _container.find("input[type=checkbox]").addClass("form-control");
             },
             onCheckAll: function (rows) {
                 checkedCenters = [];
@@ -198,26 +276,33 @@ define([
         }
     }
 
-    function getContextCellContentForElement(element) {
-        var anchor = buildAnchorForElement(element);
-        var container = $("<div class='grid'>").appendTo(
-            anchor
-        );
+    function getContextCellContentForElement(element, noLink) {
+        var container = $("<div class='around-list'>");
+        if (!noLink) {
+            var anchor = buildAnchorForElement(element);
+            container.appendTo(
+                anchor
+            );
+        }
         var contextUris = Object.keys(element.getContext());
         if (contextUris.length < 1) {
-            anchor.addClass("empty").text(
-                "empty label"
-            );
+            if (noLink) {
+                container.addClass("empty");
+            } else {
+                anchor.addClass("empty").text(
+                    "empty label"
+                );
+            }
         }
         for (var i = 0; i < contextUris.length; i++) {
             var text = element.getContext()[contextUris[i]];
             container.append(
-                $("<div class='grid-item'>").text(
+                $("<div class='around-list-item'>").text(
                     text
                 )
             );
         }
-        return anchor.prop('outerHTML');
+        return noLink ? container : anchor.prop('outerHTML');
     }
 
     function getLastVisitCellContentForElement(element) {
@@ -284,7 +369,7 @@ define([
             return center.getUri();
         });
         askToRemoveCenters().then(function () {
-            table.bootstrapTable('remove', {field: 'uri', values: centersUri});
+            removeUrisFromUi(centersUri);
             checkedCenters = [];
             return CenterGraphElementService.removeCentersWithUri(
                 centersUri
@@ -292,17 +377,19 @@ define([
         });
     }
 
-    function askToRemoveCenters() {
-        displayCentersLabelToRemove();
+    function askToRemoveCenters(centers) {
+        displayCentersLabelToRemove(centers);
         var modal = $("#remove-centers-confirm-menu").modal();
-        var hasMultipleCheckedElements = checkedCenters.length > 1;
+        centers = centers || checkedCenters;
+        var hasMultipleCheckedElements = centers.length > 1;
         var askModal = AskModal.usingModalHtml(modal, hasMultipleCheckedElements);
         return askModal.ask();
     }
 
-    function displayCentersLabelToRemove() {
+    function displayCentersLabelToRemove(centers) {
+        centers = centers || checkedCenters;
         var ul = $("#remove-centers-list").empty();
-        checkedCenters.forEach(function (centerElement) {
+        centers.forEach(function (centerElement) {
             ul.append(
                 $("<li>").text(
                     centerElement.getLabel()
@@ -328,6 +415,20 @@ define([
                 );
             }
         });
+        $connectedHomeContainer.find(".center-card-container").each(function () {
+            var center = $(this).data("center");
+            var graphElementType = IdUri.getGraphElementTypeFromUri(
+                center.getUri()
+            );
+            var isInTypes = typesToFilter.some(function (type) {
+                return graphElementType === type;
+            });
+            if (isInTypes) {
+                $(this).removeClass("hidden");
+            } else {
+                $(this).addClass("hidden");
+            }
+        })
         table.bootstrapTable('filterBy', {
             "graphElementType": typesToFilter
         });
@@ -381,5 +482,71 @@ define([
 
     function getWordsContainer() {
         return $("#word-cloud");
+    }
+
+    function setupDisplays() {
+        $("#centers-to-grid").off(enterGridFlow).click(enterGridFlow);
+        $("#centers-to-list").off(enterTableFlow).click(enterTableFlow);
+        $("#centers-search-filter").on("keyup", function () {
+            var searchValue = $(this).val();
+            $(".fixed-table-toolbar .search input").val(searchValue).keyup()
+            $connectedHomeContainer.find(".center-card-container").each(function () {
+                var center = $(this).data("center");
+                var inLabel = center.getLabel().toLowerCase().indexOf(searchValue.toLowerCase()) > -1;
+                var inSurround = Object.values(center.getContext()).join(" ").toLowerCase().indexOf(searchValue.toLowerCase()) > -1;
+                if (inLabel || inSurround) {
+                    $(this).removeClass("hidden");
+                } else {
+                    $(this).addClass("hidden");
+                }
+            })
+        });
+    }
+
+    function enterTableFlow(event) {
+        if (event) {
+            event.preventDefault();
+        }
+        $("#centers-to-list").addClass("hidden");
+        $("#centers-to-grid").removeClass("hidden");
+        $connectedHomeContainer.find(".table-flow").removeClass(
+            "hidden"
+        );
+        $connectedHomeContainer.find(".grid-flow").addClass(
+            "hidden"
+        );
+        $connectedHomeContainer.find(".bootstrap-table").removeClass("hidden");
+    }
+
+    function enterGridFlow(event) {
+        if (event) {
+            event.preventDefault();
+        }
+        $("#centers-to-grid").addClass("hidden");
+        $("#centers-to-list").removeClass("hidden");
+        $connectedHomeContainer.find(".table-flow").addClass(
+            "hidden"
+        );
+        $connectedHomeContainer.find(".grid-flow").removeClass(
+            "hidden"
+        );
+        $connectedHomeContainer.find(".bootstrap-table").addClass("hidden");
+    }
+
+    function getConnectedHomeContainer() {
+        return $("#connected-home-flow");
+    }
+
+    function removeUrisFromUi(centersUri) {
+        table.bootstrapTable('remove', {field: 'uri', values: centersUri});
+        $(".center-card-container").each(function () {
+            var $centerContainer = $(this);
+            var containerCenterUri = $centerContainer.data("center").getUri();
+            centersUri.forEach(function (centerUri) {
+                if (containerCenterUri === centerUri) {
+                    $centerContainer.remove();
+                }
+            })
+        });
     }
 });

@@ -1,6 +1,65 @@
 @charset "UTF-8";
 /* Copyright Vincent Blouin under the GPL License version 3 */
 /* Copyright Vincent Blouin under the GPL License version 3 */
+/*!
+ * Copyright Vincent Blouin under the GPL License version 3
+ */
+.card { font-size: 1em; overflow: hidden; padding: 0; border: none; border-radius: .28571429rem; box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5; }
+
+.card-block { font-size: 1em; position: relative; margin: 0; padding: 1em; border: none; border-top: 1px solid rgba(34, 36, 38, 0.1); box-shadow: none; }
+
+.card-img-top { display: block; width: 100%; height: auto; }
+
+.card-title { font-size: 1.28571429em; font-weight: 700; line-height: 1.2857em; }
+
+.card-text { clear: both; margin-top: .5em; color: rgba(0, 0, 0, 0.68); }
+
+.card-footer { font-size: 1em; position: static; top: 0; left: 0; max-width: 100%; padding: .75em 1em; color: rgba(0, 0, 0, 0.4); border-top: 1px solid rgba(0, 0, 0, 0.05) !important; background: #fff; }
+
+.card-inverse .btn { border: 1px solid rgba(0, 0, 0, 0.05); }
+
+.profile { position: absolute; top: -12px; display: inline-block; overflow: hidden; box-sizing: border-box; width: 25px; height: 25px; margin: 0; border: 1px solid #fff; border-radius: 50%; }
+
+.profile-avatar { display: block; width: 100%; height: auto; border-radius: 50%; }
+
+.profile-inline { position: relative; top: 0; display: inline-block; }
+
+.profile-inline ~ .card-title { display: inline-block; margin-left: 4px; vertical-align: top; }
+
+.text-bold { font-weight: 700; }
+
+.meta { font-size: 1em; color: rgba(0, 0, 0, 0.4); }
+
+.meta a { text-decoration: none; color: rgba(0, 0, 0, 0.4); }
+
+.meta a:hover { color: rgba(0, 0, 0, 0.87); }
+
+.box > .icon { text-align: center; position: relative; }
+
+.box > .icon > .image { position: relative; z-index: 2; margin: auto; width: 88px; height: 88px; border: 8px solid white; line-height: 88px; border-radius: 50%; background: #63B76C; vertical-align: middle; }
+
+.box > .icon:hover > .image { background: #333; -webkit-transition: all 0.4s ease-in-out; -moz-transition: all 0.4s ease-in-out; -o-transition: all 0.4s ease-in-out; transition: all 0.4s ease-in-out; -webkit-transform: rotate(360deg) scale(1.5); -moz-transform: rotate(360deg) scale(1.5); -o-transform: rotate(360deg) scale(1.5); -ms-transform: rotate(360deg) scale(1.5); transform: rotate(360deg) scale(1.5); }
+
+.box > .icon > .image > i { font-size: 36px !important; color: #fff !important; }
+
+.box > .icon:hover > .image > i { color: white !important; }
+
+.box > .icon > .info { margin-top: -24px; background: rgba(0, 0, 0, 0.04); border: 1px solid #e0e0e0; padding: 15px 0 10px 0; }
+
+.box > .icon:hover > .info { background: rgba(0, 0, 0, 0.04); border-color: #e0e0e0; color: white; }
+
+.box > .icon > .info > h3.title { font-family: "Roboto",sans-serif !important; font-size: 16px; color: #222; font-weight: 500; }
+
+.box > .icon > .info > p { font-family: "Roboto",sans-serif !important; font-size: 13px; color: #666; line-height: 1.5em; margin: 20px; }
+
+.box > .icon:hover > .info > h3.title, .box > .icon:hover > .info > p, .box > .icon:hover > .info > .more > a { color: #222; }
+
+.box > .icon > .info > .more a { font-family: "Roboto",sans-serif !important; font-size: 12px; color: #222; line-height: 12px; text-transform: uppercase; text-decoration: none; }
+
+.box > .icon:hover > .info > .more > a { color: #fff; padding: 6px 8px; background-color: #63B76C; }
+
+.box .space { height: 30px; }
+
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .vertical-align { display: flex; align-items: center; }
 
@@ -645,12 +704,15 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .zoom-scale-1 .in-bubble-content { zoom: 500%; -moz-transform: scale(5); }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
+#connected-home-flow .fixed-table-toolbar { margin-bottom: 36px; }
 #connected-home-flow .background { position: absolute; background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("images/neurons-440660-white3.jpg"); left: 0; width: 100%; min-height: 200px; }
 
 #connected-home-flow-content { margin-top: 3%; padding: 1em; }
 
+#remove-center-btn { margin-top: 10px; }
+
 #word-cloud { text-align: left; }
-#word-cloud button.remove, #word-cloud button.create { margin-top: 10px; }
+#word-cloud button.create { margin-top: 10px; }
 #word-cloud button.create { margin-right: 10px; }
 #word-cloud table { font-size: 30px; table-layout: fixed; word-wrap: break-word; }
 #word-cloud table, #word-cloud table * { cursor: pointer; }
@@ -665,10 +727,10 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 #word-cloud td a.empty { color: transparent !important; }
 #word-cloud td.bubble-label a { overflow: hidden; text-overflow: ellipsis; font-weight: bold; }
 #word-cloud td.bubble-label a .reference.badge { font-size: 0.8em; margin-left: 5px; }
-#word-cloud td.context .grid { overflow: hidden; text-overflow: ellipsis; }
-#word-cloud td.context .grid .grid-item { float: left; max-width: 50%; overflow: hidden; padding-left: 5px; text-overflow: ellipsis; }
-#word-cloud td.context .grid .grid-item:after { content: " ● "; }
-#word-cloud td.context .grid .grid-item:last-of-type:after { content: " ..."; }
+#word-cloud td.context .around-list { overflow: hidden; text-overflow: ellipsis; }
+#word-cloud td.context .around-list .around-list-item { float: left; max-width: 50%; overflow: hidden; padding-left: 5px; text-overflow: ellipsis; }
+#word-cloud td.context .around-list .around-list-item:after { content: " ● "; }
+#word-cloud td.context .around-list .around-list-item:last-of-type:after { content: " ..."; }
 #word-cloud td.number-visits a { text-align: center; }
 #word-cloud td.number-visits .label { display: inline-block; padding-left: 10px; padding-right: 10px; }
 #word-cloud td a { display: block; color: black; }
@@ -678,6 +740,20 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 
 @media (max-width: 992px) { #connected-home-flow-content { margin-top: 7%; } }
 table.red-border { border: 1px solid #c00000 !important; }
+
+.card.red-border { box-shadow: 0 1px 3px 0 #c06056, 0 0 0 1px #a72121; }
+.card.red-border:hover { box-shadow: 0 3px 9px 0 #c06056, 0 0 0 1px #a72121; }
+
+#centers-search-filter { margin-top: 9px; }
+
+#grid-flow-container .card { font-size: 15px; margin-top: 15px; margin-right: 20px; }
+#grid-flow-container .card .title { font-size: 15px; }
+#grid-flow-container .around-list .around-list-item { text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow-x: hidden; display: block; }
+#grid-flow-container .around-list.empty { text-align: center; }
+#grid-flow-container .around-list.empty:before { content: "..."; }
+#grid-flow-container .card-footer { background-color: transparent; }
+
+.center-card-container { padding-left: 0; padding-right: 0; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 #schemas-container { margin-top: 5%; }
@@ -841,4 +917,20 @@ vertical-horizontal-center
 */
 .vh-center { display: flex; align-items: center; justify-content: center; }
 
+/*
+vertical-center
+*/
+.v-center { display: flex; align-items: center; }
+
+/*
+horizontal-center
+*/
+.h-center { display: flex; justify-content: center; }
+
+.spacer { flex-grow: 1 !important; }
+
 .root-vertex-super-container { width: 100%; height: 100%; table-layout: fixed; }
+
+.icon-btn { font-size: 21px !important; }
+
+.btn.small { font-size: 11px; padding: 4px 8px; }

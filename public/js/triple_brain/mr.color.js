@@ -47,5 +47,9 @@ define([], function () {
             l: l
         };
     };
+    api.getBackgroundColorForColor = function (color) {
+        var hsl = api.hex2Hsl(color);
+        return 'hsl(' + hsl.h + ', ' + hsl.s + '%, ' + 96 + '%)';
+    };
     return api;
 });

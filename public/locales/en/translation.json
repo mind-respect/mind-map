@@ -413,7 +413,9 @@
     },
     "tabs":{
       "friends" : "FRIENDS"
-    }
+    },
+    "toGrid": "Grid view",
+    "toList": "List view"
   },
   "friends":{
     "search": "Users of Mind Respect",

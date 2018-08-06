@@ -4,8 +4,8 @@
 
 define([
     "jquery",
-    "triple_brain.friendly_resource"
-], function ($, FriendlyResource) {
+    "triple_brain.graph_element"
+], function ($, GraphElement) {
     "use strict";
     var api = {};
     api.fromServerFormat = function (centersServerFormat) {
@@ -22,15 +22,15 @@ define([
     function CenterGraphElement() {
     }
 
-    CenterGraphElement.prototype = new FriendlyResource.FriendlyResource();
+    CenterGraphElement.prototype = new GraphElement.GraphElement();
     CenterGraphElement.prototype.init = function (serverFormat) {
         this.centerGraphElementServerFormat = serverFormat;
-        FriendlyResource.FriendlyResource.apply(
-            this.centerGraphElementServerFormat.graphElement.friendlyResource
+        GraphElement.GraphElement.apply(
+            this.centerGraphElementServerFormat.graphElement
         );
-        FriendlyResource.FriendlyResource.prototype.init.call(
+        GraphElement.GraphElement.prototype.init.call(
             this,
-            this.centerGraphElementServerFormat.graphElement.friendlyResource
+            this.centerGraphElementServerFormat.graphElement
         );
         return this;
     };

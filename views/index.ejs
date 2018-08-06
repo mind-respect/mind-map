@@ -1149,6 +1149,14 @@
                                    class="hidden"></a>
                             </li>
                         </ul>
+                        <div class="pull-right">
+                            <a href="#" id="centers-to-list" data-i18n="[title]centralBubbles.toList">
+                                <i class="fa fa-list icon-btn"></i>
+                            </a>
+                            <a href="#" id="centers-to-grid" data-i18n="[title]centralBubbles.toGrid">
+                                <i class="fa fa-th-large icon-btn"></i>
+                            </a>
+                        </div>
                         <%- include addFriend.ejs %>
                     </div>
                 </div>
@@ -1158,13 +1166,46 @@
                             data-i18n="[title]centralBubbles.createInfo">
                         <i class="fa fa-plus-circle"></i>
                     </button>
+                    <div class="pull-left search">
+                        <input class="form-control" type="text" data-i18n="[placeholder]centralBubbles.filter"
+                               id="centers-search-filter">
+                    </div>
                     <button type="button" id="remove-center-btn"
-                            class="owner-only remove hidden btn btn-primary pull-right"
+                            class="owner-only remove hidden btn btn-primary pull-right table-flow"
                             data-i18n="[title]centralBubbles.removeInfo">
                         <i class="fa fa-trash"></i>
                     </button>
                 </div>
-                <table class="table-responsive red-border" id="word-cloud-table"></table>
+                <table class="table-responsive red-border table-flow" id="word-cloud-table"></table>
+                <div class="grid-flow" id="grid-flow-container">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <!--<div class="col-sm-6 col-md-4 col-lg-2 mt-4 center-card-container">-->
+                                <!--<div class="card">-->
+                                    <!--<div class="card-text text-center">-->
+                                        <!--<h5 class="text-bold">Tawshif Ahsan Khan</h5>-->
+                                    <!--</div>-->
+                                    <!--<div>-->
+                                        <!--<footer>-->
+                                            <!--<small>-->
+                                                <!--Someone famous in <cite title="Source Title">Source Title</cite>-->
+                                            <!--</small>-->
+                                        <!--</footer>-->
+                                    <!--</div>-->
+                                    <!--<div class="card-footer v-center">-->
+                                        <!--Last updated 3 mins ago-->
+                                        <!--<div class="spacer"></div>-->
+                                        <!--<button type="button"-->
+                                                <!--class="owner-only remove remove-center-btn btn btn-primary pull-right small"-->
+                                                <!--data-i18n="[title]centralBubbles.removeInfo">-->
+                                                <!--<i class="fa fa-trash"></i>-->
+                                        <!--</button>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+                </div>
             </div>
             <div id="friends-subflow" class="hidden subflow">
                 <div class="row" style="margin-top:10px;">

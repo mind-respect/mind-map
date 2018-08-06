@@ -411,7 +411,9 @@
     },
     "tabs": {
       "friends": "AMIS"
-    }
+    },
+    "toGrid": "Vue en grille",
+    "toList": "Vue en liste"
   },
   "friends": {
     "search": "Usagers de Mind Respect",
