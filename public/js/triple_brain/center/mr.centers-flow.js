@@ -83,15 +83,19 @@ define([
                 ).append(
                     $("<div class='card red-border'>").append(
                         buildAnchorForElement(center).append(
-                            $('<div class="card-text text-center">').append(
+                            $('<div class="card-text text-center center-label v-center">').append(
                                 $("<i class='pull-left fa' style='margin-left:10px;'>").addClass(
                                     getIconClassFromElementUri(center.getUri())
                                 ),
-                                $('<h5 class="title text-bold" style="margin-right:10px;">').text(
-                                    center.getLabel()
+                                $("<div class='label-container spacer'>").addClass(
+                                    center.getLabel().length <= 30 ? "vh-center" : ""
+                                ).append(
+                                    $('<div class="title text-bold">').text(
+                                        center.getLabel()
+                                    )
                                 )
                             ),
-                            $("<div class='card-block card-text'>").append(
+                            $("<div class='card-block card-text vh-center'>").append(
                                 getContextCellContentForElement(center, true)
                             ).css(
                                 "background-color", backgroundColor

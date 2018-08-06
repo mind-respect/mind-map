@@ -220,16 +220,34 @@ table.red-border {
 
 #grid-flow-container {
   $fontSize: 15px;
+  $height: 40px;
   .card {
     font-size: $fontSize;
+    .center-label {
+      //overflow: hidden;
+      height: $height;
+      max-height: $height;
+      text-overflow: ellipsis;
+    }
+    .label-container {
+      overflow: hidden;
+      float: left;
+      //width: 100%;
+      height: $height;
+    }
     .title {
       font-size: $fontSize;
+      text-overflow: ellipsis;
+      margin-right: 10px;
+      margin-top: 0;
     }
     margin-top: 15px;
     margin-right: 20px;
   }
   .card-block {
     //background-color: hsl(197, 71%, 96%);
+    height: 135px;
+    max-height: 135px;
   }
   .around-list {
     //  text-align: center;
@@ -239,7 +257,7 @@ table.red-border {
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow-x: hidden;
-      display:block;
+      display: block;
       //margin-right: 10px;
       //&:after {
       //  content: " ● ";
