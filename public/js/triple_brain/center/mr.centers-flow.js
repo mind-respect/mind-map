@@ -95,8 +95,10 @@ define([
                                     )
                                 )
                             ),
-                            $("<div class='card-block card-text vh-center'>").append(
+                            $("<div class='card-block card-text'>").append(
                                 getContextCellContentForElement(center, true)
+                            ).addClass(
+                                Object.keys(center.getContext()).length === 0 ? "vh-center" : ""
                             ).css(
                                 "background-color", backgroundColor
                             )
