@@ -133,7 +133,7 @@ define([
     return api;
 
     function setupMindMap(isAnonymous, isTagCloudFlow) {
-        $("body").addClass("no-scroll");
+        // $("body").addClass("no-scroll");
         MindMapInfo.setIsAnonymous(isAnonymous);
         MindMapInfo.setIsTagCloudFlow(isTagCloudFlow);
         Header.earlyInit();
