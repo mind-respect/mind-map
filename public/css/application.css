@@ -256,6 +256,8 @@ footer > a:hover { background-color: black !important; color: white !important; 
 .right-oriented.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .relation.inverse .connector, .right-oriented .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .relation.inverse .connector { left: -41px; }
 .right-oriented.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .relation .connector, .right-oriented .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .relation .connector { border-bottom-right-radius: 0; }
 
+.vertices-children-container.left-oriented { padding-top: 20px; }
+
 .vertices-children-container .vertex-tree-container > .vertices-children-container > .vertex-tree-container > .arrow.vertex { margin-top: -3px; }
 .vertices-children-container .vertex-tree-container:first-child > .vertical-border-first { border-left: none; border-right: none; }
 .vertices-children-container .vertex-tree-container:first-child > .vertical-border-second { border-top-right-radius: 18px; border-top-left-radius: 18px; height: calc(50% + 3px); margin-top: -4px; }
