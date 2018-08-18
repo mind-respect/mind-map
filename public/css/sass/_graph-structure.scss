@@ -30,6 +30,7 @@ $connectorRadius: 25px;
     margin-left: 2225px;
     content: " ";
     height: 100%;
+    position: absolute;
   }
 }
 
@@ -38,6 +39,7 @@ $connectorRadius: 25px;
     margin-right: 2225px;
     content: " ";
     height: 100%;
+    position: absolute;
   }
 }
 
@@ -197,7 +199,7 @@ $connectorRadius: 25px;
   }
 }
 
-.vertices-children-container.left-oriented{
+.vertices-children-container.left-oriented, .vertices-children-container.right-oriented{
   padding-top: 20px;
 }
 

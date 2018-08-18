@@ -221,9 +221,9 @@ footer > a:hover { background-color: black !important; color: white !important; 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 #drawn_graph { position: absolute; padding: 100%; top: 0; display: flex; justify-content: center; align-items: center; }
 
-.vertices-children-container.left-oriented:before { margin-left: 2225px; content: " "; height: 100%; }
+.vertices-children-container.left-oriented:before { margin-left: 2225px; content: " "; height: 100%; position: absolute; }
 
-.vertices-children-container.right-oriented:before { margin-right: 2225px; content: " "; height: 100%; }
+.vertices-children-container.right-oriented:before { margin-right: 2225px; content: " "; height: 100%; position: absolute; }
 
 .vertices-children-container { display: table-cell; vertical-align: middle; }
 
@@ -256,7 +256,7 @@ footer > a:hover { background-color: black !important; color: white !important; 
 .right-oriented.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .relation.inverse .connector, .right-oriented .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .relation.inverse .connector { left: -41px; }
 .right-oriented.vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .relation .connector, .right-oriented .vertices-children-container .vertex-tree-container:last-of-type > .vertex-container .relation .connector { border-bottom-right-radius: 0; }
 
-.vertices-children-container.left-oriented { padding-top: 20px; }
+.vertices-children-container.left-oriented, .vertices-children-container.right-oriented { padding-top: 20px; }
 
 .vertices-children-container .vertex-tree-container > .vertices-children-container > .vertex-tree-container > .arrow.vertex { margin-top: -3px; }
 .vertices-children-container .vertex-tree-container:first-child > .vertical-border-first { border-left: none; border-right: none; }
@@ -288,7 +288,7 @@ footer > a:hover { background-color: black !important; color: white !important; 
 .arrow { height: 1px; width: 52px; margin-left: -1px; top: 50%; display: table; border-top: 0.15em solid #3a87ad; z-index: 3; }
 .arrow ~ { background-color: yellow; }
 .arrow ~ .in-bubble-note-button:not(hidden) { width: 100%; }
-.arrow:before { content: url("images/icons/vertex/arrowhead_right.svg"); position: relative; top: -10px; left: 20px; }
+.arrow:before { content: url("images/icons/vertex/arrowhead_right.svg"); position: relative; top: -9px; left: 20px; }
 .arrow.property, .arrow.group-relation { border-top-left-radius: 0; border-top-right-radius: 25px; }
 .arrow.vertex { margin-right: -7px; }
 .arrow.vertex.inverse:before { content: ""; }
@@ -493,7 +493,7 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .relation.bubble.selected .label { box-shadow: 3px 3px 4px black; }
 .relation.bubble.selected .label .bubble-label:empty { padding: 5px 10px 5px 10px; line-height: inherit; }
 .relation.bubble.inverse .connector { width: 51px; left: -41px; }
-.relation.bubble.inverse .connector:before { content: url(images/icons/vertex/arrowhead_left.svg); position: relative; top: -10px; left: 20px; }
+.relation.bubble.inverse .connector:before { content: url(images/icons/vertex/arrowhead_left.svg); position: relative; top: -9px; left: 20px; }
 .relation.bubble .hidden-properties-content { margin-left: 15px; }
 .relation.bubble.compare-add .in-bubble-content .label-info, .relation.bubble.compare-add.inverse .in-bubble-content .label-info, .relation.bubble.compare-add.suggestion .in-bubble-content .label-info { color: black; }
 .relation.bubble.compare-add .in-bubble-content .label-info .bubble-label, .relation.bubble.compare-add.inverse .in-bubble-content .label-info .bubble-label, .relation.bubble.compare-add.suggestion .in-bubble-content .label-info .bubble-label { color: black; }
@@ -545,7 +545,7 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .bubble.property .arrow { padding-top: 10px; padding-bottom: 10px; top: calc(50% - 5px); }
 .bubble.property .arrow:before { top: -50%; position: absolute; left: 26px; }
 
-.bubble.group-relation { white-space: nowrap; }
+.bubble.group-relation { padding-top: 3px; white-space: nowrap; }
 .bubble.group-relation .arrow { height: 20px; }
 .bubble.group-relation .arrow:before { content: none; }
 .bubble.group-relation.selected .in-bubble-content .label { box-shadow: 3px 3px 3px black; }
@@ -589,7 +589,7 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .bubble .arrow { position: absolute; height: 1px; width: 52px; top: 50%; border-top: 0.15em solid #3a87ad; z-index: -1; }
 .bubble .arrow ~ { background-color: yellow; }
 .bubble .arrow ~ .in-bubble-note-button:not(hidden) { width: 100%; }
-.bubble .arrow:before { content: url("images/icons/vertex/arrowhead_right.svg"); position: relative; top: -10px; left: 20px; }
+.bubble .arrow:before { content: url("images/icons/vertex/arrowhead_right.svg"); position: relative; top: -9px; left: 20px; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .vertex { /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */ white-space: nowrap; }
