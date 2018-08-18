@@ -57,14 +57,18 @@ define([
 
             function integrateBubble(bubble, isARoot) {
                 var html = $(
-                    isARoot ? "<div>" : "<li>"
+                    isARoot ? "<div>" : "<li data-type='" + bubble.getGraphElementType() + "'>"
                 ).append(bubble.textHtml());
                 var ul = $("<ul>");
                 bubble.visitAllImmediateChild(function (child) {
                     if (child.isGroupRelation() && !child.getModel().isLabelEmpty()) {
-                        ul.append(
-                            integrateBubble(child, false)
-                        );
+                        var groupRelationList = integrateBubble(child, false);
+                        var groupRelationListHasVertices = groupRelationList.find("[data-type=vertex]").length > 0;
+                        if (groupRelationListHasVertices) {
+                            ul.append(
+                                groupRelationList
+                            );
+                        }
                     } else if (child.isATypeOfEdge()) {
                         var childVertex = child.getTopMostChildBubble();
                         if (!shouldIntegrateVertex(childVertex)) {
@@ -72,7 +76,7 @@ define([
                         }
                         if (!child.getModel().isLabelEmpty() && !child.isSetAsSameAsGroupRelation()) {
                             ul.append(
-                                $("<li>").append(
+                                $("<li data-type='vertex'>").append(
                                     $("<em>").html("(" + child.textHtml() + ")"),
                                     "  ",
                                     childVertex.textHtml()
