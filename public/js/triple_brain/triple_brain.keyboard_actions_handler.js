@@ -68,6 +68,11 @@ define([
     };
 
     api.init = function () {
+        $(window).bind('mousewheel DOMMouseScroll', function (event) {
+            if (event.which !== api._ctrlKeyNumber) {
+                event.preventDefault();
+            }
+        });
         EventBus.subscribe(
             "/event/ui/graph/drawing_info/updated/",
             api._handleKeyboardActions
