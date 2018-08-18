@@ -25,19 +25,18 @@ define([
 
         function init() {
             getInput().empty().mrAutocomplete({
-                createBubbleIfNoResults:true,
+                createBubbleIfNoResults: true,
                 select: function (event, ui) {
                     if (ui.item.uri === "create") {
                         event.preventDefault();
-                        return GraphDisplayer.getAppController().createVertex().then(function () {
-                            GraphElementUi.getCenterVertexOrSchema().getController().setLabel(
-                                ui.item.searchTerm
-                            );
-                        });
+                        return GraphDisplayer.getAppController().createVertex(
+                            ui.item.searchTerm
+                        );
+                    } else {
+                        window.location = IdUri.htmlUrlForBubbleUri(
+                            ui.item.uri
+                        );
                     }
-                    window.location = IdUri.htmlUrlForBubbleUri(
-                        ui.item.uri
-                    );
                 },
                 resultsProviders: [
                     UserMapAutocompleteProvider.toFetchAllOwned({

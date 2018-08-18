@@ -84,7 +84,7 @@ define([
             newLabel
         );
         return FriendlyResourceService.updateLabel(
-            this.getUi(),
+            this.getModel(),
             newLabel
         );
     };

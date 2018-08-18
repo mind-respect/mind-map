@@ -545,7 +545,7 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .bubble.property .arrow { padding-top: 10px; padding-bottom: 10px; top: calc(50% - 5px); }
 .bubble.property .arrow:before { top: -50%; position: absolute; left: 26px; }
 
-.bubble.group-relation { padding-top: 3px; white-space: nowrap; }
+.bubble.group-relation { white-space: nowrap; }
 .bubble.group-relation .arrow { height: 20px; }
 .bubble.group-relation .arrow:before { content: none; }
 .bubble.group-relation.selected .in-bubble-content .label { box-shadow: 3px 3px 3px black; }

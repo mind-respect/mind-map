@@ -7,13 +7,14 @@ define([
     "mr.command",
     "triple_brain.graph_ui",
     "triple_brain.vertex_service",
+    "triple_brain.friendly_resource_service",
     "triple_brain.mind_map_info",
     "triple_brain.graph_displayer",
     "triple_brain.vertex",
     "triple_brain.id_uri",
     "mr.to-list",
     "triple_brain.graph_element_ui"
-], function ($, Command, GraphUi, VertexService, MindMapInfo, GraphDisplayer, Vertex, IdUri, ToList, GraphElementUi) {
+], function ($, Command, GraphUi, VertexService, FriendlyResourceService, MindMapInfo, GraphDisplayer, Vertex, IdUri, ToList, GraphElementUi) {
     "use strict";
     var api = {};
     api.undoCanDo = function () {
@@ -45,18 +46,27 @@ define([
         );
     };
 
-    api.createVertex = function () {
-        return VertexService.createVertex().then(function (newVertex) {
-            var serverFormatFacade = Vertex.fromServerFormat(
-                newVertex
+    api.createVertex = function (label) {
+        return VertexService.createVertex().then(function (serverFormat) {
+            var newVertex = Vertex.fromServerFormat(
+                serverFormat
             );
-            if (MindMapInfo.isTagCloudFlow() || MindMapInfo.isAuthenticatedLandingPageFlow()) {
-                window.location = IdUri.htmlUrlForBubbleUri(serverFormatFacade.getUri());
-                return;
-            }
-            return GraphDisplayer.displayUsingCentralBubbleUri(
-                serverFormatFacade.getUri()
-            );
+            var updateLabelPromise = label === undefined ? $.Deferred().resolve() :
+                FriendlyResourceService.updateLabel(
+                    newVertex,
+                    label
+                );
+            return updateLabelPromise.then(function () {
+                if (MindMapInfo.isTagCloudFlow() || MindMapInfo.isAuthenticatedLandingPageFlow()) {
+                    window.location = IdUri.htmlUrlForBubbleUri(newVertex.getUri());
+                } else {
+                    return GraphDisplayer.displayUsingCentralBubbleUri(
+                        newVertex.getUri()
+                    );
+                }
+            }).then(function () {
+                return newVertex;
+            });
         });
     };
     api.changeBackgroundColorCanDo = function () {
