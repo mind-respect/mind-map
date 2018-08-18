@@ -288,7 +288,7 @@ footer > a:hover { background-color: black !important; color: white !important; 
 .arrow { height: 1px; width: 52px; margin-left: -1px; top: 50%; display: table; border-top: calc(1px + 0.1em) solid #3a87ad; z-index: 3; }
 .arrow ~ { background-color: yellow; }
 .arrow ~ .in-bubble-note-button:not(hidden) { width: 100%; }
-.arrow:before { content: url("images/icons/vertex/arrowhead_right.svg"); position: relative; top: calc(-9px - 0.05em); left: 20px; }
+.arrow:before { content: url("images/icons/vertex/arrowhead_right.svg"); position: relative; top: calc(-9px - 0.04em); left: 20px; }
 .arrow.property, .arrow.group-relation { border-top-left-radius: 0; border-top-right-radius: 25px; }
 .arrow.vertex { margin-right: -7px; }
 .arrow.vertex.inverse:before { content: ""; }
@@ -493,7 +493,7 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .relation.bubble.selected .label { box-shadow: 3px 3px 4px black; }
 .relation.bubble.selected .label .bubble-label:empty { padding: 5px 10px 5px 10px; line-height: inherit; }
 .relation.bubble.inverse .connector { width: 51px; left: -41px; }
-.relation.bubble.inverse .connector:before { content: url(images/icons/vertex/arrowhead_left.svg); position: relative; top: calc(-9px - 0.05em); left: 20px; }
+.relation.bubble.inverse .connector:before { content: url(images/icons/vertex/arrowhead_left.svg); position: relative; top: calc(-9px - 0.04em); left: 20px; }
 .relation.bubble .hidden-properties-content { margin-left: 15px; }
 .relation.bubble.compare-add .in-bubble-content .label-info, .relation.bubble.compare-add.inverse .in-bubble-content .label-info, .relation.bubble.compare-add.suggestion .in-bubble-content .label-info { color: black; }
 .relation.bubble.compare-add .in-bubble-content .label-info .bubble-label, .relation.bubble.compare-add.inverse .in-bubble-content .label-info .bubble-label, .relation.bubble.compare-add.suggestion .in-bubble-content .label-info .bubble-label { color: black; }
@@ -589,7 +589,7 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .bubble .arrow { position: absolute; height: 1px; width: 52px; top: 50%; border-top: calc(1px + 0.1em) solid #3a87ad; z-index: -1; }
 .bubble .arrow ~ { background-color: yellow; }
 .bubble .arrow ~ .in-bubble-note-button:not(hidden) { width: 100%; }
-.bubble .arrow:before { content: url("images/icons/vertex/arrowhead_right.svg"); position: relative; top: calc(-9px - 0.05em); left: 20px; }
+.bubble .arrow:before { content: url("images/icons/vertex/arrowhead_right.svg"); position: relative; top: calc(-9px - 0.04em); left: 20px; }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 .vertex { /*white-space: nowrap; because sometimes when hovering the relation menu and there is a vertex image it messes up */ white-space: nowrap; }
@@ -621,7 +621,7 @@ button.disabled { opacity: 1; cursor: not-allowed; color: #c0c0c1; }
 .included-vertices-container .layout { position: absolute; }
 
 .vertex-tree-container.no-relation-label > .vertices-children-container > .vertex-tree-container > .vertex.arrow { border-top: none; margin-top: -2px; }
-.vertex-tree-container.no-relation-label > .vertices-children-container > .vertex-tree-container > .vertex.arrow:before { top: calc(-9px - 0.05em); }
+.vertex-tree-container.no-relation-label > .vertices-children-container > .vertex-tree-container > .vertex.arrow:before { top: calc(-9px - 0.04em); }
 
 /* Copyright Vincent Blouin under the GPL License version 3 */
 [data-zoom="0"] .vertex .in-bubble-content { max-width: 500px; }
