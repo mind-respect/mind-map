@@ -340,7 +340,6 @@ define([
         this.setLabel(
             this.getModel().getLabel() + separator + clipText
         );
-        this.getUi().getLabel().blur();
         this.getUi().pasteText();
     };
 
