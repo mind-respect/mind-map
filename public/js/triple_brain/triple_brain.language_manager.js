@@ -16,6 +16,33 @@ define([
     api.getBrowserLocale = function () {
         return $.i18n.detectLanguage();
     };
+    api.getLocaleUsedForSiteTranslation = function() {
+        return getFromBrowser();
+        //var currentUser = UserService.authenticatedUserInCache();
+        //return currentUser === undefined ?
+        //    getFromBrowser() :
+        //    getFromUser();
+        //function getFromUser() {
+        //    var localeUsedForSiteTranslation = "en";
+        //    $.each(currentUser.preferred_locales, function () {
+        //        var locale = this;
+        //        if (isLocaleEnglish(locale)) {
+        //            return false;
+        //        }
+        //        if (isLocaleFrench(locale)) {
+        //            localeUsedForSiteTranslation = "fr";
+        //            return false;
+        //        }
+        //    });
+        //    return localeUsedForSiteTranslation;
+        //}
+
+        function getFromBrowser() {
+            return isLocaleFrench(api.getBrowserLocale()) ?
+                "fr" :
+                "en";
+        }
+    };
     api.getPossibleLanguages = function () {
         if (possibleLanguages === undefined) {
             possibleLanguages = makeLanguages([
@@ -188,7 +215,7 @@ define([
         );
     };
     api.loadLocaleContent = function (callback) {
-        var locale = getLocaleUsedForSiteTranslation();
+        var locale = api.getLocaleUsedForSiteTranslation();
         Moment.locale(
             "fr" === locale ?
                 "fr-ca" :
@@ -257,34 +284,5 @@ define([
             );
         });
         return formattedLanguages;
-    }
-
-
-    function getLocaleUsedForSiteTranslation() {
-        return getFromBrowser();
-        //var currentUser = UserService.authenticatedUserInCache();
-        //return currentUser === undefined ?
-        //    getFromBrowser() :
-        //    getFromUser();
-        //function getFromUser() {
-        //    var localeUsedForSiteTranslation = "en";
-        //    $.each(currentUser.preferred_locales, function () {
-        //        var locale = this;
-        //        if (isLocaleEnglish(locale)) {
-        //            return false;
-        //        }
-        //        if (isLocaleFrench(locale)) {
-        //            localeUsedForSiteTranslation = "fr";
-        //            return false;
-        //        }
-        //    });
-        //    return localeUsedForSiteTranslation;
-        //}
-
-        function getFromBrowser() {
-            return isLocaleFrench(api.getBrowserLocale()) ?
-                "fr" :
-                "en";
-        }
     }
 });
