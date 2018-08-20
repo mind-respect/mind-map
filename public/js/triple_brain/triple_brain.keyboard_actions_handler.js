@@ -69,6 +69,7 @@ define([
 
     api.init = function () {
         $(window).bind('mousewheel DOMMouseScroll', function (event) {
+            //should use event.which === api._ctrlKeyNumber but event.which is zero even if ctrl is pressed
             if (event.ctrlKey) {
                 event.preventDefault();
             }

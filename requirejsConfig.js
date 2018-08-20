@@ -14,6 +14,7 @@ module.exports = {
         "clipboard": "vendor/node_modules/clipboard/dist/clipboard",
         "intro": "vendor/node_modules/intro.js/intro",
         "font-picker": "vendor/node_modules/font-picker/lib/font-picker",
+        "dompurify": "vendor/node_modules/dompurify/dist/purify",
         // "html2canvas": "vendor/node_modules/html2canvas/dist/html2canvas",
         /*
          Jquery

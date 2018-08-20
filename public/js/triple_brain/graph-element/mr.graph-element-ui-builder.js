@@ -78,6 +78,11 @@ define([
             ui.applyToOtherInstances(function (otherInstance) {
                 otherInstance.setText(text);
             });
+        }).keyup(function(){
+            var unwantedBrs = $(this).find('br');
+            if(unwantedBrs.length > 0){
+                unwantedBrs.remove();
+            }
         });
     };
 

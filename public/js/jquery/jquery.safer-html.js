@@ -12,9 +12,10 @@ define([
             "img"
         ];
         $.fn.saferHtml = function (html) {
+            var toSanitize = html === undefined ? this.html() : html;
             return this.html(
                 emptyHtmlIfHasMalicious(
-                    html
+                    toSanitize
                 )
             );
         };
