@@ -69,7 +69,7 @@ define([
 
     api.init = function () {
         $(window).bind('mousewheel DOMMouseScroll', function (event) {
-            if (event.which !== api._ctrlKeyNumber) {
+            if (event.ctrlKey) {
                 event.preventDefault();
             }
         });
