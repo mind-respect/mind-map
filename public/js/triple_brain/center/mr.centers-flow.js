@@ -81,7 +81,7 @@ define([
                 $('<div class="col-sm-6 col-md-4 col-lg-2 mt-4 center-card-container">').data(
                     "center", center
                 ).append(
-                    $("<div class='card red-border'>").append(
+                    $("<div class='card' style='box-shadow:none'>").append(
                         buildAnchorForElement(center).append(
                             $('<div class="card-text text-center center-label v-center">').append(
                                 $("<i class='pull-left fa' style='margin-left:10px;'>").addClass(
