@@ -748,15 +748,15 @@ table.red-border { border: 1px solid #c00000 !important; }
 
 #centers-search-filter { margin-top: 9px; }
 
-#grid-flow-container .card { font-size: 15px; margin-top: 15px; margin-right: 20px; }
-#grid-flow-container .card .center-label { height: 40px; max-height: 40px; text-overflow: ellipsis; }
+#grid-flow-container .card { font-size: 15px; margin-top: 15px; }
+#grid-flow-container .card .center-label { height: 40px; max-height: 40px; text-overflow: ellipsis; border-left: 1px solid #c00000; border-right: 1px solid #c00000; }
 #grid-flow-container .card .label-container { overflow: hidden; float: left; height: 40px; }
 #grid-flow-container .card .title { font-size: 15px; text-overflow: ellipsis; margin-right: 10px; margin-top: 0; }
 #grid-flow-container .card-block { height: 135px; max-height: 135px; }
 #grid-flow-container .around-list .around-list-item { text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow-x: hidden; display: block; }
 #grid-flow-container .around-list.empty { text-align: center; }
 #grid-flow-container .around-list.empty:before { content: "..."; }
-#grid-flow-container .card-footer { background-color: transparent; }
+#grid-flow-container .card-footer { background-color: transparent; border-right: 1px solid #c00000; }
 
 .center-card-container { padding-left: 0; padding-right: 0; }
 
