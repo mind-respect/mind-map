@@ -81,7 +81,7 @@ define([
                 $('<div class="col-sm-6 col-md-4 col-lg-2 mt-4 center-card-container">').data(
                     "center", center
                 ).append(
-                    $("<div class='card' style='box-shadow:none'>").append(
+                    $("<div class='card'>").append(
                         buildAnchorForElement(center).append(
                             $('<div class="card-text text-center center-label v-center">').append(
                                 $("<i class='pull-left fa' style='margin-left:10px;'>").addClass(
@@ -103,12 +103,11 @@ define([
                                 "background-color", backgroundColor
                             )
                         ),
-                        $('<div class="card-footer v-center">').append(
+                        $('<div class="card-footer v-center h-center">').append(
                             new Moment(center.getLastCenterDate()).fromNow(),
-                            $('<div class="spacer">'),
                             // $('<i class="fa fa-ellipsis-v icon-btn">'),
                             $('<a href="#">').append(
-                                $('<i class="fa fa-trash" style="color: rgba(0, 0, 0, 0.4);">')
+                                $('<i class="fa fa-trash" style="color: rgba(0, 0, 0, 0.4); margin-left:15px;">')
                             ).click(function (event) {
                                 event.preventDefault();
                                 var container = $(this).closest('.center-card-container');
