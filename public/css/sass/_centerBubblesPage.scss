@@ -226,11 +226,14 @@ table.red-border {
     border: none;
     border-radius:0;
     padding-top:1px;
+    padding-bottom:1px;
     &:hover {
       padding-top:0px;
+      padding-bottom:0px;
       //box-shadow: 0 3px 9px 0 $red-light, 0 0 0 1px $red-dark !important;
       //box-shadow: 0px 11px 8px -10px $red-light, 0px -11px 8px -10px $red-light;
       border-top: 1px solid $red-light;
+      border-bottom: 1px solid $red-light;
       //z-index: 2;
       //position: relative;
     }
