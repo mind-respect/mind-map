@@ -748,8 +748,8 @@ table.red-border { border: 1px solid #c00000 !important; }
 
 #centers-search-filter { margin-top: 9px; }
 
-#grid-flow-container .card { box-shadow: none; border: none; border-radius: 0; padding-top: 1px; padding-bottom: 1px; font-size: 15px; margin-top: 15px; }
-#grid-flow-container .card:hover { padding-top: 0px; padding-bottom: 0px; border-top: 1px solid #c06056; border-bottom: 1px solid #c06056; }
+#grid-flow-container .card { box-shadow: none; border: none; border-radius: 0; padding-top: 1px; font-size: 15px; margin-top: 15px; }
+#grid-flow-container .card:hover { padding-top: 0px; border-top: 1px solid #c06056; }
 #grid-flow-container .card .center-label { height: 40px; max-height: 40px; text-overflow: ellipsis; }
 #grid-flow-container .card .label-container { overflow: hidden; float: left; height: 40px; }
 #grid-flow-container .card .title { font-size: 15px; text-overflow: ellipsis; margin-right: 10px; margin-top: 0; }
