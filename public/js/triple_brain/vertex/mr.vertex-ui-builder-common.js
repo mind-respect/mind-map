@@ -18,11 +18,9 @@ define([
     "triple_brain.schema_suggestion",
     "mr.graph-element-ui-builder",
     "triple_brain.bubble_factory",
-    "triple_brain.graph_element_ui",
-    "triple_brain.point",
     "jquery.triple_brain.search",
     "jquery.safer-html"
-], function ($, UiUtils, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, WikidataAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, GraphElementUiBuilder, BubbleFactory, GraphElementUi, Point) {
+], function ($, UiUtils, GraphDisplayer, VertexUi, VertexService, GraphElementMenu, Identification, UserMapAutocompleteProvider, WikidataAutocompleteProvider, GraphElementMainMenu, MindMapInfo, SelectionHandler, SchemaSuggestion, GraphElementUiBuilder, BubbleFactory) {
     "use strict";
     var api = {};
     api.applyAutoCompleteIdentificationToLabelInput = function (input) {
@@ -85,6 +83,7 @@ define([
             "data-placeholder",
             uiSelector.getWhenEmptyLabel()
         ).appendTo(inContentContainer);
+        label.html(label.text());
         GraphElementUiBuilder.setUpLabel(label);
         api.applyAutoCompleteIdentificationToLabelInput(
             label
@@ -153,9 +152,7 @@ define([
             return;
         }
         bubble.focus(
-            Point.fromCoordinates(
-            event.offsetX,
-            event.offsetY
-        ));
+            event
+        );
     }
 });

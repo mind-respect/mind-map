@@ -3,32 +3,23 @@
  */
 
 define([
-        "jquery"
+        "jquery",
+        "dompurify"
     ],
-    function ($) {
-        var blacklist = [
-            "script",
-            "iframe",
-            "img"
-        ];
+    function ($, DOMPurify) {
         $.fn.saferHtml = function (html) {
-            var toSanitize = html === undefined ? this.html() : html;
-            return this.html(
-                emptyHtmlIfHasMalicious(
-                    toSanitize
-                )
+            if (html === undefined) {
+                html = this.html();
+            }
+            this.html(
+                DOMPurify.sanitize(
+                    html, {
+                        ADD_TAGS: ['del', 'ins', 'DEL', 'INS'],
+                        ADD_ATTR: ['TITLE', 'title', 'style'],
+                        FORBID_TAGS: ['img']
+                    })
             );
+            return this;
         };
-        function emptyHtmlIfHasMalicious(html) {
-            var $html = $("<div>").append(html);
-            var isMalicious = false;
-            $.each(blacklist, function () {
-                if ($html.find(this + "").length > 0) {
-                    isMalicious = true;
-                    return false;
-                }
-            });
-            return isMalicious ? "" : html;
-        }
     }
 );

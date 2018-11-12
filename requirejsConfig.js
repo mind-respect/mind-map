@@ -15,6 +15,8 @@ module.exports = {
         "intro": "vendor/node_modules/intro.js/intro",
         "font-picker": "vendor/node_modules/font-picker/lib/font-picker",
         "dompurify": "vendor/node_modules/dompurify/dist/purify",
+        "linkifyjs": "vendor/node_modules/linkifyjs/dist/linkify-jquery",
+        "linkify": "vendor/node_modules/linkifyjs/dist/linkify",
         // "html2canvas": "vendor/node_modules/html2canvas/dist/html2canvas",
         /*
          Jquery
@@ -302,6 +304,7 @@ module.exports = {
         "bootstrap-wysiwyg": ["jquery", "bootstrap", "jquery.hotkeys", "google-code-prettify"],
         "bootstrap-table": ["jquery", "bootstrap"],
         "jasmine-jquery": ["jquery"],
-        "ekko-lightbox": ["jquery"]
+        "ekko-lightbox": ["jquery"],
+        "linkifyjs": ["linkify", "jquery"]
     }
 };

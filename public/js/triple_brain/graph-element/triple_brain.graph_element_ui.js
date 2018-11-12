@@ -524,13 +524,13 @@ define([
         });
 
     };
-    api.GraphElementUi.prototype.focus = function (clickPosition) {
+    api.GraphElementUi.prototype.focus = function (event) {
         this.hideMenu();
         this.editMode();
         this._setTextBeforeModification();
         var label = this.getLabel();
-        if (clickPosition) {
-            label.focusAtPosition(clickPosition);
+        if (event) {
+            label.focusAtPosition(event);
         } else {
             label.focusEnd();
         }

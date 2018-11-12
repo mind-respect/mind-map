@@ -16,7 +16,8 @@ define([
         "triple_brain.mind_map_info",
         "jquery.is-fully-on-screen",
         "jquery.center-on-screen",
-        "triple_brain.ui_utils"
+        "triple_brain.ui_utils",
+        "linkifyjs"
     ], function ($, EventBus, MindMapTemplate, BubbleFactory, RelativeTreeVertex, VertexUiBuilderCommon, GraphElementUiBuilder, GraphElementUi, GraphUi, CenterBubble, MindMapInfo) {
         "use strict";
         var api = {};
@@ -108,17 +109,13 @@ define([
                 this.serverFacade
             ).blur(function () {
                 var $label = $(this);
-                $label.html(
-                    linkify(
-                        $label.html()
-                    )
-                );
+                $label.linkify({
+                    target: "_blank"
+                });
             });
-            label.html(
-                linkify(
-                    label.html()
-                )
-            );
+            label.linkify({
+                target: "_blank"
+            });
             GraphElementUiBuilder.setupDrop(
                 this.vertexUi
             );
@@ -170,21 +167,6 @@ define([
             return vertexMenu;
         };
         return api;
-
-        function linkify(htmlContent) {
-            //http://stackoverflow.com/a/25821576/541493
-            htmlContent = htmlContent.replace(
-                /\n/g,
-                ''
-            );
-            var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
-            var hasLink = false;
-            return htmlContent.replace(urlRegex, function (url, b, c) {
-                var url2 = (c === 'www.') ? 'http://' + url : url;
-                hasLink = true;
-                return '<a href="' + url2 + '" target="_blank">' + url + '</a>';
-            });
-        }
     }
 );
 

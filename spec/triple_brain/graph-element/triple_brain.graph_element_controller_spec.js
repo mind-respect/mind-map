@@ -48,11 +48,11 @@ define([
                 GraphElementController._getContentEditor().html()
             ).toBe("");
         });
-        it("can have script tag as text", function () {
+            it("can have script tag as text", function () {
             loadFixtures('graph-element-note-menu.html');
             var bubble1 = new Scenarios.threeBubblesGraph().getBubble1InTree();
             bubble1.getModel().setComment(
-                $("<div>").text("<script>alert('yo')</script>")
+                $("<div>").text("<script>alert('yo')</script>").prop('outerHTML')
             );
             bubble1.getController().note();
             expect(

@@ -54,6 +54,7 @@ define([
             }
 
             function doIt() {
+                elementUi.getLabel().saferHtml();
                 elementUi.getModel().setLabel(elementUi.text());
                 elementUi.labelUpdateHandle();
                 if (!elementUi.hasTextChangedAfterModification()) {
