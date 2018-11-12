@@ -3,14 +3,27 @@
  */
 
 #drag-bubble-text-for-chrome {
-  font-size: 25px;
+  //position: absolute;
+  //max-width: 500px;
+  //text-align: center;
+  //font-size: calc(1em + 0.5vw);
+}
+
+#drag-bubble-text-for-chrome-container {
+  position: absolute;
+  display: table;
+}
+
+#drag-bubble-text-for-chrome {
+  font-size: calc(0.9em + 0.5vw);
   padding: 10px;
   width: auto;
-  max-width: 325px;
-  text-align: left;
-  display: inline-block;
+  max-width: 500px;
+  text-align: center;
+  display: table-cell;
   border-radius: 50px;
-  position: absolute;
+  position: relative;
+  margin: 0 auto;
 }
 
 .cboxPhoto {

@@ -229,7 +229,7 @@ define([
             * use setDragImage
             * */
             graphElementUi.getHtml().on("drag", function (event) {
-                $("#drag-bubble-text-for-chrome").css("top", event.pageY).css("left", event.pageX);
+                $("#drag-bubble-text-for-chrome-container").css("top", event.pageY).css("left", event.pageX);
             });
         }
     };
