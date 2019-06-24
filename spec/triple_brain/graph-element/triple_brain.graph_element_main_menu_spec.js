@@ -73,46 +73,6 @@ define([
                 getAWholeGraphButton().getHtml()
             ).not.toHaveClass("hidden");
         });
-        it("sets the correct controller when multiple selected elements are all vertices", function () {
-            var scenario = new Scenarios.threeBubblesGraph();
-            var b1 = scenario.getBubble1InTree();
-            var b2 = scenario.getBubble2InTree();
-            SelectionHandler.addVertex(b1);
-            SelectionHandler.addVertex(b2);
-            expect(
-                GraphElementMainMenu._currentController instanceof VertexController.VertexController
-            ).toBeTruthy();
-        });
-        it("sets the correct controller when multiple selected elements are all relations", function () {
-            var scenario = new Scenarios.threeBubblesGraph();
-            var b1 = scenario.getBubble1InTree();
-            var r1 = TestUtils.getChildWithLabel(
-                b1,
-                "r1"
-            );
-            var r2 = TestUtils.getChildWithLabel(
-                b1,
-                "r2"
-            );
-            SelectionHandler.addRelation(r1);
-            SelectionHandler.addRelation(r2);
-            expect(
-                GraphElementMainMenu._currentController instanceof EdgeController.RelationController
-            ).toBeTruthy();
-        });
-        it("sets the correct controller when multiple selected elements are different types of graph elements", function () {
-            var scenario = new Scenarios.threeBubblesGraph();
-            var b1 = scenario.getBubble1InTree();
-            var r1 = TestUtils.getChildWithLabel(
-                b1,
-                "r1"
-            );
-            SelectionHandler.addVertex(b1);
-            SelectionHandler.addRelation(r1);
-            expect(
-                GraphElementMainMenu._currentController instanceof GraphElementController.GraphElementController
-            ).toBeTruthy();
-        });
         function getAWholeGraphButton() {
             var wholeGraphButton;
             GraphElementMainMenu.visitButtons(function (button) {
