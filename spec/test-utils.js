@@ -15,7 +15,7 @@ define([
     var api = {};
     api.generateVertexUri = function (userName) {
         userName = userName || "églantier";
-        return "\/service\/users\/"+userName+"\/graph\/vertex\/" + generateUuid();
+        return "\/service\/users\/" + userName + "\/graph\/vertex\/" + generateUuid();
     };
     api.generateEdgeUri = function () {
         return "\/service\/users\/églantier\/graph\/edge\/" + generateUuid();
@@ -179,11 +179,11 @@ define([
         );
     };
 
-    api.getIdentifierWithLabelInSubGraph = function(identifierLabel, subGraph){
+    api.getIdentifierWithLabelInSubGraph = function (identifierLabel, subGraph) {
         var identifierWithLabel;
-        subGraph.visitGraphElements(function(graphElement){
-            graphElement.getIdentifiers().forEach(function(identifier){
-                if(identifier.getLabel() === identifierLabel){
+        subGraph.visitGraphElements(function (graphElement) {
+            graphElement.getIdentifiers().forEach(function (identifier) {
+                if (identifier.getLabel() === identifierLabel) {
                     identifierWithLabel = identifier;
                 }
             });
@@ -191,7 +191,7 @@ define([
         return identifierWithLabel;
     };
 
-    api.defaultMock = function(api, method){
+    api.defaultMock = function (api, method) {
         return spyOn(
             api,
             method
@@ -212,4 +212,5 @@ define([
             .toString(16)
             .substring(1);
     }
+
 });
